@@ -1480,7 +1480,9 @@ file_dialog_ok_callback (GimpLevelsTool *l_tool)
 
   if (! file)
     {
-      g_message (_("Failed to open file: '%s': %s"),
+      g_message (l_tool->is_save ?
+                 _("Could not open '%s' for writing: %s") :
+                 _("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return;
     }

@@ -315,8 +315,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 
   if (! uri)
     {
-      g_message (_("Revert failed.\n"
-		   "No file name associated with this image."));
+      g_message (_("Revert failed. No file name associated with this image."));
     }
   else if (query_box)
     {

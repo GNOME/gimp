@@ -83,7 +83,7 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
                                 GTK_WIDGET (editor),
 				gimp_standard_help_func,
 				GIMP_HELP_PALETTE_MERGE,
-				_("Enter a name for merged palette"),
+				_("Enter a name for the merged palette"),
 				NULL,
 				G_OBJECT (editor), "destroy",
 				palettes_merge_palettes_callback,

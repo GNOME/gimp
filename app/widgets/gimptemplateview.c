@@ -385,8 +385,8 @@ gimp_template_view_delete_clicked (GtkWidget        *widget,
       delete_data->container = editor->view->container;
       delete_data->template  = template;
 
-      str = g_strdup_printf (_("Are you sure you want to delete\n"
-			       "template \"%s\" from the list?"),
+      str = g_strdup_printf (_("Are you sure you want to delete template '%s' "
+                               "from the list and from disk?"),
 			     GIMP_OBJECT (template)->name);
 
       dialog = gimp_query_boolean_box (_("Delete Template"),

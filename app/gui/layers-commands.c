@@ -573,7 +573,7 @@ new_layer_query_response (GtkWidget       *widget,
             }
           else
             {
-              g_message ("new_layer_query_response():\n"
+              g_message ("new_layer_query_response: "
                          "could not allocate new layer");
             }
         }
@@ -1074,8 +1074,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
     }
   else
     {
-      g_message (_("Invalid width or height.\n"
-		   "Both must be positive."));
+      g_message (_("Invalid width or height. Both must be positive."));
     }
 }
 
@@ -1169,8 +1168,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
     }
   else
     {
-      g_message (_("Invalid width or height.\n"
-		   "Both must be positive."));
+      g_message (_("Invalid width or height. Both must be positive."));
     }
 }
 

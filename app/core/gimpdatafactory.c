@@ -440,8 +440,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         }
       else
         {
-          g_message (_("Trying legacy loader on\n"
-		       "file '%s'\n" 
+          g_message (_("Trying legacy loader on file '%s' "
 		       "with unknown extension."),
                      file_data->filename);
           goto insert;

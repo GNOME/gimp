@@ -208,7 +208,7 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 
   if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Hue-Saturation operates only on RGB color drawables."));
+      g_message (_("Hue-Saturation operates only on RGB color layers."));
       return;
     }
 

@@ -586,9 +586,9 @@ gimp_brush_load_brush (gint          fd,
       else
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parsing error (unknown depth %d):\n"
-                         "Brush file '%s'"),
-                       header.bytes, filename);
+                       _("Fatal parse error in brush file '%s': "
+                         "Unknown depth %d."),
+                       filename, header.bytes);
           return NULL;
         }
       /*  fallthrough  */
@@ -599,9 +599,9 @@ gimp_brush_load_brush (gint          fd,
 
     default:
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error (unknown version %d):\n"
-                     "Brush file '%s'"),
-                   header.version, filename);
+                   _("Fatal parse error in brush file '%s': "
+                     "Unknown version %d."),
+                   filename, header.version);
       return NULL;
     }
 
@@ -615,8 +615,8 @@ gimp_brush_load_brush (gint          fd,
       if ((read (fd, name, bn_size)) < bn_size)
 	{
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parsing error:\n"
-                         "Brush file '%s' appears truncated."),
+                       _("Fatal parse error in brush file '%s': "
+                         "File appears truncated."),
                        filename);
 	  g_free (name);
 	  return NULL;
@@ -719,8 +719,8 @@ gimp_brush_load_brush (gint          fd,
     default:
       g_object_unref (brush);
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Unsupported brush depth %d\n"
-                     "in file '%s'.\n"
+                   _("Fatal parse error in brush file '%s': "
+                     "Unsupported brush depth %d\n"
                      "GIMP brushes must be GRAY or RGBA."),
                    header.bytes, filename);
       g_free (name);
@@ -731,8 +731,8 @@ gimp_brush_load_brush (gint          fd,
     {
       g_object_unref (brush);
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error:\n"
-                     "Brush file '%s' appears truncated."),
+                   _("Fatal parse error in brush file '%s': "
+                     "File appears truncated."),
                    filename);
       g_free (name);
       return NULL;

@@ -2685,7 +2685,7 @@ gimp_image_position_layer (GimpImage   *gimage,
       if (new_index == num_layers - 1 &&
 	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (tmp)))
 	{
-	  g_message (_("Layer \"%s\" has no alpha.\nLayer was placed above it."),
+	  g_message (_("Layer '%s' has no alpha. Layer was placed above it."),
 		     GIMP_OBJECT (tmp)->name);
 	  new_index--;
 	}

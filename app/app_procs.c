@@ -277,7 +277,7 @@ app_init (const gchar         *full_prog_name,
 
                       filename = file_utils_uri_to_utf8_filename (uri);
 
-                      g_message (_("Opening '%s' failed:\n%s"),
+                      g_message (_("Opening '%s' failed: %s"),
                                  filename, error->message);
                       g_clear_error (&error);
 

@@ -415,7 +415,7 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
 
 	  blocked = (PlugInBlocked *) list->data;
 
-	  if (blocked->proc_name && proc_return->name && 
+	  if (blocked->proc_name && proc_return->name &&
 	      strcmp (blocked->proc_name, proc_return->name) == 0)
 	    {
 	      if (! gp_proc_return_write (blocked->plug_in->my_write,
@@ -493,7 +493,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[0].type != GIMP_PDB_INT32))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Toolbox> procedure \"%s\"\n"
+			 "attempted to install <Toolbox> procedure \"%s\" "
 			 "which does not take the standard <Toolbox> Plug-In "
                          "args.\n"
                          "(INT32)",
@@ -511,7 +511,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Image> procedure \"%s\"\n"
+			 "attempted to install <Image> procedure \"%s\" "
 			 "which does not take the standard <Image> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE)",
@@ -529,7 +529,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[2].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Load> procedure \"%s\"\n"
+			 "attempted to install <Load> procedure \"%s\" "
 			 "which does not take the standard <Load> Plug-In "
                          "args.\n"
                          "(INT32, STRING, STRING)",
@@ -549,7 +549,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[4].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install <Save> procedure \"%s\"\n"
+			 "attempted to install <Save> procedure \"%s\" "
 			 "which does not take the standard <Save> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
@@ -562,7 +562,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       else
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n"
-		     "attempted to install procedure \"%s\"\n"
+		     "attempted to install procedure \"%s\" "
 		     "in an invalid menu location.\n"
 		     "Use either \"<Toolbox>\", \"<Image>\", "
 		     "\"<Load>\", or \"<Save>\".",
@@ -575,7 +575,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   /*  Sanity check for array arguments  */
 
-  for (i = 1; i < proc_install->nparams; i++) 
+  for (i = 1; i < proc_install->nparams; i++)
     {
       if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
 	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
@@ -585,9 +585,9 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	  proc_install->params[i-1].type != GIMP_PDB_INT32)
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n"
-		     "attempted to install procedure \"%s\"\n"
-		     "which fails to comply with the array parameter\n"
-		     "passing standard.  Argument %d is noncompliant.", 
+		     "attempted to install procedure \"%s\" "
+		     "which fails to comply with the array parameter "
+		     "passing standard.  Argument %d is noncompliant.",
 		     plug_in->name,
 		     plug_in->prog,
 		     proc_install->name, i);
@@ -597,16 +597,16 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   /*  Sanity check strings for UTF-8 validity  */
 
-  if ((proc_install->menu_path == NULL || 
+  if ((proc_install->menu_path == NULL ||
        g_utf8_validate (proc_install->menu_path, -1, NULL)) &&
       (g_utf8_validate (proc_install->name, -1, NULL))      &&
-      (proc_install->blurb == NULL || 
+      (proc_install->blurb == NULL ||
        g_utf8_validate (proc_install->blurb, -1, NULL))     &&
-      (proc_install->help == NULL || 
+      (proc_install->help == NULL ||
        g_utf8_validate (proc_install->help, -1, NULL))      &&
       (proc_install->author == NULL ||
        g_utf8_validate (proc_install->author, -1, NULL))    &&
-      (proc_install->copyright == NULL || 
+      (proc_install->copyright == NULL ||
        g_utf8_validate (proc_install->copyright, -1, NULL)) &&
       (proc_install->date == NULL ||
        g_utf8_validate (proc_install->date, -1, NULL)))
@@ -616,7 +616,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       for (i = 0; i < proc_install->nparams && valid_utf8; i++)
         {
           if (! (g_utf8_validate (proc_install->params[i].name, -1, NULL) &&
-                 (proc_install->params[i].description == NULL || 
+                 (proc_install->params[i].description == NULL ||
                   g_utf8_validate (proc_install->params[i].description, -1, NULL))))
             valid_utf8 = FALSE;
         }
@@ -629,11 +629,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
             valid_utf8 = FALSE;
         }
     }
-  
+
   if (! valid_utf8)
     {
       g_message ("Plug-In \"%s\"\n(%s)\n"
-                 "attempted to install a procedure with invalid UTF-8 strings.", 
+                 "attempted to install a procedure with invalid UTF-8 strings.",
                  plug_in->name,
                  plug_in->prog);
       return;

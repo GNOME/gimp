@@ -361,7 +361,8 @@ gimp_gradient_load (const gchar  *filename,
   if (strcmp (line, "GIMP Gradient\n") != 0)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal Parse Error: '%s' is not a GIMP Gradient file"),
+                   _("Fatal parse error in gradient file '%s': "
+                     "Not a GIMP gradient file."),
                    filename);
       fclose (file);
       return NULL;
@@ -405,7 +406,8 @@ gimp_gradient_load (const gchar  *filename,
   if (num_segments < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error:\nGradient file '%s' is corrupt."),
+                   _("Fatal parse error in gradient file '%s': "
+                     "File is corrupt."),
                    filename);
       g_object_unref (gradient);
       fclose (file);

@@ -101,8 +101,7 @@ file_utils_filename_to_uri (GSList       *procs,
         }
       else
         {
-          g_set_error (error,
-                       G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+          g_set_error (error, G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
                        _("Invalid character sequence in URI"));
           return NULL;
         }

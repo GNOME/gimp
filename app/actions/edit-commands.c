@@ -287,7 +287,7 @@ edit_stroke_selection (GimpItem  *item,
 
   if (! active_drawable)
     {
-      g_message (_("There is no active layer or channel to stroke to"));
+      g_message (_("There is no active layer or channel to stroke to."));
       return;
     }
 

@@ -662,7 +662,7 @@ gimp_selection_extract (GimpChannel  *selection,
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      g_message (_("Unable to cut or copy because the\n"
+      g_message (_("Unable to cut or copy because the "
 		   "selected region is empty."));
       return NULL;
     }
@@ -807,7 +807,7 @@ gimp_selection_float (GimpChannel  *selection,
   non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
-      g_message (_("Cannot float selection because the\n"
+      g_message (_("Cannot float selection because the "
 		   "selected region is empty."));
       return NULL;
     }

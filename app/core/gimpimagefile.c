@@ -167,10 +167,10 @@ gimp_imagefile_get_type (void)
       };
 
       imagefile_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					       "GimpImagefile", 
+					       "GimpImagefile",
                                                &imagefile_info, 0);
     }
-  
+
   return imagefile_type;
 }
 
@@ -212,7 +212,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   for (i = 0; i < G_N_ELEMENTS (thumb_sizes); i++)
     thumb_subdirs[i] = g_build_filename (g_get_home_dir(), ".thumbnails",
                                          thumb_sizes[i].dirname, NULL);
-  
+
   thumb_fail_subdir = thumb_subdirs[0];
   thumb_subdirs[0] = g_strdup_printf ("%s%cgimp-%d.%d",
                                       thumb_fail_subdir, G_DIR_SEPARATOR,
@@ -242,7 +242,7 @@ gimp_imagefile_finalize (GObject *object)
 
   if (imagefile->description && ! imagefile->static_desc)
     g_free (imagefile->description);
-  
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -376,7 +376,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       file_exists = gimp_imagefile_test (filename, &image_mtime, &image_size);
       g_free (filename);
-      
+
       if (! file_exists)
         return;
 
@@ -455,13 +455,13 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
                          TAG_THUMB_SIZE,         s_str,
                          NULL))
     {
-      g_message (_("Failed to write thumbnail for '%s' as '%s': %s"), 
+      g_message (_("Could not write thumbnail for '%s' as '%s': %s"),
                  uri, thumb_name, error->message);
       g_error_free (error);
     }
   else if (chmod (thumb_name, 0600))
     {
-      g_message (_("Failed to set permissions of thumbnail '%s': %s"),
+      g_message (_("Could not set permissions of thumbnail '%s': %s"),
                  thumb_name, g_strerror (errno));
     }
 
@@ -599,7 +599,7 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_WIDTH);
   if (!option || sscanf (option, "%d", &img_width) != 1)
     img_width = -1;
-  
+
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_HEIGHT);
   if (!option || sscanf (option, "%d", &img_height) != 1)
     img_height = -1;
@@ -744,7 +744,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       break;
 
     case GIMP_IMAGEFILE_STATE_NOT_FOUND:
-      imagefile->description = _("Failed to open");
+      imagefile->description = _("Could not open");
       imagefile->static_desc = TRUE;
       break;
 
@@ -796,7 +796,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
                                           imagefile->height);
                   g_string_append_c (str, '\n');
                 }
-            
+
               enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
               enum_value = g_enum_get_value (enum_class, imagefile->type);
 
@@ -816,7 +816,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
                 }
             }
             break;
-            
+
           default:
             break;
           }
@@ -850,7 +850,7 @@ gimp_imagefile_test (const gchar *filename,
 }
 
 
-/* PNG thumbnail handling routines according to the 
+/* PNG thumbnail handling routines according to the
    Thumbnail Managing Standard  http://triq.net/~pearl/thumbnail-spec/  */
 
 static TempBuf *
@@ -890,7 +890,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
 
   if (!pixbuf)
     {
-      g_message (_("Failed to open thumbnail file '%s': %s"),
+      g_message (_("Could not open thumbnail '%s': %s"),
                  thumbname, error->message);
       goto cleanup;
     }
@@ -899,7 +899,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   thumbname = NULL;
 
   /* URI and mtime from the thumbnail need to match our file */
- 
+
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
   if (!option || strcmp (option, GIMP_OBJECT (imagefile)->name))
     goto cleanup;
@@ -1000,7 +1000,7 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
         }
     }
 
-  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (gimage), 
+  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (gimage),
                                                  width, height);
 
   {
@@ -1045,13 +1045,13 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
 
     if (! success)
       {
-        g_message (_("Failed to write thumbnail for '%s' as '%s': %s"), 
+        g_message (_("Could not write thumbnail for '%s' as '%s': %s"),
                    uri, thumb_name, error->message);
         g_error_free (error);
       }
     else if (chmod (thumb_name, 0600))
       {
-        g_message (_("Failed to set permissions of thumbnail '%s': %s"),
+        g_message (_("Could not set permissions of thumbnail '%s': %s"),
                    thumb_name, g_strerror (errno));
       }
 
@@ -1115,11 +1115,11 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
     }
   else
     {
-      for (i = 1; 
-           i < G_N_ELEMENTS (thumb_sizes) && thumb_sizes[i].size < *thumb_size; 
+      for (i = 1;
+           i < G_N_ELEMENTS (thumb_sizes) && thumb_sizes[i].size < *thumb_size;
            i++)
         /* nothing */;
-      
+
       if (i == G_N_ELEMENTS (thumb_sizes))
         i--;
     }
@@ -1128,7 +1128,7 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
 
   if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
     {
-      if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) || 
+      if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
           (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
         {
           if (i == 0)
@@ -1139,7 +1139,7 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
 
       if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
         {
-          g_message (_("Failed to create thumbnail folder '%s'."), 
+          g_message (_("Could not create thumbnail folder '%s'."),
                      thumb_subdirs[i]);
           return NULL;
         }
@@ -1292,7 +1292,7 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
    the XFree86-style license. <adam@gimp.org> */
 static guchar *
 readXVThumb (const gchar  *fnam,
-             gint         *w, 
+             gint         *w,
              gint         *h,
 	     gchar       **imginfo)
 {
@@ -1369,6 +1369,6 @@ readXVThumb (const gchar  *fnam,
 
   fread (buf, (*w) * (*h), 1, fp);
   fclose (fp);
-  
+
   return buf;
 }

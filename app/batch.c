@@ -88,7 +88,7 @@ batch_init (Gimp         *gimp,
 
       if (! eval_proc)
         {
-          g_message ("script-fu not available: batch mode disabled\n");
+          g_message ("script-fu not available: batch mode disabled");
           return;
         }
 
@@ -185,7 +185,7 @@ batch_perl_server (Gimp        *gimp,
     default:
       break;
     }
-  
+
   procedural_db_destroy_args (vals, pserver_proc->num_values);
   g_free(args);
 

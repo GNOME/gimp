@@ -3883,7 +3883,7 @@ image_set_resolution_invoker (Gimp     *gimp,
 	  !FINITE (yresolution) || 
 	  yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
 	{
-	  g_message (_("Image resolution is out of bounds,\n" 
+	  g_message (_("Image resolution is out of bounds, " 
 		       "using the default resolution instead."));
 	  success = FALSE;
 	}

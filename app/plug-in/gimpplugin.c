@@ -694,8 +694,8 @@ plug_in_recv_message (GIOChannel   *channel,
 
   if (! got_message)
     g_message (_("Plug-In crashed: \"%s\"\n(%s)\n\n"
-		 "The dying Plug-In may have messed up GIMP's internal state.\n"
-		 "You may want to save your images and restart GIMP\n"
+		 "The dying Plug-In may have messed up GIMP's internal state. "
+		 "You may want to save your images and restart GIMP "
 		 "to be on the safe side."),
 	       plug_in->name,
 	       plug_in->prog);

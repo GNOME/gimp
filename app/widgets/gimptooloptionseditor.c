@@ -413,7 +413,7 @@ gimp_tool_options_editor_reset_ext_clicked (GtkWidget             *widget,
                                      gimp_standard_help_func,
                                      GIMP_HELP_TOOL_OPTIONS_RESET,
                                      GTK_STOCK_DIALOG_QUESTION,
-                                     _("Do you really want to reset all\n"
+                                     _("Do you really want to reset all "
                                        "tool options to default values?"),
                                      GIMP_STOCK_RESET, GTK_STOCK_CANCEL,
                                      G_OBJECT (editor), "unmap",

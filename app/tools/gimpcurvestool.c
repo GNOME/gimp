@@ -1274,7 +1274,9 @@ file_dialog_ok_callback (GimpCurvesTool *c_tool)
 
   if (! file)
     {
-      g_message (_("Failed to open file: '%s': %s"),
+      g_message (c_tool->is_save ?
+                 _("Could not open '%s' for writing: %s") :
+                 _("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return;
     }
@@ -1285,7 +1287,7 @@ file_dialog_ok_callback (GimpCurvesTool *c_tool)
     }
   else if (! curves_read_from_file (c_tool, file))
     {
-      g_message (("Error in reading file '%s'."), filename);
+      g_message ("Error in reading file '%s'.", filename);
     }
 
   if (file)

@@ -508,8 +508,8 @@ image_scale_callback (GtkWidget *widget,
 				gimp_standard_help_func,
 				GIMP_HELP_IMAGE_SCALE_WARNING,
 				GTK_STOCK_DIALOG_QUESTION,
-				_("The chosen image size will shrink\n"
-				  "some layers completely away.\n"
+				_("The chosen image size will shrink "
+				  "some layers completely away. "
 				  "Is this what you want?"),
 				GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				G_OBJECT (image_scale->resize->resize_shell),

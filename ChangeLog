@@ -1,3 +1,74 @@
+2003-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpquerybox.c
+	* app/widgets/gimpwidgets-utils.c: configure the labels in the
+	message dialog and the query boxes to do automatic word wrapping
+	to be HIG compliant.
+
+	* app/app_procs.c
+	* app/batch.c
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-path.c
+	* app/config/gimpconfig-utils.c
+	* app/config/gimpconfigwriter.c
+	* app/config/gimpscanner.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagefile.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimpselection.c
+	* app/display/gimpdisplayshell.c
+	* app/file/file-utils.c
+	* app/gui/brush-select.c
+	* app/gui/dialogs-commands.c
+	* app/gui/drawable-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/font-select.c
+	* app/gui/gradient-select.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/palette-select.c
+	* app/gui/palettes-commands.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/stroke-dialog.c
+	* app/gui/tool-options-menu.c
+	* app/gui/vectors-commands.c
+	* app/gui/view-commands.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins.c
+	* app/text/gimptextlayer-xcf.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimptransformtool.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/image.pdb: removed explicit newlines from
+	messages. Reduced number of translatable strings by making many
+	file error messages the same. Quote single words and filenames
+	with 'foo', not "foo". Replaced some more "drawable" by "layer".
+	General message cleanup and consistency check.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h (CAN_CHANGE_ACCELS_BLURB): applied

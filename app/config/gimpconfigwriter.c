@@ -101,9 +101,8 @@ gimp_config_writer_new_file (const gchar  *filename,
 
       if (fd == -1)
 	{
-	  g_set_error (error,
-		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		       _("Failed to create temporary file for '%s': %s"),
+	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+		       _("Could not create temporary file for '%s': %s"),
 		       filename, g_strerror (errno));
 	  g_free (tmpname);
 	  return NULL;
@@ -115,9 +114,8 @@ gimp_config_writer_new_file (const gchar  *filename,
 
       if (fd == -1)
 	{
-	  g_set_error (error,
-		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		       _("Failed to open '%s' for writing: %s"),
+	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+		       _("Could not open '%s' for writing: %s"),
 		       filename, g_strerror (errno));
 	  return NULL;
 	}
@@ -439,8 +437,7 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
   if (writer->buffer->len == 0 && !writer->comment)
     {
       if (write (writer->fd, "\n", 1) < 0)
-        g_set_error (&writer->error,
-                     GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+        g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                      g_strerror (errno));
     }
   else
@@ -520,8 +517,7 @@ static inline void
 gimp_config_writer_flush (GimpConfigWriter *writer)
 {
   if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-    g_set_error (&writer->error,
-                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+    g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		 g_strerror (errno));
 
   g_string_truncate (writer->buffer, 0);
@@ -600,9 +596,8 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 
       if (rename (writer->tmpname, writer->filename) == -1)
 	{
-	  g_set_error (error,
-		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		       _("Failed to create file '%s': %s"),
+	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+		       _("Could not create '%s': %s"),
 		       writer->filename, g_strerror (errno));
 
 	  unlink (writer->tmpname);

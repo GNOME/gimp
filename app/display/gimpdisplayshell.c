@@ -1725,13 +1725,8 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 
   title = g_strdup_printf (_("Close %s?"), name);
 
-  warning = g_strdup_printf (_("Changes were made to %s.\n"
+  warning = g_strdup_printf (_("Changes were made to '%s'. "
                                "Close anyway?"), name);
-#if 0
-  shell->warning_dialog = gtk_message_dialog_new (shell->window,
-						  0,
-						  GTK_MESSAGE_QUESTION,);
-#endif
 
   shell->warning_dialog =
     gimp_query_boolean_box (title,

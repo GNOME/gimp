@@ -371,7 +371,7 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
 
   if (gimp_container_num_children (image->gimp->fonts) == 0)
     {
-      g_message (_("Due to lack of any fonts,\n"
+      g_message (_("Due to lack of any fonts, "
                    "text functionality is not available."));
       return FALSE;
     }

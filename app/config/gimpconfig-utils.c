@@ -537,9 +537,10 @@ gimp_config_file_backup_on_error (const gchar  *filename,
   success = gimp_config_file_copy (filename, backup, error);
 
   if (success)
-    g_message (_("There was an error parsing your %s file.\n"
-                 "Default values will be used. A backup of your configuration has been\n"
-                 "created at '%s'."), name, backup);
+    g_message (_("There was an error parsing your '%s' file. "
+                 "Default values will be used. A backup of your "
+                 "configuration has been created at '%s'."),
+               name, backup);
 
   g_free (backup);
 

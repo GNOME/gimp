@@ -613,7 +613,7 @@ gimp_config_deserialize_path (GValue     *value,
       if (!expand)
         {
           g_scanner_error (scanner,
-                           _("while parsing token %s: %s"),
+                           _("while parsing token '%s': %s"),
                            prop_spec->name, error->message);
           g_error_free (error);
 

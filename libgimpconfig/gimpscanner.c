@@ -88,9 +88,8 @@ gimp_scanner_new_file (const gchar  *filename,
       code = (errno == ENOENT ?
               GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN);
 
-      g_set_error (error,
-                   GIMP_CONFIG_ERROR, code,
-                   _("Failed to open file: '%s': %s"),
+      g_set_error (error, GIMP_CONFIG_ERROR, code,
+                   _("Could not open '%s' for reading: %s"),
                    filename, g_strerror (errno));
 
       return NULL;
@@ -491,13 +490,11 @@ gimp_scanner_message (GScanner *scanner,
   g_return_if_fail (is_error);
 
   if (data->name)
-    g_set_error (data->error,
-                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                 _("Error while parsing '%s' in line %d:\n%s"), 
+    g_set_error (data->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                 _("Error while parsing '%s' in line %d: %s"),
                  data->name, scanner->line, message);
   else
     /*  should never happen, thus not marked for translation  */
-    g_set_error (data->error,
-                 GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                 "Error parsing internal buffer: %s", message);    
+    g_set_error (data->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                 "Error parsing internal buffer: %s", message);
 }

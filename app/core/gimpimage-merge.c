@@ -102,7 +102,7 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
       if (had_floating_sel)
 	return layer;
       else
-	g_message (_("Not enough visible layers for a merge.\n"
+	g_message (_("Not enough visible layers for a merge. "
 		     "There must be at least two."));
 
       return NULL;
@@ -553,10 +553,10 @@ gimp_image_merge_visible_vectors (GimpImage *gimage)
           vectors = GIMP_VECTORS (cur_item->data);
           gimp_vectors_add_strokes (vectors, target_vectors);
           gimp_image_remove_vectors (gimage, vectors);
-          
+
           cur_item = g_slist_next (cur_item);
         }
-      
+
       gimp_object_set_name (GIMP_OBJECT (target_vectors), name);
       g_free (name);
 
@@ -571,7 +571,7 @@ gimp_image_merge_visible_vectors (GimpImage *gimage)
     }
   else
     {
-      g_message (_("Not enough visible paths for a merge.\n"
+      g_message (_("Not enough visible paths for a merge. "
                    "There must be at least two."));
 
       return NULL;

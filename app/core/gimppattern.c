@@ -355,8 +355,9 @@ gimp_pattern_load (const gchar  *filename,
   if (read (fd, &header, sizeof (header)) != sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Could not read %d bytes from '%s': %s"),
-                   (gint) sizeof (header), filename, g_strerror (errno));
+                   _("Fatal parse error in pattern file '%s': "
+                     "Could not read %d bytes: %s"),
+                   filename, (gint) sizeof (header), g_strerror (errno));
       goto error;
     }
 
@@ -373,8 +374,9 @@ gimp_pattern_load (const gchar  *filename,
       header.header_size <= sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Unknown pattern format version %d in '%s'."),
-                   header.version, filename);
+                   _("Fatal parse error in pattern file '%s': "
+                     "Unknown pattern format version %d."),
+                   filename, header.version);
       goto error;
     }
 
@@ -382,10 +384,10 @@ gimp_pattern_load (const gchar  *filename,
   if (header.bytes < 1 || header.bytes > 4)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Unsupported pattern depth %d\n"
-                     "in file '%s'.\n"
+                   _("Fatal parse error in pattern file '%s: "
+                     "Unsupported pattern depth %d.\n"
                      "GIMP Patterns must be GRAY or RGB."),
-                   header.bytes, filename);
+                   filename, header.bytes);
       goto error;
     }
 
@@ -399,8 +401,9 @@ gimp_pattern_load (const gchar  *filename,
       if ((read (fd, name, bn_size)) < bn_size)
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Error in GIMP pattern file '%s'."),
-                       filename);
+                       _("Fatal parse error in pattern file '%s': "
+                         "Could not read %d bytes: %s"),
+                       filename, bn_size, g_strerror (errno));
 	  goto error;
         }
 
@@ -423,9 +426,10 @@ gimp_pattern_load (const gchar  *filename,
       header.width * header.height * header.bytes)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error: "
-                     "Pattern file '%s' appears truncated."),
-                   filename);
+                   _("Fatal parse error in pattern file '%s': "
+                     "Could not read %d bytes: %s"),
+                   filename, header.width * header.height * header.bytes,
+                   g_strerror (errno));
       goto error;
     }
 

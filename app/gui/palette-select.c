@@ -247,7 +247,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
 				GIMP_PDB_END);
 
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-	g_message (_("Unable to run palette callback.\n"
+	g_message (_("Unable to run palette callback. "
                      "The corresponding plug-in may have crashed."));
 
       if (return_vals)

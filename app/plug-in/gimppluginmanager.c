@@ -160,7 +160,7 @@ plug_ins_init (Gimp               *gimp,
 	  gimp->write_pluginrc = TRUE;
 
 	  if (gimp->be_verbose)
-	    g_print (_("querying plug-in: \"%s\"\n"), plug_in_def->prog);
+	    g_print (_("Querying plug-in: '%s'\n"), plug_in_def->prog);
 
 	  plug_in_call_query (gimp, plug_in_def);
 	}
@@ -215,7 +215,7 @@ plug_ins_init (Gimp               *gimp,
       GError *error = NULL;
 
       if (gimp->be_verbose)
-	g_print (_("writing \"%s\"\n"), filename);
+	g_print (_("Writing '%s'\n"), filename);
 
       if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
         {
@@ -294,7 +294,7 @@ plug_ins_init (Gimp               *gimp,
       if (plug_in_def->has_init)
 	{
 	  if (gimp->be_verbose)
-	    g_print (_("Initializing plug-in: \"%s\"\n"), plug_in_def->prog);
+	    g_print (_("Initializing plug-in: '%s'\n"), plug_in_def->prog);
 
 	  plug_in_call_init (gimp, plug_in_def);
 	}
@@ -332,7 +332,7 @@ plug_ins_init (Gimp               *gimp,
           proc_def = list->data;
 
 	  if (gimp->be_verbose)
-	    g_print (_("Starting extension: \"%s\"\n"), proc_def->db_info.name);
+	    g_print (_("Starting extension: '%s'\n"), proc_def->db_info.name);
 
 	  (* status_callback) (NULL, proc_def->db_info.name, nth / n_plugins);
 
@@ -550,7 +550,7 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
   g_free (basename1);
 
   gimp->write_pluginrc = TRUE;
-  g_print ("executable not found: \"%s\"\n", plug_in_def->prog);
+  g_print ("executable not found: '%s'\n", plug_in_def->prog);
   plug_in_def_free (plug_in_def, FALSE);
 }
 
@@ -859,7 +859,7 @@ plug_ins_init_file (const GimpDatafileData *file_data,
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
 	{
-	  g_print ("skipping duplicate plug-in: \"%s\"\n",
+	  g_print ("skipping duplicate plug-in: '%s'\n",
                    file_data->filename);
 
           g_free (plug_in_name);

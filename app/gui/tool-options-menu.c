@@ -59,7 +59,7 @@ GimpItemFactoryEntry tool_options_menu_entries[] =
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE, NULL },
-  { { N_("/Save Options to/new-separator"), "",
+  { { "/Save Options to/new-separator", "",
       NULL, 0,
       "<Separator>", NULL },
     NULL,

@@ -78,7 +78,7 @@ drawable_desaturate_cmd_callback (GtkWidget *widget,
 
   if (! gimp_drawable_is_rgb (active_drawable))
     {
-      g_message (_("Desaturate operates only on RGB color drawables."));
+      g_message (_("Desaturate operates only on RGB color layers."));
       return;
     }
 
@@ -96,7 +96,7 @@ drawable_invert_cmd_callback (GtkWidget *widget,
 
   if (gimp_drawable_is_indexed (active_drawable))
     {
-      g_message (_("Invert does not operate on indexed drawables."));
+      g_message (_("Invert does not operate on indexed layers."));
       return;
     }
 
@@ -114,7 +114,7 @@ drawable_equalize_cmd_callback (GtkWidget *widget,
 
   if (gimp_drawable_is_indexed (active_drawable))
     {
-      g_message (_("Equalize does not operate on indexed drawables."));
+      g_message (_("Equalize does not operate on indexed layers."));
       return;
     }
 

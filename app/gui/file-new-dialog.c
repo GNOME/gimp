@@ -267,14 +267,14 @@ file_new_confirm_dialog (FileNewDialog *dialog)
   size_str     = gimp_memsize_to_string (dialog->template->initial_size);
   max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size);
 
-  text = g_strdup_printf (_("You are trying to create an image with\n"
+  text = g_strdup_printf (_("You are trying to create an image with "
 			    "an initial size of %s.\n\n"
 			    "Choose OK to create this image anyway.\n"
-			    "Choose Cancel if you did not intend to\n"
+			    "Choose Cancel if you did not intend to "
 			    "create such a large image.\n\n"
-			    "To prevent this dialog from appearing,\n"
-			    "increase the \"Maximum Image Size\"\n"
-			    "setting (currently %s) in the\n"
+			    "To prevent this dialog from appearing, "
+			    "increase the \"Maximum Image Size\" "
+			    "setting (currently %s) in the "
 			    "Preferences dialog."),
                           size_str, max_size_str);
 

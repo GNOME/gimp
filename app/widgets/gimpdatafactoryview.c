@@ -398,8 +398,8 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
       delete_data->factory = view->factory;
       delete_data->data    = data;
 
-      str = g_strdup_printf (_("Are you sure you want to delete\n"
-			       "\"%s\" from the list and from disk?"),
+      str = g_strdup_printf (_("Are you sure you want to delete '%s' "
+			       "from the list and from disk?"),
 			     GIMP_OBJECT (data)->name);
 
       dialog = gimp_query_boolean_box (_("Delete Data Object"),

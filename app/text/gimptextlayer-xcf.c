@@ -62,10 +62,11 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 
       if (error)
         {
-          g_message (_("Problems parsing the text parasite for layer %s:\n"
+          g_message (_("Problems parsing the text parasite for layer '%s':\n"
                        "%s\n\n"
-                       "Some text properties may be wrong.  Unless you want to\n"
-                       "edit the text layer, you don't need to worry about this."),
+                       "Some text properties may be wrong. "
+                       "Unless you want to edit the text layer, "
+                       "you don't need to worry about this."),
                      gimp_object_get_name (GIMP_OBJECT (*layer)),
                      error->message);
 

@@ -381,8 +381,8 @@ gimp_brush_pipe_load (const gchar  *filename,
   if (!pipe)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error:\n"
-                     "Brush file '%s' is corrupt."),
+                   _("Fatal parse error in brush file '%s': "
+                     "File is corrupt."),
                    filename);
       close (fd);
       return NULL;
@@ -401,8 +401,8 @@ gimp_brush_pipe_load (const gchar  *filename,
   if (num_of_brushes < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parsing error:\n"
-                     "Brush file '%s' is corrupt."),
+                   _("Fatal parse error in brush file '%s': "
+                     "File is corrupt."),
                    filename);
       close (fd);
       g_object_unref (pipe);
@@ -491,8 +491,8 @@ gimp_brush_pipe_load (const gchar  *filename,
       else
 	{
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parsing error:\n"
-                         "Brush file '%s' is corrupt."),
+                       _("Fatal parse error in brush file '%s': "
+                         "File is corrupt."),
                        filename);
 	  close (fd);
 	  g_object_unref (pipe);

@@ -80,7 +80,7 @@ gimp_brush_generated_get_type (void)
       };
 
       brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
-					   "GimpBrushGenerated", 
+					   "GimpBrushGenerated",
 					   &brush_info, 0);
     }
 
@@ -141,28 +141,28 @@ gimp_brush_generated_save (GimpData  *data,
   fprintf (fp, "%.255s\n", GIMP_OBJECT (brush)->name);
 
   /* write brush spacing */
-  fprintf (fp, "%s\n", 
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+  fprintf (fp, "%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             GIMP_BRUSH (brush)->spacing));
 
   /* write brush radius */
-  fprintf (fp, "%s\n", 
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+  fprintf (fp, "%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             brush->radius));
 
   /* write brush hardness */
   fprintf (fp, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             brush->hardness));
 
   /* write brush aspect_ratio */
   fprintf (fp, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             brush->aspect_ratio));
 
   /* write brush angle */
   fprintf (fp, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             brush->angle));
 
   fclose (fp);
@@ -193,7 +193,7 @@ gimp_brush_generated_duplicate (GimpData *data,
 
 static gdouble
 gauss (gdouble f)
-{ 
+{
   /* this aint' a real gauss function */
   if (f < -0.5)
     {
@@ -245,7 +245,7 @@ gimp_brush_generated_dirty (GimpData *data)
   gbrush->x_axis.y = -1.0 * s * brush->radius;
   gbrush->y_axis.x =        s * short_radius;
   gbrush->y_axis.y =        c * short_radius;
-  
+
   width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
                        gbrush->y_axis.x * gbrush->y_axis.x));
   height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
@@ -263,7 +263,7 @@ gimp_brush_generated_dirty (GimpData *data)
                                           ceil (brush->radius + 1.0)));
 
   if ((1.0 - brush->hardness) < 0.000001)
-    exponent = 1000000.0; 
+    exponent = 1000000.0;
   else
     exponent = 1.0 / (1.0 - brush->hardness);
 
@@ -385,7 +385,8 @@ gimp_brush_generated_load (const gchar  *filename,
   if (strncmp (string, "GIMP-VBR", 8) != 0)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal Parse Error: '%s' is not a GIMP Brush file"),
+                   _("Fatal parse error in brush file '%s': "
+                     "Not a GIMP brush file."),
                    filename);
       return NULL;
     }
@@ -395,7 +396,8 @@ gimp_brush_generated_load (const gchar  *filename,
   if (strncmp (string, "1.0", 3))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal Parse Error: '%s': unknown GIMP Brush version"),
+                   _("Fatal parse error in brush file '%s': "
+                     "Unknown GIMP brush version."),
                    filename);
       return NULL;
     }
@@ -457,7 +459,7 @@ void
 gimp_brush_generated_thaw (GimpBrushGenerated *brush)
 {
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-  
+
   if (brush->freeze > 0)
     brush->freeze--;
 

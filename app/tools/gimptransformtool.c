@@ -335,7 +335,7 @@ gimp_transform_tool_initialize (GimpTool    *tool,
       if (GIMP_IS_LAYER (drawable) &&
           gimp_layer_get_mask (GIMP_LAYER (drawable)))
         {
-          g_message (_("Transformations do not work on\n"
+          g_message (_("Transformations do not work on "
                        "layers that contain layer masks."));
           return;
         }

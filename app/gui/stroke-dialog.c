@@ -266,7 +266,7 @@ stroke_dialog_response (GtkWidget  *widget,
 
         if (! drawable)
           {
-            g_message (_("There is no active layer or channel to stroke to"));
+            g_message (_("There is no active layer or channel to stroke to."));
             return;
           }
 

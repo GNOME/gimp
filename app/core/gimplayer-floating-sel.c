@@ -120,7 +120,7 @@ floating_sel_anchor (GimpLayer *layer)
 
   if (! gimp_layer_is_floating_sel (layer))
     {
-      g_message (_("Cannot anchor this layer because\n"
+      g_message (_("Cannot anchor this layer because "
 		   "it is not a floating selection."));
       return;
     }
@@ -198,9 +198,8 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Check if the floating layer belongs to a channel...  */
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      g_message (_("Cannot create a new layer from the floating\n"
-		   "selection because it belongs to a\n"
-		   "layer mask or channel."));
+      g_message (_("Cannot create a new layer from the floating selection "
+		   "because it belongs to a layer mask or channel."));
       return;
     }
 
