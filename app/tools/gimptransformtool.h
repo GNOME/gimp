@@ -30,6 +30,11 @@
 
 typedef struct _GimpTransformToolClass GimpTransformToolClass;
 
+/*  transform directions  */
+#define TRANSFORM_TRADITIONAL 0
+#define TRANSFORM_CORRECTIVE  1
+
+
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
 #define TRAN_INFO_SIZE  8
@@ -154,5 +159,16 @@ gboolean      gimp_transform_tool_paste                 (GimpImage        *gimag
 				                         TileManager      *tiles,
 				                         gboolean          new_layer);
 GtkType       gimp_transform_tool_get_type              (void);
+
+
+/*  FIXME These probably should no longer be global  */
+
+gboolean      gimp_transform_tool_smoothing             (void);
+gboolean      gimp_transform_tool_showpath              (void);
+gboolean      gimp_transform_tool_clip	                (void);
+gint	      gimp_transform_tool_direction             (void);
+gint	      gimp_transform_tool_grid_size             (void);
+gboolean      gimp_transform_tool_show_grid             (void);
+
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */
