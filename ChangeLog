@@ -1,5 +1,10 @@
 2004-07-19  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version number to 2.0.4, interface_age 4,
+	binary_age 4.
+
+2004-07-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-combine.c (gimp_channel_combine_ellipse):
 	backported improvements to the anti-aliasing for
         elliptical selections from HEAD branch (bug #147836).
