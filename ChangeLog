@@ -23,7 +23,6 @@
 
 	* app/base/cpu-accel.c: remove local definition.
 
->>>>>>> 1.7522
 2004-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptooloptionseditor.[ch]: added the scrolled
