@@ -29,11 +29,15 @@
 
 #include "gimpcolordisplay.h"
 #include "gimpcolordisplaystack.h"
+#include "gimpwidgetsmarshal.h"
 
 
 enum
 {
   CHANGED,
+  ADDED,
+  REMOVED,
+  REORDERED,
   LAST_SIGNAL
 };
 
@@ -94,9 +98,44 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  stack_signals[ADDED] =
+    g_signal_new ("added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorDisplayStackClass, added),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__OBJECT_INT,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_COLOR_DISPLAY,
+                  G_TYPE_INT);
+
+  stack_signals[REMOVED] =
+    g_signal_new ("removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorDisplayStackClass, removed),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_COLOR_DISPLAY);
+
+  stack_signals[REORDERED] =
+    g_signal_new ("reordered",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorDisplayStackClass, reordered),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__OBJECT_INT,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_COLOR_DISPLAY,
+                  G_TYPE_INT);
+
   object_class->finalize = gimp_color_display_stack_finalize;
 
   klass->changed         = NULL;
+  klass->added           = NULL;
+  klass->removed         = NULL;
+  klass->reordered       = NULL;
 }
 
 static void
@@ -176,6 +215,9 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
                            G_OBJECT (stack),
                            G_CONNECT_SWAPPED);
 
+  g_signal_emit (stack, stack_signals[ADDED], 0,
+                 display, g_list_length (stack->filters) - 1);
+
   gimp_color_display_stack_changed (stack);
 }
 
@@ -192,9 +234,12 @@ gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
                                         stack);
 
   stack->filters = g_list_remove (stack->filters, display);
-  g_object_unref (display);
+
+  g_signal_emit (stack, stack_signals[REMOVED], 0, display);
 
   gimp_color_display_stack_changed (stack);
+
+  g_object_unref (display);
 }
 
 void
@@ -214,6 +259,9 @@ gimp_color_display_stack_reorder_up (GimpColorDisplayStack *stack,
     {
       list->data       = list->prev->data;
       list->prev->data = display;
+
+      g_signal_emit (stack, stack_signals[REORDERED], 0,
+                     display, g_list_position (stack->filters, list->prev));
 
       gimp_color_display_stack_changed (stack);
     }
@@ -236,6 +284,9 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
     {
       list->data       = list->next->data;
       list->next->data = display;
+
+      g_signal_emit (stack, stack_signals[REORDERED], 0,
+                     display, g_list_position (stack->filters, list->next));
 
       gimp_color_display_stack_changed (stack);
     }

@@ -48,7 +48,16 @@ struct _GimpColorDisplayStackClass
 {
   GObjectClass  parent_class;
 
-  void (* changed) (GimpColorDisplayStack *stack);
+  void (* changed)   (GimpColorDisplayStack *stack);
+
+  void (* added)     (GimpColorDisplayStack *stack,
+                      GimpColorDisplay      *display,
+                      gint                   position);
+  void (* removed)   (GimpColorDisplayStack *stack,
+                      GimpColorDisplay      *display);
+  void (* reordered) (GimpColorDisplayStack *stack,
+                      GimpColorDisplay      *display,
+                      gint                   position);
 };
 
 

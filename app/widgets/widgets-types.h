@@ -111,6 +111,7 @@ typedef struct _GimpHistogramBox        GimpHistogramBox;
 typedef struct _GimpHistogramEditor     GimpHistogramEditor;
 
 typedef struct _GimpTextEditor          GimpTextEditor;
+typedef struct _GimpColorDisplayEditor  GimpColorDisplayEditor;
 
 
 /*  structs  */

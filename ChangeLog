@@ -1,3 +1,20 @@
+2003-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpcolordisplaystack.[ch]: added signals
+	::added(), ::removed() and ::reordered() and emit them in the
+	resp. functions.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcolordisplayeditor.[ch]: new widget implementing
+	an editable view on a GimpColorDisplayStack. Most code taken from
+	below...
+
+	* app/display/gimpdisplayshell-filter-dialog.c: ...and removed
+	here. Only creates a GimpDialog around a GimpColorDisplayEditor
+	now.
+
 2003-11-22  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (color_erase_inten_pixels): handle
