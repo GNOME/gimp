@@ -316,7 +316,7 @@ undo_push (GImage   *gimage,
 	  gimage->dirty = 10000;
     }
 
-  if (gimage->pushing_undo_group ==UNDO_NULL )
+  if (gimage->pushing_undo_group == UNDO_NULL)
     if (! undo_free_up_space (gimage))
       return NULL;
 
@@ -520,7 +520,7 @@ undo_get_undo_name (GImage *gimage)
     g_return_val_if_fail (gimage != NULL, NULL);
 
     /* don't want to encourage undo while a group is open */
-    if (gimage->pushing_undo_group != 0)
+    if (gimage->pushing_undo_group != UNDO_NULL)
 	return NULL;
 
     return undo_get_topitem_name (gimage->undo_stack);

@@ -1,3 +1,9 @@
+Fri Dec 10 23:55:10 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/iscissors.c: fix problem with layers with non-zero offset.
+
+	* app/undo.c: Garry, you missed one "0 -> UNDO_NULL" cleanup :)
+
 1999-12-10  Garry R. Osgood  <gosgood@idt.net>
 
 	* app/undo.c : An inadvertent substitution of UndoTypes LAYER_ADD_UNDO

@@ -384,7 +384,7 @@ iscissors_button_press (Tool           *tool,
   drawable = gimage_active_drawable (gdisp->gimage);
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
+			       &iscissors->x, &iscissors->y, FALSE, FALSE);
 
   /*  If the tool was being used in another image...reset it  */
 
@@ -691,7 +691,7 @@ iscissors_motion (Tool           *tool,
   draw_core_pause (iscissors->core, tool);
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, 
-			       &iscissors->x, &iscissors->y, FALSE, TRUE);
+			       &iscissors->x, &iscissors->y, FALSE, FALSE);
   
   switch (iscissors->state)
     {
