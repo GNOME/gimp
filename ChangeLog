@@ -1,3 +1,12 @@
+Mon Apr 26 16:05:55 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/MapObject/mapobject_main.c: 
+	* plug-ins/Lighting/lighting_main.c: 
+	MAIN macro at the end of file.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: 
+	* plug-ins/CML_explorer/CML_explorer.c: Add <sys/types.h>.
+
 Sun Apr 25 21:25:23 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/script-fu/script-fu-scripts.c:  Add <sys/types.h>.
