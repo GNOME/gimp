@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.98.6
+ * Animation Playback plug-in version 0.98.7
  *
  * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-06-05 : version 0.98.7
+ *              Fix old bug which could cause errors in evaluating the
+ *              final pixel of each composed layer.
  *
  * 2000-01-13 : version 0.98.6
  *              Looser parsing of (XXXXX) layer-name tags
@@ -1042,7 +1046,7 @@ render_frame (gint32 whichframe)
 	      srcptr  = rawframe;
 	      
 	      i = rawwidth*rawheight;
-	      while (--i)
+	      while (i--)
 		{
 		  if (!(*(srcptr+3)&128))
 		    {
@@ -1051,9 +1055,9 @@ render_frame (gint32 whichframe)
 		      continue;
 		    }
 		  *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      *(destptr++) = *(srcptr++);
-		      srcptr++;
+		  *(destptr++) = *(srcptr++);
+		  *(destptr++) = *(srcptr++);
+		  srcptr++;
 		}
 
 	      /* calculate the shape mask */
@@ -1067,6 +1071,7 @@ render_frame (gint32 whichframe)
 			{
 			  if ((*srcptr)&128)
 			    shape_preview_mask[k+i/8] |= (1<<(i&7));
+
 			  srcptr += 4;
 			}
 		    }
@@ -1314,7 +1319,7 @@ render_frame (gint32 whichframe)
 	      srcptr  = rawframe;
 	      
 	      i = rawwidth*rawheight;
-	      while (--i)
+	      while (i--)
 		{
 		  if (!(*(srcptr+1)))
 		    {

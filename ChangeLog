@@ -1,3 +1,10 @@
+Mon Jun  5 12:48:10 BST 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/animoptimize.c: Fix old bug which could
+	cause errors in evaluating the final pixel of each composed layer.
+
+	* plug-ins/common/animationplay.c: Same bug, different plugin.
+
 2000-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/xbm.c: allow saving of images with alpha.

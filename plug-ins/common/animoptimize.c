@@ -1,5 +1,5 @@
 /*
- * Animation Optimizer plug-in version 1.0.2
+ * Animation Optimizer plug-in version 1.0.3
  *
  * (c) Adam D. Moss, 1997-2000
  *     adam@gimp.org
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-06-05 : version 1.0.3
+ *              Fix old bug which could cause errors in evaluating the
+ *              final pixel of each composed layer.
  *
  * 2000-01-13 : version 1.0.2
  *              Collapse timing of completely optimized-away frames
@@ -388,7 +392,7 @@ do_optimizations(GRunModeType run_mode)
 		  srcptr  = rawframe;
 	      
 		  i = rawwidth*rawheight;
-		  while (--i)
+		  while (i--)
 		    {
 		      if (!((*(srcptr+3))&128))
 			{
@@ -397,10 +401,10 @@ do_optimizations(GRunModeType run_mode)
 			  continue;
 			}
 		      *(destptr++) = *(srcptr++);
-			  *(destptr++) = *(srcptr++);
-			  *(destptr++) = *(srcptr++);
-			  *(destptr++) = 255;
-			  srcptr++;
+		      *(destptr++) = *(srcptr++);
+		      *(destptr++) = *(srcptr++);
+		      *(destptr++) = 255;
+		      srcptr++;
 		    }
 		}
 	      else /* RGB no alpha, same size */
@@ -409,7 +413,7 @@ do_optimizations(GRunModeType run_mode)
 		  srcptr  = rawframe;
 	      
 		  i = rawwidth*rawheight;
-		  while (--i)
+		  while (i--)
 		    {
 		      *(destptr++) = *(srcptr++);
 		      *(destptr++) = *(srcptr++);
@@ -424,7 +428,7 @@ do_optimizations(GRunModeType run_mode)
 	      /* --- this frame is bigger/smaller than the preview  --- */
 	      /* --- buffer, and/or offset within it.               --- */
 	  
-	      /* FIXME: FINISH ME! */
+	      /* FIXME: FINISH ME! [done?] */
 	  
 	      if (gimp_drawable_has_alpha (drawable->id))
 		{ /* RGB alpha, diff size */
@@ -496,7 +500,7 @@ do_optimizations(GRunModeType run_mode)
 		  srcptr  = rawframe;
 	      
 		  i = rawwidth*rawheight;
-		  while (--i)
+		  while (i--)
 		    {
 		      if (!(*(srcptr+1)))
 			{
@@ -515,7 +519,7 @@ do_optimizations(GRunModeType run_mode)
 		  srcptr  = rawframe;
 	      
 		  i = rawwidth*rawheight;
-		  while (--i)
+		  while (i--)
 		    {
 		      *(destptr++) = *(srcptr);
 		      *(destptr++) = 255;
