@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-30 19:47+0100\n"
-"PO-Revision-Date: 2003-12-30 22:11+0100\n"
+"POT-Creation-Date: 2003-12-31 19:54+0100\n"
+"PO-Revision-Date: 2003-12-31 22:57+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1565,7 +1565,7 @@ msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 #: app/core/gimpbrush.c:634 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1272 app/core/gimpitem.c:444
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:150
-#: app/tools/gimpvectortool.c:332
+#: app/tools/gimpvectortool.c:335
 msgid "Unnamed"
 msgstr "Beze jména"
 
@@ -1764,7 +1764,7 @@ msgstr "Invertovat"
 msgid "Offset Drawable"
 msgstr "Obrazovka posunu"
 
-#: app/core/gimpdrawable-stroke.c:324
+#: app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
 msgstr "Vykreslit"
 
@@ -2585,17 +2585,17 @@ msgid "Translation by"
 msgstr "Přeložili"
 
 #: app/gui/about-dialog.c:54
-msgid "<Translator: insert your name here>"
+msgid "<Translators: insert your names here, separated by newline>"
 msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmac <mitr@volny.cz>"
 
-#: app/gui/about-dialog.c:55
+#: app/gui/about-dialog.c:59
 msgid "Contributions by"
 msgstr "Přispěli"
 
-#: app/gui/about-dialog.c:148
+#: app/gui/about-dialog.c:154
 msgid "About The GIMP"
 msgstr "O programu GIMP"
 
@@ -6872,7 +6872,7 @@ msgid "Calibrate"
 msgstr "Kalibrovat"
 
 #: app/gui/vectors-commands.c:178 app/pdb/paths_cmds.c:1134
-#: app/tools/gimpvectortool.c:1779 app/widgets/gimpvectorstreeview.c:285
+#: app/tools/gimpvectortool.c:1815 app/widgets/gimpvectorstreeview.c:285
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
@@ -8638,123 +8638,119 @@ msgstr "Vytvořit a upravit cesty"
 msgid "/Tools/_Paths"
 msgstr "/Nástroje/_Cesty"
 
-#: app/tools/gimpvectortool.c:354
+#: app/tools/gimpvectortool.c:359
 msgid "Add Stroke"
 msgstr "Přidat vykreslení"
 
-#: app/tools/gimpvectortool.c:370
+#: app/tools/gimpvectortool.c:377
 msgid "Add Anchor"
 msgstr "Přidat ukotvení"
 
-#: app/tools/gimpvectortool.c:391
+#: app/tools/gimpvectortool.c:400
 msgid "Insert Anchor"
 msgstr "Vložit ukotvení"
 
-#: app/tools/gimpvectortool.c:418
+#: app/tools/gimpvectortool.c:429
 msgid "Drag Handle"
 msgstr "Táhnout řídicí bod"
 
-#: app/tools/gimpvectortool.c:440
+#: app/tools/gimpvectortool.c:458
 msgid "Drag Anchor"
 msgstr "Táhnout ukotvení"
 
-#: app/tools/gimpvectortool.c:453
+#: app/tools/gimpvectortool.c:475
 msgid "Drag Anchors"
 msgstr "Táhnout ukotvení"
 
-#: app/tools/gimpvectortool.c:472
+#: app/tools/gimpvectortool.c:495
 msgid "Drag Curve"
 msgstr "Táhnout křivku"
 
-#: app/tools/gimpvectortool.c:494
+#: app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "Spojit vykreslení"
 
-#: app/tools/gimpvectortool.c:530
+#: app/tools/gimpvectortool.c:553
+msgid "Drag Path"
+msgstr "Přetáhnout cestu"
+
+#: app/tools/gimpvectortool.c:563
 msgid "Convert Edge"
 msgstr "Převést hranu"
 
-#: app/tools/gimpvectortool.c:559
+#: app/tools/gimpvectortool.c:593
 msgid "Delete Anchor"
 msgstr "Odstranit ukotvení"
 
-#: app/tools/gimpvectortool.c:580
+#: app/tools/gimpvectortool.c:615
 msgid "Delete Segment"
 msgstr "Odstranit segment"
 
-#: app/tools/gimpvectortool.c:767
+#: app/tools/gimpvectortool.c:808
 msgid "Move Anchors"
 msgstr "Přesunout ukotvení"
 
-#: app/tools/gimpvectortool.c:1114
-msgid "Click to pick Path to edit"
-msgstr "Kliknutím vyberete cestu, kterou upravit"
+#: app/tools/gimpvectortool.c:1154
+msgid "Click to pick path to edit."
+msgstr "Kliknutím vyberete cestu, kterou upravit."
 
-#: app/tools/gimpvectortool.c:1117
-msgid "Click to create a new Path"
-msgstr "Kliknutím vytvoříte novou cestu"
+#: app/tools/gimpvectortool.c:1157
+msgid "Click to create a new path."
+msgstr "Kliknutím vytvoříte novou cestu."
 
-#: app/tools/gimpvectortool.c:1120
-msgid "Click to create a new component of the path"
-msgstr "Kliknutím vytvoříte novou komponentu cesty"
+#: app/tools/gimpvectortool.c:1160
+msgid "Click to create a new component of the path."
+msgstr "Kliknutím vytvoříte novou komponentu cesty."
 
-#: app/tools/gimpvectortool.c:1123
-msgid "Click to create a new anchor, use SHIFT to create a new component."
-msgstr ""
-"Kliknutím vytvoříte nové ukotvení, použijte SHIFT pro vytvoření nové "
-"komponenty."
+#: app/tools/gimpvectortool.c:1163
+msgid "Click to create a new anchor. (try SHIFT)"
+msgstr "Kliknutím vytvoříte nové ukotvení. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1127
-msgid "Click-Drag to move the anchor around"
-msgstr "Tažením s kliknutím přesunete ukotvení"
+#: app/tools/gimpvectortool.c:1166
+msgid "Click-Drag to move the anchor around."
+msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: app/tools/gimpvectortool.c:1130
-msgid "Click-Drag to move the anchors around"
-msgstr "Tažením s kliknutím přesunete ukotvení"
+#: app/tools/gimpvectortool.c:1169
+msgid "Click-Drag to move the anchors around."
+msgstr "Tažením s kliknutím přesunete ukotvení."
 
-#: app/tools/gimpvectortool.c:1133
-msgid ""
-"Click-Drag to move the handle around. SHIFT moves the opposite handle "
-"symmetrically."
-msgstr ""
-"Tažením s kliknutím přesunete řídicí bod. SHIFT symetricky přesouvá opačný "
-"řídicí bod."
+#: app/tools/gimpvectortool.c:1172
+msgid "Click-Drag to move the handle around. (try SHIFT)"
+msgstr "Tažením s kliknutím přesunete řídicí bod. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1137
-msgid ""
-"Click-Drag to change the shape of the curve. SHIFT moves the opposite "
-"handles of the endpoints symmetrically."
-msgstr ""
-"Tažením s kliknutím změníte tvar křivky. SHIFT symetricky přesouvá opačné "
-"řídicí body koncových bodů."
+#: app/tools/gimpvectortool.c:1175
+msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
+msgstr "Tažením s kliknutím změníte tvar křivky. (SHIFT: symetricky)"
 
-#: app/tools/gimpvectortool.c:1142 app/tools/gimpvectortool.c:1146
-msgid ""
-"Click-Drag to move the component around. SHIFT moves the complete path "
-"around."
-msgstr "Tažením s kliknutím přesunete komponentu. SHIFT posouvá celou cestu."
+#: app/tools/gimpvectortool.c:1179
+msgid "Click-Drag to move the component around. (try SHIFT)"
+msgstr "Tažením s kliknutím přesunete komponentu. (zkuste SHIFT)"
 
-#: app/tools/gimpvectortool.c:1150
-msgid "Click to insert an anchor on the path."
-msgstr "Kliknutím vložíte ukotvení na cestu."
+#: app/tools/gimpvectortool.c:1183
+msgid "Click-Drag to move the path around."
+msgstr "Tažením s kliknutím přesunete cestu."
 
-#: app/tools/gimpvectortool.c:1153
+#: app/tools/gimpvectortool.c:1186
+msgid "Click to insert an anchor on the path. (try SHIFT)"
+msgstr "Kliknutím vložíte ukotvení na cestu. (zkuste SHIFT)"
+
+#: app/tools/gimpvectortool.c:1189
 msgid "Click to delete this anchor."
 msgstr "Kliknutím odstraníte toto ukotvení."
 
-#: app/tools/gimpvectortool.c:1156
+#: app/tools/gimpvectortool.c:1192
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Kliknutím spojíte toto ukotvení s vybraným koncovým bodem."
 
-#: app/tools/gimpvectortool.c:1160
+#: app/tools/gimpvectortool.c:1196
 msgid "Click to open up the path."
 msgstr "Kliknutím otevřete cestu."
 
-#: app/tools/gimpvectortool.c:1163
+#: app/tools/gimpvectortool.c:1199
 msgid "Click to make this node angular."
 msgstr "Kliknutím změníte tento uzel na úhlový."
 
-#: app/tools/gimpvectortool.c:1804
+#: app/tools/gimpvectortool.c:1840
 msgid "There is no active layer or channel to stroke to"
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat"
 
