@@ -1019,6 +1019,14 @@ prefs_memsize_entry_add (GObject      *config,
 }
 
 static void
+prefs_canvas_padding_color_changed (GtkWidget *button,
+                                    GtkWidget *combo)
+{
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 GIMP_CANVAS_PADDING_MODE_CUSTOM);
+}
+
+static void
 prefs_display_options_frame_add (Gimp         *gimp,
                                  GObject      *object,
                                  const gchar  *label,
@@ -1028,6 +1036,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
   GtkWidget *hbox;
   GtkWidget *checks_vbox;
   GtkWidget *table;
+  GtkWidget *combo;
   GtkWidget *button;
 
   vbox = prefs_frame_new (label, parent, FALSE);
@@ -1072,9 +1081,10 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox));
 
-  prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
-                            _("Canvas _padding mode:"), GTK_TABLE (table), 0,
-                            NULL);
+  combo = prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
+                                    _("Canvas _padding mode:"),
+                                    GTK_TABLE (table), 0,
+                                    NULL);
 
   button = prefs_color_button_add (object, "padding-color",
                                    _("Custom p_adding color:"),
@@ -1082,6 +1092,10 @@ prefs_display_options_frame_add (Gimp         *gimp,
                                    GTK_TABLE (table), 1, NULL);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
+
+  g_signal_connect (button, "color_changed",
+                    G_CALLBACK (prefs_canvas_padding_color_changed),
+                    gtk_bin_get_child (GTK_BIN (combo)));
 }
 
 static void

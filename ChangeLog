@@ -1,3 +1,8 @@
+2004-11-10  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: set the padding-mode to custom
+	color if a custom color is choosen. Fixes bug #157844.
+
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/dbbrowser/plugin-browser.c (browser_dialog_new): fixed
