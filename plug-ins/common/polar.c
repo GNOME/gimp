@@ -64,11 +64,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -85,7 +80,6 @@
 #define PLUG_IN_NAME    "plug_in_polar_coords"
 #define PLUG_IN_VERSION "July 1997, 0.5"
 
-#define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH   60
 
@@ -102,14 +96,10 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *preview;
-  guchar    *check_row_0;
-  guchar    *check_row_1;
-  guchar    *image;
-  guchar    *dimage;
-
   gboolean   run;
 } polarize_interface_t;
+
+static GimpFixMePreview *preview;
 
 /***** Prototypes *****/
 
@@ -121,10 +111,8 @@ static void run   (const gchar      *name,
 		   GimpParam       **return_vals);
 
 static void   polarize(void);
-static int    calc_undistorted_coords(double wx, double wy,
-				      double *x, double *y);
-
-static void build_preview_source_image(void);
+static gboolean calc_undistorted_coords(double wx, double wy,
+					double *x, double *y);
 
 static gint polarize_dialog       (void);
 static void dialog_update_preview (void);
@@ -155,11 +143,6 @@ static polarize_vals_t pcvals =
 
 static polarize_interface_t pcint =
 {
-  NULL,  /* preview */
-  NULL,  /* check_row_0 */
-  NULL,  /* check_row_1 */
-  NULL,  /* image */
-  NULL,  /* dimage */
   FALSE  /* run */
 };
 
@@ -168,7 +151,6 @@ static GimpDrawable *drawable;
 static gint img_width, img_height, img_bpp, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
-static gint preview_width, preview_height;
 
 static double cen_x, cen_y;
 static double scale_x, scale_y;
@@ -218,7 +200,6 @@ run (const gchar      *name,
   GimpRunMode run_mode;
   GimpPDBStatusType  status;
   double       xhsiz, yhsiz;
-  int          pwidth, pheight;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -268,22 +249,6 @@ run (const gchar      *name,
       scale_x = 1.0;
       scale_y = 1.0;
     }
-
-  /* Calculate preview size */
-
-  if (sel_width > sel_height)
-    {
-      pwidth  = MIN (sel_width, PREVIEW_SIZE);
-      pheight = sel_height * pwidth / sel_width;
-    }
-  else
-    {
-      pheight = MIN (sel_height, PREVIEW_SIZE);
-      pwidth  = sel_width * pheight / sel_height;
-    }
-
-  preview_width  = MAX (pwidth, 2); /* Min size is 2 */
-  preview_height = MAX (pheight, 2);
 
   /* See how we will run */
 
@@ -463,13 +428,13 @@ polarize (void)
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static gint
+static gboolean
 calc_undistorted_coords (gdouble  wx,
 			 gdouble  wy,
 			 gdouble *x,
 			 gdouble *y)
 {
-  gint    inside;
+  gboolean inside;
   gdouble phi, phi2;
   gdouble xx, xm, ym, yy;
   gint    xdiff, ydiff;
@@ -697,86 +662,6 @@ calc_undistorted_coords (gdouble  wx,
   return inside;
 }
 
-static void
-build_preview_source_image (void)
-{
-  gdouble          left, right, bottom, top;
-  gdouble          px, py;
-  gdouble          dx, dy;
-  gint             x, y;
-  guchar          *p;
-  guchar           pixel[4];
-  GimpPixelFetcher *pf;
-
-  pcint.check_row_0 = g_new (guchar, preview_width);
-  pcint.check_row_1 = g_new (guchar, preview_width);
-  pcint.image       = g_new (guchar, preview_width * preview_height * 4);
-  pcint.dimage      = g_new (guchar, preview_width * preview_height * 3);
-
-  left   = sel_x1;
-  right  = sel_x2 - 1;
-  bottom = sel_y2 - 1;
-  top    = sel_y1;
-
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
-
-  py = top;
-
-  pf = gimp_pixel_fetcher_new(drawable);
-
-  p = pcint.image;
-
-  for (y = 0; y < preview_height; y++)
-    {
-      px = left;
-
-      for (x = 0; x < preview_width; x++)
-	{
-	  /* Checks */
-
-	  if ((x / GIMP_CHECK_SIZE) & 1)
-	    {
-	      pcint.check_row_0[x] = GIMP_CHECK_DARK * 255;
-	      pcint.check_row_1[x] = GIMP_CHECK_LIGHT * 255;
-	    }
-	  else
-	    {
-	      pcint.check_row_0[x] = GIMP_CHECK_LIGHT * 255;
-	      pcint.check_row_1[x] = GIMP_CHECK_DARK * 255;
-	    }
-
-	  /* Thumbnail image */
-
-	  gimp_pixel_fetcher_get_pixel (pf, (int) px, (int) py, pixel);
-
-	  if (img_bpp < 3)
-	    {
-	      if (img_has_alpha)
-		pixel[3] = pixel[1];
-	      else
-		pixel[3] = 255;
-
-	      pixel[1] = pixel[0];
-	      pixel[2] = pixel[0];
-	    }
-	  else if (!img_has_alpha)
-	    pixel[3] = 255;
-
-	  *p++ = pixel[0];
-	  *p++ = pixel[1];
-	  *p++ = pixel[2];
-	  *p++ = pixel[3];
-
-	  px += dx;
-	}
-
-      py += dy;
-    }
-
-  gimp_pixel_fetcher_destroy (pf);
-}
-
 static gint
 polarize_dialog (void)
 {
@@ -792,8 +677,6 @@ polarize_dialog (void)
   GtkObject *adj;
 
   gimp_ui_init ("polar", TRUE);
-
-  build_preview_source_image ();
 
   dialog = gimp_dialog_new (_("Polarize"), "polar",
 			    gimp_standard_help_func, "filters/polar.html",
@@ -832,10 +715,9 @@ polarize_dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), pframe);
   gtk_widget_show (pframe);
 
-  pcint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (pcint.preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), pcint.preview);
-  gtk_widget_show (pcint.preview);
+  preview = gimp_fixme_preview_new (drawable, FALSE);
+  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
+  gtk_widget_show (preview->widget);
 
   /* Controls */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -929,10 +811,7 @@ polarize_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  g_free (pcint.check_row_0);
-  g_free (pcint.check_row_1);
-  g_free (pcint.image);
-  g_free (pcint.dimage);
+  gimp_fixme_preview_free (preview);      
 
   return pcint.run;
 }
@@ -946,11 +825,11 @@ dialog_update_preview (void)
   gdouble  cx = 0.0, cy = 0.0;
   gint     ix, iy;
   gint     x, y;
+  gint	   bpp;
   gdouble  scale_x, scale_y;
-  guchar  *p_ul, *i, *p;
-  guchar  *check_ul;
-  gint     check;
+  guchar  *p_ul, *i;
   guchar   outside[4];
+  guchar  *buffer;
 
   gimp_get_bg_guchar (drawable, TRUE, outside);
 
@@ -959,27 +838,24 @@ dialog_update_preview (void)
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
+  dx = (right - left) / (preview->width - 1);
+  dy = (bottom - top) / (preview->height - 1);
 
-  scale_x = (double) preview_width / (right - left + 1);
-  scale_y = (double) preview_height / (bottom - top + 1);
+  scale_x = (double) preview->width / (right - left + 1);
+  scale_y = (double) preview->height / (bottom - top + 1);
+
+  bpp = preview->bpp;
 
   py = top;
 
-  p_ul = pcint.dimage;
-/* p_lr = pcint.dimage + 3 * (preview_width * preview_height - 1);*/
+  buffer = g_new (guchar, preview->rowstride);
 
-  for (y = 0; y < preview_height; y++)
+  for (y = 0; y < preview->height; y++)
     {
       px = left;
+      p_ul = buffer;
 
-      if ((y / GIMP_CHECK_SIZE) & 1)
-	check_ul = pcint.check_row_0;
-      else
-	check_ul = pcint.check_row_1;
-
-      for (x = 0; x < preview_width; x++)
+      for (x = 0; x < preview->width; x++)
 	{
 	  calc_undistorted_coords (px, py, &cx, &cy);
 
@@ -989,36 +865,30 @@ dialog_update_preview (void)
 	  ix = (int) (cx + 0.5);
 	  iy = (int) (cy + 0.5);
 
-	  check = check_ul[x];
-
-	  if ((ix >= 0) && (ix < preview_width) &&
-	      (iy >= 0) && (iy < preview_height))
-	    i = pcint.image + 4 * (preview_width * iy + ix);
+	  if ((ix >= 0) && (ix < preview->width) &&
+	      (iy >= 0) && (iy < preview->height))
+	    i = preview->cache + preview->rowstride * iy + bpp * ix;
 	  else
 	    i = outside;
 
-	  p_ul[0] = check + ((i[0] - check) * i[3]) / 255;
-	  p_ul[1] = check + ((i[1] - check) * i[3]) / 255;
-	  p_ul[2] = check + ((i[2] - check) * i[3]) / 255;
+	  p_ul[0] = i[0];
+	  p_ul[1] = i[1];
+	  p_ul[2] = i[2];
+	  p_ul[3] = i[3];
 
-	  p_ul += 3;
+	  p_ul += bpp;
 
 	  px += dx;
 	}
 
+      gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
+
       py += dy;
     }
 
-  p = pcint.dimage;
+  g_free (buffer);
 
-  for (y = 0; y < img_height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (pcint.preview), p, 0, y, preview_width);
-
-      p += preview_width * 3;
-    }
-
-  gtk_widget_queue_draw (pcint.preview);
+  gtk_widget_queue_draw (preview->widget);
 }
 
 static void

@@ -393,8 +393,6 @@ static void
 make_help_menu(GtkWidget *menu_bar)
 {
    GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
-   gtk_menu_item_set_right_justified(
-      GTK_MENU_ITEM(gtk_menu_get_attach_widget(GTK_MENU(help_menu))), TRUE);
    make_item_with_label(help_menu, _("About ImageMap..."), menu_command,
 			&_menu.cmd_about);
 }

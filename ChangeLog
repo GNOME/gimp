@@ -1,3 +1,12 @@
+2003-07-24  Maurits Rijk <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmiscui.c (gimp_fixme_preview_do_row): minor optimisations
+
+	* plug-ins/common/polar.c: undeprecated gtk stuff + minor clean-up
+
+	* plug-ins/imagemap/imap_menu.c (make_help_menu): no more right
+	alignment for Help menu (fixes #118081).
+	
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_internal): added a static
@@ -20,6 +29,7 @@
 	Selection" and added "Edit/Stroke Active Path". Added some missing
 	mnemonics to the "Edit" menu.
 
+>>>>>>> 1.6017
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_create_vectors): set

@@ -205,25 +205,25 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
   guchar *p0 = preview->even;
   guchar *p1 = preview->odd;
   gint    bpp = preview->bpp;
-  gdouble r, g, b, a;
-  gdouble c0, c1;
+  gint r, g, b, a;
+  gint c0, c1;
 
   for (x = 0; x < width; x++) 
     {
       switch (bpp)
         {
         case 4:
-	  r = ((gdouble) src[x*4 + 0]) / 255.0;
-	  g = ((gdouble) src[x*4 + 1]) / 255.0;
-	  b = ((gdouble) src[x*4 + 2]) / 255.0;
-	  a = ((gdouble) src[x*4 + 3]) / 255.0;
+	  r = src[x * 4 + 0];
+	  g = src[x * 4 + 1];
+	  b = src[x * 4 + 2];
+	  a = src[x * 4 + 3];
           break;
 
         case 3:
-	  r = ((gdouble) src[x*3 + 0]) / 255.0;
-	  g = ((gdouble) src[x*3 + 1]) / 255.0;
-	  b = ((gdouble) src[x*3 + 2]) / 255.0;
-	  a = 1.0;
+	  r = src[x*3 + 0];
+	  g = src[x*3 + 1];
+	  b = src[x*3 + 2];
+	  a = 255;
           break;
 
         default:
@@ -231,41 +231,40 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 	    {
 	      gint index = MIN (src[x*bpp], preview->ncolors - 1);
 	      
-	      r = ((gdouble) preview->cmap[index * 3 + 0]) / 255.0;
-	      g = ((gdouble) preview->cmap[index * 3 + 1]) / 255.0;
-	      b = ((gdouble) preview->cmap[index * 3 + 2]) / 255.0;
+	      r = preview->cmap[index * 3 + 0];
+	      g = preview->cmap[index * 3 + 1];
+	      b = preview->cmap[index * 3 + 2];
 	    }
 	  else
 	    {
-	      r = ((gdouble) src[x*bpp + 0]) / 255.0;
-	      g = b = r;
+	      g = b = r = src[x * bpp + 0];
 	    }
 	  
 	  if (bpp == 2)
-	    a = ((gdouble) src[x*2 + 1]) / 255.0;
+	    a = src[x*2 + 1];
 	  else
-	    a = 1.0;
+	    a = 255;
           break;
         }
       
       if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	{
-	  c0 = GIMP_CHECK_LIGHT;
-	  c1 = GIMP_CHECK_DARK;
+	  c0 = GIMP_CHECK_LIGHT * 255;
+	  c1 = GIMP_CHECK_DARK * 255;
 	} 
       else 
 	{
-	  c0 = GIMP_CHECK_DARK;
-	  c1 = GIMP_CHECK_LIGHT;
+	  c0 = GIMP_CHECK_DARK * 255;
+	  c1 = GIMP_CHECK_LIGHT * 255;
 	}
       
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p0++ = c0 + (r - c0) * a / 255;
+      *p0++ = c0 + (g - c0) * a / 255;
+      *p0++ = c0 + (b - c0) * a / 255;
       
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0; 
+      *p1++ = c1 + (r - c1) * a / 255;
+      *p1++ = c1 + (g - c1) * a / 255;
+      *p1++ = c1 + (b - c1) * a / 255; 
     }
 
   if ((row / GIMP_CHECK_SIZE_SM) & 1)
