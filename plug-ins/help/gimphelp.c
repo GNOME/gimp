@@ -81,6 +81,8 @@ static void          domain_error_set_message (GError      **error,
                                                const gchar  *format,
                                                const gchar  *filename);
 
+static gchar         help_filename_from_uri   (const gchar  *uri);
+
 
 /*  private variables  */
 
@@ -392,7 +394,7 @@ domain_locale_parse (HelpDomain  *domain,
     }
 
   if (! domain->help_root)
-    domain->help_root = g_filename_from_uri (domain->help_uri, NULL, NULL);
+    domain->help_root = help_filename_from_uri (domain->help_uri);
 
   if (! domain->help_root)
     {
@@ -689,4 +691,39 @@ domain_error_set_message (GError      **error,
       g_free ((*error)->message);
       (*error)->message = msg;
     }
+}
+
+static gchar
+help_filename_from_uri (const gchar *uri)
+{
+  gchar *filename;
+  gchar *hostname;
+
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  filename = g_filename_from_uri (uri, &hostname, NULL);
+
+  if (!filename)
+    return NULL;
+
+  if (hostname)
+    {
+      /*  we have a file: URI with a hostname                           */
+#ifdef G_OS_WIN32
+      /*  on Win32, create a valid UNC path and use it as the filename  */
+
+      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
+
+      g_free (filename);
+      filename = tmp;
+#else
+      /*  otherwise return NULL, caller should use URI then             */
+      g_free (filename);
+      filename = NULL;
+#endif
+
+      g_free (hostname);
+    }
+
+  return filename;
 }

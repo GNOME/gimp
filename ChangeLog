@@ -1,5 +1,11 @@
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/domain.c
+	* plug-ins/helpbrowser/dialog.c: same trick here; should allow to
+	work with help files installed in an UNC path.
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/file-open-dialog.c
 	* app/dialogs/file-save-dialog.c
 	* app/widgets/gimpthumbbox.c: use file_utils_filename_from_uri()
