@@ -695,46 +695,52 @@ gimp_preview_area_blend (GimpPreviewArea *area,
             {
               guchar inter[4];
 
-              inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * opacity) >> 8;
-
-              if (inter[3])
+              if (s1[3] == s2[3])
                 {
-                  for (i=0 ; i<3 ; i++)
-                    {
-                      gushort a = s1[i] * s1[3];
-                      gushort b = s2[i] * s2[3];
-
-                      inter[i] =
-                        (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
-                    }
+                  inter[3] = s1[3];
+                  inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
+                  inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+                  inter[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * opacity) >> 8;
                 }
               else
                 {
-                  inter[0] = inter[1] = inter[2] = 0;
-                }
+                  inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * opacity) >> 8;
 
-              switch (inter[3])
-                {
-                case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
-                  break;
+                  if (inter[3])
+                    {
+                      for (i=0 ; i<3 ; i++)
+                        {
+                          gushort a = s1[i] * s1[3];
+                          gushort b = s2[i] * s2[3];
 
-                case 255:
-                  d[0] = inter[0];
-                  d[1] = inter[1];
-                  d[2] = inter[2];
-                  break;
+                          inter[i] =
+                            (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
+                        }
+                    }
 
-                default:
-                  {
-                    register guint alpha = inter[3] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                  switch (inter[3])
+                    {
+                    case 0:
+                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      break;
 
-                    d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                    d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                    d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
-                  }
-                  break;
+                    case 255:
+                      d[0] = inter[0];
+                      d[1] = inter[1];
+                      d[2] = inter[2];
+                      break;
+
+                    default:
+                      {
+                        register guint alpha = inter[3] + 1;
+                        register guint check = CHECK_COLOR (area, row, col);
+
+                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      }
+                      break;
+                    }
                 }
             }
 
@@ -774,18 +780,22 @@ gimp_preview_area_blend (GimpPreviewArea *area,
             {
               guchar inter[2];
 
-              inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
-
-              if (inter[1])
+              if (s1[1] == s2[1])
                 {
-                  gushort a = s1[0] * s1[1];
-                  gushort b = s2[0] * s2[1];
-
-                  inter[0] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[1];
+                  inter[1] = s1[1];
+                  inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * opacity) >> 8;
                 }
               else
                 {
-                  inter[0] = 0;
+                  inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+
+                  if (inter[1])
+                    {
+                      gushort a = s1[0] * s1[1];
+                      gushort b = s2[0] * s2[1];
+
+                      inter[0] = (((a << 8) + (b  - a) * opacity) >> 8) / inter[1];
+                    }
                 }
 
               switch (inter[1])
@@ -854,22 +864,28 @@ gimp_preview_area_blend (GimpPreviewArea *area,
               const guchar *cmap2  = area->cmap + 3 * s2[0];
               guchar        inter[4];
 
-              inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
-
-              if (inter[3])
+              if (s1[1] == s2[1])
                 {
-                  for (i = 0 ; i < 3 ; i++)
-                    {
-                      gushort a = cmap1[i] * s1[1];
-                      gushort b = cmap2[i] * s2[1];
-
-                      inter[i] =
-                        (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
-                    }
+                  inter[3] = s1[1];
+                  inter[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * opacity) >> 8;
+                  inter[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * opacity) >> 8;
+                  inter[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * opacity) >> 8;
                 }
               else
                 {
-                  inter[0] = inter[1] = inter[2] = 0;
+                  inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
+
+                  if (inter[3])
+                    {
+                      for (i = 0 ; i < 3 ; i++)
+                        {
+                          gushort a = cmap1[i] * s1[1];
+                          gushort b = cmap2[i] * s2[1];
+
+                          inter[i] =
+                            (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
+                        }
+                    }
                 }
 
               switch (inter[3])
@@ -1103,43 +1119,53 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   {
                     guchar inter[4];
 
-                    inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * m[0]) >> 8;
-
-                    if (inter[3])
+                    if (s1[3] == s2[3])
                       {
-                        for (i=0 ; i<3 ; i++)
+                        inter[3] = s1[3];
+                        inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
+                        inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+                        inter[2] = ((s1[2] << 8) + (s2[2] - s1[2]) * m[0]) >> 8;
+                      }
+                    else
+                      {
+                        inter[3] = ((s1[3] << 8) + (s2[3] - s1[3]) * m[0]) >> 8;
+
+                        if (inter[3])
                           {
-                            gushort a = s1[i] * s1[3];
-                            gushort b = s2[i] * s2[3];
+                            for (i=0 ; i<3 ; i++)
+                             {
+                               gushort a = s1[i] * s1[3];
+                               gushort b = s2[i] * s2[3];
 
-                            inter[i] =
-                              (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
-                          }
+                               inter[i] =
+                                 (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
+                             }
+                         }
                       }
 
-                  switch (inter[3])
-                    {
-                    case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
-                      break;
-
-                    case 255:
-                      d[0] = inter[0];
-                      d[1] = inter[1];
-                      d[2] = inter[2];
-                      break;
-
-                    default:
+                    switch (inter[3])
                       {
-                        register guint alpha = inter[3] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                      case 0:
+                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        break;
 
-                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      case 255:
+                        d[0] = inter[0];
+                        d[1] = inter[1];
+                        d[2] = inter[2];
+                        break;
+
+                      default:
+                        {
+                          register guint alpha = inter[3] + 1;
+                          register guint check = CHECK_COLOR (area, row, col);
+
+                          d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                          d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                          d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                        }
+                        break;
                       }
-                      break;
-                    }
                   }
                   break;
                 }
@@ -1234,41 +1260,45 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   {
                     guchar inter[2];
 
-                    inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
-
-                    if (inter[1])
+                    if (s1[1] == s2[1])
                       {
-                        gushort a = s1[0] * s1[1];
-                        gushort b = s2[0] * s2[1];
-
-                        inter[0] =
-                          (((a << 8) + (b  - a) * m[0]) >> 8) / inter[1];
+                        inter[1] = s1[1];
+                        inter[0] = ((s1[0] << 8) + (s2[0] - s1[0]) * m[0]) >> 8;
                       }
                     else
                       {
-                        inter[0] = 0;
+                        inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+
+                        if (inter[1])
+                          {
+                            gushort a = s1[0] * s1[1];
+                            gushort b = s2[0] * s2[1];
+
+                            inter[0] =
+                              (((a << 8) + (b  - a) * m[0]) >> 8) / inter[1];
+                          }
                       }
 
-                  switch (inter[1])
-                    {
-                    case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
-                      break;
-
-                    case 255:
-                      d[0] = d[1] = d[2] = inter[0];
-                      break;
-
-                    default:
+                    switch (inter[1])
                       {
-                        register guint alpha = inter[1] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                      case 0:
+                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        break;
 
-                        d[0] = d[1] = d[2] =
-                          ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                      case 255:
+                        d[0] = d[1] = d[2] = inter[0];
+                        break;
+
+                      default:
+                        {
+                          register guint alpha = inter[1] + 1;
+                          register guint check = CHECK_COLOR (area, row, col);
+
+                          d[0] = d[1] = d[2] =
+                            ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                        }
+                        break;
                       }
-                      break;
-                    }
                   }
                   break;
                 }
@@ -1379,47 +1409,53 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   {
                     guchar inter[4];
 
-                    inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
-
-                    if (inter[3])
+                    if (s1[1] == s2[1])
                       {
-                        for (i = 0 ; i < 3 ; i++)
-                          {
-                            gushort a = cmap1[i] * s1[1];
-                            gushort b = cmap2[i] * s2[1];
-
-                            inter[i] =
-                              (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
-                          }
+                        inter[3] = s1[1];
+                        inter[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * m[0]) >> 8;
+                        inter[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * m[0]) >> 8;
+                        inter[2] = ((cmap1[2] << 8) + (cmap2[2] - cmap1[2]) * m[0]) >> 8;
                       }
                     else
                       {
-                        inter[0] = inter[1] = inter[2] = 0;
+                        inter[3] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
+
+                        if (inter[3])
+                          {
+                            for (i = 0 ; i < 3 ; i++)
+                              {
+                                gushort a = cmap1[i] * s1[1];
+                                gushort b = cmap2[i] * s2[1];
+
+                                inter[i] =
+                                  (((a << 8) + (b  - a) * m[0]) >> 8) / inter[3];
+                              }
+                          }
                       }
 
-                  switch (inter[3])
-                    {
-                    case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
-                      break;
-
-                    case 255:
-                      d[0] = inter[0];
-                      d[1] = inter[1];
-                      d[2] = inter[2];
-                      break;
-
-                    default:
+                    switch (inter[3])
                       {
-                        register guint alpha = inter[3] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                      case 0:
+                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        break;
 
-                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                      case 255:
+                        d[0] = inter[0];
+                        d[1] = inter[1];
+                        d[2] = inter[2];
+                        break;
+
+                      default:
+                        {
+                          register guint alpha = inter[3] + 1;
+                          register guint check = CHECK_COLOR (area, row, col);
+
+                          d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                          d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                          d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                        }
+                        break;
                       }
-                      break;
-                    }
                   }
                   break;
                 }

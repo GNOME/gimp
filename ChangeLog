@@ -1,3 +1,9 @@
+2004-09-09  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_blend)
+	(gimp_preview_area_mask): optimized the case where both buffers have
+	the same alpha for a given pixel.
+
 2004-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrendererbrush.c
