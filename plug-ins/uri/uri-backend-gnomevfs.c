@@ -280,10 +280,10 @@ copy_uri (const gchar  *src_uri,
               message = g_strdup_printf (copied_format_str, memsize);
               g_free (memsize);
 
-              gimp_progress_init (message);
-              g_free (message);
-
+              gimp_progress_set_text (message);
               gimp_progress_pulse ();
+
+              g_free (message);
             }
 
           last_time = now;

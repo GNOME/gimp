@@ -1,5 +1,9 @@
 2005-02-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/uri/uri-backend-gnomevfs.c: use gimp_progress_set_text().
+
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-progress.[ch]
 	* tools/pdbgen/pdb/progress.pdb: added new PDB function
 	gimp_progress_set_text().
