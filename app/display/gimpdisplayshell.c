@@ -720,6 +720,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->canvas = gimp_canvas_new ();
 
+  shell->select = gimp_display_shell_selection_new (shell);
+
   /*  the horizontal ruler  */
   shell->hrule = gtk_hruler_new ();
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
@@ -1245,11 +1247,10 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                GimpGuide        *guide,
                                gboolean          active)
 {
-  GimpCanvasStyle  style = 0;
-  gint             x1, x2;
-  gint             y1, y2;
-  gint             x, y;
-  gint             w, h;
+  gint  x1, x2;
+  gint  y1, y2;
+  gint  x, y;
+  gint  w, h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (guide != NULL);
@@ -1276,27 +1277,22 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
       gimp_display_shell_transform_xy (shell,
                                        0, guide->position, &x, &y, FALSE);
       y1 = y2 = y;
-
-      style = (active ?
-               GIMP_CANVAS_STYLE_HGUIDE_ACTIVE :
-               GIMP_CANVAS_STYLE_HGUIDE_NORMAL);
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell,
                                        guide->position, 0, &x, &y, FALSE);
       x1 = x2 = x;
-
-      style = (active ?
-               GIMP_CANVAS_STYLE_VGUIDE_ACTIVE :
-               GIMP_CANVAS_STYLE_VGUIDE_NORMAL);
       break;
 
     case GIMP_ORIENTATION_UNKNOWN:
       return;
     }
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style, x1, y1, x2, y2);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                         (active ?
+                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
+                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x1, y1, x2, y2);
 }
 
 void

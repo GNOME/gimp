@@ -46,7 +46,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-filter-dialog.h	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
-	gimpdisplayshell-marching-ants.h	\
 	gimpdisplayshell-render.c		\
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-scale.c		\

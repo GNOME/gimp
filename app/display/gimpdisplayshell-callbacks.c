@@ -267,12 +267,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gimp_display_shell_update_title (shell);
 
-  /*  create the selection object  */
-  shell->select = gimp_display_shell_selection_create (canvas->window,
-                                                       shell,
-                                                       gdisp->gimage->height,
-                                                       gdisp->gimage->width);
-
   shell->disp_width  = canvas->allocation.width;
   shell->disp_height = canvas->allocation.height;
 

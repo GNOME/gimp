@@ -29,20 +29,99 @@
 
 /*  local function prototypes  */
 
-static void    gimp_canvas_class_init    (GimpCanvasClass     *klass);
-static void    gimp_canvas_init          (GimpCanvas          *gdisp);
-static void    gimp_canvas_realize       (GtkWidget           *widget);
-static void    gimp_canvas_unrealize     (GtkWidget           *widget);
-
-static GdkGC * gimp_canvas_gc_new        (GtkWidget           *widget,
-                                          GimpCanvasStyle      style);
-static GdkGC * gimp_canvas_guides_gc_new (GtkWidget           *widget,
-                                          GimpOrientationType  orientation,
-                                          GdkColor            *fg,
-                                          GdkColor            *bg);
+static void     gimp_canvas_class_init (GimpCanvasClass  *klass);
+static void     gimp_canvas_init       (GimpCanvas       *gdisp);
+static void     gimp_canvas_realize    (GtkWidget        *widget);
+static void     gimp_canvas_unrealize  (GtkWidget        *widget);
+static GdkGC  * gimp_canvas_gc_new     (GimpCanvas       *canvas,
+                                        GimpCanvasStyle   style);
 
 
 static GtkDrawingAreaClass *parent_class = NULL;
+
+static const guchar stipples[GIMP_CANVAS_NUM_STIPPLES][8] =
+{
+  {
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+  },
+  {
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+  },
+  {
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+  },
+  {
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+  },
+  {
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+  },
+  {
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+  },
+  {
+    0x3C,    /*  --####--  */
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+  },
+  {
+    0x78,    /*  -####---  */
+    0xF0,    /*  ####----  */
+    0xE1,    /*  ###----#  */
+    0xC3,    /*  ##----##  */
+    0x87,    /*  #----###  */
+    0x0F,    /*  ----####  */
+    0x1E,    /*  ---####-  */
+    0x3C,    /*  --####--  */
+  },
+};
 
 
 GType
@@ -91,6 +170,9 @@ gimp_canvas_init (GimpCanvas *canvas)
 
   for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
     canvas->gc[i] = NULL;
+
+  for (i = 0; i < GIMP_CANVAS_NUM_STIPPLES; i++)
+    canvas->stipple[i] = NULL;
 }
 
 static void
@@ -100,8 +182,9 @@ gimp_canvas_realize (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
-  canvas->gc[GIMP_CANVAS_STYLE_RENDER] =
-    gimp_canvas_gc_new (widget, GIMP_CANVAS_STYLE_RENDER);
+  canvas->stipple[0] =
+    gdk_bitmap_create_from_data (widget->window,
+                                 (const gchar *) stipples[0], 8, 8);
 }
 
 static void
@@ -119,27 +202,119 @@ gimp_canvas_unrealize (GtkWidget *widget)
         }
     }
 
+  for (i = 0; i < GIMP_CANVAS_NUM_STIPPLES; i++)
+    {
+      if (canvas->stipple[i])
+        {
+          g_object_unref (canvas->stipple[i]);
+          canvas->stipple[i] = NULL;
+        }
+    }
+
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static GdkGC *
-gimp_canvas_gc_new (GtkWidget       *widget,
+gimp_canvas_gc_new (GimpCanvas      *canvas,
                     GimpCanvasStyle  style)
 {
-  GdkGC      *gc = NULL;
-  GdkColor    fg;
-  GdkColor    bg;
+  GtkWidget       *widget = GTK_WIDGET (canvas);
+  GdkGC           *gc;
+  GdkGCValues      values;
+  GdkGCValuesMask  mask = 0;
+  GdkColor         fg;
+  GdkColor         bg;
 
   switch (style)
     {
-    case GIMP_CANVAS_STYLE_XOR:
-    case GIMP_CANVAS_STYLE_XOR_DASHED:
-      fg.pixel = 0xFFFFFFFF;
-      bg.pixel = 0x00000000;
+    case GIMP_CANVAS_STYLE_BLACK:
+    case GIMP_CANVAS_STYLE_WHITE:
       break;
 
-    case GIMP_CANVAS_STYLE_HGUIDE_NORMAL:
-    case GIMP_CANVAS_STYLE_VGUIDE_NORMAL:
+    case GIMP_CANVAS_STYLE_RENDER:
+      mask |= GDK_GC_EXPOSURES;
+      values.graphics_exposures = TRUE;
+      break;
+
+    case GIMP_CANVAS_STYLE_XOR_DASHED:
+      mask |= GDK_GC_LINE_STYLE;
+      values.line_style = GDK_LINE_ON_OFF_DASH;
+      /*  fallthrough  */
+
+    case GIMP_CANVAS_STYLE_XOR:
+      mask |= GDK_GC_FUNCTION;
+      values.function = GDK_INVERT;
+      break;
+
+    case GIMP_CANVAS_STYLE_SELECTION_IN:
+    case GIMP_CANVAS_STYLE_SELECTION_OUT:
+    case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
+      mask |= GDK_GC_CAP_STYLE;
+      values.cap_style = GDK_CAP_BUTT;
+      /*  fallthrough  */
+
+    case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
+    case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
+      mask |= GDK_GC_FILL | GDK_GC_STIPPLE;
+      values.fill    = GDK_OPAQUE_STIPPLED;
+      values.stipple = canvas->stipple[0];
+      break;
+
+    case GIMP_CANVAS_STYLE_CUSTOM:
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  gc = gdk_gc_new_with_values (widget->window, &values, mask);
+
+  switch (style)
+    {
+    default:
+    case GIMP_CANVAS_STYLE_WHITE:
+    case GIMP_CANVAS_STYLE_XOR:
+    case GIMP_CANVAS_STYLE_XOR_DASHED:
+      fg.red   = 0xffff;
+      fg.green = 0xffff;
+      fg.blue  = 0xffff;
+
+      bg.red   = 0x0;
+      bg.green = 0x0;
+      bg.blue  = 0x0;
+      break;
+
+    case GIMP_CANVAS_STYLE_BLACK:
+    case GIMP_CANVAS_STYLE_SELECTION_IN:
+      fg.red   = 0x0;
+      fg.green = 0x0;
+      fg.blue  = 0x0;
+
+      bg.red   = 0xffff;
+      bg.green = 0xffff;
+      bg.blue  = 0xffff;
+      break;
+
+    case GIMP_CANVAS_STYLE_SELECTION_OUT:
+      fg.red   = 0xffff;
+      fg.green = 0xffff;
+      fg.blue  = 0xffff;
+
+      bg.red   = 0x7f7f;
+      bg.green = 0x7f7f;
+      bg.blue  = 0x7f7f;
+      break;
+
+    case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
+      fg.red   = 0x0;
+      fg.green = 0x0;
+      fg.blue  = 0x0;
+
+      bg.red   = 0xffff;
+      bg.green = 0xffff;
+      bg.blue  = 0x0;
+      break;
+
+    case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
       fg.red   = 0x0;
       fg.green = 0x0;
       fg.blue  = 0x0;
@@ -149,8 +324,7 @@ gimp_canvas_gc_new (GtkWidget       *widget,
       bg.blue  = 0xffff;
       break;
 
-    case GIMP_CANVAS_STYLE_HGUIDE_ACTIVE:
-    case GIMP_CANVAS_STYLE_VGUIDE_ACTIVE:
+    case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
       fg.red   = 0x0;
       fg.green = 0x0;
       fg.blue  = 0x0;
@@ -159,88 +333,10 @@ gimp_canvas_gc_new (GtkWidget       *widget,
       bg.green = 0x0;
       bg.blue  = 0x0;
       break;
-
-    default:
-      break;
     }
 
-  switch (style)
-    {
-    case GIMP_CANVAS_STYLE_RENDER:
-      gc = gdk_gc_new (widget->window);
-      gdk_gc_set_exposures (gc, TRUE);
-      break;
-
-    case GIMP_CANVAS_STYLE_XOR:
-    case GIMP_CANVAS_STYLE_XOR_DASHED:
-      gc = gdk_gc_new (widget->window);
-      gdk_gc_set_function (gc, GDK_INVERT);
-      gdk_gc_set_foreground (gc, &fg);
-      gdk_gc_set_background (gc, &bg);
-      gdk_gc_set_line_attributes (gc,
-                                  0,
-                                  (style == GIMP_CANVAS_STYLE_XOR ?
-                                   GDK_LINE_SOLID : GDK_LINE_ON_OFF_DASH),
-                                  GDK_CAP_NOT_LAST,
-                                  GDK_JOIN_MITER);
-      break;
-
-    case GIMP_CANVAS_STYLE_HGUIDE_NORMAL:
-    case GIMP_CANVAS_STYLE_HGUIDE_ACTIVE:
-      gc = gimp_canvas_guides_gc_new (widget,
-                                      GIMP_ORIENTATION_HORIZONTAL, &fg, &bg);
-      break;
-
-    case GIMP_CANVAS_STYLE_VGUIDE_NORMAL:
-    case GIMP_CANVAS_STYLE_VGUIDE_ACTIVE:
-      gc = gimp_canvas_guides_gc_new (widget,
-                                      GIMP_ORIENTATION_VERTICAL, &fg, &bg);
-      break;
-
-    case GIMP_CANVAS_STYLE_CUSTOM:
-      g_assert_not_reached ();
-      break;
-
-    default:
-      break;
-    }
-
-  return gc;
-}
-
-static GdkGC *
-gimp_canvas_guides_gc_new (GtkWidget           *widget,
-                           GimpOrientationType  orient,
-                           GdkColor            *fg,
-                           GdkColor            *bg)
-{
-  const guchar stipple[] =
-    {
-      0xF0,    /*  ####----  */
-      0xE1,    /*  ###----#  */
-      0xC3,    /*  ##----##  */
-      0x87,    /*  #----###  */
-      0x0F,    /*  ----####  */
-      0x1E,    /*  ---####-  */
-      0x3C,    /*  --####--  */
-      0x78,    /*  -####---  */
-    };
-
-  GdkGC       *gc;
-  GdkGCValues  values;
-
-  values.fill = GDK_OPAQUE_STIPPLED;
-  values.stipple =
-    gdk_bitmap_create_from_data (widget->window,
-                                 (const gchar *) stipple,
-                                 orient == GIMP_ORIENTATION_HORIZONTAL ? 8 : 1,
-                                 orient == GIMP_ORIENTATION_VERTICAL   ? 8 : 1);
-
-  gc = gdk_gc_new_with_values (widget->window,
-                               &values, GDK_GC_FILL | GDK_GC_STIPPLE);
-
-  gdk_gc_set_rgb_fg_color (gc, fg);
-  gdk_gc_set_rgb_bg_color (gc, bg);
+  gdk_gc_set_rgb_fg_color (gc, &fg);
+  gdk_gc_set_rgb_bg_color (gc, &bg);
 
   return gc;
 }
@@ -261,20 +357,29 @@ gimp_canvas_draw_cursor (GimpCanvas *canvas,
                          gint        x,
                          gint        y)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  GtkWidget        *widget = GTK_WIDGET (canvas);
+  GimpCanvasStyle  style;
 
-  gdk_draw_line (widget->window,
-                 widget->style->white_gc, x - 7, y - 1, x + 7, y - 1);
-  gdk_draw_line (widget->window,
-                 widget->style->black_gc, x - 7, y,     x + 7, y    );
-  gdk_draw_line (widget->window,
-                 widget->style->white_gc, x - 7, y + 1, x + 7, y + 1);
-  gdk_draw_line (widget->window,
-                 widget->style->white_gc, x - 1, y - 7, x - 1, y + 7);
-  gdk_draw_line (widget->window,
-                 widget->style->black_gc, x,     y - 7, x,     y + 7);
-  gdk_draw_line (widget->window,
-                 widget->style->white_gc, x + 1, y - 7, x + 1, y + 7);
+  for (style  = GIMP_CANVAS_STYLE_BLACK;
+       style <= GIMP_CANVAS_STYLE_WHITE;
+       style++)
+    {
+      if (! canvas->gc[style])
+        canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+    }
+
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+                 x - 7, y - 1, x + 7, y - 1);
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
+                 x - 7, y,     x + 7, y    );
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+                 x - 7, y + 1, x + 7, y + 1);
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+                 x - 1, y - 7, x - 1, y + 7);
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
+                 x,     y - 7, x,     y + 7);
+  gdk_draw_line (widget->window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
+                 x + 1, y - 7, x + 1, y + 7);
 }
 
 void
@@ -286,9 +391,23 @@ gimp_canvas_draw_point (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_point (widget->window, canvas->gc[style], x, y);
+}
+
+void
+gimp_canvas_draw_points (GimpCanvas      *canvas,
+                         GimpCanvasStyle  style,
+                         GdkPoint        *points,
+                         gint             num_points)
+{
+  GtkWidget *widget = GTK_WIDGET (canvas);
+
+  if (! canvas->gc[style])
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+
+  gdk_draw_points (widget->window, canvas->gc[style], points, num_points);
 }
 
 void
@@ -302,7 +421,7 @@ gimp_canvas_draw_line (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_line (widget->window, canvas->gc[style], x1, y1, x2, y2);
 }
@@ -316,7 +435,7 @@ gimp_canvas_draw_lines (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_lines (widget->window, canvas->gc[style], points, num_points);
 }
@@ -333,7 +452,7 @@ gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_rectangle (widget->window, canvas->gc[style],
                       filled, x, y, width, height);
@@ -353,7 +472,7 @@ gimp_canvas_draw_arc (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_arc (widget->window, canvas->gc[style],
                 filled, x, y, width, height, angle1, angle2);
@@ -369,7 +488,7 @@ gimp_canvas_draw_polygon (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_polygon (widget->window, canvas->gc[style],
                     filled, points, num_points);
@@ -384,7 +503,7 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_segments (widget->window, canvas->gc[style],
                      segments, num_segments);
@@ -405,12 +524,63 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   if (! canvas->gc[style])
-    canvas->gc[style] = gimp_canvas_gc_new (widget, style);
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
 
   gdk_draw_rgb_image_dithalign (widget->window, canvas->gc[style],
                                 x, y, width, height,
                                 GDK_RGB_DITHER_MAX,
                                 rgb_buf, rowstride, xdith, ydith);
+}
+
+void
+gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
+                           GimpCanvasStyle  style,
+                           GdkRectangle    *rect)
+{
+  if (! canvas->gc[style])
+    {
+      if (! rect)
+        return;
+
+      canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+    }
+
+  gdk_gc_set_clip_rectangle (canvas->gc[style], rect);
+}
+
+void
+gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
+                               GimpCanvasStyle  style,
+                               guint            index)
+{
+  if (! canvas->gc[style])
+    canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+
+  index = index % GIMP_CANVAS_NUM_STIPPLES;
+
+  if (! canvas->stipple[index])
+    {
+      GtkWidget *widget = GTK_WIDGET (canvas);
+
+      canvas->stipple[index] =
+        gdk_bitmap_create_from_data (widget->window,
+                                     (const gchar *) stipples[index], 8, 8);
+    }
+
+  gdk_gc_set_stipple (canvas->gc[style], canvas->stipple[index]);
+}
+
+void
+gimp_canvas_set_custom_gc (GimpCanvas *canvas,
+                           GdkGC      *gc)
+{
+  if (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM])
+    g_object_unref (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM]);
+
+  canvas->gc[GIMP_CANVAS_STYLE_CUSTOM] = gc;
+
+  if (gc)
+    g_object_ref (gc);
 }
 
 void
@@ -431,17 +601,4 @@ gimp_canvas_set_bg_color (GimpCanvas *canvas,
   gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
 
   gdk_window_set_background (widget->window, &gdk_color);
-}
-
-void
-gimp_canvas_set_custom_gc (GimpCanvas *canvas,
-                           GdkGC      *gc)
-{
-  if (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM])
-    g_object_unref (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM]);
-
-  canvas->gc[GIMP_CANVAS_STYLE_CUSTOM] = gc;
-
-  if (gc)
-    g_object_ref (gc);
 }

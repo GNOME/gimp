@@ -1,3 +1,22 @@
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-marching-ants.h: removed this file.
+
+	* app/display/gimpcanvas.[ch]: generalized creation of GCs. Added
+	styles for drawing the selection and layer boundaries. Also added
+	support for changing stipple masks as was used by an older
+	implementation of the marching ants (see below).
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: don't create the Selection when
+	the canvas is realized but only once when it is created.
+
+	* app/display/gimpdisplayshell-selection.[ch]: removed all GC code
+	and draw by means of GimpCanvas. Also resurrected a different
+	implementation of the marching ants that was lost since 1.2
+	(#undef USE_DRAWPOINTS).
+
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-appearance.c: update

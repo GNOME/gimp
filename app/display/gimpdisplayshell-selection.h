@@ -22,22 +22,15 @@
 
 struct _Selection
 {
-  /*  This information is for maintaining the selection's appearance  */
-  GdkWindow        *win;              /*  Window to draw to                   */
-  GimpDisplayShell *shell;            /*  GimpDisplay that owns the selection */
-  GdkGC            *gc_in;            /*  GC for drawing selection outline    */
-  GdkGC            *gc_out;           /*  GC for selected regions outside     *
-                                       *  current layer                       */
-  GdkGC            *gc_layer;         /*  GC for current layer outline        */
+  GimpDisplayShell *shell;            /*  shell that owns the selection     */
 
-  /*  This information is for drawing the marching ants around the border   */
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
   GdkSegment       *segs_layer;       /*  gdk segments of area boundary     */
   gint              num_segs_in;      /*  number of segments in segs1       */
   gint              num_segs_out;     /*  number of segments in segs2       */
   gint              num_segs_layer;   /*  number of segments in segs3       */
-  gint              index_in;         /*  index of current stipple pattern  */
+  guint             index;            /*  index of current stipple pattern  */
   gint              state;            /*  internal drawing state            */
   gint              paused;           /*  count of pause requests           */
   gboolean          recalc;           /*  flag to recalculate the selection */
@@ -45,19 +38,12 @@ struct _Selection
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
   GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */
-
-  /* These are used only if USE_XDRAWPOINTS is defined.                     */
   GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
   gint              num_points_in[8]; /*  number of points in points_in     */
-  GdkGC            *gc_white;         /*  gc for drawing white points       */
-  GdkGC            *gc_black;         /*  gc for drawing black points       */
 };
 
 
-Selection * gimp_display_shell_selection_create      (GdkWindow    *window,
-                                                      GimpDisplayShell *gdisp,
-                                                      gint          size,
-                                                      gint          width);
+Selection * gimp_display_shell_selection_new     (GimpDisplayShell *shell);
 void   gimp_display_shell_selection_free             (Selection    *select);
 
 void   gimp_display_shell_selection_pause            (Selection    *select);

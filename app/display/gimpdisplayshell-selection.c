@@ -30,15 +30,16 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-marching-ants.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-transform.h"
 
 
-#undef VERBOSE
+#define USE_DRAWPOINTS
+#undef  VERBOSE
 
 /*  The possible internal drawing states...  */
 #define INVISIBLE         0
@@ -66,117 +67,30 @@ static void       selection_free_segs       (Selection      *select);
 static gboolean   selection_start_marching  (gpointer        data);
 static gboolean   selection_march_ants      (gpointer        data);
 
-static GdkPixmap *marching_ants[9] = { NULL };
-
 
 /*  public functions  */
 
 Selection *
-gimp_display_shell_selection_create (GdkWindow        *win,
-                                     GimpDisplayShell *shell,
-                                     gint              size,
-                                     gint              width)
+gimp_display_shell_selection_new (GimpDisplayShell *shell)
 {
-  GimpImage *gimage;
-  GdkColor   fg, bg;
   Selection *new;
-  gint       base_type;
   gint       i;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   new = g_new0 (Selection, 1);
 
-  gimage    = shell->gdisp->gimage;
-  base_type = gimp_image_base_type (gimage);
-
-  if (! marching_ants[0])
-    for (i = 0; i < 8; i++)
-      marching_ants[i] = gdk_bitmap_create_from_data (win,
-                                                      (gchar *) ant_data[i],
-                                                      8, 8);
-
-  new->win            = win;
-  new->shell          = shell;
-  new->segs_in        = NULL;
-  new->segs_out       = NULL;
-  new->segs_layer     = NULL;
-  new->num_segs_in    = 0;
-  new->num_segs_out   = 0;
-  new->num_segs_layer = 0;
-  new->index_in       = 0;
-  new->state          = INVISIBLE;
-  new->paused         = 0;
-  new->recalc         = TRUE;
-  new->hidden         = ! gimp_display_shell_get_show_selection (shell);
-  new->layer_hidden   = ! gimp_display_shell_get_show_layer (shell);
+  new->shell        = shell;
+  new->state        = INVISIBLE;
+  new->recalc       = TRUE;
+  new->hidden       = ! gimp_display_shell_get_show_selection (shell);
+  new->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
 
   for (i = 0; i < 8; i++)
     new->points_in[i] = NULL;
 
-  /*  create a new graphics context  */
-  new->gc_in = gdk_gc_new (new->win);
-
-  /*  get black and white pixels for this gdisplay  */
-  fg.red   = 0x0;
-  fg.green = 0x0;
-  fg.blue  = 0x0;
-
-  bg.red   = 0xffff;
-  bg.green = 0xffff;
-  bg.blue  = 0xffff;
-
-  gdk_gc_set_rgb_fg_color (new->gc_in, &fg);
-  gdk_gc_set_rgb_bg_color (new->gc_in, &bg);
-  gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_line_attributes (new->gc_in,
-                              1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  new->gc_white = gdk_gc_new (new->win);
-  gdk_gc_set_rgb_fg_color (new->gc_white, &bg);
-
-  new->gc_black = gdk_gc_new (new->win);
-  gdk_gc_set_rgb_fg_color (new->gc_black, &fg);
-
-  /*  Setup 2nd & 3rd GCs  */
-  fg.red   = 0xffff;
-  fg.green = 0xffff;
-  fg.blue  = 0xffff;
-
-  bg.red   = 0x7f7f;
-  bg.green = 0x7f7f;
-  bg.blue  = 0x7f7f;
-
-  /*  create a new graphics context  */
-  new->gc_out = gdk_gc_new (new->win);
-  gdk_gc_set_rgb_fg_color (new->gc_out, &fg);
-  gdk_gc_set_rgb_bg_color (new->gc_out, &bg);
-  gdk_gc_set_fill (new->gc_out, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_stipple (new->gc_out,   marching_ants[0]);
-  gdk_gc_set_line_attributes (new->gc_out, 1,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  /*  get black and color pixels for this gdisplay  */
-  fg.red   = 0x0;
-  fg.green = 0x0;
-  fg.blue  = 0x0;
-
-  bg.red   = 0xffff;
-  bg.green = 0xffff;
-  bg.blue  = 0x0;
-
-  /*  create a new graphics context  */
-  new->gc_layer = gdk_gc_new (new->win);
-  gdk_gc_set_rgb_fg_color (new->gc_layer, &fg);
-  gdk_gc_set_rgb_bg_color (new->gc_layer, &bg);
-  gdk_gc_set_fill (new->gc_layer, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_stipple (new->gc_layer, marching_ants[0]);
-  gdk_gc_set_line_attributes (new->gc_layer, 1,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
-
   return new;
 }
-
 
 void
 gimp_display_shell_selection_free (Selection *select)
@@ -184,22 +98,10 @@ gimp_display_shell_selection_free (Selection *select)
   if (select->timeout_id)
     g_source_remove (select->timeout_id);
 
-  if (select->gc_in)
-    g_object_unref (select->gc_in);
-  if (select->gc_out)
-    g_object_unref (select->gc_out);
-  if (select->gc_layer)
-    g_object_unref (select->gc_layer);
-  if (select->gc_white)
-    g_object_unref (select->gc_white);
-  if (select->gc_black)
-    g_object_unref (select->gc_black);
-
   selection_free_segs (select);
 
   g_free (select);
 }
-
 
 void
 gimp_display_shell_selection_pause (Selection *select)
@@ -215,7 +117,6 @@ gimp_display_shell_selection_pause (Selection *select)
   select->paused++;
 }
 
-
 void
 gimp_display_shell_selection_resume (Selection *select)
 {
@@ -229,7 +130,6 @@ gimp_display_shell_selection_resume (Selection *select)
 
   select->paused--;
 }
-
 
 void
 gimp_display_shell_selection_start (Selection *select,
@@ -258,7 +158,6 @@ gimp_display_shell_selection_start (Selection *select,
 				      select);
 }
 
-
 void
 gimp_display_shell_selection_invis (Selection *select)
 {
@@ -276,8 +175,7 @@ gimp_display_shell_selection_invis (Selection *select)
   if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
     {
       gimp_display_shell_expose_area (select->shell,
-                                      x1, y1,
-                                      (x2 - x1), (y2 - y1));
+                                      x1, y1, (x2 - x1), (y2 - y1));
     }
   else
     {
@@ -383,6 +281,7 @@ selection_add_point (GdkPoint *points[8],
       max_npoints[j] += 2048;
       points[j] = g_realloc (points[j], sizeof (GdkPoint) * max_npoints[j]);
     }
+
   points[j][i].x = x;
   points[j][i].y = y;
 }
@@ -473,10 +372,12 @@ selection_render_points (Selection *select)
 	  } while (y != select->segs_in[i].y2);
 	}
       else
-	selection_add_point (select->points_in,
-			     max_npoints,
-			     select->num_points_in,
-			     x, y);
+        {
+          selection_add_point (select->points_in,
+                               max_npoints,
+                               select->num_points_in,
+                               x, y);
+        }
     }
 }
 
@@ -484,12 +385,20 @@ selection_render_points (Selection *select)
 static void
 selection_draw (Selection *select)
 {
+  GimpCanvas *canvas = GIMP_CANVAS (select->shell->canvas);
+
   if (select->hidden)
     return;
+
+  if (! GTK_WIDGET_REALIZED (canvas))
+    return;
+
+#ifdef USE_DRAWPOINTS
 
 #ifdef VERBOSE
   {
     gint j, sum;
+
     sum = 0;
     for (j = 0; j < 8; j++)
       sum += select->num_points_in[j];
@@ -501,29 +410,42 @@ selection_draw (Selection *select)
     {
       gint i;
 
-      if (select->index_in == 0)
+      if (select->index == 0)
 	{
 	  for (i = 0; i < 4; i++)
 	    if (select->num_points_in[i])
-	      gdk_draw_points (select->win, select->gc_white,
-			       select->points_in[i], select->num_points_in[i]);
+              gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
+                                       select->points_in[i],
+                                       select->num_points_in[i]);
 	  for (i = 4; i < 8; i++)
 	    if (select->num_points_in[i])
-	      gdk_draw_points (select->win, select->gc_black,
-			       select->points_in[i], select->num_points_in[i]);
+              gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
+                                       select->points_in[i],
+                                       select->num_points_in[i]);
 	}
       else
 	{
-	  i = ((select->index_in + 3) & 7);
+	  i = ((select->index + 3) & 7);
 	  if (select->num_points_in[i])
-	    gdk_draw_points (select->win, select->gc_white,
-			     select->points_in[i], select->num_points_in[i]);
-	  i = ((select->index_in + 7) & 7);
+            gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
+                                     select->points_in[i],
+                                     select->num_points_in[i]);
+	  i = ((select->index + 7) & 7);
 	  if (select->num_points_in[i])
-	    gdk_draw_points (select->win, select->gc_black,
-			     select->points_in[i], select->num_points_in[i]);
+            gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
+                                     select->points_in[i],
+                                     select->num_points_in[i]);
 	}
     }
+
+#else  /*  ! USE_DRAWPOINTS  */
+  gimp_canvas_set_stipple_index (canvas,
+                                 GIMP_CANVAS_STYLE_SELECTION_IN,
+                                 select->index);
+  if (select->segs_in)
+    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_IN,
+                               select->segs_in, select->num_segs_in);
+#endif
 }
 
 
@@ -602,7 +524,9 @@ selection_generate_segs (Selection *select)
       selection_transform_segs (select, segs_in, select->segs_in,
 				select->num_segs_in);
 
+#ifdef USE_DRAWPOINTS
       selection_render_points (select);
+#endif
     }
   else
     {
@@ -674,11 +598,11 @@ selection_free_segs (Selection *select)
 static gboolean
 selection_start_marching (gpointer data)
 {
-  Selection         *select;
+  Selection         *select = (Selection *) data;
+  GimpCanvas        *canvas;
   GimpDisplayConfig *config;
 
-  select = (Selection *) data;
-
+  canvas = GIMP_CANVAS (select->shell->canvas);
   config = GIMP_DISPLAY_CONFIG (select->shell->gdisp->gimage->gimp->config);
 
   /*  if the RECALC bit is set, reprocess the boundaries  */
@@ -691,23 +615,21 @@ selection_start_marching (gpointer data)
       select->recalc = FALSE;
     }
 
-  select->index_in = 0;
+  select->index = 0;
 
   /*  Make sure the state is set to marching  */
   select->state = MARCHING;
 
-  /*  Draw the ants  */
-  gdk_gc_set_stipple (select->gc_in,    marching_ants[0]);
-
   if (! select->layer_hidden && select->segs_layer)
-    gdk_draw_segments (select->win, select->gc_layer,
-                       select->segs_layer, select->num_segs_layer);
+    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
+                               select->segs_layer, select->num_segs_layer);
 
+  /*  Draw the ants  */
   selection_draw (select);
 
   if (select->segs_out)
-    gdk_draw_segments (select->win, select->gc_out,
-                       select->segs_out, select->num_segs_out);
+    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
+                               select->segs_out, select->num_segs_out);
 
   /*  Reset the timer  */
   select->timeout_id = g_timeout_add (config->marching_ants_speed,
@@ -723,15 +645,7 @@ selection_march_ants (gpointer data)
 {
   Selection *select = (Selection *) data;
 
-  /*  increment stipple index  */
-  select->index_in++;
-
-  if (select->index_in > 7)
-    select->index_in = 0;
-
-  /*  Draw the ants  */
-  gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
-
+  select->index++;
   selection_draw (select);
 
   return TRUE;
