@@ -1,3 +1,12 @@
+2002-12-25  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpproxy/Makefile.am: Similar additions for Win32 as in the
+	other libgimp*/Makefile.am files: Use -no-undefined. Use the .def
+	file. Produce MS style import library if possible. Install and
+	uninstall import libraries.
+
+	* libgimpproxy/gimpproxy.def: New file.
+
 2002-12-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* libgimp/gimpmiscui.c (gimp_fixme_preview_new): make sure preview

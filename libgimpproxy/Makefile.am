@@ -1,5 +1,40 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
+if OS_WIN32
+gimpproxy_def = gimpproxy.def
+libgimpproxy_export_symbols = -export-symbols gimpproxy.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimpproxy-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimpproxy-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimpproxy-1.3.lib
+
+install-ms-lib:
+	$(INSTALL) gimpproxy-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimpproxy-1.3.lib
+
+gimpproxy-1.3.lib: gimpproxy.def
+	lib -name:libgimpproxy-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpproxy.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 libgimpproxyincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpproxy
 
 AM_CPPFLAGS = \
@@ -28,9 +63,13 @@ libgimpproxyinclude_HEADERS = \
 	gimpchannel.h
 
 libgimpproxy_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	$(no_undefined) \
+	$(libgimpproxy_export_symbols)
 
 libgimpproxy_1_3_la_LIBADD = $(GLIB_LIBS) 
+
+libgimpproxy_1_3_la_DEPENDENCIES = $(gimpproxy_def)
 
 #
 # rules to generate built sources
@@ -74,3 +113,6 @@ $(srcdir)/gimpproxytypes.h: $(srcdir)/../app/core/core-types.h $(srcdir)/../app/
 	&& cp xgen-gph $(@F) \
 	&& rm -f xgen-gph
 
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
