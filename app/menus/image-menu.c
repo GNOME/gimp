@@ -1606,10 +1606,10 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Mask/Intersect with Selection", lm && !fs && !aux);
 
   SET_SENSITIVE ("/Layer/Transparency/Add Alpha Channel",        lp && !aux && !fs && !lm && !alpha);
-  SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection",       lp && !aux && alpha);
-  SET_SENSITIVE ("/Layer/Transparency/Add to Selection",         lp && !aux && alpha);
-  SET_SENSITIVE ("/Layer/Transparency/Subtract from Selection",  lp && !aux && alpha);
-  SET_SENSITIVE ("/Layer/Transparency/Intersect with Selection", lp && !aux && alpha);
+  SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection",       lp && !aux);
+  SET_SENSITIVE ("/Layer/Transparency/Add to Selection",         lp && !aux);
+  SET_SENSITIVE ("/Layer/Transparency/Subtract from Selection",  lp && !aux);
+  SET_SENSITIVE ("/Layer/Transparency/Intersect with Selection", lp && !aux);
 
   SET_SENSITIVE ("/Layer/Transform/Flip Horizontally",     lp);
   SET_SENSITIVE ("/Layer/Transform/Flip Vertically",       lp);

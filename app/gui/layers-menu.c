@@ -260,10 +260,11 @@ layers_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Mask to Selection", layer && !fs && !ac &&  lm);
 
   SET_SENSITIVE ("/Add Alpha Channel",  layer && !fs && !alpha);
-  SET_SENSITIVE ("/Alpha to Selection", layer && !fs && !ac && alpha);
+  SET_SENSITIVE ("/Alpha to Selection", layer && !fs && !ac);
 
   SET_SENSITIVE ("/Merge Visible Layers...", layer && !fs && !ac);
   SET_SENSITIVE ("/Flatten Image",           layer && !fs && !ac);
 
 #undef SET_SENSITIVE
+#undef SET_VISIBLE
 }

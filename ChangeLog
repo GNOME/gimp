@@ -1,5 +1,16 @@
 2004-01-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/layers-commands.c (layers_alpha_to_selection_cmd_callback):
+	no need to check if the layer has an alpha channel because
+	gimp_channel_select_alpha() handles layers without alpha fine: it
+	selects everything that is opaque, which is the entire layer.
+
+	* app/gui/image-menu.c (image_menu_update)
+	* app/gui/layers-menu.c (layers_menu_update): don't make the
+	"Alpha to Selection" items insensitive for layers without alpha.
+
+2004-01-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/select-to-pattern.scm: changed
 	(mostly rewritten) to correctly create patterns from drawables
 	with or without alpha. Also work correctly with or without a

@@ -481,12 +481,9 @@ layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
 
   op = (GimpChannelOps) action;
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
-    {
-      gimp_channel_select_alpha (gimp_image_get_mask (gimage), active_layer,
-                                 op, FALSE, 0.0, 0.0);
-      gimp_image_flush (gimage);
-    }
+  gimp_channel_select_alpha (gimp_image_get_mask (gimage), active_layer,
+                             op, FALSE, 0.0, 0.0);
+  gimp_image_flush (gimage);
 }
 
 void
