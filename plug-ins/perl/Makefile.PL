@@ -12,6 +12,7 @@ $|=1;
       sethspin.pl animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
+      oneliners
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl

@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * make parasiterc ascii-only !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   * improve examples/example-*.pl
   * install in /usr/local (???? why? more options??)
   * install even without Gtk? NO!
@@ -21,17 +22,14 @@ bugs
   
 important issues
 
+  * PF_PREVIEW(!)
 [PF_FILE]  * PF_FILE
   * --use-interp=perl|script-fu
   * change set_usize to something else..
   * Gimp::IO (?)
   * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
   * generic config query mechanism
-[DONE]  * Gimp->server_eval()
-[DONE]  * supply a gimp-1.1 compatible gimp_progress_init
   * install scripts in share/
-[DONE]  * fix auto-edit shebang for check-ins
-[DONE]  * gimp-tiles are not accessible in any way..
   * register dummy function to calm gimp down
   * config options & paths in module(!)
   * Gimp::Module for modules (!)
@@ -39,15 +37,12 @@ important issues
   * gimp_display_image
   * vamp up homepage
   * --ui and --noui for Gimp::Fu
-[DONE]  * [PF_CUSTOM]
   * Gimp::ping
   * clean up PKG_ANY vs. PKG_REAL_DRAWABLE
   * allow plug-ins to register with only a drawable argument(!)
     (fix this in Gimp)
-[DONE]  * provide propper overwriting in Gimp::Net::pixel-_rgn ;(
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-[KILL] * substr 4th argument form for Net:: -> require 5.005!!!! DO IT! PLEASE!!!!
   * use Gimp qw(GIMP_HOST=jfjf)???
   * zero-copy PDL support
   * weighted movement in drawing tools
@@ -58,7 +53,6 @@ important issues
   * create working progress when Net and $verbose
   * require Storable soon(!)
   * Gimp::Fu::command(?)
-[DONE]  * Untitled/0 Untitled/1 etc..
   * default parameters at end(!)
   * try to deduce default parameters
 

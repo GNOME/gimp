@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use Gimp;                                                                                                                                                        
+use Gimp::Fu;                                                                                                                                                    
+use Gimp::Util;                                                                                                                                                  
+
+# These are a couple of one-liners that you might find handy.  Both should                                                                                       
+# be undoable w/o any special magick, and work with any gimp.                                                                                                    
+                                                                                                                                                                 
+# <sjburges@gimp.org>                                                                                                                                            
+register "layer_to_image_size", "Layer2ImageSize", "Expands layer to image size",                                                                                
+         "Seth Burgess", "Seth Burgess <sjburges\@gimp.org>", "1.0",                                                                                             
+         "<Image>/Layers/Layer to Image Size", "RGB*, GRAY*", [ ], sub {                                                                                         
+   ($img, $layer) = @_;                                                                                                                                          
+   $layer->resize($img->width, $img->height, $layer->offsets);                                                                                                   
+   ();                                                                                                                                                     
+};                                                                                                                                                               
+                                                                                                                                                                 
+# <sjburges@gimp.org>                                                                                                                                            
+register "center_layer", "Center Layer",                                                                                                                         
+         "Centers the current layer on the image",                                                                                                               
+         "Seth Burgess", "Seth Burgess <sjburges\@gimp.org>",                                                                                                    
+         "1.0", "<Image>/Layers/Center Layer", "RGB*, GRAY*", [], sub {                                                                                          
+        ($img, $layer) = @_;                                                                                                                                     
+        $layer->set_offsets(($img->width  - $layer->width )/2,                                                                                                   
+                        ($img->height - $layer->height)/2);                                                                                                      
+        ();                                                                                                                                                
+};                                                                                                                                                               
+                                                                                                                                                                 
+exit main;                                                                                                                                                       
+
