@@ -1,5 +1,11 @@
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptexteditor.c (gimp_text_editor_set_direction):
+	don't call gtk_widget_set_direction() on a non-existant widget.
+	Fixes bug #141792.
+
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/tips-dialog.c: added missing newline in error message.
 
 2004-05-10  Michael Natterer  <mitch@gimp.org>
