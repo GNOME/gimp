@@ -1,3 +1,8 @@
+2001-11-12  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in: I checked in a wrong version by accident. This one
+	should work better.
+
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: app/user_install.c -> app/gui/user-install-dialog.c
