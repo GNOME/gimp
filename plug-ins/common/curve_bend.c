@@ -58,6 +58,7 @@
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
 #define PLUG_IN_DESCRIPTION "Bends a layer using 2 spline-curves"
+#define HELP_ID             "plug-in-curve-bend"
 
 #define PLUG_IN_ITER_NAME       "plug_in_curve_bend_Iterator"
 #define PLUG_IN_DATA_ITER_FROM  "plug_in_curve_bend_ITER_FROM"
@@ -1212,8 +1213,7 @@ bender_new_dialog (GimpDrawable *drawable)
   /*  The shell and main vbox  */
   cd->shell = gimp_dialog_new (_("Curve Bend"), "curve_bend",
                                NULL, 0,
-			       gimp_standard_help_func,
-                               "filters/curve_bend.html",
+			       gimp_standard_help_func, HELP_ID,
 
 			       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			       GTK_STOCK_OK,     GTK_RESPONSE_OK,

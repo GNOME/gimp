@@ -200,8 +200,7 @@ fp_create_circle_palette (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func,
-                     "filters/fp.html", NULL);
+  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -345,8 +344,7 @@ fp_create_lnd (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func,
-                     "filters/fp.html", NULL);
+  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -394,8 +392,7 @@ fp_create_msnls (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (win, gimp_standard_help_func,
-                     "filters/fp.html", NULL);
+  gimp_help_connect (win, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -925,7 +922,7 @@ fp_dialog (void)
   /************************* All the Standard Stuff *******************/
   dlg = gimp_dialog_new (_("Filter Pack Simulation"), "fp",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/fp.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GIMP_STOCK_RESET, RESPONSE_RESET,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1054,8 +1051,7 @@ fp_advanced_dialog (void)
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect (AW.window, gimp_standard_help_func,
-		     "filters/fp.html", NULL);
+  gimp_help_connect (AW.window, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
 			_("Advanced Filter Pack Options"));

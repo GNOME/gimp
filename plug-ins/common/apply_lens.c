@@ -368,7 +368,7 @@ lens_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/apply_lens.html",
+                         gimp_standard_help_func, "plug-in-applylens",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

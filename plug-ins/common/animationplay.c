@@ -480,7 +480,7 @@ build_dialog (GimpImageBaseType  basetype,
 
   dlg = gimp_dialog_new (windowname, "animationplay",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/animationplay.html",
+                         gimp_standard_help_func, "plug-in-animationplay",
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

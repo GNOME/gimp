@@ -39,7 +39,7 @@ static void presetsrefresh(void)
 {
   gtk_list_store_clear (store);
   addfactorydefaults (store);
-  readdirintolist ("Presets", presetlist, NULL);  
+  readdirintolist ("Presets", presetlist, NULL);
 }
 
 #define PRESETMAGIC "Preset"
@@ -95,7 +95,7 @@ static void setorientvector(char *str)
 
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.orientvector[n].y = g_ascii_strtod (++tmps, NULL);
-  
+
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.orientvector[n].dir = g_ascii_strtod (++tmps, NULL);
 
@@ -104,13 +104,13 @@ static void setorientvector(char *str)
 
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.orientvector[n].dy = g_ascii_strtod (++tmps, NULL);
-  
+
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.orientvector[n].str = g_ascii_strtod (++tmps, NULL);
-  
+
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.orientvector[n].type = atoi (++tmps);
-  
+
 }
 
 static void setsizevector(char *str)
@@ -125,13 +125,13 @@ static void setsizevector(char *str)
 
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.sizevector[n].y = g_ascii_strtod (++tmps, NULL);
-  
+
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.sizevector[n].siz = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
   pcvals.sizevector[n].str = g_ascii_strtod (++tmps, NULL);
-  
+
 }
 
 static void parsedesc(char *str, char *d)
@@ -219,7 +219,7 @@ static void setval(char *key, char *val)
     char *c = parsergbstring(val);
     gimp_rgba_set_uchar(&pcvals.color, c[0], c[1], c[2], 255);
   }
-  
+
   else if(!strcmp(key, "numorientvector"))
     pcvals.numorientvector = atoi(val);
   else if(!strcmp(key, "orientvector"))
@@ -287,8 +287,8 @@ static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
       gchar *preset;
 
       gtk_tree_model_get (model, &iter, 0, &preset, -1);
-      
-      if (strcmp(preset, factory_defaults)) 
+
+      if (strcmp(preset, factory_defaults))
 	{
 	  sprintf(fname, "Presets/%s", preset);
 	  strcpy(fname, findfile(fname));
@@ -314,7 +314,7 @@ static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
 
       sprintf(fname, "Presets/%s", preset);
       strcpy(fname, findfile(fname));
-      
+
       unlink(fname);
       presetsrefresh();
 
@@ -365,7 +365,7 @@ create_savepreset (void)
   window =
     gimp_dialog_new (_("Save Current"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/gimpressionst.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -399,7 +399,7 @@ create_savepreset (void)
   g_signal_connect (buffer, "changed",
 		    G_CALLBACK (presetdesccallback), NULL);
   gtk_text_buffer_set_text (buffer, presetdesc, -1);
-  
+
   text = gtk_text_view_new_with_buffer (buffer);
   gtk_widget_set_size_request (text, -1, 192);
   gtk_container_add (GTK_CONTAINER(swin), text);
@@ -438,7 +438,7 @@ static void savepreset(void)
   fprintf(f, "%s\n", PRESETMAGIC);
   fprintf(f, "desc=%s\n", presetdesc);
   fprintf(f, "orientnum=%d\n", pcvals.orientnum);
-  fprintf(f, "orientfirst=%s\n", 
+  fprintf(f, "orientfirst=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientfirst));
   fprintf(f, "orientlast=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientlast));
@@ -485,12 +485,12 @@ static void savepreset(void)
 
   gimp_rgb_get_uchar(&pcvals.color, &color[0], &color[1], &color[2]);
   fprintf(f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
-  
+
   fprintf(f, "placetype=%d\n", pcvals.placetype);
   fprintf(f, "placecenter=%d\n", pcvals.placecenter);
 
   fprintf(f, "numorientvector=%d\n", pcvals.numorientvector);
-  for(i = 0; i < pcvals.numorientvector; i++) 
+  for(i = 0; i < pcvals.numorientvector; i++)
     {
       g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].x);
       g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].y);
@@ -498,7 +498,7 @@ static void savepreset(void)
       g_ascii_formatd (vbuf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].dx);
       g_ascii_formatd (vbuf[4], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].dy);
       g_ascii_formatd (vbuf[5], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].str);
-      
+
       fprintf (f, "orientvector=%d,%s,%s,%s,%s,%s,%s,%d\n", i,
                vbuf[0], vbuf[1], vbuf[2], vbuf[3], vbuf[4], vbuf[5],
                pcvals.orientvector[i].type);
@@ -511,7 +511,7 @@ static void savepreset(void)
   fprintf(f, "orientvoronoi=%d\n", pcvals.orientvoronoi);
 
   fprintf(f, "numsizevector=%d\n", pcvals.numsizevector);
-  for (i = 0; i < pcvals.numsizevector; i++) 
+  for (i = 0; i < pcvals.numsizevector; i++)
     {
       g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].x);
       g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].y);
@@ -537,17 +537,17 @@ static void readdesc(char *fn)
 {
   char *tmp, fname[200];
   FILE *f;
-  
+
   sprintf(fname, "Presets/%s", fn);
   tmp = findfile(fname);
   if (!tmp) {
     gtk_label_set_text(GTK_LABEL(presetdesclabel), "");
-    return; 
+    return;
   }
   strcpy(fname, tmp);
 
   f = fopen(fname, "rt");
-  if(f) { 
+  if(f) {
     char line[4096];
     char tmplabel[4096];
     while(!feof(f)) {
@@ -608,7 +608,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 5);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(create_savepreset), NULL);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -636,7 +636,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(applypreset), selection);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_DELETE);

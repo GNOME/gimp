@@ -79,6 +79,7 @@
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
 #define PLUG_IN_NAME "plug_in_blur"
+#define HELP_ID      "plug-in-blur"
 
 #define SEED_DEFAULT 10
 #define SEED_USER 11
@@ -584,7 +585,7 @@ blur_dialog (void)
 
   dlg = gimp_dialog_new (_("Blur"), "blur",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/blur.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -109,6 +109,13 @@ gchar *RNDM_VERSION[] =
   N_("Random Slur 1.7"),
 };
 
+gchar *HELP_ID[] =
+{
+  "plug-in-randomize-hurl",
+  "plug-in-randomize-pick",
+  "plug-in-randomize-slur",
+};
+
 #define RNDM_HURL 1
 #define RNDM_PICK 2
 #define RNDM_SLUR 3
@@ -694,7 +701,7 @@ randomize_dialog (void)
 
   dlg = gimp_dialog_new (gettext (RNDM_VERSION[rndm_type - 1]), "randomize",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/randomize.html",
+			 gimp_standard_help_func, HELP_ID[rndm_type - 1],
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

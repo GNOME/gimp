@@ -634,7 +634,7 @@ run_save_dialog	(Config *config)
 
   dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/csource.html",
+			    gimp_standard_help_func, "file-csource-save",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

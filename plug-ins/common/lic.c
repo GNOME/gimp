@@ -704,7 +704,7 @@ create_main_dialog (void)
 
   dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/lic.html",
+			    gimp_standard_help_func, "plug-in-lic",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 

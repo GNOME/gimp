@@ -1377,8 +1377,7 @@ main_dialog (GimpDrawable *drawable)
 
   appwin = gimp_dialog_new (_("Map to Object"), "MapObject",
                             NULL, 0,
-			    gimp_standard_help_func,
-			    "filters/mapobject.html",
+			    gimp_standard_help_func, "plug-in-map-object",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

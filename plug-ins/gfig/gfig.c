@@ -1377,7 +1377,7 @@ num_sides_dialog (gchar *d_title,
 
   window = gimp_dialog_new (d_title, "gfig",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/gfig.html",
+                            gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -2917,7 +2917,7 @@ gfig_dialog (void)
   /* Start building the dialog up */
   top_level_dlg = gimp_dialog_new (_("Gfig"), "gfig",
                                    NULL, 0,
-                                   gimp_standard_help_func, "filters/gfig.html",
+                                   gimp_standard_help_func, HELP_ID,
 
                                    GTK_STOCK_UNDO,   RESPONSE_UNDO,
                                    GTK_STOCK_CLEAR,  RESPONSE_CLEAR,
@@ -3095,8 +3095,7 @@ gfig_response (GtkWidget *widget,
 
             dialog = gimp_query_boolean_box (_("Warning"),
                                              widget,
-                                             gimp_standard_help_func,
-                                             "filters/gfig.html",
+                                             gimp_standard_help_func, HELP_ID,
                                              GTK_STOCK_DIALOG_WARNING,
                                              message,
                                              GTK_STOCK_OK, GTK_STOCK_CANCEL,
@@ -3262,7 +3261,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
   options->query_box =
     gimp_dialog_new (_("Enter Gfig Object Name"), "gfig",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/gfig.html",
+                     gimp_standard_help_func, HELP_ID,
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -3342,7 +3341,7 @@ gfig_rescan_list (void)
   /*  the dialog  */
   dlg = gimp_dialog_new (_("Rescan for Gfig Objects"), "gfig",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/gfig.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -3640,7 +3639,7 @@ about_button_callback (GtkWidget *widget,
 
   window = gimp_dialog_new (_("About Gfig"), "gfig",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/gfig.html",
+                            gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -3828,8 +3827,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
 
   delete_dialog = gimp_query_boolean_box (_("Delete Gfig Drawing"),
                                           gtk_widget_get_toplevel (list),
-                                          gimp_standard_help_func,
-                                          "filters/gfig.html",
+                                          gimp_standard_help_func, HELP_ID,
                                           FALSE,
                                           str,
                                           GTK_STOCK_DELETE, GTK_STOCK_CANCEL,

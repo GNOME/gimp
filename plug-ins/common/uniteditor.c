@@ -170,7 +170,7 @@ new_unit (GtkWidget *main_dialog,
 
   dialog = gimp_dialog_new (_("New Unit"), "uniteditor",
                             main_dialog, GTK_DIALOG_MODAL,
-			    gimp_standard_help_func, "filters/uniteditor.html",
+			    gimp_standard_help_func, "plug-in-unit-editor",
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -532,8 +532,7 @@ unit_editor_dialog (void)
 
   main_dialog = gimp_dialog_new (_("Unit Editor"), "uniteditor",
                                  NULL, 0,
-                                 gimp_standard_help_func,
-                                 "filters/uniteditor.html",
+                                 gimp_standard_help_func, "plug-in-unit-editor",
 
                                  GTK_STOCK_REFRESH, RESPONSE_REFRESH,
                                  GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,

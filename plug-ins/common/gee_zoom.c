@@ -199,7 +199,7 @@ build_dialog (void)
                            "\"The GIMP E'er Egg\""),
                          "gee_zoom",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/gee_zoom.html",
+                         gimp_standard_help_func, "plug-in-the-old-egg",
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),

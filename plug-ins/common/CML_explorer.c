@@ -91,6 +91,7 @@
 #define PARAM_FILE_FORMAT_VERSION 1.0
 #define	PLUG_IN_NAME	          "plug_in_CML_explorer"
 #define SHORT_NAME                "CML_explorer"
+#define HELP_ID                   "plug-in-cml-explorer"
 #define VALS                      CML_explorer_vals
 #define PROGRESS_UPDATE_NUM        100
 #define CML_LINE_SIZE             1024
@@ -1173,7 +1174,7 @@ CML_explorer_dialog (void)
 
   dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1901,7 +1902,7 @@ function_graph_new (GtkWidget *widget,
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,
-			 gimp_standard_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_OK, GTK_RESPONSE_OK,
 
@@ -2076,8 +2077,7 @@ CML_save_to_file_callback (GtkWidget *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      gimp_help_connect (filesel, gimp_standard_help_func,
-			 "filters/cml_explorer.html", NULL);
+      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (filesel, "response",
 			G_CALLBACK (CML_save_to_file_response),
@@ -2209,7 +2209,7 @@ force_overwrite (const gchar *filename,
 
   dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
                          parent, GTK_DIALOG_MODAL,
-			 gimp_standard_help_func, "filters/cml_explorer.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2253,8 +2253,7 @@ CML_load_from_file_callback (GtkWidget *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      gimp_help_connect (filesel, gimp_standard_help_func,
-			 "filters/cml_explorer.html", NULL);
+      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (filesel, "response",
 			G_CALLBACK (CML_load_from_file_response),

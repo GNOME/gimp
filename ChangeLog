@@ -1,3 +1,19 @@
+2004-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphelp-ids.h: added help IDs for the libgimp
+	export and unit dialogs.
+
+	* libgimp/gimpexport.c
+	* libgimpwidgets/gimpunitmenu.c: replaced html links by the new
+	help IDs.
+
+	* plug-ins/*/*.c: replaced all html help links by help IDs. A
+	plug-in's help ID is its procedure name with '_' relaced by '-'.
+
+	(e.g. file_tiff_save's help ID is file-tiff-save)
+
+	Did some random indentation and whitespace cleanup.
+
 2004-01-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: when starting a new gimp, pass it the

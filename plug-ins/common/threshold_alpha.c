@@ -37,6 +37,7 @@
 
 #define	PLUG_IN_NAME        "plug_in_threshold_alpha"
 #define SHORT_NAME          "threshold_alpha"
+#define HELP_ID             "plug-in-threshold-alpha"
 #define PROGRESS_UPDATE_NUM 100
 #define SCALE_WIDTH         120
 
@@ -217,11 +218,11 @@ threshold_alpha_dialog (void)
   GtkObject *adj;
   gboolean   run;
 
-  gimp_ui_init ("threshold_alpha", FALSE);
+  gimp_ui_init (SHORT_NAME, FALSE);
 
-  dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
+  dlg = gimp_dialog_new (_("Threshold Alpha"), SHORT_NAME,
                          NULL, 0,
-                         gimp_standard_help_func, "filters/threshold_alpha.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

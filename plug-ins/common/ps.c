@@ -2622,7 +2622,7 @@ load_dialog (void)
 
   dialog = gimp_dialog_new (_("Load PostScript"), "ps",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/ps.html",
+			    gimp_standard_help_func, "file-ps-load",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2787,7 +2787,7 @@ save_dialog (void)
 
   dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/ps.html",
+			    gimp_standard_help_func, "file-ps-save",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -615,7 +615,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as Brush"), "gbr",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/gbr.html",
+			 gimp_standard_help_func, "file-gbr-save",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -811,7 +811,7 @@ load_dialog (const gchar *name)
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), "gfli",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/gfli.html",
+			    gimp_standard_help_func, "file-gfli-load",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -874,7 +874,7 @@ save_dialog (gint32 image_id)
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), "gfli",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/gfli.html",
+			    gimp_standard_help_func, "file-gfli-save",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

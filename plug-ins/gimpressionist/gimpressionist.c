@@ -343,7 +343,7 @@ showabout (void)
   window =
     gimp_dialog_new (_("The GIMPressionist"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/gimpressionist.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -427,8 +427,7 @@ create_dialog (void)
 
   dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
                          NULL, 0,
-			 gimp_standard_help_func,
-			 "filters/gimpressionist.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 _("A_bout"),      RESPONSE_ABOUT,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

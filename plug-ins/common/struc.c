@@ -1255,7 +1255,7 @@ struc_dialog (void)
 
   dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/struc.html",
+			 gimp_standard_help_func, "plug-in-apply-canvas",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -210,7 +210,7 @@ gimp_create_color_adjust_window (void)
   gimp_color_adjust_dialog =
     gimp_dialog_new (_("Print Color Adjust"), "print",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/print.html",
+		     gimp_standard_help_func, "file-print-gimp",
 
 		     GIMP_STOCK_RESET, RESPONSE_RESET,
 		     GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,

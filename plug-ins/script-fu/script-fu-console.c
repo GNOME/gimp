@@ -167,7 +167,8 @@ script_fu_console_interface (void)
 
   dialog = gimp_dialog_new (_("Script-Fu Console"), "script-fu-console",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/script-fu.html",
+			    gimp_standard_help_func,
+                            "plug-in-script-fu-console",
 
 			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

@@ -317,7 +317,7 @@ shift_dialog (gint32 image_ID)
 
   dlg = gimp_dialog_new (_("Shift"), "shift",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/shift.html",
+			 gimp_standard_help_func, "plug-in-shift",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

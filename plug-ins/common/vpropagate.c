@@ -41,11 +41,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define	DEFAULT_PLUG_IN_NAME	"plug_in_vpropagate"
-#define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
-#define SHORT_NAME	"vpropagate"
-#define ERODE_PLUG_IN_NAME "plug_in_erode"
-#define DILATE_PLUG_IN_NAME "plug_in_dilate"
+#define	DEFAULT_PLUG_IN_NAME "plug_in_vpropagate"
+#define PLUG_IN_IMAGE_TYPES  "RGB*, GRAY*"
+#define SHORT_NAME           "vpropagate"
+#define HELP_ID              "plug-in-vpropagate"
+#define ERODE_PLUG_IN_NAME   "plug_in_erode"
+#define DILATE_PLUG_IN_NAME  "plug_in_dilate"
 
 
 #define	VP_RGB	        (1 << 0)
@@ -1025,7 +1026,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 
   dlg = gimp_dialog_new (_("Value Propagate"), "vpropagate",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/vpropagate.html",
+			 gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -185,7 +185,7 @@ maze_dialog (void)
 
   dlg = gimp_dialog_new (_(MAZE_TITLE), "maze",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/maze.html",
+			 gimp_standard_help_func, "plug-in-maze",
 
 			 GTK_STOCK_HELP,   GTK_RESPONSE_HELP,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

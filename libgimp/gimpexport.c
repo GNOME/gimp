@@ -381,7 +381,8 @@ confirm_save_dialog (const gchar *message,
 
   dialog = gimp_dialog_new (_("Confirm Save"), "gimp-export-image-confirm",
                             NULL, 0,
-			    gimp_standard_help_func, "dialogs/confirm_save.html",
+			    gimp_standard_help_func,
+                            "gimp-export-confirm-dialog",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    _("Confirm"),     GTK_RESPONSE_OK,
@@ -455,7 +456,7 @@ export_dialog (GSList      *actions,
 
   dialog = gimp_dialog_new (_("Export File"), "gimp-export-image",
                             NULL, 0,
-                            gimp_standard_help_func, "dialogs/export_file.html",
+                            gimp_standard_help_func, "gimp-export-dialog",
 
 			    _("_Ignore"),     GTK_RESPONSE_NO,
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

@@ -766,8 +766,7 @@ delete_fractal_callback (GtkWidget *widget,
 
   delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
                                           gtk_widget_get_toplevel (list),
-					  gimp_standard_help_func,
-					  "filters/fractalexplorer.html",
+					  gimp_standard_help_func, HELP_ID,
 					  GTK_STOCK_DIALOG_QUESTION,
 					  str,
 					  GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
@@ -1345,7 +1344,7 @@ fractalexplorer_rescan_list (void)
 
   dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/fractalexplorer.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

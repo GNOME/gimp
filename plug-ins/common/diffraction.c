@@ -439,7 +439,7 @@ diffraction_dialog (void)
 
   dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/diffraction.html",
+			    gimp_standard_help_func, "plug-in-diffraction",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -301,7 +301,7 @@ sel2path_dialog (SELVALS *sels)
 
   dlg = gimp_dialog_new (_("Selection To Path Advanced Settings"), "sel2path",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/sel2path.html",
+			 gimp_standard_help_func, "plug-in-sel2path-advanced",
 
 			 GIMP_STOCK_RESET, RESPONSE_RESET,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

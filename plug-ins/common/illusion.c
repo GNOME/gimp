@@ -41,6 +41,7 @@
 
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"
+#define HELP_ID         "plug-in-illusion"
 
 
 static void      query  (void);
@@ -393,7 +394,7 @@ dialog (GimpDrawable *mangle)
 
   dlg = gimp_dialog_new (_("Illusion"), "illusion",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/illusion.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

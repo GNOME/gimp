@@ -117,7 +117,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
       dbbrowser->dialog =
         gimp_dialog_new (_("DB Browser"), "dbbrowser",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/dbbrowser.html",
+                         gimp_standard_help_func, "plug-in-db-browser",
 
                          _("Search by _Name"),  RESPONSE_SEARCH_NAME,
                          _("Search by _Blurb"), RESPONSE_SEARCH_BLURB,
@@ -131,7 +131,7 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
       dbbrowser->dialog =
         gimp_dialog_new (_("DB Browser"), "dbbrowser",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/dbbrowser.html",
+                         gimp_standard_help_func, "plug-in-db-browser",
 
                          _("Search by _Name"),  RESPONSE_SEARCH_NAME,
                          _("Search by _Blurb"), RESPONSE_SEARCH_BLURB,

@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #include "config.h"
@@ -94,7 +94,7 @@ d_load_bezier (FILE *from)
 		  g_message ("[%d] Internal load error while loading bezier",
 			     line_no);
 		  return NULL;
-		} 
+		}
 	      /* Go around and read the last line */
 	      continue;
 	    }
@@ -106,7 +106,7 @@ d_load_bezier (FILE *from)
 	    }
 	  return new_obj;
 	}
-      
+
       if (!new_obj)
 	new_obj = d_new_bezier (xpnt, ypnt);
       else
@@ -167,7 +167,7 @@ d_bz_get_array (gint *sz)
 static void
 d_bz_line (void)
 {
-  gint i, x0, y0, x1, y1; 
+  gint i, x0, y0, x1, y1;
 
   g_assert ((fp_pnt_cnt % 4) == 0);
 
@@ -192,10 +192,10 @@ DrawBezier (gdouble (*points)[2],
 	    gdouble   mid,
 	    gint      depth)
 {
-  gint i, j, x0 = 0, y0 = 0, x1, y1; 
+  gint i, j, x0 = 0, y0 = 0, x1, y1;
   fp_pnt left;
   fp_pnt right;
-  
+
     if (depth == 0) /* draw polyline */
       {
 	for (i = 0; i < np; i++)
@@ -220,7 +220,7 @@ DrawBezier (gdouble (*points)[2],
 	  {
 	    right[i][0] = points[i][0];
 	    right[i][1] = points[i][1];
-	  } 
+	  }
 	left[0][0] = right[0][0];
 	left[0][1] = right[0][1];
 	for (j = np - 1; j >= 1; j--)
@@ -365,7 +365,7 @@ static Dobject *
 d_new_bezier (gint x, gint y)
 {
   Dobject *nobj;
- 
+
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = BEZIER;
@@ -390,11 +390,11 @@ d_update_bezier (GdkPoint *pnt)
 
   /* Undraw last one then draw new one */
   s_pnt = tmp_bezier->points;
-  
+
   if (!s_pnt)
     return; /* No points */
 
-  /* Hack - turn off cnt points in draw routine 
+  /* Hack - turn off cnt points in draw routine
    */
 
   if ((l_pnt = s_pnt->next))
@@ -446,10 +446,10 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
     {
       tmp_bezier = obj_creating;
     }
-  
+
   l_pnt = tmp_bezier->points->next;
 
-  if (!l_pnt) 
+  if (!l_pnt)
     return;
 
   if (shift_down)
@@ -522,7 +522,7 @@ bezier_dialog (void)
 
   window = gimp_dialog_new (_("Bezier Settings"), "gfig",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/gfig.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

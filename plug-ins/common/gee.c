@@ -165,7 +165,7 @@ build_dialog (void)
 
   dlg = gimp_dialog_new (_("GEE-SLIME"), "gee",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/gee.html",
+                         gimp_standard_help_func, "plug-in-the-slimy-egg",
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),

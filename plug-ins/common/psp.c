@@ -403,7 +403,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as PSP"), "psp",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/psp.html",
+			 gimp_standard_help_func, "file-psp-load",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

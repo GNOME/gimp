@@ -1192,7 +1192,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/newsprint.html",
+			    gimp_standard_help_func, "plug-in-newsprint",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

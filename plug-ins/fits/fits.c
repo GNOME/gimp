@@ -968,7 +968,7 @@ load_dialog (void)
 
   dialog = gimp_dialog_new (_("Load FITS File"), "fits",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/fits.html",
+			    gimp_standard_help_func, "file-fits-load",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -16,9 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* 
- * dbbrowser 
- * 0.08 26th sept 97  by Thomas NOEL <thomas@minet.net> 
+/*
+ * dbbrowser
+ * 0.08 26th sept 97  by Thomas NOEL <thomas@minet.net>
  */
 
 /*
@@ -29,7 +29,7 @@
  *
  * NOTE :
  * this is only a exercice for me (my first "plug-in" (extension))
- * so it's very (very) dirty. 
+ * so it's very (very) dirty.
  * Btw, hope it gives you some ideas about gimp possibilities.
  *
  * The core of the plugin is not here. See dbbrowser_utils (shared
@@ -110,11 +110,11 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
-  INIT_I18N (); 
+  INIT_I18N ();
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE: 
+    case GIMP_RUN_INTERACTIVE:
       {
         gimp_ui_init ("dbbrowser", FALSE);
 
@@ -124,7 +124,7 @@ run (const gchar      *name,
         gdk_flush ();
       }
       break;
-      
+
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
       g_warning ("dbbrowser allows only interactive invocation");

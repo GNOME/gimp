@@ -494,7 +494,7 @@ solid_noise_dialog (void)
   /*  Dialog initialization  */
   dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/snoise.html",
+			 gimp_standard_help_func, "plug-in-solid-noise",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -39,9 +39,11 @@
 
 #include "gimpoldpreview.h"
 
-/* Replace them with the right ones */
-#define PLUG_IN_NAME         "plug_in_max_rgb"
-#define SHORT_NAME           "max_rgb"
+
+#define PLUG_IN_NAME "plug_in_max_rgb"
+#define SHORT_NAME   "max_rgb"
+#define HELP_ID      "plug-in-max-rgb"
+
 
 static void     query   (void);
 static void     run     (const gchar      *name,
@@ -248,7 +250,7 @@ dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/max_rgb.html",
+                         gimp_standard_help_func, "plug-in-max-rgb",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -2542,7 +2542,7 @@ dialog_box (void)
 
   dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/jigsaw.html",
+			 gimp_standard_help_func, "plug-in-jigsaw",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

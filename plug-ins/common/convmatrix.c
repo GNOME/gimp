@@ -870,7 +870,7 @@ dialog (void)
 
   dlg = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/convmatrix.html",
+			 gimp_standard_help_func, "plug-in-convmatrix",
 
 			 GIMP_STOCK_RESET, RESPONSE_RESET,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

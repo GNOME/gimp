@@ -38,8 +38,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define	PLUG_IN_NAME	"plug_in_scatter_hsv"
-#define SHORT_NAME	"scatter_hsv"
+#define	PLUG_IN_NAME "plug_in_scatter_hsv"
+#define SHORT_NAME   "scatter_hsv"
+#define HELP_ID      "plug-in-scatter-hsv"
 
 static void   query (void);
 static void   run   (const gchar      *name,
@@ -335,7 +336,7 @@ scatter_hsv_dialog (void)
 
   dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
                          NULL, 0,
-			 gimp_standard_help_func, "filters/scatter_hsv.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

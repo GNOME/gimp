@@ -292,7 +292,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_tiff_save") == 0 
+  else if (strcmp (name, "file_tiff_save") == 0
            || strcmp (name, "file_tiff_save2") == 0 )
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
@@ -1142,22 +1142,22 @@ read_16bit (guchar       *source,
             case PHOTOMETRIC_MINISWHITE:
               if (alpha)
                 {
-                  if (tsvals.save_transp_pixels) 
+                  if (tsvals.save_transp_pixels)
                     {
                       *dest++ = *source; source += 2;
                       *dest++ = *source; source += 2;
                     }
-                  else 
+                  else
                     {
                       gray_val  = *source; source += 2;
                       alpha_val = *source; source += 2;
                       gray_val  = MIN (gray_val, alpha_val);
-                      
+
                       if (alpha_val)
                         *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
                       else
                         *dest++ = 0;
-                      
+
                       *dest++ = alpha_val;
                     }
                 }
@@ -1500,7 +1500,7 @@ read_default (guchar       *source,
                   else
                     {
                       gray_val= MIN (gray_val, alpha_val);
-                     
+
                       if (alpha_val)
                         *dest++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
                       else
@@ -1554,7 +1554,7 @@ read_default (guchar       *source,
                           *dest++ = 0;
                           *dest++ = 0;
                         }
-                      
+
                       *dest++ = alpha_val;
                     }
                 }
@@ -2017,7 +2017,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as TIFF"), "tiff",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/tiff.html",
+			 gimp_standard_help_func, "file-tiff-save",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -2045,7 +2045,7 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Keep colors behind alpha mask */
-  toggle = gtk_check_button_new_with_mnemonic 
+  toggle = gtk_check_button_new_with_mnemonic
     ( _("Save _color values from transparent pixels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 tsvals.save_transp_pixels);

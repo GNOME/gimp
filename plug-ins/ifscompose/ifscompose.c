@@ -69,6 +69,7 @@
 
 #define IFSCOMPOSE_PARASITE "ifscompose-parasite"
 #define IFSCOMPOSE_DATA     "plug_in_ifscompose"
+#define HELP_ID             "plug-in-ifs-compose"
 
 typedef enum
 {
@@ -806,7 +807,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/ifscompose.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GIMP_STOCK_RESET, RESPONSE_RESET,
 			 GTK_STOCK_OPEN,   RESPONSE_OPEN,
@@ -1253,7 +1254,7 @@ ifs_options_dialog (void)
       ifsOptD->dialog =
 	gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/ifscompose.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
@@ -2719,8 +2720,7 @@ ifs_compose_save (GtkWidget *parent)
       gtk_window_set_transient_for (GTK_WINDOW (file_select),
                                     GTK_WINDOW (parent));
 
-      gimp_help_connect (file_select, gimp_standard_help_func,
-			 "filters/ifscompose.html", NULL);
+      gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (file_select, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
@@ -2745,8 +2745,7 @@ ifs_compose_load (GtkWidget *parent)
       gtk_window_set_transient_for (GTK_WINDOW (file_select),
                                     GTK_WINDOW (parent));
 
-      gimp_help_connect (file_select, gimp_standard_help_func,
-			 "filters/ifscompose.html", NULL);
+      gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (file_select, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),

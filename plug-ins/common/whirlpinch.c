@@ -68,6 +68,7 @@
 
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
+#define HELP_ID         "plug-in-whirl-pinch"
 
 /***** Magic numbers *****/
 
@@ -645,7 +646,7 @@ whirl_pinch_dialog (void)
 
   dialog = gimp_dialog_new (_("Whirl and Pinch"), "whirlpinch",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/whirlpinch.html",
+			    gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

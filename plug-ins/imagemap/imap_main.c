@@ -1416,8 +1416,7 @@ dialog(GimpDrawable *drawable)
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
 
    main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func,
-                      "filters/imagemap.html", NULL);
+   gimp_help_connect (dlg, gimp_standard_help_func, "plug-in-imagemap", NULL);
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
    g_signal_connect(dlg, "delete_event",

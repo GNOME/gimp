@@ -614,8 +614,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   menu->selection = gimp_dialog_new (_("Unit Selection"), "gimp-unit-selection",
                                      GTK_WIDGET (menu),
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     gimp_standard_help_func,
-                                     "dialogs/unit_selection.html",
+                                     gimp_standard_help_func, "gimp-unit-dialog",
 
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                      GTK_STOCK_OK,     GTK_RESPONSE_OK,

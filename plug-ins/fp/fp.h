@@ -5,6 +5,8 @@
 #define ALL                255
 #define MARGIN             4
 
+#define HELP_ID            "plug-in-filter-pack"
+
 #define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \
                         GDK_ENTER_NOTIFY_MASK | \
                         GDK_BUTTON_PRESS_MASK | \
@@ -35,7 +37,7 @@ typedef enum {
 enum {
   NONEATALL  =0,
   CURRENT    =1,
-  HUE        =2, 
+  HUE        =2,
   SATURATION =4,
   VALUE      =8
 };
@@ -57,9 +59,9 @@ enum {
 };
 
 enum {
-  BY_HUE, 
-  BY_SAT, 
-  BY_VAL, 
+  BY_HUE,
+  BY_SAT,
+  BY_VAL,
   JUDGE_BY
 };
 
@@ -105,12 +107,12 @@ GtkWidget *fp_create_circle_palette(void);
 GtkWidget *fp_create_lnd(void);
 GtkWidget *fp_create_show(void);
 GtkWidget *fp_create_msnls();
-GtkWidget *fp_create_frame_select();  
+GtkWidget *fp_create_frame_select();
 GtkWidget *fp_create_pixels_select_by();
 
 void  fp_show_hide_frame(GtkWidget *button,
 			 GtkWidget *frame);
- 
+
 ReducedImage  *Reduce_The_Image   (GimpDrawable *,
 				   GimpDrawable *,
 				   gint,
@@ -156,11 +158,11 @@ void      update_range_labels            (void);
 
 void      fp_create_smoothness_graph     (GtkWidget*    );
 
-void      fp_range_preview_spill         (GtkWidget*, 
+void      fp_range_preview_spill         (GtkWidget*,
 					  gint           );
 
 void      Create_A_Preview        (GtkWidget  **,
-				   GtkWidget  **, 
+				   GtkWidget  **,
 				   int,
 				   int           );
 
@@ -187,7 +189,7 @@ void Frames_Check_Button_In_A_Box (GtkWidget     *,
 				   GtkWidget     *frame,
 				   int            clicked);
 
-void      Adjust_Preview_Sizes     (int width, 
+void      Adjust_Preview_Sizes     (int width,
 				    int height   );
 void      refreshPreviews          (int);
 void      initializeFilterPacks    (void);
@@ -203,8 +205,8 @@ void      draw_slider              (GdkWindow *window,
 				    GdkGC     *border_gc,
 				    GdkGC     *fill_gc,
 				    int        xpos);
-gint     FP_Range_Change_Events    (GtkWidget *, 
-				    GdkEvent *, 
+gint     FP_Range_Change_Events    (GtkWidget *,
+				    GdkEvent *,
 				    FP_Params *);
 
 void     As_You_Drag               (GtkWidget *button);

@@ -52,6 +52,7 @@
 
 #define PLUG_IN_NAME        "plug_in_colors_channel_mixer"
 #define PLUG_IN_VERSION     "Channel Mixer 0.8"
+#define HELP_ID             "plug-in-colors-channel-mixer"
 #define PROGRESS_UPDATE_NUM 20
 #define CM_LINE_SIZE        1024
 
@@ -528,9 +529,7 @@ cm_dialog (void)
 
   dialog = gimp_dialog_new (_("Channel Mixer"), "mixer",
                             NULL, 0,
-
-                            gimp_standard_help_func,
-                            "filters/channel_mixer.html",
+                            gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1038,8 +1037,7 @@ cm_load_file_callback (GtkWidget    *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      gimp_help_connect (filesel, gimp_standard_help_func,
-                         "filters/channel_mixer.html", NULL);
+      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (filesel, "response",
                         G_CALLBACK (cm_load_file_response_callback),
@@ -1175,8 +1173,7 @@ cm_save_file_callback (GtkWidget    *widget,
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-      gimp_help_connect (filesel, gimp_standard_help_func,
-                         "filters/channel_mixer.html", NULL);
+      gimp_help_connect (filesel, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (filesel, "response",
                         G_CALLBACK (cm_save_file_response_callback),
@@ -1267,7 +1264,7 @@ cm_force_overwrite (const gchar *filename,
   dlg = gimp_dialog_new (_("Channel Mixer File Operation Warning"),
                          "channel_mixer",
                          parent, GTK_DIALOG_MODAL,
-                         gimp_standard_help_func, "filters/channel_mixer.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -69,6 +69,7 @@
 
 #define PLUG_IN_NAME    "plug_in_pagecurl"
 #define PLUG_IN_VERSION "May 1998, 0.9"
+#define HELP_ID         "plug-in-pagecurl"
 #define NGRADSAMPLES    256
 
 
@@ -489,7 +490,7 @@ do_dialog (void)
 
   dialog = gimp_dialog_new (_("Pagecurl Effect"), "pagecurl",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/pagecurl.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

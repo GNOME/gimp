@@ -63,6 +63,7 @@
 
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
+#define HELP_ID         "plug-in-mblur"
 
 #define     MBLUR_LINEAR 0
 #define     MBLUR_RADIAL 1
@@ -735,7 +736,7 @@ mblur_dialog (void)
 
   dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/mblur.html",
+			    gimp_standard_help_func, "plug-in-mblur",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

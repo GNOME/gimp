@@ -23,6 +23,7 @@
 
 #define PLUG_IN_NAME     "plug_in_fractal_trace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
+#define HELP_ID          "plug-in-fractal-trace"
 
 /******************************************************************************/
 
@@ -158,7 +159,7 @@ typedef struct
 
 static selection_t selection;
 static image_t     image;
-  
+
 /******************************************************************************/
 
 static void
@@ -193,7 +194,7 @@ run (const gchar      *name,
 
   pixels_init (drawable);
 
-  if (!gimp_drawable_is_rgb(drawable->drawable_id) && 
+  if (!gimp_drawable_is_rgb(drawable->drawable_id) &&
       !gimp_drawable_is_gray(drawable->drawable_id))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -739,7 +740,7 @@ dialog_show (void)
 
   dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/fractaltrace.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -521,7 +521,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as HRZ"), "hrz",
 			 NULL, 0,
-                         gimp_standard_help_func, "filters/hrz.html",
+                         gimp_standard_help_func, "file-hrz-save",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

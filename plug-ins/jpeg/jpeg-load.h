@@ -1672,7 +1672,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as JPEG"), "jpeg",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/jpeg.html",
+			 gimp_standard_help_func, "file-jpeg-save",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

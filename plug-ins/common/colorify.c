@@ -41,6 +41,7 @@
 
 #define PLUG_IN_NAME    "plug_in_colorify"
 #define PLUG_IN_VERSION "1.1"
+#define HELP_ID         "plug-in-colorify"
 
 #define COLOR_SIZE 30
 
@@ -247,7 +248,7 @@ colorify_dialog (GimpRGB *color)
 
   dialog = gimp_dialog_new (_("Colorify"), "colorify",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/colorify.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

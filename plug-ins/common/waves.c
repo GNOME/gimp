@@ -293,7 +293,7 @@ pluginCoreIA (piArgs *argp,
 
   dlg = gimp_dialog_new (_("Waves"), "waves",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/waves.html",
+                         gimp_standard_help_func, "plug-in-waves",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

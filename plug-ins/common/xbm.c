@@ -1146,7 +1146,7 @@ save_dialog (gint32 drawable_ID)
 
   dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/xbm.html",
+			 gimp_standard_help_func, "file-xbm-save",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

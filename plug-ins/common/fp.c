@@ -82,7 +82,7 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
-  
+
   gimp_install_procedure ("plug_in_filter_pack",
 			  "Allows the user to change H, S, or C with many previews",
 			  "No help available",
@@ -107,11 +107,11 @@ run (const gchar      *name,
 {
   GimpParam         values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  
+
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N (); 
+  INIT_I18N ();
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -129,14 +129,14 @@ run (const gchar      *name,
     }
   else if (gimp_drawable_is_rgb (drawable->drawable_id) && fp_dialog())
     {
-      gimp_progress_init (_("Applying the Filter Pack...")); 
+      gimp_progress_init (_("Applying the Filter Pack..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       fp (drawable);
       gimp_displays_flush ();
     }
   else status = GIMP_PDB_EXECUTION_ERROR;
-  
-  
+
+
   values[0].data.d_status = status;
   if (status==GIMP_PDB_SUCCESS)
     gimp_drawable_detach (drawable);
@@ -158,7 +158,7 @@ fp_row (const guchar *src_row,
 
   for (col = 0; col < row_width ; col++)
     {
-      
+
       backupP[0] = P[0] = src_row[col * bytes + 0];
       backupP[0] = P[1] = src_row[col * bytes + 1];
       backupP[0] = P[2] = src_row[col * bytes + 2];
@@ -188,7 +188,7 @@ fp_row (const guchar *src_row,
 
 
           /* It's important to take care of Saturation first!!! */
-      
+
           m = MIN (MIN (P[0], P[1]), P[2]);
           M = MAX (MAX (P[0], P[1]), P[2]);
           middle = (M + m) / 2;
@@ -196,14 +196,14 @@ fp_row (const guchar *src_row,
           for (k = 0; k < 3; k++)
             if (P[k] != m && P[k] != M)
               middle = P[k];
-      
-          for (k = 0; k < 3; k++) 
+
+          for (k = 0; k < 3; k++)
             if (M != m)
               {
                 if (P[k] == M)
                   P[k] = MAX (P[k] + Current.satAdj[JudgeBy][Intensity], middle);
                 else if (P[k] == m)
-                  P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle); 
+                  P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle);
               }
 
           P[0] += Current.redAdj[JudgeBy][Intensity];
@@ -234,7 +234,7 @@ void fp (GimpDrawable *drawable)
   guchar *src_row, *dest_row;
   gint row;
   gint x1, y1, x2, y2;
-  
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width = drawable->width;
@@ -259,7 +259,7 @@ void fp (GimpDrawable *drawable)
 		  );
 
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
-      
+
       if ((row % 10) == 0)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }
@@ -270,8 +270,8 @@ void fp (GimpDrawable *drawable)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-  
+
   free (src_row);
   free (dest_row);
- 
+
 }

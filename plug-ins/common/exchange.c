@@ -318,7 +318,7 @@ exchange_dialog (void)
   /* set up the dialog */
   dialog = gimp_dialog_new (_("Color Exchange"), "exchange",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/exchange.html",
+			    gimp_standard_help_func, "plug-in-exchange",
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -44,10 +44,11 @@
  * Constants...
  */
 
-#define PLUG_IN_NAME		"plug_in_sharpen"
-#define PLUG_IN_VERSION		"1.4.2 - 3 June 1998"
-#define PREVIEW_SIZE		128
-#define SCALE_WIDTH		100
+#define PLUG_IN_NAME    "plug_in_sharpen"
+#define PLUG_IN_VERSION "1.4.2 - 3 June 1998"
+#define HELP_ID         "plug-in-sharpen"
+#define PREVIEW_SIZE    128
+#define SCALE_WIDTH     100
 
 /*
  * Local functions...
@@ -498,7 +499,7 @@ sharpen_dialog (void)
 
   dialog = gimp_dialog_new (_("Sharpen"), "Sharpen",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/sharpen.html",
+			    gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

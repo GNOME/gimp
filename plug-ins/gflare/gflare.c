@@ -75,6 +75,8 @@ static char rcsid[] = "$Id$";
 
 #define RESPONSE_RESCAN     1
 
+#define HELP_ID             "plug-in-gflare"
+
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
 
@@ -2300,15 +2302,14 @@ dlg_run (void)
    *	Dialog Shell
    */
 
-  shell = dlg->shell =
-    gimp_dialog_new (_("GFlare"), "gflare",
-                     NULL, 0,
-		     gimp_standard_help_func, "filters/gflare.html",
+  shell = dlg->shell = gimp_dialog_new (_("GFlare"), "gflare",
+                                        NULL, 0,
+                                        gimp_standard_help_func, HELP_ID,
 
-		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     NULL);
+                                        NULL);
 
   /*
    *    main hbox
@@ -2983,8 +2984,7 @@ dlg_selector_new_callback (GtkWidget *widget,
 
   query_box = gimp_query_string_box (_("New GFlare"),
                                      gtk_widget_get_toplevel (widget),
-				     gimp_standard_help_func,
-				     "filters/gflare.html",
+				     gimp_standard_help_func, HELP_ID,
 				     _("Enter a name for the new GFlare"),
 				     _("Unnamed"),
 				     NULL, NULL,
@@ -3056,8 +3056,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
 
   query_box = gimp_query_string_box (_("Copy GFlare"),
                                      gtk_widget_get_toplevel (widget),
-				     gimp_standard_help_func,
-				     "filters/gflare.html",
+				     gimp_standard_help_func, HELP_ID,
 				     _("Enter a name for the copied GFlare"),
 				     name,
 				     NULL, NULL,
@@ -3117,8 +3116,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 
   dialog = gimp_query_boolean_box (_("Delete GFlare"),
                                    dlg->shell,
-				   gimp_standard_help_func,
-				   "filters/gflare.html",
+				   gimp_standard_help_func, HELP_ID,
 				   GTK_STOCK_DIALOG_QUESTION,
 				   str,
 				   GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
@@ -3216,7 +3214,7 @@ ed_run (GtkWindow            *parent,
   shell = ed->shell =
     gimp_dialog_new (_("GFlare Editor"), "gflare",
                      GTK_WIDGET (parent), 0,
-		     gimp_standard_help_func, "filters/gflare.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     _("Rescan Gradients"), RESPONSE_RESCAN,
 		     GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,

@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 #ifndef __GFIG_H__
@@ -30,6 +30,8 @@
 
 #define MAX_LOAD_LINE    256
 #define SQ_SIZE 8
+
+#define HELP_ID "plug-in-gfig"
 
 extern gint line_no;
 extern gint preview_width, preview_height;
@@ -69,7 +71,7 @@ typedef enum
   REPLACE,
   INTERSECT
 } SelectionType;
-    
+
 
 typedef enum
 {
@@ -166,7 +168,7 @@ typedef struct DFigObj
   GtkWidget *list_item;
   GtkWidget *label_widget;
   GtkWidget *pixmap_widget;
-} GFigObj;  
+} GFigObj;
 
 extern GFigObj  *current_obj;
 extern GFigObj  *pic_obj;
@@ -208,19 +210,19 @@ void	toggle_obj_type		(GtkWidget *widget,
 
 void	setup_undo              (void);
 void	draw_grid_clear		(void);
-void	prepend_to_all_obj      (GFigObj *fobj, 
+void	prepend_to_all_obj      (GFigObj *fobj,
 				 DAllObjs *nobj);
 
-void	gfig_draw_arc		(gint x, 
-				 gint y, 
-				 gint width, 
-				 gint height, 
-				 gint angle1, 
+void	gfig_draw_arc		(gint x,
+				 gint y,
+				 gint width,
+				 gint height,
+				 gint angle1,
 				 gint angle2);
 
-void	gfig_draw_line		(gint x0, 
-				 gint y0, 
-				 gint x1, 
+void	gfig_draw_line		(gint x0,
+				 gint y0,
+				 gint x1,
 				 gint y1);
 
 #endif /* __GFIG_H__ */

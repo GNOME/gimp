@@ -61,14 +61,14 @@ double getsiz(double x, double y, int from)
 
   if((x < 0.0) || (x > 1.0)) printf("HUH? x = %f\n",x);
 
-  if (from == 0) 
+  if (from == 0)
     {
       n = numsmvect;
       vec = smvector;
       smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
       voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
-    } 
-  else 
+    }
+  else
     {
       n = pcvals.numsizevector;
       vec = pcvals.sizevector;
@@ -76,36 +76,36 @@ double getsiz(double x, double y, int from)
       voronoi = pcvals.sizevoronoi;
     }
 
-  if (voronoi) 
+  if (voronoi)
     {
       gdouble bestdist = -1.0;
-      for (i = 0; i < n; i++) 
+      for (i = 0; i < n; i++)
 	{
 	  dst = dist(x, y, vec[i].x, vec[i].y);
-	  if ((bestdist < 0.0) || (dst < bestdist)) 
+	  if ((bestdist < 0.0) || (dst < bestdist))
 	    {
 	      bestdist = dst;
 	      first = i;
 	    }
 	}
       last = first+1;
-    } 
-  else 
+    }
+  else
     {
       first = 0;
       last = n;
     }
 
   sum = ssum = 0.0;
-  for (i = first; i < last; i++) 
+  for (i = first; i < last; i++)
     {
       gdouble s = vec[i].str;
-      
+
       dst = dist(x,y,vec[i].x,vec[i].y);
       dst = pow(dst, smstrexp);
       if(dst < 0.0001) dst = 0.0001;
       s = s / dst;
-      
+
       sum += vec[i].siz * s;
       ssum += 1.0/dst;
   }
@@ -120,7 +120,7 @@ void updatesmpreviewprev(void)
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
 
-  if (!nsbuffer.col) 
+  if (!nsbuffer.col)
     {
       newppm(&nsbuffer,OMWIDTH,OMHEIGHT);
     }
@@ -128,7 +128,7 @@ void updatesmpreviewprev(void)
 
   for (y = 6; y < OMHEIGHT-4; y += 10)
     {
-      for (x = 6; x < OMWIDTH-4; x += 10) 
+      for (x = 6; x < OMWIDTH-4; x += 10)
 	{
 	  gdouble siz = 5 * getsiz(x/(double)OMWIDTH,y/(double)OMHEIGHT,0);
 	  drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
@@ -162,7 +162,7 @@ void updatesmvectorprev(void)
   else
     val = 0.5;
 
-  if(!ok || (val != lastval)) 
+  if(!ok || (val != lastval))
     {
       if(!infile.col)
 	updatepreviewprev(NULL, (void *)2); /* Force grabarea() */
@@ -174,7 +174,7 @@ void updatesmvectorprev(void)
   }
   copyppm(&backup, &sbuffer);
 
-  for (i = 0; i < numsmvect; i++) 
+  for (i = 0; i < numsmvect; i++)
     {
       x = smvector[i].x * OMWIDTH;
       y = smvector[i].y * OMHEIGHT;
@@ -403,7 +403,7 @@ void create_sizemap_dialog(void)
   smwindow =
     gimp_dialog_new (_("Size Map Editor"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/gimpressionst.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GTK_STOCK_APPLY,  RESPONSE_APPLY,
 		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

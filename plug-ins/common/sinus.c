@@ -185,8 +185,6 @@ query (void)
     { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" },
   };
 
-  INIT_I18N ();
-
   gimp_install_procedure ("plug_in_sinus",
 			  "Generates a texture with sinus functions",
 			  "FIX ME: sinus help",
@@ -643,7 +641,7 @@ sinus_dialog (void)
   /* ============================== */
   dlg = gimp_dialog_new (_("Sinus"), "sinus",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/sinus.html",
+			 gimp_standard_help_func, "plug-in-sinus",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

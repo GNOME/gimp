@@ -35,6 +35,7 @@
 
 #define PLUG_IN_NAME "plug_in_align_layers"
 #define SHORT_NAME   "align_layers"
+#define HELP_ID      "plug-in-align-layers"
 #define SCALE_WIDTH  150
 
 enum
@@ -399,7 +400,7 @@ align_layers_dialog (void)
 
   dlg = gimp_dialog_new (_("Align Visible Layers"), SHORT_NAME,
                          NULL, 0,
-                         gimp_standard_help_func, "filters/align_layers.html",
+                         gimp_standard_help_func, HELP_ID,
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

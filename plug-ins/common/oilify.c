@@ -441,7 +441,7 @@ oilify_dialog (void)
 
   dlg = gimp_dialog_new (_("Oilify"), "oilify",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/oilify.html",
+			 gimp_standard_help_func, "plug-in-oilify",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

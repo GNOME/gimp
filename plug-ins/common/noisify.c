@@ -308,7 +308,7 @@ noisify_dialog (GimpDrawable *drawable,
 
   dlg = gimp_dialog_new (_("Noisify"), "noisify",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/noisify.html",
+                         gimp_standard_help_func, "plug-in-noisify",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

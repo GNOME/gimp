@@ -548,7 +548,7 @@ explorer_dialog (void)
   dialog = maindlg =
     gimp_dialog_new ("Fractal Explorer", "fractalexplorer",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/fractalexplorer.html",
+                     gimp_standard_help_func, HELP_ID,
 
                      _("About"),       RESPONSE_ABOUT,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1636,7 +1636,7 @@ explorer_logo_dialog (GtkWidget *parent)
   xdlg = logodlg =
     gimp_dialog_new (_("About"), "fractalexplorer",
                      parent, 0,
-                     gimp_standard_help_func, "filters/fractalexplorer.html",
+                     gimp_standard_help_func, HELP_ID,
 
                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

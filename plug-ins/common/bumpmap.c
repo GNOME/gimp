@@ -874,7 +874,7 @@ bumpmap_dialog (void)
 
   dialog = gimp_dialog_new (_("Bump Map"), "bumpmap",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/bumpmap.html",
+                            gimp_standard_help_func, "plug-in-bump-map",
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

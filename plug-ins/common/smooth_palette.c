@@ -407,7 +407,7 @@ dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/smooth_palette.html",
+			 gimp_standard_help_func, "plug-in-smooth-palette",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

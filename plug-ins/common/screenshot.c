@@ -45,6 +45,7 @@
 
 /* Defines */
 #define PLUG_IN_NAME "plug_in_screenshot"
+#define HELP_ID      "plug-in-screenshot"
 
 #ifdef __GNUC__
 #ifdef GDK_NATIVE_WINDOW_POINTER
@@ -506,7 +507,7 @@ shoot_dialog (void)
 
   dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/screenshot.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -283,7 +283,7 @@ deinterlace_dialog (void)
 
   dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/deinterlace.html",
+			 gimp_standard_help_func, "plug-in-deinterlace",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

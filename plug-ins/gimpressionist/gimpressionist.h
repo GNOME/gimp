@@ -1,6 +1,7 @@
 
-#define PLUG_IN_NAME "plug_in_gimpressionist"
+#define PLUG_IN_NAME    "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v1.0, November 2003"
+#define HELP_ID         "plug-in-gimppressionist"
 
 #ifndef DEFAULTPATH
 #define DEFAULTPATH "~/.gimp/gimpressionist:/usr/local/share/gimp/gimpressionist"

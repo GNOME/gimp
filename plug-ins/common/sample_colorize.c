@@ -55,8 +55,9 @@
 #define RESPONSE_RESET      1
 #define RESPONSE_GET_COLORS 2
 
-#define PLUG_IN_NAME "plug_in_sample_colorize"
+#define PLUG_IN_NAME   "plug_in_sample_colorize"
 #define NUMBER_IN_ARGS 13
+#define HELP_ID        "plug-in-sample-colorize"
 
 #define TILE_CACHE_SIZE 32
 #define LUMINOSITY_0(X)	((X[0] * 30 + X[1] * 59 + X[2] * 11))
@@ -1359,7 +1360,7 @@ p_smp_dialog (void)
   g_di.dialog = dialog =
     gimp_dialog_new (_("Sample Colorize"), "sample_colorize",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/sample_colorize.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GIMP_STOCK_RESET,       RESPONSE_RESET,
 		     _("Get Sample Colors"), RESPONSE_GET_COLORS,

@@ -445,7 +445,7 @@ void create_orientmap_dialog(void)
   omwindow =
     gimp_dialog_new (_("Orientation Map Editor"), "gimpressionist",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/gimpressionst.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GTK_STOCK_APPLY,  GTK_RESPONSE_APPLY,
 		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

@@ -370,7 +370,7 @@ tileit_dialog (void)
 
   dlg = gimp_dialog_new (_("TileIt"), "tileit",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/tileit.html",
+			 gimp_standard_help_func, "plug-in-small-tiles",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -1088,7 +1088,7 @@ compose_dialog (const gchar *compose_type,
 
   dlg = gimp_dialog_new (_("Compose"), "compose",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/compose.html",
+			 gimp_standard_help_func, "plug-in-compose",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

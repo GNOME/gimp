@@ -229,7 +229,7 @@ glass_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Glass Tile"), "glasstile",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/glasstile.html",
+                         gimp_standard_help_func, "plug-in-glasstile",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

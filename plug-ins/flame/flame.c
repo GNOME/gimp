@@ -48,6 +48,8 @@
 
 #define VARIATION_SAME   (-2)
 
+#define HELP_ID "plug-in-flame"
+
 /* Declare local functions. */
 static void query             (void);
 static void run               (const gchar      *name,
@@ -465,8 +467,7 @@ make_file_dlg (GtkWidget *parent)
                     G_CALLBACK (file_response_callback),
                     NULL);
 
-  gimp_help_connect (file_dlg, gimp_standard_help_func,
-                     "filters/flame.html", NULL);
+  gimp_help_connect (file_dlg, gimp_standard_help_func, HELP_ID, NULL);
 }
 
 static void
@@ -608,7 +609,7 @@ edit_callback (GtkWidget *widget,
 
       edit_dlg = gimp_dialog_new (_("Edit Flame"), "flame",
                                   parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-				  gimp_standard_help_func, "filters/flame.html",
+				  gimp_standard_help_func, HELP_ID,
 
 				  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				  GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -899,7 +900,7 @@ dialog (void)
 
   dlg = gimp_dialog_new (_("Flame"), "flame",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/flame.html",
+			 gimp_standard_help_func, HELP_ID,
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -79,6 +79,7 @@
 
 #define PLUG_IN_NAME    "plug_in_qbist"
 #define PLUG_IN_VERSION "January 2001, 1.12"
+#define HELP_ID         "plug-in-qbist"
 
 /** types *******************************************************************/
 
@@ -744,8 +745,7 @@ dialog_load (GtkWidget *widget,
   gtk_window_set_transient_for (GTK_WINDOW (file_select),
                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-  gimp_help_connect (file_select, gimp_standard_help_func,
-		     "filters/gqbist.html", NULL);
+  gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
                                    qbist_info.path);
@@ -769,8 +769,7 @@ dialog_save (GtkWidget *widget,
   gtk_window_set_transient_for (GTK_WINDOW (file_select),
                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
-  gimp_help_connect (file_select, gimp_standard_help_func,
-		     "filters/gqbist.html", NULL);
+  gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
 				   qbist_info.path);
@@ -805,7 +804,7 @@ dialog_create (void)
 
   dialog = gimp_dialog_new (_("G-Qbist"), "gqbist",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/gqbist.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

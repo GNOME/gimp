@@ -79,6 +79,7 @@
 
 #define PLUG_IN_NAME    "plug_in_polar_coords"
 #define PLUG_IN_VERSION "July 1997, 0.5"
+#define HELP_ID         "plug-in-polar-coords"
 
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH   60
@@ -582,7 +583,7 @@ polarize_dialog (void)
 
   dialog = gimp_dialog_new (_("Polarize"), "polar",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/polar.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

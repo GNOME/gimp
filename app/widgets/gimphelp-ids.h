@@ -406,6 +406,10 @@
 #define GIMP_HELP_TIPS_DIALOG                     "gimp-tips-dialog"
 #define GIMP_HELP_UNDO_DIALOG                     "gimp-undo-dialog"
 
+#define GIMP_HELP_EXPORT_DIALOG                   "gimp-export-dialog"
+#define GIMP_HELP_EXPORT_CONFIRM_DIALOG           "gimp-export-confirm-dialog"
+#define GIMP_HELP_UNIT_DIALOG                     "gimp-unit-dialog"
+
 #define GIMP_HELP_HELP                            "gimp-help"
 #define GIMP_HELP_HELP_CONTEXT                    "gimp-help-context"
 

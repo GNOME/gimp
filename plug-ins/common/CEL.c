@@ -211,7 +211,7 @@ run (const gchar      *name,
     {
       image_ID      = param[1].data.d_int32;
       drawable_ID   = param[2].data.d_int32;
-      
+
       /*  eventually export the image */
       switch (run_mode)
 	{
@@ -221,7 +221,7 @@ run (const gchar      *name,
 	  export = gimp_export_image (&image_ID, &drawable_ID, "CEL",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED 
+				       GIMP_EXPORT_CAN_HANDLE_INDEXED
 				       ));
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
@@ -689,8 +689,7 @@ palette_dialog (const gchar *title)
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
-  gimp_help_connect (dialog, gimp_standard_help_func,
-                     "filters/cel.html", NULL);
+  gimp_help_connect (dialog, gimp_standard_help_func, "file-cel-load", NULL);
 
   gtk_widget_show (dialog);
 

@@ -51,6 +51,7 @@
 
 #define PLUG_IN_NAME    "plug_in_depth_merge"
 #define PLUG_IN_VERSION "1.0.0; 14 August 1998"
+#define HELP_ID         "plug-in-depth-merge"
 
 #define PREVIEW_SIZE    256
 
@@ -637,7 +638,7 @@ DepthMerge_dialog (DepthMerge *dm)
   dm->interface->dialog =
     gimp_dialog_new (_("Depth Merge"), "depthmerge",
                      NULL, 0,
-		     gimp_standard_help_func, "filters/depthmerge.html",
+		     gimp_standard_help_func, HELP_ID,
 
 		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 		     GTK_STOCK_OK,     GTK_RESPONSE_OK,

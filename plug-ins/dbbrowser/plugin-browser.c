@@ -972,7 +972,7 @@ gimp_plugin_desc (void)
   plugindesc->dlg =
     gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/plugindetails.html",
+                     gimp_standard_help_func, "plug-in-plug-in-details",
 
                      GTK_STOCK_CLOSE,     GTK_RESPONSE_CLOSE,
                      _("Search by Name"), GTK_RESPONSE_OK,

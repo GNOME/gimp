@@ -1144,7 +1144,7 @@ alienmap_dialog (void)
 
   dialog = gimp_dialog_new (_("AlienMap"), "alienmap",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/alienmap.html",
+                            gimp_standard_help_func, "plug-in-alienmap",
 
                             _("About"),       RESPONSE_ABOUT,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1359,7 +1359,7 @@ alienmap_logo_dialog (GtkWidget *parent)
 
   logodlg = gimp_dialog_new (_("About AlienMap"), "alienmap",
                              parent, GTK_DIALOG_DESTROY_WITH_PARENT,
-                             gimp_standard_help_func, "filters/alienmap.html",
+                             gimp_standard_help_func, "plug-in-alienmap",
 
                              GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

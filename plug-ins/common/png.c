@@ -1552,7 +1552,7 @@ save_dialog (gint32    image_ID,
 
   dlg = gimp_dialog_new (_("Save as PNG"), "png",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/png.html",
+                         gimp_standard_help_func, "file-png-save-defaults",
 
 			 _("_Load Defaults"), RESPONSE_LOAD_DEFAULTS,
 			 _("_Save Defaults"), RESPONSE_SAVE_DEFAULTS,

@@ -363,7 +363,7 @@ create_top_level_structure(void)
   print_dialog =
     gimp_dialog_new (plug_in_name, "print",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/print.html",
+                     gimp_standard_help_func, "file-print-gimp",
 
 		     _("About"),                    RESPONSE_ABOUT,
                      _("Save\nSettings"),           RESPONSE_SAVE,
@@ -649,7 +649,7 @@ create_printer_dialog (void)
 
   setup_dialog = gimp_dialog_new (_("Setup Printer"), "print",
                                   NULL, 0,
-                                  gimp_standard_help_func, "filters/print.html",
+                                  gimp_standard_help_func, "file-print-gimp",
 
                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                   GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -818,7 +818,7 @@ create_new_printer_dialog (void)
   new_printer_dialog =
     gimp_dialog_new (_("Define New Printer"), "print",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/print.html",
+                     gimp_standard_help_func, "file-print-gimp",
 
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -858,7 +858,7 @@ create_about_dialog (void)
   about_dialog =
     gimp_dialog_new (_("About Gimp-Print " PLUG_IN_VERSION), "print",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/print.html",
+                     gimp_standard_help_func, "file-print-gimp",
 
                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

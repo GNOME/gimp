@@ -185,13 +185,13 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gicon", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "GIcon", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GIcon",
 				      (GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
 	  if (export == GIMP_EXPORT_CANCEL)
@@ -425,7 +425,7 @@ save_dialog (void)
 
   dlg = gimp_dialog_new (_("Save as GIcon"), "gicon",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/gicon.html",
+			 gimp_standard_help_func, "file-gicon-save",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

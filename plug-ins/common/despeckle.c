@@ -66,6 +66,7 @@
 
 #define PLUG_IN_NAME	 "plug_in_despeckle"
 #define PLUG_IN_VERSION	 "1.3.2 - 17 May 1998"
+#define HELP_ID          "plug-in-despeckle"
 #define PREVIEW_SIZE	 128
 #define SCALE_WIDTH	 100
 #define ENTRY_WIDTH	   3
@@ -614,7 +615,7 @@ despeckle_dialog (void)
 
   dialog = gimp_dialog_new (_("Despeckle"), "despeckle",
                             NULL, 0,
-			    gimp_standard_help_func, "filters/despeckle.html",
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -871,7 +871,7 @@ dialog_box (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Wind"), "wind",
                          NULL, 0,
-                         gimp_standard_help_func, "filters/wind.html",
+                         gimp_standard_help_func, "plug-in-wind",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

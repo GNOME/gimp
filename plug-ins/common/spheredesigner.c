@@ -2165,7 +2165,7 @@ fileselect (gint       action,
                                     GTK_WINDOW (parent));
 
       gimp_help_connect (windows[action], gimp_standard_help_func,
-			 "filters/spheredesigner.html", NULL);
+			 "plug-in-spheredesigner", NULL);
 
       g_signal_connect (windows[action], "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
@@ -2486,7 +2486,7 @@ makewindow (void)
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
                             NULL, 0,
 			    gimp_standard_help_func,
-			    "filters/spheredesigner.html",
+			    "plug-in-spheredesigner",
 
                             GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

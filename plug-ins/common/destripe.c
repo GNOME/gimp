@@ -62,6 +62,7 @@
 
 #define PLUG_IN_NAME     "plug_in_destripe"
 #define PLUG_IN_VERSION  "0.2"
+#define HELP_ID          "plug-in-destripe"
 #define PREVIEW_SIZE     200
 #define SCALE_WIDTH      140
 #define MAX_AVG          100
@@ -558,7 +559,7 @@ destripe_dialog (void)
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/destripe.html",
+                            gimp_standard_help_func, HELP_ID,
 
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,

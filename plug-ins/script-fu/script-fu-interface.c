@@ -1131,7 +1131,7 @@ script_fu_interface (SFScript *script)
   sf_interface->dialog = dlg =
     gimp_dialog_new (buf, "script-fu",
                      NULL, 0,
-                     gimp_standard_help_func, "filters/script-fu.html",
+                     gimp_standard_help_func, script->pdb_name,
 
                      GIMP_STOCK_RESET, RESPONSE_RESET,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1872,8 +1872,7 @@ script_fu_about_callback (GtkWidget *widget,
       sf_interface->about_dialog = dialog =
         gimp_dialog_new (sf_interface->title, "script-fu-about",
                          sf_interface->dialog, 0,
-                         gimp_standard_help_func,
-                         "filters/script-fu.html",
+                         gimp_standard_help_func, script->pdb_name,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

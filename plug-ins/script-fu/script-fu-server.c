@@ -601,7 +601,7 @@ server_interface (void)
 
   dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/script-fu.html",
+			 gimp_standard_help_func, "plug-in-script-fu-server",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -227,7 +227,7 @@ sel_gauss_dialog (void)
 
   dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/sel_gauss.html",
+			 gimp_standard_help_func, "plug-in-sel-gauss",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,

@@ -558,7 +558,7 @@ doDialog (void)
   /* set up the dialog */
   dialog = gimp_dialog_new (_("Colorcube Analysis"), "ccanalyze",
                             NULL, 0,
-                            gimp_standard_help_func, "filters/ccanalyze.html",
+                            gimp_standard_help_func, "plug-in-ccanalyze",
 
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
