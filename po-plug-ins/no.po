@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
-"PO-Revision-Date: 2002-09-23 23:01+0200\n"
+"POT-Creation-Date: 2003-01-04 00:23+0100\n"
+"PO-Revision-Date: 2003-01-04 00:29+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -844,7 +844,7 @@ msgid "Lighting Effects"
 msgstr "Lyseffekter"
 
 #: plug-ins/Lighting/lighting_ui.c:1189 plug-ins/gimpressionist/preview.c:121
-#: plug-ins/imagemap/imap_polygon.c:456
+#: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "_Oppdater"
 
@@ -853,9 +853,8 @@ msgid "Recompute preview image"
 msgstr "Beregn forhåndsvisningsbildet på nytt"
 
 #: plug-ins/Lighting/lighting_ui.c:1198
-#, fuzzy
 msgid "I_nteractive"
-msgstr "Interlace"
+msgstr "I_nteraktiv"
 
 #: plug-ins/Lighting/lighting_ui.c:1213
 #, fuzzy
@@ -2403,7 +2402,7 @@ msgstr "Colorify"
 #: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
 #: plug-ins/common/ps.c:2727 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:47 plug-ins/gimpressionist/general.c:106
-#: plug-ins/imagemap/imap_menu.c:304 plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Farge"
 
@@ -2849,11 +2848,11 @@ msgstr "B_ytt"
 
 #: plug-ins/common/curve_bend.c:1584
 msgid "Swap the two curves"
-msgstr ""
+msgstr "Bytt om de to kurvene"
 
 #: plug-ins/common/curve_bend.c:1596
 msgid "Reset the active curve"
-msgstr ""
+msgstr "Nullstill aktiv kurve"
 
 #: plug-ins/common/curve_bend.c:1613
 msgid "Load the curves from a file"
@@ -3174,7 +3173,7 @@ msgid "Create _Histogram"
 msgstr "Lag _histogram"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:448
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:159
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
 msgstr "_Bredde:"
@@ -3920,7 +3919,7 @@ msgid "Drawing Grid..."
 msgstr "Rutenett..."
 
 #: plug-ins/common/grid.c:638 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "Rutenett"
@@ -4979,9 +4978,8 @@ msgid "Bac_kground Color"
 msgstr "Ba_kgrunnsfarge"
 
 #: plug-ins/common/papertile.c:393
-#, fuzzy
 msgid "S_elect here:"
-msgstr "Valgt tegn:"
+msgstr "V_elg her:"
 
 #: plug-ins/common/papertile.c:400
 msgid "Background Color"
@@ -5038,9 +5036,8 @@ msgid "Plasma"
 msgstr "Plasma"
 
 #: plug-ins/common/plasma.c:369
-#, fuzzy
 msgid "Random _Seed:"
-msgstr "Tilfeldig seed:"
+msgstr "Tilfeldig _utgangsverdi:"
 
 #: plug-ins/common/plasma.c:380
 msgid "T_urbulence:"
@@ -5954,15 +5951,14 @@ msgid "Smooth Palette"
 msgstr "Myk palett"
 
 #: plug-ins/common/smooth_palette.c:453 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:169
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Høyde:"
 
 #: plug-ins/common/smooth_palette.c:463
-#, fuzzy
 msgid "_Search Depth:"
-msgstr "_Søketid:"
+msgstr "_Søkedybde:"
 
 #: plug-ins/common/snoise.c:183
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
@@ -6479,39 +6475,32 @@ msgid "New Unit"
 msgstr "Ny enhet"
 
 #: plug-ins/common/uniteditor.c:203
-#, fuzzy
 msgid "_ID:"
-msgstr "ID:"
+msgstr "_ID:"
 
 #: plug-ins/common/uniteditor.c:214
-#, fuzzy
 msgid "_Factor:"
-msgstr "Faktor:"
+msgstr "_Faktor:"
 
 #: plug-ins/common/uniteditor.c:224
-#, fuzzy
 msgid "_Digits:"
-msgstr "Sifre:"
+msgstr "_Tall:"
 
 #: plug-ins/common/uniteditor.c:236
-#, fuzzy
 msgid "_Symbol:"
-msgstr "Symbol:"
+msgstr "_Symbol:"
 
 #: plug-ins/common/uniteditor.c:248
-#, fuzzy
 msgid "_Abbreviation:"
-msgstr "Forkortelse:"
+msgstr "_Forkortelse:"
 
 #: plug-ins/common/uniteditor.c:260
-#, fuzzy
 msgid "Si_ngular:"
-msgstr "Entall:"
+msgstr "E_ntall:"
 
 #: plug-ins/common/uniteditor.c:272
-#, fuzzy
 msgid "_Plural:"
-msgstr "Flertall:"
+msgstr "_Flertall:"
 
 #: plug-ins/common/uniteditor.c:309
 msgid "Unit factor must not be 0."
@@ -6546,9 +6535,8 @@ msgid "Symbol"
 msgstr "Symbol"
 
 #: plug-ins/common/uniteditor.c:625
-#, fuzzy
 msgid "Abbreviation"
-msgstr "Forkortelse:"
+msgstr "Forkortelse"
 
 #: plug-ins/common/uniteditor.c:633
 msgid "Singular"
@@ -6559,18 +6547,16 @@ msgid "Plural"
 msgstr "Flertall"
 
 #: plug-ins/common/uniteditor.c:654
-#, fuzzy
 msgid "_New Unit"
-msgstr "Ny enhet"
+msgstr "_Ny enhet"
 
 #: plug-ins/common/uniteditor.c:662
 msgid "Create a new unit from scratch."
 msgstr "Opprett en ny enhet fra bunnen av."
 
 #: plug-ins/common/uniteditor.c:664
-#, fuzzy
 msgid "_Duplicate Unit"
-msgstr "Duplisert enhet"
+msgstr "_Duplisert enhet"
 
 #: plug-ins/common/uniteditor.c:672
 msgid "Create a new unit with the currently seleted unit as template."
@@ -6899,7 +6885,6 @@ msgid "Waving..."
 msgstr "Lager bølger..."
 
 #: plug-ins/common/whirlpinch.c:189
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
 msgstr "<Image>/Filtre/Forvrengning/\"Whirl and pinch\"..."
 
@@ -7669,7 +7654,7 @@ msgstr "Forrige"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1908 plug-ins/gfig/gfig.c:5298
-#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:167
+#: plug-ins/imagemap/imap_selection.c:174 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Rediger"
 
@@ -7831,7 +7816,7 @@ msgid "Draw on:"
 msgstr "Tegn på:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:367
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:364
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr "Valg"
@@ -7859,7 +7844,7 @@ msgid "Foreground"
 msgstr "Forgrunn"
 
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5285
-#: plug-ins/imagemap/imap_cmd_copy.c:59
+#: plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
@@ -7996,7 +7981,7 @@ msgstr "Vis bilde"
 msgid "Reload Image"
 msgstr "Last bilde på nytt"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:365
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rektangel"
@@ -8124,7 +8109,7 @@ msgstr "Tegn"
 msgid "Done"
 msgstr "Fullført"
 
-#: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:54
+#: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Velg"
@@ -8492,12 +8477,12 @@ msgstr ""
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4124 plug-ins/imagemap/imap_menu.c:368
+#: plug-ins/gflare/gflare.c:4124 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Sirkel"
 
-#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:370
+#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polygon"
@@ -8547,12 +8532,11 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:196
 msgid "Save brush"
-msgstr ""
+msgstr "Lagre pensel"
 
 #: plug-ins/gimpressionist/brush.c:354
-#, fuzzy
 msgid "_Brush"
-msgstr "Børste"
+msgstr "_Pensel"
 
 #: plug-ins/gimpressionist/brush.c:374
 msgid "Brush Preview:"
@@ -8591,18 +8575,16 @@ msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
 #: plug-ins/gimpressionist/color.c:33
-#, fuzzy
 msgid "Co_lor"
-msgstr "_Farge:"
+msgstr "_Farge"
 
 #: plug-ins/gimpressionist/color.c:51
 msgid "A_verage under brush"
 msgstr ""
 
 #: plug-ins/gimpressionist/color.c:52
-#, fuzzy
 msgid "C_enter of brush"
-msgstr "Senter av FlareFx"
+msgstr "S_enter av pensel"
 
 #: plug-ins/gimpressionist/color.c:56
 msgid "Color is computed from the average of all pixels under the brush"
@@ -8613,9 +8595,8 @@ msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
 #: plug-ins/gimpressionist/color.c:76
-#, fuzzy
 msgid "Color _noise:"
-msgstr "Fargemodus"
+msgstr "Farge_støy:"
 
 #: plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
@@ -8748,19 +8729,16 @@ msgid "The GIMPressionist!"
 msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:467
-#, fuzzy
 msgid "Gimpressionist"
-msgstr "Kompresjon"
+msgstr "Gimpresjonist"
 
 #: plug-ins/gimpressionist/gimpressionist.c:473
-#, fuzzy
 msgid "A_bout..."
-msgstr "Om..."
+msgstr "_Om..."
 
 #: plug-ins/gimpressionist/orientation.c:46
-#, fuzzy
 msgid "Or_ientation"
-msgstr "Orientering"
+msgstr "Or_ientering"
 
 #: plug-ins/gimpressionist/orientation.c:63
 msgid "Directions:"
@@ -8878,9 +8856,8 @@ msgstr "Velg neste vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:524
 #: plug-ins/gimpressionist/sizemap.c:463
-#, fuzzy
 msgid "A_dd"
-msgstr "Legg til"
+msgstr "_Legg til"
 
 #: plug-ins/gimpressionist/orientmap.c:529
 msgid "Add new vector"
@@ -8888,35 +8865,33 @@ msgstr "Legg til ny vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:471
-#, fuzzy
 msgid "_Kill"
-msgstr "Drep"
+msgstr "_Terminer"
 
 #: plug-ins/gimpressionist/orientmap.c:536
 msgid "Delete selected vector"
 msgstr "Slett valgt vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:551
-#, fuzzy
 msgid "_Normal"
-msgstr "Normal"
+msgstr "_Normal"
 
 #: plug-ins/gimpressionist/orientmap.c:552
 msgid "Vorte_x"
-msgstr ""
+msgstr "Vorte_ks"
 
 #: plug-ins/gimpressionist/orientmap.c:553
 msgid "Vortex_2"
-msgstr ""
+msgstr "Vorteks_2"
 
 #: plug-ins/gimpressionist/orientmap.c:554
 msgid "Vortex_3"
-msgstr ""
+msgstr "Vorteks_3"
 
 #: plug-ins/gimpressionist/orientmap.c:559
 #: plug-ins/gimpressionist/sizemap.c:517
 msgid "_Voronoi"
-msgstr ""
+msgstr "_Voronoi"
 
 #: plug-ins/gimpressionist/orientmap.c:564
 msgid ""
@@ -8925,18 +8900,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:573
-#, fuzzy
 msgid "A_ngle:"
-msgstr "Vinkel:"
+msgstr "Vi_nkel:"
 
 #: plug-ins/gimpressionist/orientmap.c:577
 msgid "Change the angle of the selected vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:583
-#, fuzzy
 msgid "Ang_le offset:"
-msgstr "Vinkelavstand:"
+msgstr "Vinke_lavstand:"
 
 #: plug-ins/gimpressionist/orientmap.c:587
 msgid "Offset all vectors with a given angle"
@@ -8957,27 +8930,24 @@ msgid "Change the exponent of the strength"
 msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:89
-#, fuzzy
 msgid "P_aper"
-msgstr "Papir"
+msgstr "P_apir"
 
 #: plug-ins/gimpressionist/paper.c:108
 msgid "Paper Preview:"
 msgstr "Forhåndsvisning av papir:"
 
 #: plug-ins/gimpressionist/paper.c:117
-#, fuzzy
 msgid "_Invert"
-msgstr "Inverter"
+msgstr "_Snu om"
 
 #: plug-ins/gimpressionist/paper.c:125
 msgid "Inverts the Papers texture"
 msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:128
-#, fuzzy
 msgid "O_verlay"
-msgstr "Overlegg"
+msgstr "O_verlag"
 
 #: plug-ins/gimpressionist/paper.c:133
 msgid "Applies the paper as it is (without embossing it)"
@@ -8993,9 +8963,8 @@ msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
 #: plug-ins/gimpressionist/placement.c:35
-#, fuzzy
 msgid "Pl_acement"
-msgstr "Plassering"
+msgstr "Pl_assering"
 
 #: plug-ins/gimpressionist/placement.c:49
 msgid "Placement"
@@ -9043,19 +9012,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:354
-#, fuzzy
 msgid "Save Current"
 msgstr "Lagre aktiv"
 
 #: plug-ins/gimpressionist/presets.c:582
-#, fuzzy
 msgid "_Presets"
-msgstr "K_rysser"
+msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:597
-#, fuzzy
 msgid "Save current..."
-msgstr "Lagre aktiv"
+msgstr "Lagre aktiv..."
 
 #: plug-ins/gimpressionist/presets.c:603
 msgid "Save the current settings to the specified file"
@@ -9099,9 +9065,8 @@ msgid "Update"
 msgstr "Oppdater"
 
 #: plug-ins/gimpressionist/size.c:42
-#, fuzzy
 msgid "_Size"
-msgstr "_Størrelse:"
+msgstr "_Størrelse"
 
 #: plug-ins/gimpressionist/size.c:59
 msgid "Sizes:"
@@ -9112,7 +9077,6 @@ msgid "The number of sizes of brushes to use"
 msgstr "Antall størrelser på børster som skal brukes"
 
 #: plug-ins/gimpressionist/size.c:71
-#, fuzzy
 msgid "Minimum size:"
 msgstr "Minste størrelse:"
 
@@ -9121,9 +9085,8 @@ msgid "The smallest brush to create"
 msgstr "Den minste børsten som skal opprettes"
 
 #: plug-ins/gimpressionist/size.c:83
-#, fuzzy
 msgid "Maximum size:"
-msgstr "Maks størrelse:"
+msgstr "Maksimal størrelse:"
 
 #: plug-ins/gimpressionist/size.c:87
 msgid "The largest brush to create"
@@ -9202,9 +9165,8 @@ msgid "Change the angle of the selected smvector"
 msgstr "Endre vinkel på valgt smvektor"
 
 #: plug-ins/gimpressionist/sizemap.c:497
-#, fuzzy
 msgid "S_trength:"
-msgstr "Styrke:"
+msgstr "S_tyrke:"
 
 #: plug-ins/gimpressionist/sizemap.c:501
 msgid "Change the strength of the selected smvector"
@@ -9233,7 +9195,7 @@ msgid ""
 "before reporting this error as a bug.</small></div></body></html>"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:603
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:582
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Uten navn>"
@@ -9313,8 +9275,8 @@ msgid "IfsCompose"
 msgstr "IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:862 plug-ins/ifscompose/ifscompose.c:1128
-#: plug-ins/imagemap/imap_cmd_move.c:87
-#: plug-ins/imagemap/imap_cmd_object_move.c:58
+#: plug-ins/imagemap/imap_cmd_move.c:86
+#: plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Flytt"
 
@@ -9347,7 +9309,7 @@ msgid "Relative Probability:"
 msgstr "Relativ sannsynlighet:"
 
 #: plug-ins/ifscompose/ifscompose.c:1169
-#: plug-ins/imagemap/imap_cmd_select_all.c:55
+#: plug-ins/imagemap/imap_cmd_select_all.c:51
 msgid "Select All"
 msgstr "Velg alt"
 
@@ -9395,7 +9357,7 @@ msgid "Imagemap plug-in 2.0"
 msgstr ""
 
 #: plug-ins/imagemap/imap_about.c:44
-msgid "Copyright(c) 1999-2002 by Maurits Rijk"
+msgid "Copyright(c) 1999-2003 by Maurits Rijk"
 msgstr ""
 
 #: plug-ins/imagemap/imap_about.c:45
@@ -9416,8 +9378,8 @@ msgstr "Senter _x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
-#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
-#: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:506
+#: plug-ins/imagemap/imap_polygon.c:514 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
 #: plug-ins/imagemap/imap_rectangle.c:413
@@ -9428,7 +9390,7 @@ msgstr "piksler"
 msgid "Center _y:"
 msgstr "Senter _y:"
 
-#: plug-ins/imagemap/imap_cmd_clear.c:55
+#: plug-ins/imagemap/imap_cmd_clear.c:51
 msgid "Clear"
 msgstr "Nullstill"
 
@@ -9436,37 +9398,37 @@ msgstr "Nullstill"
 msgid "Create"
 msgstr "Lag"
 
-#: plug-ins/imagemap/imap_cmd_cut.c:58
-#: plug-ins/imagemap/imap_cmd_cut_object.c:56
+#: plug-ins/imagemap/imap_cmd_cut.c:55
+#: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_toolbar.c:123
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: plug-ins/imagemap/imap_cmd_delete.c:58
-#: plug-ins/imagemap/imap_selection.c:181 plug-ins/imagemap/imap_tools.c:172
+#: plug-ins/imagemap/imap_cmd_delete.c:57
+#: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
 msgstr "Slett"
 
-#: plug-ins/imagemap/imap_cmd_delete_point.c:62
-#: plug-ins/imagemap/imap_polygon.c:679
+#: plug-ins/imagemap/imap_cmd_delete_point.c:61
+#: plug-ins/imagemap/imap_polygon.c:725
 msgid "Delete Point"
 msgstr "Slett punkt"
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:55
+#: plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
 msgstr "Rediger objekt"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:75
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:72
+#: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
 msgstr "Opprett guider"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:115
+#: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:140
+#: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -9474,201 +9436,201 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/imagemap/imap_cmd_guides.c:164
 msgid "_Left Start at:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:174
 msgid "_Top Start at:"
 msgstr "_Topp starter ved:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "_Horz. Spacing:"
 msgstr "_Horisontalt mellomrom:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:185
 msgid "_No. Across:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:195
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_Vert. Spacing:"
 msgstr "_Vertikalt mellomrom:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:201
+#: plug-ins/imagemap/imap_cmd_guides.c:197
 #, fuzzy
 msgid "No. _Down:"
 msgstr "Flytt ned"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:209
+#: plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "Base _URL:"
 msgstr "Basis-_URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:226
+#: plug-ins/imagemap/imap_cmd_guides.c:222
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Bildestørrelser: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:227
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:266
+#: plug-ins/imagemap/imap_cmd_guides.c:262
 msgid "Guides"
 msgstr "Guider"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:62
-#: plug-ins/imagemap/imap_polygon.c:693
+#: plug-ins/imagemap/imap_polygon.c:739
 msgid "Insert Point"
 msgstr "Sett inn punkt"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:57
-#: plug-ins/imagemap/imap_cmd_object_down.c:56
-#: plug-ins/imagemap/imap_selection.c:172
+#: plug-ins/imagemap/imap_cmd_move_down.c:53
+#: plug-ins/imagemap/imap_cmd_object_down.c:55
+#: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
 msgstr "Flytt ned"
 
-#: plug-ins/imagemap/imap_cmd_move_sash.c:69
+#: plug-ins/imagemap/imap_cmd_move_sash.c:68
 msgid "Move Sash"
 msgstr "Flytt sash"
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:57
+#: plug-ins/imagemap/imap_cmd_move_selected.c:56
 msgid "Move Selected Objects"
 msgstr "Flytt valgte objekter"
 
-#: plug-ins/imagemap/imap_cmd_move_to_front.c:56
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:51
 #: plug-ins/imagemap/imap_toolbar.c:151
 msgid "Move To Front"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:57
-#: plug-ins/imagemap/imap_cmd_object_up.c:56
-#: plug-ins/imagemap/imap_selection.c:168
+#: plug-ins/imagemap/imap_cmd_move_up.c:53
+#: plug-ins/imagemap/imap_cmd_object_up.c:55
+#: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Flytt opp"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:53 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Paste"
 msgstr "Lim inn"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:57
+#: plug-ins/imagemap/imap_cmd_select_next.c:51
 msgid "Select Next"
 msgstr "Velg neste"
 
-#: plug-ins/imagemap/imap_cmd_select_prev.c:56
+#: plug-ins/imagemap/imap_cmd_select_prev.c:51
 msgid "Select Previous"
 msgstr "Velg forrige"
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:68
+#: plug-ins/imagemap/imap_cmd_select_region.c:64
 msgid "Select Region"
 msgstr "Velg område"
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:56
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:157
 msgid "Send To Back"
 msgstr "Send til bakgrunn"
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:54
+#: plug-ins/imagemap/imap_cmd_unselect.c:53
 msgid "Unselect"
 msgstr "Velg bort"
 
-#: plug-ins/imagemap/imap_cmd_unselect_all.c:55
+#: plug-ins/imagemap/imap_cmd_unselect_all.c:53
 msgid "Unselect All"
 msgstr "Velg bort alle"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:177
+#: plug-ins/imagemap/imap_edit_area_info.c:174
 msgid "Link Type"
 msgstr "Lenketype"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:186
+#: plug-ins/imagemap/imap_edit_area_info.c:183
 msgid "_Web Site"
 msgstr "_Nettsted"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:192
+#: plug-ins/imagemap/imap_edit_area_info.c:189
 msgid "_Ftp Site"
 msgstr "_Ftp-område"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:198
+#: plug-ins/imagemap/imap_edit_area_info.c:195
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:204
+#: plug-ins/imagemap/imap_edit_area_info.c:201
 msgid "Ot_her"
 msgstr "A_nnet"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:210
+#: plug-ins/imagemap/imap_edit_area_info.c:207
 msgid "F_ile"
 msgstr "F_il"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:222
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:228
+#: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "e-_mail"
 msgstr "e-_post"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:234
+#: plug-ins/imagemap/imap_edit_area_info.c:231
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL som skal aktiveres når dette området mottar klikk: (kreves)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:236
+#: plug-ins/imagemap/imap_edit_area_info.c:233
 msgid "Select HTML file"
 msgstr "Velg HTML-fil"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:245
+#: plug-ins/imagemap/imap_edit_area_info.c:242
 msgid "Relati_ve link"
 msgstr "Relati_v lenke"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:251
+#: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:254
+#: plug-ins/imagemap/imap_edit_area_info.c:251
 msgid "ALT te_xt: (optional)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_edit_area_info.c:257
+#: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "_Link"
 msgstr "_Lenke"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:292
+#: plug-ins/imagemap/imap_edit_area_info.c:289
 msgid "Dimensions"
 msgstr "Dimensjoner"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "Pre_view"
 msgstr "Forhånds_visning"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:331
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:434
+#: plug-ins/imagemap/imap_edit_area_info.c:431
 msgid "Area Settings"
 msgstr "Instillinger for område"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:478
+#: plug-ins/imagemap/imap_edit_area_info.c:475
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Innstillinger for område #%d"
 
-#: plug-ins/imagemap/imap_file.c:46 plug-ins/imagemap/imap_menu.c:64
+#: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
 msgstr "Feil under åpning av fil"
 
-#: plug-ins/imagemap/imap_file.c:55
+#: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
 msgstr "Last bildekart"
 
-#: plug-ins/imagemap/imap_file.c:80
+#: plug-ins/imagemap/imap_file.c:81
 msgid "File exists!"
 msgstr "Filen eksisterer!"
 
-#: plug-ins/imagemap/imap_file.c:85
+#: plug-ins/imagemap/imap_file.c:86
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
@@ -9676,7 +9638,7 @@ msgstr ""
 "Filen eksisterer allerede.\n"
 "  Vil du virkelig overskrive den?  "
 
-#: plug-ins/imagemap/imap_file.c:110
+#: plug-ins/imagemap/imap_file.c:111
 msgid "Save Imagemap"
 msgstr "Lagre bildekart"
 
@@ -9732,48 +9694,40 @@ msgstr "piksler fra _toppen"
 msgid "_Preview"
 msgstr "_Forhåndsvisning"
 
-#: plug-ins/imagemap/imap_main.c:148
+#: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filter/Web/Bildekart..."
 
-#: plug-ins/imagemap/imap_main.c:754
-msgid "Data changed"
-msgstr "Data endret"
-
-#: plug-ins/imagemap/imap_main.c:758
-msgid ""
-"Some data has been changed.\n"
-"Do you really want to discard your changes?"
+#: plug-ins/imagemap/imap_main.c:734
+msgid "Some data has been changed!"
 msgstr ""
-"Data er endret.\n"
-"Vil du virkelig forkaste dine endringer?"
 
-#: plug-ins/imagemap/imap_main.c:967
+#: plug-ins/imagemap/imap_main.c:735
+msgid "Do you really want to discard your changes?"
+msgstr "Vil du virkelig forkaste dine endringer?"
+
+#: plug-ins/imagemap/imap_main.c:943
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" lagret."
 
-#: plug-ins/imagemap/imap_main.c:971
+#: plug-ins/imagemap/imap_main.c:947
 msgid "Couldn't save file:"
 msgstr "Kunne ikke lagre fil:"
 
-#: plug-ins/imagemap/imap_main.c:996
-msgid "Image size changed"
-msgstr "Bildestørrelse endret"
+#: plug-ins/imagemap/imap_main.c:973
+msgid "Image size has changed."
+msgstr "Bildestørrelse er endret."
 
-#: plug-ins/imagemap/imap_main.c:1000
-msgid ""
-"Image size has changed.\n"
-"Resize Area's?"
+#: plug-ins/imagemap/imap_main.c:974
+msgid "Resize area's?"
 msgstr ""
-"Bildestørrelsen er endret\n"
-"Gi områder ny størrelse?"
 
-#: plug-ins/imagemap/imap_main.c:1031
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Couldn't read file:"
 msgstr "Kunne ikke lese fil:"
 
-#: plug-ins/imagemap/imap_main.c:1077
+#: plug-ins/imagemap/imap_main.c:1049
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -9782,110 +9736,113 @@ msgstr "URL: %s"
 msgid "_File"
 msgstr "_Fil"
 
-#: plug-ins/imagemap/imap_menu.c:207
+#: plug-ins/imagemap/imap_menu.c:186
+msgid "Open Recent"
+msgstr "Åpne siste"
+
+#: plug-ins/imagemap/imap_menu.c:208
 #, c-format
 msgid "_Undo %s"
 msgstr "_Angre %s"
 
-#: plug-ins/imagemap/imap_menu.c:223
+#: plug-ins/imagemap/imap_menu.c:224
 #, c-format
 msgid "_Redo %s"
 msgstr "Gjenopp_rett %s"
 
-#: plug-ins/imagemap/imap_menu.c:251
+#: plug-ins/imagemap/imap_menu.c:252
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: plug-ins/imagemap/imap_menu.c:269
+#: plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
 msgstr "Velg _alt"
 
-#: plug-ins/imagemap/imap_menu.c:272
-#, fuzzy
+#: plug-ins/imagemap/imap_menu.c:273
 msgid "Deselect _All"
-msgstr "Velg _alt"
+msgstr "Velg bort _alt"
 
-#: plug-ins/imagemap/imap_menu.c:277
+#: plug-ins/imagemap/imap_menu.c:278
 msgid "Edit Area Info..."
 msgstr "Rediger områdeinformasjon..."
 
-#: plug-ins/imagemap/imap_menu.c:292
+#: plug-ins/imagemap/imap_menu.c:293
 msgid "_View"
 msgstr "_Vis"
 
-#: plug-ins/imagemap/imap_menu.c:296
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
 msgstr "Områdeliste"
 
-#: plug-ins/imagemap/imap_menu.c:300
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Source..."
 msgstr "Kilde..."
 
-#: plug-ins/imagemap/imap_menu.c:308 plug-ins/print/gimp_main_window.c:1423
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: plug-ins/imagemap/imap_menu.c:326
+#: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
 msgstr "Zoom til"
 
-#: plug-ins/imagemap/imap_menu.c:356
+#: plug-ins/imagemap/imap_menu.c:357
 msgid "_Mapping"
 msgstr "_Kart"
 
-#: plug-ins/imagemap/imap_menu.c:359 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/imagemap/imap_menu.c:360 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_menu.c:362
+#: plug-ins/imagemap/imap_menu.c:363
 msgid "Select Contiguous Region"
 msgstr "Velg sammenhengende område"
 
-#: plug-ins/imagemap/imap_menu.c:380
+#: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
 msgstr "Verk_tøy"
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:154
+#: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
 msgstr "Instillinger for rutenett..."
 
-#: plug-ins/imagemap/imap_menu.c:385
+#: plug-ins/imagemap/imap_menu.c:386
 msgid "Use GIMP Guides..."
 msgstr "Bruk GIMP-guider..."
 
-#: plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/imagemap/imap_menu.c:388
 msgid "Create Guides..."
 msgstr "Opprett guider..."
 
-#: plug-ins/imagemap/imap_menu.c:394
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: plug-ins/imagemap/imap_menu.c:397
+#: plug-ins/imagemap/imap_menu.c:398
 msgid "About ImageMap..."
 msgstr "Om bildekart..."
 
-#: plug-ins/imagemap/imap_polygon.c:77
+#: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
 msgstr "_Polygon"
 
-#: plug-ins/imagemap/imap_polygon.c:399
+#: plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
 msgstr "x (piksler)"
 
-#: plug-ins/imagemap/imap_polygon.c:399
+#: plug-ins/imagemap/imap_polygon.c:483
 msgid "y (pixels)"
 msgstr "y (piksler)"
 
-#: plug-ins/imagemap/imap_polygon.c:462
+#: plug-ins/imagemap/imap_polygon.c:522
 msgid "_Insert"
 msgstr "Sett _inn"
 
-#: plug-ins/imagemap/imap_polygon.c:468
+#: plug-ins/imagemap/imap_polygon.c:528
 msgid "A_ppend"
 msgstr "Le_gg til"
 
-#: plug-ins/imagemap/imap_polygon.c:474
+#: plug-ins/imagemap/imap_polygon.c:534
 msgid "_Remove"
 msgstr "Fje_rn"
 
@@ -9982,15 +9939,15 @@ msgstr "Øvre venstre _x:"
 msgid "Upper left _y:"
 msgstr "Øvre venstre _y:"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "Target"
 msgstr "Mål"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -11090,6 +11047,16 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil: fil %s med egenskaper for XJT er tom"
+
+#~ msgid "Data changed"
+#~ msgstr "Data endret"
+
+#~ msgid ""
+#~ "Image size has changed.\n"
+#~ "Resize Area's?"
+#~ msgstr ""
+#~ "Bildestørrelsen er endret\n"
+#~ "Gi områder ny størrelse?"
 
 #~ msgid "_Apply"
 #~ msgstr "_Bruk"

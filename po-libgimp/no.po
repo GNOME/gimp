@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
-"PO-Revision-Date: 2002-09-23 22:44+0200\n"
+"POT-Creation-Date: 2003-01-04 00:20+0100\n"
+"PO-Revision-Date: 2003-01-04 00:22+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -167,32 +167,32 @@ msgid "Loading module: '%s'\n"
 msgstr ""
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr ""
 
@@ -213,73 +213,72 @@ msgid "/White"
 msgstr "/Hvit"
 
 #: libgimpwidgets/gimpcolorscales.c:141
-#, fuzzy
 msgid "Scales"
-msgstr "Skaler"
+msgstr "Skalaer"
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr ""
+msgstr "Glød"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
-msgstr ""
+msgstr "Metning"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
-msgstr ""
+msgstr "Verdi"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
-msgstr ""
+msgstr "Rød"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr ""
+msgstr "Grønn"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
-msgstr ""
+msgstr "Blå"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
-msgstr ""
+msgstr "Alpha"
 
 #: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Heksadesimal fargenotasjon som brukt i HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Heksadesimal triplet"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -328,41 +327,36 @@ msgid "Visible"
 msgstr "Synlig"
 
 #: libgimpwidgets/gimpstock.c:127
-#, fuzzy
 msgid "_Resize"
-msgstr "Endre størrelse"
+msgstr "End_re størrelse"
 
 #: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
-#, fuzzy
 msgid "_Scale"
-msgstr "Skaler"
+msgstr "_Skaler"
 
 #: libgimpwidgets/gimpstock.c:136
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "M_ellomrom mellom bokstaver"
 
 #: libgimpwidgets/gimpstock.c:137
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Mellomrom mellom l_injer"
 
 #: libgimpwidgets/gimpstock.c:158
 msgid "Crop"
 msgstr "Beskjær"
 
 #: libgimpwidgets/gimpstock.c:176
-#, fuzzy
 msgid "_Transform"
-msgstr "Transformer"
+msgstr "_Transformer"
 
 #: libgimpwidgets/gimpstock.c:179
-#, fuzzy
 msgid "_Rotate"
-msgstr "Roter"
+msgstr "_Roter"
 
 #: libgimpwidgets/gimpstock.c:181
-#, fuzzy
 msgid "_Shear"
-msgstr "Klipp"
+msgstr "_Klipp"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -417,100 +411,70 @@ msgstr "MegaBytes"
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
-#: modules/cdisplay_colorblind.c:100
+#: modules/cdisplay_colorblind.c:101
 msgid "Colorblind display filter"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:167
 msgid "Color Deficient Vision"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:327
 msgid "Color Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:336
+#: modules/cdisplay_colorblind.c:337
 msgid "Protonopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:341
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:345
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gamme"
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamme:"
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
 msgstr ""
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:108
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:180
 msgid "_Triangle"
-msgstr ""
+msgstr "_Trekant"
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr ""
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 msgid "_Watercolor"
-msgstr ""
+msgstr "_Vannmerke"
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
-
-#~ msgid "_Time"
-#~ msgstr "_Tid"
-
-#~ msgid "pixel"
-#~ msgstr "piksel"
-
-#~ msgid "pixels"
-#~ msgstr "piksler"
-
-#~ msgid "inches"
-#~ msgstr "tommer"
-
-#~ msgid "millimeter"
-#~ msgstr "millimeter"
-
-#~ msgid "millimeters"
-#~ msgstr "millimetre"
-
-#~ msgid "point"
-#~ msgstr "punkt"
-
-#~ msgid "points"
-#~ msgstr "punkter"
-
-#~ msgid "picas"
-#~ msgstr "picas"
-
-#~ msgid "Select Directory"
-#~ msgstr "Velg katalog"
+msgstr "Trykk"
