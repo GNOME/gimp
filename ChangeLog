@@ -1,3 +1,24 @@
+2004-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpprotocol.h (struct _GPConfig): replaced the
+	never used "gdouble gamma" with 8 reserved gint8 and stuffed two
+	gint8 behind "gint8 show_tool_tips" where they fit in in a binary
+	compatible way due to 32bit aligning of the following "gint32
+	min_colors". Use the latter ones for "check_size" and
+	"check_type".
+
+	* libgimpbase/gimpprotocol.c (_gp_config_read,write): changed
+	accordingly to pass the new stuff over the wire.
+
+	* app/plug-in/plug-in-run.c: ditto. Pass the transpareny values
+	from GimpDisplayConfig to plug-ins.
+
+	* libgimp/gimp.[ch] (gimp_config): remember the new config values.
+	(gimp_check_size,type): new functions returning the new config values.
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_init):
+	use the new values to configure preview->area accordingly.
+
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpchecks.h

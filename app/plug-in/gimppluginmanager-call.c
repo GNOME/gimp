@@ -103,19 +103,28 @@ plug_in_run (Gimp         *gimp,
       if (progress)
         plug_in->progress = g_object_ref (progress);
 
-      config.version        = GIMP_PROTOCOL_VERSION;
-      config.tile_width     = TILE_WIDTH;
-      config.tile_height    = TILE_HEIGHT;
-      config.shm_ID         = plug_in_shm_get_ID (gimp);
-      config.gamma          = 1.0;
-      config.install_cmap   = gimp->config->install_cmap;
-      config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
-      config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
-      config.gdisp_ID       = gdisp_ID;
-      config.app_name       = (gchar *) g_get_application_name ();
-      config.wm_class       = (gchar *) gimp_get_program_class (gimp);
-      config.display_name   = gimp_get_display_name (gimp, gdisp_ID, &monitor);
-      config.monitor_number = monitor;
+      config.version         = GIMP_PROTOCOL_VERSION;
+      config.tile_width      = TILE_WIDTH;
+      config.tile_height     = TILE_HEIGHT;
+      config.shm_ID          = plug_in_shm_get_ID (gimp);
+      config.gimp_reserved_1 = 0;
+      config.gimp_reserved_2 = 0;
+      config.gimp_reserved_3 = 0;
+      config.gimp_reserved_4 = 0;
+      config.gimp_reserved_5 = 0;
+      config.gimp_reserved_6 = 0;
+      config.gimp_reserved_7 = 0;
+      config.gimp_reserved_8 = 0;
+      config.install_cmap    = gimp->config->install_cmap;
+      config.show_tool_tips  = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
+      config.check_size      = GIMP_DISPLAY_CONFIG (gimp->config)->transparency_size;
+      config.check_type      = GIMP_DISPLAY_CONFIG (gimp->config)->transparency_type;
+      config.min_colors      = CLAMP (gimp->config->min_colors, 27, 256);
+      config.gdisp_ID        = gdisp_ID;
+      config.app_name        = (gchar *) g_get_application_name ();
+      config.wm_class        = (gchar *) gimp_get_program_class (gimp);
+      config.display_name    = gimp_get_display_name (gimp, gdisp_ID, &monitor);
+      config.monitor_number  = monitor;
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;

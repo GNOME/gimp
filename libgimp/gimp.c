@@ -169,19 +169,21 @@ const guint gimp_micro_version = GIMP_MICRO_VERSION;
 static HANDLE shm_handle;
 #endif
 
-static gint         _tile_width        = -1;
-static gint         _tile_height       = -1;
-static gint         _shm_ID            = -1;
-static guchar      *_shm_addr          = NULL;
-static gdouble      _gamma_val         = 1.0;
-static gboolean     _install_cmap      = FALSE;
-static gboolean     _show_tool_tips    = TRUE;
-static gint         _min_colors        = 144;
-static gint         _gdisp_ID          = -1;
-static gchar       *_wm_class          = NULL;
-static gchar       *_display_name      = NULL;
-static gint         _monitor_number    = 0;
-static const gchar *progname           = NULL;
+static gint           _tile_width        = -1;
+static gint           _tile_height       = -1;
+static gint           _shm_ID            = -1;
+static guchar        *_shm_addr          = NULL;
+static gdouble        _gamma_val         = 1.0;
+static gboolean       _install_cmap      = FALSE;
+static gboolean       _show_tool_tips    = TRUE;
+static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
+static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
+static gint           _min_colors        = 144;
+static gint           _gdisp_ID          = -1;
+static gchar         *_wm_class          = NULL;
+static gchar         *_display_name      = NULL;
+static gint           _monitor_number    = 0;
+static const gchar   *progname           = NULL;
 
 static guint8       write_buffer[WRITE_BUFFER_SIZE];
 static guint        write_buffer_index = 0;
@@ -1112,6 +1114,38 @@ gimp_show_tool_tips (void)
 }
 
 /**
+ * gimp_check_size:
+ *
+ * Returns the size of the checkerboard to be used in previews.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the check_size value
+ *
+ * Since: GIMP 2.2
+ **/
+GimpCheckSize
+gimp_check_size (void)
+{
+  return _check_size;
+}
+
+/**
+ * gimp_check_type:
+ *
+ * Returns the type of the checkerboard to be used in previews.
+ * This is a constant value given at Plug-In config time.
+ *
+ * Return value: the check_type value
+ *
+ * Since: GIMP 2.2
+ **/
+GimpCheckType
+gimp_check_type (void)
+{
+  return _check_type;
+}
+
+/**
  * gimp_default_display:
  *
  * Returns the default display ID. This corresponds to the display the
@@ -1603,9 +1637,10 @@ gimp_config (GPConfig *config)
   _tile_width     = config->tile_width;
   _tile_height    = config->tile_height;
   _shm_ID         = config->shm_ID;
-  _gamma_val      = config->gamma;
   _install_cmap   = config->install_cmap;
   _show_tool_tips = config->show_tool_tips;
+  _check_size     = config->check_size;
+  _check_type     = config->check_type;
   _min_colors     = config->min_colors;
   _gdisp_ID       = config->gdisp_ID;
   _wm_class       = g_strdup (config->wm_class);

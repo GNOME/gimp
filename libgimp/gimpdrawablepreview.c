@@ -36,6 +36,7 @@
 
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
+static void  gimp_drawable_preview_init          (GimpDrawablePreview      *preview);
 
 static void  gimp_drawable_preview_style_set     (GtkWidget   *widget,
                                                   GtkStyle    *prev_style);
@@ -62,7 +63,7 @@ gimp_drawable_preview_get_type (void)
         NULL,           /* class_data     */
         sizeof (GimpDrawablePreview),
         0,              /* n_preallocs    */
-        NULL            /* instance_init  */
+        (GInstanceInitFunc) gimp_drawable_preview_init
       };
 
       preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
@@ -84,6 +85,15 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   widget_class->style_set = gimp_drawable_preview_style_set;
 
   preview_class->draw     = gimp_drawable_preview_draw_original;
+}
+
+static void
+gimp_drawable_preview_init (GimpDrawablePreview *preview)
+{
+  g_object_set (GIMP_PREVIEW (preview)->area,
+                "check-size", gimp_check_size (),
+                "check-type", gimp_check_type (),
+                NULL);
 }
 
 static void
