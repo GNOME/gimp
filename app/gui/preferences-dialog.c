@@ -1116,7 +1116,7 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
   editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
@@ -1543,7 +1543,7 @@ prefs_dialog_new (Gimp       *gimp,
       "%f-%p.%i (%t)",
       "%f-%p.%i (%t) %z%%",
       "%f-%p.%i (%t) %d:%s",
-      "%f-%p.%i (%t) %s:%d",
+      "%f-%p.%i (%t) %wx%h",
       "%f-%p.%i (%t) %m"
     };
 
@@ -1553,7 +1553,7 @@ prefs_dialog_new (Gimp       *gimp,
       N_("Standard"),
       N_("Show zoom percentage"),
       N_("Show zoom ratio"),
-      N_("Show reversed zoom ratio"),
+      N_("Show image size"),
       N_("Show memory usage")
     };
 

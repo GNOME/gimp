@@ -62,7 +62,7 @@ static void  gimp_display_config_fullscreen_notify (GObject    *object,
                                                     gpointer    data);
 
 
-#define DEFAULT_IMAGE_TITLE_FORMAT  "%D*%f-%p.%i (%t, %L) %z%%"
+#define DEFAULT_IMAGE_TITLE_FORMAT  "%D*%f-%p.%i (%t, %L) %wx%h"
 #define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
 #define DEFAULT_ACTIVATE_ON_FOCUS   TRUE
 
