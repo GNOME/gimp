@@ -1,3 +1,7 @@
+2000-10-24  Simon Budig  <simon@gimp.org>
+
+	* gimp_splash.ppm  A new splash-screen  (not for 1.2...)    :-)
+
 2000-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpsizeentry.c: don't ask for GIMP_UNIT_PIXEL's number
