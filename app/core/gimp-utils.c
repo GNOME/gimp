@@ -122,14 +122,14 @@ gimp_g_value_get_memsize (GValue *value)
         }
       else
         {
-          g_warning ("%s: unhandled boxed value type: %s",
-                     G_STRFUNC, G_VALUE_TYPE_NAME (value));
+          g_printerr ("%s: unhandled boxed value type: %s\n",
+                      G_STRFUNC, G_VALUE_TYPE_NAME (value));
         }
     }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {
-      g_warning ("%s: unhandled object value type: %s",
-                 G_STRFUNC, G_VALUE_TYPE_NAME (value));
+      g_printerr ("%s: unhandled object value type: %s\n",
+                  G_STRFUNC, G_VALUE_TYPE_NAME (value));
     }
 
   return memsize;
