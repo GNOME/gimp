@@ -18,9 +18,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
+
+#ifdef HAVE_LCMS_LCMS_H
+#include <lcms/lcms.h>
+#else
 #include <lcms.h>
+#endif
 
 #include <gtk/gtk.h>
 

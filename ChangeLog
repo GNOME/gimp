@@ -1,3 +1,9 @@
+2003-11-21  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: if lcms.h cannot be found, try lcms/lcms.h.
+
+	* modules/cdisplay_proof.c: changed accordingly.
+
 2003-11-21  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/window-manager.png: use
