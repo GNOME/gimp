@@ -29,27 +29,23 @@
 #include <dirent.h>
 #endif
 
-#include "colormaps.h"
 #include "datafiles.h"
-#include "devices.h"
 #include "patterns.h"
 #include "pattern_header.h"
-#include "colormaps.h"
-#include "errors.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
-GPattern        *active_pattern = NULL;
-GSList          *pattern_list   = NULL;
-gint             num_patterns   = 0;
+GPattern *active_pattern = NULL;
+GSList   *pattern_list   = NULL;
+gint      num_patterns   = 0;
 
 /*  static variables  */
 static GPattern *standard_pattern = NULL;
 
-/*  static function prototypes  */
+/*  local function prototypes  */
 static GSList * insert_pattern_in_list (GSList *, GPattern *);
 static void     load_pattern           (gchar *);
 static void     pattern_free_func      (gpointer, gpointer);
@@ -80,7 +76,7 @@ patterns_init (gboolean no_data)
 }
 
 void
-patterns_free ()
+patterns_free (void)
 {
   if (pattern_list)
     {
@@ -97,13 +93,23 @@ patterns_get_standard_pattern (void)
 {
   if (! standard_pattern)
     {
+      guchar *data;
+      gint row, col;
+
       standard_pattern = g_new (GPattern, 1);
 
       standard_pattern->filename = NULL;
       standard_pattern->name     = g_strdup ("Standard");
       standard_pattern->index    = -1;  /*  not part of the pattern list  */
-      /*  TODO: fill it with something */
-      standard_pattern->mask     = temp_buf_new (8, 8, 8, 0, 0, NULL);
+      standard_pattern->mask     = temp_buf_new (32, 32, 3, 0, 0, NULL);
+
+      data = temp_buf_data (standard_pattern->mask);
+
+      for (row = 0; row < standard_pattern->mask->height; row++)
+	for (col = 0; col < standard_pattern->mask->width; col++)
+	  {
+	    *data++ = *data++ = *data++ = (col % 2) && (row % 2) ? 255 : 0;
+	  }
     }
 
   return standard_pattern;

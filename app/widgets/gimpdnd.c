@@ -823,7 +823,10 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
 
   name = (gchar *) vals;
 
-  brush = gimp_brush_list_get_brush (brush_list, name);
+  if (strcmp (name, "Standard") == 0)
+    brush = brushes_get_standard_brush ();
+  else
+    brush = gimp_brush_list_get_brush (brush_list, name);
 
   if (brush)
     (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);
@@ -927,7 +930,10 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
 
   name = (gchar *) vals;
 
-  pattern = pattern_list_get_pattern (pattern_list, name);
+  if (strcmp (name, "Standard") == 0)
+    pattern = patterns_get_standard_pattern ();
+  else
+    pattern = pattern_list_get_pattern (pattern_list, name);
 
   if (pattern)
     (* (GimpDndDropPatternFunc) set_pattern_func) (widget, pattern,
@@ -1032,7 +1038,12 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
 
   name = (gchar *) vals;
 
-  if ((gradient = gradient_list_get_gradient (gradients_list, name)))
+  if (strcmp (name, "Standard") == 0)
+    gradient = gradients_get_standard_gradient ();
+  else
+    gradient = gradient_list_get_gradient (gradients_list, name);
+
+  if (gradient)
     (* (GimpDndDropGradientFunc) set_gradient_func) (widget, gradient,
 						     set_gradient_data);
 }

@@ -1,5 +1,12 @@
 1999-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdnd.c: special handling of a dropped "Standard"
+	brush/pattern/gradient because they are not part of their lists.
+
+	* app/pattern.c: fill the standard_pattern with a b/w grid.
+
+1999-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/airbrush.c
 	* app/apptypes.h
 	* app/brushes_cmds.c
