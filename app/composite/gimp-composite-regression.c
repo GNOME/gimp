@@ -267,10 +267,10 @@ gimp_composite_regression_fixed_rgba8 (unsigned long n_pixels)
   if ((rgba8 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels))) {
     for (i = 0; i < n_pixels; i++) {
       v = i % 256;
-      rgba8[i].r = v+8;
-      rgba8[i].g = v+8;
-      rgba8[i].b = v+8;
-      rgba8[i].a = v+8;
+      rgba8[i].r = v;
+      rgba8[i].g = v;
+      rgba8[i].b = v;
+      rgba8[i].a = v;
     }
   }
 

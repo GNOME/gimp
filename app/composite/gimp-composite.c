@@ -314,46 +314,49 @@ gimp_composite_init (void)
       gimp_composite_options.bits = strtoul(p, NULL, 16);
     }
 
-  g_printerr ("gimp_composite: use=%s, verbose=%s\n",
+  g_printerr ("gimp_composite: use=%s, verbose=%s",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) ? "yes" : "no",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
 
+		gimp_composite_generic_install();
+
   if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_INITIALISED))
     {
-      gimp_composite_generic_install();
-      g_printerr ("gimp-composite:");
+						cpu = cpu_accel();
+
 #ifdef ARCH_X86
-      if (cpu_accel() & CPU_ACCEL_X86_MMX)
+      if (cpu & CPU_ACCEL_X86_MMX)
         {
           extern void gimp_composite_mmx_install (void);
-          g_printerr (" mmx");
+          g_printerr (" +mmx");
           gimp_composite_mmx_install ();
         }
-
-      if (cpu_accel() & CPU_ACCEL_X86_SSE || cpu_accel() & CPU_ACCEL_X86_MMXEXT)
+#if 0
+      if (cpu & CPU_ACCEL_X86_SSE || cpu_accel() & CPU_ACCEL_X86_MMXEXT)
         {
           extern void gimp_composite_sse_install (void);
-          g_printerr (" sse");
+          g_printerr (" +sse");
           gimp_composite_sse_install ();
         }
 
-      if (cpu_accel() & CPU_ACCEL_X86_SSE2)
+      if (cpu & CPU_ACCEL_X86_SSE2)
         {
           extern void gimp_composite_sse2_install (void);
-          g_printerr (" sse2");
+          g_printerr (" +sse2");
           gimp_composite_sse2_install ();
         }
 
-      if (cpu_accel() & CPU_ACCEL_X86_3DNOW)
+      if (cpu & CPU_ACCEL_X86_3DNOW)
         {
           extern void gimp_composite_3dnow_install (void);
-          g_printerr (" 3dnow");
+          g_printerr (" +3dnow");
           gimp_composite_3dnow_install ();
         }
 #endif
+#endif
 
 #ifdef ARCH_PPC
-      if (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC)
+      if (cpu & CPU_ACCEL_PPC_ALTIVEC)
         {
           g_printerr (" altivec");
           gimp_composite_altivec_install ();
@@ -367,8 +370,7 @@ gimp_composite_init (void)
 #endif
 #endif
 
-      g_printerr ("\n");
-
       gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_INITIALISED;
     }
+		g_printerr ("\n");
 }

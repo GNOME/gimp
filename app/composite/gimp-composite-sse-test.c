@@ -581,7 +581,7 @@ main (int argc, char *argv[])
   putenv("GIMP_COMPOSITE=0x1");
 
   iterations = 1;
-  n_pixels = 262145;
+  n_pixels = 1048577;
 
   argv++, argc--;
   while (argc >= 2) {

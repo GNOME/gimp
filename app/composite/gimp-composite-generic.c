@@ -1089,14 +1089,7 @@ gimp_composite_normal_any_any_any_generic (GimpCompositeContext * ctx)
 
 
 void
-gimp_composite_normal_rgba8_any_any_generic (GimpCompositeContext * ctx)
-{
-  ctx->D = ctx->B;
-}
-
-
-void
-gimp_composite_erase_rgba8_any_any_generic (GimpCompositeContext *ctx)
+gimp_composite_erase_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B]) ? ERASE_INTEN : 0;

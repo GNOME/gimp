@@ -904,35 +904,114 @@ mmx_op_overlay(void)
 }
 
 void
-gimp_composite_overlay_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
+xxxgimp_composite_overlay_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
   asm volatile ("pxor    %%mm0,%%mm0\n"
                 "movq    (%0),%%mm7"
-                :  : "m" (*rgba8_w128) : "%mm0");
+                : /* empty */
+																: "m" (*rgba8_w128) : "%mm0");
 
   for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq    (%0), %%mm2; addl  $8, %0\n"
-         "\tmovq    (%1), %%mm3; addl  $8, %1\n"
+    asm volatile ("  movq    (%0), %%mm2; addl  $8, %0\n"
+																		"\tmovq    (%1), %%mm3; addl  $8, %1\n"
 
-         "\tcall mmx_op_overlay\n"
+																		/* low bytes */
+																		mmx_low_bytes_to_words(mm3,mm5,mm0)
+																		"\tpcmpeqb   %%mm4, %%mm4\n"
+																		"\tpsubb     %%mm2, %%mm4\n" /* mm4 = 255 - A */
+																		"\tpunpcklbw %%mm0, %%mm4\n" /* mm4 = (low bytes as word) mm4 */
+																		"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																		"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * low bytes of B */
+																		mmx_int_mult(mm6,mm4,mm7)    /* mm4 = INT_MULT(mm6, mm4) */
 
-         "\tmovq    %%mm1, (%2); addl  $8, %2\n"
-         : "+r" (op.A), "+S" (op.B), "+D" (op.D)
-         : /* empty */
-         : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+																		/* high bytes */
+																		mmx_high_bytes_to_words(mm3,mm5,mm0)
+																		"\tpcmpeqb   %%mm1, %%mm1\n"
+																		"\tpsubb     %%mm2, %%mm1\n" /* mm1 = 255 - A */
+																		"\tpunpckhbw %%mm0, %%mm1\n" /* mm1 = (high bytes as word) mm1 */
+																		"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																		"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * high bytes of B */
+																		mmx_int_mult(mm6,mm1,mm7)    /* mm1 = INT_MULT(mm6, mm1) */
+
+																		"\tpackuswb  %%mm1,%%mm4\n"  /* mm4 = intermediate value */
+
+																		mmx_low_bytes_to_words(mm4,mm5,mm0)
+																		mmx_low_bytes_to_words(mm2,mm6,mm0)
+																		"\tpaddw     %%mm6,%%mm5\n"
+																		mmx_int_mult(mm6,mm5,mm7)   /* mm5 = INT_MULT(mm6, mm5) low bytes */
+
+																		mmx_high_bytes_to_words(mm4,mm1,mm0)
+																		mmx_high_bytes_to_words(mm2,mm6,mm0)
+																		"\tpaddw     %%mm6,%%mm1\n"
+																		mmx_int_mult(mm6,mm1,mm7)   /* mm1 = INT_MULT(mm6, mm1) high bytes */
+
+																		"\tpackuswb  %%mm1,%%mm5\n"
+
+																		"\tmovq      (%4), %%mm0\n"
+																		"\tmovq      %%mm0, %%mm1\n"
+																		"\tpandn     %%mm5, %%mm1\n"
+
+																		"\t" pminub(mm2,mm3,mm4) "\n"
+																		"\tpand      %%mm0, %%mm3\n"
+
+																		"\tpor       %%mm3, %%mm1\n"
+
+																		"\tmovq    %%mm1, (%2); addl  $8, %2\n"
+																		: "+r" (op.A), "+r" (op.B), "+r" (op.D)
+																		: "m" (*rgba8_w2), "m" (*rgba8_alpha_mask)
+																		: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
   if (op.n_pixels) {
     asm volatile ("  movd    (%0), %%mm2;\n"
                   "\tmovd    (%1), %%mm3;\n"
 
-                  "\tcall mmx_op_overlay\n"
+																		/* low bytes */
+																		mmx_low_bytes_to_words(mm3,mm5,mm0)
+																		"\tpcmpeqb   %%mm4, %%mm4\n"
+																		"\tpsubb     %%mm2, %%mm4\n" /* mm4 = 255 - A */
+																		"\tpunpcklbw %%mm0, %%mm4\n" /* mm4 = (low bytes as word) mm4 */
+																		"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																		"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * low bytes of B */
+																		mmx_int_mult(mm6,mm4,mm7)    /* mm4 = INT_MULT(mm6, mm4) */
+
+																		/* high bytes */
+																		mmx_high_bytes_to_words(mm3,mm5,mm0)
+																		"\tpcmpeqb   %%mm1, %%mm1\n"
+																		"\tpsubb     %%mm2, %%mm1\n" /* mm1 = 255 - A */
+																		"\tpunpckhbw %%mm0, %%mm1\n" /* mm1 = (high bytes as word) mm1 */
+																		"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																		"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * high bytes of B */
+																		mmx_int_mult(mm6,mm1,mm7)    /* mm1 = INT_MULT(mm6, mm1) */
+
+																		"\tpackuswb  %%mm1,%%mm4\n"  /* mm4 = intermediate value */
+
+																		mmx_low_bytes_to_words(mm4,mm5,mm0)
+																		mmx_low_bytes_to_words(mm2,mm6,mm0)
+																		"\tpaddw     %%mm6,%%mm5\n"
+																		mmx_int_mult(mm6,mm5,mm7)   /* mm5 = INT_MULT(mm6, mm5) low bytes */
+
+																		mmx_high_bytes_to_words(mm4,mm1,mm0)
+																		mmx_high_bytes_to_words(mm2,mm6,mm0)
+																		"\tpaddw     %%mm6,%%mm1\n"
+																		mmx_int_mult(mm6,mm1,mm7)   /* mm1 = INT_MULT(mm6, mm1) high bytes */
+
+																		"\tpackuswb  %%mm1,%%mm5\n"
+
+																		"\tmovq      (%4), %%mm0\n"
+																		"\tmovq      %%mm0, %%mm1\n"
+																		"\tpandn     %%mm5, %%mm1\n"
+
+																		"\t" pminub(mm2,mm3,mm4) "\n"
+																		"\tpand      %%mm0, %%mm3\n"
+
+																		"\tpor       %%mm3, %%mm1\n"
 
                   "\tmovd    %%mm1, (%2);\n"
                   : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
+                  : "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_w2), "m" (*rgba8_alpha_mask)
                   : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 

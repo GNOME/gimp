@@ -1,5 +1,13 @@
 2003-08-19  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/: Regenerated installers and testers.
+	
+	* app/composite/make-install.py: increased tests of pixels to 1024*1024+1
+
+	* app/composite/gimp-composite-mmx.c (gimp_composite_overlay_rgba8_rgba8_rgba_mmx):
+ 	Backed out of the current build.  Although the unit tests all
+	pass, the emperical evidence is that something is wrong with it.
+
 	* Removed wayward printf() of a debugging message.
 
 2003-08-19  Manish Singh  <yosh@gimp.org>

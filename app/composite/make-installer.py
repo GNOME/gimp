@@ -510,7 +510,7 @@ op.add_option('-t', '--test', action='store_true',                 dest='test', 
               help='generate regression testing code')
 op.add_option('-i', '--iterations', action='store', type='int',    dest='iterations', default=1,
               help='number of iterations in regression tests')
-op.add_option('-n', '--n-pixels', action='store',   type="int",    dest='n_pixels',   default=512*512+1,
+op.add_option('-n', '--n-pixels', action='store',   type="int",    dest='n_pixels',   default=1024*1024+1,
               help='number of pixels in each regression test iteration')
 op.add_option('-r', '--requires', action='append',  type='string', dest='requires',   default=[],
               help='cpp #if conditionals')

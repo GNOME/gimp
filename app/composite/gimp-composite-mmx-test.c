@@ -125,40 +125,6 @@ gimp_composite_mmx_test (int iterations, int n_pixels)
   }
   gimp_composite_regression_timer_report ("screen", ft0, ft1);
 
-  /* gimp_composite_overlay_rgba8_rgba8_rgba8 */
-  memset ((void *) &special_ctx, 0, sizeof(special_ctx));
-  special_ctx.op = GIMP_COMPOSITE_OVERLAY;
-  special_ctx.n_pixels = n_pixels;
-  special_ctx.scale.scale = 2;
-  special_ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
-  special_ctx.pixelformat_B = GIMP_PIXELFORMAT_RGBA8;
-  special_ctx.pixelformat_D = GIMP_PIXELFORMAT_RGBA8;
-  special_ctx.pixelformat_M = GIMP_PIXELFORMAT_RGBA8;
-  special_ctx.A = (unsigned char *) rgba8A;
-  special_ctx.B = (unsigned char *) rgba8B;
-  special_ctx.M = (unsigned char *) rgba8B;
-  special_ctx.D = (unsigned char *) rgba8D1;
-  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);
-  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));
-  generic_ctx.op = GIMP_COMPOSITE_OVERLAY;
-  generic_ctx.n_pixels = n_pixels;
-  generic_ctx.scale.scale = 2;
-  generic_ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
-  generic_ctx.pixelformat_B = GIMP_PIXELFORMAT_RGBA8;
-  generic_ctx.pixelformat_D = GIMP_PIXELFORMAT_RGBA8;
-  generic_ctx.pixelformat_M = GIMP_PIXELFORMAT_RGBA8;
-  generic_ctx.A = (unsigned char *) rgba8A;
-  generic_ctx.B = (unsigned char *) rgba8B;
-  generic_ctx.M = (unsigned char *) rgba8B;
-  generic_ctx.D = (unsigned char *) rgba8D2;
-  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);
-  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_overlay_rgba8_rgba8_rgba8_mmx, &special_ctx);
-  if (gimp_composite_regression_compare_contexts ("overlay", &generic_ctx, &special_ctx)) {
-    return (1);
-  }
-  gimp_composite_regression_timer_report ("overlay", ft0, ft1);
-
   /* gimp_composite_difference_rgba8_rgba8_rgba8 */
   memset ((void *) &special_ctx, 0, sizeof(special_ctx));
   special_ctx.op = GIMP_COMPOSITE_DIFFERENCE;
@@ -581,7 +547,7 @@ main (int argc, char *argv[])
   putenv("GIMP_COMPOSITE=0x1");
 
   iterations = 1;
-  n_pixels = 262145;
+  n_pixels = 1048577;
 
   argv++, argc--;
   while (argc >= 2) {

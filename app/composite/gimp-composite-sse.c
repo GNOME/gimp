@@ -30,10 +30,8 @@
 
 #include "config.h"
 
-#ifdef USE_MMX
-#ifdef ARCH_X86
-#if __GNUC__ >= 3
-
+#if defined(USE_SSE)
+#if defined(ARCH_X86)
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -41,17 +39,14 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
+
 #include "gimp-composite-sse.h"
 
+#if __GNUC__ >= 3
 
-#ifdef USE_SSE
+
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
 #define pmaxub(src,dst,tmp)  "pmaxub " "%%" #src ", %%" #dst
-#else
-#define pminub(src,dst,tmp)  "movq %%" #dst ", %%" #tmp ";" "psubusb %%" #src ", %%" #tmp ";" "psubb %%" #tmp ", %%" #dst
-
-#define pmaxub(a,b,tmp)      "movq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b
-#endif
 
 /* a = INT_MULT(a,b) */
 #define mmx_int_mult(a,b,w128) \
