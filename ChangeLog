@@ -1,3 +1,8 @@
+2000-06-10  Sven Neumann  <sven@gimp.org>
+
+	* AUTHORS: applied gimp-cornwell-000507-0
+	Please add yourself if have contributed and are missing.
+
 Sat Jun 10 12:19:31 BST 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/libgck/gck/gckcolor.c: #include fixup.
