@@ -4,3 +4,4 @@ makefile.mingw
 .deps
 .libs
 gimp
+gimp.rc
