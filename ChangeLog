@@ -1,5 +1,8 @@
 2004-08-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/Makefile.am: no need to link gimp-help-lookup with
+	any GIMP libraries.
+
 	* plug-ins/help/domain.[ch]: allow to specify the location of the
 	index files independently from the base URL.
 

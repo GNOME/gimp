@@ -24,15 +24,15 @@ help_SOURCES = \
 	help.h
 
 INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
-	$(libgimp)		\
-	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
-	$(RT_LIBS)		\
+	$(libgimp)	\
+	$(libgimpbase)	\
+	$(GLIB_LIBS)	\
+	$(RT_LIBS)	\
 	$(INTLLIBS)
 
 
@@ -45,3 +45,5 @@ gimp_help_lookup_SOURCES = \
 	locales.h	\
 	help.h		\
 	gimp-help-lookup.c
+
+gimp_help_lookup_LDADD = $(GLIB_LIBS)
