@@ -1,5 +1,8 @@
 2003-08-19  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/gimp-composite-generic.c: Enabled erase mode for
+	all pixel formats instead of just RGBA8.
+
 	* app/composite/: Regenerated installers and testers.
 	
 	* app/composite/make-install.py: increased tests of pixels to 1024*1024+1
