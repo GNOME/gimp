@@ -54,6 +54,8 @@ libgimpwidgets_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpquerybox.h		\
 	gimpsizeentry.c		\
 	gimpsizeentry.h		\
+	gimpstock.c		\
+	gimpstock.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
 @STRIP_END@
@@ -73,6 +75,7 @@ libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
 	gimppixmap.h		\
 	gimpquerybox.h		\
 	gimpsizeentry.h		\
+	gimpstock.h		\
 	gimpunitmenu.h		\
 @STRIP_END@
 

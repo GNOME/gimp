@@ -1,3 +1,52 @@
+2001-08-04  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am: build pixmaps/ before libgimpwidgets/.
+
+	* pixmaps/.cvsignore
+	* pixmaps/Makefile.am: build gimp-stock-pixbufs.h using
+	gdk-pixbuf-csource from some of our XPMs.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpstock.[ch]: new files featuring
+	gimp_stock_init(). Register a default GtkIconFactory and a set of
+	stock buttons.
+
+	* app/gui/gui.[ch]: new function gui_libs_init(). Call
+	gimp_stock_init() from it.
+
+	* app/app_procs.c: call new function gui_libs_init().
+
+	* libgimp/gimpui.c: call gimp_stock_init().
+
+	* app/devices.c: removed action_area hacks as we can configure it
+	via style properties now.
+
+	* app/gui/menus.c: use <StockItem> for some menu entries.
+	Looks nifty :-)
+
+	* app/widgets/gimpcontainereditor.[ch]: take a "stock_id"
+	parameter in gimp_container_editor_add_button(), not a EEKy
+	pxm_data pointer.
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdatafactoryview.c: changed accordingly.
+
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdrawablelistview.c: removed ugly tooltips
+	formating hacks since gtk2 does it right now.
+
+	* app/widgets/gimpdockbook.c: re-enabled a line that was commented
+	out for some reason...?
+
+	* app/errorconsole.c
+	* app/gui/file-new-dialog.c
+	* app/gui/tool-options-dialog.c
+	* plug-ins/common/uniteditor.c: use the new GIMP_STOCK_FOO id's.
+
+	* libgimpwidgets/gimpquerybox.c: fixed auto-hiding by connection
+	to a passed object's signal.
+
 2001-08-03  Michael Natterer  <mitch@gimp.org>
 
 	* gtkrc: set style properties for dockables.

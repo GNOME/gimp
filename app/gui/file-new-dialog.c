@@ -350,7 +350,7 @@ file_new_dialog_create (GimpImage *gimage)
 
 				  GTK_STOCK_OK, file_new_ok_callback,
 				  info, NULL, NULL, TRUE, FALSE,
-				  _("Reset"), file_new_reset_callback,
+				  GIMP_STOCK_RESET, file_new_reset_callback,
 				  info, NULL, NULL, FALSE, FALSE,
 				  GTK_STOCK_CANCEL, file_new_cancel_callback,
 				  info, NULL, NULL, FALSE, TRUE,

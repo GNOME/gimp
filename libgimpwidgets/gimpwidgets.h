@@ -38,6 +38,7 @@
 #include <libgimpwidgets/gimppixmap.h>
 #include <libgimpwidgets/gimpquerybox.h>
 #include <libgimpwidgets/gimpsizeentry.h>
+#include <libgimpwidgets/gimpstock.h>
 #include <libgimpwidgets/gimpunitmenu.h>
 
 

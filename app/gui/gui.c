@@ -123,6 +123,34 @@ static GQuark image_update_handler_id           = 0;
 /*  public functions  */
 
 void
+gui_libs_init (gint    *argc,
+	       gchar ***argv)
+{
+  const gchar *gtkrc;
+  gchar       *filename;
+
+  gimp_stock_init ();
+
+  /*  parse the systemwide gtkrc  */
+  gtkrc = gimp_gtkrc ();
+
+  if (be_verbose)
+    g_print (_("parsing \"%s\"\n"), gtkrc);
+
+  gtk_rc_parse (gtkrc);
+
+  /*  parse the user gtkrc  */
+  filename = gimp_personal_rc_file ("gtkrc");
+
+  if (be_verbose)
+    g_print (_("parsing \"%s\"\n"), filename);
+
+  gtk_rc_parse (filename);
+
+  g_free (filename);
+}
+
+void
 gui_init (Gimp *gimp)
 {
   gimp->create_display_func = gui_display_new;

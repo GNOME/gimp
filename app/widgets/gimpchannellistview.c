@@ -176,9 +176,9 @@ gimp_channel_list_view_init (GimpChannelListView *view)
   gtk_widget_show (view->toselection_button);
 
   gimp_help_set_help_data (view->toselection_button,
-			   _("Channel to Selection \n"
-			     "<Shift> Add          "
-			     "<Ctrl> Subtract      "
+			   _("Channel to Selection\n"
+			     "<Shift> Add\n"
+			     "<Ctrl> Subtract\n"
 			     "<Shift><Ctrl> Intersect"), NULL);
 
   g_signal_connect (G_OBJECT (view->toselection_button), "clicked",

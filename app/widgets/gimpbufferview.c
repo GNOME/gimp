@@ -41,11 +41,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/paste.xpm"
-#include "pixmaps/paste-into.xpm"
-#include "pixmaps/paste-as-new.xpm"
-#include "pixmaps/delete.xpm"
-
 
 static void   gimp_buffer_view_class_init (GimpBufferViewClass *klass);
 static void   gimp_buffer_view_init       (GimpBufferView      *view);
@@ -120,25 +115,25 @@ gimp_buffer_view_init (GimpBufferView *view)
 
   view->paste_button =
     gimp_container_editor_add_button (editor,
-				      paste_xpm,
+				      GIMP_STOCK_PASTE,
 				      _("Paste"), NULL,
 				      G_CALLBACK (gimp_buffer_view_paste_clicked));
 
   view->paste_into_button =
     gimp_container_editor_add_button (editor,
-				      paste_into_xpm,
+				      GIMP_STOCK_PASTE_INTO,
 				      _("Paste Into"), NULL,
 				      G_CALLBACK (gimp_buffer_view_paste_into_clicked));
 
   view->paste_as_new_button =
     gimp_container_editor_add_button (editor,
-				      paste_as_new_xpm,
+				      GIMP_STOCK_PASTE_AS_NEW,
 				      _("Paste as New"), NULL,
 				      G_CALLBACK (gimp_buffer_view_paste_as_new_clicked));
 
   view->delete_button =
     gimp_container_editor_add_button (editor,
-				      delete_xpm,
+				      GIMP_STOCK_DELETE,
 				      _("Delete"), NULL,
 				      G_CALLBACK (gimp_buffer_view_delete_clicked));
 

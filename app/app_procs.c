@@ -128,26 +128,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-      const gchar *gtkrc;
-      gchar       *filename;
-
-      /*  parse the systemwide gtkrc  */
-      gtkrc = gimp_gtkrc ();
-
-      if (be_verbose)
-	g_print (_("parsing \"%s\"\n"), gtkrc);
-
-      gtk_rc_parse (gtkrc);
-
-      /*  parse the user gtkrc  */
-      filename = gimp_personal_rc_file ("gtkrc");
-
-      if (be_verbose)
-	g_print (_("parsing \"%s\"\n"), filename);
-
-      gtk_rc_parse (filename);
-
-      g_free (filename);
+      gui_libs_init (&gimp_argc, &gimp_argv);
     }
 
   /*  The user_install dialog may have parsed unitrc and gimprc, so
@@ -187,10 +168,6 @@ app_init (gint    gimp_argc,
   app_init_update_status (_("Procedural Database"), NULL, -1);
   internal_procs_init (the_gimp);
 
-#ifdef DISPLAY_FILTERS
-  color_display_init ();
-#endif /* DISPLAY_FILTERS */
-
   /*  Initialize the xcf file format routines
    */
   xcf_init (the_gimp);
@@ -214,6 +191,10 @@ app_init (gint    gimp_argc,
     {
       if (! no_splash)
 	splash_destroy ();
+
+#ifdef DISPLAY_FILTERS
+      color_display_init ();
+#endif /* DISPLAY_FILTERS */
 
       gui_init (the_gimp);
 

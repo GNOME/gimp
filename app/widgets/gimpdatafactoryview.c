@@ -46,12 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/delete.xpm"
-#include "pixmaps/duplicate.xpm"
-#include "pixmaps/new.xpm"
-#include "pixmaps/edit.xpm"
-#include "pixmaps/refresh.xpm"
-
 
 static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);
 static void   gimp_data_factory_view_init       (GimpDataFactoryView      *view);
@@ -128,31 +122,31 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 
   view->new_button =
     gimp_container_editor_add_button (editor,
-				      new_xpm,
+				      GIMP_STOCK_NEW,
 				      _("New"), NULL,
 				      G_CALLBACK (gimp_data_factory_view_new_clicked));
 
   view->duplicate_button =
     gimp_container_editor_add_button (editor,
-				      duplicate_xpm,
+				      GIMP_STOCK_DUPLICATE,
 				      _("Duplicate"), NULL,
 				      G_CALLBACK (gimp_data_factory_view_duplicate_clicked));
 
   view->edit_button =
     gimp_container_editor_add_button (editor,
-				      edit_xpm,
+				      GIMP_STOCK_EDIT,
 				      _("Edit"), NULL,
 				      G_CALLBACK (gimp_data_factory_view_edit_clicked));
 
   view->delete_button =
     gimp_container_editor_add_button (editor,
-				      delete_xpm,
+				      GIMP_STOCK_DELETE,
 				      _("Delete"), NULL,
 				      G_CALLBACK (gimp_data_factory_view_delete_clicked));
 
   view->refresh_button =
     gimp_container_editor_add_button (editor,
-				      refresh_xpm,
+				      GIMP_STOCK_REFRESH,
 				      _("Refresh"), NULL,
 				      G_CALLBACK (gimp_data_factory_view_refresh_clicked));
 
@@ -406,20 +400,17 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 			       "\"%s\" from the list and from disk?"),
 			     GIMP_OBJECT (data)->name);
 
-      dialog =
-	gimp_query_boolean_box (_("Delete Data Object"),
-				gimp_standard_help_func, NULL,
-				FALSE,
-				str,
-				_("Delete"), GTK_STOCK_CANCEL,
-				G_OBJECT (data),
-				"destroy",
-				gimp_data_factory_view_delete_callback,
-				delete_data);
+      dialog = gimp_query_boolean_box (_("Delete Data Object"),
+				       gimp_standard_help_func, NULL,
+				       FALSE,
+				       str,
+				       GIMP_STOCK_DELETE, GTK_STOCK_CANCEL,
+				       G_OBJECT (data),
+				       "destroy",
+				       gimp_data_factory_view_delete_callback,
+				       delete_data);
 
-      g_signal_connect_swapped (G_OBJECT (dialog), "destroy",
-				G_CALLBACK (g_free),
-				delete_data);
+      g_object_weak_ref (G_OBJECT (dialog), g_free, delete_data);
 
       g_free (str);
 

@@ -20,6 +20,8 @@
 #include "gimp.h"
 #include "gimpui.h"
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 /**
  * gimp_ui_init:
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
@@ -78,6 +80,8 @@ gimp_ui_init (const gchar *prog_name,
    */
   if (preview)
     gtk_preview_set_gamma (gimp_gamma ());
+
+  gimp_stock_init ();
 
   initialized = TRUE;
 }

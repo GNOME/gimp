@@ -4,6 +4,7 @@ SUBDIRS = \
 	tools			\
 	intl			\
 	regexrepl		\
+	pixmaps			\
 	libgimpbase		\
 	libgimpcolor		\
 	libgimpmath		\
@@ -18,7 +19,6 @@ SUBDIRS = \
 	$(GIMP_PERL_PO)		\
 	po-script-fu		\
 	cursors			\
-	pixmaps			\
 	data			\
 	tips			\
 	docs			\

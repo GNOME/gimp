@@ -250,16 +250,16 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 
 GtkWidget *
 gimp_container_editor_add_button (GimpContainerEditor  *editor,
-				  gchar               **xpm_data,
+				  const gchar          *stock_id,
 				  const gchar          *tooltip,
 				  const gchar          *help_data,
 				  GCallback             callback)
 {
-  GtkWidget *pixmap;
   GtkWidget *button;
+  GtkWidget *image;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), NULL);
-  g_return_val_if_fail (xpm_data != NULL, NULL);
+  g_return_val_if_fail (stock_id != NULL, NULL);
 
   button = gtk_button_new ();
   gtk_box_pack_start (GTK_BOX (editor->button_box), button,
@@ -274,9 +274,9 @@ gimp_container_editor_add_button (GimpContainerEditor  *editor,
 		      callback,
 		      editor);
 
-  pixmap = gimp_pixmap_new (xpm_data);
-  gtk_container_add (GTK_CONTAINER (button), pixmap);
-  gtk_widget_show (pixmap);
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   return button;
 }

@@ -101,7 +101,7 @@ tool_options_dialog_create (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, TRUE,
 
-		     _("Reset"), tool_options_dialog_reset_callback,
+		     GIMP_STOCK_RESET, tool_options_dialog_reset_callback,
 		     NULL, NULL, &options_reset_button, FALSE, FALSE,
 
 		     GTK_STOCK_CLOSE, tool_options_dialog_close_callback,

@@ -292,7 +292,7 @@ error_console_create (void)
 				   GTK_WIN_POS_NONE,
 				   TRUE, TRUE, FALSE,
 
-				   _("Clear"), error_console_clear_callback,
+				   GTK_STOCK_CLEAR, error_console_clear_callback,
 				   text_buffer, NULL, NULL, FALSE, FALSE,
 				   GTK_STOCK_CLOSE, error_console_close_callback,
 				   text_buffer, NULL, NULL, TRUE, TRUE,

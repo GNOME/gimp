@@ -525,7 +525,7 @@ unit_editor_dialog (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, TRUE,
 
-		     _("Refresh"), refresh_callback,
+		     GIMP_STOCK_REFRESH, refresh_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
 		     GTK_STOCK_CLOSE, gtk_widget_destroy,
 		     NULL, 1, NULL, TRUE, TRUE,

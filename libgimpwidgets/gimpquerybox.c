@@ -107,8 +107,6 @@ create_query_box (const gchar   *title,
 		  gpointer       callback_data)
 {
   QueryBox  *query_box;
-  GtkWidget *qbox;
-  GtkWidget *vbox = NULL;
   GtkWidget *label;
 
   /*  make sure the object / signal passed are valid
@@ -118,19 +116,19 @@ create_query_box (const gchar   *title,
 
   query_box = g_new (QueryBox, 1);
 
-  qbox = gimp_dialog_new (title, "query_box",
-			  help_func, help_data,
-			  GTK_WIN_POS_MOUSE,
-			  FALSE, TRUE, FALSE,
+  query_box->qbox = gimp_dialog_new (title, "query_box",
+				     help_func, help_data,
+				     GTK_WIN_POS_MOUSE,
+				     FALSE, TRUE, FALSE,
 
-			  ok_button, ok_callback,
-			  query_box, NULL, NULL, TRUE, FALSE,
-			  cancel_button, cancel_callback,
-			  query_box, NULL, NULL, FALSE, TRUE,
+				     ok_button, ok_callback,
+				     query_box, NULL, NULL, TRUE, FALSE,
+				     cancel_button, cancel_callback,
+				     query_box, NULL, NULL, FALSE, TRUE,
 
-			  NULL);
+				     NULL);
 
-  g_signal_connect (G_OBJECT (qbox), "destroy",
+  g_signal_connect (G_OBJECT (query_box->qbox), "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
 		    &query_box->qbox);
 
@@ -153,18 +151,17 @@ create_query_box (const gchar   *title,
 
   if (message)
     {
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
-      gtk_widget_show (vbox);
+      query_box->vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 6);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
+			 query_box->vbox);
+      gtk_widget_show (query_box->vbox);
 
       label = gtk_label_new (message);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (query_box->vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
     }
 
-  query_box->qbox          = qbox;
-  query_box->vbox          = vbox;
   query_box->entry         = NULL;
   query_box->object        = object;
   query_box->callback      = callback;

@@ -20,12 +20,15 @@
 #define __GUI_H__
 
 
-void   gui_init               (Gimp *gimp);
-void   gui_restore            (Gimp *gimp);
-void   gui_post_init          (Gimp *gimp);
+void   gui_libs_init          (gint    *argc,
+			       gchar ***argv);
 
-void   gui_shutdown           (Gimp *gimp);
-void   gui_exit               (Gimp *gimp);
+void   gui_init               (Gimp    *gimp);
+void   gui_restore            (Gimp    *gimp);
+void   gui_post_init          (Gimp    *gimp);
+
+void   gui_shutdown           (Gimp    *gimp);
+void   gui_exit               (Gimp    *gimp);
 
 void   gui_really_quit_dialog (void);
 

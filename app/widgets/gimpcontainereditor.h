@@ -84,7 +84,7 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
 					      GimpContainerContextFunc  context_func);
 
 GtkWidget * gimp_container_editor_add_button (GimpContainerEditor  *editor,
-					      gchar               **xpm_data,
+					      const gchar          *stock_id,
 					      const gchar          *tooltip,
 					      const gchar          *help_data,
 					      GCallback             callback);

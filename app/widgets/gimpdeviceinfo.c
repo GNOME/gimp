@@ -195,37 +195,16 @@ GtkWidget *
 input_dialog_create (void)
 {
   static GtkWidget *inputd = NULL;
-  GtkWidget        *hbbox;
 
   if (inputd)
     return inputd;
 
   inputd = gtk_input_dialog_new ();
 
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (inputd)->action_area),
-			   FALSE);
-
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-
-  gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->save_button, hbbox);
-  GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->save_button,
-			GTK_CAN_DEFAULT);
-  gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->close_button, hbbox);
-  GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->close_button,
-			GTK_CAN_DEFAULT);
-
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (inputd)->action_area), hbbox,
-		    FALSE, FALSE, 0);
-  gtk_widget_grab_default (GTK_INPUT_DIALOG (inputd)->close_button);
-  gtk_widget_show(hbbox);
-
   g_signal_connect (G_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
                     "clicked",
                     G_CALLBACK (devices_write_rc),
-		      NULL);
+		    NULL);
   g_signal_connect (G_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
                     "clicked",
                     G_CALLBACK (devices_close_callback),
