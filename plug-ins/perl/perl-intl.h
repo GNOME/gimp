@@ -7,8 +7,8 @@
 #ifdef ENABLE_NLS
 # include <libintl.h>
 #else
-# define gettext(s) (s)
-# define dgettext(d,s) (s)
+# define gettext(s) (char *) (s)
+# define dgettext(d,s) (char *) (s)
 # define textdomain(d) (d)
 # define bindtextdomain(d,p) (p)
 #endif

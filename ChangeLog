@@ -1,3 +1,38 @@
+2001-11-05  Daniel Egger  <degger@fhm.edu>
+
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/paint_funcs.c
+	* app/paint_funcs.h: Constified a few parameter arguments to
+	shut up gcc warnings.
+	
+	* libgimp/gimpintl.h
+	* libgimp/libgimp-intl.h
+	* plug-ins/perl/perl-intl.h: When compililing without NLS
+	cast "return" of gettextish calls to char * to avoid
+	warnings.
+	
+	* plug-ins/common/url.c: Check for EOF by using feof instead
+	of comparing against EOF to avoid warning.
+
+	* plug-ins/imagemap/imap_cern.l
+	* plug-ins/imagemap/imap_cern.y
+	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_csim.l
+	* plug-ins/imagemap/imap_csim_lex.c
+	* plug-ins/imagemap/imap_ncsa.l
+	* plug-ins/imagemap/imap_ncsa_lex.c: Include string.h for
+	prototype of strcpy.
+	
+	* plug-ins/rcm/rcm_callback.c: Change string from (???) to
+	??? to avoid compiler confusion with possible trigraph.
+
+	* plug-ins/script-fu/interp_sliba.c: Change template parameters
+	of sprintf from long to int to avoid warnings. 
+	
+	* plug-ins/gap/gap_filter_iterators.c: Remove unused functions
+	to... you get the idea. :)
+
 2001-11-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/*.c: marked strings for translation, include

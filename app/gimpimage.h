@@ -115,24 +115,26 @@ GimpImage *     gimp_image_new                    (gint, gint,
 void            gimp_image_set_filename           (GimpImage *, gchar *);
 void            gimp_image_set_resolution         (GimpImage *,
 						   gdouble, gdouble);
-void            gimp_image_get_resolution         (GimpImage *,
+void            gimp_image_get_resolution         (const GimpImage *,
 						   gdouble *, gdouble *);
 void            gimp_image_set_unit               (GimpImage *, GimpUnit);
-GimpUnit        gimp_image_get_unit               (GimpImage *);
+GimpUnit        gimp_image_get_unit               (const GimpImage *);
 void            gimp_image_set_save_proc	  (GimpImage *,
 						   PlugInProcDef *);
-PlugInProcDef * gimp_image_get_save_proc	  (GimpImage *);
+PlugInProcDef * gimp_image_get_save_proc	  (const GimpImage *);
 gint		gimp_image_get_width		  (const GimpImage *);
 gint		gimp_image_get_height		  (const GimpImage *);
 void            gimp_image_resize                 (GimpImage *,
 						   gint, gint, gint, gint);
-void            gimp_image_scale                  (GimpImage *, gint, gint);
+void            gimp_image_scale                  (GimpImage *,
+						   gint, gint);
 GimpImage *     gimp_image_get_named              (gchar *);
 GimpImage *     gimp_image_get_ID                 (gint);
 TileManager *   gimp_image_shadow                 (GimpImage *,
 						   gint, gint, gint);
 void            gimp_image_free_shadow            (GimpImage *);
-void            gimp_image_apply_image            (GimpImage *, GimpDrawable *,
+void            gimp_image_apply_image            (GimpImage *,
+						   GimpDrawable *,
 						   PixelRegion *, gint,
 						   gint,
 						   LayerModeEffects,
@@ -140,17 +142,17 @@ void            gimp_image_apply_image            (GimpImage *, GimpDrawable *,
 void            gimp_image_replace_image          (GimpImage *, GimpDrawable *,
 						   PixelRegion *, gint, gint,
 						   PixelRegion *, gint, gint);
-void            gimp_image_get_foreground         (GimpImage *, GimpDrawable *,
-						   guchar *);
-void            gimp_image_get_background         (GimpImage *, GimpDrawable *,
-						   guchar *);
-guchar *        gimp_image_get_color_at           (GimpImage *, gint, gint);
-						   
-void            gimp_image_get_color              (GimpImage *,
+void            gimp_image_get_foreground         (const GimpImage *,
+						   GimpDrawable *, guchar *);
+void            gimp_image_get_background         (const GimpImage *,
+						   GimpDrawable *, guchar *);
+guchar *        gimp_image_get_color_at           (GimpImage *,
+						   gint, gint);
+void            gimp_image_get_color              (const GimpImage *,
 						   GimpImageType,
 						   guchar *,
 						   guchar *);
-void            gimp_image_transform_color        (GimpImage *,
+void            gimp_image_transform_color        (const GimpImage *,
 						   GimpDrawable *,
 						   guchar *,
 						   guchar *,
@@ -171,10 +173,10 @@ void            gimp_image_parasite_detach        (GimpImage *, const gchar *);
 
 Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
 gboolean        gimp_image_set_tattoo_state       (GimpImage *, Tattoo);
-Tattoo          gimp_image_get_tattoo_state       (GimpImage *);
+Tattoo          gimp_image_get_tattoo_state       (const GimpImage *);
 
 void            gimp_image_set_paths              (GimpImage *, PathList *);
-PathList *      gimp_image_get_paths              (GimpImage *);
+PathList *      gimp_image_get_paths              (const GimpImage *);
 
 /* Temporary hack till colormap manipulation is encapsulated in functions.
    Call this whenever you modify an image's colormap. The ncol argument
@@ -251,8 +253,8 @@ void            gimp_image_validate                  (TileManager *, Tile *);
 gboolean           gimp_image_is_empty             (GimpImage *);
 GimpDrawable *     gimp_image_active_drawable      (GimpImage *);
 
-GimpImageBaseType  gimp_image_base_type            (GimpImage *gimage);
-GimpImageType	   gimp_image_base_type_with_alpha (GimpImage *gimage);
+GimpImageBaseType  gimp_image_base_type            (const GimpImage *gimage);
+GimpImageType	   gimp_image_base_type_with_alpha (const GimpImage *gimage);
 
 gchar *            gimp_image_filename             (GimpImage *);
 gboolean           gimp_image_undo_is_enabled      (GimpImage *);
@@ -270,17 +272,17 @@ guchar *           gimp_image_cmap                 (GimpImage *);
 /*  projection access functions  */
 
 TileManager *   gimp_image_projection             (GimpImage *);
-GimpImageType	gimp_image_projection_type        (GimpImage *);
-gint            gimp_image_projection_bytes       (GimpImage *);
-gint            gimp_image_projection_opacity     (GimpImage *);
+GimpImageType	gimp_image_projection_type        (const GimpImage *);
+gint            gimp_image_projection_bytes       (const GimpImage *);
+gint            gimp_image_projection_opacity     (const GimpImage *);
 void            gimp_image_projection_realloc     (GimpImage *);
 
 
 /*  composite access functions  */
 
 TileManager *   gimp_image_composite              (GimpImage *);
-GimpImageType	gimp_image_composite_type         (GimpImage *);
-gint            gimp_image_composite_bytes        (GimpImage *);
+GimpImageType	gimp_image_composite_type         (const GimpImage *);
+gint            gimp_image_composite_bytes        (const GimpImage *);
 TempBuf *       gimp_image_composite_preview      (GimpImage *, ChannelType,
 						   gint, gint);
 

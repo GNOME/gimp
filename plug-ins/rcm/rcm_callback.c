@@ -79,7 +79,7 @@ rcm_units_string (gint units)
     case DEGREES:         return "deg";
     case RADIANS:         return "rad";
     case RADIANS_OVER_PI: return "rad/pi";
-    default:              return "(???)";
+    default:              return "???";
   }
 }
 

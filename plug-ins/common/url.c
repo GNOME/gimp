@@ -358,7 +358,7 @@ load_image (gchar             *filename,
 	    {
 	      dot = fgetc (input);
 
-	      if (dot == EOF)
+	      if (feof (input))
 		break;
 
 	      if (debug)

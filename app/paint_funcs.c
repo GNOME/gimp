@@ -113,7 +113,7 @@ struct _ColorHash
 {
   int pixel;           /*  R << 16 | G << 8 | B  */
   int index;           /*  colormap index        */
-  GimpImage* gimage;     
+  const GimpImage* gimage;     
 };
 
 static ColorHash color_hash_table [HASH_TABLE_SIZE];
@@ -3145,11 +3145,11 @@ map_to_color (int                  src_type,
 
 int
 map_rgb_to_indexed (const unsigned char *cmap,
-		    int            num_cols,
-		    GimpImage*     gimage,
-		    int            r,
-		    int            g,
-		    int            b)
+		    int			 num_cols,
+		    const GimpImage*	 gimage,
+		    int			 r,
+		    int			 g,
+		    int			 b)
 {
   unsigned int pixel;
   int hash_index;

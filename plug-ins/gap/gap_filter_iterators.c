@@ -144,15 +144,6 @@ static void p_delta_long(long *val, long val_from, long val_to, gint32 total_ste
     if(gap_debug) printf("DEBUG: p_delta_long from: %ld to: %ld curr: %ld    delta: %f\n",
                                   val_from, val_to, *val, delta);
 }
-static void p_delta_short(short *val, short val_from, short val_to, gint32 total_steps, gdouble current_step)
-{
-    double     delta;
-
-    if(total_steps < 1) return;
-
-    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-    *val  = val_from + delta; 
-}
 static void p_delta_int(int *val, int val_from, int val_to, gint32 total_steps, gdouble current_step)
 {
      double     delta;
@@ -242,19 +233,6 @@ static void p_delta_color(t_color *val, t_color *val_from, t_color *val_to, gint
                                   (int)l_idx, (int)total_steps, 
                                   (int)val_from->color[l_idx], (int)val_to->color[l_idx], (int)val->color[l_idx],
                                   delta, current_step);
-    }
-}
-static void p_delta_gint_color(t_gint_color *val, t_gint_color *val_from, t_gint_color *val_to, gint32 total_steps, gdouble current_step)
-{
-    double     delta;
-    int l_idx;
-
-    if(total_steps < 1) return;
-    
-    for(l_idx = 0; l_idx < 3; l_idx++)
-    {
-       delta = ((double)(val_to->color[l_idx] - val_from->color[l_idx]) / (double)total_steps) * ((double)total_steps - current_step);
-       val->color[l_idx]  = val_from->color[l_idx] + delta; 
     }
 }
 static void p_delta_drawable(gint32 *val, gint32 val_from, gint32 val_to, gint32 total_steps, gdouble current_step)

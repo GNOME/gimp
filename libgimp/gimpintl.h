@@ -48,9 +48,9 @@
 #else
 /* Stubs that do something close enough.  */
 #    define textdomain(String) (String)
-#    define gettext(String) (String)
-#    define dgettext(Domain,Message) (Message)
-#    define dcgettext(Domain,Message,Type) (Message)
+#    define gettext(String) (char *) (String)
+#    define dgettext(Domain,Message) (char *) (Message)
+#    define dcgettext(Domain,Message,Type) (char *) (Message)
 #    define bindtextdomain(Domain,Directory) (Domain)
 #    define _(String) (String)
 #    define N_(String) (String)

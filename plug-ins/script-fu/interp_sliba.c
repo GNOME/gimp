@@ -1470,7 +1470,7 @@ number2string (LISP x, LISP b, LISP w, LISP p)
 {
   char buffer[1000];
   double y;
-  long base, width, prec;
+  int base, width, prec;
   if NFLONUMP
     (x) my_err ("wta", x);
   y = FLONM (x);

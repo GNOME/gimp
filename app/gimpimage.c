@@ -384,7 +384,7 @@ gimp_image_set_resolution (GimpImage *gimage,
 }
 
 void
-gimp_image_get_resolution (GimpImage *gimage,
+gimp_image_get_resolution (const GimpImage *gimage,
 			   gdouble   *xresolution,
 			   gdouble   *yresolution)
 {
@@ -404,7 +404,7 @@ gimp_image_set_unit (GimpImage *gimage,
 }
 
 GimpUnit
-gimp_image_get_unit (GimpImage *gimage)
+gimp_image_get_unit (const GimpImage *gimage)
 {
   return gimage->unit;
 }
@@ -417,7 +417,7 @@ gimp_image_set_save_proc (GimpImage     *gimage,
 }
 
 PlugInProcDef *
-gimp_image_get_save_proc (GimpImage *gimage)
+gimp_image_get_save_proc (const GimpImage *gimage)
 {
   return gimage->save_proc;
 }
@@ -933,9 +933,9 @@ gimp_image_replace_image (GimpImage    *gimage,
 /* Get rid of these! A "foreground" is an UI concept.. */
 
 void
-gimp_image_get_foreground (GimpImage    *gimage, 
-			   GimpDrawable *drawable, 
-			   guchar       *fg)
+gimp_image_get_foreground (const GimpImage *gimage, 
+			   GimpDrawable	   *drawable, 
+			   guchar	   *fg)
 {
   guchar pfg[3];
 
@@ -946,9 +946,9 @@ gimp_image_get_foreground (GimpImage    *gimage,
 }
 
 void
-gimp_image_get_background (GimpImage    *gimage, 
-			   GimpDrawable *drawable, 
-			   guchar       *bg)
+gimp_image_get_background (const GimpImage *gimage, 
+			   GimpDrawable	   *drawable, 
+			   guchar	   *bg)
 {
   guchar pbg[3];
 
@@ -960,8 +960,8 @@ gimp_image_get_background (GimpImage    *gimage,
 
 guchar *
 gimp_image_get_color_at (GimpImage *gimage, 
-			 gint       x, 
-			 gint       y)
+			 gint	    x, 
+			 gint	    y)
 {
   Tile   *tile;
   guchar *src;
@@ -990,10 +990,10 @@ gimp_image_get_color_at (GimpImage *gimage,
 }
 
 void
-gimp_image_get_color (GimpImage     *gimage, 
-		      GimpImageType  d_type,
-		      guchar        *rgb, 
-		      guchar        *src)
+gimp_image_get_color (const GimpImage     *gimage, 
+		      GimpImageType	   d_type,
+		      guchar		  *rgb, 
+		      guchar		  *src)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1012,7 +1012,7 @@ gimp_image_get_color (GimpImage     *gimage,
 }
 
 void
-gimp_image_transform_color (GimpImage         *gimage, 
+gimp_image_transform_color (const GimpImage         *gimage, 
 			    GimpDrawable      *drawable,
 			    guchar            *src, 
 			    guchar            *dest, 
@@ -1240,7 +1240,7 @@ gimp_image_get_new_tattoo (GimpImage *image)
 }
 
 Tattoo
-gimp_image_get_tattoo_state (GimpImage *image)
+gimp_image_get_tattoo_state (const GimpImage *image)
 {
   return (image->tattoo_state);
 }
@@ -1350,7 +1350,7 @@ gimp_image_set_paths (GimpImage *gimage,
 }
 
 PathList *
-gimp_image_get_paths (GimpImage *gimage)
+gimp_image_get_paths (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3439,7 +3439,7 @@ gimp_image_active_drawable (GimpImage *gimage)
 }
 
 GimpImageBaseType
-gimp_image_base_type (GimpImage *gimage)
+gimp_image_base_type (const GimpImage *gimage)
 {  
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -3447,7 +3447,7 @@ gimp_image_base_type (GimpImage *gimage)
 }
 
 GimpImageType
-gimp_image_base_type_with_alpha (GimpImage *gimage)
+gimp_image_base_type_with_alpha (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -3630,7 +3630,7 @@ gimp_image_projection (GimpImage *gimage)
 }
 
 GimpImageType
-gimp_image_projection_type (GimpImage *gimage)
+gimp_image_projection_type (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -3638,7 +3638,7 @@ gimp_image_projection_type (GimpImage *gimage)
 }
 
 gint
-gimp_image_projection_bytes (GimpImage *gimage)
+gimp_image_projection_bytes (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -3646,7 +3646,7 @@ gimp_image_projection_bytes (GimpImage *gimage)
 }
 
 gint
-gimp_image_projection_opacity (GimpImage *gimage)
+gimp_image_projection_opacity (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -3670,13 +3670,13 @@ gimp_image_composite (GimpImage *gimage)
 }
 
 GimpImageType
-gimp_image_composite_type (GimpImage *gimage)
+gimp_image_composite_type (const GimpImage *gimage)
 {
   return gimp_image_projection_type (gimage);
 }
 
 gint
-gimp_image_composite_bytes (GimpImage *gimage)
+gimp_image_composite_bytes (const GimpImage *gimage)
 {
   return gimp_image_projection_bytes (gimage);
 }

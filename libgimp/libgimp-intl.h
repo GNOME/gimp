@@ -35,9 +35,9 @@
 #    endif
 #else
 /* Stubs that do something close enough.  */
-#    define gettext(String) (String)
-#    define _(String) (String)
-#    define N_(String) (String)
+#    define gettext(String) (char *) (String)
+#    define _(String) (char *) (String)
+#    define N_(String) (char *) (String)
 #endif
 
 

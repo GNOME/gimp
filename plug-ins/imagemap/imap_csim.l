@@ -22,6 +22,7 @@
  *
  */
 
+#include <string.h> 
 #include "imap_csim_parse.h"
 
 #ifdef FLEX_SCANNER

@@ -487,6 +487,7 @@ char *yytext;
  *
  */
 
+#include <string.h> 
 #include "imap_cern_parse.h"
 #define comment 1
 

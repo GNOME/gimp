@@ -447,7 +447,8 @@ map_to_color                              (int                  src_type,
  *  least squares method
  */
 int    map_rgb_to_indexed                 (const unsigned char *cmap,
-					   int num_cols, GimpImage* gimage,
+					   int num_cols, 
+					   const GimpImage* gimage,
 					   int r, int g, int b);
 
 
