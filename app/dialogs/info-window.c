@@ -26,8 +26,6 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -75,7 +73,7 @@ struct _InfoWinData
   GtkWidget   *frame1;
   GtkWidget   *frame2;
 
-  gboolean     showing_extended;
+  gboolean     show_cursor;
 };
 
 
@@ -105,9 +103,9 @@ info_window_page_switch (GtkWidget       *widget,
                          gint             page_num,
                          InfoDialog      *info_win)
 {
-  InfoWinData *iwd = (InfoWinData *) info_win->user_data;
+  InfoWinData *iwd = info_win->user_data;
 
-  iwd->showing_extended = (page_num == 1);
+  iwd->show_cursor = (page_num == 1);
 }
 
 
@@ -115,14 +113,13 @@ info_window_page_switch (GtkWidget       *widget,
  *    cursor pos
  *    cursor pos in real units
  *    color under cursor
- *  Can't we find a better place for this than in the image window? (Ralf)
  */
 
 static void
-info_window_create_extended (InfoDialog *info_win,
-                             Gimp       *gimp)
+info_window_create_cursor (InfoDialog *info_win,
+                           Gimp       *gimp)
 {
-  InfoWinData *iwd = (InfoWinData *) info_win->user_data;
+  InfoWinData *iwd = info_win->user_data;
   GtkWidget   *frame;
   GtkWidget   *table;
   GtkWidget   *hbox;
@@ -131,7 +128,7 @@ info_window_create_extended (InfoDialog *info_win,
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
-                            vbox, gtk_label_new (_("Extended")));
+                            vbox, gtk_label_new (_("Cursor")));
   gtk_widget_show (vbox);
 
 
@@ -152,15 +149,15 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_widget_show (table);
 
   iwd->pixel_labels[0] = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[0]), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[0]), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X:"), 0.0, 0.5,
+                             _("X"), 0.5, 0.5,
                              iwd->pixel_labels[0], 1, FALSE);
 
   iwd->pixel_labels[1] = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[1]), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[1]), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y:"), 0.0, 0.5,
+                             _("Y"), 0.5, 0.5,
                              iwd->pixel_labels[1], 1, FALSE);
 
   frame = gimp_frame_new (_("Units"));
@@ -174,15 +171,15 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_widget_show (table);
 
   iwd->unit_labels[0] = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[0]), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[0]), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X:"), 0.0, 0.5,
+                             _("X"), 0.5, 0.5,
                              iwd->unit_labels[0], 1, FALSE);
 
   iwd->unit_labels[1] = gtk_label_new (_("n/a"));
-  gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[1]), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[1]), 1.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y:"), 0.0, 0.5,
+                             _("Y"), 0.5, 0.5,
                              iwd->unit_labels[1], 1, FALSE);
 
 
@@ -218,7 +215,7 @@ static void
 info_window_create_comment (InfoDialog  *info_win,
                             GimpDisplay *gdisp)
 {
-  InfoWinData  *iwd = (InfoWinData *) info_win->user_data;
+  InfoWinData  *iwd = info_win->user_data;
   GtkWidget    *label;
   GtkWidget    *vbox;
   GtkWidget    *vbox2;
@@ -302,7 +299,7 @@ info_window_create (GimpDisplay *gdisp)
                          iwd->visual_depth_str);
 
   /*  Add extra tabs  */
-  info_window_create_extended (info_win, gdisp->gimage->gimp);
+  info_window_create_cursor (info_win, gdisp->gimage->gimp);
   info_window_create_comment (info_win, gdisp);
 
   /* Set back to first page */
@@ -323,7 +320,7 @@ info_window_change_display (GimpContext *context,
   GimpImage   *gimage;
   InfoWinData *iwd;
 
-  iwd = (InfoWinData *) info_window_auto->user_data;
+  iwd = info_window_auto->user_data;
 
   old_gdisp = (GimpDisplay *) iwd->gdisp;
 
@@ -370,12 +367,12 @@ info_window_follow_auto (Gimp *gimp)
 }
 
 
-/* Updates all extended information. */
+/* Updates all cursor information. */
 
 void
-info_window_update_extended (GimpDisplay *gdisp,
-                             gdouble      tx,
-                             gdouble      ty)
+info_window_update_cursor (GimpDisplay *gdisp,
+                           gdouble      tx,
+                           gdouble      ty)
 {
   InfoDialog  *info_win;
   InfoWinData *iwd;
@@ -389,7 +386,7 @@ info_window_update_extended (GimpDisplay *gdisp,
   if (! info_win)
     return;
 
-  iwd = (InfoWinData *) info_win->user_data;
+  iwd = info_win->user_data;
 
   if (info_window_auto)
     {
@@ -406,7 +403,7 @@ info_window_update_extended (GimpDisplay *gdisp,
 
   gtk_label_set_text (GTK_LABEL (iwd->comment_label), iwd->comment_str);
 
-  if (! iwd || ! iwd->showing_extended)
+  if (! iwd || ! iwd->show_cursor)
     return;
 
   /* fill in position information */
@@ -420,14 +417,20 @@ info_window_update_extended (GimpDisplay *gdisp,
     }
   else
     {
-      GimpImage   *image       = gdisp->gimage;
-      GimpUnit     unit        = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
-      gdouble      unit_factor = _gimp_unit_get_factor (image->gimp, unit);
-      gint         unit_digits = _gimp_unit_get_digits (image->gimp, unit);
-      const gchar *unit_str    = _gimp_unit_get_abbreviation (image->gimp,
-                                                              unit);
+      GimpImage   *image = gdisp->gimage;
+      GimpUnit     unit  = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+      gdouble      unit_factor;
+      gint         unit_digits;
+      const gchar *unit_str;
       gchar        format_buf[32];
       gchar        buf[32];
+
+      if (unit == GIMP_UNIT_PIXEL)
+        unit = image->unit;
+
+      unit_factor = _gimp_unit_get_factor (image->gimp, unit);
+      unit_digits = _gimp_unit_get_digits (image->gimp, unit);
+      unit_str    = _gimp_unit_get_abbreviation (image->gimp, unit);
 
       g_snprintf (buf, sizeof (buf), "%d", (gint) tx);
       gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[0]), buf);
@@ -493,7 +496,7 @@ info_window_free (InfoDialog *info_win)
   if (! info_win)
     return;
 
-  iwd = (InfoWinData *) info_win->user_data;
+  iwd = info_win->user_data;
 
   g_free (iwd);
   info_dialog_free (info_win);
@@ -509,8 +512,6 @@ info_window_update (GimpDisplay *gdisp)
   GimpUnit          unit;
   gdouble           unit_factor;
   gint              unit_digits;
-  GimpUnit          res_unit;
-  gdouble           res_unit_factor;
   gchar             format_buf[32];
   InfoDialog       *info_win;
 
@@ -522,7 +523,7 @@ info_window_update (GimpDisplay *gdisp)
   if (! info_win)
     return;
 
-  iwd = (InfoWinData *) info_win->user_data;
+  iwd = info_win->user_data;
 
   if (info_window_auto)
     gtk_widget_set_sensitive (info_window_auto->vbox, TRUE);
@@ -534,14 +535,20 @@ info_window_update (GimpDisplay *gdisp)
     return;
 
   image = gdisp->gimage;
-  unit  = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+
+  /*  pixel size  */
+  g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
+              image->width, image->height);
+
+  /*  print size  */
+  unit = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
+
+  if (unit == GIMP_UNIT_PIXEL)
+    unit = image->unit;
 
   unit_factor = _gimp_unit_get_factor (image->gimp, unit);
   unit_digits = _gimp_unit_get_digits (image->gimp, unit);
 
-  /*  width and height  */
-  g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
-              image->width, image->height);
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
               unit_digits + 1, unit_digits + 1,
               _gimp_unit_get_plural (image->gimp, unit));
@@ -549,16 +556,16 @@ info_window_update (GimpDisplay *gdisp)
               image->width  * unit_factor / image->xresolution,
               image->height * unit_factor / image->yresolution);
 
-  /*  image resolution  */
-  res_unit = image->gimp->config->default_image->resolution_unit;
-  res_unit_factor = _gimp_unit_get_factor (image->gimp, res_unit);
+  /*  resolution  */
+  unit = image->unit;
+  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
-              _gimp_unit_get_abbreviation (image->gimp, res_unit));
+              _gimp_unit_get_abbreviation (image->gimp, unit));
   g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g %s"),
-              image->xresolution / res_unit_factor,
-              image->yresolution / res_unit_factor,
-              res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
+              image->xresolution / unit_factor,
+              image->yresolution / unit_factor,
+              unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%.2f", shell->scale * 100);

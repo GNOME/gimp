@@ -160,11 +160,11 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
       t_x >= gimage->width ||
       t_y >= gimage->height)
     {
-      info_window_update_extended (shell->gdisp, -1, -1);
+      info_window_update_cursor (shell->gdisp, -1, -1);
     }
   else
     {
-      info_window_update_extended (shell->gdisp, t_x, t_y);
+      info_window_update_cursor (shell->gdisp, t_x, t_y);
     }
 }
 
@@ -175,7 +175,7 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
   gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
 
-  info_window_update_extended (shell->gdisp, -1, -1);
+  info_window_update_cursor (shell->gdisp, -1, -1);
 }
 
 static void

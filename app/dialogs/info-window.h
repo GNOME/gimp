@@ -20,14 +20,14 @@
 #define __INFO_WINDOW_H__
 
 
-InfoDialog * info_window_create          (GimpDisplay *gdisp);
-void         info_window_free            (InfoDialog  *info_win);
+InfoDialog * info_window_create        (GimpDisplay *gdisp);
+void         info_window_free          (InfoDialog  *info_win);
 
-void         info_window_update          (GimpDisplay *gdisp);
-void         info_window_update_extended (GimpDisplay *gdisp,
-                                          gdouble      tx,
-                                          gdouble      ty);
-void         info_window_follow_auto     (Gimp        *gimp);
+void         info_window_update        (GimpDisplay *gdisp);
+void         info_window_update_cursor (GimpDisplay *gdisp,
+                                        gdouble      tx,
+                                        gdouble      ty);
+void         info_window_follow_auto   (Gimp        *gimp);
 
 
 #endif /*  __INFO_WINDOW_H__  */
