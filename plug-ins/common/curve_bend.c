@@ -19,7 +19,10 @@
  */
 
 /* Revision history
- *  (2003/08/24)  v1.3.18 hof: #119937 show busy cursor when recalculating preview
+ *  (2004/02/08)  v1.3.18 hof: #133244 exit with execution error if there is
+ *                             an empty selection
+ *  (2003/08/24)  v1.3.18 hof: #119937 show busy cursor when recalculating
+ *                             preview
  *  (2002/09/xx)  v1.1.18 mitch and gsr: clean interface
  *  (2000/02/16)  v1.1.17b hof: added spinbuttons for rotate entry
  *  (2000/02/16)  v1.1.17 hof: undo bugfix (#6012)
@@ -114,8 +117,8 @@
 typedef struct _BenderValues BenderValues;
 struct _BenderValues
 {
-  guchar  curve[2][256];            /* for curve_type freehand mode   0   <= curve  <= 255 */
-  gdouble points[2][17][2];         /* for curve_type smooth mode     0.0 <= points <= 1.0 */
+  guchar  curve[2][256];    /* for curve_type freehand mode   0   <= curve  <= 255 */
+  gdouble points[2][17][2]; /* for curve_type smooth mode     0.0 <= points <= 1.0 */
 
   int            curve_type;
 
@@ -485,8 +488,14 @@ p_if_selection_float_it (gint32 image_id,
 	{
 	  /* selection is TRUE, make a layer (floating selection) from
 	     the selection  */
-	  gimp_edit_copy (layer_id);
-	  layer_id = gimp_edit_paste (layer_id, FALSE);
+	  if (gimp_edit_copy (layer_id))
+	    {
+	      layer_id = gimp_edit_paste (layer_id, FALSE);
+	    }
+	  else
+	    {
+	      return -1;
+	    }
         }
     }
 
@@ -597,11 +606,12 @@ run (const gchar      *name,
   const gchar  *l_env;
   BenderDialog *cd;
 
-  GimpDrawable *l_active_drawable = NULL;
-  gint32        l_image_id        = -1;
-  gint32        l_layer_id        = -1;
-  gint32        l_layer_mask_id   = -1;
-  gint32        l_bent_layer_id   = -1;
+  GimpDrawable *l_active_drawable    = NULL;
+  gint32        l_active_drawable_id = -1;
+  gint32        l_image_id           = -1;
+  gint32        l_layer_id           = -1;
+  gint32        l_layer_mask_id      = -1;
+  gint32        l_bent_layer_id      = -1;
 
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;
@@ -696,7 +706,7 @@ run (const gchar      *name,
 
   if (! gimp_drawable_is_layer (l_layer_id))
     {
-      g_message (_("CurveBend operates on layers only (but was called on channel or mask)"));
+      g_message (_("Can operate on layers only (but was called on channel or mask)."));
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -712,8 +722,22 @@ run (const gchar      *name,
     }
 
   /* if there is a selection, make it the floating selection layer */
-  l_active_drawable = gimp_drawable_get (p_if_selection_float_it (l_image_id,
-                                                                  l_layer_id));
+  l_active_drawable_id = p_if_selection_float_it (l_image_id, l_layer_id);
+  if (l_active_drawable_id < 0)
+    {
+      /* could not float the selection because selection rectangle
+       * is completely empty return GIMP_PDB_EXECUTION_ERROR
+       */
+       status = GIMP_PDB_EXECUTION_ERROR;
+       if (run_mode != GIMP_RUN_NONINTERACTIVE)
+         {
+           g_message (_("Cannot operate on empty selections."));
+	 }
+    }
+  else
+    {
+      l_active_drawable = gimp_drawable_get (l_active_drawable_id);
+    }
 
   /* how are we running today? */
   if (status == GIMP_PDB_SUCCESS)
@@ -2636,10 +2660,9 @@ static void
 p_clear_drawable (GimpDrawable *drawable)
 {
    GimpPixelRgn  pixel_rgn;
-   gpointer	pr;
-   gint         l_row;
-   guchar      *l_ptr;
-
+   gpointer      pr;
+   guint         l_row;
+   guchar       *l_ptr;
 
    gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			     0, 0, drawable->width, drawable->height,
@@ -2668,17 +2691,16 @@ gint32
 p_create_pv_image (GimpDrawable *src_drawable,
 		   gint32    *layer_id)
 {
-  gint32     l_new_image_id;
-  guint      l_new_width;
-  guint      l_new_height;
+  gint32        l_new_image_id;
+  guint         l_new_width;
+  guint         l_new_height;
   GimpImageType l_type;
-
-  gint    l_x, l_y;
-  double  l_scale;
-  guchar  l_pixel[4];
+  guint         l_x, l_y;
+  double        l_scale;
+  guchar        l_pixel[4];
   GimpDrawable *dst_drawable;
-  t_GDRW  l_src_gdrw;
-  t_GDRW  l_dst_gdrw;
+  t_GDRW        l_src_gdrw;
+  t_GDRW        l_dst_gdrw;
 
   l_new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
                    gimp_image_base_type (gimp_drawable_get_image (src_drawable->drawable_id)));
