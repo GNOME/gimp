@@ -75,7 +75,6 @@ static void        gimp_dock_get_property      (GObject               *object,
                                                 guint                  property_id,
                                                 GValue                *value,
                                                 GParamSpec            *pspec);
-static void        gimp_dock_dispose           (GObject               *object);
 
 static void        gimp_dock_destroy           (GtkObject             *object);
 
@@ -178,7 +177,6 @@ gimp_dock_class_init (GimpDockClass *klass)
   object_class->constructor  = gimp_dock_constructor;
   object_class->set_property = gimp_dock_set_property;
   object_class->get_property = gimp_dock_get_property;
-  object_class->dispose      = gimp_dock_dispose;
 
   gtk_object_class->destroy  = gimp_dock_destroy;
 
@@ -294,26 +292,18 @@ gimp_dock_constructor (GType                  type,
 }
 
 static void
-gimp_dock_dispose (GObject *object)
-{
-  GimpDock *dock = GIMP_DOCK (object);
-
-  if (dock->context)
-    {
-      g_object_unref (dock->context);
-      dock->context = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_dock_destroy (GtkObject *object)
 {
   GimpDock *dock = GIMP_DOCK (object);
 
   while (dock->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->dockbooks->data));
+
+  if (dock->context)
+    {
+      g_object_unref (dock->context);
+      dock->context = NULL;
+    }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }

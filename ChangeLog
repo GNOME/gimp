@@ -1,5 +1,11 @@
 2003-11-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c: reverted a small part of my last commit.
+	It doesn't seem to be a good idea to unref the context in dispose().
+	Do it in destroy() just like we used to do.
+
+2003-11-20  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/info-dialog.c (info_dialog_new_extended)
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): don't set
 	the utility window type hint on info and tool dialogs. These are
