@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.7\n"
-"POT-Creation-Date: 1999-07-23 00:18+0200\n"
+"POT-Creation-Date: 1999-07-23 01:34+0200\n"
 "PO-Revision-Date: 1999-07-22 03:19+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -190,11 +190,11 @@ msgstr "bezier_convert(): försökte konvertera en öppen bezierkurva"
 msgid "test_add_point_on_segment(): Unknown coordinate space: %d"
 msgstr "test_add_point_on_segment(): Okänd koordinatrymd: %d"
 
-#: app/bezier_select.c:3173
+#: app/bezier_select.c:3171
 msgid "Paintbrush operation failed."
 msgstr "Målarpensel-operation misslyckades."
 
-#: app/bezier_select.c:3217
+#: app/bezier_select.c:3215
 msgid "bezier_draw_segment_for_distance(): Bad bezier segment"
 msgstr "bezier_draw_segment_for_distance(): Trasigt beziersegment"
 
@@ -3336,7 +3336,8 @@ msgstr "Flytande markering"
 msgid ""
 "new_layer_query_ok_callback():\n"
 "could not allocate new layer"
-msgstr "new_layer_query_ok_callback():\n"
+msgstr ""
+"new_layer_query_ok_callback():\n"
 "kunde ej allokera nytt lager"
 
 #: app/layers_dialog.c:2833
@@ -4113,7 +4114,7 @@ msgstr "Flyttaverktyget - inställningar"
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: app/paint_core.c:1574
+#: app/paint_core.c:1576
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles är null"
 
