@@ -1,3 +1,10 @@
+2003-01-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c: fixed a compiler warning.
+
+	* plug-ins/gfig/gfig.c: fixed preview code so that the plug-in is
+	at least a bit useful again. Misc minor cleanups, still a mess.
+
 2003-01-09  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c: fixed typos.

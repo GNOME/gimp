@@ -136,7 +136,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->cancelbutton);
 
 
-  /* Update the statusbar once to work around a resizing bug(?) in GTK+:
+  /* Update the statusbar once to work around a canvas size problem:
    *
    *  The first update of the statusbar used to queue a resize which
    *  in term caused the canvas to be resized. That made it shrink by
@@ -145,7 +145,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
    *  next call the resize doesn't seem to happen any longer.
    */
 
-  gimp_statusbar_update (statusbar, 0, NULL);
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar),
+			     "GIMP");
 }
 
 static void
