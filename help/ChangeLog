@@ -1,3 +1,12 @@
+2000-08-04  Daniel Egger <egger@suse.de>
+
+	* C/dialogs/indexed_palette.html
+	* C/dialogs/info_window.html
+	* C/dialogs/layers_and_channels.html
+	* C/dialogs/module_browser.html
+	* C/dialogs/navigation_window.html: Proofed versions by
+	Rebecca Jean Pedersen <rjp@mail.tele.dk>.
+
 2000-07-29  Sven Neumannn  <sven@gimp.org>
 
 	* C/welcome.html
