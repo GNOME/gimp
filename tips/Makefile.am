@@ -35,5 +35,6 @@ EXTRA_DIST = \
 	$(tips_in_files)	\
 	$(tipsdata_DATA)	\
 	$(oldtips)		\
+	ChangeLog		\
 	makefile.mingw		\
 	update.sh

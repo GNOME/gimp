@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.4\n"
-"POT-Creation-Date: 2002-02-25 22:37+0100\n"
+"POT-Creation-Date: 2002-02-25 23:27+0100\n"
 "PO-Revision-Date: 2002-02-25 17:03+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -26,6 +26,8 @@ msgid ""
 "Alt-click on the layer mask's preview in the Layers dialog toggles viewing "
 "the mask directly."
 msgstr ""
+"Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei gedrückter Alt-"
+"Taste kann die Maske unabhängig von ihrer Ebene betrachtet werden."
 
 #: tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -39,6 +41,9 @@ msgid ""
 "Control-drag with the Transform tool in rotation mode will constrain the "
 "rotation to 15 degree angles."
 msgstr ""
+"Wird mit dem Transformationswerkzeug im Rotationsmodus die Ctrl-Taste "
+"gedrückt, so können für den Winkel nur Vielfache von 15 Grad eingestellt "
+"werden."
 
 #: tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -117,6 +122,8 @@ msgid ""
 "Shift-click with the Bucket Fill tool to have it use the background color "
 "instead of the foreground color."
 msgstr ""
+"Wird beim Anwenden des Farbeimers die Shift-Taste gedrückt, so wird statt "
+"der Vordergrund- die Hintergrundfarbe verwendet."
 
 #: tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -124,6 +131,10 @@ msgid ""
 "\", if you have bzip2 installed) to the filename and your image will be "
 "saved compressed. Of course loading compressed images works too."
 msgstr ""
+"GIMP erlaubt es, Bilder beim Abspeichern automatisch mit gzip oder bzip2 zu "
+"komprimieren (vorausgesetzt diese Programme sind installiert). Dazu muss nur "
+"beim Abspeichern die Endung .gz beziehungsweise .bz2 angehängt werden. "
+"Natürlich werden die Bilder beim Laden automatisch entpackt."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -131,12 +142,18 @@ msgid ""
 "stack of slides or filters, such that looking through them you see a "
 "composite of their contents."
 msgstr ""
+"GIMP benutzt Ebenen um Bilder zu organisieren. Diese kann man sich als ein "
+"Stapel von Folien oder Filtern vorstellen. Sieht man durch diese Folien "
+"hindurch, so entsteht das Bild durch Überlagerung ihrer Inhalte."
 
 #: tips/gimp-tips.xml.in.h:18
 msgid ""
 "The file selection dialog box has command-line completion with Tab, just "
 "like the shell. Type part of a filename, hit tab, and voila! It's completed."
 msgstr ""
+"Der Dateiauswahl-Dialog vervollständigt Dateinamen sowie man es von der "
+"Shell gewöhnt ist. Es genügt den Beginn eines Dateinamens einzugeben, Tab zu "
+"drücken und, voila, das Ende wird ergänzt."
 
 #: tips/gimp-tips.xml.in.h:19
 msgid ""
@@ -145,6 +162,10 @@ msgid ""
 "stack. You may add transparency to it by right-clicking in the \"Layers, "
 "Channels and Paths\" dialog and selecting \"Add Alpha Channel\"."
 msgstr ""
+"Ebenen mit dem Namen \"Hintergrund\" haben eine spezielle Bedeutung. Ihnen "
+"fehlt Transparenz und es kann ihnen keine Maske hinzugefügt werden. Ein "
+"rechter Mausklick im Ebenen-Dialog öffnet ein Menü, das es erlaubt, der "
+"Ebene Transparenz hinzuzufügen."
 
 #: tips/gimp-tips.xml.in.h:20
 msgid ""
@@ -153,6 +174,11 @@ msgid ""
 "circle you want to select, place your cursor at the intersection of the "
 "guides, and the resulting selection will just touch the guides."
 msgstr ""
+"Um eine perfekt runde Selektion zu erzeugen, muss die Shift-Taste beim "
+"Erstellen der Selektion gehalten werden. Um diesen Kreis präzise zu "
+"platzieren, können Hilfslinien benutzt werden. Diese werden an die Tangente "
+"des gewünschten Kreises platziert und die Selektion dann aus dem "
+"Schnittpunkt dieser Linien aufgezogen."
 
 #: tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -172,6 +198,9 @@ msgid ""
 "cursor position. If you also press Ctrl, the line will be constrained to 15 "
 "degree angles."
 msgstr ""
+"Mit den Malwerkzeugen (Pinsel, Sprühpistole und Bleistift) kann eine gerade "
+"Linie zum letzten gezeichneten Punkt gezogen werden, indem beim Klicken die "
+"Shift-Taste gedrückt wird."
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -180,10 +209,16 @@ msgid ""
 "layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
+"Die meisten Bildformate können nicht mit mehreren Ebenen umgehen und "
+"speichern daher nur die aktive Ebene. Um alle Bildinformationen wie Ebenen, "
+"Kanäle und Hilfslinien abzuspeichern, steht das GIMP-eigene Format XCF zur "
+"Verfügung."
 
 #: tips/gimp-tips.xml.in.h:25
 msgid "You can adjust and re-place a selection by using Alt-drag."
 msgstr ""
+"Selektionen können mit gedrückter Alt-Taste verschoben werden, ohne dass ihr "
+"Inhalt mitverschoben wird."
 
 #: tips/gimp-tips.xml.in.h:26
 msgid ""
@@ -236,6 +271,9 @@ msgid ""
 "selecting a menu item, and pressing the new shortcut key combination. This "
 "is dynamic and is saved when you exit GIMP."
 msgstr ""
+"Tastaturkürzel können einfach zugewiesen und verändert werden, indem der "
+"entsprechende Menüeintrag mit der Maus ausgewählt und dann bei gedrückter "
+"Maustaste die neue Tastenkombination gedrückt wird."
 
 #: tips/gimp-tips.xml.in.h:34
 msgid ""
