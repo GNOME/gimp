@@ -1,36 +1,3 @@
-## Makefile for building the GIMP plug-in message catalogs on Win32
-## Use: make -f makefile.cygwin install
-## You will need: - msgfmt from GNU gettext,
-##		  - jconv (http://www.oreilly.com/~lunde/j_tools.html)
-##		  - sjis_esc from ../po
-
-# Locale directory.
+PACKAGE = gimp-std-plugins
 LOCALEDIR = /gimp/locale
-
-# Only some languages actually have any translations
-# LANGUAGES= de fi fr hu it ja ko nl pl ru sv
-LANGUAGES= fr ja ja.sjis no sv
-
-################################################################
-
-# Nothing much configurable below
-
-all : $(addsuffix .gmo,$(LANGUAGES))
-
-install : all
-	mkdir -p $(addsuffix /LC_MESSAGES,$(addprefix $(LOCALEDIR)/,$(LANGUAGES)))
-	for l in $(LANGUAGES); do cp $$l.gmo $(LOCALEDIR)/$$l/LC_MESSAGES/gimp-std-plugins.mo; done
-
-.SUFFIXES: .po .gmo
-
-.po.gmo:
-	msgfmt -o $@ $<
-
-# Special case: Japanese, we must convert from EUC-JP to Shift-JIS
-# As Shift-JIS can have " and \ chars as second byte, we need to
-# escape those with the sjis_esc filter
-ja.sjis.po: ja.po
-	jconv -ie -os <ja.po | sjis_esc >ja.sjis.po
-
-clean:
-	rm *.gmo ja.sjis.po
+include ../../gtk+/po/makefile.cygwin

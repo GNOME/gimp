@@ -3685,7 +3685,7 @@ msgstr "°èÃş ¸ÓÁö¸ğµå :"
 
 #: plug-ins/gap/gap_range_ops.c:486
 msgid "Exclude BG-Layer"
-msgstr "¹è°æ-°èÃş Á¦¿"
+msgstr "¹è°æ-°èÃş Á¦¿ "
 
 #: plug-ins/gap/gap_range_ops.c:487
 msgid ""

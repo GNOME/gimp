@@ -1,3 +1,13 @@
+1999-10-31  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: Use the generic (UTF-8 based) makefile.cygwin
+	from gtk+.
+
+	* makefile.msc: Remove.
+
+	* ko.po: Add a space at the end of one message, otherwise
+	it got somehow mangled by native2ascii.
+
 Sun Oct 24 22:52:01 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* POTFILES.in: added imagemap plug-in
