@@ -111,7 +111,7 @@ query ()
                           "Tim Newsome",
                           "1997",
                           "<Save>/GBR",
-                          "RGB*, GRAY*",
+                          "RGB*, GRAY*, U16_RGB*, U16_GRAY*, FLOAT_RGB*, FLOAT_GRAY*",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -192,6 +192,8 @@ static gint32 load_image (char *filename) {
 	GDrawable *drawable;
 	gint line;
 	GPixelRgn pixel_rgn;
+  gint bytes;
+  gint layer_type, image_type;
 
 	temp = g_malloc(strlen (filename) + 11);
 	sprintf(temp, "Loading %s:", filename);
@@ -213,11 +215,11 @@ static gint32 load_image (char *filename) {
 	ph.version = ntohl(ph.version);
 	ph.width = ntohl(ph.width);
 	ph.height = ntohl(ph.height);
-	ph.tag = ntohl(ph.tag);
+	ph.type = ntohl(ph.type);
 	ph.magic_number = ntohl(ph.magic_number);
 	ph.spacing = ntohl(ph.spacing);
 
-	if (ph.magic_number != GBRUSH_MAGIC || ph.version != 2 ||
+	if (ph.magic_number != GBRUSH_MAGIC || ph.version < 2 ||
 			ph.header_size <= sizeof(ph)) {
 		close(fd);
 		return -1;
@@ -228,27 +230,102 @@ static gint32 load_image (char *filename) {
 		close(fd);
 		return -1;
 	}
+ 
+  /* In version 2 the type field was bytes */ 
+	if (ph.version == 2) 
+	{ 
+		if (ph.type == 1)  /* 1 byte is gray*/
+		{
+			ph.type = GRAY_IMAGE;
+		}
+    else if (ph.type == 3) /* 3 bytes is color */
+		{
+			ph.type = RGB_IMAGE;
+		}
+		else
+		{
+			close(fd);
+			return -1; 
+		}
+	}
 
-	/* Now there's just raw data left. */
+  switch (ph.type)
+	{
+		case RGB_IMAGE:
+			image_type = RGB;
+			layer_type = RGB_IMAGE;
+		  break;
+		case RGBA_IMAGE:
+			image_type = RGB;
+			layer_type = RGBA_IMAGE;
+		  break;
+		case GRAY_IMAGE:
+			image_type = GRAY;
+			layer_type = GRAY_IMAGE;
+		  break;
+		case GRAYA_IMAGE:
+			image_type = GRAY;
+			layer_type = GRAYA_IMAGE;
+		  break;
+		case U16_RGB_IMAGE:
+			image_type = U16_RGB;
+			layer_type = U16_RGB_IMAGE;
+		  break;
+		case U16_RGBA_IMAGE:
+			image_type = U16_RGB;
+			layer_type = U16_RGBA_IMAGE;
+		  break;
+		case U16_GRAY_IMAGE:
+			image_type = U16_GRAY;
+			layer_type = U16_GRAY_IMAGE;
+		  break;
+		case U16_GRAYA_IMAGE:
+			image_type = U16_GRAY;
+			layer_type = U16_GRAYA_IMAGE;
+		  break;
+		case FLOAT_RGB_IMAGE:
+			image_type = FLOAT_RGB;
+			layer_type = FLOAT_RGB_IMAGE;
+		  break;
+		case FLOAT_RGBA_IMAGE:
+			image_type = FLOAT_RGB;
+			layer_type = FLOAT_RGBA_IMAGE;
+		  break;
+		case FLOAT_GRAY_IMAGE:
+			image_type = FLOAT_GRAY;
+			layer_type = FLOAT_GRAY_IMAGE;
+		  break;
+		case FLOAT_GRAYA_IMAGE:
+			image_type = FLOAT_GRAY;
+			layer_type = FLOAT_GRAYA_IMAGE;
+		  break;
+		default:
+      close (fd);
+			return -1;
+	}
+	
+  /* Now there's just raw data left. */
 
   /*
 	 * Create a new image of the proper size and associate the filename with it.
    */
-  image_ID = gimp_image_new(ph.width, ph.height, (ph.tag >= 3) ? RGB : GRAY);
+  image_ID = gimp_image_new(ph.width, ph.height, image_type);
   gimp_image_set_filename(image_ID, filename);
 
   layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
-			(ph.tag >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
+			layer_type, 100, NORMAL_MODE);
 	gimp_image_add_layer(image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get(layer_ID);
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
 			drawable->height, TRUE, FALSE);
 
-	buffer = g_malloc(ph.width * ph.tag);
+	bytes = gimp_drawable_bpp (layer_ID);
+	buffer = g_malloc(ph.width * bytes);
+
 
 	for (line = 0; line < ph.height; line++) {
-		if (read(fd, buffer, ph.width * ph.tag) != ph.width * ph.tag) {
+		if (read(fd, buffer, ph.width * bytes ) != ph.width * bytes) {
 			close(fd);
 			g_free(buffer);
 			return -1;
@@ -286,10 +363,10 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	}
 
 	ph.header_size = htonl(sizeof(ph) + strlen(info.description) + 1);
-	ph.version = htonl(2);
+	ph.version = htonl(3);
 	ph.width = htonl(drawable->width);
 	ph.height = htonl(drawable->height);
-	ph.tag = htonl(drawable->bpp);
+	ph.type = htonl(gimp_drawable_type (drawable_ID));
 	ph.magic_number = htonl(GBRUSH_MAGIC);
 	ph.spacing = htonl(info.spacing);
 
