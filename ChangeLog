@@ -1,3 +1,9 @@
+Mon Oct 12 10:25:05 EEST 1998 Tuomas Kuosmanen <tigert@gimp.org>
+
+	* plug-ins/MapObject/mapobject_main.c: changed the 
+	location in the menus - appears now under Filters->Map
+	instead of Filters->Distort
+
 Sun Oct 11 15:45:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.h
