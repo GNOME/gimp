@@ -188,7 +188,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->popup_factory         = NULL;
   shell->qmask_factory         = NULL;
 
-  shell->scale                 = 0;
+  shell->scale                 = 0x101;
+  shell->other_scale           = 0;
   shell->dot_for_dot           = TRUE;
 
   shell->offset_x              = 0;
@@ -246,6 +247,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->warning_dialog        = NULL;
   shell->info_dialog           = NULL;
+  shell->scale_dialog          = NULL;
   shell->nav_popup             = NULL;
 
   shell->filters               = NULL;

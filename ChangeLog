@@ -1,3 +1,15 @@
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_fit): extended range of possible zoom
+	ratios like in the other scaling routines.
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	* app/display/gimpdisplayshell.[ch]
+	* app/gui/image-menu.c
+	* app/gui/view-commands.[ch]: added a dialog to menually enter the
+	zoom ratio. Fixes bug #65057.
+
 2003-04-03  Michael Natterer  <mitch@gimp.org>
 
 	Added preliminary support for image templates. Not finished

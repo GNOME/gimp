@@ -94,6 +94,7 @@ struct _GimpDisplayShell
   gdouble           monitor_yres;
 
   gint              scale;             /*  scale factor from original raw image    */
+  gint              other_scale;       /*  scale factor entered in Zoom->Other     */
   gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
 
   gint              offset_x;          /*  offset of display image into raw image  */
@@ -153,6 +154,7 @@ struct _GimpDisplayShell
 
   GtkWidget        *warning_dialog;    /*  close warning dialog               */
   InfoDialog       *info_dialog;       /*  image information dialog           */
+  GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
   GtkWidget        *nav_popup;         /*  navigation popup                   */
 
   GList            *filters;           /* color display conversion stuff      */

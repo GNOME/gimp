@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
@@ -35,6 +36,8 @@
 
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
@@ -42,12 +45,19 @@
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
-static gdouble   img2real (GimpDisplayShell *shell,
-                           gboolean          xdir,
-                           gdouble           a);
+static void     gimp_display_shell_scale_dialog_ok     (GtkWidget    *widget,
+                                                        gpointer      data);
+static void     gimp_display_shell_scale_dialog_cancel (GtkWidget    *widget,
+                                                        gpointer      data);
+
+static gdouble  img2real                           (GimpDisplayShell *shell,
+                                                    gboolean          xdir,
+                                                    gdouble           a);
 
 
 /*  public functions  */
@@ -265,7 +275,7 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   gint       scalesrc       = 1;
   gint       scaledest      = 1;
   gint       i;
-  gint       best_i         = 0x10;
+  gint       best_i         = 0xFF;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -298,7 +308,7 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
 
   if (zoom_factor < 1.0)
     {
-      for (i = 0x10; i > 0; i--)
+      for (i = 0xFF; i > 0; i--)
         {
           scalesrc  = i;
           scaledest = floor ((gdouble) scalesrc * zoom_factor);
@@ -328,7 +338,7 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
     }
   else
     {
-      for (i = 0x10; i > 0; i--)
+      for (i = 0xFF; i > 0; i--)
         {
           scaledest = i;
           scalesrc  = ceil ((gdouble) scaledest / zoom_factor);
@@ -427,7 +437,123 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
 }
 
 
+typedef struct 
+{
+  GimpDisplayShell *shell;
+  GtkObject        *src_adj;
+  GtkObject        *dest_adj;
+} ScaleDialogData;
+
+void
+gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
+{
+  ScaleDialogData *data;
+  GtkWidget       *hbox;
+  GtkWidget       *spin;
+  GtkWidget       *label;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->scale_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (shell->scale_dialog));
+      return;
+    }
+
+  data = g_new (ScaleDialogData, 1);
+  data->shell = shell;
+
+  shell->scale_dialog =
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
+                              _("Zoom Ratio"), "display_scale",
+                              GTK_STOCK_ZOOM_100,
+                              _("Select Zoom Ratio"),
+                              gimp_standard_help_func,
+                              "dialogs/display_scale.html",
+                              
+                              GTK_STOCK_CANCEL, gimp_display_shell_scale_dialog_cancel,
+                              data, NULL, NULL, FALSE, TRUE,
+
+                              GTK_STOCK_OK, gimp_display_shell_scale_dialog_ok,
+                              data, NULL, NULL, TRUE, FALSE,
+
+                              NULL);
+
+  g_object_weak_ref (G_OBJECT (shell->scale_dialog),
+                     (GWeakNotify) g_free, data);
+  g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),
+                             (gpointer *) &shell->scale_dialog);
+
+  gtk_window_set_transient_for (GTK_WINDOW (shell->scale_dialog),
+                                GTK_WINDOW (shell));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->scale_dialog), TRUE);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
+                     hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Zoom Ratio:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  if (!shell->other_scale)
+    shell->other_scale = shell->scale;
+
+  spin = gimp_spin_button_new (&data->dest_adj,
+                               (shell->other_scale & 0xFF00) >> 8, 1, 0xFF,
+                               1, 8, 1, 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
+  gtk_widget_show (spin);
+
+  label = gtk_label_new (":");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+  
+  spin = gimp_spin_button_new (&data->src_adj,
+                               (shell->other_scale & 0xFF), 1, 0xFF,
+                               1, 8, 1, 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
+  gtk_widget_show (spin);
+
+  gtk_widget_show (shell->scale_dialog);
+}
+
+
 /*  private functions  */
+
+static void
+gimp_display_shell_scale_dialog_ok (GtkWidget *widget,
+                                    gpointer   data)
+{
+  ScaleDialogData *dialog = (ScaleDialogData *) data;
+
+  gint scale_src;
+  gint scale_dest;
+
+  scale_src  = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->src_adj));
+  scale_dest = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->dest_adj));
+
+  gimp_display_shell_scale (dialog->shell, scale_dest * 100 + scale_src);
+  dialog->shell->other_scale |= (1 << 30);
+
+  gtk_widget_destroy (dialog->shell->scale_dialog);
+}
+
+static void
+gimp_display_shell_scale_dialog_cancel (GtkWidget *widget,
+                                        gpointer   data)
+{
+  ScaleDialogData *dialog = (ScaleDialogData *) data;
+
+  /*  need to emit "scaled" to get the menu updated  */
+  gimp_display_shell_scaled (dialog->shell);
+  dialog->shell->other_scale |= (1 << 30);
+
+  gtk_widget_destroy (dialog->shell->scale_dialog);
+}
+
 
 /* scale image coord to realworld units (cm, inches, pixels)
  *

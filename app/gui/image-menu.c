@@ -355,8 +355,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       view_zoom_cmd_callback, 116, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
-  { { "/View/Zoom/Other", NULL,
-      NULL,                   0,   "/View/Zoom/16:1" },
+
+  MENU_SEPARATOR ("/View/Zoom/---"),
+
+  { { "/View/Zoom/Other...", NULL,
+      view_zoom_other_cmd_callback, 0, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
 
@@ -1259,16 +1262,17 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
   SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
 
-  SET_SENSITIVE ("/View/Zoom/16:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/8:1",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/4:1",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/2:1",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:1",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:2",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:4",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:8",   gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:16",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/Other", gdisp);
+  SET_SENSITIVE ("/View/Zoom/16:1", gdisp);
+  SET_SENSITIVE ("/View/Zoom/8:1",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/4:1",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/2:1",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:1",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:2",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:4",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:8",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:16", gdisp);
+
+  SET_SENSITIVE ("/View/Zoom/Other...", gdisp);
 
   if (gdisp)
     image_menu_set_zoom (item_factory, shell);
@@ -1430,21 +1434,15 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
         }
     }
 
-  if (menu)
+  if (!menu)
     {
-      gimp_item_factory_set_label (item_factory, "/View/Zoom/Other",_("Other"));
-      gimp_item_factory_set_sensitive (item_factory, "/View/Zoom/Other", FALSE);
-    }
-  else
-    {
-      menu = "/View/Zoom/Other";
+      menu = "/View/Zoom/Other...";
 
-      label = g_strdup_printf (_("Other (%d:%d)"), scaledest, scalesrc);
-
+      label = g_strdup_printf (_("Other (%d:%d) ..."), scaledest, scalesrc);
       gimp_item_factory_set_label (item_factory, menu, label);
-      gimp_item_factory_set_sensitive (item_factory, menu, TRUE);
+      g_free (label);      
 
-      g_free (label);
+      shell->other_scale = shell->scale;
     }
 
   gimp_item_factory_set_active (item_factory, menu, TRUE);

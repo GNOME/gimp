@@ -110,6 +110,27 @@ view_zoom_cmd_callback (GtkWidget *widget,
 }
 
 void
+view_zoom_other_cmd_callback (GtkWidget *widget,
+                              gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  /*  check if we are activated by the user or from image_menu_set_zoom()  */
+  if (shell->scale != shell->other_scale)
+    gimp_display_shell_scale_dialog (shell);
+
+  /*  flag as dirty  */
+  shell->other_scale |= (1 << 30);
+}
+
+void
 view_dot_for_dot_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {

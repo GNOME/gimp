@@ -38,6 +38,7 @@ void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
 void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
                                                  gboolean          resize_window,
                                                  gboolean          redisplay);
+void   gimp_display_shell_scale_dialog          (GimpDisplayShell *shell);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */
