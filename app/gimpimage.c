@@ -1456,7 +1456,7 @@ gimp_image_free_layers (GimpImage *gimage)
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
       layer = (Layer *) list->data;
-      layer_delete (layer);
+      layer_unref (layer);
     }
   g_slist_free (gimage->layers);
   g_slist_free (gimage->layer_stack);
@@ -1472,7 +1472,7 @@ gimp_image_free_channels (GimpImage *gimage)
   for (list = gimage->channels; list; list = g_slist_next (list))
     {
       channel = (Channel *) list->data;
-      channel_delete (channel);
+      channel_unref (channel);
     }
   g_slist_free (gimage->channels);
 }

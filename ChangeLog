@@ -1,3 +1,8 @@
+2001-06-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpimage.c: unref layers and channels instead of sinking them
+	when destroying an image.
+
 2001-06-02  Garry R. Osgood <grosgood@rcn.com>
 	
 	* tips/gimp_tips.txt: English language typo at line 50: it -> is.
