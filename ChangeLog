@@ -1,5 +1,16 @@
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/selection.pdb: document how to interpret the
+	numbers returned for the selection bounding box. Fixes bug #96284.
+
+	* app/drawable_cmds.c
+	* app/selection_cmds.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpselection_pdb.c: regenerated.
+
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_file.c: hide the file selection dialogs
 	on "delete_event". Fixes bug #92750.
 	
