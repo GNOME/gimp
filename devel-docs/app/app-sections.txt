@@ -22,23 +22,6 @@ GIMP_PARAM_CONFIRM
 GIMP_PARAM_DEFAULTS
 GIMP_PARAM_IGNORE
 GIMP_CONFIG_PARAM_FLAGS
-GIMP_TYPE_PARAM_MATRIX2
-GIMP_IS_PARAM_SPEC_MATRIX2
-gimp_param_spec_matrix2
-GIMP_TYPE_PARAM_MEMSIZE
-GIMP_IS_PARAM_SPEC_MEMSIZE
-gimp_param_spec_memsize
-GimpParamPathType
-GIMP_TYPE_PARAM_PATH
-GIMP_IS_PARAM_SPEC_PATH
-gimp_param_spec_path
-gimp_param_spec_path_type
-GIMP_TYPE_PARAM_RGB
-GIMP_IS_PARAM_SPEC_RGB
-gimp_param_spec_rgb
-GIMP_TYPE_PARAM_UNIT
-GIMP_IS_PARAM_SPEC_UNIT
-gimp_param_spec_unit
 GIMP_CONFIG_INSTALL_PROP_BOOLEAN
 GIMP_CONFIG_INSTALL_PROP_DOUBLE
 GIMP_CONFIG_INSTALL_PROP_ENUM
@@ -53,12 +36,6 @@ GIMP_CONFIG_INSTALL_PROP_UINT
 GIMP_CONFIG_INSTALL_PROP_UNIT
 GIMP_CONFIG_INSTALL_PROP_OBJECT
 GIMP_CONFIG_INSTALL_PROP_POINTER
-<SUBSECTION Standard>
-gimp_param_matrix2_get_type
-gimp_param_memsize_get_type
-gimp_param_path_get_type
-gimp_param_rgb_get_type
-gimp_param_unit_get_type
 </SECTION>
 
 <SECTION>
@@ -5709,20 +5686,14 @@ GIMP_TYPE_CURVE_TYPE
 GimpCurveType
 GIMP_TYPE_HISTOGRAM_CHANNEL
 GimpHistogramChannel
-GIMP_TYPE_INTERPOLATION_TYPE
-GimpInterpolationType
 GIMP_TYPE_LAYER_MODE_EFFECTS
 GimpLayerModeEffects
-GIMP_TYPE_TRANSFER_MODE
-GimpTransferMode
 GimpConvolutionType
 GimpHueRange
 <SUBSECTION Standard>
 gimp_curve_type_get_type
 gimp_histogram_channel_get_type
-gimp_interpolation_type_get_type
 gimp_layer_mode_effects_get_type
-gimp_transfer_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -6140,18 +6111,6 @@ gimp_config_serialize_value
 </SECTION>
 
 <SECTION>
-<FILE>gimpconfig-types</FILE>
-<TITLE>GimpConfig-types</TITLE>
-GIMP_TYPE_MATRIX2
-GIMP_VALUE_HOLDS_MATRIX2
-GIMP_TYPE_PATH
-GIMP_VALUE_HOLDS_PATH
-<SUBSECTION Standard>
-gimp_path_get_type
-gimp_matrix2_get_type
-</SECTION>
-
-<SECTION>
 <FILE>gimpconfig-utils</FILE>
 <TITLE>GimpConfig-utils</TITLE>
 gimp_config_connect
@@ -6244,20 +6203,10 @@ gimp_xml_parser_free
 
 <SECTION>
 <FILE>core-enums</FILE>
-GIMP_TYPE_ADD_MASK_TYPE
-GimpAddMaskType
-GIMP_TYPE_BLEND_MODE
-GimpBlendMode
 GIMP_TYPE_BRUSH_GENERATED_SHAPE
 GimpBrushGeneratedShape
-GIMP_TYPE_BUCKET_FILL_MODE
-GimpBucketFillMode
 GIMP_TYPE_CAP_STYLE
 GimpCapStyle
-GIMP_TYPE_CHANNEL_OPS
-GimpChannelOps
-GIMP_TYPE_CHANNEL_TYPE
-GimpChannelType
 GIMP_TYPE_CONTAINER_POLICY
 GimpContainerPolicy
 GIMP_TYPE_CONVERT_DITHER_TYPE
@@ -6270,25 +6219,14 @@ GIMP_TYPE_DIRTY_MASK
 GimpDirtyMask
 GIMP_TYPE_FILL_TYPE
 GimpFillType
-GIMP_TYPE_GRADIENT_TYPE
-GimpGradientType
-GIMP_TYPE_GRAVITY_TYPE
 GimpGravityType
 GIMP_TYPE_GRID_STYLE
 GimpGridStyle
-GIMP_TYPE_ICON_TYPE
-GimpIconType
-GIMP_TYPE_JOIN_STYLE
 GimpJoinStyle
 GIMP_TYPE_ORIENTATION_TYPE
-GimpOrientationType
-GIMP_TYPE_ROTATION_TYPE
 GimpRotationType
 GIMP_TYPE_VIEW_SIZE
 GimpViewSize
-GIMP_TYPE_REPEAT_MODE
-GimpRepeatMode
-GIMP_TYPE_SELECTION_CONTROL
 GimpSelectionControl
 GIMP_TYPE_STROKE_METHOD
 GimpStrokeMethod
@@ -6296,8 +6234,6 @@ GIMP_TYPE_STROKE_STYLE
 GimpStrokeStyle
 GIMP_TYPE_THUMBNAIL_SIZE
 GimpThumbnailSize
-GIMP_TYPE_TRANSFORM_DIRECTION
-GimpTransformDirection
 GIMP_TYPE_UNDO_MODE
 GimpUndoMode
 GIMP_TYPE_UNDO_EVENT
@@ -6314,33 +6250,24 @@ GimpMergeType
 GimpOffsetType
 GimpPDBCompatMode
 <SUBSECTION Standard>
-gimp_add_mask_type_get_type
-gimp_blend_mode_get_type
 gimp_brush_generated_shape_get_type
-gimp_bucket_fill_mode_get_type
 gimp_cap_style_get_type
-gimp_channel_ops_get_type
-gimp_channel_type_get_type
 gimp_container_policy_get_type
 gimp_convert_dither_type_get_type
 gimp_convert_palette_type_get_type
 gimp_dash_preset_get_type
 gimp_dirty_mask_get_type
 gimp_fill_type_get_type
-gimp_gradient_type_get_type
 gimp_gravity_type_get_type
 gimp_grid_style_get_type
-gimp_icon_type_get_type
 gimp_join_style_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
 gimp_view_size_get_type
-gimp_repeat_mode_get_type
 gimp_selection_control_get_type
 gimp_stroke_method_get_type
 gimp_stroke_style_get_type
 gimp_thumbnail_size_get_type
-gimp_transform_direction_get_type
 gimp_undo_mode_get_type
 gimp_undo_event_get_type
 gimp_undo_type_get_type
@@ -7181,27 +7108,17 @@ vectors_import_dialog_new
 
 <SECTION>
 <FILE>paint-enums</FILE>
-GIMP_TYPE_CLONE_TYPE
-GimpCloneType
 GIMP_TYPE_CLONE_ALIGN_MODE
 GimpCloneAlignMode
-GIMP_TYPE_DODGE_BURN_TYPE
-GimpDodgeBurnType
 GIMP_TYPE_CONVOLVE_TYPE
 GimpConvolveType
 GIMP_TYPE_INK_BLOB_TYPE
 GimpInkBlobType
-GIMP_TYPE_PAINT_APPLICATION_MODE
-GimpPaintApplicationMode
-GimpBrushApplicationMode
 GimpPaintState
 <SUBSECTION Standard>
-gimp_clone_type_get_type
 gimp_clone_align_mode_get_type
-gimp_dodge_burn_type_get_type
 gimp_convolve_type_get_type
 gimp_ink_blob_type_get_type
-gimp_paint_application_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -7499,7 +7416,6 @@ GIMP_TYPE_TEXT_JUSTIFICATION
 GimpTextJustification
 GIMP_TYPE_TEXT_OUTLINE
 GimpTextOutline
-GimpSizeType
 <SUBSECTION Standard>
 gimp_text_box_mode_get_type
 gimp_text_direction_get_type

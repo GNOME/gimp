@@ -1,5 +1,10 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated for moves to libgimpbase.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/libgimpbase-docs.sgml
 	* libgimpbase/libgimpbase-sections.txt
 	* libgimpcolor/libgimpcolor-sections.txt

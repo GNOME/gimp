@@ -108,7 +108,6 @@
       <xi:include href="xml/gimpconfig-error.xml" />
       <xi:include href="xml/gimpconfig-path.xml" />
       <xi:include href="xml/gimpconfig-params.xml" />
-      <xi:include href="xml/gimpconfig-types.xml" />
       <xi:include href="xml/gimpconfig-utils.xml" />
     </chapter>
 
