@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-06 12:39+0200\n"
+"PO-Revision-Date: 2003-10-07 16:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -9506,6 +9506,8 @@ msgid ""
 "Add Color from FG\n"
 "%s  from BG"
 msgstr ""
+"Aggiungi colore dal PP\n"
+"%s  dallo SF"
 
 #: app/widgets/gimpcolormapeditor.c:393
 msgid "Color Index:"
@@ -9870,6 +9872,8 @@ msgid ""
 "New Color from FG\n"
 "%s  from BG"
 msgstr ""
+"Nuovo colore dal PP\n"
+"%s  dallo SF"
 
 #: app/widgets/gimppaletteeditor.c:303
 msgid "Delete Color"
@@ -9902,17 +9906,14 @@ msgstr ""
 "%s  Opzioni avanzate"
 
 #: app/widgets/gimpstrokeeditor.c:192
-#, fuzzy
 msgid "Stroke _Width:"
-msgstr "Ampiezza _disegno:"
+msgstr "Larghezza _tratto:"
 
 #: app/widgets/gimpstrokeeditor.c:198
-#, fuzzy
 msgid "_Cap Style:"
 msgstr "Stile _pennino:"
 
 #: app/widgets/gimpstrokeeditor.c:204
-#, fuzzy
 msgid "_Join Style:"
 msgstr "_Unisci stile:"
 
@@ -9926,7 +9927,7 @@ msgstr "_Antialiasing"
 
 #: app/widgets/gimpstrokeeditor.c:221
 msgid "Style"
-msgstr "Stile:"
+msgstr "Stile"
 
 #: app/widgets/gimptemplateeditor.c:463
 msgid "_Name:"
@@ -10037,19 +10038,16 @@ msgstr ""
 "selezione colore."
 
 #: app/widgets/gimptooloptionseditor.c:127
-#, fuzzy
 msgid "Save options to..."
-msgstr "/Salva la selezione in un file..."
+msgstr "Salva le opzioni in..."
 
 #: app/widgets/gimptooloptionseditor.c:135
-#, fuzzy
 msgid "Restore options from..."
-msgstr "Gestione risorse"
+msgstr "Recupera le opzioni da..."
 
 #: app/widgets/gimptooloptionseditor.c:143
-#, fuzzy
 msgid "Delete saved options..."
-msgstr "Elimina gradiente"
+msgstr "Elimina le opzioni salvate..."
 
 #: app/widgets/gimptooloptionseditor.c:149
 #, c-format
@@ -10057,11 +10055,12 @@ msgid ""
 "Reset to default values\n"
 "%s  Reset all Tool Options"
 msgstr ""
+"Ripristina ai valori predefiniti\n"
+"%s  Reimposta tutte le opzioni strumenti"
 
 #: app/widgets/gimptooloptionseditor.c:353
-#, fuzzy
 msgid "Reset Tool Options"
-msgstr "Opzioni strumenti"
+msgstr "Reimposta le opzioni strumenti"
 
 #: app/widgets/gimptooloptionseditor.c:357
 msgid ""
