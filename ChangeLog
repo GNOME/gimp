@@ -1,3 +1,8 @@
+2002-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_render): no
+	need to assign "d = buf" twice.
+
 2002-11-01  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-reset-16.png: finally a Reset icon

@@ -481,8 +481,6 @@ gimp_color_scale_render (GimpColorScale *scale)
   switch (range->orientation)
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      d = buf;
-
       for (x = 0, d = buf; x < scale->width; x++, d += 3)
         {
           gdouble value = (gdouble) x / (gdouble) (scale->width - 1);
