@@ -875,12 +875,12 @@ layers_add_mask_query (GimpLayer *layer)
                                _("Selection"),
                                GINT_TO_POINTER (ADD_SELECTION_MASK), NULL,
                                _("Inverse Selection"),
-                               GINT_TO_POINTER (ADD_INV_SELECTION_MASK), NULL,
+                               GINT_TO_POINTER (ADD_INVERSE_SELECTION_MASK), NULL,
 
                                _("Grayscale Copy of Layer"),
                                GINT_TO_POINTER (ADD_COPY_MASK), NULL,
                                _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_INV_COPY_MASK), NULL,
+                               GINT_TO_POINTER (ADD_INVERSE_COPY_MASK), NULL,
 
                                _("White (Full Opacity)"),
                                GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
@@ -902,7 +902,7 @@ layers_add_mask_query (GimpLayer *layer)
                                _("Grayscale Copy of Layer"),
                                GINT_TO_POINTER (ADD_COPY_MASK), NULL,
                                _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_INV_COPY_MASK), NULL,
+                               GINT_TO_POINTER (ADD_INVERSE_COPY_MASK), NULL,
 
                                _("White (Full Opacity)"),
                                GINT_TO_POINTER (ADD_WHITE_MASK), NULL,

@@ -939,11 +939,11 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 		case CHANNEL_OP_REPLACE:
 		  gimp_channel_add_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
-		case CHANNEL_OP_SUB:
+		case CHANNEL_OP_SUBTRACT:
 		  gimp_channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
 		default:
-		  g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
+		  g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
 		  break;
 		}
 	    }
@@ -983,11 +983,11 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 			case CHANNEL_OP_REPLACE:
 			  gimp_channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
-			case CHANNEL_OP_SUB:
+			case CHANNEL_OP_SUBTRACT:
 			  gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
 			default:
-			  g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
+			  g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
 			  break;
 			}
 		    }
@@ -1007,10 +1007,10 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 		{
 		  if (op == CHANNEL_OP_ADD || op == CHANNEL_OP_REPLACE)
 		    gimp_channel_add_segment (mask, x0, i, j - x0, last);
-		  else if (op == CHANNEL_OP_SUB)
+		  else if (op == CHANNEL_OP_SUBTRACT)
 		    gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 		  else
-		    g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
+		    g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
 		}
 	    }
 
@@ -1155,7 +1155,7 @@ gimp_channel_combine_mask (GimpChannel *mask,
 				      gimp_channel_combine_sub_region_add,
 				      NULL, 2, &srcPR, &destPR);
       break;
-    case CHANNEL_OP_SUB:
+    case CHANNEL_OP_SUBTRACT:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_sub,
 				      NULL, 2, &srcPR, &destPR);

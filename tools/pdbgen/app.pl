@@ -196,13 +196,7 @@ sub make_arg_recs {
 		    /enum/      && do { my $enum = $enums{$name};
 					$info = $enum->{info};
 					foreach (@remove) {
-					    if (exists $enum->{nicks}->{$_}) {
-						$nick = $enum->{nicks}->{$_};
-					    }
-					    else {
-						$nick = $_;
-					    }
-					    $info =~ s/$nick \(.*?\)(, )?//
+					    $info =~ s/$_ \(.*?\)(, )?//
 					}				 
 					$info =~ s/, $//;
 					if (!$#{[$info =~ /,/g]} &&

@@ -274,6 +274,32 @@ init_constants (void)
   setvar (cintern ("INDEXED_IMAGE"),  flocons (GIMP_INDEXED_IMAGE),     NIL);
   setvar (cintern ("INDEXEDA_IMAGE"), flocons (GIMP_INDEXEDA_IMAGE),    NIL);
 
+  setvar (cintern ("WHITE-MASK"),         flocons (GIMP_ADD_WHITE_MASK),             NIL);
+  setvar (cintern ("BLACK-MASK"),         flocons (GIMP_ADD_BLACK_MASK),             NIL);
+  setvar (cintern ("ALPHA-MASK"),         flocons (GIMP_ADD_ALPHA_MASK),             NIL);
+  setvar (cintern ("SELECTION-MASK"),     flocons (GIMP_ADD_SELECTION_MASK),         NIL);
+  setvar (cintern ("INV-SELECTION-MASK"), flocons (GIMP_ADD_INVERSE_SELECTION_MASK), NIL);
+  setvar (cintern ("COPY-MASK"),          flocons (GIMP_ADD_COPY_MASK),              NIL);
+  setvar (cintern ("INV-COPY-MASK"),      flocons (GIMP_ADD_INVERSE_COPY_MASK),      NIL);
+
+  setvar (cintern ("ADD"),       flocons (GIMP_CHANNEL_OP_ADD),       NIL);
+  setvar (cintern ("SUB"),       flocons (GIMP_CHANNEL_OP_SUBTRACT),  NIL);
+  setvar (cintern ("REPLACE"),   flocons (GIMP_CHANNEL_OP_REPLACE),   NIL);
+  setvar (cintern ("INTERSECT"), flocons (GIMP_CHANNEL_OP_INTERSECT), NIL);
+
+  setvar (cintern ("FG-BG-RGB"), flocons (GIMP_FG_BG_RGB_MODE),      NIL);
+  setvar (cintern ("FG-BG-HSV"), flocons (GIMP_FG_BG_HSV_MODE),      NIL);
+  setvar (cintern ("FG-TRANS"),  flocons (GIMP_FG_TRANSPARENT_MODE), NIL);
+  setvar (cintern ("CUSTOM"),    flocons (GIMP_CUSTOM_MODE),         NIL);
+
+  setvar (cintern ("FG-IMAGE-FILL"),    flocons (GIMP_FOREGROUND_FILL),  NIL);
+  setvar (cintern ("BG-IMAGE-FILL"),    flocons (GIMP_FOREGROUND_FILL),  NIL);
+  setvar (cintern ("WHITE-IMAGE-FILL"), flocons (GIMP_WHITE_FILL),       NIL);
+  setvar (cintern ("TRANS-IMAGE-FILL"), flocons (GIMP_TRANSPARENT_FILL), NIL);
+  setvar (cintern ("NO-IMAGE-FILL"),    flocons (GIMP_NO_FILL),          NIL);
+
+  setvar (cintern ("CONTINUOUS"), flocons (GIMP_CONSTANT), NIL);
+
   /* Useful misc stuff */
   setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
   setvar (cintern ("FALSE"),          flocons (FALSE), NIL);

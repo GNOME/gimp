@@ -36,15 +36,15 @@
 
 /*  enums  */
 
-typedef enum  /*< chop=ADD_ >*/
+typedef enum
 {
   ADD_WHITE_MASK,
   ADD_BLACK_MASK,
   ADD_ALPHA_MASK,
   ADD_SELECTION_MASK,
-  ADD_INV_SELECTION_MASK,
+  ADD_INVERSE_SELECTION_MASK,
   ADD_COPY_MASK,
-  ADD_INV_COPY_MASK
+  ADD_INVERSE_COPY_MASK
 } AddMaskType;
 
 typedef enum
@@ -68,21 +68,21 @@ typedef enum /*< pdb-skip >*/
 } InternalOrientationType;
 
 /*  Selection Boolean operations  */
-typedef enum /*< chop=CHANNEL_OP_ >*/
+typedef enum
 {
   CHANNEL_OP_ADD,
-  CHANNEL_OP_SUB,
+  CHANNEL_OP_SUBTRACT,
   CHANNEL_OP_REPLACE,
   CHANNEL_OP_INTERSECT
 } ChannelOps;
 
 typedef enum
 {
-  FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
-  BACKGROUND_FILL,	/*< nick=BG_IMAGE_FILL >*/
-  WHITE_FILL,		/*< nick=WHITE_IMAGE_FILL >*/
-  TRANSPARENT_FILL,	/*< nick=TRANS_IMAGE_FILL >*/
-  NO_FILL		/*< nick=NO_IMAGE_FILL >*/
+  FOREGROUND_FILL,
+  BACKGROUND_FILL,
+  WHITE_FILL,
+  TRANSPARENT_FILL,
+  NO_FILL
 } GimpFillType;
 
 typedef enum

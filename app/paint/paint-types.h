@@ -51,7 +51,7 @@ typedef enum
 /* Paint application modes  */
 typedef enum
 {
-  CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
+  CONSTANT,    /* pencil, paintbrush, airbrush, clone */
   INCREMENTAL  /* convolve, smudge */
 } PaintApplicationMode;
 

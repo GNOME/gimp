@@ -171,7 +171,7 @@ void
 vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
                                            gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, CHANNEL_OP_SUB);
+  vectors_vectors_to_sel (widget, data, CHANNEL_OP_SUBTRACT);
 }
 
 void

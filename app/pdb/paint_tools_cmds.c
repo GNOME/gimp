@@ -873,7 +873,7 @@ static ProcArg eraser_inargs[] =
   {
     GIMP_PDB_INT32,
     "method",
-    "CONTINUOUS (0) or INCREMENTAL (1)"
+    "CONSTANT (0) or INCREMENTAL (1)"
   }
 };
 
@@ -1045,7 +1045,7 @@ static ProcArg paintbrush_inargs[] =
   {
     GIMP_PDB_INT32,
     "method",
-    "CONTINUOUS (0) or INCREMENTAL (1)"
+    "CONSTANT (0) or INCREMENTAL (1)"
   },
   {
     GIMP_PDB_FLOAT,

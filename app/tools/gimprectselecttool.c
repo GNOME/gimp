@@ -232,7 +232,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
     case SELECTION_ADD:
       gimp_tool_push_status (tool, _("Selection: ADD"));
       break;
-    case SELECTION_SUB:
+    case SELECTION_SUBTRACT:
       gimp_tool_push_status (tool, _("Selection: SUBTRACT"));
       break;
     case SELECTION_INTERSECT:

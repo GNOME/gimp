@@ -342,7 +342,7 @@ static ProcArg channel_combine_masks_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
+    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,

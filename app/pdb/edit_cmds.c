@@ -299,7 +299,7 @@ static ProcArg edit_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill_type",
-    "The type of fill: FG_IMAGE_FILL (0), BG_IMAGE_FILL (1), WHITE_IMAGE_FILL (2), TRANS_IMAGE_FILL (3), NO_IMAGE_FILL (4)"
+    "The type of fill: FOREGROUND_FILL (0), BACKGROUND_FILL (1), WHITE_FILL (2), TRANSPARENT_FILL (3), NO_FILL (4)"
   }
 };
 

@@ -70,7 +70,6 @@ foreach (sort keys %enums) {
     my $enum = $enums{$_};
     foreach $symbol (@{$enum->{symbols}}) {
 	my $sym = $symbol;
-	$sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
 	$sym =~ s/^GIMP\_//;
 	$sym =~ s/_/-/g;
 
@@ -128,7 +127,6 @@ foreach (sort keys %enums) {
 	my $enum = $enums{$_}; my $body = "";
 	foreach $symbol (@{$enum->{symbols}}) {
 	    my $sym = $symbol;
-	    $sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
 	    if ($sym =~ /^GIMP\_/) {
 		$body .= "  $sym";
 	    } else {

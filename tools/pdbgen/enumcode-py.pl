@@ -78,7 +78,6 @@ foreach (sort keys %enums) {
     $body .= "$_\n";    
     foreach $symbol (@{$enum->{symbols}}) {
 	my $sym = $symbol; 
-	$sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
 	# Maybe Python has nice enough namespace handling that we don't
 	# need to prefix all constants with GIMP_
 	$body .= "$sym";

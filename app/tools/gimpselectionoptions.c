@@ -96,7 +96,7 @@ selection_options_init (SelectionOptions *options,
     {
       SELECTION_REPLACE,
       SELECTION_ADD,
-      SELECTION_SUB,
+      SELECTION_SUBTRACT,
       SELECTION_INTERSECT
     };
 

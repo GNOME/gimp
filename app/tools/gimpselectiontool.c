@@ -160,7 +160,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
         }
       else if (state & GDK_CONTROL_MASK)
         {
-          button_op = SELECTION_SUB;
+          button_op = SELECTION_SUBTRACT;
         }
 
       if (button_op != sel_options->op)
@@ -211,7 +211,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     }
   else if (state & GDK_CONTROL_MASK)
     {
-      selection_tool->op = SELECTION_SUB;       /* subtract from the selection */
+      selection_tool->op = SELECTION_SUBTRACT;  /* subtract from the selection */
     }
   else if (floating_sel)
     {
@@ -243,7 +243,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
     case SELECTION_ADD:
       cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
-    case SELECTION_SUB:
+    case SELECTION_SUBTRACT:
       cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
       break;
     case SELECTION_INTERSECT: 

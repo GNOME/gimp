@@ -167,7 +167,7 @@ void
 channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 					    gpointer   data)
 {
-  channels_channel_to_sel (widget, data, CHANNEL_OP_SUB);
+  channels_channel_to_sel (widget, data, CHANNEL_OP_SUBTRACT);
 }
 
 void

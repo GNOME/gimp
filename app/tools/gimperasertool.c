@@ -64,7 +64,7 @@ gimp_eraser_tool_register (Gimp                     *gimp,
                 TRUE,
                 "gimp:eraser_tool",
                 _("Eraser"),
-                _("Paint fuzzy brush strokes"),
+                _("Erase to background or transparency"),
                 N_("/Tools/Paint Tools/Eraser"), "<shift>E",
                 NULL, "tools/eraser.html",
                 GIMP_STOCK_TOOL_ERASER);

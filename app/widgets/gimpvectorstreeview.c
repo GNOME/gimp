@@ -235,7 +235,7 @@ gimp_vectors_list_view_toselection_extended_clicked (GtkWidget           *widget
 	}
       else if (state & GDK_CONTROL_MASK)
 	{
-	  operation = CHANNEL_OP_SUB;
+	  operation = CHANNEL_OP_SUBTRACT;
 	}
 
       gimp_vectors_list_view_to_selection (view, GIMP_VECTORS (viewable),

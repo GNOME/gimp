@@ -100,12 +100,12 @@ typedef enum
 
 GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< chop=_MODE >*/
+typedef enum
 {
-  GIMP_FG_BG_RGB_MODE,   /*< desc="FG to BG (RGB)"    >*/
-  GIMP_FG_BG_HSV_MODE,   /*< desc="FG to BG (HSV)"    >*/
-  GIMP_FG_TRANS_MODE,    /*< desc="FG to Transparent" >*/
-  GIMP_CUSTOM_MODE       /*< desc="Custom Gradient"   >*/
+  GIMP_FG_BG_RGB_MODE,         /*< desc="FG to BG (RGB)"    >*/
+  GIMP_FG_BG_HSV_MODE,         /*< desc="FG to BG (HSV)"    >*/
+  GIMP_FG_TRANSPARENT_MODE,    /*< desc="FG to Transparent" >*/
+  GIMP_CUSTOM_MODE             /*< desc="Custom Gradient"   >*/
 } GimpBlendMode;
 
 

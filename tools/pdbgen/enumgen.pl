@@ -64,8 +64,7 @@ my $footer = <<'FOOTER';
 :foreach $e (values %enums) {
 :    $e->{info} = "";
 :    foreach (@{$e->{symbols}}) {
-:	my $nick = exists $e->{nicks}->{$_} ? $e->{nicks}->{$_} : $_;
-:	$e->{info} .= "$nick ($e->{mapping}->{$_}), "
+:	$e->{info} .= "$_ ($e->{mapping}->{$_}), "
 :    }
 :    $e->{info} =~ s/, $//;
 :}
@@ -73,8 +72,8 @@ my $footer = <<'FOOTER';
 :1;
 FOOTER
 
-my ($enumname, $contig, $symbols, @nicks, @mapping, $before);
-my ($chop, $skip, $pdbskip, $xform);
+my ($enumname, $contig, $symbols, @mapping, $before);
+my ($skip, $pdbskip);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
 sub parse_options {
@@ -134,7 +133,7 @@ sub parse_entries {
 		  ))?,?\s*
 	      (?:/\*<                    # options 
 		(([^*]|\*(?!/))*)
-	       >\*/)?
+	       >\s*\*/)?,?
 	      \s*$
              @x) {
             my ($name, $value, $options) = ($1, $2, $3);
@@ -142,19 +141,6 @@ sub parse_entries {
 	    if (defined $options) {
 		my %options = parse_options($options);
 		next if defined $options{skip};
-		if (defined $options{nick}) {
-		    push @nicks, $name, $options{nick};
-		}
-	    }
-	    elsif (defined $chop) {
-		my $nick = $name;
-		$nick =~ s/$chop//;
-		push @nicks, $name, $nick;
-	    }
-	    elsif (defined $xform) {
-		my $nick = $name;
-		eval "\$nick =~ $xform";
-		push @nicks, $name, $nick;
 	    }
 
 	    $symbols .= $name . ' ';
@@ -195,19 +181,15 @@ while (<>) {
 	   ({)?\s*
 	   (?:/\*<
 	     (([^*]|\*(?!/))*)
-	    >\*/)?
+	    >\s*\*/)?
          @x) {
         if (defined $2) {
             my %options = parse_options($2);
-	    $chop = $options{"chop"};
 	    $skip = $options{"skip"};
 	    $pdbskip = $options{"pdb-skip"};
-	    $xform = $options{"xform"};
 	} else {
-	    $chop = undef;
 	    $skip = undef;
 	    $pdbskip = undef;
-	    $xform = undef;
 	}	    
 	# Didn't have trailing '{' look on next lines
 	if (!defined $1) {
@@ -218,7 +200,7 @@ while (<>) {
 	    }
 	}
 
-	$symbols = ""; $contig = 1; $before = -1; @mapping = (); @nicks = ();
+	$symbols = ""; $contig = 1; $before = -1; @mapping = ();
 
 	# Now parse the entries
 	&parse_entries (\*ARGV);
@@ -233,15 +215,6 @@ while (<>) {
 	}
 	$mapping =~ s/,\n\s*$//s;
 
-	my $nicks = ""; $pos = 1;
-	foreach (@nicks) {
-	    $nicks .= $pos++ % 2 ? "$_ => " : "'$_',\n\t\t       ";
-	}
-	if ($nicks) {
-	    $nicks =~ s/,\n\s*$//s;
-	    $nicks = ",\n\t  nicks   => { " . $nicks . " }";
-	}
-
 	$ARGV =~ s@(?:(?:..|app)/)*@@;
 
 	$code .= <<ENTRY if !$pdbskip;
@@ -249,7 +222,7 @@ while (<>) {
 :	{ contig => $contig,
 :	  header => '$ARGV',
 :	  symbols => [ qw($symbols) ],
-:	  mapping => { $mapping }$nicks
+:	  mapping => { $mapping }
 :	},
 ENTRY
     }

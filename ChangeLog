@@ -1,3 +1,63 @@
+2002-03-17  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/enumcode-py.pl
+	* tools/pdbgen/enumcode.pl
+	* tools/pdbgen/enumgen.pl: removed enum nick support, best to keep
+	internal and external names consistent
+
+	* app/core/core-enums.h: remove chops from enums. Change TRANS to
+	TRANSPARENT in GimpBlendMode
+
+	* app/core/core-types.h: remove chops and nicks from enums. Change INV
+	to INVERSE and SUB to SUBTRACT to make things more clear
+
+	* app/core/gimpchannel.c
+	* app/gui/channels-commands.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/selection_options.c
+	* app/tools/tools-types.h
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpvectorslistview.c: reflect SUB -> SUBTRACT change
+
+	* app/core/gimpdrawable-blend.c: reflect TRANS -> TRANSPARENT change
+
+	* app/core/gimplayer.c
+	* app/gui/layers-commands.c: reflect INV -> INVERSE change
+
+	* app/paint/paint-types.h: remove nick from PaintApplicationMode
+
+	* app/tools/gimperasertool.c: fix tooltip
+
+	* app/widgets/gimpenummenu.c: #include "libgimp/gimpintl.h" for
+	gettext
+
+	* libgimp/gimpcompat.h: compatibility enums here, since we removed
+	the nicks
+
+	* tools/pdbgen/enums.pl
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* app/core/core-enums.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/misc_tools_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated, enum changes
+
+	* plug-ins/common/hot.c: GIMP_TRANS_IMAGE_FILL -> GIMP_TRANSPARENT_FILL
+
+	* plug-ins/common/warp.c: GIMP_BG_IMAGE_FILL -> GIMP_BACKGROUND_FILL
+
+	* plug-ins/script-fu/siod-wrapper.c: compat constant definitions
+
 2002-03-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]: registered more enums.

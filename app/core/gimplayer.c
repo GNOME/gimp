@@ -668,7 +668,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case ADD_SELECTION_MASK:
-    case ADD_INV_SELECTION_MASK:
+    case ADD_INVERSE_SELECTION_MASK:
       {
         GimpDrawable *selection;
 
@@ -685,7 +685,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case ADD_COPY_MASK:
-    case ADD_INV_COPY_MASK:
+    case ADD_INVERSE_COPY_MASK:
       {
         TileManager   *copy_tiles;
         GimpImageType  layer_type;
@@ -733,8 +733,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case ADD_COPY_MASK:
       break;
 
-    case ADD_INV_SELECTION_MASK:
-    case ADD_INV_COPY_MASK:
+    case ADD_INVERSE_SELECTION_MASK:
+    case ADD_INVERSE_COPY_MASK:
       gimp_drawable_invert (GIMP_DRAWABLE (mask));
       break;
     }

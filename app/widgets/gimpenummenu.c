@@ -27,6 +27,8 @@
 
 #include "gimpenummenu.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void  gimp_enum_menu_class_init  (GimpEnumMenuClass *klass);
 static void  gimp_enum_menu_init        (GimpEnumMenu      *enum_menu);

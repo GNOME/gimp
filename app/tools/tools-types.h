@@ -70,7 +70,7 @@ typedef void (* GimpToolRegisterFunc)     (Gimp                     *gimp,
 typedef enum /*< pdb-skip >*/
 {
   SELECTION_ADD       = CHANNEL_OP_ADD,
-  SELECTION_SUB       = CHANNEL_OP_SUB,
+  SELECTION_SUBTRACT  = CHANNEL_OP_SUBTRACT,
   SELECTION_REPLACE   = CHANNEL_OP_REPLACE,
   SELECTION_INTERSECT = CHANNEL_OP_INTERSECT,
   SELECTION_MOVE_MASK,

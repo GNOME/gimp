@@ -104,7 +104,7 @@ static const GEnumValue gimp_blend_mode_enum_values[] =
 {
   { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), "fg-bg-rgb-mode" },
   { GIMP_FG_BG_HSV_MODE, N_("FG to BG (HSV)"), "fg-bg-hsv-mode" },
-  { GIMP_FG_TRANS_MODE, N_("FG to Transparent"), "fg-trans-mode" },
+  { GIMP_FG_TRANSPARENT_MODE, N_("FG to Transparent"), "fg-transparent-mode" },
   { GIMP_CUSTOM_MODE, N_("Custom Gradient"), "custom-mode" },
   { 0, NULL, NULL }
 };

@@ -448,7 +448,7 @@ by_color_select_oper_update (GimpTool        *tool,
     }
   else if (state & GDK_CONTROL_MASK)
     {
-      sel_tool->op = SELECTION_SUB;   /* subtract from the selection */
+      sel_tool->op = SELECTION_SUBTRACT;   /* subtract from the selection */
     }
   else
     {
@@ -881,7 +881,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
     operation = SELECTION_ADD;
   else if ((bevent->state & GDK_CONTROL_MASK) &&
 	   !(bevent->state & GDK_SHIFT_MASK))
-    operation = SELECTION_SUB;
+    operation = SELECTION_SUBTRACT;
   else if ((bevent->state & GDK_CONTROL_MASK) &&
 	   (bevent->state & GDK_SHIFT_MASK))
     operation = SELECTION_INTERSECT;

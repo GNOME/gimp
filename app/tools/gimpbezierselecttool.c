@@ -666,7 +666,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
             }
 	  else if (state & GDK_CONTROL_MASK)
             {
-              op = CHANNEL_OP_SUB;
+              op = CHANNEL_OP_SUBTRACT;
             }
 	  else
             {

@@ -863,7 +863,7 @@ gradient_fill_region (GimpImage        *gimage,
 
       break;
 
-    case GIMP_FG_TRANS_MODE:
+    case GIMP_FG_TRANSPARENT_MODE:
       /* Color does not change, just the opacity */
 
       rbd.bg   = rbd.fg;

@@ -165,22 +165,15 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'core/core-types.h',
 	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
-			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK
-			  ADD_COPY_MASK ADD_INV_COPY_MASK) ],
+			  ADD_SELECTION_MASK ADD_INVERSE_SELECTION_MASK
+			  ADD_COPY_MASK ADD_INVERSE_COPY_MASK) ],
 	  mapping => { ADD_WHITE_MASK => '0',
 		       ADD_BLACK_MASK => '1',
 		       ADD_ALPHA_MASK => '2',
 		       ADD_SELECTION_MASK => '3',
-		       ADD_INV_SELECTION_MASK => '4',
+		       ADD_INVERSE_SELECTION_MASK => '4',
 		       ADD_COPY_MASK => '5',
-		       ADD_INV_COPY_MASK => '6' },
-	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
-		       ADD_BLACK_MASK => 'BLACK_MASK',
-		       ADD_ALPHA_MASK => 'ALPHA_MASK',
-		       ADD_SELECTION_MASK => 'SELECTION_MASK',
-		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK',
-		       ADD_COPY_MASK => 'COPY_MASK',
-		       ADD_INV_COPY_MASK => 'INV_COPY_MASK' }
+		       ADD_INVERSE_COPY_MASK => '6' }
 	},
     MaskApplyMode =>
 	{ contig => 1,
@@ -200,16 +193,12 @@ package Gimp::CodeGen::enums;
     ChannelOps =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
-	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUB CHANNEL_OP_REPLACE
-			  CHANNEL_OP_INTERSECT) ],
+	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUBTRACT
+			  CHANNEL_OP_REPLACE CHANNEL_OP_INTERSECT) ],
 	  mapping => { CHANNEL_OP_ADD => '0',
-		       CHANNEL_OP_SUB => '1',
+		       CHANNEL_OP_SUBTRACT => '1',
 		       CHANNEL_OP_REPLACE => '2',
-		       CHANNEL_OP_INTERSECT => '3' },
-	  nicks   => { CHANNEL_OP_ADD => 'ADD',
-		       CHANNEL_OP_SUB => 'SUB',
-		       CHANNEL_OP_REPLACE => 'REPLACE',
-		       CHANNEL_OP_INTERSECT => 'INTERSECT' }
+		       CHANNEL_OP_INTERSECT => '3' }
 	},
     GimpFillType =>
 	{ contig => 1,
@@ -220,12 +209,7 @@ package Gimp::CodeGen::enums;
 		       BACKGROUND_FILL => '1',
 		       WHITE_FILL => '2',
 		       TRANSPARENT_FILL => '3',
-		       NO_FILL => '4' },
-	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
-		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
-		       WHITE_FILL => 'WHITE_IMAGE_FILL',
-		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
-		       NO_FILL => 'NO_IMAGE_FILL' }
+		       NO_FILL => '4' }
 	},
     GimpOffsetType =>
 	{ contig => 1,
@@ -295,6 +279,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_CHANNEL => '4',
 		       GIMP_ALPHA_CHANNEL => '5' }
 	},
+    GimpBlendMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
+			  GIMP_FG_TRANSPARENT_MODE GIMP_CUSTOM_MODE) ],
+	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
+		       GIMP_FG_BG_HSV_MODE => '1',
+		       GIMP_FG_TRANSPARENT_MODE => '2',
+		       GIMP_CUSTOM_MODE => '3' }
+	},
     GimpGradientType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -314,20 +308,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_SHAPEBURST_DIMPLED => '8',
 		       GIMP_SPIRAL_CLOCKWISE => '9',
 		       GIMP_SPIRAL_ANTICLOCKWISE => '10' }
-	},
-    GimpBlendMode =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
-			  GIMP_FG_TRANS_MODE GIMP_CUSTOM_MODE) ],
-	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
-		       GIMP_FG_BG_HSV_MODE => '1',
-		       GIMP_FG_TRANS_MODE => '2',
-		       GIMP_CUSTOM_MODE => '3' },
-	  nicks   => { GIMP_FG_BG_RGB_MODE => 'GIMP_FG_BG_RGB',
-		       GIMP_FG_BG_HSV_MODE => 'GIMP_FG_BG_HSV',
-		       GIMP_FG_TRANS_MODE => 'GIMP_FG_TRANS',
-		       GIMP_CUSTOM_MODE => 'GIMP_CUSTOM' }
 	},
     GimpRepeatMode =>
 	{ contig => 1,
@@ -372,8 +352,7 @@ package Gimp::CodeGen::enums;
 	  header => 'paint/paint-types.h',
 	  symbols => [ qw(CONSTANT INCREMENTAL) ],
 	  mapping => { CONSTANT => '0',
-		       INCREMENTAL => '1' },
-	  nicks   => { CONSTANT => 'CONTINUOUS' }
+		       INCREMENTAL => '1' }
 	},
     GradientPaintMode =>
 	{ contig => 1,
@@ -442,8 +421,7 @@ package Gimp::CodeGen::enums;
 foreach $e (values %enums) {
     $e->{info} = "";
     foreach (@{$e->{symbols}}) {
-	my $nick = exists $e->{nicks}->{$_} ? $e->{nicks}->{$_} : $_;
-	$e->{info} .= "$nick ($e->{mapping}->{$_}), "
+	$e->{info} .= "$_ ($e->{mapping}->{$_}), "
     }
     $e->{info} =~ s/, $//;
 }
