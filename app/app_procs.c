@@ -119,65 +119,53 @@ app_run (const gchar         *full_prog_name,
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Base",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Paint-Funcs",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Config",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Core",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-PDB",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Plug-In",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-File",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-XCF",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Widgets",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Display",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Tools",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-Text",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
+  g_log_set_handler ("Gimp-Vectors",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func, &the_gimp);
   g_log_set_handler ("Gimp-GUI",
 		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     &the_gimp);
+		     gimp_message_log_func, &the_gimp);
 
   g_log_set_handler (NULL,
 		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		     gimp_error_log_func,
-		     &the_gimp);
+		     gimp_error_log_func,   &the_gimp);
 
   units_init (the_gimp);
 

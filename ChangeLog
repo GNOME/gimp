@@ -1,3 +1,11 @@
+2003-11-19  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_run): register a log handler for the
+	"Gimp-Vectors" domain.
+
+	* app/gui/stroke-dialog.c (stroke_dialog_new): attach the saved
+	options to its parent, the user context, not to the gimp.
+
 2003-11-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmodule/gimpmodule.c (gimp_module_open): don't do lazy

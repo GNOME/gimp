@@ -67,6 +67,7 @@ stroke_dialog_new (GimpItem    *item,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
+  GimpContext       *context;
   GimpStrokeOptions *options;
   GimpStrokeOptions *saved_options;
   GimpImage         *image;
@@ -81,19 +82,19 @@ stroke_dialog_new (GimpItem    *item,
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  image = gimp_item_get_image (item);
+  image   = gimp_item_get_image (item);
+  context = gimp_get_user_context (image->gimp);
 
   options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
                           "gimp", image->gimp,
                           NULL);
 
-  saved_options = g_object_get_data (G_OBJECT (image->gimp),
+  saved_options = g_object_get_data (G_OBJECT (context),
                                      "saved-stroke-options");
   if (saved_options)
     gimp_config_sync (GIMP_CONFIG (saved_options), GIMP_CONFIG (options), 0);
 
-  gimp_context_set_parent (GIMP_CONTEXT (options),
-                           gimp_get_user_context (image->gimp));
+  gimp_context_set_parent (GIMP_CONTEXT (options), context);
   gimp_context_define_properties (GIMP_CONTEXT (options),
                                   GIMP_CONTEXT_FOREGROUND_MASK |
                                   GIMP_CONTEXT_PATTERN_MASK,
@@ -181,7 +182,7 @@ stroke_dialog_new (GimpItem    *item,
     GtkWidget    *optionmenu;
     GtkWidget    *menu;
 
-    tool_info = gimp_context_get_tool (gimp_get_user_context (image->gimp));
+    tool_info = gimp_context_get_tool (context);
 
     hbox = gtk_hbox_new (FALSE, 4);
     gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -227,14 +228,16 @@ stroke_dialog_response (GtkWidget  *widget,
                         gint        response_id,
                         GtkWidget  *dialog)
 {
-  GimpItem  *item;
-  GtkWidget *button;
-  GimpImage *image;
+  GimpContext *context;
+  GimpItem    *item;
+  GtkWidget   *button;
+  GimpImage   *image;
 
   item   = g_object_get_data (G_OBJECT (dialog), "gimp-item");
   button = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-button");
 
-  image = gimp_item_get_image (item);
+  image   = gimp_item_get_image (item);
+  context = gimp_get_user_context (image->gimp);
 
   switch (response_id)
     {
@@ -247,7 +250,7 @@ stroke_dialog_response (GtkWidget  *widget,
         options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
         menu    = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
 
-        tool_info = gimp_context_get_tool (gimp_get_user_context (image->gimp));
+        tool_info = gimp_context_get_tool (context);
 
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
         gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
@@ -277,13 +280,13 @@ stroke_dialog_response (GtkWidget  *widget,
             options = g_object_get_data (G_OBJECT (dialog),
                                          "gimp-stroke-options");
 
-            saved_options = g_object_get_data (G_OBJECT (image->gimp),
+            saved_options = g_object_get_data (G_OBJECT (context),
                                                "saved-stroke-options");
             if (saved_options)
               gimp_config_sync (GIMP_CONFIG (options),
                                 GIMP_CONFIG (saved_options), 0);
             else
-              g_object_set_data_full (G_OBJECT (image->gimp),
+              g_object_set_data_full (G_OBJECT (context),
                                       "saved-stroke-options",
                                       g_object_ref (options),
                                       (GDestroyNotify) g_object_unref);
