@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
-"PO-Revision-Date: 2002-05-28 12:53+0200\n"
+"POT-Creation-Date: 2002-05-29 21:40+0200\n"
+"PO-Revision-Date: 2002-05-29 21:40+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -287,9 +287,8 @@ msgid "MegaBytes"
 msgstr "Megabyte"
 
 #: libgimpwidgets/gimpwidgets.c:1178
-#, fuzzy
 msgid "GigaBytes"
-msgstr "Megabyte"
+msgstr "Gigabyte"
 
 #~ msgid "Paste"
 #~ msgstr "Indsæt"
