@@ -1,3 +1,8 @@
+2002-09-07  Dave Neary  <bolsh@gimp.org>
+
+        * app/xcf/xcf-load.c: Unref layer mask rather than layer
+        when adding the mask. Fixes bug #92693.
+
 2002-09-06  Hans Breuer  <hans@breuer.org>
 
 	* */*/makefile.msc : updated
