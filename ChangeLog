@@ -1,5 +1,11 @@
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/quit-dialog.c (quit_dialog_container_changed): when
+	changing the button's label to "Quit", also make it the default
+	action.
+
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpcontrollereditor.[ch]: new widget built from

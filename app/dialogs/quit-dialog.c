@@ -157,6 +157,7 @@ quit_dialog_container_changed (GimpContainer  *images,
   gint       num_images = gimp_container_num_children (images);
   GtkWidget *label      = g_object_get_data (G_OBJECT (box), "lost-label");
   GtkWidget *button     = g_object_get_data (G_OBJECT (box), "ok-button");
+  GtkWidget *dialog     = gtk_widget_get_toplevel (button);
 
   if (num_images == 1)
     gimp_message_box_set_primary_text (box,
@@ -173,6 +174,7 @@ quit_dialog_container_changed (GimpContainer  *images,
                     "label",     GTK_STOCK_QUIT,
                     "use-stock", TRUE,
                     NULL);
+      gtk_widget_grab_default (button);
     }
   else
     {
@@ -181,6 +183,7 @@ quit_dialog_container_changed (GimpContainer  *images,
                     "label",     "_Discard Changes",
                     "use-stock", FALSE,
                     NULL);
+      gtk_window_set_default (GTK_WINDOW (dialog), NULL);
     }
 }
 
