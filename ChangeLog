@@ -1,3 +1,36 @@
+1999-06-28  Tor Lillqvist  <tml@iki.fi>
+
+	* */makefile.msc: Use the DEBUG nmake variable to determine
+	whether to build for debugging or not.
+
+	* libgimp/gimp.def: Add some missing entry points.
+
+	* plug-ins/makefile.msc: Redo as to Yosh's reorg of the
+ 	sources. Add some plug-ins missing earlier. (For instance print,
+ 	which only prints to files on Win32. We still need a real Win32
+ 	print plug-in. Much code probably could be lifted from the bmp
+ 	plug-in.)
+
+	* plug-ins/MapObject/arcball.c: Change Qt_ToMatrix() to void,
+ 	instead of returning the address of its parameter (dubious
+ 	practise), as its value is never used anyway.
+
+	For the following changes, thanks to Hans Breuer:
+
+	* plug-ins/FractalExplorer/Dialogs.h: Check for feof, not to get
+	into an endless loop on malformed files.
+
+	* plug-ins/common/header.c: Support indexed images.
+
+	* plug-ins/common/sunras.c
+	* plug-ins/common/xwd.c
+	* plug-ins/print/print.h
+	* plug-ins/sgi/sgi.h: Include config.h, guard inclusion of
+ 	unistd.h. 
+
+	* plug-ins/print/print.c: Guard for SIGBUS being undefined. Open
+ 	output file in binary mode.
+
 1999-06-28  Sven Neumann  <sven@gimp.org>
 	    Michael Natterer  <mitschel@cs.tu-berlin.de>
 

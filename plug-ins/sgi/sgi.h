@@ -22,6 +22,40 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.9  1999/06/28 17:54:16  tml
+ *   	* */makefile.msc: Use the DEBUG nmake variable to determine
+ *   	whether to build for debugging or not.
+ *
+ *   	* libgimp/gimp.def: Add some missing entry points.
+ *
+ *   	* plug-ins/makefile.msc: Redo as to Yosh's reorg of the
+ *    	sources. Add some plug-ins missing earlier. (For instance print,
+ *    	which only prints to files on Win32. We still need a real Win32
+ *    	print plug-in. Much code probably could be lifted from the bmp
+ *    	plug-in.)
+ *
+ *   	* plug-ins/MapObject/arcball.c: Change Qt_ToMatrix() to void,
+ *    	instead of returning the address of its parameter (dubious
+ *    	practise), as its value is never used anyway.
+ *
+ *   	For the following changes, thanks to Hans Breuer:
+ *
+ *   	* plug-ins/FractalExplorer/Dialogs.h: Check for feof, not to get
+ *   	into an endless loop on malformed files.
+ *
+ *   	* plug-ins/common/header.c: Support indexed images.
+ *
+ *   	* plug-ins/common/sunras.c
+ *   	* plug-ins/common/xwd.c
+ *   	* plug-ins/print/print.h
+ *   	* plug-ins/sgi/sgi.h: Include config.h, guard inclusion of
+ *    	unistd.h.
+ *
+ *   	* plug-ins/print/print.c: Guard for SIGBUS being undefined. Open
+ *    	output file in binary mode.
+ *
+ *   	* po/makefile.msc: Add no.
+ *
  *   Revision 1.8  1998/06/06 23:22:20  yosh
  *   * adding Lighting plugin
  *
@@ -49,9 +83,13 @@
 #ifndef _SGI_H_
 #  define _SGI_H_
 
+#  include "config.h" 
+
 #  include <stdio.h>
 #  include <stdlib.h>
-#  include <unistd.h>
+#  ifdef HAVE_UNISTD_H
+#    include <unistd.h>
+#  endif
 #  include <string.h>
 
 #  ifdef __cplusplus

@@ -1,6 +1,6 @@
-# Makefile to build the GIMP plug-ins with Microsoft nmake
+# Makefile to build the GIMP plug-ins with Microsoft nmake and compiler
 
-# I don't want to use too many makefiles, so this is quite complex.
+# I don't want to use many hand-written makefiles, so this is quite complex.
 # This same makefile is also included by sub-makes called as subroutines.
 # Various parts of this file are used when makeing from the plug-ins directory,
 # and when building individual plug-ins and the three plug-in libraries.
@@ -19,14 +19,18 @@ BIN = $(GIMP)\plug-ins
 FROMPLUGINSDIR=YES		# Used to bypass other parts below
 
 # List plug-ins. We must use several lists to work around nmake's limits
-SIMPLE1 = AlienMap CEL CML_explorer FractalExplorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
-SIMPLE2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-SIMPLE3 = gauss_iir gauss_rle gbr gee gfig gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw laplace lic
-SIMPLE4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify pagecurl palette papertile pat pcx pix pixelize plasma plugindetails pnm polar ps psd randomize ripple rotate rotators
-SIMPLE5 = scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spread struc tga threshold_alpha tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm zealouscrop
-COMPLEX1 = Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfli ifscompose iwarp jpeg maze png rcm tiff
 
-# These are unofficial, ie not in the CVS To build these, you should
+# The COMMON* ones are in the common subdirectory
+COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
+COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
+COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw jpeg laplace lic
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
+COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm zealouscrop
+
+# These have own subdirectories each
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sgi sinus struc unsharp
+
+# These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ..\unofficial-plug-ins directory, and do "nmake -f makefile.msc unofficial".
 
@@ -34,17 +38,17 @@ UNOFFICIAL = guash user_filter twain
 
 # The main target
 
-all : ..\config.h libs-all simple-plugins-all complex-plugins-all
+all : ..\config.h libs-all common-plugins-all separate-plugins-all
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-install : libs-install simple-plugins-install complex-plugins-install scripts-install
+install : libs-install common-plugins-install separate-plugins-install scripts-install
 
 unofficial:
-	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-complex DIR=%d TARGET=install
+	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=install
 
-clean : libs-clean simple-plugins-clean complex-plugins-clean
+clean : libs-clean common-plugins-clean separate-plugins-clean
 
 libs-all :
 	@nmake -nologo -f makefile.msc sub-libs TARGET=all
@@ -68,51 +72,51 @@ sub-libs:
 
 
 
-simple-plugins-all :
-	@nmake -nologo -f makefile.msc sub-simple-plugins TARGET=all
+common-plugins-all :
+	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=all
 
-simple-plugins-install :
-	@nmake -nologo -f makefile.msc sub-simple-plugins TARGET=install
+common-plugins-install :
+	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=install
 
-simple-plugins-clean :
-	@nmake -nologo -f makefile.msc sub-simple-plugins TARGET=clean
-
-
-
-sub-simple-plugins :
-	for %d in ($(SIMPLE1)) do nmake -nologo -f makefile.msc sub-one-simple DIR=%d TARGET=$(TARGET)
-	for %d in ($(SIMPLE2)) do nmake -nologo -f makefile.msc sub-one-simple DIR=%d TARGET=$(TARGET)
-	for %d in ($(SIMPLE3)) do nmake -nologo -f makefile.msc sub-one-simple DIR=%d TARGET=$(TARGET)
-	for %d in ($(SIMPLE4)) do nmake -nologo -f makefile.msc sub-one-simple DIR=%d TARGET=$(TARGET)
-	for %d in ($(SIMPLE5)) do nmake -nologo -f makefile.msc sub-one-simple DIR=%d TARGET=$(TARGET)
-
-sub-one-simple :
-	@cd $(DIR)
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) $(TARGET)
+common-plugins-clean :
+	@nmake -nologo -f makefile.msc sub-common-plugins TARGET=clean
 
 
 
-complex-plugins-all :
-	@nmake -nologo -f makefile.msc sub-complex-plugins TARGET=all
+sub-common-plugins :
+	for %d in ($(COMMON1)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON2)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON3)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON4)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
+	for %d in ($(COMMON5)) do nmake -nologo -f makefile.msc sub-one-common DIR=%d TARGET=$(TARGET)
 
-complex-plugins-install :
-	@nmake -nologo -f makefile.msc sub-complex-plugins TARGET=install
-
-complex-plugins-clean :
-	@nmake -nologo -f makefile.msc sub-complex-plugins TARGET=clean
+sub-one-common :
+	@cd common
+	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 
-sub-complex-plugins :
-	for %d in ($(COMPLEX1)) do nmake -nologo -f makefile.msc sub-one-complex DIR=%d TARGET=$(TARGET)
+separate-plugins-all :
+	@nmake -nologo -f makefile.msc sub-separate-plugins TARGET=all
+
+separate-plugins-install :
+	@nmake -nologo -f makefile.msc sub-separate-plugins TARGET=install
+
+separate-plugins-clean :
+	@nmake -nologo -f makefile.msc sub-separate-plugins TARGET=clean
+
+
+
+sub-separate-plugins :
+	for %d in ($(SEPARATE)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=$(TARGET)
 # We must handle script-fu separately because of the dash, sigh
 	@cd script-fu
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=script-fu COMPLEX_script_fu=1 $(TARGET)
+	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 	@cd ..
 
-sub-one-complex :
-	@cd $(DIR)
-	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) COMPLEX_$(DIR)=1 $(TARGET)
+sub-one-separate :
+	cd $(DIR)
+	nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
 scripts-install :
@@ -129,7 +133,7 @@ scripts-install :
 # This part is used when building individual plug-ins or one of
 # the libraries. 
 
-!IFDEF COMPLEX_Lighting
+!IFDEF EXTRA_Lighting
 OBJECTS = \
 	lighting_apply.obj \
 	lighting_image.obj \
@@ -139,7 +143,7 @@ OBJECTS = \
 	lighting_ui.obj
 !ENDIF
 
-!IFDEF COMPLEX_MapObject
+!IFDEF EXTRA_MapObject
 OBJECTS = \
 	arcball.obj \
 	mapobject_apply.obj \
@@ -150,33 +154,33 @@ OBJECTS = \
 	mapobject_ui.obj
 !ENDIF
 
-!IFDEF COMPLEX_bmp
+!IFDEF EXTRA_bmp
 OBJECTS = \
 	bmp.obj \
 	bmpread.obj \
 	bmpwrite.obj
 !ENDIF
 
-!IFDEF COMPLEX_dbbrowser
+!IFDEF EXTRA_dbbrowser
 OBJECTS = \
 	dbbrowser.obj \
 	dbbrowser_utils.obj
 !ENDIF
 
-!IFDEF COMPLEX_faxg3
+!IFDEF EXTRA_faxg3
 OBJECTS = \
 	faxg3.obj \
 	g3.obj	\
 	run_tbl.obj
 !ENDIF
 
-!IFDEF COMPLEX_fits
+!IFDEF EXTRA_fits
 OBJECTS = \
 	fits.obj \
 	fitsrw.obj
 !ENDIF
 
-!IFDEF COMPLEX_flame
+!IFDEF EXTRA_flame
 OBJECTS = \
 	cmap.obj \
 	flame.obj \
@@ -184,7 +188,7 @@ OBJECTS = \
 	rect.obj
 !ENDIF
 
-!IFDEF COMPLEX_fp
+!IFDEF EXTRA_fp
 OBJECTS = \
 	fp.obj \
 	fp_gdk.obj \
@@ -193,7 +197,7 @@ OBJECTS = \
 	fp_misc.obj
 !ENDIF
 
-!IFDEF COMPLEX_gdyntext
+!IFDEF EXTRA_gdyntext
 # Doesn't compile yet, though, so not included in list above
 OBJECTS = \
 	charmap.obj \
@@ -204,29 +208,26 @@ OBJECTS = \
 	message_window.obj
 !ENDIF
 
-!IFDEF COMPLEX_gfli
+!IFDEF EXTRA_gfli
 OBJECTS = \
 	fli.obj \
 	gfli.obj
 !ENDIF
 
-!IFDEF COMPLEX_ifscompose
+!IFDEF EXTRA_ifscompose
 OBJECTS = \
 	ifscompose.obj \
 	ifscompose_utils.obj
 !ENDIF
 
-!IFDEF COMPLEX_iwarp
-!ENDIF
-
-!IFDEF COMPLEX_jpeg
+!IFDEF EXTRA_jpeg
 # Location of jpeg-6b sources
 JPEG = $(TOP)\..\jpeg-6b
 EXTRACFLAGS = -I$(JPEG)
 EXTRALIBS = $(JPEG)\libjpeg.lib
 !ENDIF
 
-!IFDEF COMPLEX_maze
+!IFDEF EXTRA_maze
 OBJECTS = \
 	algorithms.obj \
 	handy.obj \
@@ -234,7 +235,7 @@ OBJECTS = \
 	maze_face.obj
 !ENDIF
 
-!IFDEF COMPLEX_png
+!IFDEF EXTRA_png
 # Location of libpng sources
 PNG = $(TOP)\..\libpng-1.0.3
 # And zlib
@@ -243,7 +244,16 @@ EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
 EXTRALIBS = $(PNG)\libpng.lib $(ZLIB)\zlib.lib
 !ENDIF
 
-!IFDEF COMPLEX_rcm
+!IFDEF EXTRA_print
+OBJECTS = \
+	print.obj \
+	print-escp2.obj \
+	print-pcl.obj \
+	print-ps.obj \
+	print-util.obj
+!ENDIF
+
+!IFDEF EXTRA_rcm
 OBJECTS = \
 	rcm.obj \
 	rcm_callback.obj \
@@ -253,7 +263,7 @@ OBJECTS = \
 OPTIMIZE = 
 !ENDIF
 
-!IFDEF COMPLEX_script_fu
+!IFDEF EXTRA_script_fu
 OBJECTS = \
 	interp_md5.obj \
 	interp_regex.obj \
@@ -269,7 +279,13 @@ EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
 
-!IFDEF COMPLEX_tiff
+!IFDEF EXTRA_sgi
+OBJECTS = \
+	sgi.obj \
+	sgilib.obj
+!ENDIF
+
+!IFDEF EXTRA_tiff
 # Location of tiff-3.4 sources
 TIFF = $(TOP)\..\tiff-v3.4\libtiff
 # Location of jpeg-6b sources
@@ -280,11 +296,17 @@ EXTRACFLAGS = -I$(TIFF)
 EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB)\zlib.lib user32.lib
 !ENDIF
 
-!IFDEF COMPLEX_guash
+!IFDEF EXTRA_unsharp
+OBJECTS = \
+	dialog_f.obj \
+	unsharp.obj
+!ENDIF
+
+!IFDEF EXTRA_guash
 HAVE_RESOURCE = YES
 !ENDIF
 
-!IFDEF COMPLEX_user_filter
+!IFDEF EXTRA_user_filter
 OBJECTS = \
 	libyywrap.obj \
 	uf_eval.obj \
@@ -295,15 +317,13 @@ OBJECTS = \
 	uf_parser.tab.obj
 !ENDIF
 
-!IFDEF COMPLEX_twain
+!IFDEF EXTRA_twain
 OBJECTS = \
 	tw_func.obj \
 	tw_util.obj \
 	twain.obj
 EXTRALIBS = user32.lib
 !ENDIF
-
-LDFLAGS = /link /subsystem:windows /machine:ix86 # /debug
 
 GIMP_VER = 1.1
 GTK_VER = 1.3
@@ -316,12 +336,26 @@ GETTEXT = $(TOP)\..\gettext-0.10.35
 PLUGINDIR = $(TOP)\plug-ins
 
 !IFNDEF OPTIMIZE
+!IFNDEF DEBUG
 OPTIMIZE = -Ox
-#OPTIMIZE = -Zi
+!ELSE
+OPTIMIZE = -Zi
 !ENDIF
-CC = cl -nologo -G5 -GF $(OPTIMIZE) -W2 -MD -Zm200
+!ENDIF
+
+!IFNDEF DEBUG
+LINKDEBUG =
+RTL = -MD
+!ELSE
+LINKDEBUG = /debug
+RTL = -MDd
+!ENDIF
+
+CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
 CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl
+
+LDFLAGS = /link /subsystem:windows /machine:ix86 $(LINKDEBUG)
 
 !IFDEF PLUGIN
 

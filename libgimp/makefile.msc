@@ -16,13 +16,21 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 # Nothing much configurable below
 
-# cl -? describes the options
-#CC = cl -G5 -GF -Ox -W3 -MD -nologo
-CC = cl -G5 -GF -Zi -W3 -MD -nologo
+!IFNDEF DEBUG
+# Full optimization:
+OPTIMIZE = -Ox -MD
+LINKDEBUG =
+!ELSE
+# Debugging:
+OPTIMIZE = -Zi -MDd
+LINKDEBUG = /debug
+!ENDIF
 
-LDFLAGS = /link /debug
+# cl -? describes the options
+CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
+
+LDFLAGS = /link $(LINKDEBUG)
 INSTALL = copy
-TOUCH = copy makefile.msc+nul
 
 GTK_VER = 1.3
 GLIB_VER = 1.3
@@ -39,7 +47,6 @@ all : \
 	gimpi.lib	\
 	gimp-$(GIMP_VER).dll	\
 	gimpui-$(GIMP_VER).dll
-	$(TOUCH) all
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
@@ -50,7 +57,6 @@ gimpfeatures.h : gimpfeatures.h.win32
 install : all
 	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
 	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
-	$(TOUCH) install
 
 gimpi_OBJECTS = \
 	gimpenv.obj	\

@@ -43,7 +43,7 @@ void     ArcBall_CopyMat(HMatrix inm,HMatrix outm);
 /* Internal methods */
 /* ================ */
 
-HMatrix *Qt_ToMatrix(Quat q,HMatrix out);
+void     Qt_ToMatrix(Quat q,HMatrix out);
 Quat     Qt_Conj(Quat q);
 Quat     Qt_Mul(Quat qL, Quat qR);
 Quat     Qt_FromBallPoints(HVect from, HVect to);
@@ -211,7 +211,7 @@ Quat Qt_Mul(Quat qL, Quat qR)
 /* system and right-handed rotations.                             */
 /* ============================================================== */
 
-HMatrix *Qt_ToMatrix(Quat q, HMatrix out)
+void Qt_ToMatrix(Quat q, HMatrix out)
 {
   double Nq = q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w;
   double s = (Nq > 0.0) ? (2.0 / Nq) : 0.0;
@@ -224,7 +224,6 @@ HMatrix *Qt_ToMatrix(Quat q, HMatrix out)
   out[X][Z] = xz + wy; out[Y][Z] = yz - wx; out[Z][Z] = 1.0 - (xx + yy);
   out[X][W] = out[Y][W] = out[Z][W] = out[W][X] = out[W][Y] = out[W][Z] = 0.0;
   out[W][W] = 1.0;
-  return ((HMatrix *)&out);
 }
 
 /* Return conjugate of quaternion. */

@@ -4,20 +4,24 @@
 # Change this to wherever you want to install gimp.exe.
 BIN = C:\gimp\bin
 
+!IFNDEF DEBUG
 # Full optimization:
-#OPTIMIZE = -Ox
+OPTIMIZE = -Ox -MD
+LINKDEBUG = /subsystem:windows
+!ELSE
 # Debugging:
-OPTIMIZE = -Zi
+OPTIMIZE = -Zi -MDd
+LINKDEBUG = /subsystem:console /debug
+!ENDIF
 
 ################################################################
 
 # Nothing much configurable below
 
 # cl -? describes the options
-CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -MD -nologo
+CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -nologo
 
-# Change to /subsystem:console when debugging
-LDFLAGS = /link /subsystem:windows /machine:ix86 /debug
+LDFLAGS = /link /machine:ix86 $(LINKDEBUG)
 INSTALL = copy
 
 GIMP_VER = 1.1
@@ -53,6 +57,7 @@ gimpim_OBJECTS = \
 	gimpdrawable.obj\
 	gimpimage.obj	\
 	gimpobject.obj	\
+	gimppreviewcache.obj\
 	gimpset.obj	\
 	gimpsignal.obj
 

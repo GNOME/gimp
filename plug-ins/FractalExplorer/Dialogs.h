@@ -2071,7 +2071,7 @@ load_options(fractalexplorerOBJ * xxx, FILE * fp)
     
     get_line(load_buf, MAX_LOAD_LINE, fp, 0);
 
-    while (strcmp(load_buf, "<EOF>")) {
+    while (!feof(fp) && strcmp(load_buf, "<EOF>")) {
       /* Get option name */
 
 	sscanf(load_buf, "%s %s", str_buf, opt_buf);
@@ -2199,7 +2199,7 @@ gradient_load_options(gradientOBJ * xxx, FILE * fp)
     
     get_line(load_buf, MAX_LOAD_LINE, fp, 0);
 
-    while (strcmp(load_buf, "<EOF>")) {
+    while (!feof(fp) && strcmp(load_buf, "<EOF>")) {
       /* Get option name */
 
 	sscanf(load_buf, "%s %s", str_buf, opt_buf);

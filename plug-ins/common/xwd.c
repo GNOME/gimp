@@ -47,10 +47,14 @@
 static char ident[] = "@(#) GIMP XWD file-plugin v1.93  11-Apr-98";
 
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 

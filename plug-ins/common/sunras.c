@@ -36,10 +36,15 @@
  */
 static char ident[] = "@(#) GIMP SunRaster file-plugin v1.95  20-Dec-97";
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
