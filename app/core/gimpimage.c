@@ -1768,69 +1768,59 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
                                TempBuf            *temp_buf,
                                gboolean           *new_buf)
 {
-  TempBuf *ret_buf;
+  TempBuf       *ret_buf;
+  GimpImageType  ret_buf_type;
+  gboolean       has_alpha;
+  gboolean       is_rgb;
+  gint           in_bytes;
+  gint           out_bytes;
 
   g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
   g_return_val_if_fail (GIMP_DRAWABLE (dest_drawable), NULL);
   g_return_val_if_fail (temp_buf != NULL, NULL);
   g_return_val_if_fail (new_buf != NULL, NULL);
 
+  in_bytes  = temp_buf->bytes;
+
+  has_alpha = (in_bytes == 2 || in_bytes == 4);
+  is_rgb    = (in_bytes == 3 || in_bytes == 4);
+
+  ret_buf_type =
+    GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (dest_image));
+
+  if (has_alpha)
+    ret_buf_type = GIMP_IMAGE_TYPE_WITH_ALPHA (ret_buf_type);
+
+  out_bytes = GIMP_IMAGE_TYPE_BYTES (ret_buf_type);
+
   /*  If the pattern doesn't match the image in terms of color type,
    *  transform it.  (ie  pattern is RGB, image is indexed)
    */
-  if (((temp_buf->bytes == 3 || temp_buf->bytes == 4) &&
-       ! gimp_drawable_is_rgb  (dest_drawable)) ||
-      ((temp_buf->bytes == 1 || temp_buf->bytes == 2) &&
-       ! gimp_drawable_is_gray (dest_drawable)))
+  if (in_bytes != out_bytes || gimp_drawable_is_indexed (dest_drawable))
     {
-      guchar *d1, *d2;
-      gint    size, in_bytes, out_bytes;
+      guchar *src;
+      guchar *dest;
+      gint    size;
 
-      if (temp_buf->bytes == 2 && gimp_drawable_is_rgb (dest_drawable))
-        {
-          ret_buf = temp_buf_new (temp_buf->width,
-                                  temp_buf->height,
-                                  4, 0, 0, NULL);
-        }
-      else if (temp_buf->bytes == 1 && gimp_drawable_is_rgb (dest_drawable))
-        {
-          ret_buf = temp_buf_new (temp_buf->width,
-                                  temp_buf->height,
-                                  3, 0, 0, NULL);
-        }
-      else if (temp_buf->bytes == 4 && gimp_drawable_is_gray (dest_drawable))
-        {
-          ret_buf = temp_buf_new (temp_buf->width,
-                                  temp_buf->height,
-                                  2, 0, 0, NULL);
-        }
-      else
-        {
-          ret_buf = temp_buf_new (temp_buf->width,
-                                  temp_buf->height,
-                                  1, 0, 0, NULL);
-        }
+      ret_buf = temp_buf_new (temp_buf->width, temp_buf->height,
+                              out_bytes, 0, 0, NULL);
 
-      d1 = temp_buf_data (temp_buf);
-      d2 = temp_buf_data (ret_buf);
+      src  = temp_buf_data (temp_buf);
+      dest = temp_buf_data (ret_buf);
 
       size = temp_buf->width * temp_buf->height;
 
-      in_bytes  = temp_buf->bytes;
-      out_bytes = ret_buf->bytes;
-
       while (size--)
         {
-          gimp_image_transform_color (dest_image, dest_drawable, d2,
-                                      (in_bytes == 3 || in_bytes == 4) ?
-                                      GIMP_RGB : GIMP_GRAY, d1);
+          gimp_image_transform_color (dest_image, dest_drawable, dest,
+                                      is_rgb ? GIMP_RGB : GIMP_GRAY, src);
 
           /* Handle alpha */
-          if (in_bytes == 4 || in_bytes == 2 )
-            d2[out_bytes - 1] = d1[in_bytes - 1];
+          if (has_alpha)
+            dest[out_bytes - 1] = src[in_bytes - 1];
 
-          d1 += in_bytes;
-          d2 += out_bytes;
+          src  += in_bytes;
+          dest += out_bytes;
         }
 
       *new_buf = TRUE;

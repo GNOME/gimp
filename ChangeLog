@@ -1,5 +1,11 @@
 2003-09-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_transform_temp_buf): use a much
+	simpler and shorter method of determining how to transform the
+	TempBuf.
+
+2003-09-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-bucket-fill.c
 	(gimp_drawable_bucket_fill_full): some more small cleanups.
 
