@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-21 14:11+0200\n"
-"PO-Revision-Date: 2004-04-21 14:10+0200\n"
+"POT-Creation-Date: 2004-04-22 14:09+0200\n"
+"PO-Revision-Date: 2004-04-22 14:09+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,9 +27,9 @@ msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
 #: libgimp/gimpdrawablecombobox.c:283 libgimp/gimpimagecombobox.c:147
-#: libgimp/gimpmenu.c:407
-msgid "(None)"
-msgstr "(Keine)"
+#: libgimp/gimpmenu.c:411
+msgid "(Empty)"
+msgstr "(Leer)"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
