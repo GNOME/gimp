@@ -158,6 +158,10 @@
 #include "gimp-intl.h"
 
 
+#ifndef DM_RANGE
+# define DM_RANGE 63
+#endif
+
 /* basic memory/quality tradeoff */
 #define PRECISION_R 8
 #define PRECISION_G 6
@@ -2973,14 +2977,13 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   PixelRegion  srcPR, destPR;
   CFHistogram  histogram = quantobj->histogram;
   ColorFreq   *cachep;
-  int          pixval1=0, pixval2=0;
-  int          err1,err2;
+  gint         pixval1=0, pixval2=0;
+  gint         err1,err2;
   Color*       color1;
   Color*       color2;
   guchar      *src, *dest;
   gint         row, col;
   gint         pixel;
-  gint         R;
   gulong      *index_used_count = quantobj->index_used_count;
   gboolean     has_alpha;
   gboolean     alpha_dither     = quantobj->want_alpha_dither;
@@ -3029,10 +3032,10 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 	      color1 = &quantobj->cmap[pixval1];
 
               if (quantobj->actual_number_of_colors > 2) {
-                const int re = src[GRAY_PIX] - color1->red;
+                const int re = src[GRAY_PIX] - (int)color1->red;
                 int RV = src[GRAY_PIX] + re;
                 do {
-                  R = CLAMP0255(RV);
+                  const gint R = CLAMP0255(RV);
                   cachep = &histogram[R];
                   /* If we have not seen this color before, find nearest
                      colormap entry and update the cache */
@@ -3042,7 +3045,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                   pixval2 = *cachep - 1;
                   RV += re;
                 } while((pixval1 == pixval2) &&
-                        (!( (RV>255 || RV<0) )) &&
+                        (! (RV>255 || RV<0) ) &&
                         re);
               } else {
                 /* not enough colours to bother looking for an 'alternative'
@@ -3051,13 +3054,24 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                 pixval2 = (pixval1 + 1) %
                   (quantobj->actual_number_of_colors);
               }
+
+              /* always deterministically sort pixval1 and pixval2, to
+                 avoid artifacts in the dither range due to inverting our
+                 relative colour viewpoint -- most obvious in 1-bit dither. */
+              if (pixval1 > pixval2) {
+                gint tmpval = pixval1;
+                pixval1 = pixval2;
+                pixval2 = tmpval;
+                color1 = &quantobj->cmap[pixval1];
+              }
+
               color2 = &quantobj->cmap[pixval2];
               
               err1 = ABS(color1->red - src[GRAY_PIX]);
               err2 = ABS(color2->red - src[GRAY_PIX]);
               if (err1 || err2) {
-                const int proportion2 = (16 * 63 * err2) / (err1 + err2);
-                if ((dmval * 16) > proportion2) {
+                const int proportion2 = (256* DM_RANGE * err2) / (err1 + err2);
+                if ((dmval * 256) > proportion2) {
                   pixval1 = pixval2; /* use color2 instead of color1*/
                 }
               }
@@ -3195,12 +3209,12 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   PixelRegion  srcPR, destPR;
   CFHistogram  histogram = quantobj->histogram;
   ColorFreq   *cachep;
-  int          pixval1=0, pixval2=0;
+  gint         pixval1=0, pixval2=0;
   Color*       color1;
   Color*       color2;
   guchar      *src, *dest;
   gint         R, G, B;
-  int          err1,err2;
+  gint         err1,err2;
   gint         row, col;
   gboolean     has_alpha;
   gpointer     pr;
@@ -3315,14 +3329,25 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                         (!( (RV>255 || RV<0) || (GV>255 || GV<0) || (BV>255 || BV<0) )) &&
                         (re || ge || be));
               }
-              if (quantobj->actual_number_of_colors <= 2 /*||
-                           pixval1 == pixval2*/) {
+              if (quantobj->actual_number_of_colors <= 2
+                  /* || pixval1 == pixval2 */) {
                 /* not enough colours to bother looking for an 'alternative'
                    colour (we may fail to do so anyway), so decide that
                    the alternative colour is simply the other cmap entry. */
                 pixval2 = (pixval1 + 1) %
                   (quantobj->actual_number_of_colors);
               }
+
+              /* always deterministically sort pixval1 and pixval2, to
+                 avoid artifacts in the dither range due to inverting our
+                 relative colour viewpoint -- most obvious in 1-bit dither. */
+              if (pixval1 > pixval2) {
+                gint tmpval = pixval1;
+                pixval1 = pixval2;
+                pixval2 = tmpval;
+                color1 = &quantobj->cmap[pixval1];
+              }
+
               color2 = &quantobj->cmap[pixval2];
 
               /* now figure out the relative probabilites of choosing
@@ -3348,7 +3373,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                     src[red_pix], src[green_pix], src[blue_pix],
                     err2);
               if (err1 || err2) {
-                const int proportion2 = (63 * err2) / (err1 + err2);
+                const int proportion2 = (DM_RANGE * err2) / (err1 + err2);
                 if (dmval > proportion2) {
                   pixval1 = pixval2; /* use color2 instead of color1*/
                 }

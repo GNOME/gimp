@@ -1,5 +1,10 @@
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c: applied patch from Adam D. Moss with
+	more fixed dither improvements (bug #161123).
+
+2004-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/splash.c: restrict splash image to screen size to guard us
 	from insanely large splash images.
 
