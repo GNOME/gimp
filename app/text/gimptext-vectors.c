@@ -99,7 +99,7 @@ gimp_text_vectors_new (GimpImage *image,
 }
 
 
-static void
+static inline void
 gimp_text_vector_coords (RenderContext   *context,
                          const FT_Vector *vector,
                          GimpCoords      *coords)
@@ -117,27 +117,18 @@ moveto (FT_Vector *to,
 	gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
-  GimpCoords     coords;
+  GimpCoords     start;
 
 #if TEXT_DEBUG
   g_printerr ("moveto  %f, %f\n", to->x / 64.0, to->y / 64.0);
 #endif
 
-  gimp_text_vector_coords (context, to, &coords);
+  gimp_text_vector_coords (context, to, &start);
 
-  context->stroke = gimp_bezier_stroke_new ();
+  context->stroke = gimp_bezier_stroke_new_moveto (&start);
+
   gimp_vectors_stroke_add (context->vectors, context->stroke);
   g_object_unref (context->stroke);
-
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, NULL, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-			       &coords, context->anchor, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-			       &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
@@ -147,7 +138,7 @@ lineto (FT_Vector *to,
 	gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
-  GimpCoords     coords;
+  GimpCoords     end;
 
 #if TEXT_DEBUG
   g_printerr ("lineto  %f, %f\n", to->x / 64.0, to->y / 64.0);
@@ -156,17 +147,9 @@ lineto (FT_Vector *to,
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, to, &coords);
+  gimp_text_vector_coords (context, to, &end);
 
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+  gimp_bezier_stroke_lineto (context->stroke, &end);
 
   return 0;
 }
@@ -177,9 +160,8 @@ conicto (FT_Vector *ftcontrol,
 	 gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
-  GimpCoords     coords;
   GimpCoords     control;
-  GimpCoords     last;
+  GimpCoords     end;
   GList         *l;
 
 #if TEXT_DEBUG
@@ -188,59 +170,25 @@ conicto (FT_Vector *ftcontrol,
 
   if (! context->stroke)
     return 0;
-   
+
   gimp_text_vector_coords (context, ftcontrol, &control);
+  gimp_text_vector_coords (context, to, &end);
 
-  last = control;
-
-  /* Find the last endpoint */
-  for (l = g_list_last (context->stroke->anchors); l; l = l->prev)
-    {
-      GimpAnchor *anchor = l->data;
-
-      if (anchor->type == GIMP_ANCHOR_ANCHOR)
-	{
-	  last = anchor->position;
-	  break;
-	} 
-    }
-  
-  /* interpolate the cubic control point */
-  coords =  last;
-  coords.x = (last.x + 2 * control.x) * (1.0 / 3.0);
-  coords.y = (last.y + 2 * control.y) * (1.0 / 3.0);
-  
-  context->anchor->position = coords;
-
-  gimp_text_vector_coords (context, to, &last);
-
-  /* interpolate the cubic control point */
-  coords =  last;
-  coords.x = (last.x + 2 * control.x) * (1.0 / 3.0);
-  coords.y = (last.y + 2 * control.y) * (1.0 / 3.0);
-  
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
-
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &last, context->anchor, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &last, context->anchor, EXTEND_SIMPLE);
+  gimp_bezier_stroke_conicto (context->stroke, &control, &end);
 
   return 0;
 }
 
 static gint
-cubicto (FT_Vector *control1,
-	 FT_Vector *control2,
+cubicto (FT_Vector *ftcontrol1,
+	 FT_Vector *ftcontrol2,
 	 FT_Vector *to,
 	 gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
-  GimpCoords     coords;
+  GimpCoords     control1;
+  GimpCoords     control2;
+  GimpCoords     end;
 
 #if TEXT_DEBUG
   g_printerr ("cubicto %f, %f\n", to->x / 64.0, to->y / 64.0);
@@ -249,24 +197,11 @@ cubicto (FT_Vector *control1,
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, control1, &coords);
+  gimp_text_vector_coords (context, ftcontrol1, &control1);
+  gimp_text_vector_coords (context, ftcontrol2, &control2);
+  gimp_text_vector_coords (context, to, &end);
 
-  context->anchor->position = coords;
-
-  gimp_text_vector_coords (context, control2, &coords);
-
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
-
-  gimp_text_vector_coords (context, to, &coords);
-
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
-  context->anchor =
-    gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+  gimp_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
 
   return 0;
 }

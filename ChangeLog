@@ -1,3 +1,10 @@
+2003-09-01  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-vectors.c: use the new bezier stroke API.
+
+	* app/vectors/gimpbezierstroke.c (gimp_bezier_stroke_new_moveto):
+	pass a NULL anchor to the first call of gimp_bezier_stroke_extend().
+
 2003-08-31  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.[ch]: Implemented moveto/lineto/

@@ -1296,7 +1296,7 @@ gimp_bezier_stroke_new_moveto (const GimpCoords *start)
   stroke = gimp_bezier_stroke_new ();
 
   gimp_bezier_stroke_extend (stroke, start,
-                             GIMP_ANCHOR (stroke->anchors->data),
+                             NULL,
                              EXTEND_SIMPLE);
   gimp_bezier_stroke_extend (stroke, start,
                              GIMP_ANCHOR (stroke->anchors->data),
