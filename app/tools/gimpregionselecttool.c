@@ -169,7 +169,8 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
   select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
 
   tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
-  tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
+  tool->scroll_lock = TRUE;
+  tool->motion_mode = GIMP_MOTION_MODE_COMPRESS;
 
   fuzzy_select->fuzzy_mask      = NULL;
   fuzzy_select->x               = 0;
@@ -191,6 +192,8 @@ gimp_fuzzy_select_tool_finalize (GObject *object)
       g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
       fuzzy_sel->fuzzy_mask = NULL;
     }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

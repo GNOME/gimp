@@ -93,6 +93,9 @@ static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
                                                       gint             *y,
                                                       gpointer          data);
 
+GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
+
+
 /*  public functions  */
 
 gboolean
@@ -427,7 +430,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state |= GDK_BUTTON1_MASK;
 
-            if (active_tool->perfectmouse && gimprc.perfectmouse)
+            if (((active_tool->motion_mode == GIMP_MOTION_MODE_EXACT) &&
+                 gimprc.perfectmouse) ||
+
+                /*  don't request motion hins for XInput devices because
+                 *  the wacom driver is known to report crappy hints
+                 *  (#6901) --mitch
+                 */
+                (gimp_devices_get_current (gimage->gimp) !=
+                 gdk_device_get_core_pointer ()))
               {
                 gdk_pointer_grab (canvas->window, FALSE,
                                   GDK_BUTTON1_MOTION_MASK |
@@ -668,12 +679,46 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_MOTION_NOTIFY:
       {
         GdkEventMotion *mevent;
+        GdkEvent       *compressed_motion = NULL;
         GimpTool       *active_tool;
 
         mevent = (GdkEventMotion *) event;
 
         if (gimage->gimp->busy)
           return TRUE;
+
+        active_tool = tool_manager_get_active (gimage->gimp);
+
+        switch (active_tool->motion_mode)
+          {
+          case GIMP_MOTION_MODE_EXACT:
+          case GIMP_MOTION_MODE_HINT:
+            break;
+
+          case GIMP_MOTION_MODE_COMPRESS:
+            compressed_motion = gimp_display_shell_compress_motion (shell);
+            break;
+          }
+
+        if (compressed_motion)
+          {
+            g_print ("gimp_display_shell_compress_motion() returned an event\n");
+
+            gimp_display_shell_get_coords (shell, compressed_motion,
+                                           gimp_devices_get_current (gimage->gimp),
+                                           &display_coords);
+            gimp_display_shell_get_state (shell, compressed_motion,
+                                          gimp_devices_get_current (gimage->gimp),
+                                          &state);
+            time = gdk_event_get_time (event);
+
+            image_coords = display_coords;
+
+            /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
+            gimp_display_shell_untransform_coords (shell,
+                                                   &display_coords,
+                                                   &image_coords);
+          }
 
         /* Ask for the pointer position, but ignore it except for cursor
          * handling, so motion events sync with the button press/release events 
@@ -692,8 +737,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             shell->proximity = TRUE;
             gimp_display_shell_check_device_cursor (shell);
           }
-
-        active_tool = tool_manager_get_active (gimage->gimp);
 
         if (state & GDK_BUTTON1_MASK)
           {
@@ -1324,4 +1367,63 @@ gimp_display_shell_origin_menu_position (GtkMenu  *menu,
 
   if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
     *y -= (GTK_WIDGET (menu)->allocation.height);
+}
+
+/* gimp_display_shell_compress_motion:
+ *
+ * This function walks the whole GDK event queue seeking motion events
+ * corresponding to the widget 'widget'.  If it finds any it will
+ * remove them from the queue, and return the most recent motion event.
+ * Otherwise it will return NULL.
+ *
+ * The gimp_display_shell_compress_motion function source may be re-used under
+ * the XFree86-style license. <adam@gimp.org>
+ */
+GdkEvent *
+gimp_display_shell_compress_motion (GimpDisplayShell *shell)
+{
+  GdkEvent *event;
+  GList    *requeued_events = NULL;
+  GList    *list;
+  GdkEvent *last_motion = NULL;
+
+  /*  Move the entire GDK event queue to a private list, filtering
+   *  out any motion events for the desired widget.
+   */
+  while (gdk_events_pending ())
+    {
+      event = gdk_event_get ();
+
+      if (!event)
+	{
+	  /* Do nothing */
+	}
+      else if ((gtk_get_event_widget (event) == shell->canvas) &&
+	       (event->any.type == GDK_MOTION_NOTIFY))
+	{
+          if (last_motion)
+            gdk_event_free (last_motion);
+
+	  last_motion = event;
+	}
+      else
+	{
+	  requeued_events = g_list_prepend (requeued_events, event);
+	}
+    }
+
+  /* Replay the remains of our private event list back into the
+   * event queue in order.
+   */
+  requeued_events = g_list_reverse (requeued_events);
+
+  for (list = requeued_events; list; list = g_list_next (list))
+    {
+      gdk_event_put ((GdkEvent*) list->data);
+      gdk_event_free ((GdkEvent*) list->data);
+    }
+
+  g_list_free (requeued_events);
+
+  return last_motion;
 }

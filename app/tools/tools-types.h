@@ -93,6 +93,14 @@ typedef enum /*< pdb-skip >*/
   HALT
 } GimpToolAction;
 
+/*  Motion event report modes  */
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_MOTION_MODE_EXACT,
+  GIMP_MOTION_MODE_HINT,
+  GIMP_MOTION_MODE_COMPRESS
+} GimpMotionMode;
+
 /* possible transform functions */
 typedef enum /*< pdb-skip >*/
 {

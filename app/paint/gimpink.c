@@ -321,8 +321,8 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
   tool = GIMP_TOOL (ink_tool);
 
-  tool->perfectmouse = TRUE;
-  tool->tool_cursor  = GIMP_INK_TOOL_CURSOR;
+  tool->motion_mode = GIMP_MOTION_MODE_EXACT;
+  tool->tool_cursor = GIMP_INK_TOOL_CURSOR;
 }
 
 static void

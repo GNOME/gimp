@@ -39,9 +39,5 @@ void   gimp_edit_selection_tool_arrow_key (GimpTool       *tool,
                                            GdkEventKey    *kevent,
                                            GimpDisplay    *gdisp);
 
-gboolean   gtkutil_compress_motion        (GtkWidget      *widget,
-					   gdouble        *lastmotion_x,
-					   gdouble        *lastmotion_y);
-
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

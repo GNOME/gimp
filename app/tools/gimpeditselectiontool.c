@@ -95,7 +95,7 @@ struct _GimpEditSelectionToolClass
 };
 
 
-static GType   gimp_edit_selection_tool_get_type   (void);
+static GType   gimp_edit_selection_tool_get_type   (void) G_GNUC_CONST;
 
 static void    gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
 static void    gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
@@ -123,7 +123,7 @@ static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
 static GimpDrawToolClass *parent_class = NULL;
 
 
-GType
+static GType
 gimp_edit_selection_tool_get_type (void)
 {
   static GType tool_type = 0;
@@ -178,6 +178,7 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 
   tool->scroll_lock               = EDIT_SELECT_SCROLL_LOCK;
   tool->auto_snap_to              = FALSE;
+  tool->motion_mode               = GIMP_MOTION_MODE_COMPRESS;
 
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;
@@ -404,7 +405,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
-  gdouble                lastmotion_x, lastmotion_y;
+  gdouble                motion_x, motion_y;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
 
@@ -420,34 +421,22 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /* Perform motion compression so that we don't lag and/or waste time. */
+  {
+    gint off_x, off_y;
 
-  if (gtkutil_compress_motion (shell->canvas,
-                               &lastmotion_x,
-                               &lastmotion_y))
-    {
-      gdisplay_untransform_coords_f (gdisp,
-                                     lastmotion_x, lastmotion_y,
-                                     &lastmotion_x, &lastmotion_y,
-                                     TRUE);
-    }
-  else
-    {
-      gint off_x, off_y;
+    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                           &off_x, &off_y);
 
-      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                             &off_x, &off_y);
-
-      lastmotion_x = coords->x - off_x;
-      lastmotion_y = coords->y - off_y;
-    }
+    motion_x = coords->x - off_x;
+    motion_y = coords->y - off_y;
+  }
 
   /* now do the actual move. */
 
   gimp_edit_selection_tool_snap (edit_select,
 				 gdisp,
-				 RINT (lastmotion_x),
-				 RINT (lastmotion_y));
+				 RINT (motion_x),
+				 RINT (motion_y));
 
   /******************************************* adam's live move *******/
   /********************************************************************/
@@ -953,69 +942,4 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();
-}
-
-
-/* gtkutil_compress_motion:
- *
- * This function walks the whole GDK event queue seeking motion events
- * corresponding to the widget 'widget'.  If it finds any it will
- * remove them from the queue, write the most recent motion offset
- * to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
- * it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
- * untouched.
- */
-
-/* The gtkutil_compress_motion function source may be re-used under
- * the XFree86-style license. <adam@gimp.org>
- */
-gboolean
-gtkutil_compress_motion (GtkWidget *widget,
-			 gdouble   *lastmotion_x,
-			 gdouble   *lastmotion_y)
-{
-  GdkEvent *event;
-  GList    *requeued_events = NULL;
-  GList    *list;
-  gboolean  success = FALSE;
-
-  /*  Move the entire GDK event queue to a private list, filtering
-   *  out any motion events for the desired widget. */
-  while (gdk_events_pending ())
-    {
-      event = gdk_event_get ();
-
-      if (!event)
-	{
-	  /* Do nothing */
-	}
-      else if ((gtk_get_event_widget (event) == widget) &&
-	       (event->any.type == GDK_MOTION_NOTIFY))
-	{
-	  *lastmotion_x = event->motion.x;
-	  *lastmotion_y = event->motion.y;
-	  
-	  gdk_event_free (event);
-	  success = TRUE;
-	}
-      else
-	{
-	  requeued_events = g_list_prepend (requeued_events, event);
-	}
-    }
-  
-  /* Replay the remains of our private event list back into the
-     event queue in order. */
-
-  requeued_events = g_list_reverse (requeued_events);
-
-  for (list = requeued_events; list; list = g_list_next (list))
-    {
-      gdk_event_put ((GdkEvent*) list->data);
-      gdk_event_free ((GdkEvent*) list->data);
-    }
-
-  g_list_free (requeued_events);
-
-  return success;
 }

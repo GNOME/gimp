@@ -142,7 +142,7 @@ gimp_tool_init (GimpTool *tool)
   tool->auto_snap_to           = TRUE;   /*  Snap to guides                   */
   tool->preserve               = TRUE;   /*  Preserve across drawable change  */
   tool->handle_empty_image     = FALSE;  /*  Require active drawable          */
-  tool->perfectmouse           = FALSE;  /*  Use MOTION_HINT compression      */
+  tool->motion_mode            = GIMP_MOTION_MODE_HINT;
 
   tool->cursor                 = GIMP_MOUSE_CURSOR;
   tool->tool_cursor            = GIMP_TOOL_CURSOR_NONE;

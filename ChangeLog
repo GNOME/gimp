@@ -1,3 +1,27 @@
+2002-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-types.h: added enum GimpMotionMode which can be
+	one of { EXACT, HINT, COMPRESS }.
+
+	* app/tools/gimptool.[ch]: removed tool->perfectmouse and added
+	tool->motion_mode. Default to GIMP_MOTION_MODE_HINT.
+
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c: set GIMP_MOTION_MODE_EXACT.
+
+	* app/tools/gimpfuzzyselecttool.c: set GIMP_MOTION_MODE_COMPRESS.
+
+	* app/tools/gimpeditselectiontool.[ch]: ditto. Removed
+	gtkutil_compress_motion().
+
+	* app/display/gimpdisplayshell-callbacks.c: look at
+	active_tool->motion_mode and perform pointer grabbing and motion
+	compression accordingly. Also, don't request motion hints from
+	XInput devices because the wacom driver sends crap (fixes #6901).
+	This change also brings hints and ordinary motions back in
+	sync albeit compression, so IMHO it also fixes #68542 and #22375,
+	but this needs further investigation.
+
 2002-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am
