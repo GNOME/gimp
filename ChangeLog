@@ -1,5 +1,10 @@
 2002-08-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c: changed the default text to
+	"No, you can't change this text. Please DON'T report this bug."
+
+2002-08-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/curves.h: removed #defines and added enum CurvesType
 	instead.
 

@@ -56,7 +56,7 @@
 
 
 #define DEFAULT_FONT       "sans Normal"
-#define DEFAULT_FONT_SIZE  50
+#define DEFAULT_FONT_SIZE  18
 
 
 /*  the text tool structures  */
@@ -354,7 +354,8 @@ text_tool_render (GimpTextTool *text_tool)
   fontname = pango_font_description_to_string (font_desc);
   pango_font_description_free (font_desc);
 
-  text = "gimp";  /* FIXME */
+  text = ("No, you can't change this text.\n"
+          "Please DON'T report this bug.");  /* FIXME */
 
   text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
