@@ -22,7 +22,8 @@
 
 void   convert_to_rgb       (GimpImage *gimage);
 void   convert_to_grayscale (GimpImage *gimage);
-void   convert_to_indexed   (GimpImage *gimage);
+void   convert_to_indexed   (GimpImage *gimage,
+                             GtkWidget *parent);
 
 
 #endif  /*  __CONVERT_DIALOG_H__  */

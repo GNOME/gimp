@@ -231,6 +231,7 @@ info_window_create (GimpDisplay *gdisp)
                                        _("Info Window"), "gimp-info-window",
                                        GIMP_STOCK_INFO,
                                        _("Image Information"),
+                                       gdisp->shell,
 				       gimp_standard_help_func,
 				       GIMP_HELP_INFO_DIALOG);
 

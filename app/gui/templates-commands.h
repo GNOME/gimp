@@ -32,10 +32,13 @@ void   templates_delete_template_cmd_callback    (GtkWidget    *widget,
                                                   gpointer      data);
 
 void   templates_new_template_dialog             (Gimp         *gimp,
-                                                  GimpTemplate *unused);
+                                                  GimpTemplate *unused,
+                                                  GtkWidget    *parent);
 void   templates_edit_template_dialog            (Gimp         *gimp,
-                                                  GimpTemplate *template);
+                                                  GimpTemplate *template,
+                                                  GtkWidget    *parent);
 void   templates_file_new_dialog                 (Gimp         *gimp,
-                                                  GimpTemplate *template);
+                                                  GimpTemplate *template,
+                                                  GtkWidget    *parent);
 
 #endif /* __TEMPLATES_COMMANDS_H__ */

@@ -93,7 +93,7 @@ vectors_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  vectors_new_vectors_query (gimage, NULL, TRUE);
+  vectors_new_vectors_query (gimage, NULL, TRUE, widget);
 }
 
 void
@@ -197,7 +197,7 @@ vectors_stroke_cmd_callback (GtkWidget *widget,
   GimpVectors  *active_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  vectors_stroke_vectors (GIMP_ITEM (active_vectors));
+  vectors_stroke_vectors (GIMP_ITEM (active_vectors), widget);
 }
 
 void
@@ -265,11 +265,12 @@ vectors_edit_attributes_cmd_callback (GtkWidget *widget,
   GimpVectors *active_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  vectors_edit_vectors_query (active_vectors);
+  vectors_edit_vectors_query (active_vectors, widget);
 }
 
 void
-vectors_stroke_vectors (GimpItem *item)
+vectors_stroke_vectors (GimpItem  *item,
+                        GtkWidget *parent)
 {
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
@@ -288,7 +289,8 @@ vectors_stroke_vectors (GimpItem *item)
     }
 
   dialog = stroke_dialog_new (item, GIMP_STOCK_PATH_STROKE,
-                              GIMP_HELP_PATH_STROKE);
+                              GIMP_HELP_PATH_STROKE,
+                              parent);
   gtk_widget_show (dialog);
 }
 
@@ -420,7 +422,8 @@ new_vectors_query_response (GtkWidget         *widget,
 void
 vectors_new_vectors_query (GimpImage   *gimage,
                            GimpVectors *template,
-                           gboolean     interactive)
+                           gboolean     interactive,
+                           GtkWidget   *parent)
 {
   NewVectorsOptions *options;
   GtkWidget         *hbox;
@@ -452,6 +455,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
                               _("New Path"), "gimp-vectors-new",
                               GIMP_STOCK_TOOL_PATH,
                               _("New Path Options"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_PATH_NEW,
 
@@ -547,7 +551,8 @@ edit_vectors_query_response (GtkWidget          *widget,
 }
 
 void
-vectors_edit_vectors_query (GimpVectors *vectors)
+vectors_edit_vectors_query (GimpVectors *vectors,
+                            GtkWidget   *parent)
 {
   EditVectorsOptions *options;
   GtkWidget          *hbox;
@@ -568,6 +573,7 @@ vectors_edit_vectors_query (GimpVectors *vectors)
                               _("Path Attributes"), "gimp-vectors-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Path Attributes"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_PATH_EDIT,
 

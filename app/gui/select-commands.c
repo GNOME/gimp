@@ -149,6 +149,7 @@ select_feather_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   qbox = gimp_query_size_box (_("Feather Selection"),
+                              gdisp->shell,
 			      gimp_standard_help_func,
 			      GIMP_HELP_SELECTION_FEATHER,
 			      _("Feather Selection by:"),
@@ -184,6 +185,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   shrink_dialog =
     gimp_query_size_box (_("Shrink Selection"),
+                         gdisp->shell,
 			 gimp_standard_help_func,
 			 GIMP_HELP_SELECTION_SHRINK,
 			 _("Shrink Selection by:"),
@@ -217,6 +219,7 @@ select_grow_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   qbox = gimp_query_size_box (_("Grow Selection"),
+                              gdisp->shell,
 			      gimp_standard_help_func,
 			      GIMP_HELP_SELECTION_GROW,
 			      _("Grow Selection by:"),
@@ -239,6 +242,7 @@ select_border_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   qbox = gimp_query_size_box (_("Border Selection"),
+                              gdisp->shell,
 			      gimp_standard_help_func,
 			      GIMP_HELP_SELECTION_BORDER,
 			      _("Border Selection by:"),
@@ -263,6 +267,7 @@ select_save_cmd_callback (GtkWidget *widget,
   gimp_image_flush (gimage);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gtk_widget_get_screen (widget),
                                     "gimp-channel-list", -1);
 }
 

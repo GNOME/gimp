@@ -69,7 +69,8 @@ static void  offset_halfheight_callback (GtkWidget    *widget,
 /*  public functions  */
 
 void
-offset_dialog_create (GimpDrawable *drawable)
+offset_dialog_create (GimpDrawable *drawable,
+                      GtkWidget    *parent)
 {
   OffsetDialog *off_d;
   GtkWidget    *check;
@@ -83,6 +84,7 @@ offset_dialog_create (GimpDrawable *drawable)
   const gchar  *title = NULL;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GTK_IS_WIDGET (parent));
 
   off_d = g_new0 (OffsetDialog, 1);
 
@@ -103,6 +105,7 @@ offset_dialog_create (GimpDrawable *drawable)
                                          _("Offset"), "gimp-drawable-offset",
                                          GIMP_STOCK_TOOL_MOVE,
                                          title,
+                                         parent,
                                          gimp_standard_help_func,
                                          GIMP_HELP_LAYER_OFFSET,
 

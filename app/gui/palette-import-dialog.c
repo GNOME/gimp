@@ -166,6 +166,7 @@ palette_import_dialog_new (Gimp *gimp)
     gimp_viewable_dialog_new (NULL, _("Import Palette"), "gimp-palette-import",
                               GTK_STOCK_CONVERT,
                               _("Import a New Palette"),
+                              NULL,
                               gimp_standard_help_func,
                               GIMP_HELP_PALETTE_IMPORT,
 

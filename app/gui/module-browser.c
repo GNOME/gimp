@@ -122,6 +122,7 @@ module_browser_new (Gimp *gimp)
                                     _("Module Manager"), "gimp-modules",
                                     GTK_STOCK_EXECUTE,
                                     _("Manage Loadable Modules"),
+                                    NULL,
                                     gimp_standard_help_func,
                                     GIMP_HELP_MODULE_DIALOG,
 

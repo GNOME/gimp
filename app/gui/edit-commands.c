@@ -193,6 +193,7 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   qbox = gimp_query_string_box (_("Cut Named"),
+                                gdisp->shell,
 				gimp_standard_help_func,
 				GIMP_HELP_BUFFER_CUT,
 				_("Enter a name for this buffer"),
@@ -206,17 +207,18 @@ void
 edit_named_copy_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GimpImage *gimage;
-  GtkWidget *qbox;
-  return_if_no_image (gimage, data);
+  GimpDisplay *gdisp;
+  GtkWidget   *qbox;
+  return_if_no_display (gdisp, data);
 
   qbox = gimp_query_string_box (_("Copy Named"),
+                                gdisp->shell,
 				gimp_standard_help_func,
 				GIMP_HELP_BUFFER_COPY,
 				_("Enter a name for this buffer"),
 				NULL,
-				G_OBJECT (gimage), "disconnect",
-				copy_named_buffer_callback, gimage);
+				G_OBJECT (gdisp->gimage), "disconnect",
+				copy_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
@@ -224,7 +226,9 @@ void
 edit_named_paste_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  gimp_dialog_factory_dialog_raise (global_dock_factory, "gimp-buffer-list", -1);
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gtk_widget_get_screen (widget),
+                                    "gimp-buffer-list", -1);
 }
 
 void
@@ -264,11 +268,12 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)));
+  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
 }
 
 void
-edit_stroke_selection (GimpItem *item)
+edit_stroke_selection (GimpItem  *item,
+                       GtkWidget *parent)
 {
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
@@ -287,7 +292,8 @@ edit_stroke_selection (GimpItem *item)
     }
 
   dialog = stroke_dialog_new (item, GIMP_STOCK_SELECTION_STROKE,
-                              GIMP_HELP_SELECTION_STROKE);
+                              GIMP_HELP_SELECTION_STROKE,
+                              parent);
   gtk_widget_show (dialog);
 }
 

@@ -386,6 +386,7 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 
   gimp_item_factory_popup_with_data (shell->popup_factory,
                                      shell->gdisp,
+                                     GTK_WIDGET (shell),
                                      gimp_display_shell_origin_menu_position,
                                      shell->origin,
                                      NULL);
@@ -667,6 +668,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             state |= GDK_BUTTON3_MASK;
             gimp_item_factory_popup_with_data (shell->popup_factory,
                                                gdisp,
+                                               GTK_WIDGET (shell),
                                                NULL, NULL, NULL);
             return_val = TRUE;
             break;
@@ -1077,10 +1079,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 if (state & GDK_CONTROL_MASK)
                   {
                     if (kevent->keyval == GDK_Tab)
-                      gimp_display_shell_layer_select_init (gdisp->gimage,
+                      gimp_display_shell_layer_select_init (shell,
                                                             1, kevent->time);
                     else
-                      gimp_display_shell_layer_select_init (gdisp->gimage,
+                      gimp_display_shell_layer_select_init (shell,
                                                             -1, kevent->time);
                   }
               }
@@ -1319,14 +1321,55 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
   return FALSE;
 }
 
+static void
+gimp_display_shell_change_screen_callback (GtkWidget *query_box,
+                                           gint       value,
+                                           gpointer   data)
+{
+  GdkScreen *screen;
+
+  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
+                                   value);
+
+  if (screen)
+    gtk_window_set_screen (GTK_WINDOW (data), screen);
+}
+
 gboolean
 gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  if (! shell->gdisp->gimage->gimp->busy && event->button == 1)
+  if (! shell->gdisp->gimage->gimp->busy)
     {
-      gimp_display_shell_popup_menu (GTK_WIDGET (shell));
+      if (event->button == 1)
+        {
+          gimp_display_shell_popup_menu (GTK_WIDGET (shell));
+        }
+      else if (event->button == 2)
+        {
+          GdkScreen  *screen;
+          GdkDisplay *display;
+          gint        cur_screen;
+          gint        num_screens;
+          GtkWidget  *qbox;
+
+          screen  = gtk_widget_get_screen (widget);
+          display = gtk_widget_get_display (widget);
+
+          cur_screen  = gdk_screen_get_number (screen);
+          num_screens = gdk_display_get_n_screens (display);
+
+          qbox = gimp_query_int_box ("Move Display to Screen",
+                                     GTK_WIDGET (shell),
+                                     NULL, 0,
+                                     "Enter Destination Screen:",
+                                     cur_screen, 0, num_screens - 1,
+                                     G_OBJECT (shell), "destroy",
+                                     gimp_display_shell_change_screen_callback,
+                                     shell);
+          gtk_widget_show (qbox);
+        }
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the
@@ -1450,6 +1493,7 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
       gimp_item_factory_popup_with_data (shell->qmask_factory, shell,
+                                         GTK_WIDGET (shell),
                                          NULL, NULL, NULL);
 
       return TRUE;

@@ -63,7 +63,8 @@ static void stroke_dialog_paint_info_selected (GtkWidget    *menu,
 GtkWidget *
 stroke_dialog_new (GimpItem    *item,
                    const gchar *stock_id,
-                   const gchar *help_id)
+                   const gchar *help_id,
+                   GtkWidget   *parent)
 {
   static GimpStrokeOptions *options = NULL;
 
@@ -77,6 +78,7 @@ stroke_dialog_new (GimpItem    *item,
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   image = gimp_item_get_image (item);
 
@@ -98,6 +100,7 @@ stroke_dialog_new (GimpItem    *item,
                               _("Stroke Options"), "gimp-stroke-options",
                               stock_id,
                               _("Choose Stroke Style"),
+                              parent,
                               gimp_standard_help_func,
                               help_id,
 

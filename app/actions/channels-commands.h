@@ -38,8 +38,10 @@ void   channels_edit_attributes_cmd_callback (GtkWidget   *widget,
 
 void   channels_new_channel_query            (GimpImage   *gimage,
                                               GimpChannel *template,
-                                              gboolean     interactive);
-void   channels_edit_channel_query           (GimpChannel *channel);
+                                              gboolean     interactive,
+                                              GtkWidget   *parent);
+void   channels_edit_channel_query           (GimpChannel *channel,
+                                              GtkWidget   *parent);
 
 
 #endif /* __CHANNELS_COMMANDS_H__ */

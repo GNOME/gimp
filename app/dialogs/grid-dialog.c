@@ -64,7 +64,8 @@ static void  grid_dialog_response (GtkWidget *widget,
 
 
 GtkWidget *
-grid_dialog_new (GimpImage *gimage)
+grid_dialog_new (GimpImage *gimage,
+                 GtkWidget *parent)
 {
   GimpGrid  *grid;
   GimpGrid  *grid_backup;
@@ -72,6 +73,7 @@ grid_dialog_new (GimpImage *gimage)
   GtkWidget *editor;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (gimage));
   grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
@@ -79,6 +81,7 @@ grid_dialog_new (GimpImage *gimage)
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                                      _("Configure Grid"), "gimp-grid-configure",
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
+                                     parent,
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_GRID,
 

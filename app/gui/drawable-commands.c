@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <string.h> 
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -210,5 +210,5 @@ drawable_offset_cmd_callback (GtkWidget *widget,
   GimpDrawable *active_drawable;
   return_if_no_drawable (gimage, active_drawable, data);
 
-  offset_dialog_create (active_drawable);
+  offset_dialog_create (active_drawable, widget);
 }

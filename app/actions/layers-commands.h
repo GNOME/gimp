@@ -84,8 +84,10 @@ void   layers_edit_attributes_cmd_callback    (GtkWidget *widet,
 
 void   layers_new_layer_query                 (GimpImage *gimage,
                                                GimpLayer *template,
-                                               gboolean   interactive);
-void   layers_edit_layer_query                (GimpLayer *layer);
+                                               gboolean   interactive,
+                                               GtkWidget *parent);
+void   layers_edit_layer_query                (GimpLayer *layer,
+                                               GtkWidget *parent);
 
 
 #endif /* __LAYERS_COMMANDS_H__ */

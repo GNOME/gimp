@@ -122,7 +122,7 @@ image_convert_indexed_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  convert_to_indexed (gimage);
+  convert_to_indexed (gimage, widget);
 }
 
 void
@@ -142,7 +142,7 @@ image_resize_cmd_callback (GtkWidget *widget,
   image_resize->gimage = gimage;
 
   image_resize->resize =
-    resize_widget_new (GIMP_VIEWABLE (gimage),
+    resize_widget_new (GIMP_VIEWABLE (gimage), gdisp->shell,
                        ResizeWidget,
                        gimage->width,
                        gimage->height,
@@ -182,7 +182,7 @@ image_scale_cmd_callback (GtkWidget *widget,
   image_scale->gimage = gimage;
 
   image_scale->resize =
-    resize_widget_new (GIMP_VIEWABLE (gimage),
+    resize_widget_new (GIMP_VIEWABLE (gimage), gdisp->shell,
                        ScaleWidget,
                        gimage->width,
                        gimage->height,
@@ -284,7 +284,7 @@ image_merge_layers_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  image_layers_merge_query (gimage, TRUE);
+  image_layers_merge_query (gimage, TRUE, widget);
 }
 
 void
@@ -312,7 +312,7 @@ image_configure_grid_cmd_callback (GtkWidget *widget,
 
   if (! shell->grid_dialog)
     {
-      shell->grid_dialog = grid_dialog_new (GIMP_IMAGE (gimage));
+      shell->grid_dialog = grid_dialog_new (GIMP_IMAGE (gimage), widget);
 
       gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
                                     GTK_WINDOW (shell));
@@ -365,7 +365,8 @@ image_layers_merge_query_response (GtkWidget         *widget,
 void
 image_layers_merge_query (GimpImage   *gimage,
                           /*  if FALSE, anchor active layer  */
-                          gboolean     merge_visible)
+                          gboolean     merge_visible,
+                          GtkWidget   *parent)
 {
   LayerMergeOptions *options;
   GtkWidget         *vbox;
@@ -383,6 +384,7 @@ image_layers_merge_query (GimpImage   *gimage,
                               _("Merge Layers"), "gimp-image-merge-layers",
                               GIMP_STOCK_MERGE_DOWN,
                               _("Layers Merge Options"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_MERGE_LAYERS,
 
@@ -481,9 +483,7 @@ static void
 image_scale_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  ImageResize *image_scale;
-
-  image_scale = (ImageResize *) data;
+  ImageResize *image_scale = data;
 
   g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
@@ -504,6 +504,7 @@ image_scale_callback (GtkWidget *widget,
 
       dialog =
 	gimp_query_boolean_box (_("Layer Too Small"),
+                                image_scale->resize->resize_shell,
 				gimp_standard_help_func,
 				GIMP_HELP_IMAGE_SCALE_WARNING,
 				GTK_STOCK_DIALOG_QUESTION,
@@ -524,9 +525,7 @@ image_scale_warn_callback (GtkWidget *widget,
 			   gboolean   do_scale,
 			   gpointer   data)
 {
-  ImageResize *image_scale;
-
-  image_scale = (ImageResize *) data;
+  ImageResize *image_scale = data;
 
   if (do_scale) /* User doesn't mind losing layers... */
     {

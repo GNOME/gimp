@@ -70,6 +70,7 @@ struct _Resize
  */
 
 Resize * resize_widget_new (GimpViewable *viewable,
+                            GtkWidget    *parent,
                             ResizeType    type,
 			    gint          width,
 			    gint          height,

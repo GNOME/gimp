@@ -57,11 +57,14 @@
 
 /*  local function prototypes  */
 
-static void   layers_add_mask_query       (GimpLayer *layer);
+static void   layers_add_mask_query       (GimpLayer *layer,
+                                           GtkWidget *parent);
 static void   layers_scale_layer_query    (GimpImage *gimage,
-					   GimpLayer *layer);
+					   GimpLayer *layer,
+                                           GtkWidget *parent);
 static void   layers_resize_layer_query   (GimpImage *gimage,
-					   GimpLayer *layer);
+					   GimpLayer *layer,
+                                           GtkWidget *parent);
 
 
 #define return_if_no_image(gimage,data) \
@@ -230,7 +233,7 @@ layers_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  layers_new_layer_query (gimage, NULL, TRUE);
+  layers_new_layer_query (gimage, NULL, TRUE, widget);
 }
 
 void
@@ -302,7 +305,7 @@ layers_resize_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_resize_layer_query (gimage, active_layer);
+  layers_resize_layer_query (gimage, active_layer, widget);
 }
 
 void
@@ -325,7 +328,7 @@ layers_scale_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_scale_layer_query (gimage, active_layer);
+  layers_scale_layer_query (gimage, active_layer, widget);
 }
 
 void
@@ -374,7 +377,7 @@ layers_mask_add_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_add_mask_query (active_layer);
+  layers_add_mask_query (active_layer, widget);
 }
 
 void
@@ -479,7 +482,7 @@ layers_merge_layers_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  image_layers_merge_query (gimage, TRUE);
+  image_layers_merge_query (gimage, TRUE, widget);
 }
 
 void
@@ -501,7 +504,7 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_edit_layer_query (active_layer);
+  layers_edit_layer_query (active_layer, widget);
 }
 
 
@@ -582,7 +585,8 @@ new_layer_query_response (GtkWidget       *widget,
 void
 layers_new_layer_query (GimpImage *gimage,
                         GimpLayer *template,
-                        gboolean   interactive)
+                        gboolean   interactive,
+                        GtkWidget *parent)
 {
   NewLayerOptions *options;
   GimpLayer       *floating_sel;
@@ -668,6 +672,7 @@ layers_new_layer_query (GimpImage *gimage,
                               _("New Layer"), "gimp-layer-new",
                               GIMP_STOCK_LAYER,
                               _("Create a New Layer"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_NEW,
 
@@ -832,7 +837,8 @@ edit_layer_query_activate (GtkWidget        *widget,
 }
 
 void
-layers_edit_layer_query (GimpLayer *layer)
+layers_edit_layer_query (GimpLayer *layer,
+                         GtkWidget *parent)
 {
   EditLayerOptions *options;
   GtkWidget        *vbox;
@@ -848,6 +854,7 @@ layers_edit_layer_query (GimpLayer *layer)
                               _("Layer Attributes"), "gimp-layer-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Layer Attributes"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_EDIT,
 
@@ -936,7 +943,8 @@ add_mask_query_response (GtkWidget      *widget,
 }
 
 static void
-layers_add_mask_query (GimpLayer *layer)
+layers_add_mask_query (GimpLayer *layer,
+                       GtkWidget *parent)
 {
   AddMaskOptions *options;
   GtkWidget      *frame;
@@ -958,6 +966,7 @@ layers_add_mask_query (GimpLayer *layer)
                               _("Add Layer Mask"), "gimp-layer-add-mask",
                               GTK_STOCK_ADD,
                               _("Add a Mask to the Layer"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_MASK_ADD,
 
@@ -1072,7 +1081,8 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_scale_layer_query (GimpImage *gimage,
-                          GimpLayer *layer)
+                          GimpLayer *layer,
+                          GtkWidget *parent)
 {
   ScaleLayerOptions *options;
 
@@ -1081,7 +1091,7 @@ layers_scale_layer_query (GimpImage *gimage,
   options->layer = layer;
 
   options->resize =
-    resize_widget_new (GIMP_VIEWABLE (layer),
+    resize_widget_new (GIMP_VIEWABLE (layer), parent,
                        ScaleWidget,
 		       gimp_item_width  (GIMP_ITEM (layer)),
 		       gimp_item_height (GIMP_ITEM (layer)),
@@ -1166,7 +1176,8 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_resize_layer_query (GimpImage *gimage,
-                           GimpLayer *layer)
+                           GimpLayer *layer,
+                           GtkWidget *parent)
 {
   ResizeLayerOptions *options;
 
@@ -1175,7 +1186,7 @@ layers_resize_layer_query (GimpImage *gimage,
   options->layer = layer;
 
   options->resize =
-    resize_widget_new (GIMP_VIEWABLE (layer),
+    resize_widget_new (GIMP_VIEWABLE (layer), parent,
                        ResizeWidget,
 		       gimp_item_width  (GIMP_ITEM (layer)),
 		       gimp_item_height (GIMP_ITEM (layer)),

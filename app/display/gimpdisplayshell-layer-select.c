@@ -33,6 +33,8 @@
 #include "widgets/gimppreview.h"
 #include "widgets/gimppreviewrenderer.h"
 
+#include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
 #include "gimpdisplayshell-layer-select.h"
 
 #include "gimp-intl.h"
@@ -68,14 +70,17 @@ static gboolean      layer_select_events    (GtkWidget   *widget,
 /*  public functions  */
 
 void
-gimp_display_shell_layer_select_init (GimpImage *gimage,
-                                      gint       move,
-                                      guint32    time)
+gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
+                                      gint              move,
+                                      guint32           time)
 {
   LayerSelect *layer_select;
+  GimpImage   *gimage;
   GimpLayer   *layer;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimage = shell->gdisp->gimage;
 
   layer = gimp_image_get_active_layer (gimage);
 
@@ -85,6 +90,9 @@ gimp_display_shell_layer_select_init (GimpImage *gimage,
   layer_select = layer_select_new (gimage, layer,
                                    gimage->gimp->config->layer_preview_size);
   layer_select_advance (layer_select, move);
+
+  gtk_window_set_screen (GTK_WINDOW (layer_select->shell),
+                         gtk_widget_get_screen (GTK_WIDGET (shell)));
 
   gtk_widget_show (layer_select->shell);
 
@@ -112,10 +120,8 @@ layer_select_new (GimpImage *gimage,
 
   layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_role (GTK_WINDOW (layer_select->shell), "gimp-layer-select");
-  gtk_window_set_title (GTK_WINDOW (layer_select->shell),
-                        _("Layer Select"));
-  gtk_window_set_position (GTK_WINDOW (layer_select->shell),
-                           GTK_WIN_POS_MOUSE);
+  gtk_window_set_title (GTK_WINDOW (layer_select->shell), _("Layer Select"));
+  gtk_window_set_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
   gtk_widget_set_events (layer_select->shell, (GDK_KEY_PRESS_MASK   |
                                                GDK_KEY_RELEASE_MASK |
                                                GDK_BUTTON_PRESS_MASK));

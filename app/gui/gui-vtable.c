@@ -158,6 +158,7 @@ gui_message (Gimp        *gimp,
       GtkWidget *dockable;
 
       dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                                   gdk_screen_get_default (),
                                                    "gimp-error-console", -1);
 
       if (dockable)

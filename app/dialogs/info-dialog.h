@@ -62,6 +62,7 @@ InfoDialog *info_dialog_new            (GimpViewable    *viewable,
                                         const gchar     *role,
                                         const gchar     *stock_id,
                                         const gchar     *desc,
+                                        GtkWidget       *parent,
 					GimpHelpFunc     help_func,
 					gpointer         help_data);
 InfoDialog *info_dialog_notebook_new   (GimpViewable    *viewable,
@@ -69,6 +70,7 @@ InfoDialog *info_dialog_notebook_new   (GimpViewable    *viewable,
                                         const gchar     *role,
                                         const gchar     *stock_id,
                                         const gchar     *desc,
+                                        GtkWidget       *parent,
 					GimpHelpFunc     help_func,
 					gpointer         help_data);
 void        info_dialog_free           (InfoDialog      *idialog);

@@ -468,6 +468,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               _("Zoom Ratio"), "display_scale",
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),
+                              GTK_WIDGET (shell),
                               gimp_standard_help_func,
                               GIMP_HELP_VIEW_ZOOM_OTHER,
 

@@ -115,7 +115,8 @@ templates_new_template_response (GtkWidget *widget,
 
 void
 templates_new_template_dialog (Gimp         *gimp,
-                               GimpTemplate *unused)
+                               GimpTemplate *unused,
+                               GtkWidget    *parent)
 {
   GimpTemplate *template;
   GtkWidget    *dialog;
@@ -126,6 +127,7 @@ templates_new_template_dialog (Gimp         *gimp,
                                      _("New Template"), "gimp-template-new",
                                      GIMP_STOCK_TEMPLATE,
                                      _("Create a New Template"),
+                                     parent,
                                      gimp_standard_help_func,
                                      GIMP_HELP_TEMPLATE_NEW,
 
@@ -187,7 +189,8 @@ templates_edit_template_response (GtkWidget *widget,
 
 void
 templates_edit_template_dialog (Gimp         *gimp,
-                                GimpTemplate *template)
+                                GimpTemplate *template,
+                                GtkWidget    *parent)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -197,6 +200,7 @@ templates_edit_template_dialog (Gimp         *gimp,
                                      _("Edit Template"), "gimp-template-edit",
                                      GIMP_STOCK_EDIT,
                                      _("Edit Template"),
+                                     parent,
                                      gimp_standard_help_func,
                                      GIMP_HELP_TEMPLATE_EDIT,
 
@@ -234,11 +238,13 @@ templates_edit_template_dialog (Gimp         *gimp,
 
 void
 templates_file_new_dialog (Gimp         *gimp,
-                           GimpTemplate *template)
+                           GimpTemplate *template,
+                           GtkWidget    *parent)
 {
   GtkWidget *dialog;
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (parent),
                                            "gimp-file-new-dialog", -1);
 
   if (dialog)

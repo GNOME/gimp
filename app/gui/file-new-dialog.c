@@ -101,6 +101,7 @@ file_new_dialog_new (Gimp *gimp)
                               _("New Image"), "gimp-image-new",
                               GIMP_STOCK_IMAGE,
                               _("Create a New Image"),
+                              NULL,
                               gimp_standard_help_func,
                               GIMP_HELP_FILE_NEW,
 
@@ -306,6 +307,7 @@ file_new_confirm_dialog (FileNewDialog *dialog)
 
   dialog->confirm_dialog =
     gimp_query_boolean_box (_("Confirm Image Size"),
+                            dialog->dialog,
 			    gimp_standard_help_func,
 			    GIMP_HELP_FILE_NEW_CONFIRM,
 			    GIMP_STOCK_INFO,

@@ -17,12 +17,12 @@
  */
 
 #ifndef  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__
-#define  __GIMP_DISPLAY_SHELLLAYER_SELECT_H__
+#define  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__
 
 
-void   gimp_display_shell_layer_select_init (GimpImage *gimage,
-                                             gint       move,
-                                             guint32    time);
+void   gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
+                                             gint              move,
+                                             guint32           time);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELLLAYER_SELECT_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__  */

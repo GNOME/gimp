@@ -357,6 +357,10 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
       view = GIMP_NAVIGATION_VIEW (GTK_BIN (GTK_BIN (shell->nav_popup)->child)->child);
     }
 
+  screen = gtk_widget_get_screen (widget);
+
+  gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
+
   preview = GIMP_NAVIGATION_PREVIEW (view->preview);
 
   /* decide where to put the popup */
@@ -383,8 +387,6 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
    *
    * Warping the pointer would be another solution ...
    */
-
-  screen = gtk_widget_get_screen (widget);
 
   x = CLAMP (x, 0, (gdk_screen_get_width (screen)  -
                     GIMP_PREVIEW (preview)->renderer->width  -

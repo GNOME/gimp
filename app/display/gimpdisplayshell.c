@@ -431,7 +431,8 @@ gimp_display_shell_screen_changed (GtkWidget *widget,
   GimpDisplayShell  *shell;
   GimpDisplayConfig *config;
 
-  GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
+  if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
+    GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
 
   shell = GIMP_DISPLAY_SHELL (widget);
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
@@ -453,9 +454,7 @@ static gboolean
 gimp_display_shell_delete_event (GtkWidget   *widget,
                                  GdkEventAny *aevent)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (widget);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
   gimp_display_shell_close (shell, FALSE);
 
@@ -1848,6 +1847,7 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 
   shell->warning_dialog =
     gimp_query_boolean_box (title,
+                            GTK_WIDGET (shell),
 			    gimp_standard_help_func,
 			    GIMP_HELP_FILE_CLOSE_CONFIRM,
 			    GIMP_STOCK_QUESTION,

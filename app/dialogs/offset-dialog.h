@@ -20,7 +20,8 @@
 #define __OFFSET_DIALOG_H__
 
 
-void   offset_dialog_create (GimpDrawable *drawable);
+void   offset_dialog_create (GimpDrawable *drawable,
+                             GtkWidget    *parent);
 
 
 #endif  /*  __OFFSET_DIALOG_H__  */

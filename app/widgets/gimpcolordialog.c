@@ -87,6 +87,7 @@ static ColorNotebook *
                                                 const gchar           *role,
                                                 const gchar           *stock_id,
                                                 const gchar           *desc,
+                                                GtkWidget             *parent,
                                                 GimpDialogFactory     *dialog_factory,
                                                 const gchar           *dialog_identifier,
                                                 const GimpRGB         *color,
@@ -141,6 +142,7 @@ static GList *color_notebooks = NULL;
 
 ColorNotebook *
 color_notebook_new (const gchar           *title,
+                    GtkWidget             *parent,
                     GimpDialogFactory     *dialog_factory,
                     const gchar           *dialog_identifier,
                     const GimpRGB         *color,
@@ -154,6 +156,7 @@ color_notebook_new (const gchar           *title,
                                       "gimp-color-selection",
                                       NULL,
                                       NULL,
+                                      parent,
                                       dialog_factory,
                                       dialog_identifier,
                                       color,
@@ -166,6 +169,7 @@ color_notebook_viewable_new (GimpViewable          *viewable,
                              const gchar           *title,
                              const gchar           *stock_id,
                              const gchar           *desc,
+                             GtkWidget             *parent,
                              GimpDialogFactory     *dialog_factory,
                              const gchar           *dialog_identifier,
                              const GimpRGB         *color,
@@ -179,6 +183,7 @@ color_notebook_viewable_new (GimpViewable          *viewable,
                                       "gimp-color-selection",
                                       stock_id,
                                       desc,
+                                      parent,
                                       dialog_factory,
                                       dialog_identifier,
                                       color,
@@ -279,6 +284,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
                              const gchar           *role,
                              const gchar           *stock_id,
                              const gchar           *desc,
+                             GtkWidget             *parent,
                              GimpDialogFactory     *dialog_factory,
                              const gchar           *dialog_identifier,
                              const GimpRGB         *color,
@@ -299,6 +305,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
   GtkWidget     *arrow;
   gint           i;
 
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (dialog_factory == NULL || dialog_identifier != NULL,
@@ -321,6 +328,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
     {
       cnp->shell = gimp_viewable_dialog_new (viewable, title, role,
                                              stock_id, desc,
+                                             parent,
                                              color_notebook_help_func, NULL,
                                              NULL);
 
@@ -329,7 +337,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
   else
     {
       cnp->shell = gimp_dialog_new (title, role,
-                                    NULL, 0,
+                                    parent, 0,
                                     color_notebook_help_func, NULL,
                                     NULL);
    }

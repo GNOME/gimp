@@ -80,6 +80,7 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
   GtkWidget *qbox;
 
   qbox = gimp_query_string_box (_("Merge Palette"),
+                                GTK_WIDGET (editor),
 				gimp_standard_help_func,
 				GIMP_HELP_PALETTE_MERGE,
 				_("Enter a name for merged palette"),

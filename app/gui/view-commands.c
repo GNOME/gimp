@@ -212,6 +212,7 @@ view_navigation_window_cmd_callback (GtkWidget *widget,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gtk_widget_get_screen (widget),
                                     "gimp-navigation-view", -1);
 }
 
@@ -226,6 +227,7 @@ view_display_filters_cmd_callback (GtkWidget *widget,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                  gtk_widget_get_screen (widget),
                                   "gimp-display-filters-dialog", -1);
 }
 

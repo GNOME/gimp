@@ -43,6 +43,7 @@ static InfoDialog * info_dialog_new_extended    (GimpViewable  *viewable,
                                                  const gchar   *role,
                                                  const gchar   *stock_id,
                                                  const gchar   *desc,
+                                                 GtkWidget     *parent,
                                                  GimpHelpFunc   help_func,
                                                  gpointer       help_data,
                                                  gboolean       in_notebook);
@@ -65,11 +66,13 @@ info_dialog_new (GimpViewable *viewable,
                  const gchar  *role,
                  const gchar  *stock_id,
                  const gchar  *desc,
+                 GtkWidget    *parent,
 		 GimpHelpFunc  help_func,
 		 gpointer      help_data)
 {
   return info_dialog_new_extended (viewable, title, role,
                                    stock_id, desc,
+                                   parent,
                                    help_func, help_data, FALSE);
 }
 
@@ -79,11 +82,13 @@ info_dialog_notebook_new (GimpViewable *viewable,
                           const gchar  *role,
                           const gchar  *stock_id,
                           const gchar  *desc,
+                          GtkWidget    *parent,
                           GimpHelpFunc  help_func,
 			  gpointer      help_data)
 {
   return info_dialog_new_extended (viewable, title, role,
                                    stock_id, desc,
+                                   parent,
                                    help_func, help_data, TRUE);
 }
 
@@ -315,6 +320,7 @@ info_dialog_new_extended (GimpViewable *viewable,
                           const gchar  *role,
                           const gchar  *stock_id,
                           const gchar  *desc,
+                          GtkWidget    *parent,
 			  GimpHelpFunc  help_func,
 			  gpointer      help_data,
 			  gboolean      in_notebook)
@@ -332,6 +338,7 @@ info_dialog_new_extended (GimpViewable *viewable,
   shell = gimp_viewable_dialog_new (viewable,
                                     title, role,
                                     stock_id, desc,
+                                    parent,
                                     help_func, help_data,
                                     NULL);
   gtk_window_set_type_hint (GTK_WINDOW (shell), GDK_WINDOW_TYPE_HINT_UTILITY);

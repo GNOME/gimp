@@ -86,7 +86,7 @@ channels_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  channels_new_channel_query (gimage, NULL, TRUE);
+  channels_new_channel_query (gimage, NULL, TRUE, widget);
 }
 
 void
@@ -219,7 +219,7 @@ channels_edit_attributes_cmd_callback (GtkWidget *widget,
   GimpChannel *active_channel;
   return_if_no_channel (gimage, active_channel, data);
 
-  channels_edit_channel_query (active_channel);
+  channels_edit_channel_query (active_channel, widget);
 }
 
 
@@ -280,7 +280,8 @@ new_channel_query_response (GtkWidget         *widget,
 void
 channels_new_channel_query (GimpImage   *gimage,
                             GimpChannel *template,
-                            gboolean     interactive)
+                            gboolean     interactive,
+                            GtkWidget   *parent)
 {
   NewChannelOptions *options;
   GtkWidget         *hbox;
@@ -345,6 +346,7 @@ channels_new_channel_query (GimpImage   *gimage,
                               _("New Channel"), "gimp-channel-new",
                               GIMP_STOCK_CHANNEL,
                               _("New Channel Options"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_CHANNEL_NEW,
 
@@ -478,7 +480,8 @@ edit_channel_query_response (GtkWidget          *widget,
 }
 
 void
-channels_edit_channel_query (GimpChannel *channel)
+channels_edit_channel_query (GimpChannel *channel,
+                             GtkWidget   *parent)
 {
   EditChannelOptions *options;
   GtkWidget          *hbox;
@@ -506,6 +509,7 @@ channels_edit_channel_query (GimpChannel *channel)
                               _("Channel Attributes"), "gimp-channel-edit",
                               GIMP_STOCK_EDIT,
                               _("Edit Channel Attributes"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_CHANNEL_EDIT,
 

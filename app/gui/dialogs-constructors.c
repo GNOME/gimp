@@ -907,6 +907,7 @@ void
 dialogs_edit_brush_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gdk_screen_get_default (),
                                     "gimp-brush-editor",
                                     -1);
 
@@ -936,6 +937,7 @@ void
 dialogs_edit_gradient_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gdk_screen_get_default (),
 				    "gimp-gradient-editor",
                                     -1);
 
@@ -965,6 +967,7 @@ void
 dialogs_edit_palette_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    gdk_screen_get_default (),
 				    "gimp-palette-editor",
                                     -1);
 

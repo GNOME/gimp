@@ -99,7 +99,8 @@ convert_to_grayscale (GimpImage* gimage)
 }
 
 void
-convert_to_indexed (GimpImage *gimage)
+convert_to_indexed (GimpImage *gimage,
+                    GtkWidget *parent)
 {
   IndexedDialog *dialog;
   GtkWidget     *main_vbox;
@@ -113,6 +114,7 @@ convert_to_indexed (GimpImage *gimage)
   GSList        *group = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GTK_IS_WIDGET (parent));
 
   dialog = g_new0 (IndexedDialog, 1);
 
@@ -131,6 +133,7 @@ convert_to_indexed (GimpImage *gimage)
                               "gimp-image-convert-indexed",
                               GIMP_STOCK_CONVERT_INDEXED,
                               _("Convert Image to Indexed Colors"),
+                              parent,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_CONVERT_INDEXED,
 

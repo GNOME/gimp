@@ -120,6 +120,7 @@ static void  resolution_update           (Resize    *resize,
 
 Resize *
 resize_widget_new (GimpViewable *viewable,
+                   GtkWidget    *parent,
                    ResizeType    type,
 		   gint          width,
 		   gint          height,
@@ -243,6 +244,7 @@ resize_widget_new (GimpViewable *viewable,
       gimp_viewable_dialog_new (viewable,
                                 window_title, role,
                                 stock_id, window_desc,
+                                parent,
                                 gimp_standard_help_func, help_page,
 
                                 GIMP_STOCK_RESET, RESIZE_RESPONSE_RESET,

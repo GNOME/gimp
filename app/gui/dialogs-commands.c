@@ -38,7 +38,8 @@
 
 /*  local function prototypes  */
 
-static void   dialogs_create_dock (const gchar *tabs[],
+static void   dialogs_create_dock (GdkScreen   *screen,
+                                   const gchar *tabs[],
                                    gint         n_tabs);
 
 
@@ -62,7 +63,9 @@ dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
       const gchar *identifier = g_quark_to_string ((GQuark) action);
 
       if (identifier)
-	gimp_dialog_factory_dialog_new (global_dialog_factory, identifier, -1);
+	gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                        gtk_widget_get_screen (widget),
+                                        identifier, -1);
     }
 }
 
@@ -97,6 +100,7 @@ dialogs_create_dockable_cmd_callback (GtkWidget *widget,
             }
 
           gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                            gtk_widget_get_screen (widget),
                                             ids[i] ? ids[i] : ids[0], -1);
 
           g_strfreev (ids);
@@ -104,6 +108,7 @@ dialogs_create_dockable_cmd_callback (GtkWidget *widget,
       else
         {
           gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                            gtk_widget_get_screen (widget),
                                             identifier, -1);
         }
     }
@@ -369,7 +374,8 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
     "gimp-indexed-palette"
   };
 
-  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
+  dialogs_create_dock (gtk_widget_get_screen (widget),
+                       tabs, G_N_ELEMENTS (tabs));
 }
 
 void
@@ -386,7 +392,8 @@ dialogs_create_data_cmd_callback (GtkWidget *widget,
     "gimp-font-list"
   };
 
-  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
+  dialogs_create_dock (gtk_widget_get_screen (widget),
+                       tabs, G_N_ELEMENTS (tabs));
 }
 
 void
@@ -402,7 +409,8 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
     "gimp-template-list"
   };
 
-  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
+  dialogs_create_dock (gtk_widget_get_screen (widget),
+                       tabs, G_N_ELEMENTS (tabs));
 }
 
 void
@@ -412,7 +420,8 @@ dialogs_show_toolbox (void)
     {
       GtkWidget *toolbox;
 
-      toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory);
+      toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory,
+                                              gdk_screen_get_default ());
 
       gtk_widget_show (toolbox);
     }
@@ -437,7 +446,8 @@ dialogs_show_toolbox (void)
 /*  private functions  */
 
 static void
-dialogs_create_dock (const gchar *tabs[],
+dialogs_create_dock (GdkScreen   *screen,
+                     const gchar *tabs[],
                      gint         n_tabs)
 {
   GtkWidget *dock;
@@ -445,7 +455,7 @@ dialogs_create_dock (const gchar *tabs[],
   GtkWidget *dockable;
   gint       i;
 
-  dock = gimp_dialog_factory_dock_new (global_dock_factory);
+  dock = gimp_dialog_factory_dock_new (global_dock_factory, screen);
 
   dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 
@@ -454,6 +464,7 @@ dialogs_create_dock (const gchar *tabs[],
   for (i = 0; i < n_tabs; i++)
     {
       dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+                                                 screen,
                                                  tabs[i], -1);
 
       if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)

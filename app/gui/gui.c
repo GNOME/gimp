@@ -239,6 +239,7 @@ gui_post_init (Gimp *gimp)
 
   if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
     gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                    gdk_screen_get_default (),
                                     "gimp-tips-dialog", -1);
 }
 
@@ -424,6 +425,7 @@ gui_exit_callback (Gimp     *gimp,
       gimp_item_factories_set_sensitive ("<Image>",   "/File/Quit", FALSE);
 
       dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
+                                       NULL,
                                        gimp_standard_help_func,
                                        GIMP_HELP_FILE_QUIT_CONFIRM,
                                        GIMP_STOCK_WILBER_EEK,

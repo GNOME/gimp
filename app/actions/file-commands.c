@@ -107,10 +107,11 @@ file_new_cmd_callback (GtkWidget *widget,
   /*  if called from the image menu  */
   if (action)
     gimage = gimp_context_get_image (gimp_get_user_context (gimp));
-  else 
+  else
     gimage = NULL;
 
   dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           gtk_widget_get_screen (widget),
                                            "gimp-file-new-dialog", -1);
 
   if (dialog)
@@ -288,6 +289,7 @@ file_save_template_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   qbox = gimp_query_string_box (_("Create New Template"),
+                                gdisp->shell,
 				gimp_standard_help_func,
 				GIMP_HELP_FILE_SAVE_AS_TEMPLATE,
 				_("Enter a name for this template"),
@@ -336,6 +338,7 @@ file_revert_cmd_callback (GtkWidget *widget,
       g_free (basename);
 
       query_box = gimp_query_boolean_box (_("Revert Image"),
+                                          gdisp->shell,
 					  gimp_standard_help_func,
 					  GIMP_HELP_FILE_REVERT,
 					  GIMP_STOCK_QUESTION,

@@ -89,6 +89,7 @@ tool_options_save_new_cmd_callback (GtkWidget *widget,
   tool_info = gimp_context_get_tool (context);
 
   qbox = gimp_query_string_box (_("Save Tool Options"),
+                                GTK_WIDGET (editor),
 				gimp_standard_help_func,
 				GIMP_HELP_TOOL_OPTIONS_DIALOG,
 				_("Enter a name for the saved options"),
@@ -118,6 +119,7 @@ tool_options_rename_saved_cmd_callback (GtkWidget *widget,
   GtkWidget       *qbox;
 
   qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
+                                widget,
 				gimp_standard_help_func,
 				GIMP_HELP_TOOL_OPTIONS_DIALOG,
 				_("Enter a new name for the saved options"),

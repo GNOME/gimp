@@ -49,7 +49,8 @@ void   image_flatten_image_cmd_callback     (GtkWidget *widet,
                                              gpointer   data);
 
 void   image_layers_merge_query             (GimpImage *gimage,
-                                             gboolean   merge_visible);
+                                             gboolean   merge_visible,
+                                             GtkWidget *parent);
 
 void   image_configure_grid_cmd_callback    (GtkWidget *widget,
                                              gpointer   data);

@@ -149,6 +149,7 @@ qmask_channel_query (GimpDisplayShell *shell)
                               _("Qmask Attributes"), "gimp-qmask-edit",
                               GIMP_STOCK_QMASK_ON,
                               _("Edit QuickMask Attributes"),
+                              GTK_WIDGET (shell),
                               gimp_standard_help_func,
                               GIMP_HELP_QMASK_EDIT,
 
