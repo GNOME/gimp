@@ -2387,6 +2387,13 @@ swrite (LISP stream, LISP table, LISP data)
 }
 
 LISP
+ltrunc (LISP x)
+{
+  double cx = get_c_double (x);
+  return (flocons (cx < 0.0 ? ceil (cx) : floor (cx)));
+}
+
+LISP
 lpow (LISP x, LISP y)
 {
   if NFLONUMP
@@ -2867,6 +2874,7 @@ init_subrs_a (void)
   init_subr_4 ("fast-save", fast_save);
   init_subr_2 ("fast-load", fast_load);
   init_subr_3 ("swrite", swrite);
+  init_subr_1 ("trunc", ltrunc);
   init_subr_2 ("pow", lpow);
   init_subr_1 ("exp", lexp);
   init_subr_1 ("log", llog);

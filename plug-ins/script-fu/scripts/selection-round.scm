@@ -51,12 +51,9 @@
   (gimp-undo-push-group-start image)
 
   (if (> select-width select-height)
-      (begin
-	(set! cut-radius (* radius (/ select-height 2)))
-	(set! ellipse-radius (* radius select-height)))
-      (begin
-	(set! cut-radius (* radius (/ select-width 2)))
-	(set! ellipse-radius (* radius select-width))))
+      (set! cut-radius (trunc (+ 1 (* radius (/ select-height 2)))))
+      (set! cut-radius (trunc (+ 1 (* radius (/ select-width 2))))))
+  (set! ellipse-radius (* cut-radius 2))
   (gimp-rect-select image
 		    select-x1
 		    select-y1

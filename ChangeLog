@@ -1,5 +1,12 @@
 2003-04-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/interp_sliba.c
+	* plug-ins/script-fu/scripts/selection-round.scm: applied a patch
+	from Pedro Gimeno that adds the trunc() function to our scheme
+	interpreter and fixes bug #109475 the right way.
+
+2003-04-10  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-portrait-16.png
 	* themes/Default/images/stock-landscape-16.png: new icons by Jimmac.
