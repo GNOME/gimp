@@ -1,3 +1,9 @@
+2004-09-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_menu_position): improved the fix for bug
+	#152662 and removed trailing whitespace.
+
 2004-09-15  Nathan Summers  <rock@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c 
