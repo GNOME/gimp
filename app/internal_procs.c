@@ -20,28 +20,15 @@
 #include <string.h>
 #include "appenv.h"
 #include "app_procs.h"
-#include "airbrush.h"
-#include "blend.h"
 #include "brush_select.h"
-#include "bucket_fill.h"
 #include "gimpbrushlist.h"
-#include "by_color_select.h"
 #include "channel_cmds.h"
 #include "channel_ops.h"
-#include "clone.h"
 #include "color_balance.h"
-#include "color_picker.h"
-#include "convolve.h"
-#include "crop.h"
 #include "curves.h"
 #include "desaturate.h"
 #include "drawable_cmds.h"
-#include "ellipse_select.h"
 #include "equalize.h"
-#include "eraser.h"
-#include "flip_tool.h"
-#include "free_select.h"
-#include "fuzzy_select.h"
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
 #include "gimprc.h"
@@ -51,15 +38,8 @@
 #include "invert.h"
 #include "layer_cmds.h"
 #include "internal_procs.h"
-#include "paintbrush.h"
 #include "patterns.h"
 #include "pattern_select.h"
-#include "pencil.h"
-#include "perspective_tool.h"
-#include "rect_select.h"
-#include "rotate_tool.h"
-#include "scale_tool.h"
-#include "shear_tool.h"
 #include "threshold.h"
 #include "parasite_cmds.h"
 #include "procedural_db.h"
@@ -77,6 +57,8 @@ void register_unit_procs         (void);
 void register_text_tool_procs    (void);
 void register_color_procs        (void);
 void register_misc_procs         (void);
+void register_tools_procs        (void);
+void register_gimprc_procs       (void);
 
 void
 internal_procs_init ()
@@ -89,30 +71,9 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Tool procedures  */
-  procedural_db_register (&airbrush_proc); pcount++;
-  procedural_db_register (&blend_proc); pcount++;
-  procedural_db_register (&bucket_fill_proc); pcount++;
-  procedural_db_register (&by_color_select_proc); pcount++;
-  procedural_db_register (&clone_proc); pcount++;
-  procedural_db_register (&color_picker_proc); pcount++;
-  procedural_db_register (&convolve_proc); pcount++;
-  procedural_db_register (&crop_proc); pcount++;
-  procedural_db_register (&ellipse_select_proc); pcount++;
-  procedural_db_register (&eraser_proc); pcount++;
-  procedural_db_register (&eraser_extended_proc); pcount++;
-  procedural_db_register (&flip_proc); pcount++;
-  procedural_db_register (&free_select_proc); pcount++;
-  procedural_db_register (&fuzzy_select_proc); pcount++;
-  procedural_db_register (&paintbrush_proc); pcount++;
-  procedural_db_register (&paintbrush_extended_proc); pcount++;
-  procedural_db_register (&paintbrush_extended_gradient_proc); pcount++;
-  procedural_db_register (&pencil_proc); pcount++;
-  procedural_db_register (&perspective_proc); pcount++;
-  procedural_db_register (&rect_select_proc); pcount++;
-  procedural_db_register (&rotate_proc); pcount++;
-  procedural_db_register (&scale_proc); pcount++;
-  procedural_db_register (&shear_proc); pcount++;
-  
+  register_tools_procs ();
+  pcount += 21;
+
   register_text_tool_procs ();
   pcount += 6;
 
@@ -392,8 +353,8 @@ internal_procs_init ()
   app_init_update_status(NULL, _("gimprc ops"),
 			 pcount/total_pcount);
   /*  Gimprc procedures  */
-  procedural_db_register (&gimprc_query_proc); pcount++;
-  procedural_db_register (&gimprc_set_proc); pcount++;
+  register_gimprc_procs ();
+  pcount += 2;
 
   app_init_update_status(NULL, _("parasites"),
 			 pcount/total_pcount);

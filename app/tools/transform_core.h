@@ -46,6 +46,10 @@
 #define NON_INTERACTIVE 0
 #define INTERACTIVE     1
 
+enum BoundingBox
+{
+  X0, Y0, X1, Y1, X2, Y2, X3, Y3
+};
 
 typedef double  TranInfo[TRAN_INFO_SIZE];
 

@@ -18,26 +18,28 @@
 #ifndef  __BLEND_H__
 #define  __BLEND_H__
 
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
+#include "gimpprogress.h"
 #include "tools.h"
-#include "procedural_db.h"
 
 typedef enum
 {
-  Linear,
-  BiLinear,
-  Radial,
-  Square,
-  ConicalSymmetric,
-  ConicalAsymmetric,
-  ShapeburstAngular,
-  ShapeburstSpherical,
-  ShapeburstDimpled,
-  SpiralClockwise,
-  SpiralAntiClockwise,
-  GradientTypeLast /*< skip >*/
+  LINEAR,
+  BILINEAR,
+  RADIAL,
+  SQUARE,
+  CONICAL_SYMMETRIC,
+  CONICAL_ASYMMETRIC,
+  SHAPEBURST_ANGULAR,
+  SHAPEBURST_SPHERICAL,
+  SHAPEBURST_DIMPLED,
+  SPIRAL_CLOCKWISE,
+  SPIRAL_ANTICLOCKWISE,
+  GRADIENT_TYPE_LAST  /*< skip >*/
 } GradientType;
 
-typedef enum
+typedef enum  /*< chop=_MODE >*/
 {
   FG_BG_RGB_MODE,
   FG_BG_HSV_MODE,
@@ -54,10 +56,11 @@ typedef enum
   REPEAT_LAST /*< skip >*/
 } RepeatMode;
 
+void        blend (GimpImage *, GimpDrawable *, BlendMode, int, GradientType,
+    		   double, double, RepeatMode, int, int, double, double,
+		   double, double, double, progress_func_t, void *);
+
 Tool *      tools_new_blend   (void);
 void        tools_free_blend  (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord blend_proc;
 
 #endif  /*  __BLEND_H__  */

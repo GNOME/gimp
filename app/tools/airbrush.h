@@ -20,13 +20,11 @@
 
 #include "tools.h"
 #include "paint_core.h"
-#include "procedural_db.h"
 
 void *        airbrush_paint_func  (PaintCore *, GimpDrawable *, int);
+gboolean      airbrush_non_gui     (GimpDrawable *, double, int, double *);
 Tool *        tools_new_airbrush   (void);
 void          tools_free_airbrush  (Tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord airbrush_proc;
 
 #endif  /*  __AIRBRUSH_H__  */

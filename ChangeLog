@@ -1,9 +1,64 @@
+Sun Apr 18 14:19:36 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/tools_cmds.c: new file, containes the PDB stuff for most
+	of the tools
+
+	* app/gimprc_cmds.c: new file, PDB interface stuff for gimprc
+	access
+
+	* app/Makefile.am: added tools_cmds.c and gimprc_cmds.c
+
+	* app/airbrush.[ch]
+	* app/blend.[ch]
+	* app/bucket_fill.[ch]
+	* app/by_color_select.[ch]
+	* app/clone.[ch]
+	* app/color_picker.[ch]
+	* app/convolve.[ch]	
+	* app/crop.[ch]
+	* app/ellipse_select.[ch]
+	* app/eraser.[ch]
+	* app/flip_tool.[ch]
+	* app/free_select.[ch]
+	* app/fuzzy_select.[ch]
+	* app/gimprc.[ch]
+	* app/paintbrush.[ch]
+	* app/pencil.[ch]
+	* app/perspective_tool.[ch]
+	* app/rect_select.c app/rect_select.h
+	* app/rotate_tool.[ch]
+	* app/scale_tool.[ch]
+	* app/shear_tool.[ch]: bye bye PDB stuff (exported necessary enums
+	functions, vars, etc.)
+
+	* app/internal_procs.c: use register_foo functions
+
+	* app/blend.[ch]: GradientType enum case changed
+
+	* app/bucket_fill.[ch]: s/FillMode/BucketFillMode/, made the enum
+	more consistent
+
+	* app/clone.[ch]: capitalized the CloneType enum
+
+	* app/color_picker.[ch]: changed get_color to pick_color so we don't
+	conflict with colormaps.c get_color
+
+	* app/convolve.[ch]: capitalized the ConvolveType enum
+
+	* app/paint_core.h: made a GradientPaintMode enum
+
+	* app/transform_core.h: BoundingBox enum
+
+	* app/scale_tool.c: use the generic bounding box enum for X1, Y1, etc.
+
+	* app/shear_tool.[ch]: turned HORZ and VERT into a ShearType enum
+
 1999-04-18  Seth Burgess <sjburges@gimp.org>
     
-    * app/internal_procs.c
-    * app/gimprc.h
-    * app/gimprc.c: wrote a function to save arbitrary "token" "value" pairs
-      in the user gimprc and added gimprc_set to the PDB.
+	* app/internal_procs.c
+	* app/gimprc.h
+	* app/gimprc.c: wrote a function to save arbitrary "token" "value"
+	pairs in the user gimprc and added gimprc_set to the PDB.
 
 1999-04-18  Michael Natterer  <mitschel@cs.tu-berlin.de>
 

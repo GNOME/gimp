@@ -18,16 +18,15 @@
 #ifndef  __CROP_H__
 #define  __CROP_H__
 
+#include "gimpimageF.h"
 #include "tools.h"
-#include "procedural_db.h"
 
 /*  select functions  */
 void   crop_draw       (Tool *);
+void   crop_image      (GimpImage *gimage, int, int, int, int, int, int);
+
 Tool * tools_new_crop  (void);
 void   tools_free_crop (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord crop_proc;
 
 #endif  /*  __CROP_H__  */
 

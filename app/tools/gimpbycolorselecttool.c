@@ -90,9 +90,6 @@ static void             by_color_select_preview_button_press (ByColorDialog *, G
 
 static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
 static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
-static void       by_color_select (GImage *, GimpDrawable *, unsigned char *, int, int, int, int, double, int);
-static Argument * by_color_select_invoker (Argument *);
-
 
 /*  by_color selection machinery  */
 
@@ -243,7 +240,7 @@ by_color_select_color (GImage        *gimage,
   return mask;
 }
 
-static void
+void
 by_color_select (GImage        *gimage,
 		 GimpDrawable  *drawable,
 		 unsigned char *color,
@@ -971,158 +968,4 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
   by_color_select_draw (bcd, bcd->gimage);
-}
-
-
-/*  The by_color_select procedure definition  */
-ProcArg by_color_select_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_COLOR,
-    "color",
-    "the color to select"
-  },
-  { PDB_INT32,
-    "threshold",
-    "threshold in intensity levels: 0 <= threshold <= 255"
-  },
-  { PDB_INT32,
-    "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
-  },
-  { PDB_INT32,
-    "antialias",
-    "antialiasing On/Off"
-  },
-  { PDB_INT32,
-    "feather",
-    "feather option for selections"
-  },
-  { PDB_FLOAT,
-    "feather_radius",
-    "radius for feather operation"
-  },
-  { PDB_INT32,
-    "sample_merged",
-    "use the composite image, not the drawable"
-  }
-};
-
-ProcRecord by_color_select_proc =
-{
-  "gimp_by_color_select",
-  "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-  "This tool creates a selection over the specified image.  A by-color selection is determined by the supplied color under the constraints of the specified threshold.  Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  8,
-  by_color_select_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { by_color_select_invoker } },
-};
-
-
-static Argument *
-by_color_select_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int op;
-  int threshold;
-  int antialias;
-  int feather;
-  int sample_merged;
-  unsigned char color[3];
-  double feather_radius;
-  int int_value;
-
-  drawable    = NULL;
-  op          = REPLACE;
-  threshold   = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  color  */
-  if (success)
-    {
-      int i;
-      unsigned char *color_array;
-
-      color_array = (unsigned char *) args[1].value.pdb_pointer;
-      for (i = 0; i < 3; i++)
-	color[i] = color_array[i];
-    }
-  /*  threshold  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= 0 && int_value <= 255)
-	threshold = int_value;
-      else
-	success = FALSE;
-    }
-  /*  operation  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: op = ADD; break;
-	case 1: op = SUB; break;
-	case 2: op = REPLACE; break;
-	case 3: op = INTERSECT; break;
-	default: success = FALSE;
-	}
-    }
-  /*  antialiasing?  */
-  if (success)
-    {
-      int_value = args[4].value.pdb_int;
-      antialias = (int_value) ? TRUE : FALSE;
-    }
-  /*  feathering  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      feather = (int_value) ? TRUE : FALSE;
-    }
-  /*  feather radius  */
-  if (success)
-    {
-      feather_radius = args[6].value.pdb_float;
-    }
-  /*  sample merged  */
-  if (success)
-    {
-      int_value = args[7].value.pdb_int;
-      sample_merged = (int_value) ? TRUE : FALSE;
-    }
-
-  /*  call the ellipse_select procedure  */
-  if (success)
-    by_color_select (gimage, drawable, color, threshold, op,
-		     antialias, feather, feather_radius, sample_merged);
-
-  return procedural_db_return_args (&by_color_select_proc, success);
 }

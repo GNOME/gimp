@@ -19,21 +19,18 @@
 #define __CONVOLVE_H__
 
 #include "paint_core.h"
-#include "procedural_db.h"
 #include "tools.h"
 
-typedef enum
+typedef enum  /*< chop=_CONVOLVE >*/
 {
-  Blur,
-  Sharpen,
-  Custom
+  BLUR_CONVOLVE,
+  SHARPEN_CONVOLVE,
+  CUSTOM_CONVOLVE
 } ConvolveType;
 
 void *        convolve_paint_func  (PaintCore *, GimpDrawable *, int);
+gboolean      convolve_non_gui     (GimpDrawable *, double, int, double *);
 Tool *        tools_new_convolve   (void);
 void          tools_free_convolve  (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord convolve_proc;
 
 #endif  /*  __CONVOLVE_H__  */

@@ -20,13 +20,11 @@
 
 #include "tools.h"
 #include "paint_core.h"
-#include "procedural_db.h"
 
-void *        pencil_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_pencil   (void);
-void          tools_free_pencil  (Tool *);
+void *        pencil_paint_func (PaintCore *, GimpDrawable *, int);
+gboolean      pencil_non_gui    (GimpDrawable *, int, double *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord pencil_proc;
+Tool *        tools_new_pencil  (void);
+void          tools_free_pencil (Tool *);
 
 #endif  /*  __PENCIL_H__  */

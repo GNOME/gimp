@@ -33,25 +33,19 @@
 SelectionOptions * ellipse_options = NULL;
 
 
-/*  local function prototypes  */
-void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
-
-static Argument *ellipse_select_invoker (Argument *);
-
-
 /*************************************/
 /*  Ellipsoidal selection apparatus  */
 
 void
-ellipse_select (GImage *gimage,
-		int     x,
-		int     y,
-		int     w,
-		int     h,
-		int     op,
-		int     antialias,
-		int     feather,
-		double  feather_radius)
+ellipse_select (GimpImage *gimage,
+		int        x,
+		int        y,
+		int        w,
+		int        h,
+		int        op,
+		int        antialias,
+		int        feather,
+		double     feather_radius)
 {
   Channel * new_mask;
 
@@ -160,137 +154,4 @@ tools_free_ellipse_select (Tool *tool)
 
   draw_core_free (ellipse_sel->core);
   g_free (ellipse_sel);
-}
-
-/*  The ellipse_select procedure definition  */
-ProcArg ellipse_select_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_FLOAT,
-    "x",
-    "x coordinate of upper-left corner of ellipse bounding box"
-  },
-  { PDB_FLOAT,
-    "y",
-    "y coordinate of upper-left corner of ellipse bounding box"
-  },
-  { PDB_FLOAT,
-    "width",
-    "the width of the ellipse: width > 0"
-  },
-  { PDB_FLOAT,
-    "height",
-    "the height of the ellipse: height > 0"
-  },
-  { PDB_INT32,
-    "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
-  },
-  { PDB_INT32,
-    "antialias",
-    "antialiasing On/Off"
-  },
-  { PDB_INT32,
-    "feather",
-    "feather option for selections"
-  },
-  { PDB_FLOAT,
-    "feather_radius",
-    "radius for feather operation"
-  }
-};
-
-ProcRecord ellipse_select_proc =
-{
-  "gimp_ellipse_select",
-  "Create an elliptical selection over the specified image",
-  "This tool creates an elliptical selection over the specified image.  The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge.  This should be set as TRUE most of the time.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  9,
-  ellipse_select_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { ellipse_select_invoker } },
-};
-
-
-static Argument *
-ellipse_select_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  int op;
-  int antialias;
-  int feather;
-  double x, y;
-  double w, h;
-  double feather_radius;
-  int int_value;
-
-  op = REPLACE;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  x, y, w, h  */
-  if (success)
-    {
-      x = args[1].value.pdb_float;
-      y = args[2].value.pdb_float;
-      w = args[3].value.pdb_float;
-      h = args[4].value.pdb_float;
-    }
-  /*  operation  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: op = ADD; break;
-	case 1: op = SUB; break;
-	case 2: op = REPLACE; break;
-	case 3: op = INTERSECT; break;
-	default: success = FALSE;
-	}
-    }
-  /*  antialiasing?  */
-  if (success)
-    {
-      int_value = args[6].value.pdb_int;
-      antialias = (int_value) ? TRUE : FALSE;
-    }
-  /*  feathering  */
-  if (success)
-    {
-      int_value = args[7].value.pdb_int;
-      feather = (int_value) ? TRUE : FALSE;
-    }
-  /*  feather radius  */
-  if (success)
-    {
-      feather_radius = args[8].value.pdb_float;
-    }
-
-  /*  call the ellipse_select procedure  */
-  if (success)
-    ellipse_select (gimage, (int) x, (int) y, (int) w, (int) h,
-		    op, antialias, feather, feather_radius);
-
-  return procedural_db_return_args (&ellipse_select_proc, success);
 }

@@ -54,7 +54,8 @@ static SelectionOptions *fuzzy_options = NULL;
 /*  XSegments which make up the fuzzy selection boundary  */
 static GdkSegment *segs = NULL;
 static int         num_segs = 0;
-static Channel *   fuzzy_mask = NULL;
+
+Channel *fuzzy_mask = NULL;
 
 
 /*  fuzzy select action functions  */
@@ -66,10 +67,6 @@ static void   fuzzy_select_control         (Tool *, int, gpointer);
 
 /*  fuzzy select action functions  */
 static GdkSegment * fuzzy_select_calculate (Tool *, void *, int *);
-
-static void         fuzzy_select           (GImage *, GimpDrawable *,
-					    int, int, double);
-static Argument   * fuzzy_select_invoker   (Argument *);
 
 
 /*************************************/
@@ -296,7 +293,7 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   return mask;
 }
 
-static void
+void
 fuzzy_select (GImage *gimage, GimpDrawable *drawable, int op, int feather,
 	      double feather_radius)
 {
@@ -591,168 +588,4 @@ tools_free_fuzzy_select (Tool *tool)
   fuzzy_sel = (FuzzySelect *) tool->private;
   draw_core_free (fuzzy_sel->core);
   g_free (fuzzy_sel);
-}
-
-/*  The fuzzy_select procedure definition  */
-ProcArg fuzzy_select_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "x",
-    "x coordinate of initial seed fill point: (image coordinates)"
-  },
-  { PDB_FLOAT,
-    "y",
-    "y coordinate of initial seed fill point: (image coordinates)"
-  },
-  { PDB_INT32,
-    "threshold",
-    "threshold in intensity levels: 0 <= threshold <= 255"
-  },
-  { PDB_INT32,
-    "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
-  },
-  { PDB_INT32,
-    "antialias",
-    "antialiasing On/Off"
-  },
-  { PDB_INT32,
-    "feather",
-    "feather option for selections"
-  },
-  { PDB_FLOAT,
-    "feather_radius",
-    "radius for feather operation"
-  },
-  { PDB_INT32,
-    "sample_merged",
-    "use the composite image, not the drawable"
-  }
-};
-
-ProcRecord fuzzy_select_proc =
-{
-  "gimp_fuzzy_select",
-  "Create a fuzzy selection starting at the specified coordinates on the specified drawable",
-  "This tool creates a fuzzy selection over the specified image.  A fuzzy selection is determined by a seed fill under the constraints of the specified threshold.  Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value).  This process continues until no more expansion is possible.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.  If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  9,
-  fuzzy_select_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { fuzzy_select_invoker } },
-};
-
-
-static Argument *
-fuzzy_select_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int op;
-  int threshold;
-  int antialias;
-  int feather;
-  int sample_merged;
-  double x, y;
-  double feather_radius;
-  int int_value;
-
-  drawable    = NULL;
-  op          = REPLACE;
-  threshold   = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  x, y  */
-  if (success)
-    {
-      x = args[1].value.pdb_float;
-      y = args[2].value.pdb_float;
-    }
-  /*  threshold  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      if (int_value >= 0 && int_value <= 255)
-	threshold = int_value;
-      else
-	success = FALSE;
-    }
-  /*  operation  */
-  if (success)
-    {
-      int_value = args[4].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: op = ADD; break;
-	case 1: op = SUB; break;
-	case 2: op = REPLACE; break;
-	case 3: op = INTERSECT; break;
-	default: success = FALSE;
-	}
-    }
-  /*  antialiasing?  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      antialias = (int_value) ? TRUE : FALSE;
-    }
-  /*  feathering  */
-  if (success)
-    {
-      int_value = args[6].value.pdb_int;
-      feather = (int_value) ? TRUE : FALSE;
-    }
-  /*  feather radius  */
-  if (success)
-    {
-      feather_radius = args[7].value.pdb_float;
-    }
-  /*  sample merged  */
-  if (success)
-    {
-      int_value = args[8].value.pdb_int;
-      sample_merged = (int_value) ? TRUE : FALSE;
-    }
-
-  /*  call the fuzzy_select procedure  */
-  if (success)
-    {
-      Channel *new;
-      Channel *old_fuzzy_mask;
-
-      new = find_contiguous_region (gimage, drawable, antialias, threshold, x, y, sample_merged);
-      old_fuzzy_mask = fuzzy_mask;
-      fuzzy_mask = new;
-
-      drawable = (sample_merged) ? NULL : drawable;
-      fuzzy_select (gimage, drawable, op, feather, feather_radius);
-
-      fuzzy_mask = old_fuzzy_mask;
-    }
-
-  return procedural_db_return_args (&fuzzy_select_proc, success);
 }

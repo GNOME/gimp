@@ -77,9 +77,6 @@ static double        non_gui_incremental;
 
 /*  forward function declarations  */
 static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean, int);
-static Argument *   paintbrush_invoker     (Argument *);
-static Argument *   paintbrush_extended_invoker     (Argument *);
-static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
 
 
 /*  functions  */
@@ -166,7 +163,7 @@ paintbrush_options_new (void)
   options->incremental     = options->incremental_d     = FALSE;
   options->use_gradient    = options->use_gradient_d    = FALSE;
   options->gradient_length = options->gradient_length_d = 10.0;
-  options->gradient_type   = options->gradient_type_d   = 3;
+  options->gradient_type   = options->gradient_type_d   = LOOP_TRIANGLE;
   
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -457,212 +454,25 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
   return NULL;
 }
 
-
-/*  The paintbrush procedure definition  */
-ProcArg paintbrush_args[] =
+gboolean
+paintbrush_non_gui (GimpDrawable *drawable,
+    		    int           num_strokes,
+		    double       *stroke_array,
+		    double        fade_out,
+		    int           method,
+		    double        gradient_length)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "fade_out",
-    "fade out parameter: fade_out > 0"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-ProcArg paintbrush_extended_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "fade_out",
-    "fade out parameter: fade_out > 0"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  },
-  { PDB_INT32,
-    "method",
-    "CONTINUOUS(0) or INCREMENTAL(1)"
-  }
-};
-
-ProcArg paintbrush_extended_gradient_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "fade_out",
-    "fade out parameter: fade_out > 0"
-  },
-  { PDB_FLOAT,
-    "gradient_length",
-    "Length of gradient to draw: gradient_lengtth >0"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  },
-  { PDB_INT32,
-    "method",
-    "CONTINUOUS(0) or INCREMENTAL(1)"
-  }
-};
-
-
-ProcRecord paintbrush_proc =
-{
-  "gimp_paintbrush",
-  "Paint in the current brush with optional fade out parameter",
-  "This tool is the standard paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable in the foreground color with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  4,
-  paintbrush_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { paintbrush_invoker } },
-};
-
-ProcRecord paintbrush_extended_proc =
-{
-  "gimp_paintbrush_extended",
-  "Paint in the current brush with optional fade out parameter",
-  "This tool is the standard paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable in the foreground color with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  paintbrush_extended_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { paintbrush_extended_invoker } },
-};
-
-ProcRecord paintbrush_extended_gradient_proc =
-{
-  "gimp_paintbrush_extended_gradient",
-  "Paint in the current brush with optional fade out parameter and a pull colors from a gradient",
-  "This tool is the gradient paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable with colors drawn from the current active gradient with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length is the distance to spread the gradient over. It is measured in pixels.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  6,
-  paintbrush_extended_gradient_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { paintbrush_extended_gradient_invoker } },
-};
-
-static Argument *
-paintbrush_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
-  double fp_value;
   int i;
 
-  drawable = NULL;
-  num_strokes = 0;
+  if (paint_core_init (&non_gui_paint_core, drawable,
+		       stroke_array[0], stroke_array[1]))
+    {
+      non_gui_gradient_length = gradient_length;
+      non_gui_gradient_type = LOOP_TRIANGLE;
 
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  fade out  */
-  if (success)
-    {
-      fp_value = args[1].value.pdb_float;
-      if (fp_value >= 0.0)
-	non_gui_fade_out = fp_value;
-      else
-	success = FALSE;
-    }
-  /* FIXME FIXME FIXME */
-  /* but we need to change the pdb call to gimp_paintbrush...ouch!! */
-  /* should this be enough to do this without breaking PDB? */
-  if (success)
-    {
-      non_gui_gradient_length = 0.0;
-      non_gui_gradient_type = 0;
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[3].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      non_gui_incremental = 0;
-      /*  set the paint core's paint func  */
+      non_gui_incremental = method;
+      
+      /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
@@ -682,209 +492,13 @@ paintbrush_invoker (Argument *args)
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /*  finish the painting  */
+      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /*  cleanup  */
+      /* Cleanup */
       paint_core_cleanup ();
+      return TRUE;
     }
-
-  return procedural_db_return_args (&paintbrush_proc, success);
-}
-
-
-static Argument *
-paintbrush_extended_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
-  double fp_value;
-  int i;
-
-  drawable = NULL;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  fade out  */
-  if (success)
-    {
-      fp_value = args[1].value.pdb_float;
-      if (fp_value >= 0.0)
-	non_gui_fade_out = fp_value;
-      else
-	success = FALSE;
-    }
-  /* FIXME FIXME FIXME */
-  /* but we need to change the pdb call to gimp_paintbrush...ouch!! */
-  /* should this be enough to do this without breaking PDB? */
-  if (success)
-    {
-      non_gui_gradient_length = 0.0;
-      non_gui_gradient_type = 3;
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[3].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      non_gui_incremental = args[4].value.pdb_int;
-      /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
-
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      if (num_strokes == 1)
-	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
-
-      /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
-
-      /*  cleanup  */
-      paint_core_cleanup ();
-    }
-
-  return procedural_db_return_args (&paintbrush_extended_proc, success);
-}
-
-
-
-
-
-
-
-
-static Argument *
-paintbrush_extended_gradient_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
-  double fp_value;
-  int i;
-
-  drawable = NULL;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  fade out  */
-  if (success)
-    {
-      fp_value = args[1].value.pdb_float;
-      if (fp_value >= 0.0)
-	non_gui_fade_out = fp_value;
-      else
-	success = FALSE;
-    }
-  /* gradient length */
-  if(success)
-    {
-      fp_value = args[2].value.pdb_float;
-      if(fp_value >= 0.0)
-	 non_gui_gradient_length = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[4].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      non_gui_incremental = args[5].value.pdb_int;
-      /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
-
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      if (num_strokes == 1)
-	paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
-
-      /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
-
-      /*  cleanup  */
-      paint_core_cleanup ();
-    }
-
-  return procedural_db_return_args (&paintbrush_extended_gradient_proc, success);
+  else
+    return FALSE;
 }

@@ -19,13 +19,12 @@
 #define __ROTATE_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
-void *        rotate_tool_transform    (Tool *, gpointer, int);
+void *        rotate_tool_transform (Tool *, gpointer, int);
+void *        rotate_tool_rotate    (GimpImage *, GimpDrawable *, GDisplay *,
+				     double, TileManager *, int, GimpMatrix);
+
 Tool *        tools_new_rotate_tool    (void);
 void          tools_free_rotate_tool   (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord rotate_proc;
 
 #endif  /*  __ROTATE_TOOL_H__  */

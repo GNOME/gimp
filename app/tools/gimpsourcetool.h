@@ -19,20 +19,18 @@
 #define __CLONE_H__
 
 #include "paint_core.h"
-#include "procedural_db.h"
 #include "tools.h"
 
 typedef enum
 {
-  ImageClone,
-  PatternClone
+  IMAGE_CLONE,
+  PATTERN_CLONE
 } CloneType;
 
 void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
+gboolean      clone_non_gui     (GimpDrawable *, GimpDrawable *, CloneType,
+    				 double, double, int, double *);
 Tool *        tools_new_clone   (void);
 void          tools_free_clone  (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord clone_proc;
 
 #endif  /*  __CLONE_H__  */

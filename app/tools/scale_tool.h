@@ -19,13 +19,12 @@
 #define __SCALE_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
-void *        scale_tool_transform  (Tool *, gpointer, int);
+void *        scale_tool_transform (Tool *, gpointer, int);
+void *        scale_tool_scale     (GimpImage *, GimpDrawable *, GDisplay *,
+				    double *, TileManager *, int, GimpMatrix);
+
 Tool *        tools_new_scale_tool  (void);
 void          tools_free_scale_tool (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord scale_proc;
 
 #endif  /*  __SCALE_TOOL_H__  */

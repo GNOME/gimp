@@ -181,6 +181,10 @@ gimp_SOURCES = \
 	gimpbrushlist.h		\
 	gimpbrushlistF.h	\
 	gimpbrushlistP.h	\
+	gimphistogram.c		\
+	gimphistogram.h		\
+	gimphistogramP.h	\
+	gimphistogramF.h	\
 	gimplist.c		\
 	gimplist.h		\
 	gimplistF.h		\
@@ -195,10 +199,7 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
-	gimphistogram.c		\
-	gimphistogram.h		\
-	gimphistogramP.h	\
-	gimphistogramF.h	\
+	gimprc_cmds.c		\
 	gimpunit.c		\
 	global_edit.c		\
 	global_edit.h		\
@@ -354,6 +355,7 @@ gimp_SOURCES = \
 	tools.c			\
 	tools.h			\
 	toolsF.h		\
+	tools_cmds.c		\
 	transform_core.c	\
 	transform_core.h	\
 	transform_tool.c	\

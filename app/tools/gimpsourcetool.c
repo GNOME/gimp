@@ -89,8 +89,6 @@ static void	    clone_line_image      (GImage *, GImage *, GimpDrawable *, GimpD
 static void         clone_line_pattern    (GImage *, GimpDrawable *, GPatternP, unsigned char *,
 					   int, int, int, int);
 
-static Argument *   clone_invoker         (Argument *);
-
 
 /*  functions  */
 
@@ -146,7 +144,7 @@ clone_options_new (void)
   tool_options_init ((ToolOptions *) options,
 		     _("Clone Tool Options"),
 		     clone_options_reset);
-  options->type    = options->type_d    = ImageClone;
+  options->type    = options->type_d    = IMAGE_CLONE;
   options->aligned = options->aligned_d = AlignNo;
 
   /*  the main vbox  */
@@ -303,7 +301,7 @@ clone_paint_func (PaintCore *paint_core,
 	orig_src_x = src_x;
 	orig_src_y = src_y;
       }
-      if (clone_options->type == PatternClone)
+      if (clone_options->type == PATTERN_CLONE)
 	if (!get_active_pattern ())
 	  g_message (_("No patterns available for this operation."));
       break;
@@ -382,7 +380,7 @@ clone_draw (Tool *tool)
 
   paint_core = (PaintCore *) tool->private;
 
-  if (clone_options->type == ImageClone)
+  if (clone_options->type == IMAGE_CLONE)
     {
       gdk_draw_line (paint_core->core->win, paint_core->core->gc,
 		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,
@@ -418,7 +416,7 @@ clone_motion (PaintCore *paint_core,
   pattern = NULL;
 
   /*  Make sure we still have a source if we are doing image cloning */
-  if (type == ImageClone)
+  if (type == IMAGE_CLONE)
     {
       if (!src_drawable)
 	return;
@@ -438,7 +436,7 @@ clone_motion (PaintCore *paint_core,
 
   switch (type)
     {
-    case ImageClone:
+    case IMAGE_CLONE:
       /*  Set the paint area to transparent  */
       memset (temp_buf_data (area), 0, area->width * area->height * area->bytes);
 
@@ -500,7 +498,7 @@ clone_motion (PaintCore *paint_core,
       pr = pixel_regions_register (2, &srcPR, &destPR);
       break;
 
-    case PatternClone:
+    case PATTERN_CLONE:
       pattern = get_active_pattern ();
 
       if (!pattern)
@@ -525,12 +523,12 @@ clone_motion (PaintCore *paint_core,
 	{
 	  switch (type)
 	    {
-	    case ImageClone:
+	    case IMAGE_CLONE:
 	      clone_line_image (gimage, src_gimage, drawable, src_drawable, s, d,
 				has_alpha, srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
-	    case PatternClone:
+	    case PATTERN_CLONE:
 	      clone_line_pattern (gimage, drawable, pattern, d,
 				  area->x + offset_x, area->y + y + offset_y,
 				  destPR.bytes, destPR.w);
@@ -630,140 +628,24 @@ clone_non_gui_paint_func (PaintCore *paint_core,
   return NULL;
 }
 
-
-/*  The clone procedure definition  */
-ProcArg clone_args[] =
+gboolean
+clone_non_gui (GimpDrawable *drawable,
+    	       GimpDrawable *src_drawable,
+	       CloneType     clone_type,
+	       double        src_x,
+	       double        src_y,
+	       int           num_strokes,
+	       double       *stroke_array)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_DRAWABLE,
-    "src_drawable",
-    "the source drawable"
-  },
-  { PDB_INT32,
-    "clone_type",
-    "the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }"
-  },
-  { PDB_FLOAT,
-    "src_x",
-    "the x coordinate in the source image"
-  },
-  { PDB_FLOAT,
-    "src_y",
-    "the y coordinate in the source image"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-
-ProcRecord clone_proc =
-{
-  "gimp_clone",
-  "Clone from the source to the dest drawable using the current brush",
-  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  7,
-  clone_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { clone_invoker } },
-};
-
-
-static Argument *
-clone_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  GimpDrawable *src_drawable;
-  double src_x, src_y;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
   int i;
-  
-  drawable = NULL;
-  num_strokes = 0;
 
-  /*  the drawable  */
-  if (success)
+  if (paint_core_init (&non_gui_paint_core, drawable,
+		       stroke_array[0], stroke_array[1]))
     {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  the src drawable  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      src_drawable = drawable_get_ID (int_value);
-      if (src_drawable == NULL || gimage != drawable_gimage (src_drawable))
-	success = FALSE;
-      else
-	non_gui_src_drawable = src_drawable;
-    }
-  /*  the clone type  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: non_gui_type = ImageClone; break;
-	case 1: non_gui_type = PatternClone; break;
-	default: success = FALSE;
-	}
-    }
-  /*  x, y offsets  */
-  if (success)
-    {
-      src_x = args[3].value.pdb_float;
-      src_y = args[4].value.pdb_float;
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[6].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      /*  set the paint core's paint func  */
+      /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = clone_non_gui_paint_func;
+
+      non_gui_src_drawable = src_drawable;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
@@ -785,12 +667,13 @@ clone_invoker (Argument *args)
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /*  finish the painting  */
+      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /*  cleanup  */
+      /* Cleanup */
       paint_core_cleanup ();
+      return TRUE;
     }
-
-  return procedural_db_return_args (&clone_proc, success);
+  else
+    return FALSE;
 }

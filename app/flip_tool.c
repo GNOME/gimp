@@ -52,12 +52,7 @@ static FlipOptions *flip_options = NULL;
 /*  forward function declarations  */
 static Tool        * tools_new_flip_horz  (void);
 static Tool        * tools_new_flip_vert  (void);
-static TileManager * flip_tool_flip_horz  (GImage *, GimpDrawable *,
-					   TileManager *, int);
-static TileManager * flip_tool_flip_vert  (GImage *, GimpDrawable *,
-					   TileManager *, int);
 static void          flip_change_type     (int);
-static Argument    * flip_invoker         (Argument *);
 
 
 /*  functions  */
@@ -259,7 +254,7 @@ tools_new_flip_vert ()
   return tool;
 }
 
-static TileManager *
+TileManager *
 flip_tool_flip_horz (GImage      *gimage,
 		     GimpDrawable *drawable,
 		     TileManager *orig,
@@ -300,7 +295,7 @@ flip_tool_flip_horz (GImage      *gimage,
   return new;
 }
 
-static TileManager *
+TileManager *
 flip_tool_flip_vert (GImage      *gimage,
 		     GimpDrawable *drawable,
 		     TileManager *orig,
@@ -351,128 +346,4 @@ flip_change_type (int new_type)
 
       tools_select (flip_options->type);
     }
-}
-
-/*  The flip procedure definition  */
-ProcArg flip_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the affected drawable"
-  },
-  { PDB_INT32,
-    "flip_type",
-    "Type of flip: { HORIZONTAL (0), VERTICAL (1) }"
-  }
-};
-
-ProcArg flip_out_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the flipped drawable"
-  }
-};
-
-ProcRecord flip_proc =
-{
-  "gimp_flip",
-  "Flip the specified drawable about its center either vertically or horizontally",
-  "This tool flips the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipd by the specified amount.  The return value is the ID of the flipped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and flipd drawable.  The flip type parameter indicates whether the flip will be applied horizontally or vertically.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  2,
-  flip_args,
-
-  /*  Output arguments  */
-  1,
-  flip_out_args,
-
-  /*  Exec method  */
-  { { flip_invoker } },
-};
-
-static Argument *
-flip_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int flip_type;
-  int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
-  int new_layer;
-  Layer *layer;
-  Argument *return_args;
-
-  drawable = NULL;
-  flip_type   = 0;
-  new_tiles   = NULL;
-  layer       = NULL;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  flip type */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: flip_type = 0; break;
-	case 1: flip_type = 1; break;
-	default: success = FALSE;
-	}
-    }
-
-  /*  call the flip procedure  */
-  if (success)
-    {
-      /*  Start a transform undo group  */
-      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-      /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
-
-      /*  flip the buffer  */
-      switch (flip_type)
-	{
-	case 0: /* horz */
-	  new_tiles = flip_tool_flip_horz (gimage, drawable, float_tiles, -1);
-	  break;
-	case 1: /* vert */
-	  new_tiles = flip_tool_flip_vert (gimage, drawable, float_tiles, -1);
-	  break;
-	}
-
-      /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
-
-      if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
-      else
-	success = FALSE;
-
-      /*  push the undo group end  */
-      undo_push_group_end (gimage);
-    }
-
-  return_args = procedural_db_return_args (&flip_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
-
-  return return_args;
 }

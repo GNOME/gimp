@@ -18,7 +18,12 @@
 #ifndef __FREE_SELECT_H__
 #define __FREE_SELECT_H__
 
-#include "procedural_db.h"
+#include "gimpimageF.h"
+
+typedef struct _FreeSelectPoint FreeSelectPoint;
+
+void          free_select (GimpImage *, int, FreeSelectPoint *, int, int, int,
+    			   double);
 
 /*  free select action functions  */
 
@@ -33,8 +38,5 @@ void          free_select_dialog       (void);
 void          free_select_draw         (Tool *);
 Tool *        tools_new_free_select    (void);
 void          tools_free_free_select   (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord free_select_proc;
 
 #endif  /*  __FREE_SELECT_H__  */

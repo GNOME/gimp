@@ -66,8 +66,10 @@ struct _ColourPickerTool
 /*  the color picker tool options  */
 static ColorPickerOptions * color_picker_options = NULL;
 
+/*  the color value  */
+int            col_value[5] = { 0, 0, 0, 0, 0 };
+
 /*  the color picker dialog  */
-static int            col_value [5] = { 0, 0, 0, 0, 0 };
 static GimpDrawable * active_drawable;
 static int            update_type;
 static int            sample_type;
@@ -89,10 +91,7 @@ static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
 static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
-static int   get_color                     (GimpImage *, GimpDrawable *, int, int, gboolean, gboolean, double, int);
 static void  color_picker_info_update      (Tool *, int);
-
-static Argument *color_picker_invoker (Argument *);
 
 
 /*  functions  */
@@ -282,20 +281,20 @@ color_picker_button_press (Tool           *tool,
    */
   if (bevent->state & GDK_SHIFT_MASK)
     {
-      color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
-						 color_picker_options->sample_merged,
-						 color_picker_options->sample_average,
-						 color_picker_options->average_radius,
-						 COLOR_NEW));
+      color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
+						  color_picker_options->sample_merged,
+						  color_picker_options->sample_average,
+						  color_picker_options->average_radius,
+						  COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
   else
     {
-      color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
-						 color_picker_options->sample_merged,
-						 color_picker_options->sample_average,
-						 color_picker_options->average_radius,
-						 COLOR_UPDATE));
+      color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
+						  color_picker_options->sample_merged,
+						  color_picker_options->sample_average,
+						  color_picker_options->average_radius,
+						  COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
 
@@ -321,11 +320,11 @@ color_picker_button_release (Tool           *tool,
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
 
-  color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
-					     color_picker_options->sample_merged,
-					     color_picker_options->sample_average,
-					     color_picker_options->average_radius,
-					     update_type));
+  color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
+					      color_picker_options->sample_merged,
+					      color_picker_options->sample_average,
+					      color_picker_options->average_radius,
+					      update_type));
 
   draw_core_stop (cp_tool->core, tool);
   tool->state = INACTIVE;
@@ -351,11 +350,11 @@ color_picker_motion (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &cp_tool->centerx, &cp_tool->centery, FALSE, TRUE);
 
-  color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
-					     color_picker_options->sample_merged,
-					     color_picker_options->sample_average,
-					     color_picker_options->average_radius,
-					     update_type));
+  color_picker_info_update (tool, pick_color (gdisp->gimage, active_drawable, x, y,
+					      color_picker_options->sample_merged,
+					      color_picker_options->sample_average,
+					      color_picker_options->average_radius,
+					      update_type));
   /*  redraw the current tool  */
   draw_core_resume (cp_tool->core, tool);
 }
@@ -402,15 +401,15 @@ color_picker_control (Tool     *tool,
 
 typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
 
-static int
-get_color (GimpImage *gimage,
-	   GimpDrawable *drawable,
-	   int      x,
-	   int      y,
-	   gboolean sample_merged,
-	   gboolean sample_average,
-	   double   average_radius,
-	   int      final)
+int
+pick_color (GimpImage *gimage,
+	    GimpDrawable *drawable,
+	    int      x,
+	    int      y,
+	    gboolean sample_merged,
+	    gboolean sample_average,
+	    double   average_radius,
+	    int      final)
 {
   guchar *color;
   int offx, offy;
@@ -650,133 +649,6 @@ tools_free_color_picker (Tool *tool)
     }
 
   g_free(cp_tool);
-}
-
-/*  The color_picker procedure definition  */
-ProcArg color_picker_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "x",
-    "x coordinate of upper-left corner of rectangle"
-  },
-  { PDB_FLOAT,
-    "y",
-    "y coordinate of upper-left corner of rectangle"
-  },
-  { PDB_INT32,
-    "sample_merged",
-    "use the composite image, not the drawable"
-  },
-  { PDB_INT32,
-    "save_color",
-    "save the color to the active palette"
-  }
-};
-
-ProcArg color_picker_out_args[] =
-{
-  { PDB_COLOR,
-    "color",
-    "the return color"
-  }
-};
-
-ProcRecord color_picker_proc =
-{
-  "gimp_color_picker",
-  "Determine the color at the given drawable coordinates",
-  "This tool determines the color at the specified coordinates.  The returned color is an RGB triplet even for grayscale and indexed drawables.  If the coordinates lie outside of the extents of the specified drawable, then an error is returned.  If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates.  If the alpha value is completely transparent (0), then an error is returned.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  color_picker_args,
-
-  /*  Output arguments  */
-  1,
-  color_picker_out_args,
-
-  /*  Exec method  */
-  { { color_picker_invoker } },
-};
-
-
-static Argument *
-color_picker_invoker (Argument *args)
-{
-  GImage *gimage;
-  int success = TRUE;
-  GimpDrawable *drawable;
-  double x, y;
-  int sample_merged;
-  int save_color;
-  int int_value;
-  Argument *return_args;
-  unsigned char *color;
-
-  drawable = NULL;
-  x             = 0;
-  y             = 0;
-  sample_merged = FALSE;
-  save_color    = COLOR_UPDATE;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  x, y  */
-  if (success)
-    {
-      x = args[1].value.pdb_float;
-      y = args[2].value.pdb_float;
-    }
-  /*  sample_merged  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      sample_merged = (int_value) ? TRUE : FALSE;
-    }
-  /*  save_color  */
-  if (success)
-    {
-      int_value = args[4].value.pdb_int;
-      save_color = (int_value) ? COLOR_NEW : COLOR_UPDATE;
-    }
-
-  /*  Make sure that if we're not using the composite, the specified drawable is valid  */
-  if (success && !sample_merged)
-    if (!drawable || (drawable_gimage (drawable)) != gimage)
-      success = FALSE;
-
-  /*  call the color_picker procedure  */
-  if (success)
-    success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, FALSE, 1.0, save_color);
-
-  return_args = procedural_db_return_args (&color_picker_proc, success);
-
-  if (success)
-    {
-      color = (unsigned char *) g_malloc (3);
-      color[RED_PIX] = col_value[RED_PIX];
-      color[GREEN_PIX] = col_value[GREEN_PIX];
-      color[BLUE_PIX] = col_value[BLUE_PIX];
-      return_args[1].value.pdb_pointer = color;
-    }
-
-  return return_args;
 }
 
 static void

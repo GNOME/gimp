@@ -31,11 +31,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define X1 0
-#define Y1 1
-#define X2 2
-#define Y2 3
-
 /*  storage for information dialog fields  */
 static gchar       orig_width_buf  [MAX_INFO_BUF];
 static gchar       orig_height_buf [MAX_INFO_BUF];
@@ -47,12 +42,9 @@ static gchar       y_ratio_buf     [MAX_INFO_BUF];
 static GtkWidget  *sizeentry;
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, GimpDrawable *, GDisplay *,
-				       double *, TileManager *, int, GimpMatrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
-static Argument *  scale_invoker      (Argument *);
 
 /*  callback functions for the info dialog fields  */
 static void        scale_size_changed (GtkWidget *w, gpointer data);
@@ -129,10 +121,10 @@ scale_tool_transform (Tool     *tool,
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
 				0, transform_core->y2- transform_core->y1);
 
-      transform_core->trans_info [X1] = (double) transform_core->x1;
-      transform_core->trans_info [Y1] = (double) transform_core->y1;
-      transform_core->trans_info [X2] = (double) transform_core->x2;
-      transform_core->trans_info [Y2] = (double) transform_core->y2;
+      transform_core->trans_info [X0] = (double) transform_core->x1;
+      transform_core->trans_info [Y0] = (double) transform_core->y1;
+      transform_core->trans_info [X1] = (double) transform_core->x2;
+      transform_core->trans_info [Y1] = (double) transform_core->y2;
 
       return NULL;
       break;
@@ -174,10 +166,10 @@ tools_new_scale_tool ()
 
   /*  set the rotation specific transformation attributes  */
   private->trans_func = scale_tool_transform;
+  private->trans_info[X0] = 0;
+  private->trans_info[Y0] = 0;
   private->trans_info[X1] = 0;
   private->trans_info[Y1] = 0;
-  private->trans_info[X2] = 0;
-  private->trans_info[Y2] = 0;
 
   /*  assemble the transformation matrix  */
   gimp_matrix_identity (private->transform);
@@ -236,10 +228,10 @@ scale_info_update (Tool *tool)
     }
 
   /*  Find current sizes  */
-  x3 = (int) transform_core->trans_info [X1];
-  y3 = (int) transform_core->trans_info [Y1];
-  x4 = (int) transform_core->trans_info [X2];
-  y4 = (int) transform_core->trans_info [Y2];
+  x3 = (int) transform_core->trans_info [X0];
+  y3 = (int) transform_core->trans_info [Y0];
+  x4 = (int) transform_core->trans_info [X1];
+  y4 = (int) transform_core->trans_info [Y1];
 
   size_vals[0] = x4 - x3;
   size_vals[1] = y4 - y3;
@@ -278,16 +270,16 @@ scale_size_changed (GtkWidget *w,
       width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
       height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
 
-      if ((width != (transform_core->trans_info[X2] -
-		     transform_core->trans_info[X1])) ||
-	  (height != (transform_core->trans_info[Y2] -
-		      transform_core->trans_info[Y1])))
+      if ((width != (transform_core->trans_info[X1] -
+		     transform_core->trans_info[X0])) ||
+	  (height != (transform_core->trans_info[Y1] -
+		      transform_core->trans_info[Y0])))
 	{
 	  draw_core_pause (transform_core->core, tool);
-	  transform_core->trans_info[X2] =
-	    transform_core->trans_info[X1] + width;
-	  transform_core->trans_info[Y2] =
-	    transform_core->trans_info[Y1] + height;
+	  transform_core->trans_info[X1] =
+	    transform_core->trans_info[X0] + width;
+	  transform_core->trans_info[Y1] =
+	    transform_core->trans_info[Y0] + height;
 	  scale_tool_recalc (tool, gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
@@ -323,33 +315,33 @@ scale_tool_motion (Tool *tool,
   switch (transform_core->function)
     {
     case HANDLE_1 :
-      x1 = &transform_core->trans_info [X1];
-      y1 = &transform_core->trans_info [Y1];
-      x2 = &transform_core->trans_info [X2];
-      y2 = &transform_core->trans_info [Y2];
+      x1 = &transform_core->trans_info [X0];
+      y1 = &transform_core->trans_info [Y0];
+      x2 = &transform_core->trans_info [X1];
+      y2 = &transform_core->trans_info [Y1];
       dir_x = dir_y = 1;
       break;
     case HANDLE_2 :
-      x1 = &transform_core->trans_info [X2];
-      y1 = &transform_core->trans_info [Y1];
-      x2 = &transform_core->trans_info [X1];
-      y2 = &transform_core->trans_info [Y2];
+      x1 = &transform_core->trans_info [X1];
+      y1 = &transform_core->trans_info [Y0];
+      x2 = &transform_core->trans_info [X0];
+      y2 = &transform_core->trans_info [Y1];
       dir_x = -1;
       dir_y = 1;
       break;
     case HANDLE_3 :
-      x1 = &transform_core->trans_info [X1];
-      y1 = &transform_core->trans_info [Y2];
-      x2 = &transform_core->trans_info [X2];
-      y2 = &transform_core->trans_info [Y1];
+      x1 = &transform_core->trans_info [X0];
+      y1 = &transform_core->trans_info [Y1];
+      x2 = &transform_core->trans_info [X1];
+      y2 = &transform_core->trans_info [Y0];
       dir_x = 1;
       dir_y = -1;
       break;
     case HANDLE_4 :
-      x1 = &transform_core->trans_info [X2];
-      y1 = &transform_core->trans_info [Y2];
-      x2 = &transform_core->trans_info [X1];
-      y2 = &transform_core->trans_info [Y1];
+      x1 = &transform_core->trans_info [X1];
+      y1 = &transform_core->trans_info [Y1];
+      x2 = &transform_core->trans_info [X0];
+      y2 = &transform_core->trans_info [Y0];
       dir_x = dir_y = -1;
       break;
     default :
@@ -416,10 +408,10 @@ scale_tool_recalc (Tool *tool,
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
-  x1 = (int) transform_core->trans_info [X1];
-  y1 = (int) transform_core->trans_info [Y1];
-  x2 = (int) transform_core->trans_info [X2];
-  y2 = (int) transform_core->trans_info [Y2];
+  x1 = (int) transform_core->trans_info [X0];
+  y1 = (int) transform_core->trans_info [Y0];
+  x2 = (int) transform_core->trans_info [X1];
+  y2 = (int) transform_core->trans_info [Y1];
 
   scalex = scaley = 1.0;
   if (transform_core->x2 - transform_core->x1)
@@ -470,7 +462,7 @@ scale_tool_recalc (Tool *tool,
   return (void *) 1;
 }
 
-static void *
+void *
 scale_tool_scale (GImage       *gimage,
 		  GimpDrawable *drawable,
 		  GDisplay     *gdisp,
@@ -491,160 +483,4 @@ scale_tool_scale (GImage       *gimage,
     progress_end (progress);
 
   return ret;
-}
-
-
-/*  The scale procedure definition  */
-ProcArg scale_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the affected drawable"
-  },
-  { PDB_INT32,
-    "interpolation",
-    "whether to use interpolation"
-  },
-  { PDB_FLOAT,
-    "x1",
-    "the x coordinate of the upper-left corner of newly scaled region"
-  },
-  { PDB_FLOAT,
-    "y1",
-    "the y coordinate of the upper-left corner of newly scaled region"
-  },
-  { PDB_FLOAT,
-    "x2",
-    "the x coordinate of the lower-right corner of newly scaled region"
-  },
-  { PDB_FLOAT,
-    "y2",
-    "the y coordinate of the lower-right corner of newly scaled region"
-  }
-};
-
-ProcArg scale_out_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the scaled drawable"
-  }
-};
-
-ProcRecord scale_proc =
-{
-  "gimp_scale",
-  "Scale the specified drawable",
-  "This tool scales the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting scaled drawable.  The return value is the ID of the scaled drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and scaled drawable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  6,
-  scale_args,
-
-  /*  Output arguments  */
-  1,
-  scale_out_args,
-
-  /*  Exec method  */
-  { { scale_invoker } },
-};
-
-
-static Argument *
-scale_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int interpolation;
-  double trans_info[4];
-  int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
-  GimpMatrix matrix;
-  int new_layer;
-  Layer *layer;
-  Argument *return_args;
-
-  drawable = NULL;
-  layer = NULL;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  interpolation  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      interpolation = (int_value) ? TRUE : FALSE;
-    }
-  /*  scale extents  */
-  if (success)
-    {
-      trans_info[X1] = args[2].value.pdb_float;
-      trans_info[Y1] = args[3].value.pdb_float;
-      trans_info[X2] = args[4].value.pdb_float;
-      trans_info[Y2] = args[5].value.pdb_float;
-
-      if (trans_info[X1] >= trans_info[X2] ||
-	  trans_info[Y1] >= trans_info[Y2])
-	success = FALSE;
-    }
-
-  /*  call the scale procedure  */
-  if (success)
-    {
-      double scalex, scaley;
-
-      /*  Start a transform undo group  */
-      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-      /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
-
-      scalex = scaley = 1.0;
-      if (float_tiles->width)
-	scalex = (trans_info[X2] - trans_info[X1]) / (double) float_tiles->width;
-      if (float_tiles->height)
-	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->height;
-
-      /*  assemble the transformation matrix  */
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, float_tiles->x, float_tiles->y);
-      gimp_matrix_scale     (matrix, scalex, scaley);
-      gimp_matrix_translate (matrix, trans_info[X1], trans_info[Y1]);
-
-      /*  scale the buffer  */
-      new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
-				    float_tiles, interpolation, matrix);
-
-      /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
-
-      if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
-      else
-	success = FALSE;
-
-      /*  push the undo group end  */
-      undo_push_group_end (gimage);
-    }
-
-  return_args = procedural_db_return_args (&scale_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
-
-  return return_args;
 }

@@ -19,7 +19,6 @@
 #define __GIMPRC_H__
 
 #include <glib.h>
-#include "procedural_db.h"
 #include "libgimp/gimpunit.h"
 
 /*  global gimprc variables  */
@@ -83,9 +82,7 @@ void    init_parse_buffers (); /* this has to be called before any file
 void    parse_gimprc (void);
 void    parse_gimprc_file (char *filename);
 void    save_gimprc (GList **updated_options, GList **conflicting_options);
-
-/*  procedural database procs  */
-extern ProcRecord gimprc_query_proc;
-extern ProcRecord gimprc_set_proc;
+char *  gimprc_find_token (char *token);
+void    save_gimprc_strings (gchar *token, gchar *value);
 
 #endif  /*  __GIMPRC_H__  */

@@ -19,15 +19,17 @@
 #define __FLIP_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
 /*  Flip tool functions  */
 
-void *        flip_tool_transform    (Tool *, gpointer, int);
+void *        flip_tool_transform (Tool *, gpointer, int);
+
+TileManager * flip_tool_flip_horz (GimpImage *, GimpDrawable *,
+                                   TileManager *, int);
+TileManager * flip_tool_flip_vert (GimpImage *, GimpDrawable *,
+                                   TileManager *, int);
+
 Tool *        tools_new_flip         (void);
 void          tools_free_flip_tool   (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord flip_proc;
 
 #endif  /*  __FLIP_TOOL_H__  */

@@ -18,13 +18,16 @@
 #ifndef  __COLOR_PICKER_H__
 #define  __COLOR_PICKER_H__
 
-#include "procedural_db.h"
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
 #include "tools.h"
+
+int         pick_color (GimpImage *, GimpDrawable *, int , int,
+			gboolean, gboolean, double, int);
 
 Tool *      tools_new_color_picker   (void);
 void        tools_free_color_picker  (Tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord color_picker_proc;
+extern int col_value[5];
 
 #endif  /*  __COLOR_PICKER_H__  */

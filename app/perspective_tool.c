@@ -31,27 +31,14 @@
 
 #include "tile_manager_pvt.h"
 
-#define X0 0
-#define Y0 1
-#define X1 2
-#define Y1 3
-#define X2 4
-#define Y2 5
-#define X3 6
-#define Y3 7
 
 /*  storage for information dialog fields  */
 static char        matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, GimpDrawable *,
-						 GDisplay *, TileManager *,
-						 int, GimpMatrix);
-static void        perspective_find_transform   (double *, GimpMatrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
 static void        perspective_info_update      (Tool *);
-static Argument *  perspective_invoker          (Argument *);
 
 void *
 perspective_tool_transform (Tool     *tool,
@@ -259,7 +246,7 @@ perspective_tool_recalc (Tool *tool,
 }
 
 
-static void
+void
 perspective_find_transform (double     *coords,
 			    GimpMatrix  m)
 {
@@ -308,7 +295,7 @@ perspective_find_transform (double     *coords,
 }
 
 
-static void *
+void *
 perspective_tool_perspective (GImage       *gimage,
 			      GimpDrawable *drawable,
 			      GDisplay     *gdisp,
@@ -328,185 +315,4 @@ perspective_tool_perspective (GImage       *gimage,
     progress_end (progress);
 
   return ret;
-}
-
-
-/*  The perspective procedure definition  */
-ProcArg perspective_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the affected drawable"
-  },
-  { PDB_INT32,
-    "interpolation",
-    "whether to use interpolation"
-  },
-  { PDB_FLOAT,
-    "x0",
-    "the new x coordinate of upper-left corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "y0",
-    "the new y coordinate of upper-left corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "x1",
-    "the new x coordinate of upper-right corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "y1",
-    "the new y coordinate of upper-right corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "x2",
-    "the new x coordinate of lower-left corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "y2",
-    "the new y coordinate of lower-left corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "x3",
-    "the new x coordinate of lower-right corner of original bounding box"
-  },
-  { PDB_FLOAT,
-    "y3",
-    "the new y coordinate of lower-right corner of original bounding box"
-  }
-};
-
-ProcArg perspective_out_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the newly mapped drawable"
-  }
-};
-
-ProcRecord perspective_proc =
-{
-  "gimp_perspective",
-  "Perform a possibly non-affine transformation on the specified drawable",
-  "This tool performs a possibly non-affine transformation on the specified drawable by allowing the corners of the original bounding box to be arbitrarily remapped to any values.  The specified drawable is remapped if no selection exists.  However, if a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then remapped as specified.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting remapped drawable.  The return value is the ID of the remapped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and remapped drawable.  The 4 coordinates specify the new locations of each corner of the original bounding box.  By specifying these values, any affine transformation (rotation, scaling, translation) can be affected.  Additionally, these values can be specified such that the resulting transformed drawable will appear to have been projected via a perspective transform.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  10,
-  perspective_args,
-
-  /*  Output arguments  */
-  1,
-  perspective_out_args,
-
-  /*  Exec method  */
-  { { perspective_invoker } },
-};
-
-
-static Argument *
-perspective_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int interpolation;
-  double trans_info[8];
-  int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
-  GimpMatrix matrix;
-  int new_layer;
-  Layer *layer;
-  Argument *return_args;
-
-  drawable = NULL;
-  layer = NULL;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  interpolation  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      interpolation = (int_value) ? TRUE : FALSE;
-    }
-  /*  perspective extents  */
-  if (success)
-    {
-      trans_info[X0] = args[2].value.pdb_float;
-      trans_info[Y0] = args[3].value.pdb_float;
-      trans_info[X1] = args[4].value.pdb_float;
-      trans_info[Y1] = args[5].value.pdb_float;
-      trans_info[X2] = args[6].value.pdb_float;
-      trans_info[Y2] = args[7].value.pdb_float;
-      trans_info[X3] = args[8].value.pdb_float;
-      trans_info[Y3] = args[9].value.pdb_float;
-    }
-
-  /*  call the perspective procedure  */
-  if (success)
-    {
-      double cx, cy;
-      double scalex, scaley;
-      GimpMatrix m;
-
-      /*  Start a transform undo group  */
-      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-      /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
-
-      /*  determine the perspective transform that maps from
-       *  the unit cube to the trans_info coordinates
-       */
-      perspective_find_transform (trans_info, m);
-
-      cx     = float_tiles->x;
-      cy     = float_tiles->y;
-      scalex = 1.0;
-      scaley = 1.0;
-      if (float_tiles->width)
-	scalex = 1.0 / float_tiles->width;
-      if (float_tiles->height)
-	scaley = 1.0 / float_tiles->height;
-
-      /*  assemble the transformation matrix  */
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, -cx, -cy);
-      gimp_matrix_scale     (matrix, scalex, scaley);
-      gimp_matrix_mult      (m, matrix);
-
-      /*  perspective the buffer  */
-      new_tiles = perspective_tool_perspective (gimage, drawable, NULL, float_tiles, interpolation, matrix);
-
-      /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
-
-      if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
-      else
-	success = FALSE;
-
-      /*  push the undo group end  */
-      undo_push_group_end (gimage);
-    }
-
-  return_args = procedural_db_return_args (&perspective_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
-
-  return return_args;
 }

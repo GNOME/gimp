@@ -19,18 +19,17 @@
 #define __BY_COLOR_SELECT_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 #include "gdisplayF.h"
 #include "gimage.h"
 
 /*  by_color select functions  */
+void          by_color_select (GimpImage *, GimpDrawable *, guchar *, int,
+    			       int, int, int, double, int);
+
 Tool *        tools_new_by_color_select      (void);
 void          tools_free_by_color_select     (Tool *);
 
 void          by_color_select_initialize          (GDisplay *);
 void          by_color_select_initialize_by_image (GImage *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord by_color_select_proc;
 
 #endif  /*  __BY_COLOR_SELECT_H__  */

@@ -47,27 +47,27 @@ struct _BucketTool
 typedef struct _BucketOptions BucketOptions;
 struct _BucketOptions
 {
-  ToolOptions  tool_options;
+  ToolOptions     tool_options;
 
-  double       opacity;
-  double       opacity_d;
-  GtkObject   *opacity_w;
+  double          opacity;
+  double          opacity_d;
+  GtkObject      *opacity_w;
 
-  int          paint_mode;
-  int          paint_mode_d;
-  GtkWidget   *paint_mode_w;
+  int             paint_mode;
+  int             paint_mode_d;
+  GtkWidget      *paint_mode_w;
 
-  double       threshold;
-  double       threshold_d;
-  GtkObject   *threshold_w;
+  double          threshold;
+  double          threshold_d;
+  GtkObject      *threshold_w;
 
-  int          sample_merged;
-  int          sample_merged_d;
-  GtkWidget   *sample_merged_w;
+  int             sample_merged;
+  int             sample_merged_d;
+  GtkWidget      *sample_merged_w;
 
-  FillMode     fill_mode;
-  FillMode     fill_mode_d;
-  GtkWidget   *fill_mode_w[2];  /* 2 radio buttons */
+  BucketFillMode  fill_mode;
+  BucketFillMode  fill_mode_d;
+  GtkWidget      *fill_mode_w[2];  /* 2 radio buttons */
 };
 
 
@@ -82,19 +82,13 @@ static void  bucket_fill_motion          (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_control         (Tool *, int, gpointer);
 
-static void  bucket_fill                 (GImage *, GimpDrawable *, FillMode,
-					  int, double, double,
-					  int, double, double);
-
-static void  bucket_fill_region          (FillMode, PixelRegion *, PixelRegion *,
+static void  bucket_fill_region          (BucketFillMode, PixelRegion *, PixelRegion *,
 					  unsigned char *, TempBuf *,
 					  int, int, int);
 static void  bucket_fill_line_color      (unsigned char *, unsigned char *,
 					  unsigned char *, int, int, int);
 static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
 					  TempBuf *, int, int, int, int, int);
-
-static Argument *bucket_fill_invoker     (Argument *);
 
 
 /*  functions  */
@@ -103,7 +97,7 @@ static void
 bucket_fill_mode_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
-  bucket_options->fill_mode = (FillMode) client_data;
+  bucket_options->fill_mode = (BucketFillMode) client_data;
 }
 
 static void
@@ -128,7 +122,7 @@ bucket_options_reset (void)
 				options->sample_merged_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
-  gtk_toggle_button_set_active (((options->fill_mode_d == FgColorFill) ?
+  gtk_toggle_button_set_active (((options->fill_mode_d == FG_BUCKET_FILL) ?
 				 GTK_TOGGLE_BUTTON (options->fill_mode_w[0]) :
 				 GTK_TOGGLE_BUTTON (options->fill_mode_w[1])),
 				TRUE);
@@ -168,7 +162,7 @@ bucket_options_new (void)
   options->paint_mode    = options->paint_mode_d    = NORMAL;
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold     = options->threshold_d     = 15.0;
-  options->fill_mode     = options->fill_mode_d     = FgColorFill;
+  options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -269,7 +263,7 @@ bucket_options_new (void)
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) bucket_fill_mode_callback,
-			  (gpointer) ((long) (i == 1 ? PatternFill : FgColorFill)));  /* kludgy */
+			  (gpointer) ((long) (i == 1 ? PATTERN_BUCKET_FILL : FG_BUCKET_FILL)));  /* kludgy */
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
@@ -318,7 +312,7 @@ bucket_fill_button_release (Tool           *tool,
 {
   GDisplay * gdisp;
   BucketTool * bucket_tool;
-  FillMode fill_mode;
+  BucketFillMode fill_mode;
   Argument *return_vals;
   int nreturn_vals;
 
@@ -334,8 +328,8 @@ bucket_fill_button_release (Tool           *tool,
       fill_mode = bucket_options->fill_mode;
 
       /*  If the mode is color filling, and shift mask is down, fill with background  */
-      if (bevent->state & GDK_SHIFT_MASK && fill_mode == FgColorFill)
-	fill_mode = BgColorFill;
+      if (bevent->state & GDK_SHIFT_MASK && fill_mode == FG_BUCKET_FILL)
+	fill_mode = BG_BUCKET_FILL;
 
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
@@ -411,16 +405,16 @@ bucket_fill_control (Tool     *tool,
 }
 
 
-static void
-bucket_fill (GImage       *gimage,
-	     GimpDrawable *drawable,
-	     FillMode      fill_mode,
-	     int           paint_mode,
-	     double        opacity,
-	     double        threshold,
-	     int           sample_merged,
-	     double        x,
-	     double        y)
+void
+bucket_fill (GimpImage      *gimage,
+	     GimpDrawable   *drawable,
+	     BucketFillMode  fill_mode,
+	     int             paint_mode,
+	     double          opacity,
+	     double          threshold,
+	     int             sample_merged,
+	     double          x,
+	     double          y)
 {
   TileManager *buf_tiles;
   PixelRegion bufPR, maskPR;
@@ -435,11 +429,11 @@ bucket_fill (GImage       *gimage,
 
   pat_buf = NULL;
 
-  if (fill_mode == FgColorFill)
+  if (fill_mode == FG_BUCKET_FILL)
     gimage_get_foreground (gimage, drawable, col);
-  else if (fill_mode == BgColorFill)
+  else if (fill_mode == BG_BUCKET_FILL)
     gimage_get_background (gimage, drawable, col);
-  else if (fill_mode == PatternFill)
+  else if (fill_mode == PATTERN_BUCKET_FILL)
     {
       pattern = get_active_pattern ();
 
@@ -629,14 +623,14 @@ bucket_fill_line_pattern (unsigned char *buf,
 
 
 static void
-bucket_fill_region (FillMode       fill_mode,
-		    PixelRegion   *bufPR,
-		    PixelRegion   *maskPR,
-		    unsigned char *col,
-		    TempBuf       *pattern,
-		    int            off_x,
-		    int            off_y,
-		    int            has_alpha)
+bucket_fill_region (BucketFillMode  fill_mode,
+		    PixelRegion    *bufPR,
+		    PixelRegion    *maskPR,
+		    unsigned char  *col,
+		    TempBuf        *pattern,
+		    int             off_x,
+		    int             off_y,
+		    int             has_alpha)
 {
   unsigned char *s, *m;
   int y;
@@ -654,11 +648,11 @@ bucket_fill_region (FillMode       fill_mode,
 	{
 	  switch (fill_mode)
 	    {
-	    case FgColorFill:
-	    case BgColorFill:
+	    case FG_BUCKET_FILL:
+	    case BG_BUCKET_FILL:
 	      bucket_fill_line_color (s, m, col, has_alpha, bufPR->bytes, bufPR->w);
 	      break;
-	    case PatternFill:
+	    case PATTERN_BUCKET_FILL:
 	      bucket_fill_line_pattern (s, m, pattern, has_alpha, bufPR->bytes,
 					off_x + bufPR->x, off_y + y + bufPR->y, bufPR->w);
 	      break;
@@ -721,159 +715,4 @@ tools_free_bucket_fill (Tool *tool)
   bucket_tool = (BucketTool *) tool->private;
 
   g_free (bucket_tool);
-}
-
-
-
-/*  The bucket fill procedure definition  */
-ProcArg bucket_fill_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the affected drawable"
-  },
-  { PDB_INT32,
-    "fill_mode",
-    "the type of fill: { FG-BUCKET-FILL (0), BG-BUCKET-FILL (1), PATTERN-BUCKET-FILL (2) }"
-  },
-  { PDB_INT32,
-    "paint_mode",
-    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
-  },
-  { PDB_FLOAT,
-    "opacity",
-    "the opacity of the final bucket fill (0 <= opacity <= 100)"
-  },
-  { PDB_FLOAT,
-    "threshold",
-    "the threshold determines how extensive the seed fill will be.  It's value is specified in terms of intensity levels (0 <= threshold <= 255).  This parameter is only valid when there is no selection in the specified image."
-  },
-  { PDB_INT32,
-    "sample_merged",
-    "use the composite image, not the drawable"
-  },
-  { PDB_FLOAT,
-    "x",
-    "the x coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
-  },
-  { PDB_FLOAT,
-    "y",
-    "the y coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
-  },
-};
-
-ProcRecord bucket_fill_proc =
-{
-  "gimp_bucket_fill",
-  "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
-  "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern.  If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter.  If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of merged sampling, the x,y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  8,
-  bucket_fill_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { bucket_fill_invoker } },
-};
-
-
-static Argument *
-bucket_fill_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  FillMode fill_mode;
-  int paint_mode;
-  double opacity;
-  double threshold;
-  int sample_merged;
-  double x, y;
-  int int_value;
-  double fp_value;
-
-  drawable    = NULL;
-  fill_mode   = BgColorFill;
-  paint_mode  = NORMAL_MODE;
-  opacity     = 100.0;
-  threshold   = 0.0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)
-	success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  fill mode  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: fill_mode = FgColorFill; break;
-	case 1: fill_mode = BgColorFill; break;
-	case 2: fill_mode = PatternFill; break;
-	default: success = FALSE;
-	}
-    }
-  /*  paint mode  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
-	paint_mode = int_value;
-      else
-	success = FALSE;
-    }
-  /*  opacity  */
-  if (success)
-    {
-      fp_value = args[3].value.pdb_float;
-      if (fp_value >= 0.0 && fp_value <= 100.0)
-	opacity = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  threshold  */
-  if (success)
-    {
-      fp_value = args[4].value.pdb_float;
-      if (fp_value >= 0.0 && fp_value <= 255.0)
-	threshold = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  sample_merged  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      sample_merged = (int_value) ? TRUE : FALSE;
-    }
-  /*  x, y  */
-  if (success)
-    {
-      x = args[6].value.pdb_float;
-      y = args[7].value.pdb_float;
-    }
-
-  /*  call the blend procedure  */
-  if (success)
-    {
-      bucket_fill (gimage, drawable, fill_mode, paint_mode,
-		   opacity, threshold, sample_merged, x, y);
-    }
-
-  return procedural_db_return_args (&bucket_fill_proc, success);
 }

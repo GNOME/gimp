@@ -18,20 +18,21 @@
 #ifndef  __BUCKET_FILL_H__
 #define  __BUCKET_FILL_H__
 
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
 #include "tools.h"
-#include "procedural_db.h"
 
 typedef enum
 {
-  FgColorFill,
-  BgColorFill,
-  PatternFill
-} FillMode;
+  FG_BUCKET_FILL,
+  BG_BUCKET_FILL,
+  PATTERN_BUCKET_FILL
+} BucketFillMode;
+
+void        bucket_fill (GimpImage *, GimpDrawable *, BucketFillMode, int,
+    			 double, double, int, double, double);
 
 Tool *      tools_new_bucket_fill   (void);
 void        tools_free_bucket_fill  (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord bucket_fill_proc;
 
 #endif  /*  __BUCKET_FILL_H__  */

@@ -44,7 +44,6 @@ struct _free_select
   int             op;         /*  selection operation (ADD, SUB, etc)     */
 };
 
-typedef struct _FreeSelectPoint FreeSelectPoint;
 struct _FreeSelectPoint
 {
   double x, y;
@@ -57,10 +56,6 @@ static SelectionOptions * free_options = NULL;
 /*  The global array of XPoints for drawing the polygon...  */
 static GdkPoint *         global_pts = NULL;
 static int                max_segs = 0;
-
-
-/*  local function prototypes  */
-static Argument *free_select_invoker (Argument *);
 
 
 /*  functions  */
@@ -277,7 +272,7 @@ scan_convert (GimpImage* gimage, int num_pts, FreeSelectPoint *pts,
 /*************************************/
 /*  Polygonal selection apparatus  */
 
-static void
+void
 free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
 	     int antialias, int feather, double feather_radius)
 {
@@ -501,134 +496,4 @@ tools_free_free_select (Tool *tool)
 
   draw_core_free (free_sel->core);
   g_free (free_sel);
-}
-
-/*  The free_select procedure definition  */
-ProcArg free_select_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_INT32,
-    "num_pts",
-    "number of points (count 1 coordinate as two points)"
-  },
-  { PDB_FLOATARRAY,
-    "segs",
-    "array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}"
-  },
-  { PDB_INT32,
-    "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
-  },
-  { PDB_INT32,
-    "antialias",
-    "antialiasing option for selections"
-  },
-  { PDB_INT32,
-    "feather",
-    "feather option for selections"
-  },
-  { PDB_FLOAT,
-    "feather_radius",
-    "radius for feather operation"
-  }
-};
-
-ProcRecord free_select_proc =
-{
-  "gimp_free_select",
-  "Create a polygonal selection over the specified image",
-  "This tool creates a polygonal selection over the specified image.  The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask.  The polygon is specified through an array of floating point numbers and its length.  The length of array must be 2n, where n is the number of points.  Each point is defined by 2 floating point values which correspond to the x and y coordinates.  If the final point does not connect to the starting point, a connecting segment is automatically added.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  7,
-  free_select_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { free_select_invoker } },
-};
-
-
-static Argument *
-free_select_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  int op;
-  int antialias;
-  int feather;
-  int num_pts;
-  FreeSelectPoint *pt_array;
-  double feather_radius;
-  int int_value;
-
-  op      = REPLACE;
-  num_pts = 0;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  num pts  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value >= 2)
-	num_pts = int_value / 2;
-      else
-	success = FALSE;
-    }
-  /*  point array  */
-  if (success)
-    pt_array = (FreeSelectPoint *) args[2].value.pdb_pointer;
-  /*  operation  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: op = ADD; break;
-	case 1: op = SUB; break;
-	case 2: op = REPLACE; break;
-	case 3: op = INTERSECT; break;
-	default: success = FALSE;
-	}
-    }
-  /*  antialiasing  */
-  if (success)
-    {
-      int_value = args[4].value.pdb_int;
-      antialias = (int_value) ? TRUE : FALSE;
-    }
-  /*  feathering  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      feather = (int_value) ? TRUE : FALSE;
-    }
-  /*  feather radius  */
-  if (success)
-    {
-      feather_radius = args[6].value.pdb_float;
-    }
-
-  /*  call the free_select procedure  */
-  if (success)
-    free_select (gimage, num_pts, pt_array,
-		 op, antialias, feather, feather_radius);
-
-  return procedural_db_return_args (&free_select_proc, success);
 }

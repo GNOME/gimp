@@ -20,7 +20,6 @@
 
 #include "gimage.h"
 #include "tools.h"
-#include "procedural_db.h"
 
 
 /*  fuzzy select functions  */
@@ -29,9 +28,11 @@ void          tools_free_fuzzy_select     (Tool *);
 
 
 /*  functions  */
-Channel *     find_contiguous_region      (GImage *, GimpDrawable *, int, int, int, int, int);
+Channel *     find_contiguous_region (GimpImage *, GimpDrawable *, int, int,
+    				      int, int, int);
+void          fuzzy_select           (GimpImage *, GimpDrawable *, int, int,
+     				      double);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord fuzzy_select_proc;
+extern Channel *fuzzy_mask;
 
 #endif  /*  __FUZZY_SELECT_H__  */

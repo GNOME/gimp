@@ -59,8 +59,6 @@ static gboolean       non_gui_incremental;
 /*  forward function declarations  */
 static void       eraser_motion            (PaintCore *, GimpDrawable *,
 					    gboolean, gboolean);
-static Argument * eraser_invoker           (Argument *);
-static Argument * eraser_extended_invoker  (Argument *);
 
 
 /*  functions  */
@@ -217,141 +215,22 @@ eraser_non_gui_paint_func (PaintCore    *paint_core,
   return NULL;
 }
 
-
-/*  The eraser procedure definition  */
-ProcArg eraser_extended_args[] =
+gboolean
+eraser_non_gui (GimpDrawable *drawable,
+    		int           num_strokes,
+		double       *stroke_array,
+		int           hardness,
+		int           method)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  },
-  { PDB_INT32,
-    "hardness",
-    "SOFT(0) or HARD(1)"
-  },
-  { PDB_INT32,
-    "method",
-    "CONTINUOUS(0) or INCREMENTAL(1)"
-  }
-};
-
-ProcArg eraser_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-
-ProcRecord eraser_proc =
-{
-  "gimp_eraser",
-  "Erase using the current brush",
-  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  eraser_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { eraser_invoker } },
-};
-
-ProcRecord eraser_extended_proc =
-{
-  "gimp_eraser_extended",
-  "Erase using the current brush",
-  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  eraser_extended_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { eraser_extended_invoker } },
-};
-
-static Argument *
-eraser_invoker (args)
-     Argument *args;
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
   int i;
-
-  drawable = NULL;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
+  
+  if (paint_core_init (&non_gui_paint_core, drawable,
+		       stroke_array[0], stroke_array[1]))
     {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
+      non_gui_hard = hardness;
+      non_gui_incremental = method;
 
-      /*  point array  */
-  if (success)
-    stroke_array = (double *) args[2].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      non_gui_hard=0; non_gui_incremental = 0;
-      /*  set the paint core's paint func  */
+      /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = eraser_non_gui_paint_func;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
@@ -371,94 +250,13 @@ eraser_invoker (args)
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /*  finish the painting  */
+      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /*  cleanup  */
+      /* Cleanup */
       paint_core_cleanup ();
+      return TRUE;
     }
-
-  return procedural_db_return_args (&eraser_proc, success);
-}
-
-static Argument *
-eraser_extended_invoker (args)
-     Argument *args;
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
-  int i;
-
-  drawable = NULL;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-      /*  point array  */
-  if (success)
-    stroke_array = (double *) args[2].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-  {
-  	non_gui_hard = args[3].value.pdb_int;
-	non_gui_incremental = args[4].value.pdb_int;
-  }
-
-  if (success)
-    {
-      /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = eraser_non_gui_paint_func;
-
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      if (num_strokes == 1)
-	eraser_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
-
-      /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
-
-      /*  cleanup  */
-      paint_core_cleanup ();
-    }
-
-  return procedural_db_return_args (&eraser_proc, success);
+  else
+    return FALSE;
 }

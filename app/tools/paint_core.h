@@ -46,12 +46,13 @@ typedef enum
 } PaintApplicationMode;
 
 /* gradient paint modes */
-#define ONCE_FORWARD 0     /* paint through once, then stop */
-#define ONCE_BACKWARDS 1   /* paint once, then stop, but run the gradient the other way */
-#define LOOP_SAWTOOTH 2    /* keep painting, looping through the grad start->end,start->end /|/|/| */
-#define LOOP_TRIANGLE 3    /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
-#define ONCE_END_COLOR 4   /* paint once, but keep painting with the end color */
-
+typedef enum {
+  ONCE_FORWARD,    /* paint through once, then stop */
+  ONCE_BACKWARDS,  /* paint once, then stop, but run the gradient the other way */
+  LOOP_SAWTOOTH,   /* keep painting, looping through the grad start->end,start->end /|/|/| */
+  LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
+  ONCE_END_COLOR,  /* paint once, but keep painting with the end color */
+} GradientPaintMode;
 
 typedef struct _paint_core PaintCore;
 typedef void * (* PaintFunc)   (PaintCore *, GimpDrawable *, int);

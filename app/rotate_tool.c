@@ -55,12 +55,9 @@ static gfloat      center_vals[2];
 static GtkWidget  *sizeentry;
 
 /*  forward function declarations  */
-static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, GDisplay *,
-					double, TileManager *, int, GimpMatrix);
 static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
-static Argument *  rotate_invoker      (Argument *);
 
 /*  callback functions for the info dialog entries  */
 static void        rotate_angle_changed  (GtkWidget *entry, gpointer data);
@@ -378,7 +375,7 @@ rotate_tool_recalc (Tool *tool,
  *  requested angle is a multiple of 90 degrees...
  */
 
-static void *
+void *
 rotate_tool_rotate (GImage       *gimage,
 		    GimpDrawable *drawable,
 		    GDisplay     *gdisp,
@@ -399,135 +396,4 @@ rotate_tool_rotate (GImage       *gimage,
     progress_end (progress);
 
   return ret;
-}
-
-
-/*  The rotate procedure definition  */
-ProcArg rotate_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the affected drawable"
-  },
-  { PDB_INT32,
-    "interpolation",
-    "whether to use interpolation"
-  },
-  { PDB_FLOAT,
-    "angle",
-    "the angle of rotation (radians)",
-  }
-};
-
-ProcArg rotate_out_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the rotated drawable"
-  }
-};
-
-ProcRecord rotate_proc =
-{
-  "gimp_rotate",
-  "Rotate the specified drawable about its center through the specified angle",
-  "This tool rotates the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable.  The return value is the ID of the rotated drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and rotated drawable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  rotate_args,
-
-  /*  Output arguments  */
-  1,
-  rotate_out_args,
-
-  /*  Exec method  */
-  { { rotate_invoker } },
-};
-
-
-static Argument *
-rotate_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int interpolation;
-  double angle;
-  int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
-  GimpMatrix matrix;
-  int new_layer;
-  Layer *layer;
-  Argument *return_args;
-
-  drawable = NULL;
-  layer = NULL;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  interpolation  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      interpolation = (int_value) ? TRUE : FALSE;
-    }
-  /*  angle of rotation  */
-  if (success)
-    angle = args[2].value.pdb_float;
-
-  /*  call the rotate procedure  */
-  if (success)
-    {
-      double cx, cy;
-
-      /*  Start a transform undo group  */
-      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-      /*  Cut/Copy from the specified drawable  */
-      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
-
-      cx = float_tiles->x + float_tiles->width / 2.0;
-      cy = float_tiles->y + float_tiles->height / 2.0;
-
-      /*  assemble the transformation matrix  */
-      gimp_matrix_identity  (matrix);
-      gimp_matrix_translate (matrix, -cx, -cy);
-      gimp_matrix_rotate    (matrix, angle);
-      gimp_matrix_translate (matrix, +cx, +cy);
-
-      /*  rotate the buffer  */
-      new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle, float_tiles, interpolation, matrix);
-
-      /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
-
-      if (new_tiles)
-	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
-      else
-	success = FALSE;
-
-      /*  push the undo group end  */
-      undo_push_group_end (gimage);
-    }
-
-  return_args = procedural_db_return_args (&rotate_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE(layer));
-
-  return return_args;
 }

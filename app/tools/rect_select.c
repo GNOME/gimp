@@ -40,23 +40,18 @@ extern SelectionOptions *ellipse_options;
 extern void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
 
 
-/*  local functions  */
-static void rect_select (GImage *, int, int, int, int, int, int, double);
-static Argument *rect_select_invoker (Argument *);
-
-
 /*************************************/
 /*  Rectangular selection apparatus  */
 
-static void
-rect_select (GImage *gimage,
-	     int     x,
-	     int     y,
-	     int     w,
-	     int     h,
-	     int     op,
-	     int     feather,
-	     double  feather_radius)
+void
+rect_select (GimpImage *gimage,
+	     int        x,
+	     int        y,
+	     int        w,
+	     int        h,
+	     int        op,
+	     int        feather,
+	     double     feather_radius)
 {
   Channel * new_mask;
 
@@ -560,126 +555,4 @@ tools_free_rect_select (Tool *tool)
 
   draw_core_free (rect_sel->core);
   g_free (rect_sel);
-}
-
-/*  The rect_select procedure definition  */
-ProcArg rect_select_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_FLOAT,
-    "x",
-    "x coordinate of upper-left corner of rectangle"
-  },
-  { PDB_FLOAT,
-    "y",
-    "y coordinate of upper-left corner of rectangle"
-  },
-  { PDB_FLOAT,
-    "width",
-    "the width of the rectangle: width > 0"
-  },
-  { PDB_FLOAT,
-    "height",
-    "the height of the rectangle: height > 0"
-  },
-  { PDB_INT32,
-    "operation",
-    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
-  },
-  { PDB_INT32,
-    "feather",
-    "feather option for selections"
-  },
-  { PDB_FLOAT,
-    "feather_radius",
-    "radius for feather operation"
-  }
-};
-
-ProcRecord rect_select_proc =
-{
-  "gimp_rect_select",
-  "Create a rectangular selection over the specified image",
-  "This tool creates a rectangular selection over the specified image.  The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  8,
-  rect_select_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { rect_select_invoker } },
-};
-
-
-static Argument *
-rect_select_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  int op;
-  int feather;
-  double x, y;
-  double w, h;
-  double feather_radius;
-  int int_value;
-
-  op = REPLACE;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  x, y, w, h  */
-  if (success)
-    {
-      x = args[1].value.pdb_float;
-      y = args[2].value.pdb_float;
-      w = args[3].value.pdb_float;
-      h = args[4].value.pdb_float;
-    }
-  /*  operation  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: op = ADD; break;
-	case 1: op = SUB; break;
-	case 2: op = REPLACE; break;
-	case 3: op = INTERSECT; break;
-	default: success = FALSE;
-	}
-    }
-  /*  feathering  */
-  if (success)
-    {
-      int_value = args[6].value.pdb_int;
-      feather = (int_value) ? TRUE : FALSE;
-    }
-  /*  feather radius  */
-  if (success)
-    {
-      feather_radius = args[7].value.pdb_float;
-    }
-
-  /*  call the rect_select procedure  */
-  if (success)
-    rect_select (gimage, (int) x, (int) y, (int) w, (int) h,
-		 op, feather, feather_radius);
-
-  return procedural_db_return_args (&rect_select_proc, success);
 }

@@ -20,14 +20,12 @@
 
 #include "tools.h"
 #include "paint_core.h"
-#include "procedural_db.h"
 
-void *        paintbrush_paint_func  (PaintCore *, GimpDrawable *, int);
+void *        paintbrush_paint_func (PaintCore *, GimpDrawable *, int);
+gboolean      paintbrush_non_gui    (GimpDrawable *, int, double *, double,
+   				     int, double);
+
 Tool *        tools_new_paintbrush   (void);
 void          tools_free_paintbrush  (Tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord paintbrush_proc;
-extern ProcRecord paintbrush_extended_proc;
-extern ProcRecord paintbrush_extended_gradient_proc;
 #endif  /*  __PAINTBRUSH_H__  */

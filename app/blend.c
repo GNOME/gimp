@@ -161,17 +161,6 @@ static void   blend_motion                  (Tool *, GdkEventMotion *, gpointer)
 static void   blend_cursor_update           (Tool *, GdkEventMotion *, gpointer);
 static void   blend_control                 (Tool *, int, gpointer);
 
-static void   blend                         (GImage *gimage, GimpDrawable *drawable,
-					     BlendMode blend_mode, int paint_mode,
-					     GradientType gradient_type,
-					     double opacity, double offset,
-					     RepeatMode repeat,
-					     int supersample, int max_depth, double threshold,
-					     double startx, double starty,
-					     double endx, double endy,
-					     progress_func_t progress_callback,
-					     void *progress_data);
-
 static double gradient_calc_conical_sym_factor           (double dist, double *axis, double offset,
 							  double x, double y);
 static double gradient_calc_conical_asym_factor          (double dist, double *axis, double offset,
@@ -210,8 +199,6 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 
 static void calc_rgb_to_hsv(double *r, double *g, double *b);
 static void calc_hsv_to_rgb(double *h, double *s, double *v);
-
-static Argument *blend_invoker              (Argument *);
 
 
 /*  functions  */
@@ -303,27 +290,27 @@ blend_options_new ()
   static MenuItem gradient_option_items[] =
   {
     { N_("Linear"), 0, 0, gradient_type_callback,
-      (gpointer) Linear, NULL, NULL },
+      (gpointer) LINEAR, NULL, NULL },
     { N_("Bi-Linear"), 0, 0, gradient_type_callback,
-      (gpointer) BiLinear, NULL, NULL },
+      (gpointer) BILINEAR, NULL, NULL },
     { N_("Radial"), 0, 0, gradient_type_callback,
-      (gpointer) Radial, NULL, NULL },
+      (gpointer) RADIAL, NULL, NULL },
     { N_("Square"), 0, 0, gradient_type_callback,
-      (gpointer) Square, NULL, NULL },
+      (gpointer) SQUARE, NULL, NULL },
     { N_("Conical (symmetric)"), 0, 0, gradient_type_callback,
-      (gpointer) ConicalSymmetric, NULL, NULL },
+      (gpointer) CONICAL_SYMMETRIC, NULL, NULL },
     { N_("Conical (asymmetric)"), 0, 0, gradient_type_callback,
-      (gpointer) ConicalAsymmetric, NULL, NULL },
+      (gpointer) CONICAL_ASYMMETRIC, NULL, NULL },
     { N_("Shapeburst (angular)"), 0, 0, gradient_type_callback,
-      (gpointer) ShapeburstAngular, NULL, NULL },
+      (gpointer) SHAPEBURST_ANGULAR, NULL, NULL },
     { N_("Shapeburst (spherical)"), 0, 0, gradient_type_callback,
-      (gpointer) ShapeburstSpherical, NULL, NULL },
+      (gpointer) SHAPEBURST_SPHERICAL, NULL, NULL },
     { N_("Shapeburst (dimpled)"), 0, 0, gradient_type_callback,
-      (gpointer) ShapeburstDimpled, NULL, NULL },
+      (gpointer) SHAPEBURST_DIMPLED, NULL, NULL },
     { N_("Spiral (clockwise)"), 0, 0, gradient_type_callback,
-      (gpointer) SpiralClockwise, NULL, NULL },
+      (gpointer) SPIRAL_CLOCKWISE, NULL, NULL },
     { N_("Spiral (anticlockwise)"), 0, 0, gradient_type_callback,
-      (gpointer) SpiralAntiClockwise, NULL, NULL },
+      (gpointer) SPIRAL_ANTICLOCKWISE, NULL, NULL },
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
   static MenuItem repeat_option_items[] =
@@ -346,7 +333,7 @@ blend_options_new ()
   options->paint_mode 	 = options->paint_mode_d    = NORMAL;
   options->offset  	 = options->offset_d  	    = 0.0;
   options->blend_mode 	 = options->blend_mode_d    = FG_BG_RGB_MODE;
-  options->gradient_type = options->gradient_type_d = Linear;
+  options->gradient_type = options->gradient_type_d = LINEAR;
   options->repeat        = options->repeat_d        = REPEAT_NONE;
   options->supersample   = options->supersample_d   = FALSE;
   options->max_depth     = options->max_depth_d     = 3;
@@ -821,7 +808,7 @@ blend_control (Tool     *tool,
 /*****/
 
 /*  The actual blending procedure  */
-static void
+void
 blend (GImage          *gimage,
        GimpDrawable    *drawable,
        BlendMode        blend_mode,
@@ -1317,54 +1304,54 @@ gradient_render_pixel(double x, double y, color_t *color, void *render_data)
 
   switch (rbd->gradient_type)
     {
-    case Radial:
+    case RADIAL:
       factor = gradient_calc_radial_factor(rbd->dist, rbd->offset,
 					   x - rbd->sx, y - rbd->sy);
       break;
 
-    case ConicalSymmetric:
+    case CONICAL_SYMMETRIC:
       factor = gradient_calc_conical_sym_factor(rbd->dist, rbd->vec, rbd->offset,
 						x - rbd->sx, y - rbd->sy);
       break;
 
-    case ConicalAsymmetric:
+    case CONICAL_ASYMMETRIC:
       factor = gradient_calc_conical_asym_factor(rbd->dist, rbd->vec, rbd->offset,
 						 x - rbd->sx, y - rbd->sy);
       break;
 
-    case Square:
+    case SQUARE:
       factor = gradient_calc_square_factor(rbd->dist, rbd->offset,
 					   x - rbd->sx, y - rbd->sy);
       break;
 
-    case Linear:
+    case LINEAR:
       factor = gradient_calc_linear_factor(rbd->dist, rbd->vec,
 					   x - rbd->sx, y - rbd->sy);
       break;
 
-    case BiLinear:
+    case BILINEAR:
       factor = gradient_calc_bilinear_factor(rbd->dist, rbd->vec, rbd->offset,
 					     x - rbd->sx, y - rbd->sy);
       break;
 
-    case ShapeburstAngular:
+    case SHAPEBURST_ANGULAR:
       factor = gradient_calc_shapeburst_angular_factor(x, y);
       break;
 
-    case ShapeburstSpherical:
+    case SHAPEBURST_SPHERICAL:
       factor = gradient_calc_shapeburst_spherical_factor(x, y);
       break;
 
-    case ShapeburstDimpled:
+    case SHAPEBURST_DIMPLED:
       factor = gradient_calc_shapeburst_dimpled_factor(x, y);
       break;
 
-    case SpiralClockwise:
+    case SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,TRUE);
       break;
 
-    case SpiralAntiClockwise:
+    case SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,FALSE);
       break;
@@ -1514,20 +1501,20 @@ gradient_fill_region (GImage          *gimage,
 
   switch (gradient_type)
     {
-    case Radial:
+    case RADIAL:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
       break;
 
-    case Square:
+    case SQUARE:
       rbd.dist = MAXIMUM(fabs(ex - sx), fabs(ey - sy));
       break;
 
-    case ConicalSymmetric:
-    case ConicalAsymmetric:
-    case SpiralClockwise:
-    case SpiralAntiClockwise:
-    case Linear:
-    case BiLinear:
+    case CONICAL_SYMMETRIC:
+    case CONICAL_ASYMMETRIC:
+    case SPIRAL_CLOCKWISE:
+    case SPIRAL_ANTICLOCKWISE:
+    case LINEAR:
+    case BILINEAR:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
 
       if (rbd.dist > 0.0)
@@ -1538,9 +1525,9 @@ gradient_fill_region (GImage          *gimage,
 
       break;
 
-    case ShapeburstAngular:
-    case ShapeburstSpherical:
-    case ShapeburstDimpled:
+    case SHAPEBURST_ANGULAR:
+    case SHAPEBURST_SPHERICAL:
+    case SHAPEBURST_DIMPLED:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
       gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
       break;
@@ -1842,233 +1829,4 @@ tools_free_blend (Tool *tool)
   distR.tiles = NULL;
 
   g_free (blend_tool);
-}
-
-
-/*  The blend procedure definition  */
-ProcArg blend_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "The affected drawable"
-  },
-  { PDB_INT32,
-    "blend_mode",
-    "The type of blend: { FG-BG-RGB (0), FG-BG-HSV (1), FG-TRANS (2), CUSTOM (3) }"
-  },
-  { PDB_INT32,
-    "paint_mode",
-    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
-  },
-  { PDB_INT32,
-    "gradient_type",
-    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8), SPIRAL-CLOCKWISE(9), SPRIAL-ANTICLOCKWISE(10) }"
-  },
-  { PDB_FLOAT,
-    "opacity",
-    "The opacity of the final blend (0 <= opacity <= 100)"
-  },
-  { PDB_FLOAT,
-    "offset",
-    "Offset relates to the starting and ending coordinates specified for the blend.  This parameter is mode depndent (0 <= offset)"
-  },
-  { PDB_INT32,
-    "repeat",
-    "Repeat mode: { REPEAT-NONE (0), REPEAT-SAWTOOTH (1), REPEAT-TRIANGULAR (2) }"
-  },
-  { PDB_INT32,
-    "supersample",
-    "Do adaptive supersampling (true / false)"
-  },
-  { PDB_INT32,
-    "max_depth",
-    "Maximum recursion levels for supersampling"
-  },
-  { PDB_FLOAT,
-    "threshold",
-    "Supersampling threshold"
-  },
-  { PDB_FLOAT,
-    "x1",
-    "The x coordinate of this blend's starting point"
-  },
-  { PDB_FLOAT,
-    "y1",
-    "The y coordinate of this blend's starting point"
-  },
-  { PDB_FLOAT,
-    "x2",
-    "The x coordinate of this blend's ending point"
-  },
-  { PDB_FLOAT,
-    "y2",
-    "The y coordinate of this blend's ending point"
-  }
-};
-
-ProcRecord blend_proc =
-{
-  "gimp_blend",
-  "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
-  "This tool requires information on the paint application mode, the blend mode, and the gradient type.  It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
-  "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
-  "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  14,
-  blend_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { blend_invoker } },
-};
-
-static Argument *
-blend_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  BlendMode blend_mode;
-  int paint_mode;
-  GradientType gradient_type;
-  double opacity;
-  double offset;
-  RepeatMode repeat;
-  int supersample;
-  int max_depth;
-  double threshold;
-  double x1, y1;
-  double x2, y2;
-  int int_value;
-  double fp_value;
-
-  drawable    = NULL;
-  blend_mode  = FG_BG_RGB_MODE;
-  paint_mode  = NORMAL_MODE;
-  gradient_type = Linear;
-  opacity       = 100.0;
-  offset        = 0.0;
-  repeat        = REPEAT_NONE;
-  supersample   = FALSE;
-  max_depth     = 0;
-  threshold     = 0.0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)
-	success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  blend mode  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-
-      if (int_value >= 0 && int_value < BLEND_MODE_LAST)
-	blend_mode = (BlendMode) int_value;
-      else
-	success = FALSE;
-    }
-  /*  paint mode  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= NORMAL_MODE && int_value <= DIVIDE_MODE)
-	paint_mode = int_value;
-      else
-	success = FALSE;
-    }
-  /*  gradient type  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-
-      if (int_value >= 0 && int_value < GradientTypeLast)
-	gradient_type = (GradientType) int_value;
-      else
-	success = FALSE;
-    }
-  /*  opacity  */
-  if (success)
-    {
-      fp_value = args[4].value.pdb_float;
-      if (fp_value >= 0.0 && fp_value <= 100.0)
-	opacity = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  offset  */
-  if (success)
-    {
-      fp_value = args[5].value.pdb_float;
-      if (fp_value >= 0.0)
-	offset = fp_value;
-      else
-	success = FALSE;
-    }
-  /* repeat */
-  if (success)
-    {
-      int_value = args[6].value.pdb_int;
-
-      if (int_value >= 0 && int_value < REPEAT_LAST)
-	repeat = (RepeatMode) int_value;
-      else
-	success = FALSE;
-    }
-  /* supersampling */
-  if (success)
-    {
-      int_value = args[7].value.pdb_int;
-
-      supersample = (int_value ? TRUE : FALSE);
-    }
-  /* max_depth */
-  if (success)
-    {
-      int_value = args[8].value.pdb_int;
-
-      if (((int_value >= 1) && (int_value <= 9)) || !supersample)
-	max_depth = int_value;
-      else
-	success = FALSE;
-    }
-  /* threshold */
-  if (success)
-    {
-      fp_value = args[9].value.pdb_float;
-
-      if (((fp_value >= 0.0) && (fp_value <= 4.0)) || !supersample)
-	threshold = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  x1, y1, x2, y2  */
-  if (success)
-    {
-      x1 = args[10].value.pdb_float;
-      y1 = args[11].value.pdb_float;
-      x2 = args[12].value.pdb_float;
-      y2 = args[13].value.pdb_float;
-    }
-
-  /*  call the blend procedure  */
-  if (success)
-    {
-      blend (gimage, drawable, blend_mode, paint_mode, gradient_type,
-	     opacity, offset, repeat, supersample, max_depth, threshold,
-	     x1, y1, x2, y2, NULL, NULL);
-    }
-
-  return procedural_db_return_args (&blend_proc, success);
 }

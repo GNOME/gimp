@@ -21,44 +21,6 @@
 
 # The defs
 
-sub gimprc_set {
-    $blurb = <<'BLURB';
-Sets a gimprc token to a value and saves it in the gimprc.
-BLURB
-
-    $help = <<'HELP';
-This procedure is used to add or change additional information in the gimprc
-file that is considered extraneous to the operation of the GIMP.  Plug-ins
-that need configuration information can use this function to store it, and
-gimp_gimprc_query to retrieve it.  This will accept _only_ parameters in
-the format of (<token> <value>), where <token> and <value> must be strings.
-Entrys not corresponding to this format will be eaten and no action will
-be performed.  If the gimprc can not be written for whatever reason, gimp
-will complain loudly and the old gimprc will be saved in gimprc.old.
-HELP
-
-    $author = $copyright = 'Seth Burgess';
-	$date = '1999';
-	
-    @inargs = (
-	{ name => 'token', type => 'string',
-	  desc => 'The token to modify' },
-    { name => 'value', type => 'string',
-      desc => 'The value to set the token to' }
-    );
-
-	%invoke = ( 
-	headers => [ qw("gimprc.h") ],
-	code => <<'CODE'
-{
-save_gimprc_strings(token, value);
-success = TRUE;
-}	
-CODE
-	);
-}
-
-
 sub gimprc_query {
     $blurb = <<'BLURB';
 Queries the gimprc file parser for information on a specified token.
@@ -91,10 +53,41 @@ HELP
 
     %invoke = (
 	headers => [ qw("gimprc.h") ],
-	vars => [ 'gchar *value' ],
+	vars => [ 'gchar *value = NULL' ],
 	code => 'success = (value = gimprc_find_token (token)) != NULL;'
     );
 }
+
+sub gimprc_set {
+    $blurb = 'Sets a gimprc token to a value and saves it in the gimprc.';
+
+    $help = <<'HELP';
+This procedure is used to add or change additional information in the gimprc
+file that is considered extraneous to the operation of the GIMP. Plug-ins that
+need configuration information can use this function to store it, and
+gimp_gimprc_query to retrieve it.  This will accept _only_ parameters in the
+format of (<token> <value>), where <token> and <value> must be strings. Entries
+not corresponding to this format will be eaten and no action will be performed.
+If the gimprc can not be written for whatever reason, gimp will complain loudly
+and the old gimprc will be saved in gimprc.old.
+HELP
+
+    $author = $copyright = 'Seth Burgess';
+    $date = '1999';
+	
+    @inargs = (
+	{ name => 'token', type => 'string',
+	  desc => 'The token to modify' },
+	{ name => 'value', type => 'string',
+	  desc => 'The value to set the token to' }
+    );
+
+    %invoke = ( 
+	headers => [ qw("gimprc.h") ],
+	code => 'save_gimprc_strings(token, value);'
+    );
+}
+
 
 @procs = qw(gimprc_query gimprc_set);
 %exports = (app => [@procs]);

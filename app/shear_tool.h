@@ -19,13 +19,18 @@
 #define __SHEAR_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
-void *        shear_tool_transform  (Tool *, gpointer, int);
+typedef enum
+{
+  HORZ_SHEAR,  /*< nick=HORIZONTAL >*/
+  VERT_SHEAR   /*< nick=VERTICAL >*/
+} ShearType;
+
+void *        shear_tool_transform (Tool *, gpointer, int);
+void *        shear_tool_shear     (GimpImage *, GimpDrawable *, GDisplay *,
+				    TileManager *, int, GimpMatrix);
+
 Tool *        tools_new_shear_tool  (void);
 void          tools_free_shear_tool (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord shear_proc;
 
 #endif  /*  __SHEAR_TOOL_H__  */

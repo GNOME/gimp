@@ -98,7 +98,6 @@ static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
 
 static void         convolve_motion      (PaintCore *, GimpDrawable *);
-static Argument *   convolve_invoker     (Argument *);
 
 
 /* functions  */
@@ -147,7 +146,7 @@ convolve_options_new (void)
   tool_options_init ((ToolOptions *) options,
 		     _("Convolver Options"),
 		     convolve_options_reset);
-  options->type     = options->type_d     = Blur;
+  options->type     = options->type_d     = BLUR_CONVOLVE;
   options->pressure = options->pressure_d = 50.0;
 
   /*  the main vbox  */
@@ -364,19 +363,19 @@ calculate_matrix (ConvolveType type,
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
     {
-    case Blur:
+    case BLUR_CONVOLVE:
       matrix_size = 5;
       blur_matrix [12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       copy_matrix (blur_matrix, custom_matrix, matrix_size);
       break;
 
-    case Sharpen:
+    case SHARPEN_CONVOLVE:
       matrix_size = 5;
       sharpen_matrix [12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
       break;
 
-    case Custom:
+    case CUSTOM_CONVOLVE:
       matrix_size = 5;
       break;
     }
@@ -437,128 +436,18 @@ convolve_non_gui_paint_func (PaintCore *paint_core,
   return NULL;
 }
 
-
-/*  The convolve procedure definition  */
-ProcArg convolve_args[] =
+gboolean
+convolve_non_gui (GimpDrawable *drawable,
+    		  double        pressure,
+		  int           num_strokes,
+		  double       *stroke_array)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_FLOAT,
-    "pressure",
-    "the pressure: 0 <= pressure <= 100"
-  },
-  { PDB_INT32,
-    "convolve_type",
-    "convolve type: { BLUR (0), SHARPEN (1) }"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-
-ProcRecord convolve_proc =
-{
-  "gimp_convolve",
-  "Convolve (Blur, Sharpen) using the current brush",
-  "This tool convolves the specified drawable with either a sharpening or blurring kernel.  The pressure parameter controls the magnitude of the operation.  Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  convolve_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { convolve_invoker } },
-};
-
-
-static Argument *
-convolve_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  double pressure;
-  ConvolveType type;
-  int num_strokes;
-  double *stroke_array;
-  ConvolveType int_value;
-  double fp_value;
   int i;
 
-  drawable = NULL;
-  pressure    = 100.0;
-  type        = Blur;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
+  if (paint_core_init (&non_gui_paint_core, drawable,
+		       stroke_array[0], stroke_array[1]))
     {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  the pressure  */
-  if (success)
-    {
-      fp_value = args[1].value.pdb_int;
-      if (fp_value >= 0.0 && fp_value <= 100.0)
-	pressure = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  the convolve type  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: type = Blur; break;
-	case 1: type = Sharpen; break;
-	case 2: success = FALSE; break; /*type = Custom; break;*/
-	default: success = FALSE;
-	}
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[4].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      /*  set the paint core's paint func  */
+      /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
@@ -578,12 +467,13 @@ convolve_invoker (Argument *args)
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /*  finish the painting  */
+      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /*  cleanup  */
+      /* Cleanup */
       paint_core_cleanup ();
+      return TRUE;
     }
-
-  return procedural_db_return_args (&convolve_proc, success);
+  else
+    return FALSE;
 }

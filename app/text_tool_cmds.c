@@ -219,7 +219,7 @@ static ProcArg text_fontname_inargs[] =
   {
     PDB_INT32,
     "size_type",
-    "The units of specified size: PIXELS (0), POINTS (1)"
+    "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
     PDB_STRING,
@@ -323,7 +323,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   {
     PDB_INT32,
     "size_type",
-    "The units of specified size: PIXELS (0), POINTS (1)"
+    "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
     PDB_STRING,
@@ -484,7 +484,7 @@ static ProcArg text_inargs[] =
   {
     PDB_INT32,
     "size_type",
-    "The units of specified size: PIXELS (0), POINTS (1)"
+    "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
     PDB_STRING,
@@ -636,7 +636,7 @@ static ProcArg text_get_extents_inargs[] =
   {
     PDB_INT32,
     "size_type",
-    "The units of specified size: PIXELS (0), POINTS (1)"
+    "The units of specified size: PIXELS (0) or POINTS (1)"
   },
   {
     PDB_STRING,

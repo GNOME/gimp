@@ -38,7 +38,6 @@ static ToolOptions *  pencil_options = NULL;
 
 /*  forward function declarations  */
 static void         pencil_motion   (PaintCore *, GimpDrawable *);
-static Argument *   pencil_invoker  (Argument *);
 
 
 /*  functions  */
@@ -68,7 +67,7 @@ pencil_paint_func (PaintCore    *paint_core,
 }
 
 Tool *
-tools_new_pencil ()
+tools_new_pencil (void)
 {
   Tool * tool;
   PaintCore * private;
@@ -135,92 +134,17 @@ pencil_non_gui_paint_func (PaintCore    *paint_core,
 }
 
 
-/*  The pencil procedure definition  */
-ProcArg pencil_args[] =
+gboolean
+pencil_non_gui (GimpDrawable *drawable,
+    		int           num_strokes,
+		double       *stroke_array)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "num_strokes",
-    "number of stroke control points (count each coordinate as 2 points)"
-  },
-  { PDB_FLOATARRAY,
-    "strokes",
-    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
-  }
-};
-
-
-ProcRecord pencil_proc =
-{
-  "gimp_pencil",
-  "Paint in the current brush without sub-pixel sampling",
-  "This tool is the standard pencil.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable in the foreground color with the active brush.  The brush mask is treated as though it contains only black and white values.  Any value below half is treated as black; any above half, as white.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  pencil_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { pencil_invoker } },
-};
-
-static Argument *
-pencil_invoker (Argument *args)
-{
-  int success = TRUE;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int num_strokes;
-  double *stroke_array;
-  int int_value;
   int i;
 
-  drawable = NULL;
-  num_strokes = 0;
-
-  /*  the drawable  */
-  if (success)
+  if (paint_core_init (&non_gui_paint_core, drawable,
+		       stroke_array[0], stroke_array[1]))
     {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  num strokes  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value > 0)
-	num_strokes = int_value / 2;
-      else
-	success = FALSE;
-    }
-
-  /*  point array  */
-  if (success)
-    stroke_array = (double *) args[2].value.pdb_pointer;
-
-  if (success)
-    /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
-			       stroke_array[0], stroke_array[1]);
-
-  if (success)
-    {
-      /*  set the paint core's paint func  */
+      /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = pencil_non_gui_paint_func;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
@@ -240,12 +164,13 @@ pencil_invoker (Argument *args)
 	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
-      /*  finish the painting  */
+      /* Finish the painting */
       paint_core_finish (&non_gui_paint_core, drawable, -1);
 
-      /*  cleanup  */
+      /* Cleanup */
       paint_core_cleanup ();
+      return TRUE;
     }
-
-  return procedural_db_return_args (&pencil_proc, success);
+  else
+    return FALSE;
 }

@@ -19,13 +19,15 @@
 #define __PERSPECTIVE_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
-void *        perspective_tool_transform  (Tool *, gpointer, int);
+void *        perspective_tool_transform   (Tool *, gpointer, int);
+void *        perspective_tool_perspective (GimpImage *, GimpDrawable *,
+                                            GDisplay *, TileManager *,
+                                            int, GimpMatrix);
+void          perspective_find_transform   (double *, GimpMatrix);
+
+
 Tool *        tools_new_perspective_tool  (void);
 void          tools_free_perspective_tool (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord perspective_proc;
 
 #endif  /*  __PERSPECTIVE_TOOL_H__  */

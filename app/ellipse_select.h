@@ -18,16 +18,16 @@
 #ifndef __ELLIPSE_SELECT_H__
 #define __ELLIPSE_SELECT_H__
 
-#include "procedural_db.h"
+#include "gimpimageF.h"
 #include "tools.h"
 
 /*  ellipse select functions  */
 
-void          ellipse_select_draw         (Tool *);
+void          ellipse_select_draw (Tool *);
+void          ellipse_select      (GimpImage *, int, int, int, int, int,
+    				   int, int, double);
+
 Tool *        tools_new_ellipse_select    (void);
 void          tools_free_ellipse_select   (Tool *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord ellipse_select_proc;
 
 #endif  /*  __ELLIPSE_SELECT_H__  */

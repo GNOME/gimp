@@ -110,8 +110,6 @@ static void crop_control            (Tool *, int, gpointer);
 static void crop_arrow_keys_func    (Tool *, GdkEventKey *, gpointer);
 
 /*  Crop helper functions   */
-static void crop_image              (GImage *gimage,
-				     int, int, int, int, int, int);
 static void crop_recalc             (Tool *, Crop *);
 static void crop_start              (Tool *, Crop *);
 static void crop_adjust_guides      (GImage *, int, int, int, int);
@@ -142,8 +140,6 @@ static int crop_colors_alpha           (guchar *, guchar *, int);
 /*  Crop dialog callback funtions  */
 static void crop_orig_changed       (GtkWidget *, gpointer);
 static void crop_size_changed       (GtkWidget *, gpointer);
-
-static Argument *crop_invoker       (Argument *);
 
 
 /*  Functions  */
@@ -837,7 +833,7 @@ tools_free_crop (Tool *tool)
   g_free (crop);
 }
 
-static void
+void
 crop_image (GImage *gimage,
 	    int     x1,
 	    int     y1,
@@ -1547,102 +1543,4 @@ crop_size_changed (GtkWidget *w,
 	  draw_core_resume (crop->core, tool);
 	}
     }
-}
-
-/*  The procedure definition  */
-ProcArg crop_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_INT32,
-    "new_width",
-    "new image width: (0 < new_width <= width)"
-  },
-  { PDB_INT32,
-    "new_height",
-    "new image height: (0 < new_height <= height)"
-  },
-  { PDB_INT32,
-    "offx",
-    "x offset: (0 <= offx <= (width - new_width))"
-  },
-  { PDB_INT32,
-    "offy",
-    "y offset: (0 <= offy <= (height - new_height))"
-  }
-};
-
-ProcRecord crop_proc =
-{
-  "gimp_crop",
-  "Crop the image to the specified extents.",
-  "This procedure crops the image so that it's new width and height are equal to the supplied parameters.  Offsets are also provided which describe the position of the previous image's content.  All channels and layers within the image are cropped to the new image extents; this includes the image selection mask.  If any parameters are out of range, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  crop_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { crop_invoker } },
-};
-
-static Argument *
-crop_invoker (Argument *args)
-{
-  GImage *gimage;
-  int success;
-  int int_value;
-  int new_width, new_height;
-  int offx, offy;
-  int layer_only, crop_layers ;
-
-  new_width  = 1;
-  new_height = 1;
-  offx       = 0;
-  offy       = 0;
-  layer_only   = FALSE;
-  crop_layers  = TRUE;
-  
-  success = TRUE;
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      new_width = args[1].value.pdb_int;
-      new_height = args[2].value.pdb_int;
-
-      if (new_width <= 0 || new_height <= 0)
-	success = FALSE;
-    }
-  if (success)
-    {
-      offx = args[3].value.pdb_int;
-      offy = args[4].value.pdb_int;
-    }
-
-  if ((new_width <= 0 || new_width > gimage->width) ||
-      (new_height <= 0 || new_height > gimage->height) ||
-      (offx < 0 || offx > (gimage->width - new_width)) ||
-      (offy < 0 || offy > (gimage->height - new_height)))
-    success = FALSE;
-
-  if (success)
-    crop_image (gimage, offx, offy, offx + new_width, offy + new_height, 
-		layer_only, crop_layers);
-
-  return procedural_db_return_args (&crop_proc, success);
 }

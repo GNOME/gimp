@@ -193,7 +193,6 @@ static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
 static inline char* units_to_str (gpointer val1p, gpointer val2p);
 
 static char* transform_path (char *path, int destroy);
-static char* gimprc_find_token (char *token);
 static void gimprc_set_token (char *token, char *value);
 static Argument * gimprc_query (Argument *args);
 static void add_gimp_directory_token (char *gimp_dir);
@@ -2514,7 +2513,7 @@ open_backup_file (char *filename,
   return NULL;
 }
 
-static char*
+char*
 gimprc_find_token (char *token)
 {
   GList *list;
@@ -2556,127 +2555,3 @@ gimprc_set_token (char *token,
       list = list->next;
     }
 }
-
-/******************/
-/*  GIMPRC_QUERY  */
-
-static Argument *
-gimprc_query (Argument *args)
-{
-  Argument *return_args;
-  int success = TRUE;
-  char *token;
-  char *value;
-
-  token = (char *) args[0].value.pdb_pointer;
-
-  success = ((value = gimprc_find_token (token)) != NULL);
-  return_args = procedural_db_return_args (&gimprc_query_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = g_strdup (value);
-
-  return return_args;
-}
-
-static ProcArg gimprc_query_args[] =
-{
-  { PDB_STRING,
-    "token",
-    "the token to query for"
-  }
-};
-
-static ProcArg gimprc_query_out_args[] =
-{
-  { PDB_STRING,
-    "value",
-    "the value associated with the queried token"
-  }
-};
-
-ProcRecord gimprc_query_proc =
-{
-  "gimp_gimprc_query",
-  "Queries the gimprc file parser for information on a specified token",
-  "This procedure is used to locate additional information contained in the gimprc file considered extraneous to the operation of the GIMP.  Plug-ins that need configuration information can expect it will be stored in the user's gimprc file and can use this procedure to retrieve it.  This query procedure will return the value associated with the specified token.  This corresponds _only_ to entries with the format: (<token> <value>).  The value must be a string.  Entries not corresponding to this format will cause warnings to be issued on gimprc parsing and will not be queryable.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  1,
-  gimprc_query_args,
-
-  /*  Output arguments  */
-  1,
-  gimprc_query_out_args,
-
-  /*  Exec method  */
-  { { gimprc_query } },
-};
-
-
-static Argument *
-gimprc_set_invoker (Argument *args)
-{
-  gboolean success = TRUE;
-  gchar *token;
-  gchar *value;
-
-  token = (gchar *) args[0].value.pdb_pointer;
-  if (token == NULL)
-    success = FALSE;
-
-  value = (gchar *) args[1].value.pdb_pointer;
-  if (value == NULL)
-    success = FALSE;
-
-  if (success)
-    {
-    save_gimprc_strings(token, value);
-    success = TRUE;
-    }        
-
-  return procedural_db_return_args (&gimprc_set_proc, success);
-}
-
-static ProcArg gimprc_set_inargs[] =
-{
-  {
-    PDB_STRING,
-    "token",
-    "The token to modify"
-  },
-  {
-    PDB_STRING,
-    "value",
-    "The value to set the token to"
-  }
-};
-
-
-ProcRecord gimprc_set_proc =
-{
-  "gimp_gimprc_set",
-  "Sets a gimprc token to a value and saves it in the gimprc.",
-  "This procedure is used to add or change additional information in the gimprc file
- that is considered extraneous to the operation of the GIMP. Plug-ins that need conf
-iguration information can use this function to store it, and gimp_gimprc_query to re
-trieve it. This will accept _only_ parameters in the format of (<token> <value>), wh
-ere <token> and <value> must be strings. Entrys not corresponding to this format wil
-l be eaten and no action will be performed. If the gimprc can not be written for wha
-tever reason, gimp will complain loudly and the old gimprc will be saved in gimprc.o
-ld.",
-  "Seth Burgess",
-  "Seth Burgess",
-  "1999",
-  PDB_INTERNAL,
-  2,
-  gimprc_set_inargs,
-  0,
-  NULL,
-  { { gimprc_set_invoker } }
-};
-
