@@ -104,7 +104,7 @@ GimpItemFactoryEntry layers_menu_entries[] =
       "<StockItem>", GIMP_STOCK_RESIZE },
     NULL,
     GIMP_HELP_LAYER_RESIZE, NULL },
-  { { N_("/Layer to _Imagesize"), NULL,
+  { { N_("/Layer to _Image Size"), NULL,
       layers_resize_to_image_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LAYER_TO_IMAGESIZE },
     NULL,
@@ -236,7 +236,7 @@ layers_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Delete Layer",    layer && !ac);
 
   SET_SENSITIVE ("/Layer Boundary Size...", layer && !ac);
-  SET_SENSITIVE ("/Layer to Imagesize",     layer && !ac);
+  SET_SENSITIVE ("/Layer to Image Size",    layer && !ac);
   SET_SENSITIVE ("/Scale Layer...",         layer && !ac);
 
   SET_SENSITIVE ("/Add Layer Mask...", layer && !fs && !ac && !lm && alpha);

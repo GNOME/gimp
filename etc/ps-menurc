@@ -49,7 +49,7 @@
 (gtk_accel_path "<Image>/Layer/Stack/Layer to Bottom" "<Control>braceleft")
 (gtk_accel_path "<Image>/Tools/Selection Tools/Intelligent Scissors" "")
 (gtk_accel_path "<Image>/Tools/Paint Tools/Clone" "s")
-(gtk_accel_path "<Image>/Layer/Layer to Imagesize" "<Alt>y")
+(gtk_accel_path "<Image>/Layer/Layer to Image Size" "<Alt>y")
 (gtk_accel_path "<Image>/Layer/Stack/Lower Layer" "<Control>bracketleft")
 (gtk_accel_path "<Image>/View/Snap to Guides" "<Control>semicolon")
 (gtk_accel_path "<Image>/Tools/Selection Tools/Fuzzy Select" "w")

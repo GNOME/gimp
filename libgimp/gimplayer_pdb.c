@@ -245,6 +245,36 @@ gimp_layer_resize (gint32 layer_ID,
 }
 
 /**
+ * gimp_layer_resize_to_image_size:
+ * @layer_ID: The layer to resize.
+ *
+ * Resize a layer to the image size.
+ *
+ * This procedure resizes the layer so that it's new width and height
+ * are equal to the width and height of its image container.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_layer_resize_to_image_size (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_layer_resize_to_image_size",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_layer_delete:
  * @layer_ID: The layer to delete.
  *

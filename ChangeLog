@@ -1,3 +1,22 @@
+2003-10-06  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/image-menu.c
+	* app/gui/layers-menu.c
+	* etc/ps-menurc: "Imagesize" isn't a real word. Fix to "Image Size".
+
+	* app/paint/gimppaintcore.c: add declaration for rotate_pointers which
+	was inadvertently took out.
+
+	* tools/pdbgen/pdb/layer.pdb: add gimp_layer_resize_to_image_size.
+	Fix failure reporting logic for gimp_layer_delete.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* plug-ins/common/tiff.c: always compare used unsigned chars for 7bit
+	ASCII check.
+
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds): one

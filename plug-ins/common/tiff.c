@@ -1648,7 +1648,7 @@ save_image (const gchar *filename,
 
       for (len = strlen (c); len; c++, len--)
         {
-          if (*c < 0)
+          if ((guchar) *c > 127)
             {
               g_message (_("The TIFF format only supports comments in\n"
                            "7bit ASCII encoding. No comment is saved."));

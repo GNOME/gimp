@@ -72,6 +72,8 @@ static void   gimp_paint_core_calc_brush_size     (GimpPaintCore    *core,
                                                    gdouble           scale,
                                                    gint             *width,
                                                    gint             *height);
+static inline void rotate_pointers                (gulong          **p,
+                                                   guint32           n);
 static MaskBuf * gimp_paint_core_subsample_mask   (GimpPaintCore    *core,
                                                    MaskBuf          *mask,
                                                    gdouble           x,

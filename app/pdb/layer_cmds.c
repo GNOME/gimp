@@ -45,6 +45,7 @@ static ProcRecord layer_copy_proc;
 static ProcRecord layer_create_mask_proc;
 static ProcRecord layer_scale_proc;
 static ProcRecord layer_resize_proc;
+static ProcRecord layer_resize_to_image_size_proc;
 static ProcRecord layer_delete_proc;
 static ProcRecord layer_translate_proc;
 static ProcRecord layer_add_alpha_proc;
@@ -81,6 +82,7 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_create_mask_proc);
   procedural_db_register (gimp, &layer_scale_proc);
   procedural_db_register (gimp, &layer_resize_proc);
+  procedural_db_register (gimp, &layer_resize_to_image_size_proc);
   procedural_db_register (gimp, &layer_delete_proc);
   procedural_db_register (gimp, &layer_translate_proc);
   procedural_db_register (gimp, &layer_add_alpha_proc);
@@ -562,6 +564,53 @@ static ProcRecord layer_resize_proc =
 };
 
 static Argument *
+layer_resize_to_image_size_invoker (Gimp     *gimp,
+                                    Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp_item_get_image (GIMP_ITEM (layer)))
+	gimp_layer_resize_to_image (layer);
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&layer_resize_to_image_size_proc, success);
+}
+
+static ProcArg layer_resize_to_image_size_inargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer to resize"
+  }
+};
+
+static ProcRecord layer_resize_to_image_size_proc =
+{
+  "gimp_layer_resize_to_image_size",
+  "Resize a layer to the image size.",
+  "This procedure resizes the layer so that it's new width and height are equal to the width and height of its image container.",
+  "Manish Singh",
+  "Manish Singh",
+  "2003",
+  GIMP_INTERNAL,
+  1,
+  layer_resize_to_image_size_inargs,
+  0,
+  NULL,
+  { { layer_resize_to_image_size_invoker } }
+};
+
+static Argument *
 layer_delete_invoker (Gimp     *gimp,
                       Argument *args)
 {
@@ -575,10 +624,9 @@ layer_delete_invoker (Gimp     *gimp,
   if (success)
     {
       if (! gimp_item_get_image (GIMP_ITEM (layer)))
-	{
-	  g_object_unref (layer);
-	  success = TRUE;
-	}
+	g_object_unref (layer);
+      else
+	success = FALSE;
     }
 
   return procedural_db_return_args (&layer_delete_proc, success);
