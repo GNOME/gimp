@@ -154,6 +154,13 @@ EXPORTS
 	gimp_preview_area_get_type
 	gimp_preview_area_new
 	gimp_preview_area_set_cmap
+	gimp_preview_draw
+	gimp_preview_get_position
+	gimp_preview_get_size
+	gimp_preview_get_type
+	gimp_preview_get_update
+	gimp_preview_invalidate
+	gimp_preview_set_update
 	gimp_query_boolean_box
 	gimp_query_double_box
 	gimp_query_int_box

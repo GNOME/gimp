@@ -7,6 +7,9 @@ EXPORTS
 	gimp_drawable_combo_box_new
 	gimp_drawable_get_thumbnail
 	gimp_drawable_menu_new
+	gimp_drawable_preview_draw
+	gimp_drawable_preview_get_type
+	gimp_drawable_preview_new
 	gimp_export_image
 	gimp_font_select_widget_close
 	gimp_font_select_widget_new
@@ -25,4 +28,5 @@ EXPORTS
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set
+	gimp_progress_bar_new
 	gimp_ui_init
