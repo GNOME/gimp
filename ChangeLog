@@ -1,3 +1,7 @@
+2001-12-02  Abel Cheung  <maddog@linux.org.hk>
+
+	* tips/gimp_tips.zh_CN.txt: Converted to native encoding.
+
 2001-12-01  Abel Cheung  <maddog@linux.org.hk>
 
 	* tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_CN.txt
