@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-04-02 13:01+02:00\n"
+"PO-Revision-Date: 2000-04-02 23:46+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -477,7 +477,7 @@ msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filter/Render/Terral-Text"
 
 msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr "<Toolbox>/Xtns/PDB-Buch"
+msgstr "<Toolbox>/Xtns/PDB-Explorer"
 
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Xtns/Bilder erzeugen"
@@ -613,7 +613,7 @@ msgid "Save $name"
 msgstr "Speichere $name"
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filter/Web/Als GIF aufbereiten..."
+msgstr "<Image>/Filter/Web/Für GIF aufbereiten..."
 
 msgid "illegal type for colour specification"
 msgstr "Die Farbangabe hat einen falschen Typ"
@@ -751,7 +751,7 @@ msgid ""
 msgstr "Dimension falsch: pdl hat die Dimension %d, Minimum ist aber %d"
 
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+msgstr "<Toolbox>/Xtns/Perl/Kontrollzenter"
 
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr "<Image>/Filter/Logulator/Geschnitzt"
@@ -969,13 +969,13 @@ msgid "Pattern Selection Dialog"
 msgstr "Musterauswahl"
 
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filter/Render/Staubkörner..."
+msgstr "<Image>/Filter/Render/Staub..."
 
 msgid "not enough"
 msgstr "nicht genügend"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "PDB-Buch - Edition 'Olof' (immer noch Alpha)"
+msgstr "PDB-Explorer - Edition 'Olof' (noch immer eine Alpha-Version)"
 
 msgid "<Image>/Filters/Web/Perl-o-tine..."
 msgstr "<Image>/Filter/Web/Perl-o-tine..."

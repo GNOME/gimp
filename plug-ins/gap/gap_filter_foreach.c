@@ -273,7 +273,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   l_percentage = 0.0;  
   if(run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init( _("Applying Filter to all Layers .."));
+    gimp_progress_init( _("Applying Filter to all Layers..."));
   }
 
   l_layer_id = p_get_indexed_layerid(image_id, &l_nlayers, 0,  plugin_name);

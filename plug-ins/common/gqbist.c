@@ -431,7 +431,7 @@ run (gchar   *name,
 
 	  optimize(qbist_info);
 
-	  gimp_progress_init ( _("Qbist ..."));
+	  gimp_progress_init ( _("Qbist..."));
 	  for (row=sel_y1; row<sel_y2; row++)
 	    {
 	      qbist(qbist_info, (gchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);

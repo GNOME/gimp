@@ -628,7 +628,7 @@ despeckle_dialog (void)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  plugin_name = g_strdup_printf ("%s%s", _("Despeckle "), PLUG_IN_VERSION);
+  plugin_name = g_strdup_printf ("%s %s", _("Despeckle"), PLUG_IN_VERSION);
 
   dialog = gimp_dialog_new (plugin_name, "despeckle",
 			    gimp_plugin_help_func, "filters/despeckle.html",

@@ -2659,10 +2659,6 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
-#: app/install.c:609
-msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Клацн╕ть \"Продовжити\" щоб ув╕йти в користувацьку ╕нсталяц╕ю."
-
 #: app/install.c:713
 msgid "Personal GIMP Directory"
 msgstr "Особистий каталог GIMP"

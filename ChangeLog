@@ -1,3 +1,19 @@
+2000-04-03  Sven Neumann  <sven@gimp.org>
+
+	* app/module_db.c
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/winclipboard.c: 
+	* plug-ins/gap/gap_filter_foreach.c: microscopic cosmetic changes
+	
+	* plug-ins/gap/gap_main.c: moved the "Goto" entries into their own
+	menu so the menu gets smaller
+	
 2000-04-02  Nick Lamb  <njl195@zepler.org.uk>
 	* plug-ins/common/png.c
 	Brown paper bag version, 1.2.1 -- that'll teach me to hurry

@@ -275,7 +275,7 @@ run (gchar   *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init (_("Render flare..."));
+	  gimp_progress_init (_("Render Flare..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  
 	  FlareFX (drawable);

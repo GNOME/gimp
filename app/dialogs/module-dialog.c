@@ -308,6 +308,7 @@ module_db_browser_new (void)
   gtk_widget_show (st->list);
 
   st->table = gtk_table_new (5, NUM_INFO_LINES + 1, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (st->table), 4);  
   gtk_box_pack_start (GTK_BOX (vbox), st->table, FALSE, FALSE, 0);
   gtk_widget_show (st->table);
 
@@ -849,13 +850,13 @@ browser_info_init (browser_st *st,
   GtkWidget *label;
   int i;
   char *text[] = {
-    N_("Purpose: "),
-    N_("Author: "),
-    N_("Version: "),
-    N_("Copyright: "),
-    N_("Date: "),
-    N_("Location: "),
-    N_("State: ")
+    N_("Purpose:"),
+    N_("Author:"),
+    N_("Version:"),
+    N_("Copyright:"),
+    N_("Date:"),
+    N_("Location:"),
+    N_("State:")
   };
 
   for (i=0; i < sizeof(text) / sizeof(char *); i++)
