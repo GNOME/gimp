@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-05 16:18+0100\n"
-"PO-Revision-Date: 2004-11-05 16:21+0100\n"
+"POT-Creation-Date: 2004-11-06 15:27+0100\n"
+"PO-Revision-Date: 2004-11-06 15:29+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5689,7 +5689,7 @@ msgid "_Maximum number of colors:"
 msgstr "Maximale Anzahl der Farben:"
 
 #: app/dialogs/convert-dialog.c:206
-msgid "_Remove unused colors from final palette."
+msgid "_Remove unused colors from final palette"
 msgstr "Nicht verwendete Farben aus endgültiger Palette _entfernen"
 
 #. dithering
@@ -6153,15 +6153,15 @@ msgstr "Kanal verschieben"
 
 #. The offset frame
 #: app/dialogs/offset-dialog.c:108 app/dialogs/offset-dialog.c:136
-#: app/dialogs/resize-dialog.c:185 app/widgets/gimpgrideditor.c:274
+#: app/dialogs/resize-dialog.c:187 app/widgets/gimpgrideditor.c:274
 msgid "Offset"
 msgstr "Versatz"
 
-#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:214
+#: app/dialogs/offset-dialog.c:168 app/dialogs/resize-dialog.c:216
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:215
+#: app/dialogs/offset-dialog.c:170 app/dialogs/resize-dialog.c:217
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -6258,23 +6258,19 @@ msgstr "Tastenkürzel konfigurieren"
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr "Die Tastenkürzel werden beim nächsten Start von GIMPzurückgesetzt."
+msgstr "Die Tastenkürzel werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:600
 msgid ""
-"Your window setup will be reset to default values. the next time you start "
+"Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr ""
-"Die Fenstereinstellungen werden auf Vorgabewerte beim nächsten Startvon GIMP "
-"zurückgesetzt."
+msgstr "Die Fenstereinstellungen werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:634
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
-"Die Einstellungen für Eingabegeräte werden beim nächsten Start vonGIMP "
-"wieder zurückgesetzt."
+msgstr "Die Einstellungen für Eingabegeräte werden beim nächsten Start von GIMP auf Vorgabewerte zurückgesetzt."
 
 #: app/dialogs/preferences-dialog.c:1044
 msgid "Show _menubar"
@@ -6885,15 +6881,15 @@ msgstr "Kein Bild mit ungesicherten Änderungen vorhanden:"
 msgid "There are %d images with unsaved changes:"
 msgstr "Es sind %d Bilder mit ungespeicherten Änderungen geöffnet:"
 
-#: app/dialogs/resize-dialog.c:114
+#: app/dialogs/resize-dialog.c:115
 msgid "Canvas Size"
 msgstr "Leinwandgröße"
 
-#: app/dialogs/resize-dialog.c:125 app/dialogs/scale-dialog.c:107
+#: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:107
 msgid "Layer Size"
 msgstr "Ebenengröße"
 
-#: app/dialogs/resize-dialog.c:232
+#: app/dialogs/resize-dialog.c:234
 msgid "C_enter"
 msgstr "_Zentrieren"
 
@@ -10424,12 +10420,12 @@ msgstr "_Y Auflösung:"
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
-#: app/widgets/gimpsizebox.c:557
+#: app/widgets/gimpsizebox.c:563
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:561
+#: app/widgets/gimpsizebox.c:567
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
