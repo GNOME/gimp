@@ -606,7 +606,7 @@ selection_none_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_none (gimage);
+    gimp_image_mask_clear (gimage);
 
   return procedural_db_return_args (&selection_none_proc, success);
 }

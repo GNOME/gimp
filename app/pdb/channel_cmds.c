@@ -597,7 +597,7 @@ channel_get_show_masked_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&channel_get_show_masked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel->show_masked;
+    return_args[1].value.pdb_int = gimp_channel_get_show_masked (channel);
 
   return return_args;
 }
@@ -651,7 +651,7 @@ channel_set_show_masked_invoker (Gimp     *gimp,
   show_masked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    channel->show_masked = show_masked;
+    gimp_channel_set_show_masked (channel, show_masked);
 
   return procedural_db_return_args (&channel_set_show_masked_proc, success);
 }
