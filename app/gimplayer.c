@@ -1438,7 +1438,7 @@ layer_preview_scale (gint         type,
 	    {
 	      b = bytes;
 	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac);
+		*d++ = (unsigned char) ((*r++ * tot_frac)+0.5);
 	    }
 
 	  dest += destwidth;

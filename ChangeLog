@@ -1,3 +1,10 @@
+Tue Oct 19 21:50:52 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/layer.c
+
+	Fixed rounding error in preview generating code that 
+	produced dithering where no dithering should have been!
+
 1999-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* gimpcontext.[ch]: changed the "parent context" implementation:
