@@ -180,7 +180,7 @@ tree_items[] =
   {
     TRUE, "generated_brushes",
     N_("This folder is used to store brushes that are created\n"
-       "created with the brush editor.")
+       "with the brush editor.")
   },
   {
     TRUE, "gradients",
