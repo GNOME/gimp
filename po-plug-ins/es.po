@@ -8,9 +8,9 @@
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2000-09-28 01:22+02:00\n"
+"Project-Id-Version: GIMP 1.1.29\n"
+"POT-Creation-Date: 2000-12-27 16:29+0100\n"
+"PO-Revision-Date: 2000-12-11 20:00+01:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -999,7 +999,6 @@ msgstr "Difusa:"
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensidad del color original donde es iluminado por la fuente de luz"
 
-# //R ¿Esto existe?
 #: plug-ins/Lighting/lighting_ui.c:787 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
 msgstr "Reflexividad:"
@@ -2269,9 +2268,8 @@ msgid "Bottom Edge"
 msgstr "Borde inferior"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "Vertical:"
+msgstr "Base vertical:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -2765,7 +2763,7 @@ msgstr "Componer: Error al obtener identificadores de capas"
 #: plug-ins/common/compose.c:462
 #, c-format
 msgid "Compose: Image is not a gray image (bpp=%d)"
-msgstr "Componer: La imagen no es de escala de gris (bpp=%d)"
+msgstr "Componer: La imagen no es en tonos de gris (bpp=%d)"
 
 #: plug-ins/common/compose.c:771
 msgid "Compose"
@@ -2816,6 +2814,8 @@ msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
+"Matriz de convolución no funciona en \n"
+"capas más pequeñas que 3 píxeles."
 
 #: plug-ins/common/convmatrix.c:292
 msgid "Applying convolution"
@@ -3455,7 +3455,7 @@ msgstr "Intercambio de color"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "Vista previa: Pulse en el interior para elegir color origen"
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
@@ -3720,17 +3720,17 @@ msgstr "Desenfoque gaussiano RLE"
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Error en fichero de brochas GIMP \"%s\"."
 
+# # //R ¿Con subrayado?
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Canal sin nombre"
+msgstr "Sin nombre"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "Las brochas de GIMP son bien EN TONOS DE GRIS o bien RGBA\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3752,13 +3752,12 @@ msgid "Description:"
 msgstr "Descripción:"
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Filtros/Juguetes/Huevo de Pascua..."
+msgstr "<Image>/Filtros/Juguetes/¡Oh! Viscoso"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
-msgstr ""
+msgstr "¡Oh! Viscoso"
 
 #. Action area - 'close' button only.
 #: plug-ins/common/gee.c:197 plug-ins/common/gee_zoom.c:214
@@ -3769,22 +3768,21 @@ msgstr "** Gracias por elegir GIMP **"
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
+msgstr "Una creación menos obsoleta de Adam D. Moss / adam@gimp.org / adam@foxbox.org & 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr "<Image>/Filtros/Juguetes/Huevo de Pascua..."
+msgstr "<Image>/Filtros/Juguetes/¡Oh! Zoom"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
-msgstr ""
+msgstr "¡Oh! Zoom: El añadido anteriormente conocido como \"El huevo de Pascua de GIMP\""
 
 #: plug-ins/common/gee_zoom.c:226
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
+msgstr "Una creación obsoleta de  Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
@@ -3808,9 +3806,8 @@ msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
-"GIF: Lo siento, no puedo guardar imágenes RGB como GIFs - convierta a "
-"INDEXADA\n"
-"o ESCALA DE GRISES primero.\n"
+"GIF: Lo siento, no puedo guardar imágenes RGB como GIFs - convierta a INDEXADA\n"
+"o TONOS DE GRIS primero.\n"
 
 #: plug-ins/common/gif.c:953
 #, c-format
@@ -3904,20 +3901,19 @@ msgstr "Capa %s no tiene canal alfa, saltada. "
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Error en fichero de tubo de brochas GIMP."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "El fichero de brochas GIMP parece defectuoso."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "No puedo cargar una brocha en el tubo; renunciando."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Guardar como brocha"
+msgstr "Guardar como tubo de brochas"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -4491,7 +4487,6 @@ msgid "Subsampling:"
 msgstr "Submuestreo:"
 
 #: plug-ins/common/jpeg.c:1801
-#, fuzzy
 msgid "Fast Integer"
 msgstr "Entero rápido"
 
@@ -4500,7 +4495,6 @@ msgid "Integer"
 msgstr "Entero"
 
 #: plug-ins/common/jpeg.c:1803
-#, fuzzy
 msgid "Floating-Point"
 msgstr "Coma flotante"
 
@@ -5254,9 +5248,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: Fin de fichero prematuro."
 
 #: plug-ins/common/pnm.c:449
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM: Valor máximo no válido."
+msgstr "PNM: Fichero no válido."
 
 #: plug-ins/common/pnm.c:462
 msgid "PNM: File not in a supported format."
@@ -5744,22 +5737,18 @@ msgstr "Captura de pantalla"
 msgid "Grab"
 msgstr "Capturar"
 
-# //R ¿Con acento o sin ella?
 #: plug-ins/common/screenshot.c:397
-#, fuzzy
 msgid "Single Window"
-msgstr "Capturar una sóla ventana"
+msgstr "Una sóla ventana"
 
 #: plug-ins/common/screenshot.c:411
-#, fuzzy
 msgid "With Decorations"
-msgstr "Incluir decoraciones"
+msgstr "Con decoraciones"
 
 #. root window
 #: plug-ins/common/screenshot.c:427
-#, fuzzy
 msgid "Whole Screen"
-msgstr "Capturar la pantalla entera"
+msgstr "Pantalla entera"
 
 #: plug-ins/common/screenshot.c:443 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
@@ -6246,19 +6235,23 @@ msgid "RunLength Encoded"
 msgstr "Codificación RunLenght"
 
 #: plug-ins/common/tga.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr "no puedo abrir \"%s\"\n"
+msgstr "TGA: no puedo abrir \"%s\"\n"
 
 #: plug-ins/common/tga.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
-msgstr "XBM: no puedo crear \"%s\"\n"
+msgstr ""
+"TGA: No puedo leer pie de página de \"%s\"\n"
+"\n"
 
 #: plug-ins/common/tga.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
-msgstr "XBM: no puedo crear \"%s\"\n"
+msgstr ""
+"XBM: No puedo leer extensión de \"%s\"\n"
+"\n"
 
 #: plug-ins/common/tga.c:1178
 msgid "Save as TGA"
@@ -8172,6 +8165,7 @@ msgstr ""
 msgid "Framesequence shift"
 msgstr "Desplazamiento de secuencia de cuadros"
 
+# // Esa Lock
 #: plug-ins/gap/gap_lib.c:2922
 #, c-format
 msgid ""
@@ -8179,6 +8173,9 @@ msgid ""
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""
+"No puedo ejecutar más de una Función de vídeo\n"
+"en el mismo cuadro de animación al mismo tiempo\n"
+"LOCK ID:%s\n"
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
@@ -8572,34 +8569,28 @@ msgid "PingPong"
 msgstr "Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
 msgid "Frame Loop"
-msgstr "Cuadro %d"
+msgstr "Bucle de cuadros"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
 msgid "Frame Loop Reverse"
-msgstr "Bucle invertido"
+msgstr "Bucle de cuadros invertido"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
 msgid "Frame Once"
-msgstr "Cuadro %d"
+msgstr "Cuadro una vez"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
 msgid "Frame OnceReverse"
-msgstr "Una vez-Invertido"
+msgstr "Cuadro una vez-Invertido"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
 msgid "Frame PingPong"
-msgstr "Ping-Pong"
+msgstr "Cuadros en Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
 msgid "Frame None"
-msgstr "Cuadro %d"
+msgstr "Ningún cuadro"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
@@ -9695,7 +9686,7 @@ msgstr "Convertir a RGB"
 
 #: plug-ins/gap/gap_range_ops.c:433
 msgid "Convert to Gray"
-msgstr "Convertir a Escala de grises"
+msgstr "Convertir a tonos de gris"
 
 #: plug-ins/gap/gap_range_ops.c:434
 msgid "Convert to Indexed"
@@ -11863,7 +11854,7 @@ msgid "Forward"
 msgstr "Adelante"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11872,8 +11863,7 @@ msgid ""
 msgstr ""
 "Error en Navegador de ayuda de GIMP.\n"
 "\n"
-"No pude encontrar mi directorio de html\n"
-"raíz.\n"
+"No pude directorio del html GIMP_HELP_ROOT.\n"
 "(%s)"
 
 # //R :-?
@@ -12401,7 +12391,7 @@ msgstr "Fuente..."
 
 #: plug-ins/imagemap/imap_menu.c:329
 msgid "Grayscale"
-msgstr "Escala de grises"
+msgstr "Tonos de gris"
 
 #: plug-ins/imagemap/imap_menu.c:341
 msgid "Zoom In"
@@ -12835,9 +12825,8 @@ msgid "Print Color Adjust"
 msgstr "Ajuste de impresión en color"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
-msgstr "Restaurar valores por omisión"
+msgstr "Poner por omisión"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
@@ -12888,12 +12877,10 @@ msgid "cm"
 msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Borde:"
+msgstr "Borde derecho:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
 msgstr "Borde inferior"
 
@@ -12907,12 +12894,11 @@ msgstr "Apaisado"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Arriba abajo"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Apaisado"
+msgstr "Marina"
 
 #.
 #. *  Printer settings frame...
@@ -12941,9 +12927,8 @@ msgstr "Tipo de tinta:"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Escala:"
+msgstr "Escala"
 
 #: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
@@ -12965,14 +12950,13 @@ msgstr "Poner escala de Imagen"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:669
-#, fuzzy
 msgid "Image Settings"
-msgstr "Ajustes de tono"
+msgstr "Ajustes de imagen"
 
 # //R Sé lo que es, pero no sé traducirlo
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
-msgstr "Line Art"
+msgstr "Arte lineal"
 
 #: plug-ins/print/gimp_main_window.c:700
 msgid "Solid Colors"
@@ -13013,9 +12997,8 @@ msgstr "Configuración"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:853
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Modo de pintar:"
+msgstr "Modelo de impresora:"
 
 #.
 #. * PPD file...
@@ -13054,14 +13037,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Fichero/Imprimir..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Fichero/Imprimir..."
+msgstr "<Image>/Fichero/Imprimir (Gtk)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Fichero/Imprimir..."
+msgstr "<Image>/Fichero/Imprimir (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -13330,6 +13311,15 @@ msgstr "Error: No puedo leer fichero de propiedades XJT %s"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Error: fichero de propiedades XJT %s está vacío"
 
+#~ msgid "GEE!  The GIMP E'er Egg!"
+#~ msgstr "¡Eh! ¡Encontró el huevo de Pascua!"
+
+#~ msgid "Save as Pixmap Brush"
+#~ msgstr "Guardar como brocha píxmap"
+
+#~ msgid "Save as Pixmap Brush Pipe"
+#~ msgstr "Guardar como tubo de brochas píxmap"
+
 #~ msgid "Checker"
 #~ msgstr "Ajedrez"
 
@@ -13429,36 +13419,3 @@ msgstr "Error: fichero de propiedades XJT %s está vacío"
 
 #~ msgid "<Image>/Filters/Render/Sphere Designer..."
 #~ msgstr "<Image>/Filtros/Render/Diseñador de esferas..."
-
-#~ msgid "GEE!  The GIMP E'er Egg!"
-#~ msgstr "¡Eh! ¡Encontró el huevo de Pascua!"
-
-#~ msgid "Save as Pixmap Brush"
-#~ msgstr "Guardar como brocha píxmap"
-
-#~ msgid "Save as Pixmap Brush Pipe"
-#~ msgstr "Guardar como tubo de brochas píxmap"
-
-#~ msgid "PNM: %s is not a valid file."
-#~ msgstr "PNM: %s no es un fichero válido."
-
-#~ msgid "Output Level:"
-#~ msgstr "Nivel de salida:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "Escala normal"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "Escala experimental lineal"
-
-#~ msgid "Image Type"
-#~ msgstr "Tipo de imágen"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "Escala y ajustes de color"
-
-#~ msgid "Driver:"
-#~ msgstr "Controlador:"
-
-#~ msgid "to"
-#~ msgstr "a"

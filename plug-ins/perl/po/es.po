@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
+"POT-Creation-Date: Thu Dec 28 15:01:24 2000\n"
 "PO-Revision-Date: 2000-09-30 02:20+02:00\n"
 "Last-Translator: Oscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -28,7 +28,7 @@ msgstr " = [error argumento]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr ""
+msgstr "funciones correspondientes"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -91,11 +91,15 @@ msgstr ""
 "$function: argumento/valor de retorno '$p->[1]' tiene un tipo no válido "
 "'$p->[0]'"
 
+# //O Bueno, no se que ta quedará, pero como siempre, no se me ocurre nada mejor de momento.
+# //R Deprecated es que algo se ha vuelto obsoleto
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
+"$function: Es obsoleto llamar a $AUTOLOAD sin especificar la etiqueta de "
+"importación :auto\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -169,9 +173,11 @@ msgstr "/Exts/Render/Logos"
 msgid "/Xtns/Render/Povray"
 msgstr "/Xtns/Render/Povray"
 
+# //O Lo traduzco como negrilla al esilo Win2
+# //R No se traduce, es un nombre de fuente
 #: UI/UI.pm:0
 msgid "9x15bold"
-msgstr ""
+msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
@@ -186,9 +192,11 @@ msgstr "<Image>/Editar/Repetir y duplicar..."
 msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Filtros/Animación/Animar células..."
 
+# //O Por lo que pone el diccionario Blow tiene algo que ver con el viento, al hacer el 'out' parece que el viento se lleve los pixeles de la imagen, con el 'in' forma la imagen, ahora sólo falta encontrar una buena traducción...
+# //R Probaremos con arrastrar... 
 #: examples/blowinout:0
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr ""
+msgstr "<Image>/Filtros/Animación/Arrastrar dentro-fuera"
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
@@ -231,11 +239,11 @@ msgstr "<Image>/Filtros/Detección de Bordes/Deteción de bordes 2x2"
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtros/Realce/Realce de contraste 2x2"
 
+# //R Algún día sabré cómo traducirlo
 #: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr ""
+msgstr "<Image>/Filtros/Realce/Realce \"warp\""
 
-# //R Referencia al script-fu Mezclado
 #: examples/blended2:0
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Filtros/Logulizador/Mezclado II..."
@@ -273,8 +281,8 @@ msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Filtros/Logulizador/Cabecera página Web"
 
 # //O No se si sería mejor poner textura en lugar de Imagen
+# //R A mí me parece bien
 #: examples/image_tile:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile..."
 msgstr "<Image>/Filtros/Aplicación/Imagen de baldosas..."
 
@@ -282,37 +290,42 @@ msgstr "<Image>/Filtros/Aplicación/Imagen de baldosas..."
 # //R Se refiere a aplicar, a hacer corresponder ("mapping") unos píxeles 
 # con otros.
 #: examples/pixelmap:0
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
 msgstr "<Image>/Filtros/Aplicación/Aplicar píxeles..."
 
+# //O En la ayuda del añadido pone literalmente: "Xach's Block o' Fun', por lo que puede que 'Xach' sea el 'nick'/apodo de hombre que ha hecho el añadido, por lo que en este caso la traducción sería 'Bloques de Xach', de momento en todas las apariciones de 'Xach' voy a suponer esto, excepto en las que encuentre una traducción más descriptiva, como en la de 'Visión nocturna
+# //R Sí, es el nombre del autor
 #: examples/xachlego:0
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr ""
+msgstr "<Image>/Filtros/Aplicación/Bloques de Xach..."
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr ""
+msgstr "<Image>/Filtros/Aplicación/Sombras de Xach..."
 
+# //O Aquí lo que hace es sacar un promedio del color de los bordes de la imagen y crear una nueva capa con el color calcula, o eso parece, poqrque cuando lo he probado me ha dado un error y me ha creado la capa, no se si será así como funciona normalmente...
 #: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr ""
+msgstr "<Image>/Filtros/Misc/Promedio del borde..."
 
+# //O en mi versión del Perl-Fu no aparece (instalada de Debian woody mediante apt), así que he hecho una traducción un poco literal.
 #: examples/gimpmagick:0
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr ""
+msgstr "<Image>/Filtros/Misc/Mágico..."
 
 #: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr ""
+msgstr "<Image>/Filtros/Ruido/Tramado..."
 
 #: examples/feedback:0
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr ""
+msgstr "<Image>/Filtros/Ruido/Retroalimentado..."
 
+# //O Bueno, aquí tenemos otra vez a 'Xach', pero como te he comentado anteriormente, aquí creo que queda más descriptiva esta traducción, aunque no se si en honor al autor deberíamos poner 'Visión de Xach' (suponiendo lo que te he comentado arriba.
+# //R ciertamente
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr ""
+msgstr "<Image>/Filtros/Ruido/Visión de Xach..."
 
 #: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
@@ -326,13 +339,15 @@ msgstr "<Image>/Filtros/Render/Añadir fulgor"
 msgid "<Image>/Filters/Render/Brushed Metal..."
 msgstr "<Image>/Filtros/Render/Metal rayado..."
 
+# //O Bueno, traducción bastante distita al término original, pero parece que dibuja radios de una circunferencia, eliges el número (spokes) etc., tal vez se podría llamar tambien Estrellas..., pero no se lo dejo a tu elección.
+# //R ¿Haz radial?
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Haz radial..."
 
 #: examples/fit-text:0
 msgid "<Image>/Filters/Render/Fit Text..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Encajar texto..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
@@ -356,9 +371,10 @@ msgstr "<Image>/Filtros/Render/Cadena de TeX..."
 msgid "<Image>/Filters/Render/Terral Text..."
 msgstr "<Image>/Filtros/Render/Texto montañoso..."
 
+# //O El nombre no es tan "sugerente" como el original, pero no queda mal, lo que hace elte añadido es escribir una página html en la que aprece una imagen divida según las guías que se han puesto a una image, útil cuando quieres que una zona de la imagen cambie al poner el ratón encima, pulsar sobre ella..
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr ""
+msgstr "<Image>/Filtros/Web/Guillotina..."
 
 #: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
@@ -439,7 +455,7 @@ msgstr "<Toolbox>/Exts/Animación/Valla publicitaria..."
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Exts/Animación/Girar plano..."
+msgstr "<Toolbox>/Exts/Animación/Voltear..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
@@ -521,19 +537,23 @@ msgstr "<Toolbox>/Exts/Render/Sellos..."
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
 msgstr "<Toolbox>/Exts/Render/Ying-Yang..."
 
+# //O Esto a mi tampoco me aparece, auqnue por el nombre puede que se tradte de una especie de añadido para crear "scripts" de forma "visual" por eso lo he dejado con el mismo nombre, tan solo cambiado lo de Exts, tal vez, suponiendo que es un programa de creación de guiones, se podría haber traducido como: Creador de guiones visual...
 #: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Visual Scriptor..."
 
 #: examples/PDB:0
 msgid "Accelerator"
 msgstr "Acelerador"
 
+# //O No se si es esto exactamente es esto lo que quiere decir, pero creo que se aproxima bastante a la realidad, despues de traducir 'Seth Spin' como voltear
 #: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
+"Un número par de cuadros es necesario para voltear completamente.\n"
+"Ajustados los cuadros hasta $frames"
 
 #: examples/PDB:0
 msgid "Author"
@@ -754,21 +774,23 @@ msgstr "Guardando '$filename' como COLORHTML..."
 msgid "Saving '$filename' as DATAURL..."
 msgstr "Guardando '$filename' como DATAURL..."
 
+# //O Hace una animación en la que la imagen aparenta dar una vuelta sobre su eje central hotizontal, lo hace sobre la misma imagen o pasando de una imagen a otra, 'spin' se refiere a las ruedas de hilar, así que creo que es una traducción bastante válida.
 #: examples/sethspin:0
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Voltear..."
 
 #: examples/PDB:0
 msgid "Shortcuts"
 msgstr "Atajos"
 
+# //O Tanto aquí como abajo hago referencia al volteo, aunque como son opciones propias del añadido puede que no haga falta ponerlo, y quedaría como: Capa destino (250ms), dejo a tu elección que hacer o cómo mejorarlo
 #: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
-msgstr ""
+msgstr "Capa destino del volteo (250ms)"
 
 #: examples/sethspin:0
 msgid "Spin Layer SRC (250ms)"
-msgstr ""
+msgstr "Capa origen del volteo (250ms)"
 
 #: examples/PDB:0
 msgid "Status"
@@ -794,9 +816,11 @@ msgstr "Este módulo se creó sin soporte para PDL."
 msgid "Unable to convert a reference to type '%s'"
 msgstr "No puedo convertir una referencia a tipo '%s'"
 
+# //O al final encontré lo que es 'grok', gracias a Microsoft y su Encarta, creo que esta página puede sernos útil: http://dictionary.msn.com
+# //R Pero tío, no escribas eso en público ;-)
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
+msgstr "No entiendo '%s' como especificador de color"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
@@ -811,9 +835,10 @@ msgstr "No puedo abrir 'tile de imagen' temporal $tmp: $!"
 msgid "Unsupported argumenttype $type"
 msgstr "Tipo de argumento no soportado: $type"
 
+# //O Antes ya te he comentado lo del Visual Scriptor, o lo dejamos así o lo traducimos por lo que te he dicho anteriormente
 #: examples/visual:0
 msgid "Visual Scriptor"
-msgstr ""
+msgstr "Visual Scriptor"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "WARNING"
@@ -823,17 +848,18 @@ msgstr "AVISO"
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr "AVISO: $function devolvió algo que no es una imagen: \"$img\"\n"
 
+# //O Lo que te comenté en el mensaje sobre lo del paso de testigo me parece que no va a quedar bien, de momento voy a traduceir los lock* por "bloqueo", no se si queda muy bien, pero de momento lo voy a dejar así hasta que pensemos algo mejor.
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr ""
+msgstr "AVISO: el cliente desconectó mientras mantenía un bloqueo activo\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "AVISO: el cliente intentó desbloquear sin tener un bloqueo"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "AVISO: se ha solicitado un bloqueo compartido pero no implementado"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
@@ -959,13 +985,15 @@ msgstr ""
 "discordancia de dimensiones, pdl tiene dimensión %d pero como mucho se "
 "permiten %d dimensiones"
 
+# //O Creo que el 'dunno' es una contracción inglesa de estas raras, así se queda de momento.
+# //R Supongo que será dont' know o algo similar.
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "No sé cómo pasar tipo de argumento %d"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "No sé cómo devolver tipo de parámetro %d"
 
 #: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
@@ -1070,16 +1098,20 @@ msgstr ""
 "el último argumento a gimp_pattern_select_widget debe ser una referencia "
 "escalar"
 
+# //O He traducido las mayúsculas, creo que así no queda del todo mal
 #: Gimp/Lib.xs:0
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
+"incorrecta definición de parámetro, se esperaba "
+"[TIPO_PARAM,\"NOMBRE\",\"DESCRIPCIÓN\"] o TIPO_PARAM"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
+"¡menupath _debe_ comenzar con <Image>, <Toolbox>, <Load>, <Save> o <None>!"
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
@@ -1094,6 +1126,7 @@ msgid "not enough"
 msgstr "no suficiente"
 
 # //R Jarl
+# //O Lo mismo digo ;-), según el diccionario Encarta 'blessed' también sirve para dar énfasis a una frase, pero no cómo prodríamos utilizarlo aquí.
 #: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
 msgstr ""
@@ -1111,9 +1144,11 @@ msgstr ""
 msgid "pdl height != region height"
 msgstr "altura pdl != altura región"
 
+# //O Puff, no se que tal queda esto de momento...
+# //R Mejor usamos la hispanoamericana "arreglo" por array, que es más directo
 #: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr ""
+msgstr "se requiere perl-arrayref como tipo de datos para un arreglo de Gimp"
 
 #: Gimp/Lib.xs:0
 msgid ""
@@ -1146,9 +1181,11 @@ msgstr "retrollamada requerida 'query' no encontrada\n"
 msgid "required callback 'run' not found\n"
 msgstr "retrollamada requerida 'run' no encontrada\n"
 
+# //O He traducido "run-mode" auqnue tal vez como se refiera a algo de cara a la creación de añadidos Perl-Fu hubiese quedado bien como: El "run-mode" debe ser...
+# //R Mejor eso último, por si acaso.
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
+msgstr "run_mode debe ser INTERACTIVE, NOINTERACTIVE o RUN_WITH_LAST_VALS\n"
 
 #: Perl-Server:0
 msgid "server going down..."
@@ -1227,9 +1264,10 @@ msgstr "no puedo crear par de sockets para comunicaciones gimp: $!"
 msgid "unable to fork: $!"
 msgstr "no puedo hacer fork: $!"
 
+# //O Bueno, después de muchas bísquedas al fin encontré 'grok', la solucion gracias a M$, tal vez nos sea util su paginita del diccionario Encarta http://dictionary.msn.com, según esta página 'grok' es entender algo por intuición, así que lo traduzco por entender.
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
-msgstr ""
+msgstr "incapaz de entender la especificación del color"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"

@@ -8,9 +8,9 @@
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-09-28 01:21+02:00\n"
+"Project-Id-Version: GIMP 1.1.29\n"
+"POT-Creation-Date: 2000-12-27 16:27+0100\n"
+"PO-Revision-Date: 2000-12-27 16:28+01:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,19 +32,19 @@ msgstr "no puede manejar Capas"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
-msgstr "Mezclar Capas visibles"
+msgstr "Mezclar capas visibles"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
-msgstr "sólo puede manejar Capas como fotogramas de animación"
+msgstr "sólo puede manejar capas como fotogramas de animación"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
 msgid "Save as Animation"
-msgstr "Guardar como Animación"
+msgstr "Guardar como animación"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
-msgstr "Aplanar Imagen"
+msgstr "Aplanar imagen"
 
 #: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
@@ -60,11 +60,11 @@ msgstr "Convertir a RGB"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
-msgstr "sólo puede manejar imágenes en escala de grises"
+msgstr "sólo puede manejar imágenes en tonos de gris"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr "Convertir a escala de grises"
+msgstr "Convertir a tonos de gris"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
-msgstr "sólo puede manejar imágenes RGB o Escala de grises"
+msgstr "sólo puede manejar imágenes RGB o tonos de gris"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
@@ -88,15 +88,15 @@ msgstr "sólo puede manejar imágenes RGB o indexadas"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle grayscale or indexed images"
-msgstr "sólo puede manejar imágenes indexadas o Escala de grises"
+msgstr "sólo puede manejar imágenes indexadas o tonos de gris"
 
 #: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
-msgstr "necesita un Canal alfa"
+msgstr "necesita un canal alfa"
 
 #: libgimp/gimpexport.c:264
 msgid "Add Alpha Channel"
-msgstr "Añadir Canal alfa"
+msgstr "Añadir canal alfa"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -113,7 +113,7 @@ msgstr "Exportar"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr "No hacer caso"
+msgstr "Pasar por alto"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
