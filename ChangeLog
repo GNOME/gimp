@@ -1,5 +1,12 @@
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/debug-actions.c
+	* app/actions/debug-commands.[ch]
+	* menus/toolbox-menu.xml.in: added action & callback which XML-dump
+	all UI managers.
+
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/plug-in-actions.c (plug_in_actions_add_proc): fixed
 	bug which would have leaked broken menu translations.
 

@@ -27,10 +27,12 @@
 
 #ifdef ENABLE_DEBUG_MENU
 
-void   debug_dump_menus_cmd_callback  (GtkAction *action,
-                                       gpointer   data);
-void   debug_mem_profile_cmd_callback (GtkAction *action,
-                                       gpointer   data);
+void   debug_mem_profile_cmd_callback   (GtkAction *action,
+                                         gpointer   data);
+void   debug_dump_menus_cmd_callback    (GtkAction *action,
+                                         gpointer   data);
+void   debug_dump_managers_cmd_callback (GtkAction *action,
+                                         gpointer   data);
 
 #endif /* ENABLE_DEBUG_MENU */
 

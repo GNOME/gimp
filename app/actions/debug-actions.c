@@ -42,6 +42,11 @@ static GimpActionEntry debug_actions[] =
   { "debug-dump-items", NULL,
     "_Dump Items", NULL, NULL,
     G_CALLBACK (debug_dump_menus_cmd_callback),
+    NULL },
+
+  { "debug-dump-managers", NULL,
+    "Dump _UI Managers", NULL, NULL,
+    G_CALLBACK (debug_dump_managers_cmd_callback),
     NULL }
 };
 

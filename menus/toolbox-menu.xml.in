@@ -26,6 +26,7 @@
       <menu action="debug-menu" name="Debug">
         <menuitem action="debug-mem-profile" />
         <menuitem action="debug-dump-items" />
+        <menuitem action="debug-dump-managers" />
       </menu>
       <separator />
       <menuitem action="file-quit" />

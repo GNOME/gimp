@@ -29,6 +29,7 @@
 #include "core/gimpobject.h"
 
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpuimanager.h"
 
 #include "debug-commands.h"
 #include "gui/menus.h"
@@ -44,6 +45,19 @@ static void   debug_dump_menus_recurse_menu (GtkWidget *menu,
 
 
 /*  public functions  */
+
+void
+debug_mem_profile_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  extern gboolean gimp_debug_memsize;
+
+  gimp_debug_memsize = TRUE;
+
+  gimp_object_get_memsize (GIMP_OBJECT (data), NULL);
+
+  gimp_debug_memsize = FALSE;
+}
 
 void
 debug_dump_menus_cmd_callback (GtkAction *action,
@@ -84,16 +98,30 @@ debug_dump_menus_cmd_callback (GtkAction *action,
 }
 
 void
-debug_mem_profile_cmd_callback (GtkAction *action,
-                                gpointer   data)
+debug_dump_managers_cmd_callback (GtkAction *action,
+                                  gpointer   data)
 {
-  extern gboolean gimp_debug_memsize;
+  GList *list;
 
-  gimp_debug_memsize = TRUE;
+  for (list = global_menu_factory->registered_menus;
+       list;
+       list = g_list_next (list))
+    {
+      GimpMenuFactoryEntry *entry = list->data;
+      GList                *managers;
 
-  gimp_object_get_memsize (GIMP_OBJECT (data), NULL);
+      managers = gimp_ui_managers_from_name (entry->identifier);
 
-  gimp_debug_memsize = FALSE;
+      if (managers)
+        {
+          g_print ("\n\n========================================\n"
+                   "UI Manager: %s\n"
+                   "========================================\n\n",
+                   entry->identifier);
+
+          g_print (gtk_ui_manager_get_ui (managers->data));
+        }
+    }
 }
 
 
