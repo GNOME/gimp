@@ -629,12 +629,11 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
               if (ext_tooltip)
                 {
-                  gchar *tmp;
+                  gchar *tmp = g_strconcat (tooltip, "\n",
+                                            gimp_get_mod_string (mod_mask),
+                                            "  ", ext_tooltip, NULL);
 
-                  tmp = g_strconcat (tooltip, "\n",
-                                     gimp_get_mod_string (mod_mask), "  ",
-                                     ext_tooltip, NULL);
-
+                  g_free (ext_tooltip);
                   g_free (tooltip);
                   tooltip = tmp;
                 }

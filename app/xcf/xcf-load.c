@@ -1507,6 +1507,7 @@ xcf_load_old_path (XcfInfo   *info,
 
   vectors = gimp_vectors_compat_new (gimage, name, points, num_points, closed);
 
+  g_free (name);
   g_free (points);
 
   GIMP_ITEM (vectors)->linked = locked;

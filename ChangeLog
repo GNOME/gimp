@@ -1,3 +1,10 @@
+2004-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpscalecombobox.c
+	(gimp_scale_combo_box_mru_remove_last)
+	* app/widgets/gimpeditor.c (gimp_editor_add_action_button)
+	* app/xcf/xcf-load.c (xcf_load_old_path): plugged some small leaks.
+
 2004-11-03  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):

@@ -207,12 +207,6 @@ gimp_scale_combo_box_mru_remove_last (GimpScaleComboBox *combo_box)
 
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
-      gchar *label;
-
-      gtk_tree_model_get (model, &iter,
-                          LABEL, &label,
-                          -1);
-
       gtk_list_store_remove (GTK_LIST_STORE (model), &iter);
       gtk_tree_row_reference_free (last->data);
       combo_box->mru = g_list_delete_link (combo_box->mru, last);
