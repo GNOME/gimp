@@ -1,12 +1,17 @@
 2000-05-22  Sven Neumann  <sven@gimp.org>
 
-        * app/tools.c: moved Magnify into the Transformation tools
+	* gtkrc: for tooltips set the foreground color too. Closes
+	bug #11547.
+	
+2000-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/tools.c: moved Magnify into the Transformation tools
 	category. This is not entirely correct, but at least the 
 	tools are now grouped as they appear in the toolbox.
 	
-        * plug-ins/common/flarefx.c: applied modified version of 
+	* plug-ins/common/flarefx.c: applied modified version of 
 	gimp-timecop-200005-4.flarefx which adds a scaled down 
-	flarefx to tthe preview.
+	flarefx to the preview.
 	
 2000-05-22  Michael Natterer  <mitch@gimp.org>
 

@@ -13,6 +13,7 @@ style "ruler"
 
 style "tooltips"
 {
+  fg[NORMAL] = { 0.0,  0.0,  0.0  }
   bg[NORMAL] = { 0.94, 0.90, 0.54 }
 }
 
