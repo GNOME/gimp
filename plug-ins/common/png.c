@@ -735,7 +735,7 @@ load_image (const gchar *filename)
 				   "UTF-8", "ISO-8859-1", 
 				   NULL, NULL, NULL);
 	    }
-	  else
+	  else if (g_utf8_validate (text->text, -1, NULL))
 	    {                          /*  iTXt  */
 	      comment = g_strdup (text->text);
 	    }
