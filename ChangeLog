@@ -1,3 +1,9 @@
+2004-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_free_script): 
+	call gimp_uninstall_temp_proc() with script->pdb_name, not
+	script->script_name. Fixes bug #133280.
+
 2004-02-02  DindinX  <david@dindinx.org>
 
 	* app/display/gimpcanvas.c: gimp_canvas_draw_segments():

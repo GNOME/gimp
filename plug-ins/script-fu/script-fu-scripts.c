@@ -991,7 +991,7 @@ script_fu_free_script (SFScript *script)
   gint i;
 
   /*  Uninstall the temporary procedure for this script  */
-  gimp_uninstall_temp_proc (script->script_name);
+  gimp_uninstall_temp_proc (script->pdb_name);
 
   if (script)
     {
