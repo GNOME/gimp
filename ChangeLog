@@ -1,3 +1,29 @@
+2002-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-utils.[ch]: added gimp_config_diff()
+	which returns the difference beween two GimpConfig objects
+	as a GList of GParamSpecs.
+
+	* app/config/gimpconfig-params.c (gimp_param_color_cmp): compare
+	the colors as integers to get rid of rounding foobar.
+
+	* app/config/gimpconfig-serialize.c: use gimp_config_diff().
+
+	* app/display/gimpdisplayshell-handlers.c: only need to call
+	gimp_display_shell_scale_setup() on resolution change if the
+	display is not in dot-for-dot mode.
+
+	* app/display/gimpdisplayshell.c: changed a separator in the
+	padding color menu.
+
+	* app/gui/dialogs.c: made the prefs dialog a singleton again.
+
+	* app/gui/preferences-dialog.c: Should be fully functional again:
+	Apply GIMP_PARAM_CONFIRM properties on "OK". Save gimprc on "OK".
+	Parse a temporaty GimpRc on dialog creation to get the current
+	GIMP_PARAM_RESTART values. Use gimp_config_diff() for all config
+	comparisons.
+
 2002-11-25  Manish Singh  <yosh@gimp.org>
 
 	* libgimpbase/gimpwire.c: using a union like that may not be

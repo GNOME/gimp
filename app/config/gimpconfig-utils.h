@@ -23,6 +23,9 @@
 #define __GIMP_CONFIG_UTILS_H__
 
 
+GList    * gimp_config_diff               (GObject      *a,
+                                           GObject      *b,
+                                           GParamFlags   flags);
 void       gimp_config_copy_properties    (GObject      *src,
                                            GObject      *dest);
 

@@ -30,6 +30,50 @@
 #include "gimpconfig-utils.h"
 
 
+GList *
+gimp_config_diff (GObject      *a,
+                  GObject      *b,
+                  GParamFlags   flags)
+{
+  GParamSpec **param_specs;
+  guint        n_param_specs;
+  gint         i;
+  GList       *list = NULL;
+
+  g_return_val_if_fail (G_IS_OBJECT (a), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (b), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
+                        FALSE);
+
+  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
+                                                &n_param_specs);
+
+  for (i = 0; i < n_param_specs; i++)
+    {
+      if (! flags || ((param_specs[i]->flags & flags) == flags))
+        {
+          GValue a_value = { 0, };
+          GValue b_value = { 0, };
+
+          g_value_init (&a_value, param_specs[i]->value_type);
+          g_value_init (&b_value, param_specs[i]->value_type);
+
+          g_object_get_property (a, param_specs[i]->name, &a_value);
+          g_object_get_property (b, param_specs[i]->name, &b_value);
+
+          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
+            list = g_list_prepend (list, param_specs[i]);
+
+          g_value_unset (&a_value);
+          g_value_unset (&b_value);
+        }
+    }
+
+  g_free (param_specs);
+
+  return g_list_reverse (list);
+}
+
 void
 gimp_config_copy_properties (GObject *src,
                              GObject *dest)
@@ -64,7 +108,11 @@ gimp_config_copy_properties (GObject *src,
       
       g_object_get_property (src,  prop_spec->name, &value);
       g_object_set_property (dest, prop_spec->name, &value);
+
+      g_value_unset (&value);
     }
+
+  g_free (property_specs);
 }
 
 gchar *

@@ -147,13 +147,20 @@ gimp_param_color_values_cmp (GParamSpec   *pspec,
     return color1 != NULL;
   else
     {
-      gdouble intensity1 = gimp_rgb_intensity (color1);
-      gdouble intensity2 = gimp_rgb_intensity (color2);
+      guint32 int1, int2;
 
-      if (intensity1 < intensity2)
-        return -1;
-      else
-        return intensity1 > intensity2;
+      gimp_rgba_get_uchar (color1,
+                           ((guchar *) &int1) + 0,
+                           ((guchar *) &int1) + 1,
+                           ((guchar *) &int1) + 2,
+                           ((guchar *) &int1) + 3);
+      gimp_rgba_get_uchar (color2,
+                           ((guchar *) &int2) + 0,
+                           ((guchar *) &int2) + 1,
+                           ((guchar *) &int2) + 2,
+                           ((guchar *) &int2) + 3);
+
+      return int1 - int2;
     }
 }
 

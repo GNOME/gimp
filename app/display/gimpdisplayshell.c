@@ -646,7 +646,6 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   {
     static GtkItemFactoryEntry menu_items[] =
     {
-      { "/---", NULL, NULL, 0, "<Separator>"},
       { N_("/From Theme"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_DISPLAY_PADDING_MODE_DEFAULT, NULL },
@@ -656,6 +655,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
       { N_("/Dark Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_DISPLAY_PADDING_MODE_DARK_CHECK, NULL },
+      { "/---", NULL, NULL, 0, "<Separator>"},
       { N_("/Select Custom Color..."), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_DISPLAY_PADDING_MODE_CUSTOM, NULL },
