@@ -1,3 +1,7 @@
+2004-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added plug-ins/helpbrowser/domain.c
+
 2004-01-12  Valek Filippov  <frob@df.ru>
 
 	* ru.po: Updated russian translation by Anatoly (Doc) Yakushin.
