@@ -1,3 +1,10 @@
+2005-04-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/deinterlace.c (deinterlace): fixed boundary
+	conditions that led to incorrect preview (bug #172589).
+
 2005-04-04  Tor Lillqvist  <tml@novell.com>
 
 	* app/widgets/gimpclipboard.c (gimp_clipboard_format_compare): On

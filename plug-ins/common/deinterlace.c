@@ -184,76 +184,84 @@ deinterlace (GimpDrawable *drawable,
              GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
-  gint          width, height;
-  gint          bytes;
   gboolean      has_alpha;
   guchar       *dest;
   guchar       *dest_buffer = NULL;
   guchar       *upper;
   guchar       *lower;
   gint          row, col;
-  gint          x1, y1, x2, y2;
+  gint          x, y;
+  gint          width, height;
+  gint          bytes;
 
-  bytes  = drawable->bpp;
+  bytes = drawable->bpp;
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
 
-      dest_buffer = dest  = g_new (guchar, width * height * bytes);
+      dest_buffer = g_new (guchar, width * height * bytes);
+      dest = dest_buffer;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
-      dest  = g_new (guchar, width * height * bytes);
+      gint x2, y2;
+
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x, &y, &x2, &y2);
+
+      width  = x2 - x;
+      height = y2 - y;
+
+      dest = g_new (guchar, width * bytes);
+
+      gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, TRUE, TRUE);
     }
 
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       x, MAX (y - 1, 0),
+                       width, MIN (height + 1, drawable->height),
+                       FALSE, FALSE);
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
   /*  allocate row buffers  */
   upper = g_new (guchar, width * bytes);
   lower = g_new (guchar, width * bytes);
 
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-  /*  loop through the rows, performing our magic*/
-  for (row = y1; row < y1 + height; row++)
+  /*  loop through the rows, performing our magic  */
+  for (row = y; row < y + height; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, dest, x1, row, width);
+      gimp_pixel_rgn_get_row (&srcPR, dest, x, row, width);
 
-      /* Only do interpolation if the row:
-         (1) Isn't one we want to keep
-         (2) Has both an upper and a lower row
-         Otherwise, just duplicate the source row
-      */
-      if (!((row % 2 == devals.evenness) ||
-            (row - 1 < 0) ||
-            (row + 1 >= height)))
+      /*  Only do interpolation if the row:
+       *  (1) Isn't one we want to keep
+       *  (2) Has both an upper and a lower row
+       *  Otherwise, just duplicate the source row
+       */
+      if ((row % 2 != devals.evenness) &&
+          (row - 1 >= 0) && (row + 1 < drawable->height))
         {
-          gimp_pixel_rgn_get_row (&srcPR, upper, x1, row - 1, width);
-          gimp_pixel_rgn_get_row (&srcPR, lower, x1, row + 1, width);
+          gimp_pixel_rgn_get_row (&srcPR, upper, x, row - 1, width);
+          gimp_pixel_rgn_get_row (&srcPR, lower, x, row + 1, width);
 
           if (has_alpha)
             {
-              guchar *upix = upper;
-              guchar *lpix = lower;
-              guchar *dpix = dest;
+              const guchar *upix = upper;
+              const guchar *lpix = lower;
+              guchar       *dpix = dest;
 
               for (col = 0; col < width; col++)
                 {
-                  gint  b;
-                  guint ualpha = upix[bytes-1];
-                  guint lalpha = lpix[bytes-1];
+                  guint ualpha = upix[bytes - 1];
+                  guint lalpha = lpix[bytes - 1];
                   guint alpha  = ualpha + lalpha;
 
-                  if ((dpix[bytes-1] = (alpha >> 1)))
+                  if ((dpix[bytes - 1] = (alpha >> 1)))
                     {
-                      for (b = 0; b < bytes-1; b++)
+                      gint b;
+
+                      for (b = 0; b < bytes - 1; b++)
                         dpix[b] = (upix[b] * ualpha + lpix[b] * lalpha) / alpha;
                     }
 
@@ -265,16 +273,17 @@ deinterlace (GimpDrawable *drawable,
           else
             {
               for (col = 0; col < width * bytes; col++)
-                   dest[col] = (upper[col] + lower[col]) / 2;
+                dest[col] = ((guint) upper[col] + (guint) lower[col]) / 2;
             }
         }
+
       if (preview)
         {
           dest += width * bytes;
         }
       else
         {
-          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
+          gimp_pixel_rgn_set_row (&destPR, dest, x, row, width);
 
           if ((row % 5) == 0)
             gimp_progress_update ((double) row / (double) (height));
@@ -291,7 +300,7 @@ deinterlace (GimpDrawable *drawable,
       /*  update the deinterlaced region  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 
   g_free (lower);
