@@ -1,14 +1,15 @@
 # Greek messages for program gimp-libgimp.
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
-# 
+# Nikos Charonitakis <frolix68@yahoo.gr>, 2003
+# Simos initial translation 10 messages translated
+# Nikos update 18Aug2003 29 messages translated
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
-"PO-Revision-Date: 2001-12-27 15:07+0000\n"
-"Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
+"POT-Creation-Date: 2003-08-19 01:13+0300\n"
+"PO-Revision-Date: 2003-08-19 01:21-0200\n"
+"Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,12 +21,15 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:183
+#: libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
 msgstr "Αδύνατη η Ανάγνωση Καταλόγου"
 
-#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:184
+#: libgimp/gimpexport.c:193
+#: libgimp/gimpexport.c:202
 #, fuzzy
 msgid "Merge Visible Layers"
 msgstr "Στον Κατάλογο Εμφάνισης"
@@ -35,17 +39,21 @@ msgstr "Στον Κατάλογο Εμφάνισης"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr ""
 
-#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:201
+#: libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr ""
 
-#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:211
 #, fuzzy
 msgid "Save as Animation"
 msgstr "Επιλογή κινούμενων σχεδίων"
 
-#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:220
+#: libgimp/gimpexport.c:229
 #, fuzzy
 msgid "Flatten Image"
 msgstr "Νέα Εικόνα"
@@ -60,7 +68,9 @@ msgstr "Διαφάνεια Χροιάς"
 msgid "%s can only handle RGB images"
 msgstr ""
 
-#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:238
+#: libgimp/gimpexport.c:266
+#: libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Μετατροπή σε RGB"
 
@@ -70,17 +80,20 @@ msgid "%s can only handle grayscale images"
 msgstr ""
 
 #
-#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
-#, fuzzy
+#: libgimp/gimpexport.c:247
+#: libgimp/gimpexport.c:266
+#: libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
-msgstr "Μετατροπή σε αυτό το είδος:"
+msgstr "Μετατροπή σε Κλίμακα του Γκρι"
 
 #: libgimp/gimpexport.c:255
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr ""
 
-#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
+#: libgimp/gimpexport.c:256
+#: libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -118,9 +131,8 @@ msgstr "κανάλι άλφα"
 #.
 #. the dialog
 #: libgimp/gimpexport.c:370
-#, fuzzy
 msgid "Confirm Save"
-msgstr "Επιβεβαίωση"
+msgstr "Επιβεβαίωση Αποθήκευσης"
 
 #
 #: libgimp/gimpexport.c:378
@@ -146,9 +158,7 @@ msgid "Export"
 msgstr "Εξαγωγή"
 
 #: libgimp/gimpexport.c:468
-msgid ""
-"Your image should be exported before it can be saved for the following "
-"reasons:"
+msgid "Your image should be exported before it can be saved for the following reasons:"
 msgstr ""
 
 #. the footline
@@ -172,12 +182,11 @@ msgstr ""
 
 #
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Επιλογή Γραμματοσειράς"
@@ -188,7 +197,7 @@ msgstr ""
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Προεπισκόπηση"
 
 #: libgimp/gimpmiscui.c:536
 #, c-format
@@ -207,7 +216,7 @@ msgstr "Επιλογή Γραμματοσειράς"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "επί τις εκατό"
+msgstr "ποσοστό"
 
 #: libgimpbase/gimputils.c:118
 #, fuzzy, c-format
@@ -244,8 +253,10 @@ msgstr ""
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
-#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:190
+#: libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314
+#: libgimpmodule/gimpmodule.c:341
 #: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
@@ -286,37 +297,43 @@ msgstr "Καθορισμός χρώματος φόντου"
 
 #: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
-msgstr ""
+msgstr "/Μαύρο"
 
 #: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
-msgstr ""
+msgstr "/Λευκό"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr ""
 
@@ -324,31 +341,39 @@ msgstr ""
 msgid "_A"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174
+#: libgimpwidgets/gimpcolorselect.c:358
+#, fuzzy
 msgid "Hue"
-msgstr ""
+msgstr "Απόχρωση"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175
+#: libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
-msgstr ""
+msgstr "Κορεσμός"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176
+#: libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
-msgstr ""
+msgstr "Τιμή"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177
+#: libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr ""
+msgstr "Κόκκινο"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178
+#: libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr ""
+msgstr "Πράσινο"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179
+#: libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr ""
+msgstr "Μπλε"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180
+#: libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr ""
 
@@ -362,9 +387,8 @@ msgstr ""
 
 #
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Επιλογή Αρχείου"
+msgstr "Επιλογή Φακέλου"
 
 #
 #: libgimpwidgets/gimpfileselection.c:366
@@ -387,9 +411,7 @@ msgid "GigaBytes"
 msgstr "Byte"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:101
@@ -404,7 +426,7 @@ msgstr "πίκα"
 
 #: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
-msgstr ""
+msgstr "_Επεξεργασία"
 
 #: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
@@ -424,7 +446,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
-msgstr ""
+msgstr "Ορατό"
 
 #: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
@@ -438,7 +460,8 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
 msgstr ""
 
@@ -478,9 +501,7 @@ msgid "Factor"
 msgstr "Συντελεστής"
 
 #: libgimpwidgets/gimpwidgets.c:943
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:947
@@ -537,7 +558,7 @@ msgstr ""
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Αντίθεση"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
@@ -574,16 +595,17 @@ msgid "Cyan"
 msgstr "Ακύρωση"
 
 #: modules/colorsel_cmyk.c:151
+#, fuzzy
 msgid "Magenta"
-msgstr ""
+msgstr "Φούξια"
 
 #: modules/colorsel_cmyk.c:152
 msgid "Yellow"
-msgstr ""
+msgstr "Κίτρινο"
 
 #: modules/colorsel_cmyk.c:153
 msgid "Black"
-msgstr ""
+msgstr "Μαύρο"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
@@ -591,63 +613,18 @@ msgstr ""
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
-msgstr ""
+msgstr "Τρίγωνο"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr ""
 
 #: modules/colorsel_water.c:176
+#, fuzzy
 msgid "Watercolor"
-msgstr ""
+msgstr "Νερομπογιά"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Πίεση"
 
-#, fuzzy
-#~ msgid "a layer mask"
-#~ msgstr "Ονόματα Παικτών"
-
-#, fuzzy
-#~ msgid "a channel (saved selection)"
-#~ msgstr "Αποθήκευση επιλογής"
-
-#
-#, fuzzy
-#~ msgid "_Time"
-#~ msgstr "Χρόνος"
-
-#
-#, fuzzy
-#~ msgid "Select Directory"
-#~ msgstr "Επιλογή Αρχείου"
-
-#
-#~ msgid "OK"
-#~ msgstr "Εντάξει"
-
-#~ msgid "pixel"
-#~ msgstr "εικονοστοιχείο"
-
-#
-#~ msgid "pixels"
-#~ msgstr "εικονοστοιχεία"
-
-#~ msgid "inches"
-#~ msgstr "ίντσες"
-
-#~ msgid "millimeter"
-#~ msgstr "χιλιοστά"
-
-#~ msgid "millimeters"
-#~ msgstr "χιλιοστά"
-
-#~ msgid "point"
-#~ msgstr "σημείο"
-
-#~ msgid "points"
-#~ msgstr "σημεία"
-
-#~ msgid "picas"
-#~ msgstr "στιγμές"
