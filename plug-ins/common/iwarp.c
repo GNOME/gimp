@@ -229,7 +229,7 @@ static gboolean     do_animate_ping_pong = FALSE;
 static gdouble      supersample_threshold_2;
 static gint         xl, yl, xh, yh;
 static gint         tile_width, tile_height;
-static GimpTile       *tile = NULL;
+static GimpTile    *tile = NULL;
 static gdouble      pre2img, img2pre;
 static gint         preview_bpp;
 static gdouble      animate_deform_value = 1.0;
@@ -345,18 +345,22 @@ iwarp_get_pixel (gint    x,
    {
      col = x / tile_width;
      row = y / tile_height;
+
      if (col != old_col || row != old_row)
        {
-	 gimp_tile_unref (tile, FALSE);
+         if (tile)
+           gimp_tile_unref (tile, FALSE);
+
 	 tile = gimp_drawable_get_tile (drawable, FALSE, row, col);
 	 gimp_tile_ref (tile);
+
 	 old_col = col;
 	 old_row = row;
        }
-     data =
-       tile->data +
-       (tile->ewidth * (y % tile_height) +
-	x % tile_width) * image_bpp;
+
+     data = tile->data + (tile->ewidth * (y % tile_height) +
+                          x % tile_width) * image_bpp;
+
      for (i = 0; i < image_bpp; i++)
        *pixel++ = *data++;
    }
@@ -825,7 +829,8 @@ iwarp (void)
       animate_deform_value = 1.0;
       iwarp_frame ();
     }
-  if (tile != NULL)
+
+  if (tile)
     {
       gimp_tile_unref (tile, FALSE);
       tile = NULL;
