@@ -170,8 +170,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_plugin_menu_register ("file_raw_load", "<Load>");
-  gimp_register_magic_load_handler ("file_raw_load", "raw", "", "");
+  gimp_register_load_handler ("file_raw_load", "", "");
 
   gimp_install_procedure ("file_raw_save",
                           "Dump images to disk in raw format",
@@ -185,8 +184,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_plugin_menu_register ("file_raw_save", "<Save>");
-  gimp_register_save_handler ("file_raw_save", "raw", "");
+  gimp_register_save_handler ("file_raw_save", "", "");
 }
 
 static void
