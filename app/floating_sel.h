@@ -20,7 +20,6 @@
 #define __FLOATING_SEL_H__
 
 #include "apptypes.h"
-#include "boundaryF.h"
 
 
 /*  Functions  */

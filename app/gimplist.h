@@ -34,6 +34,7 @@
 #define GIMP_IS_LIST(obj)      GTK_CHECK_TYPE (obj, gimp_list_get_type())
 #define GIMP_LIST_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_list_get_type(), GimpListClass)
 
+
 struct _GimpList
 {
   GimpObject gobject;
@@ -50,13 +51,6 @@ struct _GimpListClass
 };
 
 typedef struct _GimpListClass GimpListClass;
-
-
-     
-/* Signals:
-   add
-   remove
-*/
 
 
 GtkType    gimp_list_get_type (void);

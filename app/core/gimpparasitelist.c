@@ -23,9 +23,8 @@
 
 #include "apptypes.h"
 
-#include "gimpobject.h"
 #include "gimpsignal.h"
-#include "parasitelistP.h"
+#include "parasitelist.h"
 
 #include "libgimp/gimpparasite.h"
 

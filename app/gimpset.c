@@ -21,9 +21,8 @@
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
-#include "gimpobject.h"
+#include "gimpset.h"
 #include "gimpsignal.h"
-#include "gimpsetP.h"
 
 
 /* Yep, this can be optimized quite a lot */
@@ -288,7 +287,7 @@ gboolean
 gimp_set_have (GimpSet  *set,
 	       gpointer  object)
 {
-  return !!gimp_set_find_node (set, object);
+  return (gimp_set_find_node (set, object) != NULL);
 }
 
 void

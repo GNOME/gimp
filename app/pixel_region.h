@@ -21,6 +21,7 @@
 #include "tile_manager.h"
 #include "pixel_processor.h" /* this is temporary, */
 
+
 typedef struct _PixelRegion PixelRegion;
 
 struct _PixelRegion
@@ -38,6 +39,32 @@ struct _PixelRegion
   gint         bytes;          /*  bytes per pixel               */
   gboolean     dirty;          /*  will this region be dirtied?  */
   gint         process_count;  /*  used internally               */
+};
+
+
+typedef struct _PixelRegionHolder PixelRegionHolder;
+
+struct _PixelRegionHolder
+{
+  PixelRegion *PR;
+  guchar      *original_data;
+  gint         startx;
+  gint         starty;
+  gint         count;
+};
+
+
+typedef struct _PixelRegionIterator PixelRegionIterator;
+
+struct _PixelRegionIterator
+{
+  GSList *pixel_regions;
+  gint    dirty_tiles;
+  gint    region_width;
+  gint    region_height;
+  gint    portion_width;
+  gint    portion_height;
+  gint    process_count;
 };
 
 

@@ -35,50 +35,77 @@
 /* BoundSeg array growth parameter */
 #define MAX_SEGS_INC  2048
 
+
 /*  The array of vertical segments  */
-static int *      vert_segs = NULL;
+static gint      *vert_segs      = NULL;
 
 /*  The array of segments  */
-static BoundSeg * tmp_segs = NULL;
-static int        num_segs = 0;
-static int        max_segs = 0;
+static BoundSeg  *tmp_segs       = NULL;
+static gint       num_segs       = 0;
+static gint       max_segs       = 0;
 
 /* static empty segment arrays */
-static int *      empty_segs_n = NULL;
-static int        num_empty_n = 0;
-static int *      empty_segs_c = NULL;
-static int        num_empty_c = 0;
-static int *      empty_segs_l = NULL;
-static int        num_empty_l = 0;
-static int        max_empty_segs = 0;
+static gint      *empty_segs_n   = NULL;
+static gint       num_empty_n    = 0;
+static gint      *empty_segs_c   = NULL;
+static gint       num_empty_c    = 0;
+static gint      *empty_segs_l   = NULL;
+static gint       num_empty_l    = 0;
+static gint       max_empty_segs = 0;
 
 /* global state variables--improve parameter efficiency */
-static PixelRegion * cur_PR;
+static PixelRegion *cur_PR       = NULL;
 
 
 /*  local function prototypes  */
-static void find_empty_segs (PixelRegion *, int, int *, int, int *,
-			     BoundaryType, int, int, int, int);
-static void make_seg (int, int, int, int, int);
-static void allocate_vert_segs (void);
+static void find_empty_segs     (PixelRegion  *maskPR,
+				 gint          scanline,
+				 gint          empty_segs[],
+				 gint          max_empty,
+				 gint         *num_empty,
+				 BoundaryType  type,
+				 gint          x1,
+				 gint          y1,
+				 gint          x2,
+				 gint          y2);
+static void make_seg            (gint          x1,
+				 gint          y1,
+				 gint          x2,
+				 gint          y2,
+				 gboolean      open);
+static void allocate_vert_segs  (void);
 static void allocate_empty_segs (void);
-static void process_horiz_seg (int, int, int, int, int);
-static void make_horiz_segs (int, int, int, int *, int, int);
-static void generate_boundary (BoundaryType, int, int, int, int);
+static void process_horiz_seg   (gint          x1,
+				 gint          y1,
+				 gint          x2,
+				 gint          y2,
+				 gboolean      open);
+static void make_horiz_segs     (gint          start,
+				 gint          end,
+				 gint          scanline,
+				 gint          empty[],
+				 gint          num_empty,
+				 gint          top);
+static void generate_boundary   (BoundaryType  type,
+				 gint          x1,
+				 gint          y1,
+				 gint          x2,
+				 gint          y2);
+
 
 /*  Function definitions  */
 
 static void
 find_empty_segs (PixelRegion  *maskPR,
-		 int           scanline,
-		 int           empty_segs[],
-		 int           max_empty,
-		 int          *num_empty,
+		 gint          scanline,
+		 gint          empty_segs[],
+		 gint          max_empty,
+		 gint         *num_empty,
 		 BoundaryType  type,
-		 int           x1,
-		 int           y1,
-		 int           x2,
-		 int           y2)
+		 gint          x1,
+		 gint          y1,
+		 gint          x2,
+		 gint          y2)
 {
   unsigned char *data;
   int x;
@@ -136,47 +163,52 @@ find_empty_segs (PixelRegion  *maskPR,
 	  if (tile)
 	    tile_release (tile, FALSE);
 	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, TRUE, FALSE);
-	  data = (unsigned char*)tile_data_pointer (tile, x % TILE_WIDTH, scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
+	  data = (guchar *) tile_data_pointer (tile, 
+					       x % TILE_WIDTH, 
+					       scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
 
 	  tilex = x / TILE_WIDTH;
-	  dstep = tile_bpp(tile);
+	  dstep = tile_bpp (tile);
 	}
       endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
       endx = MIN (end, endx);
       if (type == IgnoreBounds && (endx > x1 || x < x2))
-	for (; x < endx; x++)
 	{
-	  if (*data > HALF_WAY)
-	    if (x >= x1 && x < x2)
-	      val = -1;
-	    else
-	      val = 1;
-	  else
-	    val = -1;
-
-	  data += dstep;
-
-	  if (last != val)
-	    empty_segs[l_num_empty++] = x;
-
-	  last = val;
+	  for (; x < endx; x++)
+	    {
+	      if (*data > HALF_WAY)
+		if (x >= x1 && x < x2)
+		  val = -1;
+		else
+		  val = 1;
+	      else
+		val = -1;
+	      
+	      data += dstep;
+	      
+	      if (last != val)
+		empty_segs[l_num_empty++] = x;
+	      
+	      last = val;
+	    }
 	}
       else
-	for (; x < endx; x++)
 	{
-	  if (*data > HALF_WAY)
-	    val = 1;
-	  else
-	    val = -1;
-
-	  data += dstep;
-
-	  if (last != val)
-	    empty_segs[l_num_empty++] = x;
-
-	  last = val;
-	}
-
+	  for (; x < endx; x++)
+	    {
+	      if (*data > HALF_WAY)
+		val = 1;
+	      else
+		val = -1;
+	      
+	      data += dstep;
+	      
+	      if (last != val)
+		empty_segs[l_num_empty++] = x;
+	      
+	      last = val;
+	    }
+	} 
     }
   *num_empty = l_num_empty;
 
@@ -191,11 +223,11 @@ find_empty_segs (PixelRegion  *maskPR,
 
 
 static void
-make_seg (int x1,
-	  int y1,
-	  int x2,
-	  int y2,
-	  int open)
+make_seg (gint     x1,
+	  gint     y1,
+	  gint     x2,
+	  gint     y2,
+	  gboolean open)
 {
   if (num_segs >= max_segs)
     {
@@ -220,10 +252,11 @@ make_seg (int x1,
 static void
 allocate_vert_segs (void)
 {
-  int i;
+  gint i;
 
   /*  allocate and initialize the vert_segs array  */
-  vert_segs = (int *) g_realloc ((void *) vert_segs, (cur_PR->w + cur_PR->x + 1) * sizeof (int));
+  vert_segs = (gint *) g_realloc ((void *) vert_segs, 
+				  (cur_PR->w + cur_PR->x + 1) * sizeof (gint));
 
   for (i = 0; i <= (cur_PR->w + cur_PR->x); i++)
     vert_segs[i] = -1;
@@ -233,7 +266,7 @@ allocate_vert_segs (void)
 static void
 allocate_empty_segs (void)
 {
-  int need_num_segs;
+  gint need_num_segs;
 
   /*  find the maximum possible number of empty segments given the current mask  */
   need_num_segs = cur_PR->w + 3;
@@ -242,9 +275,9 @@ allocate_empty_segs (void)
     {
       max_empty_segs = need_num_segs;
 
-      empty_segs_n = (int *) g_realloc (empty_segs_n, sizeof (int) * max_empty_segs);
-      empty_segs_c = (int *) g_realloc (empty_segs_c, sizeof (int) * max_empty_segs);
-      empty_segs_l = (int *) g_realloc (empty_segs_l, sizeof (int) * max_empty_segs);
+      empty_segs_n = (gint *) g_realloc (empty_segs_n, sizeof (gint) * max_empty_segs);
+      empty_segs_c = (gint *) g_realloc (empty_segs_c, sizeof (gint) * max_empty_segs);
+      empty_segs_l = (gint *) g_realloc (empty_segs_l, sizeof (gint) * max_empty_segs);
 
       if (!empty_segs_n || !empty_segs_l || !empty_segs_c)
 	gimp_fatal_error ("allocate_empty_segs(): Unable to reallocate empty segments array for mask boundary.");
@@ -253,11 +286,11 @@ allocate_empty_segs (void)
 
 
 static void
-process_horiz_seg (int x1,
-		   int y1,
-		   int x2,
-		   int y2,
-		   int open)
+process_horiz_seg (gint     x1,
+		   gint     y1,
+		   gint     x2,
+		   gint     y2,
+		   gboolean open)
 {
   /*  This procedure accounts for any vertical segments that must be
       drawn to close in the horizontal segments.                     */
@@ -283,15 +316,15 @@ process_horiz_seg (int x1,
 
 
 static void
-make_horiz_segs (int start,
-		 int end,
-		 int scanline,
-		 int empty[],
-		 int num_empty,
-		 int top)
+make_horiz_segs (gint start,
+		 gint end,
+		 gint scanline,
+		 gint empty[],
+		 gint num_empty,
+		 gint top)
 {
-  int empty_index;
-  int e_s, e_e;    /* empty segment start and end values */
+  gint empty_index;
+  gint e_s, e_e;    /* empty segment start and end values */
 
   for (empty_index = 0; empty_index < num_empty; empty_index += 2)
     {
@@ -309,15 +342,15 @@ make_horiz_segs (int start,
 
 static void
 generate_boundary (BoundaryType type,
-		   int          x1,
-		   int          y1,
-		   int          x2,
-		   int          y2)
+		   gint          x1,
+		   gint          y1,
+		   gint          x2,
+		   gint          y2)
 {
-  int scanline;
-  int i;
-  int start, end;
-  int * tmp_segs;
+  gint  scanline;
+  gint  i;
+  gint  start, end;
+  gint *tmp_segs;
 
   start = 0;
   end   = 0;
@@ -418,11 +451,11 @@ static int find_segment (BoundSeg *, int, int, int);
 
 static int
 find_segment (BoundSeg *segs,
-	      int       ns,
-	      int       x,
-	      int       y)
+	      gint      ns,
+	      gint      x,
+	      gint      y)
 {
-  int index;
+  gint index;
 
   for (index = 0; index < ns; index++)
     if (((segs[index].x1 == x && segs[index].y1 == y) || (segs[index].x2 == x && segs[index].y2 == y)) &&
@@ -435,14 +468,14 @@ find_segment (BoundSeg *segs,
 
 BoundSeg *
 sort_boundary (BoundSeg *segs,
-	       int       ns,
-	       int      *num_groups)
+	       gint      ns,
+	       gint     *num_groups)
 {
-  int i;
-  int index;
-  int x, y;
-  int startx, starty;
-  int empty = (num_segs == 0);
+  gint i;
+  gint index;
+  gint x, y;
+  gint startx, starty;
+  gint empty = (num_segs == 0);
   BoundSeg *new_segs;
 
   index = 0;

@@ -21,46 +21,59 @@
 #ifndef __GIMP_LUT_H__
 #define __GIMP_LUT_H__
 
+
 #include "pixel_region.h"
 
+
+struct _GimpLut
+{
+  guchar **luts;
+  gint     nchannels;
+};
 
 /* TODO: the GimpLutFunc should really be passed the ColorModel of the region,
    not just the number of channels */
 /* GimpLutFuncs should assume that the input and output gamma are 1.0
    and do no correction as this will be handled by gimp_lut_setup */ 
-typedef float (*GimpLutFunc)(void *user_data, int nchannels,
-			     int channel, float value);
+typedef gfloat (*GimpLutFunc) (gpointer user_data, 
+			       gint     nchannels,
+			       gint     channel, 
+			       gfloat   value);
 
-GimpLut * gimp_lut_new         ();
-void      gimp_lut_free        (GimpLut *lut);
+GimpLut * gimp_lut_new            (void);
+void      gimp_lut_free           (GimpLut     *lut);
 
-void      gimp_lut_setup       (GimpLut *, GimpLutFunc,
-				void *user_data,
-				int nchannels);
+void      gimp_lut_setup          (GimpLut     *lut, 
+				   GimpLutFunc  func,
+				   gpointer     user_data,
+				   gint         nchannels);
 
 /* gimp_lut_setup_exact is currently identical to gimp_lut_setup.  It
    however is guaranteed to never perform any interpolation or gamma
    correction on the lut */
-void      gimp_lut_setup_exact (GimpLut *, GimpLutFunc,
-				void *user_data,
-				int nchannels);
+void      gimp_lut_setup_exact    (GimpLut     *lut, 
+				   GimpLutFunc  func,
+				   gpointer     user_data,
+				   gint         nchannels);
 
-void      gimp_lut_process     (GimpLut *lut,
-				PixelRegion *srcPR,
-				PixelRegion *destPR);
+void      gimp_lut_process        (GimpLut     *lut,
+				   PixelRegion *srcPR,
+				   PixelRegion *destPR);
 
 /* gimp_lut_process_inline is like gimp_lut_process except it uses a
    single PixelRegion as both the source and destination */
-void      gimp_lut_process_inline(GimpLut *lut,
-				  PixelRegion *src_destPR);
+void      gimp_lut_process_inline (GimpLut     *lut,
+				   PixelRegion *src_destPR);
 
 /* gimp_lut_process_2 is the same as gimp_lut_process but the lut
    perameter is last instead of first.  this is necesary because
    pixel_region_process_paralell sends the user_data as the 1st
    parameter, and the image_map functions send user_data as the last
    parameter */
-void      gimp_lut_process_2  (PixelRegion *srcPR,
-			       PixelRegion *destPR,
-			       GimpLut *lut);
+void      gimp_lut_process_2      (PixelRegion *srcPR,
+				   PixelRegion *destPR,
+				   GimpLut     *lut);
+
 
 #endif /* __GIMP_LUT_H__ */
+

@@ -26,7 +26,6 @@
 
 #include "apptypes.h"
 
-#include "gimplutP.h"
 #include "gimplut.h"
 
 

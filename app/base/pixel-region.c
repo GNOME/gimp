@@ -28,7 +28,6 @@
 #include "appenv.h"
 #include "gimprc.h"
 #include "pixel_region.h"
-#include "pixel_regionP.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
 

@@ -32,7 +32,6 @@
 #include "drawable.h"
 #include "draw_core.h"
 #include "gdisplay.h"
-#include "gdisplayP.h"
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
@@ -67,6 +66,15 @@
 #define EPSILON           5
 
 #define MAX_TITLE_BUF 256
+
+
+typedef struct _GimpArea GimpArea;
+
+struct _GimpArea
+{
+  gint x1, y1, x2, y2;   /*  area bounds  */
+};
+
 
 /* variable declarations */
 GSList *               display_list = NULL;

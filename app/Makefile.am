@@ -18,7 +18,6 @@ libgimpim_a_SOURCES = \
 	gimppreviewcache.c	\
 	gimpset.c		\
 	gimpset.h		\
-	gimpsetP.h		\
 	gimpsignal.c		\
 	gimpsignal.h
 
@@ -45,7 +44,6 @@ gimp_SOURCES = \
 	blob.h                  \
 	boundary.c		\
 	boundary.h		\
-	boundaryF.h		\
 	brightness_contrast.c	\
 	brightness_contrast.h	\
 	brush_edit.c		\
@@ -159,7 +157,6 @@ gimp_SOURCES = \
 	fuzzy_select.h		\
 	gdisplay.c		\
 	gdisplay.h		\
-	gdisplayP.h		\
 	gdisplayF.h		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
@@ -189,10 +186,8 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimplist.c		\
 	gimplist.h		\
-	gimplistP.h		\
 	gimplut.c		\
 	gimplut.h		\
-	gimplutP.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpprogress.c		\
@@ -304,7 +299,6 @@ gimp_SOURCES = \
 	parasite_cmds.c		\
 	parasitelist.c		\
 	parasitelist.h		\
-	parasitelistP.h		\
 	path.c			\
 	path.h			\
 	pathP.h			\
@@ -328,7 +322,6 @@ gimp_SOURCES = \
 	pixel_processor.h	\
 	pixel_region.c		\
 	pixel_region.h		\
-	pixel_regionP.h		\
 	pixmaps.h		\
 	pixmaps2.h		\
 	plug_in.c		\

@@ -22,7 +22,6 @@
 
 #include "pixel_processor.h"
 #include "pixel_region.h"
-#include "pixel_regionP.h"
 #include "gimprc.h"
 #include <stdarg.h>
 #include <stdio.h>

@@ -20,20 +20,34 @@
 
 
 #include "libgimp/gimpparasite.h"
+#include "gimpobject.h"
 
 
 #define GIMP_TYPE_PARASITE_LIST    (parasite_list_get_type ())
 #define GIMP_PARASITE_LIST(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_PARASITE_LIST, GimpParasiteList))
 #define GIMP_IS_PARASITE_LIST(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PARASITE_LIST))
+#define PARASITE_LIST_CLASS(class) GIMP_CHECK_CLASS_CAST (class, parasite_list_get_type(), ParasiteListClass)
 
-/* Signals:
-   add
-   remove
-*/
+struct _ParasiteList
+{
+  GimpObject  object;
+  GHashTable *table;
+};
 
-GtkType        parasite_list_get_type (void);
+typedef struct _ParasiteListClass
+{
+  GimpObjectClass parent_class;
+
+  void (* add)    (ParasiteList *list,
+		   GimpParasite *parasite);
+  void (* remove) (ParasiteList *list,
+		   GimpParasite *parasite);
+} ParasiteListClass;
+
 
 /* function declarations */
+
+GtkType        parasite_list_get_type (void);
 
 ParasiteList * parasite_list_new               (void);
 ParasiteList * parasite_list_copy              (const ParasiteList *list);

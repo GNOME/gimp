@@ -15,23 +15,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __BOUNDARY_H__
 #define  __BOUNDARY_H__
 
-#include "boundaryF.h"
 
 #include "paint_funcs.h"
 
+
+typedef enum
+{
+  WithinBounds,
+  IgnoreBounds
+} BoundaryType;
+
+
 struct _BoundSeg
 {
-  int x1, y1;
-  int x2, y2;
-  int open;
-  int visited;
+  gint     x1;
+  gint     y1;
+  gint     x2;
+  gint     y2;
+  gboolean open;
+  gboolean visited;
 };
 
 
-BoundSeg *  find_mask_boundary (PixelRegion *, int *, BoundaryType, int, int, int, int);
-BoundSeg *  sort_boundary (BoundSeg *, int, int *);
+BoundSeg *  find_mask_boundary (PixelRegion  *maskPR,
+				gint         *num_elems,
+				BoundaryType  type,
+				gint          x1,
+				gint          y1,
+				gint          x2,
+				gint          y2);
+BoundSeg *  sort_boundary      (BoundSeg     *segs, 
+				gint          num_segs, 
+				gint         *num_groups);
+
 
 #endif  /*  __BOUNDARY_H__  */

@@ -170,6 +170,8 @@ typedef struct _GimpObject         GimpObject;
 typedef struct _GimpHistogram      GimpHistogram;
 typedef struct _GimpLut            GimpLut;
 
+typedef struct _BoundSeg           BoundSeg;
+
 typedef struct _layer_undo         LayerUndo;
 
 typedef struct _layer_mask_undo    LayerMaskUndo;
