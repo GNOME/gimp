@@ -1,3 +1,9 @@
+2001-01-28  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* modules/gimpmodregister.h: add #include <libgimp/gimptypes.h>
+	* plug-ins/common/bz2.c (load_image): fix bug loading bz2 files (OS/2)
+	* app/module_db.c: OS/2 fix. remove gimp_color_display_register(),,
+
 2001-01-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpwidgets.c: fixed wrong for-loop boundary that caused 
