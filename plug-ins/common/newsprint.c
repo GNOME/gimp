@@ -798,9 +798,10 @@ newsprint_menu_callback (GtkWidget *widget,
   gint             value;
   static gboolean  in_progress = FALSE;
 
-  /* we shouldn't need recursion protection, but if lock_channels is
-   * set, and gtk_option_menu_set_history ever generates an
-   * "activated" signal, then we'll get back here.  So we've defensive. */
+  /* We shouldn't need recursion protection, but if lock_channels is
+   * set, and gimp_int_combo_box_set_active ever generates a "changed"
+   * signal, then we'll get back here.
+   */
   if (in_progress)
     {
       printf ("newsprint_menu_callback: unexpected recursion: can't happen\n");

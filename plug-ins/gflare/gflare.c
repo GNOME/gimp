@@ -31,10 +31,6 @@
  * federico@nuclecu.unam.mx
  */
 
-#ifdef RCSID
-static char rcsid[] = "$Id$";
-#endif
-
 #include "config.h"
 
 #include <stdio.h>
@@ -44,6 +40,7 @@ static char rcsid[] = "$Id$";
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -303,12 +300,12 @@ typedef struct
 } DrawableInfo;
 
 typedef struct _GradientMenu GradientMenu;
-typedef void (* GradientMenuCallback) (gchar    *gradient_name,
-				       gpointer  data);
+typedef void (* GradientMenuCallback) (const gchar *gradient_name,
+				       gpointer     data);
 struct _GradientMenu
 {
   GtkWidget            *preview;
-  GtkWidget            *option_menu;
+  GtkWidget            *combo;
   GradientMenuCallback  callback;
   gpointer              callback_data;
   GradientName          gradient_name;
@@ -461,8 +458,8 @@ static void        preview_rgba_to_rgb  (guchar            *dest,
 static void             gradient_menu_init    (void);
 static void             gradient_menu_rescan  (void);
 static GradientMenu   * gradient_menu_new     (GradientMenuCallback callback,
-					       gpointer  callback_data,
-					       gchar    *default_gradient_name);
+					       gpointer        callback_data,
+					       const gchar    *default_gradient_name);
 static void             gradient_name_copy    (gchar       *dest,
 					       const gchar *src);
 static void             gradient_name_encode  (gchar       *dest,
@@ -472,9 +469,9 @@ static void             gradient_name_decode  (gchar       *dest,
 static void             gradient_init         (void);
 static void             gradient_free         (void);
 static gchar         ** gradient_get_list     (gint   *num_gradients);
-static void             gradient_get_values   (gchar  *gradient_name,
-					       guchar *values,
-					       gint    nvalues);
+static void             gradient_get_values   (const gchar *gradient_name,
+					       guchar      *values,
+					       gint         nvalues);
 static void             gradient_cache_flush  (void);
 
 /* *** INSERT-FILE-END *** */
@@ -545,7 +542,7 @@ GFlare default_gflare =
 /* These are keywords to be written to disk files specifying flares. */
 /* They are not translated since we want gflare files to be compatible
    across languages. */
-static gchar *gflare_modes[] =
+static const gchar *gflare_modes[] =
 {
   "NORMAL",
   "ADDITION",
@@ -553,14 +550,14 @@ static gchar *gflare_modes[] =
   "SCREEN"
 };
 
-static gchar *gflare_shapes[] =
+static const gchar *gflare_shapes[] =
 {
   "CIRCLE",
   "POLYGON"
 };
 
 /* These are for menu entries, so they are translated. */
-static gchar *gflare_menu_modes[] =
+static const gchar *gflare_menu_modes[] =
 {
   N_("Normal"),
   N_("Addition"),
@@ -754,32 +751,31 @@ static gint preview_render_start_2    (Preview *preview);
 static gint preview_handle_idle       (Preview *preview);
 
 static void gm_gradient_get_list            (void);
-static GtkWidget *gm_menu_new               (GradientMenu *gm,
-					     gchar *default_gradient_name);
-static GtkWidget *gm_menu_create_sub_menus  (GradientMenu *gm, gint start_n,
-					     gchar **active_name_ptr,
-					     gchar *default_gradient_name);
-static void gm_menu_item_callback           (GtkWidget *w, gpointer data);
-static void gm_preview_draw                 (GtkWidget *preview,
-					     gchar *gradient_name);
-static void gm_option_menu_destroy_callback (GtkWidget *w, gpointer data);
+static void gm_gradient_combo_fill          (GradientMenu *gm,
+                                             const gchar  *default_gradient);
+static void gm_gradient_combo_callback      (GtkWidget    *widget,
+                                             gpointer      data);
+static void gm_preview_draw                 (GtkWidget    *preview,
+					     const gchar  *gradient_name);
+static void gm_combo_destroy_callback       (GtkWidget    *widget,
+                                             gpointer      data);
 
-static void gradient_get_values_internal    (gchar *gradient_name,
+static void gradient_get_values_internal    (const gchar *gradient_name,
 					     guchar *values, gint nvalues);
 static void gradient_get_blend              (guchar *fg, guchar *bg,
 					     guchar *values, gint nvalues);
 static void gradient_get_random             (guchar *values,
 					     gint nvalues);
-static void gradient_get_default            (gchar *name, guchar *values,
-					     gint nvalues);
-static void gradient_get_values_external    (gchar *gradient_name,
+static void gradient_get_default            (const gchar *name,
+                                             guchar *values, gint nvalues);
+static void gradient_get_values_external    (const gchar *gradient_name,
 					     guchar *values, gint nvalues);
-static void gradient_get_values_real_external   (gchar    *gradient_name,
+static void gradient_get_values_real_external   (const gchar *gradient_name,
 						 guchar   *values,
                                                  gint      nvalues,
                                                  gboolean  reverse);
-static GradientCacheItem *gradient_cache_lookup (gchar    *name,
-                                                 gint     *found);
+static GradientCacheItem *gradient_cache_lookup (const gchar *name,
+                                                 gboolean    *found);
 static void gradient_cache_zorch                (void);
 
 /* *** INSERT-FILE-END *** */
@@ -3328,7 +3324,7 @@ ed_make_page_general (GFlareEditor *ed,
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *option_menu;
+  GtkWidget *combo;
   GtkObject *adj;
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -3359,10 +3355,9 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  option_menu = ed_mode_menu_new (&gflare->glow_mode);
+  combo = ed_mode_menu_new (&gflare->glow_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5,
-			     option_menu, 1, TRUE);
+			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
 
   /*  Rays  */
 
@@ -3389,10 +3384,9 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  option_menu = ed_mode_menu_new (&gflare->rays_mode);
+  combo = ed_mode_menu_new (&gflare->rays_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5,
-			     option_menu, 1, TRUE);
+			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
 
   /*  Rays  */
 
@@ -3419,10 +3413,9 @@ ed_make_page_general (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  option_menu = ed_mode_menu_new (&gflare->sflare_mode);
+  combo = ed_mode_menu_new (&gflare->sflare_mode);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Paint Mode:"), 1.0, 0.5,
-			     option_menu, 1, TRUE);
+			     _("Paint Mode:"), 1.0, 0.5, combo, 1, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 			    gtk_label_new_with_mnemonic (_("_General")));
@@ -3863,35 +3856,14 @@ ed_make_page_sflare (GFlareEditor *ed,
 GtkWidget *
 ed_mode_menu_new (GFlareMode *mode_var)
 {
-  GtkWidget	*option_menu;
-  GtkWidget	*menu;
-  GtkWidget	*menuitem;
-  gint		i;
-  GFlareMode	mode;
+  GtkWidget *combo = gimp_int_combo_box_new_array (GF_NUM_MODES,
+                                                   gflare_menu_modes);
 
-  option_menu = gtk_option_menu_new ();
-  menu = gtk_menu_new ();
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), *mode_var,
+                              G_CALLBACK (ed_mode_menu_callback),
+                              mode_var);
 
-  for (i = 0; i < GF_NUM_MODES; i++)
-    {
-      menuitem = gtk_menu_item_new_with_label (gettext (gflare_menu_modes[i]));
-
-      gtk_object_set_user_data (GTK_OBJECT (menuitem),
-				GINT_TO_POINTER (i));
-      g_signal_connect (menuitem, "activate",
-                        G_CALLBACK (ed_mode_menu_callback),
-                        mode_var);
-      gtk_widget_show (menuitem);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-    }
-  mode = *mode_var;
-  if (mode < 0 || mode >= GF_NUM_MODES)
-    mode = GF_NORMAL;
-  gtk_menu_set_active (GTK_MENU (menu), mode);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_widget_show (option_menu);
-
-  return option_menu;
+  return combo;
 }
 
 /*
@@ -3911,14 +3883,13 @@ ed_put_gradient_menu (GtkWidget    *table,
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label);
 
-  gtk_object_set_user_data (GTK_OBJECT (gm->option_menu), ed);
   gtk_table_attach (GTK_TABLE (table), label,
 		    x	 , x + 1, y, y + 1,
 		    GTK_FILL, 0, 0, 0);
   gtk_table_attach (GTK_TABLE (table), gm->preview,
 		    x + 1, x + 2, y, y + 1,
 		    0, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gm->option_menu,
+  gtk_table_attach (GTK_TABLE (table), gm->combo,
 		    x + 2, x + 3, y, y + 1,
 		    0, 0, 0, 0);
 }
@@ -3927,10 +3898,7 @@ static void
 ed_mode_menu_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  GFlareMode *mode_var;
-
-  mode_var = data;
-  *mode_var = (GFlareMode) gtk_object_get_user_data (GTK_OBJECT (widget));
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   ed_preview_update ();
 }
@@ -4325,18 +4293,18 @@ preview_rgba_to_rgb (guchar *dest,
 /*************************************************************************/
 
 static void
-gradient_menu_init ()
+gradient_menu_init (void)
 {
   gm_gradient_get_list ();
   gradient_menus = NULL;
 }
 
 static void
-gradient_menu_rescan ()
+gradient_menu_rescan (void)
 {
   GList		*tmp;
   GradientMenu	*gm;
-  GtkWidget	*menu;
+  GtkTreeModel  *model;
 
   /* Detach and destroy menus first */
   tmp = gradient_menus;
@@ -4344,77 +4312,53 @@ gradient_menu_rescan ()
     {
       gm  = tmp->data;
       tmp = tmp->next;
-      menu = GTK_OPTION_MENU (gm->option_menu)->menu;
-      if (menu)
-	{
-	  gtk_option_menu_remove_menu (GTK_OPTION_MENU (gm->option_menu));
-	}
+
+      model = gtk_combo_box_get_model (GTK_COMBO_BOX (gm->combo));
+      gtk_list_store_clear (GTK_LIST_STORE (model));
     }
 
-  /* reget list of gradient names */
   gm_gradient_get_list ();
 
-  /* Create menus and attach them again */
   tmp = gradient_menus;
   while (tmp)
     {
-      GtkWidget *parent;
-
       gm  = tmp->data;
       tmp = tmp->next;
-      /* @GRADIENT_NAME */
-      menu = gm_menu_new (gm, gm->gradient_name);
 
-      /*
-	FIXME:
-	This is a kind of hack so that it doesn't mess up gtknotebook
-	to set menu into an option menu which is not shown (but
-	GTK_WIDGET_VISIBLE)
-       */
-      parent = gm->option_menu->parent;
-      if (0 && (parent != NULL) &&
-	  GTK_CHECK_TYPE (parent, gtk_container_get_type ()))
-	{
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
-	}
-      else
-	{
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
-	}
+      gm_gradient_combo_fill (gm, gm->gradient_name);
     }
 }
 
 static GradientMenu *
 gradient_menu_new (GradientMenuCallback callback,
 		   gpointer		callback_data,
-		   gchar	       *default_gradient_name)
+		   const gchar	       *default_gradient_name)
 {
-  GtkWidget	*menu;
-  GradientMenu	*gm;
-
-  gm = g_new (GradientMenu, 1);
+  GradientMenu *gm = g_new (GradientMenu, 1);
 
   gm->callback = callback;
   gm->callback_data = callback_data;
 
   gm->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW (gm->preview),
-		    GM_PREVIEW_WIDTH,
-		    GM_PREVIEW_HEIGHT);
+  gtk_preview_size (GTK_PREVIEW (gm->preview),
+		    GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT);
 
-  gm->option_menu = gtk_option_menu_new ();
+  gm->combo = gimp_int_combo_box_new (NULL, 0);
 
-  /* @GRADIENT_NAME */
-  menu = gm_menu_new (gm, default_gradient_name);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
+  g_signal_connect (gm->combo, "changed",
+                    G_CALLBACK (gm_gradient_combo_callback),
+                    gm);
+
+  gm_gradient_combo_fill (gm, default_gradient_name);
 
   gtk_widget_show (gm->preview);
-  gtk_widget_show (gm->option_menu);
+  gtk_widget_show (gm->combo);
+
+  g_signal_connect (gm->combo, "destroy",
+                    G_CALLBACK (gm_combo_destroy_callback),
+                    gm);
 
   gradient_menus = g_list_append (gradient_menus, gm);
-  g_signal_connect (gm->option_menu, "destroy",
-                    G_CALLBACK (gm_option_menu_destroy_callback),
-                    gm);
 
   return gm;
 }
@@ -4437,107 +4381,45 @@ gm_gradient_get_list (void)
   gradient_names = gradient_get_list (&num_gradient_names);
 }
 
-/*
- *  Create GtkMenu and arrange GtkMenuItem's of gradient names into it
- */
-
-static GtkWidget *
-gm_menu_new (GradientMenu *gm,
-	     gchar        *default_gradient_name)
+static void
+gm_gradient_combo_fill (GradientMenu *gm,
+                        const gchar  *default_gradient)
 {
-  GtkWidget	*menu;
-  GtkWidget	*menuitem;
-  gchar		*active_name;
-
-  menu = gtk_menu_new ();
-
-  if (num_gradient_names == 0)
-    {
-      menuitem = gtk_menu_item_new_with_label (_("none"));
-      gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_widget_show (menuitem);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_menu_set_active (GTK_MENU (menu), 0);
-    }
-  else /* num_gradient_names == 0 */
-    {
-      menu = gm_menu_create_sub_menus (gm, 0, &active_name,
-				       default_gradient_name);
-      if (active_name == NULL)
-	{
-	  active_name = gradient_names[0];
-	  g_warning (_("Not found \"%s\": used \"%s\" instead"),
-		     default_gradient_name, active_name);
-	}
-
-      gradient_name_copy (gm->gradient_name, active_name);
-      gm_preview_draw (gm->preview, active_name);
-      gtk_widget_queue_draw (gm->preview);
-
-      if (gm->callback)
-	(* gm->callback) (active_name, gm->callback_data);
-
-    } /* num_gradient_names == 0 */
-
-  return menu;
-}
-
-static GtkWidget *
-gm_menu_create_sub_menus (GradientMenu  *gm,
-			  gint           start_n,
-			  gchar        **active_name_ptr,
-			  gchar         *default_gradient_name)
-{
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  gchar     *name;
-  gint       active_i = 0;
-  gint       i;
-
-  *active_name_ptr = NULL;
-  if (start_n >= num_gradient_names)
-    {
-      return NULL;
-    }
-
-  /* gradient_names[] are malloced strings and alive during
-     this menuitem lives */
-
-  menu = gtk_menu_new ();
+  gint active = 0;
+  gint i;
 
   for (i = 0; i < num_gradient_names; i++)
     {
-      name = gradient_names[i];
-      if (strcmp (name, default_gradient_name) == 0)
-	{
-	  active_i = i;
-	  *active_name_ptr = name;
-	}
-      menuitem = gtk_menu_item_new_with_label (name);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem), gm);
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      gtk_widget_show (menuitem);
+      const gchar *name = gradient_names[i];
 
-      g_signal_connect (menuitem, "activate",
-                        G_CALLBACK (gm_menu_item_callback),
-                        name);
+      if (strcmp (name, default_gradient) == 0)
+        active = i;
+
+      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (gm->combo),
+                                 GIMP_INT_STORE_VALUE, i,
+                                 GIMP_INT_STORE_LABEL, name,
+                                 -1);
     }
 
-  gtk_menu_set_active (GTK_MENU (menu), active_i);
-
-  return menu;
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gm->combo), active);
 }
 
 static void
-gm_menu_item_callback (GtkWidget *w,
-		       gpointer   data)
+gm_gradient_combo_callback (GtkWidget *widget,
+                            gpointer   data)
 {
-  GradientMenu *gm;
-  gchar        *gradient_name = (gchar *) data;
+  GradientMenu *gm = data;
+  const gchar  *gradient_name;
+  gint          index;
 
-  DEBUG_PRINT(("gm_menu_item_callback\n"));
+  if (! gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &index) ||
+      index < 0 ||
+      index >= num_gradient_names)
+    return;
 
-  gm =	(GradientMenu *) gtk_object_get_user_data (GTK_OBJECT (w));
+  gradient_name = gradient_names[index];
+
+  DEBUG_PRINT(("gm_combo_callback\n"));
 
   gradient_name_copy (gm->gradient_name, gradient_name);
 
@@ -4549,8 +4431,8 @@ gm_menu_item_callback (GtkWidget *w,
 }
 
 static void
-gm_preview_draw (GtkWidget *preview,
-		 gchar     *gradient_name)
+gm_preview_draw (GtkWidget   *preview,
+		 const gchar *gradient_name)
 {
   guchar      values[GM_PREVIEW_WIDTH][4];
   gint        nvalues = GM_PREVIEW_WIDTH;
@@ -4601,7 +4483,7 @@ gm_preview_draw (GtkWidget *preview,
 	}
       for(irow = 0; irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT; irow++)
 	{
-	  gtk_preview_draw_row(GTK_PREVIEW (preview), (guchar*) dest_row,
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar*) dest_row,
 				0, row + irow, GM_PREVIEW_WIDTH);
 	}
     }
@@ -4609,8 +4491,8 @@ gm_preview_draw (GtkWidget *preview,
 }
 
 static void
-gm_option_menu_destroy_callback (GtkWidget *w,
-				 gpointer   data)
+gm_combo_destroy_callback (GtkWidget *w,
+                           gpointer   data)
 {
   GradientMenu *gm = data;
   gradient_menus = g_list_remove (gradient_menus, gm);
@@ -4725,9 +4607,9 @@ gradient_get_list (gint *num_gradients)
 }
 
 static void
-gradient_get_values (gchar  *gradient_name,
-		     guchar *values,
-		     gint    nvalues)
+gradient_get_values (const gchar *gradient_name,
+		     guchar      *values,
+		     gint         nvalues)
 {
   /*
     Criteria to distinguish internal and external is rather simple here.
@@ -4740,9 +4622,9 @@ gradient_get_values (gchar  *gradient_name,
 }
 
 static void
-gradient_get_values_internal (gchar  *gradient_name,
-			      guchar *values,
-			      gint    nvalues)
+gradient_get_values_internal (const gchar *gradient_name,
+			      guchar      *values,
+			      gint         nvalues)
 {
   static guchar white[4]        = { 255, 255, 255, 255 };
   static guchar white_trans[4]  = { 255, 255, 255, 0   };
@@ -4825,9 +4707,9 @@ gradient_get_random (guchar *values,
 }
 
 static void
-gradient_get_default (gchar  *name,
-		      guchar *values,
-		      gint    nvalues)
+gradient_get_default (const gchar *name,
+		      guchar      *values,
+		      gint         nvalues)
 {
   gdouble  e[3];
   gdouble  x;
@@ -4861,14 +4743,14 @@ gradient_get_default (gchar  *name,
   cached values are stored in guchar array. No accuracy.
  */
 static void
-gradient_get_values_external (gchar  *gradient_name,
-			      guchar *values,
-			      gint    nvalues)
+gradient_get_values_external (const gchar *gradient_name,
+			      guchar      *values,
+			      gint         nvalues)
 {
   GradientCacheItem *ci;
-  gint		     found;
+  gboolean           found;
 #ifdef DEBUG
-  clock_t	clk = clock ();
+  clock_t	     clk = clock ();
 #endif
 
   g_return_if_fail (nvalues >= 2);
@@ -4916,10 +4798,10 @@ gradient_get_values_external (gchar  *gradient_name,
 }
 
 static void
-gradient_get_values_real_external (gchar    *gradient_name,
-				   guchar   *values,
-				   gint      nvalues,
-                                   gboolean  reverse)
+gradient_get_values_real_external (const gchar *gradient_name,
+				   guchar      *values,
+				   gint         nvalues,
+                                   gboolean     reverse)
 {
   gchar   *old_name;
   gdouble *tmp_values;
@@ -4959,8 +4841,8 @@ gradient_cache_flush (void)
 }
 
 static GradientCacheItem *
-gradient_cache_lookup (gchar *name,
-		       gint  *found)
+gradient_cache_lookup (const gchar *name,
+		       gboolean    *found)
 {
   GradientCacheItem *ci;
 
