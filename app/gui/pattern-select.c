@@ -53,15 +53,15 @@
 
 
 /*  local function prototypes  */
-static void     pattern_select_change_callbacks       (PatternSelect *psp,
-						       gboolean       closing);
+static void  pattern_select_change_callbacks (PatternSelect *psp,
+                                              gboolean       closing);
 
-static void     pattern_select_pattern_changed        (GimpContext   *context,
-						       GimpPattern   *pattern,
-						       PatternSelect *psp);
+static void  pattern_select_pattern_changed  (GimpContext   *context,
+                                              GimpPattern   *pattern,
+                                              PatternSelect *psp);
 
-static void     pattern_select_close_callback         (GtkWidget     *widget,
-						       gpointer       data);
+static void  pattern_select_close_callback   (GtkWidget     *widget,
+                                              gpointer       data);
 
 
 /*  The main pattern selection dialog  */
@@ -178,9 +178,9 @@ pattern_select_new (gchar *title,
 
   gtk_widget_show (psp->shell);
 
-  gtk_signal_connect (GTK_OBJECT (psp->context), "pattern_changed",
-		      GTK_SIGNAL_FUNC (pattern_select_pattern_changed),
-		      psp);
+  g_signal_connect (G_OBJECT (psp->context), "pattern_changed",
+                    G_CALLBACK (pattern_select_pattern_changed),
+                    psp);
 
   /*  Add to active pattern dialogs list  */
   pattern_active_dialogs = g_slist_append (pattern_active_dialogs, psp);
@@ -197,7 +197,9 @@ pattern_select_free (PatternSelect *psp)
   /* remove from active list */
   pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (psp->context), psp);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (psp->context), 
+                                        pattern_select_pattern_changed,
+                                        psp);
 
   if (psp->callback_name)
     {

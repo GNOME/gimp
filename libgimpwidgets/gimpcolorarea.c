@@ -255,8 +255,8 @@ gimp_color_area_set_color (GimpColorArea *gca,
 
       gimp_color_area_update (gca);
 
-      gtk_signal_emit (GTK_OBJECT (gca),
-		       gimp_color_area_signals[COLOR_CHANGED]);
+      g_signal_emit (G_OBJECT (gca),
+                     gimp_color_area_signals[COLOR_CHANGED], 0);
     }
 }
 
@@ -481,10 +481,10 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
   gtk_widget_show (color_area);
   gtk_widget_show (frame);
 
-  gtk_object_set_data_full (GTK_OBJECT (widget),
-			    "gimp-color-area-drag-window",
-			    window,
-			    (GtkDestroyNotify) gtk_widget_destroy);
+  g_object_set_data_full (G_OBJECT (widget),
+                          "gimp-color-area-drag-window",
+                          window,
+                          (GDestroyNotify) gtk_widget_destroy);
 
   gtk_drag_set_icon_widget (context, window, DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }
@@ -493,8 +493,8 @@ static void
 gimp_color_area_drag_end (GtkWidget      *widget,
 			  GdkDragContext *context)
 {
-  gtk_object_set_data (GTK_OBJECT (widget),
-		       "gimp-color-area-drag-window", NULL);
+  g_object_set_data (G_OBJECT (widget),
+                     "gimp-color-area-drag-window", NULL);
 }
 
 static void

@@ -674,11 +674,11 @@ gimp_random_seed_toggle_update (GtkWidget *widget,
   toggle_val = (gint *) data;
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    *toggle_val = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
-							"time_true"));
+    *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                      "time_true"));
   else
-    *toggle_val = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
-							"time_false"));
+    *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                      "time_false"));
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
@@ -715,9 +715,9 @@ gimp_random_seed_new (gint       *seed,
   spinbutton = gimp_spin_button_new (&adj, *seed,
                                      0, G_MAXRAND, 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-                      seed);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    seed);
   gtk_widget_show (spinbutton);
 
   gimp_help_set_help_data (spinbutton,
@@ -728,9 +728,9 @@ gimp_random_seed_new (gint       *seed,
 
   button = gtk_toggle_button_new_with_label (_("Time"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_random_seed_toggle_update),
-                      use_time);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_random_seed_toggle_update),
+                    use_time);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -781,7 +781,7 @@ gimp_coordinates_callback (GtkWidget *widget,
 
   if (gimp_chain_button_get_active (gcd->chainbutton))
     {
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "value_changed");
+      g_signal_stop_emission_by_name (G_OBJECT (widget), "value_changed");
 
       if (gcd->chain_constrains_ratio)
 	{
@@ -1039,9 +1039,9 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
     gimp_spin_button_new (&divided_adj, divided_mem_size,
 			  0.0, (4096.0 * 1024 * 1024 - 1), 1.0, 16.0, 0.0,
 			  1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (divided_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_mem_size_entry_callback),
-		      gmsed);
+  g_signal_connect (G_OBJECT (divided_adj), "value_changed",
+                    G_CALLBACK (gimp_mem_size_entry_callback),
+                    gmsed);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -1058,7 +1058,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   gtk_widget_show (optionmenu);
 
   g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
-			    G_CALLBACK (gtk_object_unref),
+			    G_CALLBACK (g_object_unref),
 			    adjustment);
   g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
 			    G_CALLBACK (g_free),
@@ -1151,22 +1151,22 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
 
   active = gtk_toggle_button_get_active (toggle_button);
 
-  set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (toggle_button), "set_sensitive");
+  set_sensitive = 
+    g_object_get_data (G_OBJECT (toggle_button), "set_sensitive");
   while (set_sensitive)
     {
       gtk_widget_set_sensitive (set_sensitive, active);
       set_sensitive =
-        gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
+        g_object_get_data (G_OBJECT (set_sensitive), "set_sensitive");
     }
 
   set_sensitive =
-    gtk_object_get_data (GTK_OBJECT (toggle_button), "inverse_sensitive");
+    g_object_get_data (G_OBJECT (toggle_button), "inverse_sensitive");
   while (set_sensitive)
     {
       gtk_widget_set_sensitive (set_sensitive, ! active);
       set_sensitive =
-        gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
+        g_object_get_data (G_OBJECT (set_sensitive), "inverse_sensitive");
     }
 }
 
@@ -1198,7 +1198,7 @@ gimp_toggle_button_update (GtkWidget *widget,
  * gimp_radio_button_update:
  * @widget: A #GtkRadioButton.
  * @data:   A pointer to a #gint variable which will store the value of
- *          GPOINTER_TO_INT (gtk_object_get_user_data()).
+ *          GPOINTER_TO_INT (g_object_get_user_data(object, "user_data")).
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
  **/
@@ -1223,7 +1223,7 @@ gimp_radio_button_update (GtkWidget *widget,
  * gimp_menu_item_update:
  * @widget: A #GtkMenuItem.
  * @data:   A pointer to a #gint variable which will store the value of
- *          GPOINTER_TO_INT (gtk_object_get_user_data()).
+ *          GPOINTER_TO_INT (g_object_get_data(object, "user_data")).
  **/
 void
 gimp_menu_item_update (GtkWidget *widget,
@@ -1336,12 +1336,11 @@ gimp_unit_menu_update (GtkWidget *widget,
 	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
 	     (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
 
-  spinbutton =
-    gtk_object_get_data (GTK_OBJECT (widget), "set_digits");
+  spinbutton = g_object_get_data (G_OBJECT (widget), "set_digits");
   while (spinbutton)
     {
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-      spinbutton = gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
+      spinbutton = g_object_get_data (G_OBJECT (spinbutton), "set_digits");
     }
 }
 

@@ -357,16 +357,16 @@ module_db_browser_new (void)
 
   button = gtk_button_new_with_label (_("Refresh"));
   gtk_widget_show (button);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (browser_refresh_callback), st);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (browser_refresh_callback), st);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   st->button = gtk_button_new_with_label ("");
   st->button_label = GTK_BIN (st->button)->child;
   gtk_box_pack_start (GTK_BOX (hbox), st->button, TRUE, TRUE, 0);
   gtk_widget_show (st->button);
-  gtk_signal_connect (GTK_OBJECT (st->button), "clicked",
-		      GTK_SIGNAL_FUNC (browser_load_unload_callback), st);
+  g_signal_connect (G_OBJECT (st->button), "clicked",
+                    G_CALLBACK (browser_load_unload_callback), st);
 
   browser_info_init (st, st->table);
   browser_info_update (st->last_update, st);
@@ -384,12 +384,15 @@ module_db_browser_new (void)
                                 G_CALLBACK (browser_info_update), st);
 
   g_signal_connect (G_OBJECT (modules), "add", 
-                   G_CALLBACK (browser_info_add), st);
+                    G_CALLBACK (browser_info_add), 
+                    st);
   g_signal_connect (G_OBJECT (modules), "remove", 
-                    G_CALLBACK (browser_info_remove), st);
+                    G_CALLBACK (browser_info_remove), 
+                    st);
 
-  gtk_signal_connect (GTK_OBJECT (shell), "destroy",
-		      GTK_SIGNAL_FUNC (browser_destroy_callback), st);
+  g_signal_connect (G_OBJECT (shell), "destroy",
+                    G_CALLBACK (browser_destroy_callback), 
+                    st);
 
   return shell;
 }
@@ -448,7 +451,7 @@ module_info_class_init (ModuleInfoClass *klass)
     g_signal_new ("modified",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
-		  GTK_SIGNAL_OFFSET (ModuleInfoClass, modified),
+		  G_STRUCT_OFFSET (ModuleInfoClass, modified),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -800,7 +803,12 @@ static void
 browser_destroy_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  g_signal_handlers_disconnect_by_data (G_OBJECT (modules), data);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (modules), 
+                                        browser_info_add,
+                                        data);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (modules), 
+                                        browser_info_remove,
+                                        data);
   gimp_container_remove_handler (modules, modules_handler_id);
   g_free (data);
 }

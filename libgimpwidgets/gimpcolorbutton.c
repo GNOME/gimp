@@ -170,9 +170,9 @@ gimp_color_button_init (GimpColorButton *gcb)
 	  			       NULL, NULL);
   gtk_item_factory_create_items (gcb->item_factory, 
 				 nmenu_items, menu_items, gcb);
-  gtk_signal_connect (GTK_OBJECT (gcb), "button_press_event",
-		      GTK_SIGNAL_FUNC (gimp_color_button_menu_popup),
-		      gcb); 
+  g_signal_connect (G_OBJECT (gcb), "button_press_event",
+                    G_CALLBACK (gimp_color_button_menu_popup),
+                    gcb); 
 }
 
 GtkType
@@ -375,16 +375,16 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->help_button);
       gtk_container_set_border_width (GTK_CONTAINER (gcb->dialog), 2);
 
-      gtk_signal_connect (GTK_OBJECT (gcb->dialog), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed), 
+      g_signal_connect (G_OBJECT (gcb->dialog), "destroy",
+			  G_CALLBACK (gtk_widget_destroyed), 
 			  &gcb->dialog);
-      gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->ok_button), 
+      g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->ok_button), 
 			  "clicked",
-			  GTK_SIGNAL_FUNC (gimp_color_button_dialog_ok), 
+			  G_CALLBACK (gimp_color_button_dialog_ok), 
 			  gcb);
-      gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->cancel_button), 
+      g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->cancel_button), 
 			  "clicked",
-			  GTK_SIGNAL_FUNC (gimp_color_button_dialog_cancel), 
+			  G_CALLBACK (gimp_color_button_dialog_cancel), 
 			  gcb);
       gtk_window_set_position (GTK_WINDOW (gcb->dialog), GTK_WIN_POS_MOUSE);  
     }
@@ -477,8 +477,8 @@ gimp_color_button_color_changed (GtkObject *object,
       gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
     }
 
-  gtk_signal_emit (GTK_OBJECT (gcb), 
-		   gimp_color_button_signals[COLOR_CHANGED]);
+  g_signal_emit (G_OBJECT (gcb), 
+                 gimp_color_button_signals[COLOR_CHANGED], 0);
 }
 
 static gchar *

@@ -73,6 +73,14 @@
 #include "pixmaps/wilber.xpm"
 
 
+/* EEEK, we shouldn't use this, but it will go away when
+   GDisplay is made a proper GObject */
+
+#define g_signal_handlers_disconnect_by_data(instance,data) \
+  g_signal_handlers_disconnect_matched (instance,\
+  G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data)
+
+
 #define OVERHEAD      25  /*  in units of pixel area  */
 #define EPSILON       5
 

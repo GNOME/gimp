@@ -229,8 +229,13 @@ brush_editor_set_brush (BrushEditor *brush_editor,
 
   if (brush_editor->brush)
     {
-      g_signal_handlers_disconnect_by_data (G_OBJECT (brush_editor->brush),
+      g_signal_handlers_disconnect_by_func (G_OBJECT (brush_editor->brush),
+                                            brush_editor_brush_dirty,
                                             brush_editor);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (brush_editor->brush),
+                                            brush_editor_brush_name_changed,
+                                            brush_editor);
+      
       g_object_unref (G_OBJECT (brush_editor->brush));
       brush_editor->brush = NULL;
     }

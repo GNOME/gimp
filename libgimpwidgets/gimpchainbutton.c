@@ -147,14 +147,15 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->pixmap = gtk_type_new (gtk_pixmap_get_type ());
   gtk_pixmap_set_build_insensitive (GTK_PIXMAP (gcb->pixmap), TRUE);
 
-  gtk_signal_connect (GTK_OBJECT(gcb->button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_chain_button_clicked_callback), gcb);
-  gtk_signal_connect (GTK_OBJECT (gcb->line1), "expose_event",
-		      GTK_SIGNAL_FUNC (gimp_chain_button_draw_lines),
-		      gcb);
-  gtk_signal_connect (GTK_OBJECT (gcb->line2), "expose_event",
-		      GTK_SIGNAL_FUNC (gimp_chain_button_draw_lines),
-		      gcb);
+  g_signal_connect (G_OBJECT(gcb->button), "clicked",
+                    G_CALLBACK (gimp_chain_button_clicked_callback), 
+                    gcb);
+  g_signal_connect (G_OBJECT (gcb->line1), "expose_event",
+                    G_CALLBACK (gimp_chain_button_draw_lines),
+                    gcb);
+  g_signal_connect (G_OBJECT (gcb->line2), "expose_event",
+                    G_CALLBACK (gimp_chain_button_draw_lines),
+                    gcb);
 }
 
 static void
@@ -168,25 +169,25 @@ gimp_chain_button_destroy (GtkObject *object)
 
   if (gcb->broken)
     {
-      gdk_pixmap_unref (gcb->broken);
+      gdk_drawable_unref (gcb->broken);
       gcb->broken = NULL;
     }
 
   if (gcb->broken_mask)
     {
-      gdk_bitmap_unref (gcb->broken_mask);
+      gdk_drawable_unref (gcb->broken_mask);
       gcb->broken_mask = NULL;
     }
 
   if (gcb->chain)
     {
-      gdk_pixmap_unref (gcb->chain);
+      gdk_drawable_unref (gcb->chain);
       gcb->chain = NULL;
     }
 
   if (gcb->chain_mask)
     {
-      gdk_bitmap_unref (gcb->chain_mask);
+      gdk_drawable_unref (gcb->chain_mask);
       gcb->chain_mask = NULL;
     }
 
@@ -345,11 +346,11 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
     return;
 
   if (gcb->active)
-    gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
+    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->chain, gcb->chain_mask);
   else
-    gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
+    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->broken, gcb->broken_mask);
 
-  gtk_signal_emit (GTK_OBJECT (gcb), gimp_chain_button_signals[TOGGLED]);
+  g_signal_emit (G_OBJECT (gcb), gimp_chain_button_signals[TOGGLED], 0);
 }
 
 static gint

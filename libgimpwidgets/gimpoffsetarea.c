@@ -212,9 +212,10 @@ gimp_offset_area_set_size (GimpOffsetArea *offset_area,
       if (offset_x != offset_area->offset_x ||
           offset_y != offset_area->offset_y)
         {
-          gtk_signal_emit (GTK_OBJECT (offset_area), 
-                           gimp_offset_area_signals[OFFSETS_CHANGED], 
-                           offset_area->offset_x, offset_area->offset_y);
+          g_signal_emit (G_OBJECT (offset_area), 
+                         gimp_offset_area_signals[OFFSETS_CHANGED], 0, 
+                         offset_area->offset_x, 
+                         offset_area->offset_y);
         }
     }
 }
@@ -342,9 +343,10 @@ gimp_offset_area_event (GtkWidget *widget,
           offset_area->offset_y != offset_y)
         {
           gimp_offset_area_set_offsets (offset_area, offset_x, offset_y);
-          gtk_signal_emit (GTK_OBJECT (offset_area), 
-                           gimp_offset_area_signals[OFFSETS_CHANGED], 
-                           offset_area->offset_x, offset_area->offset_y);
+          g_signal_emit (G_OBJECT (offset_area), 
+                         gimp_offset_area_signals[OFFSETS_CHANGED], 0, 
+                         offset_area->offset_x, 
+                         offset_area->offset_y);
         }
       break;
 

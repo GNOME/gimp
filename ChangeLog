@@ -1,3 +1,31 @@
+2001-07-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h: removed g_signal_handlers_disconnect_by_data
+	again. As Owen pointed out, it's generally a bad idea to use it since
+	you can't be absolutely sure that no one else has a pointer to the 
+	data you are disconnecting.
+
+	* app/gdisplay.c: added the macro here temporarily.
+	
+	* app/module_db.c
+	* app/undo_history.c
+	* app/gui/brush-editor.c
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/pattern-select.c: use g_signal_handlers_disconnect_by_func.
+	
+	* libgimpwidgets/gimpbutton.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpfileselection.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppatheditor.c
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c
+	* libgimpwidgets/gimpwidgets.c: GObject porting.
+
 2001-07-30  Michael Natterer  <mitch@gimp.org>
 
 	* gtkrc: set the width of the scrollbar slider to the same value

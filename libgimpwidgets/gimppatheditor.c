@@ -134,33 +134,33 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 
   gpe->new_button = button = gimp_pixmap_button_new (new_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_path_editor_new_callback),
-		      gpe);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_path_editor_new_callback),
+                    gpe);
   gtk_widget_show (button);
 
   gpe->up_button = button = gimp_pixmap_button_new (raise_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_path_editor_move_callback),
-		      gpe);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_path_editor_move_callback),
+                    gpe);
   gtk_widget_show (button);
 
   gpe->down_button = button = gimp_pixmap_button_new (lower_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_path_editor_move_callback),
-		      gpe);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_path_editor_move_callback),
+                    gpe);
   gtk_widget_show (button);
 
   gpe->delete_button = button = gimp_pixmap_button_new (delete_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_path_editor_delete_callback),
-		      gpe);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_path_editor_delete_callback),
+                    gpe);
   gtk_widget_show (button);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -209,9 +209,9 @@ gimp_path_editor_new (const gchar *filesel_title,
   gtk_widget_set_sensitive (gpe->file_selection, FALSE);
   gtk_box_pack_start (GTK_BOX (gpe->upper_hbox), gpe->file_selection,
 		      TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (gpe->file_selection), "filename_changed",
-		      GTK_SIGNAL_FUNC (gimp_path_editor_filesel_callback),
-		      gpe);
+  g_signal_connect (G_OBJECT (gpe->file_selection), "filename_changed",
+                    G_CALLBACK (gimp_path_editor_filesel_callback),
+                    gpe);
   gtk_widget_show (gpe->file_selection);
 
   directory_list = NULL;
@@ -230,16 +230,16 @@ gimp_path_editor_new (const gchar *filesel_title,
       current_dir = g_strdup (directory);
 
       list_item = gtk_list_item_new_with_label (current_dir);
-      gtk_object_set_data_full (GTK_OBJECT (list_item), "gimp_path_editor",
-				current_dir,
-				(GtkDestroyNotify) g_free);
+      g_object_set_data_full (G_OBJECT (list_item), "gimp_path_editor",
+                              current_dir,
+                              (GDestroyNotify) g_free);
       directory_list = g_list_append (directory_list, list_item);
-      gtk_signal_connect (GTK_OBJECT (list_item), "select",
-			  GTK_SIGNAL_FUNC (gimp_path_editor_select_callback),
-			  gpe);
-      gtk_signal_connect (GTK_OBJECT (list_item), "deselect",
-			  GTK_SIGNAL_FUNC (gimp_path_editor_deselect_callback),
-			  gpe);
+      g_signal_connect (G_OBJECT (list_item), "select",
+                        G_CALLBACK (gimp_path_editor_select_callback),
+                        gpe);
+      g_signal_connect (G_OBJECT (list_item), "deselect",
+                        G_CALLBACK (gimp_path_editor_deselect_callback),
+                        gpe);
       gtk_widget_show (list_item);
       gpe->number_of_items++;
 
@@ -282,8 +282,8 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
       if (path == NULL)
 	{
 	  path =
-	    g_strdup ((gchar *) gtk_object_get_data (GTK_OBJECT (list->data),
-						     "gimp_path_editor"));
+	    g_strdup ((gchar *) g_object_get_data (G_OBJECT (list->data),
+                                                   "gimp_path_editor"));
 	}
       else
 	{
@@ -292,8 +292,8 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
 	  newpath =
 	    g_strconcat (path,
 			 G_SEARCHPATH_SEPARATOR_S,
-			 (gchar *) gtk_object_get_data (GTK_OBJECT (list->data),
-							"gimp_path_editor"),
+			 (gchar *) g_object_get_data (G_OBJECT (list->data),
+                                                      "gimp_path_editor"),
 			 NULL);
 
 	  g_free (path);
@@ -313,13 +313,18 @@ gimp_path_editor_select_callback (GtkWidget *widget,
   gchar          *directory;
 
   gpe = GIMP_PATH_EDITOR (data);
-  directory = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
-					     "gimp_path_editor");
+  directory = (gchar *) g_object_get_data (G_OBJECT (widget),
+                                           "gimp_path_editor");
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->file_selection), gpe);
+  g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
+                                   gimp_path_editor_filesel_callback,
+                                   gpe);
   gimp_file_selection_set_filename (GIMP_FILE_SELECTION (gpe->file_selection),
 				    directory);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->file_selection), gpe);
+  g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
+                                     gimp_path_editor_filesel_callback,
+                                     gpe);
+
   gpe->selected_item = widget;
 
   pos = gtk_list_child_position (GTK_LIST (gpe->dir_list), gpe->selected_item);
@@ -399,7 +404,7 @@ gimp_path_editor_move_callback (GtkWidget *widget,
   gtk_list_insert_items (GTK_LIST (gpe->dir_list), move_list, pos + distance);
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
 
-  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
+  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }
 
 static void
@@ -422,9 +427,13 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
   if (gpe->number_of_items == 0)
     {
       gpe->selected_item = NULL;
-      gtk_signal_handler_block_by_data (GTK_OBJECT (gpe->file_selection), gpe);
+      g_signal_handlers_block_by_func (G_OBJECT (gpe->file_selection), 
+                                       gimp_path_editor_filesel_callback,
+                                       gpe);
       gimp_file_selection_set_filename (GIMP_FILE_SELECTION (gpe->file_selection), "");
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->file_selection), gpe);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gpe->file_selection), 
+                                         gimp_path_editor_filesel_callback,
+                                         gpe);
       gtk_widget_set_sensitive (gpe->delete_button, FALSE);
       gtk_widget_set_sensitive (gpe->file_selection, FALSE);
 
@@ -435,7 +444,7 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
     pos--;
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos);
 
-  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
+  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }
 
 static void
@@ -454,16 +463,16 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
   if (gpe->selected_item == NULL)
     {
       list_item = gtk_list_item_new_with_label (directory);
-      gtk_object_set_data_full (GTK_OBJECT (list_item), "gimp_path_editor",
-				directory,
-				(GtkDestroyNotify) g_free);
+      g_object_set_data_full (G_OBJECT (list_item), "gimp_path_editor",
+                              directory,
+                              (GDestroyNotify) g_free);
       append_list = g_list_append (append_list, list_item);
-      gtk_signal_connect (GTK_OBJECT (list_item), "select",
-			  GTK_SIGNAL_FUNC (gimp_path_editor_select_callback),
-			  gpe);
-      gtk_signal_connect (GTK_OBJECT (list_item), "deselect",
-			  GTK_SIGNAL_FUNC (gimp_path_editor_deselect_callback),
-			  gpe);
+      g_signal_connect (G_OBJECT (list_item), "select",
+                        G_CALLBACK (gimp_path_editor_select_callback),
+                        gpe);
+      g_signal_connect (G_OBJECT (list_item), "deselect",
+                        G_CALLBACK (gimp_path_editor_deselect_callback),
+                        gpe);
       gtk_widget_show (list_item);
       gpe->number_of_items++;
       gtk_list_append_items (GTK_LIST (gpe->dir_list), append_list);
@@ -473,11 +482,11 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
     {
       gtk_label_set_text (GTK_LABEL (GTK_BIN (gpe->selected_item)->child),
 			  directory);
-      gtk_object_set_data_full (GTK_OBJECT (gpe->selected_item),
-				"gimp_path_editor",
-				directory,
-				(GtkDestroyNotify) g_free);
+      g_object_set_data_full (G_OBJECT (gpe->selected_item),
+                              "gimp_path_editor",
+                              directory,
+                              (GDestroyNotify) g_free);
     }
 
-  gtk_signal_emit (GTK_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED]);
+  g_signal_emit (G_OBJECT (gpe), gimp_path_editor_signals[PATH_CHANGED], 0);
 }

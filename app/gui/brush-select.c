@@ -223,9 +223,9 @@ brush_select_new (gchar   *title,
   slider = gtk_hscale_new (bsp->opacity_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (bsp->opacity_data), "value_changed",
-		      GTK_SIGNAL_FUNC (opacity_scale_update),
-		      bsp);
+  g_signal_connect (G_OBJECT (bsp->opacity_data), "value_changed",
+                    G_CALLBACK (opacity_scale_update),
+                    bsp);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Opacity:"), 1.0, 1.0,
 			     slider, 1, FALSE);
@@ -258,10 +258,10 @@ brush_select_new (gchar   *title,
       gtk_adjustment_set_value (adj, init_spacing);
     }
 
-  gtk_signal_connect
-    (GTK_OBJECT (GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment),
+  g_signal_connect
+    (G_OBJECT (GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment),
      "value_changed",
-     GTK_SIGNAL_FUNC (spacing_scale_update),
+     G_CALLBACK (spacing_scale_update),
      bsp);
 
   gtk_widget_show (table);
@@ -277,15 +277,15 @@ brush_select_new (gchar   *title,
 
   gtk_widget_show (bsp->shell);
 
-  gtk_signal_connect (GTK_OBJECT (bsp->context), "brush_changed",
-		      GTK_SIGNAL_FUNC (brush_select_brush_changed),
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT (bsp->context), "opacity_changed",
-		      GTK_SIGNAL_FUNC (brush_select_opacity_changed),
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT (bsp->context), "paint_mode_changed",
-		      GTK_SIGNAL_FUNC (brush_select_paint_mode_changed),
-		      bsp);
+  g_signal_connect (G_OBJECT (bsp->context), "brush_changed",
+                    G_CALLBACK (brush_select_brush_changed),
+                    bsp);
+  g_signal_connect (G_OBJECT (bsp->context), "opacity_changed",
+                    G_CALLBACK (brush_select_opacity_changed),
+                    bsp);
+  g_signal_connect (G_OBJECT (bsp->context), "paint_mode_changed",
+                    G_CALLBACK (brush_select_paint_mode_changed),
+                    bsp);
 
   /*  Add to active brush dialogs list  */
   brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
@@ -302,8 +302,16 @@ brush_select_free (BrushSelect *bsp)
   /* remove from active list */
   brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
 
-  g_signal_handlers_disconnect_by_data (G_OBJECT (bsp->context), bsp);
-
+  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
+                                        brush_select_brush_changed,
+                                        bsp);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
+                                        brush_select_opacity_changed,
+                                        bsp);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (bsp->context), 
+                                        brush_select_paint_mode_changed,
+                                        bsp);
+  
   if (bsp->callback_name)
     {
       g_free (bsp->callback_name);

@@ -76,8 +76,7 @@ gimp_help_init (void)
 void
 gimp_help_free (void)
 {
-  gtk_object_destroy (GTK_OBJECT (tool_tips));
-  gtk_object_unref   (GTK_OBJECT (tool_tips));
+  g_object_unref (G_OBJECT (tool_tips));
 }
 
 /**
@@ -181,13 +180,13 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   gimp_help_set_help_data (widget, NULL, help_data);
 
   /*
-  gtk_signal_connect (GTK_OBJECT (widget), "help",
-		      GTK_SIGNAL_FUNC (gimp_help_callback),
-		      (gpointer) help_func);
+  g_signal_connect (G_OBJECT (widget), "help",
+                    G_CALLBACK (gimp_help_callback),
+                    (gpointer) help_func);
 
-  gtk_signal_connect (GTK_OBJECT (widget), "tips_query",
-		      GTK_SIGNAL_FUNC (gimp_help_tips_query_start),
-		      (gpointer) tips_query);
+  g_signal_connect (G_OBJECT (widget), "tips_query",
+		    G_CALLBACK (gimp_help_tips_query_start),
+		    (gpointer) tips_query);
   */
 
   gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
@@ -256,8 +255,8 @@ gimp_help_set_help_data (GtkWidget   *widget,
     }
   else if (help_data)
     {
-      gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data",
-			   (gpointer) help_data);
+      g_object_set_data (G_OBJECT (widget), "gimp_help_data",
+                         (gpointer) help_data);
     }
 }
 
@@ -294,8 +293,8 @@ gimp_help_callback (GtkWidget *widget,
   const gchar  *help_data;
 
   help_function = (GimpHelpFunc) data;
-  help_data     = (const gchar *) gtk_object_get_data (GTK_OBJECT (widget),
-						       "gimp_help_data");
+  help_data     = (const gchar *) g_object_get_data (G_OBJECT (widget),
+                                                     "gimp_help_data");
 
   if (help_function)
     (* help_function) (help_data);
@@ -332,8 +331,8 @@ gimp_help_tips_query_idle_show_help (gpointer data)
 	}
       else
 	{
-	  help_data = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
-						     "gimp_help_data");
+	  help_data = (gchar *) g_object_get_data (G_OBJECT (widget),
+                                                   "gimp_help_data");
 	}
 
       if (help_data || widget == toplevel_widget)
@@ -362,8 +361,8 @@ gimp_help_tips_query_idle_show_help (gpointer data)
 	    }
 	  else
 	    {
-	      help_data = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
-							 "gimp_help_data");
+	      help_data = (gchar *) g_object_get_data (G_OBJECT (widget),
+                                                       "gimp_help_data");
 	    }
 
 	  if (help_data)

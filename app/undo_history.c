@@ -148,6 +148,14 @@ static GdkBitmap *clean_mask   = NULL;
 static GdkPixmap *clear_pixmap = NULL;
 static GdkBitmap *clear_mask   = NULL;
 
+
+static void undo_history_undo_event     (GtkWidget *widget,
+                                         gint       ev,
+                                         gpointer   data);
+static void undo_history_clean_callback (GtkWidget *widget,
+                                         gpointer   data);
+
+
 /**************************************************************/
 /* Local functions */
 
@@ -466,7 +474,21 @@ undo_history_shell_destroy_callback (GtkWidget *widget,
   undo_history_st *st = data;
 
   if (st->gimage)
-    g_signal_handlers_disconnect_by_data (G_OBJECT (st->gimage), st);
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+                                            undo_history_undo_event,
+                                            st);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+                                            undo_history_gimage_rename_callback,
+                                            st);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+                                            undo_history_gimage_destroy_callback,
+                                            st);
+      
+      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
+                                            undo_history_clean_callback,
+                                            st);
+    }
 
   g_free (st);
 }

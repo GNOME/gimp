@@ -166,9 +166,9 @@ gradient_select_new (gchar *title,
 
   gtk_widget_show (gsp->shell);
 
-  gtk_signal_connect (GTK_OBJECT (gsp->context), "gradient_changed",
-                      GTK_SIGNAL_FUNC (gradient_select_gradient_changed),
-                      (gpointer) gsp);
+  g_signal_connect (G_OBJECT (gsp->context), "gradient_changed",
+                    G_CALLBACK (gradient_select_gradient_changed),
+                    (gpointer) gsp);
 
   /*  Add to active gradient dialogs list  */
   gradient_active_dialogs = g_slist_append (gradient_active_dialogs, gsp);
@@ -185,7 +185,9 @@ gradient_select_free (GradientSelect *gsp)
   /* remove from active list */
   gradient_active_dialogs = g_slist_remove (gradient_active_dialogs, gsp);
 
-  g_signal_handlers_disconnect_by_data (G_OBJECT (gsp->context), gsp);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gsp->context), 
+                                        gradient_select_gradient_changed,
+                                        gsp);
 
   if (gsp->callback_name)
     { 

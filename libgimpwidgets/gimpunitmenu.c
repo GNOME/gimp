@@ -195,11 +195,11 @@ gimp_unit_menu_new (const gchar *format,
 		gtk_menu_item_new_with_label
 		(gimp_unit_menu_build_string (format, GIMP_UNIT_PERCENT));
 	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
-				  gum);
-	      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-				   (gpointer) GIMP_UNIT_PERCENT);
+	      g_signal_connect (G_OBJECT (menuitem), "activate",
+                                G_CALLBACK (gimp_unit_menu_callback),
+                                gum);
+	      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
+                                 (gpointer) GIMP_UNIT_PERCENT);
 	      gtk_widget_show (menuitem);
 	    }
 
@@ -215,11 +215,11 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
-			  gum);
-      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-			   (gpointer) u);
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
+      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
+                         (gpointer) u);
       gtk_widget_show (menuitem);
     }
 
@@ -234,11 +234,11 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
-			  gum);
-      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-			   (gpointer) unit);
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
+      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu", 
+                         (gpointer) unit);
       gtk_widget_show (menuitem);
     }
 
@@ -252,11 +252,11 @@ gimp_unit_menu_new (const gchar *format,
       menuitem =
 	gtk_menu_item_new_with_label (_("More..."));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
-			  gum);
-      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-			   (gpointer) (GIMP_UNIT_PERCENT + 1));
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
+      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
+                         (gpointer) (GIMP_UNIT_PERCENT + 1));
       gtk_widget_show (menuitem);
     }
 
@@ -328,11 +328,11 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 								   unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu),
 			     menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
-			  gum);
-      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu",
-			   (gpointer) unit);
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+                        G_CALLBACK (gimp_unit_menu_callback),
+                        gum);
+      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
+                         (gpointer) unit);
       gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
 			      menuitem, user_unit);
       gtk_widget_show (menuitem);
@@ -476,8 +476,8 @@ gimp_unit_menu_selection_ok_callback (GtkWidget *widget,
 	gtk_clist_get_row_data (GTK_CLIST (gum->clist),
 				(gint) (GTK_CLIST (gum->clist)->selection->data));
       gimp_unit_menu_set_unit (gum, unit);
-      gtk_signal_emit (GTK_OBJECT (gum),
-		       gimp_unit_menu_signals[UNIT_CHANGED]);
+      g_signal_emit (G_OBJECT (gum),
+                     gimp_unit_menu_signals[UNIT_CHANGED], 0);
 
       gtk_widget_destroy (gum->selection);
     }
@@ -520,16 +520,16 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (gum->selection), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-                      &gum->selection);
+  g_signal_connect (G_OBJECT (gum->selection), "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &gum->selection);
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (gum), "destroy",
-					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					 GTK_OBJECT (gum->selection));
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (gum), "unmap",
-					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					 GTK_OBJECT (gum->selection));
+  g_signal_connect_object (G_OBJECT (gum), "destroy",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (gum->selection), G_CONNECT_SWAPPED);
+  g_signal_connect_object (G_OBJECT (gum), "unmap",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (gum->selection), G_CONNECT_SWAPPED);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -576,14 +576,14 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
   gtk_widget_set_usize (gum->clist, -1, 150);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), gum->clist);
-  gtk_signal_connect (GTK_OBJECT (gum->clist), "select_row",
-		      GTK_SIGNAL_FUNC (gimp_unit_menu_selection_select_row_callback),
-		      gum);
+  g_signal_connect (G_OBJECT (gum->clist), "select_row",
+                    G_CALLBACK (gimp_unit_menu_selection_select_row_callback),
+                    gum);
   gtk_widget_show (gum->clist);
 
-  gtk_signal_connect (GTK_OBJECT (gum->clist), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-                      &gum->clist);
+  g_signal_connect (G_OBJECT (gum->clist), "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &gum->clist);
 
   gtk_widget_show (vbox);
   gtk_widget_show (gum->selection);
@@ -605,8 +605,7 @@ gimp_unit_menu_callback (GtkWidget *widget,
   GimpUnit      new_unit;
 
   gum = data;
-  new_unit = (guint) gtk_object_get_data (GTK_OBJECT (widget),
-					  "gimp_unit_menu"); 
+  new_unit = (guint) g_object_get_data (G_OBJECT (widget), "gimp_unit_menu"); 
   
   if (gum->unit == new_unit)
     return;
@@ -634,6 +633,6 @@ gimp_unit_menu_callback (GtkWidget *widget,
     }
 
   gimp_unit_menu_set_unit (gum, new_unit);
-  gtk_signal_emit (GTK_OBJECT (gum),
-		   gimp_unit_menu_signals[UNIT_CHANGED]);
+  g_signal_emit (G_OBJECT (gum),
+                 gimp_unit_menu_signals[UNIT_CHANGED], 0);
 }
