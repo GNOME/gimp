@@ -1,3 +1,7 @@
+Thu Dec  2 01:18:33 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/grid.c: more chainbuttons and nicer dialog layout 
+
 Tue Nov 30 21:23:39 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/info_window.c
