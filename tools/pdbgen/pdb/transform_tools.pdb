@@ -71,7 +71,8 @@ HELP
   success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
-    success = gimp_drawable_transform_flip (drawable, context, flip_type);
+    success = gimp_drawable_transform_flip (drawable, context,
+                                            flip_type, TRUE, 0.0, FALSE);
 }
 CODE
     );
@@ -404,16 +405,16 @@ Transform the specified drawable in 2d.
 BLURB
 
     $help = <<'HELP';
-This tool transforms the specified drawable if no selection exists. If a 
-selection exists, the portion of the drawable which lies under the 
-selection is cut from the drawable and made into a floating selection which 
-is then transformed. The interpolation parameter can be set to TRUE to 
-indicate that either linear or cubic interpolation should be used to smooth 
-the resulting drawable. The transformation is done by scaling the image by 
-the x and y scale factors about the point (source_x, source_y), then rotating 
-around the same point, then translating that point to the new position 
-(dest_x, dest_y). The return value is the ID of the rotated drawable. If 
-there was no selection, this will be equal to the drawable ID supplied as 
+This tool transforms the specified drawable if no selection exists. If a
+selection exists, the portion of the drawable which lies under the
+selection is cut from the drawable and made into a floating selection which
+is then transformed. The interpolation parameter can be set to TRUE to
+indicate that either linear or cubic interpolation should be used to smooth
+the resulting drawable. The transformation is done by scaling the image by
+the x and y scale factors about the point (source_x, source_y), then rotating
+around the same point, then translating that point to the new position
+(dest_x, dest_y). The return value is the ID of the rotated drawable. If
+there was no selection, this will be equal to the drawable ID supplied as
 input. Otherwise, this will be the newly created and transformed drawable.
 HELP
 

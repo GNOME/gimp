@@ -9,6 +9,7 @@
     convert
     display
     drawable
+    drawable_transform
     edit
     fileops
     floating_sel

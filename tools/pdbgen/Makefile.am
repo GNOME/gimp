@@ -2,47 +2,48 @@ PDBGEN_BACKUP = 0
 PDBGEN_GROUPS =
 
 pdb_sources = \
-	pdb/brush.pdb		\
-	pdb/brush_select.pdb	\
-	pdb/brushes.pdb		\
-	pdb/channel.pdb		\
-	pdb/color.pdb		\
-	pdb/context.pdb		\
-	pdb/convert.pdb		\
-	pdb/display.pdb		\
-	pdb/drawable.pdb	\
-	pdb/edit.pdb		\
-	pdb/fileops.pdb		\
-	pdb/floating_sel.pdb	\
-	pdb/font_select.pdb	\
-	pdb/fonts.pdb		\
-	pdb/gimprc.pdb		\
-	pdb/gradient.pdb	\
-	pdb/gradient_select.pdb	\
-	pdb/gradients.pdb	\
-	pdb/guides.pdb		\
-	pdb/help.pdb		\
-	pdb/image.pdb		\
-	pdb/layer.pdb		\
-	pdb/message.pdb		\
-	pdb/misc.pdb		\
-	pdb/paint_tools.pdb	\
-	pdb/palette.pdb		\
-	pdb/palette_select.pdb	\
-	pdb/palettes.pdb	\
-	pdb/parasite.pdb	\
-	pdb/paths.pdb		\
-	pdb/pattern.pdb		\
-	pdb/pattern_select.pdb	\
-	pdb/patterns.pdb	\
-	pdb/plug_in.pdb		\
-	pdb/procedural_db.pdb	\
-	pdb/progress.pdb	\
-	pdb/selection.pdb	\
-	pdb/selection_tools.pdb	\
-	pdb/text_tool.pdb	\
-	pdb/transform_tools.pdb	\
-	pdb/undo.pdb		\
+	pdb/brush.pdb			\
+	pdb/brush_select.pdb		\
+	pdb/brushes.pdb			\
+	pdb/channel.pdb			\
+	pdb/color.pdb			\
+	pdb/context.pdb			\
+	pdb/convert.pdb			\
+	pdb/display.pdb			\
+	pdb/drawable.pdb		\
+	pdb/drawable_transform.pdb	\
+	pdb/edit.pdb			\
+	pdb/fileops.pdb			\
+	pdb/floating_sel.pdb		\
+	pdb/font_select.pdb		\
+	pdb/fonts.pdb			\
+	pdb/gimprc.pdb			\
+	pdb/gradient.pdb		\
+	pdb/gradient_select.pdb		\
+	pdb/gradients.pdb		\
+	pdb/guides.pdb			\
+	pdb/help.pdb			\
+	pdb/image.pdb			\
+	pdb/layer.pdb			\
+	pdb/message.pdb			\
+	pdb/misc.pdb			\
+	pdb/paint_tools.pdb		\
+	pdb/palette.pdb			\
+	pdb/palette_select.pdb		\
+	pdb/palettes.pdb		\
+	pdb/parasite.pdb		\
+	pdb/paths.pdb			\
+	pdb/pattern.pdb			\
+	pdb/pattern_select.pdb		\
+	pdb/patterns.pdb		\
+	pdb/plug_in.pdb			\
+	pdb/procedural_db.pdb		\
+	pdb/progress.pdb		\
+	pdb/selection.pdb		\
+	pdb/selection_tools.pdb		\
+	pdb/text_tool.pdb		\
+	pdb/transform_tools.pdb		\
+	pdb/undo.pdb			\
 	pdb/unit.pdb
 
 EXTRA_DIST = \
@@ -93,7 +94,7 @@ stamp_files = \
 	stamp-pdbgen		\
 	stamp-enum-code		\
 	stamp-enum-code-py
-	
+
 MAINTAINERCLEANFILES = $(stamp_files)
 
 $(srcdir)/enums.pl: stamp-enums

@@ -914,7 +914,10 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 gboolean
 gimp_drawable_transform_flip (GimpDrawable        *drawable,
                               GimpContext         *context,
-                              GimpOrientationType  flip_type)
+                              GimpOrientationType  flip_type,
+                              gboolean             center,
+                              gdouble              axis,
+                              gboolean             clip_result)
 {
   GimpImage   *gimage;
   TileManager *orig_tiles;
@@ -938,30 +941,33 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
       TileManager *new_tiles;
       gint         off_x, off_y;
       gint         width, height;
-      gdouble      axis = 0.0;
 
       tile_manager_get_offsets (orig_tiles, &off_x, &off_y);
       width  = tile_manager_width  (orig_tiles);
       height = tile_manager_height (orig_tiles);
 
-      switch (flip_type)
+      if (center)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          axis = ((gdouble) off_x + (gdouble) width / 2.0);
-          break;
+          switch (flip_type)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              axis = ((gdouble) off_x + (gdouble) width / 2.0);
+              break;
 
-        case GIMP_ORIENTATION_VERTICAL:
-          axis = ((gdouble) off_y + (gdouble) height / 2.0);
-          break;
+            case GIMP_ORIENTATION_VERTICAL:
+              axis = ((gdouble) off_y + (gdouble) height / 2.0);
+              break;
 
-        default:
-          break;
+            default:
+              break;
+            }
         }
 
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
                                                       orig_tiles,
-                                                      flip_type, axis, FALSE);
+                                                      flip_type, axis,
+                                                      clip_result);
 
       /* Free the cut/copied buffer */
       tile_manager_unref (orig_tiles);

@@ -67,10 +67,13 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable           *draw
                                                     gint                    recursion_level,
                                                     gboolean                clip_result,
                                                     GimpProgress           *progress);
+
 gboolean      gimp_drawable_transform_flip         (GimpDrawable           *drawable,
                                                     GimpContext            *context,
-                                                    GimpOrientationType     flip_type);
-
+                                                    GimpOrientationType     flip_type,
+                                                    gboolean                center,
+                                                    gdouble                 axis,
+                                                    gboolean                clip_result);
 
 gboolean      gimp_drawable_transform_rotate       (GimpDrawable           *drawable,
                                                     GimpContext            *context,

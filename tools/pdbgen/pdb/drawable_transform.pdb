@@ -1,0 +1,604 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# Derived  from old transform_tools by
+# Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>
+
+# Drawable Transformations
+
+# shortcuts
+
+sub pdb_misc {
+    $author = $copyright = 'João S. O. Bueno Calligaris';
+    $date = '2004';
+    $since = '2.2';
+}
+
+sub drawable_arg () {{
+    name => 'drawable',
+    type => 'drawable',
+    desc => 'The affected drawable',
+}}
+
+sub clip_result_arg () {{
+          name => 'clip_result',
+          type => 'boolean',
+          desc => 'Whether to clip results',
+          init => False
+}}
+
+sub transform_options_args ()
+  {
+    {
+      name => 'transform_direction', type => 'enum GimpTransformDirection',
+      desc => 'Direction of Transformation: { %%desc%% } ',
+      init => 1
+    },
+    {
+      name => 'interpolation', type => 'enum GimpInterpolationType',
+      desc => 'Type of interpolation: { %%desc%% } ',
+      init => 1
+    },
+    {
+      name => 'supersample', type => 'boolean',
+      desc => 'Whether to perform supersample',
+      init => 1
+    },
+    {
+      name => 'recursion_level', type => '0 < int32',
+      desc => 'Level of recursion (3 is a nice default)',
+      init => 1
+    }
+  }
+
+sub drawable_out_arg {
+    my $type = shift;
+    my $arg = &drawable_arg;
+    $arg->{desc} = "The $type drawable";
+    $arg->{no_declare} = 1;
+    $arg;
+}
+
+
+# The defs
+
+sub drawable_transform_flip {
+    $blurb = <<'BLURB';
+Flip the specified drawable either vertically or horizontally.
+BLURB
+
+    $help = <<'HELP';
+This tool flips the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then flipped.
+If center is set to true, the flip is around the image center. Otherwise,
+the coordinate of the axis needs to be specified.
+
+The return value is the ID of the flipped drawable. If there was no
+selection, this will be equal to the drawable ID supplied as input.
+Otherwise, this will be the newly created and flipped drawable.
+HELP
+
+    @inargs = (
+        &drawable_arg,
+        { name => 'flip_type', type => &std_orientation_enum,
+          desc => 'Type of flip: %%desc%%' },
+        { name => 'center', type => 'boolean',
+          desc => 'Whether to automatically position the axis in the image center',
+          init => True  },
+        { name => 'axis', type => 'float',
+          desc => 'coord. of flip axis',
+          init => 0.0     },
+
+         &transform_options_args,
+         &clip_result_arg,
+    );
+
+    @outargs = ( &drawable_out_arg('flipped') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    success = gimp_drawable_transform_flip (drawable,
+                                            context,
+                                            transform_direction,
+                                            center, axis,
+                                            clip_result);
+}
+CODE
+    );
+}
+
+
+sub drawable_transform_flip_free {
+    $blurb = <<'BLURB';
+Flip the specified drawable around a given line.
+BLURB
+
+    $help = <<'HELP';
+This tool flips the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then flipped. The
+axis to flip around is specified by specifying two points from that line.
+
+The return value is the ID of the flipped drawable. If there was no
+selection, this will be equal to the drawable ID supplied as input.
+Otherwise, this will be the newly created and flipped drawable. The clip
+results parameter specifies wheter current selection will affect the transform.
+HELP
+
+    @inargs = (
+        &drawable_arg,
+        { name => 'x1', type => 'float',
+          desc => 'horz. coord. of one end of axis',
+          init => 0.0     },
+        { name => 'y1', type => 'float',
+          desc => 'vert. coord. of one end of axis',
+          init => 0.0     },
+        { name => 'x2', type => 'float',
+          desc => 'horz. coord. of other end of axis',
+          init => 0.0     },
+        { name => 'y2', type => 'float',
+          desc => 'vert. coord. of other end of axis',
+          init => 0.0     },
+
+         &transform_options_args,
+         &clip_result_arg,
+    );
+
+    @outargs = ( &drawable_out_arg('flipped') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          gdouble      angle;
+          gdouble      dx, dy;
+          GimpMatrix3  matrix;
+
+          angle = atan2  ((y2 - y1),  (x2 - x1));
+          dx = x  - x1;
+          dy = (x1 + ( (gdouble) (y2 - y1) / (x2 - x1) ) * x ) - y1;
+
+          gimp_matrix3_identity  (&matrix);
+          gimp_matrix3_translate (&matrix, dx, dy);
+          gimp_matrix3_rotate    (&matrix, -angle);
+          gimp_matrix3_scale     (&matrix, 1.0, -1.0);
+          gimp_matrix3_rotate    (&matrix, angle);
+          gimp_matrix3_translate (&matrix, -dx, -dy);
+
+          if (progress)
+            gimp_progress_start (progress, _("Flip..."), FALSE);
+
+          /* Transform the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation,
+                                                    supersample,
+                                                    recursion_level,
+                                                    clip_result,
+                                                    progress);
+          if (progress)
+            gimp_progress_end (progress);
+        }
+    }
+}
+CODE
+    );
+}
+
+
+sub drawable_transform_perspective {
+    $blurb = <<'BLURB';
+Perform a possibly non-affine transformation on the specified drawable, with extra parameters.
+BLURB
+
+    $help = <<'HELP';
+This tool performs a possibly non-affine transformation on the specified
+drawable by allowing the corners of the original bounding box to be arbitrarily
+remapped to any values. The specified drawable is remapped if no selection
+exists. However, if a selection exists, the portion of the drawable which lies
+under the selection is cut from the drawable and made into a floating selection
+which is then remapped as specified. The return value is the ID of the
+remapped drawable. If there was no selection, this will be equal to the
+drawable ID supplied as input. Otherwise, this will be the newly created and
+remapped drawable. The 4 coordinates specify the new locations of each corner
+of the original bounding box. By specifying these values, any affine
+transformation (rotation, scaling, translation) can be affected. Additionally,
+these values can be specified such that the resulting transformed drawable will
+appear to have been projected via a perspective transform.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg
+    );
+
+    my $pos = 0;
+    foreach $where (qw(upper-left upper-right lower-left lower-right)) {
+        foreach (qw(x y)) {
+            push @inargs,
+                 { name => "$_$pos", type => 'float',
+                   desc => "The new $_ coordinate of $where corner of original
+                            bounding box",
+                   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
+        }
+        $pos++;
+    }
+    @inargs = (@inargs,
+      &transform_options_args,
+      &clip_result_arg
+    );
+
+    @outargs = ( &drawable_out_arg('newly mapped') );
+
+    %invoke = (
+        vars => [ 'gdouble trans_info[8]' ],
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          GimpMatrix3  matrix;
+
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_perspective (x, y, x + width, y + height,
+                                             trans_info[X0], trans_info[Y0],
+	                                     trans_info[X1], trans_info[Y1],
+                                             trans_info[X2], trans_info[Y2],
+                                             trans_info[X3], trans_info[Y3],
+	                                     &matrix);
+
+          if (progress)
+            gimp_progress_start (progress, _("Perspective..."), FALSE);
+
+          /* Perspective the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result,
+                                                    progress);
+
+          if (progress)
+            gimp_progress_end (progress);
+	}
+    }
+}
+CODE
+    );
+}
+
+sub drawable_transform_rotate {
+    $blurb = <<'BLURB';
+Rotate the specified drawable about given coordinates through the specified angle.
+BLURB
+
+    $help = <<'HELP';
+This tool rotates the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then rotated by the
+specified amount. The return value is the ID of the rotated drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and rotated drawable.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg,
+        { name => 'angle', type => 'float',
+          desc => 'The angle of rotation (radians)' },
+        { name => 'cx', type => 'int32',
+          desc => 'The hor. coordinate of the center of rotation' },
+        { name => 'cy', type => 'int32',
+          desc => 'The vert. coordinate of the center of rotation' },
+        &transform_options_args,
+        &clip_result_arg
+    );
+
+    @outargs = ( &drawable_out_arg('rotated') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      GimpMatrix3  matrix;
+
+      /* Assemble the transformation matrix */
+      gimp_transform_matrix_rotate_center (cx, cy, angle, &matrix);
+
+      if (progress)
+        gimp_progress_start (progress, _("Rotating..."), FALSE);
+
+      /* Rotate the selection */
+      success = gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, transform_direction,
+                                                interpolation, supersample,
+                                                recursion_level,
+                                                clip_result, progress);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+}
+CODE
+    );
+}
+
+sub drawable_transform_scale {
+    $blurb = 'Scale the specified drawable with extra parameters';
+
+    $help = <<'HELP';
+This tool scales the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then scaled by the
+specified amount. The return value is the ID of the scaled drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and scaled drawable.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg
+    );
+
+    my $pos = 0;
+    foreach $where (qw(upper-left lower-right)) {
+        foreach (qw(x y)) {
+            push @inargs,
+                 { name => "$_$pos", type => 'float',
+                   desc => "The new $_ coordinate of $where corner of newly
+                            scaled region",
+                   alias => "trans_info[\U$_\E$pos]", no_declare => 1 }
+        }
+        $pos++;
+    }
+
+    @inargs = (@inargs,
+      &transform_options_args,
+      &clip_result_arg
+    );
+
+    @outargs = ( &drawable_out_arg('scaled') );
+
+    %invoke = (
+        vars => [ 'gdouble trans_info[4]' ],
+        code => <<'CODE'
+{
+  success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
+             trans_info[X0] < trans_info[X1] &&
+             trans_info[Y0] < trans_info[X1]);
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          GimpMatrix3  matrix;
+
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_scale (x, y, x + width, y + height,
+                                       trans_info[X0], trans_info[Y0],
+                                       trans_info[X1], trans_info[Y1],
+                                       &matrix);
+
+          if (progress)
+            gimp_progress_start (progress, _("Scaling..."), FALSE);
+
+          /* Scale the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
+	}
+    }
+}
+CODE
+    );
+}
+
+sub drawable_transform_shear {
+    $blurb = <<'BLURB';
+Shear the specified drawable about its center by the specified magnitude, with extra parameters.
+BLURB
+
+    $help = <<'HELP';
+This tool shears the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then sheard by the
+specified amount. The return value is the ID of the sheard drawable.
+If there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and sheard drawable. The shear
+type parameter indicates whether the shear will be applied horizontally or
+vertically. The magnitude can be either positive or negative and indicates the
+extent (in pixels) to shear by.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg,
+        { name => 'shear_type', type => &std_orientation_enum,
+          desc => 'Type of shear: %%desc%%' },
+        { name => 'magnitude', type => 'float',
+          desc => 'The magnitude of the shear' },
+        &transform_options_args,
+        &clip_result_arg
+    );
+
+    @outargs = ( &drawable_out_arg('sheared') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          GimpMatrix3  matrix;
+	  
+          /* Assemble the transformation matrix */
+          gimp_transform_matrix_shear (x, y, x + width, y + height,
+                                       shear_type, magnitude,
+                                       &matrix);
+
+          if (progress)
+            gimp_progress_start (progress, _("Shearing..."), FALSE);
+
+          /* Shear the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix,
+                                                    transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
+	}
+    }
+}
+CODE
+    );
+}
+
+
+sub drawable_transform_2d {
+    $blurb = <<'BLURB';
+Transform the specified drawable in 2d, with extra parameters.
+BLURB
+
+    $help = <<'HELP';
+This tool transforms the specified drawable if no selection exists. If a
+selection exists, the portion of the drawable which lies under the
+selection is cut from the drawable and made into a floating selection which
+is then transformed. The transformation is done by scaling the image by
+the x and y scale factors about the point (source_x, source_y), then rotating
+around the same point, then translating that point to the new position
+(dest_x, dest_y). The return value is the ID of the rotated drawable. If
+there was no selection, this will be equal to the drawable ID supplied as
+input. Otherwise, this will be the newly created and transformed drawable.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg,
+        { name => 'source_x', type => 'float',
+          desc => 'X coordinate of the transformation center' },
+        { name => 'source_y', type => 'float',
+          desc => 'Y coordinate of the transformation center' },
+        { name => 'scale_x', type => 'float',
+          desc => 'Amount to scale in x direction' },
+        { name => 'scale_y', type => 'float',
+          desc => 'Amount to scale in y direction' },
+        { name => 'angle', type => 'float',
+          desc => 'The angle of rotation (radians)' },
+        { name => 'dest_x', type => 'float',
+          desc => 'X coordinate of where the center goes' },
+        { name => 'dest_y', type => 'float',
+          desc => 'Y coordinate of where the center goes' },
+        &transform_options_args,
+        &clip_result_arg
+    );
+
+    @outargs = ( &drawable_out_arg('transformed') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    {
+      GimpMatrix3  matrix;
+
+      /* Assemble the transformation matrix */
+      gimp_matrix3_identity  (&matrix);
+      gimp_matrix3_translate (&matrix, -source_x, -source_y);
+      gimp_matrix3_scale     (&matrix, scale_x, scale_y);
+      gimp_matrix3_rotate    (&matrix, angle);
+      gimp_matrix3_translate (&matrix, dest_x, dest_y);
+
+      if (progress)
+        gimp_progress_start (progress, _("2D Transform..."), FALSE);
+
+      /* Transform the selection */
+      success = gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, transform_direction,
+                                                interpolation, supersample,
+                                                recursion_level,
+                                                clip_result, progress);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
+              "core/gimp.h" "core/gimp-transform-utils.h" "core/gimpimage.h"
+              "core/gimpdrawable.h" "core/gimpdrawable-transform.h"
+              "core/gimpprogress.h"
+              "gimp-intl.h");
+
+@procs = qw(drawable_transform_flip drawable_transform_flip_free
+            drawable_transform_perspective
+            drawable_transform_rotate drawable_transform_scale
+            drawable_transform_shear drawable_transform_2d);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Transformation procedures';
+
+1;

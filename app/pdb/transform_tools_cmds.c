@@ -79,7 +79,8 @@ flip_invoker (Gimp         *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-        success = gimp_drawable_transform_flip (drawable, context, flip_type);
+        success = gimp_drawable_transform_flip (drawable, context,
+                                                flip_type, TRUE, 0.0, FALSE);
     }
 
   return_args = procedural_db_return_args (&flip_proc, success);

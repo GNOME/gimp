@@ -152,6 +152,15 @@ package Gimp::CodeGen::enums;
 		       GIMP_HISTOGRAM_BLUE => '3',
 		       GIMP_HISTOGRAM_ALPHA => '4' }
 	},
+    GimpInterpolationType =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_INTERPOLATION_NONE GIMP_INTERPOLATION_LINEAR
+			  GIMP_INTERPOLATION_CUBIC) ],
+	  mapping => { GIMP_INTERPOLATION_NONE => '0',
+		       GIMP_INTERPOLATION_LINEAR => '1',
+		       GIMP_INTERPOLATION_CUBIC => '2' }
+	},
     GimpLayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -369,6 +378,13 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_REPEAT_NONE => '0',
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
+	},
+    GimpTransformDirection =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_TRANSFORM_FORWARD GIMP_TRANSFORM_BACKWARD) ],
+	  mapping => { GIMP_TRANSFORM_FORWARD => '0',
+		       GIMP_TRANSFORM_BACKWARD => '1' }
 	},
     GimpGradientSegmentType =>
 	{ contig => 1,

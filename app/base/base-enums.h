@@ -65,7 +65,7 @@ typedef enum
 
 GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_INTERPOLATION_NONE,   /*< desc="None (Fastest)" >*/
   GIMP_INTERPOLATION_LINEAR, /*< desc="Linear"         >*/

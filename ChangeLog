@@ -1,3 +1,33 @@
+2004-10-26  Sven Neumann  <sven@gimp.org>
+
+	Added new drawable transform API to the PDB. Largely based on
+	patches from Joao S. O. Bueno. Fixes bug #137053.
+
+	* app/core/gimpdrawable-transform.[ch]: added missing parameters
+	to gimp_drawable_transform_flip().
+
+	* tools/pdbgen/pdb/transform_tools.pdb: changed accordinly.
+
+	* app/base/base-enums.h
+	* app/core/core-enums.h: removed pdp-skip for GimpInterpolationType
+	and GimpTransformDirection enums.
+
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/groups.pl: regenerated.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/drawable_transform.pdb: added new file defining
+	the new PDB calls.
+
+	* app/pdb/Makefile.am
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_linux_input.c

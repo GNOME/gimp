@@ -198,6 +198,7 @@ app/paint/paint-enums.c
 
 app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
+app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
 app/pdb/guides_cmds.c
 app/pdb/image_cmds.c
