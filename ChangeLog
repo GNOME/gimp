@@ -1,5 +1,11 @@
 2004-04-17  Henrik Brix Andersen  <brix@gimp.org>
 
+	* app/tools/gimphuesaturationtool.c
+	(gimp_hue_saturation_tool_dialog): resolved conflicting
+	mnemonic. Fixes bug #139868.
+
+2004-04-17  Henrik Brix Andersen  <brix@gimp.org>
+
 	* plug-ins/common/jpeg.c (save_dialog): live preview doesn't
 	modify the undo history of the image anymore, label changed
 	accordingly. Fixes bug #140296.
