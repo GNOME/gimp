@@ -1,3 +1,10 @@
+2000-02-01  David Monniaux  <monniaux@quatramaran.ens.fr>
+
+	* plug-ins/perl/po/fr.po: beginning of French i18n of Perl
+	(it seems there's a gazillion strings marked for translation
+	inside the Perl plug-ins that are really internal error messages;
+	also, how about script-fu i18n, to be consistent with Logulator ?)
+
 2000-02-02  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/gap/gap_decode_mpeg_main.c: fixed typo.
