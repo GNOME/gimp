@@ -186,8 +186,8 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-      gtk_toggle_button_set_active
-        (GTK_TOGGLE_BUTTON (options->anti_erase_w), ! options->anti_erase);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
+                                    ! options->anti_erase);
     }
 
   tool->toggled = options->anti_erase;

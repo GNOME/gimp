@@ -349,9 +349,10 @@ static void
 rotate_tool_motion (GimpTransformTool *transform_tool,
 		    GimpDisplay       *gdisp)
 {
-  gdouble angle1, angle2, angle;
-  gdouble cx, cy;
-  gdouble x1, y1, x2, y2;
+  TransformOptions *options;
+  gdouble           angle1, angle2, angle;
+  gdouble           cx, cy;
+  gdouble           x1, y1, x2, y2;
 
   if (transform_tool->function == TRANSFORM_HANDLE_CENTER)
     {
@@ -362,6 +363,8 @@ rotate_tool_motion (GimpTransformTool *transform_tool,
 
       return;
     }
+
+  options = (TransformOptions *) GIMP_TOOL (transform_tool)->tool_info->tool_options;
 
   cx = transform_tool->trans_info[CENTER_X];
   cy = transform_tool->trans_info[CENTER_Y];
@@ -394,13 +397,17 @@ rotate_tool_motion (GimpTransformTool *transform_tool,
       transform_tool->trans_info[REAL_ANGLE] - 2.0 * G_PI;
 
   /*  constrain the angle to 15-degree multiples if ctrl is held down  */
-  if (transform_tool->state & GDK_CONTROL_MASK)
-    transform_tool->trans_info[ANGLE] =
-      FIFTEEN_DEG * (int) ((transform_tool->trans_info[REAL_ANGLE] +
-			    FIFTEEN_DEG / 2.0) /
-			   FIFTEEN_DEG);
+  if (options->constrain_1)
+    {
+      transform_tool->trans_info[ANGLE] =
+        FIFTEEN_DEG * (int) ((transform_tool->trans_info[REAL_ANGLE] +
+                              FIFTEEN_DEG / 2.0) /
+                             FIFTEEN_DEG);
+    }
   else
-    transform_tool->trans_info[ANGLE] = transform_tool->trans_info[REAL_ANGLE];
+    {
+      transform_tool->trans_info[ANGLE] = transform_tool->trans_info[REAL_ANGLE];
+    }
 }
 
 static void

@@ -29,13 +29,17 @@ struct _TransformOptions
 {
   GimpToolOptions         tool_options;
 
+  GimpTransformDirection  direction;
+  GimpTransformDirection  direction_d;
+  GtkWidget              *direction_w[2];  /* 2 radio buttons */
+
   gboolean                smoothing;
   gboolean                smoothing_d;
   GtkWidget              *smoothing_w;
 
-  GimpTransformDirection  direction;
-  GimpTransformDirection  direction_d;
-  GtkWidget              *direction_w[2];  /* 2 radio buttons */
+  gboolean                clip;
+  gboolean                clip_d;
+  GtkWidget              *clip_w;
 
   gboolean                show_grid;
   gboolean                show_grid_d;
@@ -45,13 +49,17 @@ struct _TransformOptions
   gint                    grid_size_d;
   GtkObject              *grid_size_w;
 
-  gboolean                clip;
-  gboolean                clip_d;
-  GtkWidget              *clip_w;
-
   gboolean                show_path;
   gboolean                show_path_d;
   GtkWidget              *show_path_w;
+
+  gboolean                constrain_1;
+  gboolean                constrain_1_d;
+  GtkWidget              *constrain_1_w;
+
+  gboolean                constrain_2;
+  gboolean                constrain_2_d;
+  GtkWidget              *constrain_2_w;
 };
 
 

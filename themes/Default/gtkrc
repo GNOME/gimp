@@ -58,6 +58,7 @@ class "GtkHScale" style "gimp-hscale-style"
 style "gimp-dock-style" = "gimp-small-font-style"
 {
   GimpDock::separator_height           = 6
+  GimpDockbook::tab_border             = 0
   GimpDockable::content_border         = 2
   GimpContainerView::content_spacing   = 2
   GimpContainerView::button_spacing    = 2

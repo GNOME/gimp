@@ -49,6 +49,8 @@
 static void      gimp_dockbook_class_init       (GimpDockbookClass  *klass);
 static void      gimp_dockbook_init             (GimpDockbook       *dockbook);
 
+static void      gimp_dockbook_style_set        (GtkWidget          *widget,
+                                                 GtkStyle           *prev_style);
 static gboolean  gimp_dockbook_drag_drop        (GtkWidget          *widget,
 						 GdkDragContext     *context,
 						 gint                x,
@@ -122,7 +124,16 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  widget_class->style_set = gimp_dockbook_style_set;
   widget_class->drag_drop = gimp_dockbook_drag_drop;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("tab_border",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             0,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -130,7 +141,6 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 {
   dockbook->dock = NULL;
 
-  gtk_notebook_set_tab_border (GTK_NOTEBOOK (dockbook), 0);
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
 
@@ -144,6 +154,22 @@ GtkWidget *
 gimp_dockbook_new (void)
 {
   return GTK_WIDGET (g_object_new (GIMP_TYPE_DOCKBOOK, NULL));
+}
+
+static void
+gimp_dockbook_style_set (GtkWidget *widget,
+                         GtkStyle  *prev_style)
+{
+  gint tab_border;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "tab_border", &tab_border,
+                        NULL);
+
+  gtk_notebook_set_tab_border (GTK_NOTEBOOK (widget), tab_border);
 }
 
 static gboolean

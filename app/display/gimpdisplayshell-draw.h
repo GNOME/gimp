@@ -75,8 +75,7 @@ struct _GimpDisplayShell
 
   GtkWidget        *hsb;               /*  scroll bars         */
   GtkWidget        *vsb;
-  GtkWidget        *qmaskoff;          /*  qmask buttons       */
-  GtkWidget        *qmaskon;
+  GtkWidget        *qmask;             /*  qmask button        */
   GtkWidget        *hrule;             /*  rulers              */
   GtkWidget        *vrule;
   GtkWidget        *origin;            /*  origin button       */

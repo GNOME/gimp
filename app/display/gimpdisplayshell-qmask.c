@@ -94,47 +94,8 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 }
 
 void
-gimp_display_shell_qmask_off_toggled (GtkWidget        *widget,
-                                      GimpDisplayShell *shell)
-{
-  GimpDisplay *gdisp;
-  GimpImage   *gimage;
-  GimpChannel *mask;
-
-  gdisp = shell->gdisp;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      gimage = gdisp->gimage;
-
-      if (! gimp_image_get_qmask_state (gimage))
-        return; /* if already set do nothing */
-
-      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
-
-      if (mask)
-  	{ 
-	  undo_push_group_start (gimage, QMASK_UNDO);
-	  /*  push the undo here since removing the mask will
-	   *  call the qmask_removed_callback() which will set
-	   *  the qmask_state to FALSE
-           */
-	  undo_push_qmask (gimage);
-	  gimp_image_mask_load (gimage, mask);
-	  gimp_image_remove_channel (gimage, mask);
-	  undo_push_group_end (gimage);
-	}
-
-      gimp_image_set_qmask_state (gdisp->gimage, FALSE);
-
-      if (mask)
-	gdisplays_flush ();
-    }
-}
-
-void
-gimp_display_shell_qmask_on_toggled (GtkWidget        *widget,
-                                     GimpDisplayShell *shell)
+gimp_display_shell_qmask_toggled (GtkWidget        *widget,
+                                  GimpDisplayShell *shell)
 {
   GimpDisplay *gdisp;
   GimpImage   *gimage;
@@ -144,10 +105,10 @@ gimp_display_shell_qmask_on_toggled (GtkWidget        *widget,
 
   gdisp = shell->gdisp;
 
+  gimage = gdisp->gimage;
+
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gimage = gdisp->gimage;
-
       if (gimp_image_get_qmask_state (gimage))
 	return; /* if already set, do nothing */
   
@@ -207,6 +168,33 @@ gimp_display_shell_qmask_on_toggled (GtkWidget        *widget,
       g_signal_connect (G_OBJECT (mask), "removed", 
 			G_CALLBACK (qmask_removed_callback),
 			gdisp);
+    }
+  else
+    {
+      gimage = gdisp->gimage;
+
+      if (! gimp_image_get_qmask_state (gimage))
+        return; /* if already set do nothing */
+
+      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
+
+      if (mask)
+  	{ 
+	  undo_push_group_start (gimage, QMASK_UNDO);
+	  /*  push the undo here since removing the mask will
+	   *  call the qmask_removed_callback() which will set
+	   *  the qmask_state to FALSE
+           */
+	  undo_push_qmask (gimage);
+	  gimp_image_mask_load (gimage, mask);
+	  gimp_image_remove_channel (gimage, mask);
+	  undo_push_group_end (gimage);
+	}
+
+      gimp_image_set_qmask_state (gdisp->gimage, FALSE);
+
+      if (mask)
+	gdisplays_flush ();
     }
 }
 

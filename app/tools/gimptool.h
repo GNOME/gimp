@@ -52,6 +52,10 @@ struct _GimpTool
   gboolean      scroll_lock;  /*  allow scrolling or not                      */
   gboolean      auto_snap_to; /*  snap to guides automatically                */
 
+  gboolean      handle_empty_image; /*  invoke the tool on images without
+                                     *  active drawable
+                                     */
+
   gboolean      preserve;     /*  Preserve this tool across drawable changes  */
   GimpDisplay  *gdisp;        /*  pointer to currently active gdisp           */
   GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */

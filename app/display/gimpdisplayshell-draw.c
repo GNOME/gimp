@@ -198,8 +198,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->hsb                   = NULL;
   shell->vsb                   = NULL;
-  shell->qmaskoff              = NULL;
-  shell->qmaskon               = NULL;
+  shell->qmask                 = NULL;
   shell->hrule                 = NULL;
   shell->vrule                 = NULL;
   shell->origin                = NULL;
@@ -336,7 +335,6 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   GtkWidget        *image;
   GtkWidget        *label_frame;
   GtkWidget        *nav_ebox;
-  GSList           *group = NULL;
   gint              image_width, image_height;
   gint              n_width, n_height;
   gint              s_width, s_height;
@@ -467,8 +465,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
    *     |      |    
    *     |      +-- lower_hbox
    *     |             |
-   *     |             +-- qmaskoff
-   *     |             +-- qmaskon
+   *     |             +-- qmask
    *     |             +-- hscrollbar
    *     |             +-- navbutton
    *     |
@@ -509,7 +506,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
-  /*  the hbox containing qmask buttons, vertical scrollbar and nav button  */
+  /*  the hbox containing qmask button, vertical scrollbar and nav button  */
   lower_hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (disp_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
@@ -625,49 +622,37 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  create the contents of the lower_hbox  *********************************/
 
-  /*  the qmask buttons  */
-  shell->qmaskoff = gtk_radio_button_new (group);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskoff));
-  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskoff), 16, 16);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskoff), FALSE);
-  GTK_WIDGET_UNSET_FLAGS (shell->qmaskoff, GTK_CAN_FOCUS);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->qmaskoff), image);
-  gtk_widget_show (image);
-
-  gimp_help_set_help_data (shell->qmaskoff, NULL, "#qmask_off_button");
-
-  shell->qmaskon = gtk_radio_button_new (group);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (shell->qmaskon));
-  gtk_widget_set_usize (GTK_WIDGET (shell->qmaskon), 16, 16);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmaskon), FALSE);
-  GTK_WIDGET_UNSET_FLAGS (shell->qmaskon, GTK_CAN_FOCUS);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_ON, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->qmaskon), image);
-  gtk_widget_show (image);
+  /*  the qmask button  */
+  shell->qmask = gtk_check_button_new ();
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (shell->qmask), FALSE);
+  gtk_widget_set_usize (GTK_WIDGET (shell->qmask), 16, 16);
+  GTK_WIDGET_UNSET_FLAGS (shell->qmask, GTK_CAN_FOCUS);
 
   if (gdisp->gimage->qmask_state)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskon), TRUE);
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask), TRUE);
+      image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_ON,
+                                        GTK_ICON_SIZE_MENU);
+    }
   else
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff), TRUE);
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask), FALSE);
+      image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF,
+                                        GTK_ICON_SIZE_MENU);
+    }
 
-  g_signal_connect (G_OBJECT (shell->qmaskoff), "toggled",
-		    G_CALLBACK (gimp_display_shell_qmask_off_toggled),
+  gtk_container_add (GTK_CONTAINER (shell->qmask), image);
+  gtk_widget_show (image);
+
+  gimp_help_set_help_data (shell->qmask,
+                           _("Toggle QuickMask"), "#qmask_button");
+
+  g_signal_connect (G_OBJECT (shell->qmask), "toggled",
+		    G_CALLBACK (gimp_display_shell_qmask_toggled),
 		    shell);
-  g_signal_connect (G_OBJECT (shell->qmaskoff), "button_press_event",
+  g_signal_connect (G_OBJECT (shell->qmask), "button_press_event",
 		    G_CALLBACK (gimp_display_shell_qmask_button_press),
 		    shell);
-
-  g_signal_connect (G_OBJECT (shell->qmaskon), "toggled",
-		    G_CALLBACK (gimp_display_shell_qmask_on_toggled),
-		    shell);
-  g_signal_connect (G_OBJECT (shell->qmaskon), "button_press_event",
-		    G_CALLBACK (gimp_display_shell_qmask_button_press),
-		    shell);
-
-  gimp_help_set_help_data (shell->qmaskon, NULL, "#qmask_on_button");
 
   /*  the navigation window button  */
   nav_ebox = gtk_event_box_new ();
@@ -739,8 +724,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (right_vbox), shell->vsb, TRUE, TRUE, 0);
 
   /*  fill the lower_hbox  */
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmaskoff, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmaskon, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->qmask, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), nav_ebox, FALSE, FALSE, 0);
 
@@ -765,8 +749,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   gtk_widget_show (shell->padding_button);
 
-  gtk_widget_show (shell->qmaskoff);
-  gtk_widget_show (shell->qmaskon);
+  gtk_widget_show (shell->qmask);
   gtk_widget_show (nav_ebox);
 
   gtk_widget_show (label_frame);

@@ -87,6 +87,11 @@ static void   gimp_transform_tool_motion           (GimpTool          *tool,
                                                     guint32            time,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
+static void   gimp_transform_tool_modifier_key     (GimpTool          *tool,
+                                                    GdkModifierType    key,
+                                                    gboolean           press,
+                                                    GdkModifierType    state,
+                                                    GimpDisplay       *gdisp);
 static void   gimp_transform_tool_oper_update      (GimpTool          *tool,
                                                     GimpCoords        *coords,
                                                     GdkModifierType    state,
@@ -169,6 +174,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->button_press   = gimp_transform_tool_button_press;
   tool_class->button_release = gimp_transform_tool_button_release;
   tool_class->motion         = gimp_transform_tool_motion;
+  tool_class->modifier_key   = gimp_transform_tool_modifier_key;
   tool_class->oper_update    = gimp_transform_tool_oper_update;
   tool_class->cursor_update  = gimp_transform_tool_cursor_update;
 
@@ -463,6 +469,29 @@ gimp_transform_tool_motion (GimpTool        *tool,
   transform_tool->lasty = transform_tool->cury;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_transform_tool_modifier_key (GimpTool        *tool,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *gdisp)
+{
+  TransformOptions *options;
+
+  options = (TransformOptions *) tool->tool_info->tool_options;
+
+  if (key == GDK_CONTROL_MASK && options->constrain_1_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_1_w),
+                                    ! options->constrain_1);
+    }
+  else if (key == GDK_MOD1_MASK && options->constrain_2_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_2_w),
+                                    ! options->constrain_2);
+    }
 }
 
 static void

@@ -391,14 +391,17 @@ static void
 gimp_scale_tool_motion (GimpTransformTool *transform_tool,
 		        GimpDisplay       *gdisp)
 {
-  gdouble  ratio;
-  gdouble *x1;
-  gdouble *y1;
-  gdouble *x2;
-  gdouble *y2;
-  gint     w, h;
-  gint     dir_x, dir_y;
-  gint     diff_x, diff_y;
+  TransformOptions *options;
+  gdouble           ratio;
+  gdouble          *x1;
+  gdouble          *y1;
+  gdouble          *x2;
+  gdouble          *y2;
+  gint              w, h;
+  gint              dir_x, dir_y;
+  gint              diff_x, diff_y;
+
+  options = (TransformOptions *) GIMP_TOOL (transform_tool)->tool_info->tool_options;
 
   diff_x = transform_tool->curx - transform_tool->lastx;
   diff_y = transform_tool->cury - transform_tool->lasty;
@@ -450,13 +453,15 @@ gimp_scale_tool_motion (GimpTransformTool *transform_tool,
     }
 
   /*  if just the mod1 key is down, affect only the height  */
-  if (transform_tool->state & GDK_MOD1_MASK &&
-      ! (transform_tool->state & GDK_CONTROL_MASK))
-    diff_x = 0;
+  if (options->constrain_2 && ! options->constrain_1)
+    {
+      diff_x = 0;
+    }
   /*  if just the control key is down, affect only the width  */
-  else if (transform_tool->state & GDK_CONTROL_MASK &&
-	   ! (transform_tool->state & GDK_MOD1_MASK))
-    diff_y = 0;
+  else if (options->constrain_1 && ! options->constrain_2)
+    {
+      diff_y = 0;
+    }
 
   *x1 += diff_x;
   *y1 += diff_y;
@@ -482,8 +487,7 @@ gimp_scale_tool_motion (GimpTransformTool *transform_tool,
   /*  if both the control key & mod1 keys are down,
    *  keep the aspect ratio intact 
    */
-  if (transform_tool->state & GDK_CONTROL_MASK &&
-      transform_tool->state & GDK_MOD1_MASK)
+  if (options->constrain_1 && options->constrain_2)
     {
       ratio = ((gdouble) (transform_tool->x2 - transform_tool->x1) /
                (gdouble) (transform_tool->y2 - transform_tool->y1));

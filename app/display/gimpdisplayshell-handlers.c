@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 
 #include "core/gimpimage.h"
@@ -177,28 +179,25 @@ static void
 gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
                                           GimpDisplayShell *shell)
 {
-  if (shell->gdisp->gimage->qmask_state !=
-      GTK_TOGGLE_BUTTON (shell->qmaskon)->active)
-    {
-      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskon),
-				       gimp_display_shell_qmask_on_toggled,
-				       shell);
-      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskoff),
-				       gimp_display_shell_qmask_off_toggled,
-				       shell);
+  GtkImage *image;
 
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskon),
-				    shell->gdisp->gimage->qmask_state);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff),
-				    ! shell->gdisp->gimage->qmask_state);
+  image = GTK_IMAGE (GTK_BIN (shell->qmask)->child);
 
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskon),
-                                         gimp_display_shell_qmask_on_toggled,
-					 shell);
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskoff),
-                                         gimp_display_shell_qmask_off_toggled,
-					 shell);
-    }
+  g_signal_handlers_block_by_func (G_OBJECT (shell->qmask),
+                                   gimp_display_shell_qmask_toggled,
+                                   shell);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask),
+                                shell->gdisp->gimage->qmask_state);
+
+  if (shell->gdisp->gimage->qmask_state)
+    gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_ON, GTK_ICON_SIZE_MENU);
+  else
+    gtk_image_set_from_stock (image, GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmask),
+                                     gimp_display_shell_qmask_toggled,
+                                     shell);
 }
 
 static void

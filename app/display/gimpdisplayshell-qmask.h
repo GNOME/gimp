@@ -20,13 +20,11 @@
 #define __GIMP_DISPLAY_SHELL_QMASK_H__
 
 
-gboolean   gimp_display_shell_qmask_button_press  (GtkWidget        *widget,
-                                                   GdkEventButton   *event,
-                                                   GimpDisplayShell *shell);
-void       gimp_display_shell_qmask_on_toggled    (GtkWidget        *widget,
-                                                   GimpDisplayShell *shell);
-void       gimp_display_shell_qmask_off_toggled   (GtkWidget        *widget,
-                                                   GimpDisplayShell *shell);
+gboolean   gimp_display_shell_qmask_button_press (GtkWidget        *widget,
+                                                  GdkEventButton   *event,
+                                                  GimpDisplayShell *shell);
+void       gimp_display_shell_qmask_toggled      (GtkWidget        *widget,
+                                                  GimpDisplayShell *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_QMASK_H__ */

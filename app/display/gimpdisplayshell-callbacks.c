@@ -29,6 +29,7 @@
 #include "display-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -36,7 +37,6 @@
 
 #include "tools/tools-types.h"
 
-#include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
@@ -383,6 +383,24 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
       }
       break;
 
+    case GDK_FOCUS_CHANGE:
+      {
+        GdkEventFocus *fevent;
+
+        fevent = (GdkEventFocus *) event;
+
+        if (fevent->in)
+          GTK_WIDGET_SET_FLAGS (canvas, GTK_HAS_FOCUS);
+        else
+          GTK_WIDGET_UNSET_FLAGS (canvas, GTK_HAS_FOCUS);
+
+        /*  stop the signal because otherwise gtk+ exposes the whole
+         *  canvas to get the non-existant focus indicator drawn
+         */
+        return TRUE;
+      }
+      break;
+
     case GDK_ENTER_NOTIFY:
       {
         GdkEventCrossing *cevent;
@@ -495,7 +513,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             /* FIXME!!! This code is ugly */
 
             if (active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
-                                GIMP_IS_MOVE_TOOL (active_tool) /* EEK */))
+                                active_tool->handle_empty_image))
               {
                 if (active_tool->auto_snap_to)
                   {
@@ -518,8 +536,8 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                   {
                     tool_manager_initialize_active (gdisp->gimage->gimp, gdisp);
                   }
-                else if ((gimp_image_active_drawable (gdisp->gimage) !=
-                          active_tool->drawable) &&
+                else if ((active_tool->drawable !=
+                          gimp_image_active_drawable (gdisp->gimage)) &&
                          ! active_tool->preserve)
                   {
                     /*  create a new one, deleting the current
@@ -569,16 +587,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-        /*  ugly side condition: all operations which set busy cursors are
-         *  invoked on BUTTON_RELEASE, thus no new BUTTON_PRESS events are
-         *  accepted while Gimp is busy, thus it should be safe to block
-         *  BUTTON_RELEASE.  --Mitch
-         *
-         *  ugly: fuzzy_select sets busy cursors while ACTIVE.
-         */
-        if (gdisp->gimage->gimp->busy &&
-            ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
-               active_tool->state == ACTIVE))
+        if (gdisp->gimage->gimp->busy)
           return TRUE;
 
         switch (bevent->button)
@@ -595,8 +604,8 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
             gtk_grab_remove (canvas);
 
-            if (active_tool && (GIMP_IS_MOVE_TOOL (active_tool) ||
-                                ! gimp_image_is_empty (gdisp->gimage)))
+            if (active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
+                                active_tool->handle_empty_image))
               {
                 if (active_tool->state == ACTIVE)
                   {
@@ -699,16 +708,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
         mevent = (GdkEventMotion *) event;
 
-        active_tool = tool_manager_get_active (gdisp->gimage->gimp);
-
-        /*  for the same reason we block BUTTON_RELEASE,
-         *  we block MOTION_NOTIFY.  --Mitch
-         *
-         *  ugly: fuzzy_select sets busy cursors while ACTIVE.
-         */
-        if (gdisp->gimage->gimp->busy &&
-            ! (GIMP_IS_FUZZY_SELECT_TOOL (active_tool) &&
-               active_tool->state == ACTIVE))
+        if (gdisp->gimage->gimp->busy)
           return TRUE;
 
         /* Ask for the pointer position, but ignore it except for cursor
@@ -729,9 +729,11 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             gimp_display_shell_check_device_cursor (shell);
           }
 
+        active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+
         if ((state & GDK_BUTTON1_MASK) &&
             active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
-                            GIMP_IS_MOVE_TOOL (active_tool)))
+                            active_tool->handle_empty_image))
           {
             if (active_tool->state == ACTIVE)
               {
@@ -954,7 +956,8 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
       if (active_tool)
         {
-          if (! gimp_image_is_empty (gdisp->gimage) &&
+          if ((! gimp_image_is_empty (gdisp->gimage) ||
+               active_tool->handle_empty_image) &&
               ! (state & (GDK_BUTTON1_MASK |
                           GDK_BUTTON2_MASK |
                           GDK_BUTTON3_MASK)))
@@ -1007,8 +1010,9 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
       GimpToolInfo *tool_info;
       GimpTool     *active_tool;
 
-      tool_info = tool_manager_get_info_by_type (gdisp->gimage->gimp,
-						 GIMP_TYPE_MOVE_TOOL);
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
+                                          "gimp:move_tool");
 
       if (tool_info)
 	{
@@ -1045,8 +1049,9 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
       GimpToolInfo *tool_info;
       GimpTool     *active_tool;
 
-      tool_info = tool_manager_get_info_by_type (gdisp->gimage->gimp,
-						 GIMP_TYPE_MOVE_TOOL);
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
+                                          "gimp:move_tool");
 
       if (tool_info)
 	{

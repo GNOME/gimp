@@ -1,3 +1,39 @@
+2001-11-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: replaced the QMask radio
+	buttons ba a single check button. Still needs some tuning.
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-qmask.[ch]: changed accordingly.
+
+	* app/tools/gimptool.[ch]: added "gboolean handle_empty_image" to
+	the GimpTool structure.
+
+	* app/tools/gimpmovetool.c: set it to TRUE.
+
+	* app/tools/gimpfuzzyselecttool.c: don't gimp_[set|unset]_busy()
+	while calculating the selection but set the busy cursor on the
+	display manually (we have the pointer grabbed anyway).
+
+	* app/display/gimpdisplayshell-callbacks.c: don't check for
+	GIMP_IS_MODE_TOOL(active_tool) but look at
+	active_tool->handle_empty_image. Removed the checks for
+	GIMP_IS_FUZZY_SELECT_TOOL(active_tool) because fuzzy_select
+	doesn't set GIMP busy while it's active any more.
+
+	* app/tools/transform_options.[ch]
+	* app/tools/gimptransformtool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c: added widgets for the transform tools'
+	constraints (one more #51108 issue fixed).
+
+	* app/tools/gimperasertool.c: cosmetic.
+
+	* app/widgets/gimpdockbook.c: don't hardcode GtkNotebook's
+	tab_border to 0 but add a style property for it...
+
+	* themes/Default/gtkrc: ...and set it to 0 here.
+
 2001-11-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpenv.c

@@ -27,6 +27,8 @@
 
 #include "core/gimptoolinfo.h"
 
+#include "gimprotatetool.h"
+#include "gimpscaletool.h"
 #include "gimptransformtool.h"
 #include "transform_options.h"
 #include "tool_manager.h"
@@ -54,7 +56,7 @@ transform_options_new (GimpToolInfo *tool_info)
 {
   TransformOptions *options;
 
-  options = g_new (TransformOptions, 1);
+  options = g_new0 (TransformOptions, 1);
 
   transform_options_init (options, tool_info);
 
@@ -69,6 +71,7 @@ transform_options_init (TransformOptions *options,
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *frame;
+  GtkWidget *vbox2;
   GtkWidget *fbox;
   GtkWidget *grid_density;
 
@@ -79,12 +82,14 @@ transform_options_init (TransformOptions *options,
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  options->smoothing = options->smoothing_d = TRUE;
-  options->show_path = options->show_path_d = TRUE;
-  options->clip      = options->clip_d      = FALSE;
-  options->direction = options->direction_d = GIMP_TRANSFORM_FORWARD;
-  options->grid_size = options->grid_size_d = 32;
-  options->show_grid = options->show_grid_d = TRUE;
+  options->smoothing   = options->smoothing_d   = TRUE;
+  options->show_path   = options->show_path_d   = TRUE;
+  options->clip        = options->clip_d        = FALSE;
+  options->direction   = options->direction_d   = GIMP_TRANSFORM_FORWARD;
+  options->grid_size   = options->grid_size_d   = 32;
+  options->show_grid   = options->show_grid_d   = TRUE;
+  options->constrain_1 = options->constrain_1_d = FALSE;
+  options->constrain_2 = options->constrain_2_d = FALSE;
 
   frame = gimp_radio_group_new2 (TRUE, _("Transform Direction"),
                                  G_CALLBACK (gimp_radio_button_update),
@@ -104,6 +109,24 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  /*  the smoothing toggle button  */
+  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->smoothing_w);
+
+  g_signal_connect (G_OBJECT (options->smoothing_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->smoothing);
+
+  /*  the clip resulting image toggle button  */
+  options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->clip_w);
+
+  g_signal_connect (G_OBJECT (options->clip_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->clip);
+
   /*  the grid frame  */
   frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -116,12 +139,13 @@ transform_options_init (TransformOptions *options,
 
   /*  the show grid toggle button  */
   options->show_grid_w = gtk_check_button_new_with_label (_("Show Grid"));
-  g_signal_connect (G_OBJECT (options->show_grid_w), "toggled",
-                    G_CALLBACK (gimp_transform_tool_show_grid_update),
-                    &options->show_grid);
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->show_grid_w);
   gtk_widget_show (options->show_grid_w);
   
+  g_signal_connect (G_OBJECT (options->show_grid_w), "toggled",
+                    G_CALLBACK (gimp_transform_tool_show_grid_update),
+                    &options->show_grid);
+
   /*  the grid density entry  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (fbox), hbox, FALSE, FALSE, 0);
@@ -137,11 +161,12 @@ transform_options_init (TransformOptions *options,
   grid_density =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
+  gtk_widget_show (grid_density);
+
   g_signal_connect (G_OBJECT (options->grid_size_w), "value_changed",
                     G_CALLBACK (gimp_transform_tool_grid_density_update),
                     options);
-  gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
-  gtk_widget_show (grid_density);
 
   gtk_widget_set_sensitive (label, options->show_grid_d);
   gtk_widget_set_sensitive (grid_density, options->show_grid_d);
@@ -151,27 +176,71 @@ transform_options_init (TransformOptions *options,
 
   /*  the show_path toggle button  */
   options->show_path_w = gtk_check_button_new_with_label (_("Show Path"));
-  g_signal_connect (G_OBJECT (options->show_path_w), "toggled",
-                    G_CALLBACK (gimp_transform_tool_show_path_update),
-                    &options->show_path);
   gtk_box_pack_start (GTK_BOX (vbox), options->show_path_w, FALSE, FALSE, 0);
   gtk_widget_show (options->show_path_w);
 
-  /*  the smoothing toggle button  */
-  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  g_signal_connect (G_OBJECT (options->smoothing_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->smoothing);
-  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->smoothing_w);
+  g_signal_connect (G_OBJECT (options->show_path_w), "toggled",
+                    G_CALLBACK (gimp_transform_tool_show_path_update),
+                    &options->show_path);
 
-  /*  the clip resulting image toggle button  */
-  options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
-  g_signal_connect (G_OBJECT (options->clip_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->clip);
-  gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->clip_w);
+  if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+    {
+      /*  the constraints frame  */
+      frame = gtk_frame_new (_("Constraints"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox2 = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      gtk_widget_show (vbox2);
+
+      if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
+        {
+          options->constrain_1_w =
+            gtk_check_button_new_with_label (_("15 Degrees (<Ctrl>)"));
+          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (options->constrain_1_w);
+
+          g_signal_connect (G_OBJECT (options->constrain_1_w), "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &options->constrain_1);
+        }
+      else if (tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+        {
+          options->constrain_1_w =
+            gtk_check_button_new_with_label (_("Keep Height (<Ctrl>)"));
+          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_1_w,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (options->constrain_1_w);
+
+          gimp_help_set_help_data (options->constrain_1_w,
+                                   _("Activate both the \"Keep Height\" and\n"
+                                     "\"Keep Width\" toggles to constrain\n"
+                                     "the aspect ratio"), NULL);
+
+          g_signal_connect (G_OBJECT (options->constrain_1_w), "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &options->constrain_1);
+
+          options->constrain_2_w =
+            gtk_check_button_new_with_label (_("Keep Width (<Alt>)"));
+          gtk_box_pack_start (GTK_BOX (vbox2), options->constrain_2_w,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (options->constrain_2_w);
+
+          gimp_help_set_help_data (options->constrain_2_w,
+                                   _("Activate both the \"Keep Height\" and\n"
+                                     "\"Keep Width\" toggles to constrain\n"
+                                     "the aspect ratio"), NULL);
+
+          g_signal_connect (G_OBJECT (options->constrain_2_w), "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &options->constrain_2);
+        }
+    }
 
   /* Set options to default values */
   transform_options_reset ((GimpToolOptions *) options);
@@ -184,20 +253,29 @@ transform_options_reset (GimpToolOptions *tool_options)
 
   options = (TransformOptions *) tool_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
-				options->smoothing_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_path_w),
-				options->show_path_d);
-
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w[0]),
                                GINT_TO_POINTER (options->direction_d));
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
+				options->smoothing_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
+				options->clip_d);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
 				options->show_grid_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
 			    7.0 - log (options->grid_size_d) / log (2.0));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
-				options->clip_d);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_path_w),
+				options->show_path_d);
+
+  if (options->constrain_1_w)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_1_w),
+                                  options->constrain_1_d);
+
+  if (options->constrain_2_w)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->constrain_2_w),
+                                  options->constrain_2_d);
 }
 
 

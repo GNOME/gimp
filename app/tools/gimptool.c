@@ -129,20 +129,22 @@ gimp_tool_class_init (GimpToolClass *klass)
 static void
 gimp_tool_init (GimpTool *tool)
 {
-  tool->ID            = global_tool_ID++;
+  tool->ID                 = global_tool_ID++;
 
-  tool->state         = INACTIVE;
-  tool->paused_count  = 0;
-  tool->scroll_lock   = FALSE;    /*  Allow scrolling  */
-  tool->auto_snap_to  = TRUE;     /*  Snap to guides   */
+  tool->state              = INACTIVE;
+  tool->paused_count       = 0;
+  tool->scroll_lock        = FALSE;  /*  Allow scrolling  */
+  tool->auto_snap_to       = TRUE;   /*  Snap to guides   */
 
-  tool->preserve      = TRUE;     /*  Preserve tool across drawable changes  */
-  tool->gdisp         = NULL;
-  tool->drawable      = NULL;
+  tool->handle_empty_image = FALSE;  /*  Don't work without active drawable  */
 
-  tool->tool_cursor   = GIMP_TOOL_CURSOR_NONE;
-  tool->toggle_cursor = GIMP_TOOL_CURSOR_NONE;
-  tool->toggled       = FALSE;
+  tool->preserve           = TRUE;   /*  Preserve across drawable changes  */
+  tool->gdisp              = NULL;
+  tool->drawable           = NULL;
+
+  tool->tool_cursor        = GIMP_TOOL_CURSOR_NONE;
+  tool->toggle_cursor      = GIMP_TOOL_CURSOR_NONE;
+  tool->toggled            = FALSE;
 }
 
 void

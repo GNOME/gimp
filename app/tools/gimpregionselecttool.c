@@ -33,7 +33,6 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
-#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -366,7 +365,8 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_set_busy (gdisp->gimage->gimp);
+  gimp_display_shell_install_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                              GDK_WATCH);
 
   x = fuzzy_sel->x;
   y = fuzzy_sel->y;
@@ -428,7 +428,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
   /*  free boundary segments  */
   g_free (bsegs);
 
-  gimp_unset_busy (gdisp->gimage->gimp);
+  gimp_display_shell_remove_override_cursor (GIMP_DISPLAY_SHELL (gdisp->shell));
 
   return segs;
 }

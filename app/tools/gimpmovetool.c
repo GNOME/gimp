@@ -182,9 +182,10 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->guide = NULL;
   move_tool->disp  = NULL;
 
-  tool->tool_cursor  = GIMP_MOVE_TOOL_CURSOR;
+  tool->auto_snap_to       = FALSE;  /*  Don't snap to guides     */
+  tool->handle_empty_image = TRUE;   /*  Can handle empty images  */
 
-  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
+  tool->tool_cursor  = GIMP_MOVE_TOOL_CURSOR;
 }
 
 static void
