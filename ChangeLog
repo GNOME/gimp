@@ -1,3 +1,9 @@
+2001-03-11  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/winclipboard.c: Enhance to also be able to paste
+	BI_BITFIELDS images, 16- or 32-bit. Global indentation and spacing
+	fix (use cvs diff -bu2 to see the real differences).
+
 2001-03-10  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/makefile.mingw.in: Add some missing standard plug-ins,
