@@ -17,14 +17,16 @@
 
 (controller "ControllerLinuxInput"
     (options
-	(name   "USB Device")
+	(name   "ShuttlePRO")
 	(device "/dev/input/event2"))
-    (mapping 0 "tools-rect-select")
-    (mapping 1 "tools-ellipse-select")
-    (mapping 2 "tools-bucket-fill")
-    (mapping 3 "tools-blend")
-    (mapping 4 "tools-pencil")
-    (mapping 5 "tools-paintbrush")
-    (mapping 6 "tools-eraser")
-    (mapping 7 "tools-airbrush"))
+    (mapping 0  "tools-rect-select")
+    (mapping 1  "tools-ellipse-select")
+    (mapping 2  "tools-bucket-fill")
+    (mapping 3  "tools-blend")
+    (mapping 4  "tools-pencil")
+    (mapping 5  "tools-paintbrush")
+    (mapping 6  "tools-eraser")
+    (mapping 7  "tools-airbrush")
+    (mapping 13 "context-brush-radius-decrease")
+    (mapping 14 "context-brush-radius-increase"))
 

@@ -116,22 +116,21 @@ static const GimpModuleInfo linux_input_info =
 
 static const LinuxInputEvent input_events[] =
 {
-  { EV_KEY, BTN_0,      N_("Button 0")      },
-  { EV_KEY, BTN_1,      N_("Button 1")      },
-  { EV_KEY, BTN_2,      N_("Button 2")      },
-  { EV_KEY, BTN_3,      N_("Button 3")      },
-  { EV_KEY, BTN_4,      N_("Button 4")      },
-  { EV_KEY, BTN_5,      N_("Button 5")      },
-  { EV_KEY, BTN_6,      N_("Button 6")      },
-  { EV_KEY, BTN_7,      N_("Button 7")      },
-  { EV_KEY, BTN_8,      N_("Button 8")      },
-  { EV_KEY, BTN_9,      N_("Button 9")      },
-  { EV_KEY, BTN_LEFT,   N_("Button Left")   },
-  { EV_KEY, BTN_RIGHT,  N_("Button Right")  },
-  { EV_KEY, BTN_MIDDLE, N_("Button Middle") },
-  { EV_REL, REL_DIAL,   N_("Dial (rel.)")   },
-  { EV_REL, REL_WHEEL,  N_("Wheel (rel.)")  },
-  { EV_ABS, ABS_WHEEL,  N_("Wheel (abs.)")  }
+  { EV_KEY, BTN_0,      N_("Button 0")         },
+  { EV_KEY, BTN_1,      N_("Button 1")         },
+  { EV_KEY, BTN_2,      N_("Button 2")         },
+  { EV_KEY, BTN_3,      N_("Button 3")         },
+  { EV_KEY, BTN_4,      N_("Button 4")         },
+  { EV_KEY, BTN_5,      N_("Button 5")         },
+  { EV_KEY, BTN_6,      N_("Button 6")         },
+  { EV_KEY, BTN_7,      N_("Button 7")         },
+  { EV_KEY, BTN_8,      N_("Button 8")         },
+  { EV_KEY, BTN_9,      N_("Button 9")         },
+  { EV_KEY, BTN_LEFT,   N_("Button Left")      },
+  { EV_KEY, BTN_RIGHT,  N_("Button Right")     },
+  { EV_KEY, BTN_MIDDLE, N_("Button Middle")    },
+  { EV_REL, REL_WHEEL,  N_("Wheel Turn Left")  },
+  { EV_REL, REL_WHEEL,  N_("Wheel Turn Right") },
 };
 
 static GType                controller_type = 0;
@@ -337,7 +336,23 @@ linux_input_read_event (GIOChannel   *io,
               cevent.any.source   = controller;
               cevent.any.event_id = i;
 
-              gimp_controller_event (controller, &cevent);
+              /* EEEEEEK */
+              if (ev.code == REL_WHEEL)
+                {
+                  gint count;
+
+                  for (count = ev.value; count < 0; count++)
+                    gimp_controller_event (controller, &cevent);
+
+                  cevent.any.event_id++;
+
+                  for (count = ev.value; count > 0; count--)
+                    gimp_controller_event (controller, &cevent);
+                }
+              else
+                {
+                  gimp_controller_event (controller, &cevent);
+                }
 
               break;
             }

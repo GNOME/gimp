@@ -1,3 +1,8 @@
+2004-06-16  Sven Neumann  <sven@gimp.org>
+
+	* modules/controller_linux_input.c
+	* etc/controllerrc: preliminary wheel event support.
+
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollers.c: better debugging output.
