@@ -23,5 +23,8 @@
 extern ProcRecord floating_sel_remove_proc;
 extern ProcRecord floating_sel_anchor_proc;
 extern ProcRecord floating_sel_to_layer_proc;
+extern ProcRecord floating_sel_attach_proc;
+extern ProcRecord floating_sel_rigor_proc;
+extern ProcRecord floating_sel_relax_proc;
 
 #endif /* __FLOATING_SEL_CMDS_H__ */

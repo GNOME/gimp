@@ -1,3 +1,9 @@
+Sun Nov 15 19:36:02 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/floating_sel_cmds.[ch]
+	* app/internal_procs.c: export floating-selection functions
+	to the PDB (needed for the XJT-plug-in by Wolfgang Hofer)
+
 Sun Nov 15 17:54:18 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* plugins/script-fu/scripts/waves-anim.scm: cosmetic fix
@@ -9,7 +15,7 @@ Sun Nov 15 17:54:18 MET 1998 Sven Neumann <sven@gimp.org>
 	* app/gimpimage.[ch]
 	* layer_cmds.[ch]
 	* layers_dialog.c: first set of changes to integrate GAP
-	(Gimp Animation Plugin written by Michael Hofer)
+	(Gimp Animation Plugin written by Wolfgang Hofer)
 	new functions: gimp_layer_[get|set]_linked
 	               gimp_image_raise_layer_to_top
 		       gimp_image_lower_layer_to_bottom		 

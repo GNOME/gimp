@@ -202,3 +202,219 @@ ProcRecord floating_sel_to_layer_proc =
   /*  Exec method  */
   { { floating_sel_to_layer_invoker } },
 };
+
+/**************************/
+/*  FLOATING_SEL_ATTACH  */
+
+static Argument *
+floating_sel_attach_invoker (Argument *args)
+{
+  Layer        *layer;
+  GimpDrawable *drawable;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int; 
+      if ((drawable = drawable_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    floating_sel_attach (layer, drawable);
+
+  return procedural_db_return_args (&floating_sel_attach_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg floating_sel_attach_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    N_("the layer (is attached as floating selection)")
+  },
+  { PDB_DRAWABLE,
+    "drawable",
+    N_("the drawable (where to attach the floating selection)")
+  }
+};
+
+ProcRecord floating_sel_attach_proc =
+{
+  "gimp_floating_sel_attach",
+  N_("Attach the specified layer as floating to the specified drawable"),
+  "This procedure attaches the layer as floating selection to the drawable.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  floating_sel_attach_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { floating_sel_attach_invoker } },
+};
+
+/************************/
+/*  FLOATING_SEL_RIGOR  */
+
+static Argument *
+floating_sel_rigor_invoker (Argument *args)
+{
+  Layer        *floating_sel;
+  int          undo;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((floating_sel = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int; 
+      undo = int_value;
+    }
+
+  /*  Make sure it's a floating selection  */
+  if (success)
+    if (! layer_is_floating_sel (floating_sel))
+      success = FALSE;
+
+  if (success)
+    floating_sel_rigor (floating_sel, undo);
+
+  return procedural_db_return_args (&floating_sel_rigor_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg floating_sel_rigor_args[] =
+{
+  { PDB_LAYER,
+    "floating_sel",
+    N_("the floating selection")
+  },
+  { PDB_INT32,
+    "undo",
+    N_("TRUE or FALSE")
+  }
+};
+
+ProcRecord floating_sel_rigor_proc =
+{
+  "gimp_floating_sel_rigor",
+  N_("Rigor the floating selection"),
+  "This procedure rigors the floating selection.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  floating_sel_rigor_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { floating_sel_rigor_invoker } },
+};
+
+
+/***********************/
+/* floating_sel_relax  */
+
+static Argument *
+floating_sel_relax_invoker (Argument *args)
+{
+  Layer        *floating_sel;
+  int          undo;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((floating_sel = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int; 
+      undo = int_value;
+    }
+
+  /*  Make sure it's a floating selection  */
+  if (success)
+    if (! layer_is_floating_sel (floating_sel))
+      success = FALSE;
+
+  if (success)
+    floating_sel_relax (floating_sel, undo);
+
+  return procedural_db_return_args (&floating_sel_relax_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg floating_sel_relax_args[] =
+{
+  { PDB_LAYER,
+    "floating_sel",
+    N_("the floating selection")
+  },
+  { PDB_INT32,
+    "undo",
+    N_("TRUE or FALSE")
+  }
+};
+
+ProcRecord floating_sel_relax_proc =
+{
+  "gimp_floating_sel_relax",
+  N_("Relax the floating selection"),
+  "This procedure relaxes the floating selection.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  floating_sel_relax_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { floating_sel_relax_invoker } },
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
