@@ -38,24 +38,6 @@ static double otherAxis[][4] =
   {-0.48, 0.80, 0.36, 1}
 };
 
-/* Externally visible methods */
-/* ========================== */
-
-void     ArcBall_Init      (void);
-void     ArcBall_Place     (HVect    Center,
-			    double   Radius);
-void     ArcBall_UseSet    (AxisSet  axis_Set);
-void     ArcBall_Update    (void);
-void     ArcBall_Value     (HMatrix  m_Now);
-void     ArcBall_Values    (double  *alpha,
-			    double  *beta,
-			    double  *gamma);
-void     ArcBall_BeginDrag (void);
-void     ArcBall_EndDrag   (void);
-void     ArcBall_Mouse     (HVect    v_Now);
-void     ArcBall_CopyMat   (HMatrix  inm,
-			    HMatrix  outm);
-
 /* Internal methods */
 /* ================ */
 

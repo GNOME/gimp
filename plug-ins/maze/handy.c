@@ -33,19 +33,6 @@
    nice little arrays.  It works nicely for RGB and grayscale images,
    however handling of indexed images is somewhat broken.  Patches
    appreciated. */
-void      get_colors (GimpDrawable *drawable,
-		      guint8       *fg,
-		      guint8       *bg);
-
-/* drawbox draws a solid colored box in a GimpPixelRgn, hopefully fairly
-   quickly.  See comments below. */
-void      drawbox (GimpPixelRgn *dest_rgn, 
-		   guint x, 
-		   guint y,
-		   guint w,
-		   guint h, 
-		   guint8 clr[4]);
-
 
 void 
 get_colors (GimpDrawable *drawable, 
@@ -121,59 +108,43 @@ drawbox( GimpPixelRgn *dest_rgn,
 	 guint x, guint y, guint w, guint h, 
 	 guint8 clr[4])
 {
-     const guint bpp=dest_rgn->bpp;
-     const guint x_min= x * bpp;
+     const guint bpp = dest_rgn->bpp;
+     const guint x_min = x * bpp;
 
      /* x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
      /* rowsize = x_max - x_min */
-     const guint rowsize=bpp * MIN(dest_rgn->w, (x + w)) - x_min;
+     const guint rowsize = bpp * MIN(dest_rgn->w, (x + w)) - x_min;
   
      /* The maximum [xy] value is that of the far end of the box, or
       * the edge of the region, whichever comes first. */
-     const guint y_max= dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
+     const guint y_max = dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
      
      static guint8 *rowbuf;
-     static guint high_size=0; 
+     static guint high_size = 0; 
      
      guint xx, yy;
      
      /* Does the row buffer need to be (re)allocated? */
-     if (high_size == 0) {
-	  rowbuf = g_new(guint8, rowsize);
-     } else if (rowsize > high_size) {
-	  rowbuf = g_renew(guint8, rowbuf, rowsize);
-     }
+     if (high_size == 0) 
+       {
+	 rowbuf = g_new (guint8, rowsize);
+       } 
+     else if (rowsize > high_size) 
+       {
+	 rowbuf = g_renew (guint8, rowbuf, rowsize);
+       }
      
      high_size = MAX(high_size, rowsize);
      
      /* Fill the row buffer with the color. */
-     for (xx= 0;
-	  xx < rowsize;
-	  xx+= bpp) {
-	  memcpy (&rowbuf[xx], clr, bpp);
-     } /* next xx */
+     for (xx = 0; xx < rowsize; xx += bpp) 
+       {
+	 memcpy (&rowbuf[xx], clr, bpp);
+       }
      
      /* Fill in the box in the region with rows... */
-     for (yy = dest_rgn->rowstride * y; 
-	  yy < y_max; 
-	  yy += dest_rgn->rowstride ) {
-	  memcpy (&dest_rgn->data[yy+x_min], rowbuf, rowsize);
-     } /* next yy */
+     for (yy = dest_rgn->rowstride * y; yy < y_max; yy += dest_rgn->rowstride)
+       {
+	 memcpy (&dest_rgn->data[yy + x_min], rowbuf, rowsize);
+       }
 }
-
-/* Alternate ways of doing things if you don't like memcpy. */
-#if 0
-	for (xx= x * dest_rgn->bpp;
-	     xx < bar;
-	     xx+= dest_rgn->bpp) {
-#if 0
-	    for (bp=0; bp < dest_rgn->bpp; bp++) {
-		dest_rgn->data[yy+xx+bp]=clr[bp];
-	    } /* next bp */
-#else
-		memcpy (&dest_rgn->data[yy+xx], clr, dest_rgn->bpp);
-#endif
-	} /* next xx */
-    } /* next yy */
-}
-#endif 

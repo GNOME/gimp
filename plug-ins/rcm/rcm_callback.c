@@ -87,7 +87,7 @@ rcm_units_string (gint units)
     case DEGREES:         return "deg";
     case RADIANS:         return "rad";
     case RADIANS_OVER_PI: return "rad/pi";
-    default:              return "(???)";
+    default:              return "(unknown)";
   }
 }
 
@@ -439,14 +439,14 @@ rcm_entire_image (GtkWidget *button,
 /* Circle events */
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_expose_event (GtkWidget *widget, 
 		  GdkEvent  *event, 
 		  RcmCircle *circle)
 {
   switch (circle->action_flag)
   {
-    case DO_NOTHING: return 0;
+    case DO_NOTHING: return FALSE;
 
     case VIRGIN:     rcm_draw_arrows(widget->window, widget->style->black_gc,
 				     circle->angle);
@@ -456,12 +456,12 @@ rcm_expose_event (GtkWidget *widget,
                        rcm_render_preview(Current.Bna->after,CURRENT);
 		     break;
   }
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_button_press_event (GtkWidget *widget, 
 			GdkEvent  *event, 
 			RcmCircle *circle)
@@ -471,8 +471,8 @@ rcm_button_press_event (GtkWidget *widget,
   float *beta;
   GdkEventButton *bevent;
 
-  alpha = &(circle->angle->alpha);
-  beta = &(circle->angle->beta);
+  alpha = &circle->angle->alpha;
+  beta = &circle->angle->beta;
   bevent = (GdkEventButton *) event;
 
   circle->action_flag = DRAG_START;
@@ -504,12 +504,12 @@ rcm_button_press_event (GtkWidget *widget,
   else 
     circle->mode = BOTH;
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_release_event (GtkWidget *widget, 
 		   GdkEvent  *event,  
 		   RcmCircle *circle)
@@ -518,15 +518,15 @@ rcm_release_event (GtkWidget *widget,
     rcm_draw_arrows(widget->window, widget->style->black_gc, circle->angle); 
   circle->action_flag = VIRGIN;
   
-  if (!(Current.RealTime))
+  if (!Current.RealTime)
       rcm_render_preview(Current.Bna->after,CURRENT);
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_motion_notify_event (GtkWidget *widget, 
 			 GdkEvent  *event, 
 			 RcmCircle *circle)
@@ -563,7 +563,7 @@ rcm_motion_notify_event (GtkWidget *widget,
     else 
       rcm_draw_arrows(widget->window, xor_gc, circle->angle);  /* erase! */
     
-    if (circle->mode==EACH)
+    if (circle->mode == EACH)
       *(circle->target)=clicked_angle;
     else {
       circle->angle->alpha=angle_mod_2PI(circle->angle->alpha + delta);
@@ -582,16 +582,17 @@ rcm_motion_notify_event (GtkWidget *widget,
       rcm_render_preview(Current.Bna->after, CURRENT);
   }
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 /* Gray circle events */
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_expose_event (GtkWidget *widget, 
-			    GdkEvent  *event, 
-			    RcmGray   *circle)
+gboolean 
+rcm_gray_expose_event (GtkWidget *widget, 
+		       GdkEvent  *event, 
+		       RcmGray   *circle)
 {
   if (circle->action_flag == VIRGIN)
   {
@@ -603,12 +604,12 @@ gint rcm_gray_expose_event (GtkWidget *widget,
   else if (Current.RealTime)
     rcm_render_preview(Current.Bna->after, CURRENT);
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_gray_button_press_event (GtkWidget *widget, 
 			     GdkEvent  *event, 
 			     RcmGray   *circle)
@@ -640,12 +641,12 @@ rcm_gray_button_press_event (GtkWidget *widget,
   if (Current.RealTime)
       rcm_render_preview(Current.Bna->after,CURRENT);
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_gray_release_event (GtkWidget *widget, 
 			GdkEvent  *event, 
 			RcmGray   *circle)
@@ -658,14 +659,14 @@ rcm_gray_release_event (GtkWidget *widget,
 
   circle->action_flag = VIRGIN;
   
-  if (!(Current.RealTime)) rcm_render_preview(Current.Bna->after, CURRENT);
+  if (!Current.RealTime) rcm_render_preview(Current.Bna->after, CURRENT);
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/
 
-gint 
+gboolean
 rcm_gray_motion_notify_event (GtkWidget *widget, 
 			      GdkEvent  *event, 
 			      RcmGray   *circle)
@@ -708,7 +709,7 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
 
   if (Current.RealTime) rcm_render_preview(Current.Bna->after, CURRENT);
 
-  return 1;
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*/

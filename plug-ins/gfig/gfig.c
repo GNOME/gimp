@@ -5269,7 +5269,7 @@ gfig_op_menu_create (GtkWidget *window)
 				  "activate", 'S', 0);
 #endif /* 0 */
 
-  menu_item = gtk_menu_item_new_with_label (_("Save as..."));
+  menu_item = gtk_menu_item_new_with_label (_("Save As..."));
   gtk_menu_append (GTK_MENU (gfig_op_menu), menu_item);
   gtk_widget_show (menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",

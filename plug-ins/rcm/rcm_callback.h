@@ -97,25 +97,33 @@ void rcm_entire_image(GtkWidget *button, gpointer *value);
 /* Circle events */
 /*---------------------------------------------------------------------------*/
 
-gint rcm_expose_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle);
+gboolean rcm_expose_event(GtkWidget *widget, GdkEvent *event, 
+			  RcmCircle *circle);
 
-gint rcm_button_press_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle);
+gboolean rcm_button_press_event(GtkWidget *widget, GdkEvent *event, 
+				RcmCircle *circle);
 
-gint rcm_release_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle);
+gboolean rcm_release_event(GtkWidget *widget, GdkEvent *event, 
+			   RcmCircle *circle);
 
-gint rcm_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmCircle *circle);
+gboolean rcm_motion_notify_event(GtkWidget *widget, GdkEvent *event, 
+				 RcmCircle *circle);
 
 /*---------------------------------------------------------------------------*/
 /* Gray circle events */
 /*---------------------------------------------------------------------------*/
 
-gint rcm_gray_expose_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle);
+gboolean rcm_gray_expose_event(GtkWidget *widget, GdkEvent *event, 
+			       RcmGray *circle);
 
-gint rcm_gray_button_press_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle);
+gboolean rcm_gray_button_press_event(GtkWidget *widget, GdkEvent *event, 
+				     RcmGray *circle);
 
-gint rcm_gray_release_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle);
+gboolean rcm_gray_release_event(GtkWidget *widget, GdkEvent *event, 
+				RcmGray *circle);
 
-gint rcm_gray_motion_notify_event(GtkWidget *widget, GdkEvent *event, RcmGray *circle);
+gboolean rcm_gray_motion_notify_event(GtkWidget *widget, GdkEvent *event, 
+				      RcmGray *circle);
 
 /*---------------------------------------------------------------------------*/
 /* Spinbuttons */

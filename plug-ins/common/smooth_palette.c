@@ -70,7 +70,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32, "width", "Width" },
     { GIMP_PDB_INT32, "height", "Height" },
-    { GIMP_PDB_INT32, "ntries", "Search Time" },
+    { GIMP_PDB_INT32, "ntries", "Search Depth" },
     { GIMP_PDB_INT32, "show_image","Show Image?" }
   };
 
@@ -455,7 +455,7 @@ dialog (void)
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Search Time:"), 1.0, 0.5,
+			     _("_Search Depth:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

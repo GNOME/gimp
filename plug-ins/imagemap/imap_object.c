@@ -377,15 +377,7 @@ GdkPixmap*
 object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask)
 {
 #ifdef _NOT_READY_YET_
-   if (!obj->class->icon) {
-      GtkStyle  *style = gtk_widget_get_style(widget);
-      obj->class->icon = 
-	 gdk_pixmap_create_from_xpm_d(widget->window, &obj->class->mask,
-				      &style->bg[GTK_STATE_NORMAL], 
-				      obj->class->get_icon_data());
-   }
-   *mask = obj->class->mask;
-#else
+  /* This won't work: can't get a pixmap from a stock icon */
    if (!obj->class->icon) {
       GtkWidget *image = gtk_image_new_from_stock(
 	 obj->class->get_stock_icon_name(), GTK_ICON_SIZE_MENU);

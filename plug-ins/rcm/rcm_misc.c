@@ -55,8 +55,6 @@
 #include "rcm_misc.h"
 #include "rcm_gdk.h"
 
-/*-----------------------------------------------------------------------------------*/
-
 float 
 arctg (float y, 
        float x)
@@ -64,14 +62,6 @@ arctg (float y,
   float temp = atan2(y,x);
   return (temp<0) ? (temp+TP) : temp;
 }
-
-inline 
-float sign (float x)
-{
-  return (x<0)?(-1):(1);
-}
-
-/*-----------------------------------------------------------------------------------*/
 
 float 
 min_prox (float alpha, 
@@ -177,11 +167,10 @@ rcm_angle_inside_slice (float     angle,
          angle_mod_2PI(slice->cw_ccw * (slice->beta-slice->alpha));
 }
 
-gint 
+gboolean
 rcm_is_gray (float s)
 {
-  if (s <= Current.Gray->gray_sat) return 1;
-  return 0;
+  return (s <= Current.Gray->gray_sat);
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -481,9 +470,9 @@ rcm_render_circle (GtkWidget *preview,
   gdouble h, s, v;
   guchar *a;
 
-  a = g_new (guchar, 3*sum);
-  
   if (preview == NULL) return;
+
+  a = g_new (guchar, 3*sum);
   
   for (j = 0; j < sum; j++)
   {

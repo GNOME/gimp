@@ -1,14 +1,31 @@
-2002-11-08  Sven Neumann  <sven@gimp.org>
+2002-11-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/script-fu/script-fu-scripts.c
-	* plug-ins/script-fu/interp_slib.c
-	* plug-ins/script-fu/interp_sliba.c: use locale-independant
-	functions to convert between strings and numbers so that Script-Fu
-	doesn't get confused in locales that don't use a dot as the
-	decimal point (#98014).
-	
-	* plug-ins/common/papertile.c: applied a patch from David Necas
-	that makes the color button work again (#97976).
+	* plug-ins/imagemap/imap_object.c (object_get_icon): first go at fixing
+	#97771. Not finished yet.
+
+2002-11-07  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/rcm/rcm_callback.c (rcm_units_string): replaced "???" by
+	"unknown" to avoid compiler complaining about trigraphs.
+	* plug-ins/rcm/rcm_callback.[ch]: have callback functions return the
+	right type (gboolean iso gint).
+
+	* plug-ins/rcm/rcm_misc.c (rcm_render_circle): fixed potential memory
+	leak
+
+2002-11-07  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/maze/handy.c: removed superfluous function declarations 
+	plus some minor clean-up.
+
+	* plug-ins/common/smooth_palette.c (dialog): replaced "Search Time" by
+	"Search Depth" (#82492)
+
+	* plug-ins/gfig/gfig.c (gfig_op_menu_create): replaced "Save as..." by
+	"Save As..." (solves #92469)
+
+	* plug-ins/MapObject/arcball.c: remove external function declarations 
+	already defined in arcball.h
 
 2002-11-07  Dave Neary  <bolsh@gimp.org>
 
