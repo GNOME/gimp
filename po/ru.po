@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.13\n"
-"POT-Creation-Date: 1999-12-09 18:04-0500\n"
-"PO-Revision-Date: 1999-08-10 14:01+04:00\n"
+"POT-Creation-Date: 1999-12-11 01:52-0500\n"
+"PO-Revision-Date: 1999-12-09 16:23+03:00\n"
 "Last-Translator: Valek Filippov <val@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -583,7 +583,7 @@ msgstr "С выравниванием"
 
 #: app/clone.c:150
 msgid "Registered"
-msgstr "Регистрирование"
+msgstr "С регистрацией"
 
 #. the radio frame and box
 #: app/clone.c:166
@@ -662,7 +662,7 @@ msgstr "Параметры пипетки"
 
 #: app/color_picker.c:171
 msgid "Sample Average"
-msgstr ""
+msgstr "Выборочное среднее"
 
 #: app/color_picker.c:214
 msgid "Update Active Color"
@@ -824,7 +824,7 @@ msgstr "Смешивание цветов по Флойду-Стейнбергу (нормальное)"
 
 #: app/convert.c:704
 msgid "Enable dithering of transparency"
-msgstr "Разрешить смешивание прозрачности"
+msgstr "Включить прозрачное размывание"
 
 #: app/convert.c:714
 msgid "Custom Palette Options"
@@ -1046,11 +1046,11 @@ msgstr "GTK успешно запущен"
 
 #: app/dodgeburn.c:123
 msgid "Dodge"
-msgstr ""
+msgstr "Затемнитель"
 
 #: app/dodgeburn.c:123
 msgid "Burn"
-msgstr ""
+msgstr "Осветлитель"
 
 #: app/dodgeburn.c:151
 msgid "Exposure:"
@@ -1220,7 +1220,7 @@ msgstr "Не удалось восстановить."
 
 #: app/fileops.c:1252
 msgid "(this thumbnail may be out of date)"
-msgstr ""
+msgstr "(это изображение может быть устаревшим)"
 
 #: app/fileops.c:1253
 msgid "(no information)"
@@ -1244,7 +1244,7 @@ msgstr "предпросмотр не доступен"
 
 #: app/fileops.c:1402
 msgid "(could not make preview)"
-msgstr ""
+msgstr "(невозможно выполнить предпросмотр)"
 
 #: app/fileops.c:1474 app/fileops.c:1555
 msgid "Open failed: "
@@ -1570,7 +1570,7 @@ msgstr "Невозможно переименовать %s в %s.old; %s"
 #: app/gimprc.c:2759
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr ""
+msgstr "Невозможно переоткрыть %s\n"
 
 #: app/gimprc.c:2771
 #, c-format
@@ -2115,27 +2115,27 @@ msgstr "Мастер"
 
 #: app/hue_saturation.c:353
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/hue_saturation.c:354
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: app/hue_saturation.c:355
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/hue_saturation.c:356
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: app/hue_saturation.c:357
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/hue_saturation.c:358
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. The shell and main vbox
 #: app/hue_saturation.c:366 app/tools.c:648
@@ -2262,23 +2262,23 @@ msgstr "Чистый цвет"
 
 #: app/info_window.c:225
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:230
 msgid "B:"
-msgstr ""
+msgstr "B:"
 
 #: app/info_window.c:235
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #: app/info_window.c:240
 msgid "R:"
-msgstr ""
+msgstr "R:"
 
 #: app/info_window.c:259
 msgid "Extended"
-msgstr ""
+msgstr "Расширенное"
 
 #. add the information fields
 #: app/info_window.c:327
@@ -2321,12 +2321,11 @@ msgstr "Тени:"
 msgid "Shades of Gray:"
 msgstr "Оттенки серого:"
 
-# c-format
 #. create the info dialog
 #: app/info_window.c:377
 #, c-format
 msgid "Window Info:%s-%d.%d"
-msgstr "Информация об окне:%s-%d.%d"
+msgstr "Информация об окне: %s-%d.%d"
 
 #: app/info_window.c:575
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
@@ -2781,7 +2780,7 @@ msgid ""
 "was successful! Otherwise, quit and investigate\n"
 "the possible reason...\n"
 msgstr ""
-"Вы получали какие-либо сообщения об ощибках\n"
+"Вы получали какие-либо сообщения об ошибках\n"
 "в консольном окне? Если нет, установка была\n"
 "успешной! В противном случае, выйдите и исследуйте\n"
 "возможные причины...\n"
@@ -3389,7 +3388,7 @@ msgstr "/Расш./Perl"
 
 #: app/menus.c:87
 msgid "/Xtns/Render"
-msgstr ""
+msgstr "/Расш./Визуализация"
 
 #: app/menus.c:88
 msgid "/Xtns/Render/Logos"
@@ -3409,7 +3408,7 @@ msgstr ""
 
 #: app/menus.c:92
 msgid "/Xtns/Script-Fu/Patterns"
-msgstr ""
+msgstr "/Расш./Script-Fu/Шаблон"
 
 #: app/menus.c:93
 msgid "/Xtns/Script-Fu/Web page themes"
@@ -3421,7 +3420,7 @@ msgstr ""
 
 #: app/menus.c:95
 msgid "/Xtns/Script-Fu/Buttons"
-msgstr ""
+msgstr "/Расш./Script-Fu/Кнопки"
 
 #: app/menus.c:96
 msgid "/Xtns/Script-Fu/Make Brush"
@@ -3429,7 +3428,7 @@ msgstr ""
 
 #: app/menus.c:97
 msgid "/Xtns/Script-Fu/Misc"
-msgstr ""
+msgstr "/Расш./Script-Fu/Разное"
 
 #: app/menus.c:98
 msgid "/Xtns/Script-Fu/Test"
@@ -3442,27 +3441,27 @@ msgstr ""
 #. <Image>
 #: app/menus.c:102
 msgid "/Filters/Colors/Map"
-msgstr ""
+msgstr "/Файл/Цвета/Карта"
 
 #: app/menus.c:103
 msgid "/Filters/Render/Clouds"
-msgstr ""
+msgstr "/Фильтры/Визуализация/Облака"
 
 #: app/menus.c:104
 msgid "/Filters/Render/Nature"
-msgstr ""
+msgstr "/Фильтры/Визуализация/Природа"
 
 #: app/menus.c:105
 msgid "/Filters/Render/Pattern"
-msgstr ""
+msgstr "/Фильтры/Визуализация/Шаблон"
 
 #: app/menus.c:106
 msgid "/Filters/Misc"
-msgstr "/Фильтры/Разн."
+msgstr "/Фильтры/Разное"
 
 #: app/menus.c:107
 msgid "/Script-Fu/Decor"
-msgstr "/Script-Fu/Декор."
+msgstr ""
 
 #: app/menus.c:108
 msgid "/Script-Fu/Modify"
@@ -3474,7 +3473,7 @@ msgstr ""
 
 #: app/menus.c:110
 msgid "/Script-Fu/Animators"
-msgstr "/Script-Fu/Анимация"
+msgstr ""
 
 #: app/menus.c:111
 msgid "/Script-Fu/Stencil Ops"
@@ -3486,7 +3485,7 @@ msgstr ""
 
 #: app/menus.c:113
 msgid "/Script-Fu/Selection"
-msgstr "/Script-Fu/Выделение"
+msgstr "/Script-Fu/Выделенная область"
 
 #: app/menus.c:114
 msgid "/Script-Fu/Shadow"
@@ -3494,7 +3493,7 @@ msgstr "/Script-Fu/Тень"
 
 #: app/menus.c:115
 msgid "/Script-Fu/Render"
-msgstr ""
+msgstr "/Script-Fu/Визуализация"
 
 #: app/menus.c:116
 msgid "/Guides"
@@ -3523,7 +3522,7 @@ msgstr "/Файл/Открыть..."
 
 #: app/menus.c:142
 msgid "/File/Acquire"
-msgstr ""
+msgstr "/Файл/Захватить"
 
 #: app/menus.c:147
 msgid "/File/Preferences..."
@@ -3559,7 +3558,7 @@ msgstr "/Файл/Диалоги/Палитра..."
 
 #: app/menus.c:171
 msgid "/File/Dialogs/Indexed Palette..."
-msgstr "/Диалоги/Индексированная палитра..."
+msgstr "/Файл/Диалоги/Индексированная палитра..."
 
 #: app/menus.c:176
 msgid "/File/Dialogs/Input Devices..."
@@ -3860,7 +3859,7 @@ msgstr "/Изображение/Режим/Градации серого"
 
 #: app/menus.c:417
 msgid "/Image/Mode/Indexed..."
-msgstr "/Изображение/Режим/Индексированное"
+msgstr "/Изображение/Режим/Индексированное..."
 
 #. <Image>/Image/Colors
 #: app/menus.c:425
@@ -3878,11 +3877,11 @@ msgstr "/Изображение/Цвета/Инвертировать"
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:440
 msgid "/Image/Colors/Auto"
-msgstr "/Изображение/Цвета/Автом."
+msgstr "/Изображение/Цвета/Авто"
 
 #: app/menus.c:442
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Изображение/Цвета/Автом./Выровнять"
+msgstr "/Изображение/Цвета/Авто/Выровнять"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:450
@@ -3904,11 +3903,11 @@ msgstr "/Изображение/Преобразования/Смещение..."
 
 #: app/menus.c:461
 msgid "/Image/Transforms/Rotate"
-msgstr "/Изображение//Преобразования/Поворот"
+msgstr "/Изображение/Преобразования/Вращение"
 
 #: app/menus.c:468
 msgid "/Image/Canvas Size..."
-msgstr ""
+msgstr "/Изображение/Размер холста..."
 
 #: app/menus.c:470
 msgid "/Image/Scale Image..."
@@ -3959,7 +3958,7 @@ msgstr "/Слои/Стопка/Опустить слой до низу"
 #. <Image>/Layers/Rotate
 #: app/menus.c:506
 msgid "/Layers/Rotate"
-msgstr "/Слои/Поворот"
+msgstr "/Слои/Вращение"
 
 #: app/menus.c:509
 msgid "/Layers/Resize to Image"
@@ -4196,11 +4195,11 @@ msgstr "/Удалить слой"
 
 #: app/menus.c:716
 msgid "/Layer Boundary Size..."
-msgstr ""
+msgstr "/Слой Boundary Size..."
 
 #: app/menus.c:718
 msgid "/Resize to Image"
-msgstr "/Отсекать по изображению"
+msgstr ""
 
 #: app/menus.c:720
 msgid "/Scale Layer..."
@@ -4418,11 +4417,11 @@ msgstr "Параметры перемещения"
 #: app/nav_window.c:1254
 #, c-format
 msgid "Window Navigation:%s-%d.%d"
-msgstr ""
+msgstr "Навигация в окне:%s-%d.%d"
 
 #: app/nav_window.c:1552
 msgid "No image: Window Navigation"
-msgstr ""
+msgstr "Навигация в окне: нет изображения"
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4975,7 +4974,7 @@ msgstr "Размер пред.просмотра:"
 
 #: app/preferences_dialog.c:1546
 msgid "Nav Preview Size:"
-msgstr "Размер пред.просмотра:"
+msgstr ""
 
 #: app/preferences_dialog.c:1555
 msgid "Levels of Undo:"
@@ -5437,7 +5436,7 @@ msgstr "X:"
 
 #: app/resize.c:489
 msgid "Print Size & Display Unit"
-msgstr ""
+msgstr "Единицы измерения для печати и изображения"
 
 #: app/rotate_tool.c:85
 msgid "Rotation Information"
@@ -6150,7 +6149,7 @@ msgstr ""
 
 #: app/transform_core.c:1283
 msgid "homogeneous coordinate = 0...\n"
-msgstr ""
+msgstr "однородные координаты = 0...\n"
 
 #: app/transform_core.c:1536
 msgid "Transformation"
@@ -6211,11 +6210,11 @@ msgstr ""
 #: app/undo_history.c:432 app/undo_history.c:753
 #, c-format
 msgid "%s: undo history"
-msgstr ""
+msgstr "%s: история отката"
 
 #: app/undo_history.c:488
 msgid "[ base image ]"
-msgstr ""
+msgstr "[основное изображение]"
 
 #: app/undo_history.c:897
 msgid "Redo"
@@ -6244,7 +6243,7 @@ msgstr "маска"
 
 #: app/undo.c:2859
 msgid "layer move"
-msgstr ""
+msgstr "перемещение слоя"
 
 #. ok
 #: app/undo.c:2860
@@ -6253,7 +6252,7 @@ msgstr "вращение"
 
 #: app/undo.c:2861
 msgid "paint"
-msgstr ""
+msgstr "рисование"
 
 #: app/undo.c:2862
 msgid "new layer"
@@ -6317,7 +6316,7 @@ msgstr ""
 
 #: app/undo.c:2876
 msgid "guide"
-msgstr ""
+msgstr "направляющая"
 
 #: app/undo.c:2877
 msgid "text"
@@ -6416,11 +6415,11 @@ msgstr "Ошибка XCF: неподдерживаемая версия %d XCF-файла"
 
 #: app/xcf.c:1477 app/xcf.c:2483
 msgid "xcf: zlib compression unimplemented"
-msgstr ""
+msgstr "xcf: zlib сжатие не реализовано"
 
 #: app/xcf.c:1480 app/xcf.c:2487
 msgid "xcf: fractal compression unimplemented"
-msgstr ""
+msgstr "xcf: фрактальное сжатие не реализовано"
 
 #: app/xcf.c:1626
 #, c-format
@@ -6441,7 +6440,7 @@ msgstr "неизвестный тип сжатия: %d"
 
 #: app/xcf.c:1848
 msgid "Warning, resolution out of range in XCF file"
-msgstr ""
+msgstr "Внимание, разрешение вне диапазона в XCF-файле"
 
 #: app/xcf.c:1871
 msgid "Error detected while loading an image's parasites"
@@ -6474,3 +6473,7 @@ msgstr ""
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
+
+# c-format
+#~ msgid "%s: Window Info"
+#~ msgstr "%s: Информация об окне"
