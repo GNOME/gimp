@@ -50,6 +50,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -1351,10 +1352,8 @@ gfig_save_callbk (void)
   
   if (!fp)
     {
-      message = g_strconcat (_("Error opening: %s"), 
-			     "\n",
-			     _("Could not save."), 
-			     savename);
+      message = g_strdup_printf (_("Error opening file '%s':\n%s"),
+                                   savename, g_strerror (errno));
       g_message (message);
       g_free (message);
       return;
