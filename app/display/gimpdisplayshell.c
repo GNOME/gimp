@@ -392,7 +392,7 @@ gimp_display_shell_destroy (GtkObject *object)
   if (shell->filter_idle_id)
     {
       g_source_remove (shell->filter_idle_id);
-      shell->filter_idle_id = NULL;
+      shell->filter_idle_id = 0;
     }
 
   if (shell->render_buf)

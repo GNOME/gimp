@@ -1,3 +1,8 @@
+2003-11-24  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_destroy):
+	set filter_idle_id to 0, not NULL.
+
 2003-11-24  Michael Natterer  <mitch@gimp.org>
 
 	Fixed intra-session position management for file dialogs and newly
