@@ -34,6 +34,10 @@ typedef struct _GimpDialogFactory            GimpDialogFactory;
 typedef struct _GimpItemFactory              GimpItemFactory;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 
+typedef struct _GimpActionGroup              GimpActionGroup;
+typedef struct _GimpEnumAction               GimpEnumAction;
+typedef struct _GimpStringAction             GimpStringAction;
+
 typedef struct _GimpCellRendererToggle       GimpCellRendererToggle;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
@@ -122,6 +126,12 @@ typedef struct _GimpColorDisplayEditor  GimpColorDisplayEditor;
 
 
 /*  structs  */
+
+typedef struct _GimpActionEntry         GimpActionEntry;
+typedef struct _GimpToggleActionEntry   GimpToggleActionEntry;
+typedef struct _GimpRadioActionEntry    GimpRadioActionEntry;
+typedef struct _GimpEnumActionEntry     GimpEnumActionEntry;
+typedef struct _GimpStringActionEntry   GimpStringActionEntry;
 
 typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
 typedef struct _GimpDialogFactoryEntry  GimpDialogFactoryEntry;

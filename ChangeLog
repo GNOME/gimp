@@ -1,3 +1,14 @@
+2004-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpmarshal.list: new marshaller VOID:STRING
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpactiongroup.[ch]
+	* app/widgets/gimpenumaction.[ch]
+	* app/widgets/gimpstringaction.[ch]: added some completely unused
+	GtkAction infrastructure.
+
 2004-04-15  Tor Lillqvist  <tml@iki.fi>
 
 	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install)

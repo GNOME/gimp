@@ -19,6 +19,8 @@ noinst_LIBRARIES = libappwidgets.a
 libappwidgets_a_sources = \
 	widgets-enums.h			\
 	widgets-types.h			\
+	gimpactiongroup.c		\
+	gimpactiongroup.h		\
 	gimpbrusheditor.c		\
 	gimpbrusheditor.h		\
 	gimpbrushfactoryview.c		\
@@ -95,6 +97,8 @@ libappwidgets_a_sources = \
 	gimpdrawabletreeview.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
+	gimpenumaction.c		\
+	gimpenumaction.h		\
 	gimpenummenu.c			\
 	gimpenummenu.h			\
 	gimperrorconsole.c		\
@@ -166,6 +170,8 @@ libappwidgets_a_sources = \
 	gimpselectioneditor.h		\
 	gimpsessioninfo.c		\
 	gimpsessioninfo.h		\
+	gimpstringaction.c		\
+	gimpstringaction.h		\
 	gimpstrokeeditor.c		\
 	gimpstrokeeditor.h		\
 	gimptemplateeditor.c		\
