@@ -6618,7 +6618,7 @@ msgid ""
 "Click \"Continue\" to proceed."
 msgstr ""
 "Installazione completata.\n"
-"Fare clic su \"Continua\" per procedere.\n"
+"Fare clic su \"Continua\" per procedere."
 
 #: app/gui/user-install-dialog.c:390
 msgid ""
