@@ -27,52 +27,71 @@ void  paint_funcs_free      (void);
 
 /*  Paint functions  */
 
-void  color_pixels          (guchar *dest, const guchar *color,
-			     guint w, guint bytes);
+void  color_pixels          (guchar       *dest,
+                             const guchar *color,
+                             guint         w,
+                             guint         bytes);
 
 void  blend_pixels          (const guchar *src1,
-			     const guchar *src2,
-			     guchar *dest,
-			     guchar blend, guint w,
-			     guint bytes);
+                             const guchar *src2,
+                             guchar       *dest,
+                             guchar        blend,
+                             guint         w,
+                             guint         bytes);
 
-void  shade_pixels          (const guchar *src, guchar *dest,
-			     const guchar *color,
-			     guchar rblend, guint w,
-			     guint bytes, guint has_alpha);
+void  shade_pixels          (const guchar *src,
+                             guchar       *dest,
+                             const guchar *color,
+                             guchar        rblend,
+                             guint         w,
+                             guint         bytes,
+                             gboolean      has_alpha);
 
 void  extract_alpha_pixels  (const guchar *src,
-			     const guchar *mask,
-			     guchar *dest,
-			     guint w, guint bytes);
+                             const guchar *mask,
+                             guchar       *dest,
+                             guint         w,
+                             guint         bytes);
 
-void  swap_pixels           (guchar *src, guchar *dest,
-			     guint length);
+void  swap_pixels           (guchar       *src,
+                             guchar       *dest,
+                             guint         length);
 
 void  scale_pixels          (const guchar *src,
                              guchar       *dest,
-			     guint         length,
+                             guint         length,
                              gint          scale);
 
-void  add_alpha_pixels      (const guchar *src, guchar *dest,
-			     guint length, guint bytes);
+void  add_alpha_pixels      (const guchar *src,
+                             guchar       *dest,
+                             guint         length,
+                             guint         bytes);
 
-void  flatten_pixels        (const guchar *src, guchar *dest,
-			     const guchar *bg, guint length, guint bytes);
+void  flatten_pixels        (const guchar *src,
+                             guchar       *dest,
+                             const guchar *bg,
+                             guint         length,
+                             guint         bytes);
 
-void  gray_to_rgb_pixels    (const guchar *src, guchar *dest,
-			     guint length, guint bytes);
+void  gray_to_rgb_pixels    (const guchar *src,
+                             guchar       *dest,
+                             guint         length,
+                             guint         bytes);
 
 
 /*  apply the mask data to the alpha channel of the pixel data  */
-void  apply_mask_to_alpha_channel         (guchar *src,
-					   const guchar *mask,
-					   guint opacity, guint length, guint bytes);
+void  apply_mask_to_alpha_channel         (guchar       *src,
+                                           const guchar *mask,
+                                           guint         opacity,
+                                           guint         length,
+                                           guint         bytes);
 
 /*  combine the mask data with the alpha channel of the pixel data  */
-void  combine_mask_and_alpha_channel      (guchar *src,
-					   const guchar *mask,
-					   guint opacity, guint length, guint bytes);
+void  combine_mask_and_alpha_channel      (guchar       *src,
+                                           const guchar *mask,
+                                           guint         opacity,
+                                           guint         length,
+                                           guint         bytes);
 
 
 /*  copy gray pixels to intensity-alpha pixels.  This function
@@ -81,240 +100,271 @@ void  combine_mask_and_alpha_channel      (guchar *src,
  *  adding an alpha channel.  (OPAQUE)
  */
 void  copy_gray_to_inten_a_pixels         (const guchar *src,
-					   guchar *dest,
-					   guint length, guint bytes);
+                                           guchar       *dest,
+                                           guint         length,
+                                           guint         bytes);
 
 /*  lay down the initial pixels in the case of only one
  *  channel being visible and no layers...In this singular
  *  case, we want to display a grayscale image w/o transparency
  */
 void  initial_channel_pixels              (const guchar *src,
-					   guchar *dest,
-					   guint length, guint bytes);
+                                           guchar       *dest,
+                                           guint         length,
+                                           guint         bytes);
 
 /*  lay down the initial pixels in the case of an indexed image.
  *  This process obviously requires no composition
  */
 void  initial_indexed_pixels              (const guchar *src,
-					   guchar *dest,
-					   const guchar *cmap,
-					   guint length);
+                                           guchar       *dest,
+                                           const guchar *cmap,
+                                           guint         length);
 
 /*  lay down the initial pixels in the case of an indexed image.
  *  This process obviously requires no composition
  */
 void  initial_indexed_a_pixels            (const guchar *src,
-					   guchar *dest,
-					   const guchar *mask,
-					   const guchar *no_mask,
-					   const guchar *cmap,
-					   guint opacity, guint length);
+                                           guchar       *dest,
+                                           const guchar *mask,
+                                           const guchar *no_mask,
+                                           const guchar *cmap,
+                                           guint         opacity,
+                                           guint         length);
 
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void  initial_inten_pixels                (const guchar *src,
-					   guchar *dest,
-					   const guchar *mask,
-					   const guchar *no_mask,
-					   guint opacity, const int *affect,
-					   guint length, guint bytes);
+void  initial_inten_pixels                (const guchar   *src,
+                                           guchar         *dest,
+                                           const guchar   *mask,
+                                           const guchar   *no_mask,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           guint           length,
+                                           guint           bytes);
 
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void  initial_inten_a_pixels              (const guchar *src,
-					   guchar *dest,
-					   const guchar *mask,
-					   guint opacity, const int *affect,
-					   guint length, guint bytes);
+void  initial_inten_a_pixels              (const guchar   *src,
+                                           guchar         *dest,
+                                           const guchar   *mask,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           guint           length,
+                                           guint           bytes);
 
 /*  combine indexed images with an optional mask which
  *  is interpreted as binary...destination is indexed...
  */
-void  combine_indexed_and_indexed_pixels  (const guchar *src1,
-					   const guchar *src2,
-					   guchar *dest,
-					   const guchar *mask,
-					   guint opacity, const int *affect,
-					   guint length, guint bytes);
+void  combine_indexed_and_indexed_pixels  (const guchar   *src1,
+                                           const guchar   *src2,
+                                           guchar         *dest,
+                                           const guchar   *mask,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           guint           length,
+                                           guint           bytes);
 
 /*  combine indexed images with indexed-alpha images
  *  result is an indexed image
  */
 void  combine_indexed_and_indexed_a_pixels (const guchar *src1,
-					    const guchar *src2,
-					    guchar       *dest,
-					    const guchar *mask,
-					    guint	  opacity,
-					    const int    *affect,
-					    guint	  length,
-					    guint	  bytes);
+                                            const guchar *src2,
+                                            guchar       *dest,
+                                            const guchar *mask,
+                                            guint          opacity,
+                                            const gint   *affect,
+                                            guint          length,
+                                            guint          bytes);
 
 /*  combine indexed-alpha images with indexed-alpha images
  *  result is an indexed-alpha image.  use this for painting
  *  to an indexed floating sel
  */
-void  combine_indexed_a_and_indexed_a_pixels(const guchar *src1,
-					     const guchar *src2,
-					     guchar       *dest,
-					     const guchar *mask,
-					     guint 	   opacity,
-					     const int           *affect,
-					     guint	   length,
-					     guint	   bytes);
+void  combine_indexed_a_and_indexed_a_pixels(const guchar   *src1,
+                                             const guchar   *src2,
+                                             guchar         *dest,
+                                             const guchar   *mask,
+                                             guint              opacity,
+                                             const gboolean *affect,
+                                             guint             length,
+                                             guint             bytes);
 
 /*  combine intensity with indexed, destination is
  *  intensity-alpha...use this for an indexed floating sel
  */
 void  combine_inten_a_and_indexed_a_pixels (const guchar *src1,
-					    const guchar *src2,
-					    guchar       *dest,
-					    const guchar *mask,
-					    const guchar *cmap,
-					    guint	  opacity,
-					    guint	  length,
-					    guint	  bytes);
+                                            const guchar *src2,
+                                            guchar       *dest,
+                                            const guchar *mask,
+                                            const guchar *cmap,
+                                            guint          opacity,
+                                            guint          length,
+                                            guint          bytes);
 
 /*  combine RGB image with RGB or GRAY with GRAY
  *  destination is intensity-only...
  */
-void  combine_inten_and_inten_pixels       (const guchar *src1,
-					    const guchar *src2,
-					    guchar       *dest,
-					    const guchar *mask,
-					    guint	  opacity,
-					    const gboolean *affect,
-					    guint	  length,
-					    guint         bytes);
+void  combine_inten_and_inten_pixels       (const guchar   *src1,
+                                            const guchar   *src2,
+                                            guchar         *dest,
+                                            const guchar   *mask,
+                                            guint            opacity,
+                                            const gboolean *affect,
+                                            guint            length,
+                                            guint           bytes);
 
 /*  combine an RGBA or GRAYA image with an RGB or GRAY image
  *  destination is intensity-only...
  */
-void  combine_inten_and_inten_a_pixels    (const guchar *src1,
-					   const guchar *src2,
-					   guchar *dest,
-					   const guchar *mask,
-					   guint opacity,
-					   const gboolean *affect,
-					   guint length, guint bytes);
+void  combine_inten_and_inten_a_pixels    (const guchar   *src1,
+                                           const guchar   *src2,
+                                           guchar         *dest,
+                                           const guchar   *mask,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           guint           length,
+                                           guint           bytes);
 
 /*  combine an RGB or GRAY image with an RGBA or GRAYA image
  *  destination is intensity-alpha...
  */
-void  combine_inten_a_and_inten_pixels    (const guchar *src1,
-					   const guchar *src2,
-					   guchar *dest,
-					   const guchar *mask,
-					   guint opacity, const int *affect,
-					   guint mode_affect, guint length,
-					   guint bytes);
+void  combine_inten_a_and_inten_pixels    (const guchar   *src1,
+                                           const guchar   *src2,
+                                           guchar         *dest,
+                                           const guchar   *mask,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           gboolean        mode_affect,
+                                           guint           length,
+                                           guint           bytes);
 
 /*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
  *  destination is of course intensity-alpha...
  */
-void  combine_inten_a_and_inten_a_pixels   (const guchar *src1,
-					    const guchar *src2,
-					    guchar       *dest,
-					    const guchar *mask,
-					    guint	  opacity,
-					    const gboolean *affect,
-					    guint         mode_affect,
-					    guint	  length,
-					    guint	  bytes);
+void  combine_inten_a_and_inten_a_pixels   (const guchar   *src1,
+                                            const guchar   *src2,
+                                            guchar         *dest,
+                                            const guchar   *mask,
+                                            guint            opacity,
+                                            const gboolean *affect,
+                                            gboolean        mode_affect,
+                                            guint            length,
+                                            guint            bytes);
 
 /*  combine a channel with intensity-alpha pixels based
  *  on some opacity, and a channel color...
  *  destination is intensity-alpha
  */
 void  combine_inten_a_and_channel_mask_pixels(const guchar *src,
-					      const guchar *channel,
-					      guchar       *dest,
-					      const guchar *col,
-					      guint	    opacity,
-					      guint	    length,
-					      guint	    bytes);
+                                              const guchar *channel,
+                                              guchar       *dest,
+                                              const guchar *col,
+                                              guint            opacity,
+                                              guint            length,
+                                              guint            bytes);
 
 void  combine_inten_a_and_channel_selection_pixels(const guchar *src,
-						   const guchar *channel,
-						   guchar       *dest,
-						   const guchar *col,
-						   guint	 opacity,
-						   guint	 length,
-						   guint	 bytes);
+                                                   const guchar *channel,
+                                                   guchar       *dest,
+                                                   const guchar *col,
+                                                   guint         opacity,
+                                                   guint         length,
+                                                   guint         bytes);
 
 /*  extract information from intensity pixels based on
  *  a mask.
  */
 void  extract_from_inten_pixels           (guchar       *src,
-					   guchar       *dest,
-					   const guchar *mask,
-					   const guchar *bg,
-					   guint         cut,
-					   guint         length,
-					   guint         bytes,
-					   guint         has_alpha);
+                                           guchar       *dest,
+                                           const guchar *mask,
+                                           const guchar *bg,
+                                           gboolean      cut,
+                                           guint         length,
+                                           guint         bytes,
+                                           gboolean      has_alpha);
 
 /*  extract information from indexed pixels based on
  *  a mask.
  */
 void  extract_from_indexed_pixels         (guchar       *src,
-					   guchar       *dest,
-					   const guchar *mask,
-					   const guchar *cmap,
-					   const guchar *bg,
-					   guint         cut,
-					   guint         length,
-					   guint         bytes,
-					   guint         has_alpha);
+                                           guchar       *dest,
+                                           const guchar *mask,
+                                           const guchar *cmap,
+                                           const guchar *bg,
+                                           gboolean      cut,
+                                           guint         length,
+                                           guint         bytes,
+                                           gboolean      has_alpha);
 
 
 /*  Region functions  */
 void  color_region                        (PixelRegion  *dest,
-					   const guchar *color);
+                                           const guchar *color);
 void  color_region_mask                   (PixelRegion  *dest,
                                            PixelRegion  *mask,
-					   const guchar *color);
+                                           const guchar *color);
 
 void  pattern_region                      (PixelRegion  *dest,
                                            PixelRegion  *mask,
-					   TempBuf      *pattern,
+                                           TempBuf      *pattern,
                                            gint          off_x,
                                            gint          off_y);
 
-void  blend_region                        (PixelRegion *, PixelRegion *,
-					   PixelRegion *, int);
+void  blend_region                        (PixelRegion *src1,
+                                           PixelRegion *src2,
+                                           PixelRegion *dest,
+                                           guchar       blend);
 
-void  shade_region                        (PixelRegion *, PixelRegion *,
-					   guchar *, int);
+void  shade_region                        (PixelRegion *src,
+                                           PixelRegion *dest,
+                                           guchar      *color,
+                                           guchar       blend);
 
-void  copy_region                         (PixelRegion *, PixelRegion *);
+void  copy_region                         (PixelRegion *src,
+                                           PixelRegion *dest);
 
-void  add_alpha_region                    (PixelRegion *, PixelRegion *);
+void  add_alpha_region                    (PixelRegion *src,
+                                           PixelRegion *dest);
 
-void  flatten_region                      (PixelRegion *, PixelRegion *,
-					   guchar *);
+void  flatten_region                      (PixelRegion *src,
+                                           PixelRegion *dest,
+                                           guchar      *bg);
 
-void  extract_alpha_region                (PixelRegion *, PixelRegion *,
-					   PixelRegion *);
+void  extract_alpha_region                (PixelRegion *src,
+                                           PixelRegion *mask,
+                                           PixelRegion *dest);
 
-void  extract_from_region                 (PixelRegion *, PixelRegion *,
-					   PixelRegion *, guchar *,
-					   guchar *, guint, guint, guint);
+void  extract_from_region                 (PixelRegion *src,
+                                           PixelRegion *dest,
+                                           PixelRegion *mask,
+                                           guchar      *cmap,
+                                           guchar      *bg,
+                                           gint         type,
+                                           gboolean     has_alpha,
+                                           gboolean     cut);
 
 
-void  convolve_region                     (PixelRegion *,
-					   PixelRegion *,
-					   int *, int, int,
-					   GimpConvolutionType);
+void  convolve_region                     (PixelRegion         *srcR,
+                                           PixelRegion         *destR,
+                                           gint                *matrix,
+                                           gint                 size,
+                                           gint                 divisor,
+                                           GimpConvolutionType  mode);
 
-void  multiply_alpha_region               (PixelRegion *);
+void  multiply_alpha_region               (PixelRegion *srcR);
 
-void  separate_alpha_region               (PixelRegion *);
+void  separate_alpha_region               (PixelRegion *srcR);
 
-void  gaussian_blur_region                (PixelRegion *, double, double);
+void  gaussian_blur_region                (PixelRegion *srcR,
+                                           gdouble      radius_x,
+                                           gdouble      radius_y);
 
-void  border_region                       (PixelRegion *, gint16, gint16);
+void  border_region                       (PixelRegion *src,
+                                           gint16       xradius,
+                                           gint16       yradius);
 
 void  scale_region                        (PixelRegion           *srcPR,
                                            PixelRegion           *destPR,
@@ -322,55 +372,72 @@ void  scale_region                        (PixelRegion           *srcPR,
                                            GimpProgressFunc       progress_callback,
                                            gpointer               progress_data);
 
-void  subsample_region                    (PixelRegion *, PixelRegion *,
-					   int);
+void  subsample_region                    (PixelRegion *srcPR,
+                                           PixelRegion *destPR,
+                                           gint         subsample);
 
-float shapeburst_region                   (PixelRegion *, PixelRegion *);
+gfloat shapeburst_region                  (PixelRegion *srcPR,
+                                           PixelRegion *distPR);
 
-void  thin_region                         (PixelRegion *, gint16 xradius,
-                                           gint16 yradius, int edge_lock);
+void  thin_region                         (PixelRegion *src,
+                                           gint16       xradius,
+                                           gint16       yradius,
+                                           gboolean     edge_lock);
 
-void  fatten_region                       (PixelRegion *,
-                                           gint16 xradius, gint16 yradius);
+void  fatten_region                       (PixelRegion *src,
+                                           gint16       xradius,
+                                           gint16       yradius);
 
-void  swap_region                         (PixelRegion *, PixelRegion *);
+void  swap_region                         (PixelRegion *src,
+                                           PixelRegion *dest);
 
 
 /*  Apply a mask to an image's alpha channel  */
-void  apply_mask_to_region                (PixelRegion *, PixelRegion *, guint);
+void  apply_mask_to_region                (PixelRegion *src,
+                                           PixelRegion *mask,
+                                           guint        opacity);
 
 /*  Combine a mask with an image's alpha channel  */
-void  combine_mask_and_region             (PixelRegion *, PixelRegion *, guint);
+void  combine_mask_and_region             (PixelRegion *src,
+                                           PixelRegion *mask,
+                                           guint        opacity);
 
 /*  Copy a gray image to an intensity-alpha region  */
-void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
+void  copy_gray_to_region                 (PixelRegion *src,
+                                           PixelRegion *dest);
 
 /*  Copy a component (indexed by pixel) to a 1-byte region  */
 void  copy_component                      (PixelRegion *src,
                                            PixelRegion *dest,
                                            guint        pixel);
 
-void  initial_region                      (PixelRegion *, PixelRegion *,
-					   PixelRegion *,
-                                           guchar *,
-					   gint,
-                                           GimpLayerModeEffects,
-                                           gboolean *,
-                                           CombinationMode);
+void  initial_region                      (PixelRegion    *src,
+                                           PixelRegion    *dest,
+                                           PixelRegion    *mask,
+                                           guchar         *data,
+                                           guint           opacity,
+                                           GimpLayerModeEffects  mode,
+                                           const gboolean *affect,
+                                           InitialMode     type);
 
-void  combine_regions                     (PixelRegion *, PixelRegion *,
-					   PixelRegion *, PixelRegion *,
-					   guchar *,
-                                           guint,
-					   GimpLayerModeEffects,
-					   gboolean *,
-                                           CombinationMode);
+void  combine_regions                     (PixelRegion    *src1,
+                                           PixelRegion    *src2,
+                                           PixelRegion    *dest,
+                                           PixelRegion    *mask,
+                                           guchar         *data,
+                                           guint           opacity,
+                                           GimpLayerModeEffects  mode,
+                                           const gboolean *affect,
+                                           CombinationMode type);
 
-void  combine_regions_replace             (PixelRegion *, PixelRegion *,
-					   PixelRegion *, PixelRegion *,
-					   guchar *,
-					   guint,
-                                           gboolean *,
-                                           CombinationMode);
+void  combine_regions_replace             (PixelRegion    *src1,
+                                           PixelRegion    *src2,
+                                           PixelRegion    *dest,
+                                           PixelRegion    *mask,
+                                           guchar         *data,
+                                           guint           opacity,
+                                           const gboolean *affect,
+                                           CombinationMode type);
+
 
 #endif  /*  __PAINT_FUNCS_H__  */

@@ -1,3 +1,10 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: 
+	* app/paint-funcs/paint-funcs-generic.h: header cleanup, added
+	some const qualifiers, converted tabs to spaces. Fixes bug #140115
+	for the HEAD branch.
+
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
 	Get rid of the "current_context" which was in fact just a bunch of
