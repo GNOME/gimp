@@ -2,6 +2,14 @@
 
 	* app/gui/channels-commands.c
 	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c
+	* app/widgets/gimpitemtreeview.c: shuffled some
+	gimp_image_flush()'es around.
+
+2004-03-17  Simon Budig  <simon@gimp.org>
+
+	* app/gui/channels-commands.c
+	* app/gui/layers-commands.c
 	* app/gui/vectors-commands.c: Make sure that non-dialog creation
 	of layer/channels/vectors properly updates the image. Also
 	clear the new channel unconditionally.

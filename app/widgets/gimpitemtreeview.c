@@ -1008,6 +1008,7 @@ gimp_item_tree_view_new_clicked (GtkWidget        *widget,
                                  GimpItemTreeView *view)
 {
   view->new_item_func (view->gimage, NULL, FALSE, GTK_WIDGET (view));
+  gimp_image_flush (view->gimage);
 }
 
 static void

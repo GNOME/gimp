@@ -733,7 +733,6 @@ layers_new_layer_query (GimpImage *gimage,
         }
 
       gimp_image_add_layer (gimage, new_layer, -1);
-      gimp_image_flush (gimage);
 
       gimp_image_undo_group_end (gimage);
       return;
