@@ -1,3 +1,10 @@
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.c: set <Image>/File/Revert... insensitive if the
+	image has no filename.
+
+	* plug-ins/common/uniteditor.c: minor fix.
+
 Wed Mar  1 00:13:24 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.c: return without warning if popup_timeout

@@ -1645,7 +1645,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
   SET_SENSITIVE ("File/Save", gdisp);
   SET_SENSITIVE ("File/Save As...", gdisp);
-  SET_SENSITIVE ("File/Revert", gdisp);
+  SET_SENSITIVE ("File/Revert", gdisp && gdisp->gimage->filename);
   SET_SENSITIVE ("File/Close", gdisp);
 
   SET_SENSITIVE ("Edit", gdisp);

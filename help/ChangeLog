@@ -1,3 +1,14 @@
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* C/dialogs/layers/Makefile.am
+	* C/dialogs/layers/index.html
+	* C/dialogs/layers/apply_mask.html: removed.
+
+	* C/layers/Makefile.am
+	* C/layers/index.html
+	* C/layers/apply_mask.html
+	* C/layers/delete_mask.html: new files.
+
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* C/toolbox/help/*: we forgot help for help ;-)

@@ -378,8 +378,8 @@ select_row_callback (GtkWidget      *widget,
 		     gpointer        data)
 {
   GimpUnit unit;
-  gboolean delete_sensitive    = TRUE;
-  gboolean undelete_sensitive  = TRUE;
+  gboolean delete_sensitive   = TRUE;
+  gboolean undelete_sensitive = TRUE;
 
   current_row = row;
 
@@ -394,10 +394,14 @@ select_row_callback (GtkWidget      *widget,
   else if (gimp_unit_get_deletion_flag (unit))
     {
       delete_sensitive = FALSE;
+      gtk_clist_set_pixmap (GTK_CLIST (clist), current_row, 0,
+			    no_pixmap, no_mask);
     }
   else
     {
       undelete_sensitive = FALSE;
+      gtk_clist_set_pixmap (GTK_CLIST (clist), current_row, 0,
+			    yes_pixmap, yes_mask);
     }
 
   gtk_widget_set_sensitive (delete_button,    delete_sensitive);

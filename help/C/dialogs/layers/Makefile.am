@@ -4,7 +4,6 @@ helpdatadir = $(gimpdatadir)/help/C/dialogs/layers
 
 helpdata_DATA = \
         add_mask.html \
-        apply_mask.html \
         edit_layer_attributes.html \
         index.html \
         layers.html \

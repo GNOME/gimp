@@ -8,7 +8,9 @@ helpdata_DATA = \
         add_alpha_channel.html \
         alpha_to_selection.html \
         anchor_layer.html \
+	apply_mask.html \
         delete_layer.html \
+	delete_mask.html \
         duplicate_layer.html \
         flatten_image.html \
         index.html \
