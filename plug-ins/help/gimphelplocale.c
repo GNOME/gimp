@@ -1,11 +1,10 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help Browser
- * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
+ * The GIMP Help plug-in
+ * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
- *
- * domain.c
+ *                         Henrik Brix Andersen <brix@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

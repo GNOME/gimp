@@ -6,8 +6,6 @@
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
- * Some code & ideas stolen from the GNOME help browser.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -32,6 +30,8 @@
 #include "libgimp/gimp.h"
 
 #include "domain.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 
 /*  defines  */
@@ -128,6 +128,8 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   const gchar       *default_env_domain_uri;
   gchar             *default_domain_uri;
+
+  INIT_I18N ();
 
   /*  set default values  */
   default_env_domain_uri = g_getenv (GIMP_HELP_ENV_URI);
