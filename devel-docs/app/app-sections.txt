@@ -959,6 +959,7 @@ GimpImagefile
 gimp_imagefile_new
 gimp_imagefile_update
 gimp_imagefile_create_thumbnail
+gimp_imagefile_create_thumbnail_weak
 gimp_imagefile_save_thumbnail
 gimp_imagefile_get_desc_string
 <SUBSECTION Standard>
@@ -1324,6 +1325,21 @@ gimp_selection_get_type
 GIMP_SELECTION_CLASS
 GIMP_IS_SELECTION_CLASS
 GIMP_SELECTION_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsizebox</FILE>
+<TITLE>GimpSizeBox</TITLE>
+GimpSizeBox
+<SUBSECTION Standard>
+GimpSizeBoxClass
+GIMP_SIZE_BOX
+GIMP_IS_SIZE_BOX
+GIMP_TYPE_SIZE_BOX
+gimp_size_box_get_type
+GIMP_SIZE_BOX_CLASS
+GIMP_IS_SIZE_BOX_CLASS
+GIMP_SIZE_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4443,6 +4459,7 @@ gimp_enum_radio_box_new
 gimp_enum_radio_box_new_with_range
 gimp_enum_radio_frame_new
 gimp_enum_radio_frame_new_with_range
+gimp_enum_radio_frame_add
 gimp_enum_stock_box_new
 gimp_enum_stock_box_new_with_range
 gimp_enum_stock_box_set_child_padding
@@ -5046,6 +5063,7 @@ GIMP_VIEW_RENDERER_GET_CLASS
 <SECTION>
 <FILE>gimpviewrenderer-frame</FILE>
 gimp_view_renderer_get_frame_pixbuf
+gimp_view_renderer_get_frame_size
 </SECTION>
 
 <SECTION>
@@ -5520,6 +5538,15 @@ gimp_viewable_button_get_type
 GIMP_VIEWABLE_BUTTON_CLASS
 GIMP_IS_VIEWABLE_BUTTON_CLASS
 GIMP_VIEWABLE_BUTTON_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpviewablebox</FILE>
+gimp_brush_box_new
+gimp_pattern_box_new
+gimp_gradient_box_new
+gimp_palette_box_new
+gimp_font_box_new
 </SECTION>
 
 <SECTION>
@@ -6750,6 +6777,7 @@ file_save_as
 <FILE>file-utils</FILE>
 file_utils_filename_to_uri
 file_utils_find_proc
+file_utils_find_proc_by_extension
 file_utils_uri_to_utf8_basename
 file_utils_uri_to_utf8_filename
 </SECTION>
@@ -6860,7 +6888,6 @@ dialogs_palette_editor_get
 
 <SECTION>
 <FILE>dialogs-types</FILE>
-ColorDialog
 InfoDialog
 </SECTION>
 
@@ -6956,7 +6983,7 @@ info_dialog_add_sizeentry
 info_window_create
 info_window_free
 info_window_update
-info_window_update_extended
+info_window_update_cursor
 info_window_follow_auto
 </SECTION>
 
@@ -6992,6 +7019,12 @@ resize_dialog_new
 <SECTION>
 <FILE>resolution-calibrate-dialog</FILE>
 resolution_calibrate_dialog
+</SECTION>
+
+<SECTION>
+<FILE>scale-dialog</FILE>
+GimpScaleCallback
+scale_dialog_new
 </SECTION>
 
 <SECTION>
@@ -8319,8 +8352,7 @@ vectors_linked_cmd_callback
 <FILE>view-commands</FILE>
 view_new_view_cmd_callback
 view_close_view_cmd_callback
-view_zoom_out_cmd_callback
-view_zoom_in_cmd_callback
+view_zoom_explicit_cmd_callback
 view_zoom_fit_in_cmd_callback
 view_zoom_fit_to_cmd_callback
 view_zoom_cmd_callback

@@ -691,6 +691,7 @@
       <title>Misc. Container View Widgets</title>
       <xi:include href="xml/gimpcontainerpopup.xml" />
       <xi:include href="xml/gimpviewablebutton.xml" />
+      <xi:include href="xml/gimpviewablebox.xml" />
     </chapter>
 
     <chapter id="app-widgets-container-editors">
@@ -760,6 +761,7 @@
       <xi:include href="xml/gimphistogramview.xml" />
       <xi:include href="xml/gimpmessagebox.xml" />
       <xi:include href="xml/gimpprogressbox.xml" />
+      <xi:include href="xml/gimpsizebox.xml" />
       <xi:include href="xml/gimpstrokeeditor.xml" />
       <xi:include href="xml/gimptemplateeditor.xml" />
       <xi:include href="xml/gimpthumbbox.xml" />
