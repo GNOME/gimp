@@ -1,8 +1,8 @@
-# the GIMP ÍÑ¤Î¾®µ»°ìÍ÷¤Ç¤¹.  GIMP ¤òµ¯Æ°¤¹¤ëËè¤Ë¡¢¤³¤Î¥Õ¥¡¥¤¥ëÃæ¤Î
-# °ì¤Ä¤Îµ»¤¬¡Öº£Æü¤Îµ»¡×¥À¥¤¥¢¥í¥°¤È¤·¤ÆÉ½¼¨¤µ¤ì¤ë¡£
+# the GIMP —p‚Ì¬‹Zˆê——‚Å‚·.  GIMP ‚ð‹N“®‚·‚é–ˆ‚ÉA‚±‚Ìƒtƒ@ƒCƒ‹’†‚Ì
+# ˆê‚Â‚Ì‹Z‚ªu¡“ú‚Ì‹Zvƒ_ƒCƒAƒƒO‚Æ‚µ‚Ä•\Ž¦‚³‚ê‚éB
 #
-# [ja] trans: yasuhiro@awa.tohoku.ac.jp
-# Time-stamp: <1999-11-24 22:50:24 yasuhiro>
+# [ja] trans: yasuhiro@awa.tohoku.ac.jp , yositaka@yd5.so-net.ne.jp
+# Time-stamp: <2001-07-20 15:13:14 takashi>
 #
 # - Lines starting with '#' are comments.
 # - Blank lines or comments separate two tips (they are not ignored).
@@ -13,138 +13,173 @@
 #   tips than with automatic word-wrapping, but this also means that
 #   you have to avoid excessively long lines in this file.
 # - Tips should be concise: 3 lines or less.
+# - Advice for translators to other languages: keep the original tips
+#   as comments before the translated tips.  It will be easier for
+#   other people to check for changes or additions.
 #
 # Tips in this file have been contributed by Zachary Beane, Mo Oishi,
-# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
-# lists.
+# Raphael Quinet, Sven Neumann, Carey Bunks and other people on the
+# gimp mailing lists and newsgroup (comp.graphics.apps.gimp).
+# --------------------------------------------------------------------
 
-                            GIMP ¤Ø¤è¤¦¤³¤½!
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+                            GIMP ‚Ö‚æ‚¤‚±‚»!
 	
-²èÁü¾å¤Ç±¦¥¯¥ê¥Ã¥¯¤¹¤ì¤Ð¤É¤ó¤Ê²èÁü½èÍý¤À¤Ã¤Æ¤Ç¤­¤ë¤è¡£
-¤Û¤È¤ó¤É¤Î¼ºÇÔ¤Ï¤ä¤êÄ¾¤·¤¬¤­¤¯¤«¤é¡¢¶²¤ì¤Ê¤¯¤Æ¤âÎÉ¤¤¤·...
+‰æ‘œã‚Å‰EƒNƒŠƒbƒN‚·‚ê‚Î‚Ç‚ñ‚È‰æ‘œˆ—‚¾‚Á‚Ä‚Å‚«‚é‚æB
+‚Ù‚Æ‚ñ‚Ç‚ÌŽ¸”s‚Í‚â‚è’¼‚µ‚ª‚«‚­‚©‚çA‹°‚ê‚È‚­‚Ä‚à—Ç‚¢‚µ...  
 
-# ½é¿´¼ÔÍÑ
+# ‰SŽÒ—p‚Ì¬‹Z‚Í‚±‚±‚©‚ç
+# (‚Ü‚¾ƒŒƒCƒ„[‚â‰æ‘œŒ`Ž®‚ÉŠµ‚ê‚Ä‚¢‚È‚¢l—p)
 #
 
-GIMP ¤Ç¤Ï¥ì¥¤¥ä¡¼¤ò»È¤Ã¤Æ²èÁü¤ò¤Þ¤È¤á¤ë¤³¤È¤¬¤Ç¤­¤ë¤ó¤À¡£
-¤Þ¤¡¥¹¥é¥¤¥É¤È¤«¥Õ¥£¥ë¥¿¤òÀÑ¤ß½Å¤Í¤¿¤â¤Î¤ò¤¹¤«¤·¤Æ¸«¤Æ¤¤¤ë
-¤è¤¦¤Ê¤â¤Î¤À¤È»×¤Ã¤Æ¤¯¤ì¤ì¤Ð¤¤¤¤¡£
+F1 ƒL[‚ð‰Ÿ‚·‚±‚Æ‚Å‚¢‚Â‚Å‚à GIMP ‹@”\‚Ìó‹µ“K‰žƒwƒ‹ƒv‚ð
+ŒÄ‚Ño‚·‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B‚±‚ê‚Íƒƒjƒ…[‚Ì’†‚Å‚àŽg‚¦‚é‚æB
 
-¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°¤Ç¤Î³Æ¥ì¥¤¥ä¡¼¤Ë´Ø¤¹¤ëÁàºî¤Ï¡¢¤½¤ì¤¾¤ì¤Î¥ì¥¤¥ä¡¼Ì¾¤Î
-¾å¤Ç±¦¥¯¥ê¥Ã¥¯¤¹¤ë¤È¹Ô¤¨¤ë¤ó¤À¡£(¥À¥¤¥¢¥í¥° -> ¥ì¥¤¥ä¡¼ & ¥Á¥ã¥ó¥Í¥ë)
+GIMP ‚Å‚ÍƒŒƒCƒ„[‚ðŽg‚Á‚Ä‰æ‘œ‚ð‚Ü‚Æ‚ß‚é‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B
+‚Ü‚ŸƒXƒ‰ƒCƒh‚Æ‚©ƒtƒBƒ‹ƒ^‚ðÏ‚Ýd‚Ë‚½‚à‚Ì‚ð‚·‚©‚µ‚ÄŒ©‚Ä‚¢‚é
+‚æ‚¤‚È‚à‚Ì‚¾‚ÆŽv‚Á‚Ä‚­‚ê‚ê‚Î‚¢‚¢B
 
-GIF ¤ä XPM Åù¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹ÉÕ¤­¥«¥é¡¼²èÁü·Á¼°¤ÇÊÝÂ¸¤¹¤ëºÝ¤Ë¤Ï
-²èÁü¥á¥Ë¥å¡¼Ãæ¤Î¡Ö¥¤¥ó¥Ç¥Ã¥¯¥¹¡×¤ò»ÈÍÑ¤·¤Æ²èÁü¤òÊÑ´¹¤·¤Æ
-¤ª¤¯É¬Í×¤¬¤¢¤ë¤è¡£
+"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ & ƒpƒX"ƒ_ƒCƒAƒƒO‚Å‚ÌŠeƒŒƒCƒ„[‚ÉŠÖ‚·‚é‘€ì‚Í
+‚»‚ê‚¼‚ê‚ÌƒŒƒCƒ„[–¼‚Ìã‚Å‰EƒNƒŠƒbƒN‚·‚é‚Æs‚¦‚é‚ñ‚¾B
 
-Æ»¶ñ¥ª¥×¥·¥ç¥ó¥á¥Ë¥å¡¼¤Ï¥Ä¡¼¥ë¥Ð¡¼Ãæ¤Î¥¢¥¤¥³¥ó¤ò¥À¥Ö¥ë¥¯¥ê¥Ã¥¯¤¹¤ë
-¤³¤È¤Ç¸Æ¤Ó½Ð¤»¤ë¤è¡£
+Œã‚Å‚Ü‚½•ÒW‚ð‚·‚é‰æ‘œ‚ð•Û‘¶‚·‚éŽž‚É‚ÍAGIMP ŒÅ—LŒ`Ž®‚Ì XCF ‚ðŽg‚¨‚¤
+(Šg’£Žq‚Í ".xcf")B‚±‚ê‚Íì‹Æ’†‚Ì‘S‚Ä‚Ìó‘Ô‚ð‹L˜^‚µ‚Ä‚­‚ê‚é‚ñ‚¾B
+‰æ‘œ‚ðŠ®¬‚³‚¹‚Ä‚©‚çAJPEG, PNG, GIF ‚Æ‚µ‚Ä•Û‘¶‚µ‚æ‚¤‚Ë...
 
-¥ì¥¤¥ä¡¼Ì¾¤Ï¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°Ãæ¤ÎÌ¾Á°¤ò¥À¥Ö¥ë¥¯¥ê¥Ã¥¯¤¹¤ë¤³¤È¤Ç
-ÊÑ¹¹¤Ç¤­¤ë¤è¡£
+"”wŒi" ‚Æ‚¢‚¤–¼‚ÌƒŒƒCƒ„[‚Í“Á•Ê‚¾‚æB“§–¾‚É‚µ‚½‚èA
+ƒŒƒCƒ„[ƒ}ƒXƒN‚ð•t‚¯‚½‚è‚·‚é‚±‚Æ‚ª‚Å‚«‚È‚¢‚ñ‚¾B–{“–‚É“§–¾‚É
+‚·‚éê‡‚É‚Í"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ & ƒpƒX"ƒ_ƒCƒAƒƒO’†‚Å‰EƒNƒŠƒbƒN
+‚µ‚ÄAuƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚ð’Ç‰Áv‚ð‘I‘ð‚µ‚Ä‚â‚é‚Æ‚¢‚¢‚æB
 
-"ÇØ·Ê" ¤È¤¤¤¦Ì¾¤Î¥ì¥¤¥ä¡¼¤ÏÆÃÊÌ¤À¤è¡£Æ©ÌÀ¤Ë¤·¤¿¤ê¡¢
-¥ì¥¤¥ä¡¼¥Þ¥¹¥¯¤òÉÕ¤±¤¿¤ê¤¹¤ë¤³¤È¤¬¤Ç¤­¤Ê¤¤¤ó¤À¡£ËÜÅö¤ËÆ©ÌÀ¤Ë
-¤¹¤ë¾ì¹ç¤Ë¤Ï¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°Ãæ¤Ç±¦¥¯¥ê¥Ã¥¯¤·¤Æ¡¢¡Ö¥¢¥ë¥Õ¥¡
-¥Á¥ã¥ó¥Í¥ë¤òÄÉ²Ã¡×¤òÁªÂò¤·¤Æ¤ä¤ë¤È¤¤¤¤¤è¡£
+‘å”¼‚Ìƒvƒ‰ƒOƒCƒ“‚Í¡ì‹Æ’†‚Ì‰æ‘œ‚Ì—LŒø‚ÈƒŒƒCƒ„[‚¾‚¯‚É“­‚­‚ñ‚¾B
+‚¾‚©‚ç‰æ‘œ‘S‘Ì‚ÉŒø‰Ê‚ð—^‚¦‚½‚¢‚Æ‚«‚É‚Í‰æ‘œ‚ð“‡(ƒŒƒCƒ„[ ->
+‰æ‘œ‚Ì“‡)‚·‚é•K—v‚ª‚ ‚é‚ñ‚¶‚á‚È‚¢‚©‚ÈB
 
-³¨É®¤ä¥¨¥¢¥Ö¥é¥·¡¢±ôÉ®Åù¤ÎÃå¿§¥Ä¡¼¥ë¤ò»È¤¦¤È¤­¤Ë Shift ¤ò²¡¤·¤Ê¤¬¤é
-¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢ºÇ¸å¤ËÉÁ¤¤¤¿ÅÀ¤«¤éº£¥«¡¼¥½¥ë¤¬¤¢¤ëÅÀ¤Þ¤Ç¡¢¿¿¤ÃÄ¾¤°¤Ë
-Àþ¤¬¤Ò¤«¤ì¤ë¤ó¤À¡£
+‘S•”‚Ìƒvƒ‰ƒOƒCƒ“‚ª‘S‚Ä‚ÌŽí—Þ‚Ì‰æ‘œ‚ÉŽg‚¦‚é‚í‚¯‚¶‚á‚È‚¢‚ñ‚¾Bì‹Æ’†‚Ì
+‰æ‘œ‚É‘Î‚µ‚ÄŽg‚¦‚È‚¢‚â‚Â‚ÍAƒƒjƒ…[‚ªŠDF‚É‚È‚Á‚Ä‘I‘ð‚Å‚«‚È‚­‚È‚Á‚Ä‚é
+‚Í‚¸‚¾‚æB‚»‚ñ‚ÈŽž‚É‚Í RGB Œ`Ž®‚É‚µ‚½‚èAƒAƒ‹ƒtƒ@ƒ`ƒƒƒ“ƒlƒ‹‚ð‰Á‚¦‚½‚èA
+‰æ‘œ‚ð“‡‚µ‚Ä‚Ý‚½‚è‚·‚é‚Æ‚¢‚¢‚©‚à‚µ‚ê‚È‚¢‚ËB
 
-ÂçÈ¾¤Î¥×¥é¥°¥¤¥ó¤Ïº£ºî¶ÈÃæ¤Î²èÁü¤ÎÍ­¸ú¤Ê¥ì¥¤¥ä¡¼¤À¤±¤ËÆ¯¤¯¤ó¤À¡£
-¤À¤«¤é²èÁüÁ´ÂÎ¤Ë¸ú²Ì¤òÍ¿¤¨¤¿¤¤¤È¤­¤Ë¤Ï²èÁü¤òÅý¹ç(¥ì¥¤¥ä¡¼ ->
-²èÁü¤ÎÅý¹ç)¤¹¤ëÉ¬Í×¤¬¤¢¤ë¤ó¤¸¤ã¤Ê¤¤¤«¤Ê¡£
-
-ÂçÈ¾¤Î²èÁü·Á¼°¤Ç¤Ï¥ì¥¤¥ä¡¼¤Î¾ðÊó¤¬¤¦¤Þ¤¯ÊÝÂ¸¤µ¤ì¤Ê¤¤¤«¤é¡¢
-¤½¤Î»þÍ­¸ú¤Ê¥ì¥¤¥ä¡¼¤À¤±¤¬ÊÝÂ¸¤µ¤ì¤Æ¤·¤Þ¤¦¤ó¤À¡£ÊÝÂ¸¤·¤¿
-»þ¤Î¥ì¥¤¥ä¡¼¤ä¥Á¥ã¥ó¥Í¥ë¡¢¥¬¥¤¥ÉÅù¤Î¾ðÊó¤ò¼º¤¤¤¿¤¯¤Ê¤«¤Ã¤¿¤é
-GIMP ¤ÎÉ¸½à·Á¼° XCF ¤ò»È¤¦¤È¤¤¤¤¤è¡£
-
-Á´Éô¤Î¥×¥é¥°¥¤¥ó¤¬Á´¤Æ¤Î¼ïÎà¤Î²èÁü¤Ë»È¤¨¤ë¤ï¤±¤¸¤ã¤Ê¤¤¤ó¤À¡£ºî¶ÈÃæ¤Î
-²èÁü¤ËÂÐ¤·¤Æ»È¤¨¤Ê¤¤¤ä¤Ä¤Ï¡¢¥á¥Ë¥å¡¼¤¬³¥¿§¤Ë¤Ê¤Ã¤ÆÁªÂò¤Ç¤­¤Ê¤¯¤Ê¤Ã¤Æ¤ë
-¤Ï¤º¤À¤è¡£¤½¤ó¤Ê»þ¤Ë¤Ï RGB ·Á¼°¤Ë¤·¤¿¤ê¡¢¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤ò²Ã¤¨¤¿¤ê¡¢
-²èÁü¤òÅý¹ç¤·¤Æ¤ß¤¿¤ê¤¹¤ë¤È¤¤¤¤¤«¤â¤·¤ì¤Ê¤¤¤Í¡£
-
-# Ãæµé¼ÔÍÑ
+# ’†‹‰ŽÒ—p‚Ì¬‹Z‚Í‚±‚±‚©‚ç
 #
 
-¥Õ¥¡¥¤¥ëÁªÂò¥À¥¤¥¢¥í¥°¤Ç¤Ï¤¤¤¯¤Ä¤«¤Î shell ¤Î¤è¤¦¤Ë Tab ¥­¡¼¤ò
-»È¤Ã¤Æ¤ÎÊä´Ö¤¬¤Ç¤­¤ë¤è¡£¥Õ¥¡¥¤¥ëÌ¾¤Î°ìÉôÊ¬¤òÂÇ¤Ã¤¿¸å¤Ç¡¢Tab
-¥­¡¼¤ò²¡¤»¤Ð¡Å¡Å¤Û¤é¤Í¡¢Êä´Ö¤µ¤ì¤ë¤Ç¤·¤ç?
+GIMP ‚ÌFX‚È‚à‚Ì‚ðƒhƒ‰ƒbƒO & ƒhƒƒbƒv‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚æB
+—á‚¦‚Î“¹‹ï” ‚âFƒpƒŒƒbƒg‚©‚çF‚ðƒhƒ‰ƒbƒO‚µ‚Ä‰æ‘œ‚Öƒhƒƒbƒv
+‚·‚é‚ÆA‚»‚ÌF‚Å‰æ‘œ‚â‘I‘ð—Ìˆæ‚ª“h‚è‚Â‚Ô‚³‚ê‚é‚ñ‚¾B
 
-¥·¥ç¡¼¥È¥«¥Ã¥È¥­¡¼¤Î³äÅö¤òÊÑ¤¨¤ë¤Ë¤Ï¡¢¤É¤ó¤Ê¥á¥Ë¥å¡¼¤Ç¤â¤Þ¤º¤½¤Î
-¥á¥Ë¥å¡¼¤ò¸Æ¤Ó½Ð¤·¤Æ¡¢¥á¥Ë¥å¡¼¤Ë¥«¡¼¥½¥ë¤òÅö¤Æ¤¿¾õÂÖ¤Ç¡¢¿·¤·¤¯
-³ä¤êÅö¤Æ¤ë¥­¡¼¤ÎÁÈ¹ç¤»¤ò²¡¤¹¤À¤±¤ÇÎÉ¤¤¤ó¤À¡£Æ°Åª¤Ë¹Ô¤ï¤ì¤ë¤·¡¢
-GIMP ¤Î½ªÎ»»þ¤Ë¼«Æ°Åª¤ËÊÝÂ¸¤µ¤ì¤ë¤è¡£
+•`‰æƒc[ƒ‹(ŠG•MAƒGƒAƒuƒ‰ƒVA‰”•M)‚ðŽg‚Á‚Ä‚¢‚é‚Æ‚«‚É Shift ‚ð
+‰Ÿ‚µ‚È‚ª‚çƒNƒŠƒbƒN‚·‚é‚ÆƒJ[ƒ\ƒ‹‚Ì‚Æ‚±‚ë‚Ü‚Å’¼ü‚ªˆø‚©‚ê‚é‚æB
+‚³‚ç‚É Ctrl ‚ð‰Ÿ‚µ‚Ä‚â‚ê‚ÎA’¼ü‚ª15“x’PˆÊ‚É‚È‚é‚ñ‚¾B
 
-µìÈÇ¤Ë¤¢¤Ã¤¿¥Á¥ã¥ó¥Í¥ë¤Ë´Ø¤¹¤ëÁàºî¤ÏÁ´¤Æ¤â¤Ã¤È¶¯ÎÏ¤Ç»È¤¤¤ä¤¹¤¤
-¥ì¥¤¥ä¡¼¤È¥ì¥¤¥ä¡¼¥â¡¼¥É¤ËÃÖ¤­´¹¤¨¤é¤ì¤¿¤ó¤À¡£´·¤ì¤ë¤Þ¤Ç¤Ë¾¯¤·
-»þ´Ö¤¬¤«¤«¤ë¤«¤â¤·¤ì¤Ê¤¤¤±¤ì¤É¡¢¤³¤Ã¤Á¤ÎÊý¤¬Ã±½ã¤À¤·¡¢»È¤¤¤ä¤¹¤¤
-¤È»×¤¦¤è¡£
+ƒtƒ@ƒCƒ‹‘I‘ðƒ_ƒCƒAƒƒO‚Å‚Í‚¢‚­‚Â‚©‚Ì shell ‚Ì‚æ‚¤‚É Tab ƒL[‚ð
+Žg‚Á‚Ä‚Ì•âŠÔ‚ª‚Å‚«‚é‚æBƒtƒ@ƒCƒ‹–¼‚Ìˆê•”•ª‚ð‘Å‚Á‚½Œã‚ÅATab
+ƒL[‚ð‰Ÿ‚¹‚Îdd‚Ù‚ç‚ËA•âŠÔ‚³‚ê‚é‚Å‚µ‚å?
 
-É½¼¨¤µ¤ì¤Æ¤¤¤ëÁë¤è¤ê¤â²èÁü¤ÎÊý¤¬Âç¤­¤¤¾ì¹ç¤Ë¤Ï¡¢¥Þ¥¦¥¹¤ÎÃæ¥Ü¥¿¥ó¤Ç
-¤º¤ê¤º¤êÉ½¼¨ÎÎ°è¤òÆ°¤«¤»¤ë¤è¡£
+ƒVƒ‡[ƒgƒJƒbƒgƒL[‚ÌŠ„“–‚ð•Ï‚¦‚é‚É‚ÍA‚Ç‚ñ‚Èƒƒjƒ…[‚Å‚à‚Ü‚¸‚»‚Ì
+ƒƒjƒ…[‚ðŒÄ‚Ño‚µ‚ÄAƒƒjƒ…[‚ÉƒJ[ƒ\ƒ‹‚ð“–‚Ä‚½ó‘Ô‚ÅAV‚µ‚­
+Š„‚è“–‚Ä‚éƒL[‚Ì‘g‡‚¹‚ð‰Ÿ‚·‚¾‚¯‚Å—Ç‚¢‚ñ‚¾B“®“I‚És‚í‚ê‚é‚µA
+GIMP ‚ÌI—¹Žž‚ÉŽ©“®“I‚É•Û‘¶‚³‚ê‚é‚æB
 
-ÌÜÀ¹ÏÈ¤Î¾å¤«¤é¥É¥é¥Ã¥°¤¹¤ë¤ÈÄêµ¬¤ò²èÁü¾å¤Ë°ú¤­½Ð¤»¤ë¤è¡£ÁªÂòÎÎ°è
-¤Ê¤ó¤«¤Ï¤³¤ÎÄêµ¬¤ËµÛ¤¤¤Ä¤¯¤è¤¦¤Ë¤Ê¤Ã¤Æ¤ë¤ó¤À¡£¤³¤ÎÄêµ¬¤Ï°ÜÆ°¥Ä¡¼¥ë
-¤ò»È¤Ã¤Æ²èÁü¾å¤«¤éÄÉ¤¤½Ð¤¹¤³¤È¤â¤Ç¤­¤ë¤è¤¦¤Ë¤Ê¤Ã¤Æ¤ë¤è¡£
+•\Ž¦‚³‚ê‚Ä‚¢‚é‘‹‚æ‚è‚à‰æ‘œ‚Ì•û‚ª‘å‚«‚¢ê‡‚É‚ÍAƒ}ƒEƒX‚Ì’†ƒ{ƒ^ƒ“‚Å
+‚¸‚è‚¸‚è•\Ž¦—Ìˆæ‚ð“®‚©‚¹‚é‚æB
 
-GIMP ¤Ï¼«Æ° gzip °µ½Ì¤ò¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤ë¤è¡£Â¾¤ÀÃ±¤Ë¥Õ¥¡¥¤¥ëÌ¾¤Ë
-'.gz' ¤ò( bzip2 ¤¬¤¢¤ë»þ¤Ë¤Ï '.bz2' ¤ÎÊý¤¬¤¤¤¤¤«¤Ê)ÉÕ¤±¤ë¤À¤±¤Ç¡¢
-¼«Æ°Åª¤Ë°µ½Ì¤µ¤ì¤ë¤è¤¦¤Ë¤Ê¤Ã¤Æ¤ë¤ó¤À¡£¤â¤Á¤í¤ó¡¢ÆÉ¤ß¹þ¤à»þ¤Ë¤â
-¼«Æ°¤ÇÅ¸³«¤µ¤ì¤ë¤è¡£
+–Ú·˜g‚Ìã‚©‚çƒhƒ‰ƒbƒO‚·‚é‚Æ’è‹K‚ð‰æ‘œã‚Éˆø‚«o‚¹‚é‚æB‘I‘ð—Ìˆæ
+‚È‚ñ‚©‚Í‚±‚Ì’è‹K‚É‹z‚¢‚Â‚­‚æ‚¤‚É‚È‚Á‚Ä‚é‚ñ‚¾B‚±‚Ì’è‹K‚ÍˆÚ“®ƒc[ƒ‹
+‚ðŽg‚Á‚Ä‰æ‘œã‚©‚ç’Ç‚¢o‚·‚±‚Æ‚à‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚é‚æB
 
-ÎÎ°è¤òÁªÂò¤·»Ï¤á¤ë»þ¤Ë Shift ¥­¡¼¤ò²¡¤·¤¿¤Þ¤Þ¤Ë¤·¤Æ¤ª¤¯¤È¡¢¤½¤Î»þ¤Î
-ÁªÂòÎÎ°è¤òÃÖ¤­´¹¤¨¤ë¤ó¤¸¤ã¤Ê¤¯¤Ã¤Æ¡¢ÉÕ¤±²Ã¤¨¤ë»ö¤¬½ÐÍè¤ë¤ó¤À¡£Ctrl
-¤ò²¡¤·¤Ê¤¬¤é»Ï¤á¤ì¤ÐÎÎ°è¤ò¤µ¤Ã°ú¤¯»ö¤Ë¤Ê¤ë¤·¤Í¡£
+"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ & ƒpƒX"ƒ_ƒCƒAƒƒO‚©‚ç“¹‹ï” ‚ÖƒŒƒCƒ„[‚ð
+Ž‚Á‚Ä‚¢‚­‚±‚Æ‚à‚Å‚«‚é‚ñ‚¾B‚·‚é‚Æ‚»‚ÌƒŒƒCƒ„[‚ÅV‚µ‚¢‰æ‘œ‚ð
+ì‚é‚ñ‚¾B
 
-ÁªÂòÎÎ°è¤òºî¤Ã¤Æ¤ëºÇÃæ¤Ë Shift ¤ä Ctrl ¤ò²¡¤¹¤³¤È¤Ç¡¢ÁªÂòÎÎ°è¤ò
-ÀµÊý·Á¤äÀµ±ß¤Ë¤·¤¿¤ê¡¢ÎÎ°è¤òÂÐ³Ñ¤¸¤ã¤Ê¤¯¤Ã¤ÆÃæ¿´¤È³Ñ¤Ç»ØÄê¤¹¤ë
-¤³¤È¤â¤Ç¤­¤¿¤ê¤¹¤ë¤ó¤À¡£
+ƒtƒ[ƒeƒBƒ“ƒO‘I‘ð‚ÍV‹KƒŒƒCƒ„[‚©ÅŒã‚É‘€ì‚µ‚½ƒAƒNƒeƒBƒuƒŒƒCƒ„[
+‚ÉŒÅ’è‚·‚é•K—v‚ª‚ ‚é‚ñ‚¾B"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ & ƒpƒX"ƒ_ƒCƒAƒƒO‚Å
+V‹KƒŒƒCƒ„[‚©ƒŒƒCƒ„[ŒÅ’èƒ{ƒ^ƒ“‚ðƒNƒŠƒbƒN‚·‚é‚©Aƒƒjƒ…[‚ðŽg‚¤‚Ì‚³B
 
-# ¾åµé¼ÔÍÑ
+GIMP ‚ÍŽ©“® gzip ˆ³k‚ðƒTƒ|[ƒg‚µ‚Ä‚¢‚é‚æB‘¼‚¾’P‚Éƒtƒ@ƒCƒ‹–¼‚É
+'.gz' ‚ð( bzip2 ‚ª‚ ‚éŽž‚É‚Í '.bz2' ‚Ì•û‚ª‚¢‚¢‚©‚È)•t‚¯‚é‚¾‚¯‚ÅA
+Ž©“®“I‚Éˆ³k‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚Ä‚é‚ñ‚¾B‚à‚¿‚ë‚ñA“Ç‚Ýž‚ÞŽž‚É‚à
+Ž©“®‚Å“WŠJ‚³‚ê‚é‚æB
+
+—Ìˆæ‚ð‘I‘ð‚µŽn‚ß‚éŽž‚É Shift ƒL[‚ð‰Ÿ‚µ‚½‚Ü‚Ü‚É‚µ‚Ä‚¨‚­‚ÆA‚»‚ÌŽž‚Ì
+‘I‘ð—Ìˆæ‚ð’u‚«Š·‚¦‚é‚ñ‚¶‚á‚È‚­‚Á‚ÄA•t‚¯‰Á‚¦‚éŽ–‚ªo—ˆ‚é‚ñ‚¾BCtrl
+‚ð‰Ÿ‚µ‚È‚ª‚çŽn‚ß‚ê‚Î—Ìˆæ‚ð‚³‚Áˆø‚­Ž–‚É‚È‚é‚µ‚ËB
+
+‘I‘ð—Ìˆæ‚ðì‚Á‚Ä‚éÅ’†‚É Shift ‚â Ctrl ‚ð‰Ÿ‚·‚±‚Æ‚ÅA‘I‘ð—Ìˆæ‚ð
+³•ûŒ`‚â³‰~‚É‚µ‚½‚èA—Ìˆæ‚ð‘ÎŠp‚¶‚á‚È‚­‚Á‚Ä’†S‚ÆŠp‚ÅŽw’è‚·‚é
+‚±‚Æ‚à‚Å‚«‚½‚è‚·‚é‚ñ‚¾B
+
+•ÒW -> ƒXƒgƒ[ƒN•`‰æ ‚ðŽg‚Á‚ÄŒ»Ý—LŒø‚Èƒuƒ‰ƒV‚Å‘I‘ð—Ìˆæ‚Ì‰‚É
+‰ˆ‚Á‚Ä•`‚­‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B³•ûŒ`‚â³‰~‚ð‘‚«‚½‚¢Žž‚É‚Í•Ö—˜‚¾‚ËB
+‚à‚Á‚Æ•¡ŽG‚È‚Ì‚ð‘‚«‚½‚¢Žž‚É‚Í ƒtƒBƒ‹ƒ^ -> •`ŽÊ -> Gfig ‚¾‚ËB
+
+ƒpƒX‚ðƒXƒgƒ[ƒN•`‰æ(•ÒW->ƒXƒgƒ[ƒN•`‰æ)‚·‚é‚Æ‚«‚ÍŒ»Ý‚Ì•`‰æƒc[ƒ‹‚Ì
+Ý’è‚ðŽg‚¤‚ñ‚¾BƒOƒ‰ƒf[ƒVƒ‡ƒ“ƒ‚[ƒh‚ÌŠG•M‚âƒpƒ^[ƒ“‚ðŽg‚Á‚½ƒXƒ^ƒ“ƒv
+ƒc[ƒ‹‚âÁ‚µƒSƒ€‚â‚É‚¶‚Ýƒc[ƒ‹‚¾‚Á‚ÄŽg‚¤‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B
+
+ƒxƒWƒGƒc[ƒ‹‚ðŽg‚Á‚Ä•¡ŽG‚È‘I‘ð—Ìˆæ‚ðì‚ê‚é‚æB"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ 
+& ƒpƒX"ƒ_ƒCƒAƒƒO‚Ì"ƒpƒX"ƒ^ƒu‚Å‚Í•¡”‚ÌƒpƒX‚Åì‹Æ‚µ‚½‚è‘I‘ð—Ìˆæ‚É
+•ÏŠ·‚µ‚½‚è‚Å‚«‚é‚ñ‚¾B
+
+‘I‘ð—Ìˆæ‚ð•Ï‚¦‚é‚½‚ß‚É•`‰æƒc[ƒ‹‚ðŽg‚¤‚±‚Æ‚ª‚Å‚«‚é‚æB
+‰æ‘œƒEƒBƒ“ƒhƒE‚Ì¶‰º‚ÌƒNƒCƒbƒNƒ}ƒXƒNƒ{ƒ^ƒ“‚ðƒNƒŠƒbƒN‚µ‚æ‚¤B
+•`‰æ‚Ì•ÏX‚ªI‚í‚Á‚½‚ç‚à‚¤ˆê“xƒNƒŠƒbƒN‚µ‚Ä‚â‚é‚±‚Æ‚Å‚¢‚Â‚à‚Ì
+‘I‘ð—Ìˆæ‚É–ß‚é‚ñ‚¾B
+
+‘I‘ð—Ìˆæ‚ðƒ`ƒƒƒ“ƒlƒ‹‚É•Û‘¶‚µ‚Ä(‘I‘ð->ƒ`ƒƒƒ“ƒlƒ‹‚É•Û‘¶)A•`‰æƒc[ƒ‹‚Å
+‚±‚Ìƒ`ƒƒƒ“ƒlƒ‹‚ðC³‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚æB"ƒŒƒCƒ„[, ƒ`ƒƒƒ“ƒlƒ‹ & ƒpƒX"
+ƒ_ƒCƒAƒƒO‚Ì"ƒ`ƒƒƒ“ƒlƒ‹"ƒ^ƒu‚Åƒ{ƒ^ƒ“‚ðŽg‚Á‚ÄA‚±‚Ìƒ`ƒƒƒ“ƒlƒ‹‚ð•\Ž¦
+‚µ‚½‚è‘I‘ð—Ìˆæ‚É•ÏŠ·‚µ‚½‚è‚Å‚«‚é‚æB
+
+# ã‹‰ŽÒ—p‚Ì¬‹Z‚Í‚±‚±‚©‚ç
+# (Žå‚ÉƒVƒ‡[ƒgƒJƒbƒgƒL[‚Ì‚¨•×‹­)
 #
 
-¥Õ¥¡¥¸¡¼ÁªÂò¥Ä¡¼¥ë¤Ç¤Ï¥¯¥ê¥Ã¥¯¤·¤¿¸å¤Ë¡¢º¸±¦¤Ë¥É¥é¥Ã¥°¤¹¤ë»ö¤Ç
-ÁªÂòÎÎ°è¤ò¹­¤²¤¿¤ê¶¹¤á¤¿¤ê¤Ç¤­¤ë¤ó¤À¡£
+‰æ–Ê‚ª‚«‚ã‚¤‚­‚Â‚ÈŽž‚ÍA‰æ‘œƒEƒBƒ“ƒhƒE‚Å‰½‰ñ‚© Tab ƒL[‚ð‰Ÿ‚·‚±‚Æ‚Å
+“¹‹ï” ‚âƒ_ƒCƒAƒƒO‚ðo‚µ“ü‚ê‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B
 
-¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°¤Ç¡ÖÌÜ¡×¤Î¥¢¥¤¥³¥ó¤ò Shift ¤ò²¡¤·¤Ê¤¬¤é¥¯¥ê¥Ã¥¯
-¤¹¤ë¤³¤È¤Ç¡¢¤½¤ì°Ê³°¤Î¥ì¥¤¥ä¡¼Á´Éô¤ò±£¤¹¤³¤È¤¬¤Ç¤­¤ë¤ó¤À¡£¤â¤¦°ì²ó
-Æ±¤¸»ö¤ò¤¹¤ì¤ÐÁ´Éô¤Î¥ì¥¤¥ä¡¼¤¬É½¼¨¤µ¤ì¤ë¤è¤¦¤Ë¤Ê¤ë¤è¡£
+ƒtƒ@ƒW[‘I‘ðƒc[ƒ‹‚Å‚ÍƒNƒŠƒbƒN‚µ‚½Œã‚ÉA¶‰E‚Éƒhƒ‰ƒbƒO‚·‚éŽ–‚Å
+‘I‘ð—Ìˆæ‚ðL‚°‚½‚è‹·‚ß‚½‚è‚Å‚«‚é‚ñ‚¾B
 
-¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°¤Î¥ì¥¤¥ä¡¼¥Þ¥¹¥¯¤Î½Ì¾®É½¼¨¤ò Ctrl ¤ò²¡¤·¤Ê¤¬¤é
-¥¯¥ê¥Ã¥¯¤¹¤ë¤È¥ì¥¤¥ä¡¼¥Þ¥¹¥¯¤ÎÍ­¸úÌµ¸ú¤òÀÚÂØ¤¨¤é¤ì¤ë¤ó¤À¡£
+ƒŒƒCƒ„[ƒ_ƒCƒAƒƒO‚Åu–Úv‚ÌƒAƒCƒRƒ“‚ð Shift ‚ð‰Ÿ‚µ‚È‚ª‚çƒNƒŠƒbƒN
+‚·‚é‚±‚Æ‚ÅA‚»‚êˆÈŠO‚ÌƒŒƒCƒ„[‘S•”‚ð‰B‚·‚±‚Æ‚ª‚Å‚«‚é‚ñ‚¾B‚à‚¤ˆê‰ñ
+“¯‚¶Ž–‚ð‚·‚ê‚Î‘S•”‚ÌƒŒƒCƒ„[‚ª•\Ž¦‚³‚ê‚é‚æ‚¤‚É‚È‚é‚æB
 
-¥ì¥¤¥ä¡¼¥À¥¤¥¢¥í¥°¤Î¥ì¥¤¥ä¡¼¥Þ¥¹¥¯¤Î½Ì¾®É½¼¨¤ò Alt ¤ò²¡¤·¤Ê¤¬¤é
-¥¯¥ê¥Ã¥¯¤¹¤ë¤È¥ì¥¤¥ä¡¼¥Þ¥¹¥¯¤òÄ¾ÀÜ¸«¤ë¥â¡¼¥É¤ËÀÚÂØ¤¨¤é¤ì¤ë¤ó¤À¡£
+ƒŒƒCƒ„[ƒ_ƒCƒAƒƒO‚ÌƒŒƒCƒ„[ƒ}ƒXƒN‚Ìk¬•\Ž¦‚ð Ctrl ‚ð‰Ÿ‚µ‚È‚ª‚ç
+ƒNƒŠƒbƒN‚·‚é‚ÆƒŒƒCƒ„[ƒ}ƒXƒN‚Ì—LŒø–³Œø‚ðØ‘Ö‚¦‚ç‚ê‚é‚ñ‚¾B
 
-Alt ¤ò²¡¤·¤Ê¤¬¤é Tab ¤ò²¡¤¹¤È¥ì¥¤¥ä¡¼¤ò½ç¤ËÀÚÂØ¤¨¤é¤ì¤ë¤ó¤À¡£
-(Áë¥Þ¥Í¡¼¥¸¥ã¤¬¤³¤Î³äÅö¤ò²£¼è¤ê¤·¤Æ¤Ê¤±¤ì¤Ð¤Í¡Å¡Å)
+ƒŒƒCƒ„[ƒ_ƒCƒAƒƒO‚ÌƒŒƒCƒ„[ƒ}ƒXƒN‚Ìk¬•\Ž¦‚ð Alt ‚ð‰Ÿ‚µ‚È‚ª‚ç
+ƒNƒŠƒbƒN‚·‚é‚ÆƒŒƒCƒ„[ƒ}ƒXƒN‚ð’¼ÚŒ©‚éƒ‚[ƒh‚ÉØ‘Ö‚¦‚ç‚ê‚é‚ñ‚¾B
 
-ÅÉ¤ê¤Ä¤Ö¤·¥Ä¡¼¥ë¤Ç¤Ï Shift ¤ò²¡¤·¤Ê¤¬¤é¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢
-ÇØ·Ê¿§¤ÇÅÉ¤ê¤Ä¤Ö¤¹¤³¤È¤¬¤Ç¤­¤ë¤è¡£
+Alt ‚ð‰Ÿ‚µ‚È‚ª‚ç Tab ‚ð‰Ÿ‚·‚ÆƒŒƒCƒ„[‚ð‡‚ÉØ‘Ö‚¦‚ç‚ê‚é‚ñ‚¾B
+(‘‹ƒ}ƒl[ƒWƒƒ‚ª‚±‚ÌŠ„“–‚ð‰¡Žæ‚è‚µ‚Ä‚È‚¯‚ê‚Î‚Ëdd)
 
-ÊÑ´¹¥Ä¡¼¥ë¤Î²óÅ¾¥â¡¼¥É¤Ç¤Ï Ctrl ¤ò²¡¤·¤Ê¤¬¤é¥É¥é¥Ã¥°¤¹¤ë¤È¡¢
-²óÅ¾¤¬15ÅÙÃ±°Ì¤Ë¤Ê¤ë¤ó¤À¡£
+“h‚è‚Â‚Ô‚µƒc[ƒ‹‚Å‚Í Shift ‚ð‰Ÿ‚µ‚È‚ª‚çƒNƒŠƒbƒN‚·‚é‚ÆA
+”wŒiF‚Å“h‚è‚Â‚Ô‚·‚±‚Æ‚ª‚Å‚«‚é‚æB
 
-Alt ¤ò²¡¤·¤Ê¤¬¤é¥É¥é¥Ã¥°¤¹¤ë¤³¤È¤Ç¡¢ÁªÂòÎÎ°è¤òÃÖ¤­´¹¤¨¤¿¤ê
-Ä´Àá¤·¤¿¤ê¤Ç¤­¤ë¤ó¤À¡£
+•ÏŠ·ƒc[ƒ‹‚Ì‰ñ“]ƒ‚[ƒh‚Å‚Í Ctrl ‚ð‰Ÿ‚µ‚È‚ª‚çƒhƒ‰ƒbƒO‚·‚é‚ÆA
+‰ñ“]‚ª15“x’PˆÊ‚É‚È‚é‚ñ‚¾B
 
-Ê¸»ú¤¬¥¬¥¿¥¬¥¿¤Ë¤Ê¤Ã¤Á¤ã¤¦¤Î¤Ï¥¹¥±¥é¡¼¥Ö¥ë¥Õ¥©¥ó¥È¤¸¤ã¤Ê¤¤
-¤«¤é¤À¤è¡£¤Û¤È¤ó¤É¤Î X ¥µ¡¼¥Ð¤Ï Type 1 Postscript ¥Õ¥©¥ó¥È¤ò
-¥µ¥Ý¡¼¥È¤·¤Æ¤ë¤Ï¤º¤À¤«¤é¡¢¼ê¤Ë¤¤¤ì¤Æ¥¤¥ó¥¹¥È¡¼¥ë¤·¤è¤¦¡£
+Alt ‚ð‰Ÿ‚µ‚È‚ª‚çƒhƒ‰ƒbƒO‚·‚é‚±‚Æ‚ÅA‘I‘ð—Ìˆæ‚ð’u‚«Š·‚¦‚½‚è
+’²ß‚µ‚½‚è‚Å‚«‚é‚ñ‚¾B
 
-¿·¤·¤¤ÈÇ¤Î¤â¤Î¤ËÆþ¤ì´¹¤¨¤¿¤é¤Þ¤º ~/.gimp ¤òºï½ü¤¹¤ë¤Î¤òËº¤ì¤º¤Ë¡£
+•¶Žš‚ªƒKƒ^ƒKƒ^‚É‚È‚Á‚¿‚á‚¤‚Ì‚ÍƒXƒPƒ‰[ƒuƒ‹ƒtƒHƒ“ƒg‚¶‚á‚È‚¢
+‚©‚ç‚¾‚æB‚Ù‚Æ‚ñ‚Ç‚Ì X ƒT[ƒo‚Í Type 1 Postscript ƒtƒHƒ“ƒg‚ð
+ƒTƒ|[ƒg‚µ‚Ä‚é‚Í‚¸‚¾‚©‚çAŽè‚É‚¢‚ê‚ÄƒCƒ“ƒXƒg[ƒ‹‚µ‚æ‚¤B
+‚¢‚­‚Â‚©‚ÌƒtƒHƒ“ƒgƒT[ƒo‚ÍƒXƒPƒ‰[ƒuƒ‹‚È TrueType ƒtƒHƒ“ƒg‚ð
+Žg‚¦‚é‚æB
 
-ÊÔ½¸ -> ¥¹¥È¥í¡¼¥¯ÉÁ²è ¤ò»È¤Ã¤Æ¸½ºßÍ­¸ú¤Ê¥Ö¥é¥·¤ÇÁªÂòÎÎ°è¤Î±ï¤Ë
-±è¤Ã¤ÆÉÁ¤¯¤³¤È¤¬¤Ç¤­¤ë¤ó¤À¡£ÀµÊý·Á¤äÀµ±ß¤ò½ñ¤­¤¿¤¤»þ¤Ë¤ÏÊØÍø¤À¤Í¡£
-¤â¤Ã¤ÈÊ£»¨¤Ê¤Î¤ò½ñ¤­¤¿¤¤»þ¤Ë¤Ï ¥Õ¥£¥ë¥¿ -> ÉÁ¼Ì -> Gfig ¤À¤Í¡£
+³‰~‚ðì‚é‚É‚ÍA‘È‰~‘I‘ðƒc[ƒ‹‚ðŽg‚Á‚Ä‚éŽž‚É Shift ‚ð‰Ÿ‚·‚ñ‚¾B
+‚³‚ç‚É³Šm‚ÉˆÊ’u‚ðŒˆ‚ß‚éŽž‚É‚Í’è‹K‚ð‰~‚ÌÚü‚Æ‚È‚éêŠ‚É…•½A
+‚’¼‚É’u‚¢‚Ä‚¨‚±‚¤B‚ÅAÅŒã‚É’è‹K‚ÌŒð“_‚ÉƒJ[ƒ\ƒ‹‚ð‚à‚Á‚Ä
+‚±‚ê‚ÎŠ®àø‚³B
 
-Àµ±ß¤òºî¤ë¤Ë¤Ï¡¢ÂÊ±ßÁªÂò¥Ä¡¼¥ë¤ò»È¤Ã¤Æ¤ë»þ¤Ë Shift ¤ò²¡¤¹¤ó¤À¡£
-¤µ¤é¤ËÀµ³Î¤Ë°ÌÃÖ¤ò·è¤á¤ë»þ¤Ë¤ÏÄêµ¬¤ò±ß¤ÎÀÜÀþ¤È¤Ê¤ë¾ì½ê¤Ë¿åÊ¿¡¢
-¿âÄ¾¤ËÃÖ¤¤¤Æ¤ª¤³¤¦¡£¤Ç¡¢ºÇ¸å¤ËÄêµ¬¤Î¸òÅÀ¤Ë¥«¡¼¥½¥ë¤ò¤â¤Ã¤Æ
-¤³¤ì¤Ð´°àú¤µ¡£
+ƒXƒLƒƒƒ“‚µ‚½‰æ‘œ‚ÌF‚ªŒ¸‚Á‚¿‚á‚¤‚Æ‚«‚É‚ÍAƒŒƒxƒ‹ƒc[ƒ‹(‰æ‘œ->F->
+ƒŒƒxƒ‹)‚ÅuŽ©“®vƒ{ƒ^ƒ“‚ðŽg‚Á‚Äƒg[ƒ“‚ðŠÈ’P‚É‰ü‘P‚·‚é‚±‚Æ‚ª‚Å‚«‚é‚æB
+ƒJƒ‰[ƒLƒƒƒXƒg‚ª‚ ‚ê‚ÎAƒJ[ƒuƒc[ƒ‹(‰æ‘œ->F->ƒJ[ƒu)‚ÅC³‚·‚é
+‚±‚Æ‚ª‚Å‚«‚é‚æB
 
-# µ»¤ª¤·¤Þ¤¤
+# (‹Z‚¨‚µ‚Ü‚¢)
 
