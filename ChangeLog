@@ -1,3 +1,7 @@
+Sat Aug  1 20:50:47 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile_manager.c: Added an assertion check in tile_manager_map
+
 Fri Jul 31 15:41:30 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* applied gimp-alt-980729-0 and gimp-alt-980730-0, adds brush

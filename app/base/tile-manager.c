@@ -596,6 +596,11 @@ tile_manager_map (TileManager *tm,
   /*  printf(")");fflush(stdout);*/
 
   TILE_MUTEX_LOCK (*tile_ptr);
+  if ((*tile_ptr)->ewidth  != srctile->ewidth ||
+      (*tile_ptr)->eheight != srctile->eheight ||
+      (*tile_ptr)->bpp     != srctile->bpp) {
+    g_warning ("tile_manager_map: nonconformant map (%p -> %p)",
+	       srctile, *tile_ptr);
   tile_detach (*tile_ptr, tm, tile_num);
 
   /*  printf(">");fflush(stdout);*/
