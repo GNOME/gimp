@@ -116,3 +116,8 @@
     'xwd' => { libdep => 'glib' },
     'zealouscrop' => { libdep => 'glib' }
 );
+
+@extra = qw(
+    winclipboard.c
+    winprint.c
+);

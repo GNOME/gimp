@@ -18,6 +18,12 @@ foreach (sort keys %plugins) {
     $bins .= " \\\n";
 }
 
+$extra = "";
+foreach (@extra) { $extra .= "\t$_\t\\\n" }
+if ($extra) {
+    $extra =~ s/\t\\\n$//s;
+    $extra = "\t\\\n$extra";
+}
 
 foreach ($bins, $opts) { s/ \\\n$//s }
 
@@ -26,7 +32,7 @@ libexecdir = \$(gimpplugindir)/plug-ins
 
 EXTRA_DIST = \\
 	mkgen.pl	\\
-	plugin-defs.pl
+	plugin-defs.pl$extra
 
 AM_CPPFLAGS = \\
 	-DLOCALEDIR=\\""\$(localedir)"\\"

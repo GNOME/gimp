@@ -35,7 +35,6 @@
 #include "gimage.h"
 
 #include "libgimp/gimpintl.h"
-#define ROUND(x) (int)((x) + .5)
 
 /*  the dodgeburn structures  */
 

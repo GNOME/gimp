@@ -52,13 +52,13 @@
 #ifdef HAVE_RINT
 #define RINT(x) rint(x)
 #else
-#define RINT(x) floor ((x)+0.5)
+#define RINT(x) floor ((x) + 0.5)
 #endif
 
-#define ROUND(x) ((int) ((x)+0.5))
+#define ROUND(x) ((int) ((x) + 0.5))
 
 /* Square */
-#define SQR(x) ((x)*(x))
+#define SQR(x) ((x) * (x))
 
 /* limit a (0->511) int to 255 */
 #define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))

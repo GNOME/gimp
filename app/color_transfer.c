@@ -21,8 +21,6 @@
 #include "appenv.h"
 #include "color_transfer.h"
 
-#define  SQR(x) ((x) * (x))
-
 /*  for lightening  */
 double  highlights_add[256];
 double  midtones_add[256];

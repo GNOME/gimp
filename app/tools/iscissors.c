@@ -139,7 +139,6 @@ static IScissorsOptions *iscissors_options = NULL;
 #define  EPSILON           0.00001
 
 /*  functional defines  */
-#define  SQR(x)            ((x) * (x))
 #define  BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
      ((1-dy) * ((1-dx)*jk + dx*j1k) + \
       dy  * ((1-dx)*jk1 + dx*j1k1))

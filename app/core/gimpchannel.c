@@ -24,6 +24,7 @@
 #include "channel.h"
 #include "drawable.h"
 #include "errors.h"
+#include "gdisplay.h"
 #include "gimage_mask.h"
 #include "layer.h"
 #include "paint_funcs.h"

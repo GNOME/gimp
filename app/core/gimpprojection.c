@@ -52,8 +52,6 @@
 #define OVERHEAD          25  /*  in units of pixel area  */
 #define EPSILON           5
 
-#define ROUND(x) ((int) (x + 0.5))
-
 #define MAX_TITLE_BUF 256
 
 /* variable declarations */

@@ -43,7 +43,6 @@
 #define  TARGET_HEIGHT  15
 #define  TARGET_WIDTH   15
 
-#define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
 
 /*  global variables--for use in the various paint tools  */

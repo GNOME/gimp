@@ -27,7 +27,7 @@
 void *        flip_tool_transform (Tool *, gpointer, int);
 
 TileManager * flip_tool_flip (GimpImage *, GimpDrawable *,
-			      TileManager *, int, OrientationType);
+			      TileManager *, int, InternalOrientationType);
 Tool *        tools_new_flip         (void);
 void          tools_free_flip_tool   (Tool *);
 

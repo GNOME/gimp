@@ -1,3 +1,27 @@
+Fri Aug 13 15:28:00 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: add pixmaps/dropper.xpm to EXTRA_DIST
+
+	* app/appenv.h: minor formatting changes
+
+	* app/channel.c: #include "gdisplay.h"
+
+	* app/color_transfer.c
+	* app/dodgeburn.c
+	* app/gdisplay.c
+	* app/iscissors.c
+	* app/paint_core.c: remove extra SQR and ROUND definitions
+
+	* app/flip_tool.c: hackaround the flip tool options constant problem
+
+	* app/flip_tool.[ch]: use InternalOrientationType for flip_tool_flip
+	prototype
+
+	* app/interface.c: use GTK_LABEL case in gtk_label_set_justify
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl: add @extra EXTRA_DIST processing
+
 Fri Aug 13 16:39:25 1999 Adrian Likins <alikins@redhat.com>
 
 	* app/airbrush.c

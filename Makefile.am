@@ -34,6 +34,7 @@ EXTRA_DIST = \
 	pixmaps/chain.xpm	\
 	pixmaps/channel.xbm	\
 	pixmaps/delete.xpm	\
+	pixmaps/dropper.xpm	\
 	pixmaps/duplicate.xpm	\
 	pixmaps/eek.xpm		\
 	pixmaps/eye.xbm		\

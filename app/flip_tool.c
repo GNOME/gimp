@@ -50,15 +50,18 @@ struct _FlipOptions
 
 static FlipOptions *flip_options = NULL;
 
-
 /*  functions  */
+
+/*  FIXME: Lame - 1 hacks abound since the code assumes certain values for
+ *  the ORIENTATION_FOO constants.
+ */
 
 static void
 flip_options_reset (void)
 {
   FlipOptions *options = flip_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
 }
 
 static FlipOptions *
@@ -88,7 +91,7 @@ flip_options_new (void)
 					   type_label,
 					   type_value,
 					   2);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -108,9 +111,9 @@ flip_modifier_key_func (Tool        *tool,
       break;
     case GDK_Control_L: case GDK_Control_R:
       if (flip_options->type == ORIENTATION_HORIZONTAL)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL]), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
       else
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL]), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
       break;
     }
 }
@@ -140,7 +143,8 @@ flip_tool_transform (Tool     *tool,
 
     case FINISH :
       /*      transform_core->trans_info[FLIP] *= -1.0;*/
-      return flip_tool_flip (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      return flip_tool_flip (gdisp->gimage,
+	  		     gimage_active_drawable (gdisp->gimage),
 			     transform_core->original, 
 			     (int)transform_core->trans_info[FLIP_INFO],
 			     flip_options->type);
@@ -171,14 +175,15 @@ flip_cursor_update (Tool           *tool,
 				   &x, &y, TRUE, FALSE);
 
       if (x >= off_x && y >= off_y &&
-      x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-      y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
-	  if (gimage_mask_is_empty (gdisp->gimage) || gimage_mask_value (gdisp->gimage, x, y))
+	  if (gimage_mask_is_empty (gdisp->gimage) ||
+	      gimage_mask_value (gdisp->gimage, x, y))
 	    {
 	      if (flip_options->type == ORIENTATION_HORIZONTAL)
-	    ctype = GDK_SB_H_DOUBLE_ARROW;
+		ctype = GDK_SB_H_DOUBLE_ARROW;
 	      else
 		ctype = GDK_SB_V_DOUBLE_ARROW;
 	    }
@@ -188,7 +193,7 @@ flip_cursor_update (Tool           *tool,
 }
 
 Tool *
-tools_new_flip ()
+tools_new_flip (void)
 {
   Tool * tool;
   TransformCore * private;
@@ -219,11 +224,11 @@ tools_free_flip_tool (Tool *tool)
 }
 
 TileManager *
-flip_tool_flip (GimpImage       *gimage,
-		GimpDrawable    *drawable,
-		TileManager     *orig,
-		int              flip,
-		OrientationType  type)
+flip_tool_flip (GimpImage               *gimage,
+		GimpDrawable            *drawable,
+		TileManager             *orig,
+		int                      flip,
+		InternalOrientationType  type)
 {
   TileManager *new;
   PixelRegion srcPR, destPR;
