@@ -1,3 +1,15 @@
+2005-03-05  Sven Neumann  <sven@gimp.org>
+
+	Fix for bug #169274:
+
+	* configure.in: updated definition of localedir.
+
+	* po/Makefile.in.in: updated.
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in: synchronized with po/Makefile.in.in.
+
 2005-03-05  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-drawable.c: default args for layer
