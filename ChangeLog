@@ -1,5 +1,9 @@
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpexport.c (confirm_save_dialog): fixed button order.
+
+2003-06-06  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/message.pdb: UTF-8 validate messages before
 	passing them to g_message().
 
