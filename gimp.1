@@ -3,10 +3,12 @@
 Gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
-[\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP] [\-n] [\-\-no\-interface]
-[\-\-no\-data] [\-\-verbose] [\-\-no\-shm] [\-\-no\-xshm] [\-\-display \fIdisplay\fP]
-[\-\-no\-splash] [\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages]
-
+[\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-n] [\-\-no\-interface] [\-r] 
+[\-\-restore\-session] [\-\-no\-data] [\-\-verbose] [\-\-no\-shm]
+[\-\-no\-xshm] [\-\-display \fIdisplay\fP] [\-\-no\-splash]
+[\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages] 
+[\-\-system\-gimprc \fI<gimprc>\fP] [\fIfilename\fP]...
 
 .SH DESCRIPTION
 .PP
@@ -41,8 +43,15 @@ Execute the set of \fI<commands>\fP non-interactively. The set
 of \fI<commands>\fP is typically in the form of a script that
 can be executed by one of the Gimp scripting extensions.
 .TP 8
+.B \-g, \-\-gimprc \fI<gimprc>\fP
+Use an alternative gimprc instead of the default one. Useful in
+cases where plugins paths or machine specs may be different.
+.TP 8
 .B \-n, \-\-no-interface
 Run without a user interface.
+.TP 8
+.B \-r, \-\-restore\-session
+Try to restore saved session.
 .TP 8
 .B \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful
@@ -77,6 +86,9 @@ Enable debugging signal handlers.
 .B \-\-console\-messages
 Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
+.TP 8
+.B \-\-system\-gimprc \fI<gimprc>\fP
+Use an alternate system gimprc file.
 
 .SH ENVIRONMENT
 .PP
@@ -114,6 +126,22 @@ such as widget color and fonts sizes can be set here.
 
 \fB$PREFIX\fP/share/menurc - system wide set of keybindings.
 
+\fB$HOME\fP/.gimp/parasiterc - Description of all available gimp parasites.
+This is file is recreated everytime gimp starts up.
+
+\fB$HOME\fP/.gimp/sessionrc - This file takes session-specific info (that is info,
+you want to keep between two gimp-sessions). You are
+not supposed to edit it manually, but of course you
+can do. This file will be entirely rewritten every time
+you quit the gimp. If this file isn't found, defaults are used.
+
+\fB$HOME\fP/.gimp/unitrc - This file contains your user unit database. You can
+modify this list with the unit editor. You are not
+supposed to edit it manually, but of course you can do.
+This file will be entirely rewritten every time you
+quit the gimp.
+
+
 \fB$HOME\fP/.gimp/plug-ins - location of user installed plugins.
 
 \fB$HOME\fP/.gimp/pluginrc - plugin initialization values are stored
@@ -129,7 +157,17 @@ Gimp's data files are stored in \fB$PREFIX\fP/share/gimp where
 \fB$PREFIX\fP/share/gimp/brushes - system wide brush files.
 
 \fB$HOME\fP/.gimp/brushes - user created and installed brush
-files. This files are in the .gbr (gimp brush) format.
+files. These files are in the .gbr (gimp brush) format.
+
+\fB$HOME\fP/.gimp/generated_brushes - Brushes generated and saved
+from the brush dialog. These files are in the .vbr (gimp vector brush) format.
+
+\fB$HOME\fP/.gimp/curves - Curve profiles and presets as saved from the Curves tool.
+
+\fB$HOME\fP/.gimp/levels - Level profiles and presets as saved from the Levels tool.
+
+\fB$HOME\fP/.gimp/gimpressionist - Presets and user created brushes and papers
+are stored here.
 
 \fB$PREFIX\fP/share/gimp/palettes - the system wide palette files. The 
 files are copied to the user palettes directory when gimp is first ran
@@ -179,11 +217,6 @@ about dialog.
 \fB$PREFIX\fP/share/gimp/gimp_tips.txt - list of tips displayed in the 
 "Tip of the Day" dialog box.
 
-
-
-
-.SH SEE ALSO
-.BR X (1)
 .SH COPYRIGHT
 Copyright \(co  1995 Spencer Kimball and Peter Mattis
 
@@ -195,9 +228,10 @@ supporting documentation.
 
 .SH SUGGESTIONS AND BUG REPORTS
 Any bugs found should be reported to the Gimp Developer mailing list
-at gimp-developer@scam.xcf.berkeley.edu or you may want to make use
+at gimp-developer@xcf.berkeley.edu or you may want to make use
 of the online bug-tracking system available on the web at
-http://www.wilberworks.com/bugs.html.
+http://bugs.gnome.org/db/pa/lgimp.html or submit a bug report
+to the system via http://www.xach.com/gimp/news/bugreport.html
 
 Before reporting bugs, please check to see if the bug is mentioned 
 in the FAQ's or the mailing list archive. See the section on Other 
@@ -230,25 +264,35 @@ ftp://ftp.gimp.org/.
 .SH AUTHORS
 Spencer Kimball and Peter Mattis.
 
-With patches, fixes, plugins, extensions, scripts and more from
-lots and lots of people including but not limited to 
+With patches, fixes, plugins, extensions, scripts,
+translations, documentation, and more from lots 
+and lots of people including but not limited to 
 Lauri Alanko, Shawn Amundson, John Beale, Zach Beane,
 Tom Bech, Marc Bless, Edward Blevins, Roberto Boyd,
-Seth Burgess, Brent Burton, Ed Connel, Andreas Dilger,
-Larry Ewing, David Forsyth, Jim Geuther, Scott Goehring,
-Heiko Goller, Michael Hammel, Christoph Hoegl, 
+Stanislav Brabec, Simon Budig, Seth Burgess, Brent Burton,
+Francisco Bustamante, Ed Connel, Jay Cox, Andreas Dilger,
+Kenneth Christiansen, Austin Donnelly, Scott Draves,
+Misha Dynin, Daniel Egger, Larry Ewing, Nick Fetchak,
+Valek Filippov, David Forsyth, Jim Geuther, Scott Goehring,
+Heiko Goller, Michael Hammel, Ville Hautamäki,
+James Henstridge, Christoph Hoegl, Wolfgang Hofer, 
 Jan Hubicka, Simon Janes, Ben Jackson, Tim Janik,
-Tuomas Kuosmanen, Peter Kirchgessner, Karl LaRocca, 
-Jens Lautenbacher, Laramie Leavitt, Raph Levien,
-Adrian Likins, Ingo Luetkebohle, Josh MacDonald, Ed Mackey,
-Marcelo Malheiros, Ian Main, Torsten Martinsen,
-Federico Mena, Adam D. Moss, Shuji Narazaki,
+Tuomas Kuosmanen, Peter Kirchgessner, Karin Kylander,
+Olof S Kylander, Karl LaRocca, CHris Lahey, Jens Lautenbacher,
+Laramie Leavitt, Elliot Lee, Marc Lehmann, Raph Levien,
+Wing Tung Leung, Adrian Likins, Tor lillqvist,
+Ingo Luetkebohle, Josh MacDonald, Ed Mackey, Daniele Medri,
+Vidar Madsen, Marcelo Malheiros, Ian Main, Kjartan Maraas,
+Torsten Martinsen, Federico Mena, David Monniaux,
+Adam D. Moss, Sung-Hyun Nam, Shuji Narazaki, Michael Natterer,
 Sven Neumann, Stephen Robert Norris, Erik Nygren,
-Miles O'Neal, Jay Painter, Mike Phillips,
-Raphael Quinet, James Robinson, Mike Schaeffer,
-Tracy Scott, Manish Singh, Nathan Summers,
+Tomas Ogren, Balazs Nagy,Miles O'Neal, Jay Painter,
+Asbjorn Pettersen,  Mike Phillips, Raphael Quinet, 
+Vincent Renardias, James Robinson, Mike Schaeffer,
+Tracy Scott, Aaron Sherman, Manish Singh, Nathan Summers,
 Mike Sweet, Eiichi Takamori, Tristan Tarrant,
-Owen Taylor, Ian Tester, James Wang, Kris Wehner.
+Owen Taylor, Ian Tester, Andy Thomas, James Wang,
+Kris Wehner,Matthew Wilson, Shirasaki Yasuhiro.
 
 .SH "SEE ALSO"
-.BR gimprc (5)
+.BR gimprc (5), gimptool (1), gtk-config (1)

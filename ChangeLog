@@ -1,3 +1,9 @@
+Sat Oct  9 14:58:08 EDT 1999 Adrian Likins <adrian@gimp.org>
+
+	* app/about_dialog.c: added some more folks
+	* gimp.1: updated the list of contributors, and
+	a few other misc updates.
+
 Sat Oct  9 21:03:08 *EST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am
