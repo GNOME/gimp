@@ -787,6 +787,8 @@ gdisplay_set_color (GtkWidget *widget,
 
   gimage = ((GDisplay *) data)->gimage;
   drawable = gimage_active_drawable (gimage);
+  if (!drawable)
+    return;
 
   gimp_add_busy_cursors ();
 

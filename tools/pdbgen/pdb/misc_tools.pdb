@@ -766,7 +766,7 @@ HELP
     %invoke = (
 	headers => [ qw("free_select.h") ],
 	code => <<'CODE'
-free_select (gimage, num_segs, (FreeSelectPoint *) segs, operation,
+free_select (gimage, num_segs, (ScanConvertPoint *) segs, operation,
 	     antialias, feather, feather_radius);
 CODE
     );

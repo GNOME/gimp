@@ -26,6 +26,7 @@
 #include "gdisplay.h"
 #include "rect_select.h"
 #include "selection_options.h"
+#include "scan_convert.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -45,10 +46,6 @@ struct _FreeSelect
   int        num_pts;    /*  Number of points in the polygon         */
 };
 
-struct _FreeSelectPoint
-{
-  double x, y;
-};
 
 
 /*  the free selection tool options  */
@@ -83,200 +80,22 @@ add_point (int num_pts,
 }
 
 
-/*  Routines to scan convert the polygon  */
-
-static GSList *
-insert_into_sorted_list (GSList *list,
-			 int     x)
-{
-  GSList *orig = list;
-  GSList *rest;
-
-  if (!list)
-    return g_slist_prepend (list, (gpointer) ((long) x));
-
-  while (list)
-    {
-      rest = g_slist_next (list);
-      if (x < (long) list->data)
-	{
-	  rest = g_slist_prepend (rest, list->data);
-	  list->next = rest;
-	  list->data = (gpointer) ((long) x);
-	  return orig;
-	}
-      else if (!rest)
-	{
-	  g_slist_append (list, (gpointer) ((long) x));
-	  return orig;
-	}
-      list = g_slist_next (list);
-    }
-
-  return orig;
-}
-
-static void
-convert_segment (GSList **scanlines,
-		 int      width,
-		 int      height,
-		 int      x1,
-		 int      y1,
-		 int      x2,
-		 int      y2)
-{
-  int ydiff, y, tmp;
-  float xinc, xstart;
-
-  if (y1 > y2)
-    { tmp = y2; y2 = y1; y1 = tmp;
-      tmp = x2; x2 = x1; x1 = tmp; }
-  ydiff = (y2 - y1);
-
-  if ( ydiff )
-    {
-      xinc = (float) (x2 - x1) / (float) ydiff;
-      xstart = x1 + 0.5 * xinc;
-      for (y = y1 ; y < y2; y++)
-	{
-	  if (y >= 0 && y < height)
-	    scanlines[y] = insert_into_sorted_list (scanlines[y], ROUND (xstart));
-	  xstart += xinc;
-	}
-    }
-}
-
 static Channel *
 scan_convert (GimpImage       *gimage,
 	      int              num_pts,
-	      FreeSelectPoint *pts,
+	      ScanConvertPoint *pts,
 	      int              width,
 	      int              height,
 	      int              antialias)
 {
-  PixelRegion maskPR;
   Channel * mask;
-  GSList **scanlines;
-  GSList *list;
-  unsigned char *buf, *b;
-  int * vals, val;
-  int start, end;
-  int x, x2, w;
-  int i, j;
+  ScanConverter *sc;
 
-  buf  = NULL;
-  vals = NULL;
+  sc = scan_converter_new (width, height, antialias? SUPERSAMPLE : 1);
+  scan_converter_add_points (sc, num_pts, pts);
 
-  if (num_pts < 3)
-    return NULL;
-
-  mask = channel_new_mask (gimage, width, height);
-
-  if (antialias)
-    {
-      buf = (unsigned char *) g_malloc (width);
-      width  *= SUPERSAMPLE;
-      height *= SUPERSAMPLE;
-      /* allocate value array  */
-      vals = (int *) g_malloc (sizeof (int) * width);
-    }
-
-  scanlines = (GSList **) g_malloc (sizeof (GSList *) * height);
-  for (i = 0; i < height; i++)
-    scanlines[i] = NULL;
-
-  for (i = 0; i < (num_pts - 1); i++)
-    {
-      if (antialias)
-	convert_segment (scanlines, width, height,
-			 (int) pts[i].x * SUPERSAMPLE, (int) pts[i].y * SUPERSAMPLE,
-			 (int) pts[i + 1].x * SUPERSAMPLE, (int) pts[i + 1].y * SUPERSAMPLE);
-      else
-	convert_segment (scanlines, width, height,
-			 (int) pts[i].x, (int) pts[i].y,
-			 (int) pts[i + 1].x, (int) pts[i + 1].y);
-    }
-
-  /*  check for a connecting Point  */
-  if (pts[num_pts - 1].x != pts[0].x ||
-      pts[num_pts - 1].y != pts[0].y)
-    {
-      if (antialias)
-	convert_segment (scanlines, width, height,
-			 (int) pts[num_pts - 1].x * SUPERSAMPLE,
-			 (int) pts[num_pts - 1].y * SUPERSAMPLE,
-			 (int) pts[0].x * SUPERSAMPLE, (int) pts[0].y * SUPERSAMPLE);
-      else
-	convert_segment (scanlines, width, height,
-			 (int) pts[num_pts - 1].x, (int) pts[num_pts - 1].y,
-			 (int) pts[0].x, (int) pts[0].y);
-    }
-
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE(mask)), 
-		     drawable_height (GIMP_DRAWABLE(mask)), TRUE);
-  for (i = 0; i < height; i++)
-    {
-      list = scanlines[i];
-
-      /*  zero the vals array  */
-      if (antialias && !(i % SUPERSAMPLE))
-	memset (vals, 0, width * sizeof (int));
-
-      while (list)
-	{
-	  x = (long) list->data;
-	  list = g_slist_next(list);
-	  if (!list)
-	      g_message (_("Cannot properly scanline convert polygon!\n"));
-	  else
-	    {
-	      /*  bounds checking  */
-	      x = BOUNDS (x, 0, width);
-	      x2 = BOUNDS ((long) list->data, 0, width);
-
-	      w = x2 - x;
-
-	      if (w > 0)
-		{
-		  if (! antialias)
-		    channel_add_segment (mask, x, i, w, 255);
-		  else
-		    for (j = 0; j < w; j++)
-		      vals[j + x] += 255;
-		}
-	      list = g_slist_next (list);
-	    }
-	}
-
-      if (antialias && !((i+1) % SUPERSAMPLE))
-	{
-	  b = buf;
-	  start = 0;
-	  end = width;
-	  for (j = start; j < end; j += SUPERSAMPLE)
-	    {
-	      val = 0;
-	      for (x = 0; x < SUPERSAMPLE; x++)
-		val += vals[j + x];
-
-	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
-	    }
-
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
-				drawable_width (GIMP_DRAWABLE(mask)), buf);
-	}
-
-      g_slist_free (scanlines[i]);
-    }
-
-  if (antialias)
-    {
-      g_free (vals);
-      g_free (buf);
-    }
-
-  g_free (scanlines);
+  mask = scan_converter_to_channel (sc, gimage);
+  scan_converter_free (sc);
 
   return mask;
 }
@@ -288,7 +107,7 @@ scan_convert (GimpImage       *gimage,
 void
 free_select (GImage          *gimage,
 	     int              num_pts,
-	     FreeSelectPoint *pts,
+	     ScanConvertPoint *pts,
 	     int              op,
 	     int              antialias,
 	     int              feather,
@@ -363,7 +182,7 @@ free_select_button_release (Tool           *tool,
 			    gpointer        gdisp_ptr)
 {
   FreeSelect *free_sel;
-  FreeSelectPoint *pts;
+  ScanConvertPoint *pts;
   GDisplay *gdisp;
   int i;
 
@@ -380,7 +199,7 @@ free_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      pts = (FreeSelectPoint *) g_malloc (sizeof (FreeSelectPoint) * free_sel->num_pts);
+      pts = (ScanConvertPoint *) g_malloc (sizeof (ScanConvertPoint) * free_sel->num_pts);
 
       for (i = 0; i < free_sel->num_pts; i++)
 	{

@@ -19,10 +19,9 @@
 #define __FREE_SELECT_H__
 
 #include "gimpimageF.h"
+#include "scan_convert.h"
 
-typedef struct _FreeSelectPoint FreeSelectPoint;
-
-void          free_select (GimpImage *, int, FreeSelectPoint *, int, int, int,
+void          free_select (GimpImage *, int, ScanConvertPoint *, int, int, int,
     			   double);
 
 /*  free select action functions  */
