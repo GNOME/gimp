@@ -1,3 +1,11 @@
+2003-09-10  Manish Singh  <yosh@gimp.org>
+
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am: add a dependency on libgimpbase.la so
+	they get rebuilt when the version number changes.
+
+	* Makefile.am: build libgimpbase before the above
+
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-layer-select.c: switch layers

@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
@@ -78,6 +80,8 @@ libgimpmath_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
 	$(no_undefined)						\
 	$(libgimpmath_export_symbols)
+
+libgimpmath_1_3_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
 
 libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
 

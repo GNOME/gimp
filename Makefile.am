@@ -12,9 +12,9 @@ SUBDIRS = \
 	po-script-fu		\
 	data			\
 	tips			\
+	libgimpbase		\
 	libgimpcolor		\
 	libgimpmath		\
-	libgimpbase		\
 	libgimpmodule		\
 	libgimpwidgets		\
 	libgimp			\
