@@ -1,5 +1,10 @@
 2002-03-19  Sven Neumann  <sven@gimp.org>
 
+	* ChangeLog.plug-ins
+	* PLUGIN_CVS: removed these files, they have never been used.
+
+2002-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/Makefile.am
 	* app/paint/paint-enums.h
 	* app/paint/paint-types.h: split enums into their own file and
