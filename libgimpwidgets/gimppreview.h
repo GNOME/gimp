@@ -56,6 +56,7 @@ struct _GimpPreview
   GtkWidget    *area;
   GtkWidget    *toggle_update;
   gboolean      update_preview;
+  guint         timeout_id;
 };
 
 struct _GimpPreviewClass

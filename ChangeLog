@@ -1,5 +1,14 @@
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: delay the emission of the
+	"invalidated" signal using a timeout. Removed hack that used to
+	invalidate the preview on button-release.
+	
+	* plug-ins/common/unsharp.c: no need to fiddle with the slider
+	update policies any longer.
+
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdialogfactory.[ch]: added a boolean parameter to
 	gimp_dialog_factory_dialog_new() to let the caller decide whether
 	the window should be presented or not.

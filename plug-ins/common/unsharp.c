@@ -652,7 +652,6 @@ unsharp_mask_dialog (GimpDrawable *drawable)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *preview;
-  GtkWidget *scrollbar;
   GtkObject *adj;
   gboolean   run;
 
@@ -704,18 +703,11 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
-                               GTK_UPDATE_DISCONTINUOUS);
-
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
                               unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
-  scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
-
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -729,8 +721,6 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                               unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

@@ -30,6 +30,9 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#define PREVIEW_TIMEOUT  200
+
+
 enum
 {
   INVALIDATED,
@@ -46,6 +49,7 @@ enum
 
 static void     gimp_preview_class_init         (GimpPreviewClass *klass);
 static void     gimp_preview_init               (GimpPreview      *preview);
+static void     gimp_preview_dispose            (GObject          *object);
 static void     gimp_preview_get_property       (GObject          *object,
                                                  guint             property_id,
                                                  GValue           *value,
@@ -55,9 +59,6 @@ static void     gimp_preview_set_property       (GObject          *object,
                                                  const GValue     *value,
                                                  GParamSpec       *pspec);
 
-static gboolean gimp_preview_button_release     (GtkWidget        *hs,
-                                                 GdkEventButton   *ev,
-                                                 GimpPreview      *preview);
 static void     gimp_preview_draw               (GimpPreview      *preview);
 static void     gimp_preview_area_realize       (GtkWidget        *widget);
 static void     gimp_preview_area_size_allocate (GtkWidget        *widget,
@@ -123,6 +124,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  object_class->dispose      = gimp_preview_dispose;
   object_class->get_property = gimp_preview_get_property;
   object_class->set_property = gimp_preview_set_property;
 
@@ -154,10 +156,10 @@ gimp_preview_init (GimpPreview *preview)
   gtk_table_resize (GTK_TABLE (preview), 3, 2);
   gtk_table_set_homogeneous (GTK_TABLE (preview), FALSE);
 
-  preview->xoff           = 0;
-  preview->yoff           = 0;
-  preview->in_drag        = FALSE;
-  preview->update_preview = TRUE;
+  preview->xoff       = 0;
+  preview->yoff       = 0;
+  preview->in_drag    = FALSE;
+  preview->timeout_id = 0;
 
   preview->xmin   = preview->ymin = 0;
   preview->xmax   = preview->ymax = 1;
@@ -178,9 +180,6 @@ gimp_preview_init (GimpPreview *preview)
   gtk_table_attach (GTK_TABLE (preview), preview->hscr, 0,1, 1,2,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
-  g_signal_connect (preview->hscr, "button-release-event",
-                    G_CALLBACK (gimp_preview_button_release), preview);
-
   preview->vadj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
                                       preview->height, preview->height);
 
@@ -193,9 +192,6 @@ gimp_preview_init (GimpPreview *preview)
                                GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (preview), preview->vscr, 1,2, 0,1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-
-  g_signal_connect (preview->vscr, "button-release-event",
-                    G_CALLBACK (gimp_preview_button_release), preview);
 
   /* the area itself */
   frame = gtk_frame_new (NULL);
@@ -232,11 +228,26 @@ gimp_preview_init (GimpPreview *preview)
   preview->toggle_update = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
                                 preview->update_preview);
+  gtk_table_set_row_spacing (GTK_TABLE (preview), 1, 6);
   gtk_table_attach (GTK_TABLE (preview), preview->toggle_update,
-                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+                    0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect_after (preview->toggle_update, "toggled",
                           G_CALLBACK (gimp_preview_toggle_callback),
                           preview);
+}
+
+static void
+gimp_preview_dispose (GObject *object)
+{
+  GimpPreview *preview = GIMP_PREVIEW (object);
+
+  if (preview->timeout_id)
+    {
+      g_source_remove (preview->timeout_id);
+      preview->timeout_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -289,16 +300,6 @@ gimp_preview_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static gboolean
-gimp_preview_button_release (GtkWidget      *hs,
-                             GdkEventButton *ev,
-                             GimpPreview    *preview)
-{
-  gimp_preview_invalidate (preview);
-
-  return FALSE;
 }
 
 static void
@@ -372,6 +373,8 @@ gimp_preview_h_scroll (GtkAdjustment *hadj,
 
   if (! preview->in_drag)
     gimp_preview_draw (preview);
+
+  gimp_preview_invalidate (preview);
 }
 
 static void
@@ -382,6 +385,8 @@ gimp_preview_v_scroll (GtkAdjustment *vadj,
 
   if (! preview->in_drag)
     gimp_preview_draw (preview);
+
+  gimp_preview_invalidate (preview);
 }
 
 static gboolean
@@ -410,7 +415,6 @@ gimp_preview_area_event (GtkWidget   *area,
         {
           gtk_grab_remove (area);
           preview->in_drag = FALSE;
-          gimp_preview_invalidate (preview);
         }
       break;
 
@@ -434,6 +438,7 @@ gimp_preview_area_event (GtkWidget   *area,
           gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
 
           gimp_preview_draw (preview);
+          gimp_preview_invalidate (preview);
         }
       break;
 
@@ -459,6 +464,16 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
     }
 
   g_object_notify (G_OBJECT (preview), "update");
+}
+
+static gboolean
+gimp_preview_invalidate_now (GimpPreview *preview)
+{
+  preview->timeout_id = 0;
+
+  g_signal_emit (preview, preview_signals[INVALIDATED], 0);
+
+  return FALSE;
 }
 
 /**
@@ -535,6 +550,13 @@ gimp_preview_invalidate (GimpPreview *preview)
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
 
   if (preview->update_preview)
-    g_signal_emit (preview, preview_signals[INVALIDATED], 0);
-}
+    {
+      if (preview->timeout_id)
+        g_source_remove (preview->timeout_id);
 
+      preview->timeout_id =
+        g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE, PREVIEW_TIMEOUT,
+                            (GSourceFunc) gimp_preview_invalidate_now,
+                            preview, NULL);
+    }
+}
