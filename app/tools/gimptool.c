@@ -482,7 +482,20 @@ gimp_tool_help_func (const gchar *help_data)
 
 #define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
 
-#define QUIET_STUB(x) void * x (void){return NULL;}
+STUB(airbrush_non_gui)
+STUB(airbrush_non_gui_default)
+STUB(by_color_select_initialize_by_image)
+STUB(by_color_select)
+STUB(perspective_find_transform)
+STUB(perspective_tool_perspective)
+STUB(rotate_tool_rotate)
+STUB(shear_tool_shear)
+STUB(smudge_non_gui)
+STUB(smudge_non_gui_default)
+STUB(clone_non_gui)
+STUB(clone_non_gui_default)
+STUB(convolve_non_gui)
+STUB(convolve_non_gui_default)
 
 STUB(curves_free)
 STUB(hue_saturation_free)
@@ -501,22 +514,7 @@ STUB(threshold_dialog_hide)
 STUB(levels_dialog_hide)
 STUB(curves_dialog_hide)
 STUB(posterize_dialog_hide)
-STUB(by_color_select_initialize_by_image)
-STUB(undo_pop_paint)
 STUB(histogram_tool_histogram_range)
-STUB(perspective_find_transform)
-STUB(perspective_tool_perspective)
-STUB(rotate_tool_rotate)
-STUB(shear_tool_shear)
-STUB(smudge_non_gui)
-STUB(smudge_non_gui_default)
-STUB(airbrush_non_gui)
-STUB(airbrush_non_gui_default)
-STUB(by_color_select)
-STUB(clone_non_gui)
-STUB(clone_non_gui_default)
-STUB(convolve_non_gui)
-STUB(convolve_non_gui_default)
 
 #ifdef __GNUC__
 #warning obsolete crap
@@ -638,34 +636,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Blend"),
-    N_("/Tools/Paint Tools/Blend"),
-    "L",
-    (char **) gradient_bits,
-    NULL,
-    NULL,
-    N_("Fill with a color gradient"),
-    "tools/blend.html",
-    BLEND,
-    tools_new_blend,
-    tools_free_blend,
-    NULL,
-    NULL,
-    NULL,
-    {
-      blend_small_bits, blend_small_mask_bits,
-      blend_small_width, blend_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
     N_("Airbrush"),
     N_("/Tools/Paint Tools/Airbrush"),
     "A",
@@ -683,34 +653,6 @@ ToolInfo tool_info[] =
     {
       airbrush_small_bits, airbrush_small_mask_bits,
       airbrush_small_width, airbrush_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Ink"),
-    N_("/Tools/Paint Tools/Ink"),
-    "K",
-    (char **) ink_bits,
-    NULL,
-    NULL,
-    N_("Draw in ink"),
-    "tools/ink.html",
-    INK,
-    tools_new_ink,
-    tools_free_ink,
-    NULL,
-    NULL,
-    NULL,
-    {
-      ink_small_bits, ink_small_mask_bits,
-      ink_small_width, ink_small_height,
       0, 0, NULL, NULL, NULL
     },
     {

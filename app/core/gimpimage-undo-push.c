@@ -1349,25 +1349,21 @@ undo_push_paint (GimpImage *gimage,
     }
 }
 
-#ifdef __GNUC__
-#warning super bogosity error
-#endif
 static gboolean
 undo_pop_paint (GimpImage *gimage,
 		UndoState  state,
 		UndoType   type,
 		gpointer   pu_ptr)
 {
-#if 0
-  PaintCore *pc;
-  PaintUndo *pu;
-  gdouble    tmp;
+  GimpPaintTool *pt;
+  PaintUndo     *pu;
+  gdouble        tmp;
 
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)
     return TRUE;
 
-  pc = (PaintCore *) active_tool->private;
+  pt = (GimpPaintTool *) active_tool;
   pu = (PaintUndo *) pu_ptr;
 
   /*  only pop if the active tool is the tool that pushed this undo  */
@@ -1375,30 +1371,27 @@ undo_pop_paint (GimpImage *gimage,
     return TRUE;
 
   /*  swap the paint core information  */
-  tmp = pc->lastx;
-  pc->lastx = pu->lastx;
+  tmp = pt->lastx;
+  pt->lastx = pu->lastx;
   pu->lastx = tmp;
 
-  tmp = pc->lasty;
-  pc->lasty = pu->lasty;
+  tmp = pt->lasty;
+  pt->lasty = pu->lasty;
   pu->lasty = tmp;
 
-  tmp = pc->lastpressure;
-  pc->lastpressure = pu->lastpressure;
+  tmp = pt->lastpressure;
+  pt->lastpressure = pu->lastpressure;
   pu->lastpressure = tmp;
 
-  tmp = pc->lastxtilt;
-  pc->lastxtilt = pu->lastxtilt;
+  tmp = pt->lastxtilt;
+  pt->lastxtilt = pu->lastxtilt;
   pu->lastxtilt = tmp;
 
-  tmp = pc->lastytilt;
-  pc->lastytilt = pu->lastytilt;
+  tmp = pt->lastytilt;
+  pt->lastytilt = pu->lastytilt;
   pu->lastytilt = tmp;
 
   return TRUE;
-#else
-  return FALSE;
-#endif
 }
 
 static void

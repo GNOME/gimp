@@ -1041,8 +1041,9 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
 
   undo_push_group_start (gimage, PAINT_CORE_UNDO);
 
-  pu = g_new (PaintUndo, 1);
-  pu->tool         = paint_tool;
+  pu = g_new0 (PaintUndo, 1);
+  pu->tool_ID      = GIMP_TOOL (paint_tool)->ID;
+  pu->tool_type    = GTK_OBJECT (paint_tool)->klass->type;
   pu->lastx        = paint_tool->startx;
   pu->lasty        = paint_tool->starty;
   pu->lastpressure = paint_tool->startpressure;

@@ -1,5 +1,16 @@
 2001-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/undo.c: made undo_pop_paint() work again.
+
+	* app/tools/gimppainttool.[ch]: store the tool ID and the tool
+	type in the PaintUndo struct.
+
+	* app/tools/gimppenciltool.c: removed unused variable.
+
+	* app/tools/gimptool.c: removed and reordered STUB()s and cruft.
+
+2001-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimpfliptool.[ch]: applied a patch from Dave Neary
 	which re-activates this tool. Enabled the tool options too.

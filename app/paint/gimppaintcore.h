@@ -115,7 +115,8 @@ typedef struct _PaintUndo PaintUndo;
 
 struct _PaintUndo
 {
-  GimpPaintTool     *tool;
+  gint     tool_ID;
+  GtkType  tool_type;
 
   gdouble  lastx;
   gdouble  lasty;

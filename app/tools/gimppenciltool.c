@@ -159,7 +159,6 @@ gimp_pencil_tool_paint (GimpPaintTool *paint_tool,
                         GimpDrawable  *drawable,
                         PaintState     state)
 {
-  GimpImage            *gimage;
   PaintPressureOptions *pressure_options;
   gboolean              incremental;
 
