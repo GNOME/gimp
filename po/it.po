@@ -26,19 +26,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-13 15:33+0100\n"
-"PO-Revision-Date: 2005-02-13 15:20+0100\n"
+"POT-Creation-Date: 2005-02-15 12:56+0100\n"
+"PO-Revision-Date: 2005-02-15 13:07+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../app/app_procs.c:129
+#: ../app/app_procs.c:133
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Questa finestra di console si chiuderà in 10 secondi)\n"
 
-#: ../app/app_procs.c:222
+#: ../app/app_procs.c:226
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -50,7 +50,7 @@ msgstr ""
 "eseguire \n"
 "GIMP senza l'opzione '--no-interface'."
 
-#: ../app/app_procs.c:273
+#: ../app/app_procs.c:277
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -61,7 +61,7 @@ msgstr ""
 "controllare la posizione ed i permessi della cartella di scambio nelle "
 "preferenze (attualmente è \"%s\")."
 
-#: ../app/app_procs.c:328 ../app/core/gimppalette-import.c:441
+#: ../app/app_procs.c:332 ../app/core/gimppalette-import.c:441
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di '%s' è fallita: %s"
@@ -1322,7 +1322,7 @@ msgstr "Ri_pristina..."
 msgid "_Quit"
 msgstr "_Esci"
 
-#: ../app/actions/file-commands.c:215 ../app/dialogs/file-save-dialog.c:287
+#: ../app/actions/file-commands.c:226 ../app/dialogs/file-save-dialog.c:515
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1333,36 +1333,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:238 ../app/dialogs/file-save-dialog.c:78
+#: ../app/actions/file-commands.c:249 ../app/dialogs/file-save-dialog.c:82
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:254
+#: ../app/actions/file-commands.c:265
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:265
+#: ../app/actions/file-commands.c:276
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:269
+#: ../app/actions/file-commands.c:280
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:291
+#: ../app/actions/file-commands.c:302
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:303
+#: ../app/actions/file-commands.c:314
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:329
+#: ../app/actions/file-commands.c:340
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare '%s' a '%s'?"
 
-#: ../app/actions/file-commands.c:335
+#: ../app/actions/file-commands.c:346
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1370,19 +1370,19 @@ msgstr ""
 "Ricaricando l'immagine allo stato salvato su disco, perderai tutti i "
 "cambiamenti, incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:385
+#: ../app/actions/file-commands.c:396
 msgid "Open Image as Layer"
 msgstr "Apri immagine come livello"
 
-#: ../app/actions/file-commands.c:390 ../app/dialogs/file-open-dialog.c:74
+#: ../app/actions/file-commands.c:401 ../app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:456
+#: ../app/actions/file-commands.c:467
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:505
+#: ../app/actions/file-commands.c:516
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1435,11 +1435,11 @@ msgstr "Colore capo destro..."
 
 #: ../app/actions/gradient-editor-actions.c:108
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Sfumatura _colori estremi"
+msgstr "_Colori estremi sfumatura"
 
 #: ../app/actions/gradient-editor-actions.c:113
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Sfumatura _opacità estremi"
+msgstr "_Opacità estremi sfumatura"
 
 #: ../app/actions/gradient-editor-actions.c:143
 msgid "_Left Neighbor's Right Endpoint"
@@ -1918,7 +1918,7 @@ msgstr "_Livello"
 msgid "Stac_k"
 msgstr "_Pila"
 
-#: ../app/actions/layers-actions.c:54 ../app/tools/gimplevelstool.c:661
+#: ../app/actions/layers-actions.c:54 ../app/tools/gimplevelstool.c:655
 msgid "_Auto"
 msgstr "_Auto"
 
@@ -3352,7 +3352,7 @@ msgstr "Fusione grani"
 msgid "Color erase"
 msgstr "Cancellazione colore"
 
-#: ../app/base/tile-swap.c:457
+#: ../app/base/tile-swap.c:472
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -4755,7 +4755,7 @@ msgstr "Riempimento colore"
 msgid "Desaturate"
 msgstr "Desaturazione"
 
-#: ../app/core/gimpdrawable-equalize.c:80
+#: ../app/core/gimpdrawable-equalize.c:78
 msgid "Equalize"
 msgstr "Equalizzazione"
 
@@ -4763,8 +4763,8 @@ msgstr "Equalizzazione"
 msgid "Invert"
 msgstr "Invertita"
 
-#: ../app/core/gimpdrawable-levels.c:112 ../app/core/gimpdrawable-levels.c:162
-#: ../app/tools/gimplevelstool.c:156
+#: ../app/core/gimpdrawable-levels.c:110 ../app/core/gimpdrawable-levels.c:160
+#: ../app/tools/gimplevelstool.c:154
 msgid "Levels"
 msgstr "Livelli"
 
@@ -5657,20 +5657,46 @@ msgstr "Apri indirizzo"
 msgid "Enter location (URI):"
 msgstr "Inserisci indirizzo (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:185
+#: ../app/dialogs/file-save-dialog.c:261 ../app/dialogs/file-save-dialog.c:297
+msgid ""
+"The given filename does not have any known file extension. Please enter a "
+"known file extension or select a file format from the file format list."
+msgstr "Il nome file dato ha un'estensione sconosciuta. Inserire un'estensione conosciuta o selezionare un formato file dall'elenco dei formati."
+
+#. remote URI
+#: ../app/dialogs/file-save-dialog.c:330
+msgid ""
+"Saving remote files needs to determine the file format from the file "
+"extension. Please enter a file extension that matches the selected file "
+"format or enter no file extension at all."
+msgstr "Il salvataggio di file remoti necessita la determinazione del formato del file dall'estensione. Inserire un'estensione corrispondente con il formato file selezionato o non inserire nessuna estensione."
+
+#: ../app/dialogs/file-save-dialog.c:400
+msgid "Extension Mismatch"
+msgstr "Estensione non corrispondente"
+
+#: ../app/dialogs/file-save-dialog.c:416
+msgid "The given file extension does not match the chosen file type."
+msgstr "L'estensione file data non corrisponde con il tipo di file scelto."
+
+#: ../app/dialogs/file-save-dialog.c:420
+msgid "Do you want to use this name anyway?"
+msgstr "Usare ugualmente questo nome?"
+
+#: ../app/dialogs/file-save-dialog.c:447
 msgid "File exists"
 msgstr "File esistente"
 
-#: ../app/dialogs/file-save-dialog.c:190
+#: ../app/dialogs/file-save-dialog.c:452
 msgid "_Replace"
 msgstr "_Rimpiazza"
 
-#: ../app/dialogs/file-save-dialog.c:205
+#: ../app/dialogs/file-save-dialog.c:463
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un file di nome '%s' esiste già."
 
-#: ../app/dialogs/file-save-dialog.c:210
+#: ../app/dialogs/file-save-dialog.c:468
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Volete rimpiazzarlo con l'immagine che stavate salvando?"
 
@@ -6050,10 +6076,10 @@ msgstr "_Y:"
 msgid "Offset by  x/_2, y/2"
 msgstr "Sposta di  x/_2,y/2"
 
-#. The edge behaviour frame
+#. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:211
-msgid "Edge Behaviour"
-msgstr "Comportamento dei margini"
+msgid "Edge Behavior"
+msgstr "Comportamento dei bordi"
 
 #: ../app/dialogs/offset-dialog.c:215
 msgid "_Wrap around"
@@ -6874,19 +6900,19 @@ msgstr "Dimensione superficie"
 msgid "Layer Size"
 msgstr "Dimensione livello"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:67
+#: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
 msgstr "Calibra risoluzione monitor"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:125
+#: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Misura i righelli e inserisci la loro lunghezza:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:150
+#: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
 msgstr "_Orizzontale:"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:155
+#: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
 msgstr "_Verticale:"
 
@@ -7560,11 +7586,11 @@ msgstr "Cancella"
 msgid "Other..."
 msgstr "Altro..."
 
-#: ../app/file/file-open.c:105 ../app/file/file-save.c:146
+#: ../app/file/file-open.c:105
 msgid "Unknown file type"
 msgstr "Tipo di file sconosciuto"
 
-#: ../app/file/file-open.c:120 ../app/file/file-save.c:161
+#: ../app/file/file-open.c:120 ../app/file/file-save.c:108
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
@@ -7580,7 +7606,7 @@ msgstr "Il plug-in non può aprire l'immagine"
 msgid "Image doesn't contain any visible layers"
 msgstr "L'immagine non contiene nessun livello visibile"
 
-#: ../app/file/file-save.c:235
+#: ../app/file/file-save.c:181
 msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
@@ -7664,32 +7690,32 @@ msgstr "Sfumata"
 msgid "Sharpen"
 msgstr "Definita"
 
-#: ../app/pdb/color_cmds.c:140 ../app/tools/gimpbrightnesscontrasttool.c:85
+#: ../app/pdb/color_cmds.c:139 ../app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Liminosità-Contrasto"
 
-#: ../app/pdb/color_cmds.c:457 ../app/tools/gimpposterizetool.c:78
+#: ../app/pdb/color_cmds.c:456 ../app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterizza"
 
-#: ../app/pdb/color_cmds.c:745 ../app/pdb/color_cmds.c:870
-#: ../app/tools/gimpcurvestool.c:137
+#: ../app/pdb/color_cmds.c:744 ../app/pdb/color_cmds.c:869
+#: ../app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Curve"
 
-#: ../app/pdb/color_cmds.c:995 ../app/tools/gimpcolorbalancetool.c:95
+#: ../app/pdb/color_cmds.c:994 ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Bilanciamento colore"
 
-#: ../app/pdb/color_cmds.c:1120 ../app/tools/gimpcolorizetool.c:96
+#: ../app/pdb/color_cmds.c:1119 ../app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colora"
 
-#: ../app/pdb/color_cmds.c:1399 ../app/tools/gimphuesaturationtool.c:110
+#: ../app/pdb/color_cmds.c:1396 ../app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Tonalità-saturazione"
 
-#: ../app/pdb/color_cmds.c:1506 ../app/tools/gimpthresholdtool.c:91
+#: ../app/pdb/color_cmds.c:1503 ../app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Soglia"
 
@@ -8492,54 +8518,54 @@ msgstr "Dalla selezione"
 msgid "Auto shrink"
 msgstr "Riduzione automatica"
 
-#: ../app/tools/gimpcurvestool.c:138
+#: ../app/tools/gimpcurvestool.c:137
 msgid "Adjust color curves"
 msgstr "Regola le curve di colore"
 
-#: ../app/tools/gimpcurvestool.c:139
+#: ../app/tools/gimpcurvestool.c:138
 msgid "_Curves..."
 msgstr "_Curve..."
 
-#: ../app/tools/gimpcurvestool.c:198
+#: ../app/tools/gimpcurvestool.c:197
 msgid "Adjust Color Curves"
 msgstr "Regola le curve di colore"
 
-#: ../app/tools/gimpcurvestool.c:200
+#: ../app/tools/gimpcurvestool.c:199
 msgid "Load Curves"
 msgstr "Apri curve"
 
-#: ../app/tools/gimpcurvestool.c:201
+#: ../app/tools/gimpcurvestool.c:200
 msgid "Load curves settings from file"
 msgstr "Lettura impostazioni curve da file"
 
-#: ../app/tools/gimpcurvestool.c:202
+#: ../app/tools/gimpcurvestool.c:201
 msgid "Save Curves"
 msgstr "Salva curve"
 
-#: ../app/tools/gimpcurvestool.c:203
+#: ../app/tools/gimpcurvestool.c:202
 msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
-#: ../app/tools/gimpcurvestool.c:279
+#: ../app/tools/gimpcurvestool.c:278
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
-#: ../app/tools/gimpcurvestool.c:475 ../app/tools/gimplevelstool.c:411
-#: ../app/widgets/gimphistogrameditor.c:158
+#: ../app/tools/gimpcurvestool.c:470 ../app/tools/gimplevelstool.c:405
+#: ../app/widgets/gimphistogrameditor.c:156
 msgid "Channel:"
 msgstr "Canale:"
 
-#: ../app/tools/gimpcurvestool.c:490 ../app/tools/gimplevelstool.c:426
+#: ../app/tools/gimpcurvestool.c:485 ../app/tools/gimplevelstool.c:420
 msgid "R_eset channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:592 ../app/tools/gimplevelstool.c:636
+#: ../app/tools/gimpcurvestool.c:587 ../app/tools/gimplevelstool.c:630
 msgid "All Channels"
 msgstr "Tutti i canali"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:610
+#: ../app/tools/gimpcurvestool.c:605
 msgid "Curve Type"
 msgstr "Tipo di curva"
 
@@ -8765,65 +8791,65 @@ msgstr "Seleziona aree dall'immagine"
 msgid "Intelligent _Scissors"
 msgstr "Forbici _intelligenti"
 
-#: ../app/tools/gimplevelstool.c:157
+#: ../app/tools/gimplevelstool.c:155
 msgid "Adjust color levels"
 msgstr "Regola i livelli colore"
 
-#: ../app/tools/gimplevelstool.c:158
+#: ../app/tools/gimplevelstool.c:156
 msgid "_Levels..."
 msgstr "_Livelli..."
 
-#: ../app/tools/gimplevelstool.c:216
+#: ../app/tools/gimplevelstool.c:214
 msgid "Adjust Color Levels"
 msgstr "Regola i livelli colore"
 
-#: ../app/tools/gimplevelstool.c:218
+#: ../app/tools/gimplevelstool.c:216
 msgid "Load Levels"
 msgstr "Apri livelli"
 
-#: ../app/tools/gimplevelstool.c:219
+#: ../app/tools/gimplevelstool.c:217
 msgid "Load levels settings from file"
 msgstr "Carica le impostazione livelli da file"
 
-#: ../app/tools/gimplevelstool.c:220
+#: ../app/tools/gimplevelstool.c:218
 msgid "Save Levels"
 msgstr "Salva livelli"
 
-#: ../app/tools/gimplevelstool.c:221
+#: ../app/tools/gimplevelstool.c:219
 msgid "Save levels settings to file"
 msgstr "Salva i livelli all'uscita"
 
-#: ../app/tools/gimplevelstool.c:281
+#: ../app/tools/gimplevelstool.c:279
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Per i livelli a colori indicizzati i livelli non sono modificabili."
 
-#: ../app/tools/gimplevelstool.c:351
+#: ../app/tools/gimplevelstool.c:345
 msgid "Pick black point"
 msgstr "Prendi il punto nero"
 
-#: ../app/tools/gimplevelstool.c:355
+#: ../app/tools/gimplevelstool.c:349
 msgid "Pick gray point"
 msgstr "Prendi il punto grigio"
 
-#: ../app/tools/gimplevelstool.c:359
+#: ../app/tools/gimplevelstool.c:353
 msgid "Pick white point"
 msgstr "Prendi punto bianco"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:441
+#: ../app/tools/gimplevelstool.c:435
 msgid "Input Levels"
 msgstr "Livelli di ingresso"
 
-#: ../app/tools/gimplevelstool.c:535
+#: ../app/tools/gimplevelstool.c:529
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:565
+#: ../app/tools/gimplevelstool.c:559
 msgid "Output Levels"
 msgstr "Livelli di uscita"
 
-#: ../app/tools/gimplevelstool.c:663
+#: ../app/tools/gimplevelstool.c:657
 msgid "Adjust levels automatically"
 msgstr "Regola livelli automaticamente"
 
@@ -9290,19 +9316,19 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimpthresholdtool.c:92
+#: ../app/tools/gimpthresholdtool.c:90
 msgid "Reduce image to two colors using a threshold"
 msgstr "Riduci immagine a due colori utilizzando una soglia"
 
-#: ../app/tools/gimpthresholdtool.c:93
+#: ../app/tools/gimpthresholdtool.c:91
 msgid "_Threshold..."
 msgstr "_Soglia..."
 
-#: ../app/tools/gimpthresholdtool.c:147
+#: ../app/tools/gimpthresholdtool.c:145
 msgid "Apply Threshold"
 msgstr "Applica soglia"
 
-#: ../app/tools/gimpthresholdtool.c:198
+#: ../app/tools/gimpthresholdtool.c:196
 msgid "Threshold does not operate on indexed layers."
 msgstr "La soglia non agisce su livelli indicizzati."
 
@@ -9643,8 +9669,8 @@ msgstr "Percentuale di larghezza del pennello"
 #: ../app/widgets/gimpbufferview.c:165 ../app/widgets/gimpbufferview.c:246
 #: ../app/widgets/gimpcontainergridview.c:206
 #: ../app/widgets/gimpcontainergridview.c:657
-#: ../app/widgets/gimphistogrameditor.c:144
-#: ../app/widgets/gimphistogrameditor.c:356
+#: ../app/widgets/gimphistogrameditor.c:142
+#: ../app/widgets/gimphistogrameditor.c:353
 msgid "(None)"
 msgstr "(Nessuno)"
 
@@ -10320,27 +10346,27 @@ msgstr "Impossibile eseguire il plug-in visualizzatore dell'aiuto di GIMP."
 msgid "Use _web browser instead"
 msgstr "Usa in alternativa il navigatore _web"
 
-#: ../app/widgets/gimphistogrameditor.c:131
+#: ../app/widgets/gimphistogrameditor.c:129
 msgid "Mean:"
 msgstr "Media:"
 
-#: ../app/widgets/gimphistogrameditor.c:132
+#: ../app/widgets/gimphistogrameditor.c:130
 msgid "Std Dev:"
 msgstr "Deviazione standard"
 
-#: ../app/widgets/gimphistogrameditor.c:133
+#: ../app/widgets/gimphistogrameditor.c:131
 msgid "Median:"
 msgstr "Mediana"
 
-#: ../app/widgets/gimphistogrameditor.c:134
+#: ../app/widgets/gimphistogrameditor.c:132
 msgid "Pixels:"
 msgstr "Pixel:"
 
-#: ../app/widgets/gimphistogrameditor.c:135
+#: ../app/widgets/gimphistogrameditor.c:133
 msgid "Count:"
 msgstr "Conteggio:"
 
-#: ../app/widgets/gimphistogrameditor.c:136
+#: ../app/widgets/gimphistogrameditor.c:134
 msgid "Percentile:"
 msgstr "Percentile:"
 
