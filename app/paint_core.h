@@ -21,6 +21,7 @@
 #include "draw_core.h"
 #include "temp_buf.h"
 #include "gimpbrush.h"
+#include "gimpdrawableF.h"
 
 /* the different states that the painting function can be called with  */
 #define INIT_PAINT      0

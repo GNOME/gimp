@@ -21,6 +21,8 @@
 
 #include "gtk/gtk.h"
 
+#include "gimpimageF.h"
+
 
 void file_ops_pre_init               (void);
 void file_ops_post_init              (void);

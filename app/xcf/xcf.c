@@ -18,7 +18,7 @@
 #include "interface.h"
 #include "plug_in.h"
 #include "procedural_db.h"
-#include "tile_swap.h"
+/* #include "tile_swap.h"*/
 #include "xcf.h"
 #include "frac.h"
 

@@ -22,6 +22,8 @@
 #include "info_dialog.h"
 #include "selection.h"
 
+#include "gdisplayF.h"
+
 /*
  *  Global variables
  *
@@ -38,16 +40,6 @@
 /* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
 
 
-typedef enum
-{
-  SelectionOff,
-  SelectionLayerOff,
-  SelectionOn,
-  SelectionPause,
-  SelectionResume
-} SelectionControl;
-
-typedef struct _GDisplay GDisplay;
 struct _GDisplay
 {
   int ID;                         /*  unique identifier for this gdisplay     */

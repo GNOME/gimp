@@ -28,13 +28,7 @@
 #define APPLY   0
 #define DISCARD 1
 
-typedef enum
-{
-  WhiteMask,
-  BlackMask,
-  AlphaMask
-} AddMaskType;
-
+#include "layerF.h"
 
 /* structure declarations */
 
@@ -50,20 +44,11 @@ typedef enum
 #define GIMP_IS_LAYER_MASK(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
 #define GIMP_IS_LAYER_MASK_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
 
-typedef struct _GimpLayer      GimpLayer;
-typedef struct _GimpLayerClass GimpLayerClass;
-typedef struct _GimpLayerMask      GimpLayerMask;
-typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
-
-typedef GimpLayer Layer;		/* convenience */
-typedef GimpLayerMask LayerMask;	/* convenience */
 
 GtkType gimp_layer_get_type (void);
 GtkType gimp_layer_mask_get_type (void);
 
 /*  Special undo types  */
-
-typedef struct _layer_undo LayerUndo;
 
 struct _layer_undo
 {
@@ -73,8 +58,6 @@ struct _layer_undo
   int undo_type;     /*  is this a new layer undo */
                      /*  or a remove layer undo?  */
 };
-
-typedef struct _layer_mask_undo LayerMaskUndo;
 
 struct _layer_mask_undo
 {
@@ -87,8 +70,6 @@ struct _layer_mask_undo
   int undo_type;     /*  is this a new layer mask */
                      /*  or a remove layer mask   */
 };
-
-typedef struct _fs_to_layer_undo FStoLayerUndo;
 
 struct _fs_to_layer_undo
 {

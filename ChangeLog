@@ -1,3 +1,11 @@
+Sat Aug 15 19:30:42 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* Makefile.am boundary.h boundaryF.h by_color_select.h 
+	  file_new_dialog.c fileops.h floating_sel.h gdisplay.h
+	  gdisplayF.h ink.c interface.h layer.h layerF.h paint_core.h
+	  tools.h toolsF.h: header file tweaks.  Now changing tile.h
+	  doesn't force about_dialog to recompile! :)
+
 Sat Aug 15 16:53:45 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/airbrush.c: added a debug warning to a case that previously

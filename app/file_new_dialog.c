@@ -12,6 +12,7 @@
 #include "interface.h"
 #include "plug_in.h"
 #include "tile_manager_pvt.h"
+#include "gdisplay.h"
 
 typedef struct {
   GtkWidget *dlg;

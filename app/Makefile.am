@@ -30,6 +30,7 @@ gimp_SOURCES = \
 	blob.h                  \
 	boundary.c		\
 	boundary.h		\
+	boundaryF.h		\
 	brightness_contrast.c	\
 	brightness_contrast.h	\
 	brush_edit.c		\
@@ -134,6 +135,7 @@ gimp_SOURCES = \
 	gdisplay.c		\
 	gdisplay.h		\
 	gdisplayP.h		\
+	gdisplayF.h		\
 	gdisplay_cmds.c		\
 	gdisplay_cmds.h		\
 	gdisplay_ops.c		\
@@ -196,6 +198,7 @@ gimp_SOURCES = \
 	iscissors.h		\
 	layer.c			\
 	layer.h			\
+	layerF.h		\
 	layer_pvt.h		\
 	layer_cmds.c		\
 	layer_cmds.h		\
@@ -286,6 +289,7 @@ gimp_SOURCES = \
 	tips_dialog.h		\
 	tools.c			\
 	tools.h			\
+	toolsF.h		\
 	transform_core.c	\
 	transform_core.h	\
 	transform_tool.c	\

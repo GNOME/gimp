@@ -25,6 +25,7 @@
 #include "tools.h"
 #include "undo.h"
 #include "blob.h"
+#include "gdisplay.h"
 
 #include "tile.h"			/* ick. */
 

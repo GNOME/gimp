@@ -18,7 +18,9 @@
 #ifndef __FLOATING_SEL_H__
 #define __FLOATING_SEL_H__
 
-#include "layer.h"
+#include "layerF.h"
+#include "boundaryF.h"
+#include "gimpdrawableF.h"
 
 /*  Functions  */
 

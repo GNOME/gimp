@@ -18,8 +18,8 @@
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
 
-#include "tools.h"
-#include "gdisplay.h"
+#include "toolsF.h"
+#include "gdisplayF.h"
 
 /* typedefs */
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);

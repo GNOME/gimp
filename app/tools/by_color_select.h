@@ -20,6 +20,8 @@
 
 #include "tools.h"
 #include "procedural_db.h"
+#include "gdisplayF.h"
+#include "gimage.h"
 
 /*  by_color select functions  */
 Tool *        tools_new_by_color_select      (void);

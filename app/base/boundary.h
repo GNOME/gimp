@@ -18,9 +18,9 @@
 #ifndef  __BOUNDARY_H__
 #define  __BOUNDARY_H__
 
-#include "paint_funcs.h"
+#include "boundaryF.h"
 
-typedef struct _BoundSeg BoundSeg;
+#include "paint_funcs.h"
 
 struct _BoundSeg
 {
@@ -29,12 +29,6 @@ struct _BoundSeg
   int open;
   int visited;
 };
-
-typedef enum
-{
-  WithinBounds,
-  IgnoreBounds
-} BoundaryType;
 
 
 BoundSeg *  find_mask_boundary (PixelRegion *, int *, BoundaryType, int, int, int, int);
