@@ -791,8 +791,6 @@ DepthMerge_dialog (DepthMerge *dm)
 void
 DepthMerge_buildPreviewSourceImage (DepthMerge *dm)
 {
-  int x;
-
   dm->interface->previewSource1   =
     g_new(guchar, dm->interface->previewWidth *
                   dm->interface->previewHeight * 4);

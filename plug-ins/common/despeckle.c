@@ -835,8 +835,7 @@ preview_update (void)
                 radius,         /* Current radius */
                 hist0,          /* Histogram count for 0 values */
                 hist255;        /* Histogram count for 255 values */
-  guchar       *rgba,           /* Output image */
-               *rgba_ptr;       /* Pixel pointer for output */
+  guchar       *rgba;           /* Output image */
 
   rgba = g_new (guchar, PREVIEW_SIZE * PREVIEW_SIZE * img_bpp);
  /*
