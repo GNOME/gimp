@@ -48,12 +48,6 @@ typedef enum
 
 GtkType gimp_channel_get_type (void);
 
-typedef enum /*< skip >*/
-{
-  CHANNEL_ADD_UNDO,
-  CHANNEL_REMOVE_UNDO
-} ChannelUndoType;
-
 
 /*  Special undo type  */
 typedef struct _ChannelUndo ChannelUndo;
@@ -63,8 +57,6 @@ struct _ChannelUndo
   Channel          *channel;         /*  the actual channel          */
   gint              prev_position;   /*  former position in list     */
   Channel          *prev_channel;    /*  previous active channel     */
-  ChannelUndoType   undo_type;       /*  is this a new channel undo  */
-				     /*  or a remove channel undo?   */
 };
 
 /*  Special undo type  */

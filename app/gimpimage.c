@@ -3232,8 +3232,7 @@ gimp_image_add_channel (GimpImage *gimage,
   cu->channel       = channel;
   cu->prev_position = 0;
   cu->prev_channel  = gimage->active_channel;
-  cu->undo_type     = 0;
-  undo_push_channel (gimage, cu);
+  undo_push_channel (gimage, CHANNEL_ADD_UNDO, cu);
 
   /*  add the channel to the list  */
   gimage->channels = g_slist_prepend (gimage->channels, channel_ref (channel));
@@ -3261,7 +3260,6 @@ gimp_image_remove_channel (GimpImage *gimage,
       cu->channel       = channel;
       cu->prev_position = gimp_image_get_channel_index (gimage, channel);
       cu->prev_channel  = gimage->active_channel;
-      cu->undo_type     = 1;
 
       gimage->channels = g_slist_remove (gimage->channels, channel);
 
@@ -3277,7 +3275,7 @@ gimp_image_remove_channel (GimpImage *gimage,
 	drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
 
       /*  Important to push the undo here in case the push fails  */
-      undo_push_channel (gimage, cu);
+      undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);
 
       return channel;
     }

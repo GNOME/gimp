@@ -39,7 +39,7 @@ int      undo_push_layer_mod         (GImage *, void *);
 int      undo_push_layer_mask        (GImage *, UndoType, void *);
 int      undo_push_layer_change      (GImage *, int);
 int      undo_push_layer_position    (GImage *, int);
-int      undo_push_channel           (GImage *, void *);
+int      undo_push_channel           (GImage *, UndoType, void *);
 int      undo_push_channel_mod       (GImage *, void *);
 int      undo_push_fs_to_layer       (GImage *, void *);
 int      undo_push_fs_rigor          (GImage *, int);

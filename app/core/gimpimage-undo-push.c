@@ -1639,18 +1639,23 @@ undo_free_layer_mask (UndoState state,
 /*  New Channel Undo             */
 
 int
-undo_push_channel (GImage *gimage,
-		   void   *cu_ptr)
+undo_push_channel (GImage  *gimage,
+		   UndoType type,
+		   void    *cu_ptr)
 {
   ChannelUndo *cu;
   Undo *new;
   int size;
 
+  g_return_val_if_fail (type == CHANNEL_ADD_UNDO ||
+			type == CHANNEL_REMOVE_UNDO,
+			FALSE);
+
   cu = (ChannelUndo *) cu_ptr;
 
   size = channel_size (cu->channel) + sizeof (ChannelUndo);
 
-  if ((new = undo_push (gimage, size, CHANNEL_UNDO, TRUE)))
+  if ((new = undo_push (gimage, size, type, TRUE)))
     {
       new->data          = cu_ptr;
       new->pop_func      = undo_pop_channel;
@@ -1660,7 +1665,7 @@ undo_push_channel (GImage *gimage,
     }
   else
     {
-      if (cu->undo_type == CHANNEL_REMOVE_UNDO)
+      if (type == CHANNEL_REMOVE_UNDO)
 	channel_delete (cu->channel);
       g_free (cu);
       return FALSE;
@@ -1679,8 +1684,8 @@ undo_pop_channel (GImage    *gimage,
   cu = (ChannelUndo *) cu_ptr;
 
   /*  remove channel  */
-  if ((state == UNDO && cu->undo_type == CHANNEL_ADD_UNDO) ||
-      (state == REDO && cu->undo_type == CHANNEL_REMOVE_UNDO))
+  if ((state == UNDO && type == CHANNEL_ADD_UNDO) ||
+      (state == REDO && type == CHANNEL_REMOVE_UNDO))
     {
       /*  record the current position  */
       cu->prev_position = gimage_get_channel_index (gimage, cu->channel);
@@ -1729,8 +1734,8 @@ undo_free_channel (UndoState state,
    *  stack and it's a channel add, or if we're freeing from
    *  the undo stack and it's a channel remove
    */
-  if ((state == REDO && cu->undo_type == CHANNEL_ADD_UNDO) ||
-      (state == UNDO && cu->undo_type == CHANNEL_REMOVE_UNDO))
+  if ((state == REDO && type == CHANNEL_ADD_UNDO) ||
+      (state == UNDO && type == CHANNEL_REMOVE_UNDO))
     channel_delete (cu->channel);
 
   g_free (cu);
@@ -2730,46 +2735,47 @@ static struct undo_name_t {
     UndoType type;
     const char *name;
 } undo_name[] = {
-    {0,			N_("<<invalid>>")},
-    {IMAGE_UNDO,	N_("image")},
-    {IMAGE_MOD_UNDO,	N_("image mod")},
-    {MASK_UNDO,		N_("mask")},
-    {LAYER_DISPLACE_UNDO, N_("layer move")}, /* ok */
-    {TRANSFORM_UNDO,	N_("transform")},
-    {PAINT_UNDO,	N_("paint")},
-    {LAYER_ADD_UNDO,	N_("new layer")},
-    {LAYER_REMOVE_UNDO,	N_("delete layer")},
-    {LAYER_MOD,		N_("layer mod")},
-    {LAYER_MASK_ADD_UNDO, N_("add layer mask")},  /* ok */
-    {LAYER_MASK_REMOVE_UNDO, N_("delete layer mask")}, /* ok */
-    {LAYER_RENAME_UNDO,	N_("rename layer")},
-    {LAYER_POSITION,	N_("layer position")}, /* unused? */
-    {CHANNEL_UNDO,	N_("channel")},
-    {CHANNEL_MOD,	N_("channel mod")},
-    {FS_TO_LAYER_UNDO,	N_("FS to layer")}, /* ok */
-    {GIMAGE_MOD,	N_("gimage")},
-    {FS_RIGOR,		N_("FS rigor")},
-    {FS_RELAX,		N_("FS relax")},
-    {GUIDE_UNDO,	N_("guide")},
-    {FLOAT_MASK_UNDO,	N_("float selection")},
-    {EDIT_PASTE_UNDO,	N_("paste")},
-    {EDIT_CUT_UNDO,	N_("cut")},
-    {TRANSFORM_CORE_UNDO, N_("transform core")},
-    {PAINT_CORE_UNDO,	N_("paint core")},
-    {FLOATING_LAYER_UNDO, N_("floating layer")}, /* unused! */
-    {LINKED_LAYER_UNDO,	N_("linked layer")},
-    {LAYER_APPLY_MASK_UNDO, N_("apply layer mask")}, /* ok */
-    {LAYER_MERGE_UNDO,	N_("layer merge")},
-    {FS_ANCHOR_UNDO,	N_("FS anchor")},
-    {GIMAGE_MOD_UNDO,	N_("gimage mod")},
-    {CROP_UNDO,		N_("crop")},
-    {LAYER_SCALE_UNDO,	N_("layer scale")},
-    {LAYER_RESIZE_UNDO,	N_("layer resize")},
-    {QMASK_UNDO,	N_("quickmask")},
-    {PARASITE_ATTACH_UNDO, N_("attach parasite")},
-    {PARASITE_REMOVE_UNDO, N_("remove parasite")},
-    {RESOLUTION_UNDO,	N_("resolution change")},
-    {MISC_UNDO,		N_("misc")}
+    {0,				N_("<<invalid>>")},
+    {IMAGE_UNDO,		N_("image")},
+    {IMAGE_MOD_UNDO,		N_("image mod")},
+    {MASK_UNDO,			N_("mask")},
+    {LAYER_DISPLACE_UNDO,	N_("layer move")}, /* ok */
+    {TRANSFORM_UNDO,		N_("transform")},
+    {PAINT_UNDO,		N_("paint")},
+    {LAYER_ADD_UNDO,		N_("new layer")},
+    {LAYER_REMOVE_UNDO,		N_("delete layer")},
+    {LAYER_MOD,			N_("layer mod")},
+    {LAYER_MASK_ADD_UNDO,	N_("add layer mask")},  /* ok */
+    {LAYER_MASK_REMOVE_UNDO,	N_("delete layer mask")}, /* ok */
+    {LAYER_RENAME_UNDO,		N_("rename layer")},
+    {LAYER_POSITION,		N_("layer position")}, /* unused? */
+    {CHANNEL_ADD_UNDO,		N_("new channel")},
+    {CHANNEL_REMOVE_UNDO,	N_("delete channel")},
+    {CHANNEL_MOD,		N_("channel mod")},
+    {FS_TO_LAYER_UNDO,		N_("FS to layer")}, /* ok */
+    {GIMAGE_MOD,		N_("gimage")},
+    {FS_RIGOR,			N_("FS rigor")},
+    {FS_RELAX,			N_("FS relax")},
+    {GUIDE_UNDO,		N_("guide")},
+    {FLOAT_MASK_UNDO,		N_("float selection")},
+    {EDIT_PASTE_UNDO,		N_("paste")},
+    {EDIT_CUT_UNDO,		N_("cut")},
+    {TRANSFORM_CORE_UNDO,	N_("transform core")},
+    {PAINT_CORE_UNDO,		N_("paint core")},
+    {FLOATING_LAYER_UNDO,	N_("floating layer")}, /* unused! */
+    {LINKED_LAYER_UNDO,		N_("linked layer")},
+    {LAYER_APPLY_MASK_UNDO,	N_("apply layer mask")}, /* ok */
+    {LAYER_MERGE_UNDO,		N_("layer merge")},
+    {FS_ANCHOR_UNDO,		N_("FS anchor")},
+    {GIMAGE_MOD_UNDO,		N_("gimage mod")},
+    {CROP_UNDO,			N_("crop")},
+    {LAYER_SCALE_UNDO,		N_("layer scale")},
+    {LAYER_RESIZE_UNDO,		N_("layer resize")},
+    {QMASK_UNDO,		N_("quickmask")},
+    {PARASITE_ATTACH_UNDO,	N_("attach parasite")},
+    {PARASITE_REMOVE_UNDO,	N_("remove parasite")},
+    {RESOLUTION_UNDO,		N_("resolution change")},
+    {MISC_UNDO,			N_("misc")}
 };
 #define NUM_NAMES (sizeof (undo_name) / sizeof (struct undo_name_t))
 
