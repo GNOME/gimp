@@ -120,9 +120,9 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
   GimpTool *tool = GIMP_TOOL (eraser);
 
   gimp_tool_control_set_tool_cursor            (tool->control,
-                                                GIMP_ERASER_TOOL_CURSOR);
+                                                GIMP_TOOL_CURSOR_ERASER);
   gimp_tool_control_set_toggle_tool_cursor     (tool->control,
-                                                GIMP_ERASER_TOOL_CURSOR);
+                                                GIMP_TOOL_CURSOR_ERASER);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 

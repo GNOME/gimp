@@ -86,8 +86,6 @@ static GdkSegment *
 static GimpSelectionToolClass *parent_class = NULL;
 
 
-/*  public functions  */
-
 void
 gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data)
@@ -115,37 +113,30 @@ gimp_fuzzy_select_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpFuzzySelectToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_fuzzy_select_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpFuzzySelectTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_fuzzy_select_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_fuzzy_select_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpFuzzySelectTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_fuzzy_select_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpFuzzySelectTool",
+                                          "GimpFuzzySelectTool",
                                           &tool_info, 0);
     }
 
   return tool_type;
 }
 
-
-/*  private functions  */
-
 static void
 gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -161,13 +152,11 @@ gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass)
 static void
 gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (fuzzy_select);
+  GimpTool *tool = GIMP_TOOL (fuzzy_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_FUZZY_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_FUZZY_SELECT);
 
   fuzzy_select->x               = 0;
   fuzzy_select->y               = 0;
@@ -183,9 +172,7 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 static void
 gimp_fuzzy_select_tool_finalize (GObject *object)
 {
-  GimpFuzzySelectTool *fuzzy_sel;
-
-  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (object);
+  GimpFuzzySelectTool *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (object);
 
   if (fuzzy_sel->fuzzy_mask)
     {
@@ -210,10 +197,9 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool  *fuzzy_sel;
+  GimpFuzzySelectTool  *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
 
-  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   fuzzy_sel->x               = coords->x;
@@ -254,10 +240,9 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool  *fuzzy_sel;
+  GimpFuzzySelectTool  *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
 
-  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -290,9 +275,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
         }
       else
         {
-          GimpDrawable *drawable;
-
-          drawable = gimp_image_active_drawable (gdisp->gimage);
+          GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
 
           gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
         }
@@ -334,8 +317,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool  *fuzzy_sel;
-  GimpSelectionTool    *sel_tool;
+  GimpFuzzySelectTool  *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
   GdkSegment           *new_segs;
   gint                  num_new_segs;
@@ -344,9 +326,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   static guint32 last_time = 0;
 
-  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
-  sel_tool  = GIMP_SELECTION_TOOL (tool);
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
   if (time - last_time < 100)
@@ -400,7 +380,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
                                   GimpDisplay         *gdisp,
                                   gint                *num_segs)
 {
-  GimpTool             *tool;
+  GimpTool             *tool = GIMP_TOOL (fuzzy_sel);
   GimpSelectionOptions *options;
   GimpDisplayShell     *shell;
   PixelRegion           maskPR;
@@ -411,7 +391,6 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
   gint                  i;
   gint                  x, y;
 
-  tool    = GIMP_TOOL (fuzzy_sel);
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);

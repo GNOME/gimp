@@ -294,18 +294,18 @@ gimp_iscissors_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpIscissorsToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_iscissors_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpIscissorsTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_iscissors_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_iscissors_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpIscissorsTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_iscissors_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpIscissorsTool",
+                                          "GimpIscissorsTool",
                                           &tool_info, 0);
     }
 
@@ -315,13 +315,9 @@ gimp_iscissors_tool_get_type (void)
 static void
 gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -340,9 +336,7 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
 static void
 gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (iscissors);
+  GimpTool *tool = GIMP_TOOL (iscissors);
 
   iscissors->op           = ISCISSORS_OP_NONE;
   iscissors->dp_buf       = NULL;
@@ -356,7 +350,7 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_SCISSORS_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ISCISSORS);
 
   gimp_iscissors_tool_reset (iscissors);
 }
@@ -376,10 +370,8 @@ gimp_iscissors_tool_control (GimpTool       *tool,
                              GimpToolAction  action,
                              GimpDisplay    *gdisp)
 {
-  GimpIscissorsTool *iscissors;
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
   IscissorsDraw      draw;
-
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   switch (iscissors->state)
     {
@@ -424,11 +416,10 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool    *iscissors;
+  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
 
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   iscissors->x = coords->x;
   iscissors->y = coords->y;
@@ -589,12 +580,11 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool    *iscissors;
+  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
   ICurve               *curve;
 
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -703,11 +693,10 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool    *iscissors;
+  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options;
 
-  iscissors = GIMP_ISCISSORS_TOOL (tool);
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   if (iscissors->state == NO_ACTION)
     return;
@@ -770,14 +759,11 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
 static void
 gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool          *tool;
-  GimpIscissorsTool *iscissors;
+  GimpTool          *tool      = GIMP_TOOL (draw_tool);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
   GimpDisplay       *gdisp;
   ICurve            *curve;
   GSList            *list;
-
-  tool      = GIMP_TOOL (draw_tool);
-  iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
 
   gdisp = tool->gdisp;
 
@@ -1019,7 +1005,7 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                                    GimpDisplay     *gdisp)
 {
   GimpIscissorsTool  *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GdkCursorType       cursor    = GIMP_MOUSE_CURSOR;
+  GdkCursorType       cursor    = GIMP_CURSOR_MOUSE;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (iscissors->op)
@@ -1034,16 +1020,14 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
     case ISCISSORS_OP_IMPOSSIBLE:
-      cursor = GIMP_BAD_CURSOR;
+      cursor = GIMP_CURSOR_BAD;
       break;
     default:
       break;
     }
 
   gimp_tool_set_cursor (tool, gdisp,
-                        cursor,
-                        GIMP_SCISSORS_TOOL_CURSOR /* tool->tool_cursor*/,
-                        cmodifier);
+                        cursor, GIMP_TOOL_CURSOR_ISCISSORS, cmodifier);
 }
 
 

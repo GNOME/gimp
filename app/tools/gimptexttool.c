@@ -157,18 +157,18 @@ gimp_text_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpTextToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_text_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTextTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_text_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_text_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpTextTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_text_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-					  "GimpTextTool",
+                                          "GimpTextTool",
                                           &tool_info, 0);
     }
 
@@ -211,7 +211,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_TEXT);
 }
 
 static GObject *

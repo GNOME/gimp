@@ -151,7 +151,7 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
-				     GIMP_BUCKET_FILL_TOOL_CURSOR);
+				     GIMP_TOOL_CURSOR_BUCKET_FILL);
 }
 
 static void

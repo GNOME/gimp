@@ -223,8 +223,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_BEZIER_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_PATHS);
 
   vector_tool->status_msg     = NULL;
 
@@ -1252,15 +1251,15 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  cursor      = GIMP_MOUSE_CURSOR;
-  tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
+  cursor      = GIMP_CURSOR_MOUSE;
+  tool_cursor = GIMP_TOOL_CURSOR_PATHS;
   cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (vector_tool->function)
     {
     case VECTORS_SELECT_VECTOR:
       cursor      = GDK_HAND2;
-      tool_cursor = GIMP_HAND_TOOL_CURSOR;
+      tool_cursor = GIMP_TOOL_CURSOR_HAND;
       break;
     case VECTORS_CREATE_VECTOR:
     case VECTORS_CREATE_STROKE:
@@ -1277,7 +1276,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     case VECTORS_MOVE_HANDLE:
     case VECTORS_CONVERT_EDGE:
       cursor      = GDK_HAND2;
-      tool_cursor = GIMP_HAND_TOOL_CURSOR;
+      tool_cursor = GIMP_TOOL_CURSOR_HAND;
       cmodifier   = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
     case VECTORS_MOVE_ANCHOR:
@@ -1291,12 +1290,12 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
       break;
     default:
-      cursor = GIMP_BAD_CURSOR;
+      cursor = GIMP_CURSOR_BAD;
       break;
     }
 
-  gimp_tool_control_set_cursor (tool->control, cursor);
-  gimp_tool_control_set_tool_cursor (tool->control, tool_cursor);
+  gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
@@ -1305,18 +1304,14 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpVectorTool  *vector_tool;
-  GimpTool        *tool;
-  GimpAnchor      *cur_anchor = NULL;
-  GimpStroke      *cur_stroke = NULL;
+  GimpVectorTool  *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
+  GimpAnchor      *cur_anchor  = NULL;
+  GimpStroke      *cur_stroke  = NULL;
   GimpVectors     *vectors;
   GArray          *coords;
   gboolean         closed;
   GList           *draw_anchors;
   GList           *list;
-
-  vector_tool = GIMP_VECTOR_TOOL (draw_tool);
-  tool        = GIMP_TOOL (draw_tool);
 
   vectors = vector_tool->vectors;
 

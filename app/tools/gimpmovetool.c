@@ -179,7 +179,7 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   gimp_tool_control_set_snap_to             (tool->control, FALSE);
   gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor         (tool->control,
-                                             GIMP_MOVE_TOOL_CURSOR);
+                                             GIMP_TOOL_CURSOR_MOVE);
 }
 
 static void
@@ -586,19 +586,19 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
   GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
-  GdkCursorType      cursor      = GIMP_BAD_CURSOR;
-  GimpToolCursorType tool_cursor = GIMP_MOVE_TOOL_CURSOR;
+  GdkCursorType      cursor      = GIMP_CURSOR_BAD;
+  GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_MOVE;
   GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS;
       modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 
       if (options->move_current)
         {
           if (gimp_image_get_active_vectors (gdisp->gimage))
-            cursor = GIMP_MOUSE_CURSOR;
+            cursor = GIMP_CURSOR_MOUSE;
         }
       else
         {
@@ -607,22 +607,22 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                          NULL, NULL, NULL, NULL, NULL, NULL))
             {
               cursor      = GDK_HAND2;
-              tool_cursor = GIMP_HAND_TOOL_CURSOR;
+              tool_cursor = GIMP_TOOL_CURSOR_HAND;
             }
         }
     }
   else if (options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-      tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+      tool_cursor = GIMP_TOOL_CURSOR_RECT_SELECT;
       modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 
       if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
-        cursor = GIMP_MOUSE_CURSOR;
+        cursor = GIMP_CURSOR_MOUSE;
     }
   else if (options->move_current)
     {
       if (gimp_image_active_drawable (gdisp->gimage))
-        cursor = GIMP_MOUSE_CURSOR;
+        cursor = GIMP_CURSOR_MOUSE;
     }
   else
     {
@@ -639,7 +639,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                           FUNSCALEY (shell, snap_distance))))
         {
           cursor      = GDK_HAND2;
-          tool_cursor = GIMP_HAND_TOOL_CURSOR;
+          tool_cursor = GIMP_TOOL_CURSOR_HAND;
           modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 	}
       else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
@@ -649,18 +649,18 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
-              cursor      = GIMP_MOUSE_CURSOR;
-              tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+              cursor      = GIMP_CURSOR_MOUSE;
+              tool_cursor = GIMP_TOOL_CURSOR_RECT_SELECT;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
 	    }
 	  else if (layer == gimp_image_get_active_layer (gdisp->gimage))
 	    {
-              cursor = GIMP_MOUSE_CURSOR;
+              cursor = GIMP_CURSOR_MOUSE;
 	    }
 	  else
 	    {
               cursor      = GDK_HAND2;
-              tool_cursor = GIMP_HAND_TOOL_CURSOR;
+              tool_cursor = GIMP_TOOL_CURSOR_HAND;
               modifier    = GIMP_CURSOR_MODIFIER_MOVE;
 	    }
 	}
@@ -751,7 +751,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 
   gimp_tool_set_cursor (tool, gdisp,
                         GDK_HAND2,
-                        GIMP_HAND_TOOL_CURSOR,
+                        GIMP_TOOL_CURSOR_HAND,
                         GIMP_CURSOR_MODIFIER_MOVE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (move), gdisp);

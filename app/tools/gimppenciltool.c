@@ -89,7 +89,7 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   GimpTool *tool = GIMP_TOOL (pencil);
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_PENCIL_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_PENCIL);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (pencil),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

@@ -608,14 +608,14 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                 if (GIMP_IS_LAYER (drawable) &&
                     gimp_layer_get_mask (GIMP_LAYER (drawable)))
                   {
-                    ctype = GIMP_BAD_CURSOR;
+                    ctype = GIMP_CURSOR_BAD;
                   }
                 else if (gimp_display_coords_in_active_drawable (gdisp, coords))
                   {
                     if (gimp_channel_is_empty (selection) ||
                         gimp_channel_value (selection, coords->x, coords->y))
                       {
-                        ctype = GIMP_MOUSE_CURSOR;
+                        ctype = GIMP_CURSOR_MOUSE;
                       }
                   }
               }
@@ -626,15 +626,15 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           if (gimp_channel_is_empty (selection) ||
               gimp_channel_value (selection, coords->x, coords->y))
             {
-              ctype = GIMP_MOUSE_CURSOR;
+              ctype = GIMP_CURSOR_MOUSE;
             }
           break;
 
         case GIMP_TRANSFORM_TYPE_PATH:
           if (gimp_image_get_active_vectors (gdisp->gimage))
-            ctype = GIMP_MOUSE_CURSOR;
+            ctype = GIMP_CURSOR_MOUSE;
           else
-            ctype = GIMP_BAD_CURSOR;
+            ctype = GIMP_CURSOR_BAD;
           break;
         }
 

@@ -120,9 +120,9 @@ gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
   GimpTool *tool = GIMP_TOOL (dodgeburn);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_DODGE_TOOL_CURSOR);
+                                            GIMP_TOOL_CURSOR_DODGE);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
-                                            GIMP_BURN_TOOL_CURSOR);
+                                            GIMP_TOOL_CURSOR_BURN);
 }
 
 static void

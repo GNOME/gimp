@@ -261,7 +261,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
 
   if (color_tool->enabled)
     {
-      GdkCursorType      cursor   = GIMP_BAD_CURSOR;
+      GdkCursorType      cursor   = GIMP_CURSOR_BAD;
       GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
 
       if (coords->x > 0 && coords->x < gdisp->gimage->width  &&
@@ -270,7 +270,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
           (color_tool->options->sample_merged ||
            gimp_display_coords_in_active_drawable (gdisp, coords)))
         {
-          cursor = GIMP_COLOR_PICKER_CURSOR;
+          cursor = GIMP_CURSOR_COLOR_PICKER;
         }
 
       switch (color_tool->pick_mode)
@@ -287,8 +287,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
         }
 
       gimp_tool_set_cursor (tool, gdisp,
-                            cursor,
-                            GIMP_COLOR_PICKER_TOOL_CURSOR, modifier);
+                            cursor, GIMP_TOOL_CURSOR_COLOR_PICKER, modifier);
 
       return;  /*  don't chain up  */
     }

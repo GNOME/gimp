@@ -224,7 +224,7 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   GimpTool *tool = GIMP_TOOL (crop_tool);
 
   gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_CROP_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 }
 
 static void
@@ -742,7 +742,7 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 {
   GimpCropTool       *crop      = GIMP_CROP_TOOL (tool);
   GimpCropOptions    *options;
-  GdkCursorType       ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
+  GdkCursorType       ctype     = GIMP_CURSOR_CROSSHAIR_SMALL;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
@@ -769,8 +769,8 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_tool_cursor (tool->control,
                                      options->crop_mode ==
                                      GIMP_CROP_MODE_CROP ?
-                                     GIMP_CROP_TOOL_CURSOR :
-                                     GIMP_RESIZE_TOOL_CURSOR);
+                                     GIMP_TOOL_CURSOR_CROP :
+                                     GIMP_TOOL_CURSOR_RESIZE);
   gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

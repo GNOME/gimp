@@ -191,7 +191,8 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
-  if (cursor_type != GIMP_BAD_CURSOR)
+  if (cursor_type != GIMP_CURSOR_NONE &&
+      cursor_type != GIMP_CURSOR_BAD)
     {
       switch (config->cursor_mode)
 	{
@@ -199,11 +200,11 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 	  break;
 
 	case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
+	  cursor_type = GIMP_CURSOR_CROSSHAIR_SMALL;
 	  break;
 
 	case GIMP_CURSOR_MODE_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_CURSOR;
+	  cursor_type = GIMP_CURSOR_CROSSHAIR;
 	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
 	  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 	  break;

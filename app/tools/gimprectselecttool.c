@@ -136,11 +136,8 @@ gimp_rect_select_tool_get_type (void)
 static void
 gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 {
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -159,7 +156,7 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
   GimpTool *tool = GIMP_TOOL (rect_select);
 
   gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_RECT_SELECT_TOOL_CURSOR);
+                                     GIMP_TOOL_CURSOR_RECT_SELECT);
 
   rect_select->x = rect_select->y = 0.0;
   rect_select->w = rect_select->h = 0.0;
@@ -172,15 +169,13 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpRectSelectTool   *rect_sel;
-  GimpSelectionTool    *sel_tool;
+  GimpRectSelectTool   *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
+  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
   GimpSelectionOptions *options;
-  GimpUnit              unit = GIMP_UNIT_PIXEL;
+  GimpUnit              unit     = GIMP_UNIT_PIXEL;
   gdouble               unit_factor;
 
-  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
-  sel_tool = GIMP_SELECTION_TOOL (tool);
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   rect_sel->x      = coords->x;
   rect_sel->y      = coords->y;
@@ -264,15 +259,11 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *gdisp)
 {
-  GimpRectSelectTool *rect_sel;
-  GimpSelectionTool  *sel_tool;
+  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   gdouble             x, y;
   gdouble             w, h;
   gint                ix, iy;
   gint                iw, ih;
-
-  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
-  sel_tool = GIMP_SELECTION_TOOL (tool);
 
   gimp_tool_pop_status (tool);
 
@@ -323,17 +314,14 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpRectSelectTool *rect_sel;
-  GimpSelectionTool  *sel_tool;
+  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (tool);
+  GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
   gdouble             ox, oy;
   gdouble             w, h;
   gdouble             tw, th;
   gdouble             ratio;
   gint                ix, iy;
   gint                iw, ih;
-
-  rect_sel = GIMP_RECT_SELECT_TOOL (tool);
-  sel_tool = GIMP_SELECTION_TOOL (tool);
 
   if (coords->x != rect_sel->x || coords->y != rect_sel->y)
     rect_sel->moved = TRUE;
@@ -523,13 +511,11 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
                                         gint                w,
                                         gint                h)
 {
-  GimpTool             *tool;
-  GimpSelectionTool    *sel_tool;
+  GimpTool             *tool     = GIMP_TOOL (rect_tool);
+  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (rect_tool);
   GimpSelectionOptions *options;
 
-  tool     = GIMP_TOOL (rect_tool);
-  sel_tool = GIMP_SELECTION_TOOL (rect_tool);
-  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->gimage),
                                  x, y, w, h,

@@ -115,18 +115,18 @@ gimp_shear_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpShearToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_shear_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpShearTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_shear_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_shear_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpShearTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_shear_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpShearTool",
+                                          "GimpShearTool",
                                           &tool_info, 0);
     }
 
@@ -136,9 +136,7 @@ gimp_shear_tool_get_type (void)
 static void
 gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
-  GimpTransformToolClass *trans_class;
-
-  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -154,7 +152,7 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   GimpTool          *tool    = GIMP_TOOL (shear_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (shear_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_SHEAR_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SHEAR);
 
   tr_tool->use_center    = FALSE;
   tr_tool->shell_desc    = _("Shearing Information");

@@ -6,6 +6,7 @@ CURSOR_IMAGES = \
 	cursor-crosshair.png		\
 	cursor-crosshair-small.png	\
 	cursor-mouse.png		\
+	cursor-none.png			\
 	cursor-zoom.png			\
 	\
 	modifier-anchor.png		\
@@ -55,6 +56,7 @@ EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf			\
 	\
+	xbm/cursor-none.xbm			\
 	xbm/cursor-mouse.xbm			\
 	xbm/cursor-mouse-mask.xbm		\
 	xbm/cursor-crosshair.xbm		\

@@ -120,9 +120,9 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
   GimpTool *tool = GIMP_TOOL (convolve);
 
   gimp_tool_control_set_tool_cursor            (tool->control,
-                                                GIMP_BLUR_TOOL_CURSOR);
+                                                GIMP_TOOL_CURSOR_BLUR);
   gimp_tool_control_set_toggle_tool_cursor     (tool->control,
-                                                GIMP_BLUR_TOOL_CURSOR);
+                                                GIMP_TOOL_CURSOR_BLUR);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 }

@@ -141,7 +141,7 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   tool = GIMP_TOOL (by_color_select);
 
   gimp_tool_control_set_preserve (tool->control, FALSE);
-  gimp_tool_control_set_preserve (tool->control, GIMP_RECT_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_preserve (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
 
   by_color_select->x = 0;
   by_color_select->y = 0;
@@ -297,11 +297,11 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
   if (! options->sample_merged &&
       layer && layer != gdisp->gimage->active_layer)
     {
-      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_BAD);
     }
   else
     {
-      gimp_tool_control_set_cursor (tool->control, GIMP_MOUSE_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_MOUSE);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

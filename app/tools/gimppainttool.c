@@ -69,23 +69,23 @@ static GObject * gimp_paint_tool_constructor (GType                type,
 static void   gimp_paint_tool_finalize       (GObject             *object);
 
 static void   gimp_paint_tool_control        (GimpTool	          *tool,
-					      GimpToolAction       action,
-					      GimpDisplay         *gdisp);
+                                              GimpToolAction       action,
+                                              GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_press   (GimpTool            *tool,
                                               GimpCoords          *coords,
                                               guint32              time,
-					      GdkModifierType      state,
-					      GimpDisplay         *gdisp);
+                                              GdkModifierType      state,
+                                              GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_release (GimpTool            *tool,
                                               GimpCoords          *coords,
                                               guint32              time,
-					      GdkModifierType      state,
-					      GimpDisplay         *gdisp);
+                                              GdkModifierType      state,
+                                              GimpDisplay         *gdisp);
 static void   gimp_paint_tool_motion         (GimpTool            *tool,
                                               GimpCoords          *coords,
                                               guint32              time,
-					      GdkModifierType      state,
-					      GimpDisplay         *gdisp);
+                                              GdkModifierType      state,
+                                              GimpDisplay         *gdisp);
 static void   gimp_paint_tool_arrow_key      (GimpTool            *tool,
                                               GdkEventKey         *kevent,
                                               GimpDisplay         *gdisp);
@@ -96,8 +96,12 @@ static void   gimp_paint_tool_modifier_key   (GimpTool            *tool,
                                               GimpDisplay         *gdisp);
 static void   gimp_paint_tool_oper_update    (GimpTool            *tool,
                                               GimpCoords          *coords,
-					      GdkModifierType      state,
-					      GimpDisplay         *gdisp);
+                                              GdkModifierType      state,
+                                              GimpDisplay         *gdisp);
+static void   gimp_paint_tool_cursor_update  (GimpTool            *tool,
+                                              GimpCoords          *coords,
+                                              GdkModifierType      state,
+                                              GimpDisplay         *gdisp);
 
 static void   gimp_paint_tool_draw           (GimpDrawTool        *draw_tool);
 
@@ -162,6 +166,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->arrow_key      = gimp_paint_tool_arrow_key;
   tool_class->modifier_key   = gimp_paint_tool_modifier_key;
   tool_class->oper_update    = gimp_paint_tool_oper_update;
+  tool_class->cursor_update  = gimp_paint_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
 
@@ -178,6 +183,7 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->pick_colors = FALSE;
   paint_tool->draw_line   = FALSE;
 
+  paint_tool->show_cursor = TRUE;
   paint_tool->draw_brush  = TRUE;
   paint_tool->brush_x     = 0.0;
   paint_tool->brush_y     = 0.0;
@@ -201,9 +207,15 @@ gimp_paint_tool_constructor (GType                  type,
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
 
+  paint_tool->show_cursor =
+    GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_paint_tool_cursor;
   paint_tool->draw_brush =
     GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_brush_outline;
 
+  g_signal_connect_object (tool->tool_info->gimp->config,
+                           "notify::show-paint-tool-cursor",
+                           G_CALLBACK (gimp_paint_tool_notify_brush),
+                           paint_tool, 0);
   g_signal_connect_object (tool->tool_info->gimp->config,
                            "notify::show-brush-outline",
                            G_CALLBACK (gimp_paint_tool_notify_brush),
@@ -851,6 +863,26 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
+gimp_paint_tool_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+
+  if (! paint_tool->show_cursor)
+    {
+      gimp_tool_set_cursor (tool, gdisp,
+                            GIMP_CURSOR_NONE,
+                            GIMP_TOOL_CURSOR_NONE,
+                            GIMP_CURSOR_MODIFIER_NONE);
+      return;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+}
+
+static void
 gimp_paint_tool_color_picked (GimpColorTool *color_tool,
                               GimpImageType  sample_type,
                               GimpRGB       *color,
@@ -887,7 +919,8 @@ gimp_paint_tool_notify_brush (GimpDisplayConfig *config,
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
 
-  paint_tool->draw_brush = config->show_brush_outline;
+  paint_tool->show_cursor = config->show_paint_tool_cursor;
+  paint_tool->draw_brush  = config->show_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }

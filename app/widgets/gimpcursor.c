@@ -27,6 +27,7 @@
 #include "cursors/gimp-tool-cursors.h"
 
 /*  standard gimp cursors  */
+#include "cursors/xbm/cursor-none.xbm"
 #include "cursors/xbm/cursor-mouse.xbm"
 #include "cursors/xbm/cursor-mouse-mask.xbm"
 #include "cursors/xbm/cursor-crosshair.xbm"
@@ -148,6 +149,13 @@ static GimpBitmapCursor gimp_cursors[] =
 {
   /* these have to match up with enum GimpCursorType in widgets-enums.h */
 
+  {
+    cursor_none_bits, cursor_none_bits,
+    cursor_none_width, cursor_none_height,
+    cursor_none_x_hot, cursor_none_y_hot, NULL, NULL,
+
+    cursor_none, NULL
+  },
   {
     cursor_mouse_bits, cursor_mouse_mask_bits,
     cursor_mouse_width, cursor_mouse_height,
@@ -556,31 +564,31 @@ gimp_cursor_new (GdkDisplay         *display,
   GimpBitmapCursor *bmtool     = NULL;
 
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
-  g_return_val_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY, NULL);
+  g_return_val_if_fail (cursor_type < GIMP_CURSOR_LAST, NULL);
 
   if (cursor_type <= GDK_LAST_CURSOR)
     return gdk_cursor_new_for_display (display, cursor_type);
 
-  g_return_val_if_fail (cursor_type >= GIMP_MOUSE_CURSOR, NULL);
+  g_return_val_if_fail (cursor_type >= GIMP_CURSOR_NONE, NULL);
 
   /*  allow the small tool cursor only with the standard mouse,
    *  the small crosshair and the bad cursor
    */
-  if (cursor_type != GIMP_MOUSE_CURSOR &&
-      cursor_type != GIMP_CROSSHAIR_SMALL_CURSOR &&
-      cursor_type != GIMP_BAD_CURSOR)
+  if (cursor_type != GIMP_CURSOR_MOUSE           &&
+      cursor_type != GIMP_CURSOR_CROSSHAIR_SMALL &&
+      cursor_type != GIMP_CURSOR_BAD)
     {
       tool_cursor = GIMP_TOOL_CURSOR_NONE;
     }
 
   /*  prepare the main cursor  */
 
-  cursor_type -= GIMP_MOUSE_CURSOR;
+  cursor_type -= GIMP_CURSOR_NONE;
   bmcursor = &gimp_cursors[cursor_type];
 
   /*  prepare the tool cursor  */
 
-  if (tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
+  if (tool_cursor >= GIMP_TOOL_CURSOR_LAST)
     tool_cursor = GIMP_TOOL_CURSOR_NONE;
 
   if (tool_cursor != GIMP_TOOL_CURSOR_NONE)

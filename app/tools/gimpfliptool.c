@@ -150,11 +150,11 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   gimp_tool_control_set_cursor             (tool->control,
                                             GDK_SB_H_DOUBLE_ARROW);
   gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_FLIP_HORIZONTAL_TOOL_CURSOR);
+                                            GIMP_TOOL_CURSOR_FLIP_HORIZONTAL);
   gimp_tool_control_set_toggle_cursor      (tool->control,
                                             GDK_SB_V_DOUBLE_ARROW);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
-                                            GIMP_FLIP_VERTICAL_TOOL_CURSOR);
+                                            GIMP_TOOL_CURSOR_FLIP_VERTICAL);
 
   transform_tool->use_grid = FALSE;
 }
@@ -217,12 +217,12 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   if (bad_cursor)
     {
-      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
-      gimp_tool_control_set_toggle_cursor (tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor        (tool->control, GIMP_CURSOR_BAD);
+      gimp_tool_control_set_toggle_cursor (tool->control, GIMP_CURSOR_BAD);
     }
   else
     {
-      gimp_tool_control_set_cursor (tool->control, GDK_SB_H_DOUBLE_ARROW);
+      gimp_tool_control_set_cursor        (tool->control, GDK_SB_H_DOUBLE_ARROW);
       gimp_tool_control_set_toggle_cursor (tool->control, GDK_SB_V_DOUBLE_ARROW);
     }
 

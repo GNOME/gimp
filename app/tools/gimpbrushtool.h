@@ -40,6 +40,7 @@ struct _GimpPaintTool
   gboolean         pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean         draw_line;
 
+  gboolean         show_cursor;
   gboolean         draw_brush;
   gdouble          brush_x;
   gdouble          brush_y;

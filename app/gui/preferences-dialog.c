@@ -1494,6 +1494,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "show-brush-outline",
                           _("Show _Brush Outline"),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (object, "show-paint-tool-cursor",
+                          _("Show Paint _Tool Cursor"),
+                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "perfect-mouse",
                           _("Perfect-but-Slow _Pointer Tracking"),
                           GTK_BOX (vbox2));

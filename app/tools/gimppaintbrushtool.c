@@ -90,7 +90,7 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
   GimpTool *tool = GIMP_TOOL (paintbrush);
 
   gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_PAINTBRUSH_TOOL_CURSOR);
+                                     GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

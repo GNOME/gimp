@@ -118,18 +118,18 @@ gimp_rotate_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpRotateToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_rotate_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpRotateTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_rotate_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_rotate_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpRotateTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_rotate_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpRotateTool",
+                                          "GimpRotateTool",
                                           &tool_info, 0);
     }
 
@@ -142,9 +142,7 @@ gimp_rotate_tool_get_type (void)
 static void
 gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
 {
-  GimpTransformToolClass *trans_class;
-
-  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -160,7 +158,7 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
   GimpTool          *tool    = GIMP_TOOL (rotate_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_ROTATE_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ROTATE);
 
   tr_tool->shell_desc    = _("Rotation Information");
   tr_tool->progress_text = _("Rotating...");

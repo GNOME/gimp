@@ -128,18 +128,18 @@ gimp_measure_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpMeasureToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_measure_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpMeasureTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_measure_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_measure_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpMeasureTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_measure_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpMeasureTool",
+                                          "GimpMeasureTool",
                                           &tool_info, 0);
     }
 
@@ -149,11 +149,8 @@ gimp_measure_tool_get_type (void)
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -171,7 +168,7 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 {
   GimpTool *tool = GIMP_TOOL (measure_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_MEASURE_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_MEASURE);
 }
 
 static void
@@ -207,12 +204,11 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpMeasureTool    *mtool;
+  GimpMeasureTool    *mtool = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options;
   GimpDisplayShell   *shell;
   gint                i;
 
-  mtool   = GIMP_MEASURE_TOOL (tool);
   options = GIMP_MEASURE_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
@@ -386,13 +382,12 @@ gimp_measure_tool_motion (GimpTool        *tool,
                           GdkModifierType  state,
                           GimpDisplay     *gdisp)
 {
-  GimpMeasureTool    *mtool;
+  GimpMeasureTool    *mtool = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options;
   gint                dx, dy;
   gint                i;
   gint                tmp;
 
-  mtool   = GIMP_MEASURE_TOOL (tool);
   options = GIMP_MEASURE_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (mtool));
@@ -513,7 +508,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 {
   GimpMeasureTool   *mtool     = GIMP_MEASURE_TOOL (tool);
   gboolean           in_handle = FALSE;
-  GdkCursorType      ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
+  GdkCursorType      ctype     = GIMP_CURSOR_CROSSHAIR_SMALL;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
   gint               i;
 

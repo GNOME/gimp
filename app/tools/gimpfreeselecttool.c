@@ -112,18 +112,18 @@ gimp_free_select_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpFreeSelectToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_free_select_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpFreeSelectTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_free_select_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_free_select_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpFreeSelectTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_free_select_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpFreeSelectTool",
+                                          "GimpFreeSelectTool",
                                           &tool_info, 0);
     }
 
@@ -135,13 +135,9 @@ gimp_free_select_tool_get_type (void)
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -157,14 +153,11 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 static void
 gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *select_tool;
-
-  tool        = GIMP_TOOL (free_select);
-  select_tool = GIMP_SELECTION_TOOL (free_select);
+  GimpTool *tool = GIMP_TOOL (free_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_FREE_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_TOOL_CURSOR_FREE_SELECT);
 
   free_select->points     = NULL;
   free_select->num_points = 0;
@@ -174,9 +167,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 static void
 gimp_free_select_tool_finalize (GObject *object)
 {
-  GimpFreeSelectTool *free_sel;
-
-  free_sel = GIMP_FREE_SELECT_TOOL (object);
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (object);
 
   if (free_sel->points)
     {
@@ -194,9 +185,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpFreeSelectTool *free_sel;
-
-  free_sel = GIMP_FREE_SELECT_TOOL (tool);
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -231,10 +220,9 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *gdisp)
 {
-  GimpFreeSelectTool   *free_sel;
+  GimpFreeSelectTool   *free_sel = GIMP_FREE_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
 
-  free_sel = GIMP_FREE_SELECT_TOOL (tool);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -279,11 +267,8 @@ gimp_free_select_tool_motion (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpFreeSelectTool *free_sel;
-  GimpSelectionTool  *sel_tool;
-
-  free_sel  = GIMP_FREE_SELECT_TOOL (tool);
-  sel_tool  = GIMP_SELECTION_TOOL (tool);
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (tool);
+  GimpSelectionTool  *sel_tool = GIMP_SELECTION_TOOL (tool);
 
   if (sel_tool->op == SELECTION_ANCHOR)
     {
@@ -320,10 +305,8 @@ gimp_free_select_tool_motion (GimpTool        *tool,
 static void
 gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpFreeSelectTool *free_sel;
+  GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
   gint                i;
-
-  free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
 
   for (i = 1; i < free_sel->num_points; i++)
     {

@@ -85,11 +85,11 @@ gimp_tool_control_init (GimpToolControl *control)
   control->handle_empty_image     = FALSE;
   control->motion_mode            = GIMP_MOTION_MODE_HINT;
 
-  control->cursor                 = GIMP_MOUSE_CURSOR;
+  control->cursor                 = GIMP_CURSOR_MOUSE;
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
   control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
 
-  control->toggle_cursor          = GIMP_MOUSE_CURSOR;
+  control->toggle_cursor          = GIMP_CURSOR_MOUSE;
   control->toggle_tool_cursor     = GIMP_TOOL_CURSOR_NONE;
   control->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
 }

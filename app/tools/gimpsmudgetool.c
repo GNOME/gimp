@@ -92,7 +92,7 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 {
   GimpTool *tool = GIMP_TOOL (smudge);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_SMUDGE_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SMUDGE);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (smudge),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

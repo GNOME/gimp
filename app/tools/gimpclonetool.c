@@ -155,7 +155,7 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 {
   GimpTool *tool = GIMP_TOOL (clone);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CLONE);
 }
 
 static GObject *
@@ -224,7 +224,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 			       GimpDisplay     *gdisp)
 {
   GimpCloneOptions *options;
-  GdkCursorType     ctype = GIMP_MOUSE_CURSOR;
+  GdkCursorType     ctype = GIMP_CURSOR_MOUSE;
 
   options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
@@ -236,17 +236,17 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
        *  if so, is cursor inside?
        */
       if (gimp_channel_is_empty (selection))
-        ctype = GIMP_MOUSE_CURSOR;
+        ctype = GIMP_CURSOR_MOUSE;
       else if (gimp_channel_value (selection, coords->x, coords->y))
-        ctype = GIMP_MOUSE_CURSOR;
+        ctype = GIMP_CURSOR_MOUSE;
     }
 
   if (options->clone_type == GIMP_IMAGE_CLONE)
     {
       if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
+	ctype = GIMP_CURSOR_CROSSHAIR_SMALL;
       else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
-	ctype = GIMP_BAD_CURSOR;
+	ctype = GIMP_CURSOR_BAD;
     }
 
   gimp_tool_control_set_cursor (tool->control, ctype);

@@ -632,7 +632,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 else if (gimp_image_is_empty (gimage))
                   {
                     gimp_display_shell_set_cursor (shell,
-                                                   GIMP_BAD_CURSOR,
+                                                   GIMP_CURSOR_BAD,
                                                    gimp_tool_control_get_tool_cursor (active_tool->control),
                                                    GIMP_CURSOR_MODIFIER_NONE);
                   }
@@ -640,7 +640,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             else
               {
                 gimp_display_shell_set_cursor (shell,
-                                               GIMP_BAD_CURSOR,
+                                               GIMP_CURSOR_BAD,
                                                GIMP_TOOL_CURSOR_NONE,
                                                GIMP_CURSOR_MODIFIER_NONE);
               }
@@ -1263,7 +1263,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           else if (gimp_image_is_empty (gimage))
             {
               gimp_display_shell_set_cursor (shell,
-                                             GIMP_BAD_CURSOR,
+                                             GIMP_CURSOR_BAD,
                                              gimp_tool_control_get_tool_cursor (active_tool->control),
                                              GIMP_CURSOR_MODIFIER_NONE);
             }
@@ -1271,7 +1271,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       else
         {
           gimp_display_shell_set_cursor (shell,
-                                         GIMP_BAD_CURSOR,
+                                         GIMP_CURSOR_BAD,
                                          GIMP_TOOL_CURSOR_NONE,
                                          GIMP_CURSOR_MODIFIER_NONE);
         }

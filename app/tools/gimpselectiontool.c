@@ -265,7 +265,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       break;
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
-      tool_cursor = GIMP_MOVE_TOOL_CURSOR;
+      tool_cursor = GIMP_TOOL_CURSOR_MOVE;
       break;
     case SELECTION_ANCHOR:
       cmodifier = GIMP_CURSOR_MODIFIER_ANCHOR;
@@ -273,7 +273,5 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
     }
 
   gimp_tool_set_cursor (tool, gdisp,
-                        GIMP_MOUSE_CURSOR,
-                        tool_cursor,
-                        cmodifier);
+                        GIMP_CURSOR_MOUSE, tool_cursor, cmodifier);
 }

@@ -37,7 +37,16 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ink_tool_init (GimpInkTool *tool);
+static void   gimp_ink_tool_init          (GimpInkTool      *tool);
+static void   gimp_ink_tool_class_init    (GimpInkToolClass *klass);
+
+static void   gimp_ink_tool_cursor_update (GimpTool         *tool,
+                                           GimpCoords       *coords,
+                                           GdkModifierType   state,
+                                           GimpDisplay      *gdisp);
+
+
+static GimpPaintToolClass *parent_class = NULL;
 
 
 void
@@ -72,7 +81,7 @@ gimp_ink_tool_get_type (void)
         sizeof (GimpInkToolClass),
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
-        NULL,           /* class_init     */
+        (GClassInitFunc) gimp_ink_tool_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpInkTool),
@@ -89,10 +98,33 @@ gimp_ink_tool_get_type (void)
 }
 
 static void
+gimp_ink_tool_class_init (GimpInkToolClass *klass)
+{
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  tool_class->cursor_update = gimp_ink_tool_cursor_update;
+}
+
+static void
 gimp_ink_tool_init (GimpInkTool *ink_tool)
 {
   GimpTool *tool = GIMP_TOOL (ink_tool);
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_INK_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
+}
+
+static void
+gimp_ink_tool_cursor_update (GimpTool         *tool,
+                             GimpCoords       *coords,
+                             GdkModifierType   state,
+                             GimpDisplay      *gdisp)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+
+  paint_tool->show_cursor = TRUE;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

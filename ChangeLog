@@ -1,3 +1,32 @@
+2004-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/cursor-none.png
+	* cursors/xbm/cursor-none.xbm: new empty cursor images.
+
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpcursor.c
+	* app/display/gimpdisplayshell-cursor.c
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimpinktool.c
+	* app/gui/preferences-dialog.c: applied patches from Philip
+	Lafleur which implement hiding the cursor completely for paint
+	tools. Changed the name of the config option from
+	"hide-paint-tool-cursor" to "show-paint-tool-cursor" and default
+	to TRUE because this needs the brush outline being visible while
+	painting to be really usable. Fixes bug #132163.
+
+	* app/widgets/widgets-enums.h: renamed all GimpCursorType and
+	GimpToolCursorType enum values to GIMP_CURSOR_* and
+	GIMP_TOOL_CURSOR_*.
+
+	* app/widgets/gimpcursor.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-cursor.c
+	* app/tools/gimp*tool.c; changed accordingly.
+
 2004-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursor.c: changed create_cursor_foo() utility
