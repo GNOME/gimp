@@ -59,6 +59,7 @@ struct _GimpCellRendererAccelClass
 
   void (* accel_edited) (GimpCellRendererAccel *accel,
                          const char            *path_string,
+                         gboolean               delete,
                          guint                  accel_key,
                          GdkModifierType        accel_mask);
 };

@@ -136,9 +136,10 @@ gimp_cell_renderer_accel_class_init (GimpCellRendererAccelClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpCellRendererAccelClass, accel_edited),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING_UINT_FLAGS,
-                  G_TYPE_NONE, 3,
+                  gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS,
+                  G_TYPE_NONE, 4,
                   G_TYPE_STRING,
+                  G_TYPE_BOOLEAN,
                   G_TYPE_UINT,
                   GDK_TYPE_MODIFIER_TYPE);
 
@@ -329,7 +330,7 @@ grab_key_callback (GtkWidget             *widget,
 
   if (edited)
     g_signal_emit (accel, accel_cell_signals[ACCEL_EDITED], 0,
-                   path, accel_key, accel_mods);
+                   path, delete, accel_key, accel_mods);
 
   g_free (path);
 
@@ -380,7 +381,7 @@ pointless_eventbox_subclass_get_type (void)
         NULL,           /* class_data     */
         sizeof (GtkEventBox),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) NULL,
+        NULL            /* instance init  */
       };
 
       static const GInterfaceInfo editable_info =

@@ -1,3 +1,12 @@
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpmarshal.list
+	* app/widgets/gimpcellrendereraccel.[ch]: added "gboolean delete"
+	parameter to the GimpCellRendererAccel::accel_edited() signal.
+
+	* app/widgets/gimpactionview.c: distinguish between deletion of an
+	accelerator and the user entering an invalid accelerator.
+
 2004-07-21  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: normalized the identifiers in 

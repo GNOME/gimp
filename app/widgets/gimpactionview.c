@@ -68,6 +68,7 @@ static void     gimp_action_view_accel_changed   (GtkAccelGroup   *accel_group,
                                                   GimpActionView  *view);
 static void     gimp_action_view_accel_edited    (GimpCellRendererAccel *accel,
                                                   const char      *path_string,
+                                                  gboolean         delete,
                                                   guint            accel_key,
                                                   GdkModifierType  accel_mask,
                                                   GimpActionView  *view);
@@ -424,6 +425,7 @@ gimp_action_view_accel_confirm (GtkWidget   *query_box,
 static void
 gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                const char            *path_string,
+                               gboolean               delete,
                                guint                  accel_key,
                                GdkModifierType        accel_mask,
                                GimpActionView        *view)
@@ -471,7 +473,18 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                       gtk_action_group_get_name (group),
                                       gtk_action_get_name (action));
 
-      if (accel_key)
+      if (delete)
+        {
+          if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
+            {
+              g_message (_("Removing shortcut failed."));
+            }
+        }
+      else if (! accel_key)
+        {
+          g_message (_("Invalid shortcut."));
+        }
+      else
         {
           if (! gtk_accel_map_change_entry (accel_path,
                                             accel_key, accel_mask, FALSE))
@@ -519,9 +532,9 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
               if (conflict_action)
                 {
                   GimpActionGroup *conflict_group;
-                  gchar           *accel_string;
                   gchar           *label;
                   gchar           *stripped;
+                  gchar           *accel_string;
                   gchar           *message;
                   ConfirmData     *confirm_data;
                   GtkWidget       *query_box;
@@ -573,12 +586,12 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                      (GWeakNotify) g_free,
                                      confirm_data->accel_path);
 
-                  g_free (message);
-                  g_free (accel_string);
                   g_free (label);
                   g_free (stripped);
-                  g_object_unref (conflict_group);
+                  g_free (accel_string);
+                  g_free (message);
                   g_object_unref (conflict_action);
+                  g_object_unref (conflict_group);
 
                   gtk_widget_show (query_box);
                 }
@@ -586,16 +599,6 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                 {
                   g_message (_("Changing shortcut failed."));
                 }
-            }
-        }
-      else
-        {
-          accel_mask = 0;
-
-          if (! gtk_accel_map_change_entry (accel_path,
-                                            accel_key, accel_mask, FALSE))
-            {
-              g_message (_("Removing shortcut failed."));
             }
         }
 
