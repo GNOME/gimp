@@ -1,5 +1,10 @@
 2003-10-02  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/image-menu.c: added back ellipsis to Display Filters and
+	Configure Grid.
+
+2003-10-02  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/Makefile.am
 	* plug-ins/mosaic/*: removed mosaic plug-in here...

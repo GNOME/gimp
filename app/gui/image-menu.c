@@ -419,7 +419,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_NAVIGATION },
     NULL,
     GIMP_HELP_NAVIGATION_DIALOG, NULL },
-  { { N_("/View/Display _Filters"), NULL,
+  { { N_("/View/Display _Filters..."), NULL,
       view_display_filters_cmd_callback, 0 },
     NULL,
     GIMP_HELP_DISPLAY_FILTER_DIALOG, NULL },
@@ -578,7 +578,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Image/---"),
 
-  { { N_("/Image/Configure G_rid"), NULL,
+  { { N_("/Image/Configure G_rid..."), NULL,
       image_configure_grid_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_GRID },
     NULL,
@@ -1487,9 +1487,9 @@ image_menu_update (GtkItemFactory *item_factory,
   if (gdisp)
     image_menu_set_zoom (item_factory, shell);
 
-  SET_SENSITIVE ("/View/Info Window",       gdisp);
-  SET_SENSITIVE ("/View/Navigation Window", gdisp);
-  SET_SENSITIVE ("/View/Display Filters",   gdisp);
+  SET_SENSITIVE ("/View/Info Window",         gdisp);
+  SET_SENSITIVE ("/View/Navigation Window",   gdisp);
+  SET_SENSITIVE ("/View/Display Filters...",  gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
   SET_ACTIVE    ("/View/Show Selection",      gdisp && appearance->selection);
@@ -1536,7 +1536,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Duplicate",               gdisp);
   SET_SENSITIVE ("/Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("/Image/Flatten Image",           gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Image/Configure Grid",          gdisp);
+  SET_SENSITIVE ("/Image/Configure Grid...",       gdisp);
 
   /*  Layer  */
 
