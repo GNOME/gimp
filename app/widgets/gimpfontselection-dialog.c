@@ -253,7 +253,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
 		    GTK_FILL, 0, 0, 0);
 
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), table, 
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /* Insert the fonts. */

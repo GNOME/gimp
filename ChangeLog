@@ -1,3 +1,9 @@
+2003-06-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfontselection-dialog.c
+	(gimp_font_selection_dialog_new): pack the main table expanding,
+	not shrinking. Fixes bug #114656.
+
 2003-06-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpmemsizeentry.c: added a default spacing of
