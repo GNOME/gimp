@@ -1,9 +1,15 @@
+# Serbian translation of gimp-tips
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
+#
+# This file is distributed under the same license as the gimp-tips package.
+#
+# Maintainer: Aleksandar Urošević <urke@gmx.net>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips 1.3\n"
-"POT-Creation-Date: 2003-08-31 14:33+0200\n"
-"PO-Revision-Date: 2003-05-22 17:01+0200\n"
+"POT-Creation-Date: 2003-08-31 14:32+0200\n"
+"PO-Revision-Date: 2003-09-02 16:56+0200\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,21 +37,18 @@ msgstr ""
 "na masci sloja."
 
 #: tips/gimp-tips.xml.in.h:4
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
-msgstr ""
-"<tt>Shift</tt>-klik sa alatom „Kantica sa bojom‟ za upotrebu boje pozadine "
-"umesto boje lica za bojenje površine."
+msgstr "<tt>Ctrl</tt>-klik sa alatom za bojenje radi korišćenja boje pozadine umesto boje crtanja."
 
 #: tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
 msgstr ""
-"<tt>Ctrl</tt>-prevlačenje sa alatom za Transformaciju u modu rotiranja "
-"forsira rotaciju za ugao od 15 stepeni."
+"<tt>Ctrl</tt>-prevlačenje sa alatom za Transformaciju u modu rotiranja forsira "
+"rotaciju za ugao od 15 stepeni."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -57,29 +60,20 @@ msgstr ""
 "vidljivosti sloja."
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A Floating Selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
 "or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
 "same."
-msgstr ""
-"Plutajuća selekcija moja biti pripojena novom ili poslednjem aktivnom sloju "
-"pre izvršavanja bilo koje druge akcije nad slikom. Kliknite na dugme „Novi "
-"sloj‟ ili „Pripoj na sloj‟ u dijalogu „Slojevi, Kanali i Putanje‟, ili "
-"koristite meni za obavljanje ovih akcija."
+msgstr "Plutajući izbor mora biti pripojen novom ili poslednjem aktivnom sloju pre izvršavanja bilo koje druge radnje nad slikom. Kliknite na dugme „Novi sloj“ ili „Pripoj na sloj“ u prozorčetu „Slojevi, kanali i putanje“, ili koristite meni za obavljanje ovih akcija."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. This is saved when you "
 "exit GIMP."
-msgstr ""
-"Možete ponovo definisati rpečice sa tastature na svakom meniju ako opstavite "
-"kursor iznad stavke menija i pritisnete novu tastersku kombinaciju. Ovaj "
-"postupak je dinamičan i itzmene će biti sačuvane prilikom zatvaranja Gimpa."
+msgstr "Nakon što omogućite dinamičke prečice sa tatasture u prozorčetu za postavke, možete sami odrediti prečice. To radite tako što držite pokazivač miša iznad stavke menija i pritisnete novu kombinaciju tastera. Izmene će biti sačuvane kada zatvorite GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -89,10 +83,9 @@ msgid ""
 msgstr ""
 "Kliknite i povucite na lenjir kako bi postavili vodeću liniju na sliku. Sve "
 "selekcije će naleći na vodeće linije. Možete ukloniti vodeću liniju "
-"odvlačeći je sa slike pomoću „Alata za pomeranje‟."
+"odvlačeći je sa slike pomoću „Alata za pomeranje“."
 
 #: tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
@@ -100,9 +93,9 @@ msgid ""
 "with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Ukoliko neka od Vaših skeniranih fotografija nije dovoljno zasićena bojama, "
-"možete jednostavno osvežiti tonalitet pomoću dugmeta „Automatski‟ u dijalogu "
+"možete jednostavno osvežiti tonalitet pomoću dugmeta „Automatski“ u dijalogu "
 "za podešavanja Slojeva (Slika-&gt;Boje-&gt;Slojevi). Ukoliko je neka boja "
-"preskočena možete je popraviti sa alatom „Krivulje‟ (Slika-&gt;Boje-&gt;"
+"preskočena možete je popraviti sa alatom „Krivulje“ (Slika-&gt;Boje-&gt;"
 "Krivulje)."
 
 #: tips/gimp-tips.xml.in.h:11
@@ -113,8 +106,8 @@ msgid ""
 msgstr ""
 "Ukoliko iscrtate okvir (Uredi-&gt;Okvir), podešavanja trenutno odabranog "
 "alata će biti primenjena na iscrtani okvir. Možete koristiti Četkicu u modu "
-"pretapanja, alat za Kloniranje sa šablonom, ili čak Gumicu za brisanje ili "
-"alat za razmazivanje."
+"pretapanja, alat za Kloniranje sa šablonom, ili čak Gumicu za brisanje ili alat "
+"za razmazivanje."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -123,8 +116,7 @@ msgid ""
 msgstr ""
 "Ako Vam se čini da je raspored dijaloga na ekranu neuredan, možete "
 "pritisnuti taster <tt>Tab</tt> nekoliko puta u okviru prozora neke slike "
-"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih "
-"dijaloga."
+"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih dijaloga."
 
 #: tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -190,28 +182,19 @@ msgstr ""
 "njihovih sadržaja."
 
 #: tips/gimp-tips.xml.in.h:19
-#, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
 "just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
 "it's completed."
-msgstr ""
-"Dijalog za izbor fajla podržava opciju automatskog dovršavanja započetog "
-"unosa pomoću tastera <tt>Tab</tt>, kao što je to moguće činiti u ljušturi. "
-"unesite deo naziva fajla, pritisnite <tt>Tab</tt>, i gle čuda! Kompletan je."
+msgstr "Prozorče za izbor datoteke podržava opciju automatskog dovršavanja započetog unosa pomoću tastera <tt>Tab</tt>, kao što je to moguće činiti u ljusci. Unesite deo naziva datoteke, pritisnite <tt>Tab</tt>, i gle čuda! Ime je dopunjeno."
 
 #: tips/gimp-tips.xml.in.h:20
-#, fuzzy
 msgid ""
 "The layer named \"Background\" is special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
 "stack. You may add transparency to it by right-clicking in the Layers dialog "
 "and selecting \"Add Alpha Channel\"."
-msgstr ""
-"Sloj nazvan „Pozadina‟ je poseban jer nije providan. Ovo vas sprečava da "
-"dodate masku sloja ili pomerite sloj na gore u gomili. Možete mu dodati "
-"providnost ako kliknete desnim tasterom miša u dijalogu „Slojevi, Kanali i "
-"putanje‟ i odaberete opciju „Dodaj Alfa kanal‟."
+msgstr "Sloj nazvan „Pozadina“ je poseban jer nije providan. Ovo vas sprečava da dodate masku sloja ili pomerite sloj na gore u gomili. Možete mu dodati providnost ako kliknete desnim tasterom miša u prozorčetu „Slojevi, kanali i putanje“ i odaberete opciju „Dodaj alfa kanal“."
 
 #: tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -244,8 +227,8 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</"
-"tt>-klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
+"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</tt>-"
+"klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
 "pozicije kursora. Ako pritisnete <tt>Ctrl</tt>, moći ćete da liniju rotirate "
 "pod uglom od 15°."
 
@@ -258,7 +241,7 @@ msgid ""
 msgstr ""
 "Kada snimite neku sliku da bi kasnije nastavili njenu obratu, odaberite "
 "format XCF, osobeni format fajla za GIMP (koristite nastavak <tt>.xcf</tt>). "
-"Na ovaj način će slojevi i svi aspekti Vaše „obrade u toku‟ biti sačuvani. "
+"Na ovaj način će slojevi i svi aspekti Vaše „obrade u toku“ biti sačuvani. "
 "Jednom kada završite projekat, možete ga sačuvati kao JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:25
@@ -276,26 +259,17 @@ msgstr ""
 "prevlačite kursor levo i desno."
 
 #: tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr ""
-"Možete kreirati i uređivati kompleksne selekcije koristeći alat za Bezierove "
-"krive. Kartica „Putanja‟ u na dijalogu „Slojevi, Kanali i Putanje‟ "
-"dozvoljava Vam da radite sa nekoliko putanja i da ih konvertujete u "
-"selekcije."
+msgstr "Možete kreirati i uređivati složene izbore koristeći alat za Bezijerove krive. Kartica „Putanja“ u prozorčetu „Slojevi, kanali i putanje“ dozvoljava Vam da radite sa nekoliko putanja i da ih pretvarate u izbore."
 
 #: tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
-msgstr ""
-"Možete prevući sloj sa dijaloga „Slojevi, Kanali i Putanje‟ i spustiti ga na "
-"paletu alata. Na taj način će se kreirati nova slika koja sadrži samo taj "
-"sloj."
+msgstr "Možete prevući sloj iz prozorčeta „Slojevi, kanali i putanje“ i spustiti ga na paletu alata. Na taj način će se napraviti nova slika koja sadrži samo taj sloj."
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -303,9 +277,9 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
-"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje "
-"sa palete alata ili sa palete boja i puštanjem na sliku, učinićete da se "
-"slika ili selekcija oboje odabranom bojom."
+"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje sa "
+"palete alata ili sa palete boja i puštanjem na sliku, učinićete da se slika "
+"ili selekcija oboje odabranom bojom."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -316,13 +290,10 @@ msgstr ""
 "pritisnete taster F1. Ova opcija takođe funkcioniše i unutar menija."
 
 #: tips/gimp-tips.xml.in.h:31
-#, fuzzy
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
-msgstr ""
-"Možete preduzeti puno operacija nad slojevima desnim klikom na tekstualnu "
-"oznaku sloja u dijalogu „Slojevi, Kanali i Putanje‟."
+msgstr "Možete izvesti mnogo operacija nad slojevima desnim klikom na tekstualnu oznaku sloja u prozorčetu „Slojevi, kanali i putanje“."
 
 #: tips/gimp-tips.xml.in.h:32
 msgid ""
@@ -331,21 +302,16 @@ msgid ""
 "circle, or to have it centered on its starting point."
 msgstr ""
 "Možete pritisnuti i otpustiti tastere <tt>Shift</tt> i <tt>Ctrl</tt> kada "
-"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili "
-"radi njihovog centriranja u odnosu na početnu njihovu tačku."
+"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili radi "
+"njihovog centriranja u odnosu na početnu njihovu tačku."
 
 #: tips/gimp-tips.xml.in.h:33
-#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
-msgstr ""
-"Možete sačuvati selekciju u kanal (Selekcija-&gt;Sačuvaj u Kanal) i potom "
-"modifikovati taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na "
-"kartici „Kanali‟ na dijalogu „Slojevi, Kanali i Putanje‟, možete odrediti "
-"vidljivost tog novog kanala ili ga konvertovati u selekciju."
+msgstr "Možete sačuvati izbor u kanal (Izbori-&gt;Sačuvaj u kanal) i potom menjati taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na kartici „Kanali“ u prozorčetu „Slojevi, kanali i putanje“, možete odrediti vidljivost tog novog kanala ili ga pretvoriti u izbor."
 
 #: tips/gimp-tips.xml.in.h:34
 msgid ""
@@ -361,21 +327,16 @@ msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr ""
-"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako "
-"je veća od prozora u kome je prikazana."
+"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako je "
+"veća od prozora u kome je prikazana."
 
 #: tips/gimp-tips.xml.in.h:36
-#, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the \"Quick "
 "Mask\" button at the bottom left of an image window. Change your selection "
 "by painting in the image and click on the button again to convert it back to "
 "a normal selection."
-msgstr ""
-"Možete koristiti alate za bojenje u cilju modifikacije selekcije. Kliknite "
-"na dugme „Brza Maska‟ na donjem levom delu prozora tza prikaz slike. "
-"Modifikujte selekciju po želji bojenje na slici i ponovo kliknite na ovo "
-"dugme da bi se maska konvertovala nazad u normalnu selekciju."
+msgstr "Možete koristiti alate za bojenje u radi izmene izbora. Kliknite na dugme „Brza maska“ na donjem levom delu prozora za prikaz slike. Izmenite izbor po želji bojenjem po slici i ponovo kliknite na ovo dugme da bi se maska pretvorila nazad u običan izbor."
 
 #~ msgid ""
 #~ "If your fonts turn out blocky, that's because they're not scalable fonts. "

@@ -1,3 +1,9 @@
+2003-09-02  Danilo Šegan  <dsegan@gmx.net>
+
+	* Makefile.am: Added "sr.po" and "sr@Latn.po" to tips_POFILES.
+
+	* sr.po, sr@Latn.po: Updated Serbian translation.
+
 2003-08-31  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian 

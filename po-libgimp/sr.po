@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-07-14 09:01+0200\n"
-"PO-Revision-Date: 2003-07-14 01:15-0400\n"
+"POT-Creation-Date: 2003-09-02 16:46+0200\n"
+"PO-Revision-Date: 2003-09-02 16:47+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -172,12 +172,11 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Избор фонта"
 
-#: libgimp/gimpgradientmenu.c:102
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
 msgstr "Селекција нагиба"
 
-#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
-#: libgimp/gimpmenu.c:517
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Ниједан"
 
@@ -185,7 +184,7 @@ msgstr "Ниједан"
 msgid "Preview"
 msgstr "Изглед"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -429,23 +428,23 @@ msgstr "Размак редова"
 msgid "_Resize"
 msgstr "_Промени величину"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr "_Скала"
 
-#: libgimpwidgets/gimpstock.c:234
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr "Исеци"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr "_Трансформиши"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr "_Дели"
 
@@ -533,21 +532,61 @@ msgstr "Контраст"
 msgid "Contrast Cycles:"
 msgstr "Контраст циклус:"
 
+#: modules/colorsel_cmyk.c:70
+msgid "CMYK color selector"
+msgstr "Избор CMYK боје"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr "CMYK"
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr "_C"
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr "_M"
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr "_Y"
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr "_K"
+
+#: modules/colorsel_cmyk.c:150
+msgid "Cyan"
+msgstr "Цијан"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr "Магента"
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr "Жута"
+
+#: modules/colorsel_cmyk.c:153
+msgid "Black"
+msgstr "Црна"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Одабирач троугла боја сликарског стила"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
-msgstr "_Троугао"
+msgid "Triangle"
+msgstr "Троугао"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Избор боје стила водене боје"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
-msgstr "_Водена боја"
+msgid "Watercolor"
+msgstr "Водена боја"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"

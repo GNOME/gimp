@@ -15,6 +15,8 @@ tips_POFILES = \
 	pl.po	\
 	pt.po	\
 	sk.po	\
+	sr.po	\
+	sr@Latn.po	\
 	sv.po	\
 	zh_CN.po	\
 	zh_TW.po
