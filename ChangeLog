@@ -1,3 +1,9 @@
+2003-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayout.c: added a "base-direction" property to
+	GimpText and set it on the PangoContext when rendering the text.
+
 2003-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c

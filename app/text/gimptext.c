@@ -27,6 +27,7 @@
 #include <locale.h>
 
 #include <glib-object.h>
+#include <pango/pango.h>
 
 #include "libgimpbase/gimplimits.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -52,6 +53,7 @@ enum
   PROP_AUTOHINT,
   PROP_ANTIALIAS,
   PROP_LANGUAGE,
+  PROP_BASE_DIR,
   PROP_COLOR,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
@@ -168,6 +170,12 @@ gimp_text_class_init (GimpTextClass *klass)
 				   "language", NULL,
 				   language,
 				   0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
+                                "base-direction",
+                                 NULL,
+                                 PANGO_TYPE_DIRECTION,
+                                 PANGO_DIRECTION_LTR,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
 				  "color", NULL,
 				  &black,
@@ -262,6 +270,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, text->antialias);
       break;
+    case PROP_BASE_DIR:
+      g_value_set_enum (value, text->base_dir);
+      break;
     case PROP_LANGUAGE:
       g_value_set_string (value, text->language);
       break;
@@ -326,6 +337,9 @@ gimp_text_set_property (GObject      *object,
     case PROP_LANGUAGE:
       g_free (text->language);
       text->language = g_value_dup_string (value);
+      break;
+    case PROP_BASE_DIR:
+      text->base_dir = g_value_get_enum (value);
       break;
     case PROP_COLOR:
       color = g_value_get_boxed (value);

@@ -32,8 +32,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 @any_id: 
 @data: 
-<!-- # Unused Parameters # -->
-@id: 
 
 
 <!-- ##### FUNCTION gimp_image_menu_new ##### -->
@@ -97,8 +95,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @callback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@udata: 
 
 
 <!-- ##### FUNCTION gimp_brush_select_widget ##### -->
@@ -114,8 +110,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @cback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param7: 
 
 
 <!-- ##### USER_FUNCTION GimpRunBrushCallback ##### -->
@@ -144,10 +138,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @opacity: 
 @spacing: 
 @paint_mode: 
-<!-- # Unused Parameters # -->
-@pname: 
-@Returns: 
-@w: 
 
 
 <!-- ##### FUNCTION gimp_brush_select_widget_close_popup ##### -->
@@ -156,9 +146,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
 
 
 <!-- ##### FUNCTION gimp_interactive_selection_font ##### -->
@@ -201,7 +188,7 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-@pname: 
+@fname: 
 
 
 <!-- ##### FUNCTION gimp_font_select_widget_close_popup ##### -->
@@ -223,8 +210,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @callback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@udata: 
 
 
 <!-- ##### FUNCTION gimp_gradient_select_widget ##### -->
@@ -237,8 +222,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @cback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param4: 
 
 
 <!-- ##### USER_FUNCTION GimpRunGradientCallback ##### -->
@@ -259,9 +242,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
 
 
 <!-- ##### FUNCTION gimp_gradient_select_widget_set_popup ##### -->
@@ -271,10 +251,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 @widget: 
 @gname: 
-<!-- # Unused Parameters # -->
-@pname: 
-@Returns: 
-@w: 
 
 
 <!-- ##### FUNCTION gimp_interactive_selection_pattern ##### -->
@@ -287,8 +263,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @callback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@udata: 
 
 
 <!-- ##### FUNCTION gimp_pattern_select_widget ##### -->
@@ -301,8 +275,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @cback: 
 @data: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Param4: 
 
 
 <!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
@@ -325,9 +297,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
 
 
 <!-- ##### FUNCTION gimp_pattern_select_widget_set_popup ##### -->
@@ -337,8 +306,5 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 @widget: 
 @pname: 
-<!-- # Unused Parameters # -->
-@Returns: 
-@w: 
 
 
