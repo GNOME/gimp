@@ -1,3 +1,10 @@
+1999-10-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/menus.c: made the "Dialogs" sub-menus of <Toolbox>/File and
+	<Image> consistent.
+
+	* app/nav_window.c: wheelmouse support as in the gdisplay shell.
+
 1999-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/pattern_select.c: fixed a SEGV: The "refresh" callback
