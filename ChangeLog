@@ -1,3 +1,9 @@
+2005-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): use GTK_STOCK_DELETE for the
+	"Don't Save" button.
+
 2005-03-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_label_set_attributes): fixed
