@@ -2242,6 +2242,7 @@ byte2bit (guchar   *byteline,
           gboolean  invert)
 {
   guchar bitval;
+  guchar rest[8];
 
   while (width >= 8)
     {
@@ -2259,17 +2260,17 @@ byte2bit (guchar   *byteline,
     }
   if (width > 0)
     {
+      memset (rest, 0, 8);
+      memcpy (rest, byteline, width);
       bitval = 0;
-      switch (width)
-        {
-        case 7: if (*(byteline++)) bitval |= 0x02;
-        case 6: if (*(byteline++)) bitval |= 0x04;
-        case 5: if (*(byteline++)) bitval |= 0x08;
-        case 4: if (*(byteline++)) bitval |= 0x10;
-        case 3: if (*(byteline++)) bitval |= 0x20;
-        case 2: if (*(byteline++)) bitval |= 0x40;
-        case 1: if (*(byteline++)) bitval |= 0x80;
-        }
+      byteline = rest;
+      if (*(byteline++)) bitval |= 0x80;
+      if (*(byteline++)) bitval |= 0x40;
+      if (*(byteline++)) bitval |= 0x20;
+      if (*(byteline++)) bitval |= 0x10;
+      if (*(byteline++)) bitval |= 0x08;
+      if (*(byteline++)) bitval |= 0x04;
+      if (*(byteline++)) bitval |= 0x02;
       *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
     }
 }

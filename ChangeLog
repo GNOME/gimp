@@ -1,3 +1,8 @@
+2005-01-01  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/tiff.c: Revert incorrect optimization from previous
+	change.
+
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/gradmap.c: added procedure plug_in_palettemap
