@@ -1252,6 +1252,7 @@ combine_mask_and_alpha_channel_row_float16  (
   while (width --)
     {
       mask_val = FLT (*mask++) * opacity;
+      sa = FLT (src[alpha]);
       sa = sa + (1.0 - sa) * mask_val;
       src[alpha] = FLT16 (sa);
       src += num_channels;

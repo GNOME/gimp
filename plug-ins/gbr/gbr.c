@@ -300,6 +300,22 @@ static gint32 load_image (char *filename) {
 			image_type = FLOAT_GRAY;
 			layer_type = FLOAT_GRAYA_IMAGE;
 			break;
+		case FLOAT16_RGB_IMAGE:
+			image_type = FLOAT16_RGB;
+			layer_type = FLOAT16_RGB_IMAGE;
+			break;
+		case FLOAT16_RGBA_IMAGE:
+			image_type = FLOAT16_RGB;
+			layer_type = FLOAT16_RGBA_IMAGE;
+			break;
+		case FLOAT16_GRAY_IMAGE:
+			image_type = FLOAT16_GRAY;
+			layer_type = FLOAT16_GRAY_IMAGE;
+			break;
+		case FLOAT16_GRAYA_IMAGE:
+			image_type = FLOAT16_GRAY;
+			layer_type = FLOAT16_GRAYA_IMAGE;
+			break;
 		default:
 			close (fd);
 			return -1;
