@@ -72,10 +72,10 @@ procedural_db_free (Gimp *gimp)
 
   if (gimp->procedural_ht)
     {
-      g_hash_table_foreach (gimp->procedural_ht, 
+      g_hash_table_foreach (gimp->procedural_ht,
                             procedural_db_free_entry, NULL);
       g_hash_table_destroy (gimp->procedural_ht);
-  
+
       gimp->procedural_ht = NULL;
     }
 
@@ -109,7 +109,7 @@ procedural_db_register (Gimp       *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (procedure != NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) procedure->name);
+  list = g_hash_table_lookup (gimp->procedural_ht, procedure->name);
   list = g_list_prepend (list, (gpointer) procedure);
 
   g_hash_table_insert (gimp->procedural_ht,
@@ -126,19 +126,16 @@ procedural_db_unregister (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (name != NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, name);
 
   if (list)
     {
       list = g_list_remove (list, list->data);
 
       if (list)
-	g_hash_table_insert (gimp->procedural_ht,
-			     (gpointer) name,
-			     (gpointer) list);
-      else 
-	g_hash_table_remove (gimp->procedural_ht,
-			     (gpointer) name);
+	g_hash_table_insert (gimp->procedural_ht, (gpointer) name, list);
+      else
+	g_hash_table_remove (gimp->procedural_ht, name);
     }
 }
 
@@ -151,7 +148,7 @@ procedural_db_lookup (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, name);
 
   if (list)
     return (ProcRecord *) list->data;
@@ -170,7 +167,7 @@ procedural_db_execute (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, name);
 
   if (list == NULL)
     {
@@ -308,7 +305,7 @@ procedural_db_run_proc (Gimp        *gimp,
 
   for (i = 0; i < proc->num_args; i++)
     {
-      if (proc->args[i].arg_type != 
+      if (proc->args[i].arg_type !=
           (params[i].arg_type = va_arg (args, GimpPDBArgType)))
 	{
 	  g_message (_("PDB calling error for procedure '%s':\n"

@@ -54,9 +54,9 @@ static void  serialize_unknown_token (const gchar  *key,
 
 /**
  * gimp_config_serialize_properties:
- * @object: a #GObject. 
+ * @object: a #GObject.
  * @writer: a #GimpConfigWriter.
- * 
+ *
  * This function writes all object properties to the @writer.
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
@@ -71,7 +71,7 @@ gimp_config_serialize_properties (GObject          *object,
   guint          i;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
-  
+
   klass = G_OBJECT_GET_CLASS (object);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -97,9 +97,9 @@ gimp_config_serialize_properties (GObject          *object,
 
 /**
  * gimp_config_serialize_changed_properties:
- * @object: a #GObject. 
+ * @object: a #GObject.
  * @writer: a #GimpConfigWriter.
- * 
+ *
  * This function writes all object properties that have been changed from
  * their default values to the @writer.
  *
@@ -150,10 +150,10 @@ gimp_config_serialize_changed_properties (GObject          *object,
 
 /**
  * gimp_config_serialize_properties_diff:
- * @object: a #GObject. 
- * @compare: a #GObject of the same type as @object. 
+ * @object: a #GObject.
+ * @compare: a #GObject of the same type as @object.
  * @writer: a #GimpConfigWriter.
- * 
+ *
  * This function compares @object and @compare and writes all
  * properties of @object that have different values than @compare to
  * the @writer.
@@ -171,7 +171,7 @@ gimp_config_serialize_properties_diff (GObject          *object,
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (object) == 
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (object) ==
                         G_TYPE_FROM_INSTANCE (compare), FALSE);
 
   klass = G_OBJECT_GET_CLASS (object);
@@ -311,7 +311,7 @@ gimp_config_serialize_property (GObject          *object,
             {
               g_warning ("couldn't serialize property %s::%s of type %s",
                          g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                         param_spec->name, 
+                         param_spec->name,
                          g_type_name (param_spec->value_type));
             }
         }
@@ -329,7 +329,7 @@ gimp_config_serialize_property (GObject          *object,
  * @escaped: whether to escape string values.
  *
  * This utility function appends a string representation of #GValue to @str.
- * 
+ *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  **/
 gboolean
@@ -340,17 +340,17 @@ gimp_config_serialize_value (const GValue *value,
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
       gboolean bool;
-      
+
       bool = g_value_get_boolean (value);
       g_string_append (str, bool ? "yes" : "no");
       return TRUE;
     }
-  
+
   if (G_VALUE_HOLDS_ENUM (value))
     {
       GEnumClass *enum_class;
       GEnumValue *enum_value;
-      
+
       enum_class = g_type_class_peek (G_VALUE_TYPE (value));
       enum_value = g_enum_get_value (G_ENUM_CLASS (enum_class),
                                      g_value_get_enum (value));
@@ -362,12 +362,12 @@ gimp_config_serialize_value (const GValue *value,
         }
       else
         {
-          g_warning ("Couldn't get nick for enum_value of %s", 
+          g_warning ("Couldn't get nick for enum_value of %s",
                      G_ENUM_CLASS_TYPE_NAME (enum_class));
           return FALSE;
         }
     }
-  
+
   if (G_VALUE_HOLDS_STRING (value))
     {
       const gchar *cstr = g_value_get_string (value);
@@ -466,7 +466,7 @@ gimp_config_serialize_value (const GValue *value,
   if (g_value_type_transformable (G_VALUE_TYPE (value), G_TYPE_STRING))
     {
       GValue  tmp_value = { 0, };
-      
+
       g_value_init (&tmp_value, G_TYPE_STRING);
       g_value_transform (value, &tmp_value);
 
@@ -475,7 +475,7 @@ gimp_config_serialize_value (const GValue *value,
       g_value_unset (&tmp_value);
       return TRUE;
     }
-  
+
   return FALSE;
 }
 
@@ -484,7 +484,7 @@ gimp_config_serialize_value (const GValue *value,
  * gimp_config_serialize_unknown_tokens:
  * @object: a #GObject.
  * @writer: a #GimpConfigWriter.
- * 
+ *
  * Writes all unknown tokens attached to #object to the @writer.  See
  * gimp_config_add_unknown_token().
  *
@@ -509,7 +509,7 @@ gimp_config_serialize_unknown_tokens (GObject          *object,
  * gimp_config_serialize_comment:
  * @str: a #GString.
  * @comment: the comment to serialize (ASCII only)
- * 
+ *
  * Appends the @comment to @str and inserts linebreaks and hash-marks to
  * format it as a comment. Note that this function does not handle non-ASCII
  * characters.

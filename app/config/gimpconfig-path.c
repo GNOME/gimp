@@ -38,7 +38,7 @@
 static inline gchar * extract_token (const gchar **str);
 
 
-gchar * 
+gchar *
 gimp_config_path_expand (const gchar  *path,
                          gboolean      recode,
                          GError      **error)
@@ -47,7 +47,7 @@ gimp_config_path_expand (const gchar  *path,
   const gchar *s;
   gchar       *n;
   gchar       *token;
-  gchar       *filename;
+  gchar       *filename = NULL;
   gchar       *expanded = NULL;
   gchar      **substs   = NULL;
   guint        n_substs = 0;
@@ -61,13 +61,15 @@ gimp_config_path_expand (const gchar  *path,
     {
       if (!(filename = g_filename_from_utf8 (path, -1, NULL, NULL, error)))
         return NULL;
+
+      p = filename;
     }
   else
     {
-      filename = (gchar *) path;
+      p = path;
     }
 
-  for (p = filename; *p; )
+  while (*p)
     {
 
 #ifndef G_OS_WIN32
@@ -84,7 +86,7 @@ gimp_config_path_expand (const gchar  *path,
           for (i = 0; i < n_substs; i++)
             if (strcmp (substs[2*i], token) == 0)
               break;
-          
+
           if (i < n_substs)
             {
               s = substs[2*i+1];
@@ -95,21 +97,21 @@ gimp_config_path_expand (const gchar  *path,
 
               if (!s && strcmp (token, "gimp_dir") == 0)
                 s = gimp_directory ();
-                  
+
               if (!s && strcmp (token, "gimp_data_dir") == 0)
                 s = gimp_data_directory ();
-                  
-              if (!s && 
-                  ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
+
+              if (!s &&
+                  ((strcmp (token, "gimp_plug_in_dir")) == 0 ||
                    (strcmp (token, "gimp_plugin_dir")) == 0))
                 s = gimp_plug_in_directory ();
-                  
+
               if (!s && strcmp (token, "gimp_sysconf_dir") == 0)
                 s = gimp_sysconf_directory ();
-              
+
               if (!s)
                 s = g_getenv (token);
-                  
+
 #ifdef G_OS_WIN32
               /* The default user gimprc on Windows references
                * ${TEMP}, but not all Windows installations have that
@@ -120,32 +122,32 @@ gimp_config_path_expand (const gchar  *path,
                 s = g_get_tmp_dir ();
 #endif  /* G_OS_WIN32 */
             }
-          
+
           if (!s)
             {
               g_set_error (error, 0, 0, _("can not expand ${%s}"), token);
               g_free (token);
               goto cleanup;
             }
-          
+
           if (n_substs % SUBSTS_ALLOC == 0)
             substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
-          
+
           substs[2*n_substs]     = token;
           substs[2*n_substs + 1] = (gchar *) s;
           n_substs++;
-      
+
           length += strlen (s);
         }
       else
 	{
-          length += g_utf8_skip[(guchar) *p];
+          length += g_utf8_skip[(const guchar) *p];
           p = g_utf8_next_char (p);
 	}
     }
 
   if (n_substs == 0)
-    return recode ? filename : g_strdup (filename);
+    return recode ? filename : g_strdup (path);
 
   expanded = g_new (gchar, length + 1);
 
@@ -197,11 +199,9 @@ gimp_config_path_expand (const gchar  *path,
     g_free (substs[2*i]);
 
   g_free (substs);
+  g_free (filename);
 
-  if (recode)
-    g_free (filename);
-
-  return expanded;  
+  return expanded;
 }
 
 static inline gchar *
@@ -223,7 +223,7 @@ extract_token (const gchar **str)
 
   token = g_strndup (*str + 2, g_utf8_pointer_to_offset (*str + 2, p));
 
-  *str = p + 1; /* after the closing bracket */  
+  *str = p + 1; /* after the closing bracket */
 
   return token;
 }

@@ -47,13 +47,13 @@
 #include "gimp-intl.h"
 
 
-/*  
+/*
  *  All functions return G_TOKEN_RIGHT_PAREN on success,
  *  the GTokenType they would have expected but didn't get
  *  or G_TOKEN_NONE if they got the expected token but
  *  couldn't parse it.
  */
-  
+
 static GTokenType  gimp_config_deserialize_unknown     (GObject    *object,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_property    (GObject    *object,
@@ -94,7 +94,7 @@ static GTokenType  gimp_config_deserialize_any         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 
-static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner, 
+static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
 
 
@@ -104,7 +104,7 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
  * @scanner: a #GScanner.
  * @nest_level:
  * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
- * 
+ *
  * This function uses the @scanner to configure the properties of @object.
  *
  * The store_unknown_tokens parameter is a special feature for #GimpRc.
@@ -112,8 +112,8 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
  * a property of @object) with string values are attached to @object as
  * unknown tokens. GimpConfig has a couple of functions to handle the
  * attached key/value pairs.
- * 
- * Return value: 
+ *
+ * Return value:
  **/
 gboolean
 gimp_config_deserialize_properties (GObject   *object,
@@ -147,7 +147,7 @@ gimp_config_deserialize_properties (GObject   *object,
 
       if (prop_spec->flags & GIMP_PARAM_SERIALIZE)
         {
-          g_scanner_scope_add_symbol (scanner, scope_id, 
+          g_scanner_scope_add_symbol (scanner, scope_id,
                                       prop_spec->name, prop_spec);
         }
     }
@@ -170,7 +170,7 @@ gimp_config_deserialize_properties (GObject   *object,
         }
 
       token = g_scanner_get_next_token (scanner);
-      
+
       switch (token)
         {
         case G_TOKEN_LEFT_PAREN:
@@ -209,7 +209,7 @@ gimp_config_deserialize_properties (GObject   *object,
 			     _("fatal parse error"), TRUE);
       return FALSE;
     }
-  
+
   return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
@@ -225,7 +225,7 @@ gimp_config_deserialize_unknown (GObject  *object,
   key = g_strdup (scanner->value.v_identifier);
 
   g_scanner_get_next_token (scanner);
-  
+
   if (!scanner_string_utf8_valid (scanner, key))
     {
       g_free (key);
@@ -309,18 +309,18 @@ gimp_config_deserialize_property (GObject    *object,
              (prop_spec->flags & GIMP_PARAM_AGGREGATE)))
         g_object_set_property (object, prop_spec->name, &value);
     }
-#if CONFIG_DEBUG
+#ifdef CONFIG_DEBUG
   else
     {
       g_warning ("couldn't deserialize property %s::%s of type %s",
                  g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                 prop_spec->name, 
+                 prop_spec->name,
                  g_type_name (prop_spec->value_type));
     }
 #endif
 
   g_value_unset (&value);
-  
+
   return token;
 }
 
@@ -382,11 +382,11 @@ gimp_config_deserialize_fundamental (GValue     *value,
     case G_TYPE_STRING:
       token = G_TOKEN_STRING;
       break;
-      
+
     case G_TYPE_BOOLEAN:
       token = G_TOKEN_IDENTIFIER;
       break;
-      
+
     case G_TYPE_INT:
     case G_TYPE_LONG:
       if (g_scanner_peek_next_token (scanner) == '-')
@@ -399,12 +399,12 @@ gimp_config_deserialize_fundamental (GValue     *value,
     case G_TYPE_ULONG:
       token = G_TOKEN_INT;
       break;
-      
+
     case G_TYPE_FLOAT:
     case G_TYPE_DOUBLE:
       token = G_TOKEN_FLOAT;
       break;
-      
+
     default:
       token = G_TOKEN_NONE;
       g_assert_not_reached ();
@@ -426,7 +426,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
       else
         return G_TOKEN_NONE;
       break;
-      
+
     case G_TYPE_BOOLEAN:
       if (! g_ascii_strcasecmp (scanner->value.v_identifier, "yes") ||
           ! g_ascii_strcasecmp (scanner->value.v_identifier, "true"))
@@ -436,10 +436,10 @@ gimp_config_deserialize_fundamental (GValue     *value,
         g_value_set_boolean (value, FALSE);
       else
         {
-          g_scanner_error 
-            (scanner, 
+          g_scanner_error
+            (scanner,
              /* please don't translate 'yes' and 'no' */
-             _("expected 'yes' or 'no' for boolean token %s, got '%s'"), 
+             _("expected 'yes' or 'no' for boolean token %s, got '%s'"),
              prop_spec->name, scanner->value.v_identifier);
           return G_TOKEN_NONE;
         }
@@ -489,21 +489,21 @@ gimp_config_deserialize_enum (GValue     *value,
     case G_TOKEN_IDENTIFIER:
       g_scanner_get_next_token (scanner);
 
-      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
+      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class),
 					     scanner->value.v_identifier);
       if (!enum_value)
-	enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
+	enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class),
 					       scanner->value.v_identifier);
 
       if (!enum_value)
 	{
-	  g_scanner_error (scanner, 
-			   _("invalid value '%s' for token %s"), 
+	  g_scanner_error (scanner,
+			   _("invalid value '%s' for token %s"),
 			   scanner->value.v_identifier, prop_spec->name);
 	  return G_TOKEN_NONE;
 	}
       break;
-      
+
     case G_TOKEN_INT:
       g_scanner_get_next_token (scanner);
 
@@ -511,17 +511,17 @@ gimp_config_deserialize_enum (GValue     *value,
 
       if (!enum_value)
 	{
-	  g_scanner_error (scanner, 
-			   _("invalid value '%ld' for token %s"), 
+	  g_scanner_error (scanner,
+			   _("invalid value '%ld' for token %s"),
 			   scanner->value.v_int, prop_spec->name);
 	  return G_TOKEN_NONE;
 	}
       break;
-      
+
     default:
       return G_TOKEN_IDENTIFIER;
     }
-  
+
   g_value_set_enum (value, enum_value->value);
 
   return G_TOKEN_RIGHT_PAREN;
@@ -537,7 +537,7 @@ gimp_config_deserialize_memsize (GValue     *value,
 
   scanner->config->cset_identifier_first = G_CSET_DIGITS;
   scanner->config->cset_identifier_nth   = G_CSET_DIGITS "gGmMkKbB";
-  
+
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
     return G_TOKEN_IDENTIFIER;
 
@@ -545,7 +545,7 @@ gimp_config_deserialize_memsize (GValue     *value,
 
   scanner->config->cset_identifier_first = orig_cset_first;
   scanner->config->cset_identifier_nth   = orig_cset_nth;
-  
+
   if (gimp_memsize_set_from_string (value, scanner->value.v_identifier))
     return G_TOKEN_RIGHT_PAREN;
   else
@@ -581,10 +581,10 @@ gimp_config_deserialize_path (GValue     *value,
                            _("while parsing token %s: %s"),
                            prop_spec->name, error->message);
           g_error_free (error);
-          
+
           return G_TOKEN_NONE;
         }
-      
+
       g_free (expand);
 
       g_value_set_static_string (value, scanner->value.v_string);
@@ -644,7 +644,7 @@ gimp_config_deserialize_object (GValue     *value,
 
   if (! gimp_config_iface)
     return gimp_config_deserialize_any (value, prop_spec, scanner);
-  
+
   if (! gimp_config_iface->deserialize (prop_object,
                                         scanner, nest_level + 1, NULL))
     return G_TOKEN_NONE;
@@ -723,14 +723,14 @@ gimp_config_deserialize_any (GValue     *value,
 }
 
 static inline gboolean
-scanner_string_utf8_valid (GScanner    *scanner, 
+scanner_string_utf8_valid (GScanner    *scanner,
                            const gchar *token_name)
 {
   if (g_utf8_validate (scanner->value.v_string, -1, NULL))
     return TRUE;
 
-  g_scanner_error (scanner, 
-                   _("value for token %s is not a valid UTF-8 string"), 
+  g_scanner_error (scanner,
+                   _("value for token %s is not a valid UTF-8 string"),
                    token_name);
 
   return FALSE;

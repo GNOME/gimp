@@ -464,10 +464,9 @@ gimp_cursor_new (GimpCursorType      cursor_type,
 
   /*  prepare the tool cursor  */
 
-  if (tool_cursor < GIMP_TOOL_CURSOR_NONE ||
-      tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
+  if (tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
     {
-      tool_cursor = GIMP_TOOL_CURSOR_NONE; 
+      tool_cursor = GIMP_TOOL_CURSOR_NONE;
     }
 
   if (tool_cursor != GIMP_TOOL_CURSOR_NONE)
@@ -480,8 +479,7 @@ gimp_cursor_new (GimpCursorType      cursor_type,
 
   /*  prepare the cursor modifier  */
 
-  if (modifier < GIMP_CURSOR_MODIFIER_NONE ||
-      modifier >= GIMP_LAST_CURSOR_MODIFIER_ENTRY)
+  if (modifier >= GIMP_LAST_CURSOR_MODIFIER_ENTRY)
     {
       modifier = GIMP_CURSOR_MODIFIER_NONE;
     }

@@ -84,8 +84,10 @@ color_pixels (guchar       *dest,
   guchar   c0, c1, c2, c3;
 #else
   guchar   c0, c1, c2;
-  guint32 *longd, longc;
-  guint16 *shortd, shortc;
+  guint32 *longd;
+  guint32  longc;
+  guint16 *shortd;
+  guint16  shortc;
 #endif
 
   switch (bytes)
@@ -105,7 +107,7 @@ color_pixels (guchar       *dest,
 	  dest += 2;
 	}
 #else
-      shortc = ((guint16 *) color)[0];
+      shortc = ((const guint16 *) color)[0];
       shortd = (guint16 *) dest;
       while (w--)
 	{
@@ -143,7 +145,7 @@ color_pixels (guchar       *dest,
 	  dest += 4;
 	}
 #else
-      longc = ((guint32 *) color)[0];
+      longc = ((const guint32 *) color)[0];
       longd = (guint32 *) dest;
       while (w--)
 	{
@@ -681,7 +683,7 @@ dodge_pixels (const guchar *src1,
 	{
 	  tmp = src1[b] << 8;
 	  tmp /= 256 - src2[b];
-	  dest[b] = (guchar) CLAMP (tmp, 0, 255);
+	  dest[b] = (guchar) MIN (tmp, 255);
 	}
 
       if (has_alpha1 && has_alpha2)
@@ -753,10 +755,10 @@ hardlight_pixels (const guchar *src1,
 	{
 	  if (src2[b] > 128) {
 	    tmp = ((gint)255 - src1[b]) * ((gint)255 - ((src2[b] - 128) << 1));
-	    dest[b] = (guchar)CLAMP(255 - (tmp >> 8), 0, 255);
+	    dest[b] = (guchar) MIN (255 - (tmp >> 8), 255);
 	  } else {
 	    tmp = (gint)src1[b] * ((gint)src2[b] << 1);
-	    dest[b] = (guchar)CLAMP(tmp >> 8, 0, 255);
+	    dest[b] = (guchar) MIN (tmp >> 8, 255);
 	  }
 	}
 

@@ -93,7 +93,7 @@ plug_in_menus_init (Gimp        *gimp,
                                               &locale_path);
 
       for (list = domains; list; list = list->next)
-        if (! strcmp (locale_domain, (gchar *) list->data))
+        if (! strcmp (locale_domain, (const gchar *) list->data))
           break;
 
       if (! list)

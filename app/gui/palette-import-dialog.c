@@ -575,6 +575,7 @@ static void
 palette_import_make_palette (ImportDialog *import_dialog)
 {
   GimpPalette  *palette = NULL;
+  const gchar  *entry;
   gchar        *palette_name;
   GimpGradient *gradient;
   GimpImage    *gimage;
@@ -582,10 +583,10 @@ palette_import_make_palette (ImportDialog *import_dialog)
   gint          n_columns;
   gint          threshold;
 
-  palette_name = (gchar *) gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
+  entry = gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
 
-  if (palette_name && strlen (palette_name))
-    palette_name = g_strdup (palette_name);
+  if (entry && strlen (entry))
+    palette_name = g_strdup (entry);
   else
     palette_name = g_strdup (_("Untitled"));
 

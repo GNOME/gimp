@@ -40,33 +40,33 @@
 
 #if __GNUC__ >= 3
 
-const static guint32 rgba8_alpha_mask_128[4] = { 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 };
-const static guint32 rgba8_b1_128[4] =         { 0x01010101, 0x01010101, 0x01010101, 0x01010101 };
-const static guint32 rgba8_b255_128[4] =       { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-const static guint32 rgba8_w1_128[4] =         { 0x00010001, 0x00010001, 0x00010001, 0x00010001 };
-const static guint32 rgba8_w2_128[4] =         { 0x00020002, 0x00020002, 0x00020002, 0x00020002 };
-const static guint32 rgba8_w128_128[4] =       { 0x00800080, 0x00800080, 0x00800080, 0x00800080 };
-const static guint32 rgba8_w256_128[4] =       { 0x01000100, 0x01000100, 0x01000100, 0x01000100 };
-const static guint32 rgba8_w255_128[4] =       { 0X00FF00FF, 0X00FF00FF, 0X00FF00FF, 0X00FF00FF };
+static const guint32 rgba8_alpha_mask_128[4] = { 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 };
+static const guint32 rgba8_b1_128[4] =         { 0x01010101, 0x01010101, 0x01010101, 0x01010101 };
+static const guint32 rgba8_b255_128[4] =       { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+static const guint32 rgba8_w1_128[4] =         { 0x00010001, 0x00010001, 0x00010001, 0x00010001 };
+static const guint32 rgba8_w2_128[4] =         { 0x00020002, 0x00020002, 0x00020002, 0x00020002 };
+static const guint32 rgba8_w128_128[4] =       { 0x00800080, 0x00800080, 0x00800080, 0x00800080 };
+static const guint32 rgba8_w256_128[4] =       { 0x01000100, 0x01000100, 0x01000100, 0x01000100 };
+static const guint32 rgba8_w255_128[4] =       { 0X00FF00FF, 0X00FF00FF, 0X00FF00FF, 0X00FF00FF };
 
-const static guint32 va8_alpha_mask_128[4] =   { 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00 };
-const static guint32 va8_b255_128[4] =         { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
-const static guint32 va8_w1_128[4] =           { 0x00010001, 0x00010001, 0x00010001, 0x00010001 };
-const static guint32 va8_w255_128[4] =         { 0x00FF00FF, 0x00FF00FF, 0x00FF00FF, 0x00FF00FF };
+static const guint32 va8_alpha_mask_128[4] =   { 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00 };
+static const guint32 va8_b255_128[4] =         { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF };
+static const guint32 va8_w1_128[4] =           { 0x00010001, 0x00010001, 0x00010001, 0x00010001 };
+static const guint32 va8_w255_128[4] =         { 0x00FF00FF, 0x00FF00FF, 0x00FF00FF, 0x00FF00FF };
 
-const static guint32 rgba8_alpha_mask_64[2] = { 0xFF000000, 0xFF000000 };
-const static guint32 rgba8_b1_64[2] =         { 0x01010101, 0x01010101 };
-const static guint32 rgba8_b255_64[2] =       { 0xFFFFFFFF, 0xFFFFFFFF };
-const static guint32 rgba8_w1_64[2] =         { 0x00010001, 0x00010001 };
-const static guint32 rgba8_w2_64[2] =         { 0x00020002, 0x00020002 };
-const static guint32 rgba8_w128_64[2] =       { 0x00800080, 0x00800080 };
-const static guint32 rgba8_w256_64[2] =       { 0x01000100, 0x01000100 };
-const static guint32 rgba8_w255_64[2] =       { 0X00FF00FF, 0X00FF00FF };
+static const guint32 rgba8_alpha_mask_64[2] = { 0xFF000000, 0xFF000000 };
+static const guint32 rgba8_b1_64[2] =         { 0x01010101, 0x01010101 };
+static const guint32 rgba8_b255_64[2] =       { 0xFFFFFFFF, 0xFFFFFFFF };
+static const guint32 rgba8_w1_64[2] =         { 0x00010001, 0x00010001 };
+static const guint32 rgba8_w2_64[2] =         { 0x00020002, 0x00020002 };
+static const guint32 rgba8_w128_64[2] =       { 0x00800080, 0x00800080 };
+static const guint32 rgba8_w256_64[2] =       { 0x01000100, 0x01000100 };
+static const guint32 rgba8_w255_64[2] =       { 0X00FF00FF, 0X00FF00FF };
 
-const static guint32 va8_alpha_mask_64[2] =   { 0xFF00FF00, 0xFF00FF00 };
-const static guint32 va8_b255_64[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
-const static guint32 va8_w1_64[2] =           { 0x00010001, 0x00010001 };
-const static guint32 va8_w255_64[2] =         { 0x00FF00FF, 0x00FF00FF };
+static const guint32 va8_alpha_mask_64[2] =   { 0xFF00FF00, 0xFF00FF00 };
+static const guint32 va8_b255_64[2] =         { 0xFFFFFFFF, 0xFFFFFFFF };
+static const guint32 va8_w1_64[2] =           { 0x00010001, 0x00010001 };
+static const guint32 va8_w255_64[2] =         { 0x00FF00FF, 0x00FF00FF };
 
 void
 debug_display_sse (void)
@@ -90,20 +90,20 @@ void
 gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   asm volatile ("  movdqu    %0,%%xmm0\n"
-                "\tmovq      %1,%%mm0"    
+                "\tmovq      %1,%%mm0"
                 : /* empty */
                 : "m" (*rgba8_alpha_mask_128), "m" (*rgba8_alpha_mask_64)
                 : "%xmm0", "%mm0");
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm ("  movdqu      %1,%%xmm2\n"
            "\tmovdqu      %2,%%xmm3\n"
            "\tmovdqu  %%xmm2,%%xmm4\n"
            "\tpaddusb %%xmm3,%%xmm4\n"
-           
+
            "\tmovdqu  %%xmm0,%%xmm1\n"
            "\tpandn   %%xmm4,%%xmm1\n"
            "\tpminub  %%xmm3,%%xmm2\n"
@@ -117,7 +117,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm ("  movq       %1,%%mm2\n"
@@ -137,7 +137,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   for (; op.n_pixels >= 1; op.n_pixels -= 1)
     {
       asm volatile ("  movd       %1,%%mm2\n"
@@ -157,7 +157,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 4;
       op.D += 4;
     }
-  
+
   asm("emms");
 }
 
@@ -165,14 +165,14 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 void
 xxxgimp_composite_burn_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
-  
+
 }
 
 void
 gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu          %1,%%xmm2\n"
@@ -186,7 +186,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq       %1, %%mm2\n"
@@ -199,7 +199,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd       %1, %%mm2\n"
@@ -210,7 +210,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm2", "%mm3", "%mm4");
     }
-  
+
   asm("emms");
 }
 
@@ -218,13 +218,13 @@ void
 gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   asm volatile ("  movq   %0,%%mm0\n"
                 "\tmovdqu %1,%%xmm0"
                 :
                 : "m" (*rgba8_alpha_mask_64), "m" (*rgba8_alpha_mask_128)
                 : "%mm0", "%xmm0");
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu        %1,%%xmm2\n"
@@ -247,7 +247,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq       %1, %%mm2\n"
@@ -270,7 +270,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd       %1, %%mm2\n"
@@ -290,7 +290,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
     }
-  
+
   asm("emms");
 }
 
@@ -300,7 +300,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-#if 0  
+#if 0
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu        %0,%%xmm0\n"
@@ -309,32 +309,32 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpxor      %%xmm2,%%xmm2\n"
                     "\tpunpcklbw %%xmm2,%%xmm3\n"
                     "\tpunpcklbw %%xmm0,%%xmm2\n"
-                    
+
                     "\tmovdqu        %3,%%xmm4\n"
                     "\tpsubw     %%xmm3,%%xmm4\n"
-                    
+
                     "\t" xmm_pdivwuqX(xmm2,xmm4,xmm5,xmm6) "\n"
-                    
+
                     "\tmovdqu    %%xmm1,%%xmm3\n"
                     "\tpxor      %%xmm2,%%xmm2\n"
                     "\tpunpckhbw %%xmm2,%%xmm3\n"
                     "\tpunpckhbw %%xmm0,%%xmm2\n"
-                    
+
                     "\tmovdqu        %3,%%xmm4\n"
                     "\tpsubw     %%xmm3,%%xmm4\n"
-                    
+
                     "\t" xmm_pdivwuqX(xmm2,xmm4,xmm6,xmm7) "\n"
-                    
+
                     "\tpackuswb  %%xmm6,%%xmm5\n"
-                    
+
                     "\tmovdqu        %4,%%xmm6\n"
                     "\tmovdqu    %%xmm1,%%xmm7\n"
                     "\tpminub    %%xmm0,%%xmm7\n"
                     "\tpand      %%xmm6,%%xmm7\n"
                     "\tpandn     %%xmm5,%%xmm6\n"
-                    
+
                     "\tpor       %%xmm6,%%xmm7\n"
-                    
+
                     "\tmovdqu    %%xmm7,%2\n"
                     : /* empty */
                     : "m" (*op.A), "m" (*op.B), "m" (*op.D), "m" (*rgba8_w256_128), "m" (*rgba8_alpha_mask_128)
@@ -344,7 +344,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.D += 16;
     }
 #endif
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq         %0,%%mm0\n"
@@ -353,32 +353,32 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpxor      %%mm2,%%mm2\n"
                     "\tpunpcklbw %%mm2,%%mm3\n"
                     "\tpunpcklbw %%mm0,%%mm2\n"
-                    
+
                     "\tmovq         %3,%%mm4\n"
                     "\tpsubw     %%mm3,%%mm4\n"
-                    
+
                     "\t" pdivwuqX(mm2,mm4,mm5) "\n"
-                    
+
                     "\tmovq      %%mm1,%%mm3\n"
                     "\tpxor      %%mm2,%%mm2\n"
                     "\tpunpckhbw %%mm2,%%mm3\n"
                     "\tpunpckhbw %%mm0,%%mm2\n"
-                    
+
                     "\tmovq         %3,%%mm4\n"
                     "\tpsubw     %%mm3,%%mm4\n"
-                    
+
                     "\t" pdivwuqX(mm2,mm4,mm6) "\n"
-                    
+
                     "\tpackuswb  %%mm6,%%mm5\n"
-                    
+
                     "\tmovq         %4,%%mm6\n"
                     "\tmovq      %%mm1,%%mm7\n"
                     "\tpminub    %%mm0,%%mm7\n"
                     "\tpand      %%mm6,%%mm7\n"
                     "\tpandn     %%mm5,%%mm6\n"
-                    
+
                     "\tpor       %%mm6,%%mm7\n"
-                    
+
                     "\tmovq      %%mm7,%2\n"
                     : /* empty */
                     : "m" (*op.A), "m" (*op.B), "m" (*op.D), "m" (*rgba8_w256_64), "m" (*rgba8_alpha_mask_64)
@@ -387,7 +387,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd         %0,%%mm0\n"
@@ -396,38 +396,38 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpxor      %%mm2,%%mm2\n"
                     "\tpunpcklbw %%mm2,%%mm3\n"
                     "\tpunpcklbw %%mm0,%%mm2\n"
-                    
+
                     "\tmovq         %3,%%mm4\n"
                     "\tpsubw     %%mm3,%%mm4\n"
-                    
+
                     "\t" pdivwuqX(mm2,mm4,mm5) "\n"
-                    
+
                     "\tmovq      %%mm1,%%mm3\n"
                     "\tpxor      %%mm2,%%mm2\n"
                     "\tpunpckhbw %%mm2,%%mm3\n"
                     "\tpunpckhbw %%mm0,%%mm2\n"
-                    
+
                     "\tmovq         %3,%%mm4\n"
                     "\tpsubw     %%mm3,%%mm4\n"
-                    
+
                     "\t" pdivwuqX(mm2,mm4,mm6) "\n"
-                    
+
                     "\tpackuswb  %%mm6,%%mm5\n"
-                    
+
                     "\tmovq         %4,%%mm6\n"
                     "\tmovq      %%mm1,%%mm7\n"
                     "\tpminub    %%mm0,%%mm7\n"
                     "\tpand      %%mm6,%%mm7\n"
                     "\tpandn     %%mm5,%%mm6\n"
-                    
+
                     "\tpor       %%mm6,%%mm7\n"
-                    
+
                     "\tmovd      %%mm7,%2\n"
                     : /* empty */
                     : "m" (*op.A), "m" (*op.B), "m" (*op.D), "m" (*rgba8_w256_64), "m" (*rgba8_alpha_mask_64)
                     : "0", "1", "2", "%eax", "%ecx", "%edx", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
     }
-  
+
   asm("emms");
 }
 
@@ -435,7 +435,7 @@ void
 gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   asm volatile ("  movq       %0,%%mm0\n"
                 "\tpxor    %%mm6,%%mm6\n"
                 "\tmovq       %1,%%mm7\n"
@@ -455,22 +455,22 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpsubw     %%xmm5,%%xmm4\n"
                     "\tpaddw     %%xmm7,%%xmm4\n"
                     "\tmovdqu    %%xmm4,%%xmm1\n"
-                    
+
                     xmm_high_bytes_to_words(xmm2,xmm4,xmm6)
                     xmm_high_bytes_to_words(xmm3,xmm5,xmm6)
-                    
+
                     "\tpsubw     %%xmm5,%%xmm4\n"
                     "\tpaddw     %%xmm7,%%xmm4\n"
-                    
+
                     "\tpackuswb  %%xmm4,%%xmm1\n"
                     "\tmovdqu    %%xmm1,%%xmm4\n"
-                    
+
                     "\tmovdqu    %%xmm0,%%xmm1\n"
                     "\tpandn     %%xmm4,%%xmm1\n"
-                    
+
                     "\tpminub    %%xmm3,%%xmm2\n"
                     "\tpand      %%xmm0,%%xmm2\n"
-                    
+
                     "\tpor       %%xmm2,%%xmm1\n"
                     "\tmovdqu    %%xmm1,%0\n"
                     : "+m" (*op.D)
@@ -480,7 +480,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq         %1,%%mm2\n"
@@ -490,22 +490,22 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpsubw     %%mm5,%%mm4\n"
                     "\tpaddw     %%mm7,%%mm4\n"
                     "\tmovq      %%mm4,%%mm1\n"
-                    
+
                     mmx_high_bytes_to_words(mm2,mm4,mm6)
                     mmx_high_bytes_to_words(mm3,mm5,mm6)
-                    
+
                     "\tpsubw     %%mm5,%%mm4\n"
                     "\tpaddw     %%mm7,%%mm4\n"
-                    
+
                     "\tpackuswb  %%mm4,%%mm1\n"
                     "\tmovq      %%mm1,%%mm4\n"
-                    
+
                     "\tmovq      %%mm0,%%mm1\n"
                     "\tpandn     %%mm4,%%mm1\n"
-                    
+
                     "\tpminub    %%mm3,%%mm2\n"
                     "\tpand      %%mm0,%%mm2\n"
-                    
+
                     "\tpor       %%mm2,%%mm1\n"
                     "\tmovq      %%mm1,%0\n"
                     : "+m" (*op.D)
@@ -515,7 +515,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd         %1, %%mm2\n"
@@ -537,7 +537,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
-  
+
   asm("emms");
 }
 
@@ -545,9 +545,9 @@ void
 gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask_64) : "%mm0");
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu      %1, %%xmm2\n"
@@ -567,7 +567,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq       %1, %%mm2\n"
@@ -587,7 +587,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd       %1, %%mm2\n"
@@ -604,7 +604,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
-  
+
   asm("emms");
 }
 
@@ -612,20 +612,20 @@ void
 gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   asm volatile ("  movq    %0,%%mm0\n"
                 "\tmovdqu  %1,%%xmm0\n"
                 : /* empty */
                 : "m" (*rgba8_alpha_mask_64), "m" (*rgba8_alpha_mask_128)
                 : "%mm0", "%xmm0");
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu       %1,%%xmm2\n"
                     "\tmovdqu       %2,%%xmm3\n"
                     "\tmovdqu   %%xmm2,%%xmm4\n"
                     "\tpsubusb  %%xmm3,%%xmm4\n"
-                    
+
                     "\tmovdqu   %%xmm0,%%xmm1\n"
                     "\tpandn    %%xmm4,%%xmm1\n"
                     "\tpminub   %%xmm3,%%xmm2\n"
@@ -639,7 +639,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 16;
       op.D += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq       %1,%%mm2\n"
@@ -659,7 +659,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.B += 8;
       op.D += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd       %1,%%mm2\n"
@@ -676,7 +676,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
-  
+
   asm("emms");
 }
 
@@ -684,7 +684,7 @@ void
 gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
-  
+
   /*
    * Inhale one whole i686 cache line at once. 64 bytes, 16 rgba8 pixels, 4 128 bit xmm registers.
    */
@@ -698,7 +698,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu      %5,%%xmm5\n"
                     "\tmovdqu      %6,%%xmm6\n"
                     "\tmovdqu      %7,%%xmm7\n"
-                    
+
                     "\tmovdqu      %%xmm0,%1\n"
                     "\tmovdqu      %%xmm1,%0\n"
                     "\tmovdqu      %%xmm2,%3\n"
@@ -717,7 +717,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.A += 64;
       op.B += 64;
     }
-  
+
   for (; op.n_pixels >= 4; op.n_pixels -= 4)
     {
       asm volatile ("  movdqu      %0,%%xmm2\n"
@@ -730,7 +730,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.A += 16;
       op.B += 16;
     }
-  
+
   for (; op.n_pixels >= 2; op.n_pixels -= 2)
     {
       asm volatile ("  movq      %0,%%mm2\n"
@@ -743,18 +743,18 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       op.A += 8;
       op.B += 8;
     }
-  
+
   if (op.n_pixels)
     {
       asm volatile ("  movd      %0,%%mm2\n"
                     "\tmovd      %1,%%mm3\n"
                     "\tmovd   %%mm3,%0\n"
-                    "\tmovd   %%mm2,%1\n"                  
+                    "\tmovd   %%mm2,%1\n"
                     : "+m" (*op.A), "+m" (*op.B)
                     : /* empty */
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
-  
+
   asm("emms");
 }
 

@@ -995,7 +995,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 
   if (mask)
     {
-      const guchar * m = mask;
+      const guchar *m = mask;
 
       if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
 	{
@@ -1038,7 +1038,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		}
 
 	      /* BODY */
-	      mask_ip = (int*)m;
+	      mask_ip = (const gint *)m;
 	      i = length / sizeof(int);
 	      length %= sizeof(int);
 	      while (i--)
@@ -1156,7 +1156,7 @@ combine_inten_a_and_inten_a_pixels (const guchar   *src1,
 		}
 
 	      /* BODY */
-	      mask_ip = (int*)m;
+	      mask_ip = (const gint *)m;
 	      i = length / sizeof(int);
 	      length %= sizeof(int);
 	      while (i--)

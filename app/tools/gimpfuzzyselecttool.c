@@ -343,7 +343,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
   options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
-  if (ABS (time - last_time) < 100)
+  if (time - last_time < 100)
     return;
 
   last_time = time;

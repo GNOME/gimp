@@ -61,7 +61,8 @@ static void  gimp_text_layout_render_glyphs  (GimpTextLayout     *layout,
 					      gint                y,
 					      gpointer            render_data);
 static FT_Int32   gimp_text_layout_render_flags (GimpTextLayout  *layout);
-static FT_Matrix  gimp_text_layout_render_trafo (GimpTextLayout  *layout);
+static void       gimp_text_layout_render_trafo (GimpTextLayout  *layout,
+                                                 FT_Matrix       *trafo);
 
 
 
@@ -150,7 +151,7 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
   gint            x_position = 0;
 
   flags = gimp_text_layout_render_flags (layout);
-  trafo = gimp_text_layout_render_trafo (layout);
+  gimp_text_layout_render_trafo (layout, &trafo);
 
   for (i = 0, gi = glyphs->glyphs; i < glyphs->num_glyphs; i++, gi++)
     {
@@ -190,16 +191,14 @@ gimp_text_layout_render_flags (GimpTextLayout *layout)
   return flags;
 }
 
-static FT_Matrix
-gimp_text_layout_render_trafo (GimpTextLayout *layout)
+static void
+gimp_text_layout_render_trafo (GimpTextLayout *layout,
+                               FT_Matrix      *trafo)
 {
-  GimpText  *text = layout->text;
-  FT_Matrix  trafo;
+  GimpText *text = layout->text;
 
-  trafo.xx = text->transformation.coeff[0][0] * 65536.0;
-  trafo.xy = text->transformation.coeff[0][1] * 65536.0;
-  trafo.yx = text->transformation.coeff[1][0] * 65536.0;
-  trafo.yy = text->transformation.coeff[1][1] * 65536.0;
-
-  return trafo;
+  trafo->xx = text->transformation.coeff[0][0] * 65536.0;
+  trafo->xy = text->transformation.coeff[0][1] * 65536.0;
+  trafo->yx = text->transformation.coeff[1][0] * 65536.0;
+  trafo->yy = text->transformation.coeff[1][1] * 65536.0;
 }

@@ -314,7 +314,7 @@ cpercep_init_conversions(void)
 
 
 
-const static inline double
+static inline double
 ffunc(const double t)
 {
   if (t > 0.008856F)
@@ -328,7 +328,7 @@ ffunc(const double t)
 }
 
 
-const static inline double
+static inline double
 ffunc_inv(const double t)
 {
   if (t > 0.206893F)

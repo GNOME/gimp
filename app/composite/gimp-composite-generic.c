@@ -673,11 +673,11 @@ gimp_composite_dodge_any_any_any_generic (GimpCompositeContext * ctx)
         {
           tmp = src1[b] << 8;
           tmp /= 256 - src2[b];
-          dest[b] = (guchar) CLAMP(tmp, 0, 255);
+          dest[b] = (guchar) MIN (tmp, 255);
         }
 
       if (has_alpha1 && has_alpha2)
-        dest[alpha] = MIN(src1[alpha], src2[alpha]);
+        dest[alpha] = MIN (src1[alpha], src2[alpha]);
       else if (has_alpha2)
         dest[alpha] = src2[alpha];
 
@@ -747,12 +747,12 @@ gimp_composite_hardlight_any_any_any_generic (GimpCompositeContext * ctx)
           if (src2[b] > 128)
             {
               tmp = ((gint) 255 - src1[b]) * ((gint) 255 - ((src2[b] - 128) << 1));
-              dest[b] = (guchar) CLAMP(255 - (tmp >> 8), 0, 255);
+              dest[b] = (guchar) MIN (255 - (tmp >> 8), 255);
             }
           else
             {
               tmp = (gint) src1[b] * ((gint) src2[b] << 1);
-              dest[b] = (guchar) CLAMP(tmp >> 8, 0, 255);
+              dest[b] = (guchar) MIN (tmp >> 8, 255);
             }
         }
 

@@ -1,3 +1,26 @@
+2003-09-16  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-generic.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-path.c
+	* app/config/gimpconfig-serialize.c
+	* app/core/cpercep.c
+	* app/core/gimpunit.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/plug-in-menus.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c
+	* app/pdb/procedural_db.c
+	* app/text/gimptextlayout-render.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/widgets/gimpcursor.c: some trivial code cleanups: avoid
+	casts that discard const qualifiers and avoid useless comparisons
+	on unsigned variables. Also reordered qualifiers in function
+	declarations (static comes before const).
+
 2003-09-16  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]: Fixed stupid bug (for getting
