@@ -1,3 +1,14 @@
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/resize-dialog.[ch]: started to redo the Resize
+	dialog in the style of the new Scale dialog. Only halfway done but
+	at least the new API is there.
+
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c: changed accordingly.
+
+	* app/dialogs/image-scale-dialog.c: cosmetics.
+
 2004-10-27  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/*[ch]: preliminary cleanups: removed all trailing

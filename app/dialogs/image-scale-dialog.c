@@ -87,15 +87,15 @@ image_scale_dialog_new (GimpImage                *image,
   dialog->gimage  = image;
   dialog->gdisp   = display;
   dialog->context = context;
-  dialog->dialog  =
-    scale_dialog_new (GIMP_VIEWABLE (display->gimage),
-                      _("Scale Image"), "gimp-image-scale",
-                      display->shell,
-                      gimp_standard_help_func, GIMP_HELP_IMAGE_SCALE,
-                      GIMP_DISPLAY_SHELL (display->shell)->unit,
-                      image->gimp->config->interpolation_type,
-                      image_scale_callback,
-                      dialog);
+  dialog->dialog  = scale_dialog_new (GIMP_VIEWABLE (display->gimage),
+                                      _("Scale Image"), "gimp-image-scale",
+                                      display->shell,
+                                      gimp_standard_help_func,
+                                      GIMP_HELP_IMAGE_SCALE,
+                                      GIMP_DISPLAY_SHELL (display->shell)->unit,
+                                      image->gimp->config->interpolation_type,
+                                      image_scale_callback,
+                                      dialog);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_free, dialog);

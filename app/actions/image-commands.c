@@ -42,6 +42,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -64,19 +65,22 @@ typedef struct _ImageResizeOptions ImageResizeOptions;
 
 struct _ImageResizeOptions
 {
-  ResizeDialog *dialog;
-
   GimpContext  *context;
   GimpDisplay  *gdisp;
-  GimpImage    *gimage;
 };
 
 
 /*  local function prototypes  */
 
-static void   image_resize_callback        (GtkWidget              *widget,
+static void   image_resize_callback        (GtkWidget              *dialog,
+                                            GimpViewable           *viewable,
+                                            gint                    width,
+                                            gint                    height,
+                                            gint                    offset_x,
+                                            gint                    offset_y,
                                             gpointer                data);
 static void   image_scale_callback         (ImageScaleDialog       *dialog);
+
 static void   image_merge_layers_response  (GtkWidget              *widget,
                                             gint                    response_id,
                                             ImageMergeLayersDialog *dialog);
@@ -165,39 +169,35 @@ image_resize_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   ImageResizeOptions *options;
-  GimpDisplay        *gdisp;
   GimpImage          *gimage;
+  GtkWidget          *widget;
+  GimpDisplay        *gdisp;
+  GtkWidget          *dialog;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
   return_if_no_display (gdisp, data);
-
-  gimage = gdisp->gimage;
 
   options = g_new0 (ImageResizeOptions, 1);
 
-  options->context = action_data_get_context (data);
   options->gdisp   = gdisp;
-  options->gimage  = gimage;
+  options->context = action_data_get_context (data);
 
-  options->dialog =
-    resize_dialog_new (GIMP_VIEWABLE (gimage), gdisp->shell,
-                       RESIZE_DIALOG,
-                       gimage->width,
-                       gimage->height,
-                       gimage->xresolution,
-                       gimage->yresolution,
-                       GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
-                       G_CALLBACK (image_resize_callback),
-                       options);
+  dialog = resize_dialog_new (GIMP_VIEWABLE (gimage),
+                              _("Set Image Canvas Size"), "gimp-image-resize",
+                              widget,
+                              gimp_standard_help_func, GIMP_HELP_IMAGE_RESIZE,
+                              GIMP_DISPLAY_SHELL (gdisp->shell)->unit,
+                              image_resize_callback,
+                              options);
 
   g_signal_connect_object (gdisp, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
-                           options->dialog->shell,
-                           G_CONNECT_SWAPPED);
+                           dialog, G_CONNECT_SWAPPED);
 
-  g_object_weak_ref (G_OBJECT (options->dialog->shell),
-		     (GWeakNotify) g_free,
-		     options);
+  g_object_weak_ref (G_OBJECT (dialog),
+		     (GWeakNotify) g_free, options);
 
-  gtk_widget_show (options->dialog->shell);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -387,41 +387,46 @@ image_configure_grid_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-image_resize_callback (GtkWidget *widget,
-		       gpointer   data)
+image_resize_callback (GtkWidget    *dialog,
+                       GimpViewable *viewable,
+                       gint          width,
+                       gint          height,
+                       gint          offset_x,
+                       gint          offset_y,
+                       gpointer      data)
 {
   ImageResizeOptions *options = data;
 
-  gtk_widget_set_sensitive (options->dialog->shell, FALSE);
-
-  if (options->dialog->width  > 0 &&
-      options->dialog->height > 0)
+  if (width > 0 && height > 0)
     {
+      GimpImage    *image   = GIMP_IMAGE (viewable);
+      GimpDisplay  *gdisp   = options->gdisp;
+      GimpContext  *context = options->context;
       GimpProgress *progress;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
+      gtk_widget_destroy (dialog);
+
+      if (width == image->width && height == image->height)
+        return;
+
+      progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
                                       _("Resizing..."), FALSE);
 
-      gimp_image_resize (options->gimage,
-                         options->context,
-			 options->dialog->width,
-			 options->dialog->height,
-			 options->dialog->offset_x,
-			 options->dialog->offset_y,
+      gimp_image_resize (image,
+                         context,
+                         width, height, offset_x, offset_y,
                          progress);
 
       if (progress)
         gimp_progress_end (progress);
 
-      gimp_image_flush (options->gimage);
+      gimp_image_flush (image);
     }
   else
     {
       g_message (_("Resize Error: Both width and height must be "
 		   "greater than zero."));
     }
-
-  gtk_widget_destroy (options->dialog->shell);
 }
 
 static void

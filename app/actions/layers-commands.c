@@ -96,16 +96,6 @@ static const GimpLayerModeEffects layer_modes[] =
 };
 
 
-typedef struct _ResizeLayerOptions ResizeLayerOptions;
-
-struct _ResizeLayerOptions
-{
-  GimpLayer    *layer;
-  GimpContext  *context;
-  ResizeDialog *dialog;
-};
-
-
 /*  local function prototypes  */
 
 static void   layers_new_layer_response    (GtkWidget             *widget,
@@ -117,6 +107,7 @@ static void   layers_edit_layer_response   (GtkWidget             *widget,
 static void   layers_add_mask_response     (GtkWidget             *widget,
                                             gint                   response_id,
                                             LayerAddMaskDialog    *dialog);
+
 static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             GimpViewable          *viewable,
                                             gint                   width,
@@ -127,8 +118,14 @@ static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             gdouble                yresolution,
                                             GimpUnit               resolution_unit,
                                             gpointer               data);
-static void   layers_resize_layer_callback (GtkWidget             *widget,
+static void   layers_resize_layer_callback (GtkWidget             *dialog,
+                                            GimpViewable          *viewable,
+                                            gint                   width,
+                                            gint                   height,
+                                            gint                   offset_x,
+                                            gint                   offset_y,
                                             gpointer               data);
+
 static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
 
 
@@ -459,39 +456,27 @@ void
 layers_resize_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
-  ResizeLayerOptions *options;
-  GimpImage          *gimage;
-  GimpLayer          *layer;
-  GtkWidget          *widget;
-  GimpDisplay        *gdisp;
+  GimpDisplay *gdisp;
+  GimpImage   *gimage;
+  GimpLayer   *layer;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
   gdisp = GIMP_IS_DISPLAY (data) ? data : NULL;
 
-  options = g_new0 (ResizeLayerOptions, 1);
+  dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
+                              _("Set Layer Boundary Size"), "gimp-layer-resize",
+                              widget,
+                              gimp_standard_help_func, GIMP_HELP_LAYER_RESIZE,
+                              (gdisp ?
+                               GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
+                               GIMP_UNIT_PIXEL),
+                              layers_resize_layer_callback,
+                              action_data_get_context (data));
 
-  options->context = action_data_get_context (data);
-  options->layer   = layer;
-
-  options->dialog =
-    resize_dialog_new (GIMP_VIEWABLE (layer), widget,
-                       RESIZE_DIALOG,
-		       gimp_item_width  (GIMP_ITEM (layer)),
-		       gimp_item_height (GIMP_ITEM (layer)),
-		       gimage->xresolution,
-		       gimage->yresolution,
-		       (gdisp ?
-                        GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
-                        GIMP_UNIT_PIXEL),
-		       G_CALLBACK (layers_resize_layer_callback),
-                       options);
-
-  g_object_weak_ref (G_OBJECT (options->dialog->shell),
-		     (GWeakNotify) g_free,
-		     options);
-
-  gtk_widget_show (options->dialog->shell);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -989,27 +974,30 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 }
 
 static void
-layers_resize_layer_callback (GtkWidget *widget,
-                              gpointer   data)
+layers_resize_layer_callback (GtkWidget    *dialog,
+                              GimpViewable *viewable,
+                              gint          width,
+                              gint          height,
+                              gint          offset_x,
+                              gint          offset_y,
+                              gpointer      data)
 {
-  ResizeLayerOptions *options = data;
+  GimpContext *context = GIMP_CONTEXT (data);
 
-  if (options->dialog->width > 0 && options->dialog->height > 0)
+  if (width > 0 && height > 0)
     {
-      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (options->layer));
+      GimpItem *item = GIMP_ITEM (viewable);
 
-      gtk_widget_set_sensitive (options->dialog->shell, FALSE);
+      gtk_widget_destroy (dialog);
 
-      gimp_item_resize (GIMP_ITEM (options->layer),
-                        options->context,
-                        options->dialog->width,
-                        options->dialog->height,
-                        options->dialog->offset_x,
-                        options->dialog->offset_y);
+      if (width == gimp_item_width (item) && height == gimp_item_height (item))
+        return;
 
-      gimp_image_flush (gimage);
+      gimp_item_resize (item,
+                        context,
+                        width, height, offset_x, offset_y);
 
-      gtk_widget_destroy (options->dialog->shell);
+      gimp_image_flush (gimp_item_get_image (item));
     }
   else
     {

@@ -20,21 +20,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
-
-#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "core/gimptemplate.h"
 
-#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpsizebox.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "resize-dialog.h"
@@ -42,10 +37,204 @@
 #include "gimp-intl.h"
 
 
-#define RESIZE_RESPONSE_RESET 1
-#define SB_WIDTH              8
+#define RESPONSE_RESET 1
 
 
+typedef struct _ResizeDialog ResizeDialog;
+
+struct _ResizeDialog
+{
+  GimpViewable          *viewable;
+  GimpUnit               unit;
+  GtkWidget             *box;
+  GimpResizeCallback     callback;
+  gpointer               user_data;
+};
+
+
+static void   resize_dialog_response (GtkWidget    *dialog,
+                                      gint          response_id,
+                                      ResizeDialog *private);
+static void   resize_dialog_reset    (ResizeDialog *private);
+
+
+GtkWidget *
+resize_dialog_new (GimpViewable       *viewable,
+                   const gchar        *title,
+                   const gchar        *role,
+                   GtkWidget          *parent,
+                   GimpHelpFunc        help_func,
+                   const gchar        *help_id,
+                   GimpUnit            unit,
+                   GimpResizeCallback  callback,
+                   gpointer            user_data)
+{
+  GtkWidget    *dialog;
+  GtkWidget    *vbox;
+  GtkWidget    *frame;
+  ResizeDialog *private;
+  GimpImage    *image = NULL;
+  const gchar  *text  = NULL;
+  gint          width, height;
+  gdouble       xres, yres;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
+
+  if (GIMP_IS_IMAGE (viewable))
+    {
+      image = GIMP_IMAGE (viewable);
+
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
+
+      text = _("Canvas Size");
+    }
+  else if (GIMP_IS_ITEM (viewable))
+    {
+      GimpItem *item = GIMP_ITEM (viewable);
+
+      image = gimp_item_get_image (item);
+
+      width  = gimp_item_width (item);
+      height = gimp_item_height (item);
+
+      text = _("Layer Size");
+    }
+  else
+    {
+      g_return_val_if_reached (NULL);
+    }
+
+  dialog = gimp_viewable_dialog_new (viewable,
+                                     title, role, GIMP_STOCK_RESIZE, title,
+                                     parent,
+                                     help_func, help_id,
+
+                                     GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
+                                     GIMP_STOCK_RESET,  RESPONSE_RESET,
+                                     GIMP_STOCK_RESIZE, GTK_RESPONSE_OK,
+
+                                     NULL);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  private = g_new0 (ResizeDialog, 1);
+
+  g_signal_connect_swapped (dialog, "destroy",
+                            G_CALLBACK (g_free),
+                            private);
+
+  private->viewable  = viewable;
+  private->callback  = callback;
+  private->user_data = user_data;
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
+                               "width",           width,
+                               "height",          height,
+                               "unit",            unit,
+                               "xresolution",     xres,
+                               "yresolution",     yres,
+                               "keep-aspect",     TRUE,
+                               "edit-resolution", FALSE,
+                               NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (resize_dialog_response),
+                    private);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  frame = gimp_frame_new (text);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  gtk_container_add (GTK_CONTAINER (frame), private->box);
+  gtk_widget_show (private->box);
+
+  frame = gimp_frame_new (_("Offset"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return dialog;
+}
+
+static void
+resize_dialog_response (GtkWidget    *dialog,
+                        gint          response_id,
+                        ResizeDialog *private)
+{
+  gint  width, height;
+
+  switch (response_id)
+    {
+    case GTK_RESPONSE_CANCEL:
+      gtk_widget_destroy (dialog);
+      break;
+
+    case RESPONSE_RESET:
+      resize_dialog_reset (private);
+      break;
+
+    case GTK_RESPONSE_OK:
+      g_object_get (private->box,
+                    "width",  &width,
+                    "height", &height,
+                    NULL);
+
+      private->callback (dialog,
+                         private->viewable,
+                         width, height, 0, 0,
+                         private->user_data);
+      break;
+    }
+}
+
+static void
+resize_dialog_reset (ResizeDialog *private)
+{
+  GimpImage *image;
+  gint       width, height;
+  gdouble    xres, yres;
+
+  if (GIMP_IS_IMAGE (private->viewable))
+    {
+      image = GIMP_IMAGE (private->viewable);
+
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
+    }
+  else if (GIMP_IS_ITEM (private->viewable))
+    {
+      GimpItem *item = GIMP_ITEM (private->viewable);
+
+      image = gimp_item_get_image (item);
+
+      width  = gimp_item_width (item);
+      height = gimp_item_height (item);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  g_object_set (private->box,
+                "width",       width,
+                "height",      height,
+                "xresolution", xres,
+                "yresolution", yres,
+                NULL);
+}
+
+
+#if 0
 typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
@@ -194,24 +383,24 @@ resize_dialog_new (GimpViewable *viewable,
 
     switch (type)
       {
-      case SCALE_DIALOG:
-        stock_id = GIMP_STOCK_SCALE;
+      case RESIZE_DIALOG:
+        stock_id = GIMP_STOCK_RESIZE;
 
 	switch (dialog->target)
 	  {
 	  case RESIZE_LAYER:
-	    role         = "gimp-layer-scale";
-	    window_title = _("Scale Layer");
-            window_desc  = _("Scale Layer Options");
-	    help_page    = GIMP_HELP_LAYER_SCALE;
+	    role         = "gimp-layer-resize";
+	    window_title = _("Resize Layer");
+            window_desc  = _("Resize Layer Options");
+	    help_page    = GIMP_HELP_LAYER_RESIZE;
 	    frame        = gimp_frame_new (_("Size"));
 	    break;
 
 	  case RESIZE_IMAGE:
-	    role         = "gimp-image-scale";
-	    window_title = _("Scale Image");
-            window_desc  = _("Scale Image Options");
-	    help_page    = GIMP_HELP_IMAGE_SCALE;
+	    role         = "gimp-image-resize";
+	    window_title = _("Resize Image");
+            window_desc  = _("Resize Image Options");
+	    help_page    = GIMP_HELP_IMAGE_RESIZE;
 	    frame        = gimp_frame_new (_("Pixel Dimensions"));
 	    break;
 	  }
@@ -375,7 +564,7 @@ resize_dialog_new (GimpViewable *viewable,
   /*  initialize the original width & height labels  */
   orig_labels_update (private->size_se, dialog);
 
-  /*  the scale ratio labels  */
+  /*  the resize ratio labels  */
   label = gtk_label_new (_("X ratio:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
@@ -400,7 +589,7 @@ resize_dialog_new (GimpViewable *viewable,
   gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
   gtk_widget_show (table2);
 
-  /*  the scale ratio spinbuttons  */
+  /*  the resize ratio spinbuttons  */
   spinbutton =
     gimp_spin_button_new (&private->ratio_x_adj,
                           dialog->ratio_x,
@@ -544,7 +733,7 @@ resize_dialog_new (GimpViewable *viewable,
     }
 
   /*  the resolution stuff  */
-  if ((type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
+  if ((type == RESIZE_DIALOG) && (dialog->target == RESIZE_IMAGE))
     {
       frame = gimp_frame_new (_("Print Size & Display Unit"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -694,7 +883,7 @@ resize_dialog_new (GimpViewable *viewable,
     }
 
   /*  the interpolation menu  */
-  if (type == SCALE_DIALOG)
+  if (type == RESIZE_DIALOG)
     {
       GtkWidget *hbox;
       GtkWidget *combo;
@@ -722,7 +911,7 @@ resize_dialog_new (GimpViewable *viewable,
 
       if (gimp_image_base_type (dialog->gimage) == GIMP_INDEXED)
         {
-          label = gtk_label_new (_("Indexed color layers are always scaled "
+          label = gtk_label_new (_("Indexed color layers are always resized "
                                    "without interpolation. The chosen "
                                    "interpolation type will affect scaling "
                                    "channels and masks only."));
@@ -869,13 +1058,13 @@ response_callback (GtkWidget    *widget,
       /* restore size and ratio settings */
       size_update (dialog, private->old_width, private->old_height, 1.0, 1.0);
 
-      if ((dialog->type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
+      if ((dialog->type == RESIZE_DIALOG) && (dialog->target == RESIZE_IMAGE))
         {
           /* restore resolution settings */
           resolution_update (dialog, private->old_res_x, private->old_res_y);
         }
 
-      if (dialog->type == SCALE_DIALOG)
+      if (dialog->type == RESIZE_DIALOG)
         {
           dialog->interpolation =
             dialog->gimage->gimp->config->interpolation_type;
@@ -1018,7 +1207,7 @@ size_update (ResizeDialog *dialog,
          MAX (0, dialog->height - private->old_height));
     }
 
-  if ((dialog->type == SCALE_DIALOG) && (dialog->target == RESIZE_IMAGE))
+  if ((dialog->type == RESIZE_DIALOG) && (dialog->target == RESIZE_IMAGE))
     {
       g_signal_handlers_block_by_func (private->printsize_se,
                                        printsize_update, dialog);
@@ -1214,3 +1403,5 @@ resolution_update (ResizeDialog *dialog,
   g_signal_handlers_unblock_by_func (private->printsize_se,
                                      printsize_update, dialog);
 }
+
+#endif

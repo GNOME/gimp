@@ -20,67 +20,24 @@
 #define __RESIZE_DIALOG_H__
 
 
-typedef enum
-{
-  SCALE_DIALOG,
-  RESIZE_DIALOG
-} ResizeType;
-
-typedef enum
-{
-  RESIZE_IMAGE,
-  RESIZE_LAYER
-} ResizeTarget;
+typedef void (* GimpResizeCallback) (GtkWidget    *dialog,
+                                     GimpViewable *viewable,
+                                     gint          width,
+                                     gint          height,
+                                     gint          offset_x,
+                                     gint          offset_y,
+                                     gpointer      user_data);
 
 
-typedef struct _ResizeDialog ResizeDialog;
-
-struct _ResizeDialog
-{
-  GtkWidget             *shell;
-
-  GimpImage             *gimage;
-
-  ResizeType             type;
-  ResizeTarget           target;
-
-  gint                   width;
-  gint                   height;
-
-  gdouble                resolution_x;
-  gdouble                resolution_y;
-  GimpUnit               unit;
-
-  gdouble                ratio_x;
-  gdouble                ratio_y;
-
-  gint                   offset_x;
-  gint                   offset_y;
-
-  GimpInterpolationType  interpolation;
-};
-
-
-/*  If resolution_x is zero, then don't show resolution modification
- *  parts of the dialog.
- *
- *  If object and signal are non-NULL, then attach the cancel callback
- *  to signal.
- *
- *  If cancel_callback is NULL, then the dialog will be destroyed on
- *  "Cancel".
- */
-
-ResizeDialog * resize_dialog_new (GimpViewable *viewable,
-                                  GtkWidget    *parent,
-                                  ResizeType    type,
-                                  gint          width,
-                                  gint          height,
-                                  gdouble       resolution_x,
-                                  gdouble       resolution_y,
-                                  GimpUnit      unit,
-                                  GCallback     ok_cb,
-                                  gpointer      user_data);
+GtkWidget * resize_dialog_new (GimpViewable          *viewable,
+                               const gchar           *title,
+                               const gchar           *role,
+                               GtkWidget             *parent,
+                               GimpHelpFunc           help_func,
+                               const gchar           *help_id,
+                               GimpUnit               unit,
+                               GimpResizeCallback     callback,
+                               gpointer               user_data);
 
 
 #endif  /*  __RESIZE_DIALOG_H__  */
