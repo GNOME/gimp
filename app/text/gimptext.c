@@ -76,10 +76,12 @@ static void    gimp_text_set_property         (GObject       *object,
                                                guint          property_id,
                                                const GValue  *value,
                                                GParamSpec    *pspec);
+static gsize   gimp_text_get_memsize          (GimpObject    *object,
+                                               gsize         *gui_size);
 static gchar * gimp_text_get_default_language (void);
 
 
-static GObjectClass *parent_class = NULL;
+static GimpObjectClass *parent_class = NULL;
 
 
 GType
@@ -108,7 +110,7 @@ gimp_text_get_type (void)
         NULL            /* iface_data     */
       };
 
-      text_type = g_type_register_static (G_TYPE_OBJECT,
+      text_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                           "GimpText", &text_info, 0);
 
       g_type_add_interface_static (text_type,
@@ -122,19 +124,23 @@ gimp_text_get_type (void)
 static void
 gimp_text_class_init (GimpTextClass *klass)
 {
-  GObjectClass *object_class;
-  GParamSpec   *param_spec;
-  GimpRGB       black;
-  GimpMatrix2   identity;
-  gchar        *language;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
+  GParamSpec      *param_spec;
+  GimpRGB          black;
+  GimpMatrix2      identity;
+  gchar           *language;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = gimp_text_finalize;
-  object_class->get_property = gimp_text_get_property;
-  object_class->set_property = gimp_text_set_property;
+  object_class->finalize         = gimp_text_finalize;
+  object_class->get_property     = gimp_text_get_property;
+  object_class->set_property     = gimp_text_set_property;
+
+  gimp_object_class->get_memsize = gimp_text_get_memsize;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_matrix2_identity (&identity);
@@ -410,6 +416,28 @@ gimp_text_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gsize
+gimp_text_get_memsize (GimpObject *object,
+                       gsize      *gui_size)
+{
+  GimpText *text;
+  gsize     memsize = 0;
+
+  text = GIMP_TEXT (object);
+
+  if (text->text)
+    memsize += strlen (text->text) + 1;
+
+  if (text->font)
+    memsize += strlen (text->font) + 1;
+
+  if (text->language)
+    memsize += strlen (text->language) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 

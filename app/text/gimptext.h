@@ -22,6 +22,10 @@
 #ifndef __GIMP_TEXT_H__
 #define __GIMP_TEXT_H__
 
+
+#include "core/gimpobject.h"
+
+
 #define GIMP_TYPE_TEXT            (gimp_text_get_type ())
 #define GIMP_TEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT, GimpText))
 #define GIMP_TEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT, GimpTextClass))
@@ -34,7 +38,7 @@ typedef struct _GimpTextClass  GimpTextClass;
 
 struct _GimpText
 {
-  GObject                parent_instance;
+  GimpObject             parent_instance;
 
   gchar                 *text;
   gchar                 *font;
@@ -60,7 +64,7 @@ struct _GimpText
 
 struct _GimpTextClass
 {
-  GObjectClass           parent_class;
+  GimpObjectClass        parent_class;
 };
 
 

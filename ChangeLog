@@ -1,3 +1,8 @@
+2003-08-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimptext.[ch]: derive it from GimpObject and added
+	GimpObject::get_memsize() implementation.
+
 2003-08-25  Sven Neumann  <sven@gimp.org>
 
 	Fixed some issues with the PDB thumbnail functions spotted by
