@@ -10,14 +10,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-11 14:24+0200\n"
-"PO-Revision-Date: 2004-05-06 20:39+0200\n"
+"POT-Creation-Date: 2004-05-13 03:57+0200\n"
+"PO-Revision-Date: 2004-05-17 00:29+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3\n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -26,7 +25,8 @@ msgid ""
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 "A GIMP nincs megfelelően telepítve a jelenlegi felhasználó számára.\n"
-"A felhasználói telepítés ki lett hagyva, mivel a \"--no-interface\" kapcsoló\n"
+"A felhasználói telepítés ki lett hagyva, mivel a \"--no-interface\" "
+"kapcsoló\n"
 "meg volt adva. Ha szeretne felhasználói telepítést végezni, indítsa el a\n"
 "programot a \"--no-interface\" kapcsoló nélkül."
 
@@ -38,8 +38,8 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 "Nem sikerült megnyitni a tesztelési célú cserefájlt. Az adatvesztés "
-"elkerülése érdekében ellenőrizze a cserekönyvtár helyét és engedélyeit "
-"(a cserekönyvtár a beállításoknál adható meg; jelenleg \"%s\")."
+"elkerülése érdekében ellenőrizze a cserekönyvtár helyét és engedélyeit (a "
+"cserekönyvtár a beállításoknál adható meg; jelenleg \"%s\")."
 
 #: app/app_procs.c:281
 #, c-format
@@ -119,8 +119,8 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data            Nem tölti be az ecseteket, a színátmeneteket, "
-"a palettákat és a mintákat.\n"
+"  -d, --no-data            Nem tölti be az ecseteket, a színátmeneteket, a "
+"palettákat és a mintákat.\n"
 
 #: app/main.c:521
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
@@ -287,6 +287,19 @@ msgstr "Középszínek"
 msgid "Highlights"
 msgstr "Fényes színek"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+"Nem sikerült megnyitni a cserefájlt. A program által használható memória "
+"elfogyott, a cserefájl pedig nem használható. A képek egyes részei "
+"megsérülhettek. Próbálja meg elmenteni a módosított képeket más "
+"fájlnevekkel, majd indítsa újra a programot és ellenőrizze a cserekönyvtár "
+"helyét a beállítások között."
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -300,8 +313,8 @@ msgstr "végzetes feldolgozási hiba"
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
-"csak \"yes\" vagy \"no\" érték szerepelhetne %s logikai kifejezésben, de \"%s\" "
-"szerepel"
+"csak \"yes\" vagy \"no\" érték szerepelhetne %s logikai kifejezésben, de \"%s"
+"\" szerepel"
 
 #: app/config/gimpconfig-deserialize.c:527
 #, c-format
@@ -332,7 +345,7 @@ msgstr "${%s} nem bővíthető"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -420,9 +433,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
-"Ha be van kapcsolva, akkor egy kép minden alkalommal aktívvá válik "
-"amikor az ablaka megkapja a fókuszt. Olyan ablakkezelők esetében lehet "
-"hasznos, amelyek a \"fókusz kattintásra\" módszert használják."
+"Ha be van kapcsolva, akkor egy kép minden alkalommal aktívvá válik amikor az "
+"ablaka megkapja a fókuszt. Olyan ablakkezelők esetében lehet hasznos, "
+"amelyek a \"fókusz kattintásra\" módszert használják."
 
 #: app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
@@ -449,14 +462,16 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"A helyzetérzékeny kurzor egy hasznos szolgáltatás. Alapértelmezésben be "
-"van kapcsolva, viszont lassulást okozhat."
+"A helyzetérzékeny kurzor egy hasznos szolgáltatás. Alapértelmezésben be van "
+"kapcsolva, viszont lassulást okozhat."
 
 #: app/config/gimprc-blurbs.h:44
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "Ha be van kapcsolva, akkor a kép minden pontja a képernyő egy pontjához van rendelve."
+msgstr ""
+"Ha be van kapcsolva, akkor a kép minden pontja a képernyő egy pontjához van "
+"rendelve."
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -473,11 +488,11 @@ msgid ""
 "the default threshold."
 msgstr ""
 "A varázspálca-kijelölés, a kitöltés és a hasonló eszközök egy kezdőértéken "
-"alapuló algoritmust használnak a megfelelő terület meghatározásához. "
-"A terület meghatározásakor a program a kijelölt képponttól indulva addig "
-"halad minden irányban, amíg az eredeti képponthoz viszonyított "
-"intenzitásbeli különbség nagyobb nem lesz egy megadott küszöbértéknél. "
-"Az itt megadott érték az alapértelmezett küszöbérték."
+"alapuló algoritmust használnak a megfelelő terület meghatározásához. A "
+"terület meghatározásakor a program a kijelölt képponttól indulva addig halad "
+"minden irányban, amíg az eredeti képponthoz viszonyított intenzitásbeli "
+"különbség nagyobb nem lesz egy megadott küszöbértéknél. Az itt megadott "
+"érték az alapértelmezett küszöbérték."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -485,20 +500,26 @@ msgid ""
 "your window manager decorates and handles dock windows."
 msgstr ""
 "A dokkolható ablakokhoz használandó ablaktípus-információ. Ez a beállítás "
-"befolyásolhatja, hogy az ablakkezelő hogyan jeleníti meg és kezeli a dokkolható "
-"ablakokat."
+"befolyásolhatja, hogy az ablakkezelő hogyan jeleníti meg és kezeli a "
+"dokkolható ablakokat."
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "Ha be van kapcsolva, akkor a kiválasztott ecset az összes eszközre vonatkozik."
+msgstr ""
+"Ha be van kapcsolva, akkor a kiválasztott ecset az összes eszközre "
+"vonatkozik."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Ha be van kapcsolva, akkor a kiválasztott színátmenet az összes eszközre vonatkozik."
+msgstr ""
+"Ha be van kapcsolva, akkor a kiválasztott színátmenet az összes eszközre "
+"vonatkozik."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Ha be van kapcsolva, akkor a kiválasztott minta az összes eszközre vonatkozik."
+msgstr ""
+"Ha be van kapcsolva, akkor a kiválasztott minta az összes eszközre "
+"vonatkozik."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -515,28 +536,28 @@ msgstr "Beállítja a képek ablakának címsorában megjelenítendő szöveget.
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
 msgstr ""
-"Ha be van kapcsolva, akkor a GIMP különálló információs ablakot "
-"nyit minden egyes képnézethez."
+"Ha be van kapcsolva, akkor a GIMP különálló információs ablakot nyit minden "
+"egyes képnézethez."
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Megadja, hogy egy fájl megnyitását követően a teljes kép legyen látható "
-"vagy mindig 1:1 arányú nagyítással jelenjen meg a kép."
+"Megadja, hogy egy fájl megnyitását követően a teljes kép legyen látható vagy "
+"mindig 1:1 arányú nagyítással jelenjen meg a kép."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
-"Saját színtérkép telepítése. A \"hamis\" színeket használó eszközök "
-"esetében lehet rá szükség."
+"Saját színtérkép telepítése. A \"hamis\" színeket használó eszközök esetében "
+"lehet rá szükség."
 
 #: app/config/gimprc-blurbs.h:167
 msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
-"Az átméretezéshez és egyéb átalakításokhoz használt interpoláció "
-"szintjét adja meg."
+"Az átméretezéshez és egyéb átalakításokhoz használt interpoláció szintjét "
+"adja meg."
 
 #: app/config/gimprc-blurbs.h:171
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -555,31 +576,33 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"A program figyelmeztetni fogja a felhasználót, ha olyan képet "
-"kísérel meg létrehozni, amely több memóriát igényel, mint amekkora "
-"érték itt meg van adva."
+"A program figyelmeztetni fogja a felhasználót, ha olyan képet kísérel meg "
+"létrehozni, amely több memóriát igényel, mint amekkora érték itt meg van "
+"adva."
 
 #: app/config/gimprc-blurbs.h:182
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
-"A GIMP számára kiosztott rendszerszínek minimális számát adja meg. "
-"Általában csak 8 bites megjelenítők esetében van rá szükség."
+"A GIMP számára kiosztott rendszerszínek minimális számát adja meg. Általában "
+"csak 8 bites megjelenítők esetében van rá szükség."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
-msgstr "A képek ablakainak jobb alsó sarkában levő navigációs előnézet méretét adja meg."
+msgstr ""
+"A képek ablakainak jobb alsó sarkában levő navigációs előnézet méretét adja "
+"meg."
 
 #: app/config/gimprc-blurbs.h:207
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
-"Többprocesszoros rendszer esetén - ha a GIMP --enable-mp módon lett lefordítva - "
-"beállítja, hogy hány processzort használjon egyidejűleg a GIMP."
+"Többprocesszoros rendszer esetén - ha a GIMP --enable-mp módon lett "
+"lefordítva - beállítja, hogy hány processzort használjon egyidejűleg a GIMP."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
@@ -589,12 +612,12 @@ msgid ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
-"Ha be van kapcsolva, akkor minden elmozdulás alkalmával le lesz "
-"kérdezve az X grafikus környezettől az aktuális egérpozíció; ellenkező "
-"esetben egy kevésbé pontos módszerrel lesz meghatározva a pozíció. "
-"Bekapcsolt állapot esetén a nagy ecsetekkel való rajzolás általában "
-"pontosabb, viszont sok esetben lassabb. Bizonyos X grafikus környezetek "
-"esetében gyorsabb működést eredményez a bekapcsolása."
+"Ha be van kapcsolva, akkor minden elmozdulás alkalmával le lesz kérdezve az "
+"X grafikus környezettől az aktuális egérpozíció; ellenkező esetben egy "
+"kevésbé pontos módszerrel lesz meghatározva a pozíció. Bekapcsolt állapot "
+"esetén a nagy ecsetekkel való rajzolás általában pontosabb, viszont sok "
+"esetben lassabb. Bizonyos X grafikus környezetek esetében gyorsabb működést "
+"eredményez a bekapcsolása."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
@@ -628,11 +651,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr "A legutóbbi mentett munkafolyamat visszaállítása a program minden indításakor."
+msgstr ""
+"A legutóbbi mentett munkafolyamat visszaállítása a program minden "
+"indításakor."
 
 #: app/config/gimprc-blurbs.h:253
 msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Az aktuális eszköz, minta, szín és ecset megőrzése a programból való kilépéskor."
+msgstr ""
+"Az aktuális eszköz, minta, szín és ecset megőrzése a programból való "
+"kilépéskor."
 
 #: app/config/gimprc-blurbs.h:257
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -645,8 +672,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Ha be van kapcsolva, akkor az összes festőeszköz megjelenít egy "
-"előnézetet az aktuális ecset körvonaláról."
+"Ha be van kapcsolva, akkor az összes festőeszköz megjelenít egy előnézetet "
+"az aktuális ecset körvonaláról."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
@@ -709,8 +736,8 @@ msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Ha be van kapcsolva, akkor alapértelmezésben megjelenik a rács. "
-"Átállítható a \"Nézet->Rács megjelenítése\" funkcióval is."
+"Ha be van kapcsolva, akkor alapértelmezésben megjelenik a rács. Átállítható "
+"a \"Nézet->Rács megjelenítése\" funkcióval is."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
@@ -726,9 +753,9 @@ msgid ""
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
 "to enable this setting."
 msgstr ""
-"A nagyobb sebesség általában nagyobb memóriahasználatot jelent. "
-"A legtöbb esetben a GIMP a nagyobb sebességű módszereket használja. "
-"A memóriahasználat csökkenthető ezzel a beállítással."
+"A nagyobb sebesség általában nagyobb memóriahasználatot jelent. A legtöbb "
+"esetben a GIMP a nagyobb sebességű módszereket használja. A memóriahasználat "
+"csökkenthető ezzel a beállítással."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
@@ -740,11 +767,11 @@ msgid ""
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "Megadja a cserefájl helyét. A program egy képrészletekre épülő "
-"memóriafoglalási módszert használ, a képrészleteket szükség esetén "
-"kiírja a cserefájlba illetve visszaolvassa onnan. Nagy képek feldolgozása "
-"esetén a cserefájl mérete erősen megnőhet. Ha a cserefájl elérése NFS-en "
-"keresztül történik, akkor lassúvá válhat a program működése. Érdemes tehát "
-"a cserefájlt a \"/tmp\" helyre tenni."
+"memóriafoglalási módszert használ, a képrészleteket szükség esetén kiírja a "
+"cserefájlba illetve visszaolvassa onnan. Nagy képek feldolgozása esetén a "
+"cserefájl mérete erősen megnőhet. Ha a cserefájl elérése NFS-en keresztül "
+"történik, akkor lassúvá válhat a program működése. Érdemes tehát a "
+"cserefájlt a \"/tmp\" helyre tenni."
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
@@ -774,19 +801,18 @@ msgid ""
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
 msgstr ""
-"Megadja az átmeneti adatok könyvtárát. A GIMP működése közben "
-"fájlok fognak megjelenni ezen a helyen. A legtöbb fájl törlésre kerül a "
-"programból való kilépéskor, de valószínű, hogy bizonyos fájlok megmaradnak. "
-"Nem érdemes tehát olyan könyvtárt választani, amelyet több felhasználó is "
-"használhat."
+"Megadja az átmeneti adatok könyvtárát. A GIMP működése közben fájlok fognak "
+"megjelenni ezen a helyen. A legtöbb fájl törlésre kerül a programból való "
+"kilépéskor, de valószínű, hogy bizonyos fájlok megmaradnak. Nem érdemes "
+"tehát olyan könyvtárt választani, amelyet több felhasználó is használhat."
 
 #: app/config/gimprc-blurbs.h:344
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
-"A képekkel együtt elmentett bélyegképek méretének beállítása. Megjegyzés: "
-"a GIMP nem képes bélyegképet menteni, ha a réteg-előnézetek ki vannak "
+"A képekkel együtt elmentett bélyegképek méretének beállítása. Megjegyzés: a "
+"GIMP nem képes bélyegképet menteni, ha a réteg-előnézetek ki vannak "
 "kapcsolva."
 
 #: app/config/gimprc-blurbs.h:348
@@ -797,9 +823,9 @@ msgid ""
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
 "A képgyorstár a lemezműveletek számának csökkentésére szolgál. Az értéket "
-"nagyobbra állítva a program kevesebb lemezhelyet fog használni, de több memóriát. "
-"Kisebb képgyorstár esetén a felhasznált lemezhely lesz nagyobb, és a "
-"memóriahasználat kisebb."
+"nagyobbra állítva a program kevesebb lemezhelyet fog használni, de több "
+"memóriát. Kisebb képgyorstár esetén a felhasznált lemezhely lesz nagyobb, és "
+"a memóriahasználat kisebb."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
@@ -832,7 +858,8 @@ msgid ""
 "are kept available until the undo-size limit is reached."
 msgstr ""
 "Beállítja, hogy minimálisan mennyi művelet legyen visszavonható. Annyi "
-"visszavonható művelet tárolódik el, amennyi belefér a visszavonási méretkorlátba."
+"visszavonható művelet tárolódik el, amennyi belefér a visszavonási "
+"méretkorlátba."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
@@ -840,9 +867,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Felső korlátot szab a képenkénti visszavonási memória méretének. "
-"Ezen beállítástól függetlenül mindig visszavonható minimum annyi művelet, "
-"amennyi a megfelelő beállításban szerepel."
+"Felső korlátot szab a képenkénti visszavonási memória méretének. Ezen "
+"beállítástól függetlenül mindig visszavonható minimum annyi művelet, amennyi "
+"a megfelelő beállításban szerepel."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -850,7 +877,9 @@ msgstr "A visszavonási előzményeknél megjelenő előnézetek méretét adja 
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr "Ha be van kapcsolva, akkor az F1 billentyű lenyomására elindul a súgóböngésző."
+msgstr ""
+"Ha be van kapcsolva, akkor az F1 billentyű lenyomására elindul a "
+"súgóböngésző."
 
 #: app/config/gimprc-blurbs.h:384
 #, c-format
@@ -862,9 +891,9 @@ msgid ""
 msgstr ""
 "A felhasználandó külső webböngészőt adja meg. Megadható abszolút útvonallal "
 "vagy egy olyan program nevével, amely szerepel a felhasználó keresési "
-"útvonalában. Ha a parancs tartalmazza a '%s' szöveget, akkor az helyettesítve "
-"lesz az URL-lel, ellenkező esetben pedig hozzá lesz fűzve az URL a parancshoz "
-"(a kettő között szóközzel)."
+"útvonalában. Ha a parancs tartalmazza a '%s' szöveget, akkor az "
+"helyettesítve lesz az URL-lel, ellenkező esetben pedig hozzá lesz fűzve az "
+"URL a parancshoz (a kettő között szóközzel)."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -1204,13 +1233,13 @@ msgstr "Vissza (korrektív)"
 msgid "<<invalid>>"
 msgstr "<<érvénytelen>>"
 
-#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:75
+#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:70
 #: app/gui/image-commands.c:617 app/gui/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Kép átméretezése"
 
-#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:144
-#: app/core/gimpimage-resize.c:66
+#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:125
+#: app/core/gimpimage-resize.c:61
 msgid "Resize Image"
 msgstr "Képméret módosítása"
 
@@ -1226,7 +1255,7 @@ msgstr "Kép forgatása"
 msgid "Convert Image"
 msgstr "Kép konvertálása"
 
-#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:141
+#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:122
 msgid "Crop Image"
 msgstr "Kép kivágása"
 
@@ -1260,45 +1289,41 @@ msgid "Drawable Mod"
 msgstr "Rajzfelület-módosítás"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
-#: app/core/gimpchannel.c:1636 app/core/gimpselection.c:570
+#: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
 msgid "Selection Mask"
 msgstr "Kijelölési maszk"
 
-#: app/core/core-enums.c:597
-msgid "Item Properties"
-msgstr "Elem tulajdonságai"
-
-#: app/core/core-enums.c:598 app/core/core-enums.c:628
-msgid "Move Item"
-msgstr "Elem áthelyezése"
-
-#: app/core/core-enums.c:599 app/core/core-enums.c:629
+#: app/core/core-enums.c:597 app/core/core-enums.c:629
 msgid "Item Visibility"
 msgstr "Elem láthatósága"
 
-#: app/core/core-enums.c:600
+#: app/core/core-enums.c:598
 msgid "Linked Item"
 msgstr "Láncolt elem"
 
-#: app/core/core-enums.c:601 app/core/gimplayer.c:253 app/core/gimplayer.c:646
-#: app/gui/layers-commands.c:1187 app/gui/resize-dialog.c:204
-#: app/pdb/layer_cmds.c:453
-msgid "Scale Layer"
-msgstr "Réteg átméretezése"
+#: app/core/core-enums.c:599
+msgid "Item Properties"
+msgstr "Elem tulajdonságai"
 
-#: app/core/core-enums.c:602 app/core/gimpimage-crop.c:117
-#: app/core/gimplayer.c:254 app/core/gimplayer.c:676
-#: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
-msgid "Resize Layer"
-msgstr "Réteg méretének módosítása"
+#: app/core/core-enums.c:600 app/core/core-enums.c:628
+msgid "Move Item"
+msgstr "Elem áthelyezése"
+
+#: app/core/core-enums.c:601
+msgid "Scale Item"
+msgstr "Elem átméretezése"
+
+#: app/core/core-enums.c:602
+msgid "Resize Item"
+msgstr "Elem méretének módosítása"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
-#: app/gui/layers-commands.c:1094
+#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Rétegmaszk hozzáadása"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1264
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
 msgid "Apply Layer Mask"
 msgstr "Rétegmaszk alkalmazása"
 
@@ -1342,7 +1367,7 @@ msgstr "Átalakítás"
 msgid "Paint"
 msgstr "Festés"
 
-#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:934
+#: app/core/core-enums.c:614 app/core/core-enums.c:654 app/core/gimpitem.c:987
 msgid "Attach Parasite"
 msgstr "Élősködő hozzáadása"
 
@@ -1383,8 +1408,8 @@ msgstr "Elem átnevezése"
 msgid "Set Item Linked"
 msgstr "Elem láncolttá tétele"
 
-#: app/core/core-enums.c:631 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
+#: app/core/core-enums.c:631 app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:739 app/gui/layers-commands.c:773
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Új réteg"
@@ -1393,7 +1418,7 @@ msgstr "Új réteg"
 msgid "Delete Layer"
 msgstr "Réteg törlése"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1265
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
 msgid "Delete Layer Mask"
 msgstr "Rétegmaszk törlése"
 
@@ -1603,7 +1628,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Érvénytelen UTF-8 karakterlánc a(z) '%s' ecsetfájlban."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
-#: app/core/gimpitem.c:457 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
 msgstr "Névtelen"
@@ -1644,72 +1669,72 @@ msgstr "Csatorna"
 msgid "Rename Channel"
 msgstr "Csatorna átnevezése"
 
-#: app/core/gimpchannel.c:261
-msgid "Scale Channel"
-msgstr "Csatorna átméretezése"
-
-#: app/core/gimpchannel.c:262
-msgid "Resize Channel"
-msgstr "Csatorna méretének módosítása"
-
-#: app/core/gimpchannel.c:277 app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1218
+#: app/core/gimpchannel.c:254 app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1204
 msgid "Move Channel"
 msgstr "Csatorna áthelyezése"
 
-#: app/core/gimpchannel.c:278
-msgid "Feather Channel"
-msgstr "Csatorna lágy szélűvé tétele"
+#: app/core/gimpchannel.c:255
+msgid "Scale Channel"
+msgstr "Csatorna átméretezése"
 
-#: app/core/gimpchannel.c:279
-msgid "Sharpen Channel"
-msgstr "Csatorna élesítése"
+#: app/core/gimpchannel.c:256
+msgid "Resize Channel"
+msgstr "Csatorna méretének módosítása"
 
-#: app/core/gimpchannel.c:280
-msgid "Clear Channel"
-msgstr "Csatorna ürítése"
-
-#: app/core/gimpchannel.c:281
-msgid "Fill Channel"
-msgstr "Csatorna kitöltése"
-
-#: app/core/gimpchannel.c:282
-msgid "Invert Channel"
-msgstr "Csatorna megfordítása"
-
-#: app/core/gimpchannel.c:283
-msgid "Border Channel"
-msgstr "Csatorna keretezése"
-
-#: app/core/gimpchannel.c:284
-msgid "Grow Channel"
-msgstr "Csatorna növelése"
-
-#: app/core/gimpchannel.c:285
-msgid "Shrink Channel"
-msgstr "Csatorna szűkítése"
-
-#: app/core/gimpchannel.c:525
+#: app/core/gimpchannel.c:257
 msgid "Flip Channel"
 msgstr "Csatorna tükrözése"
 
-#: app/core/gimpchannel.c:545
+#: app/core/gimpchannel.c:258
 msgid "Rotate Channel"
 msgstr "Csatorna forgatása"
 
-#: app/core/gimpchannel.c:570 app/core/gimpdrawable-transform.c:1080
+#: app/core/gimpchannel.c:259 app/core/gimpdrawable-transform.c:1080
 msgid "Transform Channel"
 msgstr "Csatorna átalakítása"
 
-#: app/core/gimpchannel.c:603
+#: app/core/gimpchannel.c:281
+msgid "Feather Channel"
+msgstr "Csatorna lágy szélűvé tétele"
+
+#: app/core/gimpchannel.c:282
+msgid "Sharpen Channel"
+msgstr "Csatorna élesítése"
+
+#: app/core/gimpchannel.c:283
+msgid "Clear Channel"
+msgstr "Csatorna ürítése"
+
+#: app/core/gimpchannel.c:284
+msgid "Fill Channel"
+msgstr "Csatorna kitöltése"
+
+#: app/core/gimpchannel.c:285
+msgid "Invert Channel"
+msgstr "Csatorna megfordítása"
+
+#: app/core/gimpchannel.c:286
+msgid "Border Channel"
+msgstr "Csatorna keretezése"
+
+#: app/core/gimpchannel.c:287
+msgid "Grow Channel"
+msgstr "Csatorna növelése"
+
+#: app/core/gimpchannel.c:288
+msgid "Shrink Channel"
+msgstr "Csatorna szűkítése"
+
+#: app/core/gimpchannel.c:584
 msgid "Cannot stroke empty channel."
 msgstr "Üres csatorna körvonala nem rajzolható meg."
 
-#: app/core/gimpchannel.c:1518
+#: app/core/gimpchannel.c:1499
 msgid "Set Channel Color"
 msgstr "Csatornaszín beállítása"
 
-#: app/core/gimpchannel.c:1565
+#: app/core/gimpchannel.c:1546
 msgid "Set Channel Opacity"
 msgstr "Csatorna átlátszatlanság beállítása"
 
@@ -1753,11 +1778,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
-#: app/core/gimpitem.c:295 app/core/gimpitem.c:298
+#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
 msgid "copy"
 msgstr "másolás"
 
-#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:307
+#: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
 #, c-format
 msgid "%s copy"
 msgstr "%s másolata"
@@ -1818,7 +1843,7 @@ msgstr "Tükrözés"
 msgid "Rotate"
 msgstr "Forgatás"
 
-#: app/core/gimpdrawable-transform.c:1078 app/core/gimplayer.c:750
+#: app/core/gimpdrawable-transform.c:1078 app/core/gimplayer.c:254
 #: app/tools/tools-enums.c:73
 msgid "Transform Layer"
 msgstr "Réteg átalakítása"
@@ -1841,8 +1866,8 @@ msgstr "Érvénytelen változónév a(z) \"%s\" környezeti fájlban: %s"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Végzetes feldolgozási hiba a(z) \"%s\" színátmenet-fájlban: nem GIMP-formátumú "
-"színátmenet-fájl."
+"Végzetes feldolgozási hiba a(z) \"%s\" színátmenet-fájlban: nem GIMP-"
+"formátumú színátmenet-fájl."
 
 #: app/core/gimpgradient.c:376
 #, c-format
@@ -1901,15 +1926,15 @@ msgstr "Indexelt palettabejegyzés megváltoztatása"
 msgid "Add Color to Indexed Palette"
 msgstr "Szín hozzáadása indexelt palettához"
 
-#: app/core/gimpimage-convert.c:773
+#: app/core/gimpimage-convert.c:768
 msgid "Convert Image to RGB"
 msgstr "Kép konvertálása RGB módba"
 
-#: app/core/gimpimage-convert.c:777
+#: app/core/gimpimage-convert.c:772
 msgid "Convert Image to Grayscale"
 msgstr "Kép konvertálása szürkeárnyalatos módba"
 
-#: app/core/gimpimage-convert.c:781
+#: app/core/gimpimage-convert.c:776
 msgid "Convert Image to Indexed"
 msgstr "Kép konvertálása indexelt módba"
 
@@ -2140,11 +2165,11 @@ msgstr "%d réteg"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nem lehet megnyitni a(z) '%s' bélyegképet: %s"
 
-#: app/core/gimpitem.c:944
+#: app/core/gimpitem.c:997
 msgid "Attach Parasite to Item"
 msgstr "Élősködő hozzáadása az elemhez"
 
-#: app/core/gimpitem.c:983 app/core/gimpitem.c:990
+#: app/core/gimpitem.c:1036 app/core/gimpitem.c:1043
 msgid "Remove Parasite from Item"
 msgstr "Élősködő eltávolítása az elemből"
 
@@ -2168,53 +2193,61 @@ msgstr "Réteg"
 msgid "Rename Layer"
 msgstr "Réteg átnevezése"
 
-#: app/core/gimplayer.c:331 app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:249 app/pdb/layer_cmds.c:636 app/pdb/layer_cmds.c:712
+#: app/tools/gimpeditselectiontool.c:263
+#: app/tools/gimpeditselectiontool.c:1214
+msgid "Move Layer"
+msgstr "Réteg áthelyezése"
+
+#: app/core/gimplayer.c:250 app/gui/resize-dialog.c:204
+msgid "Scale Layer"
+msgstr "Réteg átméretezése"
+
+#: app/core/gimplayer.c:251
+msgid "Resize Layer"
+msgstr "Réteg méretének módosítása"
+
+#: app/core/gimplayer.c:252 app/gui/drawable-commands.c:160
+msgid "Flip Layer"
+msgstr "Réteg tükrözése"
+
+#: app/core/gimplayer.c:253 app/gui/drawable-commands.c:194
+msgid "Rotate Layer"
+msgstr "Réteg forgatása"
+
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s maszk"
 
-#: app/core/gimplayer.c:607 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
-#: app/tools/gimpeditselectiontool.c:263
-#: app/tools/gimpeditselectiontool.c:1228
-msgid "Move Layer"
-msgstr "Réteg áthelyezése"
-
-#: app/core/gimplayer.c:700 app/gui/drawable-commands.c:160
-msgid "Flip Layer"
-msgstr "Réteg tükrözése"
-
-#: app/core/gimplayer.c:722 app/gui/drawable-commands.c:194
-msgid "Rotate Layer"
-msgstr "Réteg forgatása"
-
-#: app/core/gimplayer.c:976
+#: app/core/gimplayer.c:954
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Nem lehet rétegmaszkot hozzáadni olyan réteghez, amely nem része egy képnek."
 
-#: app/core/gimplayer.c:983
+#: app/core/gimplayer.c:961
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 
-#: app/core/gimplayer.c:990
+#: app/core/gimplayer.c:968
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Nem lehet rétegmaszkot hozzáadni olyan réteghez, amelynek nincs alfa "
 "csatornája."
 
-#: app/core/gimplayer.c:1000
+#: app/core/gimplayer.c:978
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
 
-#: app/core/gimplayer.c:1104
+#: app/core/gimplayer.c:1082
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa átvitele a maszkra"
 
-#: app/core/gimplayer.c:1370
+#: app/core/gimplayer.c:1348
 msgid "Add Alpha Channel"
 msgstr "Alfa csatorna hozzáadása"
 
-#: app/core/gimplayer.c:1390
+#: app/core/gimplayer.c:1368
 msgid "Layer to Image Size"
 msgstr "Réteg kép-méretűvé alakítása"
 
@@ -2237,8 +2270,8 @@ msgstr "Végzetes feldolgozási hiba a(z) \"%s\" palettafájlban: hiányzó var�
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
-"Végzetes feldolgozási hiba a(z) \"%s\" palettafájlban: olvasási hiba a(z) %d. "
-"sorban."
+"Végzetes feldolgozási hiba a(z) \"%s\" palettafájlban: olvasási hiba a(z) %"
+"d. sorban."
 
 #: app/core/gimppalette.c:419
 #, c-format
@@ -2251,8 +2284,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Hiba a(z) \"%s\" palettafájlban: érvénytelen oszlopszám a(z) %d. sorban. "
-"Az alapértelmezés szerinti érték lesz használva."
+"Hiba a(z) \"%s\" palettafájlban: érvénytelen oszlopszám a(z) %d. sorban. Az "
+"alapértelmezés szerinti érték lesz használva."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:493
@@ -2310,8 +2343,8 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Érvénytelen UTF-8 karakterlánc a(z) '%s' palettafájlban."
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
-#: app/tools/gimpeditselectiontool.c:1130 app/tools/gimpmoveoptions.c:184
+#: app/core/gimpselection.c:180 app/tools/gimpeditselectiontool.c:259
+#: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Kijelölés áthelyezése"
@@ -2370,15 +2403,15 @@ msgstr "Nem lehet kivágni vagy másolni, mert a kijelölt terület üres."
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nem lehet lebegő kijelölést alkalmazni, mert a kijelölt terület üres."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:995
+#: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
 msgid "Floating Selection"
 msgstr "Lebegő kijelölés"
 
 #: app/core/gimptemplate.c:143
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
-"A nem \"pontról pontra\" üzemmódokban a koordináták megjelenítéséhez használt "
-"mértékegység."
+"A nem \"pontról pontra\" üzemmódokban a koordináták megjelenítéséhez "
+"használt mértékegység."
 
 #: app/core/gimptemplate.c:150
 msgid "The horizonal image resolution."
@@ -2393,7 +2426,7 @@ msgstr "A függőleges képfelbontás."
 msgid "pixel"
 msgstr "képpont"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "képpont"
@@ -2509,7 +2542,7 @@ msgstr "Változások _eldobása"
 #: app/display/gimpdisplayshell.c:1455
 #, c-format
 msgid "Changes were made to '%s'."
-msgstr "Változások történtek ezen: '%s'."
+msgstr "\"%s\" módosult."
 
 #: app/display/gimpdisplayshell.c:1469
 msgid "Unsaved changes will be lost."
@@ -3813,7 +3846,7 @@ msgstr ""
 msgid "Layer Too Small"
 msgstr "A réteg túl kicsi"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1181
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1170
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Átméretezés..."
@@ -4620,7 +4653,7 @@ msgstr "/Szűrők/_Színek"
 
 #: app/gui/image-menu.c:1105
 msgid "/Filters/Colors/Ma_p"
-msgstr "/Szűrők/Színek/_Térkép"
+msgstr "/Szűrők/Színek/_Leképezés"
 
 #: app/gui/image-menu.c:1106
 msgid "/Filters/_Noise"
@@ -4628,19 +4661,19 @@ msgstr "/Szűrők/_Zaj"
 
 #: app/gui/image-menu.c:1107
 msgid "/Filters/Edge-De_tect"
-msgstr "/Szűrők/_Élkeresés"
+msgstr "/Szűrők/É_lkeresés"
 
 #: app/gui/image-menu.c:1108
 msgid "/Filters/En_hance"
-msgstr "/Szűrők/_Kiemelés"
+msgstr "/Szűrők/K_iemelés"
 
 #: app/gui/image-menu.c:1109
 msgid "/Filters/_Generic"
-msgstr "/Szűrők/_Általános"
+msgstr "/Szűrők/Ált_alános"
 
 #: app/gui/image-menu.c:1113
 msgid "/Filters/Gla_ss Effects"
-msgstr "/Szűrők/_Üveges effektusok"
+msgstr "/Szűrők/Üve_g-effektusok"
 
 #: app/gui/image-menu.c:1114
 msgid "/Filters/_Light Effects"
@@ -4648,19 +4681,19 @@ msgstr "/Szűrők/_Fényeffektusok"
 
 #: app/gui/image-menu.c:1115
 msgid "/Filters/_Distorts"
-msgstr "/Szűrők/_Torzítások"
+msgstr "/Szűrők/T_orzítások"
 
 #: app/gui/image-menu.c:1116
 msgid "/Filters/_Artistic"
-msgstr "/Szűrők/_Művészi"
+msgstr "/Szűrők/Mű_vészi"
 
 #: app/gui/image-menu.c:1117
 msgid "/Filters/_Map"
-msgstr "/Szűrők/_Leképezés"
+msgstr "/Szűrők/Leké_pezés"
 
 #: app/gui/image-menu.c:1118
 msgid "/Filters/_Render"
-msgstr "/Szűrők/_Megjelenítés"
+msgstr "/Szűrők/Megjele_nítés"
 
 #: app/gui/image-menu.c:1119
 msgid "/Filters/Render/_Clouds"
@@ -4680,15 +4713,15 @@ msgstr "/Szűrők/_Web"
 
 #: app/gui/image-menu.c:1126
 msgid "/Filters/An_imation"
-msgstr "/Szűrők/An_imáció"
+msgstr "/Szűrők/Animá_ció"
 
 #: app/gui/image-menu.c:1127
 msgid "/Filters/C_ombine"
-msgstr "/Szűrők/_Egyesítés"
+msgstr "/Szűrők/Eg_yesítés"
 
 #: app/gui/image-menu.c:1131
 msgid "/Filters/To_ys"
-msgstr "/Szűrők/_Játékok"
+msgstr "/Szűrők/Játé_kok"
 
 #: app/gui/image-menu.c:1471
 #, c-format
@@ -4866,28 +4899,28 @@ msgstr "színek"
 msgid "Crop Layer"
 msgstr "Réteg kivágása"
 
-#: app/gui/layers-commands.c:461
+#: app/gui/layers-commands.c:455
 msgid "Layer Mask to Selection"
 msgstr "Rétegmaszk kijelöléssé alakítása"
 
-#: app/gui/layers-commands.c:723
+#: app/gui/layers-commands.c:717
 msgid "Empty Layer"
 msgstr "Üres réteg"
 
-#: app/gui/layers-commands.c:747
+#: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
 msgstr "Új réteg létrehozása"
 
-#: app/gui/layers-commands.c:781
+#: app/gui/layers-commands.c:775
 msgid "Layer _Name:"
 msgstr "Réteg _neve:"
 
 #. The size labels
-#: app/gui/layers-commands.c:785
+#: app/gui/layers-commands.c:779
 msgid "Layer Width:"
 msgstr "Réteg szélessége:"
 
-#: app/gui/layers-commands.c:791 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:785 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4895,39 +4928,39 @@ msgstr "Réteg szélessége:"
 msgid "Height:"
 msgstr "Magasság:"
 
-#: app/gui/layers-commands.c:850
+#: app/gui/layers-commands.c:844
 msgid "Layer Fill Type"
 msgstr "Kitöltés típusa"
 
-#: app/gui/layers-commands.c:959
+#: app/gui/layers-commands.c:953
 msgid "Layer Attributes"
 msgstr "Réteg tulajdonságai"
 
-#: app/gui/layers-commands.c:961 app/widgets/gimplayertreeview.c:205
+#: app/gui/layers-commands.c:955 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: app/gui/layers-commands.c:998
+#: app/gui/layers-commands.c:992
 msgid "Layer _Name"
 msgstr "Réteg _neve"
 
-#: app/gui/layers-commands.c:1009
+#: app/gui/layers-commands.c:1003
 msgid "Set Name from _Text"
 msgstr "Név beállítása a _szövegből"
 
-#: app/gui/layers-commands.c:1096
+#: app/gui/layers-commands.c:1090
 msgid "Add a Mask to the Layer"
 msgstr "Maszk hozzáadása a réteghez"
 
-#: app/gui/layers-commands.c:1115
+#: app/gui/layers-commands.c:1109
 msgid "Initialize Layer Mask to:"
 msgstr "Rétegmaszk-beállítások:"
 
-#: app/gui/layers-commands.c:1132
+#: app/gui/layers-commands.c:1126
 msgid "In_vert Mask"
 msgstr "Maszk in_vertálása"
 
-#: app/gui/layers-commands.c:1215 app/gui/layers-commands.c:1311
+#: app/gui/layers-commands.c:1188 app/gui/layers-commands.c:1264
 msgid "Invalid width or height. Both must be positive."
 msgstr "Érvénytelen szélesség vagy magasság. Mindkettőnek pozitívnak kell lennie."
 
@@ -5366,8 +5399,8 @@ msgstr "/Paletták _frissítése"
 #: app/gui/pattern-select.c:252
 msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
-"A minta-eljárás nem indítható. Lehetséges, hogy a megfelelő bővítmény "
-"hibába ütközött."
+"A minta-eljárás nem indítható. Lehetséges, hogy a megfelelő bővítmény hibába "
+"ütközött."
 
 #. disabled because they are useless now
 #: app/gui/patterns-menu.c:47
@@ -6167,9 +6200,9 @@ msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
-"Az indexelt színű rétegek mindig interpoláció nélkül kerülnek "
-"átméretezésre. A kiválasztott interpoláció-típus csak a csatornák és "
-"a maszkok átméretezésére fog vonatkozni."
+"Az indexelt színű rétegek mindig interpoláció nélkül kerülnek átméretezésre. "
+"A kiválasztott interpoláció-típus csak a csatornák és a maszkok "
+"átméretezésére fog vonatkozni."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6269,7 +6302,7 @@ msgstr "/Sablon s_zerkesztése..."
 msgid "/_Delete Template"
 msgstr "/Sablon _törlése"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "'%s' írása\n"
@@ -6538,16 +6571,15 @@ msgid ""
 msgstr ""
 "A gimprc fájlban tárolódnak a személyes beállítások, amelyek a GIMP "
 "alapértelmezett viselkedését megváltoztatják. Az ecsetek, paletták, "
-"színátmenetek, minták, bővítmények és modulok útvonalai is beállíthatóak "
-"itt."
+"színátmenetek, minták, bővítmények és modulok útvonalai is beállíthatóak itt."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 msgstr ""
-"A GIMP egy másik gtkrc fájlt használ, tehát beállíthatja, hogy másképp nézzen "
-"ki, mint a többi GTK alkalmazás."
+"A GIMP egy másik gtkrc fájlt használ, tehát beállíthatja, hogy másképp "
+"nézzen ki, mint a többi GTK alkalmazás."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
@@ -6569,11 +6601,11 @@ msgid ""
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"A GIMP gyorsbillentyűi dinamikusan módosíthatók. A program ezeket "
-"a beállításokat eltárolja a menurc fájlban, így a következő futtatáskor "
-"is érvényben maradnak. A fájlt át lehet szerkeszteni, de egyszerűbb a "
-"GIMP felületéről átállítani a billentyűket. Az említett fájl törlése "
-"esetén az eredeti gyorsbillentyűk lépnek érvénybe."
+"A GIMP gyorsbillentyűi dinamikusan módosíthatók. A program ezeket a "
+"beállításokat eltárolja a menurc fájlban, így a következő futtatáskor is "
+"érvényben maradnak. A fájlt át lehet szerkeszteni, de egyszerűbb a GIMP "
+"felületéről átállítani a billentyűket. Az említett fájl törlése esetén az "
+"eredeti gyorsbillentyűk lépnek érvénybe."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
@@ -6581,9 +6613,9 @@ msgid ""
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
-"A program a sessionrc fájlban tárolja el, hogy kilépéskor mely "
-"ablakok voltak nyitva. Beállítható, hogy a program minden indításkor "
-"állítsa vissza a legutóbb elmenett állapotot."
+"A program a sessionrc fájlban tárolja el, hogy kilépéskor mely ablakok "
+"voltak nyitva. Beállítható, hogy a program minden indításkor állítsa vissza "
+"a legutóbb elmenett állapotot."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
@@ -6602,9 +6634,8 @@ msgid ""
 msgstr ""
 "A program a unitrc fájlban tárolja a felhasználó által definiált "
 "mértékegységeket. A felhasználó létrehozhat saját mértékegységeket, "
-"amelyeket a beépítettekkel (milliméter, hüvelyk, pont, pica) "
-"megegyező módon lehet használni. Ez a fájl a programból való minden "
-"kilépéskor felülíródik."
+"amelyeket a beépítettekkel (milliméter, hüvelyk, pont, pica) megegyező módon "
+"lehet használni. Ez a fájl a programból való minden kilépéskor felülíródik."
 
 #: app/gui/user-install-dialog.c:189
 msgid ""
@@ -6612,9 +6643,9 @@ msgid ""
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
-"Ebben a könyvtárban a felhasználó saját ecsetei tárolódnak. "
-"Az ecsetek keresésekor a program a rendszerszintű GIMP-ecseteken "
-"kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó saját ecsetei tárolódnak. Az ecsetek "
+"keresésekor a program a rendszerszintű GIMP-ecseteken kívül ellenőrzi ezt a "
+"könyvtárt is."
 
 #: app/gui/user-install-dialog.c:197
 msgid ""
@@ -6624,11 +6655,11 @@ msgid ""
 "have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
 "Ebbe a könyvtárba a csak a GIMP számára elérhetővé tenni kívánt "
-"betűkészleteket lehet tenni. A betűkészletek keresésekor a program "
-"a rendszerszintű GIMP-betűkészleteken kívül ellenőrzi ezt a "
-"könyvtárt is. Csak akkor használja ezt a lehetőséget, ha valóban "
-"szeretne csak GIMP által elérhető betűkészleteket; egyéb esetben "
-"a globális betűkészlet-könyvtárba tegye azokat."
+"betűkészleteket lehet tenni. A betűkészletek keresésekor a program a "
+"rendszerszintű GIMP-betűkészleteken kívül ellenőrzi ezt a könyvtárt is. Csak "
+"akkor használja ezt a lehetőséget, ha valóban szeretne csak GIMP által "
+"elérhető betűkészleteket; egyéb esetben a globális betűkészlet-könyvtárba "
+"tegye azokat."
 
 #: app/gui/user-install-dialog.c:207
 msgid ""
@@ -6636,9 +6667,9 @@ msgid ""
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
 msgstr ""
-"Ebben a könyvtárban a felhasználó saját színátmenetei tárolódnak. "
-"A színátmenetek keresésekor a program a rendszerszintű "
-"GIMP-színátmeneteken kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó saját színátmenetei tárolódnak. A "
+"színátmenetek keresésekor a program a rendszerszintű GIMP-színátmeneteken "
+"kívül ellenőrzi ezt a könyvtárt is."
 
 #: app/gui/user-install-dialog.c:214
 msgid ""
@@ -6646,9 +6677,9 @@ msgid ""
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
 msgstr ""
-"Ebben a könyvtárban a felhasználó saját palettái tárolódnak. "
-"A paletták keresésekor a program a rendszerszintű "
-"GIMP-palettákon kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó saját palettái tárolódnak. A paletták "
+"keresésekor a program a rendszerszintű GIMP-palettákon kívül ellenőrzi ezt a "
+"könyvtárt is."
 
 #: app/gui/user-install-dialog.c:221
 msgid ""
@@ -6656,9 +6687,9 @@ msgid ""
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
 msgstr ""
-"Ebben a könyvtárban a felhasználó saját mintái tárolódnak. "
-"A minták keresésekor a program a rendszerszintű "
-"GIMP-mintákon kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó saját mintái tárolódnak. A minták "
+"keresésekor a program a rendszerszintű GIMP-mintákon kívül ellenőrzi ezt a "
+"könyvtárt is."
 
 #: app/gui/user-install-dialog.c:228
 msgid ""
@@ -6666,10 +6697,10 @@ msgid ""
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti "
-"és az egyéb nem rendszerszintű bővítmények tárolódnak. "
-"A bővítmények keresésekor a program a rendszerszintű "
-"GIMP-bővítményeken kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti és az egyéb "
+"nem rendszerszintű bővítmények tárolódnak. A bővítmények keresésekor a "
+"program a rendszerszintű GIMP-bővítményeken kívül ellenőrzi ezt a könyvtárt "
+"is."
 
 #: app/gui/user-install-dialog.c:236
 msgid ""
@@ -6678,10 +6709,9 @@ msgid ""
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
 msgstr ""
-"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti "
-"és az egyéb nem rendszerszintű DLL-modulok tárolódnak. "
-"A betöltendő modulok keresésekor a program a rendszerszintű "
-"GIMP-modulokon kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti és az egyéb "
+"nem rendszerszintű DLL-modulok tárolódnak. A betöltendő modulok keresésekor "
+"a program a rendszerszintű GIMP-modulokon kívül ellenőrzi ezt a könyvtárt is."
 
 #: app/gui/user-install-dialog.c:245
 msgid ""
@@ -6690,10 +6720,10 @@ msgid ""
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
 msgstr ""
-"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti "
-"és az egyéb nem rendszerszintű bővítmény-komponensek tárolódnak. "
-"A bővítmény-komponensek keresésekor a program a rendszerszintű "
-"GIMP-környezeten kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban a felhasználó által létrehozott, az átmeneti és az egyéb "
+"nem rendszerszintű bővítmény-komponensek tárolódnak. A bővítmény-komponensek "
+"keresésekor a program a rendszerszintű GIMP-környezeten kívül ellenőrzi ezt "
+"a könyvtárt is."
 
 #: app/gui/user-install-dialog.c:255
 msgid ""
@@ -6701,9 +6731,9 @@ msgid ""
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 msgstr ""
-"Ebben a könyvtárban tárolhatók a felhasználó által létrehozott "
-"és telepített szkriptek. A szkriptek keresésekor a program a rendszerszintű "
-"GIMP-szkripteken kívül ellenőrzi ezt a könyvtárt is."
+"Ebben a könyvtárban tárolhatók a felhasználó által létrehozott és telepített "
+"szkriptek. A szkriptek keresésekor a program a rendszerszintű GIMP-"
+"szkripteken kívül ellenőrzi ezt a könyvtárt is."
 
 #: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
@@ -6720,12 +6750,11 @@ msgid ""
 "<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
 msgstr ""
-"Ebben a könyvtárban a program a visszavonáshoz szükséges "
-"adatokat tárolja (a memóriaigény csökkentése érdekében). "
-"Ha a GIMP működése nem szabályos módon fejeződik be, akkor "
-"gimp<#>.<#> nevű fájlok maradhatnak ebben a könyvtárban. "
-"Ezeket a fájlokat a GIMP leállása után már nem lehet "
-"felhasználni, tehát nyugodtan törölhetőek."
+"Ebben a könyvtárban a program a visszavonáshoz szükséges adatokat tárolja (a "
+"memóriaigény csökkentése érdekében). Ha a GIMP működése nem szabályos módon "
+"fejeződik be, akkor gimp<#>.<#> nevű fájlok maradhatnak ebben a könyvtárban. "
+"Ezeket a fájlokat a GIMP leállása után már nem lehet felhasználni, tehát "
+"nyugodtan törölhetőek."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
@@ -7155,8 +7184,8 @@ msgstr "Küszöb"
 #: app/pdb/image_cmds.c:3660
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"A kép felbontása az engedélyezett tartományon kívül esik, "
-"ezért az alapértelmezett felbontás lesz használva."
+"A kép felbontása az engedélyezett tartományon kívül esik, ezért az "
+"alapértelmezett felbontás lesz használva."
 
 #: app/pdb/internal_procs.c:80
 msgid "Internal Procedures"
@@ -7272,7 +7301,7 @@ msgstr "Szövegeljárások"
 msgid "Transform Tool procedures"
 msgstr "Átalakítóeszköz-eljárások"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7281,7 +7310,7 @@ msgstr ""
 "PDB hívási hiba:\n"
 "'%s' eljárás nem található"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7347,12 +7376,12 @@ msgstr "Új bővítmények lekérdezése"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Bővítmény lekérdezése: '%s'\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Bővítmények inicializálása"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Bővítmény inicializálása: '%s'\n"
@@ -7479,7 +7508,8 @@ msgstr "Megadott méretarány"
 msgid "Transform Selection"
 msgstr "Kijelölés átalakítása"
 
-#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:531
+#: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
+#: app/vectors/gimpvectors.c:537
 msgid "Transform Path"
 msgstr "Útvonal átalakítása"
 
@@ -7851,7 +7881,7 @@ msgstr "Kivágási és méretmódosítási információ"
 #. add the information fields
 #: app/tools/gimpcroptool.c:982
 msgid "Origin X:"
-msgstr "Kezdő X: "
+msgstr "Kezdő X:"
 
 #. the pixel size labels
 #. the unit size labels
@@ -7942,21 +7972,22 @@ msgid "Exposure:"
 msgstr "Kitettség:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1170 app/vectors/gimpvectors.c:366
+#: app/tools/gimpeditselectiontool.c:1156 app/vectors/gimpvectors.c:233
+#: app/vectors/gimpvectors.c:372
 msgid "Move Path"
 msgstr "Útvonal áthelyezése"
 
 #: app/tools/gimpeditselectiontool.c:255
-#: app/tools/gimpeditselectiontool.c:1213
+#: app/tools/gimpeditselectiontool.c:1199
 msgid "Move Layer Mask"
 msgstr "Rétegmaszk áthelyezése"
 
 #: app/tools/gimpeditselectiontool.c:267
-#: app/tools/gimpeditselectiontool.c:1223
+#: app/tools/gimpeditselectiontool.c:1209
 msgid "Move Floating Layer"
 msgstr "Lebegő réteg áthelyezése"
 
-#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
+#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:763
 msgid "Move: "
 msgstr "Áthelyezés: "
 
@@ -8038,7 +8069,7 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Az árnyalat-telítettség csak RGB színes rétegeken működik."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+msgid "M_aster"
 msgstr "_Fő"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8094,7 +8125,7 @@ msgstr "Igazítás"
 msgid "Size:"
 msgstr "Méret:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Dőlésszög:"
@@ -8248,11 +8279,11 @@ msgid "Add Guides"
 msgstr "Segédvonalak hozzáadása"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Távolság- és szögmérő"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Távolság:"
 
@@ -8442,7 +8473,7 @@ msgstr "Elforgatási információ"
 
 #: app/tools/gimprotatetool.c:191
 msgid "Center X:"
-msgstr "Középpont X: "
+msgstr "Középpont X:"
 
 #: app/tools/gimpscaletool.c:99
 msgid "Scale"
@@ -8466,7 +8497,7 @@ msgstr "Jelenlegi szélesség:"
 
 #: app/tools/gimpscaletool.c:197
 msgid "Scale Ratio X:"
-msgstr "X átméretezés aránya: "
+msgstr "X átméretezés aránya:"
 
 #: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
@@ -8629,8 +8660,8 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"A kijelölt réteg egy szövegréteg, amely módosítva lett más eszközökkel. "
-"A rétegnek a szövegeszközzel való szerkesztése esetén ezek a módosítások "
+"A kijelölt réteg egy szövegréteg, amely módosítva lett más eszközökkel. A "
+"rétegnek a szövegeszközzel való szerkesztése esetén ezek a módosítások "
 "elvesznek.\n"
 "\n"
 "Szerkesztheti a réteget vagy létrehozhat egy új szövegréteget annak "
@@ -8878,23 +8909,23 @@ msgstr "Útvonal"
 msgid "Rename Path"
 msgstr "Útvonal átnevezése"
 
-#: app/vectors/gimpvectors.c:395
+#: app/vectors/gimpvectors.c:234
 msgid "Scale Path"
 msgstr "Útvonal átméretezése"
 
-#: app/vectors/gimpvectors.c:427
+#: app/vectors/gimpvectors.c:235
 msgid "Resize Path"
 msgstr "Útvonal méretének módosítása"
 
-#: app/vectors/gimpvectors.c:457
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "Útvonal tükrözése"
 
-#: app/vectors/gimpvectors.c:500
+#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:506
 msgid "Rotate Path"
 msgstr "Útvonal forgatása"
 
-#: app/vectors/gimpvectors.c:560
+#: app/vectors/gimpvectors.c:566
 msgid "Cannot stroke empty path."
 msgstr "Üres útvonal nem rajzolható körbe."
 
@@ -9456,7 +9487,9 @@ msgstr "Automatikus"
 
 #: app/widgets/gimpimagedock.c:222
 msgid "When enabled the dialog automatically follows the image you are working on."
-msgstr "Ha be van kapcsolva, akkor a párbeszédablak automatikusan követi az aktuális képet."
+msgstr ""
+"Ha be van kapcsolva, akkor a párbeszédablak automatikusan követi az aktuális "
+"képet."
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"
@@ -9655,11 +9688,11 @@ msgstr "Szöveg betöltése fájlból"
 msgid "Clear all Text"
 msgstr "Összes szöveg törlése"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:367
 msgid "Open Text File (UTF-8)"
 msgstr "Szöveges fájl megnyitása (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:452
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Érvénytelen UTF-8 adat a(z) '%s' fájlban."
@@ -9756,8 +9789,8 @@ msgstr "Eszközbeállítások visszaállítása"
 #: app/widgets/gimptooloptionseditor.c:416
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
-"Valóban vissza kívánja állítani az összes eszközbeállítást az alapértelmezett "
-"értékekre?"
+"Valóban vissza kívánja állítani az összes eszközbeállítást az "
+"alapértelmezett értékekre?"
 
 #: app/widgets/gimpundoeditor.c:152
 msgid "Redo"
@@ -10025,58 +10058,8 @@ msgstr "Nem lehet pozicionálni az XCF fájlban: %s"
 #: app/xcf/xcf.c:264
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XFC hiba: nem támogatott, %d verziójú XFC fájl "
+msgstr "XFC hiba: nem támogatott, %d verziójú XFC fájl"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Képek vagy fotók létrehozása és szerkesztése"
-
-msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  -S, --no-splash-image    Nem mutatja az üdvözlő képernyőn a képet.\n"
-
-msgid "Layer Mod"
-msgstr "Réteg-módosítás"
-
-msgid "Channel Mod"
-msgstr "Csatorna-módosítás"
-
-msgid "Paste Transform"
-msgstr "Átalakítás beillesztése"
-
-msgid "Could not open"
-msgstr "Nem lehet megnyitni"
-
-msgid "Empty Layer Copy"
-msgstr "Üres réteg másolása"
-
-msgid "Empty Vectors Copy"
-msgstr "Üres vektorok másolása"
-
-msgid "Modify letter spacing"
-msgstr "Betűköz módosítása"
-
-#: app/base/tile-swap.c:451
-msgid ""
-"Unable to open swap file. The Gimp has run out of memory and cannot use the "
-"swap file. Some parts of your images may be corrupted. Try to save your work "
-"using different filenames, restart the Gimp and check the location of the "
-"swap directory in your Preferences."
-msgstr ""
-"Nem sikerült megnyitni a cserefájlt. A program által használható "
-"memória elfogyott, a cserefájl pedig nem használható. A képek egyes "
-"részei megsérülhettek. Próbálja meg elmenteni a módosított "
-"képeket más fájlnevekkel, majd indítsa újra a programot és ellenőrizze "
-"a cserekönyvtár helyét a beállítások között."
-
-#: app/core/core-enums.c:601
-msgid "Scale Item"
-msgstr "Elem átméretezése"
-
-#: app/core/core-enums.c:602
-msgid "Resize Item"
-msgstr "Elem méretének módosítása"
-
-#: app/tools/gimphuesaturationtool.c:263
-msgid "M_aster"
-msgstr "_Fő"
-

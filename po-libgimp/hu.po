@@ -2,13 +2,14 @@
 # Copyright (C) 2000-2004 Free Software Foundation, Inc.
 # Andras Timar <timar@gnome.hu>, 2000.
 # Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
+# Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-26 14:44+0200\n"
-"PO-Revision-Date: 2004-04-26 17:43+0200\n"
+"POT-Creation-Date: 2004-05-13 04:02+0200\n"
+"PO-Revision-Date: 2004-05-16 23:10+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -98,13 +99,15 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
+msgstr "%s csak bitképes (kétszínű) indexelt képeket kezel"
 
 #: libgimp/gimpexport.c:307
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Átalakítás indexeltté az alapértelmezett bitképes beállítások használatával\n"
+"(A finomhangoláshoz válassza a kézi beállítást)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
@@ -162,7 +165,8 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr ""
+"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -179,6 +183,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Csatornát (elmentett kijelölést) készül menteni %s formátumba.\n"
+"Ez nem fogja menteni a látható rétegeket."
 
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
@@ -302,7 +308,7 @@ msgstr "/_Háttérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
-msgstr "/F_ekete"
+msgstr "/Fe_kete"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
@@ -310,7 +316,7 @@ msgstr "/_Fehér"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr ""
+msgstr "Színskála"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
@@ -418,6 +424,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Egy képernyőpont színének kiválasztásához kattintson a pipettára, majd a "
+"kívánt képernyőpontra."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -461,11 +469,11 @@ msgstr "S_orköz"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr "Átmé_retezés"
+msgstr "Mé_ret módosítása"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
-msgstr "_Méretezés"
+msgstr "Átmére_tezés"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
@@ -513,39 +521,41 @@ msgstr "Ú_j kiindulóérték"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
-msgstr ""
+msgstr "A véletlenszám-előállítás kiindulóértékének beállítása egy "
+"előállított véletlenszámmal"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
-msgstr ""
+msgstr "_Véletlenszerűen"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Színérzékelési problémát szimuláló szűrő "
+"(Brettel-Vienot-Mollon-módszer)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Színérzékelési probléma"
 
 #: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
-msgstr ""
+msgstr "Érzékelési probléma _típusa:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (a vörös szín érzékelésének hiánya)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (a zöld szín érzékelésének hiánya)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopia (a kék szín érzékelésének hiánya)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "\"Gamma\" színmegjelenítési szűrő"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
@@ -557,7 +567,7 @@ msgstr "_Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "\"Magas kontraszt\" színmegjelenítési szűrő"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
@@ -565,31 +575,31 @@ msgstr "Kontraszt"
 
 #: modules/cdisplay_highcontrast.c:308
 msgid "Contrast C_ycles:"
-msgstr ""
+msgstr "Kontraszt_ciklusok:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "ICC színprofilt használó \"színes próbanyomat\" szűrő"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Színes próbanyomat"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Érzékelési"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Relatív színmérési"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Abszolút színmérési"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Cél:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
@@ -601,7 +611,7 @@ msgstr "_Profil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "_Feketepont-kompenzáció"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -645,7 +655,7 @@ msgstr "Fekete"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Fekete kivonása (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
