@@ -321,7 +321,7 @@ channels_dialog_flush ()
 
   /*  Switch positions of items if necessary  */
   list = channelsD->channel_widgets;
-  pos = -channelsD->num_components;
+  pos = -channelsD->num_components + 1;
   while (list)
     {
       cw = (ChannelWidget *) list->data;
