@@ -337,8 +337,6 @@ plug-ins/xd/Makefile
 plug-ins/bmp/Makefile
 plug-ins/megawidget/Makefile
 plug-ins/blur/Makefile
-plug-ins/gfig/Makefile
-plug-ins/gfig/gfig-examples/Makefile
 plug-ins/flame/Makefile
 plug-ins/gimptcl/Makefile
 plug-ins/gimptcl/scripts/Makefile
@@ -397,7 +395,6 @@ plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
-plug-ins/FractalExplorer/Makefile
 plug-ins/fs/Makefile
 plug-ins/flarefx/Makefile
 app/Makefile

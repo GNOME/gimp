@@ -5,7 +5,6 @@ SUBDIRS = 			\
 	libgck 			\
 	AlienMap		\
 	dbbrowser		\
-	gflare			\
 	@GIMPTCL@		\
 	script-fu		\
 	struc			\
