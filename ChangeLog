@@ -1,3 +1,10 @@
+2004-12-15  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_scale):
+	fixed RGBA resampling by using premultiplied values for the
+	intermediate accumulation buffer. Fixes bugs #72880 and #72881.
+
 2004-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc-frame.[ch]: added "gint ref_count" to

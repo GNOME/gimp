@@ -238,6 +238,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   gint     i, j;
   gint     frac;
   gboolean advance_dest;
+  gboolean has_alpha;
 
   g_return_if_fail (type != GIMP_INDEXED || cmap != NULL);
 
@@ -249,6 +250,8 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   /*  Some calculations...  */
   bytes     = destPR->bytes;
   destwidth = destPR->rowstride;
+
+  has_alpha = ((bytes == 2) || (bytes == 4));
 
   /*  the data pointers...  */
   src  = g_new (guchar, orig_width * bytes);
@@ -332,19 +335,44 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	    {
               gint index = *s * 3;
 
-	      r[RED_PIX]   += cmap[index++] * tot_frac;
-	      r[GREEN_PIX] += cmap[index++] * tot_frac;
-	      r[BLUE_PIX]  += cmap[index++] * tot_frac;
-
-              if (bytes == 4)
-                r[ALPHA_PIX] += ((s[ALPHA_I_PIX] & 0x80 ?
-                                  OPAQUE_OPACITY : TRANSPARENT_OPACITY)
-                                 * tot_frac);
-	    }
+              if (has_alpha)
+                {
+                  if (s[ALPHA_I_PIX] & 0x80)
+                    {
+                      r[RED_PIX]   += cmap[index++] * tot_frac;
+                      r[GREEN_PIX] += cmap[index++] * tot_frac;
+                      r[BLUE_PIX]  += cmap[index++] * tot_frac;
+                      r[ALPHA_PIX] += tot_frac;
+                    }
+                  /* else the pixel contributes nothing and needs
+                   * not to be added
+                   */
+                }
+              else
+                {
+                  r[RED_PIX]   += cmap[index++] * tot_frac;
+                  r[GREEN_PIX] += cmap[index++] * tot_frac;
+                  r[BLUE_PIX]  += cmap[index++] * tot_frac;
+                }
+            }
 	  else
 	    {
-	      for (b = 0; b < bytes; b++)
-		r[b] += s[b] * tot_frac;
+              if (has_alpha)
+                {
+                  /* premultiply */
+
+                  gdouble local_frac = tot_frac * (gdouble) s[bytes - 1] / 255.0;
+
+                  for (b = 0; b < (bytes - 1); b++)
+                    r[b] += s[b] * local_frac;
+
+                  r[bytes - 1] += local_frac;
+                }
+              else
+                {
+                  for (b = 0; b < bytes; b++)
+                    r[b] += s[b] * tot_frac;
+                }
 	    }
 
 	  /*  increment the destination  */
@@ -373,9 +401,33 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	  j = width;
 	  while (j--)
 	    {
-	      b = bytes;
-	      while (b--)
-		*d++ = (guchar) ((*r++ * tot_frac) + 0.5);
+              if (has_alpha)
+                {
+                  /* unpremultiply */
+
+                  gdouble alpha = r[bytes - 1];
+
+                  if (alpha > EPSILON)
+                    {
+                      for (b = 0; b < (bytes - 1); b++)
+                        d[b] = (guchar) ((r[b] / alpha) + 0.5);
+
+                      d[bytes - 1] = (guchar) ((alpha * tot_frac * 255.0) + 0.5);
+                    }
+                  else
+                    {
+                      for (b = 0; b < bytes; b++)
+                        d[b] = 0;
+                    }
+                }
+              else
+                {
+                  for (b = 0; b < bytes; b++)
+                    d[b] = (guchar) ((r[b] * tot_frac) + 0.5);
+                }
+
+              r += bytes;
+              d += bytes;
 	    }
 
 	  dest += destwidth;
