@@ -1,3 +1,17 @@
+2002-06-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimpcolor/gimprgb.c (gimp_rgb_min)
+	* libgimpcolor/gimprgb.c (gimp_rgb_max): don't use macro calls inside
+	a macro call to avoid double evaluation.
+
+2002-06-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/lic.c: started code clean-up. This plug-in is still
+	painfully slow.
+
+	* plug-ins/common/lic.c (create_main_dialog): Added mnemonics (#80804) 
+	to dialog.
+
 2002-06-23  Marco Wessel  <marco@phoenix.uzaynet.nl> 
 	* plug-ins/script-fu/scripts/tileblur.scm: switch horizontal and
 	vertical blurring. They were reversed. (Tuomas noticed this.)

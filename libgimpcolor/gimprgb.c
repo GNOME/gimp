@@ -85,9 +85,9 @@ gimp_rgb_add (GimpRGB       *rgb1,
   g_return_if_fail (rgb1 != NULL);
   g_return_if_fail (rgb2 != NULL);
 
-  rgb1->r = rgb1->r + rgb2->r;
-  rgb1->g = rgb1->g + rgb2->g;
-  rgb1->b = rgb1->b + rgb2->b;
+  rgb1->r += rgb2->r;
+  rgb1->g += rgb2->g;
+  rgb1->b += rgb2->b;
 }
 
 void
@@ -97,9 +97,9 @@ gimp_rgb_subtract (GimpRGB       *rgb1,
   g_return_if_fail (rgb1 != NULL);
   g_return_if_fail (rgb2 != NULL);
 
-  rgb1->r = rgb1->r - rgb2->r;
-  rgb1->g = rgb1->g - rgb2->g;
-  rgb1->b = rgb1->b - rgb2->b;
+  rgb1->r -= rgb2->r;
+  rgb1->g -= rgb2->g;
+  rgb1->b -= rgb2->b;
 }
 
 void
@@ -130,7 +130,9 @@ gimp_rgb_max (const GimpRGB *rgb)
 {
   g_return_val_if_fail (rgb != NULL, 0.0);
 
-  return MAX (rgb->r, MAX (rgb->g, rgb->b));
+  if (rgb->r > rgb->g)
+     return (rgb->r > rgb->b) ? rgb->r : rgb->b;
+  return (rgb->g > rgb->b) ? rgb->g : rgb->b;
 }
 
 gdouble
@@ -138,7 +140,9 @@ gimp_rgb_min (const GimpRGB *rgb)
 {
   g_return_val_if_fail (rgb != NULL, 0.0);
 
-  return MIN (rgb->r, MIN (rgb->g, rgb->b));
+  if (rgb->r < rgb->g)
+     return (rgb->r < rgb->b) ? rgb->r : rgb->b;
+  return (rgb->g < rgb->b) ? rgb->g : rgb->b;
 }
 
 void
@@ -287,10 +291,10 @@ gimp_rgba_add (GimpRGB       *rgba1,
   g_return_if_fail (rgba1 != NULL);
   g_return_if_fail (rgba2 != NULL);
 
-  rgba1->r = rgba1->r + rgba2->r;
-  rgba1->g = rgba1->g + rgba2->g;
-  rgba1->b = rgba1->b + rgba2->b;
-  rgba1->a = rgba1->a + rgba2->a;
+  rgba1->r += rgba2->r;
+  rgba1->g += rgba2->g;
+  rgba1->b += rgba2->b;
+  rgba1->a += rgba2->a;
 }
 
 void
@@ -300,10 +304,10 @@ gimp_rgba_subtract (GimpRGB       *rgba1,
   g_return_if_fail (rgba1 != NULL);
   g_return_if_fail (rgba2 != NULL);
 
-  rgba1->r = rgba1->r - rgba2->r;
-  rgba1->g = rgba1->g - rgba2->g;
-  rgba1->b = rgba1->b - rgba2->b;
-  rgba1->a = rgba1->a - rgba2->a;
+  rgba1->r -= rgba2->r;
+  rgba1->g -= rgba2->g;
+  rgba1->b -= rgba2->b;
+  rgba1->a -= rgba2->a;
 }
 
 void
@@ -312,10 +316,10 @@ gimp_rgba_multiply (GimpRGB *rgba,
 {
   g_return_if_fail (rgba != NULL);
 
-  rgba->r = rgba->r * factor;
-  rgba->g = rgba->g * factor;
-  rgba->b = rgba->b * factor;
-  rgba->a = rgba->a * factor;
+  rgba->r *= factor;
+  rgba->g *= factor;
+  rgba->b *= factor;
+  rgba->a *= factor;
 }
 
 gdouble
