@@ -38,7 +38,7 @@
 /**
  * gimp_tool_dialog_new:
  * @tool_info: a #GimpToolInfo
- * @parent:    the parent widget of this dialog
+ * @parent:    the parent widget of this dialog or %NULL
  * @desc:      a string to use in the dialog header or %NULL to use the help
  *             field from #GimpToolInfo
  * @...:       a %NULL-terminated valist of button parameters as described in
@@ -62,7 +62,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
-  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
