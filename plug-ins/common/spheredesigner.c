@@ -2436,7 +2436,7 @@ GtkWidget* makewindow (void)
   g_object_set_data (G_OBJECT (window), "colorbutton1", colorbutton1);
   gtk_widget_show (colorbutton1);
   gtk_box_pack_start (GTK_BOX (hbox3), colorbutton1, TRUE, FALSE, 0);
-  g_signal_connect (G_OBJECT (colorbutton1), "clicked",
+  g_signal_connect (colorbutton1, "clicked",
                     G_CALLBACK (selectcolor1),
                     NULL);
   tmpw = gtk_preview_new(GTK_PREVIEW_COLOR);
@@ -2560,7 +2560,7 @@ GtkWidget* makewindow (void)
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table2), _rotscale, 3, 4, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (G_OBJECT (rotxscale), "value_changed",
+  g_signal_connect (rotxscale, "value_changed",
                     G_CALLBACK (getscales), NULL);
 
   label6 = gtk_label_new ( _("Rotate Y:"));

@@ -1,5 +1,12 @@
 2003-02-10  Manish Singh  <yosh@gimp.org>
 
+	* app/plug-in/plug-in-debug.c: remove a couple unused vars
+
+	* plug-ins/common/spheredesigner.c: G_OBJECT casts not needed
+	for g_signal_connect.
+
+2003-02-10  Manish Singh  <yosh@gimp.org>
+
 	* app/plug-in/plug-in.[ch]: added hooks for running plug-ins under
 	a memory debugger. Also, removed the args array from the PlugIn
 	structure, replacing with simply a variable for the path to the

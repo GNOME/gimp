@@ -53,8 +53,6 @@ plug_in_debug_init (Gimp *gimp)
   GimpPlugInDebug  *dbg;
   const gchar      *wrap, *wrapper;
   gchar            *debug_string;
-  gchar            *name;
-  guint             flags;
   gchar           **args;
   GError           *error = NULL;
 
