@@ -1,5 +1,11 @@
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.c (gimp_display_shell_bucket_fill):
+	only set the text layer's color if a color is being dropped. Fixes
+	crash on pattern drops (bug #136645).
+
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_editor): always connect
 	the "text_changed" signal so text layers can be edited again.
 
