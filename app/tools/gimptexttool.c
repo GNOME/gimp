@@ -69,17 +69,10 @@ static void   gimp_text_tool_button_press   (GimpTool          *tool,
 					     guint32            time,
 					     GdkModifierType    state,
 					     GimpDisplay       *gdisp);
-static void   gimp_text_tool_motion         (GimpTool          *tool,
-					     GimpCoords        *coords,
-					     guint32            time,
-					     GdkModifierType    state,
-					     GimpDisplay       *gdisp);
 static void   gimp_text_tool_cursor_update  (GimpTool          *tool,
 					     GimpCoords        *coords,
 					     GdkModifierType    state,
 					     GimpDisplay       *gdisp);
-
-static void   gimp_text_tool_draw           (GimpDrawTool      *draw_tool);
 
 static void   gimp_text_tool_connect        (GimpTextTool      *tool,
 					     GimpText          *text,
@@ -96,7 +89,7 @@ static void   gimp_text_tool_buffer_changed (GtkTextBuffer     *buffer,
 
 /*  local variables  */
 
-static GimpDrawToolClass *parent_class = NULL;
+static GimpToolClass *parent_class = NULL;
 
 
 /*  public functions  */
@@ -138,7 +131,7 @@ gimp_text_tool_get_type (void)
 	(GInstanceInitFunc) gimp_text_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
 					  "GimpTextTool",
                                           &tool_info, 0);
     }
@@ -152,20 +145,15 @@ gimp_text_tool_get_type (void)
 static void
 gimp_text_tool_class_init (GimpTextToolClass *klass)
 {
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
+  GimpToolClass *tool_class;
 
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   tool_class->control       = gimp_text_tool_control;
   tool_class->button_press  = gimp_text_tool_button_press;
-  tool_class->motion        = gimp_text_tool_motion;
   tool_class->cursor_update = gimp_text_tool_cursor_update;
-
-  draw_tool_class->draw     = gimp_text_tool_draw;
 }
 
 static void
@@ -258,26 +246,12 @@ gimp_text_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_text_tool_motion (GimpTool        *tool,
-		       GimpCoords      *coords,
-		       guint32          time,
-		       GdkModifierType  state,
-		       GimpDisplay     *gdisp)
-{
-}
-
-static void
 gimp_text_tool_cursor_update (GimpTool        *tool,
 			      GimpCoords      *coords,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
-}
-
-static void
-gimp_text_tool_draw (GimpDrawTool *draw_tool)
-{
 }
 
 static void

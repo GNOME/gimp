@@ -1,3 +1,9 @@
+2004-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.[ch]: derive the text tool from GimpTool
+	directly. Doesn't look like we are going to use draw_tool
+	functionality for 2.0.
+
 2004-02-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c
