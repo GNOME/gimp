@@ -1,3 +1,8 @@
+1999-07-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c (view_toggle_rulers_cmd_callback): set the
+	"visible" flags before mapping the widgets.
+
 1999-07-08  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* tools/pdbgen/app.pl (generate): Fix typo.

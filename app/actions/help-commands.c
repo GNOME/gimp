@@ -583,13 +583,13 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
     {
       if (!GTK_WIDGET_VISIBLE (gdisp->origin))
 	{
-	  gtk_widget_map (gdisp->origin);
-	  gtk_widget_map (gdisp->hrule);
-	  gtk_widget_map (gdisp->vrule);
-
 	  GTK_WIDGET_SET_FLAGS (gdisp->origin, GTK_VISIBLE);
 	  GTK_WIDGET_SET_FLAGS (gdisp->hrule, GTK_VISIBLE);
 	  GTK_WIDGET_SET_FLAGS (gdisp->vrule, GTK_VISIBLE);
+
+	  gtk_widget_map (gdisp->origin);
+	  gtk_widget_map (gdisp->hrule);
+	  gtk_widget_map (gdisp->vrule);
 
 	  gtk_widget_queue_resize (GTK_WIDGET (gdisp->origin->parent));
 	}
