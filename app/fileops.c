@@ -417,7 +417,10 @@ file_save_callback (GtkWidget *widget,
   GDisplay *gdisplay;
 
   gdisplay = gdisplay_active ();
-  if (!gdisplay)
+  if (! gdisplay)
+    return;
+
+  if (! gimage_active_drawable (gdisplay->gimage))
     return;
 
   /*  Only save if the gimage has been modified  */
@@ -459,7 +462,10 @@ file_save_as_callback (GtkWidget *widget,
   GDisplay *gdisplay;
 
   gdisplay = gdisplay_active ();
-  if (!gdisplay)
+  if (! gdisplay)
+    return;
+
+  if (! gimage_active_drawable (gdisplay->gimage))
     return;
 
   the_gimage = gdisplay->gimage;

@@ -1652,8 +1652,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 #define SET_STATE(menu,condition) \
         menus_set_state ("<Image>/" menu, (condition) != 0)
 
-  SET_SENSITIVE ("File/Save", gdisp);
-  SET_SENSITIVE ("File/Save As...", gdisp);
+  SET_SENSITIVE ("File/Save", gdisp && drawable);
+  SET_SENSITIVE ("File/Save As...", gdisp && drawable);
   SET_SENSITIVE ("File/Revert", gdisp && gdisp->gimage->filename);
   SET_SENSITIVE ("File/Close", gdisp);
 
