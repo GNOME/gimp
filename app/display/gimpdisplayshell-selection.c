@@ -486,13 +486,9 @@ selection_render_points (Selection *select)
   gint dx, dy;
   gint dxa, dya;
   gint r;
-  gint xsize, ysize;
-  gint x2, y2;
 
   if (select->segs_in == NULL)
     return;
-
-  g_return_if_fail (select->shell != NULL);
 
   for (j = 0; j < 8; j++)
     {
@@ -500,9 +496,6 @@ selection_render_points (Selection *select)
       select->points_in[j] = g_new (GdkPoint, max_npoints[j]);
       select->num_points_in[j] = 0;
     }
-
-  xsize = select->shell->disp_width;
-  ysize = select->shell->disp_height;
 
   for (i = 0; i < select->num_segs_in; i++)
     {
@@ -513,9 +506,8 @@ selection_render_points (Selection *select)
 	       select->segs_in[i].x2,
 	       select->segs_in[i].y2);
 #endif
-      x = CLAMP (select->segs_in[i].x1, -1, xsize);
-      x2 = CLAMP (select->segs_in[i].x2, -1, xsize);
-      dxa = x2 - x;
+      x = select->segs_in[i].x1;
+      dxa = select->segs_in[i].x2 - x;
       if (dxa > 0)
 	{
 	  dx = 1;
@@ -525,9 +517,8 @@ selection_render_points (Selection *select)
 	  dxa = -dxa;
 	  dx = -1;
 	}
-      y = CLAMP (select->segs_in[i].y1, -1, ysize);
-      y2 = CLAMP (select->segs_in[i].y2, -1, ysize);
-      dya = y2 - y;
+      y = select->segs_in[i].y1;
+      dya = select->segs_in[i].y2 - y;
       if (dya > 0)
 	{
 	  dy = 1;
@@ -551,7 +542,7 @@ selection_render_points (Selection *select)
 	      y += dy;
 	      r -= (dxa << 1);
 	    }
-	  } while (x != x2);
+	  } while (x != select->segs_in[i].x2);
 	}
       else if (dxa < dya)
 	{
@@ -567,7 +558,7 @@ selection_render_points (Selection *select)
 	      x += dx;
 	      r -= (dya << 1);
 	    }
-	  } while (y != y2);
+	  } while (y != select->segs_in[i].y2);
 	}
       else
 	selection_add_point (select->points_in,
@@ -645,6 +636,10 @@ selection_transform_segs (Selection  *select,
 {
   gint x, y;
   gint i;
+  gint xclamp, yclamp;
+
+  xclamp = select->shell->disp_width + 1;
+  yclamp = select->shell->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {
@@ -653,16 +648,16 @@ selection_transform_segs (Selection  *select,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x1 = x;
-      dest_segs[i].y1 = y;
+      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
 
       gimp_display_shell_transform_xy (select->shell,
                                        src_segs[i].x2, src_segs[i].y2,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x2 = x;
-      dest_segs[i].y2 = y;
+      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
 
       /*  If this segment is a closing segment && the segments lie inside
        *  the region, OR if this is an opening segment and the segments
@@ -670,19 +665,19 @@ selection_transform_segs (Selection  *select,
        *  we need to transform it by one display pixel
        */
       if (!src_segs[i].open)
-	{
-	  /*  If it is vertical  */
-	  if (dest_segs[i].x1 == dest_segs[i].x2)
-	    {
-	      dest_segs[i].x1 -= 1;
-	      dest_segs[i].x2 -= 1;
-	    }
-	  else
-	    {
-	      dest_segs[i].y1 -= 1;
-	      dest_segs[i].y2 -= 1;
-	    }
-	}
+        {
+          /*  If it is vertical  */
+          if (dest_segs[i].x1 == dest_segs[i].x2)
+            {
+              dest_segs[i].x1 -= 1;
+              dest_segs[i].x2 -= 1;
+            }
+          else
+            {
+              dest_segs[i].y1 -= 1;
+              dest_segs[i].y2 -= 1;
+            }
+        }
     }
 }
 
@@ -733,22 +728,9 @@ selection_generate_segs (Selection *select)
 
   if (select->num_segs_layer)
     {
-      gint i;
-      GdkSegment *seg;
-
       select->segs_layer = g_new (GdkSegment, select->num_segs_layer);
       selection_transform_segs (select, segs_layer, select->segs_layer,
 				select->num_segs_layer);
-
-      seg = select->segs_layer;
-      for (i = 0; i < select->num_segs_layer; i++)
-        {
-          seg->x1 = CLAMP (seg->x1, -1, select->shell->disp_width);
-          seg->y1 = CLAMP (seg->y1, -1, select->shell->disp_height);
-          seg->x2 = CLAMP (seg->x2, -1, select->shell->disp_width);
-          seg->y2 = CLAMP (seg->y2, -1, select->shell->disp_height);
-          seg++;
-        }
     }
   else
     {

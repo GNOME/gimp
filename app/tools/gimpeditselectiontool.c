@@ -666,8 +666,12 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
   GimpDisplayShell *shell;
   gint              x, y;
   gint              i;
+  gint              xclamp, yclamp;
 
   shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (edit_select)->gdisp->shell);
+
+  xclamp = shell->disp_width + 1;
+  yclamp = shell->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {
@@ -677,8 +681,8 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x1 = CLAMP (x, -1, shell->disp_width);
-      dest_segs[i].y1 = CLAMP (y, -1, shell->disp_height);
+      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
 
       gimp_display_shell_transform_xy (shell,
                                        src_segs[i].x2 + edit_select->cumlx, 
@@ -686,8 +690,28 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
                                        &x, &y,
                                        FALSE);
 
-      dest_segs[i].x2 = CLAMP (x, -1, shell->disp_width);
-      dest_segs[i].y2 = CLAMP (y, -1, shell->disp_height);
+      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (!src_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (dest_segs[i].x1 == dest_segs[i].x2)
+            {
+              dest_segs[i].x1 -= 1;
+              dest_segs[i].x2 -= 1;
+            }
+          else
+            {
+              dest_segs[i].y1 -= 1;
+              dest_segs[i].y2 -= 1;
+            }
+        }
     }
 }
 

@@ -1,3 +1,19 @@
+2003-05-26  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/tools/gimpeditselectiontool.c (selection_transform_segs):
+	Fix off-by-one when dragging the selection. Fixes the last pending
+	issue of bug #17904. Use temporary variables for clamp values.
+
+	* app/display/gimpdisplayshell-selection.c
+	(selection_transform_segs): Perform the clamping that fixes
+	bug #110014 here instead of in the callers. Solves a rare case
+	that was not properly handled before.
+	(selection_render_points, selection_generate_segs): Remove the
+	clamping code from here.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_rectangle): More
+	clampings to avoid overflow of 16-bit coordinates.
+
 2003-05-25  Maurits Rijk <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_csim_parse.[ch]: regenerated

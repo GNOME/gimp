@@ -385,6 +385,11 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                      &tx2, &ty2,
                                      use_offsets);
 
+  tx1 = CLAMP (tx1, -1, shell->disp_width + 1);
+  ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
+  tx2 = CLAMP (tx2, -1, shell->disp_width + 1);
+  ty2 = CLAMP (ty2, -1, shell->disp_height + 1);
+
   tx2 -= tx1;
   ty2 -= ty1;
   w = (tx2 >= 0.0) ? RINT (tx2) : 0;
