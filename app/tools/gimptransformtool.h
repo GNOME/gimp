@@ -89,6 +89,9 @@ struct _GimpTransformTool
                                    */
   gdouble	 *tgrid_coords;   /*  transformed grid_coords          */
 
+  gboolean        notify_connected;
+  gboolean        show_path;
+
   /*  transform info dialog  */
   const gchar    *shell_desc;
   const gchar    *progress_text;
@@ -116,10 +119,6 @@ struct _GimpTransformToolClass
 GType   gimp_transform_tool_get_type               (void) G_GNUC_CONST;
 
 void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
-
-void	gimp_transform_tool_grid_density_changed   (GimpTransformTool *tr_tool);
-void	gimp_transform_tool_show_path_changed      (GimpTransformTool *tr_tool,
-                                                    gint               type);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

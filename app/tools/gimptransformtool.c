@@ -129,6 +129,13 @@ static void   transform_cancel_callback            (GtkWidget         *widget,
 static void   transform_ok_callback                (GtkWidget         *widget,
                                                     GimpTransformTool *tr_tool);
 
+static void   gimp_transform_tool_notify_grid   (GimpTransformOptions *options,
+                                                 GParamSpec           *pspec,
+                                                 GimpTransformTool    *tr_tool);
+static void   gimp_transform_tool_notify_path   (GimpTransformOptions *options,
+                                                 GParamSpec           *pspec,
+                                                 GimpTransformTool    *tr_tool);
+
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -215,16 +222,19 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   gimp_matrix3_identity (tr_tool->transform);
 
-  tr_tool->use_grid      = TRUE;
-  tr_tool->use_center    = TRUE;
-  tr_tool->ngx           = 0;
-  tr_tool->ngy           = 0;
-  tr_tool->grid_coords   = NULL;
-  tr_tool->tgrid_coords  = NULL;
+  tr_tool->use_grid         = TRUE;
+  tr_tool->use_center       = TRUE;
+  tr_tool->ngx              = 0;
+  tr_tool->ngy              = 0;
+  tr_tool->grid_coords      = NULL;
+  tr_tool->tgrid_coords     = NULL;
 
-  tr_tool->shell_desc    = NULL;
-  tr_tool->progress_text = _("Transforming...");
-  tr_tool->info_dialog   = NULL;
+  tr_tool->notify_connected = FALSE;
+  tr_tool->show_path        = FALSE;
+
+  tr_tool->shell_desc       = NULL;
+  tr_tool->progress_text    = _("Transforming...");
+  tr_tool->info_dialog      = NULL;
 }
 
 static void
@@ -307,6 +317,27 @@ gimp_transform_tool_button_press (GimpTool        *tool,
   draw_tool = GIMP_DRAW_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (! tr_tool->notify_connected)
+    {
+      tr_tool->show_path =
+        GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->show_path;
+
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::grid-type",
+                               G_CALLBACK (gimp_transform_tool_notify_grid),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::grid-size",
+                               G_CALLBACK (gimp_transform_tool_notify_grid),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::show-path",
+                               G_CALLBACK (gimp_transform_tool_notify_path),
+                               tr_tool, 0);
+
+      tr_tool->notify_connected = TRUE;
+    }
 
   if (gdisp != tool->gdisp)
     {
@@ -714,7 +745,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                   FALSE);
     }
 
-  if (options->show_path)
+  if (tr_tool->show_path)
     {
       GimpMatrix3 tmp_matrix;
 
@@ -967,33 +998,6 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
     }
 }
 
-void
-gimp_transform_tool_grid_density_changed (GimpTransformTool *tr_tool)
-{
-  if (tr_tool->function == TRANSFORM_CREATING)
-    return;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-  gimp_transform_tool_grid_recalc (tr_tool);
-  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-}
-
-void
-gimp_transform_tool_show_path_changed (GimpTransformTool *tr_tool,
-                                       gint               type /* a truly undescriptive name */)
-{
-  if (tr_tool->function == TRANSFORM_CREATING)
-    return;
-
-  if (type)
-    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-  else
-    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-}
-
 static void
 gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 {
@@ -1181,4 +1185,35 @@ transform_ok_callback (GtkWidget         *widget,
 		       GimpTransformTool *tr_tool)
 {
   gimp_transform_tool_doit (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+}
+
+static void
+gimp_transform_tool_notify_grid (GimpTransformOptions *options,
+                                 GParamSpec           *pspec,
+                                 GimpTransformTool    *tr_tool)
+{
+  if (tr_tool->function == TRANSFORM_CREATING)
+    return;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+  gimp_transform_tool_grid_recalc (tr_tool);
+  gimp_transform_tool_transform_bounding_box (tr_tool);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+}
+
+static void
+gimp_transform_tool_notify_path (GimpTransformOptions *options,
+                                 GParamSpec           *pspec,
+                                 GimpTransformTool    *tr_tool)
+{
+  if (tr_tool->function == TRANSFORM_CREATING)
+    return;
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+  tr_tool->show_path = options->show_path;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
 }

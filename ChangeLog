@@ -1,4 +1,15 @@
-2003-02-09  Michael Natterer  <mitch@convergence.de>
+2003-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptransformtool.[ch]: connect to GimpTransformOptions'
+	"notify" signal and update grid and path drawing accordingly.
+
+	* app/tools/gimptransformoptions.c: removed the same stuff here.
+	Doesn't depend on the tool_manager any more.
+
+	* app/tools/gimpselectionoptions.c
+	* app/tools/paint_options.c: don't #include "tool_manager.h"
+
+2003-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: changed GimpOrientationType from
 	GIMP_HORIZONTAL to GIMP_ORIENTATION_HORIZONTAL etc.

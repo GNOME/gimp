@@ -40,9 +40,6 @@
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
-#include "paint_options.h"
-#include "tool_manager.h"
-
 #include "gimpairbrushtool.h"
 #include "gimpblendtool.h"
 #include "gimpbucketfilltool.h"
@@ -55,6 +52,7 @@
 #include "gimpsmudgetool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
+#include "paint_options.h"
 
 #include "libgimp/gimpintl.h"
 

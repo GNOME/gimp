@@ -38,7 +38,6 @@
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 

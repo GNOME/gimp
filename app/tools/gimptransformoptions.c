@@ -36,9 +36,7 @@
 
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
-#include "gimptransformtool.h"
 #include "gimptransformoptions.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -71,7 +69,7 @@ static void   gimp_transform_options_get_property (GObject         *object,
 
 static void   gimp_transform_options_reset        (GimpToolOptions *tool_options);
 
-static void   gimp_transform_options_notify       (GimpTransformOptions *options,
+static void   gimp_transform_options_grid_notify  (GimpTransformOptions *options,
                                                    GParamSpec           *pspec,
                                                    GtkWidget            *density_box);
 
@@ -327,8 +325,8 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  g_signal_connect (config, "notify",
-                    G_CALLBACK (gimp_transform_options_notify),
+  g_signal_connect (config, "notify::grid-type",
+                    G_CALLBACK (gimp_transform_options_grid_notify),
                     table);
 
   gimp_prop_scale_entry_new (config, "grid-size",
@@ -410,53 +408,11 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 /*  private functions  */
 
 static void
-gimp_transform_options_notify (GimpTransformOptions *options,
-                               GParamSpec           *pspec,
-                               GtkWidget            *density_box)
+gimp_transform_options_grid_notify (GimpTransformOptions *options,
+                                    GParamSpec           *pspec,
+                                    GtkWidget            *density_box)
 {
-  GimpToolOptions   *tool_options;
-  GimpTool          *active_tool;
-  GimpTransformTool *transform_tool;
-
-  tool_options = GIMP_TOOL_OPTIONS (options);
-
-  active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
-
-  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
-    transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
-  else
-    transform_tool = NULL;
-
-  switch (pspec->param_id)
-    {
-    case PROP_GRID_TYPE:
-      if (transform_tool)
-        gimp_transform_tool_grid_density_changed (transform_tool);
-
-      gtk_widget_set_sensitive (density_box,
-                                options->grid_type !=
-                                GIMP_TRANSFORM_GRID_TYPE_NONE);
-      break;
-
-    case PROP_GRID_SIZE:
-      if (transform_tool)
-        gimp_transform_tool_grid_density_changed (transform_tool);
-      break;
-
-    case PROP_SHOW_PATH:
-      if (transform_tool)
-        {
-#if 0
-          gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
-
-          gimp_toggle_button_update (widget, &options->show_path);
-
-          gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
-#endif
-        }
-      break;
-
-    default:
-      break;
-    }
+  gtk_widget_set_sensitive (density_box,
+                            options->grid_type !=
+                            GIMP_TRANSFORM_GRID_TYPE_NONE);
 }
