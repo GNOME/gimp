@@ -3,7 +3,6 @@
 use Gimp;
 use Gimp::Fu;
 use Gimp::Util;
-use Gimp::PDL;
 
 sub new_scratchlayer {
     my($image,$length,$gamma,$angle)=@_;

@@ -6,7 +6,7 @@ Revision history for Gimp-Perl extension.
         - removed publicly-visible non-PDB pixelfunctions.
           "uuuuuse peedee-ell or dieieie".
         - implemented Gimp::Fu::PF_RADIO.
-        - added blowinout.pl and terral_text.
+        - added blowinout.pl, terral_text and xachvision.pl.
         - the use of Gimp::PDL to access the region/tile functions is
           now mandatory. The old string interface does not exist anymore.
         
