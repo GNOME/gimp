@@ -206,18 +206,19 @@ file_save_cmd_callback (GtkWidget *widget,
 	{
 	  GimpPDBStatusType status;
 
-	  status = file_save (gdisp->gimage,
-			      uri,
-			      uri,
-                              NULL,
-			      GIMP_RUN_WITH_LAST_VALS,
-			      TRUE);
+	  status = file_save (gdisp->gimage, GIMP_RUN_WITH_LAST_VALS);
 
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
 	    {
+              gchar *filename;
+
+              filename = file_utils_uri_to_utf8_basename (uri);
+
 	      /* Error message should be added. --bex */
-	      g_message (_("Saving '%s' failed."), uri);
+	      g_message (_("Saving '%s' failed."), filename);
+
+              g_free (filename);
 	    }
 	}
     }

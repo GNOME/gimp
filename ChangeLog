@@ -1,3 +1,18 @@
+2003-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-save.[ch]: added new function file_save_as() which
+	always uses the uri and file_proc parameters passed and never
+	looks at the image's uri and file_proc. Renamed "gboolean set_uri"
+	to "set_uri_and_proc" and always set them both if the save
+	succeeded.  Fixes bug #97835.  Removed most parameters from
+	file_save() and made it a small wrapper around file_save_as().
+
+	* app/gui/file-commands.c (file_save_cmd_callback): changed
+	accordingly.
+
+	* app/gui/file-save-dialog.c: call file_save_as(), renamed
+	"set_uri" variables to "set_uri_and_proc".
+
 2003-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore-stroke.c

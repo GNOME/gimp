@@ -70,14 +70,14 @@ static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
                                                  const gchar     *uri,
                                                  const gchar     *raw_filename,
                                                  PlugInProcDef   *save_proc,
-                                                 gboolean         set_uri);
+                                                 gboolean         set_uri_and_proc);
 
 
-static GtkWidget     *filesave       = NULL;
+static GtkWidget     *filesave         = NULL;
 
-static PlugInProcDef *save_file_proc = NULL;
-static GimpImage     *the_gimage     = NULL;
-static gboolean       set_uri        = TRUE;
+static PlugInProcDef *save_file_proc   = NULL;
+static GimpImage     *the_gimage       = NULL;
+static gboolean       set_uri_and_proc = TRUE;
 
 
 /*  public functions  */
@@ -104,8 +104,8 @@ file_save_dialog_show (GimpImage       *gimage,
   if (! gimp_image_active_drawable (gimage))
     return;
 
-  the_gimage = gimage;
-  set_uri    = TRUE;
+  the_gimage       = gimage;
+  set_uri_and_proc = TRUE;
 
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
@@ -151,8 +151,8 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
   if (! gimp_image_active_drawable (gimage))
     return;
 
-  the_gimage = gimage;
-  set_uri    = FALSE;
+  the_gimage       = gimage;
+  set_uri_and_proc = FALSE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -292,7 +292,7 @@ file_save_ok_callback (GtkWidget *widget,
                                    uri,
                                    raw_filename,
                                    save_file_proc,
-                                   set_uri);
+                                   set_uri_and_proc);
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
@@ -314,7 +314,8 @@ file_save_overwrite (GtkWidget   *save_dialog,
 {
   OverwriteData *overwrite_data;
   GtkWidget     *query_box;
-  gchar         *overwrite_text;
+  gchar         *filename;
+  gchar         *message;
 
   overwrite_data = g_new0 (OverwriteData, 1);
 
@@ -322,20 +323,24 @@ file_save_overwrite (GtkWidget   *save_dialog,
   overwrite_data->uri          = g_strdup (uri);
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
-  overwrite_text = g_strdup_printf (_("File '%s' exists.\n"
-                                      "Overwrite it?"), uri);
+  filename = file_utils_uri_to_utf8_filename (uri);
+
+  message = g_strdup_printf (_("File '%s' exists.\n"
+                               "Overwrite it?"), filename);
+
+  g_free (filename);
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
 				      "save/file_exists.html",
 				      GTK_STOCK_DIALOG_QUESTION,
-				      overwrite_text,
+				      message,
 				      GTK_STOCK_YES, GTK_STOCK_NO,
 				      NULL, NULL,
 				      file_save_overwrite_callback,
 				      overwrite_data);
 
-  g_free (overwrite_text);
+  g_free (message);
 
   gtk_widget_show (query_box);
 
@@ -358,7 +363,7 @@ file_save_overwrite_callback (GtkWidget *widget,
                                    overwrite_data->uri,
                                    overwrite_data->raw_filename,
                                    save_file_proc,
-                                   set_uri);
+                                   set_uri_and_proc);
     }
 
   gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);
@@ -374,16 +379,16 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                              const gchar   *uri,
                              const gchar   *raw_filename,
                              PlugInProcDef *save_proc,
-                             gboolean       set_uri)
+                             gboolean       set_uri_and_proc)
 {
   GimpPDBStatusType status;
 
-  status = file_save (gimage,
-                      uri,
-                      raw_filename,
-                      save_proc,
-                      GIMP_RUN_INTERACTIVE,
-                      set_uri);
+  status = file_save_as (gimage,
+                         uri,
+                         raw_filename,
+                         save_proc,
+                         GIMP_RUN_INTERACTIVE,
+                         set_uri_and_proc);
 
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)

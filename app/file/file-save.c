@@ -62,12 +62,30 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage     *gimage,
-	   const gchar   *uri,
-	   const gchar   *raw_filename,
-           PlugInProcDef *file_proc,
-           GimpRunMode    run_mode,
-	   gboolean       set_uri)
+file_save (GimpImage   *gimage,
+           GimpRunMode  run_mode)
+{
+  const gchar   *uri;
+  PlugInProcDef *file_proc;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+
+  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+
+  g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
+
+  file_proc = gimp_image_get_save_proc (gimage);
+
+  return file_save_as (gimage, uri, uri, file_proc, run_mode, FALSE);
+}
+
+GimpPDBStatusType
+file_save_as (GimpImage      *gimage,
+              const gchar    *uri,
+              const gchar    *raw_filename,
+              PlugInProcDef  *file_proc,
+              GimpRunMode     run_mode,
+              gboolean        set_uri_and_proc)
 {
   ProcRecord        *proc;
   Argument          *args;
@@ -77,33 +95,22 @@ file_save (GimpImage     *gimage,
   gchar             *filename;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (raw_filename != NULL, GIMP_PDB_CALLING_ERROR);
 
   if (gimp_image_active_drawable (gimage) == NULL)
     return GIMP_PDB_EXECUTION_ERROR;
 
-  /*  set the image's save_proc if we got passed one, otherwise
-   *  try to find a matching file_proc
-   */
-  if (file_proc)
+  if (! file_proc)
+    file_proc = file_utils_find_proc (gimage->gimp->save_procs, raw_filename);
+
+  if (! file_proc)
     {
-      gimp_image_set_save_proc (gimage, file_proc);
-    }
-  else
-    {
-      file_proc = gimp_image_get_save_proc (gimage);
+      g_message (_("Save failed.\n"
+                   "%s: Unknown file type."),
+                 uri);
 
-      if (! file_proc)
-        file_proc = file_utils_find_proc (gimage->gimp->save_procs,
-                                          raw_filename);
-
-      if (! file_proc)
-        {
-          g_message (_("Save failed.\n"
-                       "%s: Unknown file type."),
-                     uri);
-
-          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
-        }
+      return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
     }
 
   filename = g_filename_from_uri (uri, NULL, NULL);
@@ -170,16 +177,16 @@ file_save (GimpImage     *gimage,
       documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri);
 
-      if (set_uri)
+      if (set_uri_and_proc)
 	{
-	  /*  set the image title  */
 	  gimp_image_set_uri (gimage, uri);
+          gimp_image_set_save_proc (gimage, file_proc);
 	}
 
       /* Write a thumbnail for the saved image, where appropriate */
       if (gimage->gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE)
 	{
-          if (set_uri)
+          if (set_uri_and_proc)
             {
               gimp_imagefile_save_thumbnail (imagefile, gimage);
             }
