@@ -302,8 +302,7 @@ spread_updating_preview (GimpPreview *preview, GtkWidget *size)
   param.width    = drawable_preview->drawable->width;
   param.height   = drawable_preview->drawable->height;
 
-  width    = gimp_preview_get_width (preview);
-  height   = gimp_preview_get_height (preview);
+  gimp_preview_get_size (preview, &width, &height);
 
   bpp = drawable_preview->drawable->bpp;
   dest = buffer = g_new (guchar, width * height * bpp);
@@ -386,10 +385,10 @@ spread_dialog (gint32        image_ID,
                                0, 0);
   gtk_container_add (GTK_CONTAINER (frame), size);
   gtk_widget_show (size);
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (spread_updating_preview), size);
   g_signal_connect_swapped (size, "value_changed",
-                            G_CALLBACK (spread_updating_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
   gtk_widget_show (dlg);
 
   spread_updating_preview (GIMP_PREVIEW(preview), size);

@@ -1,3 +1,29 @@
+2004-08-31  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreview.c
+	* libgimpwidgets/gimppreview.h: renamed the "updated" signal to
+	"invalidated" and the confusing "update" virtual function to "draw".
+
+	Renamed the property with saner names, too.
+
+	Removed _get_width and _get_height functions in favor of a _get_size
+	on.
+
+	Added a gimp_preview_invalidate function that emit the "invalidated"
+	signal if needed.
+
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpdrawablepreview.h: modified accordingly and fixed the
+	scrollbar range.
+
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/unsharp.c: modified accordingly.
+
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: removed the script title

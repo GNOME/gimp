@@ -516,13 +516,13 @@ gauss_dialog (gint32        image_ID,
   /*  FIXME: Shouldn't need two signal connections here,
              gimp_coordinates_new() seems to be severily broken.  */
   g_signal_connect_swapped (size, "value_changed",
-                            G_CALLBACK (update_preview),
+                            G_CALLBACK (gimp_preview_invalidate),
                             preview);
   g_signal_connect_swapped (size, "refval_changed",
-                            G_CALLBACK (update_preview),
+                            G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (update_preview),
                     size);
 
@@ -658,8 +658,7 @@ gauss (GimpDrawable *drawable,
     {
       gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
 
-      width  = gimp_preview_get_width  (GIMP_PREVIEW (preview));
-      height = gimp_preview_get_height (GIMP_PREVIEW (preview));
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
     }
   else
     {

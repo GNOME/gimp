@@ -63,24 +63,27 @@ struct _GimpPreviewClass
   GtkTableClass parent_class;
 
   /* virtuals */
-  void (* update) (GimpPreview *preview);
+  void (* draw) (GimpPreview *preview);
 
   /* signal */
-  void (* updated) (GimpPreview *preview);
+  void (* invalidated) (GimpPreview *preview);
 };
 
 
 GType   gimp_preview_get_type           (void) G_GNUC_CONST;
 
-gint    gimp_preview_get_width          (GimpPreview  *preview);
-gint    gimp_preview_get_height         (GimpPreview  *preview);
+void    gimp_preview_get_size           (GimpPreview *preview,
+                                         gint        *width,
+                                         gint        *height);
 
-void    gimp_preview_get_position       (GimpPreview  *preview,
-                                         gint         *x,
-                                         gint         *y);
+void    gimp_preview_get_position       (GimpPreview *preview,
+                                         gint        *x,
+                                         gint        *y);
 
 void    gimp_preview_show_update_toggle (GimpPreview *preview,
                                          gboolean     show_update);
+
+void    gimp_preview_invalidate         (GimpPreview *preview);
 
 G_END_DECLS
 

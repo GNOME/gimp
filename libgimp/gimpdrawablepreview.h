@@ -43,6 +43,7 @@ typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
 struct _GimpDrawablePreview
 {
   GimpPreview   parent_instance;
+
   GimpDrawable *drawable;
 };
 

@@ -248,7 +248,7 @@ sobel_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (sobel_update_preview), NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
@@ -260,7 +260,7 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.horizontal);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (sobel_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -271,7 +271,7 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (sobel_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result (one direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -282,7 +282,7 @@ sobel_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.keep_sign);
   g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (sobel_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   gtk_widget_show (dlg);
 
@@ -350,20 +350,21 @@ sobel (GimpDrawable *drawable,
   if (preview)
     {
       gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
-      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
     }
   else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       gimp_progress_init (_("Sobel Edge Detecting..."));
+      width  = x2 - x1;
+      height = y2 - y1;
     }
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width  = x2 - x1;
-  height = y2 - y1;
   bytes  = drawable->bpp;
   alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
 

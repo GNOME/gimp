@@ -601,7 +601,7 @@ despeckle_dialog (void)
   preview = gimp_drawable_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update), NULL);
 
   preview_init ();
@@ -688,8 +688,6 @@ despeckle_dialog (void)
    */
 
   gtk_widget_show (dialog);
-
-  preview_update (preview);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -915,7 +913,7 @@ dialog_iscale_update (GtkAdjustment *adjustment,
   if (value == &despeckle_radius)
     preview_init ();
 
-  preview_update (preview);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -927,7 +925,7 @@ dialog_adaptive_callback (GtkWidget *widget,
   else
     filter_type &= ~FILTER_ADAPTIVE;
 
-  preview_update (preview);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -939,5 +937,5 @@ dialog_recursive_callback (GtkWidget *widget,
   else
     filter_type &= ~FILTER_RECURSIVE;
 
-  preview_update (preview);
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }

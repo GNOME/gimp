@@ -682,7 +682,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                                            &unsharp_params.update_preview);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update), NULL);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -701,7 +701,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.radius);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (preview_update),
+                            G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
@@ -721,7 +721,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.amount);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (preview_update),
+                            G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -736,7 +736,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &unsharp_params.threshold);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (preview_update),
+                            G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);

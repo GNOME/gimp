@@ -34,8 +34,8 @@
 
 #define PREVIEW_SIZE (128)
 
-static void   gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);
-static void   gimp_drawable_preview_update     (GimpPreview  *preview);
+static void gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
+static void gimp_drawable_preview_draw_original (GimpPreview  *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -76,11 +76,11 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->update = gimp_drawable_preview_update;
+  preview_class->draw = gimp_drawable_preview_draw_original;
 }
 
 static void
-gimp_drawable_preview_update (GimpPreview *preview)
+gimp_drawable_preview_draw_original (GimpPreview *preview)
 {
   GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
   GimpDrawable        *drawable         = drawable_preview->drawable;
@@ -153,12 +153,12 @@ gimp_drawable_preview_new (GimpDrawable *drawable)
                             1.0,
                             MIN (preview->width, sel_width));
   gtk_range_set_range (GTK_RANGE (preview->hscr),
-                       0, sel_width-1);
+                       0, sel_width - preview->width - 1);
   gtk_range_set_increments (GTK_RANGE (preview->vscr),
                             1.0,
                             MIN (preview->height, sel_height));
   gtk_range_set_range (GTK_RANGE (preview->vscr),
-                       0, sel_height-1);
+                       0, sel_height - preview->height - 1);
 
   gtk_widget_set_size_request (preview->area,
                                preview->width, preview->height);
@@ -189,8 +189,8 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
   g_return_val_if_fail (toggle != NULL, NULL);
 
   drawable_preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
-                                   "show_toggle_preview", TRUE,
-                                   "update_preview",      *toggle,
+                                   "show_update_toggle", TRUE,
+                                   "update",             *toggle,
                                    NULL);
 
   drawable_preview->drawable = drawable;
@@ -209,12 +209,12 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
                             1.0,
                             MIN (preview->width, sel_width));
   gtk_range_set_range (GTK_RANGE (preview->hscr),
-                       0, sel_width-1);
+                       0, sel_width -preview->width - 1);
   gtk_range_set_increments (GTK_RANGE (preview->vscr),
                             1.0,
                             MIN (preview->height, sel_height));
   gtk_range_set_range (GTK_RANGE (preview->vscr),
-                       0, sel_height-1);
+                       0, sel_height - preview->height - 1);
 
   gtk_widget_set_size_request (preview->area,
                                preview->width, preview->height);

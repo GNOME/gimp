@@ -262,19 +262,21 @@ neon (GimpDrawable *drawable,
   if (preview)
     {
       gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
-      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
     }
   else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width  = (x2 - x1);
+      height = (y2 - y1);
     }
 
   if (radius < 1.0)
     return;
 
-  width     = (x2 - x1);
-  height    = (y2 - y1);
   bytes     = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
@@ -704,7 +706,7 @@ neon_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "updated",
+  g_signal_connect (preview, "invalidated",
                     G_CALLBACK (neon_preview_update), NULL);
   
   table = gtk_table_new (2, 3, FALSE);

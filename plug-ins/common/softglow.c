@@ -64,7 +64,6 @@ static void      run    (const gchar      *name,
 static void      softglow                (GimpDrawable *drawable,
                                           GtkWidget    *preview);
 static gboolean  softglow_dialog         (GimpDrawable *drawable);
-static void      softglow_update_preview (GtkWidget    *preview);
 
 /*
  * Gaussian blur helper functions
@@ -258,16 +257,17 @@ softglow (GimpDrawable *drawable,
   if (preview)
     {
       gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      x2 = x1 + gimp_preview_get_width  (GIMP_PREVIEW (preview));
-      y2 = y1 + gimp_preview_get_height (GIMP_PREVIEW (preview));
+      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
     }
   else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width     = (x2 - x1);
+      height    = (y2 - y1);
     }
 
-  width     = (x2 - x1);
-  height    = (y2 - y1);
   bytes     = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -677,7 +677,7 @@ softglow_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  g_signal_connect_swapped (preview, "updated",
+  g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (softglow), drawable);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -697,7 +697,7 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.glow_radius);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (softglow_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -710,7 +710,7 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.brightness);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (softglow_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   /*  Label, scale, entry for svals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -723,7 +723,7 @@ softglow_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.sharpness);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (softglow_update_preview), preview);
+                            G_CALLBACK (gimp_preview_invalidate), preview);
 
   gtk_widget_show (dlg);
 
@@ -734,8 +734,3 @@ softglow_dialog (GimpDrawable *drawable)
   return run;
 }
 
-static void
-softglow_update_preview (GtkWidget *preview)
-{
-  softglow (GIMP_DRAWABLE_PREVIEW (preview)->drawable, preview);
-}
