@@ -197,9 +197,10 @@ struct _GParam
      return gimp_main (argc, argv);	\
    }					\
 					\
+   struct HINSTANCE__;			\
    int _stdcall				\
-   WinMain (void *hInstance,		\
-	    void *hPrevInstance,	\
+   WinMain (struct HINSTANCE__ *hInstance, \
+	    struct HINSTANCE__ *hPrevInstance,	\
 	    char *lpszCmdLine,		\
 	    int   nCmdShow)		\
    {					\

@@ -1,3 +1,10 @@
+1999-11-26  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.h (MAIN) (Win32): Improve WinMain prototype to
+	avoid compiler warnings.
+
+	* libgimp/gimpui.def: Add one entry point.
+
 Thu Nov 25 12:54:10 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.13 release
