@@ -155,7 +155,7 @@ static gboolean   gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
                                                       const gdouble     dist,
                                                       const gdouble     precision,
                                                       GimpCoords       *position,
-                                                      gdouble          *gradient);
+                                                      gdouble          *slope);
 
 /*  private variables  */
 
@@ -872,13 +872,13 @@ gimp_stroke_real_get_length (const GimpStroke *stroke,
   GArray     *points;
   gint        i;
   gdouble     length;
-  GimpCoords  difference; 
+  GimpCoords  difference;
 
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
 
   if (!stroke->anchors)
     return -1;
-    
+
   points = gimp_stroke_interpolate (stroke, precision, NULL);
   if (points == NULL)
     return -1;
@@ -887,7 +887,7 @@ gimp_stroke_real_get_length (const GimpStroke *stroke,
 
   for (i = 0; i < points->len - 1; i++ )
     {
-       gimp_coords_difference (&(g_array_index (points, GimpCoords, i)), 
+       gimp_coords_difference (&(g_array_index (points, GimpCoords, i)),
                                &(g_array_index (points, GimpCoords, i+1)),
                                &difference);
        length += gimp_coords_length (&difference);
@@ -1230,7 +1230,7 @@ gimp_stroke_get_point_at_dist (const GimpStroke *stroke,
                                const gdouble     dist,
                                const gdouble     precision,
                                GimpCoords       *position,
-                               gdouble          *gradient)
+                               gdouble          *slope)
 {
    g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
 
@@ -1238,7 +1238,7 @@ gimp_stroke_get_point_at_dist (const GimpStroke *stroke,
                                                              dist,
                                                              precision,
                                                              position,
-                                                             gradient);
+                                                             slope);
 }
 
 
@@ -1247,7 +1247,7 @@ gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
                                     const gdouble     dist,
                                     const gdouble     precision,
                                     GimpCoords       *position,
-                                    gdouble          *gradient)
+                                    gdouble          *slope)
 {
   GArray     *points;
   gint        i;
@@ -1285,16 +1285,16 @@ gimp_stroke_real_get_point_at_dist (const GimpStroke *stroke,
                                u, &(g_array_index (points, GimpCoords , i+1)),
                            position);
 
-          if (difference.y == 0)
-            *gradient = G_MAXDOUBLE;
-          else 
-            *gradient = difference.x / difference.y;
+          if (difference.x == 0)
+            *slope = G_MAXDOUBLE;
+          else
+            *slope = difference.y / difference.x;
 
           ret = TRUE;
           break;
         }
     }
-  
+
   g_array_free (points, TRUE);
 
   return ret;

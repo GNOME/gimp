@@ -351,8 +351,8 @@ HELP
 	  desc => 'The x position of the point.', init => 1 },
 	{ name => 'y_point', type => 'int32',
 	  desc => 'The y position of the point.', init => 1 },
-	{ name => 'gradient', type => 'float',
-	  desc => 'The gradient at the specified point.', init => 1 }
+	{ name => 'slope', type => 'float',
+	  desc => 'The slope (dy / dx) at the specified point.', init => 1 }
     );
 
     %invoke = (
@@ -382,7 +382,7 @@ HELP
               stroke_distance = stroke_distance < 0 ? 0: stroke_distance;
 
               if (!gimp_stroke_get_point_at_dist (stroke, stroke_distance, 0.5,
-	                                          &position, &gradient))
+	                                          &position, &slope))
                 {
                   success = FALSE;
                   break;

@@ -666,7 +666,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
   gdouble distance;
   gint32 x_point = 0;
   gint32 y_point = 0;
-  gdouble gradient = 0;
+  gdouble slope = 0;
   GimpVectors *vectors;
   GimpStroke *stroke;
   gdouble distance_along;
@@ -703,7 +703,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
                   stroke_distance = stroke_distance < 0 ? 0: stroke_distance;
 
                   if (!gimp_stroke_get_point_at_dist (stroke, stroke_distance, 0.5,
-                                                      &position, &gradient))
+                                                      &position, &slope))
                     {
                       success = FALSE;
                       break;
@@ -732,7 +732,7 @@ path_get_point_at_dist_invoker (Gimp         *gimp,
     {
       return_args[1].value.pdb_int = x_point;
       return_args[2].value.pdb_int = y_point;
-      return_args[3].value.pdb_float = gradient;
+      return_args[3].value.pdb_float = slope;
     }
 
   return return_args;
@@ -766,8 +766,8 @@ static ProcArg path_get_point_at_dist_outargs[] =
   },
   {
     GIMP_PDB_FLOAT,
-    "gradient",
-    "The gradient at the specified point."
+    "slope",
+    "The slope (dy / dx) at the specified point."
   }
 };
 

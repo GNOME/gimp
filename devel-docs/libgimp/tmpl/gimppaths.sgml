@@ -86,7 +86,7 @@ Operations related to paths.
 @image_ID: 
 @distance: 
 @y_point: 
-@gradient: 
+@slope: 
 @Returns: 
 
 

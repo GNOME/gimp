@@ -50,7 +50,7 @@ gboolean gimp_path_stroke_current    (gint32           image_ID);
 gint     gimp_path_get_point_at_dist (gint32           image_ID,
 				      gdouble          distance,
 				      gint            *y_point,
-				      gdouble         *gradient);
+				      gdouble         *slope);
 gint     gimp_path_get_tattoo        (gint32           image_ID,
 				      const gchar     *name);
 gboolean gimp_path_set_tattoo        (gint32           image_ID,

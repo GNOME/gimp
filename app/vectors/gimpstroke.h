@@ -123,7 +123,7 @@ struct _GimpStrokeClass
                                           const gdouble          dist,
                                           const gdouble          precision,
                                           GimpCoords            *position,
-                                          gdouble               *gradient);
+                                          gdouble               *slope);
 
   GArray      * (* interpolate)          (const GimpStroke      *stroke,
                                           const gdouble          precision,
@@ -252,8 +252,8 @@ gboolean     gimp_stroke_get_point_at_dist    (const GimpStroke      *stroke,
                                                const gdouble          dist,
                                                const gdouble          precision,
                                                GimpCoords            *position,
-                                               gdouble               *gradient);
- 
+                                               gdouble               *slope);
+
 /* returns an array of valid coordinates */
 GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
                                                const gdouble          precision,

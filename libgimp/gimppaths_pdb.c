@@ -284,7 +284,7 @@ gimp_path_stroke_current (gint32 image_ID)
  * @image_ID: The ID of the image the paths belongs to.
  * @distance: The distance along the path.
  * @y_point: The y position of the point.
- * @gradient: The gradient at the specified point.
+ * @slope: The slope (dy / dx) at the specified point.
  *
  * Get point on a path at a specified distance along the path.
  *
@@ -301,7 +301,7 @@ gint
 gimp_path_get_point_at_dist (gint32   image_ID,
 			     gdouble  distance,
 			     gint    *y_point,
-			     gdouble *gradient)
+			     gdouble *slope)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -317,7 +317,7 @@ gimp_path_get_point_at_dist (gint32   image_ID,
     {
       x_point = return_vals[1].data.d_int32;
       *y_point = return_vals[2].data.d_int32;
-      *gradient = return_vals[3].data.d_float;
+      *slope = return_vals[3].data.d_float;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
