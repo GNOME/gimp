@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * version 1.1.15a; 2000/01/25  hof: use g_malloc, g_free
  * version 1.00.00; 1998/10/26  hof: 1.st (pre) release
  */
 
@@ -840,8 +841,8 @@ xjpg_save_drawable (char   *filename,
    */
   /* JSAMPLEs per row in image_buffer */
   rowstride = drawable->bpp * drawable->width;
-  temp = (guchar *) malloc (cinfo.image_width * cinfo.input_components);
-  data = (guchar *) malloc (rowstride * gimp_tile_height ());
+  temp = (guchar *) g_malloc (cinfo.image_width * cinfo.input_components);
+  data = (guchar *) g_malloc (rowstride * gimp_tile_height ());
   src = data;
   
   while (cinfo.next_scanline < cinfo.image_height)
@@ -932,8 +933,8 @@ xjpg_save_drawable (char   *filename,
   /* This is an important step since it will release a good deal of memory. */
   jpeg_destroy_compress (&cinfo);
   /* free the temporary buffer */
-  free (temp);
-  free (data);
+  g_free (temp);
+  g_free (data);
 
   gimp_drawable_detach (drawable);
 
