@@ -1,5 +1,7 @@
 2003-07-08  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* Added app/composite to app/Makefile.am
+
 	* Added app/composite for the new compositing mechanism.
 
 2003-07-08  Sven Neumann  <sven@gimp.org>

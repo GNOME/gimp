@@ -6,6 +6,7 @@ endif
 
 SUBDIRS = \
 	paint-funcs	\
+	composite \
 	base 		\
 	core		\
 	config		\
@@ -77,6 +78,7 @@ gimp_1_3_LDADD = \
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\
 	paint-funcs/libapppaint-funcs.a					\
+  composite/libgimpcomposite.a     \
 	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
