@@ -463,13 +463,19 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       if (scaledest > 1)
 	scaledest--;
       else
-	if (scalesrc < 0xff)
+	if (scalesrc < 0xFF)
 	  scalesrc++;
 
-      n_width  = image_width * 
-	(scaledest * SCREEN_XRES (shell)) / (scalesrc * gdisp->gimage->xresolution);
-      n_height = image_height *
-	(scaledest * SCREEN_XRES (shell)) / (scalesrc * gdisp->gimage->xresolution);
+      n_width  = (image_width * 
+                  (scaledest * SCREEN_XRES (shell)) /
+                  (scalesrc * gdisp->gimage->xresolution));
+
+      n_height = (image_height *
+                  (scaledest * SCREEN_XRES (shell)) /
+                  (scalesrc * gdisp->gimage->xresolution));
+
+      if (scaledest == 1 && scalesrc == 0xFF)
+        break;
     }
 
   shell->scale = (scaledest << 8) + scalesrc;

@@ -589,8 +589,6 @@ gimp_set_config (Gimp           *gimp,
   gimp->edit_config =
     GIMP_CORE_CONFIG (gimp_config_duplicate (G_OBJECT (gimp->config)));
 
-  gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
-
   g_signal_connect_object (gimp->config, "notify",
                            G_CALLBACK (gimp_global_config_notify),
                            gimp->edit_config, 0);

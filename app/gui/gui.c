@@ -377,8 +377,9 @@ gui_get_screen_resolution (gdouble *xres,
       y = 75.0;
     }
 
-  *xres = x;
-  *yres = y;
+  /*  round the value to full integers to give more pleasant results  */
+  *xres = RINT (x);
+  *yres = RINT (y);
 }
 
 

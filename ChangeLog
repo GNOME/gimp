@@ -1,3 +1,21 @@
+2003-01-10  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_init)
+	* app/core/gimp.c (gimp_set_config): delayed the activation of
+	gimprc-autosave so we don't write the monitor resolution obtained
+	from GDK back to the gimprc on each startup.
+
+	* app/gui/gui.c (gui_get_screen_resolution): round values to get
+	rid of rounding errors introduced earlier. Looks better in the
+	prefs dialog.
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	merged fix for bug #94979 from stable branch. Go even further and
+	don't limit the zoom ratio between 1:16 and 16:1.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): merged
+	fix for bug #103030 from stable branch.
+
 2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/tiff.c (load_image): improved fix for #96611

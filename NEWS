@@ -14,11 +14,11 @@ Overview of Changes in GIMP 1.3.12
 - Portability fixes for 64bit platforms [Yosh, Sven]
 - Handle large swap files (>2GB) [Sven]
 - Updates to the Win32 build system [Tor Lillqvist, Hans Breuer]
-- More work on the vectors tool [Simon]
+- More work on the vectors tool [Simon, Mitch]
 - Lots of bug fixes
 
 Other contributors:
-  Maurits Rijk, Garry R. Osgood
+  Maurits Rijk, Garry R. Osgood, Jakub Steiner
 
 
 Overview of Changes in GIMP 1.3.11

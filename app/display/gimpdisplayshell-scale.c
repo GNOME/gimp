@@ -172,21 +172,21 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->dot_for_dot)
     {
+      Gimp *gimp = shell->gdisp->gimage->gimp;
+
       /* freeze the active tool */
-      tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                                   shell->gdisp);
+      tool_manager_control_active (gimp, PAUSE, shell->gdisp);
 
       shell->dot_for_dot = dot_for_dot;
 
       gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
       gimp_display_shell_scale_resize (shell,
-				       GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->resize_windows_on_zoom,
+				       GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,
 				       TRUE);
 
       /* re-enable the active tool */
-      tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                                   shell->gdisp);
+      tool_manager_control_active (gimp, RESUME, shell->gdisp);
     }
 }
 
@@ -194,9 +194,10 @@ void
 gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type)
 {
+  GimpDisplayConfig *config;
+
   guchar  scalesrc, scaledest;
   gdouble offset_x, offset_y;
-  glong   sx, sy;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -207,8 +208,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   offset_x = shell->offset_x + (shell->disp_width / 2.0);
   offset_y = shell->offset_y + (shell->disp_height / 2.0);
 
-  offset_x *= ((double) scalesrc / (double) scaledest);
-  offset_y *= ((double) scalesrc / (double) scaledest);
+  offset_x *= ((gdouble) scalesrc / (gdouble) scaledest);
+  offset_y *= ((gdouble) scalesrc / (gdouble) scaledest);
 
   switch (zoom_type)
     {
@@ -216,7 +217,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       if (scalesrc > 1)
 	scalesrc--;
       else
-	if (scaledest < 0x10)
+	if (scaledest < 0xFF)
 	  scaledest++;
 	else
 	  return;
@@ -226,55 +227,46 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       if (scaledest > 1)
 	scaledest--;
       else
-	if (scalesrc < 0x10)
+	if (scalesrc < 0xFF)
 	  scalesrc++;
 	else
 	  return;
       break;
 
     default:
-      scalesrc  = CLAMP (zoom_type % 100, 1, 0x10);
-      scaledest = CLAMP (zoom_type / 100, 1, 0x10);
+      scalesrc  = CLAMP (zoom_type % 100, 1, 0xFF);
+      scaledest = CLAMP (zoom_type / 100, 1, 0xFF);
       break;
     }
 
-  sx = (shell->gdisp->gimage->width  * scaledest) / scalesrc;
-  sy = (shell->gdisp->gimage->height * scaledest) / scalesrc;
-
-  /*  The slider value is a short, so make sure we are within its
-   *  range.  If we are trying to scale past it, then stop the scale
-   */
-  if (sx < 0xffff && sy < 0xffff)
-    {
-      /*  set the offsets  */
-      offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
-      offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
-
-      gimp_display_shell_scale_by_values (shell,
-                                          (scaledest << 8) + scalesrc,
-                                          (offset_x - (shell->disp_width  / 2)),
-                                          (offset_y - (shell->disp_height / 2)),
-                                          GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->resize_windows_on_zoom);
-    }
+  /*  set the offsets  */
+  offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
+  offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
+  
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+      
+  gimp_display_shell_scale_by_values (shell,
+                                      (scaledest << 8) + scalesrc,
+                                      (offset_x - (shell->disp_width  / 2)),
+                                      (offset_y - (shell->disp_height / 2)),
+                                      config->resize_windows_on_zoom);
 }
 
 void
 gimp_display_shell_scale_fit (GimpDisplayShell *shell)
 {
-  GimpDisplayConfig *config;
-  GimpImage         *gimage;
-
-  gint    image_width;
-  gint    image_height;
-  gdouble zoom_x;
-  gdouble zoom_y;
-  gdouble zoom_factor;
-  gdouble zoom_delta;
-  gdouble min_zoom_delta = G_MAXFLOAT;
-  gint    scalesrc       = 1;
-  gint    scaledest      = 1;
-  gint    i;
-  gint    best_i         = 0x10;
+  GimpImage *gimage;
+  gint       image_width;
+  gint       image_height;
+  gdouble    zoom_x;
+  gdouble    zoom_y;
+  gdouble    zoom_factor;
+  gdouble    zoom_delta;
+  gdouble    min_zoom_delta = G_MAXFLOAT;
+  gint       scalesrc       = 1;
+  gint       scaledest      = 1;
+  gint       i;
+  gint       best_i         = 0x10;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -283,10 +275,10 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   image_width  = gimage->width;
   image_height = gimage->height;
 
-  config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
-
   if (! shell->dot_for_dot)
     {
+      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
+
       image_width  = ROUND (image_width *
                             config->monitor_xres / gimage->xresolution);
       image_height = ROUND (image_height *
@@ -380,11 +372,14 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
                                     gint              offset_y,
                                     gboolean          resize_window)
 {
+  Gimp *gimp;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  gimp = shell->gdisp->gimage->gimp;
+
   /* freeze the active tool */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                               shell->gdisp);
+  tool_manager_control_active (gimp, PAUSE, shell->gdisp);
 
   shell->scale    = scale;
   shell->offset_x = offset_x;
@@ -393,8 +388,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   gimp_display_shell_scale_resize (shell, resize_window, TRUE);
 
   /* re-enable the active tool */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                               shell->gdisp);
+  tool_manager_control_active (gimp, RESUME, shell->gdisp);
 }
 
 void
@@ -410,11 +404,14 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
                                  gboolean          resize_window,
                                  gboolean          redisplay)
 {
+  Gimp *gimp;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  gimp = shell->gdisp->gimage->gimp;
+
   /* freeze the active tool */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                               shell->gdisp);
+  tool_manager_control_active (gimp, PAUSE, shell->gdisp);
 
   if (resize_window)
     gimp_display_shell_shrink_wrap (shell);
@@ -433,8 +430,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
     }
 
   /* re-enable the active tool */
-  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                               shell->gdisp);
+  tool_manager_control_active (gimp, RESUME, shell->gdisp);
 }
 
 
@@ -450,15 +446,18 @@ img2real (GimpDisplayShell *shell,
 	  gboolean          xdir,
 	  gdouble           a)
 {
-  gdouble res;
+  GimpImage *gimage;
+  gdouble    res;
 
   if (shell->dot_for_dot)
     return a;
 
-  if (xdir)
-    res = shell->gdisp->gimage->xresolution;
-  else
-    res = shell->gdisp->gimage->yresolution;
+  gimage = shell->gdisp->gimage;
 
-  return a * gimp_unit_get_factor (shell->gdisp->gimage->unit) / res;
+  if (xdir)
+    res = gimage->xresolution;
+  else
+    res = gimage->yresolution;
+
+  return a * gimp_unit_get_factor (gimage->unit) / res;
 }

@@ -200,6 +200,11 @@ app_init (gint    gimp_argc,
                           G_CALLBACK (app_exit_finish_callback),
                           NULL);
 
+  /*  enable autosave late so we don't autosave when the
+   *  monitor resolution is set in gui_init()
+   */
+  gimp_rc_set_autosave (GIMP_RC (the_gimp->edit_config), TRUE);
+
   /*  Parse the rest of the command line arguments as images to load
    */
   if (gimp_argc > 0)
