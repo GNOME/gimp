@@ -1,3 +1,11 @@
+2003-09-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added a chapter id to
+	get a reasonable name for the generated HTML file.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new icons.
+
 2003-09-17  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: added another file to ignore, added -u hack to

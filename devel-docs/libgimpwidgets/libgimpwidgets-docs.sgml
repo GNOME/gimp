@@ -14,7 +14,7 @@
   <part id="libgimpwidgets-widgets">
     <title>GIMP Widgets</title>
 
-    <chapter>
+    <chapter id="libgimpwidgets-hierarchy">
       <title>Object Hierarchy</title>
       <xi:include href="xml/tree_index.sgml" />
     </chapter>    

@@ -45,6 +45,27 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_RESET ##### -->
+<para>
+<inlinegraphic fileref="stock-reset-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CLOSE ##### -->
+<para>
+<inlinegraphic fileref="stock-close-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_MENU ##### -->
+<para>
+<inlinegraphic fileref="stock-menu-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_INVERT ##### -->
 <para>
 <inlinegraphic fileref="stock-invert-16.png" format="png"></inlinegraphic>
@@ -111,13 +132,6 @@ size).
 <!-- ##### MACRO GIMP_STOCK_QMASK_ON ##### -->
 <para>
 <inlinegraphic fileref="stock-qmask-on-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_RESET ##### -->
-<para>
-<inlinegraphic fileref="stock-reset-16.png" format="png"></inlinegraphic>
 </para>
 
 
