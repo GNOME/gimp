@@ -40,13 +40,12 @@ gboolean   gimp_display_shell_events               (GtkWidget         *widget,
 
 void       gimp_display_shell_canvas_realize       (GtkWidget         *widget,
                                                     GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_canvas_configure     (GtkWidget         *widget,
-                                                    GdkEventConfigure *cevent,
+void       gimp_display_shell_canvas_size_allocate (GtkWidget         *widget,
+                                                    GtkAllocation     *alloc,
                                                     GimpDisplayShell  *shell);
 gboolean   gimp_display_shell_canvas_expose        (GtkWidget         *widget,
                                                     GdkEventExpose    *eevent,
                                                     GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_popup_menu           (GtkWidget         *widget);
 gboolean   gimp_display_shell_canvas_tool_events   (GtkWidget         *widget,
                                                     GdkEvent          *event,
                                                     GimpDisplayShell  *shell);
@@ -57,6 +56,7 @@ gboolean   gimp_display_shell_hruler_button_press  (GtkWidget         *widget,
 gboolean   gimp_display_shell_vruler_button_press  (GtkWidget         *widget,
                                                     GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);
+
 gboolean   gimp_display_shell_origin_button_press  (GtkWidget         *widget,
                                                     GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);

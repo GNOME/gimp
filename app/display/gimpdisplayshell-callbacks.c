@@ -106,11 +106,6 @@ static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
 static GdkModifierType
                 gimp_display_shell_key_to_state      (gint              key);
 
-static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
-                                                      gint             *x,
-                                                      gint             *y,
-                                                      gpointer          data);
-
 GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
 
 
@@ -318,35 +313,33 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gimp_display_shell_draw_vectors (shell);
 }
 
-gboolean
-gimp_display_shell_canvas_configure (GtkWidget         *widget,
-                                     GdkEventConfigure *cevent,
-                                     GimpDisplayShell  *shell)
+void
+gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
+                                         GtkAllocation    *allocation,
+                                         GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
   if (! shell->gdisp || ! shell->gdisp->shell)
-    return TRUE;
+    return;
 
-  if ((shell->disp_width  != shell->canvas->allocation.width) ||
-      (shell->disp_height != shell->canvas->allocation.height))
+  if ((shell->disp_width  != allocation->width) ||
+      (shell->disp_height != allocation->height))
     {
-      if (shell->zoom_on_resize                 &&
-          shell->disp_width  > 64               &&
-          shell->disp_height > 64               &&
-          shell->canvas->allocation.width  > 64 &&
-          shell->canvas->allocation.height > 64)
+      if (shell->zoom_on_resize   &&
+          shell->disp_width  > 64 &&
+          shell->disp_height > 64 &&
+          allocation->width  > 64 &&
+          allocation->height > 64)
         {
-          gdouble scale;
+          gdouble scale = shell->scale;
           gint    offset_x;
           gint    offset_y;
-
-          scale = shell->scale;
 
           /*  multiply the zoom_factor with the ratio of the new and
            *  old canvas diagonals
            */
-          scale *= (sqrt (SQR (shell->canvas->allocation.width) +
-                          SQR (shell->canvas->allocation.height)) /
+          scale *= (sqrt (SQR (allocation->width) +
+                          SQR (allocation->height)) /
                     sqrt (SQR (shell->disp_width) +
                           SQR (shell->disp_height)));
 
@@ -358,15 +351,13 @@ gimp_display_shell_canvas_configure (GtkWidget         *widget,
           shell->offset_y = SCALEY (shell, offset_y);
         }
 
-      shell->disp_width  = shell->canvas->allocation.width;
-      shell->disp_height = shell->canvas->allocation.height;
+      shell->disp_width  = allocation->width;
+      shell->disp_height = allocation->height;
 
       gimp_display_shell_scroll_clamp_offsets (shell);
       gimp_display_shell_scale_setup (shell);
       gimp_display_shell_scaled (shell);
     }
-
-  return TRUE;
 }
 
 gboolean
@@ -459,23 +450,6 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 }
 
 gboolean
-gimp_display_shell_popup_menu (GtkWidget *widget)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-
-  gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
-                            shell->gdisp);
-
-  gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
-                            GTK_WIDGET (shell),
-                            gimp_display_shell_origin_menu_position,
-                            shell->origin_button,
-                            NULL, NULL);
-
-  return TRUE;
-}
-
-gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
@@ -502,6 +476,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   /*  are we in destruction?  */
   if (! shell->gdisp || ! shell->gdisp->shell)
+    return TRUE;
+
+  /*  set the active display before doing any other canvas event processing  */
+  if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
 
   gdisp  = shell->gdisp;
@@ -1507,7 +1485,11 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
   if (! shell->gdisp->gimage->gimp->busy)
     {
       if (event->button == 1)
-        gimp_display_shell_popup_menu (GTK_WIDGET (shell));
+        {
+          gboolean unused;
+
+          g_signal_emit_by_name (shell, "popup-menu", &unused);
+        }
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the
@@ -1744,15 +1726,6 @@ gimp_display_shell_key_to_state (gint key)
     default:
       return 0;
     }
-}
-
-static void
-gimp_display_shell_origin_menu_position (GtkMenu  *menu,
-                                         gint     *x,
-                                         gint     *y,
-                                         gpointer  data)
-{
-  gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
 }
 
 /* gimp_display_shell_compress_motion:

@@ -1,3 +1,29 @@
+2004-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): don't
+	connect to "event" and don't connect any canvas event to
+	gimp_display_shell_events(). Connect all tool events separately
+	(doesn't include "configure-event" and thus fixes bug #141543).
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): call
+	gimp_display_shell_events() manually before doing tool event
+	processing.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-callbacks.[ch]: connect to
+	"size_allocate" of the canvas, not to "configure_event"
+	(suggested by Owen in bug #141543).
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: removed
+	gimp_display_shell_popup_menu().
+
+	(gimp_display_shell_origin_button_press): emit "popup-menu" on the
+	shell manually instead of calling above function.
+
+	* app/display/gimpdisplayshell.c: added the whole menu popup code
+	here.
+
 2004-11-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpoffsetarea.c (gimp_offset_area_resize): queue

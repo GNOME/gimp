@@ -119,8 +119,14 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
                                                     GdkEventAny      *aevent);
+static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
+
+static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
+                                                    gint             *x,
+                                                    gint             *y,
+                                                    gpointer          data);
 
 
 static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
@@ -540,6 +546,23 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
   return TRUE;
 }
 
+static gboolean
+gimp_display_shell_popup_menu (GtkWidget *widget)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+
+  gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
+                            shell->gdisp);
+
+  gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
+                            GTK_WIDGET (shell),
+                            gimp_display_shell_menu_position,
+                            shell->origin_button,
+                            NULL, NULL);
+
+  return TRUE;
+}
+
 static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
@@ -558,6 +581,18 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   if (shell->gdisp == gimp_context_get_display (user_context))
     gimp_ui_manager_update (shell->popup_manager, shell->gdisp);
 }
+
+static void
+gimp_display_shell_menu_position (GtkMenu  *menu,
+                                  gint     *x,
+                                  gint     *y,
+                                  gpointer  data)
+{
+  gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
+}
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_display_shell_new (GimpDisplay     *gdisp,
@@ -845,19 +880,47 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),
                     shell);
-
-  /*  set the active display before doing any other canvas event processing  */
-  g_signal_connect (shell->canvas, "event",
-                    G_CALLBACK (gimp_display_shell_events),
+  g_signal_connect (shell->canvas, "size_allocate",
+                    G_CALLBACK (gimp_display_shell_canvas_size_allocate),
                     shell);
-
   g_signal_connect (shell->canvas, "expose_event",
                     G_CALLBACK (gimp_display_shell_canvas_expose),
                     shell);
-  g_signal_connect (shell->canvas, "configure_event",
-                    G_CALLBACK (gimp_display_shell_canvas_configure),
+
+  g_signal_connect (shell->canvas, "enter_notify_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
                     shell);
-  g_signal_connect (shell->canvas, "event",
+  g_signal_connect (shell->canvas, "leave_notify_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "proximity_in_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "proximity_out_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "focus_in_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "focus_out_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "button_press_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "button_release_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "scroll_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "motion_notify_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "key_press_event",
+                    G_CALLBACK (gimp_display_shell_canvas_tool_events),
+                    shell);
+  g_signal_connect (shell->canvas, "key_release_event",
                     G_CALLBACK (gimp_display_shell_canvas_tool_events),
                     shell);
 
