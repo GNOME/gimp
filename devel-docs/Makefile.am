@@ -12,6 +12,7 @@ EXTRA_DIST = \
 	ChangeLog		\
 	README			\
 	README.gtkdoc		\
+	app			\
 	debug-plug-ins.txt	\
 	gbr.txt			\
 	gih.txt  		\

@@ -1,3 +1,10 @@
+2003-08-09  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* app: added a first version of docs for the application. The
+	templates are not yet in CVS and it's not built by default (and
+	probably never will be).
+
 2003-07-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am: exclude libgimbase/gimpwin32-io.h.

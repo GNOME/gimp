@@ -1245,6 +1245,8 @@ plug-ins/twain/Makefile
 plug-ins/winsnap/Makefile
 modules/Makefile
 devel-docs/Makefile
+devel-docs/app/Makefile
+devel-docs/app/version.xml
 devel-docs/libgimp/Makefile
 devel-docs/libgimp/version.xml
 devel-docs/libgimpbase/Makefile

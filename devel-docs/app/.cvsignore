@@ -1,0 +1,15 @@
+Makefile
+Makefile.in
+deprecated
+app.args
+app.hierarchy
+app.signals
+app-decl.txt
+app-decl-list.txt
+app-unused.txt
+app-undocumented.txt
+html
+tmpl
+xml
+version.xml
+*.stamp

@@ -1,3 +1,10 @@
+2003-08-09  Sven Neumann  <neo@bender>
+
+	* configure.in: added devel-docs/app.
+
+	* app/core/gimpitem.c
+	* app/widgets/gimpdialogfactory.c: more documentation fixes.
+
 2003-08-09  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c

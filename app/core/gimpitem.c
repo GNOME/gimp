@@ -576,6 +576,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * @item:         The item to be transformed by width & height scale factors
  * @new_width:    The width that item will acquire
  * @new_height:   The height that the item will acquire
+ * @interpolation:
  * @local_origin: sets fixed point of the scaling transform. See below.
  *
  * Sets item dimensions to new_width and
