@@ -187,6 +187,8 @@ gimp_edit_clear (gint32 drawable_ID)
  * If the fill mode is background, the current background color is
  * used. Other fill modes should not be used. This procedure only
  * affects regions within a selection if there is a selection active.
+ * If you want to fill the whole drawable, regardless of the selection,
+ * use gimp_drawable_fill().
  *
  * Returns: TRUE on success.
  */
