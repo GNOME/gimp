@@ -3,7 +3,6 @@
 
 app/app_procs.c
 app/main.c
-app/undo.c
 app/undo_history.c
 
 app/base/base-enums.c
@@ -25,7 +24,12 @@ app/core/gimpchannel.c
 app/core/gimpcontext.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
+app/core/gimpdrawable-blend.c
 app/core/gimpdrawable-bucket-fill.c
+app/core/gimpdrawable-desaturate.c
+app/core/gimpdrawable-equalize.c
+app/core/gimpdrawable-invert.c
+app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdrawable.c
 app/core/gimpedit.c
@@ -33,12 +37,14 @@ app/core/gimpenvirontable.c
 app/core/gimpgradient.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-crop.c
+app/core/gimpimage-mask-select.c
 app/core/gimpimage-mask.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
 app/core/gimpimage-qmask.c
 app/core/gimpimage-resize.c
 app/core/gimpimage-scale.c
+app/core/gimpimage-undo-push.c
 app/core/gimpimage.c
 app/core/gimpimagefile.c
 app/core/gimpitem.c
@@ -134,15 +140,26 @@ app/gui/user-install-dialog.c
 app/gui/vectors-commands.c
 app/gui/vectors-menu.c
 
-app/paint/paint-enums.c
+app/paint/gimpairbrush.c
 app/paint/gimpclone.c
+app/paint/gimpconvolve.c
+app/paint/gimpdodgeburn.c
+app/paint/gimperaser.c
+app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
+app/paint/gimppencil.c
+app/paint/gimpsmudge.c
+app/paint/paint-enums.c
 
+app/pdb/color_cmds.c
+app/pdb/drawable_cmds.c
+app/pdb/guides_cmds.c
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
 app/pdb/layer_cmds.c
 app/pdb/procedural_db.c
 app/pdb/procedural_db_cmds.c
+app/pdb/selection_tools_cmds.c
 app/pdb/undo_cmds.c
 
 app/plug-in/plug-in.c
