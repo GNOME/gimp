@@ -69,6 +69,7 @@ app/iscissors.c
 app/layer.c
 app/layer_select.c
 app/layers_dialog.c
+app/lc_dialog.c
 app/levels.c
 app/magnify.c
 app/main.c
@@ -101,6 +102,7 @@ app/tile_manager.c
 app/tile_swap.c
 app/tips_dialog.c
 app/tools.c
+app/tool_options.c
 app/transform_core.c
 app/transform_tool.c
 app/xcf.c
