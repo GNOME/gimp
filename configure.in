@@ -543,7 +543,7 @@ if test "x$enable_perl" != xno; then
       EXTENSIVE_TESTS=0
 
       dnl include the autoconf fragment from there
-      sinclude(plug-ins/perl/etc/configure.frag)
+      sinclude(plug-ins/perl/configure.frag)
 
       dnl we ignore prefix
       if test -n "$enable_perl" && test "$enable_perl" != xyes; then
@@ -665,7 +665,7 @@ libgimp/gimpfeatures.h
 libgimp/Makefile
 app/Makefile
 plug-ins/Makefile
-plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
+plug-ins/perl/config.pl
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/megawidget/Makefile
