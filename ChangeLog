@@ -1,3 +1,9 @@
+2004-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Small/gtkrc: don't change GtkDialog::button_spacing and
+	::action_area_border because it breaks alignment with all other
+	dialog spacings or borders (which are hardcoded).
+
 2004-11-01  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-types.h: new file to hold the types gfig uses.
