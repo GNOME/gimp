@@ -1,3 +1,8 @@
+2000-12-15  Vidar Madsen  <vidar@gimp.org>
+
+	* plug-ins/common/spheredesigner.c: Removed from CVS, until
+	it gets more usable.
+
 2000-12-15  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/convmatrix.c: Fixed the unuseable PDB-interface
