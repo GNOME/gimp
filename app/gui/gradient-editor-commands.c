@@ -28,12 +28,12 @@
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
 
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "color-notebook.h"
 #include "gradient-editor.h"
 #include "gradient-editor-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -921,7 +921,7 @@ gradient_editor_show_context_menu (GradientEditor *editor)
 
   gradient_editor_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_gradient_editor_factory ();
+  item_factory = gtk_item_factory_from_path ("<GradientEditor>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -981,15 +981,15 @@ gradient_editor_menu_set_sensitivity (GradientEditor *editor)
   delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
 
 #define SET_ACTIVE(menu,active) \
-        menus_set_active ("<GradientEditor>/" menu, (active))
+        gimp_menu_item_set_active ("<GradientEditor>/" menu, (active))
 #define SET_COLOR(menu,color,set_label) \
-        menus_set_color ("<GradientEditor>/" menu, (color), (set_label))
+        gimp_menu_item_set_color ("<GradientEditor>/" menu, (color), (set_label))
 #define SET_LABEL(menu,label) \
-        menus_set_label ("<GradientEditor>/" menu, (label))
+        gimp_menu_item_set_label ("<GradientEditor>/" menu, (label))
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<GradientEditor>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<GradientEditor>/" menu, (condition) != 0)
 #define SET_VISIBLE(menu,condition) \
-        menus_set_visible ("<GradientEditor>/" menu, (condition) != 0)
+        gimp_menu_item_set_visible ("<GradientEditor>/" menu, (condition) != 0)
 
   SET_COLOR ("Left Endpoint's Color...",
              &editor->control_sel_l->left_color, FALSE);

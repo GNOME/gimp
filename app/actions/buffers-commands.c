@@ -30,12 +30,12 @@
 
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "buffers-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -110,7 +110,7 @@ buffers_show_context_menu (GimpContainerEditor *editor)
 
   buffers_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_buffers_factory ();
+  item_factory = gtk_item_factory_from_path ("<Buffers>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -126,7 +126,7 @@ buffers_menu_set_sensitivity (GimpContainerEditor *editor)
   buffer = gimp_context_get_buffer (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Buffers>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Buffers>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Paste Buffer",        buffer);
   SET_SENSITIVE ("Paste Buffer Into",   buffer);

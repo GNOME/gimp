@@ -27,16 +27,20 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "patterns-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+
 static void   patterns_menu_set_sensitivity (GimpContainerEditor *editor);
 
+
+/*  public functions  */
 
 void
 patterns_show_context_menu (GimpContainerEditor *editor)
@@ -45,11 +49,13 @@ patterns_show_context_menu (GimpContainerEditor *editor)
 
   patterns_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_patterns_factory ();
+  item_factory = gtk_item_factory_from_path ("<Patterns>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
 
+
+/*  private functions  */
 
 static void
 patterns_menu_set_sensitivity (GimpContainerEditor *editor)
@@ -59,7 +65,7 @@ patterns_menu_set_sensitivity (GimpContainerEditor *editor)
   pattern = gimp_context_get_pattern (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Patterns>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Patterns>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Pattern",
 		 pattern && GIMP_DATA_GET_CLASS (pattern)->duplicate);

@@ -96,11 +96,12 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpitemfactory.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
-#include "gui/menus.h"
 #include "gui/pattern-select.h"
 
 #include "app_procs.h"
@@ -1480,20 +1481,22 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	      break;
 	    }
 
-	  menus_set_sensitive (proc_def->menu_path, sensitive);
+	  gimp_menu_item_set_sensitive (proc_def->menu_path, sensitive);
 
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
-	      menus_set_sensitive ("<Image>/Filters/Repeat Last", sensitive);
-	      menus_set_sensitive ("<Image>/Filters/Re-Show Last", sensitive);
+	      gimp_menu_item_set_sensitive ("<Image>/Filters/Repeat Last",
+                                            sensitive);
+	      gimp_menu_item_set_sensitive ("<Image>/Filters/Re-Show Last",
+                                            sensitive);
 	    }
 	}
     }
 
   if (!last_plug_in)
     {
-      menus_set_sensitive ("<Image>/Filters/Repeat Last", FALSE);
-      menus_set_sensitive ("<Image>/Filters/Re-Show Last", FALSE);
+      gimp_menu_item_set_sensitive ("<Image>/Filters/Repeat Last", FALSE);
+      gimp_menu_item_set_sensitive ("<Image>/Filters/Re-Show Last", FALSE);
     }
 }
 
@@ -2681,9 +2684,9 @@ plug_in_make_menu_entry (gpointer         foo,
   entry.help_page             = lowercase_page;
   entry.description           = NULL;
 
-  menus_create_item_from_full_path (&entry, 
-				    menu_entry->domain, 
-				    &menu_entry->proc_def->db_info);
+  gimp_menu_item_create (&entry, 
+                         menu_entry->domain, 
+                         &menu_entry->proc_def->db_info);
   g_free (menu_entry);
   
   return FALSE;
@@ -2960,7 +2963,9 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
     {
       /*  Destroy the menu item  */
       if (proc_def->menu_path)
-        menus_destroy (proc_def->menu_path);
+        {
+          gimp_menu_item_destroy (proc_def->menu_path);
+        }
     }
 
   /*  Unregister the procedural database entry  */

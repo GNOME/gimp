@@ -30,10 +30,10 @@
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "documents-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -125,7 +125,7 @@ documents_show_context_menu (GimpContainerEditor *editor)
 
   documents_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_documents_factory ();
+  item_factory = gtk_item_factory_from_path ("<Documents>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -141,7 +141,7 @@ documents_menu_set_sensitivity (GimpContainerEditor *editor)
   imagefile = gimp_context_get_imagefile (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Documents>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Documents>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Open Image",          imagefile);
   SET_SENSITIVE ("Raise or Open Image", imagefile);

@@ -30,13 +30,13 @@
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "palette-import-dialog.h"
 #include "palettes-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -87,7 +87,7 @@ palettes_show_context_menu (GimpContainerEditor *editor)
 
   palettes_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_palettes_factory ();
+  item_factory = gtk_item_factory_from_path ("<Palettes>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -103,7 +103,7 @@ palettes_menu_set_sensitivity (GimpContainerEditor *editor)
   palette = gimp_context_get_palette (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Palettes>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Palettes>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Palette",
 		 palette && GIMP_DATA_GET_CLASS (palette)->duplicate);

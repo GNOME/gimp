@@ -51,9 +51,10 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpitemfactory.h"
+
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
-#include "menus.h"
 
 #include "plug_in.h"
 #include "undo.h"
@@ -137,7 +138,7 @@ file_open_dialog_menu_init (Gimp *gimp)
       entry.help_page             = help_page;
       entry.description           = NULL;
 
-      menus_create_item_from_full_path (&entry, NULL, file_proc);
+      gimp_menu_item_create (&entry, NULL, file_proc);
     }
 }
 
@@ -241,7 +242,7 @@ file_open_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
-    load_menu = menus_get_load_factory ()->widget;
+    load_menu = gtk_item_factory_from_path ("<Load>")->widget;
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
 
     gtk_widget_show (vbox);

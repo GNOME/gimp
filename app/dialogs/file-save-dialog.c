@@ -41,9 +41,10 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpitemfactory.h"
+
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
-#include "menus.h"
 
 #include "gimprc.h"
 #include "plug_in.h"
@@ -130,7 +131,7 @@ file_save_dialog_menu_init (Gimp *gimp)
       entry.help_page             = lowercase_page;
       entry.description           = NULL;
 
-      menus_create_item_from_full_path (&entry, NULL, file_proc);
+      gimp_menu_item_create (&entry, NULL, file_proc);
     }
 }
 
@@ -311,7 +312,7 @@ file_save_dialog_create (void)
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
     gtk_widget_show (option_menu);
 
-    save_menu = menus_get_save_factory ()->widget;
+    save_menu = gtk_item_factory_from_path ("<Save>")->widget;
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), save_menu);
 
     gtk_widget_show (frame);

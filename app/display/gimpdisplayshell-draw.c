@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -41,10 +42,10 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
-#include "gui/menus.h"
 
 #include "tools/tool_manager.h"
 
@@ -413,7 +414,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
                                               GDK_KEY_RELEASE_MASK));
 
   /*  the popup menu  */
-  shell->ifactory = menus_get_image_factory ();
+  shell->ifactory = gtk_item_factory_from_path ("<Image>");
 
   /*  The accelerator table for images  */
   gimp_window_add_accel_group (GTK_WINDOW (shell),
@@ -909,6 +910,8 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   GimpImageType      type      = -1;
   GimpDrawable      *drawable  = NULL;
   GimpLayer         *layer     = NULL;
+  GimpRGB            fg;
+  GimpRGB            bg;
   gboolean           fs        = FALSE;
   gboolean           aux       = FALSE;
   gboolean           lm        = FALSE;
@@ -949,12 +952,20 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 
 	  lnum = gimp_container_num_children (gimage->layers);
 	}
+
+      gimp_context_get_foreground (gimp_get_user_context (gdisp->gimage->gimp),
+                                   &fg);
+      gimp_context_get_background (gimp_get_user_context (gdisp->gimage->gimp),
+                                   &bg);
+
     }
 
-#define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Image>/" menu, (condition) != 0)
 #define SET_ACTIVE(menu,condition) \
-        menus_set_active ("<Image>/" menu, (condition) != 0)
+        gimp_menu_item_set_active ("<Image>/" menu, (condition) != 0)
+#define SET_COLOR(menu,color) \
+        gimp_menu_item_set_color ("<Image>/" menu, (color), FALSE)
+#define SET_SENSITIVE(menu,condition) \
+        gimp_menu_item_set_sensitive ("<Image>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("File/Save", gdisp && drawable);
   SET_SENSITIVE ("File/Save as...", gdisp && drawable);
@@ -989,6 +1000,9 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
       SET_SENSITIVE ("Edit/Fill with FG Color", lp);
       SET_SENSITIVE ("Edit/Fill with BG Color", lp);
       SET_SENSITIVE ("Edit/Stroke", lp);
+
+      SET_COLOR ("Edit/Fill with FG Color", &fg);
+      SET_COLOR ("Edit/Fill with BG Color", &bg);
     }
 
   SET_SENSITIVE ("Select", gdisp && lp);
@@ -1074,6 +1088,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Script-Fu", gdisp && lp);
 
 #undef SET_ACTIVE
+#undef SET_COLOR
 #undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (type);

@@ -41,6 +41,7 @@
 #include "display/gximage.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "brush-select.h"
 #include "color-select.h"
@@ -365,8 +366,8 @@ gui_really_quit_dialog (GCallback quit_func)
 {
   GtkWidget *dialog;
 
-  menus_set_sensitive ("<Toolbox>/File/Quit", FALSE);
-  menus_set_sensitive ("<Image>/File/Quit", FALSE);
+  gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", FALSE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Quit", FALSE);
 
   dialog = gimp_query_boolean_box (_("Really Quit?"),
 				   gimp_standard_help_func,
@@ -503,8 +504,8 @@ gui_really_quit_callback (GtkWidget *button,
     }
   else
     {
-      menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
-      menus_set_sensitive ("<Image>/File/Quit", TRUE);
+      gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", TRUE);
+      gimp_menu_item_set_sensitive ("<Image>/File/Quit", TRUE);
     }
 }
 

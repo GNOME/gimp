@@ -29,7 +29,6 @@
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "menus.h"
 
 
 GimpDialogFactory *global_dialog_factory = NULL;
@@ -101,7 +100,7 @@ dialogs_init (Gimp *gimp)
 
   global_dock_factory = gimp_dialog_factory_new ("dock",
 						 gimp_get_user_context (gimp),
-						 menus_get_dialogs_factory (),
+						 gtk_item_factory_from_path ("<Dialogs>"),
 						 dialogs_dock_new);
 
   for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)

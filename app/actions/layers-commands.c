@@ -39,10 +39,10 @@
 
 #include "display/gimpdisplay-foreach.h"
 
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "layers-commands.h"
-#include "menus.h"
 #include "resize-dialog.h"
 
 #include "floating_sel.h"
@@ -1224,7 +1224,7 @@ layers_show_context_menu (GimpImage *gimage)
 
   layers_menu_set_sensitivity (gimage);
 
-  item_factory = menus_get_layers_factory ();
+  item_factory = gtk_item_factory_from_path ("<Layers>");
 
   gimp_item_factory_popup_with_data (item_factory, gimage);
 }
@@ -1278,7 +1278,7 @@ layers_menu_set_sensitivity (GimpImage *gimage)
     next_alpha = FALSE;
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Layers>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Layers>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("New Layer...", gimage);
 

@@ -1,5 +1,37 @@
 2001-11-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpitemfactory.[ch]: put the whole generic stuff
+	from gui/menus.[ch] here (where generic == less_evil because it at
+	least does not depend on particular menu entries).
+
+	* app/gui/menus.[ch]: removed the stuff here. Only the global menu
+	definitions and bad hacks to adjust them to our needs left.
+	Removed all menus_get_foobar_factory() functions because we can
+	use gtk_item_factory_from_path("<FooBar>") all over the place.
+
+	* app/plug_in.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/brushes-commands.c
+	* app/gui/buffers-commands.c
+	* app/gui/channels-commands.c
+	* app/gui/dialogs.c
+	* app/gui/documents-commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gradients-commands.c
+	* app/gui/gui.c
+	* app/gui/layers-commands.c
+	* app/gui/palettes-commands.c
+	* app/gui/paths-dialog.c
+	* app/gui/patterns-commands.c
+	* app/gui/toolbox.c: changed accordingly. None of these files
+	except gui/gui.c includes gui/menus.h any more.
+
+2001-11-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.c: GType is a pointer now, not a guint.
 
 	* app/widgets/gimpdock.c: chain up in widget_class->style_set().

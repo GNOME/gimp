@@ -43,6 +43,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -51,7 +52,6 @@
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "indicator-area.h"
-#include "menus.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
@@ -359,7 +359,7 @@ toolbox_create (Gimp *gimp)
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
     }
 
-  toolbox_factory = menus_get_toolbox_factory ();
+  toolbox_factory = gtk_item_factory_from_path ("<Toolbox>");
 
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 1);

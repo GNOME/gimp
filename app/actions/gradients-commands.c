@@ -31,10 +31,10 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gradients-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -70,7 +70,7 @@ gradients_show_context_menu (GimpContainerEditor *editor)
 
   gradients_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_gradients_factory ();
+  item_factory = gtk_item_factory_from_path ("<Gradients>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -86,7 +86,7 @@ gradients_menu_set_sensitivity (GimpContainerEditor *editor)
   gradient = gimp_context_get_gradient (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Gradients>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Gradients>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Gradient",
 		 gradient && GIMP_DATA_GET_CLASS (gradient)->duplicate);

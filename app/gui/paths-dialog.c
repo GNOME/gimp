@@ -37,12 +37,13 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpitemfactory.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
 #include "tools/gimpbezierselecttool.h"
 
-#include "menus.h"
 #include "ops_buttons.h"
 #include "paths-dialog.h"
 
@@ -220,7 +221,7 @@ paths_dialog_set_menu_sensitivity (void)
     cpp = TRUE;
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Paths>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Paths>/" menu, (condition) != 0)
 #define SET_OPS_SENSITIVE(button,condition) \
         gtk_widget_set_sensitive (paths_ops_buttons[(button)].widget, \
                                  (condition) != 0)
@@ -358,7 +359,7 @@ paths_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 0);
   gtk_widget_show (button_box);
 
-  paths_factory = menus_get_paths_factory ();
+  paths_factory = gtk_item_factory_from_path ("<Paths>");
 
   paths_dialog->ops_menu    = paths_factory->widget;
   paths_dialog->accel_group = paths_factory->accel_group;;

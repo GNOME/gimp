@@ -25,7 +25,7 @@
 
 #include "gui-types.h"
 
-#include "menus.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "plug_in.h"
 
@@ -33,11 +33,11 @@
 void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive ("<Toolbox>/File/Open...", FALSE);
-  menus_set_sensitive ("<Image>/File/Open...", FALSE);
-  menus_set_sensitive ("<Image>/File/Save", FALSE);
-  menus_set_sensitive ("<Image>/File/Save as...", FALSE);
-  menus_set_sensitive ("<Image>/File/Save a Copy as...", FALSE);
+  gimp_menu_item_set_sensitive ("<Toolbox>/File/Open...", FALSE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Open...", FALSE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save", FALSE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save as...", FALSE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save a Copy as...", FALSE);
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
   gtk_widget_show (filesel);
@@ -48,11 +48,11 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
   
-  menus_set_sensitive ("<Toolbox>/File/Open...", TRUE);
-  menus_set_sensitive ("<Image>/File/Open...", TRUE);
-  menus_set_sensitive ("<Image>/File/Save", TRUE);
-  menus_set_sensitive ("<Image>/File/Save as...", TRUE);
-  menus_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
+  gimp_menu_item_set_sensitive ("<Toolbox>/File/Open...", TRUE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Open...", TRUE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save", TRUE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save as...", TRUE);
+  gimp_menu_item_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
 
   /*  return TRUE because we are used as "delete_event" handler  */
   return TRUE;
@@ -100,7 +100,9 @@ file_dialog_update_menus (GSList *procs,
       procs     = procs->next;
 
       if (file_proc->db_info.proc_type != GIMP_EXTENSION)
-	menus_set_sensitive (file_proc->menu_path,
-			     (file_proc->image_types_val & image_type));
+        {
+          gimp_menu_item_set_sensitive (file_proc->menu_path,
+                                        (file_proc->image_types_val & image_type));
+        }
     }
 }

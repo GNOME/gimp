@@ -27,10 +27,10 @@
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "brushes-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -45,7 +45,7 @@ brushes_show_context_menu (GimpContainerEditor *editor)
 
   brushes_menu_set_sensitivity (editor);
 
-  item_factory = menus_get_brushes_factory ();
+  item_factory = gtk_item_factory_from_path ("<Brushes>");
 
   gimp_item_factory_popup_with_data (item_factory, editor);
 }
@@ -59,7 +59,7 @@ brushes_menu_set_sensitivity (GimpContainerEditor *editor)
   brush = gimp_context_get_brush (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Brushes>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Brushes>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Brush",
 		 brush && GIMP_DATA_GET_CLASS (brush)->duplicate);

@@ -34,16 +34,20 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "channels-commands.h"
-#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+
 static void   channels_menu_set_sensitivity (GimpImage *gimage);
 
+
+/*  public functions  */
 
 void
 channels_new_channel_cmd_callback (GtkWidget *widget,
@@ -594,7 +598,7 @@ channels_show_context_menu (GimpImage *gimage)
 
   channels_menu_set_sensitivity (gimage);
 
-  item_factory = menus_get_channels_factory ();
+  item_factory = gtk_item_factory_from_path ("<Channels>");
 
   gimp_item_factory_popup_with_data (item_factory, gimage);
 }
@@ -629,7 +633,7 @@ channels_menu_set_sensitivity (GimpImage *gimage)
     }
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive ("<Channels>/" menu, (condition) != 0)
+        gimp_menu_item_set_sensitive ("<Channels>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("New Channel...",             !fs);
   SET_SENSITIVE ("Raise Channel",              !fs && channel && prev);

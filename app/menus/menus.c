@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -33,6 +32,8 @@
 #include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+
+#include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
 
@@ -73,45 +74,11 @@
 
 /*  local function prototypes  */
 
-static void    menus_create_item               (GtkItemFactory       *item_factory,
-                                                GimpItemFactoryEntry *entry,
-                                                gpointer              callback_data,
-                                                guint                 callback_type,
-                                                gboolean              create_tearoff,
-                                                gboolean              static_entry);
-static void    menus_create_items              (GtkItemFactory       *item_factory,
-                                                guint                 n_entries,
-                                                GimpItemFactoryEntry *entries,
-                                                gpointer              callback_data,
-                                                guint                 callback_type,
-                                                gboolean              create_tearoff,
-                                                gboolean              static_entries);
-static GtkItemFactory * menus_item_factory_new (GtkType               container_type,
-                                                const gchar          *path,
-                                                const gchar          *factory_path,
-                                                guint                 n_entries,
-                                                GimpItemFactoryEntry *entries,
-                                                gpointer              callback_data,
-                                                gboolean              create_tearoff);
-static void    menus_create_branches           (GtkItemFactory       *item_factory,
-                                                GimpItemFactoryEntry *entry);
 static void    menus_filters_subdirs_to_top    (GtkMenu              *menu);
 static void    menus_tools_create              (GimpToolInfo         *tool_info);
 static void    menus_last_opened_update_labels (GimpContainer        *container,
                                                 GimpImagefile        *unused,
                                                 Gimp                 *gimp);
-
-#ifdef ENABLE_NLS
-static gchar * menus_menu_translate_func  (const gchar          *path,
-					   gpointer              data);
-#else
-#define        menus_menu_translate_func  (NULL)
-#endif
-
-static void    menus_tearoff_cmd_callback (GtkWidget            *widget,
-					   gpointer              data,
-					   guint                 action);
-
 #ifdef ENABLE_DEBUG_ENTRY
 static void    menus_debug_recurse_menu   (GtkWidget            *menu,
 					   gint                  depth,
@@ -329,7 +296,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
 static GimpItemFactoryEntry image_entries[] =
 {
-  { { "/tearoff1", NULL, menus_tearoff_cmd_callback, 0, "<Tearoff>" },
+  { { "/tearoff1", NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
     NULL,
     NULL, NULL },
 
@@ -1235,71 +1202,41 @@ static GimpItemFactoryEntry paths_entries[] =
 
 /*****  <Dialogs>  *****/
 
+#define ADD_TAB(path,id,type,stock_id) \
+  { { (path), NULL, dialogs_add_tab_cmd_callback, 0, (type), (stock_id) }, \
+    (id), NULL, NULL }
+#define PREVIEW_SIZE(path,size) \
+  { { (path), NULL, dialogs_preview_size_cmd_callback, \
+      (size), "/Preview Size/Tiny" }, NULL, NULL, NULL }
+
 static GimpItemFactoryEntry dialogs_entries[] =
 {
   { { N_("/Select Tab"), NULL, NULL, 0 },
     NULL,
     NULL, NULL },
 
-  { { N_("/Add Tab/Layers..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:layer-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Channels..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:channel-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Paths..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:path-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Document History..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:document-history",
-    NULL, NULL },
-  { { N_("/Add Tab/Error Console..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:error-console",
-    NULL, NULL },
+
+  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp:layer-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp:channel-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp:path-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Document History..."), "gimp:document-history", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp:error-console", NULL, NULL),
 
   SEPARATOR ("/Add Tab/---"),
 
-  { { N_("/Add Tab/Brushes..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:brush-grid",
-    NULL, NULL },
-  { { N_("/Add Tab/Patterns..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:pattern-grid",
-    NULL, NULL },
-  { { N_("/Add Tab/Gradients..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:gradient-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Palettes..."), NULL,
-      dialogs_add_tab_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:palette-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Indexed Palette..."), NULL,
-      dialogs_add_tab_cmd_callback, 0, "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:indexed-palette",
-    NULL, NULL },
-  { { N_("/Add Tab/Buffers..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:buffer-list",
-    NULL, NULL },
-  { { N_("/Add Tab/Images..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:image-list",
-    NULL, NULL },
+  ADD_TAB (N_("/Add Tab/Brushes..."),         "gimp:brush-grid", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Patterns..."),        "gimp:pattern-grid", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Gradients..."),       "gimp:gradient-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Palettes..."),        "gimp:palette-list",
+           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
+  ADD_TAB (N_("/Add Tab/Indexed Palette..."), "gimp:indexed-palette",
+           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
+  ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp:buffer-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Images..."),          "gimp:image-list", NULL, NULL),
 
   SEPARATOR ("/Add Tab/---"),
 
-  { { N_("/Add Tab/Tools..."), NULL,
-      dialogs_add_tab_cmd_callback, 0 },
-    "gimp:tool-list",
-    NULL, NULL },
+  ADD_TAB (N_("/Add Tab/Tools..."), "gimp:tool-list", NULL, NULL),
 
   SEPARATOR ("/---"),
 
@@ -1313,46 +1250,15 @@ static GimpItemFactoryEntry dialogs_entries[] =
       GIMP_PREVIEW_SIZE_TINY, "<RadioItem>" },
     NULL,
     NULL, NULL },
-  { { N_("/Preview Size/Very Small"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_EXTRA_SMALL, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Small"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_SMALL, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Medium"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_MEDIUM, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Large"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_LARGE, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Extra Large"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_EXTRA_LARGE, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Huge"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_HUGE, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Enormous"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_ENORMOUS, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Preview Size/Gigantic"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_GIGANTIC, "/Preview Size/Tiny" },
-    NULL,
-    NULL, NULL },
+
+  PREVIEW_SIZE (N_("/Preview Size/Extra Small"), GIMP_PREVIEW_SIZE_EXTRA_SMALL),
+  PREVIEW_SIZE (N_("/Preview Size/Small"),       GIMP_PREVIEW_SIZE_SMALL),
+  PREVIEW_SIZE (N_("/Preview Size/Medium"),      GIMP_PREVIEW_SIZE_MEDIUM),
+  PREVIEW_SIZE (N_("/Preview Size/Large"),       GIMP_PREVIEW_SIZE_LARGE),
+  PREVIEW_SIZE (N_("/Preview Size/Extra Large"), GIMP_PREVIEW_SIZE_EXTRA_LARGE),
+  PREVIEW_SIZE (N_("/Preview Size/Huge"),        GIMP_PREVIEW_SIZE_HUGE),
+  PREVIEW_SIZE (N_("/Preview Size/Enormous"),    GIMP_PREVIEW_SIZE_ENORMOUS),
+  PREVIEW_SIZE (N_("/Preview Size/Gigantic"),    GIMP_PREVIEW_SIZE_GIGANTIC),
 
   { { N_("/View as List"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
@@ -1375,6 +1281,9 @@ static GimpItemFactoryEntry dialogs_entries[] =
     NULL, NULL }
 
 };
+
+#undef ADD_TAB
+#undef PREVIEW_SIZE
 
 
 /*****  <Brushes>  *****/
@@ -1449,6 +1358,19 @@ static GimpItemFactoryEntry patterns_entries[] =
 
 /*****  <GradientEditor>  *****/
 
+#define LOAD_LEFT_FROM(num,magic) \
+  { { "/Load Left Color From/" num, NULL, \
+      gradient_editor_load_left_cmd_callback, (magic) }, NULL, NULL, NULL }
+#define SAVE_LEFT_TO(num,magic) \
+  { { "/Save Left Color To/" num, NULL, \
+      gradient_editor_save_left_cmd_callback, (magic) }, NULL, NULL, NULL }
+#define LOAD_RIGHT_FROM(num,magic) \
+  { { "/Load Right Color From/" num, NULL, \
+      gradient_editor_load_right_cmd_callback, (magic) }, NULL, NULL, NULL }
+#define SAVE_RIGHT_TO(num,magic) \
+  { { "/Save Right Color To/" num, NULL, \
+      gradient_editor_save_right_cmd_callback, (magic) }, NULL, NULL, NULL }
+
 static GimpItemFactoryEntry gradient_editor_entries[] =
 {
   { { N_("/Left Endpoint's Color..."), NULL,
@@ -1475,89 +1397,29 @@ static GimpItemFactoryEntry gradient_editor_entries[] =
 
   SEPARATOR ("/Load Left Color From/---"),
 
-  { { "/Load Left Color From/01", NULL,
-      gradient_editor_load_left_cmd_callback, 4 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/02", NULL,
-      gradient_editor_load_left_cmd_callback, 5 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/03", NULL,
-      gradient_editor_load_left_cmd_callback, 6 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/04", NULL,
-      gradient_editor_load_left_cmd_callback, 7 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/05", NULL,
-      gradient_editor_load_left_cmd_callback, 8 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/06", NULL,
-      gradient_editor_load_left_cmd_callback, 9 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/07", NULL,
-      gradient_editor_load_left_cmd_callback, 10 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/08", NULL,
-      gradient_editor_load_left_cmd_callback, 11 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/09", NULL,
-      gradient_editor_load_left_cmd_callback, 12 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Left Color From/10", NULL,
-      gradient_editor_load_left_cmd_callback, 13 },
-    NULL,
-    NULL, NULL },
+  LOAD_LEFT_FROM ("01", 4),
+  LOAD_LEFT_FROM ("02", 5),
+  LOAD_LEFT_FROM ("03", 6),
+  LOAD_LEFT_FROM ("04", 7),
+  LOAD_LEFT_FROM ("05", 8),
+  LOAD_LEFT_FROM ("06", 9),
+  LOAD_LEFT_FROM ("07", 10),
+  LOAD_LEFT_FROM ("08", 11),
+  LOAD_LEFT_FROM ("09", 12),
+  LOAD_LEFT_FROM ("10", 13),
 
   BRANCH (N_("/Save Left Color To")),
 
-  { { "/Save Left Color To/01", NULL,
-      gradient_editor_save_left_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/02", NULL,
-      gradient_editor_save_left_cmd_callback, 1 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/03", NULL,
-      gradient_editor_save_left_cmd_callback, 2 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/04", NULL,
-      gradient_editor_save_left_cmd_callback, 3 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/05", NULL,
-      gradient_editor_save_left_cmd_callback, 4 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/06", NULL,
-      gradient_editor_save_left_cmd_callback, 5 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/07", NULL,
-      gradient_editor_save_left_cmd_callback, 6 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/08", NULL,
-      gradient_editor_save_left_cmd_callback, 7 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/09", NULL,
-      gradient_editor_save_left_cmd_callback, 8 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Left Color To/10", NULL,
-      gradient_editor_save_left_cmd_callback, 9 },
-    NULL,
-    NULL, NULL },
+  SAVE_LEFT_TO ("01", 0),
+  SAVE_LEFT_TO ("02", 1),
+  SAVE_LEFT_TO ("03", 2),
+  SAVE_LEFT_TO ("04", 3),
+  SAVE_LEFT_TO ("05", 4),
+  SAVE_LEFT_TO ("06", 5),
+  SAVE_LEFT_TO ("07", 6),
+  SAVE_LEFT_TO ("08", 7),
+  SAVE_LEFT_TO ("09", 8),
+  SAVE_LEFT_TO ("10", 9),
 
   SEPARATOR ("/---"),
 
@@ -1585,89 +1447,29 @@ static GimpItemFactoryEntry gradient_editor_entries[] =
 
   SEPARATOR ("/Load Right Color From/---"),
 
-  { { "/Load Right Color From/01", NULL,
-      gradient_editor_load_right_cmd_callback, 4 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/02", NULL,
-      gradient_editor_load_right_cmd_callback, 5 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/03", NULL,
-      gradient_editor_load_right_cmd_callback, 6 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/04", NULL,
-      gradient_editor_load_right_cmd_callback, 7 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/05", NULL,
-      gradient_editor_load_right_cmd_callback, 8 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/06", NULL,
-      gradient_editor_load_right_cmd_callback, 9 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/07", NULL,
-      gradient_editor_load_right_cmd_callback, 10 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/08", NULL,
-      gradient_editor_load_right_cmd_callback, 11 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/09", NULL,
-      gradient_editor_load_right_cmd_callback, 12 },
-    NULL,
-    NULL, NULL },
-  { { "/Load Right Color From/10", NULL,
-      gradient_editor_load_right_cmd_callback, 13 },
-    NULL,
-    NULL, NULL },
+  LOAD_RIGHT_FROM ("01", 4),
+  LOAD_RIGHT_FROM ("02", 5),
+  LOAD_RIGHT_FROM ("03", 6),
+  LOAD_RIGHT_FROM ("04", 7),
+  LOAD_RIGHT_FROM ("05", 8),
+  LOAD_RIGHT_FROM ("06", 9),
+  LOAD_RIGHT_FROM ("07", 10),
+  LOAD_RIGHT_FROM ("08", 11),
+  LOAD_RIGHT_FROM ("09", 12),
+  LOAD_RIGHT_FROM ("10", 13),
 
   BRANCH (N_("/Save Right Color To")),
 
-  { { "/Save Right Color To/01", NULL,
-      gradient_editor_save_right_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/02", NULL,
-      gradient_editor_save_right_cmd_callback, 1 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/03", NULL,
-      gradient_editor_save_right_cmd_callback, 2 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/04", NULL,
-      gradient_editor_save_right_cmd_callback, 3 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/05", NULL,
-      gradient_editor_save_right_cmd_callback, 4 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/06", NULL,
-      gradient_editor_save_right_cmd_callback, 5 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/07", NULL,
-      gradient_editor_save_right_cmd_callback, 6 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/08", NULL,
-      gradient_editor_save_right_cmd_callback, 7 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/09", NULL,
-      gradient_editor_save_right_cmd_callback, 8 },
-    NULL,
-    NULL, NULL },
-  { { "/Save Right Color To/10", NULL,
-      gradient_editor_save_right_cmd_callback, 9 },
-    NULL,
-    NULL, NULL },
+  SAVE_RIGHT_TO ("01", 0),
+  SAVE_RIGHT_TO ("02", 1),
+  SAVE_RIGHT_TO ("03", 2),
+  SAVE_RIGHT_TO ("04", 3),
+  SAVE_RIGHT_TO ("05", 4),
+  SAVE_RIGHT_TO ("06", 5),
+  SAVE_RIGHT_TO ("07", 6),
+  SAVE_RIGHT_TO ("08", 7),
+  SAVE_RIGHT_TO ("09", 8),
+  SAVE_RIGHT_TO ("10", 9),
 
   SEPARATOR ("/---"),
 
@@ -1763,6 +1565,11 @@ static GimpItemFactoryEntry gradient_editor_entries[] =
     NULL,
     NULL, NULL },
 };
+
+#undef LOAD_LEFT_FROM
+#undef SAVE_LEFT_TO
+#undef LOAD_RIGHT_FROM
+#undef SAVE_RIGHT_TO
 
 
 /*****  <Gradients>  *****/
@@ -1958,12 +1765,12 @@ menus_init (Gimp *gimp)
     GtkWidget            *menu_item;
     gint                  i;
 
-    toolbox_factory = menus_item_factory_new (GTK_TYPE_MENU_BAR,
-                                              "<Toolbox>", "toolbox",
-                                              G_N_ELEMENTS (toolbox_entries),
-                                              toolbox_entries,
-                                              gimp,
-                                              TRUE);
+    toolbox_factory = gimp_item_factory_new (GTK_TYPE_MENU_BAR,
+                                             "<Toolbox>", "toolbox",
+                                             G_N_ELEMENTS (toolbox_entries),
+                                             toolbox_entries,
+                                             gimp,
+                                             TRUE);
 
     last_opened_entries = g_new (GimpItemFactoryEntry,
                                  gimprc.last_opened_size);
@@ -1988,8 +1795,9 @@ menus_init (Gimp *gimp)
         last_opened_entries[i].description           = NULL;
       }
 
-    menus_create_items (toolbox_factory, gimprc.last_opened_size,
-                        last_opened_entries, gimp, 2, TRUE, FALSE);
+    gimp_item_factory_create_items (toolbox_factory,
+                                    gimprc.last_opened_size, last_opened_entries,
+                                    gimp, 2, TRUE, FALSE);
 
     for (i = 0; i < gimprc.last_opened_size; i++)
       {
@@ -2017,103 +1825,103 @@ menus_init (Gimp *gimp)
     g_free (last_opened_entries);
   }
 
-  image_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                          "<Image>", "image",
-                                          G_N_ELEMENTS (image_entries),
-                                          image_entries,
-                                          gimp,
-                                          TRUE);
-
-  load_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                         "<Load>", "open",
-                                         G_N_ELEMENTS (load_entries),
-                                         load_entries,
+  image_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                         "<Image>", "image",
+                                         G_N_ELEMENTS (image_entries),
+                                         image_entries,
                                          gimp,
-                                         FALSE);
+                                         TRUE);
 
-  save_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                         "<Save>", "save",
-                                         G_N_ELEMENTS (save_entries),
-                                         save_entries,
-                                         gimp,
-                                         FALSE);
+  load_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                        "<Load>", "open",
+                                        G_N_ELEMENTS (load_entries),
+                                        load_entries,
+                                        gimp,
+                                        FALSE);
 
-  layers_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                           "<Layers>", "layers",
-                                           G_N_ELEMENTS (layers_entries),
-                                           layers_entries,
-                                           gimp,
-                                           FALSE);
+  save_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                        "<Save>", "save",
+                                        G_N_ELEMENTS (save_entries),
+                                        save_entries,
+                                        gimp,
+                                        FALSE);
 
-  channels_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                             "<Channels>", "channels",
-                                             G_N_ELEMENTS (channels_entries),
-                                             channels_entries,
-                                             gimp,
-                                             FALSE);
-
-  paths_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                          "<Paths>", "paths",
-                                          G_N_ELEMENTS (paths_entries),
-                                          paths_entries,
+  layers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                          "<Layers>", "layers",
+                                          G_N_ELEMENTS (layers_entries),
+                                          layers_entries,
                                           gimp,
                                           FALSE);
 
-  dialogs_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                            "<Dialogs>", "dialogs",
-                                            G_N_ELEMENTS (dialogs_entries),
-                                            dialogs_entries,
+  channels_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                            "<Channels>", "channels",
+                                            G_N_ELEMENTS (channels_entries),
+                                            channels_entries,
                                             gimp,
                                             FALSE);
 
-  brushes_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                            "<Brushes>", "brushes",
-                                            G_N_ELEMENTS (brushes_entries),
-                                            brushes_entries,
+  paths_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                         "<Paths>", "paths",
+                                         G_N_ELEMENTS (paths_entries),
+                                         paths_entries,
+                                         gimp,
+                                         FALSE);
+
+  dialogs_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                           "<Dialogs>", "dialogs",
+                                           G_N_ELEMENTS (dialogs_entries),
+                                           dialogs_entries,
+                                           gimp,
+                                           FALSE);
+
+  brushes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                           "<Brushes>", "brushes",
+                                           G_N_ELEMENTS (brushes_entries),
+                                           brushes_entries,
+                                           gimp,
+                                           FALSE);
+
+  patterns_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                            "<Patterns>", "patterns",
+                                            G_N_ELEMENTS (patterns_entries),
+                                            patterns_entries,
                                             gimp,
                                             FALSE);
 
-  patterns_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                             "<Patterns>", "patterns",
-                                             G_N_ELEMENTS (patterns_entries),
-                                             patterns_entries,
+  gradient_editor_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                                   "<GradientEditor>", "gradient_editor",
+                                                   G_N_ELEMENTS (gradient_editor_entries),
+                                                   gradient_editor_entries,
+                                                   gimp,
+                                                   FALSE);
+
+  gradients_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                             "<Gradients>", "gradients",
+                                             G_N_ELEMENTS (gradients_entries),
+                                             gradients_entries,
                                              gimp,
                                              FALSE);
 
-  gradient_editor_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                                    "<GradientEditor>", "gradient_editor",
-                                                    G_N_ELEMENTS (gradient_editor_entries),
-                                                    gradient_editor_entries,
-                                                    gimp,
-                                                    FALSE);
-
-  gradients_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                              "<Gradients>", "gradients",
-                                              G_N_ELEMENTS (gradients_entries),
-                                              gradients_entries,
-                                              gimp,
-                                              FALSE);
-
-  palettes_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                             "<Palettes>", "palettes",
-                                             G_N_ELEMENTS (palettes_entries),
-                                             palettes_entries,
-                                             gimp,
-                                             FALSE);
-
-  buffers_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                            "<Buffers>", "buffers",
-                                            G_N_ELEMENTS (buffers_entries),
-                                            buffers_entries,
+  palettes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                            "<Palettes>", "palettes",
+                                            G_N_ELEMENTS (palettes_entries),
+                                            palettes_entries,
                                             gimp,
                                             FALSE);
 
-  documents_factory = menus_item_factory_new (GTK_TYPE_MENU,
-                                              "<Documents>", "documents",
-                                              G_N_ELEMENTS (documents_entries),
-                                              documents_entries,
-                                              gimp,
-                                              FALSE);
+  buffers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                           "<Buffers>", "buffers",
+                                           G_N_ELEMENTS (buffers_entries),
+                                           buffers_entries,
+                                           gimp,
+                                           FALSE);
+
+  documents_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                             "<Documents>", "documents",
+                                             G_N_ELEMENTS (documents_entries),
+                                             documents_entries,
+                                             gimp,
+                                             FALSE);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -2478,473 +2286,8 @@ menus_restore (Gimp *gimp)
     }
 }
 
-GtkItemFactory *
-menus_get_toolbox_factory (void)
-{
-  return toolbox_factory;
-}
-
-GtkItemFactory *
-menus_get_image_factory (void)
-{
-  return image_factory;
-}
-
-GtkItemFactory *
-menus_get_load_factory (void)
-{
-  return load_factory;
-}
-
-GtkItemFactory *
-menus_get_save_factory (void)
-{
-  return save_factory;
-}
-
-GtkItemFactory *
-menus_get_layers_factory (void)
-{
-  return layers_factory;
-}
-
-GtkItemFactory *
-menus_get_channels_factory (void)
-{
-  return channels_factory;
-}
-
-GtkItemFactory *
-menus_get_paths_factory (void)
-{
-  return paths_factory;
-}
-
-GtkItemFactory *
-menus_get_dialogs_factory (void)
-{
-  return dialogs_factory;
-}
-
-GtkItemFactory *
-menus_get_brushes_factory (void)
-{
-  return brushes_factory;
-}
-
-GtkItemFactory *
-menus_get_patterns_factory (void)
-{
-  return patterns_factory;
-}
-
-GtkItemFactory *
-menus_get_gradient_editor_factory (void)
-{
-  return gradient_editor_factory;
-}
-
-GtkItemFactory *
-menus_get_gradients_factory (void)
-{
-  return gradients_factory;
-}
-
-GtkItemFactory *
-menus_get_palettes_factory (void)
-{
-  return palettes_factory;
-}
-
-GtkItemFactory *
-menus_get_buffers_factory (void)
-{
-  return buffers_factory;
-}
-
-GtkItemFactory *
-menus_get_documents_factory (void)
-{
-  return documents_factory;
-}
-
-void
-menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
-				  gchar                *domain_name,
-				  gpointer              callback_data)
-{
-  GtkItemFactory *item_factory;
-  gchar          *path;
-
-  g_return_if_fail (entry != NULL);
-  g_return_if_fail (menus_initialized);
-
-  path = entry->entry.path;
-
-  if (!path)
-    return;
-
-  item_factory = gtk_item_factory_from_path (path);
-
-  if (!item_factory)
-    {
-      g_warning ("entry refers to unknown item factory: \"%s\"", path);
-      return;
-    }
-
-  g_object_set_data (G_OBJECT (item_factory), "textdomain", domain_name);
-
-  while (*path != '>')
-    path++;
-  path++;
-
-  entry->entry.path = path;
-
-  menus_create_item (item_factory, entry, callback_data, 2, TRUE, FALSE);
-}
-
-void
-menus_set_active (gchar    *path,
-                  gboolean  active)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
-
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (menus_initialized);
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), active);
-      else
-	widget = NULL;
-    }
-
-  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set \"active\" for menu which doesn't exist:\n%s",
-	       path);
-}
-
-void
-menus_set_color (gchar         *path,
-                 const GimpRGB *color,
-                 gboolean       set_label)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget;
-  GtkWidget      *preview = NULL;
-  GtkWidget      *label   = NULL;
-
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (color != NULL);
-  g_return_if_fail (menus_initialized);
-
-  ifactory = gtk_item_factory_from_path (path);
-
-#define COLOR_BOX_WIDTH  24
-#define COLOR_BOX_HEIGHT 16
-
-  if (! ifactory)
-    return;
-
-  widget = gtk_item_factory_get_widget (ifactory, path);
-
-  if (! widget)
-    return;
-
-  if (GTK_IS_HBOX (GTK_BIN (widget)->child))
-    {
-      preview = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
-                                   "preview");
-      label = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
-                                 "label");
-    }
-  else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
-    {
-      GtkWidget *hbox;
-
-      label = GTK_BIN (widget)->child;
-
-      g_object_ref (G_OBJECT (label));
-
-      gtk_container_remove (GTK_CONTAINER (widget), label);
-
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_container_add (GTK_CONTAINER (widget), hbox);
-      gtk_widget_show (hbox);
-
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (preview),
-                        COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
-      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-      gtk_widget_show (preview);
-
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      g_object_unref (G_OBJECT (label));
-
-      g_object_set_data (G_OBJECT (hbox), "preview", preview);
-      g_object_set_data (G_OBJECT (hbox), "label",   label);
-    }
-
-  if (preview)
-    {
-      guchar  rows[3][COLOR_BOX_WIDTH * 3];
-      gint    x, y;
-      gint    r0, g0, b0;
-      gint    r1, g1, b1;
-      guchar *p0, *p1, *p2;
-
-      /* Fill rows */
-
-      r0 = (GIMP_CHECK_DARK + (color->r - GIMP_CHECK_DARK) * color->a) * 255.0;
-      r1 = (GIMP_CHECK_LIGHT + (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      g0 = (GIMP_CHECK_DARK + (color->g - GIMP_CHECK_DARK) * color->a) * 255.0;
-      g1 = (GIMP_CHECK_LIGHT + (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      b0 = (GIMP_CHECK_DARK + (color->b - GIMP_CHECK_DARK) * color->a) * 255.0;
-      b1 = (GIMP_CHECK_LIGHT + (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      p0 = rows[0];
-      p1 = rows[1];
-      p2 = rows[2];
-
-      for (x = 0; x < COLOR_BOX_WIDTH; x++)
-        {
-          if ((x == 0) || (x == (COLOR_BOX_WIDTH - 1)))
-            {
-              *p0++ = 0;
-              *p0++ = 0;
-              *p0++ = 0;
-
-              *p1++ = 0;
-              *p1++ = 0;
-              *p1++ = 0;
-            }
-          else if ((x / GIMP_CHECK_SIZE) & 1)
-            {
-              *p0++ = r1;
-              *p0++ = g1;
-              *p0++ = b1;
-
-              *p1++ = r0;
-              *p1++ = g0;
-              *p1++ = b0;
-            }
-          else
-            {
-              *p0++ = r0;
-              *p0++ = g0;
-              *p0++ = b0;
-
-              *p1++ = r1;
-              *p1++ = g1;
-              *p1++ = b1;
-            }
-
-          *p2++ = 0;
-          *p2++ = 0;
-          *p2++ = 0;
-        }
-
-      /* Fill preview */
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
-                            0, 0, COLOR_BOX_WIDTH);
-
-      for (y = 1; y < (COLOR_BOX_HEIGHT - 1); y++)
-        if ((y / GIMP_CHECK_SIZE) & 1)
-          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[1],
-                                0, y, COLOR_BOX_WIDTH);
-        else
-          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[0],
-                                0, y, COLOR_BOX_WIDTH);
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
-                            0, y, COLOR_BOX_WIDTH);
-    }
-
-  if (label && set_label)
-    {
-      gchar *str;
-
-      str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
-                             color->r, color->g, color->b, color->a);
-
-      gtk_label_set_text (GTK_LABEL (label), str);
-
-      g_free (str);
-    }
-
-#undef COLOR_BOX_WIDTH
-#undef COLOR_BOX_HEIGHT
-}
-
-void
-menus_set_label (gchar       *path,
-                 const gchar *label)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
-
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (label != NULL);
-  g_return_if_fail (menus_initialized);
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget)
-        {
-          if (GTK_IS_MENU (widget))
-            {
-              widget = gtk_menu_get_attach_widget (GTK_MENU (widget));
-            }
-
-          if (GTK_IS_LABEL (GTK_BIN (widget)->child))
-            {
-              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), label);
-            }
-        }
-    }
-}
-
-void
-menus_set_sensitive (gchar    *path,
-		     gboolean  sensitive)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
-
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (menus_initialized);
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget)
-	gtk_widget_set_sensitive (widget, sensitive);
-    }
-
-  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s",
-	       path);
-}
-
-void
-menus_set_visible (gchar    *path,
-                   gboolean  visible)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget;
-
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (menus_initialized);
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget)
-        {
-          if (visible)
-            gtk_widget_show (widget);
-          else
-            gtk_widget_hide (widget);
-        }
-    }
-}
-
-void
-menus_destroy (gchar *path)
-{
-  g_return_if_fail (path != NULL);
-  g_return_if_fail (menus_initialized);
-
-  gtk_item_factories_path_delete (NULL, path);
-}
-
 
 /*  private functions  */
-
-static void
-menus_create_branches (GtkItemFactory       *item_factory,
-		       GimpItemFactoryEntry *entry)
-{
-  GString *tearoff_path;
-  gint     factory_length;
-  gchar   *p;
-  gchar   *path;
-
-  if (! entry->entry.path)
-    return;
-
-  tearoff_path = g_string_new ("");
-
-  path = entry->entry.path;
-  p = strchr (path, '/');
-  factory_length = p - path;
-
-  /*  skip the first slash  */
-  if (p)
-    p = strchr (p + 1, '/');
-
-  while (p)
-    {
-      g_string_assign (tearoff_path, path + factory_length);
-      g_string_truncate (tearoff_path, p - path - factory_length);
-
-      if (!gtk_item_factory_get_widget (item_factory, tearoff_path->str))
-	{
-	  GimpItemFactoryEntry branch_entry =
-	  {
-	    { NULL, NULL, NULL, 0, "<Branch>" },
-	    NULL,
-	    NULL
-	  };
-
-	  branch_entry.entry.path = tearoff_path->str;
-	  g_object_set_data (G_OBJECT (item_factory), "complete", path);
-	  menus_create_item (item_factory, &branch_entry, NULL, 2, TRUE, FALSE);
-	  g_object_set_data (G_OBJECT (item_factory), "complete", NULL);
-	}
-
-      g_string_append (tearoff_path, "/tearoff1");
-
-      if (! gtk_item_factory_get_widget (item_factory, tearoff_path->str))
-	{
-	  GimpItemFactoryEntry tearoff_entry =
-	  {
-	    { NULL, NULL, menus_tearoff_cmd_callback, 0, "<Tearoff>" },
-	    NULL,
-	    NULL, NULL
-	  };
-
-	  tearoff_entry.entry.path = tearoff_path->str;
-
-	  menus_create_item (item_factory, &tearoff_entry, NULL, 2, TRUE, FALSE);
-	}
-
-      p = strchr (p + 1, '/');
-    }
-
-  g_string_free (tearoff_path, TRUE);
-}
 
 static void
 menus_filters_subdirs_to_top (GtkMenu *menu)
@@ -3005,11 +2348,11 @@ menus_tools_create (GimpToolInfo *tool_info)
   entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
 
-  menus_create_item (image_factory,
-		     &entry,
-                     tool_info,
-		     2,
-		     TRUE, FALSE);
+  gimp_item_factory_create_item (image_factory,
+                                 &entry,
+                                 tool_info,
+                                 2,
+                                 TRUE, FALSE);
 }
 
 static void
@@ -3075,415 +2418,6 @@ menus_last_opened_update_labels (GimpContainer *container,
     }
 }
 
-/*  This function gets called while browsing a menu created
- *  by a GtkItemFactory
- */
-static gint
-menus_item_key_press (GtkWidget   *widget,
-		      GdkEventKey *kevent,
-		      gpointer     data)
-{
-  GtkItemFactory *item_factory     = NULL;
-  GtkWidget      *active_menu_item = NULL;
-  gchar          *factory_path     = NULL;
-  gchar          *help_path        = NULL;
-  gchar          *help_page        = NULL;
-
-  item_factory     = (GtkItemFactory *) data;
-  active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
-
-  /*  first, get the help page from the item
-   */
-  if (active_menu_item)
-    {
-      help_page = (gchar *) g_object_get_data (G_OBJECT (active_menu_item),
-                                               "help_page");
-    }
-
-  /*  For any key except F1, continue with the standard
-   *  GtkItemFactory callback and assign a new shortcut, but don't
-   *  assign a shortcut to the help menu entries...
-   */
-  if (kevent->keyval != GDK_F1)
-    {
-      if (help_page &&
-	  *help_page &&
-	  item_factory == toolbox_factory &&
-	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
-	   strcmp (help_page, "help/context_help.html") == 0))
-	{
-	  return TRUE;
-	}
-      else
-	{
-	  return FALSE;
-	}
-    }
-
-  /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
-
-  factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
-                                              "factory_path");
-
-  if (! help_page ||
-      ! *help_page)
-    help_page = "index.html";
-
-  if (factory_path && help_page)
-    {
-      gchar *help_string;
-      gchar *at;
-
-      help_page = g_strdup (help_page);
-
-      at = strchr (help_page, '@');  /* HACK: locale subdir */
-
-      if (at)
-	{
-	  *at = '\0';
-	  help_path   = g_strdup (help_page);
-	  help_string = g_strdup (at + 1);
-	}
-      else
-	{
-	  help_string = g_strdup_printf ("%s/%s", factory_path, help_page);
-	}
-
-      gimp_help (help_path, help_string);
-
-      g_free (help_string);
-      g_free (help_page);
-    }
-  else
-    {
-      gimp_standard_help_func (NULL);
-    }
-
-  return TRUE;
-}
-
-/*  set up the callback to catch the "F1" key  */
-static void
-menus_item_realize (GtkWidget *widget,
-		    gpointer   data)
-{
-  if (GTK_IS_MENU_SHELL (widget->parent))
-    {
-      if (! g_object_get_data (G_OBJECT (widget->parent),
-                               "menus_key_press_connected"))
-	{
-	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
-                            G_CALLBACK (menus_item_key_press),
-                            data);
-
-	  g_object_set_data (G_OBJECT (widget->parent),
-                             "menus_key_press_connected",
-                             (gpointer) TRUE);
-	}
-    }
-}
-
-static void
-menus_create_item (GtkItemFactory       *item_factory,
-		   GimpItemFactoryEntry *entry,
-		   gpointer              callback_data,
-		   guint                 callback_type,
-		   gboolean              create_tearoff,
-		   gboolean              static_entry)
-{
-  GtkWidget *menu_item;
-
-  if (! (strstr (entry->entry.path, "tearoff1")))
-    {
-      if (! gimprc.disable_tearoff_menus && create_tearoff)
-	{
-	  menus_create_branches (item_factory, entry);
-	}
-    }
-  else if (gimprc.disable_tearoff_menus || ! create_tearoff)
-    {
-      return;
-    }
-
-  if (entry->quark_string)
-    {
-      GQuark quark;
-
-      if (static_entry)
-	quark = g_quark_from_static_string (entry->quark_string);
-      else
-	quark = g_quark_from_string (entry->quark_string);
-
-      entry->entry.callback_action = (guint) quark;
-    }
-
-  gtk_item_factory_create_item (item_factory,
-				(GtkItemFactoryEntry *) entry,
-				callback_data,
-				callback_type);
-
-  menu_item = gtk_item_factory_get_item (item_factory,
-					 ((GtkItemFactoryEntry *) entry)->path);
-
-  if (menu_item)
-    {
-      g_signal_connect_after (G_OBJECT (menu_item), "realize",
-			      G_CALLBACK (menus_item_realize),
-			      item_factory);
-
-      g_object_set_data (G_OBJECT (menu_item), "help_page",
-			 (gpointer) entry->help_page);
-    }
-}
-
-static void
-menus_create_items (GtkItemFactory       *item_factory,
-		    guint                 n_entries,
-		    GimpItemFactoryEntry *entries,
-		    gpointer              callback_data,
-		    guint                 callback_type,
-		    gboolean              create_tearoff,
-		    gboolean              static_entries)
-{
-  gint i;
-
-  for (i = 0; i < n_entries; i++)
-    {
-      menus_create_item (item_factory,
-			 entries + i,
-			 callback_data,
-			 callback_type,
-			 create_tearoff,
-			 static_entries);
-    }
-}
-
-static GtkItemFactory *
-menus_item_factory_new (GtkType               container_type,
-			const gchar          *path,
-			const gchar          *factory_path,
-			guint                 n_entries,
-			GimpItemFactoryEntry *entries,
-			gpointer              callback_data,
-			gboolean              create_tearoff)
-{
-  GtkItemFactory *item_factory;
-
-  item_factory = gtk_item_factory_new (container_type, path, NULL);
-
-  gtk_item_factory_set_translate_func (item_factory,
-				       menus_menu_translate_func,
-				       (gpointer) path,
-				       NULL);
-
-  g_object_set_data (G_OBJECT (item_factory), "factory_path",
-		     (gpointer) factory_path);
-
-  menus_create_items (item_factory,
-		      n_entries,
-		      entries,
-		      callback_data,
-		      2,
-		      create_tearoff,
-		      TRUE);
-
-  return item_factory;
-}
-
-#ifdef ENABLE_NLS
-
-static gchar *
-menus_menu_translate_func (const gchar *path,
-			   gpointer     data)
-{
-  static gchar   *menupath = NULL;
-
-  GtkItemFactory *item_factory = NULL;
-  gchar          *retval;
-  gchar          *factory;
-  gchar          *translation;
-  gchar          *domain = NULL;
-  gchar          *complete = NULL;
-  gchar          *p, *t;
-
-  factory = (gchar *) data;
-
-  if (menupath)
-    g_free (menupath);
-
-  retval = menupath = g_strdup (path);
-
-  if ((strstr (path, "/tearoff1") != NULL) ||
-      (strstr (path, "/---") != NULL) ||
-      (strstr (path, "/MRU") != NULL))
-    return retval;
-
-  if (factory)
-    item_factory = gtk_item_factory_from_path (factory);
-  if (item_factory)
-    {
-      domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
-      complete = g_object_get_data (G_OBJECT (item_factory), "complete");
-    }
-  
-  if (domain)   /*  use the plugin textdomain  */
-    {
-      g_free (menupath);
-      menupath = g_strconcat (factory, path, NULL);
-
-      if (complete)
-	{
-	  /*  
-           *  This is a branch, use the complete path for translation, 
-	   *  then strip off entries from the end until it matches. 
-	   */
-	  complete = g_strconcat (factory, complete, NULL);
-	  translation = g_strdup (dgettext (domain, complete));
-
-	  while (complete && *complete && 
-		 translation && *translation && 
-		 strcmp (complete, menupath))
-	    {
-	      p = strrchr (complete, '/');
-	      t = strrchr (translation, '/');
-	      if (p && t)
-		{
-		  *p = '\0';
-		  *t = '\0';
-		}
-	      else
-		break;
-	    }
-
-	  g_free (complete);
-	}
-      else
-	{
-	  translation = dgettext (domain, menupath);
-	}
-
-      /* 
-       * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
-       */
-      if (strncmp (factory, translation, strlen (factory)) == 0)
-	{
-	  retval = translation + strlen (factory);
-	  if (complete)
-	    {
-	      g_free (menupath);
-	      menupath = translation;
-	    }
-	}
-      else
-	{
-	  g_warning ("bad translation for menupath: %s", menupath);
-	  retval = menupath + strlen (factory);
-	  if (complete)
-	    g_free (translation);
-	}
-    }
-  else   /*  use the gimp textdomain  */
-    {
-      if (complete)
-	{
-	  /*  
-           *  This is a branch, use the complete path for translation, 
-	   *  then strip off entries from the end until it matches. 
-	   */
-	  complete = g_strdup (complete);
-	  translation = g_strdup (gettext (complete));
-	  
-	  while (*complete && *translation && strcmp (complete, menupath))
-	    {
-	      p = strrchr (complete, '/');
-	      t = strrchr (translation, '/');
-	      if (p && t)
-		{
-		  *p = '\0';
-		  *t = '\0';
-		}
-	      else
-		break;
-	    }
-	  g_free (complete);
-	}
-      else
-	translation = gettext (menupath);
-
-      if (*translation == '/')
-	{
-	  retval = translation;
-	  if (complete)
-	    {
-	      g_free (menupath);
-	      menupath = translation;
-	    }
-	}
-      else
-	{
-	  g_warning ("bad translation for menupath: %s", menupath);
-	  if (complete)
-	    g_free (translation);
-	}
-    }
-  
-  return retval;
-}
-
-#endif  /*  ENABLE_NLS  */
-
-static void   
-menus_tearoff_cmd_callback (GtkWidget *widget,
-			    gpointer   data,
-			    guint      action)
-{
-  if (GTK_IS_TEAROFF_MENU_ITEM (widget))
-    {
-      GtkTearoffMenuItem *tomi = (GtkTearoffMenuItem *) widget;
-
-      if (tomi->torn_off)
-	{
-	  GtkWidget *toplevel;
-
-	  toplevel = gtk_widget_get_toplevel (widget);
-
-	  if (! GTK_IS_WINDOW (toplevel))
-	    {
-	      g_warning ("menus_tearoff_cmd_callback(): tearoff menu not "
-			 "in top level window");
-	    }
-	  else
-	    {
-#ifdef __GNUC__
-#warning FIXME: register tearoffs
-#endif
-	      g_object_set_data (G_OBJECT (widget), "tearoff-menu-toplevel",
-                                 toplevel);
-
-	      gimp_dialog_set_icon (GTK_WINDOW (toplevel));
-	    }
-	}
-      else
-	{
-	  GtkWidget *toplevel;
-
-	  toplevel = (GtkWidget *) g_object_get_data (G_OBJECT (widget),
-                                                      "tearoff-menu-toplevel");
-
-	  if (! toplevel)
-	    {
-	      g_warning ("menus_tearoff_cmd_callback(): can't unregister "
-			 "tearoff menu top level window");
-	    }
-	  else
-	    {
-#ifdef __GNUC__
-#warning FIXME: unregister tearoffs
-#endif
-	    }
-	}
-    }
-}
 
 #ifdef ENABLE_DEBUG_ENTRY
 
