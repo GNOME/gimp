@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Much of the content of this file are derivative works of David
+ */
+
+/* Much of the content of this file are derivative works of David
  * Monniaux which are Copyright (C) 1999, 2001 David Monniaux
  * Tip-o-the-hat to David for pioneering this effort.
  *
@@ -27,11 +28,17 @@
  * use. XXX
  */
 
+#include "config.h"
+
 #include <stdio.h>
-#include <sys/types.h>
+
+#include <glib-object.h>
+
+#include "base/base-types.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-mmx.h"
+
 
 #undef USE_SSE
 
