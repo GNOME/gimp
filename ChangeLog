@@ -1,5 +1,13 @@
 2004-06-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.c (gimp_layer_set_tiles): don't set
+	layer->mask's offsets. It is wrong because GimpDrawable::set_tiles()
+	is a lowlevel function which is used by stuff like scale and
+	resize which keep the mask in sync explicitely and don't expect it
+	to be moved in the middle of chaining up. Fixes bug #143860.
+
+2004-06-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/view-actions.c
 	* app/actions/view-commands.[ch]: added separate callback for
 	"view-zoom-other" and connect GtkAction::activate manually so

@@ -412,12 +412,6 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, FALSE);
-
-  if (layer->mask)
-    {
-      GIMP_ITEM (layer->mask)->offset_x = offset_x;
-      GIMP_ITEM (layer->mask)->offset_y = offset_y;
-    }
 }
 
 static void
