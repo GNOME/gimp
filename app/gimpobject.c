@@ -10,10 +10,6 @@ gimp_object_class_init (GimpObjectClass *gobjectclass)
 {
 }
 
-
-
-
-   									     
 GtkType gimp_object_get_type (void)
 {
 	static GtkType type;
@@ -26,3 +22,7 @@ GtkType gimp_object_get_type (void)
 	return type;
 }
 
+
+
+
+   									     

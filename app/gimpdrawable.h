@@ -40,9 +40,6 @@ typedef enum
 
 
 /*  drawable access functions  */
-void             gimp_drawable_apply_image        (GimpDrawable *, 
-					      int, int, int, int, 
-					      TileManager *, int);
 void             gimp_drawable_merge_shadow       (GimpDrawable *, int);
 void gimp_drawable_fill (GimpDrawable *drawable, guchar r, guchar g,
 			 guchar b, guchar a);

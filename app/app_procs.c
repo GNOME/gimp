@@ -35,6 +35,7 @@
 #include "colormaps.h"
 #include "fileops.h"
 #include "gimprc.h"
+#include "gimpset.h"
 #include "global_edit.h"
 #include "gradient.h"
 #include "gximage.h"
@@ -456,7 +457,11 @@ app_init (void)
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
     splash_text_draw (logo_area);
   }
-    
+
+  /* Create the context of all existing images */
+
+  image_context=gimp_set_new(GIMP_TYPE_IMAGE, TRUE);
+  
   /*
    *  Initialize the procedural database
    *    We need to do this first because any of the init

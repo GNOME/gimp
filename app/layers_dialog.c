@@ -30,6 +30,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "gimpset.h"
 #include "general.h"
 #include "image_render.h"
 #include "interface.h"
@@ -166,6 +167,8 @@ static void layers_dialog_alpha_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_mask_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_add_alpha_channel_callback (GtkWidget *, gpointer);
 static gint lc_dialog_close_callback (GtkWidget *, gpointer);
+
+static void lc_dialog_update_cb (GimpSet *, GimpImage *, gpointer);
 
 /*  layer widget function prototypes  */
 static LayerWidget *layer_widget_get_ID (Layer *);
@@ -387,7 +390,11 @@ lc_dialog_create (GimpImage* gimage)
 	     no image present. */
 	  ops_button_box_set_insensitive (layers_ops_buttons);
 	}
-
+      gtk_signal_connect (GTK_OBJECT (image_context), "add",
+			  GTK_SIGNAL_FUNC (lc_dialog_update_cb), NULL);
+      gtk_signal_connect (GTK_OBJECT (image_context), "remove",
+			  GTK_SIGNAL_FUNC(lc_dialog_update_cb), NULL);
+      
       layers_dialog_update (gimage);
       channels_dialog_update (gimage);
       gdisplays_flush ();
@@ -1870,6 +1877,15 @@ lc_dialog_close_callback (GtkWidget *w,
   gtk_widget_hide (lc_shell);
 
   return TRUE;
+}
+
+
+static void
+lc_dialog_update_cb (GimpSet   *set,
+		     GimpImage *image,
+		     gpointer   user_data)
+{
+  lc_dialog_update_image_list ();
 }
 
 

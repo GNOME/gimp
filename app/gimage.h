@@ -48,8 +48,6 @@ gimage_set_layer_mask_show (GImage *gimage, GimpLayer* layer);
 void
 gimage_foreach (GFunc func, gpointer user_data);
 
-GImage * gimage_get_named (gchar *name);
-
 
 #define gimage_set_filename gimp_image_set_filename
 #define gimage_resize gimp_image_resize

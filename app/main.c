@@ -48,6 +48,7 @@ int be_verbose;
 int use_shm;
 int use_debug_handler;
 int console_messages;
+GimpSet* image_context;
 
 MessageHandlerType message_handler;
 

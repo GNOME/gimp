@@ -18,6 +18,8 @@
 #include "channel.h"
 #include "tools.h"
 #include "general.h"
+#include "appenv.h"
+#include "gimpset.h"
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
    to proper places. That is, the handlers should be moved to
@@ -29,11 +31,6 @@ static void gimage_rename_handler (GimpImage* gimage);
 static void gimage_resize_handler (GimpImage* gimage);
 static void gimage_restructure_handler (GimpImage* gimage);
 static void gimage_repaint_handler (GimpImage* gimage, gint, gint, gint, gint);
-
-/* This is the app's global context of "all images".. This should be
-   unglobalized, too */
-
-static GSList* image_list;
 
 GImage*
 gimage_new(int width, int height, GimpImageBaseType base_type)
@@ -53,9 +50,8 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
   gtk_signal_connect (GTK_OBJECT (gimage), "repaint",
 		      GTK_SIGNAL_FUNC(gimage_repaint_handler), NULL);
 
-  image_list=g_slist_prepend(image_list, gimage);
-  pdb_add_image(gimage);
-  lc_dialog_update_image_list ();
+  
+  gimp_set_add(image_context, gimage);
   indexed_palette_update_image_list ();
   return gimage;
 }
@@ -79,19 +75,17 @@ gimage_delete (GImage *gimage)
      gtk_object_unref (GTK_OBJECT(gimage));
 };
 
+static void
+invalidate_cb(gpointer image, gpointer user_data){
+	gimp_image_invalidate_preview(GIMP_IMAGE(image));
+}
+
 void
 gimage_invalidate_previews (void)
 {
-  GSList *tmp = image_list;
-  GimpImage *gimage;
-
-  while (tmp)
-    {
-      gimage = (GimpImage *) tmp->data;
-      gimp_image_invalidate_preview (gimage);
-      tmp = g_slist_next (tmp);
-    }
+	gimp_set_foreach(image_context, invalidate_cb, NULL);
 }
+
 static void
 gimage_dirty_handler (GimpImage* gimage){
   if (active_tool && !active_tool->preserve) {
@@ -111,10 +105,6 @@ gimage_destroy_handler (GimpImage* gimage)
 
   /*  free the undo list  */
   undo_free (gimage);
-
-  pdb_remove_image(gimage);
-  image_list=g_slist_remove(image_list, gimage);
-  lc_dialog_update_image_list ();
 
   indexed_palette_update_image_list ();
 }
@@ -207,26 +197,6 @@ gimage_set_layer_mask_show (GImage *gimage, GimpLayer* layer)
 
 void
 gimage_foreach (GFunc func, gpointer user_data){
-	GSList* l;
-	for(l=image_list;l;l=l->next)
-		func(l->data, user_data);
-}
-
-GImage *
-gimage_get_named (gchar *name)
-{
-  GSList *tmp = image_list;
-  GimpImage *gimage;
-  char *str;
-  while (tmp)
-    {
-      gimage = tmp->data;
-      str = prune_filename (gimp_image_filename (gimage));
-      if (strcmp (str, name) == 0)
-	return gimage;
-
-      tmp = g_slist_next (tmp);
-    }
-  return NULL;
+	gimp_set_foreach(image_context, func, user_data);
 }
 

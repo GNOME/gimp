@@ -23,9 +23,10 @@
 int drawable_ID		     (GimpDrawable *);
 void drawable_fill (GimpDrawable *drawable, int fill_type);
 void drawable_update (GimpDrawable *drawable, int x, int y, int w, int h);
+void drawable_apply_image (GimpDrawable *, int, int, int, int, 
+			   TileManager *, int);
 
 
-#define drawable_apply_image gimp_drawable_apply_image
 #define drawable_merge_shadow gimp_drawable_merge_shadow
 #define drawable_mask_bounds gimp_drawable_mask_bounds
 #define drawable_invalidate_preview gimp_drawable_invalidate_preview

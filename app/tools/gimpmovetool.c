@@ -438,6 +438,7 @@ tools_new_move_tool ()
 
   private->layer = NULL;
   private->guide = NULL;
+  private->disp = NULL;
 
   return tool;
 }

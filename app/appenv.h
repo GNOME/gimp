@@ -20,6 +20,7 @@
 
 #include "gdk/gdkx.h"
 #include "gtk/gtk.h"
+#include "gimpsetF.h"
 
 #define DISPLAY              ((Display *) GDK_DISPLAY())
 
@@ -40,6 +41,7 @@ extern int no_data;
 extern int be_verbose;
 extern int use_debug_handler;
 extern int console_messages;
+extern GimpSet* image_context;
 
 extern MessageHandlerType message_handler;
 

@@ -5,7 +5,7 @@ scriptdata =
 bin_PROGRAMS = gimp
 noinst_LIBRARIES = libgimpim.a
 
-libgimpim_a_SOURCES = gimpobject.c gimpimage.c gimpsignal.c gimpdrawable.c
+libgimpim_a_SOURCES = gimpobject.c gimpimage.c gimpset.c gimpsignal.c gimpdrawable.c
 
 gimp_SOURCES = \
 	about_dialog.c		\
@@ -317,6 +317,7 @@ LDADD = \
 	-lc
 
 DEPS = \
+	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a
 
 gimp_DEPENDENCIES = $(DEPS)

@@ -22,6 +22,7 @@
 #include "palette.h"
 #include "gimpimageF.h"
 #include "gdisplay.h"
+#include "undo.h"
 
 int
 drawable_ID (GimpDrawable *drawable)
@@ -72,3 +73,20 @@ drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
   /*  invalidate the preview  */
   gimp_drawable_invalidate_preview (drawable);
 }
+
+void
+drawable_apply_image (GimpDrawable *drawable, 
+		      int x1, int y1, int x2, int y2, 
+		      TileManager *tiles, int sparse)
+{
+  if (drawable)
+    {
+      if (! tiles)
+	undo_push_image (drawable->gimage, drawable, 
+			 x1, y1, x2, y2);
+      else
+	undo_push_image_mod (drawable->gimage, drawable, 
+			     x1, y1, x2, y2, tiles, sparse);
+    }
+}
+

@@ -86,9 +86,6 @@ typedef enum
   HISTOGRAM
 } ToolType;
 
-#define XButtonEvent GdkEventButton
-#define XMotionEvent GdkEventMotion
-
 /*  Structure definitions  */
 
 typedef struct _tool Tool;

@@ -20,7 +20,6 @@
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "undo.h"
 
 
 enum {
@@ -88,22 +87,6 @@ gimp_drawable_get_ID (int drawable_id)
 
   return (GimpDrawable*) g_hash_table_lookup (gimp_drawable_table, 
 					      (gpointer) drawable_id);
-}
-
-void
-gimp_drawable_apply_image (GimpDrawable *drawable, 
-		      int x1, int y1, int x2, int y2, 
-		      TileManager *tiles, int sparse)
-{
-  if (drawable)
-    {
-      if (! tiles)
-	undo_push_image (drawable->gimage, drawable, 
-			 x1, y1, x2, y2);
-      else
-	undo_push_image_mod (drawable->gimage, drawable, 
-			     x1, y1, x2, y2, tiles, sparse);
-    }
 }
 
 

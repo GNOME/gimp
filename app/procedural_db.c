@@ -1266,18 +1266,30 @@ static gboolean id_cmp_func(gconstpointer id1, gconstpointer id2){
 	return (*((guint*)id1)==*((guint*)id2));
 }
 
-static void pdb_id_init (void){
-	image_hash=g_hash_table_new(id_hash_func, id_cmp_func);
-	drawable_hash=g_hash_table_new(id_hash_func, id_cmp_func);
-	display_hash=g_hash_table_new(id_hash_func, id_cmp_func);
-}
-
-void pdb_add_image(GimpImage* gimage){
+static void add_cb(GimpSet* set, GimpImage* gimage, gpointer data){
 	guint* id=g_new(gint,1);
 	*id=next_image_id++;
 	gtk_object_set_data(GTK_OBJECT(gimage), "pdb_id", id);
 	g_hash_table_insert(image_hash, id, gimage);
 }
+
+static void remove_cb(GimpSet* set, GimpImage* image, gpointer data){
+	guint* id=gtk_object_get_data(GTK_OBJECT(image), "pdb_id");
+	gtk_object_remove_data(GTK_OBJECT(image), "pdb_id");
+	g_hash_table_remove(image_hash, id);
+	g_free(id);
+}
+
+static void pdb_id_init (void){
+	image_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+	drawable_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+	display_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+	gtk_signal_connect(GTK_OBJECT(image_context), "add",
+			   GTK_SIGNAL_FUNC(add_cb), NULL);
+	gtk_signal_connect(GTK_OBJECT(image_context), "remove",
+			   GTK_SIGNAL_FUNC(remove_cb), NULL);
+}
+
 
 gint pdb_image_to_id(GimpImage* gimage){
 	guint *id=gtk_object_get_data(GTK_OBJECT(gimage), "pdb_id");
@@ -1289,10 +1301,4 @@ GimpImage* pdb_id_to_image(gint id){
 }
 
 	
-void pdb_remove_image(GimpImage* image){
-	guint* id=gtk_object_get_data(GTK_OBJECT(image), "pdb_id");
-	gtk_object_remove_data(GTK_OBJECT(image), "pdb_id");
-	g_hash_table_remove(image_hash, id);
-	g_free(id);
-}
 	 
