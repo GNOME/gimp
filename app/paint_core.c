@@ -603,6 +603,7 @@ paint_core_get_paint_area (paint_core, drawable)
   int x, y;
   int x1, y1, x2, y2;
   int bytes;
+  int dwidth, dheight;
 
   bytes = drawable_has_alpha (drawable) ?
     drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
@@ -611,12 +612,15 @@ paint_core_get_paint_area (paint_core, drawable)
   x = (int) paint_core->curx - (paint_core->brush->mask->width >> 1);
   y = (int) paint_core->cury - (paint_core->brush->mask->height >> 1);
 
-  x1 = BOUNDS (x - 1, 0, drawable_width (drawable));
-  y1 = BOUNDS (y - 1, 0, drawable_height (drawable));
+  dwidth = drawable_width (drawable);
+  dheight = drawable_height (drawable);
+
+  x1 = BOUNDS (x - 1, 0, dwidth);
+  y1 = BOUNDS (y - 1, 0, dheight);
   x2 = BOUNDS (x + paint_core->brush->mask->width + 1,
-	       0, drawable_width (drawable));
+	       0, dwidth);
   y2 = BOUNDS (y + paint_core->brush->mask->height + 1,
-	       0, drawable_height (drawable));
+	       0, dheight);
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
@@ -640,18 +644,24 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   int h;
   int refd;
   int pixelwidth;
+  int dwidth, dheight;
   unsigned char * s, * d;
   void * pr;
 
   orig_buf = temp_buf_resize (orig_buf, drawable_bytes (drawable),
 			      x1, y1, (x2 - x1), (y2 - y1));
-  x1 = BOUNDS (x1, 0, drawable_width (drawable));
-  y1 = BOUNDS (y1, 0, drawable_height (drawable));
-  x2 = BOUNDS (x2, 0, drawable_width (drawable));
-  y2 = BOUNDS (y2, 0, drawable_height (drawable));
+
+  dwidth = drawable_width (drawable);
+  dheight = drawable_height (drawable);
+
+  x1 = BOUNDS (x1, 0, dwidth);
+  y1 = BOUNDS (y1, 0, dheight);
+  x2 = BOUNDS (x2, 0, dwidth);
+  y2 = BOUNDS (y2, 0, dheight);
 
   /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1,
+		     (x2 - x1), (y2 - y1), FALSE);
   destPR.bytes = orig_buf->bytes;
   destPR.x = 0; destPR.y = 0;
   destPR.w = (x2 - x1); destPR.h = (y2 - y1);
@@ -659,14 +669,18 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   destPR.data = temp_buf_data (orig_buf) +
     (y1 - orig_buf->y) * destPR.rowstride + (x1 - orig_buf->x) * destPR.bytes;
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, FALSE, FALSE);
+      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
+					 0, FALSE, FALSE);
       if (undo_tile->valid == TRUE)
 	{
 	  refd = 1;
-	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, TRUE, FALSE);
+	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
+					     0, TRUE, FALSE);
 	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
 	}
@@ -810,7 +824,7 @@ paint_core_subsample_mask (mask, x, y)
 	      while (s--)
 		{
 		  new_val = *d + ((*m * *k++) >> 8);
-		  *d++ = (new_val > 255) ? 255 : new_val;
+		  *d++ = MINIMUM (new_val, 255);
 		}
 	    }
 	  m++;

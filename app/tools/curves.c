@@ -757,8 +757,8 @@ curves_plot_curve (CurvesDialog *cd,
       dy += dy2;
       dy2 += dy3;
 
-      newx = BOUNDS ((ROUND (x)), 0, 255);
-      newy = BOUNDS ((ROUND (y)), 0, 255);
+      newx = CLAMP0255 (ROUND (x));
+      newy = CLAMP0255 (ROUND (y));
 
       /* if this point is different than the last one...then draw it */
       if ((lastx != newx) || (lasty != newy))
@@ -914,7 +914,7 @@ curves_smooth_callback (GtkWidget *w,
       /*  pick representative points from the curve and make them control points  */
       for (i = 0; i <= 8; i++)
 	{
-	  index = BOUNDS ((i * 32), 0, 255);
+	  index = CLAMP0255 (i * 32);
 	  cd->points[cd->channel][i * 2][0] = index;
 	  cd->points[cd->channel][i * 2][1] = cd->curve[cd->channel][index];
 	}

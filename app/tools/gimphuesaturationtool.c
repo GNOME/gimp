@@ -163,7 +163,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 	value = (hsd->saturation[0] + hsd->saturation[hue + 1]) * 255.0 / 100.0;
 	value = BOUNDS (value, -255, 255);
 #if 0
-        saturation_transfer[hue][i] = (unsigned char) (BOUNDS ((i * (255 + value)) / 255, 0, 255));
+        saturation_transfer[hue][i] = (unsigned char) (CLAMP0255 ((i * (255 + value)) / 255));
 #else
 	if (value < 0)
 	  saturation_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);

@@ -154,8 +154,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
+      x = MINIMUM (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = MINIMUM (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -183,8 +183,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
+      x = MINIMUM (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = MINIMUM (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -219,8 +219,8 @@ gdisplay_resize_image (GDisplay *gdisp)
   /*  Calculate the width and height of the new canvas  */
   sx = SCALE (gdisp, gdisp->gimage->width);
   sy = SCALE (gdisp, gdisp->gimage->height);
-  width = HIGHPASS (sx, gdisp->disp_width);
-  height = HIGHPASS (sy, gdisp->disp_height);
+  width = MINIMUM (sx, gdisp->disp_width);
+  height = MINIMUM (sy, gdisp->disp_height);
 
   /* if the new dimensions of the ximage are different than the old...resize */
   if (width != gdisp->disp_width || height != gdisp->disp_height)

@@ -1,3 +1,11 @@
+Fri Jul 24 19:36:33 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* app/appenv.h app/brightness_contrast.c app/color_balance.c
+	app/curves.c app/gdisplay.h app/gdisplay_ops.c
+	app/hue_saturation.c app/paint_core.c app/paint_funcs.c
+	app/undo.c: Attempt to speed-up and/or sanitize
+	MAX/MIN/CLAMP macro usage throughout gimp-core.
+
 Fri Jul 24 12:01:31 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/gdisplay.c (gdisplay_update_cursor): Fixed a string

@@ -35,7 +35,7 @@
 #define  UNSCALE(g,x)   ((x * SCALESRC(g)) / SCALEDEST(g))
 
 #define LOWPASS(x) ((x>0) ? x : 0)
-#define HIGHPASS(x,y) ((x>y) ? y : x)
+/* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
 
 
 typedef enum

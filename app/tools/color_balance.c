@@ -154,25 +154,25 @@ color_balance (PixelRegion *srcPR,
 	  b = b_n = s[BLUE_PIX];
 
 	  r_n += cbd->cyan_red[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
+	  r_n = CLAMP0255 (r_n);
 	  r_n += cbd->cyan_red[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
+	  r_n = CLAMP0255 (r_n);
 	  r_n += cbd->cyan_red[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
-	  r_n = BOUNDS (r_n, 0, 255);
+	  r_n = CLAMP0255 (r_n);
 
 	  g_n += cbd->magenta_green[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
+	  g_n = CLAMP0255 (g_n);
 	  g_n += cbd->magenta_green[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
+	  g_n = CLAMP0255 (g_n);
 	  g_n += cbd->magenta_green[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
-	  g_n = BOUNDS (g_n, 0, 255);
+	  g_n = CLAMP0255 (g_n);
 
 	  b_n += cbd->yellow_blue[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
+	  b_n = CLAMP0255 (b_n);
 	  b_n += cbd->yellow_blue[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
+	  b_n = CLAMP0255 (b_n);
 	  b_n += cbd->yellow_blue[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
-	  b_n = BOUNDS (b_n, 0, 255);
+	  b_n = CLAMP0255 (b_n);
 
 	  if (cbd->preserve_luminosity)
 	    {

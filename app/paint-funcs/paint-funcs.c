@@ -725,7 +725,7 @@ divide_pixels (unsigned char *src1,
     {
       for (b = 0; b < alpha; b++) {
 	result = ((src1[b] * 256) / (1+src2[b]));
-        dest[b] = (result > 255) ? 255 : result;
+        dest[b] = MINIMUM(result, 255);
       }
 
       if (ha1 && ha2)
@@ -827,7 +827,9 @@ add_pixels (unsigned char *src1,
       for (b = 0; b < alpha; b++)
 	{
 	  sum = src1[b] + src2[b];
-	  dest[b] = (sum > 255) ? 255 : sum;
+	  dest[b] = MAX255 (sum);
+	  /* dest[b] = sum | ((sum&256) - ((sum&256) >> 8)); */
+	  /* dest[b] = (sum > 255) ? 255 : sum; */ /* older, little slower */
 	}
 
       if (ha1 && ha2)

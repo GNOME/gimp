@@ -513,6 +513,7 @@ undo_push_image_mod (GImage *gimage,
 		     int     sparse)
 {
   long size;
+  int dwidth, dheight;
   Undo * new;
   ImageUndo *image_undo;
   TileManager *tiles;
@@ -524,10 +525,13 @@ undo_push_image_mod (GImage *gimage,
   if (! tiles_ptr)
     return FALSE;
 
-  x1 = BOUNDS (x1, 0, drawable_width (drawable));
-  y1 = BOUNDS (y1, 0, drawable_height (drawable));
-  x2 = BOUNDS (x2, 0, drawable_width (drawable));
-  y2 = BOUNDS (y2, 0, drawable_height (drawable));
+  dwidth = drawable_width (drawable);
+  dheight = drawable_height (drawable);
+
+  x1 = BOUNDS (x1, 0, dwidth);
+  y1 = BOUNDS (y1, 0, dheight);
+  x2 = BOUNDS (x2, 0, dwidth);
+  y2 = BOUNDS (y2, 0, dheight);
 
   tiles = (TileManager *) tiles_ptr;
   size = tiles->levels[0].width * tiles->levels[0].height *

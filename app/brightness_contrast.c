@@ -133,7 +133,7 @@ brightness_contrast (PixelRegion *srcPR,
 	value = (i > 127) ? (255 - i) : i;
 	value = (int) (127.0 * pow ((double) (value ? value : 1) / 127.0,
 				    (double) (127 + bcd->contrast) / 127.0));
-	value = BOUNDS (value, 0, 255);
+	value = CLAMP0255 (value);
 	contrast[i] = (i > 127) ? (255 - value) : value;
       }
   else
@@ -142,7 +142,7 @@ brightness_contrast (PixelRegion *srcPR,
 	value = (i > 127) ? (255 - i) : i;
 	power = (bcd->contrast == 127) ? 127 : 127.0 / (127 - bcd->contrast);
 	value = (int) (127.0 * pow ((double) value / 127.0, power));
-	value = BOUNDS (value, 0, 255);
+	value = CLAMP0255 (value);
 	contrast[i] = (i > 127) ? (255 - value) : value;
       }
 

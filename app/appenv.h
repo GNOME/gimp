@@ -18,16 +18,24 @@
 #ifndef __APPENV_H__
 #define __APPENV_H__
 
+#include "glib.h"
 #include "gdk/gdkx.h"
 #include "gtk/gtk.h"
 #include "gimpsetF.h"
 
 #define DISPLAY              ((Display *) GDK_DISPLAY())
 
-/*   important macros  */
-#define BOUNDS(a,x,y)  ((a < x) ? x : ((a > y) ? y : a))
-#define MINIMUM(x,y) ((x < y) ? x : y)
-#define MAXIMUM(x,y) ((x > y) ? x : y)
+/*   important macros - we reuse the ones from glib */
+#define BOUNDS(a,x,y)  CLAMP(a,x,y)
+#define MINIMUM(x,y)   MIN(x,y)
+#define MAXIMUM(x,y)   MAX(x,y)
+
+/* limit a (0->511) int to 255 */
+#define MAX255(a)  (a | ((a & 256) - ((a & 256) >> 8)))
+
+/* clamp a int32-range int between 0 and 255 inclusive */
+#define CLAMP0255(a)  ((a&256)? (~(a>>31)) : a)
+
 
 typedef enum {
   MESSAGE_BOX,
