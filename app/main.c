@@ -316,7 +316,7 @@ main (int    argc,
 	  use_shm = FALSE;
  	  argv[i] = NULL;
 	}
-      else if (strcmp (argv[i], "--no-mmx") == 0)
+      else if (strcmp (argv[i], "--no-cpu-accel") == 0)
 	{
 	  use_mmx = FALSE;
  	  argv[i] = NULL;
@@ -481,7 +481,7 @@ gimp_show_help (const gchar *progname)
   g_print (_("  -v, --version            Output version information.\n"));
   g_print (_("  --verbose                Show startup messages.\n"));
   g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
-  g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
+  g_print (_("  --no-cpu-accel           Do not use special CPU accelerations.\n"));
   g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
   g_print (_("  -f, --no-fonts           Do not load any fonts.\n"));
   g_print (_("  -i, --no-interface       Run without a user interface.\n"));

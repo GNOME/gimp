@@ -1,3 +1,26 @@
+2003-11-30  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite.c:
+	* app/composite/gimp-composite.h:
+	* app/main.c:
+	* app/base/base.c:
+
+	Changed the existing command line option, --no-mmx to
+	--no-cpu-accel and propogated the changes necessary to use that
+	flag to turn OFF the use of CPU extensions using only the generic
+	implementations in app/composite/gimp-composite-generic.c
+
+	Nota Bene: All of the previous gimp 1.2 code is still available
+	and is is enabled by setting the GIMP_COMPOSITE environment
+	variable to zero (GIMP_COMPOSITE=0x0).  This causes only the 1.2
+	code to be used and is helpful for regression testing of the newer
+	gimp-composite code.  Whether using the new code, or the old code
+	there should be absolutely no visible differences.
+
+	The newly renamed option --no-cpu-accel retains its previous
+	semantic meaning with the old 1.2 code--turning OFF MMX
+	optimisations.
+
 2003-11-30  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c: removed the hack that used to call gimp_exit() when

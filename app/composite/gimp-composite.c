@@ -347,9 +347,13 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
  *
  **/
 void
-gimp_composite_init (void)
+gimp_composite_init (gboolean use_cpu_accel)
 {
   const gchar *p;
+
+  if (!use_cpu_accel) {
+    gimp_composite_options.bits |=  GIMP_COMPOSITE_OPTION_NOEXTENSIONS;
+  }
 
   if ((p = g_getenv ("GIMP_COMPOSITE")))
     {
