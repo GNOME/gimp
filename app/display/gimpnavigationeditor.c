@@ -51,6 +51,7 @@ typedef struct _NavWinData NavWinData;
 struct _NavWinData
 {
   gboolean   showingPreview;
+  gboolean   installedDirtyTimer;
   InfoDialog *info_win;
   GtkWidget *preview;
   void      *gdisp_ptr; /* I'm not happy 'bout this one */
@@ -94,7 +95,7 @@ nav_window_preview_resized (GtkWidget      *,
 #endif /* 0 */
 
 static void
-nav_window_update_preview (NavWinData *);
+nav_window_update_preview (NavWinData *,gboolean);
 
 static void 
 destroy_preview_widget     (NavWinData *);
@@ -182,7 +183,7 @@ nav_window_disp_area(NavWinData *iwd,GDisplay *gdisp)
   if(need_update == TRUE)
     {
       gtk_widget_hide(iwd->previewAlign);
-      nav_window_update_preview(iwd);
+      nav_window_update_preview(iwd,FALSE);
       gtk_widget_show(iwd->preview);
       gtk_widget_draw(iwd->preview, NULL); 
       gtk_widget_show(iwd->previewAlign);
@@ -387,15 +388,17 @@ update_real_view(NavWinData *iwd,gint tx,gint ty)
 }
 
 static void
-nav_window_update_preview(NavWinData *iwd)
+nav_window_update_preview
+(NavWinData *iwd,
+			  gboolean    invalidated)
 {
   GDisplay *gdisp;
   TempBuf * preview_buf;
-  gchar *src, *buf, *dest;
+  guchar *src, *buf, *dest;
   gint x,y,has_alpha;
   gint pwidth, pheight;
   GimpImage *gimage;
-  guchar r,g,b,a;
+  gdouble r,g,b,a,chk;
 
   gimp_add_busy_cursors();
 
@@ -424,38 +427,45 @@ nav_window_update_preview(NavWinData *iwd)
 	case 4:
 	  for (x = 0; x < preview_buf->width; x++)
 	    {
-              r = *(src++);
-              g = *(src++);
-              b = *(src++);
-              a = *(src++);
-
-	      if (a & 128)
-                {
-                  *(dest++) = r;
-                  *(dest++) = g;
-                  *(dest++) = b;
-                }
-              else
-                {
-                  r = (( (x^y) & 4 ) << 4) | 128;
-                  *(dest++) = r;
-                  *(dest++) = r;
-                  *(dest++) = r;
-                }
+              r = ((gdouble)(*(src++)))/255.0;
+              g = ((gdouble)(*(src++)))/255.0;
+              b = ((gdouble)(*(src++)))/255.0;
+              a = ((gdouble)(*(src++)))/255.0;
+	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
+	      if(!invalidated)
+		{
+		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+		  *(dest++) = (guchar)((chk + (g - chk)*a)*255.0);
+		  *(dest++) = (guchar)((chk + (b - chk)*a)*255.0);
+		}
+	      else
+		{
+		  chk *= 128.0;
+		  *(dest++) = (guchar)chk;
+		  *(dest++) = (guchar)chk;
+		  *(dest++) = (guchar)chk;
+		}
 	    }
 	  break;
 	case 2:
 	  for (x = 0; x < preview_buf->width; x++)
 	    {
-              r = *(src++);
-              a = *(src++);
-
-              if (!(a & 128))
-                r = (( (x^y) & 4 ) << 4) | 128;
-
-              *(dest++) = r;
-              *(dest++) = r;
-              *(dest++) = r;
+              r = ((gdouble)(*(src++)))/255.0;
+              a = ((gdouble)(*(src++)))/255.0;
+	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
+	      if(!invalidated)
+		{
+		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+		  *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+		}
+	      else
+		{
+		  chk *= 255.0;
+		  *(dest++) = (guchar)chk;
+		  *(dest++) = (guchar)chk;
+		  *(dest++) = (guchar)chk;
+		}
 	    }
 	  break;
 	default:
@@ -511,7 +521,7 @@ nav_window_preview_resized (GtkWidget      *widget,
   iwd->nav_preview_height = alloc->height;
   set_size_data(iwd);
   gtk_preview_size(GTK_PREVIEW(iwd->preview),alloc->width,alloc->height);
-  nav_window_update_preview(iwd);
+  nav_window_update_preview(iwd,FALSE);
   nav_window_draw_sqr(iwd,FALSE,
 		      iwd->dispx,iwd->dispy,
 		      iwd->dispwidth,iwd->dispheight);
@@ -519,10 +529,10 @@ nav_window_preview_resized (GtkWidget      *widget,
 #if 0 
   destroy_preview_widget(iwd);
   create_preview_widget(iwd);
-  nav_window_update_preview(iwd);
+  nav_window_update_preview(iwd,FALSE);
 
 
-  nav_window_update_preview(iwd);
+  nav_window_update_preview(iwd,FALSE);
   gtk_widget_show(iwd->preview);
   gtk_widget_draw(iwd->preview, NULL); 
   gtk_widget_show(iwd->previewAlign);
@@ -608,7 +618,7 @@ nav_window_preview_events (GtkWidget *widget,
       break;
 
     case GDK_MAP:
-      nav_window_update_preview(iwd); 
+      nav_window_update_preview(iwd,FALSE); 
       break;
 
     case GDK_BUTTON_PRESS:
@@ -691,8 +701,6 @@ nav_window_preview_events (GtkWidget *widget,
 	{
 	case GDK_space:
 	  gdk_window_raise(gdisp->shell->window);
-	  nav_window_update_preview(iwd);
-	  gtk_widget_draw(iwd->preview, NULL); 
 	  break;
 	case GDK_Up:
 	  arrowKey = TRUE;
@@ -787,6 +795,41 @@ nav_window_expose_events (GtkWidget *widget,
   return FALSE;
 }
 
+static gint 
+nav_preview_update_do(NavWinData *iwd)
+{
+  nav_window_update_preview(iwd,FALSE);
+  gtk_widget_draw(iwd->preview, NULL); 
+  iwd->installedDirtyTimer = FALSE;
+  return FALSE;
+}
+
+static gint 
+nav_preview_update_do_timer(NavWinData *iwd)
+{
+  gtk_idle_add((GtkFunction)nav_preview_update_do,(gpointer)iwd);
+
+  return FALSE;
+}
+
+static void
+nav_image_need_update (GtkObject *obj,
+		       gpointer   client_data)
+{
+  NavWinData *iwd;
+
+  iwd = (NavWinData *)client_data;
+
+  if(!iwd || !iwd->showingPreview || iwd->installedDirtyTimer == TRUE)
+    return;
+
+  iwd->installedDirtyTimer = TRUE;
+
+  /* Update preview at a less busy time */
+  nav_window_update_preview(iwd,TRUE);
+  gtk_widget_draw(iwd->preview, NULL); 
+  gtk_timeout_add(2000,(GtkFunction)nav_preview_update_do_timer,(gpointer)iwd); 
+}
 
 static GtkWidget *
 info_window_image_preview_new(InfoDialog *info_win)
@@ -858,6 +901,7 @@ nav_window_create (void *gdisp_ptr)
   info_win->user_data = iwd;
   iwd->info_win = info_win;
   iwd->showingPreview = TRUE;
+  iwd->installedDirtyTimer = FALSE;
   iwd->preview = NULL;
   iwd->gdisp_ptr = gdisp_ptr;
   iwd->dispx   = -1;
@@ -881,6 +925,14 @@ nav_window_create (void *gdisp_ptr)
   /* Create the action area  */
   action_items[0].user_data = info_win;
   build_action_area (GTK_DIALOG (info_win->shell), action_items, 1, 0);
+
+  /* Tie into the dirty signal so we can update the preview */
+  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
+			    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
+
+  /* Also clean signal so undos get caught as well..*/
+  gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
+			    GTK_SIGNAL_FUNC(nav_image_need_update),iwd);
 
   return info_win;
 }
