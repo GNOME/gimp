@@ -11,7 +11,6 @@ Gimp.pm
 Perl-Server
 UI/UI.pm
 UI/UI.xs
-blib/lib/Gimp.pm
 examples/Create_Images
 examples/PDB
 examples/alpha2color
