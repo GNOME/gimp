@@ -2,6 +2,7 @@
 # marked to allow runtime translation of messages
 
 plug-ins/script-fu/script-fu-console.c
+plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu-text-console.c

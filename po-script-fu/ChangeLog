@@ -1,3 +1,7 @@
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added script-fu-interface.c.
+
 2004-08-27  Sven Neumann  <sven@gimp.org>
 
 	* de.po: merged fixes from stable branch.

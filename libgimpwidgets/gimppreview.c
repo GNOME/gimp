@@ -30,9 +30,6 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define PREVIEW_SIZE (128)
-
-
 enum
 {
   INVALIDATED,
@@ -50,11 +47,11 @@ enum
 static void     gimp_preview_class_init         (GimpPreviewClass *klass);
 static void     gimp_preview_init               (GimpPreview      *preview);
 static void     gimp_preview_get_property       (GObject          *object,
-                                                 guint             param_id,
+                                                 guint             property_id,
                                                  GValue           *value,
                                                  GParamSpec       *pspec);
 static void     gimp_preview_set_property       (GObject          *object,
-                                                 guint             param_id,
+                                                 guint             property_id,
                                                  const GValue     *value,
                                                  GParamSpec       *pspec);
 
@@ -151,28 +148,23 @@ static void
 gimp_preview_init (GimpPreview *preview)
 {
   GtkWidget *frame;
-  gint       sel_width;
-  gint       sel_height;
 
   preview->xoff           = 0;
   preview->yoff           = 0;
   preview->in_drag        = FALSE;
   preview->update_preview = TRUE;
 
-  preview->xmin = preview->ymin = 0;
-  preview->xmax = preview->ymax = 1;
+  preview->xmin   = preview->ymin = 0;
+  preview->xmax   = preview->ymax = 1;
 
-  sel_width       = preview->xmax - preview->xmin;
-  sel_height      = preview->ymax - preview->ymin;
-  preview->width  = MIN (sel_width,  PREVIEW_SIZE);
-  preview->height = MIN (sel_height, PREVIEW_SIZE);
+  preview->width  = preview->xmax - preview->xmin;
+  preview->height = preview->ymax - preview->ymin;
 
   gtk_table_resize (GTK_TABLE (preview), 3, 2);
   gtk_table_set_homogeneous (GTK_TABLE (preview), FALSE);
 
-  preview->hadj = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-                                      MIN (preview->width, sel_width),
-                                      MIN (preview->width, sel_width));
+  preview->hadj = gtk_adjustment_new (0, 0, preview->width - 1, 1.0,
+                                      preview->width, preview->width);
 
   g_signal_connect (preview->hadj, "value_changed",
                     G_CALLBACK (gimp_preview_h_scroll),
@@ -188,9 +180,8 @@ gimp_preview_init (GimpPreview *preview)
   g_signal_connect (preview->hscr, "button-release-event",
                     G_CALLBACK (gimp_preview_button_release), preview);
 
-  preview->vadj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-                                      MIN (preview->height, sel_height),
-                                      MIN (preview->height, sel_height));
+  preview->vadj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
+                                      preview->height, preview->height);
 
   g_signal_connect (preview->vadj, "value_changed",
                     G_CALLBACK (gimp_preview_v_scroll),
@@ -215,14 +206,13 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_show (frame);
 
   preview->area = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview->area,
-                               preview->width, preview->height);
+  gtk_widget_set_size_request (preview->area, preview->width, preview->height);
   gtk_container_add (GTK_CONTAINER (frame), preview->area);
   gtk_widget_show (preview->area);
 
   gtk_widget_set_events (preview->area,
-                         GDK_BUTTON_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_BUTTON_PRESS_MASK        |
+                         GDK_BUTTON_RELEASE_MASK      |
                          GDK_POINTER_MOTION_HINT_MASK |
                          GDK_BUTTON_MOTION_MASK);
 
@@ -252,13 +242,13 @@ gimp_preview_init (GimpPreview *preview)
 
 static void
 gimp_preview_get_property (GObject    *object,
-                           guint       param_id,
+                           guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
   GimpPreview *preview = GIMP_PREVIEW (object);
 
-  switch (param_id)
+  switch (property_id)
     {
     case PROP_UPDATE:
       g_value_set_boolean (value, preview->update_preview);
@@ -269,20 +259,20 @@ gimp_preview_get_property (GObject    *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
 static void
 gimp_preview_set_property (GObject      *object,
-                           guint         param_id,
+                           guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
   GimpPreview *preview = GIMP_PREVIEW (object);
 
-  switch (param_id)
+  switch (property_id)
     {
     case PROP_UPDATE:
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
@@ -297,7 +287,7 @@ gimp_preview_set_property (GObject      *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -307,8 +297,6 @@ gimp_preview_button_release (GtkWidget      *hs,
                              GdkEventButton *ev,
                              GimpPreview    *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
-
   gimp_preview_invalidate (preview);
 
   return FALSE;
@@ -317,11 +305,7 @@ gimp_preview_button_release (GtkWidget      *hs,
 static void
 gimp_preview_draw (GimpPreview *preview)
 {
-  GimpPreviewClass *class;
-
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
-  class = GIMP_PREVIEW_GET_CLASS (preview);
+  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
 
   if (class->draw)
     class->draw (preview);
@@ -412,6 +396,7 @@ gimp_preview_area_event (GtkWidget   *area,
                         0, preview->ymax - preview->ymin - preview->height);
           gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadj), xoff);
           gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
+
           gimp_preview_draw (preview);
         }
       break;

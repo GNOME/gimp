@@ -1,3 +1,8 @@
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.c: removed the hardcoded preview size,
+	removed some redundant assertions.
+
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.[ch]: removed the GUI code...
