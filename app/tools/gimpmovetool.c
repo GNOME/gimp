@@ -51,6 +51,12 @@
 #include "gimp-intl.h"
 
 
+#define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
+                             GIMP_ORIENTATION_VERTICAL : \
+                             GIMP_ORIENTATION_HORIZONTAL)
+
+
+
 /*  local function prototypes  */
 
 static void   gimp_move_tool_class_init     (GimpMoveToolClass *klass);
@@ -276,8 +282,6 @@ gimp_move_tool_button_press (GimpTool        *tool,
                                               FUNSCALEX (shell, snap_distance),
                                               FUNSCALEY (shell, snap_distance))))
             {
-              gchar *str;
-
               move->guide             = guide;
               move->moving_guide      = TRUE;
               move->guide_position    = guide->position;
@@ -291,9 +295,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
               gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
-              str = g_strdup_printf (_("Move Guide: %d"), move->guide_position);
-              gimp_tool_push_status (tool, str);
-              g_free (str);
+              gimp_tool_push_status_length (tool, _("Move Guide: "),
+                                            SWAP_ORIENT (move->guide_orientation),
+                                            move->guide_position);
 
               return;
             }
@@ -508,7 +512,6 @@ gimp_move_tool_motion (GimpTool        *tool,
   if (move->moving_guide)
     {
       gint      tx, ty;
-      gchar    *str;
       gboolean  delete_guide = FALSE;
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -556,26 +559,24 @@ gimp_move_tool_motion (GimpTool        *tool,
             }
         }
 
-      if (delete_guide)
-        {
-          if (move->guide)
-            str = g_strdup (_("Delete Guide"));
-          else
-            str = g_strdup (_("Cancel Guide"));
-        }
-      else
-        {
-          if (move->guide)
-            str = g_strdup_printf (_("Move Guide: %d"), move->guide_position);
-          else
-            str = g_strdup_printf (_("Add Guide: %d"), move->guide_position);
-        }
-
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
       gimp_tool_pop_status (tool);
-      gimp_tool_push_status (tool, str);
-      g_free (str);
+
+      if (delete_guide)
+        {
+          gimp_tool_push_status (tool,
+                                 move->guide ?
+                                 _("Remove Guide") : _("Cancel Guide"));
+        }
+      else
+        {
+          gimp_tool_push_status_length (tool,
+                                        move->guide ?
+                                        _("Move Guide: ") : _("Add Guide: "),
+                                        SWAP_ORIENT (move->guide_orientation),
+                                        move->guide_position);
+        }
     }
 }
 

@@ -158,9 +158,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   box->spacing     = 2;
   box->homogeneous = FALSE;
 
-  statusbar->shell                 = NULL;
-  statusbar->cursor_format_str[0]  = '\0';
-  statusbar->progress_active       = FALSE;
+  statusbar->shell                = NULL;
+  statusbar->cursor_format_str[0] = '\0';
+  statusbar->length_format_str[0] = '\0';
+  statusbar->progress_active      = FALSE;
 
   gtk_box_set_spacing (box, 1);
 
@@ -468,7 +469,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
   GimpDisplayShell *shell;
   gchar             buf[CURSOR_LEN];
 
-  g_return_if_fail  (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
 
@@ -493,6 +494,57 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                   x * unit_factor / image->xresolution,
                   separator,
                   y * unit_factor / image->yresolution);
+    }
+
+  gimp_statusbar_push (statusbar, context, buf);
+}
+
+void
+gimp_statusbar_push_length (GimpStatusbar       *statusbar,
+                            const gchar         *context,
+                            const gchar         *title,
+                            GimpOrientationType  axis,
+                            gdouble              value)
+{
+  GimpDisplayShell *shell;
+  gchar             buf[CURSOR_LEN];
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (title != NULL);
+
+  shell = statusbar->shell;
+
+  if (shell->unit == GIMP_UNIT_PIXEL)
+    {
+      g_snprintf (buf, sizeof (buf), statusbar->length_format_str,
+                  title,
+                  ROUND (value));
+    }
+  else /* show real world units */
+    {
+      GimpImage *image       = shell->gdisp->gimage;
+      gdouble    resolution;
+      gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
+                                                      shell->unit);
+
+      switch (axis)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          resolution = image->xresolution;
+          break;
+
+        case GIMP_ORIENTATION_VERTICAL:
+          resolution = image->yresolution;
+          break;
+
+        default:
+          g_return_if_reached ();
+          break;
+        }
+
+      g_snprintf (buf, sizeof (buf), statusbar->length_format_str,
+                  title,
+                  value * unit_factor / resolution);
     }
 
   gimp_statusbar_push (statusbar, context, buf);
@@ -670,6 +722,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%d%%s%%d");
+      g_snprintf (statusbar->length_format_str,
+                  sizeof (statusbar->length_format_str),
+                  "%%s%%d");
     }
   else /* show real world units */
     {
@@ -677,6 +732,10 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%.%df%%s%%.%df",
                   _gimp_unit_get_digits (image->gimp, shell->unit),
+                  _gimp_unit_get_digits (image->gimp, shell->unit));
+      g_snprintf (statusbar->length_format_str,
+                  sizeof (statusbar->length_format_str),
+                  "%%s%%.%df",
                   _gimp_unit_get_digits (image->gimp, shell->unit));
     }
 

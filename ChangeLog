@@ -1,3 +1,17 @@
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: added new function
+	gimp_statusbar_push_length(), which works exactly like
+	push_coords() but takes only one value plus a GimpOrientationType
+	for specifying the value's axis.
+
+	* app/tools/gimptool.[ch]: added the corresponding
+	gimp_tool_push_status_length().
+
+	* app/tools/gimpmovetool.c: use gimp_tool_push_status_length()
+	so the guide position is shown in the selected display unit.
+	Cleaned up the status message code a bit.
+
 2004-11-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: use an idle handler to jump to the
