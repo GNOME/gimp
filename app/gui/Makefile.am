@@ -143,8 +143,6 @@ menus_sources = \
 	qmask-menu.h			\
 	select-commands.c		\
 	select-commands.h		\
-	test-commands.c			\
-	test-commands.h			\
 	toolbox-menu.c			\
 	toolbox-menu.h			\
 	tools-commands.c		\

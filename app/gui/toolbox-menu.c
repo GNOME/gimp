@@ -36,7 +36,6 @@
 #include "help-commands.h"
 #include "menus.h"
 #include "plug-in-menus.h"
-#include "test-commands.h"
 #include "toolbox-menu.h"
 
 #include "gimp-intl.h"
@@ -192,24 +191,11 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
     "file/dialogs/error_console.html", NULL },
 
 #ifdef ENABLE_DEBUG_ENTRIES
-  { { "/File/Debug/Test Dialogs/Multi List...", NULL,
-      test_multi_container_list_view_cmd_callback, 0 },
-    NULL, NULL, NULL },
-  { { "/File/Debug/Test Dialogs/Multi Grid...", NULL,
-      test_multi_container_grid_view_cmd_callback, 0 },
-    NULL, NULL, NULL },
-
   { { "/File/Debug/Mem Profile", NULL,
       debug_mem_profile_cmd_callback, 0 },
     NULL, NULL, NULL },
   { { "/File/Debug/Dump Items", NULL,
       debug_dump_menus_cmd_callback, 0 },
-    NULL, NULL, NULL },
-  { { "/File/Debug/Serialize User Context", NULL,
-      test_serialize_context_cmd_callback, 0 },
-    NULL, NULL, NULL },
-  { { "/File/Debug/Deserialize User Context", NULL,
-      test_deserialize_context_cmd_callback, 0 },
     NULL, NULL, NULL },
 #endif
 

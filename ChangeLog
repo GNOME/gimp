@@ -1,3 +1,11 @@
+2003-04-01  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/toolbox-menu.c (toolbox_menu_entries): removed some
+	debug entries which are not needed any longer. Fixes bug #109680.
+
+	* app/gui/Makefile.am
+	* app/gui/test-commands.[ch]: removed these files from CVS.
+
 2003-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpdisplayconfig.[ch]: added gboolean show_scrollbars
