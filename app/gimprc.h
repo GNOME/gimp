@@ -36,6 +36,7 @@ extern char *    default_gradient;
 extern char *    pluginrc_path;
 extern int       tile_cache_size;
 extern int       marching_speed;
+extern int       last_opened_size;
 extern double    gamma_val;
 extern int       transparency_type;
 extern int       transparency_size;

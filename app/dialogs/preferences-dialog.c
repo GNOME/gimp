@@ -92,6 +92,7 @@ static   int          old_stingy_memory_use;
 static   int          old_tile_cache_size;
 static   int          old_install_cmap;
 static   int          old_cycled_marching_ants;
+static   int          old_last_opened_size;
 static   char *       old_temp_path;
 static   char *       old_swap_path;
 static   char *       old_brush_path;
@@ -111,6 +112,7 @@ static   int          edit_stingy_memory_use;
 static   int          edit_tile_cache_size;
 static   int          edit_install_cmap;
 static   int          edit_cycled_marching_ants;
+static   int          edit_last_opened_size;
 
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
 static   int          divided_tile_cache_size;
@@ -133,6 +135,7 @@ static   int          mem_size_unit;
    tile-cache-size
    install-cmap
    cycled-marching-ants
+   last-opened-size
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -240,6 +243,7 @@ file_prefs_save_callback (GtkWidget *widget,
   int save_tile_cache_size;
   int save_install_cmap;
   int save_cycled_marching_ants;
+  int save_last_opened_size;
   gchar *save_temp_path;
   gchar *save_swap_path;
   gchar *save_brush_path;
@@ -256,6 +260,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_tile_cache_size = tile_cache_size;
   save_install_cmap = install_cmap;
   save_cycled_marching_ants = cycled_marching_ants;
+  save_last_opened_size = last_opened_size;
   save_temp_path = temp_path;
   save_swap_path = swap_path;
   save_brush_path = brush_path;
@@ -268,6 +273,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "undo-levels");
   if (marching_speed != old_marching_speed)
     update = g_list_append (update, "marching-ants-speed");
+  if (last_opened_size != old_last_opened_size)
+    update = g_list_append (update, "last-opened-size");
   if (allow_resize_windows != old_allow_resize_windows)
     {
       update = g_list_append (update, "allow-resize-windows");
@@ -337,6 +344,12 @@ file_prefs_save_callback (GtkWidget *widget,
       cycled_marching_ants = edit_cycled_marching_ants;
       restart_notification = TRUE;
     }
+  if (edit_last_opened_size != last_opened_size)
+    {
+      update = g_list_append (update, "last-opened-size");
+      last_opened_size = edit_last_opened_size;
+      restart_notification = TRUE;
+    }
   if (file_prefs_strcmp (temp_path, edit_temp_path))
     {
       update = g_list_append (update, "temp-path");
@@ -386,6 +399,7 @@ file_prefs_save_callback (GtkWidget *widget,
   tile_cache_size = save_tile_cache_size;
   install_cmap = save_install_cmap;
   cycled_marching_ants = save_cycled_marching_ants;
+  last_opened_size = save_last_opened_size;
   temp_path = save_temp_path;
   swap_path = save_swap_path;
   brush_path = save_brush_path;
@@ -454,6 +468,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_tile_cache_size = old_tile_cache_size;
   edit_install_cmap = old_install_cmap;
   edit_cycled_marching_ants = old_cycled_marching_ants;
+  edit_last_opened_size = old_last_opened_size;
   file_prefs_strset (&edit_temp_path, old_temp_path);
   file_prefs_strset (&edit_swap_path, old_swap_path);
   file_prefs_strset (&edit_brush_path, old_brush_path);
@@ -679,6 +694,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  edit_tile_cache_size = tile_cache_size;
 	  edit_install_cmap = install_cmap;
 	  edit_cycled_marching_ants = cycled_marching_ants;
+	  edit_last_opened_size = last_opened_size;
 	}
       old_transparency_type = transparency_type;
       old_transparency_size = transparency_size;
@@ -700,6 +716,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_tile_cache_size = edit_tile_cache_size;
       old_install_cmap = edit_install_cmap;
       old_cycled_marching_ants = edit_cycled_marching_ants;
+      old_last_opened_size = edit_last_opened_size;
       file_prefs_strset (&old_temp_path, edit_temp_path);
       file_prefs_strset (&old_swap_path, edit_swap_path);
       file_prefs_strset (&old_brush_path, edit_brush_path);
@@ -1034,6 +1051,26 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
                           (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &marching_speed);
+      gtk_widget_show (spinbutton);
+
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new ("Recent Documents list size:");
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      adj = (GtkAdjustment *) gtk_adjustment_new (last_opened_size, 0.0,
+                                                  256.0, 1.0, 5.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
+                          &last_opened_size);
       gtk_widget_show (spinbutton);
 
       label = gtk_label_new ("Interface");

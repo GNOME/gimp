@@ -1,3 +1,12 @@
+Sat Jul 11 22:15:31 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* fileops.c
+	* gimprc.[ch]
+	* menus.[ch]
+	* preferences_dialog.c: added MRU file list (patch from
+	nuke@bayside.net) Moved document index menu item into the
+	dialogs submenu
+
 Sat Jul 11 23:57:09 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/ink.c (tools_free_ink): Free last_blob when destroying

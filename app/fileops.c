@@ -856,6 +856,7 @@ file_open_ok_callback (GtkWidget *w,
     {
       file_dialog_hide (client_data);
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+      menus_last_opened_add (filename);
       return;
     }
 

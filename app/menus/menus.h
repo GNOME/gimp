@@ -38,6 +38,7 @@ void menus_set_state           (char                 *path,
 				int                   state);
 void menus_destroy             (char                 *path);
 void menus_quit                (void);
+void menus_last_opened_add     (gchar                *filename);
 
 
 #endif /* MENUS_H */

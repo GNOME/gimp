@@ -22,6 +22,7 @@
 #include "colormaps.h"
 #include "commands.h"
 #include "fileops.h"
+#include "general.h"
 #include "gimprc.h"
 #include "interface.h"
 #include "menus.h"
@@ -32,7 +33,13 @@
 #include "gdisplay.h"
 #include "docindex.h"
 
+#define MRU_MENU_ENTRY_SIZE sizeof ("/File/MRU00")
+#define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
+
 static void menus_init (void);
+
+static GSList *last_opened_raw_filenames = NULL;
+static gint num_entries = 0;
 
 static GtkItemFactoryEntry toolbox_entries[] =
 {
@@ -50,12 +57,14 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { "/File/Dialogs/Tool Options...", "<control><shift>T", dialogs_tools_options_cmd_callback, 0 },
   { "/File/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, 0 },
   { "/File/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, 0 },
+  { "/File/Dialogs/Document Index...", NULL, raise_idea_callback, 0 },
   { "/File/---", NULL, NULL, 0, "<Separator>" },
-  { "/File/Document Index...", NULL, raise_idea_callback, 0 },
-  { "/File/Quit", "<control>Q", file_quit_cmd_callback, 0 },
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);
 static GtkItemFactory *toolbox_factory = NULL;
+
+static GtkItemFactoryEntry file_menu_separator = { "/File/---", NULL, NULL, 0, "<Separator>" };
+static GtkItemFactoryEntry toolbox_end = { "/File/Quit", "<control>Q", file_quit_cmd_callback, 0 };
 
 static GtkItemFactoryEntry image_entries[] =
 {
@@ -385,6 +394,140 @@ menus_quit ()
 
 }
 
+void
+menus_last_opened_cmd_callback (GtkWidget           *widget,
+                                gpointer             callback_data,
+                                guint                num)
+{
+  gchar *filename, *raw_filename;
+
+  raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
+  filename = prune_filename (raw_filename);
+
+  if (!file_open(raw_filename, filename))
+    g_message ("Error opening file: %s\n", raw_filename);
+}
+
+void
+menus_last_opened_update_labels ()
+{
+  GSList	*filename_slist;
+  GString	*entry_filename, *path;
+  GtkWidget	*widget;
+  gint		i;
+
+  entry_filename = g_string_new ("");
+  path = g_string_new ("");
+
+  filename_slist = last_opened_raw_filenames;
+
+  for (i = 1; i <= num_entries; i++)
+    {
+      g_string_sprintf (entry_filename, "%d. %s", i, prune_filename (((GString *) filename_slist->data)->str));
+
+      g_string_sprintf (path, "/File/MRU%02d", i);
+
+      widget = gtk_item_factory_get_widget (toolbox_factory, path->str);
+      gtk_widget_show (widget);
+
+      gtk_label_set (GTK_LABEL (GTK_BIN (widget)->child), entry_filename->str);
+      
+      filename_slist = filename_slist->next;
+    }
+
+  g_string_free (entry_filename, TRUE);
+  g_string_free (path, TRUE);
+}
+
+void
+menus_last_opened_add (gchar *filename)
+{
+  GString	*raw_filename;
+  GtkWidget	*widget;
+
+  if (num_entries == last_opened_size)
+    {
+      g_slist_free (g_slist_last (last_opened_raw_filenames));
+    }
+
+  raw_filename = g_string_new (filename);
+  last_opened_raw_filenames = g_slist_prepend (last_opened_raw_filenames, raw_filename);
+
+  if (num_entries == 0)
+    {
+      widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
+      gtk_widget_show (widget);
+    }
+
+  if (num_entries < last_opened_size)
+    num_entries++;
+
+  menus_last_opened_update_labels ();
+}
+
+void
+menus_init_mru ()
+{
+  gchar			*paths, *accelerators;
+  gint			i;
+  GtkItemFactoryEntry	*last_opened_entries;
+  GtkWidget		*widget;
+  
+  last_opened_entries = g_new (GtkItemFactoryEntry, last_opened_size);
+
+  paths = g_new (gchar, last_opened_size * MRU_MENU_ENTRY_SIZE);
+  accelerators = g_new (gchar, 9 * MRU_MENU_ACCEL_SIZE);
+
+  for (i = 0; i < last_opened_size; i++)
+    {
+      gchar *path, *accelerator;
+      
+      path = &paths[i * MRU_MENU_ENTRY_SIZE];
+      if (i < 9)
+        accelerator = &accelerators[i * MRU_MENU_ACCEL_SIZE];
+      else
+        accelerator = NULL;
+    
+      last_opened_entries[i].path = path;
+      last_opened_entries[i].accelerator = accelerator;
+      last_opened_entries[i].callback = (GtkItemFactoryCallback) menus_last_opened_cmd_callback;
+      last_opened_entries[i].callback_action = i;
+      last_opened_entries[i].item_type = NULL;
+
+      sprintf (path, "/File/MRU%02d", i + 1);
+      sprintf (accelerator, "<control>%d", i + 1);
+    }
+
+  gtk_item_factory_create_items_ac (toolbox_factory, last_opened_size,
+  				    last_opened_entries, NULL, 2);
+  gtk_item_factory_create_item (toolbox_factory, &file_menu_separator, NULL, 2);
+  gtk_item_factory_create_item (toolbox_factory, &toolbox_end, NULL, 2);
+
+  for (i=0; i < last_opened_size; i++)
+    {
+      widget = gtk_item_factory_get_widget (toolbox_factory,
+      					    last_opened_entries[i].path);
+      gtk_widget_hide (widget);
+    }
+
+  widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
+  gtk_widget_hide (widget);
+  
+  g_free (paths);
+  g_free (accelerators);
+  g_free (last_opened_entries);
+}
+
+/*  This is separate from menus_init() in case the last_opened_size changes,
+    or for any other reason we might want to regen just the toolbox menu     */
+void
+menus_init_toolbox ()
+{
+  toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>", NULL);
+  gtk_item_factory_create_items_ac (toolbox_factory, n_toolbox_entries,
+				    toolbox_entries, NULL, 2);
+  menus_init_mru ();
+}
 
 static void
 menus_init ()
@@ -397,11 +540,8 @@ menus_init ()
 
       initialize = FALSE;
 
-      toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>", NULL);
-      gtk_item_factory_create_items_ac (toolbox_factory,
-					n_toolbox_entries,
-					toolbox_entries,
-					NULL, 2);
+      menus_init_toolbox ();
+
       image_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Image>", NULL);
       gtk_item_factory_create_items_ac (image_factory,
 					n_image_entries,
@@ -428,8 +568,3 @@ menus_init ()
       g_free (filename);
     }
 }
-
-
-
-
-

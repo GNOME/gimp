@@ -201,7 +201,6 @@ devices_rc_update (gchar *name, DeviceValues values,
 {
   GList *tmp_list;
   DeviceInfo *device_info;
-  GimpBrushP brushp;
 
   /* Find device if we have it */
 
