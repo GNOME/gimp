@@ -21,6 +21,7 @@
  */
 
 /* Revision history
+ *  (2000/02/28)  v1.1.17b hof: checkboard BG for transparent preview pixels
  *  (2000/02/19)  v1.1.17  hof: added spinbuttons for level entries and Reset Button
  *  (1999/07/12)  v1.0.2 hof: bugfix: progress is now updated properly
  *                            make use NLS Macros if available
@@ -738,7 +739,11 @@ p_clear_preview(GtkWidget *preview)
 
 
 void
-p_update_pv(GtkWidget *preview, gint32 show_selection, t_GDRW *gdrw, guchar *dst_buffer, gint is_color)
+p_update_pv (GtkWidget *preview, 
+	     gint32     show_selection, 
+	     t_GDRW    *gdrw, 
+	     guchar    *dst_buffer, 
+	     gint       is_color)
 {
   guchar  l_rowbuf[4 * PREVIEW_SIZE_X];
   guchar  l_pixel[4];
@@ -752,6 +757,8 @@ p_update_pv(GtkWidget *preview, gint32 show_selection, t_GDRW *gdrw, guchar *dst
   guchar  l_dummy[4];
   guchar  l_maskbytes[4];
   gint    l_dstep;
+  guchar  l_check;
+  guchar  l_alpha;
  
 
   if(preview == NULL) return;
@@ -826,24 +833,69 @@ p_update_pv(GtkWidget *preview, gint32 show_selection, t_GDRW *gdrw, guchar *dst
 	  }
 	  
 	}
-        
-	if(is_color && (gdrw->bpp > 2))
+	
+	l_alpha = l_pixel[gdrw->index_alpha];
+	if((gdrw->index_alpha == 0)             /* has no alpha channel */
+	|| (l_alpha == 255))                    /* or is full opaque */
 	{
-	  *l_buf_ptr    = *l_ptr   = l_pixel[0];
-	   l_buf_ptr[1] = l_ptr[1] = l_pixel[1];
-	   l_buf_ptr[2] = l_ptr[2] = l_pixel[2];
+	  if(is_color && (gdrw->bpp > 2))
+	  {
+	    *l_buf_ptr    = *l_ptr   = l_pixel[0];
+	     l_buf_ptr[1] = l_ptr[1] = l_pixel[1];
+	     l_buf_ptr[2] = l_ptr[2] = l_pixel[2];
+	  }
+	  else
+	  {
+            if(gdrw->bpp > 2)  *l_ptr = LUMINOSITY_1(l_pixel);
+            else               *l_ptr = l_pixel[0];
+
+            *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */      
+             l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+             l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+          }
+	  l_buf_ptr[3] = l_maskbytes[0];
 	}
 	else
 	{
-          if(gdrw->bpp > 2)  *l_ptr = LUMINOSITY_1(l_pixel);
-          else               *l_ptr = l_pixel[0];
+	  if( ( l_y % (GIMP_CHECK_SIZE*2) < GIMP_CHECK_SIZE ) ^
+	      ( l_x % (GIMP_CHECK_SIZE*2) < GIMP_CHECK_SIZE ) )
+	  {
+	     l_check = GIMP_CHECK_LIGHT * 255;
+	  }
+	  else
+	  {
+	     l_check = GIMP_CHECK_DARK * 255;
+	  }
 	  
-          *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */      
-           l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
-           l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
-        }
-	l_buf_ptr[3] = l_maskbytes[0];
-
+	  if(l_alpha == 0)
+	  {
+	     /* full transparent */
+	     *l_buf_ptr   = *l_ptr   = l_check;
+	     l_buf_ptr[1] = l_ptr[1] = l_check;
+	     l_buf_ptr[2] = l_ptr[2] = l_check;
+	  }
+	  else
+	  {
+	     /* more or less  transparent */
+	     if(is_color && (gdrw->bpp > 2))
+	     {
+	       *l_buf_ptr    = *l_ptr   = MIX_CHANNEL(l_pixel[0], l_check, l_alpha);
+		l_buf_ptr[1] = l_ptr[1] = MIX_CHANNEL(l_pixel[1], l_check, l_alpha);
+		l_buf_ptr[2] = l_ptr[2] = MIX_CHANNEL(l_pixel[2], l_check, l_alpha);
+	     }
+	     else
+	     {
+               if(gdrw->bpp > 2)  *l_ptr =  MIX_CHANNEL(LUMINOSITY_1(l_pixel), l_check, l_alpha);
+               else               *l_ptr =  MIX_CHANNEL(l_pixel[0], l_check, l_alpha);
+	       
+               *l_buf_ptr    = *l_ptr;    /* copy to buffer (or to dummy byte) */      
+        	l_buf_ptr[1] = l_ptr[1] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+        	l_buf_ptr[2] = l_ptr[2] = *l_ptr;	/* copy to buffer (or to dummy byte) */      
+             }
+	  }
+	  l_buf_ptr[3] = MIN(l_maskbytes[0], l_alpha);
+	}
+        
  	l_buf_ptr += l_dstep;   /* advance (or stay at dummy byte) */
         l_ptr += PREVIEW_BPP;
      }
@@ -1971,7 +2023,7 @@ p_provide_tile(t_GDRW *gdrw, gint col, gint row, gint shadow )
 }	/* end p_provide_tile */
 
 /* get pixel value
- *   return light gray pixel if out of bounds
+ *   return light gray transparent pixel if out of bounds
  *   (should occur in the previews only)
  */
 static void
@@ -1987,7 +2039,7 @@ p_get_pixel( t_GDRW *gdrw, gint32 x, gint32 y, guchar *pixel )
     || (y > gdrw->drawable->height - 1))
     {
       pixel[0] = pixel[1] = pixel[2] = 200;
-      pixel[3] = 255;
+      pixel[3] = 0;
       return;
     }
 
@@ -2000,7 +2052,7 @@ p_get_pixel( t_GDRW *gdrw, gint32 x, gint32 y, guchar *pixel )
 
     p_provide_tile(  gdrw, col, row, gdrw->shadow);
 
-    pixel[1] = 255;  pixel[3] = 255;  /* simulate full visible alpha channel */
+    pixel[1] = 0;  pixel[3] = 0;  /* simulate full transparent alpha channel */
     ptr = gdrw->tile->data + ((( offy * gdrw->tile->ewidth) + offx ) * gdrw->bpp);
     memcpy(pixel, ptr, gdrw->bpp);
 
