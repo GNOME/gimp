@@ -55,6 +55,7 @@ Operations related to gradients.
 </para>
 
 @num_samples: 
+@reverse: 
 @Returns: 
 
 
@@ -65,6 +66,7 @@ Operations related to gradients.
 
 @num_samples: 
 @positions: 
+@reverse: 
 @Returns: 
 
 
@@ -75,6 +77,7 @@ Operations related to gradients.
 
 @name: 
 @sample_size: 
+@reverse: 
 @width: 
 @grad_data: 
 @Returns: 
