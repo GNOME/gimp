@@ -23,6 +23,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
@@ -33,7 +34,6 @@
 #include "gdisplay.h"
 #include "gui/palette-import-dialog.h"
 
-#include "context_manager.h"
 #include "gimage.h"
 #include "undo.h"
 
@@ -59,11 +59,12 @@ static void gimage_repaint_handler       (GimpImage *gimage,
 
 
 GimpImage *
-gimage_new (gint              width, 
+gimage_new (Gimp             *gimp,
+	    gint              width, 
 	    gint              height, 
 	    GimpImageBaseType base_type)
 {
-  GimpImage *gimage = gimp_image_new (width, height, base_type);
+  GimpImage *gimage = gimp_image_new (gimp, width, height, base_type);
 
   gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
 		      GTK_SIGNAL_FUNC (gimage_dirty_handler),
@@ -87,7 +88,7 @@ gimage_new (gint              width,
 		      GTK_SIGNAL_FUNC (gimage_cmap_change_handler),
 		      NULL);
 
-  gimp_container_add (image_context, GIMP_OBJECT (gimage));
+  gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
 
   return gimage;
 }
@@ -117,7 +118,7 @@ gimage_destroy_handler (GimpImage *gimage)
   undo_free (gimage);
 
   /*  check if this is the last image  */
-  if (gimp_container_num_children (image_context) == 1)
+  if (gimp_container_num_children (gimage->gimp->images) == 1)
     {
       dialog_show_toolbox ();
     }

@@ -20,7 +20,8 @@
 #define __XCF_LOAD_H__
 
 
-GimpImage * xcf_load_image (XcfInfo *info);
+GimpImage * xcf_load_image (Gimp    *gimp,
+			    XcfInfo *info);
 
 
 #endif  /* __XCF_LOAD_H__ */

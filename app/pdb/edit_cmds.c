@@ -29,12 +29,11 @@
 #include "procedural_db.h"
 
 #include "core/core-types.h"
+#include "core/gimp.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "drawable.h"
-
-extern TileManager *global_buffer;
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
@@ -44,18 +43,19 @@ static ProcRecord edit_fill_proc;
 static ProcRecord edit_stroke_proc;
 
 void
-register_edit_procs (void)
+register_edit_procs (Gimp *gimp)
 {
-  procedural_db_register (&edit_cut_proc);
-  procedural_db_register (&edit_copy_proc);
-  procedural_db_register (&edit_paste_proc);
-  procedural_db_register (&edit_clear_proc);
-  procedural_db_register (&edit_fill_proc);
-  procedural_db_register (&edit_stroke_proc);
+  procedural_db_register (gimp, &edit_cut_proc);
+  procedural_db_register (gimp, &edit_copy_proc);
+  procedural_db_register (gimp, &edit_paste_proc);
+  procedural_db_register (gimp, &edit_clear_proc);
+  procedural_db_register (gimp, &edit_fill_proc);
+  procedural_db_register (gimp, &edit_stroke_proc);
 }
 
 static Argument *
-edit_cut_invoker (Argument *args)
+edit_cut_invoker (Gimp     *gimp,
+                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -100,7 +100,8 @@ static ProcRecord edit_cut_proc =
 };
 
 static Argument *
-edit_copy_invoker (Argument *args)
+edit_copy_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -145,7 +146,8 @@ static ProcRecord edit_copy_proc =
 };
 
 static Argument *
-edit_paste_invoker (Argument *args)
+edit_paste_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -163,7 +165,7 @@ edit_paste_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      layer = gimp_edit_paste (gimage, drawable, global_buffer, paste_into);
+      layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into);
       success = layer != NULL;
     }
 
@@ -215,7 +217,8 @@ static ProcRecord edit_paste_proc =
 };
 
 static Argument *
-edit_clear_invoker (Argument *args)
+edit_clear_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -260,7 +263,8 @@ static ProcRecord edit_clear_proc =
 };
 
 static Argument *
-edit_fill_invoker (Argument *args)
+edit_fill_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -315,7 +319,8 @@ static ProcRecord edit_fill_proc =
 };
 
 static Argument *
-edit_stroke_invoker (Argument *args)
+edit_stroke_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

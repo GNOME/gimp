@@ -35,7 +35,8 @@ struct _Argument
 
 
 /*  Argument marshalling procedures  */
-typedef Argument * (* ArgMarshal) (Argument *);
+typedef Argument * (* ArgMarshal) (Gimp     *gimp,
+				   Argument *args);
 
 
 /*  Execution types  */
@@ -44,6 +45,7 @@ typedef struct _PlugInExec PlugInExec;
 typedef struct _ExtExec    ExtExec;
 typedef struct _TempExec   TempExec;
 typedef struct _NetExec    NetExec;
+
 
 struct _IntExec
 {
@@ -115,18 +117,21 @@ struct _ProcRecord
   } exec_method;
 };
 
-/*  Variables  */
-extern GHashTable *procedural_ht;
 
 /*  Functions  */
-void          procedural_db_init         (void);
-void          procedural_db_free         (void);
-void          procedural_db_register     (ProcRecord  *procedure);
-void          procedural_db_unregister   (const gchar *name);
-ProcRecord  * procedural_db_lookup       (const gchar *name);
-Argument    * procedural_db_execute      (const gchar *name,
+void          procedural_db_init         (Gimp        *gimp);
+void          procedural_db_free         (Gimp        *gimp);
+void          procedural_db_register     (Gimp        *gimp,
+					  ProcRecord  *procedure);
+void          procedural_db_unregister   (Gimp        *gimp,
+					  const gchar *name);
+ProcRecord  * procedural_db_lookup       (Gimp        *gimp,
+					  const gchar *name);
+Argument    * procedural_db_execute      (Gimp        *gimp,
+					  const gchar *name,
 					  Argument    *args);
-Argument    * procedural_db_run_proc     (const gchar *name,
+Argument    * procedural_db_run_proc     (Gimp        *gimp,
+					  const gchar *name,
 					  gint        *nreturn_vals,
 					  ...);
 Argument    * procedural_db_return_args  (ProcRecord  *procedure,

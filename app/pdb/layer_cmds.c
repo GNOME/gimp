@@ -73,43 +73,44 @@ static ProcRecord layer_get_tattoo_proc;
 static ProcRecord layer_set_tattoo_proc;
 
 void
-register_layer_procs (void)
+register_layer_procs (Gimp *gimp)
 {
-  procedural_db_register (&layer_new_proc);
-  procedural_db_register (&layer_copy_proc);
-  procedural_db_register (&layer_create_mask_proc);
-  procedural_db_register (&layer_scale_proc);
-  procedural_db_register (&layer_resize_proc);
-  procedural_db_register (&layer_delete_proc);
-  procedural_db_register (&layer_translate_proc);
-  procedural_db_register (&layer_add_alpha_proc);
-  procedural_db_register (&layer_set_offsets_proc);
-  procedural_db_register (&layer_mask_proc);
-  procedural_db_register (&layer_is_floating_sel_proc);
-  procedural_db_register (&layer_get_name_proc);
-  procedural_db_register (&layer_set_name_proc);
-  procedural_db_register (&layer_get_visible_proc);
-  procedural_db_register (&layer_set_visible_proc);
-  procedural_db_register (&layer_get_preserve_trans_proc);
-  procedural_db_register (&layer_set_preserve_trans_proc);
-  procedural_db_register (&layer_get_apply_mask_proc);
-  procedural_db_register (&layer_set_apply_mask_proc);
-  procedural_db_register (&layer_get_show_mask_proc);
-  procedural_db_register (&layer_set_show_mask_proc);
-  procedural_db_register (&layer_get_edit_mask_proc);
-  procedural_db_register (&layer_set_edit_mask_proc);
-  procedural_db_register (&layer_get_opacity_proc);
-  procedural_db_register (&layer_set_opacity_proc);
-  procedural_db_register (&layer_get_mode_proc);
-  procedural_db_register (&layer_set_mode_proc);
-  procedural_db_register (&layer_get_linked_proc);
-  procedural_db_register (&layer_set_linked_proc);
-  procedural_db_register (&layer_get_tattoo_proc);
-  procedural_db_register (&layer_set_tattoo_proc);
+  procedural_db_register (gimp, &layer_new_proc);
+  procedural_db_register (gimp, &layer_copy_proc);
+  procedural_db_register (gimp, &layer_create_mask_proc);
+  procedural_db_register (gimp, &layer_scale_proc);
+  procedural_db_register (gimp, &layer_resize_proc);
+  procedural_db_register (gimp, &layer_delete_proc);
+  procedural_db_register (gimp, &layer_translate_proc);
+  procedural_db_register (gimp, &layer_add_alpha_proc);
+  procedural_db_register (gimp, &layer_set_offsets_proc);
+  procedural_db_register (gimp, &layer_mask_proc);
+  procedural_db_register (gimp, &layer_is_floating_sel_proc);
+  procedural_db_register (gimp, &layer_get_name_proc);
+  procedural_db_register (gimp, &layer_set_name_proc);
+  procedural_db_register (gimp, &layer_get_visible_proc);
+  procedural_db_register (gimp, &layer_set_visible_proc);
+  procedural_db_register (gimp, &layer_get_preserve_trans_proc);
+  procedural_db_register (gimp, &layer_set_preserve_trans_proc);
+  procedural_db_register (gimp, &layer_get_apply_mask_proc);
+  procedural_db_register (gimp, &layer_set_apply_mask_proc);
+  procedural_db_register (gimp, &layer_get_show_mask_proc);
+  procedural_db_register (gimp, &layer_set_show_mask_proc);
+  procedural_db_register (gimp, &layer_get_edit_mask_proc);
+  procedural_db_register (gimp, &layer_set_edit_mask_proc);
+  procedural_db_register (gimp, &layer_get_opacity_proc);
+  procedural_db_register (gimp, &layer_set_opacity_proc);
+  procedural_db_register (gimp, &layer_get_mode_proc);
+  procedural_db_register (gimp, &layer_set_mode_proc);
+  procedural_db_register (gimp, &layer_get_linked_proc);
+  procedural_db_register (gimp, &layer_set_linked_proc);
+  procedural_db_register (gimp, &layer_get_tattoo_proc);
+  procedural_db_register (gimp, &layer_set_tattoo_proc);
 }
 
 static Argument *
-layer_new_invoker (Argument *args)
+layer_new_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -231,7 +232,8 @@ static ProcRecord layer_new_proc =
 };
 
 static Argument *
-layer_copy_invoker (Argument *args)
+layer_copy_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -296,7 +298,8 @@ static ProcRecord layer_copy_proc =
 };
 
 static Argument *
-layer_create_mask_invoker (Argument *args)
+layer_create_mask_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -363,7 +366,8 @@ static ProcRecord layer_create_mask_proc =
 };
 
 static Argument *
-layer_scale_invoker (Argument *args)
+layer_scale_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -453,7 +457,8 @@ static ProcRecord layer_scale_proc =
 };
 
 static Argument *
-layer_resize_invoker (Argument *args)
+layer_resize_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -551,7 +556,8 @@ static ProcRecord layer_resize_proc =
 };
 
 static Argument *
-layer_delete_invoker (Argument *args)
+layer_delete_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -592,7 +598,8 @@ static ProcRecord layer_delete_proc =
 };
 
 static Argument *
-layer_translate_invoker (Argument *args)
+layer_translate_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -680,7 +687,8 @@ static ProcRecord layer_translate_proc =
 };
 
 static Argument *
-layer_add_alpha_invoker (Argument *args)
+layer_add_alpha_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -721,7 +729,8 @@ static ProcRecord layer_add_alpha_proc =
 };
 
 static Argument *
-layer_set_offsets_invoker (Argument *args)
+layer_set_offsets_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -811,7 +820,8 @@ static ProcRecord layer_set_offsets_proc =
 };
 
 static Argument *
-layer_mask_invoker (Argument *args)
+layer_mask_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -864,7 +874,8 @@ static ProcRecord layer_mask_proc =
 };
 
 static Argument *
-layer_is_floating_sel_invoker (Argument *args)
+layer_is_floating_sel_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -917,7 +928,8 @@ static ProcRecord layer_is_floating_sel_proc =
 };
 
 static Argument *
-layer_get_name_invoker (Argument *args)
+layer_get_name_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -970,7 +982,8 @@ static ProcRecord layer_get_name_proc =
 };
 
 static Argument *
-layer_set_name_invoker (Argument *args)
+layer_set_name_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1021,7 +1034,8 @@ static ProcRecord layer_set_name_proc =
 };
 
 static Argument *
-layer_get_visible_invoker (Argument *args)
+layer_get_visible_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1074,7 +1088,8 @@ static ProcRecord layer_get_visible_proc =
 };
 
 static Argument *
-layer_set_visible_invoker (Argument *args)
+layer_set_visible_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1123,7 +1138,8 @@ static ProcRecord layer_set_visible_proc =
 };
 
 static Argument *
-layer_get_preserve_trans_invoker (Argument *args)
+layer_get_preserve_trans_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1176,7 +1192,8 @@ static ProcRecord layer_get_preserve_trans_proc =
 };
 
 static Argument *
-layer_set_preserve_trans_invoker (Argument *args)
+layer_set_preserve_trans_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1225,7 +1242,8 @@ static ProcRecord layer_set_preserve_trans_proc =
 };
 
 static Argument *
-layer_get_apply_mask_invoker (Argument *args)
+layer_get_apply_mask_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1278,7 +1296,8 @@ static ProcRecord layer_get_apply_mask_proc =
 };
 
 static Argument *
-layer_set_apply_mask_invoker (Argument *args)
+layer_set_apply_mask_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1327,7 +1346,8 @@ static ProcRecord layer_set_apply_mask_proc =
 };
 
 static Argument *
-layer_get_show_mask_invoker (Argument *args)
+layer_get_show_mask_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1380,7 +1400,8 @@ static ProcRecord layer_get_show_mask_proc =
 };
 
 static Argument *
-layer_set_show_mask_invoker (Argument *args)
+layer_set_show_mask_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1429,7 +1450,8 @@ static ProcRecord layer_set_show_mask_proc =
 };
 
 static Argument *
-layer_get_edit_mask_invoker (Argument *args)
+layer_get_edit_mask_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1482,7 +1504,8 @@ static ProcRecord layer_get_edit_mask_proc =
 };
 
 static Argument *
-layer_set_edit_mask_invoker (Argument *args)
+layer_set_edit_mask_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1531,7 +1554,8 @@ static ProcRecord layer_set_edit_mask_proc =
 };
 
 static Argument *
-layer_get_opacity_invoker (Argument *args)
+layer_get_opacity_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1584,7 +1608,8 @@ static ProcRecord layer_get_opacity_proc =
 };
 
 static Argument *
-layer_set_opacity_invoker (Argument *args)
+layer_set_opacity_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1635,7 +1660,8 @@ static ProcRecord layer_set_opacity_proc =
 };
 
 static Argument *
-layer_get_mode_invoker (Argument *args)
+layer_get_mode_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1688,7 +1714,8 @@ static ProcRecord layer_get_mode_proc =
 };
 
 static Argument *
-layer_set_mode_invoker (Argument *args)
+layer_set_mode_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1739,7 +1766,8 @@ static ProcRecord layer_set_mode_proc =
 };
 
 static Argument *
-layer_get_linked_invoker (Argument *args)
+layer_get_linked_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1792,7 +1820,8 @@ static ProcRecord layer_get_linked_proc =
 };
 
 static Argument *
-layer_set_linked_invoker (Argument *args)
+layer_set_linked_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -1841,7 +1870,8 @@ static ProcRecord layer_set_linked_proc =
 };
 
 static Argument *
-layer_get_tattoo_invoker (Argument *args)
+layer_get_tattoo_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1894,7 +1924,8 @@ static ProcRecord layer_get_tattoo_proc =
 };
 
 static Argument *
-layer_set_tattoo_invoker (Argument *args)
+layer_set_tattoo_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;

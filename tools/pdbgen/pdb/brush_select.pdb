@@ -55,7 +55,7 @@ sub brushes_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)))
+  if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (brush && strlen (brush))
 	newdialog = brush_select_new (title, brush, opacity, spacing,
@@ -89,7 +89,7 @@ sub brushes_close_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
+  if ((prec = procedural_db_lookup (gimp, name)) &&
       (bsp = brush_get_brushselect (name)))
     {
       if (GTK_WIDGET_VISIBLE (bsp->shell))
@@ -130,11 +130,11 @@ sub brushes_set_popup {
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
+  if ((prec = procedural_db_lookup (gimp, name)) &&
       (bsp = brush_get_brushselect (name)))
     {
       GimpObject *object =
-        gimp_container_get_child_by_name (global_brush_factory->container,
+        gimp_container_get_child_by_name (gimp->brush_factory->container,
 					  brush_name);
 
       if (object)
@@ -162,7 +162,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "core/gimpcontext.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
 	      "core/gimpdatafactory.h" "gui/brush-select.h");
 
 $extra{app}->{code} = <<'CODE';

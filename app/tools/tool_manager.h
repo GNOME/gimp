@@ -21,46 +21,41 @@
 
 
 /*  Global Data Structures  */
-extern GimpTool      *active_tool;
-
-extern GimpContainer *global_tool_info_list;
+extern GimpTool *active_tool;
 
 
-void        tool_manager_select_tool              (GimpTool       *tool);
+void           tool_manager_select_tool           (GimpTool       *tool);
 
-void        tool_manager_push_tool                (GimpTool       *tool);
-void        tool_manager_pop_tool                 (void);
+void           tool_manager_push_tool             (GimpTool       *tool);
+void           tool_manager_pop_tool              (void);
 
 
-void        tool_manager_initialize_tool          (GimpTool       *tool,
+void           tool_manager_initialize_tool       (GimpTool       *tool,
 						   GDisplay       *gdisp);
 
-void        tool_manager_control_active           (ToolAction      action,
+void           tool_manager_control_active        (ToolAction      action,
 						   GDisplay       *gdisp);
 
 const gchar  * tool_manager_active_get_PDB_string (void);
 const gchar  * tool_manager_active_get_help_data  (void);
 
 
+void           tool_manager_register_tool         (GtkType         tool_type,
+						   gboolean        tool_context,
+						   const gchar    *identifier,
+						   const gchar    *blurb,
+						   const gchar    *help,
+						   const gchar    *menu_path,
+						   const gchar    *menu_accel,
+						   const gchar    *help_domain,
+						   const gchar    *help_data,
+						   const gchar   **icon_data);
 
-void        tool_manager_init                  (void);
+void           tool_manager_register_tool_options (GtkType         tool_type,
+						   ToolOptions    *tool_options);
 
-void        tool_manager_register_tool         (GtkType         tool_type,
-						gboolean        tool_context,
-						const gchar    *identifier,
-						const gchar    *blurb,
-						const gchar    *help,
-						const gchar    *menu_path,
-						const gchar    *menu_accel,
-						const gchar    *help_domain,
-						const gchar    *help_data,
-						const gchar   **icon_data);
-
-void        tool_manager_register_tool_options (GtkType         tool_type,
-						ToolOptions    *tool_options);
-
-GimpToolInfo * tool_manager_get_info_by_type   (GtkType         tool_type);
-GimpToolInfo * tool_manager_get_info_by_tool   (GimpTool       *tool);
+GimpToolInfo * tool_manager_get_info_by_type      (GtkType         tool_type);
+GimpToolInfo * tool_manager_get_info_by_tool      (GimpTool       *tool);
 
 
 

@@ -49,25 +49,26 @@ static ProcRecord path_set_locked_proc;
 static ProcRecord path_set_tattoo_proc;
 
 void
-register_paths_procs (void)
+register_paths_procs (Gimp *gimp)
 {
-  procedural_db_register (&path_list_proc);
-  procedural_db_register (&path_get_points_proc);
-  procedural_db_register (&path_get_current_proc);
-  procedural_db_register (&path_set_current_proc);
-  procedural_db_register (&path_set_points_proc);
-  procedural_db_register (&path_stroke_current_proc);
-  procedural_db_register (&path_get_point_at_dist_proc);
-  procedural_db_register (&path_get_tattoo_proc);
-  procedural_db_register (&get_path_by_tattoo_proc);
-  procedural_db_register (&path_delete_proc);
-  procedural_db_register (&path_get_locked_proc);
-  procedural_db_register (&path_set_locked_proc);
-  procedural_db_register (&path_set_tattoo_proc);
+  procedural_db_register (gimp, &path_list_proc);
+  procedural_db_register (gimp, &path_get_points_proc);
+  procedural_db_register (gimp, &path_get_current_proc);
+  procedural_db_register (gimp, &path_set_current_proc);
+  procedural_db_register (gimp, &path_set_points_proc);
+  procedural_db_register (gimp, &path_stroke_current_proc);
+  procedural_db_register (gimp, &path_get_point_at_dist_proc);
+  procedural_db_register (gimp, &path_get_tattoo_proc);
+  procedural_db_register (gimp, &get_path_by_tattoo_proc);
+  procedural_db_register (gimp, &path_delete_proc);
+  procedural_db_register (gimp, &path_get_locked_proc);
+  procedural_db_register (gimp, &path_set_locked_proc);
+  procedural_db_register (gimp, &path_set_tattoo_proc);
 }
 
 static Argument *
-path_list_invoker (Argument *args)
+path_list_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -152,7 +153,8 @@ static ProcRecord path_list_proc =
 };
 
 static Argument *
-path_get_points_invoker (Argument *args)
+path_get_points_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -290,7 +292,8 @@ static ProcRecord path_get_points_proc =
 };
 
 static Argument *
-path_get_current_invoker (Argument *args)
+path_get_current_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -356,7 +359,8 @@ static ProcRecord path_get_current_proc =
 };
 
 static Argument *
-path_set_current_invoker (Argument *args)
+path_set_current_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -407,7 +411,8 @@ static ProcRecord path_set_current_proc =
 };
 
 static Argument *
-path_set_points_invoker (Argument *args)
+path_set_points_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -494,7 +499,8 @@ static ProcRecord path_set_points_proc =
 };
 
 static Argument *
-path_stroke_current_invoker (Argument *args)
+path_stroke_current_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -552,7 +558,8 @@ static ProcRecord path_stroke_current_proc =
 };
 
 static Argument *
-path_get_point_at_dist_invoker (Argument *args)
+path_get_point_at_dist_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -648,7 +655,8 @@ static ProcRecord path_get_point_at_dist_proc =
 };
 
 static Argument *
-path_get_tattoo_invoker (Argument *args)
+path_get_tattoo_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -743,7 +751,8 @@ static ProcRecord path_get_tattoo_proc =
 };
 
 static Argument *
-get_path_by_tattoo_invoker (Argument *args)
+get_path_by_tattoo_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -820,7 +829,8 @@ static ProcRecord get_path_by_tattoo_proc =
 };
 
 static Argument *
-path_delete_invoker (Argument *args)
+path_delete_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -871,7 +881,8 @@ static ProcRecord path_delete_proc =
 };
 
 static Argument *
-path_get_locked_invoker (Argument *args)
+path_get_locked_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -966,7 +977,8 @@ static ProcRecord path_get_locked_proc =
 };
 
 static Argument *
-path_set_locked_invoker (Argument *args)
+path_set_locked_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1053,7 +1065,8 @@ static ProcRecord path_set_locked_proc =
 };
 
 static Argument *
-path_set_tattoo_invoker (Argument *args)
+path_set_tattoo_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;

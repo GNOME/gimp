@@ -235,7 +235,8 @@ read_bzpaths (GimpImage *gimage,
 }
 
 GimpImage *
-xcf_load_image (XcfInfo *info)
+xcf_load_image (Gimp    *gimp,
+		XcfInfo *info)
 {
   GimpImage   *gimage;
   GimpLayer   *layer;
@@ -253,7 +254,7 @@ xcf_load_image (XcfInfo *info)
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
   /* create a new gimage */
-  gimage = gimage_new (width, height, image_type);
+  gimage = gimage_new (gimp, width, height, image_type);
   if (!gimage)
     return NULL;
 

@@ -49,24 +49,25 @@ static ProcRecord image_parasite_detach_proc;
 static ProcRecord image_parasite_list_proc;
 
 void
-register_parasite_procs (void)
+register_parasite_procs (Gimp *gimp)
 {
-  procedural_db_register (&parasite_find_proc);
-  procedural_db_register (&parasite_attach_proc);
-  procedural_db_register (&parasite_detach_proc);
-  procedural_db_register (&parasite_list_proc);
-  procedural_db_register (&drawable_parasite_find_proc);
-  procedural_db_register (&drawable_parasite_attach_proc);
-  procedural_db_register (&drawable_parasite_detach_proc);
-  procedural_db_register (&drawable_parasite_list_proc);
-  procedural_db_register (&image_parasite_find_proc);
-  procedural_db_register (&image_parasite_attach_proc);
-  procedural_db_register (&image_parasite_detach_proc);
-  procedural_db_register (&image_parasite_list_proc);
+  procedural_db_register (gimp, &parasite_find_proc);
+  procedural_db_register (gimp, &parasite_attach_proc);
+  procedural_db_register (gimp, &parasite_detach_proc);
+  procedural_db_register (gimp, &parasite_list_proc);
+  procedural_db_register (gimp, &drawable_parasite_find_proc);
+  procedural_db_register (gimp, &drawable_parasite_attach_proc);
+  procedural_db_register (gimp, &drawable_parasite_detach_proc);
+  procedural_db_register (gimp, &drawable_parasite_list_proc);
+  procedural_db_register (gimp, &image_parasite_find_proc);
+  procedural_db_register (gimp, &image_parasite_attach_proc);
+  procedural_db_register (gimp, &image_parasite_detach_proc);
+  procedural_db_register (gimp, &image_parasite_list_proc);
 }
 
 static Argument *
-parasite_find_invoker (Argument *args)
+parasite_find_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -126,7 +127,8 @@ static ProcRecord parasite_find_proc =
 };
 
 static Argument *
-parasite_attach_invoker (Argument *args)
+parasite_attach_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpParasite *parasite;
@@ -167,7 +169,8 @@ static ProcRecord parasite_attach_proc =
 };
 
 static Argument *
-parasite_detach_invoker (Argument *args)
+parasite_detach_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -208,7 +211,8 @@ static ProcRecord parasite_detach_proc =
 };
 
 static Argument *
-parasite_list_invoker (Argument *args)
+parasite_list_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   Argument *return_args;
   gint32 num_parasites;
@@ -255,7 +259,8 @@ static ProcRecord parasite_list_proc =
 };
 
 static Argument *
-drawable_parasite_find_invoker (Argument *args)
+drawable_parasite_find_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -325,7 +330,8 @@ static ProcRecord drawable_parasite_find_proc =
 };
 
 static Argument *
-drawable_parasite_attach_invoker (Argument *args)
+drawable_parasite_attach_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -376,7 +382,8 @@ static ProcRecord drawable_parasite_attach_proc =
 };
 
 static Argument *
-drawable_parasite_detach_invoker (Argument *args)
+drawable_parasite_detach_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -427,7 +434,8 @@ static ProcRecord drawable_parasite_detach_proc =
 };
 
 static Argument *
-drawable_parasite_list_invoker (Argument *args)
+drawable_parasite_list_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -493,7 +501,8 @@ static ProcRecord drawable_parasite_list_proc =
 };
 
 static Argument *
-image_parasite_find_invoker (Argument *args)
+image_parasite_find_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -563,7 +572,8 @@ static ProcRecord image_parasite_find_proc =
 };
 
 static Argument *
-image_parasite_attach_invoker (Argument *args)
+image_parasite_attach_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -614,7 +624,8 @@ static ProcRecord image_parasite_attach_proc =
 };
 
 static Argument *
-image_parasite_detach_invoker (Argument *args)
+image_parasite_detach_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -665,7 +676,8 @@ static ProcRecord image_parasite_detach_proc =
 };
 
 static Argument *
-image_parasite_list_invoker (Argument *args)
+image_parasite_list_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

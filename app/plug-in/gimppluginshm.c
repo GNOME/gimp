@@ -1709,11 +1709,11 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
   PlugInBlocked *blocked;
 
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
-  proc_rec = procedural_db_lookup (proc_run->name);
+  proc_rec = procedural_db_lookup (the_gimp, proc_run->name);
 
   if (proc_rec)
     {
-      return_vals = procedural_db_execute (proc_run->name, args);
+      return_vals = procedural_db_execute (the_gimp, proc_run->name, args);
     }
   else
     {
@@ -2025,7 +2025,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
       proc_defs = g_slist_append (proc_defs, proc_def);
       proc->exec_method.temporary.plug_in = (void *) current_plug_in;
-      procedural_db_register (proc);
+      procedural_db_register (the_gimp, proc);
 
       /*  If there is a menu path specified, create a menu entry  */
       if (proc_install->menu_path)
@@ -2433,7 +2433,7 @@ plug_in_add_to_db (void)
       if (proc_def->prog && (proc_def->db_info.proc_type != GIMP_INTERNAL))
 	{
 	  proc_def->db_info.exec_method.plug_in.filename = proc_def->prog;
-	  procedural_db_register (&proc_def->db_info);
+	  procedural_db_register (the_gimp, &proc_def->db_info);
 	}
     }
 
@@ -2458,14 +2458,16 @@ plug_in_add_to_db (void)
           if (proc_def->image_types)
             {
               return_vals = 
-		procedural_db_execute ("gimp_register_save_handler", 
+		procedural_db_execute (the_gimp,
+				       "gimp_register_save_handler", 
 				       args);
               g_free (return_vals);
             }
           else
             {
               return_vals = 
-		procedural_db_execute ("gimp_register_magic_load_handler", 
+		procedural_db_execute (the_gimp,
+				       "gimp_register_magic_load_handler", 
 				       args);
               g_free (return_vals);
             }
@@ -2789,7 +2791,7 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
     menus_destroy (proc_def->menu_path);
 
   /*  Unregister the procedural database entry  */
-  procedural_db_unregister (proc_def->db_info.name);
+  procedural_db_unregister (the_gimp, proc_def->db_info.name);
 
   /*  Remove the defintion from the global list  */
   proc_defs = g_slist_remove (proc_defs, proc_def);

@@ -24,8 +24,6 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
 #include "base/pixel-region.h"
@@ -33,6 +31,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpedit.h"
@@ -46,8 +45,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
-
-#include "tools/tool_manager.h"
 
 #include "color-area.h"
 #include "devices.h"
@@ -285,7 +282,7 @@ create_tools (GtkWidget   *wbox,
   GList  *list;
   GSList *group = NULL;
 
-  for (list = GIMP_LIST (global_tool_info_list)->list;
+  for (list = GIMP_LIST (context->gimp->tool_info_list)->list;
        list;
        list = g_list_next (list))
     {
@@ -516,7 +513,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
       type = RGB; break;
     }
 
-  new_gimage = gimage_new (width, height, type);
+  new_gimage = gimage_new (the_gimp, width, height, type);
   gimp_image_undo_disable (new_gimage);
 
   if (type == INDEXED) /* copy the colormap */
@@ -591,5 +588,5 @@ toolbox_drop_buffer (GtkWidget    *widget,
   if (gimp_busy)
     return;
 
-  gimp_edit_paste_as_new (NULL, GIMP_BUFFER (viewable)->tiles);
+  gimp_edit_paste_as_new (the_gimp, NULL, GIMP_BUFFER (viewable)->tiles);
 }

@@ -1,4 +1,104 @@
-2001-07-04  Dave Neary  <dneary@eircom.net
+2001-07-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimp.[ch]: added an "application object" called Gimp.
+
+	Currently, it contains the image list, the clipboard, the data
+	factories, the procedural hashtable and the tool info list.  It's
+	the toplevel object of the core object system. Finally, creating a
+	Gimp object will return a standalone gimp core engine instance
+	with no other global states/variables involved.
+
+	* app/app_procs.[ch]: allocate a "Gimp" instance called "the_gimp" :)
+	Removed stuff which is now done by the "Gimp" object. Merged
+	gimp_init() into app_init() because gimp_init() is taken now.
+
+	* app/context_manager.[ch]: removed stuff done by "Gimp".
+
+	* app/batch.[ch]
+	* app/gimage.[ch]
+	* app/xcf/xcf-load.[ch]
+	* app/xcf/xcf.[ch]
+	* app/core/gimpedit.[ch]
+	* app/tools/tool_manager.[ch]: pass around an additional "Gimp"
+	argument.
+
+	* app/pdb/procedural_db.[ch]: pass a "Gimp" pointer as first
+	parameter to all internal procedures and to all procedural_db_*
+	functions.
+
+	* app/core/gimpcontext.[ch]
+	* app/core/gimpimage.[ch]: added a "Gimp" pointer to the structs.
+
+	* app/devices.c
+	* app/errors.c
+	* app/file-open.c
+	* app/file-save.c
+	* app/gimphelp.c
+	* app/gimpunit.c
+	* app/image_new.c
+	* app/main.c
+	* app/nav_window.c
+	* app/plug_in.c
+	* app/base/base.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimptoolinfo.[ch]
+	* app/gui/brush-select.c
+	* app/gui/convert-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/edit-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradient-select.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/menus.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palette-select.c
+	* app/gui/paths-dialog.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c
+	* app/gui/test-commands.c
+	* app/gui/toolbox.c
+	* app/gui/tools-commands.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimppainttool.h
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.h
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpimagedock.c: changed accordingly. Cleaned up
+	lots of includes. Many files still access the global "the_gimp"
+	variable exported by app_procs.h.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb: changed accordingly. Don't
+	use "the_gimp" here because all procedures get passed a "Gimp"
+	pointer now.
+
+	* app/pdb/*: regenerated.
+
+2001-07-04  Dave Neary  <dneary@eircom.net>
 
 	* po/POTFILESin: Changed to reflect some moved/removed files.
 

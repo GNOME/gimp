@@ -22,12 +22,14 @@
 
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
+#include "app_procs.h"
 #include "gdisplay.h"
 
 
@@ -59,9 +61,12 @@ tools_swap_contexts_cmd_callback (GtkWidget *widget,
 
   if (! swap_context)
     {
-      swap_context = gimp_context_new ("Swap Context",
+      swap_context = gimp_context_new (the_gimp,
+				       "Swap Context",
 				       gimp_context_get_user ());
-      temp_context = gimp_context_new ("Temp Context", NULL);
+      temp_context = gimp_context_new (the_gimp,
+				       "Temp Context",
+				       NULL);
     }
 
   gimp_context_copy_args (gimp_context_get_user (),

@@ -26,6 +26,8 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
+
 #include "app_procs.h"
 #include "context_manager.h"
 #include "plug_in.h"
@@ -35,19 +37,17 @@
 #include "libgimp/gimpintl.h"
 
 
-GHashTable *procedural_ht = NULL;
-
 /*  Local functions  */
 static guint   procedural_db_hash_func (gconstpointer key);
 
 
 void
-procedural_db_init (void)
+procedural_db_init (Gimp *gimp)
 {
-  app_init_update_status (_("Procedural Database"), NULL, -1);
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (!procedural_ht)
-    procedural_ht = g_hash_table_new (procedural_db_hash_func, g_str_equal);
+  gimp->procedural_ht = g_hash_table_new (procedural_db_hash_func, g_str_equal);
 }
 
 static void
@@ -60,60 +60,60 @@ procedural_db_free_entry (gpointer key,
 }
 
 void
-procedural_db_free (void)
+procedural_db_free (Gimp *gimp)
 {
-  if (procedural_ht)
+  if (gimp->procedural_ht)
     {
-      g_hash_table_foreach (procedural_ht, procedural_db_free_entry, NULL);
-      g_hash_table_destroy (procedural_ht);
-    }
+      g_hash_table_foreach (gimp->procedural_ht, procedural_db_free_entry, NULL);
+      g_hash_table_destroy (gimp->procedural_ht);
   
-  procedural_ht = NULL;
+      gimp->procedural_ht = NULL;
+    }
 }
 
 void
-procedural_db_register (ProcRecord *procedure)
+procedural_db_register (Gimp       *gimp,
+			ProcRecord *procedure)
 {
   GList *list;
 
-  if (!procedural_ht)
-    procedural_db_init ();
-
-  list = g_hash_table_lookup (procedural_ht, (gpointer) procedure->name);
+  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) procedure->name);
   list = g_list_prepend (list, (gpointer) procedure);
 
-  g_hash_table_insert (procedural_ht,
+  g_hash_table_insert (gimp->procedural_ht,
 		       (gpointer) procedure->name,
 		       (gpointer) list);
 }
 
 void
-procedural_db_unregister (const gchar *name)
+procedural_db_unregister (Gimp        *gimp,
+			  const gchar *name)
 {
   GList *list;
 
-  list = g_hash_table_lookup (procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
   if (list)
     {
       list = g_list_remove (list, list->data);
 
       if (list)
-	g_hash_table_insert (procedural_ht,
+	g_hash_table_insert (gimp->procedural_ht,
 			     (gpointer) name,
 			     (gpointer) list);
       else 
-	g_hash_table_remove (procedural_ht,
+	g_hash_table_remove (gimp->procedural_ht,
 			     (gpointer) name);
     }
 }
 
 ProcRecord *
-procedural_db_lookup (const gchar *name)
+procedural_db_lookup (Gimp        *gimp,
+		      const gchar *name)
 {
-  GList *list;
+  GList      *list;
   ProcRecord *procedure;
 
-  list = g_hash_table_lookup (procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
   if (list != NULL)
     procedure = (ProcRecord *) list->data;
   else
@@ -123,7 +123,8 @@ procedural_db_lookup (const gchar *name)
 }
 
 Argument *
-procedural_db_execute (const gchar *name,
+procedural_db_execute (Gimp        *gimp,
+		       const gchar *name,
 		       Argument    *args)
 {
   ProcRecord *procedure;
@@ -133,7 +134,7 @@ procedural_db_execute (const gchar *name,
 
   return_args = NULL;
 
-  list = g_hash_table_lookup (procedural_ht, (gpointer) name);
+  list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
 
   if (list == NULL)
     {
@@ -177,7 +178,7 @@ procedural_db_execute (const gchar *name,
       switch (procedure->proc_type)
 	{
 	case GIMP_INTERNAL:
-	  return_args = (* procedure->exec_method.internal.marshal_func) (args);
+	  return_args = (* procedure->exec_method.internal.marshal_func) (gimp, args);
 	  break;
 
 	case GIMP_PLUGIN:
@@ -216,7 +217,8 @@ procedural_db_execute (const gchar *name,
 }
 
 Argument *
-procedural_db_run_proc (const gchar *name,
+procedural_db_run_proc (Gimp        *gimp,
+			const gchar *name,
 			gint        *nreturn_vals,
 			...)
 {
@@ -226,7 +228,7 @@ procedural_db_run_proc (const gchar *name,
   va_list     args;
   gint        i;
 
-  if ((proc = procedural_db_lookup (name)) == NULL)
+  if ((proc = procedural_db_lookup (gimp, name)) == NULL)
     {
       return_vals = g_new (Argument, 1);
       return_vals->arg_type = GIMP_PDB_STATUS;
@@ -300,7 +302,7 @@ procedural_db_run_proc (const gchar *name,
 
   *nreturn_vals = proc->num_values;
 
-  return_vals = procedural_db_execute (name, params);
+  return_vals = procedural_db_execute (gimp, name, params);
 
   g_free (params);
 
@@ -312,7 +314,7 @@ procedural_db_return_args (ProcRecord *procedure,
 			   gboolean    success)
 {
   Argument *return_args;
-  gint i;
+  gint      i;
 
   return_args = g_new (Argument, procedure->num_values + 1);
 
@@ -400,8 +402,8 @@ static guint
 procedural_db_hash_func (gconstpointer key)
 {
   const gchar *string;
-  guint result;
-  int c;
+  guint        result;
+  gint         c;
 
   /*
    * I tried a zillion different hash functions and asked many other

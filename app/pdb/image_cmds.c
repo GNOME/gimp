@@ -31,8 +31,8 @@
 
 #include "app_procs.h"
 #include "base/temp-buf.h"
-#include "context_manager.h"
 #include "core/core-types.h"
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-duplicate.h"
@@ -110,68 +110,68 @@ static ProcRecord image_get_layer_by_tattoo_proc;
 static ProcRecord image_get_channel_by_tattoo_proc;
 
 void
-register_image_procs (void)
+register_image_procs (Gimp *gimp)
 {
-  procedural_db_register (&image_list_proc);
-  procedural_db_register (&image_new_proc);
-  procedural_db_register (&image_resize_proc);
-  procedural_db_register (&image_scale_proc);
-  procedural_db_register (&image_delete_proc);
-  procedural_db_register (&image_free_shadow_proc);
-  procedural_db_register (&image_get_layers_proc);
-  procedural_db_register (&image_get_channels_proc);
-  procedural_db_register (&image_unset_active_channel_proc);
-  procedural_db_register (&image_pick_correlate_layer_proc);
-  procedural_db_register (&image_raise_layer_proc);
-  procedural_db_register (&image_lower_layer_proc);
-  procedural_db_register (&image_raise_layer_to_top_proc);
-  procedural_db_register (&image_lower_layer_to_bottom_proc);
-  procedural_db_register (&image_merge_visible_layers_proc);
-  procedural_db_register (&image_merge_down_proc);
-  procedural_db_register (&image_flatten_proc);
-  procedural_db_register (&image_add_layer_proc);
-  procedural_db_register (&image_remove_layer_proc);
-  procedural_db_register (&image_add_layer_mask_proc);
-  procedural_db_register (&image_remove_layer_mask_proc);
-  procedural_db_register (&image_raise_channel_proc);
-  procedural_db_register (&image_lower_channel_proc);
-  procedural_db_register (&image_add_channel_proc);
-  procedural_db_register (&image_remove_channel_proc);
-  procedural_db_register (&image_active_drawable_proc);
-  procedural_db_register (&image_base_type_proc);
-  procedural_db_register (&image_get_cmap_proc);
-  procedural_db_register (&image_set_cmap_proc);
-  procedural_db_register (&image_undo_is_enabled_proc);
-  procedural_db_register (&image_undo_enable_proc);
-  procedural_db_register (&image_undo_disable_proc);
-  procedural_db_register (&image_undo_freeze_proc);
-  procedural_db_register (&image_undo_thaw_proc);
-  procedural_db_register (&image_clean_all_proc);
-  procedural_db_register (&image_floating_selection_proc);
-  procedural_db_register (&image_floating_sel_attached_to_proc);
-  procedural_db_register (&image_thumbnail_proc);
-  procedural_db_register (&image_set_tattoo_state_proc);
-  procedural_db_register (&image_get_tattoo_state_proc);
-  procedural_db_register (&image_duplicate_proc);
-  procedural_db_register (&image_width_proc);
-  procedural_db_register (&image_height_proc);
-  procedural_db_register (&image_get_active_layer_proc);
-  procedural_db_register (&image_set_active_layer_proc);
-  procedural_db_register (&image_get_active_channel_proc);
-  procedural_db_register (&image_set_active_channel_proc);
-  procedural_db_register (&image_get_selection_proc);
-  procedural_db_register (&image_get_component_active_proc);
-  procedural_db_register (&image_set_component_active_proc);
-  procedural_db_register (&image_get_component_visible_proc);
-  procedural_db_register (&image_set_component_visible_proc);
-  procedural_db_register (&image_get_filename_proc);
-  procedural_db_register (&image_set_filename_proc);
-  procedural_db_register (&image_get_resolution_proc);
-  procedural_db_register (&image_set_resolution_proc);
-  procedural_db_register (&image_get_unit_proc);
-  procedural_db_register (&image_set_unit_proc);
-  procedural_db_register (&image_get_layer_by_tattoo_proc);
-  procedural_db_register (&image_get_channel_by_tattoo_proc);
+  procedural_db_register (gimp, &image_list_proc);
+  procedural_db_register (gimp, &image_new_proc);
+  procedural_db_register (gimp, &image_resize_proc);
+  procedural_db_register (gimp, &image_scale_proc);
+  procedural_db_register (gimp, &image_delete_proc);
+  procedural_db_register (gimp, &image_free_shadow_proc);
+  procedural_db_register (gimp, &image_get_layers_proc);
+  procedural_db_register (gimp, &image_get_channels_proc);
+  procedural_db_register (gimp, &image_unset_active_channel_proc);
+  procedural_db_register (gimp, &image_pick_correlate_layer_proc);
+  procedural_db_register (gimp, &image_raise_layer_proc);
+  procedural_db_register (gimp, &image_lower_layer_proc);
+  procedural_db_register (gimp, &image_raise_layer_to_top_proc);
+  procedural_db_register (gimp, &image_lower_layer_to_bottom_proc);
+  procedural_db_register (gimp, &image_merge_visible_layers_proc);
+  procedural_db_register (gimp, &image_merge_down_proc);
+  procedural_db_register (gimp, &image_flatten_proc);
+  procedural_db_register (gimp, &image_add_layer_proc);
+  procedural_db_register (gimp, &image_remove_layer_proc);
+  procedural_db_register (gimp, &image_add_layer_mask_proc);
+  procedural_db_register (gimp, &image_remove_layer_mask_proc);
+  procedural_db_register (gimp, &image_raise_channel_proc);
+  procedural_db_register (gimp, &image_lower_channel_proc);
+  procedural_db_register (gimp, &image_add_channel_proc);
+  procedural_db_register (gimp, &image_remove_channel_proc);
+  procedural_db_register (gimp, &image_active_drawable_proc);
+  procedural_db_register (gimp, &image_base_type_proc);
+  procedural_db_register (gimp, &image_get_cmap_proc);
+  procedural_db_register (gimp, &image_set_cmap_proc);
+  procedural_db_register (gimp, &image_undo_is_enabled_proc);
+  procedural_db_register (gimp, &image_undo_enable_proc);
+  procedural_db_register (gimp, &image_undo_disable_proc);
+  procedural_db_register (gimp, &image_undo_freeze_proc);
+  procedural_db_register (gimp, &image_undo_thaw_proc);
+  procedural_db_register (gimp, &image_clean_all_proc);
+  procedural_db_register (gimp, &image_floating_selection_proc);
+  procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
+  procedural_db_register (gimp, &image_thumbnail_proc);
+  procedural_db_register (gimp, &image_set_tattoo_state_proc);
+  procedural_db_register (gimp, &image_get_tattoo_state_proc);
+  procedural_db_register (gimp, &image_duplicate_proc);
+  procedural_db_register (gimp, &image_width_proc);
+  procedural_db_register (gimp, &image_height_proc);
+  procedural_db_register (gimp, &image_get_active_layer_proc);
+  procedural_db_register (gimp, &image_set_active_layer_proc);
+  procedural_db_register (gimp, &image_get_active_channel_proc);
+  procedural_db_register (gimp, &image_set_active_channel_proc);
+  procedural_db_register (gimp, &image_get_selection_proc);
+  procedural_db_register (gimp, &image_get_component_active_proc);
+  procedural_db_register (gimp, &image_set_component_active_proc);
+  procedural_db_register (gimp, &image_get_component_visible_proc);
+  procedural_db_register (gimp, &image_set_component_visible_proc);
+  procedural_db_register (gimp, &image_get_filename_proc);
+  procedural_db_register (gimp, &image_set_filename_proc);
+  procedural_db_register (gimp, &image_get_resolution_proc);
+  procedural_db_register (gimp, &image_set_resolution_proc);
+  procedural_db_register (gimp, &image_get_unit_proc);
+  procedural_db_register (gimp, &image_set_unit_proc);
+  procedural_db_register (gimp, &image_get_layer_by_tattoo_proc);
+  procedural_db_register (gimp, &image_get_channel_by_tattoo_proc);
 }
 
 /* Yuup, this is somewhat unsmooth, to say the least */
@@ -185,7 +185,8 @@ gimlist_cb (gpointer im,
 }
 
 static Argument *
-image_list_invoker (Argument *args)
+image_list_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   Argument *return_args;
   gint32 num_images = 0;
@@ -193,7 +194,7 @@ image_list_invoker (Argument *args)
   GList *list = NULL;
   int i;
 
-  gimp_container_foreach (image_context, gimlist_cb, &list);
+  gimp_container_foreach (gimp->images, gimlist_cb, &list);
   num_images = g_list_length (list);
 
   if (num_images)
@@ -242,7 +243,8 @@ static ProcRecord image_list_proc =
 };
 
 static Argument *
-image_new_invoker (Argument *args)
+image_new_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -264,7 +266,7 @@ image_new_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = (gimage = gimage_new (width, height, type)) != NULL;
+    success = (gimage = gimage_new (gimp, width, height, type)) != NULL;
 
   return_args = procedural_db_return_args (&image_new_proc, success);
 
@@ -319,7 +321,8 @@ static ProcRecord image_new_proc =
 };
 
 static Argument *
-image_resize_invoker (Argument *args)
+image_resize_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -399,7 +402,8 @@ static ProcRecord image_resize_proc =
 };
 
 static Argument *
-image_scale_invoker (Argument *args)
+image_scale_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -463,7 +467,8 @@ static ProcRecord image_scale_proc =
 };
 
 static Argument *
-image_delete_invoker (Argument *args)
+image_delete_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -504,7 +509,8 @@ static ProcRecord image_delete_proc =
 };
 
 static Argument *
-image_free_shadow_invoker (Argument *args)
+image_free_shadow_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -545,7 +551,8 @@ static ProcRecord image_free_shadow_proc =
 };
 
 static Argument *
-image_get_layers_invoker (Argument *args)
+image_get_layers_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -623,7 +630,8 @@ static ProcRecord image_get_layers_proc =
 };
 
 static Argument *
-image_get_channels_invoker (Argument *args)
+image_get_channels_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -701,7 +709,8 @@ static ProcRecord image_get_channels_proc =
 };
 
 static Argument *
-image_unset_active_channel_invoker (Argument *args)
+image_unset_active_channel_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -742,7 +751,8 @@ static ProcRecord image_unset_active_channel_proc =
 };
 
 static Argument *
-image_pick_correlate_layer_invoker (Argument *args)
+image_pick_correlate_layer_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -815,7 +825,8 @@ static ProcRecord image_pick_correlate_layer_proc =
 };
 
 static Argument *
-image_raise_layer_invoker (Argument *args)
+image_raise_layer_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -866,7 +877,8 @@ static ProcRecord image_raise_layer_proc =
 };
 
 static Argument *
-image_lower_layer_invoker (Argument *args)
+image_lower_layer_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -917,7 +929,8 @@ static ProcRecord image_lower_layer_proc =
 };
 
 static Argument *
-image_raise_layer_to_top_invoker (Argument *args)
+image_raise_layer_to_top_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -968,7 +981,8 @@ static ProcRecord image_raise_layer_to_top_proc =
 };
 
 static Argument *
-image_lower_layer_to_bottom_invoker (Argument *args)
+image_lower_layer_to_bottom_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1019,7 +1033,8 @@ static ProcRecord image_lower_layer_to_bottom_proc =
 };
 
 static Argument *
-image_merge_visible_layers_invoker (Argument *args)
+image_merge_visible_layers_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1089,7 +1104,8 @@ static ProcRecord image_merge_visible_layers_proc =
 };
 
 static Argument *
-image_merge_down_invoker (Argument *args)
+image_merge_down_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1169,7 +1185,8 @@ static ProcRecord image_merge_down_proc =
 };
 
 static Argument *
-image_flatten_invoker (Argument *args)
+image_flatten_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1226,7 +1243,8 @@ static ProcRecord image_flatten_proc =
 };
 
 static Argument *
-image_add_layer_invoker (Argument *args)
+image_add_layer_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1292,7 +1310,8 @@ static ProcRecord image_add_layer_proc =
 };
 
 static Argument *
-image_remove_layer_invoker (Argument *args)
+image_remove_layer_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1343,7 +1362,8 @@ static ProcRecord image_remove_layer_proc =
 };
 
 static Argument *
-image_add_layer_mask_invoker (Argument *args)
+image_add_layer_mask_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1404,7 +1424,8 @@ static ProcRecord image_add_layer_mask_proc =
 };
 
 static Argument *
-image_remove_layer_mask_invoker (Argument *args)
+image_remove_layer_mask_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1465,7 +1486,8 @@ static ProcRecord image_remove_layer_mask_proc =
 };
 
 static Argument *
-image_raise_channel_invoker (Argument *args)
+image_raise_channel_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1516,7 +1538,8 @@ static ProcRecord image_raise_channel_proc =
 };
 
 static Argument *
-image_lower_channel_invoker (Argument *args)
+image_lower_channel_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1567,7 +1590,8 @@ static ProcRecord image_lower_channel_proc =
 };
 
 static Argument *
-image_add_channel_invoker (Argument *args)
+image_add_channel_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1626,7 +1650,8 @@ static ProcRecord image_add_channel_proc =
 };
 
 static Argument *
-image_remove_channel_invoker (Argument *args)
+image_remove_channel_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1677,7 +1702,8 @@ static ProcRecord image_remove_channel_proc =
 };
 
 static Argument *
-image_active_drawable_invoker (Argument *args)
+image_active_drawable_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1734,7 +1760,8 @@ static ProcRecord image_active_drawable_proc =
 };
 
 static Argument *
-image_base_type_invoker (Argument *args)
+image_base_type_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1791,7 +1818,8 @@ static ProcRecord image_base_type_proc =
 };
 
 static Argument *
-image_get_cmap_invoker (Argument *args)
+image_get_cmap_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1861,7 +1889,8 @@ static ProcRecord image_get_cmap_proc =
 };
 
 static Argument *
-image_set_cmap_invoker (Argument *args)
+image_set_cmap_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1931,7 +1960,8 @@ static ProcRecord image_set_cmap_proc =
 };
 
 static Argument *
-image_undo_is_enabled_invoker (Argument *args)
+image_undo_is_enabled_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1988,7 +2018,8 @@ static ProcRecord image_undo_is_enabled_proc =
 };
 
 static Argument *
-image_undo_enable_invoker (Argument *args)
+image_undo_enable_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2044,7 +2075,8 @@ static ProcRecord image_undo_enable_proc =
 };
 
 static Argument *
-image_undo_disable_invoker (Argument *args)
+image_undo_disable_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2100,7 +2132,8 @@ static ProcRecord image_undo_disable_proc =
 };
 
 static Argument *
-image_undo_freeze_invoker (Argument *args)
+image_undo_freeze_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2156,7 +2189,8 @@ static ProcRecord image_undo_freeze_proc =
 };
 
 static Argument *
-image_undo_thaw_invoker (Argument *args)
+image_undo_thaw_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2212,7 +2246,8 @@ static ProcRecord image_undo_thaw_proc =
 };
 
 static Argument *
-image_clean_all_invoker (Argument *args)
+image_clean_all_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -2253,7 +2288,8 @@ static ProcRecord image_clean_all_proc =
 };
 
 static Argument *
-image_floating_selection_invoker (Argument *args)
+image_floating_selection_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2310,7 +2346,8 @@ static ProcRecord image_floating_selection_proc =
 };
 
 static Argument *
-image_floating_sel_attached_to_invoker (Argument *args)
+image_floating_sel_attached_to_invoker (Gimp     *gimp,
+                                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2375,7 +2412,8 @@ static ProcRecord image_floating_sel_attached_to_proc =
 };
 
 static Argument *
-image_thumbnail_invoker (Argument *args)
+image_thumbnail_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2508,7 +2546,8 @@ static ProcRecord image_thumbnail_proc =
 };
 
 static Argument *
-image_set_tattoo_state_invoker (Argument *args)
+image_set_tattoo_state_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -2559,7 +2598,8 @@ static ProcRecord image_set_tattoo_state_proc =
 };
 
 static Argument *
-image_get_tattoo_state_invoker (Argument *args)
+image_get_tattoo_state_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2618,7 +2658,8 @@ static ProcRecord image_get_tattoo_state_proc =
 };
 
 static Argument *
-image_duplicate_invoker (Argument *args)
+image_duplicate_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2675,7 +2716,8 @@ static ProcRecord image_duplicate_proc =
 };
 
 static Argument *
-image_width_invoker (Argument *args)
+image_width_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2728,7 +2770,8 @@ static ProcRecord image_width_proc =
 };
 
 static Argument *
-image_height_invoker (Argument *args)
+image_height_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2781,7 +2824,8 @@ static ProcRecord image_height_proc =
 };
 
 static Argument *
-image_get_active_layer_invoker (Argument *args)
+image_get_active_layer_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2838,7 +2882,8 @@ static ProcRecord image_get_active_layer_proc =
 };
 
 static Argument *
-image_set_active_layer_invoker (Argument *args)
+image_set_active_layer_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -2889,7 +2934,8 @@ static ProcRecord image_set_active_layer_proc =
 };
 
 static Argument *
-image_get_active_channel_invoker (Argument *args)
+image_get_active_channel_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2946,7 +2992,8 @@ static ProcRecord image_get_active_channel_proc =
 };
 
 static Argument *
-image_set_active_channel_invoker (Argument *args)
+image_set_active_channel_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -2997,7 +3044,8 @@ static ProcRecord image_set_active_channel_proc =
 };
 
 static Argument *
-image_get_selection_invoker (Argument *args)
+image_get_selection_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3054,7 +3102,8 @@ static ProcRecord image_get_selection_proc =
 };
 
 static Argument *
-image_get_component_active_invoker (Argument *args)
+image_get_component_active_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3127,7 +3176,8 @@ static ProcRecord image_get_component_active_proc =
 };
 
 static Argument *
-image_set_component_active_invoker (Argument *args)
+image_set_component_active_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -3196,7 +3246,8 @@ static ProcRecord image_set_component_active_proc =
 };
 
 static Argument *
-image_get_component_visible_invoker (Argument *args)
+image_get_component_visible_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3269,7 +3320,8 @@ static ProcRecord image_get_component_visible_proc =
 };
 
 static Argument *
-image_set_component_visible_invoker (Argument *args)
+image_set_component_visible_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -3338,7 +3390,8 @@ static ProcRecord image_set_component_visible_proc =
 };
 
 static Argument *
-image_get_filename_invoker (Argument *args)
+image_get_filename_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3391,7 +3444,8 @@ static ProcRecord image_get_filename_proc =
 };
 
 static Argument *
-image_set_filename_invoker (Argument *args)
+image_set_filename_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -3442,7 +3496,8 @@ static ProcRecord image_set_filename_proc =
 };
 
 static Argument *
-image_get_resolution_invoker (Argument *args)
+image_get_resolution_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3503,7 +3558,8 @@ static ProcRecord image_get_resolution_proc =
 };
 
 static Argument *
-image_set_resolution_invoker (Argument *args)
+image_set_resolution_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -3575,7 +3631,8 @@ static ProcRecord image_set_resolution_proc =
 };
 
 static Argument *
-image_get_unit_invoker (Argument *args)
+image_get_unit_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3628,7 +3685,8 @@ static ProcRecord image_get_unit_proc =
 };
 
 static Argument *
-image_set_unit_invoker (Argument *args)
+image_set_unit_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -3679,7 +3737,8 @@ static ProcRecord image_set_unit_proc =
 };
 
 static Argument *
-image_get_layer_by_tattoo_invoker (Argument *args)
+image_get_layer_by_tattoo_invoker (Gimp     *gimp,
+                                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -3749,7 +3808,8 @@ static ProcRecord image_get_layer_by_tattoo_proc =
 };
 
 static Argument *
-image_get_channel_by_tattoo_invoker (Argument *args)
+image_get_channel_by_tattoo_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -35,15 +35,16 @@ static ProcRecord message_get_handler_proc;
 static ProcRecord message_set_handler_proc;
 
 void
-register_message_procs (void)
+register_message_procs (Gimp *gimp)
 {
-  procedural_db_register (&message_proc);
-  procedural_db_register (&message_get_handler_proc);
-  procedural_db_register (&message_set_handler_proc);
+  procedural_db_register (gimp, &message_proc);
+  procedural_db_register (gimp, &message_get_handler_proc);
+  procedural_db_register (gimp, &message_set_handler_proc);
 }
 
 static Argument *
-message_invoker (Argument *args)
+message_invoker (Gimp     *gimp,
+                 Argument *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -84,7 +85,8 @@ static ProcRecord message_proc =
 };
 
 static Argument *
-message_get_handler_invoker (Argument *args)
+message_get_handler_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   Argument *return_args;
 
@@ -120,7 +122,8 @@ static ProcRecord message_get_handler_proc =
 };
 
 static Argument *
-message_set_handler_invoker (Argument *args)
+message_set_handler_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   gint32 handler;

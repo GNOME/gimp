@@ -45,12 +45,12 @@ static ProcRecord text_proc;
 static ProcRecord text_get_extents_proc;
 
 void
-register_text_tool_procs (void)
+register_text_tool_procs (Gimp *gimp)
 {
-  procedural_db_register (&text_fontname_proc);
-  procedural_db_register (&text_get_extents_fontname_proc);
-  procedural_db_register (&text_proc);
-  procedural_db_register (&text_get_extents_proc);
+  procedural_db_register (gimp, &text_fontname_proc);
+  procedural_db_register (gimp, &text_get_extents_fontname_proc);
+  procedural_db_register (gimp, &text_proc);
+  procedural_db_register (gimp, &text_get_extents_proc);
 }
 
 static gchar *
@@ -180,7 +180,8 @@ text_xlfd_create (gchar    *foundry,
 }
 
 static Argument *
-text_fontname_invoker (Argument *args)
+text_fontname_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -333,7 +334,8 @@ static ProcRecord text_fontname_proc =
 };
 
 static Argument *
-text_get_extents_fontname_invoker (Argument *args)
+text_get_extents_fontname_invoker (Gimp     *gimp,
+                                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -454,7 +456,8 @@ static ProcRecord text_get_extents_fontname_proc =
 };
 
 static Argument *
-text_invoker (Argument *args)
+text_invoker (Gimp     *gimp,
+              Argument *args)
 {
   gboolean success = TRUE;
   int i;
@@ -517,7 +520,7 @@ text_invoker (Argument *args)
 		      registry,
 		      encoding);
 
-  return text_fontname_invoker (argv);
+  return text_fontname_invoker (gimp, argv);
 }
 
 static ProcArg text_inargs[] =
@@ -636,7 +639,8 @@ static ProcRecord text_proc =
 };
 
 static Argument *
-text_get_extents_invoker (Argument *args)
+text_get_extents_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   int i;
@@ -699,7 +703,7 @@ text_get_extents_invoker (Argument *args)
 		      registry,
 		      encoding);
 
-  return text_get_extents_fontname_invoker (argv);
+  return text_get_extents_fontname_invoker (gimp, argv);
 }
 
 static ProcArg text_get_extents_inargs[] =

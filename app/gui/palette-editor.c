@@ -27,6 +27,7 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -43,7 +44,7 @@
 #include "palette-import-dialog.h"
 #include "palette-select.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
 
@@ -201,7 +202,7 @@ palette_dialog_free (void)
 				     palette_dialog_palette_changed,
 				     top_level_edit_palette);
 
-      gimp_container_remove_handler (global_palette_factory->container,
+      gimp_container_remove_handler (the_gimp->palette_factory->container,
 				     top_level_edit_palette->invalidate_preview_handler_id);
 
       g_free (top_level_edit_palette); 
@@ -217,7 +218,7 @@ palette_dialog_free (void)
 				     palette_dialog_palette_changed,
 				     top_level_palette);
 
-      gimp_container_remove_handler (global_palette_factory->container,
+      gimp_container_remove_handler (the_gimp->palette_factory->container,
 				     top_level_palette->invalidate_preview_handler_id);
 
       g_free (top_level_palette);
@@ -328,7 +329,7 @@ palette_dialog_new (gboolean editor)
   if (! editor)
     palette_dialog->context = gimp_context_get_user ();
   else
-    palette_dialog->context = gimp_context_new (NULL, NULL);
+    palette_dialog->context = gimp_context_new (the_gimp, NULL, NULL);
 
   palette_dialog->zoom_factor   = 1.0;
   palette_dialog->columns       = COLUMNS;
@@ -470,7 +471,7 @@ palette_dialog_new (gboolean editor)
   /*  The Palette List  */
   palette_dialog->view =
     gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				global_palette_factory,
+				the_gimp->palette_factory,
 				editor ? NULL : palette_dialog_edit_palette,
 				palette_dialog->context,
 				SM_PREVIEW_HEIGHT,
@@ -498,7 +499,7 @@ palette_dialog_new (gboolean editor)
 		      palette_dialog);
 
   palette_dialog->invalidate_preview_handler_id =
-    gimp_container_add_handler (global_palette_factory->container,
+    gimp_container_add_handler (the_gimp->palette_factory->container,
 				"invalidate_preview",
 				GTK_SIGNAL_FUNC (palette_dialog_invalidate_preview),
 				palette_dialog);
@@ -1338,7 +1339,7 @@ palette_dialog_do_merge_callback (GtkWidget *widget,
       sel_list = sel_list->next;
     }
 
-  gimp_container_add (global_palette_factory->container,
+  gimp_container_add (the_gimp->palette_factory->container,
 		      GIMP_OBJECT (new_palette));
 }
 

@@ -29,7 +29,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -42,12 +42,12 @@ static ProcRecord gradients_set_popup_proc;
 static ProcRecord gradients_get_gradient_data_proc;
 
 void
-register_gradient_select_procs (void)
+register_gradient_select_procs (Gimp *gimp)
 {
-  procedural_db_register (&gradients_popup_proc);
-  procedural_db_register (&gradients_close_popup_proc);
-  procedural_db_register (&gradients_set_popup_proc);
-  procedural_db_register (&gradients_get_gradient_data_proc);
+  procedural_db_register (gimp, &gradients_popup_proc);
+  procedural_db_register (gimp, &gradients_close_popup_proc);
+  procedural_db_register (gimp, &gradients_set_popup_proc);
+  procedural_db_register (gimp, &gradients_get_gradient_data_proc);
 }
 
 static GradientSelect *
@@ -68,7 +68,8 @@ gradients_get_gradientselect (gchar *name)
 }
 
 static Argument *
-gradients_popup_invoker (Argument *args)
+gradients_popup_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -94,7 +95,7 @@ gradients_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)))
+      if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (initial_gradient && strlen (initial_gradient))
 	    newdialog = gradient_select_new (title, initial_gradient);
@@ -152,7 +153,8 @@ static ProcRecord gradients_popup_proc =
 };
 
 static Argument *
-gradients_close_popup_invoker (Argument *args)
+gradients_close_popup_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -165,7 +167,7 @@ gradients_close_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)) &&
+      if ((prec = procedural_db_lookup (gimp, name)) &&
 	  (gsp = gradients_get_gradientselect (name)))
 	{
 	  if (GTK_WIDGET_VISIBLE (gsp->shell))
@@ -212,7 +214,8 @@ static ProcRecord gradients_close_popup_proc =
 };
 
 static Argument *
-gradients_set_popup_invoker (Argument *args)
+gradients_set_popup_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   gchar *pdbname;
@@ -230,13 +233,13 @@ gradients_set_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (pdbname)) &&
+      if ((prec = procedural_db_lookup (gimp, pdbname)) &&
 	  (gsp = gradients_get_gradientselect (pdbname)))
 	{
 	  GimpGradient *active = NULL;
     
 	  active = (GimpGradient *)
-	    gimp_container_get_child_by_name (global_gradient_factory->container,
+	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      gradient_name);
     
 	  if (active)
@@ -285,7 +288,8 @@ static ProcRecord gradients_set_popup_proc =
 };
 
 static Argument *
-gradients_get_gradient_data_invoker (Argument *args)
+gradients_get_gradient_data_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -309,7 +313,7 @@ gradients_get_gradient_data_invoker (Argument *args)
 	  success = FALSE;
     
 	  gradient = (GimpGradient *)
-	    gimp_container_get_child_by_name (global_gradient_factory->container,
+	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      name);
     
 	  if (gradient)

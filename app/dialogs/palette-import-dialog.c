@@ -29,6 +29,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -41,7 +42,7 @@
 #include "palette-editor.h"
 #include "palette-import-dialog.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gimage.h"
 
 #include "libgimp/gimpintl.h"
@@ -319,13 +320,13 @@ palette_import_image_menu_activate (gint        redo,
   /* Get list of images */
   if (import_dialog->import_type == INDEXED_IMPORT)
     {
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      palette_import_gimlist_indexed_cb,
 			      &list);
     }
   else
     {
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      palette_import_gimlist_cb,
 			      &list);
     }
@@ -452,13 +453,13 @@ palette_import_image_count (ImportType type)
 
   if (type == INDEXED_IMPORT)
     {
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      palette_import_gimlist_indexed_cb,
 			      &list);
     }
   else
     {
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      palette_import_gimlist_cb,
 			      &list);
     }
@@ -599,7 +600,7 @@ palette_import_import_callback (GtkWidget *widget,
   g_free (palette_name);
 
   if (palette)
-    gimp_container_add (global_palette_factory->container,
+    gimp_container_add (the_gimp->palette_factory->container,
 			GIMP_OBJECT (palette));
 
   palette_import_close_callback (NULL, NULL);
@@ -790,10 +791,10 @@ palette_import_dialog_new (void)
 		      NULL);
 
   /*  keep the dialog up-to-date  */
-  gtk_signal_connect (GTK_OBJECT (image_context), "add",
+  gtk_signal_connect (GTK_OBJECT (the_gimp->images), "add",
 		      GTK_SIGNAL_FUNC (palette_import_image_new),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (image_context), "remove",
+  gtk_signal_connect (GTK_OBJECT (the_gimp->images), "remove",
 		      GTK_SIGNAL_FUNC (palette_import_image_destroyed),
 		      NULL);
 

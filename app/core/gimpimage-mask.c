@@ -638,23 +638,19 @@ gimage_mask_stroke (GimpImage    *gimage,
 
       /* Stroke with the correct tool */
       return_vals =
-	procedural_db_run_proc (tool_manager_active_get_PDB_string (),
+	procedural_db_run_proc (gimage->gimp,
+				tool_manager_active_get_PDB_string (),
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				GIMP_PDB_INT32, (gint32) cpnt,
 				GIMP_PDB_FLOATARRAY, stroke_points,
 				GIMP_PDB_END);
-      
-      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
-	{
-	  /* Not required */
-	  /*gdisplays_flush ();*/
-	}
-      else
+
+      if (return_vals && return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Paintbrush operation failed."));
-      
+
       procedural_db_destroy_args (return_vals, nreturn_vals);
-      
+
       cpnt = 0;
       seg ++;
       stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x1 - offx + 0.5);

@@ -35,15 +35,16 @@ static ProcRecord gimprc_set_proc;
 static ProcRecord get_monitor_resolution_proc;
 
 void
-register_gimprc_procs (void)
+register_gimprc_procs (Gimp *gimp)
 {
-  procedural_db_register (&gimprc_query_proc);
-  procedural_db_register (&gimprc_set_proc);
-  procedural_db_register (&get_monitor_resolution_proc);
+  procedural_db_register (gimp, &gimprc_query_proc);
+  procedural_db_register (gimp, &gimprc_set_proc);
+  procedural_db_register (gimp, &get_monitor_resolution_proc);
 }
 
 static Argument *
-gimprc_query_invoker (Argument *args)
+gimprc_query_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -105,7 +106,8 @@ static ProcRecord gimprc_query_proc =
 };
 
 static Argument *
-gimprc_set_invoker (Argument *args)
+gimprc_set_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   gchar *token;
@@ -156,7 +158,8 @@ static ProcRecord gimprc_set_proc =
 };
 
 static Argument *
-get_monitor_resolution_invoker (Argument *args)
+get_monitor_resolution_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

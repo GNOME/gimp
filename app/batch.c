@@ -29,7 +29,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -38,11 +38,13 @@
 #include "pdb/procedural_db.h"
 
 
-static void batch_run_cmd  (gchar             *cmd);
+static void batch_run_cmd  (Gimp              *gimp,
+			    gchar             *cmd);
 static void batch_read     (gpointer           data,
 			    gint               source,
 			    GdkInputCondition  condition);
-static void batch_pserver  (gint               run_mode,
+static void batch_pserver  (Gimp              *gimp,
+			    gint               run_mode,
                             gint               flags,
                             gint               extra);
 
@@ -50,7 +52,7 @@ static void batch_pserver  (gint               run_mode,
 static ProcRecord *eval_proc;
 
 void
-batch_init (void)
+batch_init (Gimp *gimp)
 {
   extern gchar **batch_cmds;
 
@@ -58,7 +60,7 @@ batch_init (void)
   gboolean perl_server_already_running = FALSE;
   gint     i;
 
-  eval_proc = procedural_db_lookup ("extension_script_fu_eval");
+  eval_proc = procedural_db_lookup (gimp, "extension_script_fu_eval");
 
   read_from_stdin = FALSE;
   for (i = 0; batch_cmds[i]; i++)
@@ -75,7 +77,7 @@ batch_init (void)
           {
             if (!perl_server_already_running)
              {
-               batch_pserver (run_mode, flags, extra);
+               batch_pserver (gimp, run_mode, flags, extra);
                perl_server_already_running = 1;
              }
             continue;
@@ -94,7 +96,7 @@ batch_init (void)
 	    {
 #ifndef G_OS_WIN32 /* for now */
 	      g_print ("reading batch commands from stdin\n");
-	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
+	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, gimp);
 	      read_from_stdin = TRUE;
 #else
 	      g_error ("Batch mode from standard input not implemented on Win32");
@@ -103,14 +105,15 @@ batch_init (void)
 	}
       else
 	{
-	  batch_run_cmd (batch_cmds[i]);
+	  batch_run_cmd (gimp, batch_cmds[i]);
 	}
     }
 }
 
 
 static void
-batch_run_cmd (gchar *cmd)
+batch_run_cmd (Gimp  *gimp,
+	       gchar *cmd)
 {
   Argument *args;
   Argument *vals;
@@ -129,7 +132,8 @@ batch_run_cmd (gchar *cmd)
   args[0].value.pdb_int = 1;
   args[1].value.pdb_pointer = cmd;
 
-  vals = procedural_db_execute ("extension_script_fu_eval", args);
+  vals = procedural_db_execute (gimp, "extension_script_fu_eval", args);
+
   switch (vals[0].value.pdb_int)
     {
     case GIMP_PDB_EXECUTION_ERROR:
@@ -203,7 +207,7 @@ batch_read (gpointer          data,
 
       if (done)
 	{
-	  batch_run_cmd (string->str);
+	  batch_run_cmd ((Gimp *) data, string->str);
 	  g_string_truncate (string, 0);
 	}
     }
@@ -212,7 +216,8 @@ batch_read (gpointer          data,
 #endif /* !G_OS_WIN32 */
 
 static void
-batch_pserver (gint  run_mode,
+batch_pserver (Gimp *gimp,
+	       gint  run_mode,
                gint  flags,
                gint  extra)
 {
@@ -221,7 +226,7 @@ batch_pserver (gint  run_mode,
   Argument   *vals;
   gint        i;
 
-  pserver_proc = procedural_db_lookup ("extension_perl_server");
+  pserver_proc = procedural_db_lookup (gimp, "extension_perl_server");
 
   if (!pserver_proc)
     {
@@ -237,7 +242,8 @@ batch_pserver (gint  run_mode,
   args[1].value.pdb_int = flags;
   args[2].value.pdb_int = extra;
 
-  vals = procedural_db_execute ("extension_perl_server", args);
+  vals = procedural_db_execute (gimp, "extension_perl_server", args);
+
   switch (vals[0].value.pdb_int)
     {
     case GIMP_PDB_EXECUTION_ERROR:

@@ -40,7 +40,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -456,7 +456,7 @@ static void
 init (void)
 {
   /*  Continue initializing  */
-  gimp_init (gimp_argc, gimp_argv);
+  app_init (gimp_argc, gimp_argv);
 }
 
 

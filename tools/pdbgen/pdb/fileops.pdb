@@ -305,7 +305,7 @@ HELP
 {
   success = FALSE;
 
-  proc = procedural_db_lookup (name);
+  proc = procedural_db_lookup (gimp, name);
 
   if (proc && ((proc->num_args < 3) ||
 	       (proc->num_values < 1) ||
@@ -376,7 +376,7 @@ HELP
 {
   success = FALSE;
 
-  proc = procedural_db_lookup (name);
+  proc = procedural_db_lookup (gimp, name);
 
   if (proc && ((proc->num_args < 5) ||
 	       (proc->args[0].arg_type != GIMP_PDB_INT32) ||

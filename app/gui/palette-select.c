@@ -28,6 +28,7 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -42,7 +43,7 @@
 #include "palette-select.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -99,7 +100,7 @@ palette_select_new (const gchar *title,
 
   if (title)
     {
-      psp->context = gimp_context_new (title, NULL);
+      psp->context = gimp_context_new (the_gimp, title, NULL);
     }
   else
     {
@@ -114,14 +115,14 @@ palette_select_new (const gchar *title,
     }
 
   if (no_data && first_call)
-    gimp_data_factory_data_init (global_palette_factory, FALSE);
+    gimp_data_factory_data_init (the_gimp->palette_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && initial_palette && strlen (initial_palette))
     {
       active = (GimpPalette *)
-	gimp_container_get_child_by_name (global_palette_factory->container,
+	gimp_container_get_child_by_name (the_gimp->palette_factory->container,
 					  initial_palette);
     }
   else
@@ -130,7 +131,7 @@ palette_select_new (const gchar *title,
     }
 
   if (!active)
-    active = gimp_context_get_palette (gimp_context_get_standard ());
+    active = gimp_context_get_palette (gimp_context_get_standard (the_gimp));
 
   if (title)
     gimp_context_set_palette (psp->context, active);
@@ -142,7 +143,7 @@ palette_select_new (const gchar *title,
 
   /*  The Palette List  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-					  global_palette_factory,
+					  the_gimp->palette_factory,
 					  dialogs_edit_palette_func,
 					  psp->context,
 					  32,

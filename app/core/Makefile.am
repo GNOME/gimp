@@ -4,6 +4,8 @@ noinst_LIBRARIES = libappcore.a
 
 libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	core-types.h			\
+	gimp.c				\
+	gimp.h				\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\

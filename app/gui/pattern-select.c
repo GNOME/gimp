@@ -29,6 +29,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -42,7 +43,7 @@
 #include "pattern-select.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -128,7 +129,7 @@ pattern_select_new (gchar *title,
 
   if (title)
     {
-      psp->context = gimp_context_new (title, NULL);
+      psp->context = gimp_context_new (the_gimp, title, NULL);
     }
   else
     {
@@ -138,14 +139,14 @@ pattern_select_new (gchar *title,
     }
 
   if (no_data && first_call)
-    gimp_data_factory_data_init (global_pattern_factory, FALSE);
+    gimp_data_factory_data_init (the_gimp->pattern_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && initial_pattern && strlen (initial_pattern))
     {
       active = (GimpPattern *)
-	gimp_container_get_child_by_name (global_pattern_factory->container,
+	gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
 					  initial_pattern);
     }
   else
@@ -154,7 +155,7 @@ pattern_select_new (gchar *title,
     }
 
   if (!active)
-    active = gimp_context_get_pattern (gimp_context_get_standard ());
+    active = gimp_context_get_pattern (gimp_context_get_standard (the_gimp));
 
   if (title)
     gimp_context_set_pattern (psp->context, active);
@@ -166,7 +167,7 @@ pattern_select_new (gchar *title,
 
   /*  The Brush Grid  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					  global_pattern_factory,
+					  the_gimp->pattern_factory,
 					  NULL,
 					  psp->context,
 					  MIN_CELL_SIZE,
@@ -234,12 +235,13 @@ pattern_select_change_callbacks (PatternSelect *psp,
   pattern = gimp_context_get_pattern (psp->context);
 
   /* If its still registered run it */
-  prec = procedural_db_lookup (name);
+  prec = procedural_db_lookup (psp->context->gimp, name);
 
   if (prec && pattern)
     {
       return_vals =
-	procedural_db_run_proc (name,
+	procedural_db_run_proc (psp->context->gimp,
+				name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (pattern)->name,
 				GIMP_PDB_INT32,     pattern->mask->width,
@@ -282,7 +284,7 @@ pattern_select_dialogs_check (void)
 
       if (name)
 	{
-	  prec = procedural_db_lookup (name);
+	  prec = procedural_db_lookup (psp->context->gimp, name);
 
 	  if (!prec)
 	    {

@@ -228,7 +228,7 @@ HELP
     $help  .= ' in the GIMP.';
 
     for ($invoke{code}) {
-	s/list = .*$/gimp_container_foreach (image_context, gimlist_cb, &list);/m;
+	s/list = .*$/gimp_container_foreach (gimp->images, gimlist_cb, &list);/m;
 	s/DRAWABLE/IMAGE/;
 	s/gimp_drawable_get_ID/gimp_image_get_ID/;
     }
@@ -264,7 +264,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (gimage = gimage_new (width, height, type)) != NULL;
+success = (gimage = gimage_new (gimp, width, height, type)) != NULL;
 CODE
     );
 }
@@ -1456,7 +1456,8 @@ CODE
 }
 
 
-@headers = qw(<string.h> "gimage.h" "context_manager.h" "core/gimpcontainer.h"
+@headers = qw(<string.h> "gimage.h" "core/gimp.h"
+              "core/gimpcontainer.h"
 	      "core/gimplist.h" "base/temp-buf.h" 
 	      "libgimpmath/gimpmath.h" "libgimpbase/gimpbase.h"
               "libgimp/gimpintl.h");

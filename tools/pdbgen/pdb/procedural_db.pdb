@@ -83,7 +83,7 @@ HELP
 	vars => [ 'ProcRecord *proc', "ProcArg *$type = NULL" ],
 	code => <<CODE
 {
-  proc = procedural_db_lookup (proc_name);
+  proc = procedural_db_lookup (gimp, proc_name);
   if (proc && (${type}_num >= 0 && ${type}_num < proc->num_$real_type))
     $type = \&proc->${real_type}\[${type}_num];
   else
@@ -115,12 +115,13 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<stdio.h>) ],
+	headers => [ qw(<stdio.h> "core/gimp.h") ],
 	code => <<'CODE'
 {
   if ((procedural_db_out = fopen (filename, "w")))
     {
-      g_hash_table_foreach (procedural_ht, procedural_db_print_entry, NULL);
+      g_hash_table_foreach (gimp->procedural_ht,
+                            procedural_db_print_entry, NULL);
       fclose (procedural_db_out);
     }
   else
@@ -188,7 +189,8 @@ HELP
   pdb_query.list_of_procs = NULL;
   pdb_query.num_procs = 0;
 
-  g_hash_table_foreach (procedural_ht, procedural_db_query_entry, \&pdb_query);
+  g_hash_table_foreach (gimp->procedural_ht,
+                        procedural_db_query_entry, \&pdb_query);
 
   $free
 }
@@ -243,7 +245,7 @@ HELP
     %invoke = (
 	vars => [ 'ProcRecord *proc = NULL' ],
 	code => <<'CODE'
-success = (proc = procedural_db_lookup (proc_name)) != NULL;
+success = (proc = procedural_db_lookup (gimp, proc_name)) != NULL;
 CODE
     );
 }

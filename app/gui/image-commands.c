@@ -133,7 +133,8 @@ image_invert_cmd_callback (GtkWidget *widget,
     }
 
   return_vals =
-    procedural_db_run_proc ("gimp_invert",
+    procedural_db_run_proc (gdisp->gimage->gimp,
+			    "gimp_invert",
 			    &nreturn_vals,
 			    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 			    GIMP_PDB_END);

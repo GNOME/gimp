@@ -41,11 +41,14 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef GimpImage * GimpXcfLoaderFunc (XcfInfo *info);
+typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
+				       XcfInfo *info);
 
 
-static Argument * xcf_load_invoker (Argument *args);
-static Argument * xcf_save_invoker (Argument *args);
+static Argument * xcf_load_invoker (Gimp     *gimp,
+				    Argument *args);
+static Argument * xcf_save_invoker (Gimp     *gimp,
+				    Argument *args);
 
 
 static ProcArg xcf_load_args[] =
@@ -153,7 +156,7 @@ static gint n_xcf_loaders = sizeof (xcf_loaders) / sizeof (xcf_loaders[0]);
 
 
 void
-xcf_init (void)
+xcf_init (Gimp *gimp)
 {
   /* So this is sort of a hack, but its better than it was before.  To do this
    * right there would be a file load-save handler type and the whole interface
@@ -162,8 +165,8 @@ xcf_init (void)
    * handlers, even though they are internal.  The only thing it requires is
    * using a PlugInProcDef struct.  -josh
    */
-  procedural_db_register (&xcf_plug_in_save_proc.db_info);
-  procedural_db_register (&xcf_plug_in_load_proc.db_info);
+  procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
+  procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
 
   xcf_plug_in_save_proc.image_types_val =
     plug_in_image_types_parse (xcf_plug_in_save_proc.image_types);
@@ -180,7 +183,8 @@ xcf_exit (void)
 }
 
 static Argument*
-xcf_load_invoker (Argument *args)
+xcf_load_invoker (Gimp     *gimp,
+		  Argument *args)
 {
   XcfInfo    info;
   Argument  *return_args;
@@ -237,7 +241,7 @@ xcf_load_invoker (Argument *args)
 	{
 	  if (info.file_version < n_xcf_loaders)
 	    {
-	      gimage = (*(xcf_loaders[info.file_version])) (&info);
+	      gimage = (*(xcf_loaders[info.file_version])) (gimp, &info);
 
 	      if (! gimage)
 		success = FALSE;
@@ -265,7 +269,8 @@ xcf_load_invoker (Argument *args)
 }
 
 static Argument *
-xcf_save_invoker (Argument *args)
+xcf_save_invoker (Gimp     *gimp,
+		  Argument *args)
 {
   XcfInfo    info;
   Argument  *return_args;

@@ -20,7 +20,7 @@
 #define __GIMP_TRANSFORM_TOOL_H__
 
 
-#include "tools/gimpdrawtool.h"
+#include "gimpdrawtool.h"
 
 
 /* buffer sizes for scaling information strings (for the info dialog) */

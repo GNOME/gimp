@@ -28,7 +28,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 
@@ -43,19 +43,20 @@ static ProcRecord palette_swap_colors_proc;
 static ProcRecord palette_refresh_proc;
 
 void
-register_palette_procs (void)
+register_palette_procs (Gimp *gimp)
 {
-  procedural_db_register (&palette_get_foreground_proc);
-  procedural_db_register (&palette_get_background_proc);
-  procedural_db_register (&palette_set_foreground_proc);
-  procedural_db_register (&palette_set_background_proc);
-  procedural_db_register (&palette_set_default_colors_proc);
-  procedural_db_register (&palette_swap_colors_proc);
-  procedural_db_register (&palette_refresh_proc);
+  procedural_db_register (gimp, &palette_get_foreground_proc);
+  procedural_db_register (gimp, &palette_get_background_proc);
+  procedural_db_register (gimp, &palette_set_foreground_proc);
+  procedural_db_register (gimp, &palette_set_background_proc);
+  procedural_db_register (gimp, &palette_set_default_colors_proc);
+  procedural_db_register (gimp, &palette_swap_colors_proc);
+  procedural_db_register (gimp, &palette_refresh_proc);
 }
 
 static Argument *
-palette_get_foreground_invoker (Argument *args)
+palette_get_foreground_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   Argument *return_args;
   GimpRGB color;
@@ -94,7 +95,8 @@ static ProcRecord palette_get_foreground_proc =
 };
 
 static Argument *
-palette_get_background_invoker (Argument *args)
+palette_get_background_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   Argument *return_args;
   GimpRGB color;
@@ -133,7 +135,8 @@ static ProcRecord palette_get_background_proc =
 };
 
 static Argument *
-palette_set_foreground_invoker (Argument *args)
+palette_set_foreground_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   GimpRGB color;
 
@@ -171,7 +174,8 @@ static ProcRecord palette_set_foreground_proc =
 };
 
 static Argument *
-palette_set_background_invoker (Argument *args)
+palette_set_background_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   GimpRGB color;
 
@@ -209,7 +213,8 @@ static ProcRecord palette_set_background_proc =
 };
 
 static Argument *
-palette_set_default_colors_invoker (Argument *args)
+palette_set_default_colors_invoker (Gimp     *gimp,
+                                    Argument *args)
 {
   gimp_context_set_default_colors (NULL);
   return procedural_db_return_args (&palette_set_default_colors_proc, TRUE);
@@ -232,7 +237,8 @@ static ProcRecord palette_set_default_colors_proc =
 };
 
 static Argument *
-palette_swap_colors_invoker (Argument *args)
+palette_swap_colors_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gimp_context_swap_colors (NULL);
   return procedural_db_return_args (&palette_swap_colors_proc, TRUE);
@@ -255,7 +261,8 @@ static ProcRecord palette_swap_colors_proc =
 };
 
 static Argument *
-palette_refresh_invoker (Argument *args)
+palette_refresh_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   /* FIXME: I've hardcoded success to be TRUE, because brushes_init() is a 
    *        void function right now.  It'd be nice if it returned a value at 
@@ -266,7 +273,7 @@ palette_refresh_invoker (Argument *args)
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  gimp_data_factory_data_init (global_palette_factory, FALSE);
+  gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 
   return procedural_db_return_args (&palette_refresh_proc, TRUE);
 }

@@ -78,7 +78,7 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_VBOX);
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
   object_class->destroy = gimp_data_factory_destroy;
 }
@@ -102,7 +102,10 @@ gimp_data_factory_destroy (GtkObject *object)
   factory = GIMP_DATA_FACTORY (object);
 
   if (factory->container)
-    gtk_object_unref (GTK_OBJECT (factory->container));
+    {
+      gtk_object_unref (GTK_OBJECT (factory->container));
+      factory->container = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

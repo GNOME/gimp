@@ -35,13 +35,14 @@
 static ProcRecord help_proc;
 
 void
-register_help_procs (void)
+register_help_procs (Gimp *gimp)
 {
-  procedural_db_register (&help_proc);
+  procedural_db_register (gimp, &help_proc);
 }
 
 static Argument *
-help_invoker (Argument *args)
+help_invoker (Gimp     *gimp,
+              Argument *args)
 {
   gboolean success = TRUE;
   gchar *prog_name;

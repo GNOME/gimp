@@ -31,7 +31,7 @@
 
 #include "base/base-types.h"
 #include "base/temp-buf.h"
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -50,23 +50,24 @@ static ProcRecord brushes_list_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
-register_brushes_procs (void)
+register_brushes_procs (Gimp *gimp)
 {
-  procedural_db_register (&brushes_refresh_proc);
-  procedural_db_register (&brushes_get_brush_proc);
-  procedural_db_register (&brushes_set_brush_proc);
-  procedural_db_register (&brushes_get_opacity_proc);
-  procedural_db_register (&brushes_set_opacity_proc);
-  procedural_db_register (&brushes_get_spacing_proc);
-  procedural_db_register (&brushes_set_spacing_proc);
-  procedural_db_register (&brushes_get_paint_mode_proc);
-  procedural_db_register (&brushes_set_paint_mode_proc);
-  procedural_db_register (&brushes_list_proc);
-  procedural_db_register (&brushes_get_brush_data_proc);
+  procedural_db_register (gimp, &brushes_refresh_proc);
+  procedural_db_register (gimp, &brushes_get_brush_proc);
+  procedural_db_register (gimp, &brushes_set_brush_proc);
+  procedural_db_register (gimp, &brushes_get_opacity_proc);
+  procedural_db_register (gimp, &brushes_set_opacity_proc);
+  procedural_db_register (gimp, &brushes_get_spacing_proc);
+  procedural_db_register (gimp, &brushes_set_spacing_proc);
+  procedural_db_register (gimp, &brushes_get_paint_mode_proc);
+  procedural_db_register (gimp, &brushes_set_paint_mode_proc);
+  procedural_db_register (gimp, &brushes_list_proc);
+  procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
 static Argument *
-brushes_refresh_invoker (Argument *args)
+brushes_refresh_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
    *        void function right now.  It'd be nice if it returned a value at 
@@ -76,7 +77,7 @@ brushes_refresh_invoker (Argument *args)
    *                         <sjburges@gimp.org>
    */
 
-  gimp_data_factory_data_init (global_brush_factory, FALSE);
+  gimp_data_factory_data_init (gimp->brush_factory, FALSE);
 
   return procedural_db_return_args (&brushes_refresh_proc, TRUE);
 }
@@ -98,7 +99,8 @@ static ProcRecord brushes_refresh_proc =
 };
 
 static Argument *
-brushes_get_brush_invoker (Argument *args)
+brushes_get_brush_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -160,7 +162,8 @@ static ProcRecord brushes_get_brush_proc =
 };
 
 static Argument *
-brushes_set_brush_invoker (Argument *args)
+brushes_set_brush_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -172,7 +175,7 @@ brushes_set_brush_invoker (Argument *args)
 
   if (success)
     {
-      object = gimp_container_get_child_by_name (global_brush_factory->container,
+      object = gimp_container_get_child_by_name (gimp->brush_factory->container,
 						 name);
     
       if (object)
@@ -210,7 +213,8 @@ static ProcRecord brushes_set_brush_proc =
 };
 
 static Argument *
-brushes_get_opacity_invoker (Argument *args)
+brushes_get_opacity_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   Argument *return_args;
 
@@ -246,7 +250,8 @@ static ProcRecord brushes_get_opacity_proc =
 };
 
 static Argument *
-brushes_set_opacity_invoker (Argument *args)
+brushes_set_opacity_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   gdouble opacity;
@@ -287,7 +292,8 @@ static ProcRecord brushes_set_opacity_proc =
 };
 
 static Argument *
-brushes_get_spacing_invoker (Argument *args)
+brushes_get_spacing_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   Argument *return_args;
 
@@ -323,7 +329,8 @@ static ProcRecord brushes_get_spacing_proc =
 };
 
 static Argument *
-brushes_set_spacing_invoker (Argument *args)
+brushes_set_spacing_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   gint32 spacing;
@@ -364,7 +371,8 @@ static ProcRecord brushes_set_spacing_proc =
 };
 
 static Argument *
-brushes_get_paint_mode_invoker (Argument *args)
+brushes_get_paint_mode_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   Argument *return_args;
 
@@ -400,7 +408,8 @@ static ProcRecord brushes_get_paint_mode_proc =
 };
 
 static Argument *
-brushes_set_paint_mode_invoker (Argument *args)
+brushes_set_paint_mode_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   gint32 paint_mode;
@@ -441,7 +450,8 @@ static ProcRecord brushes_set_paint_mode_proc =
 };
 
 static Argument *
-brushes_list_invoker (Argument *args)
+brushes_list_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -449,9 +459,9 @@ brushes_list_invoker (Argument *args)
   GList *list = NULL;
   int i = 0;
 
-  brushes = g_new (char *, global_brush_factory->container->num_children);
+  brushes = g_new (char *, gimp->brush_factory->container->num_children);
 
-  success = (list = GIMP_LIST (global_brush_factory->container)->list) != NULL;
+  success = (list = GIMP_LIST (gimp->brush_factory->container)->list) != NULL;
 
   while (list)
     {
@@ -463,7 +473,7 @@ brushes_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = global_brush_factory->container->num_children;
+      return_args[1].value.pdb_int = gimp->brush_factory->container->num_children;
       return_args[2].value.pdb_pointer = brushes;
     }
 
@@ -501,7 +511,8 @@ static ProcRecord brushes_list_proc =
 };
 
 static Argument *
-brushes_get_brush_data_invoker (Argument *args)
+brushes_get_brush_data_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -522,7 +533,7 @@ brushes_get_brush_data_invoker (Argument *args)
     
 	  success = FALSE;
     
-	  for (list = GIMP_LIST (global_brush_factory->container)->list;
+	  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
 	       list;
 	       list = g_list_next (list))
 	    {

@@ -25,8 +25,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "core-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -34,9 +33,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "tools/gimptool.h"
-#include "tools/tool_manager.h"
-
+#include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -46,7 +43,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -106,11 +103,11 @@ gimp_edit_cut (GimpImage    *gimage,
   if (cropped_cut)
     {
       /*  Free the old global edit buffer  */
-      if (global_buffer)
-	tile_manager_destroy (global_buffer);
+      if (gimage->gimp->global_buffer)
+	tile_manager_destroy (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
-      global_buffer = cropped_cut;
+      gimage->gimp->global_buffer = cropped_cut;
     }
 
   return cropped_cut;
@@ -157,11 +154,11 @@ gimp_edit_copy (GimpImage    *gimage,
   if (cropped_copy)
     {
       /*  Free the old global edit buffer  */
-      if (global_buffer)
-	tile_manager_destroy (global_buffer);
+      if (gimage->gimp->global_buffer)
+	tile_manager_destroy (gimage->gimp->global_buffer);
 
       /*  Set the global edit buffer  */
-      global_buffer = cropped_copy;
+      gimage->gimp->global_buffer = cropped_copy;
     }
 
   return cropped_copy;
@@ -246,7 +243,8 @@ gimp_edit_paste (GimpImage    *gimage,
 }
 
 GimpImage *
-gimp_edit_paste_as_new (GimpImage   *invoke,
+gimp_edit_paste_as_new (Gimp        *gimp,
+			GimpImage   *invoke,
 			TileManager *paste)
 {
   GimpImage    *gimage;
@@ -254,11 +252,9 @@ gimp_edit_paste_as_new (GimpImage   *invoke,
   GimpParasite *comment_parasite;
   GDisplay     *gdisp;
 
-  if (! global_buffer)
-    return FALSE;
-
   /*  create a new image  (always of type RGB)  */
-  gimage = gimage_new (tile_manager_width (paste), 
+  gimage = gimage_new (gimp,
+		       tile_manager_width (paste), 
 		       tile_manager_height (paste), 
 		       RGB);
   gimp_image_undo_disable (gimage);

@@ -1288,24 +1288,26 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
 {
   ProcRecord *proc_rec;
   Argument   *args;
-  GimpImage *gimage;
+  GimpImage  *gimage;
+
+  gimage = paths_dialog->gimage;
 
   /*  find the sel2path PDB record  */
-  if ((proc_rec = procedural_db_lookup ("plug_in_sel2path_advanced")) == NULL)
+  if ((proc_rec = procedural_db_lookup (gimage->gimp,
+					"plug_in_sel2path_advanced")) == NULL)
     {
       g_message ("paths_dialog_adavanced_to_path_callback(): selection to path (advanced) procedure lookup failed");
       return;
     }
 
-  gimage = paths_dialog->gimage;
-
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
-  args[0].arg_type = GIMP_PDB_INT32;
+
+  args[0].arg_type      = GIMP_PDB_INT32;
   args[0].value.pdb_int = RUN_INTERACTIVE;
-  args[1].arg_type = GIMP_PDB_IMAGE;
+  args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
-  args[2].arg_type = GIMP_PDB_DRAWABLE;
+  args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = (gint32) gimp_drawable_get_ID (gimp_image_active_drawable (gimage));
 
   plug_in_run (proc_rec, args, 3, FALSE, TRUE,
@@ -1324,22 +1326,24 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   GimpImage  *gimage;
   GDisplay   *gdisp;
 
+  gimage = paths_dialog->gimage;
+
   /*  find the sel2path PDB record  */
-  if ((proc_rec = procedural_db_lookup ("plug_in_sel2path")) == NULL)
+  if ((proc_rec = procedural_db_lookup (gimage->gimp,
+					"plug_in_sel2path")) == NULL)
     {
       g_message ("paths_dialog_sel_to_path_callback(): selection to path procedure lookup failed");
       return;
     }
 
-  gimage = paths_dialog->gimage;
-
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
-  args[0].arg_type = GIMP_PDB_INT32;
+
+  args[0].arg_type      = GIMP_PDB_INT32;
   args[0].value.pdb_int = RUN_INTERACTIVE;
-  args[1].arg_type = GIMP_PDB_IMAGE;
+  args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
-  args[2].arg_type = GIMP_PDB_DRAWABLE;
+  args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = (gint32) gimp_drawable_get_ID (gimp_image_active_drawable (gimage));
 
   /* get the display by asking the current context */

@@ -86,6 +86,8 @@ struct _GimpContext
 {
   GimpObject	    parent_instance;
 
+  Gimp             *gimp;
+
   GimpContext	   *parent;
 
   guint32           defined_args;
@@ -150,7 +152,8 @@ struct _GimpContextClass
 };
 
 GtkType       gimp_context_get_type          (void);
-GimpContext * gimp_context_new               (const gchar *name,
+GimpContext * gimp_context_new               (Gimp        *gimp,
+					      const gchar *name,
 					      GimpContext *template);
 
 /*  TODO: - gimp_context_find ()
@@ -176,7 +179,7 @@ void          gimp_context_set_default       (GimpContext *context);
 GimpContext * gimp_context_get_current       (void);
 GimpContext * gimp_context_get_user          (void);
 GimpContext * gimp_context_get_default       (void);
-GimpContext * gimp_context_get_standard      (void);
+GimpContext * gimp_context_get_standard      (Gimp        *gimp);
 
 /*  functions for manipulating a single context
  */

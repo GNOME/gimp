@@ -45,24 +45,25 @@ static ProcRecord unit_get_singular_proc;
 static ProcRecord unit_get_plural_proc;
 
 void
-register_unit_procs (void)
+register_unit_procs (Gimp *gimp)
 {
-  procedural_db_register (&unit_get_number_of_units_proc);
-  procedural_db_register (&unit_get_number_of_built_in_units_proc);
-  procedural_db_register (&unit_new_proc);
-  procedural_db_register (&unit_get_deletion_flag_proc);
-  procedural_db_register (&unit_set_deletion_flag_proc);
-  procedural_db_register (&unit_get_identifier_proc);
-  procedural_db_register (&unit_get_factor_proc);
-  procedural_db_register (&unit_get_digits_proc);
-  procedural_db_register (&unit_get_symbol_proc);
-  procedural_db_register (&unit_get_abbreviation_proc);
-  procedural_db_register (&unit_get_singular_proc);
-  procedural_db_register (&unit_get_plural_proc);
+  procedural_db_register (gimp, &unit_get_number_of_units_proc);
+  procedural_db_register (gimp, &unit_get_number_of_built_in_units_proc);
+  procedural_db_register (gimp, &unit_new_proc);
+  procedural_db_register (gimp, &unit_get_deletion_flag_proc);
+  procedural_db_register (gimp, &unit_set_deletion_flag_proc);
+  procedural_db_register (gimp, &unit_get_identifier_proc);
+  procedural_db_register (gimp, &unit_get_factor_proc);
+  procedural_db_register (gimp, &unit_get_digits_proc);
+  procedural_db_register (gimp, &unit_get_symbol_proc);
+  procedural_db_register (gimp, &unit_get_abbreviation_proc);
+  procedural_db_register (gimp, &unit_get_singular_proc);
+  procedural_db_register (gimp, &unit_get_plural_proc);
 }
 
 static Argument *
-unit_get_number_of_units_invoker (Argument *args)
+unit_get_number_of_units_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   Argument *return_args;
 
@@ -98,7 +99,8 @@ static ProcRecord unit_get_number_of_units_proc =
 };
 
 static Argument *
-unit_get_number_of_built_in_units_invoker (Argument *args)
+unit_get_number_of_built_in_units_invoker (Gimp     *gimp,
+                                           Argument *args)
 {
   Argument *return_args;
 
@@ -134,7 +136,8 @@ static ProcRecord unit_get_number_of_built_in_units_proc =
 };
 
 static Argument *
-unit_new_invoker (Argument *args)
+unit_new_invoker (Gimp     *gimp,
+                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -248,7 +251,8 @@ static ProcRecord unit_new_proc =
 };
 
 static Argument *
-unit_get_deletion_flag_invoker (Argument *args)
+unit_get_deletion_flag_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -301,7 +305,8 @@ static ProcRecord unit_get_deletion_flag_proc =
 };
 
 static Argument *
-unit_set_deletion_flag_invoker (Argument *args)
+unit_set_deletion_flag_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   GimpUnit unit;
@@ -350,7 +355,8 @@ static ProcRecord unit_set_deletion_flag_proc =
 };
 
 static Argument *
-unit_get_identifier_invoker (Argument *args)
+unit_get_identifier_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -403,7 +409,8 @@ static ProcRecord unit_get_identifier_proc =
 };
 
 static Argument *
-unit_get_factor_invoker (Argument *args)
+unit_get_factor_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -456,7 +463,8 @@ static ProcRecord unit_get_factor_proc =
 };
 
 static Argument *
-unit_get_digits_invoker (Argument *args)
+unit_get_digits_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -509,7 +517,8 @@ static ProcRecord unit_get_digits_proc =
 };
 
 static Argument *
-unit_get_symbol_invoker (Argument *args)
+unit_get_symbol_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -562,7 +571,8 @@ static ProcRecord unit_get_symbol_proc =
 };
 
 static Argument *
-unit_get_abbreviation_invoker (Argument *args)
+unit_get_abbreviation_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -615,7 +625,8 @@ static ProcRecord unit_get_abbreviation_proc =
 };
 
 static Argument *
-unit_get_singular_invoker (Argument *args)
+unit_get_singular_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -668,7 +679,8 @@ static ProcRecord unit_get_singular_proc =
 };
 
 static Argument *
-unit_get_plural_invoker (Argument *args)
+unit_get_plural_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

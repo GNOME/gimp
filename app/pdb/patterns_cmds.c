@@ -30,7 +30,7 @@
 #include "procedural_db.h"
 
 #include "base/temp-buf.h"
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
@@ -42,16 +42,17 @@ static ProcRecord patterns_list_proc;
 static ProcRecord patterns_get_pattern_data_proc;
 
 void
-register_patterns_procs (void)
+register_patterns_procs (Gimp *gimp)
 {
-  procedural_db_register (&patterns_get_pattern_proc);
-  procedural_db_register (&patterns_set_pattern_proc);
-  procedural_db_register (&patterns_list_proc);
-  procedural_db_register (&patterns_get_pattern_data_proc);
+  procedural_db_register (gimp, &patterns_get_pattern_proc);
+  procedural_db_register (gimp, &patterns_set_pattern_proc);
+  procedural_db_register (gimp, &patterns_list_proc);
+  procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
 
 static Argument *
-patterns_get_pattern_invoker (Argument *args)
+patterns_get_pattern_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -107,7 +108,8 @@ static ProcRecord patterns_get_pattern_proc =
 };
 
 static Argument *
-patterns_set_pattern_invoker (Argument *args)
+patterns_set_pattern_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -122,7 +124,7 @@ patterns_set_pattern_invoker (Argument *args)
     {
       success = FALSE;
     
-      for (list = GIMP_LIST (global_pattern_factory->container)->list;
+      for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
 	   list;
 	   list = g_list_next (list))
 	{
@@ -166,7 +168,8 @@ static ProcRecord patterns_set_pattern_proc =
 };
 
 static Argument *
-patterns_list_invoker (Argument *args)
+patterns_list_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -174,9 +177,9 @@ patterns_list_invoker (Argument *args)
   GList *list = NULL;
   gint i = 0;
 
-  patterns = g_new (gchar *, global_pattern_factory->container->num_children);
+  patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
 
-  success = ((list = GIMP_LIST (global_pattern_factory->container)->list) != NULL);
+  success = ((list = GIMP_LIST (gimp->pattern_factory->container)->list) != NULL);
 
   while (list)
     {
@@ -188,7 +191,7 @@ patterns_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = global_pattern_factory->container->num_children;
+      return_args[1].value.pdb_int = gimp->pattern_factory->container->num_children;
       return_args[2].value.pdb_pointer = patterns;
     }
 
@@ -226,7 +229,8 @@ static ProcRecord patterns_list_proc =
 };
 
 static Argument *
-patterns_get_pattern_data_invoker (Argument *args)
+patterns_get_pattern_data_invoker (Gimp     *gimp,
+                                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -247,7 +251,7 @@ patterns_get_pattern_data_invoker (Argument *args)
     
 	  success = FALSE;
     
-	  for (list = GIMP_LIST (global_pattern_factory->container)->list;
+	  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
 	       list;
 	       list = g_list_next (list))
 	    {

@@ -38,10 +38,7 @@
 /* FIXME: remove the Path <-> BezierSelect dependency */
 #include "tools/tools-types.h"
 
-#include "app_procs.h"
-#include "drawable.h"
-#include "floating_sel.h"
-#include "gdisplay.h"
+#include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
@@ -51,9 +48,14 @@
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpundostack.h"
+
+#include "app_procs.h"
+#include "drawable.h"
+#include "floating_sel.h"
+#include "gdisplay.h"
+#include "gimprc.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "undo.h"
@@ -602,13 +604,20 @@ gimp_image_allocate_shadow (GimpImage *gimage,
 /* function definitions */
 
 GimpImage *
-gimp_image_new (gint               width,
+gimp_image_new (Gimp              *gimp,
+		gint               width,
 		gint               height,
 		GimpImageBaseType  base_type)
 {
-  GimpImage *gimage = GIMP_IMAGE (gtk_type_new (GIMP_TYPE_IMAGE));
-  gint i;
+  GimpImage *gimage;
+  gint       i;
 
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  gimage = GIMP_IMAGE (gtk_type_new (GIMP_TYPE_IMAGE));
+
+  gimage->gimp      = gimp;
   gimage->width     = width;
   gimage->height    = height;
   gimage->base_type = base_type;

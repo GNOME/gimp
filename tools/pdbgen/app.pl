@@ -462,7 +462,7 @@ sub generate {
 	$out->{procs} .= "static ProcRecord ${name}_proc;\n";
 
 	$out->{register} .= <<CODE;
-  procedural_db_register (\&${name}_proc);
+  procedural_db_register (gimp, \&${name}_proc);
 CODE
 
 	if (exists $proc->{invoke}->{headers}) {
@@ -472,7 +472,8 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic Argument *\n";
-	$out->{code} .= "${name}_invoker (Argument *args)\n{\n";
+	$out->{code} .= "${name}_invoker (Gimp     *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          Argument *args)\n{\n";
 
 	my $code = "";
 
@@ -481,7 +482,7 @@ CODE
 	    my ($exec, $fail, $argtype);
 	    my $custom = $proc->{invoke}->{code};
 
-	    $exec = "procedural_db_execute ($procname, $args)";
+	    $exec = "procedural_db_execute (gimp, $procname, $args)";
 	    $fail = "procedural_db_return_args (\&${name}_proc, FALSE)";
 
 	    $argtype = 'Argument';
@@ -585,7 +586,7 @@ CODE
 	    }
 
 	    $code .= <<CODE;
-  return $invoke->{pass_through}_invoker (argv);
+  return $invoke->{pass_through}_invoker (gimp, argv);
 }
 CODE
 	}
@@ -771,7 +772,7 @@ GPL
 	print CFILE $headers, "\n";
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE $out->{procs};
-	print CFILE "\nvoid\nregister_${group}_procs (void)\n";
+	print CFILE "\nvoid\nregister_${group}_procs (Gimp *gimp)\n";
 	print CFILE "{\n$out->{register}}\n";
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
@@ -788,7 +789,7 @@ GPL
 	$group_procs .= qq/, _("$main::grp{$group}->{desc}"), /;
        ($group_procs .= sprintf "%.3f", $pcount / $total) =~ s/\.?0*$//s;
 	$group_procs .= ($group_procs !~ /\.\d+$/s ? ".0" : "") . ");\n";
-	$group_procs .=  ' ' x 2 . "register_${group}_procs ();\n\n";
+	$group_procs .=  ' ' x 2 . "register_${group}_procs (gimp);\n\n";
 	$pcount += $out->{pcount};
     }
 
@@ -801,7 +802,7 @@ GPL
 #ifndef $guard
 #define $guard
 
-void internal_procs_init (void);
+void internal_procs_init (Gimp *gimp);
 
 #endif /* $guard */
 HEADER
@@ -812,16 +813,17 @@ HEADER
 	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
-	print IFILE qq@#include <glib.h>\n@;
+	print IFILE qq@#include <gtk/gtk.h>\n\n@;
+	print IFILE qq@#include "core/core-types.h"\n\n@;
 	print IFILE qq@#include "app_procs.h"\n\n@;
 	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
 	foreach (@group_decls) {
-	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (void);\n";
+	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (Gimp *gimp);\n";
 	}
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
-	print IFILE "void\ninternal_procs_init (void)\n{\n$group_procs}\n";
+	print IFILE "void\ninternal_procs_init (Gimp *gimp)\n{\n$group_procs}\n";
 	close IFILE;
 	&write_file($internal);
     }

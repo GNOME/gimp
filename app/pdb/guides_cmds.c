@@ -40,18 +40,19 @@ static ProcRecord image_get_guide_orientation_proc;
 static ProcRecord image_get_guide_position_proc;
 
 void
-register_guides_procs (void)
+register_guides_procs (Gimp *gimp)
 {
-  procedural_db_register (&image_add_hguide_proc);
-  procedural_db_register (&image_add_vguide_proc);
-  procedural_db_register (&image_delete_guide_proc);
-  procedural_db_register (&image_find_next_guide_proc);
-  procedural_db_register (&image_get_guide_orientation_proc);
-  procedural_db_register (&image_get_guide_position_proc);
+  procedural_db_register (gimp, &image_add_hguide_proc);
+  procedural_db_register (gimp, &image_add_vguide_proc);
+  procedural_db_register (gimp, &image_delete_guide_proc);
+  procedural_db_register (gimp, &image_find_next_guide_proc);
+  procedural_db_register (gimp, &image_get_guide_orientation_proc);
+  procedural_db_register (gimp, &image_get_guide_position_proc);
 }
 
 static Argument *
-image_add_hguide_invoker (Argument *args)
+image_add_hguide_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -129,7 +130,8 @@ static ProcRecord image_add_hguide_proc =
 };
 
 static Argument *
-image_add_vguide_invoker (Argument *args)
+image_add_vguide_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -207,7 +209,8 @@ static ProcRecord image_add_vguide_proc =
 };
 
 static Argument *
-image_delete_guide_invoker (Argument *args)
+image_delete_guide_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -280,7 +283,8 @@ static ProcRecord image_delete_guide_proc =
 };
 
 static Argument *
-image_find_next_guide_invoker (Argument *args)
+image_find_next_guide_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -390,7 +394,8 @@ static ProcRecord image_find_next_guide_proc =
 };
 
 static Argument *
-image_get_guide_orientation_invoker (Argument *args)
+image_get_guide_orientation_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -473,7 +478,8 @@ static ProcRecord image_get_guide_orientation_proc =
 };
 
 static Argument *
-image_get_guide_position_invoker (Argument *args)
+image_get_guide_position_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

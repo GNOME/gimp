@@ -30,6 +30,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -42,7 +43,7 @@
 #include "gdisplay.h"
 #include "nav_window.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gimprc.h"
 #include "scroll.h"
 #include "scale.h"
@@ -1634,7 +1635,8 @@ nav_dialog_display_changed (GimpContext *context,
 
   gimage = gdisp->gimage;
 
-  if (gimage && gimp_container_have (image_context, GIMP_OBJECT (gimage)))
+  if (gimage && gimp_container_have (context->gimp->images,
+				     GIMP_OBJECT (gimage)))
     {
       nav_dialog->gdisp = gdisp;
 
@@ -1670,7 +1672,7 @@ nav_dialog_get_gdisp (void)
 {
   GList *list;
 
-  for (list = GIMP_LIST (image_context)->list;
+  for (list = GIMP_LIST (the_gimp->images)->list;
        list;
        list = g_list_next (list))
     {

@@ -233,7 +233,8 @@ gimp_tool_info_new (GtkType       tool_type,
 
   if (tool_context)
     {
-      tool_info->context = gimp_context_new (identifier,
+      tool_info->context = gimp_context_new (global_tool_context->gimp,
+					     identifier,
                                              global_tool_context);
     }
 

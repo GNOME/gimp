@@ -20,7 +20,7 @@
 #define __XCF_H__
 
 
-void   xcf_init (void);
+void   xcf_init (Gimp *gimp);
 void   xcf_exit (void);
 
 

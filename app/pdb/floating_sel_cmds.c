@@ -40,18 +40,19 @@ static ProcRecord floating_sel_rigor_proc;
 static ProcRecord floating_sel_relax_proc;
 
 void
-register_floating_sel_procs (void)
+register_floating_sel_procs (Gimp *gimp)
 {
-  procedural_db_register (&floating_sel_remove_proc);
-  procedural_db_register (&floating_sel_anchor_proc);
-  procedural_db_register (&floating_sel_to_layer_proc);
-  procedural_db_register (&floating_sel_attach_proc);
-  procedural_db_register (&floating_sel_rigor_proc);
-  procedural_db_register (&floating_sel_relax_proc);
+  procedural_db_register (gimp, &floating_sel_remove_proc);
+  procedural_db_register (gimp, &floating_sel_anchor_proc);
+  procedural_db_register (gimp, &floating_sel_to_layer_proc);
+  procedural_db_register (gimp, &floating_sel_attach_proc);
+  procedural_db_register (gimp, &floating_sel_rigor_proc);
+  procedural_db_register (gimp, &floating_sel_relax_proc);
 }
 
 static Argument *
-floating_sel_remove_invoker (Argument *args)
+floating_sel_remove_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -97,7 +98,8 @@ static ProcRecord floating_sel_remove_proc =
 };
 
 static Argument *
-floating_sel_anchor_invoker (Argument *args)
+floating_sel_anchor_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -143,7 +145,8 @@ static ProcRecord floating_sel_anchor_proc =
 };
 
 static Argument *
-floating_sel_to_layer_invoker (Argument *args)
+floating_sel_to_layer_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -189,7 +192,8 @@ static ProcRecord floating_sel_to_layer_proc =
 };
 
 static Argument *
-floating_sel_attach_invoker (Argument *args)
+floating_sel_attach_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -240,7 +244,8 @@ static ProcRecord floating_sel_attach_proc =
 };
 
 static Argument *
-floating_sel_rigor_invoker (Argument *args)
+floating_sel_rigor_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -294,7 +299,8 @@ static ProcRecord floating_sel_rigor_proc =
 };
 
 static Argument *
-floating_sel_relax_invoker (Argument *args)
+floating_sel_relax_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;

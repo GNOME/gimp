@@ -165,7 +165,8 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 
   dock->factory = factory;
 
-  dock->context = gimp_context_new ("Dock Context", NULL);
+  dock->context = gimp_context_new (factory->context->gimp,
+				    "Dock Context", NULL);
   gimp_context_define_args (dock->context,
 			    GIMP_CONTEXT_ALL_ARGS_MASK &
 			    ~(GIMP_CONTEXT_IMAGE_MASK |

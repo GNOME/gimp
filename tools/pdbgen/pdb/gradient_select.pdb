@@ -54,7 +54,7 @@ sub gradients_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)))
+  if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (initial_gradient && strlen (initial_gradient))
 	newdialog = gradient_select_new (title, initial_gradient);
@@ -87,7 +87,7 @@ sub gradients_close_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
+  if ((prec = procedural_db_lookup (gimp, name)) &&
       (gsp = gradients_get_gradientselect (name)))
     {
       if (GTK_WIDGET_VISIBLE (gsp->shell))
@@ -126,13 +126,13 @@ sub gradients_set_popup {
 	vars => [ 'ProcRecord *prec', 'GradientSelect *gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (pdbname)) &&
+  if ((prec = procedural_db_lookup (gimp, pdbname)) &&
       (gsp = gradients_get_gradientselect (pdbname)))
     {
       GimpGradient *active = NULL;
 
       active = (GimpGradient *)
-        gimp_container_get_child_by_name (global_gradient_factory->container,
+        gimp_container_get_child_by_name (gimp->gradient_factory->container,
                                           gradient_name);
 
       if (active)
@@ -188,7 +188,7 @@ HELP
       success = FALSE;
 
       gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (global_gradient_factory->container,
+        gimp_container_get_child_by_name (gimp->gradient_factory->container,
                                           name);
 
       if (gradient)
@@ -227,7 +227,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "core/gimpcontext.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
 	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimpgradient.h" "gui/gradient-select.h");
 

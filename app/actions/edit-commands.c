@@ -25,6 +25,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -40,7 +41,6 @@
 #include "dialogs.h"
 #include "edit-commands.h"
 
-#include "context_manager.h"
 #include "gdisplay.h"
 #include "undo.h"
 
@@ -119,14 +119,14 @@ edit_paste_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (global_buffer)
+  if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
       tool_manager_control_active (HALT, gdisp);
 
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
-			   global_buffer,
+			   gdisp->gimage->gimp->global_buffer,
 			   FALSE))
 	{
 	  gdisplays_update_title (gdisp->gimage);
@@ -142,14 +142,14 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (global_buffer)
+  if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
       tool_manager_control_active (HALT, gdisp);
 
       if (gimp_edit_paste (gdisp->gimage,
 			   gimp_image_active_drawable (gdisp->gimage), 
-			   global_buffer,
+			   gdisp->gimage->gimp->global_buffer,
 			   TRUE))
 	{
 	  gdisplays_update_title (gdisp->gimage);
@@ -165,13 +165,14 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (global_buffer)
+  if (gdisp->gimage->gimp->global_buffer)
     {
       /*  stop any active tool  */
       tool_manager_control_active (HALT, gdisp);
 
-      gimp_edit_paste_as_new (gdisp->gimage,
-			      global_buffer);
+      gimp_edit_paste_as_new (gdisp->gimage->gimp,
+			      gdisp->gimage,
+			      gdisp->gimage->gimp->global_buffer);
     }
 }
 
@@ -290,7 +291,7 @@ cut_named_buffer_callback (GtkWidget *widget,
       GimpBuffer *buffer;
 
       buffer = gimp_buffer_new (new_tiles, name);
-      gimp_container_add (named_buffers, GIMP_OBJECT (buffer));
+      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
     }
 
   gdisplays_flush ();
@@ -314,6 +315,6 @@ copy_named_buffer_callback (GtkWidget *widget,
       GimpBuffer *buffer;
 
       buffer = gimp_buffer_new (new_tiles, name);
-      gimp_container_add (named_buffers, GIMP_OBJECT (buffer));
+      gimp_container_add (gimage->gimp->named_buffers, GIMP_OBJECT (buffer));
     }
 }

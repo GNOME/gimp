@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets/widgets-types.h"
+#include "widgets-types.h"
 
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
@@ -32,11 +32,11 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontainerview-utils.h"
-#include "widgets/gimplistitem.h"
-#include "widgets/gimpmenuitem.h"
-#include "widgets/gimppreview.h"
+#include "gimpcontainerview.h"
+#include "gimpcontainerview-utils.h"
+#include "gimplistitem.h"
+#include "gimpmenuitem.h"
+#include "gimppreview.h"
 
 
 static gchar * gimp_container_view_tool_name_func    (GtkWidget *widget);

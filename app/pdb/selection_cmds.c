@@ -55,30 +55,31 @@ static ProcRecord selection_save_proc;
 static ProcRecord selection_combine_proc;
 
 void
-register_selection_procs (void)
+register_selection_procs (Gimp *gimp)
 {
-  procedural_db_register (&selection_bounds_proc);
-  procedural_db_register (&selection_value_proc);
-  procedural_db_register (&selection_is_empty_proc);
-  procedural_db_register (&selection_translate_proc);
-  procedural_db_register (&selection_float_proc);
-  procedural_db_register (&selection_clear_proc);
-  procedural_db_register (&selection_invert_proc);
-  procedural_db_register (&selection_sharpen_proc);
-  procedural_db_register (&selection_all_proc);
-  procedural_db_register (&selection_none_proc);
-  procedural_db_register (&selection_feather_proc);
-  procedural_db_register (&selection_border_proc);
-  procedural_db_register (&selection_grow_proc);
-  procedural_db_register (&selection_shrink_proc);
-  procedural_db_register (&selection_layer_alpha_proc);
-  procedural_db_register (&selection_load_proc);
-  procedural_db_register (&selection_save_proc);
-  procedural_db_register (&selection_combine_proc);
+  procedural_db_register (gimp, &selection_bounds_proc);
+  procedural_db_register (gimp, &selection_value_proc);
+  procedural_db_register (gimp, &selection_is_empty_proc);
+  procedural_db_register (gimp, &selection_translate_proc);
+  procedural_db_register (gimp, &selection_float_proc);
+  procedural_db_register (gimp, &selection_clear_proc);
+  procedural_db_register (gimp, &selection_invert_proc);
+  procedural_db_register (gimp, &selection_sharpen_proc);
+  procedural_db_register (gimp, &selection_all_proc);
+  procedural_db_register (gimp, &selection_none_proc);
+  procedural_db_register (gimp, &selection_feather_proc);
+  procedural_db_register (gimp, &selection_border_proc);
+  procedural_db_register (gimp, &selection_grow_proc);
+  procedural_db_register (gimp, &selection_shrink_proc);
+  procedural_db_register (gimp, &selection_layer_alpha_proc);
+  procedural_db_register (gimp, &selection_load_proc);
+  procedural_db_register (gimp, &selection_save_proc);
+  procedural_db_register (gimp, &selection_combine_proc);
 }
 
 static Argument *
-selection_bounds_invoker (Argument *args)
+selection_bounds_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -165,7 +166,8 @@ static ProcRecord selection_bounds_proc =
 };
 
 static Argument *
-selection_value_invoker (Argument *args)
+selection_value_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -234,7 +236,8 @@ static ProcRecord selection_value_proc =
 };
 
 static Argument *
-selection_is_empty_invoker (Argument *args)
+selection_is_empty_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -287,7 +290,8 @@ static ProcRecord selection_is_empty_proc =
 };
 
 static Argument *
-selection_translate_invoker (Argument *args)
+selection_translate_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -344,7 +348,8 @@ static ProcRecord selection_translate_proc =
 };
 
 static Argument *
-selection_float_invoker (Argument *args)
+selection_float_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -422,7 +427,8 @@ static ProcRecord selection_float_proc =
 };
 
 static Argument *
-selection_clear_invoker (Argument *args)
+selection_clear_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -463,7 +469,8 @@ static ProcRecord selection_clear_proc =
 };
 
 static Argument *
-selection_invert_invoker (Argument *args)
+selection_invert_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -504,7 +511,8 @@ static ProcRecord selection_invert_proc =
 };
 
 static Argument *
-selection_sharpen_invoker (Argument *args)
+selection_sharpen_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -545,7 +553,8 @@ static ProcRecord selection_sharpen_proc =
 };
 
 static Argument *
-selection_all_invoker (Argument *args)
+selection_all_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -586,7 +595,8 @@ static ProcRecord selection_all_proc =
 };
 
 static Argument *
-selection_none_invoker (Argument *args)
+selection_none_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -627,7 +637,8 @@ static ProcRecord selection_none_proc =
 };
 
 static Argument *
-selection_feather_invoker (Argument *args)
+selection_feather_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -678,7 +689,8 @@ static ProcRecord selection_feather_proc =
 };
 
 static Argument *
-selection_border_invoker (Argument *args)
+selection_border_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -729,7 +741,8 @@ static ProcRecord selection_border_proc =
 };
 
 static Argument *
-selection_grow_invoker (Argument *args)
+selection_grow_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -780,7 +793,8 @@ static ProcRecord selection_grow_proc =
 };
 
 static Argument *
-selection_shrink_invoker (Argument *args)
+selection_shrink_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -831,7 +845,8 @@ static ProcRecord selection_shrink_proc =
 };
 
 static Argument *
-selection_layer_alpha_invoker (Argument *args)
+selection_layer_alpha_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -876,7 +891,8 @@ static ProcRecord selection_layer_alpha_proc =
 };
 
 static Argument *
-selection_load_invoker (Argument *args)
+selection_load_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -926,7 +942,8 @@ static ProcRecord selection_load_proc =
 };
 
 static Argument *
-selection_save_invoker (Argument *args)
+selection_save_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -983,7 +1000,8 @@ static ProcRecord selection_save_proc =
 };
 
 static Argument *
-selection_combine_invoker (Argument *args)
+selection_combine_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;

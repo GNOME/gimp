@@ -33,6 +33,7 @@
 
 #include "base/base.h"
 
+#include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
 #include "pdb/internal_procs.h"
@@ -72,7 +73,7 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   app_init (void);
+Gimp *the_gimp = NULL;
 
 
 /* FIXME: gimp_busy HACK */
@@ -80,30 +81,6 @@ gboolean gimp_busy = FALSE;
 
 static gboolean is_app_exit_finish_done = FALSE;
 
-
-void
-gimp_init (gint    gimp_argc,
-	   gchar **gimp_argv)
-{
-  /* Initialize the application */
-  app_init ();
-
-  /* Parse the rest of the command line arguments as images to load */
-  if (gimp_argc > 0)
-    while (gimp_argc--)
-      {
-	if (*gimp_argv)
-	  file_open_with_display (*gimp_argv, *gimp_argv);
-	gimp_argv++;
-      }
-
-  batch_init ();
-
-  if (! no_interface)
-    {
-      gui_post_init ();
-    }
-}
 
 void
 app_init_update_status (const gchar *text1,
@@ -119,8 +96,9 @@ app_init_update_status (const gchar *text1,
 /* #define RESET_BAR() app_init_update_status("", "", 0) */
 #define RESET_BAR()
 
-static void
-app_init (void)
+void
+app_init (gint    gimp_argc,
+	  gchar **gimp_argv)
 {
   const gchar *gtkrc;
   gchar       *filename;
@@ -157,6 +135,17 @@ app_init (void)
 	splash_create ();
     }
 
+  /*  initialize lowlevel stuff  */
+  base_init ();
+
+  /*  Create an instance of the "Gimp" object which is the root of the
+   *  core object system
+   */
+  the_gimp = gimp_new ();
+
+  gtk_object_ref (GTK_OBJECT (the_gimp));
+  gtk_object_sink (GTK_OBJECT (the_gimp));
+
   /*  Initialize the context system before loading any data  */
   context_manager_init ();
 
@@ -164,9 +153,8 @@ app_init (void)
    *    We need to do this first because any of the init
    *    procedures might install or query it as needed.
    */
-  procedural_db_init ();
-  RESET_BAR();
-  internal_procs_init ();
+  app_init_update_status (_("Procedural Database"), NULL, -1);
+  internal_procs_init (the_gimp);
 
 #ifdef DISPLAY_FILTERS
   color_display_init ();
@@ -176,14 +164,6 @@ app_init (void)
   if (gimprc.always_restore_session)
     restore_session = TRUE;
 
-  /* make sure the monitor resolution is valid */
-  if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
-      gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
-    {
-      gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
-      gimprc.using_xserver_resolution = TRUE;
-    }
-
   /* Now we are ready to draw the splash-screen-image to the start-up window */
   if (! no_interface && ! no_splash_image)
     {
@@ -191,37 +171,15 @@ app_init (void)
     }
 
   RESET_BAR();
-  xcf_init ();             /*  initialize the xcf file format routines */
+  xcf_init (the_gimp);       /*  initialize the xcf file format routines */
 
-  /*  initialize  the global parasite table  */
-  app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
-  gimp_init_parasites ();
-
-  /*  initialize the list of gimp brushes    */
-  app_init_update_status (NULL, _("Brushes"), 0.20);
-  gimp_data_factory_data_init (global_brush_factory, no_data); 
-
-  /*  initialize the list of gimp patterns   */
-  app_init_update_status (NULL, _("Patterns"), 0.40);
-  gimp_data_factory_data_init (global_pattern_factory, no_data); 
-
-  /*  initialize the list of gimp palettes   */
-  app_init_update_status (NULL, _("Palettes"), 0.60);
-  gimp_data_factory_data_init (global_palette_factory, no_data); 
-
-  /*  initialize the list of gimp gradients  */
-  app_init_update_status (NULL, _("Gradients"), 0.80);
-  gimp_data_factory_data_init (global_gradient_factory, no_data); 
-
-  app_init_update_status (NULL, NULL, 1.00);
+  /*  initialize the global gimp object  */
+  gimp_initialize (the_gimp);
 
   plug_in_init ();           /*  initialize the plug in structures  */
   module_db_init ();         /*  load any modules we need           */
 
   RESET_BAR();
-
-  /*  initialize lowlevel stuff  */
-  base_init ();
 
   if (! no_interface)
     {
@@ -237,6 +195,22 @@ app_init (void)
   if (! no_interface)
     {
       gui_restore ();
+    }
+
+  /* Parse the rest of the command line arguments as images to load */
+  if (gimp_argc > 0)
+    while (gimp_argc--)
+      {
+	if (*gimp_argv)
+	  file_open_with_display (*gimp_argv, *gimp_argv);
+	gimp_argv++;
+      }
+
+  batch_init (the_gimp);
+
+  if (! no_interface)
+    {
+      gui_post_init ();
     }
 }
 
@@ -269,7 +243,6 @@ app_exit_finish (void)
   gdisplays_delete ();
   context_manager_free ();
   plug_in_kill ();
-  procedural_db_free ();
   save_unitrc ();
   gimp_parasiterc_save ();
 
@@ -282,12 +255,15 @@ app_exit_finish (void)
 
   xcf_exit ();
 
+  gtk_object_unref (GTK_OBJECT (the_gimp));
+  the_gimp = NULL;
+
   base_exit ();
 
   /*  There used to be gtk_main_quit() here, but there's a chance 
    *  that gtk_main() was never called before we reach this point. --Sven  
    */
-  gtk_exit (0);   
+  gtk_exit (0);
 }
 
 gboolean

@@ -20,7 +20,8 @@
 #define __GIMAGE_H__
 
 
-GimpImage * gimage_new (gint               width,
+GimpImage * gimage_new (Gimp              *gimp,
+			gint               width,
                         gint               height,
                         GimpImageBaseType  base_type);
 

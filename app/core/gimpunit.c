@@ -28,7 +28,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "app_procs.h"
 #include "gimprc.h"

@@ -62,24 +62,25 @@ static ProcRecord hue_saturation_proc;
 static ProcRecord threshold_proc;
 
 void
-register_color_procs (void)
+register_color_procs (Gimp *gimp)
 {
-  procedural_db_register (&brightness_contrast_proc);
-  procedural_db_register (&levels_proc);
-  procedural_db_register (&posterize_proc);
-  procedural_db_register (&desaturate_proc);
-  procedural_db_register (&equalize_proc);
-  procedural_db_register (&invert_proc);
-  procedural_db_register (&curves_spline_proc);
-  procedural_db_register (&curves_explicit_proc);
-  procedural_db_register (&color_balance_proc);
-  procedural_db_register (&histogram_proc);
-  procedural_db_register (&hue_saturation_proc);
-  procedural_db_register (&threshold_proc);
+  procedural_db_register (gimp, &brightness_contrast_proc);
+  procedural_db_register (gimp, &levels_proc);
+  procedural_db_register (gimp, &posterize_proc);
+  procedural_db_register (gimp, &desaturate_proc);
+  procedural_db_register (gimp, &equalize_proc);
+  procedural_db_register (gimp, &invert_proc);
+  procedural_db_register (gimp, &curves_spline_proc);
+  procedural_db_register (gimp, &curves_explicit_proc);
+  procedural_db_register (gimp, &color_balance_proc);
+  procedural_db_register (gimp, &histogram_proc);
+  procedural_db_register (gimp, &hue_saturation_proc);
+  procedural_db_register (gimp, &threshold_proc);
 }
 
 static Argument *
-brightness_contrast_invoker (Argument *args)
+brightness_contrast_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -170,7 +171,8 @@ static ProcRecord brightness_contrast_proc =
 };
 
 static Argument *
-levels_invoker (Argument *args)
+levels_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -323,7 +325,8 @@ static ProcRecord levels_proc =
 };
 
 static Argument *
-posterize_invoker (Argument *args)
+posterize_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -402,7 +405,8 @@ static ProcRecord posterize_proc =
 };
 
 static Argument *
-desaturate_invoker (Argument *args)
+desaturate_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -448,7 +452,8 @@ static ProcRecord desaturate_proc =
 };
 
 static Argument *
-equalize_invoker (Argument *args)
+equalize_invoker (Gimp     *gimp,
+                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -502,7 +507,8 @@ static ProcRecord equalize_proc =
 };
 
 static Argument *
-invert_invoker (Argument *args)
+invert_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -548,7 +554,8 @@ static ProcRecord invert_proc =
 };
 
 static Argument *
-curves_spline_invoker (Argument *args)
+curves_spline_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -669,7 +676,8 @@ static ProcRecord curves_spline_proc =
 };
 
 static Argument *
-curves_explicit_invoker (Argument *args)
+curves_explicit_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -777,7 +785,8 @@ static ProcRecord curves_explicit_proc =
 };
 
 static Argument *
-color_balance_invoker (Argument *args)
+color_balance_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -905,7 +914,8 @@ static ProcRecord color_balance_proc =
 };
 
 static Argument *
-histogram_invoker (Argument *args)
+histogram_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1070,7 +1080,8 @@ static ProcRecord histogram_proc =
 };
 
 static Argument *
-hue_saturation_invoker (Argument *args)
+hue_saturation_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1190,7 +1201,8 @@ static ProcRecord hue_saturation_proc =
 };
 
 static Argument *
-threshold_invoker (Argument *args)
+threshold_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

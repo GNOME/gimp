@@ -28,7 +28,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -42,17 +42,18 @@ static ProcRecord gradients_sample_uniform_proc;
 static ProcRecord gradients_sample_custom_proc;
 
 void
-register_gradients_procs (void)
+register_gradients_procs (Gimp *gimp)
 {
-  procedural_db_register (&gradients_get_list_proc);
-  procedural_db_register (&gradients_get_active_proc);
-  procedural_db_register (&gradients_set_active_proc);
-  procedural_db_register (&gradients_sample_uniform_proc);
-  procedural_db_register (&gradients_sample_custom_proc);
+  procedural_db_register (gimp, &gradients_get_list_proc);
+  procedural_db_register (gimp, &gradients_get_active_proc);
+  procedural_db_register (gimp, &gradients_set_active_proc);
+  procedural_db_register (gimp, &gradients_sample_uniform_proc);
+  procedural_db_register (gimp, &gradients_sample_custom_proc);
 }
 
 static Argument *
-gradients_get_list_invoker (Argument *args)
+gradients_get_list_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success;
   Argument *return_args;
@@ -63,13 +64,13 @@ gradients_get_list_invoker (Argument *args)
   int i = 0;
 
   num_gradients =
-    gimp_container_num_children (global_gradient_factory->container);
+    gimp_container_num_children (gimp->gradient_factory->container);
 
   gradients = g_new (gchar *, num_gradients);
 
   if (num_gradients)
     {
-      list = GIMP_LIST (global_gradient_factory->container)->list;
+      list = GIMP_LIST (gimp->gradient_factory->container)->list;
     }
 
   success = (list != NULL);
@@ -123,7 +124,8 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_get_active_invoker (Argument *args)
+gradients_get_active_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -164,7 +166,8 @@ static ProcRecord gradients_get_active_proc =
 };
 
 static Argument *
-gradients_set_active_invoker (Argument *args)
+gradients_set_active_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -177,7 +180,8 @@ gradients_set_active_invoker (Argument *args)
   if (success)
     {
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_factory->container, name);
+	gimp_container_get_child_by_name (gimp->gradient_factory->container,
+					  name);
     
       success = FALSE;
     
@@ -217,7 +221,8 @@ static ProcRecord gradients_set_active_proc =
 };
 
 static Argument *
-gradients_sample_uniform_invoker (Argument *args)
+gradients_sample_uniform_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -308,7 +313,8 @@ static ProcRecord gradients_sample_uniform_proc =
 };
 
 static Argument *
-gradients_sample_custom_invoker (Argument *args)
+gradients_sample_custom_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

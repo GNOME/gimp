@@ -128,11 +128,11 @@ HELP
 	  break;
 
 	case CUSTOM_PALETTE:
-	  if (! global_palette_factory->container->num_children)
-	    gimp_data_factory_data_init (global_palette_factory, FALSE);
+	  if (! gimp->palette_factory->container->num_children)
+	    gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 
           palette = (GimpPalette *)
-            gimp_container_get_child_by_name (global_palette_factory->container,
+            gimp_container_get_child_by_name (gimp->palette_factory->container,
                                               palette_name);
 
 	  if (palette == NULL)
@@ -153,8 +153,8 @@ CODE
     );
 }
 
-@headers = qw("context_manager.h" "core/gimpcontainer.h" "core/gimpimage.h"
-	      "core/gimpdatafactory.h" "core/gimppalette.h");
+@headers = qw("core/gimp.h" "core/gimpcontainer.h"
+	      "core/gimpimage.h" "core/gimpdatafactory.h" "core/gimppalette.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

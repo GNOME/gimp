@@ -28,6 +28,7 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -42,7 +43,7 @@
 #include "gradient-select.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -119,7 +120,7 @@ gradient_select_new (gchar *title,
 
   if (title)
     {
-      gsp->context = gimp_context_new (title, NULL);
+      gsp->context = gimp_context_new (the_gimp, title, NULL);
     }
   else
     {
@@ -129,14 +130,14 @@ gradient_select_new (gchar *title,
     }
 
   if (no_data && first_call)
-    gimp_data_factory_data_init (global_gradient_factory, FALSE);
+    gimp_data_factory_data_init (gsp->context->gimp->gradient_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && initial_gradient && strlen (initial_gradient))
     {
       active = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_factory->container,
+	gimp_container_get_child_by_name (gsp->context->gimp->gradient_factory->container,
 					  initial_gradient);
     }
   else
@@ -145,7 +146,7 @@ gradient_select_new (gchar *title,
     }
 
   if (!active)
-    active = gimp_context_get_gradient (gimp_context_get_standard ());
+    active = gimp_context_get_gradient (gimp_context_get_standard (the_gimp));
 
   if (title)
     gimp_context_set_gradient (gsp->context, active);
@@ -156,7 +157,7 @@ gradient_select_new (gchar *title,
 
   /*  The Gradient List  */
   gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-					  global_gradient_factory,
+					  gsp->context->gimp->gradient_factory,
 					  dialogs_edit_gradient_func,
 					  gsp->context,
 					  16,
@@ -220,7 +221,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
   gradient = gimp_context_get_gradient (gsp->context);
 
   /*  If its still registered run it  */
-  prec = procedural_db_lookup (name);
+  prec = procedural_db_lookup (gsp->context->gimp, name);
 
   if (prec && gradient)
     {
@@ -249,7 +250,8 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 	}
 
       return_vals =
-	procedural_db_run_proc (name,
+	procedural_db_run_proc (gsp->context->gimp,
+				name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,     GIMP_OBJECT (gradient)->name,
 				GIMP_PDB_INT32,      gsp->sample_size * 4,
@@ -287,7 +289,7 @@ gradient_select_dialogs_check (void)
 
       if (name)
 	{
-	  prec = procedural_db_lookup (name);
+	  prec = procedural_db_lookup (gsp->context->gimp, name);
 
 	  if (!prec)
 	    {

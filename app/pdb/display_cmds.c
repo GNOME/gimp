@@ -36,15 +36,16 @@ static ProcRecord display_delete_proc;
 static ProcRecord displays_flush_proc;
 
 void
-register_display_procs (void)
+register_display_procs (Gimp *gimp)
 {
-  procedural_db_register (&display_new_proc);
-  procedural_db_register (&display_delete_proc);
-  procedural_db_register (&displays_flush_proc);
+  procedural_db_register (gimp, &display_new_proc);
+  procedural_db_register (gimp, &display_delete_proc);
+  procedural_db_register (gimp, &displays_flush_proc);
 }
 
 static Argument *
-display_new_invoker (Argument *args)
+display_new_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -107,7 +108,8 @@ static ProcRecord display_new_proc =
 };
 
 static Argument *
-display_delete_invoker (Argument *args)
+display_delete_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GDisplay *gdisp;
@@ -148,7 +150,8 @@ static ProcRecord display_delete_proc =
 };
 
 static Argument *
-displays_flush_invoker (Argument *args)
+displays_flush_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gdisplays_flush ();
   return procedural_db_return_args (&displays_flush_proc, TRUE);

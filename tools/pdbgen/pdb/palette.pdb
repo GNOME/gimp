@@ -160,13 +160,14 @@ HELP
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  gimp_data_factory_data_init (global_palette_factory, FALSE);
+  gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 }
 CODE
     );
 }
 
-@headers = qw("context_manager.h" "core/gimpcontext.h" "core/gimpdatafactory.h");
+@headers = qw("core/gimp.h" "core/gimpcontext.h"
+              "core/gimpdatafactory.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

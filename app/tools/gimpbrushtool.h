@@ -20,7 +20,7 @@
 #define __GIMP_PAINT_TOOL_H__
 
 
-#include "tools/gimpdrawtool.h"
+#include "gimpdrawtool.h"
 
 
 /* the different states that the painting function can be called with  */

@@ -27,9 +27,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -41,10 +41,8 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
-#include "tools/tool_manager.h"
-
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
@@ -303,7 +301,8 @@ devices_init (void)
       device_info->num_axes   = gdk_info->num_axes;
       device_info->axes       = NULL;
 
-      device_info->context    = gimp_context_new (device_info->name, NULL);
+      device_info->context    = gimp_context_new (the_gimp,
+						  device_info->name, NULL);
       gimp_context_define_args (device_info->context,
 				DEVICE_CONTEXT_MASK,
 				FALSE);
@@ -390,7 +389,8 @@ devices_rc_update (gchar        *name,
       else
 	device_info->mode = GDK_MODE_DISABLED;
 
-      device_info->context = gimp_context_new (device_info->name, NULL);
+      device_info->context = gimp_context_new (the_gimp,
+					       device_info->name, NULL);
       gimp_context_define_args (device_info->context,
 				DEVICE_CONTEXT_MASK,
 				FALSE);
@@ -436,7 +436,7 @@ devices_rc_update (gchar        *name,
       GimpToolInfo *tool_info;
 
       tool_info = (GimpToolInfo *)
-	gimp_container_get_child_by_name (global_tool_info_list,
+	gimp_container_get_child_by_name (the_gimp->tool_info_list,
 					  tool_name);
 
       if (tool_info)
@@ -465,7 +465,7 @@ devices_rc_update (gchar        *name,
       GimpBrush *brush;
 
       brush = (GimpBrush *)
-	gimp_container_get_child_by_name (global_brush_factory->container,
+	gimp_container_get_child_by_name (the_gimp->brush_factory->container,
 					  brush_name);
 
       if (brush)
@@ -484,7 +484,7 @@ devices_rc_update (gchar        *name,
       GimpPattern *pattern;
 
       pattern = (GimpPattern *)
-	gimp_container_get_child_by_name (global_pattern_factory->container,
+	gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
 					  pattern_name);
 
       if (pattern)
@@ -503,7 +503,7 @@ devices_rc_update (gchar        *name,
       GimpGradient *gradient;
 
       gradient = (GimpGradient *)
-	gimp_container_get_child_by_name (global_gradient_factory->container,
+	gimp_container_get_child_by_name (the_gimp->gradient_factory->container,
 					  gradient_name);
 
       if (gradient)

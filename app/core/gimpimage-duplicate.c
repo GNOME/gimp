@@ -75,7 +75,9 @@ gimp_image_duplicate (GimpImage *gimage)
   gimp_set_busy_until_idle ();
 
   /*  Create a new image  */
-  new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
+  new_gimage = gimage_new (gimage->gimp,
+			   gimage->width, gimage->height,
+			   gimage->base_type);
   gimp_image_undo_disable (new_gimage);
 
   /*  Copy resolution and unit information  */

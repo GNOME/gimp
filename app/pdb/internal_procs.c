@@ -20,140 +20,143 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
+
+#include "core/core-types.h"
+
 #include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
 /* Forward declarations for registering PDB procs */
 
-void register_brush_select_procs    (void);
-void register_brushes_procs         (void);
-void register_channel_procs         (void);
-void register_color_procs           (void);
-void register_convert_procs         (void);
-void register_display_procs         (void);
-void register_drawable_procs        (void);
-void register_edit_procs            (void);
-void register_fileops_procs         (void);
-void register_floating_sel_procs    (void);
-void register_gimprc_procs          (void);
-void register_gradients_procs       (void);
-void register_gradient_select_procs (void);
-void register_guides_procs          (void);
-void register_help_procs            (void);
-void register_image_procs           (void);
-void register_layer_procs           (void);
-void register_message_procs         (void);
-void register_misc_procs            (void);
-void register_palette_procs         (void);
-void register_parasite_procs        (void);
-void register_paths_procs           (void);
-void register_pattern_select_procs  (void);
-void register_patterns_procs        (void);
-void register_plug_in_procs         (void);
-void register_procedural_db_procs   (void);
-void register_selection_procs       (void);
-void register_text_tool_procs       (void);
-void register_tools_procs           (void);
-void register_undo_procs            (void);
-void register_unit_procs            (void);
+void register_brush_select_procs    (Gimp *gimp);
+void register_brushes_procs         (Gimp *gimp);
+void register_channel_procs         (Gimp *gimp);
+void register_color_procs           (Gimp *gimp);
+void register_convert_procs         (Gimp *gimp);
+void register_display_procs         (Gimp *gimp);
+void register_drawable_procs        (Gimp *gimp);
+void register_edit_procs            (Gimp *gimp);
+void register_fileops_procs         (Gimp *gimp);
+void register_floating_sel_procs    (Gimp *gimp);
+void register_gimprc_procs          (Gimp *gimp);
+void register_gradients_procs       (Gimp *gimp);
+void register_gradient_select_procs (Gimp *gimp);
+void register_guides_procs          (Gimp *gimp);
+void register_help_procs            (Gimp *gimp);
+void register_image_procs           (Gimp *gimp);
+void register_layer_procs           (Gimp *gimp);
+void register_message_procs         (Gimp *gimp);
+void register_misc_procs            (Gimp *gimp);
+void register_palette_procs         (Gimp *gimp);
+void register_parasite_procs        (Gimp *gimp);
+void register_paths_procs           (Gimp *gimp);
+void register_pattern_select_procs  (Gimp *gimp);
+void register_patterns_procs        (Gimp *gimp);
+void register_plug_in_procs         (Gimp *gimp);
+void register_procedural_db_procs   (Gimp *gimp);
+void register_selection_procs       (Gimp *gimp);
+void register_text_tool_procs       (Gimp *gimp);
+void register_tools_procs           (Gimp *gimp);
+void register_undo_procs            (Gimp *gimp);
+void register_unit_procs            (Gimp *gimp);
 
 /* 325 procedures registered total */
 
 void
-internal_procs_init (void)
+internal_procs_init (Gimp *gimp)
 {
   app_init_update_status (_("Internal Procedures"), _("Brush UI"), 0.0);
-  register_brush_select_procs ();
+  register_brush_select_procs (gimp);
 
   app_init_update_status (NULL, _("Brushes"), 0.009);
-  register_brushes_procs ();
+  register_brushes_procs (gimp);
 
   app_init_update_status (NULL, _("Channel"), 0.043);
-  register_channel_procs ();
+  register_channel_procs (gimp);
 
   app_init_update_status (NULL, _("Color"), 0.092);
-  register_color_procs ();
+  register_color_procs (gimp);
 
   app_init_update_status (NULL, _("Convert"), 0.129);
-  register_convert_procs ();
+  register_convert_procs (gimp);
 
   app_init_update_status (NULL, _("GDisplay procedures"), 0.138);
-  register_display_procs ();
+  register_display_procs (gimp);
 
   app_init_update_status (NULL, _("Drawable procedures"), 0.148);
-  register_drawable_procs ();
+  register_drawable_procs (gimp);
 
   app_init_update_status (NULL, _("Edit procedures"), 0.218);
-  register_edit_procs ();
+  register_edit_procs (gimp);
 
   app_init_update_status (NULL, _("File Operations"), 0.237);
-  register_fileops_procs ();
+  register_fileops_procs (gimp);
 
   app_init_update_status (NULL, _("Floating selections"), 0.262);
-  register_floating_sel_procs ();
+  register_floating_sel_procs (gimp);
 
   app_init_update_status (NULL, _("Gimprc procedures"), 0.28);
-  register_gimprc_procs ();
+  register_gimprc_procs (gimp);
 
   app_init_update_status (NULL, _("Gradients"), 0.289);
-  register_gradients_procs ();
+  register_gradients_procs (gimp);
 
   app_init_update_status (NULL, _("Gradient UI"), 0.305);
-  register_gradient_select_procs ();
+  register_gradient_select_procs (gimp);
 
   app_init_update_status (NULL, _("Guide procedures"), 0.317);
-  register_guides_procs ();
+  register_guides_procs (gimp);
 
   app_init_update_status (NULL, _("Help procedures"), 0.335);
-  register_help_procs ();
+  register_help_procs (gimp);
 
   app_init_update_status (NULL, _("Image"), 0.338);
-  register_image_procs ();
+  register_image_procs (gimp);
 
   app_init_update_status (NULL, _("Layer"), 0.523);
-  register_layer_procs ();
+  register_layer_procs (gimp);
 
   app_init_update_status (NULL, _("Interface"), 0.618);
-  register_message_procs ();
+  register_message_procs (gimp);
 
   app_init_update_status (NULL, _("Miscellaneous"), 0.628);
-  register_misc_procs ();
+  register_misc_procs (gimp);
 
   app_init_update_status (NULL, _("Palette"), 0.634);
-  register_palette_procs ();
+  register_palette_procs (gimp);
 
   app_init_update_status (NULL, _("Parasite procedures"), 0.655);
-  register_parasite_procs ();
+  register_parasite_procs (gimp);
 
   app_init_update_status (NULL, _("Paths"), 0.692);
-  register_paths_procs ();
+  register_paths_procs (gimp);
 
   app_init_update_status (NULL, _("Pattern UI"), 0.732);
-  register_pattern_select_procs ();
+  register_pattern_select_procs (gimp);
 
   app_init_update_status (NULL, _("Patterns"), 0.742);
-  register_patterns_procs ();
+  register_patterns_procs (gimp);
 
   app_init_update_status (NULL, _("Plug-in"), 0.754);
-  register_plug_in_procs ();
+  register_plug_in_procs (gimp);
 
   app_init_update_status (NULL, _("Procedural database"), 0.772);
-  register_procedural_db_procs ();
+  register_procedural_db_procs (gimp);
 
   app_init_update_status (NULL, _("Image mask"), 0.797);
-  register_selection_procs ();
+  register_selection_procs (gimp);
 
   app_init_update_status (NULL, _("Text procedures"), 0.852);
-  register_text_tool_procs ();
+  register_text_tool_procs (gimp);
 
   app_init_update_status (NULL, _("Tool procedures"), 0.865);
-  register_tools_procs ();
+  register_tools_procs (gimp);
 
   app_init_update_status (NULL, _("Undo"), 0.957);
-  register_undo_procs ();
+  register_undo_procs (gimp);
 
   app_init_update_status (NULL, _("Units"), 0.963);
-  register_unit_procs ();
+  register_unit_procs (gimp);
 }

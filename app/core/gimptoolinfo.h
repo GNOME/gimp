@@ -20,7 +20,7 @@
 #define __GIMP_TOOL_INFO_H__
 
 
-#include "core/gimpdata.h"
+#include "gimpdata.h"
 
 
 /* FIXME: the ToolOptions need to be an object living in core/ */

@@ -28,6 +28,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -42,7 +43,7 @@
 #include "dialogs-constructors.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 #include "dialog_handler.h"
 #include "gimprc.h"
 
@@ -152,7 +153,7 @@ brush_select_new (gchar   *title,
 
   if (title)
     {
-      bsp->context = gimp_context_new (title, NULL);
+      bsp->context = gimp_context_new (the_gimp, title, NULL);
     }
   else
     {
@@ -162,14 +163,14 @@ brush_select_new (gchar   *title,
     }
 
   if (no_data && first_call)
-    gimp_data_factory_data_init (global_brush_factory, FALSE);
+    gimp_data_factory_data_init (the_gimp->brush_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && init_name && strlen (init_name))
     {
       active = (GimpBrush *)
-	gimp_container_get_child_by_name (global_brush_factory->container,
+	gimp_container_get_child_by_name (the_gimp->brush_factory->container,
 					  init_name);
     }
   else
@@ -178,7 +179,7 @@ brush_select_new (gchar   *title,
     }
 
   if (!active)
-    active = gimp_context_get_brush (gimp_context_get_standard ());
+    active = gimp_context_get_brush (gimp_context_get_standard (the_gimp));
 
   if (title)
     {
@@ -195,7 +196,7 @@ brush_select_new (gchar   *title,
 
   /*  The Brush Grid  */
   bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					   global_brush_factory,
+					   the_gimp->brush_factory,
 					   dialogs_edit_brush_func,
 					   bsp->context,
 					   title ? FALSE : TRUE,
@@ -355,12 +356,13 @@ brush_select_change_callbacks (BrushSelect *bsp,
   brush = gimp_context_get_brush (bsp->context);
 
   /* If its still registered run it */
-  prec = procedural_db_lookup (name);
+  prec = procedural_db_lookup (bsp->context->gimp, name);
 
   if (prec && brush)
     {
       return_vals =
-	procedural_db_run_proc (name,
+	procedural_db_run_proc (bsp->context->gimp,
+				name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (brush)->name,
 				GIMP_PDB_FLOAT,     gimp_context_get_opacity (bsp->context),
@@ -403,7 +405,7 @@ brush_select_dialogs_check (void)
 
       if (name)
 	{
-	  prec = procedural_db_lookup (name);
+	  prec = procedural_db_lookup (bsp->context->gimp, name);
 
 	  if (!prec)
 	    {

@@ -67,35 +67,36 @@ static ProcRecord drawable_thumbnail_proc;
 static ProcRecord drawable_offset_proc;
 
 void
-register_drawable_procs (void)
+register_drawable_procs (Gimp *gimp)
 {
-  procedural_db_register (&drawable_merge_shadow_proc);
-  procedural_db_register (&drawable_fill_proc);
-  procedural_db_register (&drawable_update_proc);
-  procedural_db_register (&drawable_mask_bounds_proc);
-  procedural_db_register (&drawable_image_proc);
-  procedural_db_register (&drawable_type_proc);
-  procedural_db_register (&drawable_has_alpha_proc);
-  procedural_db_register (&drawable_type_with_alpha_proc);
-  procedural_db_register (&drawable_is_rgb_proc);
-  procedural_db_register (&drawable_is_gray_proc);
-  procedural_db_register (&drawable_is_indexed_proc);
-  procedural_db_register (&drawable_bytes_proc);
-  procedural_db_register (&drawable_width_proc);
-  procedural_db_register (&drawable_height_proc);
-  procedural_db_register (&drawable_offsets_proc);
-  procedural_db_register (&drawable_is_layer_proc);
-  procedural_db_register (&drawable_is_layer_mask_proc);
-  procedural_db_register (&drawable_is_channel_proc);
-  procedural_db_register (&drawable_get_pixel_proc);
-  procedural_db_register (&drawable_set_pixel_proc);
-  procedural_db_register (&drawable_set_image_proc);
-  procedural_db_register (&drawable_thumbnail_proc);
-  procedural_db_register (&drawable_offset_proc);
+  procedural_db_register (gimp, &drawable_merge_shadow_proc);
+  procedural_db_register (gimp, &drawable_fill_proc);
+  procedural_db_register (gimp, &drawable_update_proc);
+  procedural_db_register (gimp, &drawable_mask_bounds_proc);
+  procedural_db_register (gimp, &drawable_image_proc);
+  procedural_db_register (gimp, &drawable_type_proc);
+  procedural_db_register (gimp, &drawable_has_alpha_proc);
+  procedural_db_register (gimp, &drawable_type_with_alpha_proc);
+  procedural_db_register (gimp, &drawable_is_rgb_proc);
+  procedural_db_register (gimp, &drawable_is_gray_proc);
+  procedural_db_register (gimp, &drawable_is_indexed_proc);
+  procedural_db_register (gimp, &drawable_bytes_proc);
+  procedural_db_register (gimp, &drawable_width_proc);
+  procedural_db_register (gimp, &drawable_height_proc);
+  procedural_db_register (gimp, &drawable_offsets_proc);
+  procedural_db_register (gimp, &drawable_is_layer_proc);
+  procedural_db_register (gimp, &drawable_is_layer_mask_proc);
+  procedural_db_register (gimp, &drawable_is_channel_proc);
+  procedural_db_register (gimp, &drawable_get_pixel_proc);
+  procedural_db_register (gimp, &drawable_set_pixel_proc);
+  procedural_db_register (gimp, &drawable_set_image_proc);
+  procedural_db_register (gimp, &drawable_thumbnail_proc);
+  procedural_db_register (gimp, &drawable_offset_proc);
 }
 
 static Argument *
-drawable_merge_shadow_invoker (Argument *args)
+drawable_merge_shadow_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -144,7 +145,8 @@ static ProcRecord drawable_merge_shadow_proc =
 };
 
 static Argument *
-drawable_fill_invoker (Argument *args)
+drawable_fill_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -195,7 +197,8 @@ static ProcRecord drawable_fill_proc =
 };
 
 static Argument *
-drawable_update_invoker (Argument *args)
+drawable_update_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -268,7 +271,8 @@ static ProcRecord drawable_update_proc =
 };
 
 static Argument *
-drawable_mask_bounds_invoker (Argument *args)
+drawable_mask_bounds_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -355,7 +359,8 @@ static ProcRecord drawable_mask_bounds_proc =
 };
 
 static Argument *
-drawable_image_invoker (Argument *args)
+drawable_image_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -412,7 +417,8 @@ static ProcRecord drawable_image_proc =
 };
 
 static Argument *
-drawable_type_invoker (Argument *args)
+drawable_type_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -465,7 +471,8 @@ static ProcRecord drawable_type_proc =
 };
 
 static Argument *
-drawable_has_alpha_invoker (Argument *args)
+drawable_has_alpha_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -518,7 +525,8 @@ static ProcRecord drawable_has_alpha_proc =
 };
 
 static Argument *
-drawable_type_with_alpha_invoker (Argument *args)
+drawable_type_with_alpha_invoker (Gimp     *gimp,
+                                  Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -571,7 +579,8 @@ static ProcRecord drawable_type_with_alpha_proc =
 };
 
 static Argument *
-drawable_is_rgb_invoker (Argument *args)
+drawable_is_rgb_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -624,7 +633,8 @@ static ProcRecord drawable_is_rgb_proc =
 };
 
 static Argument *
-drawable_is_gray_invoker (Argument *args)
+drawable_is_gray_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -677,7 +687,8 @@ static ProcRecord drawable_is_gray_proc =
 };
 
 static Argument *
-drawable_is_indexed_invoker (Argument *args)
+drawable_is_indexed_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -730,7 +741,8 @@ static ProcRecord drawable_is_indexed_proc =
 };
 
 static Argument *
-drawable_bytes_invoker (Argument *args)
+drawable_bytes_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -783,7 +795,8 @@ static ProcRecord drawable_bytes_proc =
 };
 
 static Argument *
-drawable_width_invoker (Argument *args)
+drawable_width_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -836,7 +849,8 @@ static ProcRecord drawable_width_proc =
 };
 
 static Argument *
-drawable_height_invoker (Argument *args)
+drawable_height_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -889,7 +903,8 @@ static ProcRecord drawable_height_proc =
 };
 
 static Argument *
-drawable_offsets_invoker (Argument *args)
+drawable_offsets_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -955,7 +970,8 @@ static ProcRecord drawable_offsets_proc =
 };
 
 static Argument *
-drawable_is_layer_invoker (Argument *args)
+drawable_is_layer_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1008,7 +1024,8 @@ static ProcRecord drawable_is_layer_proc =
 };
 
 static Argument *
-drawable_is_layer_mask_invoker (Argument *args)
+drawable_is_layer_mask_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1061,7 +1078,8 @@ static ProcRecord drawable_is_layer_mask_proc =
 };
 
 static Argument *
-drawable_is_channel_invoker (Argument *args)
+drawable_is_channel_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1114,7 +1132,8 @@ static ProcRecord drawable_is_channel_proc =
 };
 
 static Argument *
-drawable_get_pixel_invoker (Argument *args)
+drawable_get_pixel_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1223,7 +1242,8 @@ static ProcRecord drawable_get_pixel_proc =
 };
 
 static Argument *
-drawable_set_pixel_invoker (Argument *args)
+drawable_set_pixel_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1322,7 +1342,8 @@ static ProcRecord drawable_set_pixel_proc =
 };
 
 static Argument *
-drawable_set_image_invoker (Argument *args)
+drawable_set_image_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1373,7 +1394,8 @@ static ProcRecord drawable_set_image_proc =
 };
 
 static Argument *
-drawable_thumbnail_invoker (Argument *args)
+drawable_thumbnail_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1505,7 +1527,8 @@ static ProcRecord drawable_thumbnail_proc =
 };
 
 static Argument *
-drawable_offset_invoker (Argument *args)
+drawable_offset_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

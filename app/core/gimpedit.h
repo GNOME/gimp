@@ -28,7 +28,8 @@ GimpLayer   * gimp_edit_paste        (GimpImage    *gimage,
 				      GimpDrawable *drawable,
 				      TileManager  *paste,
 				      gboolean      paste_into);
-GimpImage   * gimp_edit_paste_as_new (GimpImage    *gimage,
+GimpImage   * gimp_edit_paste_as_new (Gimp         *gimp,
+				      GimpImage    *gimage,
 				      TileManager  *tiles);
 gboolean      gimp_edit_clear        (GimpImage    *gimage,
 				      GimpDrawable *drawable);

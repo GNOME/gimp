@@ -29,6 +29,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
@@ -43,12 +44,9 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "tools/gimptool.h"
-#include "tools/tool_manager.h"
-
 #include "gui/file-open-dialog.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gimprc.h"
 
 #include "gimpdnd.h"
@@ -1274,7 +1272,7 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
     brush = GIMP_BRUSH (gimp_brush_get_standard ());
   else
     brush = (GimpBrush *)
-      gimp_container_get_child_by_name (global_brush_factory->container,
+      gimp_container_get_child_by_name (the_gimp->brush_factory->container,
 					name);
 
   if (brush)
@@ -1311,7 +1309,7 @@ gimp_dnd_set_pattern_data (GtkWidget     *widget,
     pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
   else
     pattern = (GimpPattern *)
-      gimp_container_get_child_by_name (global_pattern_factory->container,
+      gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
 					name);
 
   if (pattern)
@@ -1348,7 +1346,7 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
     gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
   else
     gradient = (GimpGradient *)
-      gimp_container_get_child_by_name (global_gradient_factory->container,
+      gimp_container_get_child_by_name (the_gimp->gradient_factory->container,
 					name);
 
   if (gradient)
@@ -1385,7 +1383,7 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
     palette = GIMP_PALETTE (gimp_palette_get_standard ());
   else
     palette = (GimpPalette *)
-      gimp_container_get_child_by_name (global_palette_factory->container,
+      gimp_container_get_child_by_name (the_gimp->palette_factory->container,
 					name);
 
   if (palette)
@@ -1419,7 +1417,7 @@ gimp_dnd_set_buffer_data (GtkWidget     *widget,
   name = (gchar *) vals;
 
   buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (named_buffers, name);
+    gimp_container_get_child_by_name (the_gimp->named_buffers, name);
 
   if (buffer)
     (* (GimpDndDropViewableFunc) set_buffer_func) (widget,
@@ -1482,7 +1480,7 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
     tool_info = gimp_tool_info_get_standard ();
   else
     tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (global_tool_info_list,
+      gimp_container_get_child_by_name (the_gimp->tool_info_list,
 					name);
 
   if (tool_info)

@@ -28,7 +28,7 @@ sub inargs {
 # Common invoker for checking for image/drawable consistency
 sub invoke {
     %invoke = (
-	headers => [ qw("core/gimpedit.h") ],
+	headers => [ qw("core/gimp.h" "core/gimpedit.h") ],
 	vars => [ 'GimpImage *gimage' ],
 	code => <<CODE
 {
@@ -106,7 +106,7 @@ HELP
     );
 
     &invoke('layer != NULL');
-    $cmd = "layer = gimp_edit_paste (gimage, drawable, global_buffer, paste_into);\n";
+    $cmd = "layer = gimp_edit_paste (gimage, drawable, gimp->global_buffer, paste_into);\n";
     $invoke{code} =~ s/(success.*$)/"$cmd  $1"/me;
 }
 
@@ -163,9 +163,6 @@ HELP
     &invoke('gimage_mask_stroke (gimage, drawable)');
     push @{$invoke{headers}}, qw("core/gimpimage-mask.h");
 }
-
-# For edit_paste
-$extra{app}->{decls} = "extern TileManager *global_buffer;\n";
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear edit_fill edit_stroke);
 %exports = (app => [@procs], lib => [@procs]);

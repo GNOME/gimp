@@ -21,29 +21,6 @@
 
 
 /*
- *  the list of all images
- */
-extern GimpContainer *image_context;
-
-/*
- *  the global cut buffer
- */
-extern TileManager *global_buffer;
-
-/*
- *  the list of named cut buffers
- */
-extern GimpContainer *named_buffers;
-
-/*
- *  the global data factories which contain the global data lists
- */
-extern GimpDataFactory *global_brush_factory;
-extern GimpDataFactory *global_pattern_factory;
-extern GimpDataFactory *global_gradient_factory;
-extern GimpDataFactory *global_palette_factory;
-
-/*
  *  the global tool context
  */
 extern GimpContext *global_tool_context;

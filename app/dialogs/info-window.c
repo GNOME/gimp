@@ -27,6 +27,7 @@
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -42,7 +43,6 @@
 #include "info-dialog.h"
 #include "info-window.h"
 
-#include "context_manager.h"
 #include "colormaps.h"
 
 #include "libgimp/gimpintl.h"
@@ -406,7 +406,8 @@ info_window_change_display (GimpContext *context,
 
   gimage = gdisp->gimage;
 
-  if (gimage && gimp_container_have (image_context, GIMP_OBJECT (gimage)))
+  if (gimage && gimp_container_have (context->gimp->images,
+				     GIMP_OBJECT (gimage)))
     {
       iwd->gdisp = gdisp;
       info_window_update (gdisp);

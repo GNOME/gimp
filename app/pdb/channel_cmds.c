@@ -54,28 +54,29 @@ static ProcRecord channel_get_tattoo_proc;
 static ProcRecord channel_set_tattoo_proc;
 
 void
-register_channel_procs (void)
+register_channel_procs (Gimp *gimp)
 {
-  procedural_db_register (&channel_new_proc);
-  procedural_db_register (&channel_copy_proc);
-  procedural_db_register (&channel_delete_proc);
-  procedural_db_register (&channel_combine_masks_proc);
-  procedural_db_register (&channel_get_name_proc);
-  procedural_db_register (&channel_set_name_proc);
-  procedural_db_register (&channel_get_visible_proc);
-  procedural_db_register (&channel_set_visible_proc);
-  procedural_db_register (&channel_get_show_masked_proc);
-  procedural_db_register (&channel_set_show_masked_proc);
-  procedural_db_register (&channel_get_opacity_proc);
-  procedural_db_register (&channel_set_opacity_proc);
-  procedural_db_register (&channel_get_color_proc);
-  procedural_db_register (&channel_set_color_proc);
-  procedural_db_register (&channel_get_tattoo_proc);
-  procedural_db_register (&channel_set_tattoo_proc);
+  procedural_db_register (gimp, &channel_new_proc);
+  procedural_db_register (gimp, &channel_copy_proc);
+  procedural_db_register (gimp, &channel_delete_proc);
+  procedural_db_register (gimp, &channel_combine_masks_proc);
+  procedural_db_register (gimp, &channel_get_name_proc);
+  procedural_db_register (gimp, &channel_set_name_proc);
+  procedural_db_register (gimp, &channel_get_visible_proc);
+  procedural_db_register (gimp, &channel_set_visible_proc);
+  procedural_db_register (gimp, &channel_get_show_masked_proc);
+  procedural_db_register (gimp, &channel_set_show_masked_proc);
+  procedural_db_register (gimp, &channel_get_opacity_proc);
+  procedural_db_register (gimp, &channel_set_opacity_proc);
+  procedural_db_register (gimp, &channel_get_color_proc);
+  procedural_db_register (gimp, &channel_set_color_proc);
+  procedural_db_register (gimp, &channel_get_tattoo_proc);
+  procedural_db_register (gimp, &channel_set_tattoo_proc);
 }
 
 static Argument *
-channel_new_invoker (Argument *args)
+channel_new_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -186,7 +187,8 @@ static ProcRecord channel_new_proc =
 };
 
 static Argument *
-channel_copy_invoker (Argument *args)
+channel_copy_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -243,7 +245,8 @@ static ProcRecord channel_copy_proc =
 };
 
 static Argument *
-channel_delete_invoker (Argument *args)
+channel_delete_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -284,7 +287,8 @@ static ProcRecord channel_delete_proc =
 };
 
 static Argument *
-channel_combine_masks_invoker (Argument *args)
+channel_combine_masks_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel1;
@@ -363,7 +367,8 @@ static ProcRecord channel_combine_masks_proc =
 };
 
 static Argument *
-channel_get_name_invoker (Argument *args)
+channel_get_name_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -416,7 +421,8 @@ static ProcRecord channel_get_name_proc =
 };
 
 static Argument *
-channel_set_name_invoker (Argument *args)
+channel_set_name_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -467,7 +473,8 @@ static ProcRecord channel_set_name_proc =
 };
 
 static Argument *
-channel_get_visible_invoker (Argument *args)
+channel_get_visible_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -520,7 +527,8 @@ static ProcRecord channel_get_visible_proc =
 };
 
 static Argument *
-channel_set_visible_invoker (Argument *args)
+channel_set_visible_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -569,7 +577,8 @@ static ProcRecord channel_set_visible_proc =
 };
 
 static Argument *
-channel_get_show_masked_invoker (Argument *args)
+channel_get_show_masked_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -622,7 +631,8 @@ static ProcRecord channel_get_show_masked_proc =
 };
 
 static Argument *
-channel_set_show_masked_invoker (Argument *args)
+channel_set_show_masked_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -671,7 +681,8 @@ static ProcRecord channel_set_show_masked_proc =
 };
 
 static Argument *
-channel_get_opacity_invoker (Argument *args)
+channel_get_opacity_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -724,7 +735,8 @@ static ProcRecord channel_get_opacity_proc =
 };
 
 static Argument *
-channel_set_opacity_invoker (Argument *args)
+channel_set_opacity_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -775,7 +787,8 @@ static ProcRecord channel_set_opacity_proc =
 };
 
 static Argument *
-channel_get_color_invoker (Argument *args)
+channel_get_color_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -834,7 +847,8 @@ static ProcRecord channel_get_color_proc =
 };
 
 static Argument *
-channel_set_color_invoker (Argument *args)
+channel_set_color_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -888,7 +902,8 @@ static ProcRecord channel_set_color_proc =
 };
 
 static Argument *
-channel_get_tattoo_invoker (Argument *args)
+channel_get_tattoo_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -941,7 +956,8 @@ static ProcRecord channel_get_tattoo_proc =
 };
 
 static Argument *
-channel_set_tattoo_invoker (Argument *args)
+channel_set_tattoo_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;

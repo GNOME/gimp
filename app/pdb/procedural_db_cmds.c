@@ -31,6 +31,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>
@@ -116,16 +117,16 @@ static ProcRecord procedural_db_get_data_size_proc;
 static ProcRecord procedural_db_set_data_proc;
 
 void
-register_procedural_db_procs (void)
+register_procedural_db_procs (Gimp *gimp)
 {
-  procedural_db_register (&procedural_db_dump_proc);
-  procedural_db_register (&procedural_db_query_proc);
-  procedural_db_register (&procedural_db_proc_info_proc);
-  procedural_db_register (&procedural_db_proc_arg_proc);
-  procedural_db_register (&procedural_db_proc_val_proc);
-  procedural_db_register (&procedural_db_get_data_proc);
-  procedural_db_register (&procedural_db_get_data_size_proc);
-  procedural_db_register (&procedural_db_set_data_proc);
+  procedural_db_register (gimp, &procedural_db_dump_proc);
+  procedural_db_register (gimp, &procedural_db_query_proc);
+  procedural_db_register (gimp, &procedural_db_proc_info_proc);
+  procedural_db_register (gimp, &procedural_db_proc_arg_proc);
+  procedural_db_register (gimp, &procedural_db_proc_val_proc);
+  procedural_db_register (gimp, &procedural_db_get_data_proc);
+  procedural_db_register (gimp, &procedural_db_get_data_size_proc);
+  procedural_db_register (gimp, &procedural_db_set_data_proc);
 }
 
 static int
@@ -271,7 +272,8 @@ pdb_type_name (gint type)
 }
 
 static Argument *
-procedural_db_dump_invoker (Argument *args)
+procedural_db_dump_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   gchar *filename;
@@ -284,7 +286,8 @@ procedural_db_dump_invoker (Argument *args)
     {
       if ((procedural_db_out = fopen (filename, "w")))
 	{
-	  g_hash_table_foreach (procedural_ht, procedural_db_print_entry, NULL);
+	  g_hash_table_foreach (gimp->procedural_ht,
+				procedural_db_print_entry, NULL);
 	  fclose (procedural_db_out);
 	}
       else
@@ -320,7 +323,8 @@ static ProcRecord procedural_db_dump_proc =
 };
 
 static Argument *
-procedural_db_query_invoker (Argument *args)
+procedural_db_query_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -374,7 +378,8 @@ procedural_db_query_invoker (Argument *args)
       pdb_query.list_of_procs = NULL;
       pdb_query.num_procs = 0;
     
-      g_hash_table_foreach (procedural_ht, procedural_db_query_entry, &pdb_query);
+      g_hash_table_foreach (gimp->procedural_ht,
+			    procedural_db_query_entry, &pdb_query);
     
       free (pdb_query.name_regex.buffer);
       free (pdb_query.blurb_regex.buffer);
@@ -466,7 +471,8 @@ static ProcRecord procedural_db_query_proc =
 };
 
 static Argument *
-procedural_db_proc_info_invoker (Argument *args)
+procedural_db_proc_info_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -478,7 +484,7 @@ procedural_db_proc_info_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = (proc = procedural_db_lookup (proc_name)) != NULL;
+    success = (proc = procedural_db_lookup (gimp, proc_name)) != NULL;
 
   return_args = procedural_db_return_args (&procedural_db_proc_info_proc, success);
 
@@ -567,7 +573,8 @@ static ProcRecord procedural_db_proc_info_proc =
 };
 
 static Argument *
-procedural_db_proc_arg_invoker (Argument *args)
+procedural_db_proc_arg_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -584,7 +591,7 @@ procedural_db_proc_arg_invoker (Argument *args)
 
   if (success)
     {
-      proc = procedural_db_lookup (proc_name);
+      proc = procedural_db_lookup (gimp, proc_name);
       if (proc && (arg_num >= 0 && arg_num < proc->num_args))
 	arg = &proc->args[arg_num];
       else
@@ -653,7 +660,8 @@ static ProcRecord procedural_db_proc_arg_proc =
 };
 
 static Argument *
-procedural_db_proc_val_invoker (Argument *args)
+procedural_db_proc_val_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -670,7 +678,7 @@ procedural_db_proc_val_invoker (Argument *args)
 
   if (success)
     {
-      proc = procedural_db_lookup (proc_name);
+      proc = procedural_db_lookup (gimp, proc_name);
       if (proc && (val_num >= 0 && val_num < proc->num_values))
 	val = &proc->values[val_num];
       else
@@ -739,7 +747,8 @@ static ProcRecord procedural_db_proc_val_proc =
 };
 
 static Argument *
-procedural_db_get_data_invoker (Argument *args)
+procedural_db_get_data_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -824,7 +833,8 @@ static ProcRecord procedural_db_get_data_proc =
 };
 
 static Argument *
-procedural_db_get_data_size_invoker (Argument *args)
+procedural_db_get_data_size_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -897,7 +907,8 @@ static ProcRecord procedural_db_get_data_size_proc =
 };
 
 static Argument *
-procedural_db_set_data_invoker (Argument *args)
+procedural_db_set_data_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   gchar *identifier;

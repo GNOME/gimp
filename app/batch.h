@@ -15,9 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BATCH_H__
 #define __BATCH_H__
 
-void batch_init (void);
+
+void   batch_init (Gimp *gimp);
+
 
 #endif /* __BATCH_H__ */

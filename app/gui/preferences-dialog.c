@@ -31,6 +31,7 @@
 #include "base/base-config.h"
 #include "base/tile-cache.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
@@ -39,6 +40,7 @@
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
+#include "app_procs.h"
 #include "colormaps.h"
 #include "context_manager.h"
 #include "gdisplay_ops.h"
@@ -901,7 +903,7 @@ prefs_cancel_callback (GtkWidget *widget,
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
 
@@ -989,11 +991,8 @@ prefs_toggle_callback (GtkWidget *widget,
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
-      gimp_container_foreach (image_context,
+      gimp_container_foreach (the_gimp->images,
 			      (GFunc) gimp_image_invalidate_layer_previews,
-			      NULL);
-      gimp_container_foreach (image_context,
-			      (GFunc) gimp_viewable_invalidate_preview,
 			      NULL);
       gdisplays_expose_full ();
       gdisplays_flush ();

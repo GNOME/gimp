@@ -45,14 +45,14 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "app_procs.h"
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
+#include "menus.h"
+
+#include "app_procs.h"
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
-#include "gui/menus.h"
-
 #include "gimage.h"
 #include "gimprc.h"
 #include "file-open.h"

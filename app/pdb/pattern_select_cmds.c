@@ -29,7 +29,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -40,11 +40,11 @@ static ProcRecord patterns_close_popup_proc;
 static ProcRecord patterns_set_popup_proc;
 
 void
-register_pattern_select_procs (void)
+register_pattern_select_procs (Gimp *gimp)
 {
-  procedural_db_register (&patterns_popup_proc);
-  procedural_db_register (&patterns_close_popup_proc);
-  procedural_db_register (&patterns_set_popup_proc);
+  procedural_db_register (gimp, &patterns_popup_proc);
+  procedural_db_register (gimp, &patterns_close_popup_proc);
+  procedural_db_register (gimp, &patterns_set_popup_proc);
 }
 
 static PatternSelect *
@@ -65,7 +65,8 @@ pattern_get_patternselect (gchar *name)
 }
 
 static Argument *
-patterns_popup_invoker (Argument *args)
+patterns_popup_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -86,7 +87,7 @@ patterns_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)))
+      if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (pattern && strlen (pattern))
 	    newdialog = pattern_select_new (title, pattern);
@@ -139,7 +140,8 @@ static ProcRecord patterns_popup_proc =
 };
 
 static Argument *
-patterns_close_popup_invoker (Argument *args)
+patterns_close_popup_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -152,7 +154,7 @@ patterns_close_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)) &&
+      if ((prec = procedural_db_lookup (gimp, name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
 	  if (GTK_WIDGET_VISIBLE (psp->shell))
@@ -198,7 +200,8 @@ static ProcRecord patterns_close_popup_proc =
 };
 
 static Argument *
-patterns_set_popup_invoker (Argument *args)
+patterns_set_popup_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -216,11 +219,11 @@ patterns_set_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)) &&
+      if ((prec = procedural_db_lookup (gimp, name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
 	  GimpPattern *active = (GimpPattern *)
-	    gimp_container_get_child_by_name (global_pattern_factory->container,
+	    gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					      pattern_name);
     
 	  if (active)

@@ -278,7 +278,7 @@ gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
 
       if (gimage)
 	{
-	  gimp_edit_paste_as_new (gimage, buffer->tiles);
+	  gimp_edit_paste_as_new (gimage->gimp, gimage, buffer->tiles);
 	}
     }
 }

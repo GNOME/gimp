@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -52,7 +53,8 @@
 
 #include "app_procs.h"
 #include "dialog_handler.h"
-#include "gdisplay.h" /* for gdisplay_*_override_cursor() */
+#include "gdisplay.h"     /* for gdisplay_*_override_cursor()  */
+#include "gdisplay_ops.h" /* for gdisplay_xserver_resolution() */
 
 #include "libgimp/gimpintl.h"
 
@@ -70,6 +72,14 @@ extern GSList *display_list;  /*  from gdisplay.c  */
 void
 gui_init (void)
 {
+  /* make sure the monitor resolution is valid */
+  if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
+      gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
+    {
+      gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
+      gimprc.using_xserver_resolution = TRUE;
+    }
+
   file_open_menu_init ();
   file_save_menu_init ();
 

@@ -58,20 +58,21 @@ static ProcRecord register_load_handler_proc;
 static ProcRecord register_save_handler_proc;
 
 void
-register_fileops_procs (void)
+register_fileops_procs (Gimp *gimp)
 {
-  procedural_db_register (&file_load_proc);
-  procedural_db_register (&file_save_proc);
-  procedural_db_register (&file_load_thumbnail_proc);
-  procedural_db_register (&file_save_thumbnail_proc);
-  procedural_db_register (&temp_name_proc);
-  procedural_db_register (&register_magic_load_handler_proc);
-  procedural_db_register (&register_load_handler_proc);
-  procedural_db_register (&register_save_handler_proc);
+  procedural_db_register (gimp, &file_load_proc);
+  procedural_db_register (gimp, &file_save_proc);
+  procedural_db_register (gimp, &file_load_thumbnail_proc);
+  procedural_db_register (gimp, &file_save_thumbnail_proc);
+  procedural_db_register (gimp, &temp_name_proc);
+  procedural_db_register (gimp, &register_magic_load_handler_proc);
+  procedural_db_register (gimp, &register_load_handler_proc);
+  procedural_db_register (gimp, &register_save_handler_proc);
 }
 
 static Argument *
-file_load_invoker (Argument *args)
+file_load_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -82,7 +83,7 @@ file_load_invoker (Argument *args)
 
   proc = &file_proc->db_info;
 
-  return procedural_db_execute (proc->name, args);
+  return procedural_db_execute (gimp, proc->name, args);
 }
 
 static ProcArg file_load_inargs[] =
@@ -130,7 +131,8 @@ static ProcRecord file_load_proc =
 };
 
 static Argument *
-file_save_invoker (Argument *args)
+file_save_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   Argument *new_args;
   Argument *return_vals;
@@ -155,7 +157,7 @@ file_save_invoker (Argument *args)
       new_args[i].value.pdb_pointer = g_strdup("\0");
   }
 
-  return_vals = procedural_db_execute (proc->name, new_args);
+  return_vals = procedural_db_execute (gimp, proc->name, new_args);
   g_free (new_args);
 
   return return_vals;
@@ -207,7 +209,8 @@ static ProcRecord file_save_proc =
 };
 
 static Argument *
-file_load_thumbnail_invoker (Argument *args)
+file_load_thumbnail_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -319,7 +322,8 @@ static ProcRecord file_load_thumbnail_proc =
 };
 
 static Argument *
-file_save_thumbnail_invoker (Argument *args)
+file_save_thumbnail_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -375,7 +379,8 @@ static ProcRecord file_save_thumbnail_proc =
 };
 
 static Argument *
-temp_name_invoker (Argument *args)
+temp_name_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -440,7 +445,8 @@ static ProcRecord temp_name_proc =
 };
 
 static Argument *
-register_magic_load_handler_invoker (Argument *args)
+register_magic_load_handler_invoker (Gimp     *gimp,
+                                     Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -464,7 +470,7 @@ register_magic_load_handler_invoker (Argument *args)
     {
       success = FALSE;
     
-      proc = procedural_db_lookup (name);
+      proc = procedural_db_lookup (gimp, name);
     
       if (proc && ((proc->num_args < 3) ||
 		   (proc->num_values < 1) ||
@@ -539,7 +545,8 @@ static ProcRecord register_magic_load_handler_proc =
 };
 
 static Argument *
-register_load_handler_invoker (Argument *args)
+register_load_handler_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   int i;
   Argument argv[4];
@@ -550,7 +557,7 @@ register_load_handler_invoker (Argument *args)
   argv[3].arg_type = GIMP_PDB_STRING;
   argv[3].value.pdb_pointer = NULL;
 
-  return register_magic_load_handler_invoker (argv);
+  return register_magic_load_handler_invoker (gimp, argv);
 }
 
 static ProcArg register_load_handler_inargs[] =
@@ -589,7 +596,8 @@ static ProcRecord register_load_handler_proc =
 };
 
 static Argument *
-register_save_handler_invoker (Argument *args)
+register_save_handler_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -610,7 +618,7 @@ register_save_handler_invoker (Argument *args)
     {
       success = FALSE;
     
-      proc = procedural_db_lookup (name);
+      proc = procedural_db_lookup (gimp, name);
     
       if (proc && ((proc->num_args < 5) ||
 		   (proc->args[0].arg_type != GIMP_PDB_INT32) ||

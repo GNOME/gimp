@@ -44,7 +44,7 @@ sub patterns_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *newdialog' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)))
+  if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (pattern && strlen (pattern))
 	newdialog = pattern_select_new (title, pattern);
@@ -77,7 +77,7 @@ sub patterns_close_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
+  if ((prec = procedural_db_lookup (gimp, name)) &&
       (psp = pattern_get_patternselect (name)))
     {
       if (GTK_WIDGET_VISIBLE (psp->shell))
@@ -115,11 +115,11 @@ sub patterns_set_popup {
 	vars => [ 'ProcRecord *prec', 'PatternSelect *psp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
+  if ((prec = procedural_db_lookup (gimp, name)) &&
       (psp = pattern_get_patternselect (name)))
     {
       GimpPattern *active = (GimpPattern *)
-        gimp_container_get_child_by_name (global_pattern_factory->container,
+        gimp_container_get_child_by_name (gimp->pattern_factory->container,
                                           pattern_name);
 
       if (active)
@@ -137,7 +137,7 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "gui/pattern-select.h"
+@headers = qw(<string.h> "core/gimp.h" "gui/pattern-select.h"
               "core/gimpcontext.h" "core/gimpdatafactory.h"
               "core/gimpcontainer.h");
 

@@ -28,7 +28,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "widgets/gimpwidgets-utils.h"
 

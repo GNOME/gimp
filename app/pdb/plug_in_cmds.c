@@ -48,14 +48,14 @@ static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
 
 void
-register_plug_in_procs (void)
+register_plug_in_procs (Gimp *gimp)
 {
-  procedural_db_register (&progress_init_proc);
-  procedural_db_register (&progress_update_proc);
-  procedural_db_register (&temp_PDB_name_proc);
-  procedural_db_register (&plugins_query_proc);
-  procedural_db_register (&plugin_domain_register_proc);
-  procedural_db_register (&plugin_help_register_proc);
+  procedural_db_register (gimp, &progress_init_proc);
+  procedural_db_register (gimp, &progress_update_proc);
+  procedural_db_register (gimp, &temp_PDB_name_proc);
+  procedural_db_register (gimp, &plugins_query_proc);
+  procedural_db_register (gimp, &plugin_domain_register_proc);
+  procedural_db_register (gimp, &plugin_help_register_proc);
 }
 
 static int
@@ -66,7 +66,8 @@ match_strings (regex_t *preg,
 }
 
 static Argument *
-progress_init_invoker (Argument *args)
+progress_init_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = FALSE;
   gchar *message;
@@ -117,7 +118,8 @@ static ProcRecord progress_init_proc =
 };
 
 static Argument *
-progress_update_invoker (Argument *args)
+progress_update_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = FALSE;
   gdouble percentage;
@@ -160,7 +162,8 @@ static ProcRecord progress_update_proc =
 };
 
 static Argument *
-temp_PDB_name_invoker (Argument *args)
+temp_PDB_name_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   Argument *return_args;
   gchar *temp_name;
@@ -200,7 +203,8 @@ static ProcRecord temp_PDB_name_proc =
 };
 
 static Argument *
-plugins_query_invoker (Argument *args)
+plugins_query_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   Argument *return_args;
   gchar *search_str;
@@ -402,7 +406,8 @@ static ProcRecord plugins_query_proc =
 };
 
 static Argument *
-plugin_domain_register_invoker (Argument *args)
+plugin_domain_register_invoker (Gimp     *gimp,
+                                Argument *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -465,7 +470,8 @@ static ProcRecord plugin_domain_register_proc =
 };
 
 static Argument *
-plugin_help_register_invoker (Argument *args)
+plugin_help_register_invoker (Gimp     *gimp,
+                              Argument *args)
 {
   gboolean success = TRUE;
   gchar *help_path;

@@ -36,14 +36,15 @@ static ProcRecord version_proc;
 static ProcRecord quit_proc;
 
 void
-register_misc_procs (void)
+register_misc_procs (Gimp *gimp)
 {
-  procedural_db_register (&version_proc);
-  procedural_db_register (&quit_proc);
+  procedural_db_register (gimp, &version_proc);
+  procedural_db_register (gimp, &quit_proc);
 }
 
 static Argument *
-version_invoker (Argument *args)
+version_invoker (Gimp     *gimp,
+                 Argument *args)
 {
   Argument *return_args;
 
@@ -79,7 +80,8 @@ static ProcRecord version_proc =
 };
 
 static Argument *
-quit_invoker (Argument *args)
+quit_invoker (Gimp     *gimp,
+              Argument *args)
 {
   gboolean kill_it;
 

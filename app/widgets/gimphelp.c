@@ -34,6 +34,7 @@
 
 #include "core/core-types.h"
 
+#include "app_procs.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "plug_in.h"
@@ -177,13 +178,15 @@ gimp_help_internal (const gchar *help_path,
   ProcRecord *proc_rec;
 
   /*  Check if a help browser is already running  */
-  proc_rec = procedural_db_lookup ("extension_gimp_help_browser_temp");
+  proc_rec = procedural_db_lookup (the_gimp,
+				   "extension_gimp_help_browser_temp");
 
   if (proc_rec == NULL)
     {
       Argument *args = NULL;
 
-      proc_rec = procedural_db_lookup ("extension_gimp_help_browser");
+      proc_rec = procedural_db_lookup (the_gimp,
+				       "extension_gimp_help_browser");
 
       if (proc_rec == NULL)
 	{
@@ -224,7 +227,8 @@ gimp_help_internal (const gchar *help_path,
       gint      nreturn_vals;
 
       return_vals =
-        procedural_db_run_proc ("extension_gimp_help_browser_temp",
+        procedural_db_run_proc (the_gimp,
+				"extension_gimp_help_browser_temp",
                                 &nreturn_vals,
 				GIMP_PDB_STRING, help_path,
 				GIMP_PDB_STRING, current_locale,
@@ -274,7 +278,8 @@ gimp_help_netscape (const gchar *help_path,
     }
 
   return_vals =
-    procedural_db_run_proc ("extension_web_browser",
+    procedural_db_run_proc (the_gimp,
+			    "extension_web_browser",
 			    &nreturn_vals,
 			    GIMP_PDB_INT32,  RUN_NONINTERACTIVE,
 			    GIMP_PDB_STRING, url,

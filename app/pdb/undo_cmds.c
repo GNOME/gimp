@@ -35,14 +35,15 @@ static ProcRecord undo_push_group_start_proc;
 static ProcRecord undo_push_group_end_proc;
 
 void
-register_undo_procs (void)
+register_undo_procs (Gimp *gimp)
 {
-  procedural_db_register (&undo_push_group_start_proc);
-  procedural_db_register (&undo_push_group_end_proc);
+  procedural_db_register (gimp, &undo_push_group_start_proc);
+  procedural_db_register (gimp, &undo_push_group_end_proc);
 }
 
 static Argument *
-undo_push_group_start_invoker (Argument *args)
+undo_push_group_start_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -83,7 +84,8 @@ static ProcRecord undo_push_group_start_proc =
 };
 
 static Argument *
-undo_push_group_end_invoker (Argument *args)
+undo_push_group_end_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;

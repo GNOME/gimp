@@ -30,6 +30,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -38,7 +39,7 @@
 #include "gdisplay.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 #include "drawable.h"
 #include "gimage.h"
 #include "gimprc.h"
@@ -156,10 +157,10 @@ image_new_create_window (const GimpImageNewValues *create_values,
   /*  If a cut buffer exists, default to using its size for the new image
    *  also check to see if a new_image has been opened
    */
-  if (global_buffer && current_cut_buffer)
+  if (the_gimp->global_buffer && current_cut_buffer)
     {
-      values->width  = tile_manager_width (global_buffer);
-      values->height = tile_manager_height (global_buffer);
+      values->width  = tile_manager_width (the_gimp->global_buffer);
+      values->height = tile_manager_height (the_gimp->global_buffer);
     }
 
   ui_new_image_window_create (values);
@@ -282,7 +283,7 @@ image_new_create_image (const GimpImageNewValues *values)
       break;
     }
 
-  image = gimage_new (values->width, values->height, values->type);
+  image = gimage_new (the_gimp, values->width, values->height, values->type);
   
   gimp_image_set_resolution (image, values->xresolution, values->yresolution);
   gimp_image_set_unit (image, values->unit);

@@ -27,6 +27,7 @@
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -51,7 +52,7 @@
 #include "dialogs.h"
 #include "gradient-editor.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -75,35 +76,35 @@ static void
 brushes_callback (GtkWidget         *widget,
 		  GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, global_brush_factory->container);
+  gimp_container_view_set_container (view, view->context->gimp->brush_factory->container);
 }
 
 static void
 patterns_callback (GtkWidget         *widget,
 		   GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, global_pattern_factory->container);
+  gimp_container_view_set_container (view, view->context->gimp->pattern_factory->container);
 }
 
 static void
 gradients_callback (GtkWidget         *widget,
 		    GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, global_gradient_factory->container);
+  gimp_container_view_set_container (view, view->context->gimp->gradient_factory->container);
 }
 
 static void
 palettes_callback (GtkWidget         *widget,
 		   GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, global_palette_factory->container);
+  gimp_container_view_set_container (view, view->context->gimp->palette_factory->container);
 }
 
 static void
 images_callback (GtkWidget         *widget,
 		 GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, image_context);
+  gimp_container_view_set_container (view, the_gimp->images);
 }
 
 /*
@@ -382,7 +383,7 @@ test_image_container_list_view_cmd_callback (GtkWidget *widget,
 					     gpointer   client_data)
 {
   container_view_new (TRUE, "Image List",
-		      image_context,
+		      the_gimp->images,
 		      gimp_context_get_user (),
 		      64);
 }
@@ -392,7 +393,7 @@ test_image_container_grid_view_cmd_callback (GtkWidget *widget,
 					     gpointer   client_data)
 {
   container_view_new (FALSE, "Image Grid",
-		      image_context,
+		      the_gimp->images,
 		      gimp_context_get_user (),
 		      64);
 }
@@ -403,7 +404,7 @@ test_brush_container_list_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 			 "Brush List",
-			 global_brush_factory,
+			 the_gimp->brush_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -415,7 +416,7 @@ test_pattern_container_list_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 			 "Pattern List",
-			 global_pattern_factory,
+			 the_gimp->pattern_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -427,7 +428,7 @@ test_gradient_container_list_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 			 "Gradient List",
-			 global_gradient_factory,
+			 the_gimp->gradient_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -439,7 +440,7 @@ test_palette_container_list_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 			 "Palette List",
-			 global_palette_factory,
+			 the_gimp->palette_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -451,7 +452,7 @@ test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 			 "Brush Grid",
-			 global_brush_factory,
+			 the_gimp->brush_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 32);
@@ -463,7 +464,7 @@ test_pattern_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 			 "Pattern Grid",
-			 global_pattern_factory,
+			 the_gimp->pattern_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -475,7 +476,7 @@ test_gradient_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 			 "Gradient Grid",
-			 global_gradient_factory,
+			 the_gimp->gradient_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -487,7 +488,7 @@ test_palette_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 			 "Palette Grid",
-			 global_palette_factory,
+			 the_gimp->palette_factory,
 			 NULL,
 			 gimp_context_get_user (),
 			 24);
@@ -498,7 +499,7 @@ test_multi_container_list_view_cmd_callback (GtkWidget *widget,
 					     gpointer   client_data)
 {
   container_multi_view_new (TRUE, "Multi List",
-			    global_brush_factory->container,
+			    the_gimp->brush_factory->container,
 			    gimp_context_get_user (),
 			    24);
 }
@@ -508,7 +509,7 @@ test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 					     gpointer   client_data)
 {
   container_multi_view_new (FALSE, "Multi Grid",
-			    global_brush_factory->container,
+			    the_gimp->brush_factory->container,
 			    gimp_context_get_user (),
 			    32);
 }

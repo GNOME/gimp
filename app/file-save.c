@@ -162,7 +162,7 @@ file_save (GimpImage   *gimage,
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
 
-  return_vals = procedural_db_execute (proc->name, args);
+  return_vals = procedural_db_execute (gimage->gimp, proc->name, args);
 
   status = return_vals[0].value.pdb_int;
 

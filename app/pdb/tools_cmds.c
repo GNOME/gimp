@@ -95,42 +95,43 @@ static ProcRecord smudge_default_proc;
 static ProcRecord transform_2d_proc;
 
 void
-register_tools_procs (void)
+register_tools_procs (Gimp *gimp)
 {
-  procedural_db_register (&airbrush_proc);
-  procedural_db_register (&airbrush_default_proc);
-  procedural_db_register (&blend_proc);
-  procedural_db_register (&bucket_fill_proc);
-  procedural_db_register (&by_color_select_proc);
-  procedural_db_register (&clone_proc);
-  procedural_db_register (&clone_default_proc);
-  procedural_db_register (&color_picker_proc);
-  procedural_db_register (&convolve_proc);
-  procedural_db_register (&convolve_default_proc);
-  procedural_db_register (&crop_proc);
-  procedural_db_register (&dodgeburn_proc);
-  procedural_db_register (&dodgeburn_default_proc);
-  procedural_db_register (&ellipse_select_proc);
-  procedural_db_register (&eraser_proc);
-  procedural_db_register (&eraser_default_proc);
-  procedural_db_register (&flip_proc);
-  procedural_db_register (&free_select_proc);
-  procedural_db_register (&fuzzy_select_proc);
-  procedural_db_register (&paintbrush_proc);
-  procedural_db_register (&paintbrush_default_proc);
-  procedural_db_register (&pencil_proc);
-  procedural_db_register (&perspective_proc);
-  procedural_db_register (&rect_select_proc);
-  procedural_db_register (&rotate_proc);
-  procedural_db_register (&scale_proc);
-  procedural_db_register (&shear_proc);
-  procedural_db_register (&smudge_proc);
-  procedural_db_register (&smudge_default_proc);
-  procedural_db_register (&transform_2d_proc);
+  procedural_db_register (gimp, &airbrush_proc);
+  procedural_db_register (gimp, &airbrush_default_proc);
+  procedural_db_register (gimp, &blend_proc);
+  procedural_db_register (gimp, &bucket_fill_proc);
+  procedural_db_register (gimp, &by_color_select_proc);
+  procedural_db_register (gimp, &clone_proc);
+  procedural_db_register (gimp, &clone_default_proc);
+  procedural_db_register (gimp, &color_picker_proc);
+  procedural_db_register (gimp, &convolve_proc);
+  procedural_db_register (gimp, &convolve_default_proc);
+  procedural_db_register (gimp, &crop_proc);
+  procedural_db_register (gimp, &dodgeburn_proc);
+  procedural_db_register (gimp, &dodgeburn_default_proc);
+  procedural_db_register (gimp, &ellipse_select_proc);
+  procedural_db_register (gimp, &eraser_proc);
+  procedural_db_register (gimp, &eraser_default_proc);
+  procedural_db_register (gimp, &flip_proc);
+  procedural_db_register (gimp, &free_select_proc);
+  procedural_db_register (gimp, &fuzzy_select_proc);
+  procedural_db_register (gimp, &paintbrush_proc);
+  procedural_db_register (gimp, &paintbrush_default_proc);
+  procedural_db_register (gimp, &pencil_proc);
+  procedural_db_register (gimp, &perspective_proc);
+  procedural_db_register (gimp, &rect_select_proc);
+  procedural_db_register (gimp, &rotate_proc);
+  procedural_db_register (gimp, &scale_proc);
+  procedural_db_register (gimp, &shear_proc);
+  procedural_db_register (gimp, &smudge_proc);
+  procedural_db_register (gimp, &smudge_default_proc);
+  procedural_db_register (gimp, &transform_2d_proc);
 }
 
 static Argument *
-airbrush_invoker (Argument *args)
+airbrush_invoker (Gimp     *gimp,
+                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -201,7 +202,8 @@ static ProcRecord airbrush_proc =
 };
 
 static Argument *
-airbrush_default_invoker (Argument *args)
+airbrush_default_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -262,7 +264,8 @@ static ProcRecord airbrush_default_proc =
 };
 
 static Argument *
-blend_invoker (Argument *args)
+blend_invoker (Gimp     *gimp,
+               Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -429,7 +432,8 @@ static ProcRecord blend_proc =
 };
 
 static Argument *
-bucket_fill_invoker (Argument *args)
+bucket_fill_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -539,7 +543,8 @@ static ProcRecord bucket_fill_proc =
 };
 
 static Argument *
-by_color_select_invoker (Argument *args)
+by_color_select_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -649,7 +654,8 @@ static ProcRecord by_color_select_proc =
 };
 
 static Argument *
-clone_invoker (Argument *args)
+clone_invoker (Gimp     *gimp,
+               Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -747,7 +753,8 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
-clone_default_invoker (Argument *args)
+clone_default_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -808,7 +815,8 @@ static ProcRecord clone_default_proc =
 };
 
 static Argument *
-color_picker_invoker (Argument *args)
+color_picker_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -940,7 +948,8 @@ static ProcRecord color_picker_proc =
 };
 
 static Argument *
-convolve_invoker (Argument *args)
+convolve_invoker (Gimp     *gimp,
+                  Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1021,7 +1030,8 @@ static ProcRecord convolve_proc =
 };
 
 static Argument *
-convolve_default_invoker (Argument *args)
+convolve_default_invoker (Gimp     *gimp,
+                          Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1082,7 +1092,8 @@ static ProcRecord convolve_default_proc =
 };
 
 static Argument *
-crop_invoker (Argument *args)
+crop_invoker (Gimp     *gimp,
+              Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1171,7 +1182,8 @@ static ProcRecord crop_proc =
 };
 
 static Argument *
-dodgeburn_invoker (Argument *args)
+dodgeburn_invoker (Gimp     *gimp,
+                   Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1262,7 +1274,8 @@ static ProcRecord dodgeburn_proc =
 };
 
 static Argument *
-dodgeburn_default_invoker (Argument *args)
+dodgeburn_default_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1323,7 +1336,8 @@ static ProcRecord dodgeburn_default_proc =
 };
 
 static Argument *
-ellipse_select_invoker (Argument *args)
+ellipse_select_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1435,7 +1449,8 @@ static ProcRecord ellipse_select_proc =
 };
 
 static Argument *
-eraser_invoker (Argument *args)
+eraser_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1516,7 +1531,8 @@ static ProcRecord eraser_proc =
 };
 
 static Argument *
-eraser_default_invoker (Argument *args)
+eraser_default_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1577,7 +1593,8 @@ static ProcRecord eraser_default_proc =
 };
 
 static Argument *
-flip_invoker (Argument *args)
+flip_invoker (Gimp     *gimp,
+              Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1681,7 +1698,8 @@ static ProcRecord flip_proc =
 };
 
 static Argument *
-free_select_invoker (Argument *args)
+free_select_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1777,7 +1795,8 @@ static ProcRecord free_select_proc =
 };
 
 static Argument *
-fuzzy_select_invoker (Argument *args)
+fuzzy_select_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1901,7 +1920,8 @@ static ProcRecord fuzzy_select_proc =
 };
 
 static Argument *
-paintbrush_invoker (Argument *args)
+paintbrush_invoker (Gimp     *gimp,
+                    Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1993,7 +2013,8 @@ static ProcRecord paintbrush_proc =
 };
 
 static Argument *
-paintbrush_default_invoker (Argument *args)
+paintbrush_default_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2054,7 +2075,8 @@ static ProcRecord paintbrush_default_proc =
 };
 
 static Argument *
-pencil_invoker (Argument *args)
+pencil_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2115,7 +2137,8 @@ static ProcRecord pencil_proc =
 };
 
 static Argument *
-perspective_invoker (Argument *args)
+perspective_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2289,7 +2312,8 @@ static ProcRecord perspective_proc =
 };
 
 static Argument *
-rect_select_invoker (Argument *args)
+rect_select_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -2393,7 +2417,8 @@ static ProcRecord rect_select_proc =
 };
 
 static Argument *
-rotate_invoker (Argument *args)
+rotate_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2504,7 +2529,8 @@ static ProcRecord rotate_proc =
 };
 
 static Argument *
-scale_invoker (Argument *args)
+scale_invoker (Gimp     *gimp,
+               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2648,7 +2674,8 @@ static ProcRecord scale_proc =
 };
 
 static Argument *
-shear_invoker (Argument *args)
+shear_invoker (Gimp     *gimp,
+               Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -2777,7 +2804,8 @@ static ProcRecord shear_proc =
 };
 
 static Argument *
-smudge_invoker (Argument *args)
+smudge_invoker (Gimp     *gimp,
+                Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2848,7 +2876,8 @@ static ProcRecord smudge_proc =
 };
 
 static Argument *
-smudge_default_invoker (Argument *args)
+smudge_default_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2909,7 +2938,8 @@ static ProcRecord smudge_default_proc =
 };
 
 static Argument *
-transform_2d_invoker (Argument *args)
+transform_2d_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -22,19 +22,10 @@
 
 #include "core/core-types.h"
 
-#include "base/tile-manager.h"
-
-#include "core/gimpbrush.h"
-#include "core/gimpbrushgenerated.h"
-#include "core/gimpbrushpipe.h"
-#include "core/gimpbuffer.h"
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpgradient.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
-#include "core/gimppalette.h"
-#include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
@@ -45,6 +36,7 @@
 #include "gui/brush-select.h"
 
 #include "appenv.h"
+#include "app_procs.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -53,29 +45,6 @@
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
                            GIMP_CONTEXT_PAINT_MODE_MASK
 
-
-/*
- *  the list of all images
- */
-GimpContainer *image_context = NULL;
-
-/*
- *  the global cut buffer
- */
-TileManager *global_buffer = NULL;
-
-/*
- *  the list of named cut buffers
- */
-GimpContainer *named_buffers = NULL;
-
-/*
- *  the global data lists
- */
-GimpDataFactory *global_brush_factory    = NULL;
-GimpDataFactory *global_pattern_factory  = NULL;
-GimpDataFactory *global_gradient_factory = NULL;
-GimpDataFactory *global_palette_factory  = NULL;
 
 /*
  *  the global tool context
@@ -167,97 +136,17 @@ context_manager_init (void)
   GimpContext *user_context;
   GimpContext *tool_context;
 
-  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
-  {
-    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
-    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
-    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
-    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
-  };
-  static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
-					sizeof (brush_loader_entries[0]));
-
-  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
-  {
-    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
-  };
-  static gint n_pattern_loader_entries = (sizeof (pattern_loader_entries) /
-					  sizeof (pattern_loader_entries[0]));
-
-  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
-  {
-    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
-    { gimp_gradient_load, NULL /* legacy loader */     }
-  };
-  static gint n_gradient_loader_entries = (sizeof (gradient_loader_entries) /
-					   sizeof (gradient_loader_entries[0]));
-
-  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
-  {
-    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
-    { gimp_palette_load, NULL /* legacy loader */    }
-  };
-  static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
-					  sizeof (palette_loader_entries[0]));
-
-  /* Create the context of all existing images */
-  image_context = gimp_list_new (GIMP_TYPE_IMAGE, GIMP_CONTAINER_POLICY_WEAK);
-
-  gtk_object_ref (GTK_OBJECT (image_context));
-  gtk_object_sink (GTK_OBJECT (image_context));
-
-  /* Create the list of all named cut buffers */
-  named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, GIMP_CONTAINER_POLICY_STRONG);
-
-  gtk_object_ref (GTK_OBJECT (named_buffers));
-  gtk_object_sink (GTK_OBJECT (named_buffers));
-
-  /* Create the global data factories */
-  global_brush_factory =
-    gimp_data_factory_new (GIMP_TYPE_BRUSH,
-			   (const gchar **) &gimprc.brush_path,
-			   brush_loader_entries,
-			   n_brush_loader_entries,
-			   gimp_brush_new,
-			   gimp_brush_get_standard);
-
-  global_pattern_factory =
-    gimp_data_factory_new (GIMP_TYPE_PATTERN,
-			   (const gchar **) &gimprc.pattern_path,
-			   pattern_loader_entries,
-			   n_pattern_loader_entries,
-			   gimp_pattern_new,
-			   gimp_pattern_get_standard);
-
-  global_gradient_factory =
-    gimp_data_factory_new (GIMP_TYPE_GRADIENT,
-			   (const gchar **) &gimprc.gradient_path,
-			   gradient_loader_entries,
-			   n_gradient_loader_entries,
-			   gimp_gradient_new,
-			   gimp_gradient_get_standard);
-
-  global_palette_factory =
-    gimp_data_factory_new (GIMP_TYPE_PALETTE,
-			   (const gchar **) &gimprc.palette_path,
-			   palette_loader_entries,
-			   n_palette_loader_entries,
-			   gimp_palette_new,
-			   gimp_palette_get_standard);
-
-  /*  Create the global tool info list  */
-  tool_manager_init ();
-
   /*  Implicitly create the standard context  */
-  standard_context = gimp_context_get_standard ();
+  standard_context = gimp_context_get_standard (the_gimp);
 
   /*  TODO: load from disk  */
-  default_context = gimp_context_new ("Default", NULL);
+  default_context = gimp_context_new (the_gimp, "Default", NULL);
 
   gimp_context_set_default (default_context);
 
   /*  Initialize the user context with the default context's values  */
-  user_context = gimp_context_new ("User", default_context);
+  user_context = gimp_context_new (default_context->gimp,
+				   "User", default_context);
   gimp_context_set_user (user_context);
 
   /*  Update the tear-off menus  */
@@ -276,7 +165,8 @@ context_manager_init (void)
   /*  Create a context to store the paint options of the
    *  global paint options mode
    */
-  global_tool_context = gimp_context_new ("Global Tool Context", user_context);
+  global_tool_context = gimp_context_new (user_context->gimp,
+					  "Global Tool Context", user_context);
 
   /*  TODO: add foreground, background, brush, pattern, gradient  */
   gimp_context_define_args (global_tool_context, PAINT_OPTIONS_MASK, FALSE);
@@ -294,7 +184,7 @@ context_manager_init (void)
       gimp_context_set_parent (global_tool_context, user_context);
     }
 
-  gimp_container_thaw (global_tool_info_list);
+  gimp_container_thaw (the_gimp->tool_info_list);
 }
 
 void
@@ -310,23 +200,6 @@ context_manager_free (void)
   /*  TODO: Save to disk before destroying  */
   gtk_object_unref (GTK_OBJECT (gimp_context_get_default ()));
   gimp_context_set_default (NULL);
-
-  gimp_data_factory_data_free (global_brush_factory);
-  gimp_data_factory_data_free (global_pattern_factory);
-  gimp_data_factory_data_free (global_gradient_factory);
-  gimp_data_factory_data_free (global_palette_factory);
-
-  gtk_object_unref (GTK_OBJECT (named_buffers));
-  named_buffers = NULL;
-
-  if (global_buffer)
-    {
-      tile_manager_destroy (global_buffer);
-      global_buffer = NULL;
-    }
-
-  gtk_object_unref (GTK_OBJECT (image_context));
-  image_context = NULL;
 }
 
 void

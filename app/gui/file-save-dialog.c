@@ -44,6 +44,7 @@
 #include "gdisplay.h"
 #include "menus.h"
 
+#include "app_procs.h"
 #include "gimprc.h"
 #include "file-save.h"
 #include "file-utils.h"
@@ -410,7 +411,7 @@ file_save_ok_callback (GtkWidget *widget,
 	  if (!the_drawable)
 	    return;
 
-	  proc_rec = procedural_db_lookup ("plug_in_the_slimy_egg");
+	  proc_rec = procedural_db_lookup (the_gimp, "plug_in_the_slimy_egg");
 	  if (!proc_rec)
 	    break;
 

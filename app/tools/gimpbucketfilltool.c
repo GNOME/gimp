@@ -355,7 +355,8 @@ gimp_bucket_fill_tool_button_release (GimpTool       *tool,
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       return_vals =
-	procedural_db_run_proc ("gimp_bucket_fill",
+	procedural_db_run_proc (gdisp->gimage->gimp,
+				"gimp_bucket_fill",
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
 				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,

@@ -28,7 +28,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage-convert.h"
@@ -40,15 +40,16 @@ static ProcRecord convert_grayscale_proc;
 static ProcRecord convert_indexed_proc;
 
 void
-register_convert_procs (void)
+register_convert_procs (Gimp *gimp)
 {
-  procedural_db_register (&convert_rgb_proc);
-  procedural_db_register (&convert_grayscale_proc);
-  procedural_db_register (&convert_indexed_proc);
+  procedural_db_register (gimp, &convert_rgb_proc);
+  procedural_db_register (gimp, &convert_grayscale_proc);
+  procedural_db_register (gimp, &convert_indexed_proc);
 }
 
 static Argument *
-convert_rgb_invoker (Argument *args)
+convert_rgb_invoker (Gimp     *gimp,
+                     Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -90,7 +91,8 @@ static ProcRecord convert_rgb_proc =
 };
 
 static Argument *
-convert_grayscale_invoker (Argument *args)
+convert_grayscale_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -132,7 +134,8 @@ static ProcRecord convert_grayscale_proc =
 };
 
 static Argument *
-convert_indexed_invoker (Argument *args)
+convert_indexed_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -194,11 +197,11 @@ convert_indexed_invoker (Argument *args)
 	      break;
     
 	    case CUSTOM_PALETTE:
-	      if (! global_palette_factory->container->num_children)
-		gimp_data_factory_data_init (global_palette_factory, FALSE);
+	      if (! gimp->palette_factory->container->num_children)
+		gimp_data_factory_data_init (gimp->palette_factory, FALSE);
     
 	      palette = (GimpPalette *)
-		gimp_container_get_child_by_name (global_palette_factory->container,
+		gimp_container_get_child_by_name (gimp->palette_factory->container,
 						  palette_name);
     
 	      if (palette == NULL)

@@ -30,6 +30,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
@@ -50,7 +51,6 @@
 #include "file-commands.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
-#include "gdisplay.h"
 #include "image-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
@@ -60,6 +60,8 @@
 #include "tools-commands.h"
 #include "view-commands.h"
 
+#include "app_procs.h"
+#include "gdisplay.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 
@@ -2242,7 +2244,7 @@ menus_init (void)
 		      TRUE);
 
 
-  for (list = GIMP_LIST (global_tool_info_list)->list;
+  for (list = GIMP_LIST (the_gimp->tool_info_list)->list;
        list;
        list = g_list_next (list))
     {

@@ -25,8 +25,8 @@
 
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
-#include "tools/tools-types.h" /* FIXME: remove as soon as paths-dialog.* is gone */
 
+#include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
@@ -47,8 +47,6 @@
 #include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
-
-#include "tools/tool_manager.h"
 
 #include "about-dialog.h"
 #include "brush-editor.h"
@@ -72,7 +70,7 @@
 #include "tool-options-dialog.h"
 #include "toolbox.h"
 
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "module_db.h"
@@ -219,7 +217,7 @@ dialogs_indexed_palette_get (GimpDialogFactory *factory,
 {
   GimpColormapDialog *cmap_dlg;
 
-  cmap_dlg = gimp_colormap_dialog_create (image_context);
+  cmap_dlg = gimp_colormap_dialog_create (context->gimp->images);
 
   gtk_signal_connect (GTK_OBJECT (cmap_dlg), "selected",
 		      GTK_SIGNAL_FUNC (dialogs_indexed_palette_selected),
@@ -288,7 +286,7 @@ GtkWidget *
 dialogs_dock_new (GimpDialogFactory *factory,
 		  GimpContext       *context)
 {
-  return gimp_image_dock_new (factory, image_context);
+  return gimp_image_dock_new (factory, context->gimp->images);
 }
 
 
@@ -300,7 +298,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (image_context,
+  view = gimp_container_list_view_new (context->gimp->images,
 				       context,
 				       32,
 				       5, 3);
@@ -318,7 +316,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				      global_brush_factory,
+				      context->gimp->brush_factory,
 				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
@@ -338,7 +336,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     global_pattern_factory,
+				     context->gimp->pattern_factory,
 				     NULL,
 				     context,
 				     32,
@@ -357,7 +355,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     global_gradient_factory,
+				     context->gimp->gradient_factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     32 / 2,
@@ -376,7 +374,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     global_palette_factory,
+				     context->gimp->palette_factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     32,
@@ -394,7 +392,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (global_tool_info_list,
+  view = gimp_container_list_view_new (context->gimp->tool_info_list,
 				       context,
 				       22,
 				       5, 3);
@@ -412,7 +410,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_buffer_view_new (GIMP_VIEW_TYPE_LIST,
-			       named_buffers,
+			       context->gimp->named_buffers,
 			       context,
 			       32,
 			       5, 3);
@@ -432,7 +430,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (image_context,
+  view = gimp_container_grid_view_new (context->gimp->images,
 				       context,
 				       32,
 				       5, 3);
@@ -450,7 +448,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				      global_brush_factory,
+				      context->gimp->brush_factory,
 				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
@@ -470,7 +468,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_pattern_factory,
+				     context->gimp->pattern_factory,
 				     NULL,
 				     context,
 				     32,
@@ -489,7 +487,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_gradient_factory,
+				     context->gimp->gradient_factory,
 				     dialogs_edit_gradient_func,
 				     context,
 				     32,
@@ -508,7 +506,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_palette_factory,
+				     context->gimp->palette_factory,
 				     dialogs_edit_palette_func,
 				     context,
 				     32,
@@ -526,7 +524,7 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (global_tool_info_list,
+  view = gimp_container_grid_view_new (context->gimp->tool_info_list,
 				       context,
 				       22,
 				       5, 3);
@@ -544,7 +542,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_buffer_view_new (GIMP_VIEW_TYPE_GRID,
-			       named_buffers,
+			       context->gimp->named_buffers,
 			       context,
 			       32,
 			       5, 3);

@@ -30,7 +30,7 @@
 #include "procedural_db.h"
 
 #include "base/base-types.h"
-#include "context_manager.h"
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
@@ -43,11 +43,11 @@ static ProcRecord brushes_close_popup_proc;
 static ProcRecord brushes_set_popup_proc;
 
 void
-register_brush_select_procs (void)
+register_brush_select_procs (Gimp *gimp)
 {
-  procedural_db_register (&brushes_popup_proc);
-  procedural_db_register (&brushes_close_popup_proc);
-  procedural_db_register (&brushes_set_popup_proc);
+  procedural_db_register (gimp, &brushes_popup_proc);
+  procedural_db_register (gimp, &brushes_close_popup_proc);
+  procedural_db_register (gimp, &brushes_set_popup_proc);
 }
 
 static BrushSelect *
@@ -68,7 +68,8 @@ brush_get_brushselect (gchar *name)
 }
 
 static Argument *
-brushes_popup_invoker (Argument *args)
+brushes_popup_invoker (Gimp     *gimp,
+                       Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -100,7 +101,7 @@ brushes_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)))
+      if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (brush && strlen (brush))
 	    newdialog = brush_select_new (title, brush, opacity, spacing,
@@ -169,7 +170,8 @@ static ProcRecord brushes_popup_proc =
 };
 
 static Argument *
-brushes_close_popup_invoker (Argument *args)
+brushes_close_popup_invoker (Gimp     *gimp,
+                             Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -182,7 +184,7 @@ brushes_close_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)) &&
+      if ((prec = procedural_db_lookup (gimp, name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
 	  if (GTK_WIDGET_VISIBLE (bsp->shell))
@@ -228,7 +230,8 @@ static ProcRecord brushes_close_popup_proc =
 };
 
 static Argument *
-brushes_set_popup_invoker (Argument *args)
+brushes_set_popup_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -257,11 +260,11 @@ brushes_set_popup_invoker (Argument *args)
 
   if (success)
     {
-      if ((prec = procedural_db_lookup (name)) &&
+      if ((prec = procedural_db_lookup (gimp, name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
 	  GimpObject *object =
-	    gimp_container_get_child_by_name (global_brush_factory->container,
+	    gimp_container_get_child_by_name (gimp->brush_factory->container,
 					      brush_name);
     
 	  if (object)

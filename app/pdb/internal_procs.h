@@ -21,6 +21,6 @@
 #ifndef __INTERNAL_PROCS_H__
 #define __INTERNAL_PROCS_H__
 
-void internal_procs_init (void);
+void internal_procs_init (Gimp *gimp);
 
 #endif /* __INTERNAL_PROCS_H__ */

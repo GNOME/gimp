@@ -24,6 +24,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -44,15 +45,14 @@
 #include "gimpsmudgetool.h"
 
 #include "appenv.h"
-#include "context_manager.h"
+#include "app_procs.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /*  Global Data  */
-GimpTool      *active_tool           = NULL;
-GimpContainer *global_tool_info_list = NULL;
+GimpTool *active_tool = NULL;
 
 
 static GSList *tool_stack = NULL;
@@ -139,7 +139,7 @@ tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
     {
       GList *list;
 
-      for (list = GIMP_LIST (global_tool_info_list)->list;
+      for (list = GIMP_LIST (the_gimp->tool_info_list)->list;
 	   list;
 	   list = g_list_next (list))
 	{
@@ -261,13 +261,6 @@ tools_register (ToolType     tool_type,
 
 
 void
-tool_manager_init (void)
-{
-  global_tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO,
-					 GIMP_CONTAINER_POLICY_STRONG);
-}
-
-void
 tool_manager_register_tool (GtkType       tool_type,
 			    gboolean      tool_context,
 			    const gchar  *identifier,
@@ -292,7 +285,7 @@ tool_manager_register_tool (GtkType       tool_type,
 				  help_data,
 				  icon_data);
 
-  gimp_container_add (global_tool_info_list, GIMP_OBJECT (tool_info));
+  gimp_container_add (the_gimp->tool_info_list, GIMP_OBJECT (tool_info));
 }
 
 void
@@ -319,7 +312,7 @@ tool_manager_get_info_by_type (GtkType tool_type)
   GimpToolInfo *tool_info;
   GList        *list;
 
-  for (list = GIMP_LIST (global_tool_info_list)->list;
+  for (list = GIMP_LIST (the_gimp->tool_info_list)->list;
        list;
        list = g_list_next (list))
     {

@@ -25,6 +25,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-convert.h"
@@ -34,10 +35,9 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
+#include "app_procs.h"
 #include "gdisplay.h"
 #include "palette-select.h"
-
-#include "context_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -430,7 +430,7 @@ build_palette_button (void)
 
   UserHasWebPal = FALSE;
 
-  list = GIMP_LIST (global_palette_factory->container)->list;
+  list = GIMP_LIST (the_gimp->palette_factory->container)->list;
 
   if (! list)
     {
@@ -473,7 +473,7 @@ build_palette_button (void)
 	 }
        else
 	 {
-	   for (i = 0, list = GIMP_LIST (global_palette_factory->container)->list;
+	   for (i = 0, list = GIMP_LIST (the_gimp->palette_factory->container)->list;
 		list && default_palette == -1;
 		i++, list = g_list_next (list))
 	     {

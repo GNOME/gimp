@@ -56,11 +56,12 @@ base_init (void)
 {
   gchar *path;
 
+  toast_old_temp_files ();
+
   /* Add the swap file  */
   if (base_config->swap_path == NULL)
     base_config->swap_path = g_get_tmp_dir ();
 
-  toast_old_temp_files ();
   path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
 			  base_config->swap_path,
 			  (unsigned long) getpid ());

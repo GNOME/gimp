@@ -30,11 +30,7 @@
 #include "base/base-config.h"
 #include "base/temp-buf.h"
 
-/* FIXME: make a GimpToolFactory out of the tool_manager and put it here */
-#include "tools/tools-types.h"
-
-#include "tools/tool_manager.h"
-
+#include "gimp.h"
 #include "gimpbrush.h"
 #include "gimpbuffer.h"
 #include "gimpcontainer.h"
@@ -47,7 +43,6 @@
 #include "gimppattern.h"
 #include "gimptoolinfo.h"
 
-#include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 
@@ -540,6 +535,8 @@ gimp_context_class_init (GimpContextClass *klass)
 static void
 gimp_context_init (GimpContext *context)
 {
+  context->gimp          = NULL;
+
   context->parent        = NULL;
 
   context->defined_args  = GIMP_CONTEXT_ALL_ARGS_MASK;
@@ -792,14 +789,19 @@ gimp_context_get_type (void)
 }
 
 GimpContext *
-gimp_context_new (const gchar *name,
+gimp_context_new (Gimp        *gimp,
+		  const gchar *name,
 		  GimpContext *template)
 {
   GimpContext *context;
 
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
 
   context = gtk_type_new (GIMP_TYPE_CONTEXT);
+
+  context->gimp = gimp;
 
   /*  FIXME: need unique names here  */
   if (! name)
@@ -807,72 +809,72 @@ gimp_context_new (const gchar *name,
 
   gimp_object_set_name (GIMP_OBJECT (context), name);
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (image_context), "remove",
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->images), "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_image_removed),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_tool_info_list),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->tool_info_list),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_tool_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_tool_info_list),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->tool_info_list),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_tool_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->brush_factory->container),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->brush_factory->container),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_brush_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->pattern_factory->container),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_pattern_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_pattern_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->pattern_factory->container),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_pattern_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->gradient_factory->container),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_gradient_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_gradient_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->gradient_factory->container),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_gradient_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->palette_factory->container),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_palette_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_factory->container),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->palette_factory->container),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_palette_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (named_buffers),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->named_buffers),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_buffer_removed),
 				  context,
 				  GTK_OBJECT (context));
-  gtk_signal_connect_while_alive (GTK_OBJECT (named_buffers),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp->named_buffers),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_buffer_list_thaw),
 				  context,
@@ -928,11 +930,14 @@ gimp_context_set_default (GimpContext *context)
 }
 
 GimpContext *
-gimp_context_get_standard (void)
+gimp_context_get_standard (Gimp *gimp)
 {
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   if (! standard_context)
     {
-      standard_context = gimp_context_new ("Standard", NULL);
+      standard_context = gimp_context_new (gimp, "Standard", NULL);
 
       gtk_quit_add_destroy (TRUE, GTK_OBJECT (standard_context));
     }
