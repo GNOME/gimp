@@ -24,6 +24,8 @@ DEPS = \
 
 libgpc_aDEPENDENCIES = $(DEPS)
 
+EXTRA_DIST=gpc.3 gpc.man
+
 man_MANS=gpc.3
 
 .PHONY: files
