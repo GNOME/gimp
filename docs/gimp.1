@@ -5,8 +5,8 @@ Gimp - an image manipulation and paint program.
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP] [\-n] [\-\-no\-interface]
 [\-\-no\-data] [\-\-verbose] [\-\-no\-shm] [\-\-no\-xshm] [\-\-display \fIdisplay\fP]
-[\-\-no\-splash] [\-\-no\-splash\-image] [\-\-sync] [\-\-show\-events] [\-\-no\-show\-events] 
-[\-\-debug\-level \fIlevel\fP]
+[\-\-no\-splash] [\-\-no\-splash\-image] 
+
 
 .SH DESCRIPTION
 .PP
@@ -49,7 +49,7 @@ Do not load patterns, gradients, palettes, or brushes. Often useful
 in non-interactive situations where startup time is to be minimized.
 .TP 8
 .B \-\-verbose
-Show startup messages. FIXME!
+Show startup messages.
 .TP 8 
 .B \-\-no\-shm
 Do not use shared memory between GIMP and its plugins. 
@@ -70,18 +70,6 @@ Do not show the splash screen.
 .TP 8
 .B \-\-no\-splash\-image
 Do not show the splash screen image as part of the splash screen.
-.TP 8
-.B \-\-sync
-Send X commands synchronously.
-.TP 8
-.B \-\-show\-events
-Show GDK events.
-.TP 8
-.B \-\-no\-show\-events
-Dont show GDK events.
-.TP 8
-.B \-\-debug-\-level \fIlevel\fP
-Provide debug output at designated level.
 
 .SH ENVIRONMENT
 .PP
@@ -214,10 +202,10 @@ Tom Bech, Marc Bless, Edward Blevins, Roberto Boyd,
 Seth Burgess, Brent Burton, Ed Connel, Andreas Dilger,
 Larry Ewing, David Forsyth, Jim Geuther, Scott Goehring,
 Heiko Goller, Michael Hammel, Christoph Hoegl, 
-Jan Hubicka, Simon Janes, Tim Janik, Tuomas Kuosmanen, 
-Peter Kirchgessner, Karl LaRocca, Jens Lautenbacher,
-Laramie Leavitt, Raph Levien, Adrian Likins,
-Ingo Luetkebohle, Josh MacDonald, Ed Mackey,
+Jan Hubicka, Simon Janes, Ben Jackson, Tim Janik,
+Tuomas Kuosmanen, Peter Kirchgessner, Karl LaRocca, 
+Jens Lautenbacher, Laramie Leavitt, Raph Levien,
+Adrian Likins, Ingo Luetkebohle, Josh MacDonald, Ed Mackey,
 Marcelo Malheiros, Ian Main, Torsten Martinsen,
 Federico Mena, Adam D. Moss, Shuji Narazaki,
 Sven Neumann, Stephen Robert Norris, Erik Nygren,

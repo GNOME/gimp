@@ -1,3 +1,9 @@
+Sat Mar 14 20:52:06 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* doc/gimp.1
+	* app/main.c: some updates to reflect that none of
+	  "valid debugging options" do anything anymore
+     
 Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* updated to use libtool 1.1

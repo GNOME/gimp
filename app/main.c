@@ -186,11 +186,7 @@ main (int argc, char **argv)
       g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
       g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
       g_print ("  --display <display>    Use the designated X display.\n\n");
-      g_print ("Valid debugging options are:\n");
-      g_print ("  --sync                 Send X commands synchronously.\n");
-      g_print ("  --show-events          Show GDK events.\n");
-      g_print ("  --no-show-events       Don't show GDK events.\n");
-      g_print ("  --debug-level <level>  Provide debug output at designated level.\n");
+
     }
 
   if (show_version || show_help)
