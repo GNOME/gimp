@@ -44,4 +44,4 @@
 
 /* Procedures */
 
-gint rcm_dialog (void);
+gboolean  rcm_dialog (void);

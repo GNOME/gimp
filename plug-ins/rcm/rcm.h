@@ -53,15 +53,15 @@ typedef enum { VIRGIN, DRAG_START, DRAGING, DO_NOTHING } RcmOp;
 
 typedef struct
 {
-  float  alpha;
-  float  beta;
-  int    cw_ccw;
+  gfloat   alpha;
+  gfloat   beta;
+  gint     cw_ccw;
 } RcmAngle;
 
 typedef struct
 {
-  gint    width;
-  gint    height;
+  gint     width;
+  gint     height;
   guchar  *rgb;
   gdouble *hsv;
   guchar  *mask;
@@ -87,10 +87,10 @@ typedef struct
   GtkWidget  *beta_entry;
   GtkWidget  *beta_units_label;
   gfloat     *target;
-  gint       mode;
+  gint        mode;
   RcmAngle   *angle;
-  RcmOp      action_flag;
-  gfloat     prev_clicked;
+  RcmOp       action_flag;
+  gfloat      prev_clicked;
 } RcmCircle;
 
 typedef struct
@@ -105,24 +105,23 @@ typedef struct
 {
   GtkWidget  *preview;
   GtkWidget  *frame;
-  float      gray_sat;
-  float      hue;
-  float      satur;
-  GtkWidget  *gray_sat_entry;
+  gfloat      gray_sat;
+  gfloat      hue;
+  gfloat      satur;
   GtkWidget  *hue_entry;
   GtkWidget  *hue_units_label;
   GtkWidget  *satur_entry;
-  RcmOp      action_flag;
+  RcmOp       action_flag;
 } RcmGray;
 
 typedef struct
 {
-  gint          Slctn;
-  gint          RealTime;
-  gint          Units;
-  gint          Gray_to_from;
-  GimpDrawable     *drawable;
-  GimpDrawable     *mask;
+  gint           Slctn;
+  gint           RealTime;
+  gint           Units;
+  gint           Gray_to_from;
+  GimpDrawable  *drawable;
+  GimpDrawable  *mask;
   ReducedImage  *reduced;
   RcmCircle     *To;
   RcmCircle     *From;
