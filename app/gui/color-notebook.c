@@ -325,6 +325,9 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
                                       NULL);
 
+      gtk_window_set_type_hint (GTK_WINDOW (cnp->shell),
+                                GDK_WINDOW_TYPE_HINT_NORMAL);
+
       gtk_dialog_set_has_separator (GTK_DIALOG (cnp->shell), FALSE);
       gtk_widget_hide (GTK_DIALOG (cnp->shell)->action_area);
     }
