@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
-"POT-Creation-Date: 2003-12-27 17:04+0100\n"
-"PO-Revision-Date: 2003-12-20 23:39+0100\n"
+"POT-Creation-Date: 2004-01-02 12:18+0100\n"
+"PO-Revision-Date: 2004-01-02 12:18+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5984,7 +5984,7 @@ msgstr "Analisi campione..."
 
 #: plug-ins/common/sample_colorize.c:3046
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Rimappa colorati..."
 
 #: plug-ins/common/scatter_hsv.c:137
 msgid "<Image>/Filters/Noise/S_catter HSV..."
@@ -6004,7 +6004,7 @@ msgstr "Anteprima (1:4) - clic con tasto destro per saltare"
 
 #: plug-ins/common/scatter_hsv.c:399
 msgid "_Holdness:"
-msgstr ""
+msgstr "_Tenuta:"
 
 #: plug-ins/common/scatter_hsv.c:408
 msgid "H_ue:"
@@ -6759,6 +6759,7 @@ msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #: plug-ins/common/svg.c:822
+#, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
@@ -10898,10 +10899,21 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"Posizione dell'immagine nella pagina.\n"
+"Fare clic e trascinare con il primo tasto per posizionare l'immagine.\n"
+"Fare clic e trascinare con il secondo tasto per spostare l'immagine con una "
+"precisione migliore; ogni unità di moto sposta l'immagine di un punto "
+"(1/72).\n"
+"Fare clic e trascinare con il terzo tasto (al centro) per spostare "
+"l'immagine in unità dell'ampiezza dell'immagine.\n"
+"Mantenendo premuto il tasto MAIUSC mentre si fa clic e si trascina blocca "
+"l'immagine nel movimento verticale o orizzontale.\n"
+"Se si preme un qualsiasi altro tasto durante lo spostamento del mouse "
+"l'immagine tornerà alla sua posizione originale."
 
 #: plug-ins/print/gimp_main_window.c:484
 msgid "Portrait"
-msgstr "Ritratto"
+msgstr "Verticale"
 
 #: plug-ins/print/gimp_main_window.c:486
 msgid "Landscape"
@@ -10909,29 +10921,31 @@ msgstr "Orizzontale"
 
 #: plug-ins/print/gimp_main_window.c:488
 msgid "Upside down"
-msgstr "Rovesciata"
+msgstr "Capovolta verticale"
 
 #: plug-ins/print/gimp_main_window.c:490
 msgid "Seascape"
-msgstr "Panoramica al contrario"
+msgstr "Capovolta orizzontale"
 
 #: plug-ins/print/gimp_main_window.c:494
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
+"Seleziona l'orientamento: verticale, orizzontale, capovolta verticale o "
+"capovolta orizzontale"
 
 #: plug-ins/print/gimp_main_window.c:517
 msgid "Distance from the left of the paper to the image"
-msgstr ""
+msgstr "Distanza dalla sinistra del foglio all'immagine"
 
 #: plug-ins/print/gimp_main_window.c:530
 msgid "Distance from the top of the paper to the image"
-msgstr ""
+msgstr "Distanza dalla cima del foglio all'immagine"
 
 #: plug-ins/print/gimp_main_window.c:543
 msgid "Distance from the left of the paper to the right of the image"
-msgstr ""
+msgstr "Distanza dalla sinistra del foglio alla destra dell'immagine"
 
 #: plug-ins/print/gimp_main_window.c:553
 msgid "Right Border:"
@@ -10939,11 +10953,11 @@ msgstr "Bordo destro:"
 
 #: plug-ins/print/gimp_main_window.c:557
 msgid "Distance from the right of the paper to the image"
-msgstr ""
+msgstr "Distanza dalla destra del foglio all'immagine"
 
 #: plug-ins/print/gimp_main_window.c:571
 msgid "Distance from the top of the paper to the bottom of the image"
-msgstr ""
+msgstr "Distanza dalla cima del foglio al fondo dell'immagine"
 
 #: plug-ins/print/gimp_main_window.c:581
 msgid "Bottom Border:"
@@ -10951,7 +10965,7 @@ msgstr "Bordo inferiore:"
 
 #: plug-ins/print/gimp_main_window.c:585
 msgid "Distance from the bottom of the paper to the image"
-msgstr ""
+msgstr "Distanza dal fondo del foglio all'immagine"
 
 #: plug-ins/print/gimp_main_window.c:602
 msgid "Center:"
@@ -11028,6 +11042,8 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
+"Immettere il comando necessario per stampare. Nota: non rimuovere le opzioni "
+"-l o -oraw dal comando o la stampa probabilmente fallirà!"
 
 #.
 #. * Output file selection dialog.
@@ -11053,15 +11069,15 @@ msgstr "Nome stampante:"
 
 #: plug-ins/print/gimp_main_window.c:846
 msgid "Enter the name you wish to give this logical printer"
-msgstr ""
+msgstr "Immettere il nome che si vuole dare a questa stampante logica"
 
 #: plug-ins/print/gimp_main_window.c:859
 msgid "About Gimp-Print "
-msgstr ""
+msgstr "Informazioni su Gimp-Print"
 
 #: plug-ins/print/gimp_main_window.c:872
 msgid "Gimp-Print Version "
-msgstr ""
+msgstr "Versione di Gimp-Print"
 
 #: plug-ins/print/gimp_main_window.c:872
 msgid ""
@@ -11086,6 +11102,29 @@ msgid ""
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
+"\n"
+"\n"
+"Tutti i diritti riservati (C) Michael Sweet, Robert Krawitz,\n"
+"e tutto il resto del gruppo di sviluppo di Gimp-Print.\n"
+"\n"
+"Visitate il nostro sito web su http://gimp-print.sourceforge.net.\n"
+"\n"
+"Questo programma è software libero; è possibile ridistribuirlo e/o "
+"modificarlo\n"
+"nei termini della licenza GNU General Public License come pubblicato dalla\n"
+"Free Software Foundation; versione 2 della licenza o (a vostro piacimento)\n"
+"qualsiasi versione successiva.\n"
+"\n"
+"Questo programma è distribuito nella speranza che sia utile,\n"
+"ma SENZA ALCUNA GARANZIA; senza neanche la garanzia implicita di\n"
+"VENDIBILITà o che sia ADATTO AD UNO SCOPO PARTICOLARE. Vedere la\n"
+"licenza GNU General Public License per i dettagli in merito.\n"
+"\n"
+"Si dovrebbe aver ricevuto una copia della licenza GNU General Public "
+"License\n"
+"con questo programma; se così non è, scrivete alla Free Software "
+"Foundation,\n"
+"Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 
 #: plug-ins/print/gimp_main_window.c:920
 msgid "Printer Settings"
@@ -11254,7 +11293,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1304
 msgid "Set the print size to the size of the image"
-msgstr ""
+msgstr "Imposta l'ampiezza della stampa all'ampiezza dell'immagine"
 
 #: plug-ins/print/gimp_main_window.c:1327
 msgid "Image / Output Settings"
@@ -11266,7 +11305,7 @@ msgstr "Tipo immagine:"
 
 #: plug-ins/print/gimp_main_window.c:1345
 msgid "Optimize the output for the type of image being printed"
-msgstr ""
+msgstr "Ottimizza il risultato in base al tipo di immagine da stampare"
 
 #: plug-ins/print/gimp_main_window.c:1349
 msgid "Line Art"
@@ -11384,11 +11423,11 @@ msgstr "A"
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:509
 msgid "Treat as this"
-msgstr ""
+msgstr "Trattalo come"
 
 #: plug-ins/rcm/rcm_dialog.c:521
 msgid "Change to this"
-msgstr ""
+msgstr "Cambialo in"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:534
@@ -11521,7 +11560,7 @@ msgstr "Il file XJT contiene una modalità livello sconosciuta %d"
 #: plug-ins/xjt/xjt.c:752
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr "Attenzione: modalità livello non supportata %s salvata sul file XJT"
+msgstr "Attenzione: modalità livello non supportata %d salvata sul file XJT"
 
 #: plug-ins/xjt/xjt.c:768
 #, c-format
