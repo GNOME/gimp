@@ -1,3 +1,7 @@
+2005-02-18  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added bg.po.
+
 2005-02-18  Alexander Shopov  <ash@contact.bg>
 
 	* bg.po: Added Bulgarian translation by
