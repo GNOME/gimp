@@ -233,7 +233,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  "dock-window-type",
                                  DOCK_WINDOW_TYPE_BLURB,
                                  GIMP_TYPE_WINDOW_TYPE_HINT,
-                                 GIMP_WINDOW_TYPE_HINT_UTILITY,
+                                 GIMP_WINDOW_TYPE_HINT_NORMAL,
                                  GIMP_PARAM_RESTART);
 }
 
