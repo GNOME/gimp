@@ -44,6 +44,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
 #include "file-dialog-utils.h"
@@ -94,7 +95,8 @@ void
 file_save_dialog_show (GimpImage       *gimage,
                        GimpMenuFactory *menu_factory)
 {
-  gchar *filename;
+  GimpItemFactory *item_factory;
+  gchar           *filename;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
@@ -127,8 +129,10 @@ file_save_dialog_show (GimpImage       *gimage,
 
   g_free (filename);
 
-  file_dialog_update_menus (gimage->gimp->save_procs,
-                            gimp_drawable_type (gimp_image_active_drawable (gimage)));
+  item_factory = g_object_get_data (G_OBJECT (filesave), "gimp-item-factory");
+
+  gimp_item_factory_update (item_factory,
+                            gimp_image_active_drawable (gimage));
 
   file_dialog_show (filesave);
 }
@@ -137,8 +141,9 @@ void
 file_save_a_copy_dialog_show (GimpImage       *gimage,
                               GimpMenuFactory *menu_factory)
 {
-  const gchar *uri;
-  gchar       *filename = NULL;
+  GimpItemFactory *item_factory;
+  const gchar     *uri;
+  gchar           *filename = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
@@ -172,8 +177,12 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
                                    filename :
                                    "." G_DIR_SEPARATOR_S);
 
-  file_dialog_update_menus (gimage->gimp->save_procs,
-                            gimp_drawable_type (gimp_image_active_drawable (gimage)));
+  g_free (filename);
+
+  item_factory = g_object_get_data (G_OBJECT (filesave), "gimp-item-factory");
+
+  gimp_item_factory_update (item_factory,
+                            gimp_image_active_drawable (gimage));
 
   file_dialog_show (filesave);
 }

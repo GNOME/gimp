@@ -20,21 +20,19 @@
 #define __FILE_DIALOG_UTILS_H__
 
 
-GtkWidget * file_dialog_new          (Gimp             *gimp,
-                                      GimpMenuFactory  *menu_factory,
-                                      const gchar      *menu_identifier,
-                                      const gchar      *title,
-                                      const gchar      *wmclass_name,
-                                      const gchar      *help_data,
-                                      GCallback         ok_callback);
+GtkWidget * file_dialog_new         (Gimp             *gimp,
+                                     GimpMenuFactory  *menu_factory,
+                                     const gchar      *menu_identifier,
+                                     const gchar      *title,
+                                     const gchar      *wmclass_name,
+                                     const gchar      *help_data,
+                                     GCallback         ok_callback);
 
-void        file_dialog_show         (GtkWidget        *filesel);
-gboolean    file_dialog_hide         (GtkWidget        *filesel);
+void        file_dialog_show        (GtkWidget        *filesel);
+gboolean    file_dialog_hide        (GtkWidget        *filesel);
 
-void        file_dialog_update_name  (PlugInProcDef    *proc,
-                                      GtkFileSelection *filesel);
-void        file_dialog_update_menus (GSList           *procs,
-                                      GimpImageType     image_type);
+void        file_dialog_update_name (PlugInProcDef    *proc,
+                                     GtkFileSelection *filesel);
 
 
 #endif /* __FILE_DIALOG_UTILS_H__ */

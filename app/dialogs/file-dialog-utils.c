@@ -100,6 +100,9 @@ file_dialog_new (Gimp            *gimp,
                                                GTK_TYPE_MENU,
                                                gimp,
                                                FALSE);
+
+    g_object_set_data (G_OBJECT (filesel), "gimp-item-factory", item_factory);
+
     option_menu = gtk_option_menu_new ();
     gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
@@ -176,55 +179,5 @@ file_dialog_update_name (PlugInProcDef    *proc,
       gtk_entry_set_text (GTK_ENTRY (filesel->selection_entry), s->str);
 
       g_string_free (s, TRUE);
-    }
-}
-
-void
-file_dialog_update_menus (GSList        *procs,
-			  GimpImageType  image_type)
-{
-  PlugInProcDef   *file_proc;
-  PlugInImageType  plug_in_image_type = 0;
-
-  switch (image_type)
-    {
-    case GIMP_RGB_IMAGE:
-      plug_in_image_type = PLUG_IN_RGB_IMAGE;
-      break;
-    case GIMP_RGBA_IMAGE:
-      plug_in_image_type = PLUG_IN_RGBA_IMAGE;
-      break;
-    case GIMP_GRAY_IMAGE:
-      plug_in_image_type = PLUG_IN_GRAY_IMAGE;
-      break;
-    case GIMP_GRAYA_IMAGE:
-      plug_in_image_type = PLUG_IN_GRAYA_IMAGE;
-      break;
-    case GIMP_INDEXED_IMAGE:
-      plug_in_image_type = PLUG_IN_INDEXED_IMAGE;
-      break;
-    case GIMP_INDEXEDA_IMAGE:
-      plug_in_image_type = PLUG_IN_INDEXEDA_IMAGE;
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-  for (; procs; procs = g_slist_next (procs))
-    {
-      file_proc = (PlugInProcDef *) procs->data;
-
-      if (file_proc->db_info.proc_type != GIMP_EXTENSION)
-        {
-          GtkItemFactory *item_factory;
-
-          item_factory =
-            GTK_ITEM_FACTORY (gimp_item_factory_from_path (file_proc->menu_path));
-
-          gimp_item_factory_set_sensitive (item_factory,
-                                           file_proc->menu_path,
-                                           (file_proc->image_types_val & plug_in_image_type));
-        }
     }
 }

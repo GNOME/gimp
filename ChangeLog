@@ -1,3 +1,13 @@
+2003-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-dialog-utils.[ch] (file_dialog_update_menus): removed.
+
+	* app/gui/file-save-menu.[ch] (file_save_menu_update): added here.
+
+	* app/gui/menus.c: register it as non-automatic update_func.
+
+	* app/gui/file-save-dialog.c: changed accordingly.
+
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-params.h

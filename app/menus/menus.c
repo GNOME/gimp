@@ -117,7 +117,8 @@ menus_init (Gimp *gimp)
 
   gimp_menu_factory_menu_register (global_menu_factory,
                                    "<Save>", "save",
-                                   file_save_menu_setup, NULL, FALSE,
+                                   file_save_menu_setup,
+                                   file_save_menu_update, FALSE,
                                    n_file_save_menu_entries,
                                    file_save_menu_entries);
 
