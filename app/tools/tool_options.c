@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "tool_options.h"
 

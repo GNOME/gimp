@@ -768,156 +768,110 @@ gdisplay_origin_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-gboolean
-gdisplay_drag_drop (GtkWidget      *widget,
-		    GdkDragContext *context,
-		    gint            x,
-		    gint            y,
-		    guint           time,
-		    gpointer        data)
+void
+gdisplay_drop_drawable (GtkWidget    *widget,
+			GimpViewable *viewable,
+			gpointer      data)
 {
-  GDisplay  *gdisp;
-  GtkWidget *src_widget;
-  gboolean   return_val = FALSE;
+  GimpDrawable     *drawable;
+  GDisplay         *gdisp;
+  GimpImage        *src_gimage;
+  GimpLayer        *new_layer;
+  GimpImage        *dest_gimage;
+  gint              src_width, src_height;
+  gint              dest_width, dest_height;
+  gint              off_x, off_y;
+  TileManager      *tiles;
+  PixelRegion       srcPR, destPR;
+  guchar            bg[MAX_CHANNELS];
+  gint              bytes; 
+  GimpImageBaseType type;
 
-  gdisp = (GDisplay *) data;
+  if (gimp_busy)
+    return;
 
-  if (!gimp_busy && (src_widget = gtk_drag_get_source_widget (context)))
+  drawable = GIMP_DRAWABLE (viewable);
+  gdisp    = (GDisplay *) data;
+
+  src_gimage = gimp_drawable_gimage (drawable);
+  src_width  = gimp_drawable_width  (drawable);
+  src_height = gimp_drawable_height (drawable);
+
+  switch (gimp_drawable_type (drawable))
     {
-      GimpDrawable  *drawable       = NULL;
-      GimpLayer     *layer          = NULL;
-      GimpChannel   *channel        = NULL;
-      GimpLayerMask *layer_mask     = NULL;
-      GimpImage     *component      = NULL;
-      ChannelType    component_type = -1;
-
-      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						 "gimp_layer");
-      channel = (GimpChannel *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						     "gimp_channel");
-      layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-							  "gimp_layer_mask");
-      component = (GimpImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						     "gimp_component");
-
-      if (layer)
-	{
-	  drawable = GIMP_DRAWABLE (layer);
-	}
-      else if (channel)
-	{
-	  drawable = GIMP_DRAWABLE (channel);
-	}
-      else if (layer_mask)
-	{
-	  drawable = GIMP_DRAWABLE (layer_mask);
-	}
-      else if (component)
-	{
-	  component_type =
-	    (ChannelType) gtk_object_get_data (GTK_OBJECT (src_widget),
-					       "gimp_component_type");
-	}
-
-      /*  FIXME: implement special treatment of channel etc.
-       */
-      if (drawable)
-	{
-          GimpImage        *src_gimage;
-	  GimpLayer        *new_layer;
-	  GimpImage        *dest_gimage;
-	  gint              src_width, src_height;
-	  gint              dest_width, dest_height;
-	  gint              off_x, off_y;
-	  TileManager      *tiles;
-	  PixelRegion       srcPR, destPR;
-	  guchar            bg[MAX_CHANNELS];
-	  gint              bytes; 
-          GimpImageBaseType type;
-
-	  src_gimage = gimp_drawable_gimage (drawable);
-          src_width  = gimp_drawable_width  (drawable);
-          src_height = gimp_drawable_height (drawable);
-
-	  /*  How many bytes in the temp buffer?  */
-	  switch (gimp_drawable_type (drawable))
-	    {
-	    case RGB_GIMAGE: case RGBA_GIMAGE:
-	      bytes = 4; type = RGB;
-	      break;
-	    case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	      bytes = 2; type = GRAY;
-	      break;
-	    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	      bytes = 4; type = INDEXED;
-	      break;
-	    default:
-	      bytes = 3; type = RGB;
-	      break;
-	    }
-
-	  gimp_image_get_background (src_gimage, drawable, bg);
-
-	  tiles = tile_manager_new (src_width, src_height, bytes);
-
-	  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			     0, 0, src_width, src_height, FALSE);
-	  pixel_region_init (&destPR, tiles,
-			     0, 0, src_width, src_height, TRUE);
-
-	  if (type == INDEXED)
-	    /*  If the layer is indexed...we need to extract pixels  */
-	    extract_from_region (&srcPR, &destPR, NULL,
-				 gimp_drawable_cmap (drawable), bg, type,
-				 gimp_drawable_has_alpha (drawable), FALSE);
-	  else if (bytes > srcPR.bytes)
-	    /*  If the layer doesn't have an alpha channel, add one  */
-	    add_alpha_region (&srcPR, &destPR);
-	  else
-	    /*  Otherwise, do a straight copy  */
-	    copy_region (&srcPR, &destPR);
-
-	  dest_gimage = gdisp->gimage;
-	  dest_width  = dest_gimage->width;
-	  dest_height = dest_gimage->height;
-
-	  undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
-
-	  new_layer =
-	    gimp_layer_new_from_tiles (dest_gimage,
-				       gimp_image_base_type_with_alpha (dest_gimage),
-				       tiles, 
-				       _("Pasted Layer"),
-				       OPAQUE_OPACITY, NORMAL_MODE);
-
-	  tile_manager_destroy (tiles);
-
-	  if (new_layer)
-	    {
-	      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
-
-	      off_x = (dest_gimage->width - src_width) / 2;
-	      off_y = (dest_gimage->height - src_height) / 2;
-
-	      gimp_layer_translate (new_layer, off_x, off_y);
-
-	      gimp_image_add_layer (dest_gimage, new_layer, -1);
-
-	      undo_push_group_end (dest_gimage);
-
-	      gdisplays_flush ();
-
-	      return_val = TRUE;
-	    }
-	}
+    case RGB_GIMAGE: case RGBA_GIMAGE:
+      bytes = 4; type = RGB;
+      break;
+    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+      bytes = 2; type = GRAY;
+      break;
+    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+      bytes = 4; type = INDEXED;
+      break;
+    default:
+      bytes = 3; type = RGB;
+      break;
     }
 
-  gtk_drag_finish (context, return_val, FALSE, time);
+  gimp_image_get_background (src_gimage, drawable, bg);
 
-  if (return_val)
-    gimp_context_set_display (gimp_context_get_user (), gdisp);
+  tiles = tile_manager_new (src_width, src_height, bytes);
 
-  return return_val;
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+		     0, 0, src_width, src_height, FALSE);
+  pixel_region_init (&destPR, tiles,
+		     0, 0, src_width, src_height, TRUE);
+
+  if (type == INDEXED)
+    {
+      /*  If the layer is indexed...we need to extract pixels  */
+      extract_from_region (&srcPR, &destPR, NULL,
+			   gimp_drawable_cmap (drawable), bg, type,
+			   gimp_drawable_has_alpha (drawable), FALSE);
+    }
+  else if (bytes > srcPR.bytes)
+    {
+      /*  If the layer doesn't have an alpha channel, add one  */
+      add_alpha_region (&srcPR, &destPR);
+    }
+  else
+    {
+      /*  Otherwise, do a straight copy  */
+      copy_region (&srcPR, &destPR);
+    }
+
+  dest_gimage = gdisp->gimage;
+  dest_width  = dest_gimage->width;
+  dest_height = dest_gimage->height;
+
+  undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
+
+  new_layer =
+    gimp_layer_new_from_tiles (dest_gimage,
+			       gimp_image_base_type_with_alpha (dest_gimage),
+			       tiles, 
+			       _("Pasted Layer"),
+			       OPAQUE_OPACITY, NORMAL_MODE);
+
+  tile_manager_destroy (tiles);
+
+  if (new_layer)
+    {
+      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
+
+      off_x = (dest_gimage->width - src_width) / 2;
+      off_y = (dest_gimage->height - src_height) / 2;
+
+      gimp_layer_translate (new_layer, off_x, off_y);
+
+      gimp_image_add_layer (dest_gimage, new_layer, -1);
+
+      undo_push_group_end (dest_gimage);
+
+      gdisplays_flush ();
+
+      gimp_context_set_display (gimp_context_get_user (), gdisp);
+    }
 }
 
 static void
@@ -1034,6 +988,18 @@ gdisplay_bucket_fill (GtkWidget      *widget,
 }
 
 void
+gdisplay_drop_pattern (GtkWidget    *widget,
+		       GimpViewable *viewable,
+		       gpointer      data)
+{
+  if (GIMP_IS_PATTERN (viewable))
+    {
+      gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL,
+			    GIMP_PATTERN (viewable)->mask, data);
+    }
+}
+
+void
 gdisplay_drop_color (GtkWidget     *widget,
 		     const GimpRGB *drop_color,
 		     gpointer       data)
@@ -1047,16 +1013,4 @@ gdisplay_drop_color (GtkWidget     *widget,
 		       &color[3]);
 
   gdisplay_bucket_fill (widget, FG_BUCKET_FILL, color, NULL, data);
-}
-
-void
-gdisplay_drop_pattern (GtkWidget    *widget,
-		       GimpViewable *viewable,
-		       gpointer      data)
-{
-  if (GIMP_IS_PATTERN (viewable))
-    {
-      gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL,
-			    GIMP_PATTERN (viewable)->mask, data);
-    }
 }

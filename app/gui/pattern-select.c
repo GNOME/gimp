@@ -59,11 +59,6 @@ static void     pattern_select_pattern_changed        (GimpContext   *context,
 						       GimpPattern   *pattern,
 						       PatternSelect *psp);
 
-static void     pattern_select_pattern_dirty_callback (GimpPattern   *brush,
-						       PatternSelect *psp);
-
-static void     pattern_select_update_active_pattern_field (PatternSelect *psp);
-
 static void     pattern_select_close_callback         (GtkWidget     *widget,
 						       gpointer       data);
 
@@ -106,7 +101,6 @@ pattern_select_new (gchar *title,
 {
   PatternSelect *psp;
   GtkWidget     *vbox;
-  GtkWidget     *label_box;
 
   GimpPattern *active = NULL;
 
@@ -169,24 +163,6 @@ pattern_select_new (gchar *title,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), vbox);
 
-  /*  Options box  */
-  psp->options_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), psp->options_box, FALSE, FALSE, 0);
-  gtk_widget_show (psp->options_box);
-
-  /*  Create the active pattern label  */
-  label_box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 2);
-  gtk_widget_show (label_box);
-
-  psp->pattern_name = gtk_label_new (_("No Patterns available"));
-  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 4);
-  psp->pattern_size = gtk_label_new ("(0 X 0)");
-  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_size, FALSE, FALSE, 2);
-
-  gtk_widget_show (psp->pattern_name);
-  gtk_widget_show (psp->pattern_size);
-
   /*  The Brush Grid  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 					  global_pattern_factory,
@@ -200,21 +176,11 @@ pattern_select_new (gchar *title,
 
   gtk_widget_show (vbox);
 
-  /*  add callbacks to keep the display area current  */
-  psp->name_changed_handler_id =
-    gimp_container_add_handler 
-    (global_pattern_factory->container, "name_changed",
-     GTK_SIGNAL_FUNC (pattern_select_pattern_dirty_callback),
-     psp);
-
   gtk_widget_show (psp->shell);
 
   gtk_signal_connect (GTK_OBJECT (psp->context), "pattern_changed",
 		      GTK_SIGNAL_FUNC (pattern_select_pattern_changed),
 		      psp);
-
-  if (active)
-    pattern_select_update_active_pattern_field (psp);
 
   /*  Add to active pattern dialogs list  */
   pattern_active_dialogs = g_slist_append (pattern_active_dialogs, psp);
@@ -238,9 +204,6 @@ pattern_select_free (PatternSelect *psp)
       g_free (psp->callback_name);
       gtk_object_unref (GTK_OBJECT (psp->context));
     }
-
-  gimp_container_remove_handler (global_pattern_factory->container,
-				 psp->name_changed_handler_id);
 
   g_free (psp);
 }
@@ -340,39 +303,9 @@ pattern_select_pattern_changed (GimpContext   *context,
 {
   if (pattern)
     {
-      pattern_select_update_active_pattern_field (psp);
-
       if (psp->callback_name)
 	pattern_select_change_callbacks (psp, FALSE);
     }
-}
-
-static void
-pattern_select_pattern_dirty_callback (GimpPattern   *pattern,
-				       PatternSelect *psp)
-{
-  pattern_select_update_active_pattern_field (psp);
-}
-
-static void
-pattern_select_update_active_pattern_field (PatternSelect *psp)
-{
-  GimpPattern *pattern;
-  gchar        buf[32];
-
-  pattern = gimp_context_get_pattern (psp->context);
-
-  if (!pattern)
-    return;
-
-  /*  Set pattern name  */
-  gtk_label_set_text (GTK_LABEL (psp->pattern_name),
-		      GIMP_OBJECT (pattern)->name);
-
-  /*  Set pattern size  */
-  g_snprintf (buf, sizeof (buf), "(%d X %d)",
-	      pattern->mask->width, pattern->mask->height);
-  gtk_label_set_text (GTK_LABEL (psp->pattern_size), buf);
 }
 
 static void

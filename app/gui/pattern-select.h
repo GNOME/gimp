@@ -28,17 +28,11 @@ struct _PatternSelect
 
   GtkWidget     *view;
 
-  GtkWidget     *options_box;
-  GtkWidget     *pattern_name;
-  GtkWidget     *pattern_size;
-
   /*  Callback function name  */
   gchar         *callback_name;
 
   /*  Context to store the current pattern  */
   GimpContext   *context;
-
-  GQuark         name_changed_handler_id;
 };
 
 

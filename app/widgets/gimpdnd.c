@@ -25,6 +25,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimplimits.h"
 
 #include "widgets-types.h"
 
@@ -52,8 +53,6 @@
 
 #include "gimpdnd.h"
 #include "gimppreview.h"
-
-#include "libgimp/gimplimits.h"
 
 
 #define DRAG_PREVIEW_SIZE 32
@@ -1435,169 +1434,4 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
     (* (GimpDndDropViewableFunc) set_tool_func) (widget,
 						 GIMP_VIEWABLE (tool_info),
 						 set_tool_data);
-}
-
-/****************************/
-/*  drawable dnd functions  */
-/****************************/
-
-void
-gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
-				    GdkDragContext *context,
-				    GimpDrawable   *drawable)
-{
-  GtkWidget *window;
-  GtkWidget *frame;
-  GtkWidget *preview;
-
-  gboolean  drag_connected;
-
-  TempBuf   *tmpbuf;
-  gint       bpp;
-  gint       x, y;
-  guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1, *even, *odd;
-  gint       width;
-  gint       height;
-  gdouble    ratio;
-
-  if (! preview_size)
-    return;
-
-  if (gimp_drawable_width (drawable) > gimp_drawable_height (drawable))
-    ratio = (gdouble) DRAG_PREVIEW_SIZE / 
-            (gdouble) (gimp_drawable_width (drawable));
-  else
-    ratio = (gdouble) DRAG_PREVIEW_SIZE /
-            (gdouble) (gimp_drawable_height (drawable));
-
-  width =  (gint) (ratio * gimp_drawable_width (drawable));
-  height = (gint) (ratio * gimp_drawable_height (drawable));
-
-  if (width < 1)
-    width = 1;
-  if (height < 1)
-    height = 1;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), width, height);
-
-  tmpbuf = gimp_viewable_get_preview (GIMP_VIEWABLE (drawable), width, height);
-
-  if (! tmpbuf)
-    {
-      gtk_widget_destroy (preview);
-      return;
-    }
-
-  bpp = tmpbuf->bytes;
-
-  /*  Draw the thumbnail with checks  */
-  src = temp_buf_data (tmpbuf);
-
-  even = g_new (guchar, width * 3);
-  odd  = g_new (guchar, width * 3);
-  
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-
-      for (x = 0; x < width; x++)
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble) src[x*4+0]) / 255.0;
-	      g = ((gdouble) src[x*4+1]) / 255.0;
-	      b = ((gdouble) src[x*4+2]) / 255.0;
-	      a = ((gdouble) src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble) src[x*3+0]) / 255.0;
-	      g = ((gdouble) src[x*3+1]) / 255.0;
-	      b = ((gdouble) src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble) src[x*bpp+0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble) src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    }
-	  else
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-
-	  *p0++ = (c0 + (r - c0) * a) * 255.0;
-	  *p0++ = (c0 + (g - c0) * a) * 255.0;
-	  *p0++ = (c0 + (b - c0) * a) * 255.0;
-
-	  *p1++ = (c1 + (r - c1) * a) * 255.0;
-	  *p1++ = (c1 + (g - c1) * a) * 255.0;
-	  *p1++ = (c1 + (b - c1) * a) * 255.0;
-
-	}
-
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), odd,
-				0, y, width);
-	}
-      else
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), even,
-				0, y, width);
-	}
-      src += width * bpp;
-    }
-
-  g_free (even);
-  g_free (odd);
-
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_realize (window);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (window), frame);
-  gtk_widget_show (frame);
-
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
-
-  drag_connected =
-    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
-				    "gimp_dnd_drag_connected");
-
-  if (! drag_connected)
-    {
-      gtk_signal_connect (GTK_OBJECT (widget), "drag_end",
-			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_end),
-			  NULL);
-
-      gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drag_connected",
-			   (gpointer) TRUE);
-    }
-
-  gtk_object_set_data_full (GTK_OBJECT (widget),
-			    "gimp-dnd-data-widget",
-			    window,
-			    (GtkDestroyNotify) gtk_widget_destroy);
-
-  gtk_drag_set_icon_widget (context, window,
-			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }

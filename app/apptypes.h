@@ -83,10 +83,6 @@ typedef struct _TempBuf             MaskBuf;
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;
 
-typedef struct _Tool		    Tool;
-typedef struct _ToolInfo	    ToolInfo;
-typedef struct _ToolOptions         ToolOptions;
-
 typedef struct _ScanConvertPoint    ScanConvertPoint;
 
 typedef struct _Selection           Selection;
@@ -105,14 +101,12 @@ typedef         GSList              PathUndo;
 
 /*  functions  */
 
-typedef void       (* TileValidateProc)         (TileManager *tm,
-						 Tile        *tile);
+typedef void   (* TileValidateProc)  (TileManager *tm,
+				      Tile        *tile);
 
-typedef void       (* ToolOptionsResetFunc)     (ToolOptions *tool_options);
-
-typedef void       (* ImageMapApplyFunc)        (PixelRegion *srcPR,
-						 PixelRegion *destPR,
-						 gpointer     data);
+typedef void   (* ImageMapApplyFunc) (PixelRegion *srcPR,
+				      PixelRegion *destPR,
+				      gpointer     data);
 
 
 #endif /* __APPTYPES_H__ */

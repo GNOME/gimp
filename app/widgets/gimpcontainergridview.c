@@ -38,6 +38,8 @@
 
 #include "colormaps.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
 static void     gimp_container_grid_view_init         (GimpContainerGridView      *panel);
@@ -132,6 +134,14 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 static void
 gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 {
+  grid_view->name_label = gtk_label_new (_("(None)"));
+  gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (grid_view->name_label),
+			grid_view->name_label->style->klass->xthickness, 0);
+  gtk_box_pack_start (GTK_BOX (grid_view), grid_view->name_label,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (grid_view->name_label);
+
   grid_view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
                                   GTK_POLICY_NEVER,
@@ -406,6 +416,26 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
         }
 
       gimp_preview_set_border_color (preview, &black_color);
+
+      if (view->get_name_func)
+	{
+	  gchar *name;
+
+	  name = view->get_name_func (GTK_WIDGET (preview));
+
+	  gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
+
+	  g_free (name);
+	}
+      else
+	{
+	  gtk_label_set_text (GTK_LABEL (grid_view->name_label),
+			      GIMP_OBJECT (viewable)->name);
+	}
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (grid_view->name_label), _("(None)"));
     }
 
   gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", preview);

@@ -44,8 +44,6 @@
 #include "gdisplay.h"
 #include "gimprc.h"
 
-#include "tools/paint_options.h"
-
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/toselection.xpm"

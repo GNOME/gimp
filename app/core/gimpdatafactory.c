@@ -23,8 +23,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "core-types.h"
 
 #include "datafiles.h"

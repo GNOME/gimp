@@ -29,9 +29,6 @@ struct _BrushSelect
   GtkWidget     *view;
   GtkWidget     *paint_options_box;
 
-  GtkWidget     *brush_name;
-  GtkWidget     *brush_size;
-
   GtkAdjustment *spacing_data;
 
   GtkAdjustment *opacity_data;
@@ -43,9 +40,6 @@ struct _BrushSelect
   /*  Context to store the current brush & paint options  */
   GimpContext   *context;
   gint           spacing_value;
-
-  GQuark         name_changed_handler_id;
-  GQuark         dirty_handler_id;
 };
 
 /*  list of active dialogs  */

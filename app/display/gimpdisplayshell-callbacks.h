@@ -20,46 +20,43 @@
 #define __DISP_CALLBACKS_H__
 
 
-#define CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK | \
-			   GDK_POINTER_MOTION_MASK | \
+#define CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
+			   GDK_POINTER_MOTION_MASK      | \
 			   GDK_POINTER_MOTION_HINT_MASK | \
-			   GDK_BUTTON_PRESS_MASK | \
-			   GDK_BUTTON_RELEASE_MASK | \
-			   GDK_STRUCTURE_MASK | \
-			   GDK_ENTER_NOTIFY_MASK | \
-			   GDK_LEAVE_NOTIFY_MASK | \
-			   GDK_KEY_PRESS_MASK | \
-			   GDK_KEY_RELEASE_MASK | \
+			   GDK_BUTTON_PRESS_MASK        | \
+			   GDK_BUTTON_RELEASE_MASK      | \
+			   GDK_STRUCTURE_MASK           | \
+			   GDK_ENTER_NOTIFY_MASK        | \
+			   GDK_LEAVE_NOTIFY_MASK        | \
+			   GDK_KEY_PRESS_MASK           | \
+			   GDK_KEY_RELEASE_MASK         | \
 			   GDK_PROXIMITY_OUT_MASK)
 
 
-gint       gdisplay_shell_events        (GtkWidget      *widget,
+gboolean   gdisplay_shell_events        (GtkWidget      *widget,
 					 GdkEvent       *event,
 					 GDisplay       *gdisp);
-gint       gdisplay_canvas_events       (GtkWidget      *widget,
+gboolean   gdisplay_canvas_events       (GtkWidget      *widget,
 					 GdkEvent       *event);
 
-gint       gdisplay_hruler_button_press (GtkWidget      *widget,
+gboolean   gdisplay_hruler_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,
 					 gpointer        dtata);
-gint       gdisplay_vruler_button_press (GtkWidget      *widget,
+gboolean   gdisplay_vruler_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,
 					 gpointer        data);
-gint       gdisplay_origin_button_press (GtkWidget      *widget,
+gboolean   gdisplay_origin_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,
 					 gpointer        data);
 
-gboolean   gdisplay_drag_drop           (GtkWidget      *widget,
-					 GdkDragContext *context,
-					 gint            x,
-					 gint            y,
-					 guint           time,
-					 gpointer        data);
-void       gdisplay_drop_color          (GtkWidget      *widget,
-					 const GimpRGB  *color,
+void       gdisplay_drop_drawable       (GtkWidget      *widget,
+					 GimpViewable   *viewable,
 					 gpointer        data);
 void       gdisplay_drop_pattern        (GtkWidget      *widget,
 					 GimpViewable   *viewable,
+					 gpointer        data);
+void       gdisplay_drop_color          (GtkWidget      *widget,
+					 const GimpRGB  *color,
 					 gpointer        data);
 
 

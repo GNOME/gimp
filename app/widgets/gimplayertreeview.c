@@ -41,6 +41,8 @@
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"
 
+/* TODO: move the paint mode menu constructor to widgets/ */
+#include "tools/tools-types.h"
 #include "tools/paint_options.h"
 
 #include "libgimp/gimpintl.h"

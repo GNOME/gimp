@@ -672,10 +672,10 @@ GPL
     my $longest = 0;
     my $once = 0;
     my $pcount = 0.0;
-    my $tool_eek = 0;
 
     foreach $group (@main::groups) {
 	my $out = $out{$group};
+        my $tool_eek = 0;
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};

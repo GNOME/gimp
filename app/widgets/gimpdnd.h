@@ -90,8 +90,6 @@ enum
         { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
 
 
-
-
 /*  file / url dnd functions  */
 
 typedef void (* GimpDndDropFileFunc) (GtkWidget *widget,
@@ -158,13 +156,6 @@ void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
 					GtkType                  type);
 
 GimpViewable * gimp_dnd_get_drag_data  (GtkWidget               *widget);
-
-
-/*  OLD drawable dnd functions  */
-
-void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
-					  GdkDragContext *context,
-					  GimpDrawable   *drawable);
 
 
 #endif /* __GIMP_DND_H__ */

@@ -39,6 +39,8 @@ struct _GimpContainerGridView
 {
   GimpContainerView  parent_instance;
 
+  GtkWidget         *name_label;
+
   GtkWidget         *scrolled_win;
   GtkWidget         *wrap_box;
 };

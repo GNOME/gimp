@@ -34,7 +34,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdktypes.h>
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
@@ -45,6 +44,7 @@
 #include "libgimp/gimpenv.h"
 
 #include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

@@ -1,3 +1,54 @@
+2001-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/apptypes.h: removed some forgotten tools types.
+
+	* app/tools/tools-types.h: and added them here.
+
+	* app/interface.c
+	* app/disp_callbacks.[ch]: ported dropping of drawables to the
+	new DND system.
+
+	* app/app_procs.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimptoolinfo.h
+	* app/gui/gui.c
+	* app/tools/tool_options.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimplayerlistview.c: removed/fixed includes.
+
+	* app/gui/brush-select.[ch]
+	* app/gui/pattern-select.[ch]: removed the display of the current
+	name (done by the grid view now).
+
+	* app/gui/palette-select.c: fixed palette preview size.
+
+	* app/gui/dialogs-constructors.c: added get_name() functions for
+	brushes, patterns, images and palettes.
+
+	* app/widgets/gimpcontainergridview.[ch]: added a label for the
+	name of the active item.
+
+	* app/widgets/gimpdnd.[ch]: removed the old drawable DND preview
+	icon code.
+
+	* tools/pdbgen/app.pl: braino: the $tool_eek hack has to be
+	initialized to 0 at the beginning of each file, otherwise we end
+	up including "tools/tools-types.h" everywhere.
+
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/tools.pdb: add "tools/tools-types.h" where needed.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/pattern_select_cmds.c
+	* app/pdb/patterns_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/undo_cmds.c
+	* app/pdb/unit_cmds.c: regenerated.
+
 2001-05-12  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Cunningly decrease

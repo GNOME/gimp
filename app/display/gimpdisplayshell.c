@@ -25,6 +25,8 @@
 #include "core/core-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 
 #include "widgets/gimpdnd.h"
@@ -189,13 +191,17 @@ create_display_shell (GDisplay *gdisp,
 		     GTK_DEST_DEFAULT_ALL,
 		     display_target_table, display_n_targets,
 		     GDK_ACTION_COPY);
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "drag_drop",
-		      GTK_SIGNAL_FUNC (gdisplay_drag_drop),
-		      gdisp);
-  gimp_dnd_color_dest_set (gdisp->shell, gdisplay_drop_color, gdisp);
-  gimp_dnd_viewable_dest_set (gdisp->shell,
-			      GIMP_TYPE_PATTERN,
+
+  gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_LAYER,
+			      gdisplay_drop_drawable, gdisp);
+  gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_LAYER_MASK,
+			      gdisplay_drop_drawable, gdisp);
+  gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_CHANNEL,
+			      gdisplay_drop_drawable, gdisp);
+  gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_PATTERN,
 			      gdisplay_drop_pattern, gdisp);
+  gimp_dnd_color_dest_set    (gdisp->shell,
+			      gdisplay_drop_color, gdisp);
 
   /*  the popup menu  */
   gdisp->ifactory = menus_get_image_factory ();

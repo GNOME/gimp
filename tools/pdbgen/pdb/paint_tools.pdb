@@ -1537,7 +1537,8 @@ sub ink {
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "core/gimpdrawable.h" "tile_manager.h");
+@headers = qw("libgimpmath/gimpmath.h" "tools/tools-types.h"
+              "core/gimpdrawable.h" "tile_manager.h");
 
 @procs = qw(airbrush airbrush_default blend bucket_fill by_color_select 
 	    clone clone_default color_picker

@@ -145,9 +145,8 @@ palette_select_new (const gchar *title,
 					  global_palette_factory,
 					  dialogs_edit_palette_func,
 					  psp->context,
-					  64, /* FIXME: SM_PREVIEW_WIDTH */
-					  3, /* FIXME: STD_PALETTE_COLUMNS */
-					  3); /* FIXME: STD_PALETTE_ROWS */
+					  32,
+					  5, 3);
   gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
   gtk_widget_show (psp->view);
 

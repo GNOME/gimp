@@ -68,10 +68,6 @@ static void     brush_select_opacity_changed        (GimpContext      *context,
 static void     brush_select_paint_mode_changed     (GimpContext      *context,
 						     LayerModeEffects  paint_mode,
 						     BrushSelect      *bsp);
-static void     brush_select_brush_renamed_callback (GimpBrush        *brush,
-						     BrushSelect      *bsp);
-
-static void     brush_select_update_active_brush_field (BrushSelect   *bsp);
 
 static void     opacity_scale_update                (GtkAdjustment    *adj,
 						     gpointer          data);
@@ -128,7 +124,6 @@ brush_select_new (gchar   *title,
 {
   BrushSelect *bsp;
   GtkWidget   *main_vbox;
-  GtkWidget   *hbox;
   GtkWidget   *sep;
   GtkWidget   *table;
   GtkWidget   *slider;
@@ -199,19 +194,6 @@ brush_select_new (gchar   *title,
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), main_vbox);
 
-  /*  Create the active brush label  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 2);
-
-  bsp->brush_name = gtk_label_new (_("No Brushes available"));
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->brush_name, FALSE, FALSE, 4);
-  bsp->brush_size = gtk_label_new ("(0 x 0)");
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->brush_size, FALSE, FALSE, 2);
-
-  gtk_widget_show (bsp->brush_name);
-  gtk_widget_show (bsp->brush_size);
-  gtk_widget_show (hbox);
-
   /*  The Brush Grid  */
   bsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 					  global_brush_factory,
@@ -275,29 +257,29 @@ brush_select_new (gchar   *title,
   slider = gtk_hscale_new (bsp->spacing_data);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Spacing:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+
   if (title && init_spacing >= 0)
     {
       /*  Use passed spacing instead of brushes default  */
       gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
 				init_spacing);
     }
+  else if (active)
+    {
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
+				gimp_brush_get_spacing (active));
+    }
+
   gtk_signal_connect (GTK_OBJECT (bsp->spacing_data), "value_changed",
 		      GTK_SIGNAL_FUNC (spacing_scale_update),
 		      bsp);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Spacing:"), 1.0, 1.0,
-			     slider, 1, FALSE);
 
   gtk_widget_show (table);
 
   gtk_widget_show (main_vbox);
-
-  /*  add callbacks to keep the display area current  */
-  bsp->name_changed_handler_id =
-    gimp_container_add_handler
-    (global_brush_factory->container, "name_changed",
-     GTK_SIGNAL_FUNC (brush_select_brush_renamed_callback),
-     bsp);
 
   /*  Only for main dialog  */
   if (! title)
@@ -317,9 +299,6 @@ brush_select_new (gchar   *title,
   gtk_signal_connect (GTK_OBJECT (bsp->context), "paint_mode_changed",
 		      GTK_SIGNAL_FUNC (brush_select_paint_mode_changed),
 		      bsp);
-
-  if (active)
-    brush_select_update_active_brush_field (bsp);
 
   /*  Add to active brush dialogs list  */
   brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
@@ -343,9 +322,6 @@ brush_select_free (BrushSelect *bsp)
       g_free (bsp->callback_name);
       gtk_object_unref (GTK_OBJECT (bsp->context));
     }
-
-  gimp_container_remove_handler (global_brush_factory->container,
-				 bsp->name_changed_handler_id);
 
   g_free (bsp);
 }
@@ -463,7 +439,8 @@ brush_select_brush_changed (GimpContext *context,
 {
   if (brush)
     {
-      brush_select_update_active_brush_field (bsp);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
+				gimp_brush_get_spacing (brush));
 
       gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (bsp->view)->edit_button,
 				GIMP_IS_BRUSH_GENERATED (brush));
@@ -497,35 +474,6 @@ brush_select_paint_mode_changed (GimpContext      *context,
 
   if (bsp->callback_name)
     brush_select_change_callbacks (bsp, FALSE);
-}
-
-static void
-brush_select_brush_renamed_callback (GimpBrush   *brush,
-				     BrushSelect *bsp)
-{
-  brush_select_update_active_brush_field (bsp);
-}
-
-static void
-brush_select_update_active_brush_field (BrushSelect *bsp)
-{
-  GimpBrush *brush;
-  gchar      buf[32];
-
-  brush = gimp_context_get_brush (bsp->context);
-
-  if (!brush)
-    return;
-
-  gtk_label_set_text (GTK_LABEL (bsp->brush_name), GIMP_OBJECT (brush)->name);
-
-  g_snprintf (buf, sizeof (buf), "(%d x %d)",
-	      brush->mask->width,
-	      brush->mask->height);
-  gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
-			    gimp_brush_get_spacing (brush));
 }
 
 static void

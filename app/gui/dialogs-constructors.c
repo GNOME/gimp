@@ -33,6 +33,8 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcontainerlistview.h"
@@ -75,6 +77,8 @@
 #include "gimprc.h"
 #include "module_db.h"
 #include "undo_history.h"
+
+#include "temp_buf.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
@@ -124,7 +128,11 @@ static void dialogs_path_view_image_changed     (GimpContext          *context,
 						 GimpImage            *gimage,
 						 GtkWidget            *view);
 
-static gchar * dialogs_tool_name_func           (GtkWidget *widget);
+static gchar * dialogs_tool_name_func           (GtkWidget            *widget);
+static gchar * dialogs_image_name_func          (GtkWidget            *widget);
+static gchar * dialogs_brush_name_func          (GtkWidget            *widget);
+static gchar * dialogs_pattern_name_func        (GtkWidget            *widget);
+static gchar * dialogs_palette_name_func        (GtkWidget            *widget);
 
 
 /*  public functions  */
@@ -300,10 +308,15 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (image_context,
+  view = gimp_container_list_view_new (NULL,
 				       context,
 				       32,
 				       5, 3);
+
+  gimp_container_view_set_name_func (GIMP_CONTAINER_VIEW (view),
+				     dialogs_image_name_func);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+				     image_context);
 
   return dialogs_dockable_new (view,
 			       "Image List", "Images",
@@ -418,10 +431,15 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (image_context,
+  view = gimp_container_grid_view_new (NULL,
 				       context,
 				       32,
 				       5, 3);
+
+  gimp_container_view_set_name_func (GIMP_CONTAINER_VIEW (view),
+				     dialogs_image_name_func);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view),
+				     image_context);
 
   return dialogs_dockable_new (view,
 			       "Image Grid", "Images",
@@ -442,6 +460,9 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				     32,
 				     5, 3);
 
+  gimp_container_view_set_name_func (GIMP_DATA_FACTORY_VIEW (view)->view,
+				     dialogs_brush_name_func);
+
   return dialogs_dockable_new (view,
 			       "Brush Grid", "Brushes",
 			       dialogs_brush_tab_func,
@@ -460,6 +481,9 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     32,
 				     5, 3);
+
+  gimp_container_view_set_name_func (GIMP_DATA_FACTORY_VIEW (view)->view,
+				     dialogs_pattern_name_func);
 
   return dialogs_dockable_new (view,
 			       "Pattern Grid", "Patterns",
@@ -498,6 +522,9 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     32,
 				     5, 3);
+
+  gimp_container_view_set_name_func (GIMP_DATA_FACTORY_VIEW (view)->view,
+				     dialogs_palette_name_func);
 
   return dialogs_dockable_new (view,
 			       "Palette Grid", "Palettes",
@@ -972,22 +999,132 @@ dialogs_path_view_image_changed (GimpContext *context,
   paths_dialog_update (gimage);
 }
 
-static gchar *
-dialogs_tool_name_func (GtkWidget *widget)
-{
-  GimpToolInfo *tool_info = NULL;
 
+/*  get_name_funcs  */
+
+static GimpPreview *
+dialogs_get_name_func_preview (GtkWidget *widget)
+{
   if (GIMP_IS_PREVIEW (widget))
     {
-      tool_info = GIMP_TOOL_INFO (GIMP_PREVIEW (widget)->viewable);
+      return GIMP_PREVIEW (widget);
     }
   else if (GIMP_IS_LIST_ITEM (widget))
     {
-      tool_info = GIMP_TOOL_INFO (GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview)->viewable);
+      return GIMP_PREVIEW (GIMP_LIST_ITEM (widget)->preview);
     }
 
-  if (tool_info)
-    return g_strdup (tool_info->blurb);
-  else
-    return g_strdup ("EEK");
+  g_warning ("dialogs_get_name_func_preview(): widget type does not match");
+
+  return NULL;
+}
+
+static gchar *
+dialogs_tool_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = dialogs_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpToolInfo *tool_info;
+
+      tool_info = GIMP_TOOL_INFO (preview->viewable);
+
+      if (tool_info)
+	return g_strdup (tool_info->blurb);
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+dialogs_image_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = dialogs_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpImage *gimage;
+
+      gimage = GIMP_IMAGE (preview->viewable);
+
+      if (gimage)
+	return g_strdup_printf ("%s-%d",
+				g_basename (gimp_image_filename (gimage)),
+				gimp_image_get_ID (gimage));
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+dialogs_brush_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = dialogs_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpBrush *brush;
+
+      brush = GIMP_BRUSH (preview->viewable);
+
+      if (brush)
+	return g_strdup_printf ("%s (%d x %d)",
+				GIMP_OBJECT (brush)->name,
+				brush->mask->width,
+				brush->mask->height);
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+dialogs_pattern_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = dialogs_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpPattern *pattern;
+
+      pattern = GIMP_PATTERN (preview->viewable);
+
+      if (pattern)
+	return g_strdup_printf ("%s (%d x %d)",
+				GIMP_OBJECT (pattern)->name,
+				pattern->mask->width,
+				pattern->mask->height);
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+dialogs_palette_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = dialogs_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpPalette *palette;
+
+      palette = GIMP_PALETTE (preview->viewable);
+
+      if (palette)
+	return g_strdup_printf ("%s (%d)",
+				GIMP_OBJECT (palette)->name,
+				palette->n_colors);
+    }
+
+  return g_strdup ("EEK");
 }

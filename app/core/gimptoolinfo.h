@@ -23,6 +23,10 @@
 #include "core/gimpdata.h"
 
 
+/* FIXME: the ToolOptions need to be an object living in core/ */
+#include "tools/tools-types.h"
+
+
 #define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())
 #define GIMP_TOOL_INFO(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
 #define GIMP_IS_TOOL_INFO(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
