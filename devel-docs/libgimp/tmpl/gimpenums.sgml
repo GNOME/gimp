@@ -219,6 +219,7 @@ Enums and definitions.
 @GIMP_INTERPOLATION_NONE: 
 @GIMP_INTERPOLATION_LINEAR: 
 @GIMP_INTERPOLATION_CUBIC: 
+@GIMP_INTERPOLATION_LANCZOS: 
 
 <!-- ##### ENUM GimpLayerModeEffects ##### -->
 <para>
