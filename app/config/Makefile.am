@@ -76,7 +76,7 @@ gimprc: gimpconfig-dump
 	./$< --system-gimprc > gimprc  2>/dev/null
 
 man: gimpconfig-dump
-	./$< --man-page > gimprc-1.3.5  2>/dev/null
+	./$< --man-page > gimprc-1.3.5.in  2>/dev/null
 
 
 #
@@ -90,4 +90,4 @@ test_config_DEPENDENCIES = $(gimpconfig_dependencies)
 test_config_LDADD =  $(GLIB_LIBS) $(gimpconfig_libs)
 
 
-CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc.5
+CLEANFILES = $(EXTRA_PROGRAMS) foorc gimprc gimprc-1.3.5.in

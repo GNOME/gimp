@@ -1182,6 +1182,7 @@ devel-docs/libgimpmodule/Makefile
 devel-docs/libgimpwidgets/Makefile
 docs/Makefile
 docs/gimp-1.3.1
+docs/gimprc-1.3.5
 docs/gimptool-1.3.1
 docs/gimp-remote-1.3.1
 tips/Makefile

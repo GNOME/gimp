@@ -8,6 +8,7 @@ man_MANS = \
 
 EXTRA_DIST = \
 	gimp-1.3.1.in			\
+	gimprc-1.3.5.in			\
 	gimptool-1.3.1.in		\
 	gimp-remote-1.3.1.in		\
 	Wilber.svg			\
