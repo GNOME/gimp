@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPMODULE_H__
-#define __GIMPMODULE_H__
+#ifndef __GIMP_MODULE_H__
+#define __GIMP_MODULE_H__
 
 #include <gmodule.h>
 
@@ -28,19 +28,10 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
-typedef enum
-{
-  GIMP_MODULE_OK,
-  GIMP_MODULE_UNLOAD
-} GimpModuleStatus;
-
-
 typedef struct _GimpModuleInfo GimpModuleInfo;
 
 struct _GimpModuleInfo
 {
-  gpointer     shutdown_data;
-
   const gchar *purpose;
   const gchar *author;
   const gchar *version;
@@ -49,40 +40,10 @@ struct _GimpModuleInfo
 };
 
 
-/*  Module initialization  */
-
-typedef GimpModuleStatus (* GimpModuleInitFunc) (GimpModuleInfo **module_info);
-
-
-#ifndef MODULE_COMPILATION
-
-/*  On Win32 this declaration clashes with the definition
- *  (which uses G_MODULE_EXPORT) and thus should be bypassed
- *  when compiling the module itself.
- */
-GimpModuleInitFunc module_init;
-
-#endif /* ! MODULE_COMPILATION */
-
-
-/*  Module unload  */
-
-typedef void (* GimpModuleCompletedCB) (gpointer               completed_data);
-
-typedef void (* GimpModuleUnloadFunc)  (gpointer               shutdown_data,
-					GimpModuleCompletedCB  completed_cb,
-					gpointer               completed_data);
-
-
-#ifndef MODULE_COMPILATION
-
-/*  The same as for module_init.
- */
-GimpModuleUnloadFunc module_unload;
-
-#endif /* ! MODULE_COMPILATION */
+typedef gboolean (* GimpModuleRegisterFunc) (GTypeModule     *module,
+                                             GimpModuleInfo **module_info);
 
 
 G_END_DECLS
 
-#endif /* __GIMPMODULE_H__ */
+#endif /* __GIMP_MODULE_H__ */

@@ -25,6 +25,12 @@ libgimpwidgets_1_3_la_sources = \
 	gimpcolorarea.h		\
 	gimpcolorbutton.c	\
 	gimpcolorbutton.h	\
+	gimpcolordisplay.c	\
+	gimpcolordisplay.h	\
+	gimpcolorselector.c	\
+	gimpcolorselector.h	\
+	gimpcolorselect.c	\
+	gimpcolorselect.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
 	gimpfileselection.c	\
@@ -70,6 +76,9 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpchainbutton.h	\
 	gimpcolorarea.h		\
 	gimpcolorbutton.h	\
+	gimpcolordisplay.h	\
+	gimpcolorselector.h	\
+	gimpcolorselect.h	\
 	gimpdialog.h		\
 	gimpfileselection.h	\
 	gimphelpui.h		\

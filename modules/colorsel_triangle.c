@@ -22,65 +22,92 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
 #undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
-#include "gimpmodregister.h"
-
-#include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
 
-/* prototypes */
-static GtkWidget * colorsel_triangle_new  (const GimpHSV    *hsv,
-					   const GimpRGB    *rgb,
-					   gboolean          show_alpha,
-					   GimpColorSelectorCallback callback,
-					   gpointer          callback_data,
-					   gpointer         *selector_data);
-
-static void colorsel_triangle_free        (gpointer          selector_data);
-
-static void colorsel_triangle_set_color   (gpointer          selector_data,
-					   const GimpHSV    *hsv,
-					   const GimpRGB    *rgb);
-static void colorsel_xy_to_triangle_buf   (const gint        x,
-					   const gint        y,
-					   const gdouble     hue,
-					   guchar           *buf,
-					   const gint        sx,
-					   const gint        sy,
-					   const gint        vx,
-					   const gint        vy,
-					   const gint        hx,
-					   const gint        hy);
+#define COLORWHEELRADIUS    (GIMP_COLOR_SELECTOR_SIZE / 2)
+#define COLORTRIANGLERADIUS (COLORWHEELRADIUS - GIMP_COLOR_SELECTOR_BAR_SIZE)
+#define PREVIEWSIZE         (2 * COLORWHEELRADIUS + 1)
+#define BGCOLOR             180
+#define PREVIEW_MASK        (GDK_EXPOSURE_MASK       | \
+                             GDK_BUTTON_PRESS_MASK   | \
+                             GDK_BUTTON_RELEASE_MASK | \
+                             GDK_BUTTON_MOTION_MASK )
 
 
-/* local methods */
-static GimpColorSelectorMethods methods = 
+#define COLORSEL_TYPE_TRIANGLE            (colorsel_triangle_type)
+#define COLORSEL_TRIANGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_TRIANGLE, ColorselTriangle))
+#define COLORSEL_TRIANGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_TRIANGLE, ColorselTriangleClass))
+#define COLORSEL_IS_TRIANGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), COLORSEL_TYPE_TRIANGLE))
+#define COLORSEL_IS_TRIANGLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), COLORSEL_TYPE_TRIANGLE))
+
+
+typedef struct _ColorselTriangle      ColorselTriangle;
+typedef struct _ColorselTriangleClass ColorselTriangleClass;
+
+struct _ColorselTriangle
 {
-  colorsel_triangle_new,
-  colorsel_triangle_free,
-  colorsel_triangle_set_color,
-  NULL  /*  set_channel  */
+  GimpColorSelector  parent_instance;
+
+  GimpHSV            hsv;
+  GimpRGB            rgb;
+
+  gdouble            oldsat;
+  gdouble            oldval;
+  gint               mode;
+  GtkWidget         *preview;
+};
+
+struct _ColorselTriangleClass
+{
+  GimpColorSelectorClass  parent_class;
 };
 
 
-static GimpModuleInfo info =
+static GType      colorsel_triangle_get_type   (GTypeModule           *module);
+static void       colorsel_triangle_class_init (ColorselTriangleClass *klass);
+static void       colorsel_triangle_init       (ColorselTriangle      *triangle);
+
+static void       colorsel_triangle_finalize        (GObject           *object);
+
+static void       colorsel_triangle_set_color       (GimpColorSelector *selector,
+                                                     const GimpRGB     *rgb,
+                                                     const GimpHSV     *hsv);
+
+static void       colorsel_xy_to_triangle_buf       (gint              x,
+                                                     gint              y,
+                                                     gdouble           hue,
+                                                     guchar           *buf,
+                                                     gint              sx,
+                                                     gint              sy,
+                                                     gint              vx,
+                                                     gint              vy,
+                                                     gint              hx,
+                                                     gint              hy);
+
+static GtkWidget *colorsel_triangle_create_preview  (ColorselTriangle *triangle);
+static void       colorsel_triangle_update_previews (ColorselTriangle *triangle,
+                                                     gboolean          hue_changed);
+static gboolean   colorsel_triangle_event           (GtkWidget        *widget, 
+                                                     GdkEvent         *event,
+                                                     ColorselTriangle *triangle);
+
+
+static GimpModuleInfo colorsel_triangle_info =
 {
-  NULL,
   N_("Painter-style color selector as a pluggable color selector"),
   "Simon Budig <Simon.Budig@unix-ag.org>",
   "v0.03",
@@ -94,178 +121,163 @@ static const GtkTargetEntry targets[] =
 };
 
 
-#define COLORWHEELRADIUS    (GIMP_COLOR_SELECTOR_SIZE / 2)
-#define COLORTRIANGLERADIUS (COLORWHEELRADIUS - GIMP_COLOR_SELECTOR_BAR_SIZE)
-#define PREVIEWSIZE         (2 * COLORWHEELRADIUS + 1)
+static GType                   colorsel_triangle_type = 0;
+static GimpColorSelectorClass *parent_class           = NULL;
 
-#define BGCOLOR 180
 
-#define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-                       GDK_BUTTON_PRESS_MASK | \
-                       GDK_BUTTON_RELEASE_MASK | \
-                       GDK_BUTTON_MOTION_MASK 
-
-typedef enum
+G_MODULE_EXPORT gboolean
+gimp_module_register (GTypeModule     *module,
+                      GimpModuleInfo **info_return)
 {
-  HUE = 0,
-  SATURATION,
-  VALUE,
-  RED,
-  GREEN,
-  BLUE,
-  ALPHA
-} ColorSelectFillType;
+  colorsel_triangle_get_type (module);
 
-struct _ColorSelect
-{
-  GimpHSV                    hsv;
-  GimpRGB                    rgb;
+  if (info_return)
+    *info_return = &colorsel_triangle_info;
 
-  gdouble                    oldsat;
-  gdouble                    oldval;
-  gint                       mode;
-  GtkWidget                 *preview;
-  GimpColorSelectorCallback  callback;
-  gpointer                   data;
-};
-
-typedef struct _ColorSelect ColorSelect;
-
-
-static GtkWidget * create_preview                 (ColorSelect *coldata);
-
-static void        update_previews                (ColorSelect *coldata,
-						   gboolean     hue_changed);
-
-
-/*************************************************************/
-
-/* globaly exported init function */
-G_MODULE_EXPORT GimpModuleStatus
-module_init (GimpModuleInfo **inforet)
-{
-  GimpColorSelectorID id;
-
-#ifndef __EMX__
-  id = gimp_color_selector_register (_("Triangle"), "triangle.html", &methods);
-#else
-  id = mod_color_selector_register  (_("Triangle"), "triangle.html", &methods);
-#endif
-
-  if (id)
-    {
-      info.shutdown_data = id;
-      *inforet = &info;
-      return GIMP_MODULE_OK;
-    }
-  else
-    {
-      return GIMP_MODULE_UNLOAD;
-    }
+  return TRUE;
 }
 
-G_MODULE_EXPORT void
-module_unload (gpointer                     shutdown_data,
-	       GimpColorSelectorFinishedCB  completed_cb,
-	       gpointer                     completed_data)
+static GType
+colorsel_triangle_get_type (GTypeModule *module)
 {
-#ifndef __EMX__
-  gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
-#else
-  mod_color_selector_unregister (shutdown_data, completed_cb, completed_data);
-#endif
+  if (! colorsel_triangle_type)
+    {
+      static const GTypeInfo select_info =
+      {
+        sizeof (ColorselTriangleClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) colorsel_triangle_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (ColorselTriangle),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) colorsel_triangle_init,
+      };
+
+      colorsel_triangle_type =
+        g_type_module_register_type (module,
+                                     GIMP_TYPE_COLOR_SELECTOR,
+                                     "ColorselTriangle",
+                                     &select_info, 0);
+    }
+
+  return colorsel_triangle_type;
 }
 
-/*************************************************************/
-/* methods */
-
-static GtkWidget *
-colorsel_triangle_new (const GimpHSV             *hsv,
-		       const GimpRGB             *rgb,
-		       gboolean                   show_alpha,
-		       GimpColorSelectorCallback  callback,
-		       gpointer                   callback_data,
-		       /* RETURNS: */
-		       gpointer                  *selector_data)
+static void
+colorsel_triangle_class_init (ColorselTriangleClass *klass)
 {
-  ColorSelect *coldata;
-  GtkWidget   *preview;
-  GtkWidget   *frame;
-  GtkWidget   *hbox;
-  GtkWidget   *vbox;
+  GObjectClass           *object_class;
+  GimpColorSelectorClass *selector_class;
 
-  coldata = g_new (ColorSelect, 1);
+  object_class   = G_OBJECT_CLASS (klass);
+  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  coldata->hsv    = *hsv;
-  coldata->rgb    = *rgb;
+  parent_class = g_type_class_peek_parent (klass);
 
-  coldata->oldsat = 0;
-  coldata->oldval = 0;
+  object_class->finalize      = colorsel_triangle_finalize;
 
-  coldata->mode = 0;
+  selector_class->name        = _("Triangle");
+  selector_class->help_page   = "triangle.html";
+  selector_class->set_color   = colorsel_triangle_set_color;
+}
 
-  coldata->callback = callback;
-  coldata->data     = callback_data;
+static void
+colorsel_triangle_init (ColorselTriangle *triangle)
+{
+  GtkWidget *frame;
+  GtkWidget *hbox;
 
-  preview = create_preview (coldata);
-  coldata->preview = preview;
+  gimp_rgba_set (&triangle->rgb, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgb_to_hsv (&triangle->rgb, &triangle->hsv);
 
-  update_previews (coldata, TRUE);
-
-  *selector_data = coldata;
-
-  vbox = gtk_vbox_new (FALSE, 0);
+  triangle->oldsat = 0;
+  triangle->oldval = 0;
+  triangle->mode   = 0;
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (triangle), hbox, TRUE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0); 
-  gtk_widget_show_all (vbox);
+  gtk_widget_show (frame);
 
-  return vbox;
+  triangle->preview = colorsel_triangle_create_preview (triangle);
+  gtk_container_add (GTK_CONTAINER (frame), triangle->preview);
+  gtk_widget_show (triangle->preview);
+
+  colorsel_triangle_update_previews (triangle, TRUE);
 }
 
 static void
-colorsel_triangle_free (gpointer selector_data)
+colorsel_triangle_finalize (GObject *object)
 {
-  /* anything else needed to go? */
-  g_free (selector_data);
+  ColorselTriangle *triangle;
+
+  triangle = COLORSEL_TRIANGLE (object);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-colorsel_triangle_set_color (gpointer       selector_data,
-			     const GimpHSV *hsv,
-			     const GimpRGB *rgb)
+colorsel_triangle_set_color (GimpColorSelector *selector,
+			     const GimpRGB     *rgb,
+			     const GimpHSV     *hsv)
 {
-  ColorSelect *coldata;
+  ColorselTriangle *triangle;
 
-  coldata = selector_data;
+  triangle = COLORSEL_TRIANGLE (selector);
 
-  coldata->hsv = *hsv;
-  coldata->rgb = *rgb;
+  triangle->rgb = *rgb;
+  triangle->hsv = *hsv;
 
-  update_previews (coldata, TRUE);
+  colorsel_triangle_update_previews (triangle, TRUE);
 }
 
-
-/*************************************************************/
-/* helper functions */
-
-static void 
-update_previews (ColorSelect *coldata,
-		 gint         hue_changed) 
+static GtkWidget *
+colorsel_triangle_create_preview (ColorselTriangle *triangle)
 {
   GtkWidget *preview;
   guchar     buf[3 * PREVIEWSIZE];
-  gint       x, y, k, r2, dx, col;
-  gint       x0, y0;
-  gdouble    hue, sat, val, atn;
-  gint       hx,hy, sx,sy, vx,vy;
+  gint       i;
 
-  hue = (gdouble) coldata->hsv.h * 2 * G_PI;
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
+  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK );
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
+
+  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
+                    G_CALLBACK (colorsel_triangle_event),
+                    triangle);
+  g_signal_connect (G_OBJECT (preview), "button_press_event",
+                    G_CALLBACK (colorsel_triangle_event),
+                    triangle);
+  g_signal_connect (G_OBJECT (preview), "button_release_event",
+                    G_CALLBACK (colorsel_triangle_event),
+                    triangle);
+
+  for (i=0; i < 3 * PREVIEWSIZE; i += 3)
+    buf[i] = buf[i+1] = buf[i+2] = BGCOLOR;
+  for (i=0; i < PREVIEWSIZE; i++) 
+    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, PREVIEWSIZE);
+
+  return preview;
+}
+
+static void 
+colorsel_triangle_update_previews (ColorselTriangle *triangle,
+                                   gboolean          hue_changed) 
+{
+  guchar   buf[3 * PREVIEWSIZE];
+  gint     x, y, k, r2, dx, col;
+  gint     x0, y0;
+  gdouble  hue, sat, val, atn;
+  gint     hx,hy, sx,sy, vx,vy;
+
+  hue = (gdouble) triangle->hsv.h * 2 * G_PI;
 
   /* Colored point (value = 1, saturation = 1) */
   hx = RINT (sin (hue) * COLORTRIANGLERADIUS);
@@ -279,8 +291,7 @@ update_previews (ColorSelect *coldata,
   vx = RINT (sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS);
   vy = RINT (cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS);
 
-  hue = coldata->hsv.h * 360.0;
-  preview = coldata->preview;
+  hue = triangle->hsv.h * 360.0;
 
   if (hue_changed)
     {
@@ -310,7 +321,7 @@ update_previews (ColorSelect *coldata,
 	      k += 3;
 	    }
 
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+	  gtk_preview_draw_row (GTK_PREVIEW (triangle->preview), buf,
 				COLORWHEELRADIUS - dx,
 				COLORWHEELRADIUS - y, 2 * dx + 1);
 	}
@@ -352,7 +363,7 @@ update_previews (ColorSelect *coldata,
 	      k += 3;
 	    }
 
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+	  gtk_preview_draw_row (GTK_PREVIEW (triangle->preview), buf,
 				COLORWHEELRADIUS + x0 - 4,
 				COLORWHEELRADIUS - y, 9);
 	}
@@ -361,8 +372,8 @@ update_previews (ColorSelect *coldata,
     {
       /* delete marker in triangle */
   
-      sat = coldata->oldsat;
-      val = coldata->oldval;
+      sat = triangle->oldsat;
+      val = triangle->oldval;
       x0 = RINT (sx + (vx - sx) * val + (hx - vx) * sat * val);
       y0 = RINT (sy + (vy - sy) * val + (hy - vy) * sat * val);
 
@@ -388,7 +399,7 @@ update_previews (ColorSelect *coldata,
 	      k += 3;
 	    }
 
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+	  gtk_preview_draw_row (GTK_PREVIEW (triangle->preview), buf,
 				COLORWHEELRADIUS + x0 - 4,
 				COLORWHEELRADIUS - y, 9);
 	}
@@ -396,10 +407,10 @@ update_previews (ColorSelect *coldata,
 
   /* marker in triangle */
 
-  col = gimp_rgb_intensity (&coldata->rgb) > 0.5 ? 0 : 255;
+  col = gimp_rgb_intensity (&triangle->rgb) > 0.5 ? 0 : 255;
 
-  sat = coldata->oldsat = coldata->hsv.s;
-  val = coldata->oldval = coldata->hsv.v;
+  sat = triangle->oldsat = triangle->hsv.s;
+  val = triangle->oldval = triangle->hsv.v;
 
   x0 = RINT (sx + (vx - sx) * val + (hx - vx) * sat * val);
   y0 = RINT (sy + (vy - sy) * val + (hy - vy) * sat * val);
@@ -433,20 +444,25 @@ update_previews (ColorSelect *coldata,
 	  k += 3;
 	}
 
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+      gtk_preview_draw_row (GTK_PREVIEW (triangle->preview), buf,
 			    COLORWHEELRADIUS + x0 - 4,
 			    COLORWHEELRADIUS - y, 9);
     }
 
-  gtk_widget_draw (preview, NULL);
+  gtk_widget_queue_draw (triangle->preview);
 }
 
 static void
-colorsel_xy_to_triangle_buf (const gint x, const gint y,
-			     const gdouble hue, guchar *buf,
-			     const gint hx, const gint hy, /* colored point */
-			     const gint sx, const gint sy, /* black point */
-			     const gint vx, const gint vy) /* white point */
+colorsel_xy_to_triangle_buf (gint     x,
+                             gint     y,
+			     gdouble  hue,
+                             guchar  *buf,
+			     gint     hx,
+                             gint     hy, /* colored point */
+			     gint     sx,
+                             gint     sy, /* black point */
+			     gint     vx,
+                             gint     vy) /* white point */
 {
   gdouble sat, val;
 
@@ -476,21 +492,15 @@ colorsel_xy_to_triangle_buf (const gint x, const gint y,
     } 
 }
 
-/*
- * Color Preview
- */
-
-static gint
-color_selection_callback (GtkWidget *widget, 
-			  GdkEvent  *event)
+static gboolean
+colorsel_triangle_event (GtkWidget        *widget, 
+                         GdkEvent         *event,
+                         ColorselTriangle *triangle)
 {
-  ColorSelect *coldata;
-  gint         x,y, angle, mousex, mousey;
-  gdouble      r;
-  gdouble      hue, sat, val;
-  gint         hx,hy, sx,sy, vx,vy;
-
-  coldata = g_object_get_data (G_OBJECT (widget), "colorselect");
+  gint    x,y, angle, mousex, mousey;
+  gdouble r;
+  gdouble hue, sat, val;
+  gint    hx,hy, sx,sy, vx,vy;
 
   switch (event->type)
     {
@@ -501,9 +511,9 @@ color_selection_callback (GtkWidget *widget,
       r = sqrt ((gdouble) (x * x + y * y));
       angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
       if ( /* r <= COLORWHEELRADIUS  && */ r > COLORTRIANGLERADIUS) 
-        coldata->mode = 1;  /* Dragging in the Ring */
+        triangle->mode = 1;  /* Dragging in the Ring */
       else
-        coldata->mode = 2;  /* Dragging in the Triangle */
+        triangle->mode = 2;  /* Dragging in the Triangle */
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -514,13 +524,13 @@ color_selection_callback (GtkWidget *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      coldata->mode = 0;
+      triangle->mode = 0;
       gtk_grab_remove (widget);
 
       /* callback the user */
-      (* coldata->callback) (coldata->data,
-			     &coldata->hsv,
-			     &coldata->rgb);
+      gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle),
+                                         &triangle->rgb,
+                                         &triangle->hsv);
       
       return FALSE;
       break;
@@ -539,25 +549,25 @@ color_selection_callback (GtkWidget *widget,
       (mousex != event->motion.x || mousey != event->motion.y)))
      return FALSE;
 
-  if (coldata->mode == 1 ||
+  if (triangle->mode == 1 ||
       (r > COLORWHEELRADIUS &&
-       (abs (angle - coldata->hsv.h * 360.0) < 30 ||
-	abs (abs (angle - coldata->hsv.h * 360.0) - 360) < 30)))
+       (abs (angle - triangle->hsv.h * 360.0) < 30 ||
+	abs (abs (angle - triangle->hsv.h * 360.0) - 360) < 30)))
     {
-      coldata->hsv.h = angle / 360.0;
-      gimp_hsv_to_rgb (&coldata->hsv, &coldata->rgb);
-      update_previews (coldata, TRUE);
+      triangle->hsv.h = angle / 360.0;
+      gimp_hsv_to_rgb (&triangle->hsv, &triangle->rgb);
+      colorsel_triangle_update_previews (triangle, TRUE);
     }
   else
     {
-      hue = coldata->hsv.h * 2 * G_PI;
+      hue = triangle->hsv.h * 2 * G_PI;
       hx = sin (hue) * COLORTRIANGLERADIUS;
       hy = cos (hue) * COLORTRIANGLERADIUS;
       sx = sin (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       sy = cos (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       vx = sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
       vy = cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-      hue = coldata->hsv.h * 360.0;
+      hue = triangle->hsv.h * 360.0;
 
       if ((x - sx) * vx + (y - sy) * vy < 0)
 	{
@@ -613,50 +623,16 @@ color_selection_callback (GtkWidget *widget,
 	    }
 	}
 
-    coldata->hsv.s = sat;
-    coldata->hsv.v = val;
-    gimp_hsv_to_rgb (&coldata->hsv, &coldata->rgb);
-    update_previews (coldata, FALSE);
+    triangle->hsv.s = sat;
+    triangle->hsv.v = val;
+    gimp_hsv_to_rgb (&triangle->hsv, &triangle->rgb);
+    colorsel_triangle_update_previews (triangle, FALSE);
   }
 
   /* callback the user */
-  (* coldata->callback) (coldata->data,
-			 &coldata->hsv,
-			 &coldata->rgb);
+  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (triangle),
+                                     &triangle->rgb,
+                                     &triangle->hsv);
 
   return FALSE;
-}
-
-static GtkWidget *
-create_preview (ColorSelect *coldata)
-{
-  GtkWidget *preview;
-  guchar     buf[3 * PREVIEWSIZE];
-  gint       i;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
-  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK );
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
-
-  g_object_set_data (G_OBJECT (preview), "colorselect", coldata);
-
-  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
-                    G_CALLBACK (color_selection_callback),
-                    NULL);
-  g_signal_connect (G_OBJECT (preview), "button_press_event",
-                    G_CALLBACK (color_selection_callback),
-                    NULL);
-  g_signal_connect (G_OBJECT (preview), "button_release_event",
-                    G_CALLBACK (color_selection_callback),
-                    NULL);
-
-  for (i=0; i < 3 * PREVIEWSIZE; i += 3)
-    buf[i] = buf[i+1] = buf[i+2] = BGCOLOR;
-  for (i=0; i < PREVIEWSIZE; i++) 
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, PREVIEWSIZE);
-
-  gtk_widget_draw (preview, NULL);
-
-  return preview;
 }

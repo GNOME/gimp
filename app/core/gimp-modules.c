@@ -47,6 +47,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define DUMP_DB 1
+
+
 static void       gimp_modules_module_initialize  (const gchar *filename,
                                                    gpointer     loader_data);
 
@@ -60,8 +63,6 @@ static void       print_module_info                (gpointer    data,
 
 static gboolean   gimp_modules_write_modulerc      (Gimp       *gimp);
 
-static void       gimp_modules_module_free_func    (gpointer    data, 
-                                                    gpointer    user_data);
 static void       gimp_modules_module_on_disk_func (gpointer    data, 
                                                     gpointer    user_data);
 static void       gimp_modules_module_remove_func  (gpointer    data, 
@@ -74,7 +75,7 @@ gimp_modules_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->modules = gimp_list_new (GIMP_TYPE_MODULE_INFO,
-                                 GIMP_CONTAINER_POLICY_WEAK);
+                                 GIMP_CONTAINER_POLICY_STRONG);
   gimp_object_set_name (GIMP_OBJECT (gimp->modules), "modules");
 
   gimp->write_modulerc = FALSE;
@@ -110,7 +111,7 @@ gimp_modules_load (Gimp *gimp)
                                      gimp);
 
 #ifdef DUMP_DB
-  gimp_container_foreach (modules, print_module_info, NULL);
+  gimp_container_foreach (gimp->modules, print_module_info, NULL);
 #endif
 }
 
@@ -126,8 +127,6 @@ gimp_modules_unload (Gimp *gimp)
 	  gimp->write_modulerc = FALSE;
 	}
     }
-
-  gimp_container_foreach (gimp->modules, gimp_modules_module_free_func, NULL);
 }
 
 void
@@ -154,20 +153,6 @@ gimp_modules_refresh (Gimp *gimp)
 }
 
 static void
-gimp_modules_module_free_func (gpointer data,
-                               gpointer user_data)
-{
-  GimpModuleInfoObj *module_info = data;
-
-  if (module_info->module &&
-      module_info->unload &&
-      module_info->state == GIMP_MODULE_STATE_LOADED_OK)
-    {
-      gimp_module_info_module_unload (module_info, FALSE);
-    }
-}
-
-static void
 add_to_inhibit_string (gpointer data, 
 		       gpointer user_data)
 {
@@ -177,7 +162,7 @@ add_to_inhibit_string (gpointer data,
   if (module_info->load_inhibit)
     {
       str = g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-      str = g_string_append (str, module_info->fullpath);
+      str = g_string_append (str, module_info->filename);
     }
 }
 
@@ -266,62 +251,29 @@ gimp_modules_module_initialize (const gchar *filename,
   if (gimp_modules_module_find_by_path (gimp, filename))
     return;
 
-  module_info = gimp_module_info_new (filename);
+  module_info = gimp_module_info_new (filename,
+                                      gimp->config->module_db_load_inhibit,
+                                      gimp->be_verbose);
 
-  gimp_module_info_set_load_inhibit (module_info,
-                                     gimp->config->module_db_load_inhibit);
-
-  if (! module_info->load_inhibit)
-    {
-      if (gimp->be_verbose)
-	g_print (_("loading module: '%s'\n"), filename);
-
-      gimp_module_info_module_load (module_info, TRUE);
-    }
-  else
-    {
-      if (gimp->be_verbose)
-	g_print (_("skipping module: '%s'\n"), filename);
-
-      module_info->state = GIMP_MODULE_STATE_UNLOADED_OK;
-    }
-
-  gimp_container_add (gimp->modules, GIMP_OBJECT (module_info));
-}
-
-typedef struct
-{
-  const gchar       *search_key;
-  GimpModuleInfoObj *found;
-} find_by_path_closure;
-
-static void
-gimp_modules_module_path_cmp_func (gpointer data, 
-                                   gpointer user_data)
-{
-  GimpModuleInfoObj    *module_info;
-  find_by_path_closure *closure;
-
-  module_info = (GimpModuleInfoObj *) data;
-  closure     = (find_by_path_closure *) user_data;
-
-  if (! strcmp (module_info->fullpath, closure->search_key))
-    closure->found = module_info;
+  gimp_container_add (gimp->modules, (GimpObject *) module_info);
 }
 
 static GimpModuleInfoObj *
 gimp_modules_module_find_by_path (Gimp       *gimp,
                                   const char *fullpath)
 {
-  find_by_path_closure cl;
+  GimpModuleInfoObj *module_info;
+  GList             *list;
 
-  cl.found      = NULL;
-  cl.search_key = fullpath;
+  for (list = GIMP_LIST (gimp->modules)->list; list; list = g_list_next (list))
+    {
+      module_info = (GimpModuleInfoObj *) list->data;
 
-  gimp_container_foreach (gimp->modules,
-                          gimp_modules_module_path_cmp_func, &cl);
+      if (! strcmp (module_info->filename, fullpath))
+        return module_info;
+    }
 
-  return cl.found;
+  return NULL;
 }
 
 #ifdef DUMP_DB
@@ -331,22 +283,25 @@ print_module_info (gpointer data,
 {
   GimpModuleInfoObj *i = data;
 
-  g_print ("\n%s: %s\n",
-	   i->fullpath, statename[i->state]);
-  g_print ("  module:%p  lasterr:%s  init:%p  unload:%p\n",
-	   i->module, i->last_module_error? i->last_module_error : "NONE",
-	   i->init, i->unload);
+  g_print ("\n%s: %i\n",
+	   i->filename,
+           i->state /* statename[i->state] */);
+  g_print ("  module:%p  lasterr:%s  register:%p\n",
+	   i->module,
+           i->last_module_error? i->last_module_error : "NONE",
+	   i->register_module);
   if (i->info)
     {
-      g_print ("  shutdown_data: %p\n"
-	       "  purpose:   %s\n"
+      g_print ("  purpose:   %s\n"
 	       "  author:    %s\n"
 	       "  version:   %s\n"
 	       "  copyright: %s\n"
 	       "  date:      %s\n",
-	       i->info->shutdown_data,
-	       i->info->purpose, i->info->author, i->info->version,
-	       i->info->copyright, i->info->date);
+	       i->info->purpose,
+               i->info->author,
+               i->info->version,
+	       i->info->copyright,
+               i->info->date);
     }
 }
 #endif
@@ -364,7 +319,7 @@ gimp_modules_module_on_disk_func (gpointer data,
 
   old_on_disk = module_info->on_disk;
 
-  module_info->on_disk = g_file_test (module_info->fullpath, 
+  module_info->on_disk = g_file_test (module_info->filename, 
                                       G_FILE_TEST_IS_REGULAR);
 
   /* if it's not on the disk, and it isn't in memory, mark it to be
@@ -390,7 +345,5 @@ gimp_modules_module_remove_func (gpointer data,
   module_info = (GimpModuleInfoObj *) data;
   gimp        = (Gimp *) user_data;
 
-  gimp_container_remove (gimp->modules, GIMP_OBJECT (module_info));
-
-  g_object_unref (G_OBJECT (module_info));
+  gimp_container_remove (gimp->modules, (GimpObject *) module_info);
 }

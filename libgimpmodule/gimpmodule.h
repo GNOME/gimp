@@ -25,8 +25,6 @@
 
 #include "libgimp/gimpmodule.h"
 
-#include "gimpobject.h"
-
 
 typedef enum
 {
@@ -50,34 +48,26 @@ typedef struct _GimpModuleInfoObjClass GimpModuleInfoObjClass;
 
 struct _GimpModuleInfoObj
 {
-  GimpObject       parent_instance;
+  GTypeModule      parent_instance;
 
-  gchar           *fullpath;     /* path to the module                        */
+  gchar           *filename;     /* path to the module                        */
+  gboolean         verbose;      /* verbose error reporting                   */
   GimpModuleState  state;        /* what's happened to the module             */
   gboolean         on_disk;      /* TRUE if file still exists                 */
   gboolean         load_inhibit; /* user requests not to load at boot time    */
 
-  /* Count of times main gimp is within the module.  Normally, this
-   * will be 1, and we assume that the module won't call its
-   * unload callback until it is satisfied that it's not in use any
-   * more.  refs can be 2 temporarily while we're running the module's
-   * unload function, to stop the module attempting to unload
-   * itself.
-   */
-  gint             refs;
-
-  /* stuff from now on may be NULL depending on the state the module is in   */
-  GimpModuleInfo  *info;         /* returned values from module_init          */
+  /* stuff from now on may be NULL depending on the state the module is in    */
   GModule         *module;       /* handle on the module                      */
+  GimpModuleInfo  *info;         /* returned values from module_register      */
   gchar           *last_module_error;
 
-  GimpModuleInitFunc   init;
-  GimpModuleUnloadFunc unload;
+  gboolean       (* register_module) (GTypeModule     *module,
+                                      GimpModuleInfo **module_info);
 };
 
 struct _GimpModuleInfoObjClass
 {
-  GimpObjectClass  parent_class;
+  GTypeModuleClass  parent_class;
 
   void (* modified) (GimpModuleInfoObj *module_info);
 };
@@ -85,18 +75,13 @@ struct _GimpModuleInfoObjClass
 
 GType               gimp_module_info_get_type         (void) G_GNUC_CONST;
 
-GimpModuleInfoObj * gimp_module_info_new              (const gchar       *filename);
+GimpModuleInfoObj * gimp_module_info_new              (const gchar       *filename,
+                                                       const gchar       *inhibit_str,
+                                                       gboolean           verbose);
 
 void                gimp_module_info_modified         (GimpModuleInfoObj *module);
 void                gimp_module_info_set_load_inhibit (GimpModuleInfoObj *module,
                                                        const gchar       *inhibit_list);
-
-void                gimp_module_info_module_load      (GimpModuleInfoObj *module_info, 
-                                                       gboolean           verbose);
-void                gimp_module_info_module_unload    (GimpModuleInfoObj *module_info,
-                                                       gboolean           verbose);
-void                gimp_module_info_module_ref       (GimpModuleInfoObj *module_info);
-void                gimp_module_info_module_unref     (GimpModuleInfoObj *module_info);
 
 
 #endif  /* __GIMP_MODULE_INFO_H__ */

@@ -91,8 +91,6 @@ static void   color_display_down_callback      (GtkWidget          *widget,
 static void   color_display_configure_callback (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
 
-static void   src_list_populate                (const char         *name,
-                                                GtkTreeStore       *src);
 static void   dest_list_populate               (GList              *node_list,
                                                 GtkTreeStore       *dest);
 
@@ -142,7 +140,7 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
-  cdd->src = gtk_tree_store_new (1, G_TYPE_STRING);
+  cdd->src = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cdd->src));
   g_object_unref (G_OBJECT (cdd->src));
 
@@ -357,10 +355,10 @@ color_display_add_callback (GtkWidget          *widget,
       ColorDisplayNode *node;
       GValue            val = { 0, };
 
-      gtk_tree_model_get_value (model, &iter, 0, &val);
+      gtk_tree_model_get_value (model, &iter, 1, &val);
 
       node = gimp_display_shell_filter_attach (cdd->shell,
-                                               g_value_get_string (&val));
+                                               (GType) g_value_get_pointer (&val));
 
       g_value_unset (&val);
 
@@ -527,12 +525,34 @@ void
 gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
   ColorDisplayDialog *cdd;
+  GType              *filter_types;
+  gint                n_filter_types;
+  gint                i;
 
   cdd = g_new0 (ColorDisplayDialog, 1);
 
   make_dialog (cdd);
 
-  color_display_foreach ((GimpCDFunc) src_list_populate, cdd->src);
+  filter_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_filter_types);
+
+  for (i = 0; i < n_filter_types; i++)
+    {
+      GimpColorDisplayClass *filter_class;
+      GtkTreeIter            iter;
+
+      filter_class = g_type_class_ref (filter_types[i]);
+
+      gtk_tree_store_append (cdd->src, &iter, NULL);
+
+      gtk_tree_store_set (cdd->src, &iter,
+                          0, filter_class->name,
+                          1, filter_types[i],
+                          -1);
+
+      g_type_class_unref (filter_class);
+    }
+
+  g_free (filter_types);
 
   cdd->old_nodes = shell->filters;
   dest_list_populate (shell->filters, cdd->dest);
@@ -541,19 +561,6 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
   cdd->shell = shell;
 
   shell->filters_dialog = cdd->dialog;
-}
-
-static void
-src_list_populate (const char   *name,
-		   GtkTreeStore *src)
-{
-  GtkTreeIter iter;
-
-  gtk_tree_store_append (src, &iter, NULL);
-
-  gtk_tree_store_set (src, &iter,
-                      0, name,
-                      -1);
 }
 
 static void

@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <string.h>
@@ -23,74 +24,77 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
-#include "libgimp/gimpmodule.h"
-#include "libgimp/gimpcolordisplay.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gimpmodregister.h"
+#include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define COLOR_DISPLAY_NAME _("Gamma")
+#define CDISPLAY_TYPE_GAMMA            (cdisplay_gamma_type)
+#define CDISPLAY_GAMMA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_GAMMA, CdisplayGamma))
+#define CDISPLAY_GAMMA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_GAMMA, CdisplayGammaClass))
+#define CDISPLAY_IS_GAMMA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_GAMMA))
+#define CDISPLAY_IS_GAMMA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CDISPLAY_TYPE_GAMMA))
 
-typedef struct _GammaContext GammaContext;
 
-struct _GammaContext
+typedef struct _CdisplayGamma      CdisplayGamma;
+typedef struct _CdisplayGammaClass CdisplayGammaClass;
+
+struct _CdisplayGamma
 {
-  GFunc    ok_func;
-  gpointer ok_data;
-  GFunc    cancel_func;
-  gpointer cancel_data;
+  GimpColorDisplay  parent_instance;
 
-  gdouble  gamma;
-  guchar  *lookup;
+  GFunc             ok_func;
+  gpointer          ok_data;
+  GFunc             cancel_func;
+  gpointer          cancel_data;
 
-  GtkWidget *shell;
-  GtkWidget *spinner;
+  gdouble           gamma;
+  guchar           *lookup;
+
+  GtkWidget        *shell;
+  GtkWidget        *spinner;
 };
 
-static gpointer       gamma_new                       (int           type);
-static gpointer       gamma_clone                     (gpointer      cd_ID);
-static void           gamma_create_lookup_table       (GammaContext *context);
-static void           gamma_destroy                   (gpointer      cd_ID);
-static void           gamma_convert                   (gpointer      cd_ID,
-						       guchar       *buf,
-						       int           w,
-						       int           h,
-						       int           bpp,
-						       int           bpl);
-static void           gamma_load                      (gpointer      cd_ID,
-						       GimpParasite *state);
-static GimpParasite * gamma_save                      (gpointer      cd_ID);
-static void           gamma_configure_ok_callback     (GtkWidget    *widget,
-						       gpointer      data);
-static void           gamma_configure_cancel_callback (GtkWidget    *widget,
-						       gpointer      data);
-static void           gamma_configure                 (gpointer      cd_ID,
-						       GFunc         ok_func,
-						       gpointer      ok_data,
-						       GFunc         cancel_func,
-						       gpointer      cancel_data);
-static void           gamma_configure_cancel          (gpointer      cd_ID);
-
-static GimpColorDisplayMethods methods = 
+struct _CdisplayGammaClass
 {
-  NULL,
-  gamma_new,
-  gamma_clone,
-  gamma_convert,
-  gamma_destroy,
-  NULL,
-  gamma_load,
-  gamma_save,
-  gamma_configure,
-  gamma_configure_cancel
+  GimpColorDisplayClass  parent_instance;
 };
 
-static GimpModuleInfo info = 
+
+static GType   cdisplay_gamma_get_type   (GTypeModule        *module);
+static void    cdisplay_gamma_class_init (CdisplayGammaClass *klass);
+static void    cdisplay_gamma_init       (CdisplayGamma      *gamma);
+
+static void    cdisplay_gamma_finalize          (GObject           *object);
+
+static GimpColorDisplay * cdisplay_gamma_clone  (GimpColorDisplay *display);
+static void    cdisplay_gamma_convert           (GimpColorDisplay *display,
+                                                 guchar           *buf,
+                                                 gint              w,
+                                                 gint              h,
+                                                 gint              bpp,
+                                                 gint              bpl);
+static void    cdisplay_gamma_load_state        (GimpColorDisplay *display,
+                                                 GimpParasite     *state);
+static GimpParasite * cdisplay_gamma_save_state (GimpColorDisplay *display);
+static void    cdisplay_gamma_configure         (GimpColorDisplay *display,
+                                                 GFunc             ok_func,
+                                                 gpointer          ok_data,
+                                                 GFunc             cancel_func,
+                                                 gpointer          cancel_data);
+static void    cdisplay_gamma_configure_cancel  (GimpColorDisplay *display);
+
+static void    gamma_create_lookup_table        (CdisplayGamma    *gamma);
+static void    gamma_configure_ok_callback      (GtkWidget        *widget,
+                                                 CdisplayGamma    *gamma);
+static void    gamma_configure_cancel_callback  (GtkWidget        *widget,
+                                                 CdisplayGamma    *gamma);
+
+
+static GimpModuleInfo cdisplay_gamma_info = 
 {
-  NULL,
   N_("Gamma color display filter"),
   "Manish Singh <yosh@gimp.org>",
   "v0.2",
@@ -98,111 +102,137 @@ static GimpModuleInfo info =
   "October 14, 2000"
 };
 
-G_MODULE_EXPORT GimpModuleStatus
-module_init (GimpModuleInfo **inforet)
+static GType                  cdisplay_gamma_type = 0;
+static GimpColorDisplayClass *parent_class        = NULL;
+
+
+G_MODULE_EXPORT gboolean
+gimp_module_register (GTypeModule     *module,
+                      GimpModuleInfo **inforet)
 {
-#ifndef __EMX__ 
-  if (gimp_color_display_register (COLOR_DISPLAY_NAME, &methods))
-#else
-  if (mod_color_display_register (COLOR_DISPLAY_NAME, &methods))
-#endif
+  cdisplay_gamma_get_type (module);
+
+  if (inforet)
+    *inforet = &cdisplay_gamma_info;
+
+  return TRUE;
+}
+
+static GType
+cdisplay_gamma_get_type (GTypeModule *module)
+{
+  if (! cdisplay_gamma_type)
     {
-      *inforet = &info;
-      return GIMP_MODULE_OK;
+      static const GTypeInfo select_info =
+      {
+        sizeof (CdisplayGammaClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) cdisplay_gamma_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (CdisplayGamma),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) cdisplay_gamma_init,
+      };
+
+      cdisplay_gamma_type =
+        g_type_module_register_type (module,
+                                     GIMP_TYPE_COLOR_DISPLAY,
+                                     "CdisplayGamma",
+                                     &select_info, 0);
     }
-  else
-    return GIMP_MODULE_UNLOAD;
+
+  return cdisplay_gamma_type;
 }
 
-G_MODULE_EXPORT void
-module_unload (void  *shutdown_data,
-	       void (*completed_cb) (void *),
-	       void  *completed_data)
+static void
+cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 {
-#ifndef __EMX__
-  gimp_color_display_unregister (COLOR_DISPLAY_NAME);
-#else
-  mod_color_display_unregister (COLOR_DISPLAY_NAME);
-#endif
+  GObjectClass          *object_class;
+  GimpColorDisplayClass *display_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize          = cdisplay_gamma_finalize;
+
+  display_class->name             = _("Gamma");
+  display_class->help_page        = "modules/gamma.html";
+  display_class->clone            = cdisplay_gamma_clone;
+  display_class->convert          = cdisplay_gamma_convert;
+  display_class->load_state       = cdisplay_gamma_load_state;
+  display_class->save_state       = cdisplay_gamma_save_state;
+  display_class->configure        = cdisplay_gamma_configure;
+  display_class->configure_cancel = cdisplay_gamma_configure_cancel;
 }
 
-
-static gpointer
-gamma_new (int type)
+static void
+cdisplay_gamma_init (CdisplayGamma *gamma)
 {
-  int i;
-  GammaContext *context;
+  gint i;
 
-  context = g_new0 (GammaContext, 1);
-  context->gamma = 1.0;
-  context->lookup = g_new (guchar, 256);
+  gamma->gamma  = 1.0;
+  gamma->lookup = g_new (guchar, 256);
 
   for (i = 0; i < 256; i++)
-    context->lookup[i] = i;
-
-  return context;
+    gamma->lookup[i] = i;
 }
 
-static gpointer
-gamma_clone (gpointer cd_ID)
+static void
+cdisplay_gamma_finalize (GObject *object)
 {
-  GammaContext *src_context = cd_ID;
-  GammaContext *context;
+  CdisplayGamma *gamma;
 
-  context = gamma_new (0);
-  context->gamma = src_context->gamma;
+  gamma = CDISPLAY_GAMMA (object);
+
+  if (gamma->shell)
+    {
+      gtk_widget_destroy (gamma->shell);
+      gamma->shell = NULL;
+    }
+
+  if (gamma->lookup)
+    {
+      g_free (gamma->lookup);
+      gamma->lookup = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+
+static GimpColorDisplay *
+cdisplay_gamma_clone (GimpColorDisplay *display)
+{
+  CdisplayGamma *gamma;
+  CdisplayGamma *copy;
+
+  gamma = CDISPLAY_GAMMA (display);
+
+  copy = CDISPLAY_GAMMA (gimp_color_display_new (G_TYPE_FROM_INSTANCE (gamma)));
+
+  copy->gamma = gamma->gamma;
   
-  memcpy (context->lookup, src_context->lookup, sizeof (guchar) * 256);
+  memcpy (copy->lookup, gamma->lookup, sizeof (guchar) * 256);
 
-  return context;
+  return GIMP_COLOR_DISPLAY (copy);
 }
 
 static void
-gamma_create_lookup_table (GammaContext *context)
+cdisplay_gamma_convert (GimpColorDisplay *display,
+                        guchar           *buf,
+                        gint              width,
+                        gint              height,
+                        gint              bpp,
+                        gint              bpl)
 {
-  gdouble one_over_gamma;
-  gdouble ind;
-  gint    i;
+  CdisplayGamma *gamma;
+  gint           i, j   = height;
 
-  if (context->gamma == 0.0)
-    context->gamma = 1.0;
-
-  one_over_gamma = 1.0 / context->gamma;
-
-  for (i = 0; i < 256; i++)
-    {
-      ind = (double) i / 255.0;
-      context->lookup[i] = (guchar) (gint) (255 * pow (ind, one_over_gamma));
-    }
-}
-
-static void
-gamma_destroy (gpointer cd_ID)
-{
-  GammaContext *context = cd_ID;
-
-  if (context->shell)
-    {
-#if 0
-      dialog_unregister (context->shell);
-#endif
-      gtk_widget_destroy (context->shell);
-    }
-
-  g_free (context->lookup);
-  g_free (context);
-}
-
-static void
-gamma_convert (gpointer  cd_ID,
-    	       guchar   *buf,
-	       gint      width,
-	       gint      height,
-	       gint      bpp,
-	       gint      bpl)
-{
-  guchar *lookup = ((GammaContext *) cd_ID)->lookup;
-  gint    i, j = height;
+  gamma = CDISPLAY_GAMMA (display);
 
   /* You will not be using the entire buffer most of the time. 
    * Hence, the simplistic code for this is as follows:
@@ -223,7 +253,7 @@ gamma_convert (gpointer  cd_ID,
       i = width;
       while (i--)
 	{
-	  *buf = lookup[*buf];
+	  *buf = gamma->lookup[*buf];
 	  buf++;
 	}
       buf += bpl;
@@ -231,36 +261,44 @@ gamma_convert (gpointer  cd_ID,
 }
 
 static void
-gamma_load (gpointer      cd_ID,
-            GimpParasite *state)
+cdisplay_gamma_load_state (GimpColorDisplay *display,
+                           GimpParasite     *state)
 {
-  GammaContext *context = cd_ID;
+  CdisplayGamma *gamma;
+
+  gamma = CDISPLAY_GAMMA (display);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&context->gamma, gimp_parasite_data (state), sizeof (gdouble));
+  memcpy (&gamma->gamma, gimp_parasite_data (state), sizeof (gdouble));
 #else
-  guint32 buf[2], *data = gimp_parasite_data (state);
+  {
+    guint32 buf[2], *data = gimp_parasite_data (state);
 
-  buf[0] = g_ntohl (data[1]);
-  buf[1] = g_ntohl (data[0]);
+    buf[0] = g_ntohl (data[1]);
+    buf[1] = g_ntohl (data[0]);
 
-  memcpy (&context->gamma, buf, sizeof (gdouble));
+    memcpy (&gamma->gamma, buf, sizeof (gdouble));
+  }
 #endif
 
-  gamma_create_lookup_table (context);
+  gamma_create_lookup_table (gamma);
 }
 
 static GimpParasite *
-gamma_save (gpointer cd_ID)
+cdisplay_gamma_save_state (GimpColorDisplay *display)
 {
-  GammaContext *context = cd_ID;
-  guint32 buf[2];
+  CdisplayGamma *gamma;
+  guint32        buf[2];
 
-  memcpy (buf, &context->gamma, sizeof (double));
+  gamma = CDISPLAY_GAMMA (display);
+
+  memcpy (buf, &gamma->gamma, sizeof (double));
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
   {
-    guint32 tmp = g_htonl (buf[0]);
+    guint32 tmp;
+
+    tmp    = g_htonl (buf[0]);
     buf[0] = g_htonl (buf[1]);
     buf[1] = tmp;
   }
@@ -271,113 +309,113 @@ gamma_save (gpointer cd_ID)
 }
 
 static void
-gamma_configure_ok_callback (GtkWidget *widget,
-			     gpointer   data)
+cdisplay_gamma_configure (GimpColorDisplay *display,
+                          GFunc             ok_func,
+                          gpointer          ok_data,
+                          GFunc             cancel_func,
+                          gpointer          cancel_data)
 {
-  GammaContext *context = data;
+  CdisplayGamma *gamma;
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkObject     *adjustment;
 
-  context->gamma =
-    gtk_spin_button_get_value (GTK_SPIN_BUTTON (context->spinner));
-  gamma_create_lookup_table (context);
+  gamma = CDISPLAY_GAMMA (display);
 
-#if 0
-  dialog_unregister (context->shell);
-#endif
-
-  gtk_widget_destroy (GTK_WIDGET (context->shell));
-  context->shell = NULL;
-
-  if (context->ok_func)
-    context->ok_func (context, context->ok_data);
-}
-
-static void
-gamma_configure_cancel_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  GammaContext *context = data;
-
-#if 0
-  dialog_unregister (context->shell);
-#endif
-
-  gtk_widget_destroy (GTK_WIDGET (context->shell));
-  context->shell = NULL;
-
-  if (context->cancel_func)
-    context->cancel_func (context, context->cancel_data);
-}
-
-static void
-gamma_configure (gpointer cd_ID,
-		 GFunc    ok_func,
-		 gpointer ok_data,
-		 GFunc    cancel_func,
-		 gpointer cancel_data)
-{
-  GammaContext *context = cd_ID;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkObject *adjustment;
-
-  if (!context->shell)
+  if (!gamma->shell)
     {
-      context->ok_func = ok_func;
-      context->ok_data = ok_data;
-      context->cancel_func = cancel_func;
-      context->cancel_data = cancel_data;
+      gamma->ok_func     = ok_func;
+      gamma->ok_data     = ok_data;
+      gamma->cancel_func = cancel_func;
+      gamma->cancel_data = cancel_data;
 
-      context->shell =
+      gamma->shell =
 	gimp_dialog_new (_("Gamma"), "gamma",
 			 gimp_standard_help_func, "modules/gamma.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
 			 GTK_STOCK_CANCEL, gamma_configure_cancel_callback,
-			 cd_ID, NULL, NULL, FALSE, TRUE,
+			 gamma, NULL, NULL, FALSE, TRUE,
 
 			 GTK_STOCK_OK, gamma_configure_ok_callback,
-			 cd_ID, NULL, NULL, TRUE, FALSE,
+			 gamma, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-#if 0
-      dialog_register (context->shell);
-#endif
-
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (context->shell)->vbox),
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gamma->shell)->vbox),
 			  hbox, FALSE, FALSE, 0);
 
       label = gtk_label_new ( _("Gamma:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 
-      adjustment = gtk_adjustment_new (context->gamma, 0.01, 10.0, 0.01, 0.1, 0.0);
-      context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
+      adjustment = gtk_adjustment_new (gamma->gamma, 0.01, 10.0, 0.01, 0.1, 0.0);
+      gamma->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
-      gtk_widget_set_size_request (context->spinner, 100, -1);
-      gtk_box_pack_start (GTK_BOX (hbox), context->spinner, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), gamma->spinner, FALSE, FALSE, 0);
     }
 
-  gtk_widget_show_all (context->shell);
+  gtk_widget_show_all (gamma->shell);
 }
 
 static void
-gamma_configure_cancel (gpointer cd_ID)
+cdisplay_gamma_configure_cancel (GimpColorDisplay *display)
 {
-  GammaContext *context = cd_ID;
+  CdisplayGamma *gamma;
  
-  if (context->shell)
+  gamma = CDISPLAY_GAMMA (display);
+
+  if (gamma->shell)
     {
-#if 0
-      dialog_unregister (context->shell);
-#endif
-      gtk_widget_destroy (context->shell);
-      context->shell = NULL;
+      gtk_widget_destroy (gamma->shell);
+      gamma->shell = NULL;
     }
 
-  if (context->cancel_func)
-    context->cancel_func (context, context->cancel_data);
+  if (gamma->cancel_func)
+    gamma->cancel_func (gamma, gamma->cancel_data);
+}
+
+static void
+gamma_create_lookup_table (CdisplayGamma *gamma)
+{
+  gdouble one_over_gamma;
+  gdouble ind;
+  gint    i;
+
+  if (gamma->gamma == 0.0)
+    gamma->gamma = 1.0;
+
+  one_over_gamma = 1.0 / gamma->gamma;
+
+  for (i = 0; i < 256; i++)
+    {
+      ind = (gdouble) i / 255.0;
+      gamma->lookup[i] = (guchar) (gint) (255 * pow (ind, one_over_gamma));
+    }
+}
+
+static void
+gamma_configure_ok_callback (GtkWidget     *widget,
+			     CdisplayGamma *gamma)
+{
+  gamma->gamma =
+    gtk_spin_button_get_value (GTK_SPIN_BUTTON (gamma->spinner));
+
+  gamma_create_lookup_table (gamma);
+
+  gtk_widget_destroy (GTK_WIDGET (gamma->shell));
+  gamma->shell = NULL;
+
+  if (gamma->ok_func)
+    gamma->ok_func (gamma, gamma->ok_data);
+}
+
+static void
+gamma_configure_cancel_callback (GtkWidget     *widget,
+				 CdisplayGamma *gamma)
+{
+  gimp_color_display_configure_cancel (GIMP_COLOR_DISPLAY (gamma));
 }

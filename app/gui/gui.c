@@ -37,7 +37,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-filter.h"
 #include "display/gimpdisplayshell-render.h"
 
 #include "widgets/gimpdevices.h"
@@ -45,7 +44,6 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "color-select.h"
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
@@ -118,6 +116,8 @@ gui_libs_init (gint    *argc,
 #endif
 
   gimp_widgets_init ();
+
+  g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
 }
 
 void
@@ -226,8 +226,6 @@ gui_init (Gimp *gimp)
 
   menus_init (gimp);
 
-  color_display_init ();
-
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
   dialogs_init (gimp);
@@ -248,8 +246,6 @@ gui_restore (Gimp     *gimp,
   file_save_dialog_menu_init (gimp, gimp_item_factory_from_path ("<Save>"));
 
   menus_restore (gimp);
-
-  color_select_init ();
 
   gimp_devices_restore (gimp);
 
@@ -308,6 +304,8 @@ gui_exit (Gimp *gimp)
       g_hash_table_destroy (themes_hash);
       themes_hash = NULL;
     }
+
+  g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 }
 
 void

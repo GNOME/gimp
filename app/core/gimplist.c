@@ -131,7 +131,7 @@ gimp_list_dispose (GObject *object)
   while (list->list)
     {
       gimp_container_remove (GIMP_CONTAINER (list),
-			     GIMP_OBJECT (list->list->data));
+			     (GimpObject *) list->list->data);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -155,7 +155,8 @@ gimp_list_get_memsize (GimpObject *object)
 
       for (list = gimp_list->list; list; list = g_list_next (list))
         {
-          memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data));
+          if (GIMP_IS_OBJECT (list->data))
+            memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data));
         }
     }
 
@@ -279,7 +280,7 @@ gimp_list_new (GType                children_type,
 {
   GimpList *list;
 
-  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (g_type_is_a (children_type, G_TYPE_OBJECT), NULL);
   g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
                         policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
 

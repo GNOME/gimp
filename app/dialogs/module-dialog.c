@@ -280,10 +280,11 @@ browser_load_unload_callback (GtkWidget *widget,
 {
   BrowserState *st = data;
 
-  if (st->last_update->state == GIMP_MODULE_STATE_LOADED_OK)
-    gimp_module_info_module_unload (st->last_update, FALSE);
-  else
-    gimp_module_info_module_load (st->last_update, FALSE);
+  if (st->last_update->state != GIMP_MODULE_STATE_LOADED_OK)
+    {
+      if (g_type_module_use (G_TYPE_MODULE (st->last_update)))
+        g_type_module_unuse (G_TYPE_MODULE (st->last_update));
+    }
 
   gimp_module_info_modified (st->last_update);
 }
@@ -310,7 +311,7 @@ make_list_item (gpointer data,
 
   gtk_list_store_append (st->list, &iter);
   gtk_list_store_set (st->list, &iter,
-		      PATH_COLUMN, info->fullpath,
+		      PATH_COLUMN, info->filename,
 		      INFO_COLUMN, info,
 		      -1);
 }
@@ -444,8 +445,7 @@ browser_info_update (GimpModuleInfoObj *mod,
 
     case GIMP_MODULE_STATE_LOADED_OK:
       gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
-      gtk_widget_set_sensitive (GTK_WIDGET (st->button),
-				mod->unload ? TRUE : FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (st->button), FALSE);
       break;    
     }
 }

@@ -2,8 +2,6 @@
 
 libdir = $(gimpplugindir)/modules
 
-AM_CPPFLAGS = -DMODULE_COMPILATION
-
 INCLUDES = \
         -I$(top_srcdir)		\
         $(GTK_CFLAGS)		\
@@ -14,17 +12,15 @@ EXTRA_DIST = \
 	makefile.mingw.in	\
 	makefile.msc		\
 	module.def		\
-	gimpmodregister.c	\
-	gimpmodregister.h	\
 	colorsel_water.c
 
 lib_LTLIBRARIES = \
 	libcolorsel_triangle.la		\
 	libcdisplay_gamma.la		\
-	libcdisplay_highcontrast.la
+	libcdisplay_highcontrast.la	\
+	libcolorsel_water.la
 
 ##	libcolorsel_gtk.la		\
-##	libcolorsel_water.la		\
 
 EXTRA_LTLIBRARIES =
 
@@ -36,9 +32,9 @@ libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module
 libcolorsel_triangle_la_LIBADD = $(GTK_LIBS)
 
-## libcolorsel_water_la_SOURCES = colorsel_water.c
-## libcolorsel_water_la_LDFLAGS = -avoid-version -module
-## libcolorsel_water_la_LIBADD = $(GTK_LIBS)
+libcolorsel_water_la_SOURCES = colorsel_water.c
+libcolorsel_water_la_LDFLAGS = -avoid-version -module
+libcolorsel_water_la_LIBADD = $(GTK_LIBS)
 
 libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
 libcdisplay_gamma_la_LDFLAGS = -avoid-version -module

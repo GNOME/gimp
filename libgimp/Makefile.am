@@ -139,8 +139,6 @@ libgimpui_1_3_la_SOURCES = \
 	gimpexport.h
 
 gimpinclude_HEADERS = \
-	gimpcolordisplay.h	\
-	gimpcolorselector.h	\
 	gimp.h			\
 	gimpcompat.h		\
 	gimptypes.h		\

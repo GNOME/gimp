@@ -1,3 +1,69 @@
+2002-10-20  Michael Natterer  <mitch@gimp.org>
+
+	Ported module loading to GTypeModule, getting rid of all own
+	module registering/bookkeeping stuff for color selectors and
+	display filters. The modules now simply register GimpColorSelector
+	and GimpColorDisplay subclasses, the list of registered subclasses
+	can then be obtained calling g_type_children() on the abstract
+	base classes.
+
+	This is work in progress and just the first working state after I
+	started breaking everything...
+
+	* app/gui/color-select.[ch]
+	* libgimp/gimpcolordisplay.h
+	* libgimp/gimpcolorselector.h: removed.
+
+	* app/gui/Makefile.am
+	* libgimp/Makefile.am: changed accordingly.
+
+	* libgimp/gimpmodule.h: massively simplified. All voodoo is gone.
+
+	* libgimpwidgets/gimpcolordisplay.[ch]
+	* libgimpwidgets/gimpcolorselector.[ch]: new abstract base classes
+	which need to be subclassed by modules.
+
+	* libgimpwidgets/gimpcolorselect.[ch]: the built-in color selector
+	from app/gui/color-select.* ported to be a GimpColorSelector
+	subclass.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpwidgetstypes.h: changed accordingly.
+
+	* app/core/gimpmoduleinfo.[ch]: made it a GTypeModule subclass
+
+	* app/core/gimpmodules.c: changed accordingly.
+
+	* app/core/gimpcontainer.c
+	* app/core/gimplist.c: HACKED around to allow GimpLists of
+	GObjects (not GimpObjects). This is EEKy, so I will either make
+	gimp->modules a simple GList and revert this bit of change, or
+	allow GObjects all over the place in GimpContainer land...
+
+	* app/display/gimpdisplayshell-filter.[ch]
+	* app/gui/color-notebook.c: removed all module stuff and use
+	g_type_children() to get the list of available color_selectors
+	and display_filters.
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/module-browser.c: changed accordingly.
+
+	* app/gui/gui.c: ref the built-in color selector's class before
+	the modules are queried so it appears first in the list of
+	GimpColorSelector's children.
+
+	* modules/Makefile.am: build the water color selector again.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: ported them all to the new API.
+
+	* modules/gimpmodregister.[ch]: removed the old EMX module hack.
+
 2002-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-mask.c (gimp_image_mask_extract): changed an

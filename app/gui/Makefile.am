@@ -16,8 +16,6 @@ libappgui_a_SOURCES = \
 	channels-commands.h		\
 	color-notebook.c		\
 	color-notebook.h		\
-	color-select.c			\
-	color-select.h			\
 	colormap-editor-commands.c	\
 	colormap-editor-commands.h	\
 	convert-dialog.c		\

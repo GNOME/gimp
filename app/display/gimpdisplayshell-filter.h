@@ -20,27 +20,18 @@
 #define __GIMP_DISPLAY_SHELL_FILTER_H__
 
 
-#include "libgimp/gimpcolordisplay.h"
-
-
 typedef struct _ColorDisplayNode ColorDisplayNode;
 
-struct _ColorDisplayNode {
-  gpointer                cd_ID; 
-  gchar                  *cd_name;
-  GimpColorDisplayConvert cd_convert;
+struct _ColorDisplayNode
+{
+  GimpColorDisplay *color_display;
+  gchar            *cd_name;
 };
 
-typedef void (*GimpCDFunc) (const gchar *name,
-			    gpointer     user_data);
-
-void color_display_init    (void);
-void color_display_foreach (GimpCDFunc func,
-			    gpointer   user_data);
 
 ColorDisplayNode *
        gimp_display_shell_filter_attach           (GimpDisplayShell *shell,
-                                                   const gchar      *name);
+                                                   GType             type);
 ColorDisplayNode *
        gimp_display_shell_filter_attach_clone     (GimpDisplayShell *shell,
                                                    ColorDisplayNode *node);

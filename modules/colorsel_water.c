@@ -22,18 +22,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "libgimp/gimpuitypes.h"
-
-#include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
-
-#include "gimpmodregister.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -42,49 +42,69 @@
 
 #define IMAGE_SIZE   GIMP_COLOR_SELECTOR_SIZE
 
-typedef struct
+
+#define COLORSEL_TYPE_WATER            (colorsel_water_type)
+#define COLORSEL_WATER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_WATER, ColorselWater))
+#define COLORSEL_WATER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_WATER, ColorselWaterClass))
+#define COLORSEL_IS_WATER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), COLORSEL_TYPE_WATER))
+#define COLORSEL_IS_WATER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), COLORSEL_TYPE_WATER))
+
+
+typedef struct _ColorselWater      ColorselWater;
+typedef struct _ColorselWaterClass ColorselWaterClass;
+
+struct _ColorselWater
 {
-  GimpRGB                    rgb;
-  gdouble                    last_x;
-  gdouble                    last_y;
-  gdouble                    last_pressure;
+  GimpColorSelector  parent_instance;
 
-  gfloat                     pressure_adjust;
-  guint32                    motion_time;
-  gint                       button_state;
+  GimpRGB            rgb;
 
-  GimpColorSelectorCallback  callback;
-  gpointer                   data;
-} ColorselWater;
+  gdouble            last_x;
+  gdouble            last_y;
+  gdouble            last_pressure;
 
+  gfloat             pressure_adjust;
+  guint32            motion_time;
+  gint               button_state;
+};
 
-/* prototypes */
-static GtkWidget * colorsel_water_new         (const GimpHSV      *hsv,
-					       const GimpRGB      *rgb,
-					       gboolean            show_alpha,
-				               GimpColorSelectorCallback,
-				               gpointer            ,
-				               gpointer           *);
-static void        colorsel_water_free        (gpointer            data);
-static void        colorsel_water_set_color   (gpointer            data,
-					       const GimpHSV      *hsv,
-					       const GimpRGB      *rgb);
-static void        colorsel_water_update      (ColorselWater      *colorsel);
-
-
-/* local methods */
-static GimpColorSelectorMethods methods = 
+struct _ColorselWaterClass
 {
-  colorsel_water_new,
-  colorsel_water_free,
-  colorsel_water_set_color,
-  NULL  /*  set_channel  */
+  GimpColorSelectorClass  parent_class;
 };
 
 
-static GimpModuleInfo info =
+static GType      colorsel_water_get_type   (GTypeModule           *module);
+static void       colorsel_water_class_init (ColorselWaterClass *klass);
+static void       colorsel_water_init       (ColorselWater      *water);
+
+static void       colorsel_water_finalize   (GObject           *object);
+
+static void       colorsel_water_set_color  (GimpColorSelector *selector,
+                                             const GimpRGB     *rgb,
+                                             const GimpHSV     *hsv);
+
+static void       colorsel_water_update     (ColorselWater     *water);
+
+static void       select_area_draw          (GtkWidget         *preview);
+static gboolean   button_press_event        (GtkWidget         *widget,
+                                             GdkEventButton    *event,
+                                             ColorselWater     *water);
+static gboolean   button_release_event      (GtkWidget         *widget,
+                                             GdkEventButton    *event,
+                                             ColorselWater     *water);
+static gboolean   motion_notify_event       (GtkWidget         *widget,
+                                             GdkEventMotion    *event,
+                                             ColorselWater     *water);
+static gboolean   proximity_out_event       (GtkWidget         *widget,
+                                             GdkEventProximity *event,
+                                             ColorselWater     *water);
+static void       pressure_adjust_update    (GtkAdjustment     *adj,
+                                             ColorselWater     *water);
+
+
+static GimpModuleInfo colorsel_water_info =
 {
-  NULL,
   N_("Watercolor style color selector as a pluggable module"),
   "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
   "v0.3",
@@ -92,52 +112,196 @@ static GimpModuleInfo info =
   "May, 10 1999"
 };
 
-
 static const GtkTargetEntry targets[] =
 {
   { "application/x-color", 0 }
 };
 
-/*************************************************************/
 
-/* globaly exported init function */
-G_MODULE_EXPORT GimpModuleStatus
-module_init (GimpModuleInfo **inforet)
+static GType                   colorsel_water_type = 0;
+static GimpColorSelectorClass *parent_class           = NULL;
+
+
+G_MODULE_EXPORT gboolean
+gimp_module_register (GTypeModule     *module,
+                      GimpModuleInfo **info_return)
 {
-  GimpColorSelectorID id;
+  colorsel_water_get_type (module);
 
-#ifndef __EMX__
-  id = gimp_color_selector_register (_("Watercolor"), "watercolor.html",
-				     &methods);
-#else
-  id = mod_color_selector_register (_("Watercolor"), "watercolor.html",
-				    &methods);
-#endif
+  if (info_return)
+    *info_return = &colorsel_water_info;
 
-  if (id)
+  return TRUE;
+}
+
+static GType
+colorsel_water_get_type (GTypeModule *module)
+{
+  if (! colorsel_water_type)
     {
-      info.shutdown_data = id;
-      *inforet = &info;
-      return GIMP_MODULE_OK;
+      static const GTypeInfo select_info =
+      {
+        sizeof (ColorselWaterClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) colorsel_water_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (ColorselWater),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) colorsel_water_init,
+      };
+
+      colorsel_water_type =
+        g_type_module_register_type (module,
+                                     GIMP_TYPE_COLOR_SELECTOR,
+                                     "ColorselWater",
+                                     &select_info, 0);
     }
-  else
-    {
-      return GIMP_MODULE_UNLOAD;
-    }
+
+  return colorsel_water_type;
+}
+
+static void
+colorsel_water_class_init (ColorselWaterClass *klass)
+{
+  GObjectClass           *object_class;
+  GimpColorSelectorClass *selector_class;
+
+  object_class   = G_OBJECT_CLASS (klass);
+  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize      = colorsel_water_finalize;
+
+  selector_class->name        = _("Watercolor");
+  selector_class->help_page   = "watercolor.html";
+  selector_class->set_color   = colorsel_water_set_color;
+}
+
+static void
+colorsel_water_init (ColorselWater *water)
+{
+  GtkWidget *preview;
+  GtkWidget *event_box;
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *hbox2;
+  GtkObject *adj;
+  GtkWidget *scale;
+
+  water->pressure_adjust = 1.0;
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (water), hbox, TRUE, FALSE, 0);
+
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
+
+  /* the event box */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0); 
+
+  event_box = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (frame), event_box);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), IMAGE_SIZE, IMAGE_SIZE);
+  gtk_container_add (GTK_CONTAINER (event_box), preview);
+  select_area_draw (preview);
+
+  /* Event signals */
+  g_signal_connect (G_OBJECT (event_box), "motion_notify_event",
+                    G_CALLBACK (motion_notify_event),
+                    water);
+  g_signal_connect (G_OBJECT (event_box), "button_press_event",
+                    G_CALLBACK (button_press_event),
+                    water);
+  g_signal_connect (G_OBJECT (event_box), "button_release_event",
+                    G_CALLBACK (button_release_event),
+                    water);
+  g_signal_connect (G_OBJECT (event_box), "proximity_out_event",
+                    G_CALLBACK (proximity_out_event),
+                    water);
+
+  gtk_widget_set_events (event_box,
+			 GDK_EXPOSURE_MASK            |
+			 GDK_LEAVE_NOTIFY_MASK        |
+			 GDK_BUTTON_PRESS_MASK        |
+			 GDK_KEY_PRESS_MASK           |
+			 GDK_POINTER_MOTION_MASK      |
+			 GDK_POINTER_MOTION_HINT_MASK |
+			 GDK_PROXIMITY_OUT_MASK);
+
+  /* The following call enables tracking and processing of extension
+   * events for the drawing area
+   */
+  gtk_widget_set_extension_events (event_box, GDK_EXTENSION_EVENTS_ALL);
+  gtk_widget_grab_focus (event_box);
+
+  adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
+			    0.0, 200.0, 1.0, 1.0, 0.0);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (pressure_adjust_update),
+                    water);
+  scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gimp_help_set_help_data (scale, _("Pressure"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), scale, FALSE, FALSE, 0);
+
+  gtk_widget_show_all (hbox);
+}
+
+static void
+colorsel_water_finalize (GObject *object)
+{
+  ColorselWater *water;
+
+  water = COLORSEL_WATER (object);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+colorsel_water_set_color (GimpColorSelector *selector,
+                          const GimpRGB     *rgb,
+                          const GimpHSV     *hsv)
+{
+  ColorselWater *water;
+
+  water = COLORSEL_WATER (selector);
+
+  water->rgb = *rgb;
+}
+
+static void
+colorsel_water_update (ColorselWater *water)
+{
+  GimpHSV hsv;
+
+  gimp_rgb_to_hsv (&water->rgb, &hsv);
+
+  gimp_color_selector_color_changed (GIMP_COLOR_SELECTOR (water),
+                                     &water->rgb, &hsv);
 }
 
 
-G_MODULE_EXPORT void
-module_unload (gpointer                     shutdown_data,
-	       GimpColorSelectorFinishedCB  completed_cb,
-	       gpointer                     completed_data)
-{
-#ifndef __EMX__
-  gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
-#else
-  mod_color_selector_unregister (shutdown_data, completed_cb, completed_data);
-#endif
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 static gdouble
@@ -250,260 +414,121 @@ draw_brush (ColorselWater *colorsel,
 
   add_pigment (colorsel, erase, x, y, much);
 
-  colorsel->last_x = x;
-  colorsel->last_y = y;
+  colorsel->last_x        = x;
+  colorsel->last_y        = y;
   colorsel->last_pressure = pressure;
 }
 
-static gint
+static gboolean
 button_press_event (GtkWidget      *widget,
 		    GdkEventButton *event,
-		    gpointer        data)
+		    ColorselWater  *water)
 {
-  ColorselWater *colorsel;
-  gboolean       erase;
+  gboolean erase = FALSE;
 
-  colorsel = (ColorselWater *) data;
+  water->last_x        = event->x;
+  water->last_y        = event->y;
+  water->last_pressure = 1.0; /* FIXME: event->pressure */
 
-  colorsel->last_x = event->x;
-  colorsel->last_y = event->y;
-  colorsel->last_pressure = event->pressure;
+  water->button_state |= 1 << event->button;
 
-  colorsel->button_state |= 1 << event->button;
+  erase = (event->button != 1) || FALSE;
+  /* FIXME: (event->source == GDK_SOURCE_ERASER) */
 
-  erase = (event->button != 1) ||
-    (event->source == GDK_SOURCE_ERASER);
-
-  add_pigment (colorsel, erase, event->x, event->y, 0.05);
-  colorsel->motion_time = event->time;
+  add_pigment (water, erase, event->x, event->y, 0.05);
+  water->motion_time = event->time;
 
   return FALSE;
 }
 
-static gint
+static gboolean
 button_release_event (GtkWidget      *widget,
 		      GdkEventButton *event,
-		      gpointer        data)
+		      ColorselWater  *water)
 {
-  ColorselWater *colorsel;
-
-  colorsel = (ColorselWater *) data;
-
-  colorsel->button_state &= ~(1 << event->button);
+  water->button_state &= ~(1 << event->button);
 
   return TRUE;
 }
 
-static gint
+static gboolean
 motion_notify_event (GtkWidget      *widget,
 		     GdkEventMotion *event,
-		     gpointer        data)
+		     ColorselWater  *water)
 {
-  ColorselWater *colorsel;
-  GdkTimeCoord  *coords;
+  GdkTimeCoord **coords;
   gint           nevents;
   gint           i;
   gboolean       erase;
-
-  colorsel = (ColorselWater *) data;
 
   if (event->state & (GDK_BUTTON1_MASK |
 		      GDK_BUTTON2_MASK |
 		      GDK_BUTTON3_MASK |
 		      GDK_BUTTON4_MASK))
     {
-      coords = gdk_input_motion_events (event->window, event->deviceid,
-					colorsel->motion_time, event->time,
-					&nevents);
-      erase = (event->state & 
-	       (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
-	(event->source == GDK_SOURCE_ERASER);
+      guint32 last_motion_time;
 
-      colorsel->motion_time = event->time;
+      last_motion_time = event->time;
 
-      if (coords)
-	{
-	  for (i=0; i<nevents; i++)
-	    draw_brush (colorsel, widget,
-			erase,
-			coords[i].x,
-			coords[i].y,
-			coords[i].pressure);
+      erase = ((event->state &
+                (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK)) ||
+               FALSE);
+      /* FIXME: (event->source == GDK_SOURCE_ERASER) */
+
+      water->motion_time = event->time;
+
+      if (gdk_device_get_history (event->device,
+                                  event->window,
+                                  last_motion_time,
+                                  event->time,
+                                  &coords,
+                                  &nevents))
+ 	{
+	  for (i = 0; i < nevents; i++)
+            {
+              gdouble x        = 0.0;
+              gdouble y        = 0.0;
+              gdouble pressure = 0.5;
+
+              gdk_device_get_axis (event->device, coords[i]->axes,
+                                   GDK_AXIS_X, &x);
+              gdk_device_get_axis (event->device, coords[i]->axes,
+                                   GDK_AXIS_Y, &y);
+              gdk_device_get_axis (event->device, coords[i]->axes,
+                                   GDK_AXIS_PRESSURE, &pressure);
+
+              draw_brush (water, widget, erase, x, y, pressure);
+            }
 
 	  g_free (coords);
 	}
       else
 	{
-	  if (event->is_hint)
-	    gdk_input_window_get_pointer (event->window, event->deviceid,
-					  NULL, NULL, NULL, NULL, NULL, NULL);
+          gdouble pressure = 0.5;
 
-	  draw_brush (colorsel, widget,
-		      erase,
-		      event->x,
-		      event->y,
-		      event->pressure);
+          gdk_event_get_axis ((GdkEvent *) event, GDK_AXIS_PRESSURE, &pressure);
+
+	  draw_brush (water, widget, erase, event->x, event->y, pressure);
 	}
     }
-  else
-    {
-      gdk_input_window_get_pointer (event->window, event->deviceid,
-				    &event->x, &event->y,
-				    NULL, NULL, NULL, NULL);
-    }
+
+  if (event->is_hint)
+    gdk_device_get_state (event->device, event->window, NULL, NULL);
 
   return TRUE;
 }
 
-static gint
+static gboolean
 proximity_out_event (GtkWidget         *widget,
                      GdkEventProximity *event,
-		     gpointer           data)
+		     ColorselWater     *water)
 {
-  ColorselWater *colorsel;
-
-  colorsel = (ColorselWater *) data;
-
   return TRUE;
 }
 
 static void
 pressure_adjust_update (GtkAdjustment *adj,
-			gpointer       data)
+			ColorselWater *water)
 {
-  ColorselWater *colorsel;
-
-  colorsel = (ColorselWater *) data;
-
-  colorsel->pressure_adjust = (adj->upper - adj->value) / 100.0;
-}
-
-
-/***********/
-/* methods */
-
-
-static GtkWidget*
-colorsel_water_new (const GimpHSV             *hsv,
-		    const GimpRGB             *rgb,
-		    gboolean                   show_alpha,
-		    GimpColorSelectorCallback  callback,
-		    gpointer                   callback_data,
-		    /* RETURNS: */
-		    gpointer                  *selector_data)
-{
-  ColorselWater *coldata;
-  GtkWidget     *preview;
-  GtkWidget     *event_box;
-  GtkWidget     *frame;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *hbox2;
-  GtkObject     *adj;
-  GtkWidget     *scale;
-
-  coldata = g_new (ColorselWater, 1);
-
-  coldata->pressure_adjust = 1.0;
-
-  coldata->callback        = callback;
-  coldata->data            = callback_data;
-
-  *selector_data = coldata;
-
-  vbox = gtk_vbox_new (FALSE, 0);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
-
-  hbox2 = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
-
-  /* the event box */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame, FALSE, FALSE, 0); 
-
-  event_box = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (frame), event_box);
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), IMAGE_SIZE, IMAGE_SIZE);
-  gtk_container_add (GTK_CONTAINER (event_box), preview);
-  select_area_draw (preview);
-
-  /* Event signals */
-  g_signal_connect (G_OBJECT (event_box), "motion_notify_event",
-                    G_CALLBACK (motion_notify_event),
-                    coldata);
-  g_signal_connect (G_OBJECT (event_box), "button_press_event",
-                    G_CALLBACK (button_press_event),
-                    coldata);
-  g_signal_connect (G_OBJECT (event_box), "button_release_event",
-                    G_CALLBACK (button_release_event),
-                    coldata);
-  g_signal_connect (G_OBJECT (event_box), "proximity_out_event",
-                    G_CALLBACK (proximity_out_event),
-                    coldata);
-
-  gtk_widget_set_events (event_box,
-			 GDK_EXPOSURE_MASK            |
-			 GDK_LEAVE_NOTIFY_MASK        |
-			 GDK_BUTTON_PRESS_MASK        |
-			 GDK_KEY_PRESS_MASK           |
-			 GDK_POINTER_MOTION_MASK      |
-			 GDK_POINTER_MOTION_HINT_MASK |
-			 GDK_PROXIMITY_OUT_MASK);
-
-  /* The following call enables tracking and processing of extension
-   * events for the drawing area
-   */
-  gtk_widget_set_extension_events (event_box, GDK_EXTENSION_EVENTS_ALL);
-  gtk_widget_grab_focus (event_box);
-
-  adj = gtk_adjustment_new (200.0 - coldata->pressure_adjust * 100.0,
-			    0.0, 200.0, 1.0, 1.0, 0.0);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
-                    G_CALLBACK (pressure_adjust_update),
-                    coldata);
-  scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gimp_help_set_help_data (scale, _("Pressure"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), scale, FALSE, FALSE, 0);
-
-  gtk_widget_show_all (vbox);
-
-  colorsel_water_set_color (coldata, hsv, rgb);
-
-  return vbox;
-}
-
-
-static void
-colorsel_water_free (gpointer  selector_data)
-{
-  g_free (selector_data);
-}
-
-static void
-colorsel_water_set_color (gpointer       data,
-			  const GimpHSV *hsv,
-			  const GimpRGB *rgb)
-{
-  ColorselWater *colorsel;
-
-  colorsel = (ColorselWater *) data;
-
-  colorsel->rgb = *rgb;
-}
-
-static void
-colorsel_water_update (ColorselWater *colorsel)
-{
-  GimpHSV hsv;
-
-  gimp_rgb_to_hsv (&colorsel->rgb, &hsv);
-
-  colorsel->callback (colorsel->data, &hsv, &colorsel->rgb);
+  water->pressure_adjust = (adj->upper - adj->value) / 100.0;
 }

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 
 #include "base/tile-manager.h"
@@ -271,11 +273,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       node = (ColorDisplayNode *) list->data;
 
-      node->cd_convert (node->cd_ID,
-                        shell->render_buf,
-                        w, h,
-                        3,
-                        3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
+      gimp_color_display_convert (node->color_display,
+                                  shell->render_buf,
+                                  w, h,
+                                  3,
+                                  3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
     }
 
   /*  put it to the screen  */

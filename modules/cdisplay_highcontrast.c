@@ -24,74 +24,77 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
-#include "libgimp/gimpmodule.h"
-#include "libgimp/gimpcolordisplay.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gimpmodregister.h"
+#include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define COLOR_DISPLAY_NAME _("High Contrast")
+#define CDISPLAY_TYPE_CONTRAST            (cdisplay_contrast_type)
+#define CDISPLAY_CONTRAST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_CONTRAST, CdisplayContrast))
+#define CDISPLAY_CONTRAST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_CONTRAST, CdisplayContrastClass))
+#define CDISPLAY_IS_CONTRAST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_CONTRAST))
+#define CDISPLAY_IS_CONTRAST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CDISPLAY_TYPE_CONTRAST))
 
-typedef struct _ContrastContext ContrastContext;
 
-struct _ContrastContext
+typedef struct _CdisplayContrast      CdisplayContrast;
+typedef struct _CdisplayContrastClass CdisplayContrastClass;
+
+struct _CdisplayContrast
 {
-  GFunc    ok_func;
-  gpointer ok_data;
-  GFunc    cancel_func;
-  gpointer cancel_data;
+  GimpColorDisplay  parent_instance;
 
-  gdouble  contrast;
-  guchar  *lookup;
+  GFunc             ok_func;
+  gpointer          ok_data;
+  GFunc             cancel_func;
+  gpointer          cancel_data;
 
-  GtkWidget *shell;
-  GtkWidget *spinner;
+  gdouble           contrast;
+  guchar           *lookup;
+
+  GtkWidget        *shell;
+  GtkWidget        *spinner;
 };
 
-static gpointer       contrast_new                   (gint             type);
-static gpointer       contrast_clone                 (gpointer         cd_ID);
-static void           contrast_create_lookup_table   (ContrastContext *context);
-static void           contrast_destroy               (gpointer         cd_ID);
-static void           contrast_convert               (gpointer         cd_ID,
-						      guchar          *buf,
-						      gint             w,
-						      gint             h,
-						      gint             bpp,
-						      gint             bpl);
-static void           contrast_load                  (gpointer         cd_ID,
-						      GimpParasite    *state);
-static GimpParasite * contrast_save                  (gpointer         cd_ID);
-static void           contrast_configure_ok_callback (GtkWidget       *widget,
-						      gpointer         data);
-static void       contrast_configure_cancel_callback (GtkWidget       *widget,
-						      gpointer         data);
-static void           contrast_configure             (gpointer         cd_ID,
-						      GFunc            ok_func,
-						      gpointer         ok_data,
-						      GFunc            cancel_func,
-						      gpointer         cancel_data);
-static void           contrast_configure_cancel      (gpointer         cd_ID);
-
-static GimpColorDisplayMethods methods = 
+struct _CdisplayContrastClass
 {
-  NULL,
-  contrast_new,
-  contrast_clone,
-  contrast_convert,
-  contrast_destroy,
-  NULL,
-  contrast_load,
-  contrast_save,
-  contrast_configure,
-  contrast_configure_cancel
+  GimpColorDisplayClass  parent_instance;
 };
 
-static GimpModuleInfo info = 
+
+static GType   cdisplay_contrast_get_type   (GTypeModule        *module);
+static void    cdisplay_contrast_class_init (CdisplayContrastClass *klass);
+static void    cdisplay_contrast_init       (CdisplayContrast      *contrast);
+
+static void    cdisplay_contrast_finalize          (GObject           *object);
+
+static GimpColorDisplay * cdisplay_contrast_clone  (GimpColorDisplay *display);
+static void    cdisplay_contrast_convert           (GimpColorDisplay *display,
+                                                 guchar           *buf,
+                                                 gint              w,
+                                                 gint              h,
+                                                 gint              bpp,
+                                                 gint              bpl);
+static void    cdisplay_contrast_load_state        (GimpColorDisplay *display,
+                                                 GimpParasite     *state);
+static GimpParasite * cdisplay_contrast_save_state (GimpColorDisplay *display);
+static void    cdisplay_contrast_configure         (GimpColorDisplay *display,
+                                                 GFunc             ok_func,
+                                                 gpointer          ok_data,
+                                                 GFunc             cancel_func,
+                                                 gpointer          cancel_data);
+static void    cdisplay_contrast_configure_cancel  (GimpColorDisplay *display);
+
+static void    contrast_create_lookup_table        (CdisplayContrast    *contrast);
+static void    contrast_configure_ok_callback      (GtkWidget        *widget,
+                                                 CdisplayContrast    *contrast);
+static void    contrast_configure_cancel_callback  (GtkWidget        *widget,
+                                                 CdisplayContrast    *contrast);
+
+
+static GimpModuleInfo cdisplay_contrast_info = 
 {
-  NULL,
   N_("High Contrast color display filter"),
   "Jay Cox <jaycox@earthlink.net>",
   "v0.2",
@@ -99,105 +102,134 @@ static GimpModuleInfo info =
   "October 14, 2000"
 };
 
-G_MODULE_EXPORT GimpModuleStatus
-module_init (GimpModuleInfo **inforet)
+static GType                  cdisplay_contrast_type = 0;
+static GimpColorDisplayClass *parent_class        = NULL;
+
+
+G_MODULE_EXPORT gboolean
+gimp_module_register (GTypeModule     *module,
+                      GimpModuleInfo **inforet)
 {
-#ifndef __EMX__
-  if (gimp_color_display_register (COLOR_DISPLAY_NAME, &methods))
-#else
-  if (mod_color_display_register (COLOR_DISPLAY_NAME, &methods))
-#endif
+  cdisplay_contrast_get_type (module);
+
+  if (inforet)
+    *inforet = &cdisplay_contrast_info;
+
+  return TRUE;
+}
+
+static GType
+cdisplay_contrast_get_type (GTypeModule *module)
+{
+  if (! cdisplay_contrast_type)
     {
-      *inforet = &info;
-      return GIMP_MODULE_OK;
+      static const GTypeInfo select_info =
+      {
+        sizeof (CdisplayContrastClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) cdisplay_contrast_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (CdisplayContrast),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) cdisplay_contrast_init,
+      };
+
+      cdisplay_contrast_type =
+        g_type_module_register_type (module,
+                                     GIMP_TYPE_COLOR_DISPLAY,
+                                     "CdisplayContrast",
+                                     &select_info, 0);
     }
-  else
-    return GIMP_MODULE_UNLOAD;
+
+  return cdisplay_contrast_type;
 }
 
-G_MODULE_EXPORT void
-module_unload (void  *shutdown_data,
-	       void (*completed_cb) (void *),
-	       void  *completed_data)
+static void
+cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 {
-#ifndef __EMX__
-  gimp_color_display_unregister (COLOR_DISPLAY_NAME);
-#else
-  mod_color_display_unregister (COLOR_DISPLAY_NAME);
-#endif
+  GObjectClass          *object_class;
+  GimpColorDisplayClass *display_class;
+
+  object_class  = G_OBJECT_CLASS (klass);
+  display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize          = cdisplay_contrast_finalize;
+
+  display_class->name             = _("Contrast");
+  display_class->help_page        = "modules/contrast.html";
+  display_class->clone            = cdisplay_contrast_clone;
+  display_class->convert          = cdisplay_contrast_convert;
+  display_class->load_state       = cdisplay_contrast_load_state;
+  display_class->save_state       = cdisplay_contrast_save_state;
+  display_class->configure        = cdisplay_contrast_configure;
+  display_class->configure_cancel = cdisplay_contrast_configure_cancel;
+}
+
+static void
+cdisplay_contrast_init (CdisplayContrast *contrast)
+{
+  contrast->contrast  = 4.0;
+  contrast->lookup    = g_new (guchar, 256);
+
+  contrast_create_lookup_table (contrast);
+}
+
+static void
+cdisplay_contrast_finalize (GObject *object)
+{
+  CdisplayContrast *contrast;
+
+  contrast = CDISPLAY_CONTRAST (object);
+
+  if (contrast->shell)
+    {
+      gtk_widget_destroy (contrast->shell);
+      contrast->shell = NULL;
+    }
+
+  if (contrast->lookup)
+    {
+      g_free (contrast->lookup);
+      contrast->lookup = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
-static gpointer
-contrast_new (gint type)
+static GimpColorDisplay *
+cdisplay_contrast_clone (GimpColorDisplay *display)
 {
-  ContrastContext *context;
+  CdisplayContrast *contrast;
+  CdisplayContrast *copy;
 
-  context = g_new0 (ContrastContext, 1);
-  context->contrast = 4.0;
-  context->lookup = g_new (guchar, 256);
+  contrast = CDISPLAY_CONTRAST (display);
 
-  contrast_create_lookup_table (context);
+  copy = CDISPLAY_CONTRAST (gimp_color_display_new (G_TYPE_FROM_INSTANCE (contrast)));
 
-  return context;
-}
-
-static gpointer
-contrast_clone (gpointer cd_ID)
-{
-  ContrastContext *src_context = cd_ID;
-  ContrastContext *context;
-
-  context = contrast_new (0);
-  context->contrast = src_context->contrast;
+  copy->contrast = contrast->contrast;
   
-  memcpy (context->lookup, src_context->lookup, sizeof (guchar) * 256);
+  memcpy (copy->lookup, contrast->lookup, sizeof (guchar) * 256);
 
-  return context;
+  return GIMP_COLOR_DISPLAY (copy);
 }
 
 static void
-contrast_create_lookup_table (ContrastContext *context)
+cdisplay_contrast_convert (GimpColorDisplay *display,
+                           guchar           *buf,
+                           gint              width,
+                           gint              height,
+                           gint              bpp,
+                           gint              bpl)
 {
-  gint i;
+  CdisplayContrast *contrast;
+  gint              i, j   = height;
 
-  if (context->contrast == 0.0)
-    context->contrast = 1.0;
-
-  for (i = 0; i < 256; i++)
-    {
-      context->lookup[i] 
-	= (guchar) (int)(255 * .5 * (1 + sin(context->contrast*2*G_PI*i/255.0)));
-    }
-}
-
-static void
-contrast_destroy (gpointer cd_ID)
-{
-  ContrastContext *context = cd_ID;
-
-  if (context->shell)
-    {
-#if 0
-      dialog_unregister (context->shell);
-#endif
-      gtk_widget_destroy (context->shell);
-    }
-
-  g_free (context->lookup);
-  g_free (context);
-}
-
-static void
-contrast_convert (gpointer  cd_ID,
-		  guchar   *buf,
-		  gint      width,
-		  gint      height,
-		  gint      bpp,
-		  gint      bpl)
-{
-  guchar *lookup = ((ContrastContext *) cd_ID)->lookup;
-  gint    i, j = height;
+  contrast = CDISPLAY_CONTRAST (display);
 
   /* You will not be using the entire buffer most of the time. 
    * Hence, the simplistic code for this is as follows:
@@ -218,7 +250,7 @@ contrast_convert (gpointer  cd_ID,
       i = width;
       while (i--)
 	{
-	  *buf = lookup[*buf];
+	  *buf = contrast->lookup[*buf];
 	  buf++;
 	}
       buf += bpl;
@@ -226,151 +258,157 @@ contrast_convert (gpointer  cd_ID,
 }
 
 static void
-contrast_load (gpointer      cd_ID,
-	       GimpParasite *state)
+cdisplay_contrast_load_state (GimpColorDisplay *display,
+                              GimpParasite     *state)
 {
-  ContrastContext *context = cd_ID;
+  CdisplayContrast *contrast;
+
+  contrast = CDISPLAY_CONTRAST (display);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&context->contrast, gimp_parasite_data (state), sizeof (gdouble));
+  memcpy (&contrast->contrast, gimp_parasite_data (state), sizeof (gdouble));
 #else
-  guint32 buf[2], *data = gimp_parasite_data (state);
+  {
+    guint32 buf[2], *data = gimp_parasite_data (state);
 
-  buf[0] = g_ntohl (data[1]);
-  buf[1] = g_ntohl (data[0]);
+    buf[0] = g_ntohl (data[1]);
+    buf[1] = g_ntohl (data[0]);
 
-  memcpy (&context->contrast, buf, sizeof (gdouble));
+    memcpy (&contrast->contrast, buf, sizeof (gdouble));
+  }
 #endif
 
-  contrast_create_lookup_table (context);
+  contrast_create_lookup_table (contrast);
 }
 
 static GimpParasite *
-contrast_save (gpointer cd_ID)
+cdisplay_contrast_save_state (GimpColorDisplay *display)
 {
-  ContrastContext *context = cd_ID;
-  guint32 buf[2];
+  CdisplayContrast *contrast;
+  guint32           buf[2];
 
-  memcpy (buf, &context->contrast, sizeof (gdouble));
+  contrast = CDISPLAY_CONTRAST (display);
+
+  memcpy (buf, &contrast->contrast, sizeof (double));
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
   {
-    guint32 tmp = g_htonl (buf[0]);
+    guint32 tmp;
+
+    tmp    = g_htonl (buf[0]);
     buf[0] = g_htonl (buf[1]);
     buf[1] = tmp;
   }
 #endif
 
   return gimp_parasite_new ("Display/Contrast", GIMP_PARASITE_PERSISTENT,
-			    sizeof (gdouble), &buf);
+			    sizeof (double), &buf);
 }
 
 static void
-contrast_configure_ok_callback (GtkWidget *widget,
-				gpointer   data)
+cdisplay_contrast_configure (GimpColorDisplay *display,
+                             GFunc             ok_func,
+                             gpointer          ok_data,
+                             GFunc             cancel_func,
+                             gpointer          cancel_data)
 {
-  ContrastContext *context = data;
+  CdisplayContrast *contrast;
+  GtkWidget        *hbox;
+  GtkWidget        *label;
+  GtkObject        *adjustment;
 
-  context->contrast =
-    gtk_spin_button_get_value (GTK_SPIN_BUTTON (context->spinner));
-  contrast_create_lookup_table (context);
+  contrast = CDISPLAY_CONTRAST (display);
 
-#if 0
-  dialog_unregister (context->shell);
-#endif
-  gtk_widget_destroy (GTK_WIDGET (context->shell));
-  context->shell = NULL;
-
-  if (context->ok_func)
-    context->ok_func (context, context->ok_data);
-}
-
-static void
-contrast_configure_cancel_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  ContrastContext *context = data;
-
-#if 0
-  dialog_unregister (context->shell);
-#endif
-  gtk_widget_destroy (GTK_WIDGET (context->shell));
-  context->shell = NULL;
-
-  if (context->cancel_func)
-    context->cancel_func (context, context->cancel_data);
-}
-
-static void
-contrast_configure (gpointer cd_ID,
-		    GFunc    ok_func,
-		    gpointer ok_data,
-		    GFunc    cancel_func,
-		    gpointer cancel_data)
-{
-  ContrastContext *context = cd_ID;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkObject *adjustment;
-
-  if (!context->shell)
+  if (!contrast->shell)
     {
-      context->ok_func = ok_func;
-      context->ok_data = ok_data;
-      context->cancel_func = cancel_func;
-      context->cancel_data = cancel_data;
+      contrast->ok_func     = ok_func;
+      contrast->ok_data     = ok_data;
+      contrast->cancel_func = cancel_func;
+      contrast->cancel_data = cancel_data;
 
-      context->shell =
-	gimp_dialog_new (_("High Contrast"), "high contrast",
+      contrast->shell =
+	gimp_dialog_new (_("High Contrast"), "high_contrast",
 			 gimp_standard_help_func, "modules/highcontrast.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
 			 GTK_STOCK_CANCEL, contrast_configure_cancel_callback,
-			 cd_ID, NULL, NULL, FALSE, TRUE,
+			 contrast, NULL, NULL, FALSE, TRUE,
 
 			 GTK_STOCK_OK, contrast_configure_ok_callback,
-			 cd_ID, NULL, NULL, TRUE, FALSE,
+			 contrast, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
-#if 0
-      dialog_register (context->shell);
-#endif
-
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (context->shell)->vbox),
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (contrast->shell)->vbox),
 			  hbox, FALSE, FALSE, 0);
 
       label = gtk_label_new ( _("Contrast Cycles:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 
-      adjustment = gtk_adjustment_new (context->contrast, 1.0, 20.0, 0.5, 1.0, 0.0);
-      context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
+      adjustment = gtk_adjustment_new (contrast->contrast, 0.01, 10.0, 0.01, 0.1, 0.0);
+      contrast->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
-      gtk_widget_set_size_request (context->spinner, 100, -1);
-      gtk_box_pack_start (GTK_BOX (hbox), context->spinner, FALSE, FALSE, 0); 
+      gtk_box_pack_start (GTK_BOX (hbox), contrast->spinner, FALSE, FALSE, 0);
     }
 
-  gtk_widget_show_all (context->shell);
+  gtk_widget_show_all (contrast->shell);
 }
 
 static void
-contrast_configure_cancel (gpointer cd_ID)
+cdisplay_contrast_configure_cancel (GimpColorDisplay *display)
 {
-  ContrastContext *context = cd_ID;
+  CdisplayContrast *contrast;
  
-  if (context->shell)
+  contrast = CDISPLAY_CONTRAST (display);
+
+  if (contrast->shell)
     {
-#if 0
-      dialog_unregister (context->shell);
-#endif
-      gtk_widget_destroy (context->shell);
-      context->shell = NULL;
+      gtk_widget_destroy (contrast->shell);
+      contrast->shell = NULL;
     }
 
-  if (context->cancel_func)
-    context->cancel_func (context, context->cancel_data);
+  if (contrast->cancel_func)
+    contrast->cancel_func (contrast, contrast->cancel_data);
+}
+
+static void
+contrast_create_lookup_table (CdisplayContrast *contrast)
+{
+  gint    i;
+
+  if (contrast->contrast == 0.0)
+    contrast->contrast = 1.0;
+
+  for (i = 0; i < 256; i++)
+    {
+      contrast->lookup[i] = (guchar) (gint)
+        (255 * .5 * (1 + sin (contrast->contrast * 2 * G_PI * i / 255.0)));
+    }
+}
+
+static void
+contrast_configure_ok_callback (GtkWidget        *widget,
+                                CdisplayContrast *contrast)
+{
+  contrast->contrast =
+    gtk_spin_button_get_value (GTK_SPIN_BUTTON (contrast->spinner));
+
+  contrast_create_lookup_table (contrast);
+
+  gtk_widget_destroy (GTK_WIDGET (contrast->shell));
+  contrast->shell = NULL;
+
+  if (contrast->ok_func)
+    contrast->ok_func (contrast, contrast->ok_data);
+}
+
+static void
+contrast_configure_cancel_callback (GtkWidget        *widget,
+                                    CdisplayContrast *contrast)
+{
+  gimp_color_display_configure_cancel (GIMP_COLOR_DISPLAY (contrast));
 }
