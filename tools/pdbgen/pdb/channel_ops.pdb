@@ -35,7 +35,7 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable to offset', gimage => 1 },
+	  desc => 'The drawable to offset', get => &std_image_arg },
 	{ name => 'wrap_around', type => 'boolean',
 	  desc => 'wrap image around or fill vacated regions' },
 	{ name => 'fill_type', type => 'enum GimpOffsetType',

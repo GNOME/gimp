@@ -21,31 +21,38 @@
 
 # shortcuts
 
-sub tool_init_args {
-    (image => ['image', 'The image'],
-     drawable => ['drawable', 'The affected drawable']);
-}
+sub drawable_arg () {{
+    name => 'drawable',
+    type => 'drawable',
+    desc => 'The affected drawable',
+    get  => &std_image_arg
+}}
 
-sub sample_merged_arg {
-    (sample_merged => ['boolean', 'Use the composite image, not the drawable']);
-}
+sub sample_merged_arg () {{
+    name => 'sample_merged',
+    type => 'boolean',
+    desc => 'Use the composite image, not the drawable'
+}}
 
-sub antialias_arg {
-    (antialias => ['boolean', 'Antialiasing $desc']);
-}
+sub antialias_arg () {{
+    name => 'antialias',
+    type => 'boolean',
+    desc => 'Antialiasing $desc'
+}}
 
-sub feather_select_args {
-    (feather => ['boolean', 'Feather option for selections'],
-     feather_radius => ['float', 'Radius for feather operation']);
-}
+sub feather_select_args () {(
+    { name => 'feather', type => 'boolean',
+      desc => 'Feather option for selections' },
+    { name => 'feather_radius', type => 'float',
+      desc => 'Radius for feather operation' }
+)}
 
-sub stroke_args {
-    (num_strokes => ['0 < int32', 
-		     'number of stroke control points (count each coordinate as
-		      2 points)'],
-     strokes => ['floatarray',
-		 'array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
-		 sn.x, sn.y }']);
+sub stroke_arg () {
+    { name => 'strokes', type => 'floatarray',
+      desc => 'array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
+	       sn.x, sn.y }',
+      array => { desc => 'number of stroke control points (count each
+			  coordinate as 2 points)' } }
 }
 
 # The defs
@@ -64,16 +71,17 @@ HELP;
 
     &std_pdb_misc;
 
-    %inargs = (
-	&tool_init_args,
-	pressure => ['0 <= float <= 100',
-		     'The pressure of the airbrush strokes $desc'],
-	&stroke_args
+    @inargs = (
+	&drawable_arg,
+	 { name => 'pressure', type => '0 <= float <= 100',
+	   desc => 'The pressure of the airbrush strokes $desc' },
+	&stroke_arg
     );
+    delete $inargs[0]->{get};
 
-    @invoke = (
-	'airbrush.h',
-	'airbrush_non_gui (drawable, pressure, num_strokes, strokes);'
+    %invoke = (
+	headers => [ qw("airbrush.h") ],
+	code => 'airbrush_non_gui (drawable, pressure, num_strokes, strokes);'
     );
 }
 
@@ -91,35 +99,44 @@ HELP
 
     &std_pdb_misc;
 
-    %inargs = (
-	&tool_init_args,
-        blend_mode => ['enum BlendMode',
-		       'The type of blend: $desc'],
-	gradient_type => ['enum PaintMode',
-			  'The paint application mode: $desc'],
-	opacity => ['0 <= float <= 100',
-		    'The opacity of the final blend $desc'],
-	offset => ['0 <= float',
-		   'Offset relates to the starting and ending coordinates
-		    specified for the blend. This parameter is mode dependent
-		    $desc'],
-	repeat => ['enum RepeatMode', 'Repeat mode: $desc'],
-        supersample => ['boolean', 'Do adaptive supersampling $desc'],
-	max_depth => ['1 <= int32 <= 9',
-		      'Maximum recursion levels for supersampling',
-		      'attach supersample'],
-	threshold => ['0 <= float <= 4',
-		      'Supersampling threshold',
-		      'attach supersample'],
-	x1 => ['float', 'The x coordinate of this blend's starting point'],
-	y1 => ['float', 'The y coordinate of this blend's starting point'],
-	x2 => ['float', 'The x coordinate of this blend's ending point'],
-	y2 => ['float', 'The y coordinate of this blend's ending point']
+    @inargs = (
+	&drawable_arg,
+        { name => 'blend_mode', type => 'enum BlendMode',
+	  desc => 'The type of blend: $desc' },
+	{ name => 'gradient_type',  type => 'enum PaintMode',
+	  desc => 'The paint application mode: $desc' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The opacity of the final blend $desc' },
+	{ name => 'offset', type => '0 <= float',
+	  desc => 'Offset relates to the starting and ending coordinates
+		   specified for the blend. This parameter is mode dependent
+		   $desc' },
+	{ name => 'repeat', type => 'enum RepeatMode',
+	  desc => 'Repeat mode: $desc' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Do adaptive supersampling $desc' },
+	{ name => 'max_depth', type => '1 <= int32 <= 9',
+	  desc => 'Maximum recursion levels for supersampling',
+	  cond => 'supersample' },
+	{ name => 'threshold', type => '0 <= float <= 4',
+	  desc => 'Supersampling threshold',
+	  cond => 'supersample' },
+	{ name => 'x1', type => 'float',
+	  desc => "The x coordinate of this blend's starting point" },
+	{ name => 'y1', type => 'float',
+	  desc => "The y coordinate of this blend's starting point" },
+	{ name => 'x2', type => 'float',
+	  desc => "The x coordinate of this blend's ending point" },
+	{ name => 'y2', type => 'float',
+	  desc => "The y coordinate of this blend's ending point" }
     );
 
-    @invoke = (
-        'blend.h',
-	'blend (image, drawable, blend_mode, paint_mode, gradient_type, opacity, offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);'
+    %invoke = (
+        headers => [ qw("blend.h") ],
+	code => <<'CODE'
+blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
+       offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);
+CODE
     );
 }
 
@@ -144,27 +161,36 @@ HELP;
 
     &std_pdb_misc;
 
-    my $validity = 'This parameter is only valid when there is no selection in the specified image.'
-    my $coord = "The \$a coordinate of this bucket fill's application. $validity";
+    my $validity = 'This parameter is only valid when there is no selection in
+		    the specified image.'
+    my $coord = "The \$a coordinate of this bucket fill's application.
+		 $validity";
 
     %inargs = (
-	&tool_init_args,
-	fill_mode => ['enum FillMode', 'The type of fill: $desc'],
-	paint_mode => ['enum PaintMode', 'The paint application mode: $desc'],
-	opacity => ['0 <= float <= 100',
-		    'The opacity of the final bucket fill $desc'],
-	threshold => ['0 <= float <= 255',
-		      "The threshold determines how extensive the seed fill
-		       will be. It's value is specified in terms of intensity
-		       levels \$desc. $validity'],
+	&drawable_arg,
+	{ name => 'fill_mode', type => 'enum FillMode',
+	  desc => 'The type of fill: $desc' },
+	{ name => paint_mode, type => 'enum PaintMode',
+	  desc => 'The paint application mode: $desc' },
+	{ name => opacity, type => '0 <= float <= 100',
+	  desc => 'The opacity of the final bucket fill $desc' },
+	{ name => threshold, type => '0 <= float <= 255',
+	  desc => "The threshold determines how extensive the seed fill will
+		   be. It's value is specified in terms of intensity levels
+		   \$desc. $validity" },
 	&sample_merged_arg,
-	x => ['float', eval qq/{\$a = 'x';"$coord";}/],
-	y => ['float', eval qq/{\$a = 'y';"$coord";}/]
+	{ name => x, type => 'float',
+	  desc => eval qq/{\$a = 'x'; "$coord";}/ },
+	{ name => y, type => 'float',
+	  desc => eval qq/{\$a = 'y';"$coord";}/ }
     );
 
-    @invoke = (
-        'bucket_fill.h',
-	'bucket_fill (image, drawable, fill_mode, paint_mode, opacity, threshold, sample_merged, x, y);'
+    %invoke = (
+        headers => [ qw ("bucket_fill.h") ],
+	code => <<'CODE'
+bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity, threshold,
+             sample_merged, x, y);
+CODE
     );
 }
 
@@ -182,7 +208,7 @@ sufficiently close to the specified color (as determined by the threshold
 value) are included in the selection. The antialiasing parameter allows the
 final selection mask to contain intermediate values based on close misses to
 the threshold bar. Feathering can be enabled optionally and is controlled with
-the \"feather_radius\" parameter. If the sample_merged parameter is non-zero,
+the "feather_radius" parameter. If the sample_merged parameter is non-zero,
 the data of the composite image will be used instead of that for the specified
 drawable. This is equivalent to sampling for colors after merging all visible
 layers. In the case of a merged sampling, the supplied drawable is ignored.
@@ -190,20 +216,25 @@ HELP
 
     &std_pdb_misc;
 
-    %inargs = (
-	&tool_init_args,
-	color => ['color', 'The color to select'],
-	threshold => ['0 <= int32 <= 255',
-		      'Threshold in intensity levels $desc'],
-	operation => ['enum Operation', 'The selection operation: $desc'],
+    @inargs = (
+	&drawable_arg,
+	{ name => 'color', type => 'color',
+	  desc => 'The color to select' },
+	{ name => 'threshold', type => '0 <= int32 <= 255',
+	  desc => 'Threshold in intensity levels $desc' },
+	{ name => 'operation', type => 'enum Operation',
+	  desc => 'The selection operation: $desc' },
 	&antialias_arg,
 	&feather_select_args,
 	&sample_merged_arg
     );
 
-    @invoke = (
-        'by_color_select.h',
-	'by_color_select (image, drawable, color, threshold, operation, antialias, feather, feather_radius, sample_merged);'
+    %invoke = (
+        headers => [ qw("by_color_select.h") ],
+	code => <<'CODE'
+by_color_select (gimage, drawable, color, threshold, operation, antialias,
+		 feather, feather_radius, sample_merged);
+CODE
     );
 }
 
@@ -214,9 +245,9 @@ BLURB
 
     $help = <<'HELP'
 This tool clones (copies) from the source drawable starting at the specified 
-source coordinates to the dest drawable. If the \"clone_type\" argument is set 
+source coordinates to the dest drawable. If the "clone_type" argument is set 
 to PATTERN-CLONE, then the current pattern is used as the source and the
-\"src_drawable\" argument is ignored. Pattern cloning assumes a tileable
+"src_drawable" argument is ignored. Pattern cloning assumes a tileable
 pattern and mods the sum of the src coordinates and subsequent stroke offsets
 with the width and height of the pattern. For image cloning, if the sum of the
 src coordinates and subsequent stroke offsets exceeds the extents of the src
@@ -227,18 +258,26 @@ HELP
 
     &std_pdb_misc;
 
-    %inargs = (
-	&tool_init_args,
-	src_drawable => ['drawable', "The source drawable"],
-	clone_type => ['enum CloneType', 'The type of clone: $desc'],
-	src_x => ['float', 'The x coordinate in the source image'],
-	src_y => ['float', 'The y coordinate in the source image'],
-	&stroke_args
+    @inargs = (
+	&drawable_arg,
+	{ name => 'src_drawable', type => 'drawable',
+	  desc => 'The source drawable' },
+	{ name => 'clone_type', type => 'enum CloneType',
+	  desc => 'The type of clone: $desc' },
+	{ name => 'src_x', type => 'float',
+	  desc => 'The x coordinate in the source image' },
+	{ name => 'src_y', type => 'float',
+	  desc => 'The y coordinate in the source image' },
+	&stroke_arg
     );
+    delete $inargs[0]->{get};
 
-    @invoke = (
-	'clone.h',
-	'clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y, num_strokes, strokes);'
+    %invoke = (
+	headers => [ qw("clone.h") ],
+	code => <<'CODE'
+clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y, num_strokes,
+	       strokes);
+CODE
     );
 }
 
@@ -262,19 +301,244 @@ HELP
 
     &std_pdb_misc;
 
-    %inargs = (
-	&tool_init_args,
-	x => ['float', 'x coordinate of upper-left corner of rectangle'],
-	y => ['float', 'y coordinate of upper-left corner of rectangle'],
+    @inargs = (
+	&drawable_arg,
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
 	&sample_merged_arg,
-	save_color => ['boolean', 'Save the color to the active palette']
+	{ name => 'save_color', type => 'boolean',
+	  desc => 'Save the color to the active palette' }
     );
 
-    %outargs = (
-	color => ['color', 'The return color']
+    @outargs = (
+	{ name => 'color', type => 'color',
+	  desc => 'The return color' }
     );
 
     %invoke = (
-	'color_picker.h',
-	'
+	headers => [ qw("color_picker.h") ],
+	code => <<'CODE'
+{
+  if (success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, save_color)
+    {
+      color = g_new (guchar, 3);
+      color[RED_PIX] = col_value[RED_PIX];
+      color[GREEN_PIX] = col_value[GREEN_PIX];
+      color[BLUE_PIX] = col_value[BLUE_PIX];
+    }
 }
+CODE
+    );
+}
+
+sub convolve {
+    $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
+
+    $help = <<'HELP';
+This tool convolves the specified drawable with either a sharpening or blurring
+kernel. The pressure parameter controls the magnitude of the operation. Like
+the paintbrush, this tool linearly interpolates between the specified stroke
+coordinates.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'pressure', type => '0 <= float <= 100',
+	  desc => 'The pressure: $desc' },
+	{ name => 'convolve_type', type 'enum Convolve (no CUSTOM)',
+	  desc => 'Convolve type: $desc' },
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("convolve.h") ],
+	code => 'convolve_non_gui (drawable, pressure, num_strokes, strokes);'
+    );
+}
+
+sub crop {
+    $blurb = 'Crop the image to the specified extents.';
+
+    $help = <<'HELP';
+This procedure crops the image so that it's new width and height are equal to
+the supplied parameters. Offsets are also provided which describe the position
+of the previous image's content. All channels and layers within the image are 
+cropped to the new image extents; this includes the image selection mask. If
+any parameters are out of range, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'new_width', type => '0 < int32',
+	  desc => 'New image width: (0 < new_width <= width)' },
+	{ name => 'new_height', type => '0 < int32',
+	  desc => 'New image height: (0 < new_height <= height)' },
+	{ name => 'offx', type => '0 <= int32',
+	  desc => 'x offset: (0 <= offx <= (width - new_width))' },
+	{ name => 'offy', type => '0 <= int32',
+	  desc => 'y offset: (0 <= offy <= (height - new_height))' }
+    );
+
+    %invoke = (
+	headers => [ qw("crop.h") ],
+	code => <<'CODE'
+{
+  if (new_width > gimage->width ||
+      new_height > gimage->height ||
+      offx > (gimage->width - new_width) ||
+      offy > (gimage->height - new_height)
+    success = FALSE;
+  else
+    crop_image (gimage, offx, offy, offx + new_width, offy + new_height);
+}
+CODE
+    );
+}
+
+sub ellipse_select {
+    $blurb = 'Create an elliptical selection over the specified image.';
+
+    $help = <<'HELP';
+This tool creates an elliptical selection over the specified image. The
+elliptical region can be either added to, subtracted from, or replace the
+contents of the previous selection mask. If antialiasing is turned on, the
+edges of the elliptical region will contain intermediate values which give the
+appearance of a sharper, less pixelized edge. This should be set as TRUE most
+of the time. If the feather option is enabled, the resulting selection is
+blurred before combining. The blur is a gaussian blur with the specified
+feather radius.
+HELP
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the ellipse: $desc' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the ellipse: $desc' },
+	{ name => 'operation', 'enum Selection',
+	  desc => 'The selection operation: $desc' },
+	&antialias_arg,
+	&feather_args
+    );
+
+    %invoke = (
+	headers => [ qw("ellipse_select.h") ],
+	code => <<'CODE'
+ellipse_select (gimage, (int) x, (int) y, (int) w, (int) h, op, antialias,
+		feather, feather_radius);
+CODE
+    );
+}
+
+sub eraser {
+    $blurb = 'Erase using the current brush.';
+
+    $help = <<'HELP';
+This tool erases using the current brush mask. If the specified drawable
+contains an alpha channel, then the erased pixels will become transparent.
+Otherwise, the eraser tool replaces the contents of the drawable with the
+background color. Like paintbrush, this tool linearly interpolates between the
+specified stroke coordinates.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg,
+	{ name => 'hardness', type => 'enum EraserHardness',
+	  desc => '$desc' }
+	{ name => 'method', type => 'enum EraserMethod',
+	  desc => '$desc' }
+    );
+
+    %invoke = (
+	headers => [ qw("eraser.h") ],
+	code => <<'CODE'
+eraser_non_gui (drawable, num_strokes, strokes, hardness, method);
+CODE
+    );
+}
+
+sub flip {
+    $blurb = <<'BLURB';
+Flip the specified drawable about its center either vertically or
+horizontally.
+BLURB
+
+    $help = <<'HELP';
+This tool flips the specified drawable if no selection exists. If a selection
+exists, the portion of the drawable which lies under the selection is cut from
+the drawable and made into a floating selection which is then flipd by the
+specified amount. The return value is the ID of the flipped drawable. If there
+was no selection, this will be equal to the drawable ID supplied as input.
+Otherwise, this will be the newly created and flipped drawable. The flip type
+parameter indicates whether the flip will be applied horizontally or
+vertically.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'flip_type', type => 'enum FlipType',
+	  desc => 'Type of flip: $desc' }
+    );
+
+    @outargs = ( &drawable_arg );
+    $outargs[0]->{alias} = layer;
+    $outargs[0]->{desc} = 'The flipped drawable';
+    $outargs[0]->{no_declare} = 1;
+    delete $outargs[0]->{get};
+
+    %invoke = (
+	headers => [ qw("flip_tool.h" "tranform_core.h") ],
+	vars => ['TileManger *float_tiles, *new_tiles', 'Layer *layer']
+	code => <<'CODE'
+{
+  /* Start a transform undo group */
+  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
+
+  /* Cut/Copy from the specified drawable */
+  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+  /* flip the buffer */
+  switch (flip_type)
+    {
+    case 0: /* horz */
+      new_tiles = flip_tool_flip_horz (gimage, drawable, float_tiles, -1);
+      break;
+    case 1: /* vert */
+      new_tiles = flip_tool_flip_vert (gimage, drawable, float_tiles, -1);
+      break;
+     }
+
+  /* free the cut/copied buffer */
+  tile_manager_destroy (float_tiles);
+
+  if (new_tiles)
+    {
+      layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+      success = (layer != NULL);
+    }
+  else
+    success = FALSE;
+
+  /* push the undo group end  */
+  undo_push_group_end (gimage);
+}
+CODE
+    );
+}
+
+

@@ -25,11 +25,11 @@ package Gimp::CodeGen::pdb;
     float  => { name => 'FLOAT' , type => 'gdouble ' },
     string => { name => 'STRING', type => 'gchar *'  },
 
-    int32array   => { name => 'INT32ARRAY' , type => 'gint32 *'  },
-    int16array   => { name => 'INT16ARRAY' , type => 'gint16 *'  },
-    int8array    => { name => 'INT8ARRAY'  , type => 'gint8 *'   },
-    floatarray   => { name => 'FLOATARRAY' , type => 'gdouble *' },
-    stringarray  => { name => 'STRINGARRAY', type => 'gchar **'  },
+    int32array  => { name  => 'INT32ARRAY' , type  => 'gint32 *' , array => 1 },
+    int16array  => { name  => 'INT16ARRAY' , type  => 'gint16 *' , array => 1 },
+    int8array   => { name  => 'INT8ARRAY'  , type  => 'gint8 *'  , array => 1 },
+    floatarray  => { name  => 'FLOATARRAY' , type  => 'gdouble *', array => 1 },
+    stringarray => { name  => 'STRINGARRAY', type  => 'gchar **' , array => 1 },
 
     color  => { name => 'COLOR' , type => 'guchar *' },
 
@@ -67,7 +67,7 @@ package Gimp::CodeGen::pdb;
 		     id_func => 'gimp_drawable_get_ID',
 		     id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
 		     id_headers => [ qw("drawable.h") ],
-		     gimage => 'drawable_gimage (GIMP_DRAWABLE ($var))'
+		     image => 'drawable_gimage (GIMP_DRAWABLE ($var))'
 		 },
     selection => {
 		     name => 'SELECTION',
@@ -114,3 +114,5 @@ sub arg_ptype {
 
 # Return the alias if defined, otherwise the name
 sub arg_vname { exists $_[0]->{alias} ? $_[0]->{alias} : $_[0]->{name} }
+
+sub arg_numtype () { 'gint32 ' }

@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1998 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1998-1999 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,81 +25,123 @@ $destdir = "$main::destdir/app";
 *arg_vname = \&Gimp::CodeGen::pdb::arg_vname;
 
 *write_file = \&Gimp::CodeGen::util::write_file;
+*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+
+%testmap = (
+    '<'  => '>',
+    '>'  => '<',
+    '<=' => '>=',
+    '>=' => '<='
+);
 
 sub declare_args {
     my $proc = shift;
     my $out = shift;
+
     my $result = "";
+
     foreach (@_) {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
+
 	foreach (@args) {
 	    my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
-	    if (not exists $_->{no_declare}) {
+
+	    if ($arg->{array} && (not exists $_->{array})) {
+		warn "Array without number of elements param in $proc->{name}";
+	    }
+
+	    unless (exists $_->{no_declare}) {
 		$result .= ' ' x 2;
 		$result .= $arg->{type} . &arg_vname($_) . ";\n";
+
 		if (exists $arg->{id_headers}) {
 		    foreach (@{$arg->{id_headers}}) {
 			$out->{headers}->{$_}++;
 		    }
 		}
+
+		if (exists $_->{get}) {
+		    $result .= ' ' x 2;
+		    $result .= $arg_types{$_->{get}->{type}}->{type};
+		    $result .= &arg_vname($_->{get}) . ";\n";
+		}
 	    }
 	}
     }
+
     $result;
 } 
 
 sub make_args {
     my $proc = shift;
+
     my $result = "";
     my $once;
+
     foreach (@_) {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
+
 	if (scalar @args) {
 	    $result .= "\nstatic ProcArg $proc->{name}_${_}[] =";
 	    $result .= "\n{\n";
+
 	    foreach my $arg (@{$proc->{$_}}) {
 		my ($type) = &arg_parse($arg->{type});
-		$result .= ' ' x 2 . "{\n";
-		$result .= ' ' x 4;
-		$result .= 'PDB_' . $arg_types{$type}->{name} . ",\n"; 
-		$result .= ' ' x 4;
-		$result .= qq/"$arg->{name}",\n/; 
-		$result .= ' ' x 4;
-		$result .= qq/"$arg->{desc}"\n/; 
-		$result .= ' ' x 2 . "},\n";
+
+		$result .= <<CODE;
+  {
+    PDB_$arg_types{$type}->{name},
+    "$arg->{name}",
+    "$arg->{desc}"
+  },
+CODE
 	    }
+
 	    $result =~ s/,\n$/\n/;
 	    $result .= "};\n";
 	}
     }
+
     $result;
 }
 
 sub marshal_inargs {
     my $proc = shift;
+
     my $result = "";
     my %decls;
     my $argc = 0;
+
     my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
+
     foreach (@inargs) {
 	my($pdbtype, @typeinfo) = &arg_parse($_->{type});
 	my $arg = $arg_types{$pdbtype};
 	my $type = &arg_ptype($arg);
 	my $var = &arg_vname($_);
-	$result .= ' ' x 2;
-	$result .= "if (success)\n" . ' ' x 4 if $success;
+
 	if (exists $arg->{id_func}) {
-	    $decls{$type}++;
-	    $result .= "{\n" . ' ' x 6 if $success;
-	    $result .= "${type}_value = args[$argc].value.pdb_$type;\n";
-	    $result .= ' ' x 4 if $success;
-	    $result .= ' ' x 2;
-	    $result .= "if (($var = ";
-	    $result .= "$arg->{id_func} (${type}_value)) == NULL)\n";
-	    $result .= ' ' x 4 unless $success;
-	    $result .= "\t" if $success;
-	    $result .= "success = FALSE;\n";
-	    $result .= ' ' x 4 . "}\n" if $success;
+	    my $code = "";
+
+	    $code .= <<CODE;
+  if (($var = $arg->{id_func} (args[$argc].value.pdb_$type)) == NULL)
+    success = FALSE;
+CODE
+
+	    $code .= <<CODE if exists $_->{get};
+  else
+    @{[ &arg_vname($_->{get}) ]} = @{[ eval qq/"$arg->{$_->{get}->{type}}"/ ]};
+CODE
+
+	    if ($success) {
+		$code =~ s/^/' ' x 4/meg;
+		$code =~ s/^ {8}/\t/mg;
+		$result .= "{\n" . $code . ' ' x 4 . "}\n";
+	    }
+	    else {
+		$result .= $code;
+	    }
+
 	    $success = 1;
 	}
 	else {
@@ -107,65 +149,82 @@ sub marshal_inargs {
 		# FIXME: implement this
 	    }
 	    elsif ($pdbtype eq 'boolean') {
-		$result .= "$var = ";
-		$result .= "(args[$argc].value.pdb_$type) ? TRUE : FALSE;\n";
-	    }
-	    elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
-		my $tests = 0;
-		$result .= "success = (";
-		if (defined $typeinfo[0]) {
-		    $result .= "$var $typeinfo[1] $typeinfo[0]";
-		    $tests++;
-		}
-		if (defined $typeinfo[2]) {
-		    $result .= '|| ' if $tests;
-		    $result .= "$var $typeinfo[2] $typeinfo[3]";
-		}
-		$result .= ");\n";
+		$result .= ' ' x 2 . "$var = ";
+		$result .= "args[$argc].value.pdb_$type ? TRUE : FALSE;\n";
 	    }
 	    else {
 		my $cast = "";
+
 		$cast = " ($arg->{type})" if $type eq "pointer";
 	        $cast = " ($arg->{type})" if $arg->{type} =~ /int(16|8)$/;
-		$result .= "$var =$cast args[$argc].value.pdb_$type;\n";
+
+		$result .= ' ' x 2 . "$var =";
+		$result .= "$cast args[$argc].value.pdb_$type;\n";
+
+		if ($pdbtype eq 'string') {
+		    $result .= ' ' x 2 . "success = $var != NULL;\n";
+		    $success = 1;
+		}
+		elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
+		    my $tests = 0;
+
+		    $result .= ' ' x 2 . "success = ";
+
+		    if (defined $typeinfo[0]) {
+			$result .= "$var $testmap{$typeinfo[1]} $typeinfo[0]";
+			$tests++;
+		    }
+
+		    if (defined $typeinfo[2]) {
+			$result .= '|| ' if $tests;
+			$result .= "$var $testmap{$typeinfo[2]} $typeinfo[3]";
+		    }
+
+		    $result .= ";\n";
+
+		    $success = 1;
+		}
 	    }
 	}
+
 	$argc++; $result .= "\n";
     }
-    chomp $result if !$success && $argc == 1;
-    my $decls;
-    foreach (keys %decls) { $decls .= ' ' x 2 . "$_ ${_}_value;\n" }
-    $result = $decls . "\n" . $result if $decls;
-    $result and $result = "\n" . $result unless $decls;
+
+    $result = "\n" . $result if $result;
     $result;
 }
 
 sub marshal_outargs {
     my $proc = shift;
+
     my $result = <<CODE;
   return_args = procedural_db_return_args (\&$proc->{name}_proc, success);
 CODE
+
     my $argc = 0;
     my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
+
     if (scalar @outargs) {
 	my $outargs = "";
+
 	foreach (@{$proc->{outargs}}) {
 	    my ($pdbtype) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$pdbtype};
 	    my $type = &arg_ptype($arg);
 	    my $var = &arg_vname($_);
+
 	    $argc++; $outargs .= ' ' x 2;
+
             if (exists $arg->{id_ret_func}) {
-		$outargs .= "return_args[$argc].value.pdb_$type = ";
-		$outargs .= eval qq/"$arg->{id_ret_func}"/;
-		$outargs .= ";\n";
+		$var = eval qq/"$arg->{id_ret_func}"/;
 	    }
-	    else {
-		$outargs .= "return_args[$argc].value.pdb_$type = $var;\n";
-	    }
+
+	    $outargs .= "return_args[$argc].value.pdb_$type = $var;\n";
 	}
+
 	$outargs =~ s/^/' ' x 2/meg if $success;
 	$outargs =~ s/^/' ' x 2/meg if $success && $argc > 1;
+
 	$result .= "\n" if $success || $argc > 1;
 	$result .= ' ' x 2 . "if (success)\n" if $success;
 	$result .= ' ' x 4 . "{\n" if $success && $argc > 1;
@@ -176,6 +235,7 @@ CODE
     else {
 	$result =~ s/_args =//;
     }
+
     $result =~ s/, success\);$/, TRUE);/m unless $success;
     $result;
 }
@@ -227,8 +287,10 @@ CODE
 	$invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;
 
 	my $code = $proc->{invoke}->{code};
+
 	chomp $code;
 	$code =~ s/\t/' ' x 8/eg;
+
 	if ($code =~ /^\s*\{\s*\n.*\n\s*\}\s*$/s && !$success) {
 	    $code =~ s/^\s*\{\s*\n//s;
 	    $code =~ s/\n\s*}\s*$//s;
@@ -242,7 +304,11 @@ CODE
 	$code = ' ' x 2 . "if (success)\n" . $code if $success;
 	$success = ($code =~ /success =/) unless $success;
 
-	$out->{code} .= ' ' x 2 . "int success = TRUE;\n" if $success;
+	if ($success) {
+	    $out->{code} .= ' ' x 2;
+	    $out->{code} .= "int success = $proc->{invoke}->{success};\n";
+	}
+
 	$out->{code} .= $invoker . $code . "\n";
 	$out->{code} .= "\n" if $code =~ /\n/s || $invoker;
 	$out->{code} .= &marshal_outargs($proc) . "}\n";
@@ -290,7 +356,7 @@ CODE
 
 GPL
 
-    my $internal = "$destdir/internal_procs.h.tmp.$$";
+    my $internal = "$destdir/internal_procs.h$FILE_EXT";
     open INTERNAL, "> $internal" or die "Can't open $cmdfile: $!\n";
     print INTERNAL $gpl;
     my $guard = "__INTERNAL_PROCS_H__";
@@ -310,7 +376,7 @@ HEADER
     foreach $group (@main::groups) {
 	my $out = $out{$group};
 
-	my $cfile = "$destdir/${group}_cmds.c.tmp.$$";
+	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cmdfile: $!\n";
 	print CFILE $gpl;
 	foreach my $header (sort keys %{$out->{headers}}) {
@@ -341,7 +407,7 @@ HEADER
 	$pcount += $out->{pcount};
     }
 
-    $internal = "$destdir/internal_procs.c.tmp.$$";
+    $internal = "$destdir/internal_procs.c$FILE_EXT";
     open INTERNAL, "> $internal" or die "Can't open $cmdfile: $!\n";
     print INTERNAL $gpl;
     print INTERNAL qq/#include "app_procs.h"\n\n/;

@@ -111,12 +111,7 @@ require 'pdb.pl';
 require 'util.pl';
 
 # Squash whitespace into just single spaces between words
-sub trimspace {
-    my $val = shift;
-    $$val =~ s/[\n\s]+/ /g;
-    $$val =~ s/^ //;
-    $$val =~ s/ $//;
-}
+sub trimspace { for (${$_[0]}) { s/[\n\s]+/ /g; s/^ //; s/ $//; } }
 
 # Trim spaces and escape quotes C-style
 sub nicetext {
@@ -141,6 +136,37 @@ sub nicelist {
     foreach (@$list) { &trimspace(\$_) }
 }
 
+# Add args for array lengths
+
+sub arrayexpand {
+    my $args = shift;
+    my $newargs;
+
+    foreach (@$$args) {
+	if (exists $_->{array}) {
+	    my $arg = $_->{array};
+
+	    $arg->{name} = 'num_' . $_->{name} unless exists $arg->{name};
+
+	    # We can't have negative lengths, but let them set a min number
+	    unless (exists $arg->{type}) {
+		$arg->{type} = '0 < int32';
+	    }
+	    elsif ($arg->{type} !~ /^\s*\d+\s*</) {
+		$arg->{type} = '0 < ' . $arg->{type};
+	    }
+
+	    $arg->{num} = 1;
+
+	    push @$newargs, $arg;
+ 	}
+
+	push @$newargs, $_;
+    }
+
+    $$args = $newargs;
+}
+
 # Post-process each pdb entry
 while ((undef, $entry) = each %pdb) {
     &nicetext(\$entry->{blurb});
@@ -148,16 +174,24 @@ while ((undef, $entry) = each %pdb) {
     &nicetext(\$entry->{author});
     &nicetext(\$entry->{copyright});
     &nicetext(\$entry->{date});
+
+    &arrayexpand(\$entry->{inargs}) if exists $entry->{inargs};
+    &arrayexpand(\$entry->{outargs}) if exists $entry->{outargs};
+
     &niceargs($entry->{inargs}) if exists $entry->{inargs};
     &niceargs($entry->{outargs}) if exists $entry->{outargs};
+
     &nicelist($entry->{invoke}{headers}) if exists $entry->{invoke}{headers};
-    &nicelist($entry->{globals}) if exists $entry->{globals}
+    &nicelist($entry->{globals}) if exists $entry->{globals};
+
+    $entry->{invoke}{success} = 'TRUE' unless exists $entry->{invoke}{success};
 }
 
 # Generate code from the modules
 my $didstuff;
 while (@ARGV) {
     my $type = shift @ARGV;
+
     print "\nProcessing $type...\n";
 
     if (exists $gen{$type}) {

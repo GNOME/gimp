@@ -36,7 +36,7 @@ HELP
 
     @outargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The new display' }
+	  desc => 'The new display', alias => 'gdisp' }
     );
 
     %invoke = (
@@ -47,7 +47,7 @@ HELP
   if (gimage->layers == NULL)
     success = FALSE;
   else
-    success = ((display = gdisplay_new (gimage, scale)) != NULL);
+    success = ((gdisp = gdisplay_new (gimage, scale)) != NULL);
 }
 CODE
     );
@@ -65,12 +65,12 @@ HELP
 
     @inargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The display to delete' }
+	  desc => 'The display to delete', alias => 'gdisp' }
     );
 
     %invoke = (
 	headers => [ qw("gdisplay.h") ],
-	code => 'gtk_widget_destroy (display->shell);'
+	code => 'gtk_widget_destroy (gdisp->shell);'
     );
 }
 

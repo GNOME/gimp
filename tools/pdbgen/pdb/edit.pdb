@@ -17,12 +17,12 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Common arguments for image and drawable
+# Common arguments
 sub inargs {
     @inargs = (
-	&std_image_arg,
 	{ name => 'drawable', type => 'drawable',
-	  desc => "The drawable to @{[shift]}" }
+	  desc => "The drawable to @{[shift]}",
+	  get => &std_image_arg }
     );
 }
 
@@ -30,14 +30,7 @@ sub inargs {
 sub invoke {
     %invoke = (
 	headers => [ qw("global_edit.h") ],
-	code => <<CODE
-{
-  if (gimage != drawable_gimage (drawable))
-    success = FALSE;
-  else
-    success = @{[shift]};
-}
-CODE
+	code => "success = @{[shift]};"
     );
 }
 
@@ -57,7 +50,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('cut from');
-    &invoke('(edit_cut (gimage, drawable) != NULL)');
+    &invoke('edit_cut (gimage, drawable) != NULL');
 }
 
 sub edit_copy {
@@ -74,7 +67,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('copy from');
-    &invoke('(edit_copy (gimage, drawable) != NULL)');
+    &invoke('edit_copy (gimage, drawable) != NULL');
 }
 
 sub edit_paste {
@@ -107,10 +100,9 @@ HELP
 	  desc  => 'The new floating selection', alias => 'layer' }
     );
 
-    &invoke('(layer != NULL)');
+    &invoke('layer != NULL');
     $cmd = "layer = edit_paste (gimage, drawable, global_buf, paste_into);\n";
-    $invoke{code} =~ s/(else\n)/$1 . ' ' x 4 . "{\n" . ' ' x 6 . $cmd/se;
-    $invoke{code} =~ s/(success = \(.*?\n)/' ' x 2 . $1 . ' ' x 4 . "}\n"/se;
+    $invoke{code} = "{\n" . ' ' x 2 . $cmd . ' ' x 2 . $invoke{code} . "\n}\n";
 }
 
 sub edit_clear {

@@ -1,0 +1,100 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+}
+
+sub get_gradient_data {
+    $blurb = <<'BLURB';
+Retrieve information about the specified gradient (including data).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the gradient. This includes the
+gradient name, and the sample data for the gradient.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name ("" means current active gradient)' }
+	{ name => 'sample_size', type => '0 < int32 < 10000',
+	  desc => 'The size of the sample to return when the gradient is
+		   changed $desc',
+	  on_fail => 'G_SAMPLE' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The gradient name',
+	  alias => 'g_strdup (grad->name)', no_declare => 1 },
+	{ name => 'grad_data', type => 'floatarray',
+	  desc => 'The gradient sample data',
+	  array => { name => 'width',
+		     desc => 'The gradient sample width (r,g,b,a)',
+		     alias => 'sample_size * 4', no_declare => 1 } }
+    );
+
+    %invoke = (
+	headers => [ qw("gradient_select.h") ],
+	vars => ['gradient_t *grad'],
+	code => <<'CODE'
+{
+  if (name[0] == '\0')
+    success = (grad = curr_gradient) != NULL;
+  else
+    {
+      GSList *list;
+
+      success = FALSE;
+
+      list = gradients_list;
+
+      while (list)
+	{
+	  grad = list->data;
+
+	  if (!strcmp (grad->name, name))
+	    {
+	      success = TRUE;
+	      break;      /* We found it! */
+	    }
+
+	  list = list->next;
+	}
+    }
+
+  if (success)
+    {
+      gdouble *, 
+    }
+}
+CODE
+    );
+}
+
+@procs = qw(gradients_get_gradient_data);
+%exports = (app => [@procs]);
+
+$desc = 'Gradient UI';
+
+1;

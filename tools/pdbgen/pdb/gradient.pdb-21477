@@ -18,8 +18,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub pdb_misc {
-    $author = 'Federico Mena Quintero';
-    $copyright = $author;
+    $author = $copyright = 'Federico Mena Quintero';
     $date = '1997';
 }
 
@@ -35,11 +34,11 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name => 'num_gradients', type => 'int32',
-	  desc => 'The number of loaded gradients' },
 	{ name => 'gradient_names', type => 'stringarray',
 	  desc => 'The list of gradient names', alias => 'gradients',
-	  retval => 1, num_elements => '*num_gradients' }
+	  array => { name => 'num_gradients',
+		     desc => 'The number of loaded gradients',
+		     no_declare => 1 } }
     );
 
     %invoke = (
@@ -47,9 +46,10 @@ HELP
 	vars => ['gradient_t *grad', 'GSList *list', 'int i = 0'],
 	code => <<'CODE'
 {
-  gradients = g_new (char *, num_gradients);
+  gradients = g_new (gchar *, num_gradients);
 
-  success = ((list = gradients_list) != NULL);
+  success = (list = gradients_list) != NULL;
+
   while (list)
     {
       grad           = list->data;
@@ -71,17 +71,14 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{
-	    name  => 'name',
-	    type  => 'string',
-	    desc  => 'The name of the active gradient',
-	    alias => 'g_strdup (curr_gradient->name)', no_declare => 1
-	}
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active gradient',
+	  alias => 'g_strdup (curr_gradient->name)', no_declare => 1 }
     );
 
     %invoke = (
 	headers => [ qw("gradient.h") ],
-	code => 'success = (curr_gradient != NULL);'
+	code => 'success = curr_gradient != NULL;'
     );
 }
 
@@ -104,56 +101,24 @@ HELP
     );
 
     %invoke = (
+	success => 'FALSE',
 	headers => [ qw("gradient.h") ],
-	vars => ['gradient_t *grad', 'GSList *list'],
-	code => <<'CODE'
-{
-  success = (name != NULL);
-
-  if (success)
-    {
-      success = FALSE;
-      list = gradients_list;
-      while (list)
-	{
-	  grad = list->data;
-
-	  if (strcmp (grad->name, name) == 0)
-	    {
-	      success = TRUE;
-
-	      /* FIXME: violates functionality-GUI separation */
-	      if (grad->list_item != NULL)
-		/* Select that gradient in the listbox */
-		gtk_list_select_child (GTK_LIST (g_editor->list),
-				       grad->list_item);
-	      else
-		/* Just update the current gradient */
-		curr_gradient = grad;
-
-	      break;
-	    }
-
-	  list = list->next;
-	}
-    }
-}
-CODE
+	code => 'success = grad_set_grad_to_name (name);'
     );
 }
 
 sub sample_num_arg {
-    { name => 'num_samples', type => 'int32',
+    { name => 'num_samples', type => $_[0] . 'int32',
       desc => 'The number of samples to take', alias => 'i' }
 }
 
 sub sample_outargs {
     @outargs = (
-	{ name => 'array_length', type => 'int32',
-	  desc => 'Length of the color_samples array (4 * num_samples)' },
         { name => 'color_samples', type => 'floatarray',
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  retval => 1, num_elements => '*array_length' }
+	  array => { name => 'array_length', no_lib => 1,
+		     desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
     );
 }
 
@@ -171,7 +136,7 @@ HELP
 
     &pdb_misc;
 
-    @inargs = ( &sample_num_arg );
+    @inargs = ( &sample_num_arg('2 <= ') );
     &sample_outargs;
 
     %invoke = (
@@ -179,29 +144,24 @@ HELP
 	vars => ['gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv'],
 	code => <<'CODE'
 {
-  if (i >= 2)
+  pos = 0.0;
+  delta = 1.0 / (i - 1);
+
+  array_length = i * 4;
+
+  pv = color_samples = g_new (gdouble, array_length);
+
+  while (i--)
     {
-      pos = 0.0;
-      delta = 1.0 / (i - 1);
+      grad_get_color_at(pos, &r, &g, &b, &a);
 
-      array_length = i * 4;
+      *pv++ = r;
+      *pv++ = g;
+      *pv++ = b;
+      *pv++ = a;
 
-      pv = color_samples = g_new (gdouble, array_length);
-
-      while (i--)
-	{
-	  grad_get_color_at(pos, &r, &g, &b, &a);
-
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
-
-	  pos += delta;
-	}
+      pos += delta;
     }
-  else
-    success = FALSE;
 }
 CODE
     );
@@ -222,12 +182,12 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	&sample_num_arg,
 	{
 	    name  => 'positions',
 	    type  => 'floatarray',
 	    desc  => 'The list of positions to sample along the gradient',
-	    alias => 'pos'
+	    alias => 'pos',
+	    array => &sample_num_arg("")
 	}
     );
 
@@ -238,26 +198,21 @@ HELP
 	vars => ['gdouble r, g, b, a', 'gdouble *pv'],
 	code => <<'CODE'
 {
-  if (i >= 2)
+  array_length = i * 4;
+
+  pv = color_samples = g_new (gdouble, array_length);
+
+  while (i--)
     {
-      array_length = i * 4;
+      grad_get_color_at(*pos, &r, &g, &b, &a);
 
-      pv = color_samples = g_new (gdouble, array_length);
+      *pv++ = r;
+      *pv++ = g;
+      *pv++ = b;
+      *pv++ = a;
 
-      while (i--)
-	{
-	  grad_get_color_at(*pos, &r, &g, &b, &a);
-
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
-
-	  pos++;
-	}
+      pos++;
     }
-  else
-    success = FALSE;
 }
 CODE
     );

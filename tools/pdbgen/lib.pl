@@ -24,10 +24,17 @@ $destdir = "$main::destdir/libgimp";
 *arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
 
 *write_file = \&Gimp::CodeGen::util::write_file;
+*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
 sub generate {
     my @procs = @{(shift)};
     my %out;
+
+    sub libtype {
+	my ($arg, $type) = @_;
+	$type =~ s/\d+// unless exists $arg->{keep_size};
+	$type;
+    }
 
     foreach my $name (@procs) {
 	my $proc = $main::pdb{$name};
@@ -45,7 +52,11 @@ sub generate {
 	# explicity set
 	my $retarg;
 	foreach (@outargs) { $retarg = $_, last if exists $_->{retval} }
-	scalar @outargs and $retarg = $outargs[0] unless $retarg;
+	unless ($retarg) {
+	    if (scalar @outargs) {
+		$retarg = exists $outargs[0]->{num} ? $outargs[1] : $outargs[0];
+	    }
+	}
 
 	my $rettype; my $retcol = 0;
 	if ($retarg) {
@@ -53,8 +64,8 @@ sub generate {
 	    if ($type ne 'color') {
 		my $arg = $arg_types{$type};
 		$rettype = do {
-		    if (exists $arg->{id_func}) { 'gint32 '    }
-		    else                        { $arg->{type} }
+		    if (exists $arg->{id_func}) { 'gint32 '                  }
+		    else                        { &libtype($_, $arg->{type}) }
 		};
 		chop $rettype unless $rettype =~ /\*$/;
 	    }
@@ -62,6 +73,8 @@ sub generate {
 		# Color returns three components in pointers passed in
 		$rettype = 'void'; $retcol = 1;
 	    }
+
+	    $retarg->{retval} = 1;
 	}
 	else {
 	    # No return values
@@ -74,21 +87,28 @@ sub generate {
 	    my ($type) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
 	    my $id = exists $arg->{id_func};
+
 	    if ($type ne 'color') {
 		$arglist .= do {
-		    if ($id) { 'gint32 '    }
-		    else     { $arg->{type} }
+		    if ($id) { 'gint32 '                  }
+		    else     { &libtype($_, $arg->{type}) }
 		};
+
 		$arglist .= $_->{name};
 		$arglist .= '_ID' if $id;
 		$arglist .= ', ';
 	    }
 	    else {
 		# A color needs to stick the components into a 3-element array
-		$color = "\n" . ' ' x 2 . "guchar $_->{name}\[3];\n\n";
-		$color .= ' ' x 2 . "$_->{name}\[0] = red;\n";
-		$color .= ' ' x 2 . "$_->{name}\[1] = green;\n";
-		$color .= ' ' x 2 . "$_->{name}\[2] = blue;";
+		chop ($color = <<CODE);
+
+  guchar $_->{name}\[3];
+
+  $_->{name}\[0] = red;
+  $_->{name}\[1] = green;
+  $_->{name}\[2] = blue;
+CODE
+
 		$arglist .= "guchar red, guchar green, guchar blue, ";
 	    }
 
@@ -101,24 +121,33 @@ sub generate {
 
 	# This marshals the return value(s)
 	my $return_args = "";
-	my $return_marshal;
-	$return_marshal = "gimp_destroy_params (return_vals, nreturn_vals);";
+	my $return_marshal = "gimp_destroy_params (return_vals, nreturn_vals);";
 
 	# We only need to bother with this if we have to return a value
 	if ($rettype ne 'void' || $retcol) {
-	    my $argc = 1; my $once = 0;
+	    my $once = 0;
 	    my $firstvar;
+	    my @arraynums;
+
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
 		my $arg = $arg_types{$type};
 		my $id = $arg->{id_ret_func};
 		my $var;
+
 		$return_marshal = "" unless $once++;
-		if ($type ne 'color') {
+
+	        if (exists $_->{num}) {
+		    if (not exists $_->{no_lib}) {
+			$arglist .= "gint \*$_->{name}, ";
+			push @arraynums, $_;
+		    }
+		}
+		elsif ($type ne 'color') {
 		    $return_args .= "\n" . ' ' x 2;
 		    $return_args .= do {
-		        if ($id) { 'gint32 '    }
-		        else     { $arg->{type} }
+			if ($id) { 'gint32 '    }
+			else     { &libtype($_, $arg->{type}) }
 		    };
 
 		    # The return value variable
@@ -131,21 +160,73 @@ sub generate {
 
 		    # Initialize all IDs to -1
 		    $return_args .= " = -1" if $id;
+
+		    # Initialize pointers to NULL
+		    $return_args .= " = NULL" if !$id && ($arg->{type} =~ /\*/);
+
 		    $return_args .= ";";
+
+		    if (exists $_->{array} && exists $_->{array}->{no_lib}) {
+			$return_args .= "\n" . ' ' x 2 . "gint num_$var;";
+		    }
 		}
-		$return_marshal .= <<CODE;
+	    }
+
+	    foreach (@arraynums) { $return_marshal .= "\*$_->{name} = 0;\n  "; }
+	    $return_marshal =~ s/\n  $/\n\n  /s if scalar(@arraynums);
+
+	    $return_marshal .= <<CODE;
 if (return_vals[0].data.d_status == STATUS_SUCCESS)
 CODE
-		if ($type ne 'color') {
-		    $return_marshal .= ' ' x 4 . "$var = ";
-		    $return_marshal .= 'g_strdup (' if $type eq 'string';
-		    $return_marshal .= "return_vals[$argc].data.d_$type";
-		    $return_marshal .= ')' if $type eq 'string';
-		    $return_marshal .= ";\n";
+
+	    $return_marshal .= ' ' x 4 . "{\n" if $#outargs;
+
+	    my $argc = 1; my ($numpos, $numtype);
+	    foreach (@outargs) {
+		my ($type) = &arg_parse($_->{type});
+		my $arg = $arg_types{$type};
+		my $id = $arg->{id_ret_func};
+		my $var;
+
+		my $head = ""; my $foot = "";
+		if ($type =~ /^string(array)?/) {
+		    $head = 'g_strdup (';
+		    $foot = ')';
+		}
+
+	        if (exists $_->{num}) {
+		    $numpos = $argc;
+		    $numtype = $type;
+		}
+		elsif (exists $_->{array}) {
+		    my $datatype = $arg->{type};
+		    chop $datatype;
+		    $datatype =~ s/ *$//;
+
+		    $return_args .= "\n" . ' ' x 2 . "gint i;";
+
+		    my $numvar = '*' . $_->{array}->{name};
+		    $numvar = "num_$_->{name}" if exists $_->{array}->{no_lib};
+
+		    $return_marshal .= <<CODE;
+      $numvar = return_vals[$numpos].data.d_$numtype;
+      $_->{name} = g_new ($datatype, $numvar);
+      for (i = 0; i < $numvar; i++)
+	$_->{name}\[i] = ${head}return_vals[$argc].data.d_$type\[i]${foot};
+CODE
+		}
+		elsif ($type ne 'color') {
+		    # The return value variable
+		    $var = $_->{name};
+		    $var .= '_ID' if $id;
+
+		    $return_marshal .= <<CODE
+    $var = ${head}return_vals[$argc].data.d_$type${foot};
+CODE
 		}
 		else {
 		    # Colors are returned in parts using pointers
-		    $arglist .= "guchar \*red, guchar \*green, guchar \*blue";
+		    $arglist .= "guchar \*red, guchar \*green, guchar \*blue, ";
 		    $return_marshal .= <<CODE
     {
       \*red = return_vals[$argc].data.d_color.red;
@@ -154,8 +235,12 @@ CODE
     }
 CODE
 		}
+
 		$argc++;
 	    }
+
+	    $return_marshal .= ' ' x 4 . "}\n" if $#outargs;
+
 	    $return_marshal .= <<'CODE';
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -169,6 +254,9 @@ CODE
 	    # We don't need the last comma in the declaration
 	    $arglist =~ s/, $//;
 	}
+	else {
+	    $arglist = "void";
+	}
 
 	# Our function prototype for the headers
         push @{$out->{proto}}, "$rettype gimp_$name ($arglist);\n";
@@ -179,7 +267,7 @@ $rettype
 gimp_$name ($arglist)
 {
   GParam *return_vals;
-  int nreturn_vals;$return_args$color
+  gint nreturn_vals;$return_args$color
 
   return_vals = gimp_run_procedure ("gimp_$name",
 				    \&nreturn_vals,$argpass
@@ -215,8 +303,8 @@ LGPL
     # We generate two files, a .h file with prototypes for all the functions
     # we make, and a .c file for the actual implementation
     while (my($group, $out) = each %out) {
-	my $hfile = "$destdir/gimp${group}.h.tmp.$$";
-	my $cfile = "$destdir/gimp${group}.c.tmp.$$";
+	my $hfile = "$destdir/gimp${group}.h$FILE_EXT";
+	my $cfile = "$destdir/gimp${group}.c$FILE_EXT";
 
 	my $protos;
 	foreach (@{$out->{proto}}) { $protos .= $_ }

@@ -1,0 +1,227 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Federico Mena Quintero';
+    $date = '1997';
+}
+
+sub gradients_get_list {
+    $blurb = 'Retrieve the list of loaded gradients.';
+
+    $help = <<'HELP';
+This procedure returns a list of the gradients that are currently loaded in the 
+gradient editor. You can later use the gimp-gradients-set-active function to
+set the active gradient.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name => 'gradient_names', type => 'stringarray',
+	  desc => 'The list of gradient names', alias => 'gradients',
+	  array => { name => 'num_gradients',
+		     desc => 'The number of loaded gradients',
+		     no_declare => 1 } }
+    );
+
+    %invoke = (
+	headers => [ qw("gradient.h") ],
+	vars => ['gradient_t *grad', 'GSList *list', 'int i = 0'],
+	code => <<'CODE'
+{
+  gradients = g_new (gchar *, num_gradients);
+
+  success = (list = gradients_list) != NULL;
+
+  while (list)
+    {
+      grad           = list->data;
+      gradients[i++] = g_strdup (grad->name);
+      list           = list->next;
+    }
+}
+CODE
+    );
+}
+
+sub gradients_get_active {
+    $blurb = 'Retrieve the name of the active gradient.';
+
+    $help = <<'HELP';
+This procedure returns the name of the active gradient in the gradient editor.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active gradient',
+	  alias => 'g_strdup (curr_gradient->name)', no_declare => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("gradient.h") ],
+	code => 'success = curr_gradient != NULL;'
+    );
+}
+
+sub gradients_set_active {
+    $blurb = 'Sets the specified gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure lets you set the specified gradient as the active or "current"
+one. The name is simply a string which corresponds to one of the loaded
+gradients in the gradient editor. If no matching gradient is found, this
+procedure will return an error. Otherwise, the specified gradient will become
+active and will be used for subsequent custom gradient operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the gradient to set' }
+    );
+
+    %invoke = (
+	success => 'FALSE',
+	headers => [ qw("gradient.h") ],
+	code => 'success = grad_set_grad_to_name (name);'
+    );
+}
+
+sub sample_num_arg {
+    { name => 'num_samples', type => $_[0] . 'int32',
+      desc => 'The number of samples to take', alias => 'i' }
+}
+
+sub sample_outargs {
+    @outargs = (
+        { name => 'color_samples', type => 'floatarray',
+	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
+	  array => { name => 'array_length', no_lib => 1,
+		     desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
+    );
+}
+
+sub gradients_sample_uniform {
+    $blurb = 'Sample the active gradient in uniform parts.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient from the gradient editor in the
+specified number of uniform parts. It returns a list of floating-point values
+which correspond to the RGBA values for each sample. The minimum number of
+samples to take is 2, in which case the returned colors will correspond to the
+{ 0.0, 1.0 } positions in the gradient. For example, if the number of samples
+is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &sample_num_arg('2 <= ') );
+    &sample_outargs;
+
+    %invoke = (
+	headers => [ qw("gradient.h") ],
+	vars => ['gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv'],
+	code => <<'CODE'
+{
+  pos = 0.0;
+  delta = 1.0 / (i - 1);
+
+  array_length = i * 4;
+
+  pv = color_samples = g_new (gdouble, array_length);
+
+  while (i--)
+    {
+      grad_get_color_at(pos, &r, &g, &b, &a);
+
+      *pv++ = r;
+      *pv++ = g;
+      *pv++ = b;
+      *pv++ = a;
+
+      pos += delta;
+    }
+}
+CODE
+    );
+}
+
+sub gradients_sample_custom {
+    $blurb = 'Sample the active gradient in custom positions.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient from the gradient editor in the
+specified number of points. The procedure will sample the gradient in the
+specified positions from the list. The left endpoint of the gradient
+corresponds to position 0.0, and the right endpoint corresponds to 1.0. The
+procedure returns a list of floating-point values which correspond to the RGBA
+values for each sample.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{
+	    name  => 'positions',
+	    type  => 'floatarray',
+	    desc  => 'The list of positions to sample along the gradient',
+	    alias => 'pos',
+	    array => &sample_num_arg("")
+	}
+    );
+
+    &sample_outargs;
+
+    %invoke = (
+	headers => [ qw("gradient.h") ],
+	vars => ['gdouble r, g, b, a', 'gdouble *pv'],
+	code => <<'CODE'
+{
+  array_length = i * 4;
+
+  pv = color_samples = g_new (gdouble, array_length);
+
+  while (i--)
+    {
+      grad_get_color_at(*pos, &r, &g, &b, &a);
+
+      *pv++ = r;
+      *pv++ = g;
+      *pv++ = b;
+      *pv++ = a;
+
+      pos++;
+    }
+}
+CODE
+    );
+}
+
+@procs = qw(gradients_get_list gradients_get_active gradients_set_active
+	    gradients_sample_uniform gradients_sample_custom);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Gradients';
+
+1;
