@@ -1,3 +1,9 @@
+2004-12-22  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed asc2img.scm.
+
+	* de.po: removed unused translations.
+
 2004-12-21  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Forwardport from gimp-2-2.

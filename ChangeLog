@@ -1,5 +1,12 @@
 2004-12-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/asc2img.scm: removed this script as it
+	is broken beyond repair and the functionality is provided by the
+	text tool itself.
+
+2004-12-22  Sven Neumann  <sven@gimp.org>
+
 	* NEWS: added NEWS for the stable branch (no, we haven't branched
 	yet).
 

@@ -20,7 +20,6 @@ plug-ins/script-fu/scripts/alien-glow-bullet.scm
 plug-ins/script-fu/scripts/alien-glow-button.scm
 plug-ins/script-fu/scripts/alien-glow-logo.scm
 plug-ins/script-fu/scripts/alien-neon-logo.scm
-plug-ins/script-fu/scripts/asc2img.scm
 plug-ins/script-fu/scripts/basic1-logo.scm
 plug-ins/script-fu/scripts/basic2-logo.scm
 plug-ins/script-fu/scripts/beveled-button.scm
