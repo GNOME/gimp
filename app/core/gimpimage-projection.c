@@ -423,7 +423,7 @@ gimp_image_resize (GimpImage *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
+  undo_push_group_start (gimage, IMAGE_RESIZE_UNDO);
 
   /*  Relax the floating selection  */
   if (floating_layer)
@@ -458,11 +458,13 @@ gimp_image_resize (GimpImage *gimage,
       switch (guide->orientation)
 	{
 	case ORIENTATION_HORIZONTAL:
+	  undo_push_guide (gimage, guide);
 	  guide->position += offset_y;
 	  if (guide->position < 0 || guide->position > new_height)
 	    gimp_image_delete_guide (gimage, guide);
 	  break;
 	case ORIENTATION_VERTICAL:
+	  undo_push_guide (gimage, guide);
 	  guide->position += offset_x;
 	  if (guide->position < 0 || guide->position > new_width)
 	    gimp_image_delete_guide (gimage, guide);
@@ -529,7 +531,7 @@ gimp_image_scale (GimpImage *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
+  undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
 
   /*  Relax the floating selection  */
   if (floating_layer)
@@ -581,9 +583,11 @@ gimp_image_scale (GimpImage *gimage,
       switch (guide->orientation)
 	{
 	case ORIENTATION_HORIZONTAL:
+	  undo_push_guide (gimage, guide);
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
 	case ORIENTATION_VERTICAL:
+	  undo_push_guide (gimage, guide);
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
 	default:
@@ -1064,9 +1068,15 @@ void
 gimp_image_delete_guide (GimpImage *gimage,
 			 Guide     *guide) 
 {
-  gimage->guides = g_list_remove (gimage->guides, guide);
-  g_free (guide);
+  guide->position = -1;
+
+  if (guide->ref_count <= 0)
+    {
+      gimage->guides = g_list_remove (gimage->guides, guide);
+      g_free (guide);
+    }
 }
+
 
 Parasite *
 gimp_image_find_parasite (const GimpImage *gimage, 

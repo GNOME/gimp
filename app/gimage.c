@@ -33,9 +33,9 @@ static void gimage_repaint_handler      (GimpImage* gimage, gint, gint, gint, gi
 
 
 GImage*
-gimage_new(int width, 
-	   int height, 
-	   GimpImageBaseType base_type)
+gimage_new (int               width, 
+	    int               height, 
+	    GimpImageBaseType base_type)
 {
   GimpImage* gimage = gimp_image_new (width, height, base_type);
 
@@ -93,7 +93,7 @@ gimage_invalidate_previews (void)
 }
 
 static void
-gimage_dirty_handler (GimpImage* gimage)
+gimage_dirty_handler (GimpImage *gimage)
 {
   if (active_tool && !active_tool->preserve)
     {
@@ -132,10 +132,21 @@ gimage_image_count (void)
 }
 
 static void
-gimage_destroy_handler (GimpImage* gimage)
+gimage_destroy_handler (GimpImage *gimage)
 {
+  GList *list;
+  
   /*  free the undo list  */
   undo_free (gimage);
+
+  /*  free all guides  */
+  list = gimage->guides;
+  while (list)
+    {
+      g_free ((Guide*) list->data);
+      list = g_list_next (list);
+    }
+  g_list_free (gimage->guides);
 
   palette_import_image_destroyed (gimage);
 
@@ -155,7 +166,7 @@ gimage_cmap_change_handler (GimpImage *gimage,
 
 
 static void
-gimage_rename_handler (GimpImage* gimage)
+gimage_rename_handler (GimpImage *gimage)
 {
   gdisplays_update_title (gimage);
   lc_dialog_update_image_list ();
@@ -164,7 +175,7 @@ gimage_rename_handler (GimpImage* gimage)
 }
 
 static void
-gimage_resize_handler (GimpImage* gimage)
+gimage_resize_handler (GimpImage *gimage)
 {
   undo_push_group_end (gimage);
 
@@ -184,11 +195,11 @@ gimage_restructure_handler (GimpImage* gimage)
 }
 
 static void
-gimage_repaint_handler (GimpImage* gimage, 
-			gint x, 
-			gint y, 
-			gint w, 
-			gint h)
+gimage_repaint_handler (GimpImage *gimage, 
+			gint       x, 
+			gint       y, 
+			gint       w, 
+			gint       h)
 {
   gdisplays_update_area (gimage, x, y, w, h);
 }

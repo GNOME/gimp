@@ -363,10 +363,10 @@ gdisplay_delete (GDisplay *gdisp)
     info_window_free (gdisp->window_info_dialog);
 
   /* Remove navigation dialog if we have one */
-  if(gdisp->window_nav_dialog)
-    nav_window_free(gdisp->window_nav_dialog);
+  if (gdisp->window_nav_dialog)
+     nav_window_free(gdisp->window_nav_dialog);
 
-  if(gdisp->nav_popup)
+  if (gdisp->nav_popup)
     nav_popup_free(gdisp->nav_popup);
 
   /*  set the active display to NULL if it was this display  */
@@ -737,7 +737,6 @@ gdisplay_draw_guides (GDisplay *gdisp)
 	{
 	  guide = tmp_list->data;
 	  tmp_list = tmp_list->next;
-
 	  gdisplay_draw_guide (gdisp, guide, FALSE);
 	}
     }
@@ -1887,11 +1886,11 @@ gdisplays_resize_cursor_label (GimpImage *gimage)
 }
 
 void
-gdisplays_update_area (GimpImage* gimage,
-		       int x,
-		       int y,
-		       int w,
-		       int h)
+gdisplays_update_area (GimpImage *gimage,
+		       int        x,
+		       int        y,
+		       int        w,
+		       int        h)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -1938,7 +1937,7 @@ gdisplays_update_area (GimpImage* gimage,
 
 
 void
-gdisplays_expose_guides (GimpImage* gimage)
+gdisplays_expose_guides (GimpImage *gimage)
 {
   GDisplay *gdisp;
   GList *tmp_list;
@@ -1965,8 +1964,8 @@ gdisplays_expose_guides (GimpImage* gimage)
 
 
 void
-gdisplays_expose_guide (GimpImage* gimage,
-			Guide *guide)
+gdisplays_expose_guide (GimpImage *gimage,
+			Guide     *guide)
 {
   GDisplay *gdisp;
   GSList *list;
@@ -1977,8 +1976,10 @@ gdisplays_expose_guide (GimpImage* gimage,
     {
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage)
-	gdisplay_expose_guide (gdisp, guide);
-
+	{
+	  gdisplay_expose_guide (gdisp, guide);
+	}
+	  
       list = g_slist_next (list);
     }
 }
@@ -2015,7 +2016,7 @@ gdisplays_update_full (GimpImage* gimage)
 
 
 void
-gdisplays_shrink_wrap (GimpImage* gimage)
+gdisplays_shrink_wrap (GimpImage *gimage)
 {
   GDisplay *gdisp;
   GSList *list = display_list;

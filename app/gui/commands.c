@@ -1259,7 +1259,9 @@ image_scale_callback (GtkWidget *widget,
 {
   ImageResize * image_scale;
   GImage      * gimage;
-  gboolean      flush = FALSE;
+  gboolean      flush = FALSE;  /* this is a bit ugly: 
+				   we hijack the flush variable to check if 
+				   an undo_group was already started */
 
   image_scale = (ImageResize *) client_data;
 
@@ -1268,6 +1270,8 @@ image_scale_callback (GtkWidget *widget,
       if (image_scale->resize->resolution_x != gimage->xresolution ||
 	  image_scale->resize->resolution_y != gimage->yresolution)
 	{
+	  undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	  
 	  gimage_set_resolution (gimage,
 				 image_scale->resize->resolution_x,
 				 image_scale->resize->resolution_y);
@@ -1276,8 +1280,13 @@ image_scale_callback (GtkWidget *widget,
 
       if (image_scale->resize->unit != gimage->unit)
 	{
+	  if (!flush)
+	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+
 	  gimage_set_unit (gimage, image_scale->resize->unit);
 	  gdisplays_resize_cursor_label (gimage);
+
+	  flush = TRUE;
 	}
 
       if (image_scale->resize->width != gimage->width ||
@@ -1286,6 +1295,9 @@ image_scale_callback (GtkWidget *widget,
 	  if (image_scale->resize->width > 0 &&
 	      image_scale->resize->height > 0) 
 	    {
+	      if (!flush)
+		undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	
 	      gimage_scale (gimage,
 			    image_scale->resize->width,
 			    image_scale->resize->height);
@@ -1300,7 +1312,10 @@ image_scale_callback (GtkWidget *widget,
 	}
 
       if (flush)
-	gdisplays_flush ();
+	{
+	  undo_push_group_end (gimage);
+	  gdisplays_flush ();
+	}
     }
 
   resize_widget_free (image_scale->resize);

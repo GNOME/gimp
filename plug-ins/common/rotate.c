@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.7 by Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/05/28
+ *  Rotate plug-in v0.8 by Sven Neumann <sven@gimp.org>  
+ *  1999/10/09
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -41,6 +41,7 @@
  *  (01/15/98)  v0.6   fixed a line that caused rotate to crash on some 
  *                     systems               
  *  (05/28/98)  v0.7   use the new gimp_message function for error output
+ *  (10/09/99)  v0.8   rotate guides too
  */
 
 /* TODO List
@@ -58,16 +59,16 @@
 
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_rotate"
-#define PLUG_IN_VERSION     "v0.6 (01/15/98)"
+#define PLUG_IN_VERSION     "v0.8 (1999/10/09)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
-#define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
+#define PLUG_IN_AUTHOR      "Sven Neumann <sven@gimp.org>"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
 
 #define NUMBER_IN_ARGS 5
-#define IN_ARGS { PARAM_INT32,    "run_mode", "Interactive, non-interactive"},\
-		{ PARAM_IMAGE,    "image", "Input image" },\
-		{ PARAM_DRAWABLE, "drawable", "Input drawable"},\
-                { PARAM_INT32,    "angle", "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
+#define IN_ARGS { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
+		{ PARAM_IMAGE,    "image",      "Input image" },\
+		{ PARAM_DRAWABLE, "drawable",   "Input drawable"},\
+                { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
                 { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }"}
 
 #define NUMBER_OUT_ARGS 0 
@@ -86,6 +87,13 @@ typedef struct {
   gint run;
 } RotateInterface;
 
+typedef struct 
+{
+  gint32 ID;
+  gint32 orientation;
+  gint32 position;
+} GuideInfo;
+
 static RotateValues rotvals = 
 { 
   1,        /* default to 90 degrees */
@@ -98,27 +106,32 @@ static RotateInterface rotint =
 };
 
 
-static void  query (void);
-static void  run (gchar *name,
-		  gint nparams,	          /* number of parameters passed in */
-		  GParam * param,	  /* parameters passed in */
-		  gint *nreturn_vals,      /* number of parameters returned */
-		  GParam ** return_vals); /* parameters to be returned */
-static void  rotate (void);
-static void  rotate_drawable (GDrawable *drawable);
-static void  rotate_compute_offsets (gint *offsetx, 
-				     gint *offsety, 
-				     gint image_width, gint image_height,
-				     gint width, gint height);
-static gint  rotate_dialog (void);
-static void  rotate_close_callback (GtkWidget *widget,
-				    gpointer   data);
-static void  rotate_ok_callback (GtkWidget *widget,
-				 gpointer   data);
-static void  rotate_toggle_update (GtkWidget *widget,
-				   gpointer   data);
-gint32 my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID);
-gint32 my_gimp_selection_is_empty (gint32 image_ID);
+static void  query   (void);
+static void  run     (gchar      *name,
+		      gint        nparams,	
+		      GParam     *param,	
+		      gint       *nreturn_vals,  
+		      GParam    **return_vals);
+ 
+static void  rotate                 (void);
+static void  rotate_drawable        (GDrawable  *drawable);
+static void  rotate_compute_offsets (gint       *offsetx, 
+				     gint       *offsety, 
+				     gint       image_width, 
+				     gint       image_height,
+				     gint       width, 
+				     gint       height);
+static gint  rotate_dialog          (void);
+static void  rotate_close_callback  (GtkWidget *widget,
+				     gpointer   data);
+static void  rotate_ok_callback     (GtkWidget *widget,
+				     gpointer   data);
+static void  rotate_toggle_update   (GtkWidget *widget,
+				     gpointer   data);
+
+static gint32 my_gimp_selection_float      (gint32     image_ID, 
+					    gint32     drawable_ID);
+static gint32 my_gimp_selection_is_empty   (gint32     image_ID);
 
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
@@ -255,7 +268,7 @@ run (gchar *name,		/* name of plugin */
 
 /* Some helper functions */
 
-gint32
+static gint32
 my_gimp_selection_is_empty (gint32 image_ID)
 {
   GParam *return_vals;
@@ -279,8 +292,9 @@ my_gimp_selection_is_empty (gint32 image_ID)
   return is_empty;
 }
 
-gint32
-my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID)
+static gint32
+my_gimp_selection_float (gint32 image_ID, 
+			 gint32 drawable_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -304,10 +318,12 @@ my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID)
 }
 
 static void
-rotate_compute_offsets (gint* offsetx,
-			gint* offsety,
-			gint image_width, gint image_height,
-			gint width, gint height)
+rotate_compute_offsets (gint *offsetx,
+			gint *offsety,
+			gint  image_width, 
+			gint  image_height,
+			gint  width, 
+			gint  height)
 {
   gint buffer;
 
@@ -493,7 +509,12 @@ rotate (void)
   gint nreturn_vals;  
   GDrawable *drawable;
   gint32 *layers;
-  gint i, nlayers;
+  gint i;
+  gint nlayers;
+  gint32 guide_ID;
+  GuideInfo *guide;
+  GList *guides = NULL;
+  GList *list;
 
   if (rotvals.angle == 0) return;  
 
@@ -521,7 +542,10 @@ rotate (void)
 		      PARAM_IMAGE, image_ID, PARAM_END);
 
   if (rotvals.everything)  /* rotate the whole image */ 
-    {	
+    {
+      gint32 width = gimp_image_width (image_ID);
+      gint32 height = gimp_image_height (image_ID);
+
       gimp_drawable_detach (active_drawable);
       layers = gimp_image_get_layers (image_ID, &nlayers);
       for ( i=0; i<nlayers; i++ )
@@ -531,12 +555,71 @@ rotate (void)
 	  gimp_drawable_detach (drawable);
 	}
       g_free(layers);	  
-      if (rotvals.angle != 2)  
+
+      /* build a list of all guides and remove them */
+      guide_ID = 0;
+      while ((guide_ID = gimp_image_find_next_guide (image_ID, guide_ID)) != 0)
 	{
-	  gimp_image_resize (image_ID,
-			     gimp_image_height(image_ID),
-			     gimp_image_width(image_ID),
-			     0, 0);
+	  guide = g_new (GuideInfo, 1);
+	  guide->ID = guide_ID;
+	  guide->orientation = gimp_image_get_guide_orientation (image_ID, guide_ID);
+	  guide->position = gimp_image_get_guide_position (image_ID, guide_ID);
+	  guides = g_list_prepend (guides, guide);
+	}
+      for (list = guides; list; list = list->next)  
+	{
+	  guide = (GuideInfo *)list->data;
+	  gimp_image_delete_guide (image_ID, guide->ID);
+	}
+
+      /* if rotation is not 180 degrees, resize the image */
+      /*    Do it now after the guides are removed, since */ 
+      /*    gimp_image_resize() moves the guides.         */ 
+      if (rotvals.angle != 2)
+	gimp_image_resize (image_ID, height, width, 0, 0);
+
+      /* add the guides back to the image */
+      if (guides)
+	{
+	  switch (rotvals.angle)
+	    {
+	    case 1:
+	      for (list = guides; list; list = list->next)  
+		{
+		  guide = (GuideInfo *)list->data;
+		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		    gimp_image_add_vguide (image_ID, height - guide->position);
+		  else
+		    gimp_image_add_hguide (image_ID, guide->position);
+		  g_free (guide);
+		}     
+	      break;
+	    case 2:
+	      for (list = guides; list; list = list->next)  
+		{
+		  guide = (GuideInfo *)list->data;
+		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		    gimp_image_add_hguide (image_ID, height - guide->position);
+		  else
+		    gimp_image_add_vguide (image_ID, width - guide->position);
+		  g_free (guide);
+		}     
+	      break;
+	    case 3:
+	      for (list = guides; list; list = list->next)  
+		{
+		  guide = (GuideInfo *)list->data;
+		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		    gimp_image_add_vguide (image_ID, guide->position);
+		  else
+		    gimp_image_add_hguide (image_ID, width - guide->position);
+		  g_free (guide);
+		}     
+	      break;
+	    default: 
+	      break;
+	    }
+	  g_list_free (guides);
 	}
     }
   else  /* rotate only the active layer */

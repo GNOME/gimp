@@ -1,3 +1,23 @@
+Thu Oct 14 01:00:03 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimpimage.c
+	* app/guides_cmds.c
+	* app/move.c
+	* app/undo.c
+	* app/undo_types.h
+	* app/xcf.c
+	* tools/pdbgen/pdb/guides.pdb: a whole lotta guide fixes:
+	Guides are now freed on image close; undo should work in all
+	cases; resize and scale use undo_groups so all operations are
+	undoable in one step; some display probs fixed.
+
+	* plug-ins/common/rotate.c: when rotating an image, rotate 
+	the guides too.
+
+	This should fix bug #2608. 
+
 Wed Oct 13 21:37:51 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/crop.c

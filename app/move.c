@@ -76,7 +76,7 @@ move_tool_button_press (Tool           *tool,
   tool->gdisp_ptr = gdisp_ptr;
   move->layer = NULL;
   move->guide = NULL;
-  move->disp = NULL;
+  move->disp  = NULL;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
  
@@ -95,8 +95,6 @@ move_tool_button_press (Tool           *tool,
       if (gdisp->draw_guides && (guide = gdisplay_find_guide (gdisp, bevent->x, bevent->y)))
 	{
 	  undo_push_guide (gdisp->gimage, guide);
-
-	  move->guide = NULL;
 
 	  gdisplays_expose_guide (gdisp->gimage, guide);
 	  gimage_remove_guide (gdisp->gimage, guide);
@@ -136,7 +134,8 @@ move_tool_button_press (Tool           *tool,
 }
 
 static void
-move_draw_guide (GDisplay *gdisp, Guide *guide)
+move_draw_guide (GDisplay *gdisp, 
+		 Guide    *guide)
 {
   int x1, y1;
   int x2, y2;
@@ -181,7 +180,7 @@ move_tool_button_release (Tool           *tool,
 {
   MoveTool * move;
   GDisplay * gdisp;
-  int remove_guide;
+  int delete_guide;
   int x1, y1;
   int x2, y2;
 
@@ -197,7 +196,7 @@ move_tool_button_release (Tool           *tool,
     {
       tool->scroll_lock = FALSE;
 
-      remove_guide = FALSE;
+      delete_guide = FALSE;
       gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
       gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE, FALSE);
 
@@ -210,20 +209,20 @@ move_tool_button_release (Tool           *tool,
 	{
 	case ORIENTATION_HORIZONTAL:
 	  if ((move->guide->position < y1) || (move->guide->position > y2))
-	    remove_guide = TRUE;
+	    delete_guide = TRUE;
 	  break;
 	case ORIENTATION_VERTICAL:
 	  if ((move->guide->position < x1) || (move->guide->position > x2))
-	    remove_guide = TRUE;
+	    delete_guide = TRUE;
 	  break;
 	}
 
       gdisplays_expose_guide (gdisp->gimage, move->guide);
 
-      if (remove_guide)
+      if (delete_guide)
 	{
 	  move_draw_guide (gdisp, move->guide);
-	  move->guide->position = -1;
+	  gimp_image_delete_guide (gdisp->gimage, move->guide);
 	  move->guide = NULL;
 	  move->disp = NULL;
 	}
@@ -240,7 +239,7 @@ move_tool_button_release (Tool           *tool,
     }
   else
     {
-      /*  First take care of the case where the user "cancels" the action  */
+      /*  Take care of the case where the user "cancels" the action  */
       if (! (bevent->state & GDK_BUTTON3_MASK))
 	{
 	  if (move->layer)
@@ -320,7 +319,7 @@ move_tool_cursor_update (Tool           *tool,
 	    {
 	      if (move->guide)
 		{
-		  gdisp = move->disp;
+		  gdisp = gdisplays_check_valid (move->disp, move->disp->gimage);
 		  if (gdisp)
 		    gdisplay_draw_guide (gdisp, move->guide, FALSE);
 		}
@@ -403,7 +402,12 @@ move_tool_start_hguide (Tool *tool,
   tool->scroll_lock = TRUE;
 
   private = tool->private;
+
+  if (private->guide && private->disp && private->disp->gimage)
+    gdisplay_draw_guide (private->disp, private->guide, FALSE);
+
   private->guide = gimage_add_hguide (gdisp->gimage);
+  private->disp  = gdisp;
 
   tool->state = ACTIVE;
 
@@ -425,7 +429,12 @@ move_tool_start_vguide (Tool *tool,
   tool->scroll_lock = TRUE;
 
   private = tool->private;
+
+  if (private->guide && private->disp && private->disp->gimage)
+    gdisplay_draw_guide (private->disp, private->guide, FALSE);
+
   private->guide = gimage_add_vguide (gdisp->gimage);
+  private->disp  = gdisp;
 
   tool->state = ACTIVE;
 

@@ -1811,6 +1811,7 @@ xcf_load_image_props (XcfInfo *info,
 		info->cp += xcf_read_int8 (info->fp, (guint8*) &orientation, 1);
 
 		guide = g_new (Guide, 1);
+		guide->ref_count = 0;
 		guide->position = position;
 		guide->orientation = orientation;
 		guide->guide_ID = next_guide_id++;
