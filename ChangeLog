@@ -1,3 +1,12 @@
+2000-02-16 Garry R. Osgood <gosgood@idt.net>
+	*app/paint_funcs.c: replace_pixels() was
+	naively zeroing RGB components of RGBA pixels
+	when projecting and compositing paint_core
+	and currently active layer pixels. Closes
+	#5947. See bug report, and 
+	http://idt.net/~gosgood/gimp-patch/patch06.html
+	for further detail.
+	
 Wed Feb 16 21:42:19 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/channel_ops.c: copy image parasites on image duplicate
