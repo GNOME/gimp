@@ -2,11 +2,11 @@
 gimpmemsize
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to (de)serialize a given memory size.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions to (de)serialize a given memory size.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

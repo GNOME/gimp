@@ -2,11 +2,13 @@
 gimpregioniterator
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to traverse a pixel regions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+The GimpRgnIterator functions provide a variety
+of common ways to traverse a PixelRegion,
+using a pre-defined function pointer per pixel.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -28,8 +30,6 @@ gimpregioniterator
 @src: 
 @bpp: 
 @data: 
-<!-- # Unused Parameters # -->
-@Param3: 
 
 
 <!-- ##### USER_FUNCTION GimpRgnFunc2 ##### -->
@@ -41,8 +41,6 @@ gimpregioniterator
 @dest: 
 @bpp: 
 @data: 
-<!-- # Unused Parameters # -->
-@Param4: 
 
 
 <!-- ##### USER_FUNCTION GimpRgnFuncSrc ##### -->
@@ -90,8 +88,6 @@ gimpregioniterator
 @drawable: 
 @unused: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@run_mode: 
 
 
 <!-- ##### FUNCTION gimp_rgn_iterator_free ##### -->
@@ -141,8 +137,6 @@ gimpregioniterator
 @unused: 
 @func: 
 @data: 
-<!-- # Unused Parameters # -->
-@run_mode: 
 
 
 <!-- ##### FUNCTION gimp_rgn_iterate2 ##### -->
@@ -154,7 +148,3 @@ gimpregioniterator
 @unused: 
 @func: 
 @data: 
-<!-- # Unused Parameters # -->
-@run_mode: 
-
-

@@ -2,11 +2,11 @@
 GimpAspectPreview
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a preview with fixed aspect ratio.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a preview with fixed aspect ratio.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

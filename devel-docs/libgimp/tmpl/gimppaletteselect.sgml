@@ -2,11 +2,11 @@
 gimppaletteselect
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions providing a palette selection dialog.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions providing a palette selection dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

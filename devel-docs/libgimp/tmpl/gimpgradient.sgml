@@ -2,11 +2,11 @@
 gimpgradient
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions operating on a single gradient.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions operating on a single gradient.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

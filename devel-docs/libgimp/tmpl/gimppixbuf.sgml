@@ -2,11 +2,11 @@
 gimppixbuf
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Get a thumbnail pixbuf for a drawable or image.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Get a thumbnail pixbuf for a drawable or image.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

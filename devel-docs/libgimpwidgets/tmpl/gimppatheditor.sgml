@@ -49,8 +49,7 @@ the search path, the "path_changed" signal will be emitted.
 </para>
 
 @gimppatheditor: the object which received the signal.
-<!-- # Unused Parameters # -->
-@arg1: 
+
 
 <!-- ##### FUNCTION gimp_path_editor_new ##### -->
 <para>
@@ -69,8 +68,6 @@ the search path, the "path_changed" signal will be emitted.
 
 @editor: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@gpe: 
 
 
 <!-- ##### FUNCTION gimp_path_editor_set_path ##### -->
@@ -80,8 +77,6 @@ the search path, the "path_changed" signal will be emitted.
 
 @editor: 
 @path: 
-<!-- # Unused Parameters # -->
-@gpe: 
 
 
 <!-- ##### FUNCTION gimp_path_editor_get_writable_path ##### -->

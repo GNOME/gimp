@@ -2,11 +2,11 @@
 gimppalette
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions operating on a single palette.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions operating on a single palette.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

@@ -2,11 +2,11 @@
 GimpPreviewArea
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A general purpose preview widget which caches its pixel data.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A general purpose preview widget which caches its pixel data.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -51,8 +51,6 @@ GimpPreviewArea
 @type: 
 @buf: 
 @rowstride: 
-<!-- # Unused Parameters # -->
-@image_type: 
 
 
 <!-- ##### FUNCTION gimp_preview_area_fill ##### -->

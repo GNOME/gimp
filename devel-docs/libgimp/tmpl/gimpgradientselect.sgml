@@ -2,11 +2,11 @@
 gimpgradientselect
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions providing a gradient selection dialog.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions providing a gradient selection dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

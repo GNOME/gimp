@@ -2,11 +2,11 @@
 gimpcontext
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to manipulate a plug-in's context.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions to manipulate a plug-in's context.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

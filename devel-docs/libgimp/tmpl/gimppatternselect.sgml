@@ -2,11 +2,11 @@
 gimppatternselect
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions providing a pattern selection dialog.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions providing a pattern selection dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

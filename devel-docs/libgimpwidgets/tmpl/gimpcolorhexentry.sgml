@@ -2,11 +2,11 @@
 GimpColorHexEntry
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Widget for entering a color's hex triplet.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Widget for entering a color's hex triplet.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

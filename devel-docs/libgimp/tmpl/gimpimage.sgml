@@ -555,8 +555,6 @@ and operations involving multiple layers.
 @image_ID: 
 @tattoo_state: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@tattoo: 
 
 
 <!-- ##### FUNCTION gimp_image_get_tattoo_state ##### -->
@@ -628,8 +626,6 @@ and operations involving multiple layers.
 @colormap: 
 @num_colors: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@cmap: 
 
 
 <!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->

@@ -2,11 +2,11 @@
 gimpprogress
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for embedding the progress bar into a plug-in's GUI.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions for embedding the progress bar into a plug-in's GUI.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

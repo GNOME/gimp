@@ -2,11 +2,11 @@
 gimpgradientmenu
 
 <!-- ##### SECTION Short_Description ##### -->
-A widget for selecting gradient
+A widget for selecting gradients.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget for selecting gradients.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

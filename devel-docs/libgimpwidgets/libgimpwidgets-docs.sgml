@@ -62,6 +62,11 @@
     <xi:include href="xml/gimpcolorselect.xml" />
   </part>
 
+  <part id="libgimpwidgets-controller">
+    <title>GIMP Controllers</title>
+    <xi:include href="xml/gimpcontroller.xml" />
+  </part>
+
   <part id="libgimpwidgets-utils">
     <title>GIMP Widgets Utilities</title>
     <xi:include href="xml/gimphelpui.xml" />

@@ -2,11 +2,11 @@
 GimpScrolledPreview
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a #GimpPreview enhanced by scrolling capabilities.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a #GimpPreview enhanced by scrolling capabilities.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

@@ -43,11 +43,6 @@ gimpdrawabletransform
 @recursion_level: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@flip_type: 
-@auto_center: 
-@axis: 
-@center: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_flip_defaults ##### -->
@@ -63,8 +58,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_perspective ##### -->
@@ -106,8 +99,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_rotate_simple ##### -->
@@ -140,10 +131,6 @@ gimpdrawabletransform
 @recursion_level: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@rotate_type: 
-@cx: 
-@cy: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_rotate_defaults ##### -->
@@ -159,8 +146,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_scale ##### -->
@@ -194,8 +179,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_shear ##### -->
@@ -225,8 +208,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_2d ##### -->
@@ -266,8 +247,6 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_matrix ##### -->
@@ -311,7 +290,3 @@ gimpdrawabletransform
 @interpolate: 
 @clip_result: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@interpolation: 
-
-

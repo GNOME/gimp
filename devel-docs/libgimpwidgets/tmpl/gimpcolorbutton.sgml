@@ -2,7 +2,7 @@
 GimpColorButton
 
 <!-- ##### SECTION Short_Description ##### -->
-Widget for selecting a color.
+Widget for selecting a color from a simple button.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

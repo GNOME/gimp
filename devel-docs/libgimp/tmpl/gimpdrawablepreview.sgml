@@ -2,11 +2,11 @@
 GimpDrawablePreview
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a preview of a #GimpDrawable.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a preview of a #GimpDrawable.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

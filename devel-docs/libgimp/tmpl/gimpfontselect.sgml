@@ -1,12 +1,12 @@
 <!-- ##### SECTION Title ##### -->
-gimpfonts
+gimpfontselect
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions providing a font selection dialog.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions providing a font selection dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

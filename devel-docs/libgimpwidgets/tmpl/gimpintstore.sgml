@@ -2,11 +2,11 @@
 GimpIntStore
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A model for integer based name-value pairs (e.g. enums)
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A model for integer based name-value pairs (e.g. enums)
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

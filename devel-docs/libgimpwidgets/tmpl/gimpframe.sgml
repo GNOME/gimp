@@ -2,11 +2,11 @@
 GimpFrame
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a HIG-compliant subclass of #GtkFrame.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a HIG-compliant subclass of #GtkFrame.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

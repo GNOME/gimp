@@ -16,6 +16,7 @@ gimp_color_scales_get_type
 gimp_color_selector_get_type
 gimp_color_select_get_type
 gimp_color_selection_get_type
+gimp_controller_get_type
 gimp_dialog_get_type
 gimp_file_entry_get_type
 gimp_frame_get_type

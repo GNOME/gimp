@@ -2,11 +2,11 @@
 gimpbrushselect
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions providing a brush selection dialog.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions providing a brush selection dialog.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

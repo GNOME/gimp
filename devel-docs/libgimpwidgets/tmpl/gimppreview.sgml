@@ -2,11 +2,11 @@
 GimpPreview
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a #GimpPreviewArea plus framework to update the preview.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a #GimpPreviewArea plus framework to update the preview.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

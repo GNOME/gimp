@@ -1,3 +1,66 @@
+2004-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/tmpl/gimpaspectpreview.sgml
+	* libgimp/tmpl/gimpbrush.sgml
+	* libgimp/tmpl/gimpbrushmenu.sgml
+	* libgimp/tmpl/gimpbrushselect.sgml
+	* libgimp/tmpl/gimpcontext.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpdrawablecombobox.sgml
+	* libgimp/tmpl/gimpdrawablepreview.sgml
+	* libgimp/tmpl/gimpdrawabletransform.sgml
+	* libgimp/tmpl/gimpfontmenu.sgml
+	* libgimp/tmpl/gimpfontselect.sgml
+	* libgimp/tmpl/gimpgradient.sgml
+	* libgimp/tmpl/gimpgradientmenu.sgml
+	* libgimp/tmpl/gimpgradientselect.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimpimagecombobox.sgml
+	* libgimp/tmpl/gimplayer.sgml
+	* libgimp/tmpl/gimppalette.sgml
+	* libgimp/tmpl/gimppalettemenu.sgml
+	* libgimp/tmpl/gimppalettes.sgml
+	* libgimp/tmpl/gimppaletteselect.sgml
+	* libgimp/tmpl/gimppaths.sgml
+	* libgimp/tmpl/gimppattern.sgml
+	* libgimp/tmpl/gimppatternmenu.sgml
+	* libgimp/tmpl/gimppatternselect.sgml
+	* libgimp/tmpl/gimppixbuf.sgml
+	* libgimp/tmpl/gimppixelfetcher.sgml
+	* libgimp/tmpl/gimpprogress.sgml
+	* libgimp/tmpl/gimpprogressbar.sgml
+	* libgimp/tmpl/gimpregioniterator.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimpchecks.sgml
+	* libgimpbase/tmpl/gimpdatafiles.sgml
+	* libgimpbase/tmpl/gimpmemsize.sgml
+	* libgimpcolor/tmpl/gimpadaptivesupersample.sgml
+	* libgimpcolor/tmpl/gimpcmyk.sgml
+	* libgimpcolor/tmpl/gimphsv.sgml
+	* libgimpcolor/tmpl/gimprgb.sgml
+	* libgimpwidgets/tmpl/gimpcolorbutton.sgml
+	* libgimpwidgets/tmpl/gimpcolorhexentry.sgml
+	* libgimpwidgets/tmpl/gimpcolorselection.sgml
+	* libgimpwidgets/tmpl/gimpframe.sgml
+	* libgimpwidgets/tmpl/gimpintcombobox.sgml
+	* libgimpwidgets/tmpl/gimpintstore.sgml
+	* libgimpwidgets/tmpl/gimppatheditor.sgml
+	* libgimpwidgets/tmpl/gimppreview.sgml
+	* libgimpwidgets/tmpl/gimppreviewarea.sgml
+	* libgimpwidgets/tmpl/gimpscrolledpreview.sgml: applied a heavily
+	fixed and enhanced version of a patch from Cai Qian (bug #156271).
+	Made long_desc = short_desc where we lacked a long_desc but had
+	a short_desc. Removed unused parameters. Misc cleanups.
+
+	* libgimp/libgimp-docs.sgml: added some <chapter>s. The list of
+	libgimp modules was too long.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpcontroller.sgml: added GimpController.
+
 2004-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

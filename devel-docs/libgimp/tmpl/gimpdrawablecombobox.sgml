@@ -2,11 +2,11 @@
 gimpdrawablecombobox
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a popup menu of drawables.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a popup menu of drawables.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

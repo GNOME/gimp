@@ -2,11 +2,11 @@
 gimpbrush
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions operating on a single brush.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions operating on a single brush.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

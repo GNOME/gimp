@@ -2,11 +2,11 @@
 GimpIntComboBox
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A widget providing a popup menu of integer values (e.g. enums).
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+A widget providing a popup menu of integer values (e.g. enums).
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

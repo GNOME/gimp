@@ -2,11 +2,15 @@
 gimppixelfetcher
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for operating on pixel regions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+These functions provide neighbourhood-based algorithms which get
+dramatically slower on region boundaries, to the point where a special
+treatment for neighbourhoods which are completely inside a tile is
+called for.  It hides the special treatment of tile borders, making
+plug-in code more readable and shorter.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

@@ -2,11 +2,11 @@
 GimpAdaptiveSupersample
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to perform adaptive supersampling on an area.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Functions to perform adaptive supersampling on an area.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

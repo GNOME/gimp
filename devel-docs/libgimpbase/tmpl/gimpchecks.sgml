@@ -2,11 +2,11 @@
 gimpchecks
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Constants and functions related to rendering checkerboards.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Constants and functions related to rendering checkerboards.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
