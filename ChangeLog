@@ -1,3 +1,10 @@
+2000-10-18  Seth Burgess <sjburges@gimp.org>
+
+	*app/color_cmds.c
+	*tools/pdbgen/pdb/color.pdb: patch from Tom Rathborne
+	<tomr@aceldama.com> to enable ALPHA_LUT on the levels PDB 
+	interface.
+
 2000-10-18  Daniel Egger  <egger@suse.de>
 
 	* app/resize.c: Add a patch from 

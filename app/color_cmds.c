@@ -182,7 +182,7 @@ levels_invoker (Argument *args)
     success = FALSE;
 
   channel = args[1].value.pdb_int;
-  if (channel < VALUE_LUT || channel > BLUE_LUT)
+  if (channel < VALUE_LUT || channel > ALPHA_LUT)
     success = FALSE;
 
   low_inputv = args[2].value.pdb_int;
@@ -208,7 +208,9 @@ levels_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_is_indexed (drawable) ||
-	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+	  (!gimp_drawable_has_alpha (drawable) && channel == ALPHA_LUT) ||
+	  (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT
+					    && channel != ALPHA_LUT))
 	success = FALSE;
       else
 	{
@@ -262,7 +264,7 @@ static ProcArg levels_inargs[] =
   {
     PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3) }"
+    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
     PDB_INT32,

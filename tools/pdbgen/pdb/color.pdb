@@ -105,7 +105,6 @@ HELP
 	&drawable_arg,
 	&channel_arg
     );
-    $inargs[1]->{type} .= ' (no ALPHA_LUT)';
 
     foreach $arg (qw(input output)) {
 	foreach (qw(low high)) {
@@ -125,7 +124,9 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
-      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT))
+      (!gimp_drawable_has_alpha (drawable) && channel == ALPHA_LUT) ||
+      (gimp_drawable_is_gray (drawable) && channel != GRAY_LUT
+                                        && channel != ALPHA_LUT))
     success = FALSE;
   else
     {
