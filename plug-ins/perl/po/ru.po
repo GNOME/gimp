@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: Mon Oct 30 21:57:54 2000\n"
-"PO-Revision-Date: 2000-07-23 21:04+00:00\n"
+"PO-Revision-Date: 2000-11-04 19:56+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -891,7 +891,7 @@ msgstr "вызвано как '%s', но '%s' не зарегистрировано в pdb"
 
 #: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr ""
+msgstr "закрытие соединения %d (%d запросов за %g секунд)"
 
 #: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
@@ -966,7 +966,7 @@ msgstr "функции gimp-perl-pixel требуется модуль PDL::Core"
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
-msgstr ""
+msgstr "gimp_pixel_rgns_register поддерживает только 1, 2 или 3 аргумента, обновите до gimp-1.1 и сообщите об этой ошибке"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
@@ -1147,9 +1147,8 @@ msgid "unable to accept unix connection: $!\n"
 msgstr "невозможно принять unix-соединение: $!\n"
 
 #: Gimp/Lib.xs:0
-#, fuzzy
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "невозможно преобразовать Gimp::Drawable в Gimp::GDrawable (id %d)"
+msgstr "невозможно преобразовать Gimp::Drawable в Gimp::GimpDrawable (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
