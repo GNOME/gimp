@@ -164,6 +164,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_REDO },
     NULL,
     "edit/redo.html", NULL },
+  { { N_("/Edit/Undo _History..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_UNDO },
+    "gimp-undo-history",
+    NULL, NULL },
 
   MENU_SEPARATOR ("/Edit/---"),
 

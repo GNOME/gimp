@@ -1,5 +1,11 @@
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_entries): applied a patch from
+	Alan Horkan <horkana@tcd.ie> which adds an "Undo History..." menu
+	entry below the "Undo" and "Redo" ones. Fixes bug #119662.
+
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_subsample_mask): use
 	g_new0() instead of g_malloc() followed by memset(). Some coding
 	style cleanups.
