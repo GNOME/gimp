@@ -299,7 +299,8 @@ gimp_preview_destroy (GtkObject *object)
 
   gimp_preview_popup_hide (preview);
 
-  gimp_preview_set_viewable (preview, NULL);
+  if (preview->viewable)
+    gimp_preview_set_viewable (preview, NULL);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

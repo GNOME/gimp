@@ -758,9 +758,9 @@ device_status_create (void)
 				    GTK_WIN_POS_NONE,
 				    FALSE, FALSE, TRUE,
 
-				    _("Save"), (GtkSignalFunc) devices_write_rc,
+				    GTK_STOCK_SAVE, devices_write_rc,
 				    NULL, NULL, NULL, FALSE, FALSE,
-				    _("Close"), devices_close_callback,
+				    GTK_STOCK_CLOSE, devices_close_callback,
 				    NULL, NULL, NULL, TRUE, TRUE,
 
 				    NULL);

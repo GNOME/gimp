@@ -119,11 +119,11 @@ qmask_buttons_update (GDisplay *gdisp)
   if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON (gdisp->qmaskon)->active)
     {
       /* Disable toggle from doing anything */
-      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskoff), 
-				       G_CALLBACK (qmask_deactivate),
+      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskoff),
+				       qmask_deactivate_callback,
 				       gdisp);
-      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskon), 
-				       G_CALLBACK (qmask_activate),
+      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskon),
+				       qmask_activate_callback,
 				       gdisp);
    
       /* Change the state of the buttons */
@@ -134,19 +134,19 @@ qmask_buttons_update (GDisplay *gdisp)
 				    ! gdisp->gimage->qmask_state);
    
       /* Enable toggle again */
-      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskoff), 
-					 G_CALLBACK (qmask_deactivate),
+      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskoff),
+					 qmask_deactivate_callback,
 					 gdisp);
-      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskon), 
-					 G_CALLBACK (qmask_activate),
+      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskon),
+					 qmask_activate_callback,
 					 gdisp);
     }
 }
 
 gboolean
-qmask_click_handler (GtkWidget      *widget,
-		     GdkEventButton *event,
-                     gpointer        data)
+qmask_button_press_callback (GtkWidget      *widget,
+			     GdkEventButton *event,
+			     gpointer        data)
 {
   GDisplay *gdisp;
 
@@ -164,8 +164,8 @@ qmask_click_handler (GtkWidget      *widget,
 }
 
 void
-qmask_deactivate (GtkWidget *widget,
-		  GDisplay  *gdisp)
+qmask_deactivate_callback (GtkWidget *widget,
+			   GDisplay  *gdisp)
 {
   GimpImage   *gimage;
   GimpChannel *gmask;
@@ -200,8 +200,8 @@ qmask_deactivate (GtkWidget *widget,
 }
 
 void
-qmask_activate (GtkWidget *widget,
-		GDisplay  *gdisp)
+qmask_activate_callback (GtkWidget *widget,
+			 GDisplay  *gdisp)
 {
   GimpImage   *gimage;
   GimpChannel *gmask;

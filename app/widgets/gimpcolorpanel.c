@@ -114,11 +114,11 @@ gimp_color_panel_destroy (GtkObject *object)
   
   panel = GIMP_COLOR_PANEL (object);
 
-  /* make sure we hide and free color_notebook */
   if (panel->color_notebook)
     {
       color_notebook_hide (panel->color_notebook);
       color_notebook_free (panel->color_notebook);
+      panel->color_notebook = NULL;
     }
   
   if (GTK_OBJECT_CLASS (parent_class)->destroy)

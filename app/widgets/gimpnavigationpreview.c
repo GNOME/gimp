@@ -202,7 +202,7 @@ gimp_navigation_preview_expose (GtkWidget      *widget,
 					   &eevent->area);
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

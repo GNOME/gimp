@@ -1,3 +1,24 @@
+2001-07-31  Michael Natterer  <mitch@gimp.org>
+
+	* gtkrc: eek, my last change changed the width of all GtkRange
+	subclasses, not only GtkScale, fixed now.
+
+	* app/devices.c: use GTK_STOCK_FOO button texts.
+
+	* app/interface.c
+	* app/qmask.[ch]: renamed all qmask callbacks to *_callback().
+
+	* app/gui/tool-options-dialog.c: GObject stuff, use
+	gtk_dialog_set_has_separator() instead of poking around.
+
+	* app/widgets/gimpcolorpanel.c: set panel->color_notebook to NULL
+	in "destroy".
+
+	* app/widgets/gimpnavigationpreview.c: return TRUE from the
+	"expose_event" handler.
+
+	* app/widgets/gimppreview.c: tiny optimizatin.
+
 2001-07-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpfileselection.c

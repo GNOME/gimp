@@ -109,8 +109,7 @@ tool_options_dialog_create (void)
 
 		     NULL);
 
-  /*  hide the separator between the dialog's vbox and the action area  */
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 0)));
+  gtk_dialog_set_has_separator (GTK_DIALOG (options_shell), FALSE);
 
   /*  The outer frame  */
   frame = gtk_frame_new (NULL);
@@ -170,11 +169,11 @@ tool_options_dialog_create (void)
 				GIMP_TYPE_TOOL_INFO,
 				tool_options_dialog_drag_tool, NULL);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (gimp_get_user_context (the_gimp)), "tool_changed",
-     GTK_SIGNAL_FUNC (tool_options_dialog_tool_changed),
-     NULL,
-     GTK_OBJECT (options_shell));
+  g_signal_connect_object (G_OBJECT (gimp_get_user_context (the_gimp)),
+			   "tool_changed",
+			   G_CALLBACK (tool_options_dialog_tool_changed),
+			   G_OBJECT (options_shell),
+			   0);
 
   tool_info = gimp_context_get_tool (gimp_get_user_context (the_gimp));
 

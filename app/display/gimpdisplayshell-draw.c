@@ -389,10 +389,10 @@ create_display_shell (GDisplay *gdisp,
   GTK_WIDGET_UNSET_FLAGS (gdisp->qmaskoff, GTK_CAN_FOCUS);
 
   g_signal_connect (G_OBJECT (gdisp->qmaskoff), "toggled",
-		    G_CALLBACK (qmask_deactivate),
+		    G_CALLBACK (qmask_deactivate_callback),
 		    gdisp);
   g_signal_connect (G_OBJECT (gdisp->qmaskoff), "button_press_event",
-		    G_CALLBACK (qmask_click_handler),
+		    G_CALLBACK (qmask_button_press_callback),
 		    gdisp);
 
   gimp_help_set_help_data (gdisp->qmaskoff, NULL, "#qmask_off_button");
@@ -404,10 +404,10 @@ create_display_shell (GDisplay *gdisp,
   GTK_WIDGET_UNSET_FLAGS (gdisp->qmaskon, GTK_CAN_FOCUS);
 
   g_signal_connect (G_OBJECT (gdisp->qmaskon), "toggled",
-		    G_CALLBACK (qmask_activate),
+		    G_CALLBACK (qmask_activate_callback),
 		    gdisp);
   g_signal_connect (G_OBJECT (gdisp->qmaskon), "button_press_event",
-		    G_CALLBACK (qmask_click_handler),
+		    G_CALLBACK (qmask_button_press_callback),
 		    gdisp);
 
   gimp_help_set_help_data (gdisp->qmaskon, NULL, "#qmask_on_button");
@@ -424,8 +424,8 @@ create_display_shell (GDisplay *gdisp,
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
 
   /* We need to realize the shell so that we have a GdkWindow for
-   * the pixmap creation.  */
-
+   * the pixmap creation.
+   */
   gtk_widget_realize (gdisp->shell);
   
   /*  create the pixmaps  ****************************************************/
@@ -453,12 +453,12 @@ create_display_shell (GDisplay *gdisp,
     }
 
   /*  Icon stuff  */
-  gdisp->iconsize = 32;
-  gdisp->icon = NULL;
-  gdisp->iconmask = NULL;
+  gdisp->iconsize          = 32;
+  gdisp->icon              = NULL;
+  gdisp->iconmask          = NULL;
   gdisp->icon_needs_update = 0;
-  gdisp->icon_timeout_id = 0;
-  gdisp->icon_idle_id = 0;
+  gdisp->icon_timeout_id   = 0;
+  gdisp->icon_idle_id      = 0;
 
   g_signal_connect (G_OBJECT (gdisp->gimage), "invalidate_preview",
 		    G_CALLBACK (gdisplay_update_icon_scheduler),
