@@ -104,7 +104,7 @@ static void   histogram_tool_histogram_range  (GimpHistogramView    *view,
 
 static HistogramToolDialog * histogram_dialog = NULL;
 
-static GimpToolClass *parent_class = NULL;
+static GimpImageMapToolClass *parent_class = NULL;
 
 
 /*  public functions  */

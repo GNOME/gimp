@@ -101,29 +101,29 @@ static void   gimp_levels_tool_reset      (GimpImageMapTool *image_map_tool);
 static void   levels_update                        (GimpLevelsTool *l_tool,
 						    gint            update);
 static void   levels_channel_callback              (GtkWidget      *widget,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_channel_reset_callback        (GtkWidget      *widget,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static gboolean levels_set_sensitive_callback      (gpointer        item_data,
                                                     GimpLevelsTool *l_tool);
 static void   levels_auto_callback                 (GtkWidget      *widget,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_load_callback                 (GtkWidget      *widget,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_save_callback                 (GtkWidget      *widget,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_gamma_adjustment_update       (GtkAdjustment  *adjustment,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_high_input_adjustment_update  (GtkAdjustment  *adjustment,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_low_output_adjustment_update  (GtkAdjustment  *adjustment,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
-						    gpointer        data);
+						    GimpLevelsTool *l_tool);
 static void   levels_input_picker_toggled          (GtkWidget      *widget,
-                                                    gpointer        data);
+                                                    GimpLevelsTool *l_tool);
 static gint   levels_input_da_events               (GtkWidget      *widget,
 						    GdkEvent       *event,
 						    GimpLevelsTool *l_tool);
@@ -925,13 +925,9 @@ levels_update (GimpLevelsTool *l_tool,
 }
 
 static void
-levels_channel_callback (GtkWidget *widget,
-			 gpointer   data)
+levels_channel_callback (GtkWidget      *widget,
+			 GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   gimp_menu_item_update (widget, &l_tool->channel);
 
   if (l_tool->color)
@@ -950,13 +946,9 @@ levels_channel_callback (GtkWidget *widget,
 }
 
 static void
-levels_channel_reset_callback (GtkWidget *widget,
-                               gpointer   data)
+levels_channel_reset_callback (GtkWidget      *widget,
+                               GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   levels_channel_reset (l_tool->levels, l_tool->channel);
   levels_update (l_tool, ALL);
 
@@ -987,13 +979,9 @@ levels_set_sensitive_callback (gpointer        item_data,
 }
 
 static void
-levels_auto_callback (GtkWidget *widget,
-		      gpointer   data)
+levels_auto_callback (GtkWidget      *widget,
+		      GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   levels_auto (l_tool->levels, l_tool->hist, l_tool->color);
   levels_update (l_tool, ALL);
 
@@ -1001,13 +989,10 @@ levels_auto_callback (GtkWidget *widget,
 }
 
 static void
-levels_low_input_adjustment_update (GtkAdjustment *adjustment,
-				    gpointer       data)
+levels_low_input_adjustment_update (GtkAdjustment  *adjustment,
+				    GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-  gint            value;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
+  gint value;
 
   value = (gint) (adjustment->value + 0.5);
   value = CLAMP (value, 0, l_tool->levels->high_input[l_tool->channel]);
@@ -1025,13 +1010,9 @@ levels_low_input_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-levels_gamma_adjustment_update (GtkAdjustment *adjustment,
-				gpointer       data)
+levels_gamma_adjustment_update (GtkAdjustment  *adjustment,
+				GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   if (l_tool->levels->gamma[l_tool->channel] != adjustment->value)
     {
       l_tool->levels->gamma[l_tool->channel] = adjustment->value;
@@ -1042,13 +1023,10 @@ levels_gamma_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-levels_high_input_adjustment_update (GtkAdjustment *adjustment,
-				     gpointer       data)
+levels_high_input_adjustment_update (GtkAdjustment  *adjustment,
+				     GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-  gint            value;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
+  gint value;
 
   value = (gint) (adjustment->value + 0.5);
   value = CLAMP (value, l_tool->levels->low_input[l_tool->channel], 255);
@@ -1066,13 +1044,10 @@ levels_high_input_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-levels_low_output_adjustment_update (GtkAdjustment *adjustment,
-				     gpointer       data)
+levels_low_output_adjustment_update (GtkAdjustment  *adjustment,
+				     GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-  gint            value;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
+  gint value;
 
   value = (gint) (adjustment->value + 0.5);
 
@@ -1086,13 +1061,10 @@ levels_low_output_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-levels_high_output_adjustment_update (GtkAdjustment *adjustment,
-				      gpointer       data)
+levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
+				      GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-  gint            value;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
+  gint value;
 
   value = (gint) (adjustment->value + 0.5);
 
@@ -1106,11 +1078,9 @@ levels_high_output_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-levels_input_picker_toggled (GtkWidget *widget,
-                             gpointer   data)
+levels_input_picker_toggled (GtkWidget      *widget,
+                             GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (data);
-
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       if (l_tool->active_picker == widget)
@@ -1321,13 +1291,9 @@ levels_output_da_events (GtkWidget      *widget,
 }
 
 static void
-levels_load_callback (GtkWidget *widget,
-		      gpointer   data)
+levels_load_callback (GtkWidget      *widget,
+		      GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   if (! l_tool->file_dialog)
     file_dialog_create (l_tool);
   else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
@@ -1340,13 +1306,9 @@ levels_load_callback (GtkWidget *widget,
 }
 
 static void
-levels_save_callback (GtkWidget *widget,
-		      gpointer   data)
+levels_save_callback (GtkWidget      *widget,
+		      GimpLevelsTool *l_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (data);
-
   if (! l_tool->file_dialog)
     file_dialog_create (l_tool);
   else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog)) 
@@ -1498,7 +1460,7 @@ levels_write_to_file (GimpLevelsTool *l_tool,
 	       l_tool->levels->high_input[i],
 	       l_tool->levels->low_output[i],
 	       l_tool->levels->high_output[i],
-               g_ascii_formatd (buf,  G_ASCII_DTOSTR_BUF_SIZE, "%f",
+               g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                                 l_tool->levels->gamma[i]));
     }
 }

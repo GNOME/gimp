@@ -1,5 +1,16 @@
 2002-12-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: replaced lots of "gpointer data"
+	parameters of local callbacks by GimpCurvesTool* and
+	GimpLevelsTool* pointers. Makes the code shorter and more
+	readable. Some random cleanup.
+
+	* app/tools/gimphistogramtool.c: fixed type of "parent_class"
+	pointer.
+
+2002-12-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): fixed
 	ascii-art to match current widget hierarchy.
 

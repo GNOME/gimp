@@ -129,21 +129,21 @@ static void   curves_update                   (GimpCurvesTool   *c_tool,
                                                gint              update);
 
 static void   curves_channel_callback         (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 static void   curves_channel_reset_callback   (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 
 static gboolean curves_set_sensitive_callback (gpointer          item_data,
                                                GimpCurvesTool   *c_tool);
 static void   curves_smooth_callback          (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 static void   curves_free_callback            (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 
 static void   curves_load_callback            (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 static void   curves_save_callback            (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpCurvesTool   *c_tool);
 static gint   curves_graph_events             (GtkWidget        *widget,
                                                GdkEvent         *event,
                                                GimpCurvesTool   *c_tool);
@@ -243,7 +243,7 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (c_tool);
 
-  image_map_tool->shell_desc  = _("Adjust Color Curves");
+  image_map_tool->shell_desc = _("Adjust Color Curves");
 
   c_tool->curves  = g_new0 (Curves, 1);
   c_tool->lut     = gimp_lut_new ();
@@ -251,11 +251,8 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
 
   curves_init (c_tool->curves);
 
-  for (i = 0;
-       i < (sizeof (c_tool->col_value) / sizeof (c_tool->col_value[0]));
-       i++)
+  for (i = 0; i < G_N_ELEMENTS (c_tool->col_value); i++)
     c_tool->col_value[i] = -1;
-
 }
 
 static void
@@ -267,7 +264,7 @@ gimp_curves_tool_finalize (GObject *object)
 
   if (c_tool->curves)
     {
-      g_free(c_tool->curves);
+      g_free (c_tool->curves);
       c_tool->curves = NULL;
     }
 
@@ -1029,13 +1026,9 @@ curves_update (GimpCurvesTool *c_tool,
 }
 
 static void
-curves_channel_callback (GtkWidget *widget,
-			 gpointer   data)
+curves_channel_callback (GtkWidget      *widget,
+			 GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   gimp_menu_item_update (widget, &c_tool->channel);
 
   if (! c_tool->color)
@@ -1053,13 +1046,9 @@ curves_channel_callback (GtkWidget *widget,
 }
 
 static void
-curves_channel_reset_callback (GtkWidget *widget,
-                               gpointer   data)
+curves_channel_reset_callback (GtkWidget      *widget,
+                               GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   c_tool->grab_point = -1;
 
   curves_channel_reset (c_tool->curves, c_tool->channel);
@@ -1091,17 +1080,14 @@ curves_set_sensitive_callback (gpointer        item_data,
 }
 
 static void
-curves_smooth_callback (GtkWidget *widget,
-			gpointer   data)
+curves_smooth_callback (GtkWidget      *widget,
+			GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-  gint            i;
-  gint32          index;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   if (c_tool->curves->curve_type[c_tool->channel] != CURVES_SMOOTH)
     {
+      gint   i;
+      gint32 index;
+
       c_tool->curves->curve_type[c_tool->channel] = CURVES_SMOOTH;
 
       /*  pick representative points from the curve
@@ -1123,13 +1109,9 @@ curves_smooth_callback (GtkWidget *widget,
 }
 
 static void
-curves_free_callback (GtkWidget *widget,
-		      gpointer   data)
+curves_free_callback (GtkWidget      *widget,
+		      GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   if (c_tool->curves->curve_type[c_tool->channel] != CURVES_FREE)
     {
       c_tool->curves->curve_type[c_tool->channel] = CURVES_FREE;
@@ -1350,13 +1332,9 @@ curves_graph_events (GtkWidget      *widget,
 }
 
 static void
-curves_load_callback (GtkWidget *widget,
-		      gpointer   data)
+curves_load_callback (GtkWidget      *widget,
+		      GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   if (! c_tool->file_dialog)
     file_dialog_create (c_tool);
   else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
@@ -1369,13 +1347,9 @@ curves_load_callback (GtkWidget *widget,
 }
 
 static void
-curves_save_callback (GtkWidget *widget,
-		      gpointer   data)
+curves_save_callback (GtkWidget      *widget,
+		      GimpCurvesTool *c_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (data);
-
   if (! c_tool->file_dialog)
     file_dialog_create (c_tool);
   else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
