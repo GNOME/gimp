@@ -421,6 +421,18 @@ sub _croak($) {
   croak($_[0]);
 }
 
+sub build_thunk($) {
+   my $sub = $_[0];
+   sub {
+      shift unless ref $_[0];
+      unshift @_,$sub;
+      #goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
+      my @r=eval { gimp_call_procedure (@_) };
+      _croak $@ if $@;
+      wantarray ? @r : $r[0];
+   };
+}
+
 sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
    for(@{"$class\::PREFIXES"}) {
@@ -449,14 +461,7 @@ sub AUTOLOAD {
          };
          goto &$AUTOLOAD;
       } elsif (_gimp_procedure_available ($sub)) {
-         *{$AUTOLOAD} = sub {
-            shift unless ref $_[0];
-            unshift @_,$sub;
-            #goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
-            my @r=eval { gimp_call_procedure (@_) };
-            _croak $@ if $@;
-            wantarray ? @r : $r[0];
-         };
+         *{$AUTOLOAD} = build_thunk ($sub);
          goto &$AUTOLOAD;
       }
    }

@@ -86,6 +86,9 @@ $parser = new Parse::RecDescent <<'EOA';
       'SF-COLOR'	=> 'PF_COLOUR,    ',
       'SF-ADJUSTMENT'	=> 'PF_ADJUSTMENT,',
       'SF-FONT'		=> 'PF_FONT,      ',
+      'SF-PATTERN'	=> 'PF_PATTERN,   ',
+      'SF-GRADIENT'	=> 'PF_GRADIENT,  ',
+      'SF-FILENAME'	=> 'PF_FILE,      ',
    );
    my %constant = qw(
       TRUE		1
@@ -115,6 +118,10 @@ $parser = new Parse::RecDescent <<'EOA';
       SCREEN		SCREEN_MODE
       SUBTRACT		SUBTRACT_MODE
       VALUE		VALUE_MODE
+
+      ALPHA_MASK	ADD_ALPHA_MASK
+      BLACK_MASK	ADD_BLACK_MASK
+      WHITE_MASK	ADD_WHITE_MASK
       
       *pi*		3.14159265
    );
@@ -422,6 +429,7 @@ EOA
 
    print STDERR "reading($in)..." unless $quiet;
    { local $/; $file = <IN> }
+   $file =~ s/;.*?$//gm;
    $::filesize = length $file; # make it clear this is a _global_ variable
 
    print STDERR "translating..." unless $quiet;
