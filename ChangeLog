@@ -1,3 +1,9 @@
+2005-03-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui.c (gui_init): disable "gtk-alternative-button-order"
+	since we don't provide an alternative button order in this branch.
+	Fixes bug #170543.
+
 2005-03-14  Manish Singh  <yosh@gimp.org>
 
 	* app/display/gimpstatusbar.c: Make sure "focus-on-click" property
