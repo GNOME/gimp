@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __GDISPLAY_COLOR_H__
-#define __GDISPLAY_COLOR_H__
+
+#ifndef __GIMP_DISPLAY_SHELL_FILTER_H__
+#define __GIMP_DISPLAY_SHELL_FILTER_H__
+
 
 #include "libgimp/gimpcolordisplay.h"
 
@@ -36,25 +38,28 @@ void color_display_init    (void);
 void color_display_foreach (GimpCDFunc func,
 			    gpointer   user_data);
 
-ColorDisplayNode * gdisplay_color_attach         (GimpDisplay      *gdisp,
-						  const gchar      *name);
-ColorDisplayNode * gdisplay_color_attach_clone   (GimpDisplay      *gdisp,
-						  ColorDisplayNode *node);
-void               gdisplay_color_detach         (GimpDisplay      *gdisp,
-						  ColorDisplayNode *node);
-void               gdisplay_color_detach_destroy (GimpDisplay      *gdisp,
-						  ColorDisplayNode *node);
-void               gdisplay_color_detach_all     (GimpDisplay      *gdisp);
-void               gdisplay_color_reorder_up     (GimpDisplay      *gdisp,
-						  ColorDisplayNode *node);
-void               gdisplay_color_reorder_down   (GimpDisplay      *gdisp,
-						  ColorDisplayNode *node);
+ColorDisplayNode *
+       gimp_display_shell_filter_attach           (GimpDisplayShell *shell,
+                                                   const gchar      *name);
+ColorDisplayNode *
+       gimp_display_shell_filter_attach_clone     (GimpDisplayShell *shell,
+                                                   ColorDisplayNode *node);
+void   gimp_display_shell_filter_detach           (GimpDisplayShell *shell,
+                                                   ColorDisplayNode *node);
+void   gimp_display_shell_filter_detach_destroy   (GimpDisplayShell *shell,
+                                                   ColorDisplayNode *node);
+void   gimp_display_shell_filter_detach_all       (GimpDisplayShell *shell);
+void   gimp_display_shell_filter_reorder_up       (GimpDisplayShell *shell,
+                                                   ColorDisplayNode *node);
+void   gimp_display_shell_filter_reorder_down     (GimpDisplayShell *shell,
+                                                   ColorDisplayNode *node);
 
-void gdisplay_color_configure        (ColorDisplayNode *node,
-				      GFunc             ok_func,
-				      gpointer          ok_data,
-				      GFunc             cancel_func,
-				      gpointer          cancel_data);
-void gdisplay_color_configure_cancel (ColorDisplayNode *node);
+void   gimp_display_shell_filter_configure        (ColorDisplayNode *node,
+                                                   GFunc             ok_func,
+                                                   gpointer          ok_data,
+                                                   GFunc             cancel_func,
+                                                   gpointer          cancel_data);
+void   gimp_display_shell_filter_configure_cancel (ColorDisplayNode *node);
 
-#endif /* __GDISPLAY_COLOR_H__ */
+
+#endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */

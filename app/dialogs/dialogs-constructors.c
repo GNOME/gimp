@@ -60,6 +60,10 @@
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpvectorslistview.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-filter-dialog.h"
+
 #include "about-dialog.h"
 #include "brushes-commands.h"
 #include "buffers-commands.h"
@@ -84,10 +88,6 @@
 
 #include "gimprc.h"
 #include "undo_history.h"
-
-#ifdef DISPLAY_FILTERS
-#include "gdisplay_color_ui.h"
-#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
@@ -202,21 +202,23 @@ dialogs_display_filters_get (GimpDialogFactory *factory,
 			     GimpContext       *context,
                              gint               preview_size)
 {
-#ifdef DISPLAY_FILTERS
   GimpDisplay *gdisp;
 
   gdisp = gimp_context_get_display (context);
 
-  if (! gdisp)
-    gdisp = color_area_gdisp;
+  if (gdisp)
+    {
+      GimpDisplayShell *shell;
 
-  if (! gdisp->cd_ui)
-    gdisplay_color_ui_new (gdisp);
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  return gdisp->cd_ui;
-#else
+      if (! shell->cd_ui)
+        gimp_display_shell_filter_dialog_new (shell);
+
+      return shell->cd_ui;
+    }
+
   return NULL;
-#endif /* DISPLAY_FILTERS */
 }
 
 GtkWidget *

@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GDISPLAY_COLOR_UI_H__
-#define __GDISPLAY_COLOR_UI_H__
+#ifndef __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__
+#define __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__
 
 
-void gdisplay_color_ui_new (GimpDisplay *gdisp);
+void   gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell);
 
 
-#endif /* __GDISPLAY_COLOR_UI_H__ */
+#endif /* __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__ */

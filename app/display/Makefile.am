@@ -34,6 +34,10 @@ libappdisplay_a_sources = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-dnd.h			\
 	gimpdisplayshell-handlers.c		\
 	gimpdisplayshell-handlers.h		\
+	gimpdisplayshell-filter.c		\
+	gimpdisplayshell-filter.h		\
+	gimpdisplayshell-filter-dialog.c	\
+	gimpdisplayshell-filter-dialog.h	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
 	gimpdisplayshell-marching-ants.h	\

@@ -59,6 +59,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-dnd.h"
+#include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-selection.h"
@@ -67,10 +68,6 @@
 #include "gimprc.h"
 #include "nav_window.h"
 #include "undo.h"
-
-#ifdef DISPLAY_FILTERS
-#include "gdisplay_color.h"
-#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
@@ -236,10 +233,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->nav_dialog            = NULL;
   shell->nav_popup             = NULL;
 
-#ifdef DISPLAY_FILTERS
   shell->cd_list               = NULL;
   shell->cd_ui                 = NULL;
-#endif /* DISPLAY_FILTERS */
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -311,10 +306,7 @@ gimp_display_shell_destroy (GtkObject *object)
 
   shell->display_areas = gimp_display_area_list_free (shell->display_areas);
 
-#ifdef DISPLAY_FILTERS
-  /* detach any color displays */
-  gdisplay_color_detach_all (gdisp);
-#endif /* DISPLAY_FILTERS */
+  gimp_display_shell_filter_detach_all (shell);
 
   if (shell->render_buf)
     {

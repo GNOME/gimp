@@ -810,7 +810,7 @@ undo_history_new (GimpImage *gimage)
   g_signal_connect (G_OBJECT (gimage), "name_changed",
                     G_CALLBACK (undo_history_gimage_rename_callback),
                     st);
-  g_signal_connect (G_OBJECT (gimage), "destroy",
+  g_signal_connect (G_OBJECT (gimage), "disconnect",
                     G_CALLBACK (undo_history_gimage_destroy_callback),
                     st);
   g_signal_connect (G_OBJECT (gimage), "clean",

@@ -33,6 +33,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 
 #include "gimprc.h"
@@ -233,10 +234,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 {
   RenderInfo info;
   gint       image_type;
-
-#ifdef DISPLAY_FILTERS
   GList     *list;
-#endif
 
   render_image_init_info (&info, shell, x, y, w, h);
 
@@ -263,8 +261,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   (* render_funcs[image_type]) (&info);
 
-#if 0
-#ifdef DISPLAY_FILTERS
   /*  apply filters to the rendered projection  */
   for (list = shell->cd_list; list; list = g_list_next (list))
     {
@@ -276,8 +272,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                         3,
                         3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
     }
-#endif /* DISPLAY_FILTERS */
-#endif
 
   /*  put it to the screen  */
   gdk_draw_rgb_image_dithalign (shell->canvas->window,

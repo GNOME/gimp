@@ -21,16 +21,18 @@
 #include <string.h>
 
 #include <gmodule.h>
+#include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 
-#include "apptypes.h"
-#include "gdisplay_color.h"
-#include "gdisplay.h"
-#include "gimpimageP.h"
-#include "gimpui.h"
+#include "display-types.h"
 
-#include <gtk/gtk.h>
+#include "core/gimpimage.h"
+
+#include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
+#include "gimpdisplayshell-filter.h"
+
 
 typedef struct _ColorDisplayInfo ColorDisplayInfo;
 
@@ -41,16 +43,19 @@ struct _ColorDisplayInfo
   GSList                  *refs;
 };
 
+
+static void   color_display_foreach_real            (gpointer          key,
+                                                     gpointer          value,
+                                                     gpointer          user_data);
+static void   gimp_display_shell_filter_detach_real (GimpDisplayShell *shell,
+                                                     ColorDisplayNode *node,
+                                                     gboolean          unref);
+static gint   node_name_compare                     (ColorDisplayNode *node,
+                                                     const gchar      *name);
+
+
 static GHashTable *color_display_table = NULL;
 
-static void       color_display_foreach_real (gpointer          key,
-					      gpointer          value,
-					      gpointer          user_data);
-static void       gdisplay_color_detach_real (GimpDisplay      *gdisp,
-					      ColorDisplayNode *node,
-					      gboolean          unref);
-static gint       node_name_compare          (ColorDisplayNode *node,
-					      const gchar      *name);
 
 void
 color_display_init (void)
@@ -87,26 +92,24 @@ G_MODULE_EXPORT gboolean
 gimp_color_display_unregister (const gchar *name)
 {
   ColorDisplayInfo *info;
-  GimpDisplay *gdisp;
-  GList *node;
+  GimpDisplayShell *shell;
+  GList            *node;
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {
-      GSList *refs = info->refs;
+      GSList *refs;
 
-      while (refs)
+      for (refs = info->refs; refs; refs = g_slist_next (refs))
 	{
-	  gdisp = (GimpDisplay *) refs->data;
+	  shell = GIMP_DISPLAY_SHELL (refs->data);
 
-	  node = g_list_find_custom (gdisp->cd_list, (gpointer) name,
+	  node = g_list_find_custom (shell->cd_list, (gpointer) name,
 	      			     (GCompareFunc) node_name_compare);
-	  gdisp->cd_list = g_list_remove_link (gdisp->cd_list, node);
+	  shell->cd_list = g_list_remove_link (shell->cd_list, node);
 
-	  gdisplay_color_detach_real (gdisp, node->data, FALSE);
+	  gimp_display_shell_filter_detach_real (shell, node->data, FALSE);
 
 	  g_list_free_1 (node);
-
-	  refs = refs->next;
 	}
 
       g_slist_free (info->refs);
@@ -145,18 +148,21 @@ color_display_foreach_real (gpointer key,
 		            gpointer value,
 		            gpointer user_data)
 {
-  DisplayForeachData *data = (DisplayForeachData *) user_data;
+  DisplayForeachData *data;
+
+  data = (DisplayForeachData *) user_data;
+
   data->func (key, data->user_data);
 }
 
 ColorDisplayNode *
-gdisplay_color_attach (GimpDisplay *gdisp,
-		       const gchar *name)
+gimp_display_shell_filter_attach (GimpDisplayShell *shell,
+                                  const gchar      *name)
 {
   ColorDisplayInfo *info;
   ColorDisplayNode *node;
 
-  g_return_val_if_fail (gdisp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {
@@ -168,14 +174,14 @@ gdisplay_color_attach (GimpDisplay *gdisp,
       if (!info->refs && info->methods.init)
 	info->methods.init ();
 
-      info->refs = g_slist_append (info->refs, gdisp);
+      info->refs = g_slist_append (info->refs, shell);
 
       if (info->methods.new)
-	node->cd_ID = info->methods.new (gdisp->gimage->base_type);
+	node->cd_ID = info->methods.new (shell->gdisp->gimage->base_type);
 
       node->cd_convert = info->methods.convert;
 
-      gdisp->cd_list = g_list_append (gdisp->cd_list, node);
+      shell->cd_list = g_list_append (shell->cd_list, node);
 
       return node;
     }
@@ -186,13 +192,13 @@ gdisplay_color_attach (GimpDisplay *gdisp,
 }
 
 ColorDisplayNode *
-gdisplay_color_attach_clone (GimpDisplay      *gdisp,
-			     ColorDisplayNode *node)
+gimp_display_shell_filter_attach_clone (GimpDisplayShell *shell,
+                                        ColorDisplayNode *node)
 {
   ColorDisplayInfo *info;
   ColorDisplayNode *clone;
 
-  g_return_val_if_fail (gdisp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (node != NULL, NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
@@ -200,16 +206,16 @@ gdisplay_color_attach_clone (GimpDisplay      *gdisp,
       clone = g_new (ColorDisplayNode, 1);
 
       clone->cd_name = g_strdup (node->cd_name);
-      clone->cd_ID = NULL;
+      clone->cd_ID   = NULL;
 
-      info->refs = g_slist_append (info->refs, gdisp);
+      info->refs = g_slist_append (info->refs, shell);
 
       if (info->methods.clone)
 	node->cd_ID = info->methods.clone (node->cd_ID);
 
       node->cd_convert = info->methods.convert;
 
-      gdisp->cd_list = g_list_append (gdisp->cd_list, node);
+      shell->cd_list = g_list_append (shell->cd_list, node);
 
       return node;
     }
@@ -220,51 +226,49 @@ gdisplay_color_attach_clone (GimpDisplay      *gdisp,
 }
 
 void
-gdisplay_color_detach (GimpDisplay      *gdisp,
-		       ColorDisplayNode *node)
+gimp_display_shell_filter_detach (GimpDisplayShell *shell,
+                                  ColorDisplayNode *node)
 {
-  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gdisp->cd_list = g_list_remove (gdisp->cd_list, node);
+  shell->cd_list = g_list_remove (shell->cd_list, node);
 }
 
 void
-gdisplay_color_detach_destroy (GimpDisplay      *gdisp,
-			       ColorDisplayNode *node)
+gimp_display_shell_filter_detach_destroy (GimpDisplayShell *shell,
+                                          ColorDisplayNode *node)
 {
-  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gdisplay_color_detach_real (gdisp, node, TRUE);
-  gdisp->cd_list = g_list_remove (gdisp->cd_list, node);
+  gimp_display_shell_filter_detach_real (shell, node, TRUE);
+
+  shell->cd_list = g_list_remove (shell->cd_list, node);
 }
 
 void
-gdisplay_color_detach_all (GimpDisplay *gdisp)
+gimp_display_shell_filter_detach_all (GimpDisplayShell *shell)
 {
   GList *list;
 
-  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  list = gdisp->cd_list;
-
-  while (list)
+  for (list = shell->cd_list; list; list = g_list_next (list))
     {
-      gdisplay_color_detach_real (gdisp, list->data, TRUE);
-      list = list->next;
+      gimp_display_shell_filter_detach_real (shell, list->data, TRUE);
     }
 
-  g_list_free (gdisp->cd_list);
-  gdisp->cd_list = NULL;
+  g_list_free (shell->cd_list);
+  shell->cd_list = NULL;
 }
 
 static void
-gdisplay_color_detach_real (GimpDisplay      *gdisp,
-			    ColorDisplayNode *node,
-			    gboolean          unref)
+gimp_display_shell_filter_detach_real (GimpDisplayShell *shell,
+                                       ColorDisplayNode *node,
+                                       gboolean          unref)
 {
   ColorDisplayInfo *info;
 
-  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (node  != NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
@@ -273,23 +277,26 @@ gdisplay_color_detach_real (GimpDisplay      *gdisp,
 	info->methods.destroy (node->cd_ID);
 
       if (unref)
-        info->refs = g_slist_remove (info->refs, gdisp);
-      
+        info->refs = g_slist_remove (info->refs, shell);
+
       if (!info->refs && info->methods.finalize)
 	info->methods.finalize ();
     }
 
   g_free (node->cd_name);
   g_free (node);
-}  
+}
 
 void
-gdisplay_color_reorder_up (GimpDisplay      *gdisp,
-			   ColorDisplayNode *node)
+gimp_display_shell_filter_reorder_up (GimpDisplayShell *shell,
+                                      ColorDisplayNode *node)
 {
   GList *node_list;
 
-  node_list = g_list_find (gdisp->cd_list, node);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (node  != NULL);
+
+  node_list = g_list_find (shell->cd_list, node);
 
   if (node_list->prev)
     {
@@ -299,14 +306,15 @@ gdisplay_color_reorder_up (GimpDisplay      *gdisp,
 }
 
 void
-gdisplay_color_reorder_down (GimpDisplay      *gdisp,
-			     ColorDisplayNode *node)
+gimp_display_shell_filter_reorder_down (GimpDisplayShell *shell,
+                                        ColorDisplayNode *node)
 {
   GList *node_list;
 
-  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (node  != NULL);
 
-  node_list = g_list_find (gdisp->cd_list, node);
+  node_list = g_list_find (shell->cd_list, node);
 
   if (node_list->next)
     {
@@ -323,11 +331,11 @@ node_name_compare (ColorDisplayNode *node,
 }
 
 void
-gdisplay_color_configure (ColorDisplayNode *node,
-			  GFunc             ok_func,
-			  gpointer          ok_data,
-			  GFunc             cancel_func,
-			  gpointer          cancel_data)
+gimp_display_shell_filter_configure (ColorDisplayNode *node,
+                                     GFunc             ok_func,
+                                     gpointer          ok_data,
+                                     GFunc             cancel_func,
+                                     gpointer          cancel_data)
 {
   ColorDisplayInfo *info;
 
@@ -347,7 +355,7 @@ gdisplay_color_configure (ColorDisplayNode *node,
 }
 
 void
-gdisplay_color_configure_cancel (ColorDisplayNode *node)
+gimp_display_shell_filter_configure_cancel (ColorDisplayNode *node)
 {
   ColorDisplayInfo *info;
 

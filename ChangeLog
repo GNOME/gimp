@@ -1,5 +1,43 @@
 2002-03-14  Michael Natterer  <mitch@gimp.org>
 
+	Re-enabled the display filters. They work exactly the same way
+	as before except for the color_area pseudo-display. More stuff
+	to come...
+
+	* app/display/Makefile.am: build them again.
+
+	* app/display/gimpdisplayshell-filter-dialog.[ch]
+	* app/display/gimpdisplayshell-filter.[ch]: changed to the new
+	namespace, work on GimpDisplayShell instead of GimpDisplay.
+
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.[ch]: changed accordingly.
+
+	* app/gui/dialogs-constructors.c: enabled the dialog constructor.
+
+	* app/gui/gui.c: call the init() function.
+
+	* app/gui/menus.c: enabled the menu entry, but moved it to
+	<Image>/View. Moved "Undo History..." to <Image>/Image.
+
+	* modules/Makefile.am: build and install the modules.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: made them compile with minimal
+	changes.
+
+	Unrelated:
+
+	* app/undo_history.c: connect to the image's "disconnect", not
+	"destroy" signal.
+
+	* app/tools/gimpselectiontool.c: mask out the irrelevant parts of
+	the "state" passed to the modifier_key() func, so tool_options
+	button toggling works with other modifiers (e.g. num_lock)
+	pressed.
+
+2002-03-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcolorpickertool.c: oops, including removed files
 	is a bad idea...
 

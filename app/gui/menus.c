@@ -215,12 +215,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp:error-console",
     "file/dialogs/error_console.html", NULL },
-#ifdef DISPLAY_FILTERS
-  { { N_("/File/Dialogs/Display Filters..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:display-filters-dialog",
-    "file/dialogs/display_filters/display_filters.html", NULL },
-#endif /* DISPLAY_FILTERS */
 
   SEPARATOR ("/File/---"),
 
@@ -551,6 +545,10 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GIMP_STOCK_TOOL_MOVE },
     NULL,
     "view/dialogs/navigation_window.html", NULL },
+  { { N_("/View/Display Filters..."), NULL,
+      dialogs_create_toplevel_cmd_callback, 0 },
+    "gimp:display-filters-dialog",
+    "dialogs/display_filters/display_filters.html", NULL },
 
   SEPARATOR ("/View/---"),
 
@@ -650,7 +648,12 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Image/---"),
 
-  /*  <Image>/Layer  */
+  { { N_("/Image/Undo History..."), NULL,
+      dialogs_create_toplevel_cmd_callback, 0 },
+    "gimp:undo-history-dialog",
+    "dialogs/undo_history.html", NULL },
+
+ /*  <Image>/Layer  */
 
   /*  <Image>/Layer/Stack  */
 
@@ -880,16 +883,6 @@ static GimpItemFactoryEntry image_entries[] =
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp:error-console",
     "dialogs/error_console.html", NULL },
-#ifdef DISPLAY_FILTERS
-  { { N_("/Dialogs/Display Filters..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:display-filters-dialogs",
-    "dialogs/display_filters/display_filters.html", NULL },
-#endif /* DISPLAY_FILTERS */
-  { { N_("/Dialogs/Undo History..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:undo-history-dialog",
-    "dialogs/undo_history.html", NULL },
 
   SEPARATOR ("/---"),
 

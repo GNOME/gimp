@@ -37,6 +37,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-filter.h"
 #include "display/gimpdisplayshell-render.h"
 
 #include "widgets/gimpdevices.h"
@@ -225,9 +226,7 @@ gui_init (Gimp *gimp)
 
   menus_init (gimp);
 
-#ifdef DISPLAY_FILTERS
   color_display_init ();
-#endif /* DISPLAY_FILTERS */
 
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
 

@@ -24,7 +24,10 @@ EXTRA_DIST = \
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
 	libcolorsel_triangle.la		\
+	libcdisplay_gamma.la		\
+	libcdisplay_highcontrast.la	\
 @STRIP_END@
+
 ##	libcolorsel_gtk.la		\
 ##	libcolorsel_water.la		\
 
@@ -42,10 +45,10 @@ libcolorsel_triangle_la_LIBADD = $(GTK_LIBS)
 ## libcolorsel_water_la_LDFLAGS = -avoid-version -module
 ## libcolorsel_water_la_LIBADD = $(GTK_LIBS)
 
-## libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
-## libcdisplay_gamma_la_LDFLAGS = -avoid-version -module
-## libcdisplay_gamma_la_LIBADD = $(GTK_LIBS)
+libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
+libcdisplay_gamma_la_LDFLAGS = -avoid-version -module
+libcdisplay_gamma_la_LIBADD = $(GTK_LIBS)
 
-## libcdisplay_highcontrast_la_SOURCES = cdisplay_highcontrast.c
-## libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module
-## libcdisplay_highcontrast_la_LIBADD = $(GTK_LIBS)
+libcdisplay_highcontrast_la_SOURCES = cdisplay_highcontrast.c
+libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module
+libcdisplay_highcontrast_la_LIBADD = $(GTK_LIBS)

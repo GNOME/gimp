@@ -21,15 +21,13 @@
 
 #include <gtk/gtk.h>
 
-#include "app/dialog_handler.h"
+#include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
+#include "libgimp/gimpmodule.h"
+#include "libgimp/gimpcolordisplay.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpmodregister.h"
-
-#include <libgimp/gimpcolordisplay.h>
-#include <libgimp/gimpmodule.h>
-#include <libgimp/gimpparasite.h>
-#include <libgimp/gimpmath.h>
-#include <libgimp/gimpui.h>
 
 #include "libgimp/gimpintl.h"
 
@@ -185,7 +183,9 @@ gamma_destroy (gpointer cd_ID)
 
   if (context->shell)
     {
+#if 0
       dialog_unregister (context->shell);
+#endif
       gtk_widget_destroy (context->shell);
     }
 
@@ -280,7 +280,10 @@ gamma_configure_ok_callback (GtkWidget *widget,
     gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
   gamma_create_lookup_table (context);
 
+#if 0
   dialog_unregister (context->shell);
+#endif
+
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -294,7 +297,10 @@ gamma_configure_cancel_callback (GtkWidget *widget,
 {
   GammaContext *context = data;
 
+#if 0
   dialog_unregister (context->shell);
+#endif
+
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -335,7 +341,9 @@ gamma_configure (gpointer cd_ID,
 
 			 NULL);
 
+#if 0
       dialog_register (context->shell);
+#endif
 
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
@@ -363,7 +371,9 @@ gamma_configure_cancel (gpointer cd_ID)
  
   if (context->shell)
     {
+#if 0
       dialog_unregister (context->shell);
+#endif
       gtk_widget_destroy (context->shell);
       context->shell = NULL;
     }

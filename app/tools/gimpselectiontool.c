@@ -133,15 +133,19 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
     {
       if (press)
         {
-          if (key == state) /*  first modifier pressed  */
+          if (key == (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
             {
+              /*  first modifier pressed  */
+
               selection_tool->saved_op = sel_options->op;
             }
         }
       else
         {
-          if (! state) /*  last modifier released  */
+          if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
             {
+              /*  last modifier released  */
+
               button_op = selection_tool->saved_op;
             }
         }

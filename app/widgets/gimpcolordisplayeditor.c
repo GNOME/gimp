@@ -18,19 +18,23 @@
 
 #include "config.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbsse.h"
+#include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "display-types.h"
 
-#include "color_area.h"
-#include "dialog_handler.h"
-#include "gdisplay.h"
-#include "gdisplay_color.h"
-#include "gdisplay_color_ui.h"
-#include "gimpimageP.h"
-#include "gimpui.h"
+#include "core/gimpimage.h"
+
+#include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
+#include "gimpdisplayshell-filter.h"
+#include "gimpdisplayshell-filter-dialog.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -39,9 +43,9 @@ typedef struct _ColorDisplayDialog ColorDisplayDialog;
 
 struct _ColorDisplayDialog
 {
-  GimpDisplay *gdisp;
+  GimpDisplayShell *shell;
 
-  GtkWidget *shell;
+  GtkWidget *dialog;
 
   GtkWidget *src;
   GtkWidget *dest;
@@ -124,12 +128,10 @@ static void color_display_update_up_and_down(ColorDisplayDialog *cdd);
 #define LIST_WIDTH  180
 #define LIST_HEIGHT 180
 
-#define UPDATE_DISPLAY(gdisp)	G_STMT_START {	\
-  if (gdisp != color_area_gdisp)		\
-    {						\
-      gdisplay_expose_full (gdisp);		\
-      gdisplay_flush (gdisp);			\
-    }						\
+#define UPDATE_DISPLAY(shell) G_STMT_START      \
+{	                                        \
+  gimp_display_shell_expose_full (shell);       \
+  gimp_display_shell_flush (shell);             \
 } G_STMT_END  
 
 static void
@@ -138,8 +140,8 @@ make_dialog (ColorDisplayDialog *cdd)
   GtkWidget *hbox;
   GtkWidget *scrolled_win;
   GtkWidget *vbbox;
-  gchar *titles[2];
-  gint   i;
+  gchar     *titles[2];
+  gint       i;
 
   static ButtonInfo buttons[] = 
   {
@@ -150,7 +152,7 @@ make_dialog (ColorDisplayDialog *cdd)
     { N_("Configure"), color_display_configure_callback }
   };
 
-  cdd->shell = gimp_dialog_new (_("Color Display Filters"), "display_color",
+  cdd->dialog = gimp_dialog_new (_("Color Display Filters"), "display_color",
 				gimp_standard_help_func,
 				"dialogs/display_filters/display_filters.html",
 				GTK_WIN_POS_NONE,
@@ -164,10 +166,8 @@ make_dialog (ColorDisplayDialog *cdd)
 
 				NULL);
 
-  dialog_register (cdd->shell);
-
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd->shell)->vbox), hbox,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd->dialog)->vbox), hbox,
 		      TRUE, TRUE, 4);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -236,29 +236,24 @@ static void
 color_display_ok_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
-  GList *list;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
+  GList              *list;
 
-  dialog_unregister(cdd->shell);
-  gtk_widget_destroy (GTK_WIDGET (cdd->shell));
-  gdisp->cd_ui = NULL;
+  gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
+  shell->cd_ui = NULL;
 
   if (cdd->modified)
     {
-      list = cdd->old_nodes;
-
-      while (list)
+      for (list = cdd->old_nodes; list; list = g_list_next (list))
 	{
-	  if (!g_list_find (gdisp->cd_list, list->data))
-	    gdisplay_color_detach_destroy (gdisp, list->data);
-
-	  list = list->next;
+	  if (! g_list_find (shell->cd_list, list->data))
+	    gimp_display_shell_filter_detach_destroy (shell, list->data);
 	}
 
       g_list_free (cdd->old_nodes);
 
-      UPDATE_DISPLAY (gdisp);
+      UPDATE_DISPLAY (shell);
     }
 }
 
@@ -266,38 +261,37 @@ static void
 color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
   GList *list;
   GList *next;
 
-  dialog_unregister(cdd->shell);
-  gtk_widget_destroy (GTK_WIDGET (cdd->shell));
-  gdisp->cd_ui = NULL;
+  gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
+  shell->cd_ui = NULL;
   
   if (cdd->modified)
     {
-      list = gdisp->cd_list;
-      gdisp->cd_list = cdd->old_nodes;
+      list = shell->cd_list;
+      shell->cd_list = cdd->old_nodes;
 
       while (list)
 	{
 	  next = list->next;
 
-	  if (!g_list_find (cdd->old_nodes, list->data))
-	    gdisplay_color_detach_destroy (gdisp, list->data);
+	  if (! g_list_find (cdd->old_nodes, list->data))
+	    gimp_display_shell_filter_detach_destroy (shell, list->data);
 
 	  list = next;
 	}
 
-      UPDATE_DISPLAY (gdisp);
+      UPDATE_DISPLAY (shell);
     }
 }
 
 static void 
 color_display_update_up_and_down (ColorDisplayDialog *cdd)
 {
-  gtk_widget_set_sensitive (cdd->buttons[BUTTON_UP], cdd->dest_row > 0);
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_UP],   cdd->dest_row > 0);
   gtk_widget_set_sensitive (cdd->buttons[BUTTON_DOWN], cdd->dest_row >= 0 &&
 			    cdd->dest_row < GTK_CLIST (cdd->dest)->rows - 1);
 }
@@ -306,11 +300,11 @@ static void
 color_display_add_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
-  gchar              *name = NULL;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
+  gchar              *name  = NULL;
   ColorDisplayNode   *node;
-  gint row;
+  gint                row;
 
   if (cdd->src_row < 0)
     return;
@@ -322,22 +316,22 @@ color_display_add_callback (GtkWidget *widget,
 
   cdd->modified = TRUE;
 
-  node = gdisplay_color_attach (gdisp, name);
+  node = gimp_display_shell_filter_attach (shell, name);
 
   row = gtk_clist_append (GTK_CLIST (cdd->dest), &name);
   gtk_clist_set_row_data (GTK_CLIST (cdd->dest), row, node);
-  
+
   color_display_update_up_and_down (cdd);
 
-  UPDATE_DISPLAY (gdisp);
+  UPDATE_DISPLAY (shell);
 }
 
 static void
 color_display_remove_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -349,23 +343,23 @@ color_display_remove_callback (GtkWidget *widget,
   cdd->modified = TRUE;
 
   if (g_list_find (cdd->old_nodes, node))
-    gdisplay_color_detach (gdisp, node);
+    gimp_display_shell_filter_detach (shell, node);
   else
-    gdisplay_color_detach_destroy (gdisp, node);
+    gimp_display_shell_filter_detach_destroy (shell, node);
 
   cdd->dest_row = -1;
 
   color_display_update_up_and_down (cdd);
   
-  UPDATE_DISPLAY (gdisp);
+  UPDATE_DISPLAY (shell);
 }
 
 static void
 color_display_up_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 1)
@@ -374,22 +368,22 @@ color_display_up_callback (GtkWidget *widget,
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
   gtk_clist_row_move (GTK_CLIST (cdd->dest), cdd->dest_row, cdd->dest_row - 1);
 
-  gdisplay_color_reorder_up (gdisp, node);
+  gimp_display_shell_filter_reorder_up (shell, node);
   cdd->modified = TRUE;
 
   cdd->dest_row--;
 
   color_display_update_up_and_down (cdd);
 
-  UPDATE_DISPLAY (gdisp);
+  UPDATE_DISPLAY (shell);
 }
 
 static void
 color_display_down_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -401,22 +395,22 @@ color_display_down_callback (GtkWidget *widget,
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
   gtk_clist_row_move (GTK_CLIST (cdd->dest), cdd->dest_row, cdd->dest_row + 1);
 
-  gdisplay_color_reorder_down (gdisp, node);
+  gimp_display_shell_filter_reorder_down (shell, node);
   cdd->modified = TRUE;
 
   cdd->dest_row++;
 
   color_display_update_up_and_down (cdd);
 
-  UPDATE_DISPLAY (gdisp);
+  UPDATE_DISPLAY (shell);
 }
 
 static void
 color_display_configure_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  ColorDisplayDialog *cdd = data;
-  GimpDisplay        *gdisp = cdd->gdisp;
+  ColorDisplayDialog *cdd   = data;
+  GimpDisplayShell   *shell = cdd->shell;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -424,17 +418,18 @@ color_display_configure_callback (GtkWidget *widget,
 
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
 
-  if (!g_list_find (cdd->conf_nodes, node))
+  if (! g_list_find (cdd->conf_nodes, node))
     cdd->conf_nodes = g_list_append (cdd->conf_nodes, node);
-  
-  gdisplay_color_configure (node, NULL, NULL, NULL, NULL);
+
+  gimp_display_shell_filter_configure (node, NULL, NULL, NULL, NULL);
 
   cdd->modified = TRUE;
-  UPDATE_DISPLAY (gdisp);
+
+  UPDATE_DISPLAY (shell);
 }
 
 void
-gdisplay_color_ui_new (GimpDisplay *gdisp)
+gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
   ColorDisplayDialog *cdd;
 
@@ -447,16 +442,16 @@ gdisplay_color_ui_new (GimpDisplay *gdisp)
 
   color_display_foreach (src_list_populate, cdd->src);
 
-  cdd->old_nodes = gdisp->cd_list;
-  dest_list_populate (gdisp->cd_list, cdd->dest);
-  gdisp->cd_list = g_list_copy (cdd->old_nodes);
+  cdd->old_nodes = shell->cd_list;
+  dest_list_populate (shell->cd_list, cdd->dest);
+  shell->cd_list = g_list_copy (cdd->old_nodes);
 
-  cdd->gdisp = gdisp;
+  cdd->shell = shell;
 
   cdd->src_row = -1;
   cdd->dest_row = -1;
 
-  gdisp->cd_ui = cdd->shell;
+  shell->cd_ui = cdd->dialog;
 }
 
 static void
@@ -471,7 +466,7 @@ dest_list_populate (GList     *node_list,
     		    GtkWidget *dest)
 {
   ColorDisplayNode *node;
-  int row;
+  int               row;
 
   while (node_list)
     {
@@ -492,7 +487,9 @@ select_src (GtkWidget       *widget,
 	    gpointer         data)
 {
   ColorDisplayDialog *cdd = data;
+
   cdd->src_row = row;
+
   gtk_widget_set_sensitive (cdd->buttons[BUTTON_ADD], TRUE);
 }
 
@@ -504,7 +501,9 @@ unselect_src (GtkWidget      *widget,
               gpointer        data)
 {
   ColorDisplayDialog *cdd = data;
+
   cdd->src_row = -1;
+
   gtk_widget_set_sensitive (cdd->buttons[BUTTON_ADD], FALSE);
 }
 

@@ -102,10 +102,8 @@ struct _GimpDisplayShell
   NavigationDialog *nav_dialog;        /*  image navigation dialog            */
   NavigationDialog *nav_popup;         /*  navigation popup                   */
 
-#ifdef DISPLAY_FILTERS
   GList            *cd_list;           /* color display conversion stuff      */
   GtkWidget        *cd_ui;             /* color display filter dialog         */
-#endif /* DISPLAY_FILTERS */
 };
 
 struct _GimpDisplayShellClass
