@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <sys/types.h>
 #include <regex.h>
 #include "appenv.h"
 #include "general.h"
