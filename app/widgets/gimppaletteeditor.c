@@ -458,7 +458,7 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 {
   if (bevent->button == 3 && GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      gimp_item_factory_popup_with_data (GIMP_DATA_EDITOR (editor)->item_factory,
+      gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
                                          editor, NULL);
     }
 

@@ -332,12 +332,6 @@ gimp_item_tree_view_destroy (GtkObject *object)
       view->signal_name = NULL;
     }
 
-  if (view->item_factory)
-    {
-      g_object_unref (view->item_factory);
-      view->item_factory = NULL;
-    }
-
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
@@ -403,12 +397,8 @@ gimp_item_tree_view_new (gint                  preview_size,
   item_view->edit_item_func     = edit_item_func;
   item_view->activate_item_func = activate_item_func;
 
-  item_view->menu_factory = menu_factory;
-  item_view->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                        menu_identifier,
-                                                        GTK_TYPE_MENU,
-                                                        item_view,
-                                                        FALSE);
+  gimp_editor_create_menu (GIMP_EDITOR (item_view),
+                           menu_factory, menu_identifier, item_view);
 
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
@@ -582,8 +572,8 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
 
   item_view = GIMP_ITEM_TREE_VIEW (view);
 
-  if (item_view->item_factory)
-    gimp_item_factory_popup_with_data (item_view->item_factory,
+  if (GIMP_EDITOR (item_view)->item_factory)
+    gimp_item_factory_popup_with_data (GIMP_EDITOR (item_view)->item_factory,
                                        item_view,
                                        NULL);
 }

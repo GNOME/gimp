@@ -54,7 +54,6 @@ enum
 static void gimp_component_editor_class_init (GimpComponentEditorClass *klass);
 static void gimp_component_editor_init       (GimpComponentEditor      *editor);
 
-static void gimp_component_editor_finalize          (GObject             *object);
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
                                                      GimpImage           *gimage);
 
@@ -120,15 +119,11 @@ gimp_component_editor_get_type (void)
 static void
 gimp_component_editor_class_init (GimpComponentEditorClass *klass)
 {
-  GObjectClass         *object_class;
   GimpImageEditorClass *image_editor_class;
 
-  object_class       = G_OBJECT_CLASS (klass);
   image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize        = gimp_component_editor_finalize;
 
   image_editor_class->set_image = gimp_component_editor_set_image;
 }
@@ -198,22 +193,6 @@ gimp_component_editor_init (GimpComponentEditor *editor)
 }
 
 static void
-gimp_component_editor_finalize (GObject *object)
-{
-  GimpComponentEditor *editor;
-
-  editor = GIMP_COMPONENT_EDITOR (object);
-
-  if (editor->item_factory)
-    {
-      g_object_unref (editor->item_factory);
-      editor->item_factory = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
 gimp_component_editor_set_image (GimpImageEditor *editor,
                                  GimpImage       *gimage)
 {
@@ -274,11 +253,8 @@ gimp_component_editor_new (gint             preview_size,
 
   gimp_component_editor_set_preview_size (editor, preview_size);
 
-  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     "<Channels>",
-                                                     GTK_TYPE_MENU,
-                                                     editor,
-                                                     FALSE);
+  gimp_editor_create_menu (GIMP_EDITOR (editor),
+                           menu_factory, "<Channels>", editor);
 
   return GTK_WIDGET (editor);
 }
@@ -514,7 +490,7 @@ gimp_component_editor_button_press (GtkWidget           *widget,
           break;
 
         case 3:
-          gimp_item_factory_popup_with_data (editor->item_factory,
+          gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
                                              editor,
                                              NULL);
           break;

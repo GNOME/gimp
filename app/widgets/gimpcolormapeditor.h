@@ -39,8 +39,6 @@ struct _GimpColormapEditor
 {
   GimpImageEditor  parent_instance;
 
-  GimpItemFactory *item_factory;
-
   gint             col_index;
   gint             dnd_col_index;
   GtkWidget       *palette;

@@ -38,9 +38,12 @@ typedef struct _GimpEditorClass  GimpEditorClass;
 
 struct _GimpEditor
 {
-  GtkVBox    parent_instance;
+  GtkVBox          parent_instance;
 
-  GtkWidget *button_box;
+  GimpMenuFactory *menu_factory;
+  GimpItemFactory *item_factory;
+
+  GtkWidget       *button_box;
 };
 
 struct _GimpEditorClass
@@ -51,15 +54,20 @@ struct _GimpEditorClass
 
 GType       gimp_editor_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_editor_new        (void);
+GtkWidget * gimp_editor_new         (void);
 
-GtkWidget * gimp_editor_add_button (GimpEditor  *editor,
-                                    const gchar *stock_id,
-                                    const gchar *tooltip,
-                                    const gchar *help_data,
-                                    GCallback    callback,
-                                    GCallback    extended_callback,
-                                    gpointer     callback_data);
+void        gimp_editor_create_menu (GimpEditor      *editor,
+                                     GimpMenuFactory *menu_factory,
+                                     const gchar     *menu_identifier,
+                                     gpointer         callback_data);
+
+GtkWidget * gimp_editor_add_button  (GimpEditor      *editor,
+                                     const gchar     *stock_id,
+                                     const gchar     *tooltip,
+                                     const gchar     *help_data,
+                                     GCallback        callback,
+                                     GCallback        extended_callback,
+                                     gpointer         callback_data);
 
 
 #endif  /*  __GIMP_EDITOR_H__  */

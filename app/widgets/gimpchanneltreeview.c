@@ -176,7 +176,7 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
     {
       channel_view->component_editor =
         gimp_component_editor_new (GIMP_CONTAINER_VIEW (item_view)->preview_size,
-                                   item_view->menu_factory);
+                                   GIMP_EDITOR (item_view)->menu_factory);
       gtk_box_pack_start (GTK_BOX (item_view), channel_view->component_editor,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (item_view),

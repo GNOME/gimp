@@ -216,12 +216,6 @@ gimp_colormap_editor_destroy (GtkObject *object)
 
   editor = GIMP_COLORMAP_EDITOR (object);
 
-  if (editor->item_factory)
-    {
-      g_object_unref (editor->item_factory);
-      editor->item_factory = NULL;
-    }
-
   if (editor->color_notebook)
     {
       color_notebook_free (editor->color_notebook);
@@ -318,11 +312,8 @@ gimp_colormap_editor_new (GimpImage       *gimage,
 
   editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR, NULL);
 
-  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     "<ColormapEditor>",
-                                                     GTK_TYPE_MENU,
-                                                     editor,
-                                                     FALSE);
+  gimp_editor_create_menu (GIMP_EDITOR (editor),
+                           menu_factory, "<ColormapEditor>", editor);
 
   /*  The palette frame  */
   frame = gtk_frame_new (NULL);
@@ -757,7 +748,8 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
 
     case 3:
       gimp_colormap_editor_set_index (editor, col);
-      gimp_item_factory_popup_with_data (editor->item_factory, editor, NULL);
+      gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
+                                         editor, NULL);
       return TRUE;
 
     default:

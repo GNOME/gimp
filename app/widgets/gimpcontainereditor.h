@@ -40,7 +40,6 @@ struct _GimpContainerEditor
 {
   GtkVBox            parent_instance;
 
-  GimpItemFactory   *item_factory;
   GimpContainerView *view;
 };
 

@@ -29,6 +29,7 @@
 
 #include "gimpeditor.h"
 #include "gimpdnd.h"
+#include "gimpmenufactory.h"
 
 
 #define DEFAULT_CONTENT_SPACING  2
@@ -39,6 +40,7 @@
 static void   gimp_editor_class_init (GimpEditorClass *klass);
 static void   gimp_editor_init       (GimpEditor      *panel);
 
+static void   gimp_editor_destroy    (GtkObject       *object);
 static void   gimp_editor_style_set  (GtkWidget       *widget,
                                       GtkStyle        *prev_style);
 
@@ -77,11 +79,15 @@ gimp_editor_get_type (void)
 static void
 gimp_editor_class_init (GimpEditorClass *klass)
 {
+  GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
+  object_class = GTK_OBJECT_CLASS (klass);
   widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->destroy   = gimp_editor_destroy;
 
   widget_class->style_set = gimp_editor_style_set;
 
@@ -112,6 +118,25 @@ gimp_editor_class_init (GimpEditorClass *klass)
 static void
 gimp_editor_init (GimpEditor *editor)
 {
+  editor->menu_factory = NULL;
+  editor->item_factory = NULL;
+  editor->button_box   = NULL;
+}
+
+static void
+gimp_editor_destroy (GtkObject *object)
+{
+  GimpEditor *editor;
+
+  editor = GIMP_EDITOR (object);
+
+  if (editor->item_factory)
+    {
+      g_object_unref (editor->item_factory);
+      editor->item_factory = NULL;
+    }
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -170,6 +195,27 @@ gimp_editor_new (void)
   editor = g_object_new (GIMP_TYPE_EDITOR, NULL);
 
   return GTK_WIDGET (editor);
+}
+
+void
+gimp_editor_create_menu (GimpEditor      *editor,
+                         GimpMenuFactory *menu_factory,
+                         const gchar     *menu_identifier,
+                         gpointer         callback_data)
+{
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
+  g_return_if_fail (menu_identifier != NULL);
+
+  if (editor->item_factory)
+    g_object_unref (editor->item_factory);
+
+  editor->menu_factory = menu_factory;
+  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                     menu_identifier,
+                                                     GTK_TYPE_MENU,
+                                                     callback_data,
+                                                     FALSE);
 }
 
 GtkWidget *

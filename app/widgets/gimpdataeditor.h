@@ -46,8 +46,6 @@ struct _GimpDataEditor
   GimpData        *data;
   gboolean         data_editable;
 
-  GimpItemFactory *item_factory;
-
   GtkWidget       *name_entry;
 
   GtkWidget       *save_button;

@@ -41,7 +41,6 @@ struct _GimpComponentEditor
   GimpImageEditor    parent_instance;
 
   gint               preview_size;
-  GimpItemFactory   *item_factory;
 
   GtkTreeModel      *model;
   GtkTreeView       *view;

@@ -41,8 +41,6 @@
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
 
-static void   gimp_container_editor_finalize         (GObject             *object);
-
 static void   gimp_container_editor_select_item      (GtkWidget           *widget,
 						      GimpViewable        *viewable,
 						      gpointer             insert_data,
@@ -93,13 +91,7 @@ gimp_container_editor_get_type (void)
 static void
 gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize = gimp_container_editor_finalize;
 
   klass->select_item     = NULL;
   klass->activate_item   = NULL;
@@ -109,24 +101,7 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 static void
 gimp_container_editor_init (GimpContainerEditor *view)
 {
-  view->item_factory = NULL;
-  view->view         = NULL;
-}
-
-static void
-gimp_container_editor_finalize (GObject *object)
-{
-  GimpContainerEditor *editor;
-
-  editor = GIMP_CONTAINER_EDITOR (object);
-
-  if (editor->item_factory)
-    {
-      g_object_unref (editor->item_factory);
-      editor->item_factory = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  view->view = NULL;
 }
 
 gboolean
@@ -151,12 +126,6 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 			preview_size <= GIMP_PREVIEW_MAX_SIZE, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
-
-  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                     menu_identifier,
-                                                     GTK_TYPE_MENU,
-                                                     editor,
-                                                     FALSE);
 
   switch (view_type)
     {
@@ -184,6 +153,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
       return FALSE;
     }
+
+  gimp_editor_create_menu (GIMP_EDITOR (editor->view),
+                           menu_factory, menu_identifier, editor);
 
   gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
@@ -258,11 +230,11 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (editor->view->container,
 				       GIMP_OBJECT (viewable)))
     {
-      if (editor->item_factory)
-        {
-          gimp_item_factory_popup_with_data (editor->item_factory,
-                                             editor,
-                                             NULL);
-        }
+      GimpItemFactory *item_factory;
+
+      item_factory = GIMP_EDITOR (editor->view)->item_factory;
+
+      if (item_factory)
+        gimp_item_factory_popup_with_data (item_factory, editor, NULL);
     }
 }

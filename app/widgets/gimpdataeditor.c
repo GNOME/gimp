@@ -112,7 +112,6 @@ gimp_data_editor_init (GimpDataEditor *editor)
   editor->data_type     = G_TYPE_NONE;
   editor->data          = NULL;
   editor->data_editable = FALSE;
-  editor->item_factory  = NULL;
 
   editor->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry,
@@ -152,12 +151,6 @@ gimp_data_editor_dispose (GObject *object)
 
   if (editor->data)
     gimp_data_editor_set_data (editor, NULL);
-
-  if (editor->item_factory)
-    {
-      g_object_unref (editor->item_factory);
-      editor->item_factory = NULL;
-    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -221,11 +214,8 @@ gimp_data_editor_construct (GimpDataEditor  *editor,
   editor->data_type    = data_type;
 
   if (menu_factory && menu_identifier)
-    editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
-                                                       menu_identifier,
-                                                       GTK_TYPE_MENU,
-                                                       editor,
-                                                       FALSE);
+    gimp_editor_create_menu (GIMP_EDITOR (editor),
+                             menu_factory, menu_identifier, editor);
 
   data = (GimpData *)
     gimp_context_get_by_type (gimp_get_user_context (gimp), data_type);
@@ -240,14 +230,12 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
                            GimpData       *data)
 {
   g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
-  g_return_if_fail (! data || GIMP_IS_DATA (data));
-  g_return_if_fail (! data || g_type_is_a (G_TYPE_FROM_INSTANCE (data),
-                                           editor->data_type));
+  g_return_if_fail (data == NULL || GIMP_IS_DATA (data));
+  g_return_if_fail (data == NULL || g_type_is_a (G_TYPE_FROM_INSTANCE (data),
+                                                 editor->data_type));
 
   if (editor->data != data)
-    {
-      GIMP_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);
-    }
+    GIMP_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);
 }
 
 GimpData *

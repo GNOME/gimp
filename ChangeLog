@@ -1,3 +1,20 @@
+2003-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.[ch]: added a GimpItemFactory to the
+	GimpEditor struct. Added gimp_editor_create_menu().
+
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimpcomponenteditor.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdataeditor.[ch]
+	* app/widgets/gimpitemtreeview.[ch]: removed item_factory pointers
+	and lots of inalizers which just unref'ed the item_factory.  Use
+	gimp_editor_create_menu() instead.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.c: changed accordingly.
+
 2003-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.c: implement GtkDialog::close() and
