@@ -77,6 +77,7 @@
 /*
  * Quadword divide.  No adjustment for subsequent unsigned packing
  * (high-order bit of each word is left alone)
+ * clobber list must include: "%eax", "%ecx", "%edx", divisor quotient
  */
 #define pdivwqX(dividend,divisor,quotient) "movd   %%" #dividend ",%%eax; " \
                                           "movd   %%" #divisor  ",%%ecx; " \
@@ -102,6 +103,7 @@
                                           "movd   %%eax,%%" #divisor ";"   \
                                           "psllq  $32,%%" #divisor ";"     \
                                           "por    %%" #divisor ",%%" #quotient ";"
+#define pdivwqX_clobber "%eax", "%ecx", "%edx"
    
 /*
  * Quadword divide.  Adjusted for subsequent unsigned packing

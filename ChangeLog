@@ -1,3 +1,10 @@
+2004-07-19  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c (gimp_composite_addition_rgba8_rgba8_rgba8_mmx): 
+	* app/composite/gimp-composite-mmx.c (gimp_composite_burn_rgba8_rgba8_rgba8_mmx): 
+	* app/composite/gimp-composite-x86.h:
+	Correction of clobbered register lists, as additional progress against bug #147013.
+
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpmarshal.list: removed unused VOID:UINT,STRING.
