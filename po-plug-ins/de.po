@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.14\n"
 "POT-Creation-Date: 1999-12-30 20:23+0100\n"
-"PO-Revision-Date: 1999-12-30 20:40+0100\n"
+"PO-Revision-Date: 2000-01-10 21:21+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: ??\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
@@ -83,8 +83,7 @@ msgstr "Kein"
 
 #: plug-ins/AlienMap/AlienMap.c:765
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Roter Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
+msgstr "Roter Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:772 plug-ins/common/compose.c:125
@@ -518,8 +517,7 @@ msgstr "Qualität des Antialiasing. Höher ist besser, aber langsamer"
 
 #: plug-ins/Lighting/lighting_ui.c:646
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
-"Aufhören, sobald Unterschied zwischen Pixeln kleiner als dieser Wert sind"
+msgstr "Aufhören, sobald Unterschiede zwischen Pixeln kleiner als dieser Wert sind"
 
 #: plug-ins/Lighting/lighting_ui.c:674
 msgid "Light settings"
@@ -601,34 +599,30 @@ msgstr "Diffuse:"
 
 #: plug-ins/Lighting/lighting_ui.c:802
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Anteil der ursprünglichen Farbe, die das Objekt auch dann hat, wenn kein\n"
-"direktes Licht einfällt"
+msgstr "Anteil der ursprünglichen Farbe, wenn kein direktes Licht einfällt"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
-"Intensität der ursprünglichen Farbe, wenn das Objekt von der Lichtquelle\n"
+"Intensität der ursprünglichen Farbe, wenn das Objekt von einer Lichtquelle\n"
 "angeleuchtet wird"
 
-# TODO? gibt's das Wort ?
 #: plug-ins/Lighting/lighting_ui.c:808
 msgid "Reflectivity"
-msgstr "Reflektivität"
+msgstr "Reflexivität"
 
 #: plug-ins/Lighting/lighting_ui.c:814
 msgid "Specular:"
-msgstr ""
+msgstr "Spiegel:"
 
 #. blending amount
 #: plug-ins/Lighting/lighting_ui.c:815 plug-ins/common/jigsaw.c:2462
 msgid "Highlight:"
-msgstr "Highlight:"
+msgstr "Glanzlicht:"
 
 #: plug-ins/Lighting/lighting_ui.c:829
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Je höher der Wert, umso mehr Licht reflektiert das Objekt (es wird heller)"
+msgstr "Je höher der Wert, umso mehr Licht reflektiert das Objekt (es wird heller)"
 
 #: plug-ins/Lighting/lighting_ui.c:830
 msgid "Controls how intense the highlights will be"
@@ -636,8 +630,7 @@ msgstr "Dieser Wert legt fest wie intensiv die \"Highlights\" sind"
 
 #: plug-ins/Lighting/lighting_ui.c:831
 msgid "Higher values makes the highlights more focused"
-msgstr ""
-"Je höher dieser Wert ist, umso konzentrierter werden die \"Highlights\""
+msgstr "Je höher dieser Wert ist, umso konzentrierter werden die Glanzlichter"
 
 #: plug-ins/Lighting/lighting_ui.c:897
 msgid "Bumpmap settings"
@@ -887,8 +880,7 @@ msgstr "Anzahl der Farben nicht unterstützt (%d)"
 
 #: plug-ins/common/CEL.c:399
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr ""
-"Nur indizierte Bilder mit Transparenz können im CEL Format gespeichert werden"
+msgstr "Nur indizierte Bilder mit Transparenz können im CEL Format gespeichert werden"
 
 #: plug-ins/common/CEL.c:412
 #, c-format
@@ -1139,7 +1131,7 @@ msgid ""
 msgstr ""
 "Mache ein Bild aus dem Doppel-Map-Gitter (Coupled-Map Lattice, CML). CML "
 "ist\n"
-"eine Art von Zellularem Automat basierend auf einer stetigen "
+"eine Art Zellularer Automat basierend auf einer stetigen "
 "Definitionsmenge.\n"
 "Im Modus \"RUN_NONINTERACTIVE\" (Batchmodus) ist das 4. Argument der Name\n"
 "einer Parameter-Datei, womit man den CML_explorer steuern kann."
@@ -1251,7 +1243,7 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"Der \"behebe init-Zahl\"-Button ist ein Alias von mir.\\n\n"
+"Der \"behebe init-Zahl\"-Button ist ein Kennzeichen von mir.\\n\n"
 "Die gleiche init-Zahl resultiert im gleichen Bild wenn 1. die Breiten der\n"
 "Bilder gleich sind (deswegen ist das endgültige Bild anders als die "
 "Vorschau)\n"
@@ -1423,8 +1415,7 @@ msgstr "Warnung: das Dateiformat ist alt."
 
 #: plug-ins/common/CML_explorer.c:2338
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
-"Warnung: hmmm.. das ist ein Dateiformat für einen neueren CML-explorer."
+msgstr "Warnung: hmmm.. das ist ein Dateiformat für einen neueren CML-explorer."
 
 #: plug-ins/common/CML_explorer.c:2399
 msgid "Error: failed to load parameters"
@@ -1589,7 +1580,8 @@ msgstr "Frame %v von %u"
 #: plug-ins/common/animoptimize.c:133
 msgid ""
 "This plugin applies various optimizations to a GIMP layer-based animation."
-msgstr "Dieses Plugin optimiert eine Ebenen-basierte Animation."
+msgstr ""
+"Dieses Plugin optimiert eine Ebenen-basierte Animation."
 
 #: plug-ins/common/animoptimize.c:139
 msgid "<Image>/Filters/Animation/Animation Optimize"
@@ -1696,7 +1688,7 @@ msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
-"Ziehe den Kontrast eines Bildes, so dass es die ganze Reichweite abdeckt."
+"Spreizt den Kontrast eines Bildes, so dass es die ganze Bandbreite abdeckt."
 
 #: plug-ins/common/autostretch_hsv.c:83
 msgid ""
@@ -1707,12 +1699,10 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
-"Dieses einfache plug-in macht einen automatischen Kontrastausgleich. Für "
-"jeden\n"
-"Kanal im angegebenen Bild findet es die kleinsten und grössten Werte, und\n"
-"benutzt diese, um die einzelnen Histogramme auf die volle "
-"Kontrast-Reichweite\n"
-"zu erweitern."
+"Dieses einfache plug-in macht eine automatische Kontrastspreizung. Für jeden"
+"Kanal im angegebenen Bild findet es die kleinsten und grössten Werte, und"
+"benutzt diese, um die einzelnen Histogramme auf die ganze Kontrastweite"
+"auszudehnen."
 
 #: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto/Stretch HSV"
@@ -1727,13 +1717,13 @@ msgid ""
 "Adds a blinds effect to the image. Rather like putting the image on a set of "
 "window blinds and the closing or opening the blinds"
 msgstr ""
-"Fügt einem Bild einen \"Jalousie-Effekt\" hinzu: Ungefähr so, als ob vor\n"
-"dem Bild eine Jalousie wäre, die man öffnet und schliesst."
+"Fügt einem Bild einen \"Jalousie-Effekt\" hinzu: Ungefähr so, als\n"
+"ob das Bild eine Jalousie wäre, die man öffnet und schliesst."
 
 #: plug-ins/common/blinds.c:179 plug-ins/common/flarefx.c:191
 #: plug-ins/common/glasstile.c:102
 msgid "More here later"
-msgstr ""
+msgstr "Hierzu später mehr"
 
 #: plug-ins/common/blinds.c:183
 msgid "<Image>/Filters/Distorts/Blinds..."
@@ -1769,7 +1759,7 @@ msgstr "Transparent"
 # TODO
 #: plug-ins/common/blinds.c:455
 msgid "Displacement "
-msgstr "Verschiebung"
+msgstr "Verschiebung "
 
 #: plug-ins/common/blinds.c:487
 msgid "Num Segments "
@@ -1787,12 +1777,9 @@ msgid ""
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
 "Dieses plug-in wendet einen Aufweicheffekt (blur) zufällig auf das "
-"angegebene\n"
-"Bild an. Sie können angeben, welcher Anteil des Pixelwertes aufgeweicht "
-"wird,\n"
-"und wie oft der Effekt angewendet wird. Dieser Effekt funktioniert nicht "
-"mit\n"
-"indizierten Bildern."
+"angegebene Bild an. Sie können angeben, welcher Anteil des Pixelwertes "
+"weichgezeichnet wird, und wie oft der Effekt angewendet wird. Dieser Effekt "
+"funktioniert nicht mit indizierten Bildern."
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur..."
@@ -1825,10 +1812,8 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Holt sich die init-Zahl für den Zufallszahlen-generator aus der aktuellen "
-"Zeit\n"
-"- dadurch wird garantiert, dass die (Pseudo-)Zufallszahl \"zufällig genug\" "
-"ist"
+"Erstellt die init-Zahl für den Zufallszahlen-generator aus der aktuellen "
+"Zeit, dadurch wird ein gewisser Zufall garantiert"
 
 #.
 #. *  User button
@@ -1886,8 +1871,7 @@ msgstr "Sinusförmig"
 
 #: plug-ins/common/bumpmap.c:340
 msgid "Create an embossing effect using an image as a bump map"
-msgstr ""
-"Erstellt einen Relief-Effekt (aus dem Bild heraus), wobei es ein Bild als\n"
+msgstr "Erstellt einen Relief-Effekt (aus dem Bild heraus), wobei es ein Bild als\n"
 "Bumpmap benutzt"
 
 #: plug-ins/common/bumpmap.c:341
@@ -1959,8 +1943,7 @@ msgstr "Umgebungslicht (Ambient)"
 
 #: plug-ins/common/bz2.c:461
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr ""
-"bz2: Kann keine bzip2-gepackte Datei öffnen, wenn sie keine entsprechende\n"
+msgstr "bz2: Kann bzip2-gepackte Datei nicht öffnen, wenn sie sinnvolle\n"
 "Dateinamenerweiterung hat\n"
 
 #: plug-ins/common/c_astretch.c:79
@@ -1971,12 +1954,10 @@ msgid ""
 "images it may do just what you want; for others it may be total crap :)"
 msgstr ""
 "Dieses plug-in macht eine Automatische Kontrastspreizung. Es findet in "
-"jedem\n"
-"Kanal des Bildes die Minimal- und Maximalwerte, und benutzt diese, um\n"
-"die einzelnen Histogramme des Bildes auf die Volle Kontrastreichweite zu "
-"erweitern.\n"
-"Bei manchen Bildern ist das genau das, was Sie wollen, bei anderen völliger "
-"Dreck :)"
+"jedem Kanal des Bildes die Minimal- und Maximalwerte, und benutzt diese, um "
+"die einzelnen Histogramme des Bildes auf die volle Kontrastweite"
+"auszudehnen. Für manche Bilder ist es genau das, was Sie wollen, für "
+"andere völliger Schwachsinn :)"
 
 #: plug-ins/common/c_astretch.c:83
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
@@ -2354,8 +2335,7 @@ msgstr "Kanäle"
 
 #: plug-ins/common/cubism.c:172
 msgid "Convert the input drawable into a collection of rotated squares"
-msgstr ""
-"Verwandelt das Ursprungsbild in eine Ansammlung von rotierten Quadraten"
+msgstr "Verwandelt das Ursprungsbild in eine Ansammlung von rotierten Quadraten"
 
 #: plug-ins/common/cubism.c:173 plug-ins/mosaic/mosaic.c:327
 msgid "Help not yet written for this plug-in"
@@ -2597,6 +2577,11 @@ msgstr "Kanäle extrahieren:"
 #: plug-ins/common/deinterlace.c:77 plug-ins/common/deinterlace.c:254
 msgid "Deinterlace"
 msgstr ""
+"Dieses plug-in benutzt den Algorithmus von John Schlag, \"Fast Embossing\n"
+"Effects on Raster Image Data\", erschienen in Graphics GEMS IV (ISBN 0-12-336155-9).\n"
+"Als Argument wird ein Graustufenbild angegeben, welches als eine Bump-Map\n"
+"auf ein anderes Bild angewendet wird, und so einen Austanzungs- bzw.\n"
+"Reliefeffekt erzeugt."
 
 #: plug-ins/common/deinterlace.c:78
 msgid ""
@@ -2604,22 +2589,26 @@ msgid ""
 "only the odd or even fields get captured, deinterlace can be used to "
 "interpolate between the existing fields to correct this."
 msgstr ""
+"Entflackern ist sinnvoll für die Bearbeitung von Bildern, die mit einer "
+"TV-Karte aufgenommen sind. Wenn nur die geraden oder ungeraden Zeilen "
+"vorhanden sind kann Entfalckern dazu benutzt werden, zwischen den "
+"vorhandenen Zeilen zu interpolieren."
 
 #: plug-ins/common/deinterlace.c:82
 msgid "<Image>/Filters/Enhance/Deinterlace..."
-msgstr ""
+msgstr "<Image>/Filters/Verbessern/Entflackern..."
 
 #: plug-ins/common/deinterlace.c:138
 msgid "Deinterlace..."
-msgstr ""
+msgstr "Entflackern..."
 
 #: plug-ins/common/deinterlace.c:237
 msgid "Keep Odd Fields"
-msgstr "Erhalte ungerade Felder"
+msgstr "Erhalte ungerade Zeilen"
 
 #: plug-ins/common/deinterlace.c:238
 msgid "Keep Even Fields"
-msgstr "Erhalte gerade Felder"
+msgstr "Erhalte gerade Zeilen"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/common/deinterlace.c:261 plug-ins/common/hot.c:541
@@ -2629,8 +2618,7 @@ msgstr "Modus"
 
 #: plug-ins/common/depthmerge.c:194
 msgid "Combine two images using corresponding depth maps (z-buffers)"
-msgstr ""
-"Kombiniert zwei Bilder mit Hilfe der entsprechenden Tiefenkarte (Z-Buffer)"
+msgstr "Kombiniert zwei Bilder mit Hilfe der entsprechenden Tiefenkarte (Z-Buffer)"
 
 #: plug-ins/common/depthmerge.c:195
 msgid ""
@@ -2645,7 +2633,7 @@ msgstr ""
 
 #: plug-ins/common/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge..."
-msgstr "<Image>/Filter/Kombinieren/TiefenKombination..."
+msgstr "<Image>/Filter/Kombinieren/Tiefenkombination..."
 
 #: plug-ins/common/depthmerge.c:369
 msgid "Depth-merging..."
@@ -2653,7 +2641,7 @@ msgstr "Kombiniere basierend auf Tiefeninformation..."
 
 #: plug-ins/common/depthmerge.c:610
 msgid "Depth Merge"
-msgstr "TiefenKombination"
+msgstr "Tiefenkombination"
 
 #: plug-ins/common/depthmerge.c:648
 msgid "Source 1"
@@ -2731,7 +2719,6 @@ msgstr "Entferne Flecken..."
 msgid "Despeckle "
 msgstr "Fleckenentferner"
 
-# adaptiv ? TODO
 #: plug-ins/common/despeckle.c:845 plug-ins/gimpressionist/orientation.c:198
 #: plug-ins/gimpressionist/size.c:196
 msgid "Adaptive"
@@ -2772,8 +2759,7 @@ msgstr ""
 
 #: plug-ins/common/destripe.c:150
 msgid "This plug-in tries to remove vertical stripes from an image."
-msgstr ""
-"Dieses plug-in versucht, vertikale Streifen aus einem Bild zu entfernen."
+msgstr "Dieses plug-in versucht, vertikale Streifen aus einem Bild zu entfernen."
 
 #: plug-ins/common/destripe.c:153
 msgid "<Image>/Filters/Enhance/Destripe..."
@@ -3210,6 +3196,8 @@ msgstr "TIEFE"
 #: plug-ins/common/fractaltrace.c:825
 msgid "Outside Type"
 msgstr ""
+"Tausche eine Farbe gegen eine andere aus; optional können sie einen\n"
+"Schwellenwert für die Umsetzung von einer Schattierung in eine Andere setzen"
 
 #: plug-ins/common/fractaltrace.c:876
 msgid "White"
@@ -3543,6 +3531,10 @@ msgstr ""
 #: plug-ins/common/gpb.c:433
 msgid "Save As Pixmap Brush Pipe"
 msgstr ""
+"Versetzt den Inhalt des Angebenen Bildes um die Werte 'amount_x' bzw.\n"
+"'amount_y' multipliziert mit der Intensität des entsprechenden Pixels in\n"
+"der entsprechenden \"displace_map\". Beide \"displace maps\" müssen\n"
+"Graustufenbilder sein, damit dieses plug-in funktioniert."
 
 #: plug-ins/common/gpb.c:453
 msgid "Cell size:"
@@ -3912,6 +3904,16 @@ msgstr "Lädt Dateien vom .hrz Format"
 #: plug-ins/common/hrz.c:157
 msgid "FIXME: write help for hrz_load"
 msgstr ""
+"Dieses Plug-In basiert auf einem Artikel von Jörn Loviscach (erschienen in\n"
+"c't 10/95, Seite 326). Es erstellt moderne Kunstbilder von einer zufälligen\n"
+"genetischen Formel."
+"Dieses Plug-In bildet den Inhalt des angegebenen Bildes am aktivem\n"
+"Gradienten ab. Es berechnet die Leuchtstärke jedes Pixels und ersetzt\n"
+"das Pixel durch das Pixel im aktiven Gradienten, welches der\n"
+"Helligkeit des Pixels entspricht.  Schwarze Pixel werden zur ersten\n"
+"Farbe im Gradienten, und weisse Pixel werden auf die letzte Farbe im\n"
+"Gradienten abgebildet. Funktioniert mit Graustufen- und RGB-Bildern\n"
+"mit oder ohne Alpha-Kanal."
 
 #: plug-ins/common/hrz.c:168
 msgid "saves files in the hrz file format"
@@ -4178,10 +4180,32 @@ msgstr "Qualität"
 #: plug-ins/common/jpeg.c:1663
 msgid "Restart markers"
 msgstr ""
+"\"Heiss\" durchsucht ein Bild nach Pixeln, die, wenn Sie als NTSC oder PAL-Signal\n"
+"kodiert werden, unsichere Werte in den Bereichen \"chrominance\" oder\n"
+"\"composite signal amplitude\". Drei Effekte können auf diese \"heissen\" Pixel\n"
+"angewandt werden: (0) Leuchtstärke reduzieren, (1) Sättigung reduzieren,\n"
+"(3) schwärzen."
 
 #: plug-ins/common/jpeg.c:1669
 msgid "Restart frequency (rows)"
 msgstr ""
+"Wendet einen Gaussschen Weichzeichner mit dem angegebenen Effektradius auf\n"
+"ein Bild an. Die Standardabweichung der Normalverteilung, die benutzt wird\n"
+"um Pixelwerte zu ändern, wird mit dem angegebenen Radius ausgerechnet.\n"
+"Horizontale und vertikale Aufweicheffekte können unabhängig voneinander\n"
+"ausgeführt werden. Der IIR Gausssche Weichzeichner-Algorithmus erzeugt den\n"
+"besten Effekt mit grossen Radien und Bildern, die nicht von Computern erzeugt\n"
+"wurden. Werte für den Radius müssen grösser als 1.0 sein, weil kleinere\n"
+"Werte in eher unechten Bildern resultieren."
+"Wendet einen Gaussschen Weichzeichner mit dem angegebenen Effektradius auf\n"
+"ein Bild an. Die Standardabweichung der Normalverteilung, die benutzt wird,\n"
+"um Pixelwerte zu ändern, wird mit dem angegebenen Radius ausgerechnet.\n"
+"Horizontale und vertikale Aufweicheffekte können unabhängig voneinander\n"
+"ausgeführt werden. Der RLE Gausssche Weichzeichner-Algorithmus erzeugt den\n"
+"besten Effekt mit Bildern, die von Computern erzeugt wurden, oder Bildern\n"
+"mit grossen Flächen mit konstanter Intensität. Werte für den Radius müssen\n"
+"grösser als 1.0 sein, weil kleinere Werte in eher unechten Bildern\n"
+"resultieren."
 
 #: plug-ins/common/jpeg.c:1689
 msgid "Optimize"
@@ -4197,7 +4221,7 @@ msgstr "Erzwinge \"baseline JPEG\" (alle Decoder können das lesen)"
 
 #: plug-ins/common/jpeg.c:1727
 msgid "Subsampling"
-msgstr ""
+msgstr "Zwischenschritte"
 
 #: plug-ins/common/jpeg.c:1738
 msgid "Fast integer"
@@ -4316,8 +4340,7 @@ msgstr "<Image>/Filter/Abbilden/Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:212
 msgid "pipe files to uuencode then mail them"
-msgstr ""
-"Sende Dateien in einer \"pipe\" zu 'uuencode' und schicke Sie dann mit "
+msgstr "Sende Dateien in einer \"pipe\" zu 'uuencode' und schicke Sie dann mit "
 "'mail' ab"
 
 #: plug-ins/common/mail.c:213
@@ -4353,8 +4376,7 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:810
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr ""
-"mail: Irgendein Fehler mit der Dateinamenerweiterung (oder das Fehlen "
+msgstr "mail: Irgendein Fehler mit der Dateinamenerweiterung (oder das Fehlen "
 "derselben)\n"
 
 #: plug-ins/common/mapcolor.c:100
@@ -4641,6 +4663,8 @@ msgstr "PNG Einstellungen"
 #: plug-ins/common/png.c:1011
 msgid "Interlacing (Adam7)"
 msgstr ""
+"Farben vertauschen / VG/HG anpassen:\n"
+"Kann diesen Filter nicht auf Graustufenbilder / indizierte Bilder anwenden"
 
 #: plug-ins/common/png.c:1018
 msgid "Skip ancillary chunks"
@@ -4920,9 +4944,8 @@ msgstr "Sie können das ganze Bild nicht rotieren, solange da eine Auswahl ist."
 
 #: plug-ins/common/rotate.c:533
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr ""
-"Sie können das ganze Bild nicht rotieren, solange da eine schwebende Auswahl "
-"ist."
+msgstr "Sie können nicht das ganze Bild rotieren, wenn eine schwebende Auswahl "
+"vorhanden ist."
 
 #: plug-ins/common/rotate.c:543
 msgid "Sorry, channels and masks can not be rotated."
@@ -4935,7 +4958,8 @@ msgstr "Rotiere..."
 #: plug-ins/common/sample_colorize.c:300
 msgid ""
 "Colorize the contents of the specified drawable similar to sample drawable"
-msgstr "Färbt den Inhalt der angegeben Ebene ähnlich wie das Beispielbild ein"
+msgstr ""
+"Färbt den Inhalt der angegeben Ebene ähnlich wie das Beispielbild ein"
 
 #: plug-ins/common/sample_colorize.c:305
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
@@ -4949,6 +4973,11 @@ msgstr "Ähnlich Einfärben"
 #: plug-ins/common/sample_colorize.c:1313
 msgid "Get Sample Colors"
 msgstr ""
+"Dieses Plug-In erstellt ein Pixel breite Kanten, mit dem Farbwert proportional\n"
+"zum Gradienten, aus dem Bild. Es benutzt den Laplace-Operator (ein 3x3 kernel\n"
+"mit -8 in der Mitte). Das Bild muss laplace'd sein damit man ordentliche\n"
+"Ergebnisse erzielt - ein gauss_iir mit 1.5-5.0 (abhängig vom Rauschen im Bild)\n"
+"funktioniert am Besten."
 
 #. parameter settings
 #: plug-ins/common/sample_colorize.c:1326
@@ -4998,7 +5027,7 @@ msgstr ""
 #. check button
 #: plug-ins/common/sample_colorize.c:1610
 msgid "Hold Intensity"
-msgstr ""
+msgstr "Halte Intensität"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1621
@@ -5008,7 +5037,7 @@ msgstr "Urspr. Intensität"
 #. check button
 #: plug-ins/common/sample_colorize.c:1633
 msgid "Use Subcolors"
-msgstr ""
+msgstr "Benutze Zwischenfarben"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1643
@@ -5400,6 +5429,8 @@ msgstr "Finde XY-Gradient..."
 #, c-format
 msgid "Flow Step %d..."
 msgstr ""
+"von Vidar Madsen\n"
+"September 1999"
 
 #: plug-ins/common/xbm.c:165
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
@@ -5992,6 +6023,12 @@ msgstr "<Image>/Video/Teile Bild in Frames/MPEG1"
 #: plug-ins/gap/gap_decode_mpeg_main.c:180
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr ""
+"Teile MPEG1-Videos in einzelne Frames (Bilddateien auf Festplatte)\n"
+"und lade 1.Frame. Audio-Informationen werden ignoriert."
+"Name der MPEG1-Videodatei (zum LESEN)\n"
+"Frames werden aus der Videodatei extrahiert\n"
+"und in separate Dateien auf der Festplatte geschrieben.\n"
+"Audio-Informationen in der Videodatei werden ignoriert"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:323 plug-ins/gap/gap_range_ops.c:1169
 msgid "OVERWRITE frame"
@@ -6225,10 +6262,9 @@ msgstr "Bis :"
 msgid "Source Range ends at this framenumber"
 msgstr "Quellreichweite hört bei dieser Framenummer auf"
 
-# missverständlich !!
 #: plug-ins/gap/gap_lib.c:1962
 msgid "N-Times :"
-msgstr "N-Mal :"
+msgstr "N mal :"
 
 #: plug-ins/gap/gap_lib.c:1967
 msgid ""
@@ -7441,6 +7477,11 @@ msgstr "Floyd-Steinberg Farb-Dithering (normal)"
 #: plug-ins/gap/gap_range_ops.c:298
 msgid "Floyd-Steinberg colour dithering (reduced colour bleeding)"
 msgstr ""
+"Basisname für die AnimFrames, die auf Festplatte geschrieben werden\n"
+"(Framenummer und \".xcf\" wird hinzugefügt)"
+"\n"
+"WARNUNG: Versuchen Sie nicht, andere Dateien als MPEG1-Videos aufzuteilen.\n"
+"Bevor Sie weitermachen, sollten Sie alle geöffneten Bilder speichern"
 
 #: plug-ins/gap/gap_range_ops.c:299
 msgid "Positioned colour dithering"
@@ -7894,7 +7935,7 @@ msgstr ""
 "WARNUNG: GDynText ist zu alt!\n"
 "  Sie könnten Daten verlieren, wenn Sie diesen Text ändern.\n"
 "  Eine neuere Version wird benötigt, um diese Ebene zu bearbeiten.\n"
-"  Sie bekommen es hierher: "
+"  Sie bekommen sie hier: "
 
 #. remove old layer name
 #: plug-ins/gdyntext/gdyntext.c:393 plug-ins/gdyntext/gdyntext.c:531
@@ -8777,6 +8818,12 @@ msgstr "IfsCompose: Schwarz"
 #: plug-ins/ifscompose/ifscompose.c:781
 msgid "IfsCompose"
 msgstr ""
+"Imagemap Plug-In 1.3\n"
+"\n"
+"Copyright(c) 1999 by Maurits Rijk\n"
+"lpeek.mrijk@consunet.nl \n"
+"\n"
+"Veröffentlicht unter der GNU General Public License \"     "
 
 #. Action area
 #: plug-ins/ifscompose/ifscompose.c:789
@@ -8937,6 +8984,10 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "Left Start at"
 msgstr ""
+"Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken.  Sie\n"
+"definieren sie über deren Breite, Höhe und Abstand voneinander.\n"
+"Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen:\n"
+"Eine Bildansammlung von \"thumbnails\", praktisch für Navigationsleisten."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "Top Start at"
@@ -9769,6 +9820,9 @@ msgstr "Uhrzeigersinn einschalten"
 #: plug-ins/rcm/rcm_callback.c:143 plug-ins/rcm/rcm_dialog.c:271
 msgid "Switch to c/clockwise"
 msgstr ""
+"Tauscht zwei Farbreichweiten aus. Basierend auf code von Pavel Grinfeld\n"
+"(pavel@ml.com). Diese Version ist von Sven Anders geschrieben\n"
+"(anderss@fmi.uni-passau.de)."
 
 #: plug-ins/rcm/rcm_dialog.c:117
 msgid "Rotated"
@@ -10080,7 +10134,7 @@ msgstr "Zufällige Init-Zahl"
 
 #: plug-ins/sinus/sinus.c:719
 msgid "Force tiling?"
-msgstr "Erzwinge Kachelung ?"
+msgstr "Erzwinge Kachelung?"
 
 #: plug-ins/sinus/sinus.c:733 plug-ins/sinus/sinus.c:829
 msgid "Colors"
@@ -10258,7 +10312,8 @@ msgstr "Exportieren"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
+msgstr ""
+"Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 
 #. the footline
 #: libgimp/gimpexport.c:379
