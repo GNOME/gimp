@@ -246,7 +246,7 @@ run    (gchar    *name,
 	gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE || 
-	  (mvals.defaultseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
+	  (mvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
 	gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
     }
   else

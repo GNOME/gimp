@@ -463,7 +463,7 @@ prim_tileable(gchar *maz, guint x, guint y)
      max_progress=x*y/4;
 
      /* Pick someplace to start. */
-     if (!mvals.defaultseed)
+     if (!mvals.timeseed)
        g_rand_set_seed (gr, rnd);
 
      pos = x * 2 * g_rand_int_range (gr, 0, y/2) + 2 * g_rand_int_range(gr, 0, x/2);
