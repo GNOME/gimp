@@ -49,6 +49,7 @@ struct _QueryBox
   GtkWidget *vbox;
   GtkWidget *entry;
   GObject   *object;
+  gulong     response_handler;
   GCallback  callback;
   gpointer   callback_data;
 };
@@ -128,9 +129,10 @@ create_query_box (const gchar   *title,
 
 				     NULL);
 
-  g_signal_connect (query_box->qbox, "response",
-                    G_CALLBACK (response_callback),
-                    query_box);
+  query_box->response_handler =
+    g_signal_connect (query_box->qbox, "response",
+                      G_CALLBACK (response_callback),
+                      query_box);
 
   g_signal_connect (query_box->qbox, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
@@ -517,6 +519,15 @@ static void
 query_box_disconnect (QueryBox *query_box)
 {
   gtk_widget_set_sensitive (query_box->qbox, FALSE);
+
+  /*  disconnect the response callback to avoid that it may be run twice  */
+  if (query_box->response_handler)
+    {
+      g_signal_handler_disconnect (query_box->qbox,
+                                   query_box->response_handler);
+
+      query_box->response_handler = 0;
+    }
 
   /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
