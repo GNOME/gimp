@@ -325,7 +325,7 @@ load_image (gchar *filename)
   /* Set up progress display */
   progMessage = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (progMessage);
-  free (progMessage);
+  g_free (progMessage);
 
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
@@ -420,7 +420,7 @@ load_image (gchar *filename)
 	  gimp_progress_update ((double) i / (double) height);
 	}
 
-      free (dest_base);
+      g_free (dest_base);
     }
   else
     {
@@ -531,7 +531,7 @@ save_image (gchar  *filename,
   /* Set up progress display */
   progMessage = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (progMessage);
-  free (progMessage);
+  g_free (progMessage);
 
   /* Write the image header */
   PIX_DEBUG_PRINT ("Width %hu\n", drawable->width);

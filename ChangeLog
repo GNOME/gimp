@@ -1,3 +1,8 @@
+2002-06-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/pix.c: merged fix from HEAD branch: use g_free()
+	to release memory that has been allocated using g_malloc().
+
 2002-06-24  Marco Wessel  <marco@phoenix.uzaynet.nl>
 
 	* plug-ins/script-fu/scripts/tileblur.scm: Fix reverse horizontal and
