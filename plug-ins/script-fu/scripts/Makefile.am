@@ -42,7 +42,6 @@ scriptdata_DATA = \
 	crystal-logo.scm			\
 	distress_selection.scm			\
 	drop-shadow.scm				\
-	egg.scm					\
 	erase-rows.scm				\
 	fade-outline.scm			\
 	flatland.scm				\
