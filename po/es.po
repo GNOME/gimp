@@ -1,9 +1,10 @@
+# traducción de es.po al Spanish
 # Spanish translation file for Gimp 2.x.
 # Copyright © 1998-2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003.
-# Pablo G. del Campo <pablodc@bigfoot.com>, 2003,2004
+# Pablo G. del Campo <pablodc@bigfoot.com>, 2003,2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2004.
 #
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-06 15:54+0100\n"
-"PO-Revision-Date: 2005-02-06 16:00+0100\n"
+"PO-Revision-Date: 2005-02-12 17:30+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5689,9 +5690,9 @@ msgstr "Traducido por"
 #: ../app/dialogs/about-dialog.c:54
 msgid "translator-credits"
 msgstr ""
-"Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
-"Pablo G. del Campo <pablodc@bigfoot.com>\n"
-"Francisco Vila <francisco.vila@hispalinux.es>"
+"Francisco Javier F. Serrador\n"
+"Pablo G. del Campo\n"
+"Francisco Vila"
 
 #: ../app/dialogs/about-dialog.c:59
 msgid "Contributions by"
