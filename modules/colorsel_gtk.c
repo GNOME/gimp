@@ -45,8 +45,6 @@ static void        colorsel_gtk_free        (gpointer                   data);
 static void        colorsel_gtk_set_color   (gpointer                   data,
 					     const GimpHSV             *hsv,
 					     const GimpRGB             *rgb);
-static void        colorsel_gtk_set_channel (gpointer                   data,
-					     GimpColorSelectorChannelType  channel);
 static void        colorsel_gtk_update      (GtkWidget                 *widget,
 					     gpointer                   data);
 
@@ -62,7 +60,7 @@ static GimpColorSelectorMethods methods =
   colorsel_gtk_new,
   colorsel_gtk_free,
   colorsel_gtk_set_color,
-  colorsel_gtk_set_channel
+  NULL  /*  set_channel  */
 };
 
 static GimpModuleInfo info =
@@ -203,12 +201,6 @@ colorsel_gtk_set_color (gpointer       data,
   color[3] = rgb->a;
 
   gtk_color_selection_set_color (GTK_COLOR_SELECTION (p->selector), color);
-}
-
-static void
-colorsel_gtk_set_channel (gpointer                      data,
-			  GimpColorSelectorChannelType  channel)
-{
 }
 
 static void

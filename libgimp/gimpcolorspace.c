@@ -47,15 +47,11 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
   min = gimp_rgb_min (rgb);
 
   hsv->v = max;
+  delta = max - min;
 
-  if (max != 0.0)
+  if (delta > 0.0001)
     {
-      delta = max - min;
-
       hsv->s = delta / max;
-
-      if (delta == 0.0)
-	delta = 1.0;
 
       if (rgb->r == max)
         {

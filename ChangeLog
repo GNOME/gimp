@@ -1,5 +1,17 @@
 2001-01-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpcolorspace.c: fixed RGB to HSV routine
+
+	* app/color_notebook.c: tweaked dialog layout a little, disabled
+	toggle_buttons if the colorselector does not implement the set_channel
+	method.
+
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: removed empty set_channel methods
+
+2001-01-16  Sven Neumann  <sven@gimp.org>
+
 	* app/devices.c: don't show the alpha value of fore/background colors
 
 2001-01-16  Michael Natterer  <mitch@gimp.org>

@@ -18,8 +18,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define __COLOR_NOTEBOOK_C__ 1
-
 #include "config.h"
 
 #include <stdio.h>
@@ -194,7 +192,8 @@ color_notebook_new (GimpRGB               *color,
   GtkWidget             *color_area;
   GimpRGB                bw;
   GSList                *group;
-  gchar                  buffer[16];
+  guchar                 r, g, b;
+  gchar                  buffer[8];
   ColorSelectorInfo     *info;
   ColorSelectorInstance *csel;
   gint                   i;
@@ -409,7 +408,7 @@ color_notebook_new (GimpRGB               *color,
   gtk_widget_show (cnp->orig_color);
 
   /*  The color space sliders, toggle buttons and entries  */
-  table = gtk_table_new (show_alpha ? 7 : 6, 4, FALSE);
+  table = gtk_table_new (show_alpha ? 8 : 7, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
@@ -417,15 +416,8 @@ color_notebook_new (GimpRGB               *color,
   gtk_widget_show (table);
 
   group = NULL;
-  for (i = 0; i < (show_alpha ? 7 : 6); i++)
+  for (i = 0; i < (show_alpha ? 8 : 7); i++)
     {
-      label = gtk_label_new (toggle_titles[i]);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label,
-			1, 2, i, i + 1,
-			GTK_SHRINK, GTK_EXPAND, 0, 0);
-      gtk_widget_show (label);
-
       if (i == 6)
 	{
 	  cnp->toggles[i] = NULL;
@@ -447,8 +439,8 @@ color_notebook_new (GimpRGB               *color,
 	  gtk_widget_show (cnp->toggles[i]);
 	}
 
-      cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 2, i,
-                                                  NULL, 
+      cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
+                                                  gettext (toggle_titles[i]), 
                                                   80, 55,
                                                   slider_initial_vals[i],
                                                   0.0, slider_max_vals[i],
@@ -463,17 +455,17 @@ color_notebook_new (GimpRGB               *color,
 
   /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 3);
-  gtk_box_pack_start (GTK_BOX (right_vbox), hbox, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 4, 
+		    show_alpha ? 8 : 7, show_alpha ? 8 : 9,
+		    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (hbox);
 
-  cnp->hex_entry = gtk_entry_new ();
-  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-	      (gint) (color->r * 255.999),
-	      (gint) (color->g * 255.999),
-	      (gint) (color->b * 255.999));
+  cnp->hex_entry = gtk_entry_new_with_max_length (7);
+  gimp_rgb_get_uchar (&cnp->rgb, &r, &g, &b);
+  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
-  gtk_widget_set_usize (GTK_WIDGET (cnp->hex_entry), 75, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, FALSE, FALSE, 2);
+  gtk_widget_set_usize (GTK_WIDGET (cnp->hex_entry), 60, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, TRUE, TRUE, 2);
   gtk_signal_connect (GTK_OBJECT (cnp->hex_entry), "focus_out_event",
                       GTK_SIGNAL_FUNC (color_notebook_hex_entry_events),
                       cnp);
@@ -699,6 +691,8 @@ color_notebook_ok_callback (GtkWidget *widget,
 
   cnp = (ColorNotebook *) data;
 
+  color_history_add_clicked (NULL, cnp);
+
   if (cnp->callback)
     {
       (* cnp->callback) (&cnp->rgb,
@@ -731,6 +725,7 @@ color_notebook_page_switch (GtkWidget       *widget,
 {
   ColorNotebook         *cnp;
   ColorSelectorInstance *csel;
+  gint                   i;
 
   cnp = (ColorNotebook *) data;
 
@@ -739,6 +734,13 @@ color_notebook_page_switch (GtkWidget       *widget,
   g_return_if_fail (cnp != NULL && csel != NULL);
 
   cnp->cur_page = csel;
+
+  for (i = 0; i < 7; i++)
+    {
+      if (cnp->toggles[i])
+	gtk_widget_set_sensitive (cnp->toggles[i], 
+				  csel->info->methods.set_channel != NULL);
+    }
 
   color_notebook_update (cnp, UPDATE_CHANNEL | UPDATE_NOTEBOOK);
 }
@@ -883,9 +885,11 @@ color_notebook_update_notebook (ColorNotebook *cnp)
   g_return_if_fail (cnp != NULL);
 
   csel = cnp->cur_page;
-  csel->info->methods.set_color (csel->selector_data,
-				 &cnp->hsv,
-				 &cnp->rgb);
+
+  if (csel->info->methods.set_color)   
+    csel->info->methods.set_color (csel->selector_data,
+				   &cnp->hsv,
+				   &cnp->rgb);
 }
 
 static void
@@ -896,8 +900,10 @@ color_notebook_update_channel (ColorNotebook *cnp)
   g_return_if_fail (cnp != NULL);
 
   csel = cnp->cur_page;
-  csel->info->methods.set_channel (csel->selector_data,
-				   cnp->active_channel);
+
+  if (csel->info->methods.set_channel)   
+    csel->info->methods.set_channel (csel->selector_data,
+				     cnp->active_channel);
 }
 
 static void
@@ -960,7 +966,7 @@ color_notebook_update_scales (ColorNotebook *cnp,
 			      gint           skip)
 {
   gint  values[7];
-  gchar buffer[16];
+  gchar buffer[8];
   gint  i;
 
   if (! cnp)
@@ -984,6 +990,15 @@ color_notebook_update_scales (ColorNotebook *cnp,
 	gtk_signal_handler_unblock_by_data (GTK_OBJECT (cnp->slider_data[i]),
 					    cnp);
       }
+
+  g_print ("RGB: %d %d %d HSV: %d %d %d ALPHA: %d\n", 
+	   values[GIMP_COLOR_SELECTOR_RED],
+	   values[GIMP_COLOR_SELECTOR_GREEN],
+	   values[GIMP_COLOR_SELECTOR_BLUE],
+	   values[GIMP_COLOR_SELECTOR_HUE],
+	   values[GIMP_COLOR_SELECTOR_SATURATION],
+	   values[GIMP_COLOR_SELECTOR_VALUE],
+	   values[GIMP_COLOR_SELECTOR_ALPHA]);
 
   g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
               values[GIMP_COLOR_SELECTOR_RED],
@@ -1088,6 +1103,7 @@ color_notebook_hex_entry_events (GtkWidget *widget,
   gchar          buffer[8];
   gchar         *hex_color;
   guint          hex_rgb;
+  guchar         r, g, b;
 
   cnp = (ColorNotebook *) data;
 
@@ -1104,10 +1120,8 @@ color_notebook_hex_entry_events (GtkWidget *widget,
     case GDK_FOCUS_CHANGE:
       hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (cnp->hex_entry)));
 
-      g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-                  (gint) (cnp->rgb.r * 255.999),
-                  (gint) (cnp->rgb.g * 255.999),
-                  (gint) (cnp->rgb.b * 255.999));
+      gimp_rgb_get_uchar (&cnp->rgb, &r, &g, &b);
+      g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
 
       if ((strlen (hex_color) == 7) &&
           (g_strcasecmp (buffer, hex_color) != 0))
@@ -1115,9 +1129,10 @@ color_notebook_hex_entry_events (GtkWidget *widget,
           if ((sscanf (hex_color, "#%x", &hex_rgb) == 1) &&
               (hex_rgb < (1 << 24)))
 	    {
-	      cnp->rgb.r = ((hex_rgb & 0xff0000) >> 16) / 255.0;
-	      cnp->rgb.g = ((hex_rgb & 0x00ff00) >> 8)  / 255.0;
-	      cnp->rgb.b = ((hex_rgb & 0x0000ff))       / 255.0;
+	      gimp_rgb_set_uchar (&cnp->rgb, 
+				  (hex_rgb & 0xff0000) >> 16,
+				  (hex_rgb & 0x00ff00) >> 8,
+				  (hex_rgb & 0x0000ff));
 
 	      color_notebook_update_hsv_values (cnp);
 	      color_notebook_update_scales (cnp, -1);

@@ -69,8 +69,6 @@ static void        colorsel_water_free        (gpointer            data);
 static void        colorsel_water_set_color   (gpointer            data,
 					       const GimpHSV      *hsv,
 					       const GimpRGB      *rgb);
-static void        colorsel_water_set_channel (gpointer            data,
-					       GimpColorSelectorChannelType  channel);
 static void        colorsel_water_update      (ColorselWater      *colorsel);
 
 
@@ -80,7 +78,7 @@ static GimpColorSelectorMethods methods =
   colorsel_water_new,
   colorsel_water_free,
   colorsel_water_set_color,
-  colorsel_water_set_channel
+  NULL  /*  set_channel  */
 };
 
 
@@ -505,12 +503,6 @@ colorsel_water_set_color (gpointer       data,
   colorsel = (ColorselWater *) data;
 
   colorsel->rgb = *rgb;
-}
-
-static void
-colorsel_water_set_channel (gpointer                      data,
-			    GimpColorSelectorChannelType  channel)
-{
 }
 
 static void

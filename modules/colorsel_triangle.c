@@ -49,8 +49,6 @@ static void colorsel_triangle_free        (gpointer          selector_data);
 static void colorsel_triangle_set_color   (gpointer          selector_data,
 					   const GimpHSV    *hsv,
 					   const GimpRGB    *rgb);
-static void colorsel_triangle_set_channel (gpointer          selector_data,
-					   GimpColorSelectorChannelType  channel);
 
 
 /* local methods */
@@ -59,7 +57,7 @@ static GimpColorSelectorMethods methods =
   colorsel_triangle_new,
   colorsel_triangle_free,
   colorsel_triangle_set_color,
-  colorsel_triangle_set_channel
+  NULL  /*  set_channel  */
 };
 
 
@@ -238,11 +236,6 @@ colorsel_triangle_set_color (gpointer       selector_data,
   update_previews (coldata, TRUE);
 }
 
-static void
-colorsel_triangle_set_channel (gpointer                      selector_data, 
-			       GimpColorSelectorChannelType  channel)
-{
-}
 
 /*************************************************************/
 /* helper functions */
