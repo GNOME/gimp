@@ -1573,19 +1573,23 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 void
 gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 {
-  GdkScreen *screen;
-  gint       disp_width, disp_height;
-  gint       width, height;
-  gint       shell_width, shell_height;
-  gint       max_auto_width, max_auto_height;
-  gint       border_x, border_y;
-  gint       s_width, s_height;
-  gboolean   resize = FALSE;
+  GtkWidget    *widget;
+  GdkScreen    *screen;
+  GdkRectangle  rect;
+  gint          monitor;
+  gint          disp_width, disp_height;
+  gint          width, height;
+  gint          max_auto_width, max_auto_height;
+  gint          border_x, border_y;
+  gboolean      resize = FALSE;
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+  g_return_if_fail (GTK_WIDGET_REALIZED (shell));
 
-  s_width  = gdk_screen_get_width (screen);
-  s_height = gdk_screen_get_height (screen);
+  widget = GTK_WIDGET (shell);
+  screen = gtk_widget_get_screen (widget);
+
+  monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   width  = SCALEX (shell, shell->gdisp->gimage->width);
   height = SCALEY (shell, shell->gdisp->gimage->height);
@@ -1593,26 +1597,24 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   disp_width  = shell->disp_width;
   disp_height = shell->disp_height;
 
-  shell_width  = GTK_WIDGET (shell)->allocation.width;
-  shell_height = GTK_WIDGET (shell)->allocation.height;
+  border_x = widget->allocation.width  - disp_width;
+  border_y = widget->allocation.height - disp_height;
 
-  border_x = shell_width  - disp_width;
-  border_y = shell_height - disp_height;
-
-  max_auto_width  = (s_width  - border_x) * 0.75;
-  max_auto_height = (s_height - border_y) * 0.75;
+  max_auto_width  = (rect.width  - border_x) * 0.75;
+  max_auto_height = (rect.height - border_y) * 0.75;
 
   /* If one of the display dimensions has changed and one of the
    * dimensions fits inside the screen
    */
-  if (((width + border_x) < s_width || (height + border_y) < s_height) &&
+  if (((width + border_x) < rect.width || (height + border_y) < rect.height) &&
       (width != disp_width || height != disp_height))
     {
-      width  = ((width  + border_x) < s_width)  ? width  : max_auto_width;
-      height = ((height + border_y) < s_height) ? height : max_auto_height;
+      width  = ((width  + border_x) < rect.width)  ? width  : max_auto_width;
+      height = ((height + border_y) < rect.height) ? height : max_auto_height;
 
       resize = TRUE;
     }
+
   /*  If the projected dimension is greater than current, but less than
    *  3/4 of the screen size, expand automagically
    */

@@ -1,5 +1,11 @@
 2003-11-19  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	shrink to the size of the monitor, not to the size of the screen
+	(for Xinerama setups). Fixes bug #121796.
+
+2003-11-19  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpitemfactory.c
 	* app/widgets/gimpwidgets-utils.[ch]: moved the
 	gimp_menu_position() implementation that was used only from
