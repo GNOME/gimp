@@ -1,5 +1,10 @@
 1998-12-16  Jay Cox  <jaycox@earthlink.net>
 
+	* app/paint_funcs.c: fixed a bug in combine_inten_and_inten_a_pixels.
+	Use INT_MULT and friends everywhere possible.
+
+1998-12-16  Jay Cox  <jaycox@earthlink.net>
+
 	* libgimp/gserialize.c
 	* libgimp/gserialize.h: Changed the enum values to allow for
  	simpler future expansion.
