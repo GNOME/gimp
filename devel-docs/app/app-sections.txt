@@ -3842,6 +3842,24 @@ GIMP_COLOR_BAR_GET_CLASS
 </SECTION>
  
 <SECTION>
+<FILE>gimpcolordialog</FILE>
+<TITLE>GimpColorDialog</TITLE>
+GimpColorDialog
+gimp_color_dialog_new
+gimp_color_dialog_set_color
+gimp_color_dialog_get_color
+<SUBSECTION Standard>
+GimpColorDialogClass
+GIMP_COLOR_DIALOG
+GIMP_IS_COLOR_DIALOG
+GIMP_TYPE_COLOR_DIALOG
+gimp_color_dialog_get_type
+GIMP_COLOR_DIALOG_CLASS
+GIMP_IS_COLOR_DIALOG_CLASS
+GIMP_COLOR_DIALOG_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcoloreditor</FILE>
 <TITLE>GimpColorEditor</TITLE>
 GimpColorEditor
@@ -5718,6 +5736,7 @@ curves_init
 curves_channel_reset
 curves_calculate_curve
 curves_lut_func
+CURVES_NUM_POINTS
 </SECTION>
 
 <SECTION>
@@ -6678,6 +6697,7 @@ gimp_marshal_BOOLEAN__OBJECT_POINTER
 gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING
 gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT
 gimp_marshal_VOID__BOXED
+gimp_marshal_VOID__BOXED_ENUM
 gimp_marshal_VOID__DOUBLE
 gimp_marshal_VOID__DOUBLE_DOUBLE
 gimp_marshal_VOID__ENUM
@@ -6760,21 +6780,6 @@ color_history_get
 </SECTION>
 
 <SECTION>
-<FILE>color-dialog</FILE>
-ColorDialog
-ColorDialogState
-ColorDialogCallback
-color_dialog_new
-color_dialog_free
-color_dialog_set_viewable
-color_dialog_set_title
-color_dialog_show
-color_dialog_hide
-color_dialog_set_color
-color_dialog_get_color
-</SECTION>
-
-<SECTION>
 <FILE>convert-dialog</FILE>
 convert_dialog_new
 </SECTION>
@@ -6831,6 +6836,12 @@ dialogs_gradient_editor_get
 dialogs_edit_gradient_func
 dialogs_palette_editor_get
 dialogs_edit_palette_func
+</SECTION>
+
+<SECTION>
+<FILE>dialogs-types</FILE>
+ColorDialog
+InfoDialog
 </SECTION>
 
 <SECTION>
@@ -6906,7 +6917,6 @@ themes_apply_theme
 <FILE>info-dialog</FILE>
 InfoFieldType
 InfoField
-InfoDialog
 info_dialog_new
 info_dialog_show
 info_dialog_hide
@@ -7193,8 +7203,8 @@ plug_in_proc_args_check
 </SECTION>
 
 <SECTION>
-<FILE>plug-in-proc</FILE>
-<TITLE>PlugIn-proc</TITLE>
+<FILE>plug-in-proc-def</FILE>
+<TITLE>PlugIn-proc-def</TITLE>
 PlugInProcDef
 plug_in_proc_def_new
 plug_in_proc_def_free
@@ -7205,6 +7215,21 @@ plug_in_proc_def_get_stock_id
 plug_in_proc_def_get_pixbuf
 plug_in_proc_def_get_help_id
 plug_in_proc_def_get_sensitive
+</SECTION>
+
+<SECTION>
+<FILE>plug-in-proc-frame</FILE>
+PlugInProcFrame
+plug_in_proc_frame_new
+plug_in_proc_frame_init
+plug_in_proc_frame_dispose
+plug_in_proc_frame_free
+</SECTION>
+
+<SECTION>
+<FILE>plug-in-context</FILE>
+plug_in_context_push
+plug_in_context_pop
 </SECTION>
 
 <SECTION>
@@ -7267,6 +7292,9 @@ plug_in_pop
 plug_in_main_loop
 plug_in_main_loop_quit
 plug_in_get_undo_desc
+plug_in_get_proc_frame
+plug_in_proc_frame_push
+plug_in_proc_frame_pop
 </SECTION>
 
 <SECTION>
@@ -7594,6 +7622,8 @@ GIMP_TYPE_ACTIVE_COLOR
 GimpActiveColor
 GIMP_TYPE_ASPECT_TYPE
 GimpAspectType
+GIMP_TYPE_COLOR_DIALOG_STATE
+GimpColorDialogState
 GIMP_TYPE_COLOR_FRAME_MODE
 GimpColorFrameMode
 GIMP_TYPE_COLOR_PICK_STATE
@@ -7622,6 +7652,7 @@ GimpDeviceValues
 <SUBSECTION Standard>
 gimp_active_color_get_type
 gimp_aspect_type_get_type
+gimp_color_dialog_state_get_type
 gimp_color_frame_mode_get_type
 gimp_color_pick_state_get_type
 gimp_cursor_format_get_type
@@ -8052,6 +8083,7 @@ error_console_save_selection_cmd_callback
 <SECTION>
 <FILE>file-commands</FILE>
 file_open_cmd_callback
+file_open_as_layer_cmd_callback
 file_open_from_image_cmd_callback
 file_open_location_cmd_callback
 file_last_opened_cmd_callback

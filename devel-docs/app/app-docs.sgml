@@ -355,13 +355,15 @@
       <title>Initialization &amp; Plug-In Management</title>
       <xi:include href="xml/plug-ins.xml" />
       <xi:include href="xml/plug-in-def.xml" />
-      <xi:include href="xml/plug-in-proc.xml" />
+      <xi:include href="xml/plug-in-proc-def.xml" />
+      <xi:include href="xml/plug-in-proc-frame.xml" />
       <xi:include href="xml/plug-in-rc.xml" />
     </chapter>
 
     <chapter id="app-plug-in-execution">
       <title>Plug-In Execution</title>
       <xi:include href="xml/plug-in.xml" />   
+      <xi:include href="xml/plug-in-context.xml" />
       <xi:include href="xml/plug-in-debug.xml" />
       <xi:include href="xml/plug-in-message.xml" />
       <xi:include href="xml/plug-in-params.xml" />
@@ -745,6 +747,7 @@
       <xi:include href="xml/gimpactionview.xml" />
       <xi:include href="xml/gimpblobeditor.xml" />
       <xi:include href="xml/gimpcolorbar.xml" />
+      <xi:include href="xml/gimpcolordialog.xml" />
       <xi:include href="xml/gimpcolordisplayeditor.xml" />
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
@@ -934,13 +937,13 @@
     <chapter id="app-dialogs-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/dialogs.xml" />
+      <xi:include href="xml/dialogs-types.xml" />
       <xi:include href="xml/dialogs-constructors.xml" />
     </chapter>
 
     <chapter id="app-dialogs-dialogs">
       <title>Dialogs</title>
       <xi:include href="xml/about-dialog.xml" />
-      <xi:include href="xml/color-dialog.xml" />
       <xi:include href="xml/convert-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
       <xi:include href="xml/file-open-location-dialog.xml" />
