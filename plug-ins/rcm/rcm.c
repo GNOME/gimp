@@ -102,7 +102,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  gimp_install_procedure ("plug-in-rotate-colormap",
+  gimp_install_procedure ("plug_in_rotate_colormap",
 			  "Colormap rotation as in xv",
 			  "Exchanges two color ranges. "
                           "Based on code from Pavel Grinfeld (pavel@ml.com). "
