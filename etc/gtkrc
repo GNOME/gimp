@@ -14,7 +14,7 @@
 
 
 #
-# Example keybinding to remap Help to F2
+# Example keybinding to remap Help to F2:
 #
 binding "gimp-help-binding"
 {
@@ -30,7 +30,18 @@ binding "gimp-help-binding"
 
 
 #
-# The dock separator DND highlight color is configurable.
+# Adjust the size of drawable previews in plug-in dialogs:
+#
+style "gimp-large-preview"
+{
+  GimpDrawablePreview::size = 256
+}
+
+# class "GimpDrawablePreview" style "gimp-large-preview"
+
+
+#
+# Change the dock separator DND highlight color:
 #
 style "gimp-red-separator-style"
 {

@@ -32,12 +32,14 @@
 #include "gimpdrawablepreview.h"
 
 
-#define PREVIEW_SIZE (128)
+#define DEFAULT_SIZE  128
 
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
 
-static void  gimp_drawable_preview_draw_original (GimpPreview         *preview);
+static void  gimp_drawable_preview_style_set     (GtkWidget   *widget,
+                                                  GtkStyle    *prev_style);
+static void  gimp_drawable_preview_draw_original (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -74,11 +76,41 @@ gimp_drawable_preview_get_type (void)
 static void
 gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 {
+  GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->draw = gimp_drawable_preview_draw_original;
+  widget_class->style_set = gimp_drawable_preview_style_set;
+
+  preview_class->draw     = gimp_drawable_preview_draw_original;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("size",
+                                                             NULL, NULL,
+                                                             0, 1024,
+                                                             DEFAULT_SIZE,
+                                                             G_PARAM_READABLE));
+}
+
+static void
+gimp_drawable_preview_style_set (GtkWidget *widget,
+                                 GtkStyle  *prev_style)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+  gint         width   = preview->xmax - preview->xmin;
+  gint         height  = preview->ymax - preview->ymin;
+  gint         size;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "size", &size,
+			NULL);
+
+  gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
+                               MIN (width, size), MIN (height, size));
 }
 
 static void
@@ -122,21 +154,12 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
                                     GimpDrawable        *drawable)
 {
   GimpPreview *preview = GIMP_PREVIEW (drawable_preview);
-  gint         width;
-  gint         height;
 
   drawable_preview->drawable = drawable;
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &preview->xmin, &preview->ymin,
                              &preview->xmax, &preview->ymax);
-
-  width  = preview->xmax - preview->xmin;
-  height = preview->ymax - preview->ymin;
-
-  gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
-                               MIN (width,  PREVIEW_SIZE),
-                               MIN (height, PREVIEW_SIZE));
 }
 
 /**
