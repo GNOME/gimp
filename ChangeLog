@@ -1,3 +1,11 @@
+2001-03-04  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* app/commands.c (image_scale_callback),
+	libgimp/gimpchainbutton.c (gimp_chain_button_destroy),
+	libgimp/gimpcolorbutton.c (gimp_color_button_destroy):
+	Move variable assignments out of assertions to allow compilation
+	with "G_DISABLE_ASSERT" and/or "G_DISABLE_CHECKS" defined.
+
 2001-03-04  Sven Neumann  <sven@gimp.org>
 
 	* app/preferences_dialog.c (prefs_save_callback): applied a patch
