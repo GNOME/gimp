@@ -51,6 +51,8 @@
 #include "fileops.h"
 #include "interface.h"
 #include "menus.h"
+#include "layer.h"
+#include "channel.h"
 #include "plug_in.h"
 #include "procedural_db.h"
 #include "gimprc.h"
@@ -646,7 +648,11 @@ file_open_image (char *filename, char *raw_filename, RunModeType runmode)
   g_free (args);
 
   if (status)
-    return pdb_id_to_image (gimage_id);
+    {
+      layer_invalidate_previews(gimage_get_ID(gimage_id));
+      channel_invalidate_previews(gimage_get_ID(gimage_id));
+      return pdb_id_to_image (gimage_id);
+    }
   else
     return NULL;
 }
