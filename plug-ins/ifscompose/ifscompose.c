@@ -284,11 +284,10 @@ static void ifs_compose_new_callback      (GtkWidget *widget,
 					   gpointer   data);
 static void ifs_compose_delete_callback   (GtkWidget *widget,
 					   gpointer   data);
-static void ifs_compose_load_callback (GtkWidget *widget,
+static void ifs_compose_load_callback     (GtkWidget *widget,
 					   gpointer   data);
-static void ifs_compose_save_callback (GtkWidget *widget,
+static void ifs_compose_save_callback     (GtkWidget *widget,
 					   gpointer   data);
-
 static void ifs_compose_ok_callback       (GtkWidget *widget,
 					   GtkWidget *window);
 
@@ -310,7 +309,6 @@ static gint     undo_cur = -1;
 static gint     undo_num = 0;
 static gint     undo_start = 0;
 
-static gchar ifsfile_path[PATH_MAX] = { '\0' };
 
 /* num_elements = 0, signals not inited */
 static IfsComposeVals ifsvals =
@@ -2550,7 +2548,8 @@ ifs_compose_set_defaults (void)
 
   gimp_palette_get_foreground (&color);
 
-  ifsvals.aspect_ratio = (gdouble)ifsD->drawable_height / ifsD->drawable_width;
+  ifsvals.aspect_ratio =
+    (gdouble)ifsD->drawable_height / ifsD->drawable_width;
 
   for (i = 0; i < ifsvals.num_elements; i++)
     aff_element_free (elements[i]);
@@ -2622,16 +2621,20 @@ ifs_compose_defaults_callback (GtkWidget *widget,
 }
 
 /* show a transient message dialog */
-void
-ifscompose_message_dialog (GtkMessageType type, GtkWindow *parent,
-                           gchar *title, gchar *message)
+static void
+ifscompose_message_dialog (GtkMessageType  type,
+			   GtkWindow      *parent,
+                           const gchar    *title,
+			   const gchar    *message)
 {
   GtkWidget *dlg;
 
-  dlg = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, "%s", message);
+  dlg = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, message);
   gtk_window_set_transient_for (GTK_WINDOW (dlg), parent);
+
   if (title)
     gtk_window_set_title (GTK_WINDOW (dlg), title);
+
   gtk_window_set_wmclass (GTK_WINDOW (dlg), "message", "Gimp");
   gtk_dialog_run (GTK_DIALOG (dlg));
   gtk_widget_destroy (dlg);
@@ -2639,28 +2642,33 @@ ifscompose_message_dialog (GtkMessageType type, GtkWindow *parent,
 
 /* save an ifs file */
 static void
-ifsfile_save (GtkWidget *widget, GtkWidget *file_select)
+ifsfile_save (GtkWidget *widget,
+	      GtkWidget *file_select)
 {
-  gchar *str = ifsvals_stringify (&ifsvals, elements);
-  FILE *fh;
+  const gchar *filename;
+  gchar       *str;
+  FILE        *fh;
 
-  g_strlcpy (ifsfile_path,
-             gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)),
-             PATH_MAX);
-  fh = fopen(ifsfile_path, "w");
-  if (fh) {
-    fputs(str, fh);
-    fclose(fh);
-    gtk_widget_destroy (file_select);
-  }
-  else {
-    gchar *message = g_strdup_printf (_("Cannot save into file `%s'.\n"
-                                        "Check the path and permissions.\n"),
-                                        ifsfile_path);
-    ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
-                               "Save failed", message);
-    g_free (message);
-  }
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select));
+
+  str = ifsvals_stringify (&ifsvals, elements);
+
+  fh = fopen (filename, "w");
+  if (fh)
+    {
+      fputs (str, fh);
+      fclose (fh);
+      gtk_widget_hide (file_select);
+    }
+  else
+    {
+      gchar *message = g_strdup_printf (_("Cannot save file '%s'.\n"
+					  "Check the path and permissions."),
+                                        filename);
+      ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
+				 "Save failed", message);
+      g_free (message);
+    }
 }
 
 /* replace ifsvals and elements with specified new values
@@ -2679,23 +2687,25 @@ ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
 
   ifsvals = *new_ifsvals;
   elements = new_elements;
-  for (i = 0; i < ifsvals.num_elements; i++) {
-    aff_element_compute_trans (elements[i], width, height,
-                               ifsvals.center_x, ifsvals.center_y);
-    aff_element_compute_color_trans (elements[i]);
-  }
+  for (i = 0; i < ifsvals.num_elements; i++)
+    {
+      aff_element_compute_trans (elements[i], width, height,
+				 ifsvals.center_x, ifsvals.center_y);
+      aff_element_compute_color_trans (elements[i]);
+    }
 
   element_selected = g_realloc (element_selected,
                                 ifsvals.num_elements * sizeof(gint));
   for (i = 0; i < ifsvals.num_elements; i++)
     element_selected[i] = FALSE;
 
-  if (ifsOptD) {
-    value_pair_update (ifsOptD->iterations_pair);
-    value_pair_update (ifsOptD->subdivide_pair);
-    value_pair_update (ifsOptD->radius_pair);
-    value_pair_update (ifsOptD->memory_pair);
-  }
+  if (ifsOptD)
+    {
+      value_pair_update (ifsOptD->iterations_pair);
+      value_pair_update (ifsOptD->subdivide_pair);
+      value_pair_update (ifsOptD->radius_pair);
+      value_pair_update (ifsOptD->memory_pair);
+    }
 
   set_current_element (0);
   element_selected[0] = TRUE;
@@ -2709,85 +2719,105 @@ ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
 
 /* load an ifs file */
 static void
-ifsfile_load (GtkWidget *widget, GtkWidget *file_select)
+ifsfile_load (GtkWidget *widget,
+	      GtkWidget *file_select)
 {
-  gchar *buffer;
-  AffElement **new_elements;
-  IfsComposeVals new_ifsvals;
-  GError *error = NULL;
+  const gchar     *filename;
+  gchar           *buffer;
+  AffElement     **new_elements;
+  IfsComposeVals   new_ifsvals;
+  GError          *error = NULL;
 
-  g_strlcpy (ifsfile_path,
-             gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)),
-             PATH_MAX);
-  if (g_file_get_contents (ifsfile_path, &buffer, NULL, &error)) {
-    if (ifsvals_parse_string (buffer, &new_ifsvals, &new_elements)) {
-      guint i;
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select));
 
-      undo_begin ();
-      for (i = 0; i < ifsvals.num_elements; i++)
-        undo_update (i);
+  if (g_file_get_contents (filename, &buffer, NULL, &error))
+    {
+      if (ifsvals_parse_string (buffer, &new_ifsvals, &new_elements))
+	{
+	  guint i;
 
-      ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
+	  undo_begin ();
+	  for (i = 0; i < ifsvals.num_elements; i++)
+	    undo_update (i);
+	  
+	  ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
+	  
+	  if (ifsD->auto_preview)
+	    ifs_compose_preview ();
+	  
+	  gtk_widget_hide (file_select);
+	  design_area_redraw ();
+	}
+      else
+	{
+	  gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
+					      "an IFS Compose file."),
+					    filename);
+	  ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+				     GTK_WINDOW (file_select),
+				     _("Load failed"), message);
+	  g_free (message);
+	}
 
-      if (ifsD->auto_preview)
-        ifs_compose_preview ();
-
-      gtk_widget_destroy (file_select);
-      design_area_redraw ();
+      g_free (buffer);
     }
-    else {
-      gchar *message = g_strdup_printf (_("File `%s' doesn't seem to be "
-                                          "an IFS Compose file.\n"),
-                                        ifsfile_path);
-      ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
-                                 _("Load failed"), message);
-      g_free (message);
+  else
+    {
+      ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+				 GTK_WINDOW (file_select),
+				 _("Load failed"), error->message);
+      g_error_free (error);
     }
-    g_free (buffer);
-  }
-  else {
-    gchar *message = g_strdup_printf("%s.\n", error->message);
-    ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
-                              _("Load failed"), error->message);
-    g_error_free (error);
-    g_free (message);
-  }
 }
 
 static void
-ifs_compose_save_callback (GtkWidget *widget, gpointer data)
+ifs_compose_save_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-  GtkWidget *file_select;
+  static GtkWidget *file_select = NULL;
 
-  file_select = gtk_file_selection_new (_("Save as IFS file"));
-  gimp_help_connect (file_select, gimp_standard_help_func,
-                     "filters/ifscompose.html");
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
-                                   ifsfile_path);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
-                    "clicked", G_CALLBACK (ifsfile_save), file_select);
-  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
-                            "clicked", G_CALLBACK (gtk_widget_destroy),
-                           file_select);
-  gtk_widget_show (file_select);
+  if (!file_select)
+    {
+      file_select = gtk_file_selection_new (_("Save as IFS file"));
+      
+      gimp_help_connect (file_select, gimp_standard_help_func,
+			 "filters/ifscompose.html");
+      
+      g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
+			G_CALLBACK (ifsfile_save),
+			file_select);
+      g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
+				"clicked",
+				G_CALLBACK (gtk_widget_destroy),
+				file_select);
+    }
+
+   gtk_window_present (GTK_WINDOW (file_select));
 }
 
 static void
-ifs_compose_load_callback (GtkWidget *widget, gpointer data)
+ifs_compose_load_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-  GtkWidget *file_select;
+  static GtkWidget *file_select = NULL;
 
-  file_select = gtk_file_selection_new (_("Load IFS file"));
-  gimp_help_connect (file_select, gimp_standard_help_func,
-                     "filters/ifscompose.html");
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
-                                   ifsfile_path);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
-                    "clicked", G_CALLBACK (ifsfile_load), file_select);
-  g_signal_connect_swapped (G_OBJECT (GTK_FILE_SELECTION (file_select)->cancel_button),
-                            "clicked", G_CALLBACK (gtk_widget_destroy),
-                            file_select);
-  gtk_widget_show (file_select);
+  if (!file_select)
+    {
+      file_select = gtk_file_selection_new (_("Load IFS file"));
+      
+      gimp_help_connect (file_select, gimp_standard_help_func,
+			 "filters/ifscompose.html");
+
+      g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
+			G_CALLBACK (ifsfile_load),
+			file_select);
+      g_signal_connect_swapped (GTK_FILE_SELECTION (file_select)->cancel_button,
+				"clicked",
+				G_CALLBACK (gtk_widget_hide),
+				file_select);
+    }
+
+  gtk_window_present (GTK_WINDOW (file_select));
 }
 
 static void
@@ -2939,8 +2969,9 @@ ifs_compose_preview (void)
   if (ifsD->preview_iterations == 0)
     g_idle_add (preview_idle_render, NULL);
 
-  ifsD->preview_iterations = ifsvals.iterations*((gdouble)width*height/
-				 (ifsD->drawable_width*ifsD->drawable_height));
+  ifsD->preview_iterations =
+    ifsvals.iterations * ((gdouble) width * height /
+			  (ifsD->drawable_width * ifsD->drawable_height));
 }
 
 static void
