@@ -110,9 +110,22 @@ update_field (InfoField *field)
 
     case INFO_SIZEENTRY:
       num = GIMP_SIZE_ENTRY (field->obj)->number_of_fields;
-      for (i = 0; i < num; i++)
+
+      /*  without blocking the first (num - 1) fields, a signal would
+       *  be emitted along with every gimp_size_entry_set_refval()...
+       */
+      gtk_signal_handler_block_by_data (GTK_OBJECT (field->obj),
+					field->client_data);
+      for (i = 0; i < (num - 1); i++)
 	gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), i,
 				    ((gdouble*) field->value_ptr)[i]);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (field->obj),
+					  field->client_data);
+
+      /*  ...so block them and emit the signal for the last field only
+       */
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), num - 1,
+				  ((gdouble*) field->value_ptr)[num - 1]);
       break;
 
     default:

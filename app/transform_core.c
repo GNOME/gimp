@@ -110,13 +110,14 @@ transform_reset_callback (GtkWidget *w,
 }
 
 
-static ActionAreaItem action_items[2] = 
+static ActionAreaItem action_items[] = 
 {
   { NULL, transform_ok_callback, NULL, NULL },
   { N_("Reset"), transform_reset_callback, NULL, NULL },
 };
+static gint naction_items = sizeof (action_items) / sizeof (action_items[0]);
 
-static const char *action_labels[4] =
+static const char *action_labels[] =
 {
   N_("Rotate"),
   N_("Scale"),
@@ -125,10 +126,9 @@ static const char *action_labels[4] =
 };
 
 void
-transform_core_button_press (tool, bevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventButton *bevent;
-     gpointer gdisp_ptr;
+transform_core_button_press (Tool           *tool,
+			     GdkEventButton *bevent,
+			     gpointer        gdisp_ptr)
 {
   TransformCore * transform_core;
   GDisplay * gdisp;
@@ -266,7 +266,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 		action_items[0].user_data = tool;
 		action_items[1].user_data = tool;
 		build_action_area (GTK_DIALOG (transform_info->shell),
-				   action_items, 2, 0);
+				   action_items, naction_items, 0);
 		transform_info_inited = TRUE;
 	      }
 
@@ -281,10 +281,9 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 }
 
 void
-transform_core_button_release (tool, bevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventButton *bevent;
-     gpointer gdisp_ptr;
+transform_core_button_release (Tool           *tool,
+			       GdkEventButton *bevent,
+			       gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   TransformCore *transform_core;
@@ -341,9 +340,8 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 }
 
 void
-transform_core_doit (tool, gdisp_ptr)
-     Tool *tool;
-     gpointer gdisp_ptr;
+transform_core_doit (Tool     *tool,
+		     gpointer  gdisp_ptr)
 {
   GDisplay *gdisp;
   void *pundo;
@@ -362,9 +360,8 @@ transform_core_doit (tool, gdisp_ptr)
   draw_core_pause (transform_core->core, tool);
 
   /*  We're going to dirty this image, but we want to keep the tool
-      around
-  */
-
+   *  around
+   */
   tool->preserve = TRUE;
 
   /*  Start a transform undo group  */
@@ -409,9 +406,9 @@ transform_core_doit (tool, gdisp_ptr)
       tu->original = NULL;
       tu->path_undo = pundo;
 
-      /* Make a note of the new current drawable (since we may have
-	 a floating selection, etc now. */
-
+      /*  Make a note of the new current drawable (since we may have
+       *  a floating selection, etc now.
+       */
       tool->drawable = gimage_active_drawable (gdisp->gimage);
 
       undo_push_transform (gdisp->gimage, (void *) tu);
@@ -421,9 +418,8 @@ transform_core_doit (tool, gdisp_ptr)
   undo_push_group_end (gdisp->gimage);
 
   /*  We're done dirtying the image, and would like to be restarted
-      if the image gets dirty while the tool exists
-  */
-
+   *  if the image gets dirty while the tool exists
+   */
   tool->preserve = FALSE;
 
   /*  Flush the gdisplays  */
@@ -459,22 +455,20 @@ transform_core_doit (tool, gdisp_ptr)
 
 
 void
-transform_core_motion (tool, mevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventMotion *mevent;
-     gpointer gdisp_ptr;
+transform_core_motion (Tool           *tool,
+		       GdkEventMotion *mevent,
+		       gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   TransformCore *transform_core;
-
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   if(transform_core->bpressed == FALSE)
   {
-    /* hey we have not got the button press yet
-     * so go away.
+    /*  hey we have not got the button press yet
+     *  so go away.
      */
     return;
   }
@@ -504,10 +498,9 @@ transform_core_motion (tool, mevent, gdisp_ptr)
 
 
 void
-transform_core_cursor_update (tool, mevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventMotion *mevent;
-     gpointer gdisp_ptr;
+transform_core_cursor_update (Tool           *tool,
+			      GdkEventMotion *mevent,
+			      gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   TransformCore *transform_core;
@@ -546,10 +539,9 @@ transform_core_cursor_update (tool, mevent, gdisp_ptr)
 
 
 void
-transform_core_control (tool, action, gdisp_ptr)
-     Tool *tool;
-     int action;
-     gpointer gdisp_ptr;
+transform_core_control (Tool     *tool,
+			int       action,
+			gpointer  gdisp_ptr)
 {
   TransformCore * transform_core;
 
@@ -576,15 +568,13 @@ transform_core_control (tool, action, gdisp_ptr)
 }
 
 void
-transform_core_no_draw (tool)
-     Tool * tool;
+transform_core_no_draw (Tool *tool)
 {
   return;
 }
 
 void
-transform_core_draw (tool)
-     Tool * tool;
+transform_core_draw (Tool *tool)
 {
   int x1, y1, x2, y2, x3, y3, x4, y4;
   TransformCore * transform_core;
@@ -689,9 +679,8 @@ transform_core_draw (tool)
 }
 
 Tool *
-transform_core_new (type, interactive)
-     int type;
-     int interactive;
+transform_core_new (int type,
+		    int interactive)
 {
   Tool * tool;
   TransformCore * private;
@@ -737,8 +726,7 @@ transform_core_new (type, interactive)
 }
 
 void
-transform_core_free (tool)
-     Tool *tool;
+transform_core_free (Tool *tool)
 {
   TransformCore * transform_core;
 
@@ -772,8 +760,7 @@ transform_core_free (tool)
 }
 
 void
-transform_bounding_box (tool)
-     Tool * tool;
+transform_bounding_box (Tool *tool)
 {
   TransformCore * transform_core;
   int i, k;
@@ -820,9 +807,8 @@ transform_bounding_box (tool)
 }
 
 void
-transform_core_reset (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+transform_core_reset (Tool *tool,
+		      void *gdisp_ptr)
 {
   TransformCore * transform_core;
   GDisplay * gdisp;
@@ -843,9 +829,8 @@ transform_core_reset (tool, gdisp_ptr)
 }
 
 static int
-transform_core_bounds (tool, gdisp_ptr)
-     Tool *tool;
-     void *gdisp_ptr;
+transform_core_bounds (Tool *tool,
+		       void *gdisp_ptr)
 {
   GDisplay * gdisp;
   TransformCore * transform_core;
@@ -880,7 +865,7 @@ transform_core_bounds (tool, gdisp_ptr)
   transform_core->cx = (transform_core->x1 + transform_core->x2) / 2;
   transform_core->cy = (transform_core->y1 + transform_core->y2) / 2;
 
-  /* changing the bounds invalidates any grid we may have */
+  /*  changing the bounds invalidates any grid we may have  */
   transform_core_grid_recalc (transform_core);
 
   return TRUE;
@@ -906,13 +891,13 @@ void
 transform_core_showpath_changed (gint type)
 {
   TransformCore * transform_core;
-  
+
   transform_core = (TransformCore *) active_tool->private;
 
   if (transform_core->function == CREATING)
     return;
 
-  if(type)
+  if (type)
     draw_core_pause (transform_core->core, active_tool);
   else
     draw_core_resume (transform_core->core, active_tool);
@@ -936,8 +921,7 @@ transform_core_grid_recalc (TransformCore *transform_core)
 }
 
 static void
-transform_core_setup_grid (tool)
-     Tool *tool;
+transform_core_setup_grid (Tool *tool)
 {
   TransformCore * transform_core;
   int i, gci;
@@ -988,9 +972,8 @@ transform_core_setup_grid (tool)
 }
 
 static void *
-transform_core_recalc (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+transform_core_recalc (Tool *tool,
+		       void *gdisp_ptr)
 {
   TransformCore * transform_core;
 
@@ -1002,15 +985,13 @@ transform_core_recalc (tool, gdisp_ptr)
 
 /*  Actually carry out a transformation  */
 TileManager *
-transform_core_do (gimage, drawable, float_tiles, interpolation, matrix,
-		   progress_callback, progress_data)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     TileManager *float_tiles;
-     int interpolation;
-     GimpMatrix matrix;
-     progress_func_t progress_callback;
-     gpointer progress_data;
+transform_core_do (GImage          *gimage,
+		   GimpDrawable    *drawable,
+		   TileManager     *float_tiles,
+		   int              interpolation,
+		   GimpMatrix       matrix,
+		   progress_func_t  progress_callback,
+		   gpointer         progress_data)
 {
   PixelRegion destPR;
   TileManager *tiles;
@@ -1368,10 +1349,9 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix,
 
 
 TileManager *
-transform_core_cut (gimage, drawable, new_layer)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     int *new_layer;
+transform_core_cut (GImage       *gimage,
+		    GimpDrawable *drawable,
+		    int          *new_layer)
 {
   TileManager *tiles;
 
@@ -1394,11 +1374,10 @@ transform_core_cut (gimage, drawable, new_layer)
 
 /*  Paste a transform to the gdisplay  */
 Layer *
-transform_core_paste (gimage, drawable, tiles, new_layer)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     TileManager *tiles;
-     int new_layer;
+transform_core_paste (GImage       *gimage,
+		      GimpDrawable *drawable,
+		      TileManager  *tiles,
+		      int           new_layer)
 {
   Layer * layer;
   Layer * floating_layer;
@@ -1427,10 +1406,10 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
     }
   else
     {
-	    if (GIMP_IS_LAYER(drawable))
-		    layer=GIMP_LAYER(drawable);
-	    else
-		    return NULL;
+      if (GIMP_IS_LAYER(drawable))
+	layer=GIMP_LAYER(drawable);
+      else
+	return NULL;
 
       layer_add_alpha (layer);
       floating_layer = gimage_floating_sel (gimage);
@@ -1471,9 +1450,11 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 
 
 static double
-cubic (dx, jm1, j, jp1, jp2)
-     double dx;
-     int jm1, j, jp1, jp2;
+cubic (double dx,
+       int    jm1,
+       int    j,
+       int    jp1,
+       int    jp2)
 {
   double dx1, dx2, dx3;
   double h1, h2, h3, h4;

@@ -79,6 +79,10 @@ rotate_tool_transform (Tool     *tool,
   switch (state)
     {
     case INIT :
+      angle_val = 0.0;
+      center_vals[0] = transform_core->cx;
+      center_vals[1] = transform_core->cy;
+
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Rotation Information"));
@@ -107,47 +111,53 @@ rotate_tool_transform (Tool     *tool,
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       rotate_center_changed, tool);
+
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton2), NULL);
-
-	  if (gdisp->dot_for_dot)
-	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
-
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-					  gdisp->gimage->xresolution, FALSE);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-					  gdisp->gimage->yresolution, FALSE);
-
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-						 -65536,
-						 65536 + gdisp->gimage->width);
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-						 -65536,
-						 65536 + gdisp->gimage->height);
-
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-				      center_vals[0]);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-				      center_vals[1]);
 
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
 				     1, 6);
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
 				     2, 0);
 	}
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      gtk_signal_handler_block_by_data (GTK_OBJECT (sizeentry), tool);
+
+      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
+				gdisp->gimage->unit);
+      if (gdisp->dot_for_dot)
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+				      gdisp->gimage->xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+				      gdisp->gimage->yresolution, FALSE);
+
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+					     -65536,
+					     65536 + gdisp->gimage->width);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+					     -65536,
+					     65536 + gdisp->gimage->height);
 
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
 				transform_core->x1, transform_core->x2);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
 				transform_core->y1, transform_core->y2);
 
-      transform_core->trans_info[ANGLE] = 0.0;
-      transform_core->trans_info[REAL_ANGLE] = 0.0;
-      transform_core->trans_info[CENTER_X] =
-	(transform_core->x1 + transform_core->x2) / 2;
-      transform_core->trans_info[CENTER_Y] =
-	(transform_core->y1 + transform_core->y2) / 2;
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+				  center_vals[0]);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+				  center_vals[1]);
+
+      gtk_widget_set_sensitive (transform_info->shell, TRUE);
+
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (sizeentry), tool);
+
+      transform_core->trans_info[ANGLE] = angle_val;
+      transform_core->trans_info[REAL_ANGLE] = angle_val;
+      transform_core->trans_info[CENTER_X] = center_vals[0];
+      transform_core->trans_info[CENTER_Y] = center_vals[1];
 
       return NULL;
       break;
@@ -155,11 +165,11 @@ rotate_tool_transform (Tool     *tool,
     case MOTION :
       rotate_tool_motion (tool, gdisp_ptr);
 
-      return (rotate_tool_recalc (tool, gdisp_ptr));
+      return rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
     case RECALC :
-      return (rotate_tool_recalc (tool, gdisp_ptr));
+      return rotate_tool_recalc (tool, gdisp_ptr);
       break;
 
     case FINISH :
@@ -191,8 +201,8 @@ tools_new_rotate_tool ()
   private->trans_func = rotate_tool_transform;
   private->trans_info[ANGLE]      = 0.0;
   private->trans_info[REAL_ANGLE] = 0.0;
-  private->trans_info[CENTER_X]   = (private->x1 + private->x2) / 2;
-  private->trans_info[CENTER_Y]   = (private->y1 + private->y2) / 2;
+  private->trans_info[CENTER_X]   = 0.0;
+  private->trans_info[CENTER_Y]   = 0.0;
 
   /*  assemble the transformation matrix  */
   gimp_matrix_identity (private->transform);
@@ -210,18 +220,12 @@ static void
 rotate_info_update (Tool *tool)
 {
   TransformCore * transform_core;
-  double angle;
-  int cx, cy;
 
   transform_core = (TransformCore *) tool->private;
 
-  angle = (transform_core->trans_info[ANGLE] * 180.0) / M_PI;
-  cx = transform_core->cx;
-  cy = transform_core->cy;
-
-  angle_val = angle;
-  center_vals[0] = cx;
-  center_vals[1] = cy;
+  angle_val      = (transform_core->trans_info[ANGLE] * 180.0) / M_PI;
+  center_vals[0] = transform_core->cx;
+  center_vals[1] = transform_core->cy;
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
@@ -247,12 +251,10 @@ rotate_angle_changed (GtkWidget *w,
 
       if (value != transform_core->trans_info[ANGLE])
 	{
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_pause (transform_core->core, tool);      
+	  draw_core_pause (transform_core->core, tool);      
 	  transform_core->trans_info[ANGLE] = value;
 	  rotate_tool_recalc (tool, gdisp);
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_resume (transform_core->core, tool);
+	  draw_core_resume (transform_core->core, tool);
 	}
     }
 }
@@ -280,13 +282,11 @@ rotate_center_changed (GtkWidget *w,
       if ((cx != transform_core->cx) ||
 	  (cy != transform_core->cy))
 	{
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_pause (transform_core->core, tool);      
+	  draw_core_pause (transform_core->core, tool);      
 	  transform_core->cx = cx;
 	  transform_core->cy = cy;
 	  rotate_tool_recalc (tool, gdisp);
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_resume (transform_core->core, tool);
+	  draw_core_resume (transform_core->core, tool);
 	}
     }
 }

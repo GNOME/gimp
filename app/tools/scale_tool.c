@@ -66,6 +66,9 @@ scale_tool_transform (Tool     *tool,
   switch (state)
     {
     case INIT :
+      size_vals[0] = transform_core->x2 - transform_core->x1;
+      size_vals[1] = transform_core->y2 - transform_core->y1;
+
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Scaling Information"));
@@ -85,30 +88,11 @@ scale_tool_transform (Tool     *tool,
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 				       scale_size_changed, tool);
-	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
-				     GTK_SPIN_BUTTON (spinbutton), NULL);
 	  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
 			      scale_unit_changed, tool);
 
-	  if (gdisp->dot_for_dot)
-	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
-
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-					  gdisp->gimage->xresolution, FALSE);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-					  gdisp->gimage->yresolution, FALSE);
-
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-						 GIMP_MIN_IMAGE_SIZE,
-						 GIMP_MAX_IMAGE_SIZE);
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-						 GIMP_MIN_IMAGE_SIZE,
-						 GIMP_MAX_IMAGE_SIZE);
-
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-				      size_vals[0]);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-				      size_vals[1]);
+	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+				     GTK_SPIN_BUTTON (spinbutton), NULL);
 
 	  info_dialog_add_label (transform_info, _("Scale Ratio X:"),
 				 x_ratio_buf);
@@ -120,12 +104,39 @@ scale_tool_transform (Tool     *tool,
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
 				     2, 0);
 	}
-      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      gtk_signal_handler_block_by_data (GTK_OBJECT (sizeentry), tool);
+
+      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
+				gdisp->gimage->unit);
+      if (gdisp->dot_for_dot)
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+				      gdisp->gimage->xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+				      gdisp->gimage->yresolution, FALSE);
+
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+					     GIMP_MIN_IMAGE_SIZE,
+					     GIMP_MAX_IMAGE_SIZE);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+					     GIMP_MIN_IMAGE_SIZE,
+					     GIMP_MAX_IMAGE_SIZE);
 
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
-				0, transform_core->x2 - transform_core->x1);
+				0, size_vals[0]);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
-				0, transform_core->y2- transform_core->y1);
+				0, size_vals[1]);
+
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+				  size_vals[0]);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+				  size_vals[1]);
+
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
+
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (sizeentry), tool);
 
       transform_core->trans_info [X0] = (double) transform_core->x1;
       transform_core->trans_info [Y0] = (double) transform_core->y1;
@@ -170,12 +181,12 @@ tools_new_scale_tool ()
 
   private = tool->private;
 
-  /*  set the rotation specific transformation attributes  */
+  /*  set the scale specific transformation attributes  */
   private->trans_func = scale_tool_transform;
-  private->trans_info[X0] = 0;
-  private->trans_info[Y0] = 0;
-  private->trans_info[X1] = 0;
-  private->trans_info[Y1] = 0;
+  private->trans_info[X0] = 0.0;
+  private->trans_info[Y0] = 0.0;
+  private->trans_info[X1] = 0.0;
+  private->trans_info[Y1] = 0.0;
 
   /*  assemble the transformation matrix  */
   gimp_matrix_identity (private->transform);
@@ -281,15 +292,13 @@ scale_size_changed (GtkWidget *w,
 	  (height != (transform_core->trans_info[Y1] -
 		      transform_core->trans_info[Y0])))
 	{
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_pause (transform_core->core, tool);
+	  draw_core_pause (transform_core->core, tool);
 	  transform_core->trans_info[X1] =
 	    transform_core->trans_info[X0] + width;
 	  transform_core->trans_info[Y1] =
 	    transform_core->trans_info[Y0] + height;
 	  scale_tool_recalc (tool, gdisp);
-	  if(transform_core->core->draw_state != INVISIBLE)
-	    draw_core_resume (transform_core->core, tool);
+	  draw_core_resume (transform_core->core, tool);
 	}
     }
 }

@@ -1,3 +1,16 @@
+1999-05-31  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/info_dialog.c
+	* app/rotate_tool.c
+	* app/scale_tool.c: fixed some very strange grid redraw bugs which
+	were caused by unblocked sizeentry signals. It's generally a bad
+	idea to connect to a sizeentry's signal before initialization.
+	Removed the workaround for the gdk assert failures about
+	"gc != NULL" because the signals were the real reason.
+
+	* app/transform_core.c: originally wanted to fix the bug here but
+	ended up with just some function headers made ansii compliant.
+
 1999-05-31  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp1_1_splash.ppm: Guess what? We now have an important indicator
