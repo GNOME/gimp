@@ -45,12 +45,12 @@ GimpItemFactoryEntry palette_editor_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/_New Color from FG"), "",
+  { { N_("/New Color from _FG"), "",
       palette_editor_new_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     GIMP_HELP_PALETTE_EDITOR_NEW, NULL },
-  { { N_("/_New Color from BG"), "",
+  { { N_("/New Color from _BG"), "",
       palette_editor_new_color_cmd_callback, TRUE,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,

@@ -1,3 +1,9 @@
+2003-12-29  Raphaël Quinet  <quinet@gamers.org>
+
+	* app/gui/palette-editor-menu.c: Applied patch by David Gowers
+	(neota@softhome.net) improving the mnemonics of the palette editor
+	commands 'New from FG/BG'.  Fixes bug #130121.
+
 2003-12-29  Simon Budig  <simon@gimp.org>
 
 	* app/gui/about-dialog.c: Redone to have a fancy graphical
