@@ -1,3 +1,18 @@
+1999-12-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/menus.c: Reorder all menu items under <Image>/Filters which
+	were created by plugins, so they appear after <Image>/Filters/Web.
+	(this way <Image>/Filters/Toys is always the last submenu)
+
+	* app/palette.c: My last change caused both the normal _and_ the
+	small menu to pop up on right mouse click on an already existing
+	color. Thanks to Nick for pointing this out.
+
+	Now there is only one menu with "Edit" and "Delete" greyed out if
+	the click was outside a valid color square.
+	I also moved "New" to the top of the menu because that's how other
+	gimp menus look like.
+
 Sat Dec  4 05:30:38 GMT 1999 Nick Lamb <njl195@zepler.org.uk>
 
 	* libgimp/gimpunitmenu.c: Move mitch's change so now it

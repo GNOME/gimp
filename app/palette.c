@@ -105,17 +105,23 @@ typedef struct _PaletteDialog PaletteDialog;
 struct _PaletteDialog
 {
   GtkWidget      *shell;
+
   GtkWidget      *color_area;
   GtkWidget      *scrolled_window;
   GtkWidget      *color_name;
   GtkWidget      *clist;
+
   GtkWidget      *popup_menu;
-  GtkWidget      *popup_small_menu;
+  GtkWidget      *delete_menu_item;
+  GtkWidget      *edit_menu_item;
+
   ColorNotebookP  color_notebook;
   gboolean        color_notebook_active;
+
   PaletteEntries *entries;
   PaletteEntry   *color;
   PaletteEntry   *dnd_color;
+
   GdkGC          *gc;
   guint           entry_sig_id;
   gfloat          zoom_factor;  /* range from 0.1 to 4.0 */
@@ -1175,40 +1181,35 @@ static void
 palette_dialog_create_popup_menu (PaletteDialog *palette)
 {
   GtkWidget *menu;
-  GtkWidget *menu_items;
+  GtkWidget *menu_item;
 
-  menu = gtk_menu_new ();
-  menu_items = gtk_menu_item_new_with_label (_("Edit"));
-  gtk_menu_append (GTK_MENU (menu), menu_items);
+  palette->popup_menu = menu = gtk_menu_new ();
 
-  gtk_signal_connect (GTK_OBJECT (menu_items), "activate", 
+  menu_item = gtk_menu_item_new_with_label (_("New"));
+  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
+		      GTK_SIGNAL_FUNC (palette_dialog_new_entry_callback),
+		      (gpointer) palette);
+  gtk_widget_show (menu_item);
+
+  menu_item = gtk_menu_item_new_with_label (_("Edit"));
+  gtk_menu_append (GTK_MENU (menu), menu_item);
+
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_dialog_edit_entry_callback),
 		      (gpointer) palette);
-  gtk_widget_show (menu_items);
+  gtk_widget_show (menu_item);
 
-  menu_items = gtk_menu_item_new_with_label (_("New"));
-  gtk_menu_append (GTK_MENU (menu), menu_items);
-  gtk_signal_connect (GTK_OBJECT (menu_items), "activate", 
-		      GTK_SIGNAL_FUNC (palette_dialog_new_entry_callback),
-		      (gpointer) palette);
-  gtk_widget_show (menu_items);
+  palette->edit_menu_item = menu_item;
 
-  menu_items = gtk_menu_item_new_with_label (_("Delete"));
-  gtk_signal_connect (GTK_OBJECT(menu_items), "activate", 
+  menu_item = gtk_menu_item_new_with_label (_("Delete"));
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_dialog_delete_entry_callback),
 		      (gpointer) palette);
-  gtk_menu_append (GTK_MENU (menu), menu_items);
-  gtk_widget_show (menu_items);
+  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_widget_show (menu_item);
 
-  palette->popup_menu = menu;
-
-  palette->popup_small_menu = menu = gtk_menu_new ();
-  menu_items = gtk_menu_item_new_with_label (_("New"));
-  gtk_menu_append (GTK_MENU (menu), menu_items);
-  gtk_signal_connect (GTK_OBJECT (menu_items), "activate", 
-		      GTK_SIGNAL_FUNC (palette_dialog_new_entry_callback),
-		      (gpointer) palette);
-  gtk_widget_show (menu_items);
+  palette->delete_menu_item = menu_item;
 }
 
 /*  the color area event callbacks  ******************************************/
@@ -1218,16 +1219,23 @@ palette_dialog_eventbox_button_press (GtkWidget      *widget,
 				      GdkEventButton *bevent,
 				      PaletteDialog  *palette)
 {
+  if (gtk_get_event_widget ((GdkEvent *) bevent) == palette->color_area)
+    return FALSE;
+
   if (bevent->button == 3)
     {
-      /* Popup the small new menu */
-      gtk_menu_popup (GTK_MENU (palette->popup_small_menu),
-		      NULL, NULL, 
+      if (GTK_WIDGET_SENSITIVE (palette->edit_menu_item))
+	{
+	  gtk_widget_set_sensitive (palette->edit_menu_item, FALSE);
+	  gtk_widget_set_sensitive (palette->delete_menu_item, FALSE);
+	}
+
+      gtk_menu_popup (GTK_MENU (palette->popup_menu), NULL, NULL, 
 		      NULL, NULL, 3,
 		      bevent->time);
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gint
@@ -1237,11 +1245,11 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 {
   GdkEventButton *bevent;
   GSList *tmp_link;
-  int r, g, b;
-  int entry_width;
-  int entry_height;
-  int row, col;
-  int pos;
+  gint r, g, b;
+  gint entry_width;
+  gint entry_height;
+  gint row, col;
+  gint pos;
 
   switch (event->type)
     {
@@ -1308,21 +1316,30 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 
 	      if (bevent->button == 3)
 		{
-		  /* Popup the edit menu */
+		  if (! GTK_WIDGET_SENSITIVE (palette->edit_menu_item))
+		    {
+		      gtk_widget_set_sensitive (palette->edit_menu_item, TRUE);
+		      gtk_widget_set_sensitive (palette->delete_menu_item, TRUE);
+		    }
+
 		  gtk_menu_popup (GTK_MENU (palette->popup_menu), NULL, NULL, 
 				  NULL, NULL, 3,
-				  ((GdkEventButton *)event)->time);
+				  bevent->time);
 		}
 	    }
 	  else
 	    {
 	      if (bevent->button == 3)
 		{
-		  /* Popup the small new menu */
-		  gtk_menu_popup (GTK_MENU (palette->popup_small_menu),
-				  NULL, NULL, 
+		  if (GTK_WIDGET_SENSITIVE (palette->edit_menu_item))
+		    {
+		      gtk_widget_set_sensitive (palette->edit_menu_item, FALSE);
+		      gtk_widget_set_sensitive (palette->delete_menu_item, FALSE);
+		    }
+
+		  gtk_menu_popup (GTK_MENU (palette->popup_menu), NULL, NULL, 
 				  NULL, NULL, 3,
-				  ((GdkEventButton *)event)->time);
+				  bevent->time);
 		}
 	    }
 	}

@@ -1039,10 +1039,6 @@ menus_reorder_plugins (void)
   static gint n_reorder_subsubmenus = (sizeof (reorder_subsubmenus) /
 				       sizeof (reorder_subsubmenus[0]));
 
-  static gchar *reorder_if_exists[] = { "/Filters/Misc" };
-  static gint n_reorder_if_exists = (sizeof (reorder_if_exists) /
-				     sizeof (reorder_if_exists[0]));
-
   GtkItemFactory *item_factory;
   GtkWidget *menu_item;
   GtkWidget *menu;
@@ -1050,7 +1046,7 @@ menus_reorder_plugins (void)
   gchar *path;
   gint i, pos;
 
-  /*  Beautify <Toolbox>/Xtns  */
+  /*  Beautify "<Toolbox>/Xtns"  */
   pos = 2;
   for (i = 0; i < n_xtns_plugins; i++)
     {
@@ -1065,7 +1061,7 @@ menus_reorder_plugins (void)
 	}
     }
 
-  /*  Move "Filter all Layers..." before the separator  */
+  /*  Move "<Image>/Filters/Filter all Layers..." before the separator  */
   menu_item = gtk_item_factory_get_widget (image_factory,
 					   "/Filters/Filter all Layers...");
   if (menu_item && menu_item->parent)
@@ -1100,7 +1096,7 @@ menus_reorder_plugins (void)
         }
     }
 
-  /*  Reorder <Image>/File  */
+  /*  Reorder "<Image>/File"  */
   for (i = 0; i < n_image_file_entries; i++)
     {
       path = g_strconcat ("/File/", image_file_entries[i], NULL);
@@ -1145,7 +1141,9 @@ menus_reorder_plugins (void)
 	}
     }
 
-  /*  Reorder submenus of <Image>/Filters which only exist sometimes  */
+  /*  Move all submenus which registered after "<Image>/Filters/Toys"
+   *  before the separator after "<Image>/Filters/Web"
+   */
   menu_item = gtk_item_factory_get_widget (image_factory,
 					   "/Filters/---INSERT");
 
@@ -1154,28 +1152,30 @@ menus_reorder_plugins (void)
       menu = menu_item->parent;
       pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
 
-      for (i = 0; i < n_reorder_if_exists; i++)
+      menu_item = gtk_item_factory_get_widget (image_factory,
+					       "/Filters/Toys");
+
+      if (menu_item && GTK_IS_MENU (menu_item))
 	{
 	  GList *list;
+	  gint index = 1;
 
-	  menu_item = gtk_item_factory_get_widget (image_factory,
-						   reorder_if_exists[i]);
-
-	  if (menu_item && GTK_IS_MENU (menu_item))
+	  for (list = GTK_MENU_SHELL (menu)->children; list;
+	       list = g_list_next (list))
 	    {
-	      for (list = GTK_MENU_SHELL (menu)->children; list;
-		   list = g_list_next (list))
-		{
-		  if (GTK_MENU_ITEM (list->data)->submenu == menu_item)
-		    break;
-		}
+	      if (GTK_MENU_ITEM (list->data)->submenu == menu_item)
+		break;
 
-	      if (list)
-		{
-		  gtk_menu_reorder_child (GTK_MENU (menu),
-					  GTK_WIDGET (list->data), pos);
-		  pos++;
-		}
+	      index++;
+	    }
+
+	  while ((menu_item = g_list_nth_data (GTK_MENU_SHELL (menu)->children,
+					       index)))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu), menu_item, pos);
+
+	      pos++;
+	      index++;
 	    }
 	}
     }
