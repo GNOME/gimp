@@ -1,3 +1,10 @@
+Sat Jan  1 22:42:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/plug-in.c: If image_types == NULL, register plug-in with
+	all image_types. Should fix bug #3135.
+
+	* plug-ins/webbrowser/webbrowser.c: register with image_types = NULL
+
 Sat Jan  1 21:05:38 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* INSTALL: "strip" doc patch by Daniel Egger.

@@ -118,7 +118,7 @@ query ()
 	      "Misha Dynin, Jamie Zawinski, Spencer Kimball & Peter Mattis",
 			  "1997",
 			  "<Toolbox>/Xtns/Web Browser/Open URL...",
-			  "RGB*, GRAY*, INDEXED*",
+			  NULL,
 			  PROC_EXTENSION,
 			  nargs, nreturn_vals,
 			  args, return_vals);

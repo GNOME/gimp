@@ -3102,7 +3102,9 @@ plug_in_image_types_parse (char *image_types)
   int types;
 
   if (!image_types)
-    return (PLUG_IN_RGB_IMAGE | PLUG_IN_GRAY_IMAGE | PLUG_IN_INDEXED_IMAGE);
+    return (PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE | 
+	    PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE |
+	    PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE);
 
   types = 0;
 
