@@ -11,6 +11,7 @@ tips_POFILES = \
 	da.po		\
 	de.po		\
 	en_CA.po	\
+	en_GB.po	\
 	es.po		\
 	fr.po		\
 	he.po		\
