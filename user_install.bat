@@ -14,5 +14,11 @@ mkdir %2\scripts
 mkdir %2\gfig
 mkdir %2\gflares
 mkdir %2\fractalexplorer
+mkdir %2\gimpressionist
+mkdir %2\gimpressionist\Brushes
+mkdir %2\gimpressionist\Paper
+mkdir %2\gimpressionist\Presets
+mkdir %2\levels
+mkdir %2\curves
 
 pause

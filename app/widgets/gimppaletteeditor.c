@@ -276,7 +276,7 @@ palette_set_foreground (gint r,
   palette_get_foreground (&rr, &gg, &bb);
   if (no_interface == FALSE)
     {
-      store_color (&foreground_pixel, rr, gg, bb);
+      foreground_pixel = get_color (rr, gg, bb);
       color_area_update ();
       device_status_update (current_device);
     }
@@ -297,7 +297,7 @@ palette_set_background (gint r,
   palette_get_background (&rr, &gg, &bb);
   if (no_interface == FALSE)
     {
-      store_color (&background_pixel, rr, gg, bb);
+      background_pixel = get_color (rr, gg, bb);
       color_area_update ();
     }
 }

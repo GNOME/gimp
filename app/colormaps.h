@@ -43,8 +43,6 @@ extern gulong new_color_pixel;
 extern gulong  marching_ants_pixels[8];
 
 gulong get_color (int red, int green, int blue);
-void   store_color (gulong *pixel, int red, int green, int blue);
 void   get_standard_colormaps (void);
-
 
 #endif  /*  __COLORMAPS_H__  */

@@ -1,3 +1,36 @@
+Fri Aug 27 10:57:28 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* user_install
+	* user_install.bat: added gimpressionist, levels, and curves dirs
+
+	* app/color_panel.c
+	* app/color_select.c
+	* app/colormaps.[ch]
+	* app/palette.c
+	* app/selection.c: remove vestigal colormap code; use get_color
+	directly now
+
+	* libgimp/color_display.h
+	* app/gdisplay_color.c: bugfixes, added state load/save hooks,
+	redid the interface to work on blocks, removed dummy default
+	handler, work on gamma correction stuff
+
+	* app/gimpbrushpipe.c: #include <stdlib.h>
+
+	* app/gximage.c: minor cleanups
+
+	* app/levels.c: default to ~/.gimp-1.1/levels for load/save; minor
+	gui prettification
+
+	* app/main.c
+	* app/menus.c: plug-in menu translation patch from SHIRASAKI Yasuhiro
+	<yasuhiro@awa.tohoku.ac.jp>
+
+	* libgimp/stdplugins-intl.h: add INIT_I18N_UI() for calling
+	gtk_set_locale()
+
+	* plug-ins/Lighting/lightin_main.c: use INIT_I18N_UI()
+
 Fri Aug 27 18:57:50 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c

@@ -93,9 +93,9 @@ cycle_ant_colors (Selection *select)
     {
       index = (i + (8 - select->index_in)) % 8;
       if (index < 4)
-	store_color (&marching_ants_pixels[i], 0, 0, 0);
+	marching_ants_pixels[i] = get_color (0, 0, 0);
       else
-	store_color (&marching_ants_pixels[i], 255, 255, 255);
+	marching_ants_pixels[i] = get_color (255, 255, 255);
     }
 }
 

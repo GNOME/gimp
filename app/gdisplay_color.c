@@ -93,12 +93,9 @@ gdisplay_color_attach (GDisplay   *gdisp,
       info->refs = g_slist_append (info->refs, gdisp);
 
       if (info->methods.new)
-	{
-	  gdisp->cd_ID = info->methods.new (gdisp->gimage->base_type,
-					    gdisp->gimage->width,
-					    gdisp->gimage->height);
-	  gdisp->cd_convert = info->methods.convert;
-	}
+	gdisp->cd_ID = info->methods.new (gdisp->gimage->base_type);
+
+      gdisp->cd_convert = info->methods.convert;
     }
 }
 
@@ -107,45 +104,72 @@ gdisplay_color_detach (GDisplay *gdisp)
 {
   ColorDisplayInfo *info;
   
-  if ((info = g_hash_table_lookup (color_display_table, gdisp->cd_name)))
+  if (gdisp->cd_name)
     {
-      if (info->methods.destroy)
-	info->methods.destroy (gdisp->cd_ID);
+      if ((info = g_hash_table_lookup (color_display_table, gdisp->cd_name)))
+	{
+	  if (info->methods.destroy)
+	    info->methods.destroy (gdisp->cd_ID);
 
-      info->refs = g_slist_remove (info->refs, gdisp);
+	  info->refs = g_slist_remove (info->refs, gdisp);
       
-      if (!info->refs && info->methods.finalize)
-	info->methods.finalize ();
-    }
-  
-  g_free (gdisp->cd_name);
+	  if (!info->refs && info->methods.finalize)
+	    info->methods.finalize ();
+	}
+
+      g_free (gdisp->cd_name);
+      gdisp->cd_name = NULL;
+    }  
+}
+
+typedef struct _GammaContext GammaContext;
+
+struct _GammaContext
+{
+  double gamma;
+  guchar *lookup;
+};
+
+static
+gpointer gamma_new (int type)
+{
+  int i;
+  GammaContext *context = NULL;
+
+  context = g_new (GammaContext, 1);
+  context->gamma = 1.0;
+  context->lookup = g_new (guchar, 256);
+
+  for (i = 0; i < 256; i++)
+    context->lookup[i] = i;
+
+  return context;
 }
 
 static
-void dummy_convert (gpointer  cd_ID,
-		    int       x,
-		    int       y,
-		    guchar    r,
-		    guchar    g,
-		    guchar    b,
-		    guchar   *dest)
+void gamma_destroy (gpointer cd_ID)
 {
-  dest[0] = r;
-  dest[1] = g;
-  dest[2] = b;
+  GammaContext *context = (GammaContext *) cd_ID;
+
+  g_free (context->lookup);
+  g_free (context);
+}
+
+static
+void gamma_convert (gpointer  cd_ID,
+    		    guchar   *buf,
+		    int       width,
+		    int       height,
+		    int       bpp)
+{
+  int i;
+  guchar *lookup = ((GammaContext *) cd_ID)->lookup;
+
+  for (i = 0; i < width * height * bpp; i++)
+    *buf++ = lookup[*buf];
 }
 
 void
 gdisplay_color_init (void)
 {
-  GimpColorDisplayMethods methods = {
-    NULL,
-    NULL,
-    dummy_convert,
-    NULL,
-    NULL,
-    NULL
-  };
-  
-  gimp_color_display_register ("None", &methods);
 }

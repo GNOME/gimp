@@ -170,11 +170,9 @@ color_panel_draw (ColorPanel *color_panel)
   private = (ColorPanelPrivate *) color_panel->private_part;
   widget = private->drawing_area;
 
-  fg.pixel = old_color_pixel;
-  store_color (&fg.pixel,
-	       color_panel->color[0],
-	       color_panel->color[1],
-	       color_panel->color[2]);
+  fg.pixel = get_color (color_panel->color[0],
+		        color_panel->color[1],
+		        color_panel->color[2]);
 
   gdk_gc_set_foreground (private->gc, &fg);
   gdk_draw_rectangle (widget->window, private->gc, 1, 0, 0,

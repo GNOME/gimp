@@ -166,7 +166,7 @@ static void query(void)
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   gimp_install_procedure ("plug_in_lighting",
 			  _("Apply various lighting effects to an image"),

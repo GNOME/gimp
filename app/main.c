@@ -126,6 +126,7 @@ main (int argc, char **argv)
 #endif
 #ifdef LOCALEDIR
   bindtextdomain("gimp", LOCALEDIR);
+  bindtextdomain("gimp-std-plugins", LOCALEDIR);
 #else
   bindtextdomain("gimp", g_strconcat (gimp_data_directory (),
 				      G_DIR_SEPARATOR_S,

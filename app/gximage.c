@@ -47,7 +47,7 @@ create_gximage (GdkVisual *visual, int width, int height)
 {
   GXImage * gximage;
 
-  gximage = (GXImage *) g_malloc (sizeof (GXImage));
+  gximage = g_new (GXImage, 1);
 
   gximage->visual = visual;
   gximage->gc = NULL;
@@ -72,37 +72,37 @@ delete_gximage (GXImage *gximage)
 /*  Function definitions  */
 
 void
-gximage_init ()
+gximage_init (void)
 {
   gximage = create_gximage (g_visual, GXIMAGE_WIDTH, GXIMAGE_HEIGHT);
 }
 
 void
-gximage_free ()
+gximage_free (void)
 {
   delete_gximage (gximage);
 }
 
 guchar*
-gximage_get_data ()
+gximage_get_data (void)
 {
   return gximage->data;
 }
 
 int
-gximage_get_bpp ()
+gximage_get_bpp (void)
 {
   return 3;
 }
 
 int
-gximage_get_bpl ()
+gximage_get_bpl (void)
 {
   return 3 * GXIMAGE_WIDTH;
 }
 
 int
-gximage_get_byte_order ()
+gximage_get_byte_order (void)
 {
   return GDK_MSB_FIRST;
 }

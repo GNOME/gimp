@@ -50,53 +50,24 @@ gulong new_color_pixel;
 
 gulong marching_ants_pixels[8];
 
-static void make_color (gulong *pixel_ptr,
-			int     red,
-			int     green,
-			int     blue,
-			int     readwrite);
-
 static void
 set_app_colors (void)
 {
   cycled_marching_ants = FALSE;
 
-  make_color (&g_black_pixel, 0, 0, 0, FALSE);
-  make_color (&g_gray_pixel, 127, 127, 127, FALSE);
-  make_color (&g_white_pixel, 255, 255, 255, FALSE);
-  make_color (&g_color_pixel, 255, 255, 0, FALSE);
-  make_color (&g_normal_guide_pixel, 0, 127, 255, FALSE);
-  make_color (&g_active_guide_pixel, 255, 0, 0, FALSE);
+  g_black_pixel = get_color (0, 0, 0);
+  g_gray_pixel  = get_color (127, 127, 127);
+  g_white_pixel = get_color (255, 255, 255);
+  g_color_pixel = get_color (255, 255, 0);
 
-  store_color (&foreground_pixel, 0, 0, 0);
-  store_color (&background_pixel, 255, 255, 255);
-  store_color (&old_color_pixel, 0, 0, 0);
-  store_color (&new_color_pixel, 255, 255, 255);
+  g_normal_guide_pixel = get_color (0, 127, 255);
+  g_active_guide_pixel = get_color (255, 0, 0);
 
+  foreground_pixel = get_color (0, 0, 0);
+  background_pixel = get_color (255, 255, 255);
+  old_color_pixel  = get_color (0, 0, 0);
+  new_color_pixel  = get_color (255, 255, 255);
 }
-
-/* This probably doesn't belong here - RLL*/
-/* static unsigned int
-gamma_correct (int intensity, double gamma)
-{
-  unsigned int val;
-  double ind;
-  double one_over_gamma;
-
-  if (gamma != 0.0)
-    one_over_gamma = 1.0 / gamma;
-  else
-    one_over_gamma = 1.0;
-
-  ind = (double) intensity / 256.0;
-  val = (int) (256 * pow (ind, one_over_gamma));
-
-  return val;
-} */
-
-
-/*************************************************************************/
-
 
 gulong
 get_color (int red,
@@ -106,29 +77,8 @@ get_color (int red,
   return gdk_rgb_xpixel_from_rgb ((red << 16) | (green << 8) | blue);
 }
 
-
-static void
-make_color (gulong *pixel_ptr,
-	    int     red,
-	    int     green,
-	    int     blue,
-	    int     readwrite)
-{
-  *pixel_ptr = get_color (red, green, blue);
-}
-
 void
-store_color (gulong *pixel_ptr,
-	     int     red,
-	     int     green,
-	     int     blue)
-{
-  *pixel_ptr = get_color (red, green, blue);
-}
-
-
-void
-get_standard_colormaps ()
+get_standard_colormaps (void)
 {
   GtkPreviewInfo *info;
 

@@ -599,9 +599,6 @@ render_image_rgb (RenderInfo *info)
 	      dest[1] = src[1];
 	      dest[2] = src[2];
 
-	      /* info->gdisp->cd_convert (info->gdisp->cd_ID, x, y,
-				       src[0], src[1], src[2], dest); */
-
 	      src += 3;
 	      dest += 3;
 	    }

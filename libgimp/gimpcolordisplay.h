@@ -21,20 +21,21 @@
 
 #include <glib.h>
 
-typedef void     (*GimpColorDisplayInit)      (void);
-typedef gpointer (*GimpColorDisplayNew)       (int       type,
-					       int       width,
-					       int       height);
-typedef void     (*GimpColorDisplayConvert)   (gpointer  cd_ID,
-    					       int        x,
-    					       int        y,
-					       guchar     r,
-					       guchar     g,
-					       guchar     b,
-					       guchar    *dest);
-typedef void     (*GimpColorDisplayDestroy)   (gpointer   cd_ID);
-typedef void     (*GimpColorDisplayFinalize)  (void);
-typedef void     (*GimpColorDisplayConfigure) (gpointer   cd_ID);
+#include <libgimp/parasite.h>
+
+typedef void       (*GimpColorDisplayInit)      (void);
+typedef gpointer   (*GimpColorDisplayNew)       (int       type);
+typedef void       (*GimpColorDisplayConvert)   (gpointer  cd_ID,
+						 guchar    *buf,
+						 int        width,
+						 int        height,
+						 int        bpp);
+typedef void       (*GimpColorDisplayDestroy)   (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayFinalize)  (void);
+typedef void       (*GimpColorDisplayLoadState) (gpointer   cd_ID,
+						 Parasite  *state);
+typedef Parasite * (*GimpColorDisplaySaveState) (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayConfigure) (gpointer   cd_ID);
 
 typedef struct _GimpColorDisplayMethods GimpColorDisplayMethods;
 
@@ -45,6 +46,8 @@ struct _GimpColorDisplayMethods
   GimpColorDisplayConvert   convert;
   GimpColorDisplayDestroy   destroy;
   GimpColorDisplayFinalize  finalize;
+  GimpColorDisplayLoadState load;
+  GimpColorDisplaySaveState save;
   GimpColorDisplayConfigure configure;
 };
 

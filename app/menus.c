@@ -833,7 +833,25 @@ static gchar *
 menu_translate (const gchar *path,
     		gpointer     data)
 {
-  return gettext (path);
+  static gchar menupath[256];
+  gchar *retval;
+
+  retval = gettext (path);
+  if (!strcmp (path, retval))
+    {
+      strcpy (menupath, "<Image>");
+      strncat (menupath, path, sizeof(menupath) - sizeof("<Image>"));
+      retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Image>");
+
+      if (!strcmp (path, retval))
+	{
+	  strcpy (menupath, "<Toolbox>");
+	  strncat (menupath, path, sizeof(menupath) - sizeof("<Toolbox>"));
+	  retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Toolbox>");
+    	}
+    }
+
+  return retval;
 }
 
 static gint

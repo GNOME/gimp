@@ -13,9 +13,14 @@
   setlocale(LC_MESSAGES, ""); \
   bindtextdomain("gimp-std-plugins", LOCALEDIR); \
   textdomain("gimp-std-plugins")
-
+#define INIT_I18N_UI() \
+  gtk_set_locale(); \
+  INIT_I18N();
 #else
 #define INIT_I18N() \
   bindtextdomain("gimp-std-plugins", LOCALEDIR); \
   textdomain("gimp-std-plugins")
+#define INIT_I18N_UI() \
+  gtk_set_locale(); \
+  INIT_I18N();
 #endif

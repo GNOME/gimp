@@ -36,6 +36,7 @@
 #include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #define LOW_INPUT          0x1
 #define GAMMA              0x2
@@ -553,6 +554,7 @@ levels_new_dialog ()
   gtk_widget_show (toggle);
 
   button = gtk_button_new_with_label (_("Load"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) levels_load_callback,
@@ -560,6 +562,7 @@ levels_new_dialog ()
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Save"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) levels_save_callback,
@@ -1387,12 +1390,19 @@ levels_output_da_events (GtkWidget    *widget,
 static void
 make_file_dlg (gpointer data)
 {
+  gchar *temp;
+
   file_dlg = gtk_file_selection_new (_("Load/Save Levels"));
   gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
 		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
 		     "clicked", (GtkSignalFunc) file_ok_callback, data);
+
+  temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "levels" G_DIR_SEPARATOR_S,
+      			  gimp_directory ());
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
+  g_free (temp);
 }
 
 static void

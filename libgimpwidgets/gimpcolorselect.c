@@ -957,9 +957,10 @@ color_select_update_colors (ColorSelect *csp,
 
       /* if we haven't yet been realised, there's no need to redraw
        * anything. */
-      if (!window) return;
+      if (!window)
+	return;
 
-      store_color (&color.pixel, red, green, blue);
+      color.pixel = get_color (red, green, blue);
 
       gdk_window_get_size (window, &width, &height);
 
