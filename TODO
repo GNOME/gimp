@@ -52,6 +52,9 @@ file new dialog stuff   (i'm working on this...Adrian)
 	3. make x,y values have dropdowns for last 5 or so used sizes
 	4. maybe an estimate of how much ram the image will take?
 	5. maybe some "preset" common image sizes?
+	6. resoltuion/units need to be exported to the whole app
+	(probabaly in gimage.c) so size/scale, text tool, etc can
+	use them.
 
 export filters:
 
@@ -133,6 +136,9 @@ Redesign of the Blend Tool dialog? (it's rather large...)
 	box as approriate. When the box size is chosen, figure out the
 	best-fit font size and render it.
 
+	instead of rendering into a preview, render preview directly
+	onto the image. 
+
 	(Text should be redone entirely, with a native T1/TTF
 	interpreter.  Using X to render text is cheap but nasty. --sg)
 
@@ -209,6 +215,8 @@ BETTER FONT SUPPORT!
 	or freetype or similar. Probabaly be an extension, gimp could
 	fall back to X font rendering if need be.
 
+	Refresh font list while running.
+
 	(There's a good argument for making all text operations run
 	thru an extension. --sg)
 
@@ -272,6 +280,8 @@ make color picker able to choose from any color on the screen.
 
 	This sounds really simple. Any ideas?
 
+	Also, set a radius for color picker to pick an "average" from
+
 dodge/burn/sponge/smudge tools:
 
 	several people have commented on the need for this. Anyone
@@ -283,6 +293,7 @@ Text Tool
 	More complete font selection
 	Multiple lines and alignment
 	Kerning, hints, etc.
+
 
 big cad style cross-hairs cursor:
 	guides come close, but we probabaly dont wont somethign like
@@ -384,5 +395,19 @@ generic preview code in libgimp for use by plugins
 	slap it in libgimp. Maybe throw some of the gck stuff in there
 	too. Or possibly make a new plugin helper lib combining
 	gck, megawidget, preview code, etc.
+
+abiltiy to specify which gimprc to parse on commandline
+
+	Some people need to be able to use different gimprc on
+	different machines (for ex, 8-bit vs 24 bit display).
+
+Undo groups
+
+	basically for snapshots for the UNDO stack instead of realying on
+	everything to be recorded. Particualr useful in scripts.
+
+gradient map layer/paint mode
+
+	map values from current gradient to value/intensity
 
 
