@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <time.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -44,13 +46,15 @@
 
 /*  local function prototypes  */
 
-static void  gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
-                                                    GimpImage        *gimage);
-static void  gimp_display_shell_close_name_changed (GimpImage        *image,
-                                                    GtkWidget        *dialog);
-static void  gimp_display_shell_close_response     (GtkWidget        *widget,
-                                                    gboolean          close,
-                                                    GimpDisplayShell *shell);
+static void    gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
+                                                      GimpImage        *gimage);
+static void    gimp_display_shell_close_name_changed (GimpImage        *image,
+                                                      GtkWidget        *dialog);
+static void    gimp_display_shell_close_response     (GtkWidget        *widget,
+                                                      gboolean          close,
+                                                      GimpDisplayShell *shell);
+
+static gchar * gimp_time_since                       (guint             then);
 
 
 /*  public functions  */
@@ -102,6 +106,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   GtkWidget *box;
   gchar     *name;
   gchar     *title;
+  gchar     *period = NULL;
 
   if (shell->close_dialog)
     {
@@ -151,9 +156,17 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   gimp_display_shell_close_name_changed (gimage, dialog);
 
+  if (gimage->dirty_time)
+    period = gimp_time_since (gimage->dirty_time);
+  else
+    g_warning ("image->dirty_time is zero, how did this happen?");
+
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
                              _("If you don't save the image, "
-                               "changes will be lost."));
+                               "changes from the last %s will be lost."),
+                             period ? period : "???");
+
+  g_free (period);
 
   gtk_widget_show (dialog);
 }
@@ -212,4 +225,24 @@ gimp_display_shell_close_response (GtkWidget        *widget,
     default:
       break;
     }
+}
+
+static gchar *
+gimp_time_since (guint  then)
+{
+  guint  now = time (NULL);
+  guint  diff;
+
+  g_return_val_if_fail (now >= then, NULL);
+
+  diff = 1 + now - then;
+
+  if (diff == 1)
+    /* one second, the time period  */
+    return g_strdup (_("second"));
+
+  if (diff < 60)
+    return g_strdup_printf (_("%d seconds"), diff);
+
+  return g_strdup_printf (_("%d minutes"), 1 + diff / 60);
 }

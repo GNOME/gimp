@@ -115,6 +115,7 @@ struct _GimpImage
   gint               num_cols;              /*  number of cols--for indexed  */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
+  guint              dirty_time;            /*  time when image became dirty */
   gint               undo_freeze_count;     /*  counts the _freeze's         */
 
   gint               instance_count;        /*  number of instances          */

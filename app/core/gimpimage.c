@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <time.h>
 
 #include <glib-object.h>
 
@@ -517,6 +518,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->num_cols              = 0;
 
   gimage->dirty                 = 1;
+  gimage->dirty_time            = 0;
   gimage->undo_freeze_count     = 0;
 
   gimage->instance_count        = 0;
@@ -1768,6 +1770,9 @@ gimp_image_dirty (GimpImage     *gimage,
 
   gimage->dirty++;
 
+  if (! gimage->dirty_time)
+    gimage->dirty_time = time (NULL);
+
   g_signal_emit (gimage, gimp_image_signals[DIRTY], 0, dirty_mask);
 
   TRC (("dirty %d -> %d\n", gimage->dirty - 1, gimage->dirty));
@@ -1795,7 +1800,8 @@ gimp_image_clean_all (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimage->dirty = 0;
+  gimage->dirty      = 0;
+  gimage->dirty_time = 0;
 
   g_signal_emit (gimage, gimp_image_signals[CLEAN], 0);
 }

@@ -1,3 +1,11 @@
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.[ch]: store the time when the image is first
+	dirtied.
+
+	* app/display/gimpdisplayshell-close.c: tell the user what time
+	period of changes will be lost when the image is not saved.
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brushes.pdb (brushes_get_brush_data)
