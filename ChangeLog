@@ -1,5 +1,10 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/user-install-dialog.c (user_install_migrate_files):
+	don't copy pluginrc* and themerc*.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpimage.h: one more s/cmap/colormap/.
 
 2004-11-02  Michael Natterer  <mitch@gimp.org>

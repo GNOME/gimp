@@ -1246,7 +1246,9 @@ user_install_migrate_files (const gchar   *oldgimp,
           source = g_build_filename (oldgimp, basename, NULL);
 
           if (g_file_test (source, G_FILE_TEST_IS_REGULAR) &&
-              (strncmp (basename, "gimpswap.", 9) != 0))
+              (strncmp (basename, "gimpswap.", 9) != 0)    &&
+              (strncmp (basename, "pluginrc",  8) != 0)    &&
+              (strncmp (basename, "themerc",   7) != 0))
             {
               g_snprintf (dest, sizeof (dest), "%s%c%s",
                           gimp_directory (), G_DIR_SEPARATOR, basename);
