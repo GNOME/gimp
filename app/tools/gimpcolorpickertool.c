@@ -26,11 +26,14 @@
 #include "tools-types.h"
 #include "gui/gui-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-projection.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimptoolinfo.h"
 
+#include "gui/color-area.h"
 #include "gui/info-dialog.h"
 #include "gui/palette-editor.h"
 
@@ -109,6 +112,17 @@ static void       gimp_color_picker_tool_cursor_update  (GimpTool        *tool,
 
 static void       gimp_color_picker_tool_draw           (GimpDrawTool    *draw_tool);
 
+static gboolean   gimp_color_picker_tool_pick_color     (GimpImage            *gimage,
+                                                         GimpDrawable         *drawable,
+                                                         gint                  x,
+                                                         gint                  y,
+                                                         gboolean              sample_merged,
+                                                         gboolean              sample_average,
+                                                         gdouble               average_radius,
+                                                         gboolean              update_active,
+                                                         GimpUpdateColorState  update_state);
+
+
 static GimpToolOptions * gimp_color_picker_tool_options_new   (GimpToolInfo    *tool_info);
 static void              gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options);
 
@@ -117,34 +131,19 @@ static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widg
 static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
                                                                  gboolean   valid);
 
-					      			
-					      			
-static gboolean   pick_color_do               (GimpImage      *gimage,
-					       GimpDrawable   *drawable,
-					       gint            x,
-					       gint            y,
-					       gboolean        sample_merged,
-					       gboolean        sample_average,
-					       gdouble         average_radius,
-					       gboolean        update_active,
-					       gint            final);
 
-
-/*  the color value  */
-gint col_value[5] = { 0, 0, 0, 0, 0 };
-
-/*  the color picker dialog  */
-static gint           update_type;
-static GimpImageType  sample_type;
-static InfoDialog    *gimp_color_picker_tool_info = NULL;
-static GtkWidget     *color_area        = NULL;
-static gchar          red_buf  [MAX_INFO_BUF];
-static gchar          green_buf[MAX_INFO_BUF];
-static gchar          blue_buf [MAX_INFO_BUF];
-static gchar          alpha_buf[MAX_INFO_BUF];
-static gchar          index_buf[MAX_INFO_BUF];
-static gchar          gray_buf [MAX_INFO_BUF];
-static gchar          hex_buf  [MAX_INFO_BUF];
+static gint                  col_value[5] = { 0, 0, 0, 0, 0 };
+static GimpUpdateColorState  update_type;
+static GimpImageType         sample_type;
+static InfoDialog           *gimp_color_picker_tool_info = NULL;
+static GtkWidget            *color_area        = NULL;
+static gchar                 red_buf  [MAX_INFO_BUF];
+static gchar                 green_buf[MAX_INFO_BUF];
+static gchar                 blue_buf [MAX_INFO_BUF];
+static gchar                 alpha_buf[MAX_INFO_BUF];
+static gchar                 index_buf[MAX_INFO_BUF];
+static gchar                 gray_buf [MAX_INFO_BUF];
+static gchar                 hex_buf  [MAX_INFO_BUF];
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -384,31 +383,35 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
    */
   if (state & GDK_SHIFT_MASK)
     {
-      gimp_color_picker_tool_info_update (tool,
-                                          pick_color_do (gdisp->gimage,
-                                                         tool->drawable,
-                                                         coords->x,
-                                                         coords->y,
-                                                         options->sample_merged,
-                                                         options->sample_average,
-                                                         options->average_radius,
-                                                         options->update_active,
-                                                         COLOR_NEW));
-      update_type = COLOR_UPDATE_NEW;
+      gimp_color_picker_tool_info_update
+        (tool,
+         gimp_color_picker_tool_pick_color (gdisp->gimage,
+                                            tool->drawable,
+                                            coords->x,
+                                            coords->y,
+                                            options->sample_merged,
+                                            options->sample_average,
+                                            options->average_radius,
+                                            options->update_active,
+                                            GIMP_UPDATE_COLOR_STATE_NEW));
+
+      update_type = GIMP_UPDATE_COLOR_STATE_UPDATE_NEW;
     }
   else
     {
-      gimp_color_picker_tool_info_update (tool,
-                                          pick_color_do (gdisp->gimage,
-                                                         tool->drawable,
-                                                         coords->x,
-                                                         coords->y,
-                                                         options->sample_merged,
-                                                         options->sample_average,
-                                                         options->average_radius,
-                                                         options->update_active,
-                                                         COLOR_UPDATE));
-      update_type = COLOR_UPDATE;
+      gimp_color_picker_tool_info_update
+        (tool,
+         gimp_color_picker_tool_pick_color (gdisp->gimage,
+                                            tool->drawable,
+                                            coords->x,
+                                            coords->y,
+                                            options->sample_merged,
+                                            options->sample_average,
+                                            options->average_radius,
+                                            options->update_active,
+                                            GIMP_UPDATE_COLOR_STATE_UPDATE));
+
+      update_type = GIMP_UPDATE_COLOR_STATE_UPDATE;
     }
 
   /*  Start drawing the colorpicker tool  */
@@ -432,16 +435,17 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
   gdk_pointer_ungrab (time);
   gdk_flush ();
 
-  gimp_color_picker_tool_info_update (tool,
-                                      pick_color_do (gdisp->gimage,
-                                                     tool->drawable,
-                                                     coords->x,
-                                                     coords->y,
-                                                     options->sample_merged,
-                                                     options->sample_average,
-                                                     options->average_radius,
-                                                     options->update_active,
-                                                     update_type));
+  gimp_color_picker_tool_info_update
+    (tool,
+     gimp_color_picker_tool_pick_color (gdisp->gimage,
+                                        tool->drawable,
+                                        coords->x,
+                                        coords->y,
+                                        options->sample_merged,
+                                        options->sample_average,
+                                        options->average_radius,
+                                        options->update_active,
+                                        update_type));
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
 
@@ -471,16 +475,17 @@ gimp_color_picker_tool_motion (GimpTool        *tool,
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;
 
-  gimp_color_picker_tool_info_update (tool,
-                                      pick_color_do (gdisp->gimage,
-                                                     tool->drawable,
-                                                     coords->x,
-                                                     coords->y,
-                                                     options->sample_merged,
-                                                     options->sample_average,
-                                                     options->average_radius,
-                                                     options->update_active,
-                                                     update_type));
+  gimp_color_picker_tool_info_update
+    (tool,
+     gimp_color_picker_tool_pick_color (gdisp->gimage,
+                                        tool->drawable,
+                                        coords->x,
+                                        coords->y,
+                                        options->sample_merged,
+                                        options->sample_average,
+                                        options->average_radius,
+                                        options->update_active,
+                                        update_type));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -520,130 +525,6 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
     }
 }
 
-
-typedef guchar * (*GetColorFunc) (GimpObject *object,
-				  gint        x,
-				  gint        y);
-
-
-static gboolean
-pick_color_do (GimpImage    *gimage,
-	       GimpDrawable *drawable,
-	       gint          x,
-	       gint          y,
-	       gboolean      sample_merged,
-	       gboolean      sample_average,
-	       gdouble       average_radius,
-	       gboolean      update_active,
-	       gint          final)
-{
-  guchar       *color;
-  gint          offx, offy;
-  gint          has_alpha;
-  gint          is_indexed;
-  GetColorFunc  get_color_func;
-  GimpObject   *get_color_obj;
-
-
-  if (!drawable && !sample_merged)
-    return FALSE;
-
-  if (! sample_merged)
-    {
-      gimp_drawable_offsets (drawable, &offx, &offy);
-      x -= offx;
-      y -= offy;
-
-      sample_type = gimp_drawable_type (drawable);
-      is_indexed = gimp_drawable_is_indexed (drawable);
-
-      get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
-      get_color_obj = GIMP_OBJECT (drawable);
-    }
-  else
-    {
-      sample_type = gimp_image_projection_type (gimage);
-      is_indexed = FALSE;
-
-      get_color_func = (GetColorFunc) gimp_image_projection_get_color_at;
-      get_color_obj = GIMP_OBJECT (gimage);
-    }
-
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
-
-  if (!(color = (* get_color_func) (get_color_obj, x, y)))
-    return FALSE;
-
-  if (sample_average)
-    {
-      gint    i, j;
-      gint    count = 0;
-      gint    color_avg[4] = { 0, 0, 0, 0 };
-      guchar *tmp_color;
-      gint    radius = (gint) average_radius;
-
-      for (i = x - radius; i <= x + radius; i++)
-	for (j = y - radius; j <= y + radius; j++)
-	  if ((tmp_color = (* get_color_func) (get_color_obj, i, j)))
-	    {
-	      count++;
-	
-	      color_avg[RED_PIX]   += tmp_color[RED_PIX];
-	      color_avg[GREEN_PIX] += tmp_color[GREEN_PIX];
-	      color_avg[BLUE_PIX]  += tmp_color[BLUE_PIX];
-	      if (has_alpha)
-		color_avg[ALPHA_PIX] += tmp_color[ALPHA_PIX];
-
-	      g_free (tmp_color);
-	    }
-
-      color[RED_PIX]   = (guchar) (color_avg[RED_PIX] / count);
-      color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
-      color[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX] / count);
-      if (has_alpha)
-	color[ALPHA_PIX] = (guchar) (color_avg[ALPHA_PIX] / count);
-
-      is_indexed = FALSE;
-    }
-
-  col_value[RED_PIX]   = color[RED_PIX];
-  col_value[GREEN_PIX] = color[GREEN_PIX];
-  col_value[BLUE_PIX]  = color[BLUE_PIX];
-  if (has_alpha)
-    col_value[ALPHA_PIX] = color[ALPHA_PIX];
-  if (is_indexed)
-    col_value[4] = color[4];
-
-  if (update_active)
-    palette_set_active_color (col_value [RED_PIX],
-			      col_value [GREEN_PIX],
-			      col_value [BLUE_PIX],
-			      final);
-
-  g_free (color);
-
-  return TRUE;
-}
-
-gboolean
-pick_color (GimpImage    *gimage,
-	    GimpDrawable *drawable,
-	    gint          x,
-	    gint          y,
-	    gboolean      sample_merged,
-	    gboolean      sample_average,
-	    gdouble       average_radius,
-	    gint          final)
-{
-  return pick_color_do (gimage, drawable,
-			x, y,
-			sample_merged,
-			sample_average,
-			average_radius,
-			TRUE,
-			final);
-}
-
 static void
 gimp_color_picker_tool_draw (GimpDrawTool *draw_tool)
 {
@@ -666,6 +547,57 @@ gimp_color_picker_tool_draw (GimpDrawTool *draw_tool)
                                      2 * options->average_radius + 1,
                                      TRUE);
     }
+}
+
+static gboolean
+gimp_color_picker_tool_pick_color (GimpImage            *gimage,
+                                   GimpDrawable         *drawable,
+                                   gint                  x,
+                                   gint                  y,
+                                   gboolean              sample_merged,
+                                   gboolean              sample_average,
+                                   gdouble               average_radius,
+                                   gboolean              update_active,
+                                   GimpUpdateColorState  update_state)
+{
+  GimpRGB  color;
+  gint     color_index;
+  gboolean retval;
+  guchar   r, g, b, a;
+
+  retval = gimp_image_pick_color (gimage,
+                                  drawable,
+                                  sample_merged,
+                                  x, y,
+                                  sample_average,
+                                  average_radius,
+                                  &color,
+                                  &sample_type,
+                                  &color_index);
+
+  gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
+
+  col_value[RED_PIX]   = r;
+  col_value[GREEN_PIX] = g;
+  col_value[BLUE_PIX]  = b;
+  col_value[ALPHA_PIX] = a;
+  col_value[4]         = color_index;
+
+  if (update_active)
+    {
+      palette_editor_update_color (gimp_get_user_context (gimage->gimp),
+                                   &color,
+                                   update_state);
+
+      if (active_color == FOREGROUND)
+        gimp_context_set_foreground (gimp_get_user_context (gimage->gimp),
+                                     &color);
+      else if (active_color == BACKGROUND)
+        gimp_context_set_background (gimp_get_user_context (gimage->gimp),
+                                     &color);
+    }
+
+  return retval;
 }
 
 static void

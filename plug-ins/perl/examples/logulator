@@ -977,7 +977,7 @@ sub script_fu_title_header {
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($bg_layer, BG_IMAGE_FILL);
       gimp_ellipse_select ($img, 0, 0, $text_height, $text_height, REPLACE, 1, 0, 0);
-      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0, 6, 0));
+      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0, 6));
       gimp_edit_fill ($bg_layer, BG_IMAGE_FILL);
       gimp_rect_select ($img, ($img_width - $fade_width), 0, $fade_width, $text_height, REPLACE, 0, 0);
       gimp_palette_set_foreground (gimp_palette_get_background ());

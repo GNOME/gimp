@@ -113,59 +113,57 @@ struct _PaintUndo
 
 GType   gimp_paint_tool_get_type        (void) G_GNUC_CONST;
 
-void    gimp_paint_tool_paint           (GimpPaintTool       *tool,
+void    gimp_paint_tool_paint           (GimpPaintTool       *paint_tool,
 					 GimpDrawable        *drawable,
-					 PaintState	    state);
+					 PaintState	      state);
 
-void    gimp_paint_tool_no_draw         (GimpPaintTool       *tool);
-
-int     gimp_paint_tool_start           (GimpPaintTool    *tool,
+int     gimp_paint_tool_start           (GimpPaintTool       *paint_tool,
 					 GimpDrawable        *drawable,
 					 gdouble              x,
 					 gdouble              y);
-void    gimp_paint_tool_interpolate     (GimpPaintTool    *tool,
+void    gimp_paint_tool_interpolate     (GimpPaintTool       *paint_tool,
 					 GimpDrawable        *drawable);
-void    gimp_paint_tool_finish          (GimpPaintTool    *tool,
+void    gimp_paint_tool_finish          (GimpPaintTool       *paint_tool,
 					 GimpDrawable        *drawable);
-void    gimp_paint_tool_cleanup         (void);
+void    gimp_paint_tool_cleanup         (GimpPaintTool       *paint_tool);
 
-void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *tool,
+void    gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *paint_tool,
                                                  GimpGradient      *gradient,
 						 gdouble            gradient_length,
 						 GimpRGB           *color,
 						 GradientPaintMode  mode);
 
 /*  paint tool painting functions  */
-TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool    *tool,
-                                           GimpDrawable     *drawable,
-                                           gdouble           scale);
-TempBuf * gimp_paint_tool_get_orig_image  (GimpPaintTool    *tool,
-                                           GimpDrawable     *drawable,
-                                           gint              x1,
-                                           gint              y1,
-                                           gint              x2,
-                                           gint              y2);
-void  gimp_paint_tool_paste_canvas    (GimpPaintTool        *tool,
-				       GimpDrawable         *drawable,
-				       gint                  brush_opacity,
-				       gint                  image_opacity,
-				       GimpLayerModeEffects  paint_mode,
-				       BrushApplicationMode  brush_hardness,
-				       gdouble               brush_scale,
-				       PaintApplicationMode  mode);
-void  gimp_paint_tool_replace_canvas  (GimpPaintTool        *tool,
-				       GimpDrawable         *drawable,
-				       gint                  brush_opacity,
-				       gint                  image_opacity,
-				       BrushApplicationMode  brush_hardness,
-				       gdouble               brush_scale,
-				       PaintApplicationMode  mode);
-void gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *tool,
-					     GimpImage            *dest, 
-					     GimpDrawable         *drawable,
-					     TempBuf              *area, 
-					     gdouble               scale, 
-					     BrushApplicationMode  mode);
+TempBuf * gimp_paint_tool_get_paint_area        (GimpPaintTool        *paint_tool,
+                                                 GimpDrawable         *drawable,
+                                                 gdouble               scale);
+TempBuf * gimp_paint_tool_get_orig_image        (GimpPaintTool        *paint_tool,
+                                                 GimpDrawable         *drawable,
+                                                 gint                  x1,
+                                                 gint                  y1,
+                                                 gint                  x2,
+                                                 gint                  y2);
+void      gimp_paint_tool_paste_canvas          (GimpPaintTool        *paint_tool,
+                                                 GimpDrawable         *drawable,
+                                                 gint                  brush_opacity,
+                                                 gint                  image_opacity,
+                                                 GimpLayerModeEffects  paint_mode,
+                                                 BrushApplicationMode  brush_hardness,
+                                                 gdouble               brush_scale,
+                                                 PaintApplicationMode  mode);
+void      gimp_paint_tool_replace_canvas        (GimpPaintTool        *paint_tool,
+                                                 GimpDrawable         *drawable,
+                                                 gint                  brush_opacity,
+                                                 gint                  image_opacity,
+                                                 BrushApplicationMode  brush_hardness,
+                                                 gdouble               brush_scale,
+                                                 PaintApplicationMode  mode);
+void     gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *paint_tool,
+                                                 GimpImage            *dest, 
+                                                 GimpDrawable         *drawable,
+                                                 TempBuf              *area, 
+                                                 gdouble               scale, 
+                                                 BrushApplicationMode  mode);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

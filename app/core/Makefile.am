@@ -96,6 +96,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-merge.h		\
 	gimpimage-new.c			\
 	gimpimage-new.h			\
+	gimpimage-pick-color.c		\
+	gimpimage-pick-color.h		\
 	gimpimage-projection.c		\
 	gimpimage-projection.h		\
 	gimpimage-qmask.c		\

@@ -162,40 +162,32 @@ static GtkTargetEntry color_palette_target_table[] =
 /*  called from color_picker.h  *********************************************/
 
 void
-palette_set_active_color (gint r,
-			  gint g,
-			  gint b,
-			  gint state)
+palette_editor_update_color (GimpContext          *context,
+                             const GimpRGB        *color,
+                             GimpUpdateColorState  state)
 {
 #ifdef __GNUC__
 #warning FIXME: palette_set_active_color()
 #endif
 #if 0
-  GimpPalette *palette;
-  GimpRGB      color;
-
-  gimp_rgba_set_uchar (&color,
-		       (guchar) r,
-		       (guchar) g,
-		       (guchar) b,
-		       255);
-
   if (top_level_edit_palette)
     {
+      GimpPalette *palette;
+
       palette = gimp_context_get_palette (top_level_edit_palette->context);
 
       if (palette)
 	{
 	  switch (state)
 	    {
-	    case COLOR_NEW:
+	    case GIMP_UPDATE_COLOR_STATE_NEW:
 	      top_level_edit_palette->color = gimp_palette_add_entry (palette,
 								      NULL,
-								      &color);
+								      color);
 	      break;
 
-	    case COLOR_UPDATE_NEW:
-	      top_level_edit_palette->color->color = color;
+	    case GIMP_UPDATE_COLOR_STATE_UPDATE_NEW:
+	      top_level_edit_palette->color->color = *color;
 
 	      gimp_data_dirty (GIMP_DATA (palette));
 	      break;
@@ -205,11 +197,6 @@ palette_set_active_color (gint r,
 	    }
 	}
     }
-
-  if (active_color == FOREGROUND)
-    gimp_context_set_foreground (gimp_get_user_context (the_gimp), &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_set_background (gimp_get_user_context (the_gimp), &color);
 #endif
 }
 

@@ -166,7 +166,6 @@ gimp_bucket_fill (gint32               drawable_ID,
  * @sample_merged: Use the composite image, not the drawable.
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
- * @save_color: Save the color to the active palette.
  * @color: The return color.
  *
  * Determine the color at the given drawable coordinates
@@ -193,7 +192,6 @@ gimp_color_picker (gint32    image_ID,
 		   gboolean  sample_merged,
 		   gboolean  sample_average,
 		   gdouble   average_radius,
-		   gboolean  save_color,
 		   GimpRGB  *color)
 {
   GimpParam *return_vals;
@@ -209,7 +207,6 @@ gimp_color_picker (gint32    image_ID,
 				    GIMP_PDB_INT32, sample_merged,
 				    GIMP_PDB_INT32, sample_average,
 				    GIMP_PDB_FLOAT, average_radius,
-				    GIMP_PDB_INT32, save_color,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

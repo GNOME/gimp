@@ -1,5 +1,40 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpimage-pick-color.[ch]: new files.
+
+	gimp_image_pick_color() doesn't set the FG or BG color and doesn't
+	touch the current palettte.
+
+	* app/tools/gimpcolorpickertool.[ch]: removed the actual picking
+	code, set the user_context's FG or BG color here.
+
+	* app/gui/palette-editor.[ch]:
+	s/palette_set_active_color/palette_editor_update_color/, don't set
+	the FG and BG color here. The function is still #if 0'ed.
+
+	* app/gui/toolbox.c: fixed WM resize hints in toolbox_style_set(),
+	code cleanup.
+
+	* app/tools/gimppainttool.[ch]: some cleanup before chopping.
+
+	* app/tools/gimpsmudgetool.c: changed accordingly.
+
+	* tools/pdbgen/pdb/misc_tools.pdb: removed the possibility to set
+	the FG or BG color or add the picked color to the active palette
+	bacause it doesn't belong here. Palette PDB wrappers are on the
+	TODO anyway.
+
+	* app/pdb/misc_tools_cmds.c
+	* libgimp/gimpmisctools_pdb.[ch]: regenerated.
+
+	* plug-ins/perl/examples/image_tile
+	* plug-ins/perl/examples/logulator
+	* plug-ins/script-fu/scripts/hsv-graph.scm
+	* plug-ins/script-fu/scripts/title-header.scm: changed accordingly.
+
+2001-12-12  Michael Natterer  <mitch@gimp.org>
+
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
 	layers by Ville Pätsi (drc).
 

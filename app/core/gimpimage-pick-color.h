@@ -16,30 +16,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PALETTE_EDITOR_H__
-#define __PALETTE_EDITOR_H__
+#ifndef  __GIMP_IMAGE_PICK_COLOR_H__
+#define  __GIMP_IMAGE_PICK_COLOR_H__
 
 
-typedef enum
-{
-  GIMP_UPDATE_COLOR_STATE_NEW,
-  GIMP_UPDATE_COLOR_STATE_UPDATE_NEW,
-  GIMP_UPDATE_COLOR_STATE_UPDATE
-} GimpUpdateColorState;
+gboolean   gimp_image_pick_color (GimpImage     *gimage,
+                                  GimpDrawable  *drawable,
+                                  gboolean       sample_merged,
+                                  gint           x,
+                                  gint           y,
+                                  gboolean       sample_average,
+                                  gdouble        average_radius,
+                                  GimpRGB       *color,
+                                  GimpImageType *sample_type,
+                                  gint          *color_index);
 
 
-typedef struct _PaletteEditor PaletteEditor;
-
-
-PaletteEditor * palette_editor_new          (Gimp          *gimp);
-
-void            palette_editor_set_palette  (PaletteEditor *palette_editor,
-                                             GimpPalette   *palette);
-void            palette_editor_free         (PaletteEditor *palette_editor);
-
-void            palette_editor_update_color (GimpContext          *context,
-                                             const GimpRGB        *color,
-                                             GimpUpdateColorState  state);
-
-
-#endif /* __PALETTE_EDITOR_H__ */
+#endif  /* __GIMP_IMAGE_PICK_COLOR_H__ */

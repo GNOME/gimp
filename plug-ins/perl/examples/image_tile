@@ -324,9 +324,7 @@ sub get_image_cells {
 			    ($end_complete-$start_complete)*$x/$xcells)/100);
     }
     for(my $y=0;$y<$ycells;$y++) {
-      # Why is this setting FG? PDB docs seem to indicate that I can shut
-      # that off...
-      my $color = gimp_color_picker($draw,$x,$y,0,1,1.0,0); # Gimp 1.1 -deleted $img
+      my $color = gimp_color_picker($draw,$x,$y,0,1,1.0); # Gimp 1.1 -deleted $img
       my @c;
       if ($DO_HSV) {
 	@c = rgb2hsv(@$color);

@@ -166,7 +166,7 @@ static void      gimp_paint_tool_invalidate_cache     (GimpBrush    *brush,
 
 
 /*  paint buffers utility functions  */
-static void        free_paint_buffers            (void);
+static void      gimp_paint_tool_free_buffers     (GimpPaintTool *paint_tool);
 
 /*  brush pipe utility functions  */
 static void        paint_line_pixmap_mask  (GimpImage            *dest,
@@ -288,7 +288,7 @@ gimp_paint_tool_control (GimpTool    *tool,
 
     case HALT:
       gimp_paint_tool_paint (paint_tool, drawable, FINISH_PAINT);
-      gimp_paint_tool_cleanup ();
+      gimp_paint_tool_cleanup (paint_tool);
       break;
 
     default:
@@ -1063,7 +1063,7 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
 }
 
 void
-gimp_paint_tool_cleanup (void)
+gimp_paint_tool_cleanup (GimpPaintTool *paint_tool)
 {
   /*  CLEANUP  */
   /*  If the undo tiles exist, nuke them  */
@@ -1081,7 +1081,7 @@ gimp_paint_tool_cleanup (void)
     }
 
   /*  Free the temporary buffers if they exist  */
-  free_paint_buffers ();
+  gimp_paint_tool_free_buffers (paint_tool);
 }
 
 void
@@ -2084,7 +2084,7 @@ set_canvas_tiles (gint x,
 
 
 static void
-free_paint_buffers (void)
+gimp_paint_tool_free_buffers (GimpPaintTool *paint_tool)
 {
   if (orig_buf)
     temp_buf_free (orig_buf);

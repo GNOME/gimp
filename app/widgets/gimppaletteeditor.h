@@ -20,25 +20,26 @@
 #define __PALETTE_EDITOR_H__
 
 
-/*  The states for updating a color in the palette via palette_set_* calls */
-#define COLOR_NEW         0
-#define COLOR_UPDATE_NEW  1
-#define COLOR_UPDATE      2
+typedef enum
+{
+  GIMP_UPDATE_COLOR_STATE_NEW,
+  GIMP_UPDATE_COLOR_STATE_UPDATE_NEW,
+  GIMP_UPDATE_COLOR_STATE_UPDATE
+} GimpUpdateColorState;
 
 
 typedef struct _PaletteEditor PaletteEditor;
 
 
-PaletteEditor * palette_editor_new         (Gimp          *gimp);
+PaletteEditor * palette_editor_new          (Gimp          *gimp);
 
-void            palette_editor_set_palette (PaletteEditor *palette_editor,
-					    GimpPalette   *palette);
-void            palette_editor_free        (PaletteEditor *palette_editor);
+void            palette_editor_set_palette  (PaletteEditor *palette_editor,
+                                             GimpPalette   *palette);
+void            palette_editor_free         (PaletteEditor *palette_editor);
 
-void            palette_set_active_color   (gint           r,
-					    gint           g,
-					    gint           b,
-					    gint           state);
+void            palette_editor_update_color (GimpContext          *context,
+                                             const GimpRGB        *color,
+                                             GimpUpdateColorState  state);
 
 
 #endif /* __PALETTE_EDITOR_H__ */

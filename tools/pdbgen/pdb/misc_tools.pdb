@@ -222,9 +222,7 @@ HELP
 		   radius' },
 	{ name => 'average_radius', type => '0 < float',
 	  desc => 'The radius of pixels to average',
-	  cond => [ 'sample_average' ] },
-	{ name => 'save_color', type => 'boolean',
-	  desc => 'Save the color to the active palette' }
+	  cond => [ 'sample_average' ] }
     );
     $inargs[1]->{no_success} = 1;
 
@@ -234,7 +232,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpcolorpickertool.h") ],
+	headers => [ qw("core/gimpimage-pick-color.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -242,25 +240,22 @@ HELP
       success = FALSE;
 
   if (success)
-    success = pick_color (gimage, drawable, (int) x, (int) y,
-			  sample_merged, sample_average, average_radius,
-			  save_color);
-  if (success)
-    {
-      gimp_rgba_set_uchar (&color, 
-		           col_value[RED_PIX],
-		           col_value[GREEN_PIX],
-		           col_value[BLUE_PIX],
-		           col_value[ALPHA_PIX]);
-    }
+    success = gimp_image_pick_color (gimage,
+                                     drawable,
+			             sample_merged,
+                                     (gint) x, (gint) y,
+                                     sample_average,
+                                     average_radius,
+                                     &color,
+                                     NULL,
+                                     NULL);
 }
 CODE
     );
 }
 
 
-@headers = qw("libgimpmath/gimpmath.h" "base/tile-manager.h"
-	      "core/gimpdrawable.h" "tools/tools-types.h");
+@headers = qw("libgimpmath/gimpmath.h" "core/gimpdrawable.h");
 
 @procs = qw(blend bucket_fill color_picker);
 

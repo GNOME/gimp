@@ -58,7 +58,6 @@ gboolean gimp_color_picker (gint32                image_ID,
 			    gboolean              sample_merged,
 			    gboolean              sample_average,
 			    gdouble               average_radius,
-			    gboolean              save_color,
 			    GimpRGB              *color);
 
 

@@ -507,7 +507,7 @@ gimp_smudge_tool_non_gui (GimpDrawable *drawable,
 
       gimp_paint_tool_finish (paint_tool, drawable);
 
-      gimp_paint_tool_cleanup ();
+      gimp_paint_tool_cleanup (paint_tool);
 
       gimp_smudge_tool_finish (paint_tool, drawable);
 

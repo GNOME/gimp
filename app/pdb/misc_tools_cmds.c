@@ -21,23 +21,21 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "tools/tools-types.h"
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
-#include "base/tile-manager.h"
 #include "core/core-enums.h"
 #include "core/core-types.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimpimage.h"
-#include "tools/gimpcolorpickertool.h"
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -364,7 +362,6 @@ color_picker_invoker (Gimp     *gimp,
   gboolean sample_merged;
   gboolean sample_average;
   gdouble average_radius;
-  gboolean save_color;
   GimpRGB color;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -385,8 +382,6 @@ color_picker_invoker (Gimp     *gimp,
   if (sample_average && (average_radius <= 0.0))
     success = FALSE;
 
-  save_color = args[7].value.pdb_int ? TRUE : FALSE;
-
   if (success)
     {
       if (!sample_merged)
@@ -394,17 +389,15 @@ color_picker_invoker (Gimp     *gimp,
 	  success = FALSE;
     
       if (success)
-	success = pick_color (gimage, drawable, (int) x, (int) y,
-			      sample_merged, sample_average, average_radius,
-			      save_color);
-      if (success)
-	{
-	  gimp_rgba_set_uchar (&color, 
-			       col_value[RED_PIX],
-			       col_value[GREEN_PIX],
-			       col_value[BLUE_PIX],
-			       col_value[ALPHA_PIX]);
-	}
+	success = gimp_image_pick_color (gimage,
+					 drawable,
+					 sample_merged,
+					 (gint) x, (gint) y,
+					 sample_average,
+					 average_radius,
+					 &color,
+					 NULL,
+					 NULL);
     }
 
   return_args = procedural_db_return_args (&color_picker_proc, success);
@@ -451,11 +444,6 @@ static ProcArg color_picker_inargs[] =
     GIMP_PDB_FLOAT,
     "average_radius",
     "The radius of pixels to average"
-  },
-  {
-    GIMP_PDB_INT32,
-    "save_color",
-    "Save the color to the active palette"
   }
 };
 
@@ -477,7 +465,7 @@ static ProcRecord color_picker_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  8,
+  7,
   color_picker_inargs,
   1,
   color_picker_outargs,
