@@ -1,5 +1,12 @@
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* tools/kernelgen.c: cleanup. Removed trailing whitespace in
+	generated output.
+
+	* app/paint/gimppaintcore-kernels.h: regenerated.
+
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c: check if the active_tool is a
 	GimpDrawTool before casting & accessing its members.
 

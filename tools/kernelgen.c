@@ -1,12 +1,12 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * kernel_gen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org> 
+ * kernel_gen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org>
  *    Simple hack to create subsampling kernels for the brushes
  *    as used in app/paint_core.c.
  *    If you want to play with it, change some of the #defines at the
  *    top and copy the output to apps/tools/paint_core_kernels.h.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -21,8 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 
 #define STEPS          64
@@ -57,7 +59,7 @@ create_kernel (double x,
       for (i = 0; i < STEPS * KERNEL_WIDTH; i++)
 	{
 	  dist_x = x - (((double)i + 0.5) / (double)STEPS);
-	  
+
 	  /*  I've tried to use a gauss function here instead of a
 	      threshold, but the result was not that impressive.    */
 	  w = (SQR (dist_x) + SQR (dist_y)) < THRESHOLD ? 1.0 : 0.0;
@@ -74,10 +76,10 @@ create_kernel (double x,
 	  w = 256.0 * (value[i][j] / sum);
 	  printf (" %3d,", (int)w);
 	}
-    }    
+    }
 }
 
-int 
+int
 main (int    argc,
       char **argv)
 {
@@ -98,12 +100,12 @@ main (int    argc,
   printf ("/*  Brush pixel subsampling kernels  */\n");
   printf ("static const int subsample[%d][%d][%d] =\n{\n",
 	  SUBSAMPLE + 1, SUBSAMPLE + 1, KERNEL_WIDTH * KERNEL_HEIGHT);
-  
+
   for (j = 0; j <= SUBSAMPLE; j++)
     {
       y = (double)j / (double)(SUBSAMPLE);
- 
-      printf ("  {\n");  
+
+      printf ("  {\n");
 
       for (i = 0; i <= SUBSAMPLE; i++)
 	{
@@ -111,21 +113,15 @@ main (int    argc,
 
 	  printf ("    {");
 	  create_kernel (x, y);
-	  printf (" }%c\n", i < SUBSAMPLE ? ',' : ' ');
+	  printf (" }%s", i < SUBSAMPLE ? ",\n" : "\n");
 	}
 
-      printf ("  }%c\n", j < SUBSAMPLE ? ',' : ' ');
+      printf ("  }%s", j < SUBSAMPLE ? ",\n" : "\n");
     }
 
   printf ("};\n\n");
 
-  printf ("#endif /* __GIMP_PAINT_CORE_KERNELS_H__\n");
+  printf ("#endif /* __GIMP_PAINT_CORE_KERNELS_H__ */\n");
 
-  exit (0);
+  return 0;
 }
-
-
-
-
-
-
