@@ -19,7 +19,6 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #include "gimppatheditor.h"
 
 #include "libgimp/gimpfileselection.h"
@@ -32,8 +31,7 @@
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
 
-/*  callbacks
- */
+/*  forward declaration  */
 static void gimp_path_editor_realize          (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_select_callback  (GtkWidget *widget, gpointer data);
 static void gimp_path_editor_deselect_callback (GtkWidget *widget,
@@ -51,7 +49,7 @@ static void gimp_path_editor_check_path (GimpPathEditor *gpe,
 */
 
 enum {
-  GPE_PATH_CHANGED_SIGNAL,
+  PATH_CHANGED,
   LAST_SIGNAL
 };
 
@@ -68,17 +66,18 @@ gimp_path_editor_class_init (GimpPathEditorClass *class)
 
   parent_class = gtk_type_class (gtk_vbox_get_type ());
 
-  gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL] = 
+  gimp_path_editor_signals[PATH_CHANGED] = 
               gtk_signal_new ("path_changed",
 			      GTK_RUN_FIRST,
 			      object_class->type,
 			      GTK_SIGNAL_OFFSET (GimpPathEditorClass,
-						 gimp_path_editor),
+						 path_changed),
 			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+
   gtk_object_class_add_signals (object_class, gimp_path_editor_signals, 
 				LAST_SIGNAL);
 
-  class->gimp_path_editor = NULL;
+  class->path_changed = NULL;
 }
 
 static void
@@ -138,16 +137,15 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 					 gpe->dir_list);
   gtk_widget_show (gpe->dir_list);
 
-  /*  this callback does the rest (pixmap creation etc.)
-   */
+  /*  this callback does the rest (pixmap creation etc.)  */
   gtk_signal_connect (GTK_OBJECT(gpe), "realize",
 		      GTK_SIGNAL_FUNC(gimp_path_editor_realize), gpe);
 }
 
-guint
+GtkType
 gimp_path_editor_get_type ()
 {
-  static guint gpe_type = 0;
+  static GtkType gpe_type = 0;
 
   if (!gpe_type)
     {
@@ -195,8 +193,7 @@ gimp_path_editor_new (gchar *filesel_title,
   directory_list = NULL;
   directory = path = g_strdup (path);
 
-  /*  split up the path
-   */
+  /*  split up the path  */
   while (strlen (directory))
     {
       gchar *current_dir;
@@ -235,7 +232,6 @@ gimp_path_editor_new (gchar *filesel_title,
 
   return GTK_WIDGET (gpe);
 }
-
 
 static void
 gimp_path_editor_realize (GtkWidget *widget,
@@ -301,7 +297,6 @@ gimp_path_editor_realize (GtkWidget *widget,
   */
 }
 
-
 gchar*
 gimp_path_editor_get_path (GimpPathEditor *gpe)
 {
@@ -336,7 +331,6 @@ gimp_path_editor_get_path (GimpPathEditor *gpe)
 
   return path;
 }
-
 
 static void
 gimp_path_editor_select_callback (GtkWidget *widget,
@@ -384,7 +378,6 @@ gimp_path_editor_deselect_callback (GtkWidget *widget,
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (gpe->selected_item), gpe);
 }
 
-
 static void
 gimp_path_editor_new_callback (GtkWidget *widget,
 			       gpointer   data)
@@ -411,7 +404,6 @@ gimp_path_editor_new_callback (GtkWidget *widget,
   gtk_widget_grab_focus (GTK_WIDGET (GIMP_FILE_SELECTION (gpe->file_selection)->entry));
 }
 
-
 static void
 gimp_path_editor_move_callback (GtkWidget *widget,
 				gpointer   data)
@@ -435,9 +427,8 @@ gimp_path_editor_move_callback (GtkWidget *widget,
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos + distance);
 
   gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);
+		   gimp_path_editor_signals[PATH_CHANGED]);
 }
-
 
 static void
 gimp_path_editor_delete_callback (GtkWidget *widget,
@@ -473,9 +464,8 @@ gimp_path_editor_delete_callback (GtkWidget *widget,
   gtk_list_select_item (GTK_LIST (gpe->dir_list), pos);
 
   gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);
+		   gimp_path_editor_signals[PATH_CHANGED]);
 }
-
 
 static void
 gimp_path_editor_filesel_callback (GtkWidget *widget,
@@ -521,16 +511,14 @@ gimp_path_editor_filesel_callback (GtkWidget *widget,
   /* gimp_path_editor_check_path (gpe, gpe->selected_item); */
 
   gtk_signal_emit (GTK_OBJECT (gpe),
-		   gimp_path_editor_signals[GPE_PATH_CHANGED_SIGNAL]);
+		   gimp_path_editor_signals[PATH_CHANGED]);
 }
-
 
 static void
 gimp_path_editor_data_destroy_callback (gpointer *data)
 {
   g_free (data);
 }
-
 
 /*
 static void gimp_path_editor_check_path (GimpPathEditor *gpe,

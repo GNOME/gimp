@@ -70,8 +70,6 @@ struct _GimpChainButton
 struct _GimpChainButtonClass
 {
   GtkButtonClass parent_class;
-
-  void (* gimp_chain_button) (GimpChainButton *gcb);
 };
 
 

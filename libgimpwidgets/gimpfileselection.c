@@ -47,25 +47,18 @@
 # endif
 #endif
 
-/*  callbacks
- */
-static void gimp_file_selection_realize         (GtkWidget *widget,
-						 gpointer   data);
-static void gimp_file_selection_entry_callback  (GtkWidget *widget,
-						 gpointer   data);
-static int  gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
-							  GdkEvent  *event,
-							  gpointer   data);
-static void gimp_file_selection_browse_callback (GtkWidget *widget,
-						 gpointer   data);
+/*  callbacks  */
+static void gimp_file_selection_realize         (GtkWidget *, gpointer);
+static void gimp_file_selection_entry_callback  (GtkWidget *, gpointer);
+static int  gimp_file_selection_entry_focus_out_callback (GtkWidget *,
+							  GdkEvent *, gpointer);
+static void gimp_file_selection_browse_callback (GtkWidget *, gpointer);
 
-/*  private functions
- */
+/*  private functions  */
 static void gimp_file_selection_check_filename  (GimpFileSelection *gfs);
 
-
 enum {
-  GFS_FILENAME_CHANGED_SIGNAL,
+  FILENAME_CHANGED,
   LAST_SIGNAL
 };
 
@@ -74,7 +67,7 @@ static gint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
 static GtkHBoxClass *parent_class = NULL;
 
 static void
-gimp_file_selection_class_destroy (GtkObject *object)
+gimp_file_selection_destroy (GtkObject *object)
 {
   GimpFileSelection *gfs;
 
@@ -102,18 +95,20 @@ gimp_file_selection_class_init (GimpFileSelectionClass *class)
 
   parent_class = gtk_type_class (gtk_hbox_get_type ());
 
-  gimp_file_selection_signals[GFS_FILENAME_CHANGED_SIGNAL] = 
+  gimp_file_selection_signals[FILENAME_CHANGED] = 
               gtk_signal_new ("filename_changed",
 			      GTK_RUN_FIRST,
 			      object_class->type,
 			      GTK_SIGNAL_OFFSET (GimpFileSelectionClass,
-						 gimp_file_selection),
+						 filename_changed),
 			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+
   gtk_object_class_add_signals (object_class, gimp_file_selection_signals, 
 				LAST_SIGNAL);
 
-  object_class->destroy = gimp_file_selection_class_destroy;
-  class->gimp_file_selection = NULL;
+  class->filename_changed = NULL;
+
+  object_class->destroy = gimp_file_selection_destroy;
 }
 
 static void
@@ -141,16 +136,15 @@ gimp_file_selection_init (GimpFileSelection *gfs)
 		      (GdkEventFunc) gimp_file_selection_entry_focus_out_callback, gfs);
   gtk_widget_show (gfs->entry);
 
-  /*  this callback does the rest (pixmap creation etc.)
-   */
+  /*  this callback does the rest (pixmap creation etc.)  */
   gtk_signal_connect (GTK_OBJECT(gfs), "realize",
 		      GTK_SIGNAL_FUNC(gimp_file_selection_realize), gfs);
 }
 
-guint
+GtkType
 gimp_file_selection_get_type ()
 {
-  static guint gfs_type = 0;
+  static GtkType gfs_type = 0;
 
   if (!gfs_type)
     {
@@ -172,7 +166,6 @@ gimp_file_selection_get_type ()
   return gfs_type;
 }
 
-
 GtkWidget*
 gimp_file_selection_new (gchar    *title,
 			 gchar    *filename,
@@ -190,7 +183,6 @@ gimp_file_selection_new (gchar    *title,
 
   return GTK_WIDGET (gfs);
 }
-
 
 static void
 gimp_file_selection_realize (GtkWidget *widget,
@@ -226,7 +218,6 @@ gimp_file_selection_realize (GtkWidget *widget,
   gtk_widget_show (gfs->file_exists);
 }
 
-
 gchar*
 gimp_file_selection_get_filename (GimpFileSelection *gfs)
 {
@@ -235,7 +226,6 @@ gimp_file_selection_get_filename (GimpFileSelection *gfs)
 
   return gtk_editable_get_chars (GTK_EDITABLE (gfs->entry), 0, -1);
 }
-
 
 void
 gimp_file_selection_set_filename (GimpFileSelection *gfs,
@@ -250,7 +240,6 @@ gimp_file_selection_set_filename (GimpFileSelection *gfs,
    */
   gimp_file_selection_entry_callback (gfs->entry, (gpointer) gfs);
 }
-
 
 static void
 gimp_file_selection_entry_callback (GtkWidget *widget,
@@ -286,9 +275,8 @@ gimp_file_selection_entry_callback (GtkWidget *widget,
   gtk_entry_set_position (GTK_ENTRY (gfs->entry), -1);
 
   gtk_signal_emit (GTK_OBJECT (gfs),
-		   gimp_file_selection_signals[GFS_FILENAME_CHANGED_SIGNAL]);
+		   gimp_file_selection_signals[FILENAME_CHANGED]);
 }
-
 
 static int
 gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
@@ -300,9 +288,7 @@ gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
   return TRUE;
 }
 
-
-/*  these are local callbacks of gimp_file_selection_browse_callback()
- */
+/*  local callbacks of gimp_file_selection_browse_callback()  */
 static void
 gimp_file_selection_filesel_ok_callback (GtkWidget *widget,
 					 gpointer   data)
@@ -316,8 +302,7 @@ gimp_file_selection_filesel_ok_callback (GtkWidget *widget,
 
   gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename);
 
-  /*  update everything
-   */
+  /*  update everything  */
   gimp_file_selection_entry_callback (gfs->entry, data);
 }
 
@@ -370,25 +355,29 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->ok_button)->child), _("Select"));
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button)->child), _("Close"));
 
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->ok_button),
-			  "clicked",
-			  (GtkSignalFunc)gimp_file_selection_filesel_ok_callback,
-			  gfs);
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->selection_entry),
-			  "activate",
-			  (GtkSignalFunc)gimp_file_selection_filesel_ok_callback,
-			  gfs);
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button),
-			  "clicked",
-			  (GtkSignalFunc)gimp_file_selection_filesel_cancel_callback,
-			  gfs);
-      gtk_signal_connect (GTK_OBJECT (gfs), "unmap",
-			  (GtkSignalFunc)gimp_file_selection_filesel_cancel_callback,
-			  gfs);
-      gtk_signal_connect (GTK_OBJECT (gfs->file_selection),
-			  "delete_event",
-			  (GdkEventFunc)gimp_file_selection_filesel_delete_callback,
-			  gfs);
+      gtk_signal_connect
+	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->ok_button),
+	 "clicked",
+	 (GtkSignalFunc)gimp_file_selection_filesel_ok_callback,
+	 gfs);
+      gtk_signal_connect
+	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->selection_entry),
+	 "activate",
+	 (GtkSignalFunc)gimp_file_selection_filesel_ok_callback,
+	 gfs);
+      gtk_signal_connect
+	(GTK_OBJECT (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button),
+	 "clicked",
+	 (GtkSignalFunc)gimp_file_selection_filesel_cancel_callback,
+	 gfs);
+      gtk_signal_connect
+	(GTK_OBJECT (gfs), "unmap",
+	 (GtkSignalFunc)gimp_file_selection_filesel_cancel_callback, 
+	 gfs);
+      gtk_signal_connect
+	(GTK_OBJECT (gfs->file_selection), "delete_event",
+	 (GdkEventFunc)gimp_file_selection_filesel_delete_callback,
+	 gfs);
     }
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (gfs->file_selection),
@@ -398,7 +387,6 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
   else
     gdk_window_raise (gfs->file_selection->window);
 }
-
 
 static void
 gimp_file_selection_check_filename (GimpFileSelection *gfs)

@@ -59,10 +59,10 @@ struct _GimpUnitMenuClass
 {
   GtkOptionMenuClass parent_class;
 
-  void (* gimp_unit_menu) (GimpUnitMenu *gum);
+  void (* unit_changed) (GimpUnitMenu *gum);
 };
 
-guint       gimp_unit_menu_get_type (void);
+GtkType gimp_unit_menu_get_type (void);
 
 /*  format       -- a printf-like format string for the menu items
  *  unit         -- the unit selected on widget creation

@@ -62,10 +62,10 @@ struct _GimpFileSelectionClass
 {
   GtkHBoxClass parent_class;
 
-  void (* gimp_file_selection) (GimpFileSelection *gfs);
+  void (* filename_changed) (GimpFileSelection *gfs);
 };
 
-guint       gimp_file_selection_get_type    (void);
+GtkType     gimp_file_selection_get_type    (void);
 
 /*  creates a new GimpFileSelection widget
  *

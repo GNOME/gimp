@@ -19,7 +19,6 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMP_PATH_EDITOR_H__
 #define __GIMP_PATH_EDITOR_H__
 
@@ -61,19 +60,19 @@ struct _GimpPathEditorClass
 {
   GtkVBoxClass parent_class;
 
-  void (* gimp_path_editor) (GimpPathEditor *gpe);
+  void (* path_changed) (GimpPathEditor *gpe);
 };
 
-guint       gimp_path_editor_get_type (void);
+GtkType     gimp_path_editor_get_type (void);
 
 /*  creates a new GimpPathEditor widget
  */
-GtkWidget*  gimp_path_editor_new      (gchar          *filesel_title,
-				       gchar          *path);
+GtkWidget * gimp_path_editor_new      (gchar *filesel_title,
+				       gchar *path);
 
 /*  it's up to the caller to g_free() the returned string
  */
-gchar*      gimp_path_editor_get_path (GimpPathEditor *gpe);
+gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
 
 #ifdef __cplusplus
 }

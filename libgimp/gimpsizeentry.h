@@ -64,10 +64,12 @@ struct _GimpSizeEntryClass
 {
   GtkTableClass parent_class;
 
-  void (* gimp_size_entry) (GimpSizeEntry *gse);
+  void (* value_changed)  (GimpSizeEntry *gse);
+  void (* refval_changed) (GimpSizeEntry *gse);
+  void (* unit_changed)   (GimpSizeEntry *gse);
 };
 
-guint gimp_size_entry_get_type (void);
+GtkType gimp_size_entry_get_type (void);
 
 /* creates a new GimpSizeEntry widget
  * number_of_fields  -- how many spinbuttons to show
@@ -87,14 +89,17 @@ guint gimp_size_entry_get_type (void);
  * to have all automatic calculations performed correctly, set up the
  * widget in the following order:
  * 1. gimp_size_entry_new
- * 2. (for each input column) gimp_size_entry_set_resolution
- * 3. (for each input column) gimp_size_entry_set_value_boundaries
- *                                                   (or _set_refval_boundaries)
- * 4. (for each input column) gimp_size_entry_set_value (or _set_refval)
+ * 2. (for each additional input field) gimp_size_entry_add_field
+ * 3. gimp_size_entry_set_unit
+ * for each input field:
+ * 4. gimp_size_entry_set_resolution
+ * 5. gimp_size_entry_set_value_boundaries (or _set_refval_boundaries)
+ * 6. gimp_size_entry_set_size
+ * 7. gimp_size_entry_set_value (or _set_refval)
  *
  * the newly created GimpSizeEntry table will have an empty border
  * of one cell width on each side plus an empty column left of the
- * unit menu to allow the caller to add his own labels
+ * unit menu to allow the caller to add labels
  */
 GtkWidget*  gimp_size_entry_new        (gint             number_of_fields,
 					GUnit            unit,

@@ -37,6 +37,8 @@ static void gimp_chain_button_draw_lines (GtkWidget *widget,
 					  GdkEvent* event,
 					  GimpChainButton *gcb);
 
+static GtkWidgetClass *parent_class = NULL;
+
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *class)
 {
@@ -44,7 +46,7 @@ gimp_chain_button_class_init (GimpChainButtonClass *class)
 
   object_class = (GtkObjectClass*) class;
 
-  class->gimp_chain_button = NULL;
+  parent_class = gtk_type_class (gtk_widget_get_type ());
 }
 
 static void

@@ -1,5 +1,18 @@
 1999-06-17  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/Makefile.am
+	* app/gimpcontext.[ch]: new files. Does nothing yet. Checked in
+	because I found some bugs while hacking it: 
+
+	* libgimp/gimpchainbutton.[ch]
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimppatheditor.[ch]
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpunitmenu.[ch]: fixed some cut & paste bugs and some
+	gtk 1.0 artefacts in the object class initialisation code.
+
+1999-06-17  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/preferences_dialog.c: the tree title doesn't behave like a
 	button anymore.
 	Made the thumbnail option look like the other option menus.

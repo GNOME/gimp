@@ -37,9 +37,9 @@ static int  gimp_size_entry_focus_out_callback (GtkWidget *widget,
 */
 
 enum {
-  GSE_VALUE_CHANGED_SIGNAL,
-  GSE_REFVAL_CHANGED_SIGNAL,
-  GSE_UNIT_CHANGED_SIGNAL,
+  VALUE_CHANGED,
+  REFVAL_CHANGED,
+  UNIT_CHANGED,
   LAST_SIGNAL
 };
 
@@ -67,14 +67,12 @@ struct _GimpSizeEntryField
   gint           stop_recursion;
 };
 
-
 static gint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTableClass *parent_class = NULL;
 
-
 static void
-gimp_size_entry_class_destroy (GtkObject *object)
+gimp_size_entry_destroy (GtkObject *object)
 {
   GimpSizeEntry *gse;
   GSList        *list;        
@@ -102,32 +100,38 @@ gimp_size_entry_class_init (GimpSizeEntryClass *class)
 
   parent_class = gtk_type_class (gtk_table_get_type ());
 
-  gimp_size_entry_signals[GSE_VALUE_CHANGED_SIGNAL] = 
+  gimp_size_entry_signals[VALUE_CHANGED] = 
               gtk_signal_new ("value_changed",
 			      GTK_RUN_FIRST,
 			      object_class->type,
 			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 gimp_size_entry),
+						 value_changed),
 			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
-  gimp_size_entry_signals[GSE_REFVAL_CHANGED_SIGNAL] = 
+
+  gimp_size_entry_signals[REFVAL_CHANGED] = 
               gtk_signal_new ("refval_changed",
 			      GTK_RUN_FIRST,
 			      object_class->type,
 			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 gimp_size_entry),
+						 refval_changed),
 			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
-  gimp_size_entry_signals[GSE_UNIT_CHANGED_SIGNAL] = 
+
+  gimp_size_entry_signals[UNIT_CHANGED] = 
               gtk_signal_new ("unit_changed",
 			      GTK_RUN_FIRST,
 			      object_class->type,
 			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 gimp_size_entry),
+						 unit_changed),
 			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+
   gtk_object_class_add_signals (object_class, gimp_size_entry_signals, 
 				LAST_SIGNAL);
 
-  object_class->destroy = gimp_size_entry_class_destroy;
-  class->gimp_size_entry = NULL;
+  class->value_changed = NULL;
+  class->refval_changed = NULL;
+  class->unit_changed = NULL;
+
+  object_class->destroy = gimp_size_entry_destroy;
 }
 
 static void
@@ -143,7 +147,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
   gse->update_policy = GIMP_SIZE_ENTRY_UPDATE_NONE;
 }
 
-guint
+GtkType
 gimp_size_entry_get_type ()
 {
   static guint gse_type = 0;
@@ -167,7 +171,6 @@ gimp_size_entry_get_type ()
   
   return gse_type;
 }
-
 
 GtkWidget*
 gimp_size_entry_new (gint             number_of_fields,
@@ -649,7 +652,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
     {
       gimp_size_entry_update_value (gsef, new_value);
       gtk_signal_emit (GTK_OBJECT (gsef->gse),
-		       gimp_size_entry_signals[GSE_VALUE_CHANGED_SIGNAL]);
+		       gimp_size_entry_signals[VALUE_CHANGED]);
     }
 }
 
@@ -860,7 +863,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
     {
       gimp_size_entry_update_refval (gsef, new_refval);
       gtk_signal_emit (GTK_OBJECT (gsef->gse),
-		       gimp_size_entry_signals[GSE_REFVAL_CHANGED_SIGNAL]);
+		       gimp_size_entry_signals[REFVAL_CHANGED]);
     }
 }
 
@@ -936,12 +939,10 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
   gimp_size_entry_update_unit (GIMP_SIZE_ENTRY (data),
 			       gimp_unit_menu_get_unit (GIMP_UNIT_MENU(widget)));
   gtk_signal_emit (GTK_OBJECT (data),
-		   gimp_size_entry_signals[GSE_UNIT_CHANGED_SIGNAL]);
+		   gimp_size_entry_signals[UNIT_CHANGED]);
 }
 
-
 /*  focus stuff  **********/
-
 void
 gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 {
@@ -955,7 +956,6 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
   gtk_widget_grab_focus (gse->show_refval ?
 			 gsef->refval_spinbutton : gsef->value_spinbutton);
 }
-
 
 /*
 static int
