@@ -73,7 +73,7 @@ static GimpActionEntry dockable_actions[] =
 static GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-show-image-menu", NULL,
-    N_("_Show Image Menu"), NULL, NULL,
+    N_("_Show Image Selection"), NULL, NULL,
     G_CALLBACK (dockable_toggle_image_menu_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_IMAGE_MENU },

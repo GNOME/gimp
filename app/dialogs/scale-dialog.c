@@ -169,8 +169,12 @@ scale_dialog_new (GimpViewable          *viewable,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("I_nterpolation:"));
@@ -184,6 +188,20 @@ scale_dialog_new (GimpViewable          *viewable,
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
+
+  if (gimp_image_base_type (image) == GIMP_INDEXED)
+    {
+      label = gtk_label_new (_("Indexed color layers are always scaled "
+                               "without interpolation. The chosen "
+                               "interpolation type will affect channels "
+                               "and masks only."));
+
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+    }
 
   return dialog;
 }

@@ -233,7 +233,7 @@ gimp_size_box_constructor (GType                  type,
                                  1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
-  entry = gimp_size_entry_new (0, box->unit,_("%p"),
+  entry = gimp_size_entry_new (0, box->unit, "%p",
                                TRUE, TRUE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_SIZE);
 

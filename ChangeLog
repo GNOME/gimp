@@ -1,3 +1,13 @@
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/dockable-actions.c (dockable_toggle_actions): changed
+	menu label from "Show Image Menu" to "Show Image Selection".
+
+	* app/widgets/gimpsizebox.c: unmarked a string for translation.
+
+	* app/dialogs/scale-dialog.c: added back the message when scaling
+	an indexed image.
+
 2004-10-27  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpaspectpreview.c: really use the second parameter of
