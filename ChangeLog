@@ -1,3 +1,9 @@
+2004-10-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c: changed "Home" button to "Index".
+	"Home" is misleading and leads to problems in some locales (see
+	bug #148120).
+
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* tools/authorsgen/contributors: correct UTF-8 spelling of

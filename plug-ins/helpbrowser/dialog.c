@@ -46,7 +46,6 @@
 
 enum
 {
-  BUTTON_HOME,
   BUTTON_INDEX,
   BUTTON_BACK,
   BUTTON_FORWARD
@@ -146,7 +145,7 @@ browser_dialog_open (void)
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
+  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help browser"));
   gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
   g_signal_connect (window, "destroy",
@@ -166,15 +165,6 @@ browser_dialog_open (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_HOME);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (button_callback),
-                    GINT_TO_POINTER (BUTTON_HOME));
-
-#if 0
   button = gtk_button_new_from_stock (GTK_STOCK_INDEX);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
@@ -182,7 +172,6 @@ browser_dialog_open (void)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (button_callback),
                     GINT_TO_POINTER (BUTTON_INDEX));
-#endif
 
   back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -376,7 +365,6 @@ button_callback (GtkWidget *widget,
 
   switch (GPOINTER_TO_INT (data))
     {
-    case BUTTON_HOME:
     case BUTTON_INDEX:
       browser_dialog_load ("index.html", TRUE);
       break;
