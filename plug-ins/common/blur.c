@@ -366,10 +366,11 @@ blur (GimpDrawable *drawable)
       nr = tmp;
 
       if (PROG_UPDATE_TIME)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
-  gimp_progress_update ((double) 100);
+  gimp_progress_update (1.0);
+
   /*
    *  update the blurred region
    */

@@ -19,3 +19,5 @@ Bugs fixed in GIMP 2.2.1
 - fixed channel drag-n-drop (bug #161877)
 - fixed misbehaviour of entries in Scale and Resize dialogs (bug #161756)
 - speed up preview in Motion Blur plug-in
+- fixed bug in Despeckle plug-in that caused it to run very slowly
+  (bug #162129)

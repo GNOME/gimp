@@ -363,15 +363,13 @@ despeckle (void)
 {
   GimpPixelRgn  src_rgn,        /* Source image region */
                 dst_rgn;
-  guchar        *src, *dst;
+  guchar       *src, *dst;
   gint          img_bpp;
   gint          width;
   gint          height;
   gint          x1, y1 ,x2 ,y2;
 
-
-
-  img_bpp    = gimp_drawable_bpp (drawable->drawable_id);
+  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = x2 - x1;
@@ -379,22 +377,22 @@ despeckle (void)
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
-  src  = g_new (guchar, width * height * img_bpp);
-  dst  = g_new (guchar, width * height * img_bpp);
+
+  src = g_new (guchar, width * height * img_bpp);
+  dst = g_new (guchar, width * height * img_bpp);
+
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
-  despeckle_median(src, dst, width, height,  img_bpp, despeckle_radius, FALSE);
+  despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, FALSE);
 
-  /*
-   * Update the screen...
-   */
   gimp_pixel_rgn_set_rect (&dst_rgn, dst, x1, y1, width, height);
+
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
-  g_free(src);
-  g_free(dst);
 
+  g_free (dst);
+  g_free (src);
 }
 
 
@@ -587,7 +585,7 @@ preview_update (GtkWidget *widget)
   src = g_new (guchar, width * height * img_bpp);
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
 
-  despeckle_median(src, dst, width, height,  img_bpp, despeckle_radius, TRUE);
+  despeckle_median (src, dst, width, height, img_bpp, despeckle_radius, TRUE);
 
   /*
    * Update the screen...
@@ -653,7 +651,6 @@ despeckle_median (guchar   *src,
 
   for (x = 0; x < width; x++)
     {
-      prog += width;
       for (y = 0; y < height; y++)
         {
           hist0   = 0;
@@ -724,13 +721,16 @@ despeckle_median (guchar   *src,
                   radius--;
                 }
             }
-
-          if (!preview)
-            {
-              gimp_progress_update (prog/maxprog);
-            }
         }
+
+      prog += height;
+
+      if (!preview && x % 5 == 0)
+        gimp_progress_update (prog / maxprog);
     }
+
+  if (!preview)
+    gimp_progress_update (1.0);
 
   g_free (buf);
   g_free (ibuf);
@@ -806,7 +806,7 @@ quick_median_select (guchar **p,
       for (;;)
         {
            do ll++;
-           while (i[low] > i[ll] );
+           while (i[low] > i[ll]);
 
            do hh--;
            while (i[hh]  > i[low]);
@@ -846,7 +846,5 @@ pixel_copy (guchar       *dest,
             gint          n)
 {
   for (; n > 0; n--, dest++, src++)
-    {
-      *dest = *src;
-    }
+    *dest = *src;
 }
