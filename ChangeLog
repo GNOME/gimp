@@ -1,3 +1,8 @@
+Sun Mar 21 23:11:31 EST 1999  Adrian Likins <adrian@gimp.org>
+
+	* app/paintbrush.c: oops, forgot to make fade work
+	again after the gradient stuff. Fixed.
+
 Mon Mar 22 00:38:20 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

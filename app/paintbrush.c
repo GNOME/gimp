@@ -79,6 +79,13 @@ paintbrush_scale_update (GtkAdjustment *adjustment,
    options->incremental = INCREMENTAL;
 }
 
+static void
+paintbrush_fade_update (GtkAdjustment *adjustment,
+			 PaintOptions   *options)
+{
+ options->fade_out = adjustment->value;
+}
+
 static PaintOptions *
 create_paint_options (void)
 {
@@ -121,8 +128,8 @@ create_paint_options (void)
   gtk_scale_set_value_pos (GTK_SCALE (fade_out_scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (fade_out_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (fade_out_scale_data), "value_changed",
-		      (GtkSignalFunc) paintbrush_scale_update,
-		      &options->fade_out);
+		      (GtkSignalFunc) paintbrush_fade_update,
+		      options);
   gtk_widget_show (fade_out_scale);
   gtk_widget_show (hbox);
 
