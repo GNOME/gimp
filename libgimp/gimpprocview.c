@@ -25,6 +25,7 @@
 
 #include "config.h"
 
+#include <string.h>
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -653,9 +654,9 @@ dialog_search_callback (GtkWidget *widget,
 	  query_text++;
 	}
 
-      gimp_query_database (query->str,
-			   ".*", ".*", ".*", ".*", ".*", ".*", 
-			   &num_procs, &proc_list);
+      gimp_procedural_db_query (query->str,
+			        ".*", ".*", ".*", ".*", ".*", ".*", 
+			        &num_procs, &proc_list);
 
       g_string_free (query, TRUE);
     }
@@ -663,17 +664,18 @@ dialog_search_callback (GtkWidget *widget,
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
 			    _("DB Browser (by blurb - please wait)"));
-      gimp_query_database (".*", 
-			   gtk_entry_get_text( GTK_ENTRY(dbbrowser->search_entry) ),
-			   ".*", ".*", ".*", ".*", ".*",
-			   &num_procs, &proc_list);
+      gimp_procedural_db_query (".*", 
+			        gtk_entry_get_text(
+				  GTK_ENTRY(dbbrowser->search_entry) ),
+			        ".*", ".*", ".*", ".*", ".*",
+			        &num_procs, &proc_list);
     }
   else
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
 			    _("DB Browser (please wait)"));
-      gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
-			   &num_procs, &proc_list);
+      gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
+			        &num_procs, &proc_list);
     }
 
   for (i = 0; i < num_procs; i++)

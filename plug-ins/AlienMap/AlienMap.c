@@ -78,13 +78,13 @@ typedef struct
 /* Declare local functions. */
 
 static void      query  (void);
-static void      run    (char      *name,
-        		 int        nparams,
-        		 GParam    *param,
-        		 int       *nreturn_vals,
-        		 GParam   **return_vals);
+static void      run    (char         *name,
+        		 int           nparams,
+        		 GimpParam    *param,
+        		 int          *nreturn_vals,
+        		 GimpParam   **return_vals);
 
-static void      alienmap 	     (GDrawable  *drawable);
+static void      alienmap 	     (GimpDrawable  *drawable);
 static void      alienmap_render_row (const guchar *src_row,
 				      guchar *dest_row,
 				      gint row,
@@ -110,7 +110,7 @@ static void      alienmap_logo_dialog   (void);
 GtkWidget   *maindlg;
 GtkWidget   *logodlg;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -136,15 +136,15 @@ static alienmap_vals_t wvals =
   SINUS,
 };
 
-static GDrawable *drawable;
-static gint       tile_width, tile_height;
-static gint       img_width, img_height, img_bpp;
-static gint       sel_x1, sel_y1, sel_x2, sel_y2;
-static gint       sel_width, sel_height;
-static gint       preview_width, preview_height;
-static GTile     *the_tile = NULL;
-static gdouble    cen_x, cen_y;
-static gdouble    scale_x, scale_y;
+static GimpDrawable *drawable;
+static gint          tile_width, tile_height;
+static gint          img_width, img_height, img_bpp;
+static gint          sel_x1, sel_y1, sel_x2, sel_y2;
+static gint          sel_width, sel_height;
+static gint          preview_width, preview_height;
+static GimpTile     *the_tile = NULL;
+static gdouble       cen_x, cen_y;
+static gdouble       scale_x, scale_y;
 
 /***** Functions *****/
 
@@ -153,7 +153,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
     { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
     { PARAM_IMAGE,    "image",        "Input image" },
@@ -165,7 +165,7 @@ query (void)
     { PARAM_INT8,    "greenmode",    "Green application mode (0:SIN;1:COS;2:NONE)" },
     { PARAM_INT8,    "bluemode",     "Blue application mode (0:SIN;1:COS;2:NONE)" },
   };
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
@@ -255,19 +255,19 @@ transform (short int *r,
 
 
 static void
-run (char    *name,
-     int      nparams,
-     GParam  *param,
-     int     *nreturn_vals,
-     GParam **return_vals)
+run (char       *name,
+     int         nparams,
+     GimpParam  *param,
+     int        *nreturn_vals,
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 /*   GDrawable *drawable; */
 /*   gint32 image_ID; */
-  GRunModeType  run_mode;
+  GimpRunModeType  run_mode;
   double        xhsiz, yhsiz;
   int   	pwidth, pheight;
-  GStatusType status = STATUS_SUCCESS;
+  GStatusType   status = STATUS_SUCCESS;
  
   INIT_I18N_UI ();
 
@@ -482,9 +482,9 @@ alienmap_render_row (const guchar *src_row,
 }
 
 static void
-alienmap (GDrawable *drawable)
+alienmap (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   guchar *src_row;

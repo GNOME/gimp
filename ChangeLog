@@ -1,4 +1,8 @@
-Tue Aug 22 00:41:06 CEST 2000 Daniel egger  <egger@suse.de>
+Tue Aug 22 01:02:41 CEST 2000 Daniel Egger  <egger@suse.de>
+	
+	* plugins/AlienMap/AlienMap.c: removed COMPAT_CRUFT. 
+
+Tue Aug 22 00:41:06 CEST 2000 Daniel Egger  <egger@suse.de>
 
 	* plugins/dbbrowser/*.c: removed COMPAT_CRUFT and added
 	missing include.

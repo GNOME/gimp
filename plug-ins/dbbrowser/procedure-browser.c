@@ -55,13 +55,13 @@
 
 
 static void   query (void);
-static void   run   (gchar   *name,
-		     gint     nparams,
-		     GParam  *param,
-		     gint    *nreturn_vals,
-		     GParam **return_vals);
+static void   run   (gchar     *name,
+		     gint      nparams,
+		     GimpParam *param,
+		     gint      *nreturn_vals,
+		     GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -75,7 +75,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
@@ -95,13 +95,13 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint       nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   GRunModeType run_mode;
 
   run_mode = param[0].data.d_int32;
