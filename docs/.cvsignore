@@ -3,3 +3,6 @@ Makefile.in
 pdb.info*
 pdb_dump
 pdb_dump.texi
+*.log
+*.aux
+*.dvi
