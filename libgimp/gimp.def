@@ -24,20 +24,13 @@ EXPORTS
 	gimp_by_color_select
 	gimp_channel_combine_masks
 	gimp_channel_copy
-	gimp_channel_delete
 	gimp_channel_get_color
-	gimp_channel_get_name
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
-	gimp_channel_get_tattoo
-	gimp_channel_get_visible
 	gimp_channel_new
 	gimp_channel_set_color
-	gimp_channel_set_name
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
-	gimp_channel_set_tattoo
-	gimp_channel_set_visible
 	gimp_clone
 	gimp_clone_default
 	gimp_color_balance
@@ -67,6 +60,9 @@ EXPORTS
 	gimp_drawable_fill
 	gimp_drawable_flush
 	gimp_drawable_get
+	gimp_drawable_get_name
+	gimp_drawable_get_tattoo
+	gimp_drawable_get_visible
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile
 	gimp_drawable_get_tile2
@@ -90,6 +86,7 @@ EXPORTS
 	gimp_drawable_parasite_list
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
+	gimp_drawable_set_tattoo
 	gimp_drawable_type
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
@@ -234,17 +231,13 @@ EXPORTS
 	gimp_layer_add_alpha
 	gimp_layer_copy
 	gimp_layer_create_mask
-	gimp_layer_delete
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
 	gimp_layer_get_linked
 	gimp_layer_get_mode
-	gimp_layer_get_name
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
-	gimp_layer_get_tattoo
-	gimp_layer_get_visible
 	gimp_layer_is_floating_sel
 	gimp_layer_mask
 	gimp_layer_new
@@ -256,13 +249,10 @@ EXPORTS
 	gimp_layer_set_edit_mask
 	gimp_layer_set_linked
 	gimp_layer_set_mode
-	gimp_layer_set_name
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_preserve_trans
 	gimp_layer_set_show_mask
-	gimp_layer_set_tattoo
-	gimp_layer_set_visible
 	gimp_layer_translate
 	gimp_levels
 	gimp_levels_auto
