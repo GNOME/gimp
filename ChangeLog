@@ -1,3 +1,11 @@
+2001-12-01  Abel Cheung  <maddog@linux.org.hk>
+
+        * tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_TW.txt
+	  to the targets.
+
+        * tips/gimp_tips.zh_TW.txt: Added traditional Chinese translation
+	  in Big5 encoding.
+
 2001-11-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

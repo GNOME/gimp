@@ -46,5 +46,11 @@ install : all
 %.uk.utf8: %.uk.txt
 	iconv -f KOI8-U -t UTF-8 $< >$@
 
+%.zh_CN.utf8: %.zh_CN.txt
+	iconv -f GB2312 -t UTF-8 $< >$@
+
+%.zh_TW.utf8: %.zh_TW.txt
+	iconv -f Big5 -t UTF-8 $< >$@
+
 clean:
 	-rm *.utf8
