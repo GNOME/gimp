@@ -92,6 +92,7 @@ libexec_PROGRAMS = \
 	max_rgb \
 	mblur \
 	$(MNG) \
+	mosaic \
 	newsprint \
 	nlfilt \
 	noisify \
@@ -1020,6 +1021,18 @@ mng_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBMNG)							\
+	@GTK_LIBS@							\
+	@INTLLIBS@
+
+mosaic_SOURCES = \
+	mosaic.c
+
+mosaic_LDADD = \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	@GTK_LIBS@							\
 	@INTLLIBS@
 

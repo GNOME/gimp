@@ -70,6 +70,7 @@
     'max_rgb' => { libdep => 'gtk', ui => 1 },
     'mblur' => { libdep => 'gtk', ui => 1 },
     'mng' => { libdep => 'gtk', ui => 1, optional => 1 },
+    'mosaic' => { libdep => 'gtk', ui => 1 },
     'newsprint' => { libdep => 'gtk', ui => 1 },
     'nlfilt' => { libdep => 'gtk', ui => 1 },
     'noisify' => { libdep => 'gtk', ui => 1 },

@@ -1,5 +1,15 @@
 2003-10-02  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/mosaic/*: removed mosaic plug-in here...
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mosaic.c
+	* plug-ins/common/plugin-defs.pl: ...and added it in plug-ins/common.
+
+2003-10-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugindetails.c
 	* plug-ins/common/unsharp.c
 	* plug-ins/script-fu/script-fu.c

@@ -46,7 +46,6 @@ SUBDIRS = 			\
 	ifscompose		\
 	imagemap		\
 	maze			\
-	mosaic			\
 	pagecurl		\
 	$(print)		\
 	$(pygimp)		\

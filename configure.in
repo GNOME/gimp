@@ -1343,7 +1343,6 @@ plug-ins/helpbrowser/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/maze/Makefile
-plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile

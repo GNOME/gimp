@@ -1,4 +1,8 @@
-2003-09-228  Jan Morén  <jan.moren@lucs.lu.se>
+2003-10-02  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: mosaic.c moved to plug-ins/common.
+
+2003-09-28  Jan Morén  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 

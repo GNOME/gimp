@@ -82,6 +82,7 @@ plug-ins/common/mapcolor.c
 plug-ins/common/max_rgb.c
 plug-ins/common/mblur.c
 plug-ins/common/mng.c
+plug-ins/common/mosaic.c
 plug-ins/common/newsprint.c
 plug-ins/common/nlfilt.c
 plug-ins/common/noisify.c
@@ -224,7 +225,6 @@ plug-ins/imagemap/imap_tools.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze_face.c
-plug-ins/mosaic/mosaic.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/gimp_color_window.c
 plug-ins/print/gimp_main_window.c
