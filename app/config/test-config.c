@@ -52,6 +52,7 @@ main (int   argc,
   const gchar *filename = "foorc";
   gchar       *header;
   gchar       *result;
+  GList       *list;
   gint         i;
   GError      *error = NULL;
 
@@ -104,7 +105,7 @@ main (int   argc,
     }
   header = " Unknown string tokens:\n";
   gimp_config_foreach_unknown_token (grid, output_unknown_token, &header);
-  g_print (" done.\n");
+  g_print (" done.\n\n");
 
   g_print (" Changing a property ...");
   g_object_set (grid, "style", GIMP_GRID_DOTS, NULL);
@@ -119,6 +120,15 @@ main (int   argc,
 
   g_print (" Changing a property in the duplicate ...");
   g_object_set (grid2, "xspacing", 20.0, NULL);
+
+  g_print (" Creating a diff between the two ...");
+  for (list = gimp_config_diff (grid, grid2, 0); list; list = list->next)
+    {
+      GParamSpec *pspec = list->data;
+
+      g_print ("%c%s", (list->prev ? ',' : ' '), pspec->name);
+    }
+  g_print ("\n\n");
 
   g_object_unref (grid2);
 
@@ -171,7 +181,7 @@ main (int   argc,
   g_object_unref (grid2);
   g_object_unref (grid);
 
-  g_print ("Finished test of GimpConfig.\n\n");
+  g_print ("\nFinished test of GimpConfig.\n\n");
 
   return EXIT_SUCCESS;
 }
