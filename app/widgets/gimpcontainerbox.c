@@ -121,6 +121,12 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
   g_object_class_override_property (object_class,
                                     GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
                                     "reorderable");
+  g_object_class_override_property (object_class,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
+                                    "preview-size");
+  g_object_class_override_property (object_class,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
+                                    "preview-border-width");
 }
 
 static void

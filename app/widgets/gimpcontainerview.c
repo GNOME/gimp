@@ -79,28 +79,28 @@ static GimpContainerViewPrivate *
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
 						      GimpContainer     *container);
 
-static void   gimp_container_view_clear_items (GimpContainerView      *view);
-static void   gimp_container_view_real_clear_items (GimpContainerView *view);
+static void   gimp_container_view_clear_items      (GimpContainerView  *view);
+static void   gimp_container_view_real_clear_items (GimpContainerView  *view);
 
-static void   gimp_container_view_add_foreach (GimpViewable           *viewable,
-					       GimpContainerView      *view);
-static void   gimp_container_view_add         (GimpContainerView      *view,
-					       GimpViewable           *viewable,
-					       GimpContainer          *container);
-static void   gimp_container_view_remove      (GimpContainerView      *view,
-					       GimpViewable           *viewable,
-					       GimpContainer          *container);
-static void   gimp_container_view_reorder     (GimpContainerView      *view,
-					       GimpViewable           *viewable,
-					       gint                    new_index,
-					       GimpContainer          *container);
+static void   gimp_container_view_add_foreach      (GimpViewable       *viewable,
+                                                    GimpContainerView  *view);
+static void   gimp_container_view_add              (GimpContainerView  *view,
+                                                    GimpViewable       *viewable,
+                                                    GimpContainer      *container);
+static void   gimp_container_view_remove           (GimpContainerView  *view,
+                                                    GimpViewable       *viewable,
+                                                    GimpContainer      *container);
+static void   gimp_container_view_reorder          (GimpContainerView  *view,
+                                                    GimpViewable       *viewable,
+                                                    gint                new_index,
+                                                    GimpContainer      *container);
 
-static void   gimp_container_view_freeze      (GimpContainerView      *view,
-                                               GimpContainer          *container);
-static void   gimp_container_view_thaw        (GimpContainerView      *view,
-                                               GimpContainer          *container);
-static void   gimp_container_view_name_changed (GimpViewable          *viewable,
-                                                GimpContainerView     *view);
+static void   gimp_container_view_freeze           (GimpContainerView  *view,
+                                                    GimpContainer      *container);
+static void   gimp_container_view_thaw             (GimpContainerView  *view,
+                                                    GimpContainer      *container);
+static void   gimp_container_view_name_changed     (GimpViewable       *viewable,
+                                                    GimpContainerView  *view);
 
 static void   gimp_container_view_context_changed  (GimpContext        *context,
 						    GimpViewable       *viewable,
@@ -126,8 +126,8 @@ gimp_container_view_interface_get_type (void)
       static const GTypeInfo iface_info =
       {
         sizeof (GimpContainerViewInterface),
-	(GBaseInitFunc)     gimp_container_view_iface_base_init,
-	(GBaseFinalizeFunc) NULL,
+        (GBaseInitFunc)     gimp_container_view_iface_base_init,
+        (GBaseFinalizeFunc) NULL,
       };
 
       iface_type = g_type_register_static (G_TYPE_INTERFACE,
@@ -211,10 +211,24 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                              NULL, NULL,
                                                              FALSE,
                                                              G_PARAM_READWRITE));
+
+  g_object_interface_install_property (view_iface,
+                                       g_param_spec_int ("preview-size",
+                                                         NULL, NULL,
+                                                         1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
+                                                         GIMP_PREVIEW_SIZE_MEDIUM,
+                                                         G_PARAM_READWRITE));
+
+  g_object_interface_install_property (view_iface,
+                                       g_param_spec_int ("preview-border_width",
+                                                         NULL, NULL,
+                                                         0, GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                                                         1,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
-gimp_container_view_private_destroy (GimpContainerView        *view,
+gimp_container_view_private_dispose (GimpContainerView        *view,
                                      GimpContainerViewPrivate *private)
 {
   if (private->container)
@@ -272,7 +286,7 @@ gimp_container_view_get_private (GimpContainerView *view)
                                (GDestroyNotify) gimp_container_view_private_finalize);
 
       g_signal_connect (view, "destroy",
-                        G_CALLBACK (gimp_container_view_private_destroy),
+                        G_CALLBACK (gimp_container_view_private_dispose),
                         private);
     }
 
@@ -551,6 +565,11 @@ gimp_container_view_set_preview_size (GimpContainerView *view,
       private->preview_border_width = preview_border_width;
 
       GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_preview_size (view);
+
+      g_object_freeze_notify (G_OBJECT (view));
+      g_object_notify (G_OBJECT (view), "preview-size");
+      g_object_notify (G_OBJECT (view), "preview-border-width");
+      g_object_thaw_notify (G_OBJECT (view));
     }
 }
 
@@ -577,6 +596,7 @@ gimp_container_view_set_reorderable (GimpContainerView *view,
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   private->reorderable = reorderable ? TRUE : FALSE;
+  g_object_notify (G_OBJECT (view), "reorderable");
 }
 
 GtkWidget *
@@ -797,6 +817,21 @@ gimp_container_view_set_property (GObject      *object,
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
       break;
+    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE:
+    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH:
+      {
+        gint size, border;
+
+        size = gimp_container_view_get_preview_size (view, &border);
+
+        if (property_id == GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE)
+          size = g_value_get_int (value);
+        else
+          border = g_value_get_int (value);
+
+        gimp_container_view_set_preview_size (view, size, border);
+      }
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -821,6 +856,19 @@ gimp_container_view_get_property (GObject    *object,
       break;
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
+      break;
+    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE:
+    case GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH:
+      {
+        gint size, border;
+
+        size = gimp_container_view_get_preview_size (view, &border);
+
+        if (property_id == GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE)
+          g_value_set_int (value, size);
+        else
+          g_value_set_int (value, border);
+      }
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

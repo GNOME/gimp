@@ -1,5 +1,13 @@
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerview.[ch]: added "preview-size" and
+	"preview-border-width" properties. Cleanup.
+
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainercombobox.c: implement them.
+
+2004-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainergridview.[ch]
 	* app/widgets/gimpcontainertreeview.[ch]: removed "reorderable"
 	from gimp_container_foo_view_new().

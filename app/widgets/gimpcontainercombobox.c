@@ -136,6 +136,12 @@ gimp_container_combo_box_class_init (GimpContainerComboBoxClass *klass)
   g_object_class_override_property (object_class,
                                     GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
                                     "reorderable");
+  g_object_class_override_property (object_class,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_SIZE,
+                                    "preview-size");
+  g_object_class_override_property (object_class,
+                                    GIMP_CONTAINER_VIEW_PROP_PREVIEW_BORDER_WIDTH,
+                                    "preview-border-width");
 }
 
 static void
