@@ -1,3 +1,12 @@
+2003-12-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.h: sanitized DND identifiers
+	(e.g. GIMP_BRUSH -> application/x-gimp-brush-name).
+
+	* app/widgets/gimpdnd.[ch]: added stubs for SVG DND with
+	on-the-fly conversion from/to GimpVectors. Someone needs to add
+	the conversion functions...
+
 2003-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gradient-editor-commands.c

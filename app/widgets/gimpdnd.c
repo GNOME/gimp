@@ -128,6 +128,18 @@ static void        gimp_dnd_set_color_data     (GtkWidget *widget,
 					        gint       format,
 					        gint       length);
 
+static guchar    * gimp_dnd_get_svg_data       (GtkWidget *widget,
+					        GCallback  get_svg_func,
+					        gpointer   get_svg_data,
+					        gint      *format,
+					        gint      *length);
+static void        gimp_dnd_set_svg_data       (GtkWidget *widget,
+					        GCallback  set_svg_func,
+					        gpointer   set_svg_data,
+					        guchar    *vals,
+					        gint       format,
+					        gint       length);
+
 static guchar    * gimp_dnd_get_image_data     (GtkWidget *widget,
 					        GCallback  get_image_func,
 					        gpointer   get_image_data,
@@ -281,6 +293,34 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_color_icon,
     gimp_dnd_get_color_data,
     gimp_dnd_set_color_data
+  },
+
+  {
+    GIMP_TARGET_SVG,
+
+    "gimp-dnd-get-svg-func",
+    "gimp-dnd-get-svg-data",
+
+    "gimp-dnd-set-svg-func",
+    "gimp-dnd-set-svg-data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_svg_data,
+    gimp_dnd_set_svg_data
+  },
+
+  {
+    GIMP_TARGET_SVG_XML,
+
+    "gimp-dnd-get-svg-xml-func",
+    "gimp-dnd-get-svg-xml-data",
+
+    "gimp-dnd-set-svg-xml-func",
+    "gimp-dnd-set-svg-xml-data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_svg_data,
+    gimp_dnd_set_svg_data
   },
 
   {
@@ -1352,6 +1392,95 @@ void
 gimp_dnd_color_dest_remove (GtkWidget *widget)
 {
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_COLOR, widget);
+}
+
+
+/***********************/
+/*  svg dnd functions  */
+/***********************/
+
+static guchar *
+gimp_dnd_get_svg_data (GtkWidget *widget,
+                       GCallback  get_svg_func,
+                       gpointer   get_svg_data,
+                       gint      *format,
+                       gint      *length)
+{
+  GimpVectors *vectors;
+  guint8      *vals;
+
+  vectors = (* (GimpDndDragSvgFunc) get_svg_func) (widget, get_svg_data);
+
+  vals = NULL;
+
+  *format = 0;
+  *length = 0;
+
+  return (guchar *) vals;
+}
+
+static void
+gimp_dnd_set_svg_data (GtkWidget *widget,
+                       GCallback  set_svg_func,
+                       gpointer   set_svg_data,
+                       guchar    *vals,
+                       gint       format,
+                       gint       length)
+{
+  GimpVectors *vectors;
+  guint8      *svg_data;
+
+  if (format != 8)
+    {
+      g_warning ("Received invalid SVG data!");
+      return;
+    }
+
+  svg_data = (guint8 *) vals;
+
+  vectors = NULL;
+
+  (* (GimpDndDropSvgFunc) set_svg_func) (widget, vectors, set_svg_data);
+}
+
+void
+gimp_dnd_svg_source_add (GtkWidget          *widget,
+                         GimpDndDragSvgFunc  get_svg_func,
+                         gpointer            data)
+{
+  gimp_dnd_data_source_add (GIMP_DND_TYPE_SVG, widget,
+			    G_CALLBACK (get_svg_func),
+			    data);
+  gimp_dnd_data_source_add (GIMP_DND_TYPE_SVG_XML, widget,
+			    G_CALLBACK (get_svg_func),
+			    data);
+}
+
+void
+gimp_dnd_svg_source_remove (GtkWidget *widget)
+{
+  gimp_dnd_data_source_remove (GIMP_DND_TYPE_SVG, widget);
+  gimp_dnd_data_source_remove (GIMP_DND_TYPE_SVG_XML, widget);
+}
+
+void
+gimp_dnd_svg_dest_add (GtkWidget          *widget,
+                       GimpDndDropSvgFunc  set_svg_func,
+                       gpointer            data)
+{
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_SVG, widget,
+			  G_CALLBACK (set_svg_func),
+			  data);
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_SVG_XML, widget,
+			  G_CALLBACK (set_svg_func),
+			  data);
+}
+
+void
+gimp_dnd_svg_dest_remove (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG_XML, widget);
 }
 
 

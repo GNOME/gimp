@@ -27,22 +27,24 @@ typedef enum
   GIMP_DND_TYPE_TEXT_PLAIN   = 2,
   GIMP_DND_TYPE_NETSCAPE_URL = 3,
   GIMP_DND_TYPE_COLOR        = 4,
-  GIMP_DND_TYPE_IMAGE        = 5,
-  GIMP_DND_TYPE_LAYER        = 6,
-  GIMP_DND_TYPE_CHANNEL      = 7,
-  GIMP_DND_TYPE_LAYER_MASK   = 8,
-  GIMP_DND_TYPE_COMPONENT    = 9,
-  GIMP_DND_TYPE_VECTORS      = 10,
-  GIMP_DND_TYPE_BRUSH        = 11,
-  GIMP_DND_TYPE_PATTERN      = 12,
-  GIMP_DND_TYPE_GRADIENT     = 13,
-  GIMP_DND_TYPE_PALETTE      = 14,
-  GIMP_DND_TYPE_FONT         = 15,
-  GIMP_DND_TYPE_BUFFER       = 16,
-  GIMP_DND_TYPE_IMAGEFILE    = 17,
-  GIMP_DND_TYPE_TEMPLATE     = 18,
-  GIMP_DND_TYPE_TOOL         = 19,
-  GIMP_DND_TYPE_DIALOG       = 20,
+  GIMP_DND_TYPE_SVG          = 5,
+  GIMP_DND_TYPE_SVG_XML      = 6,
+  GIMP_DND_TYPE_IMAGE        = 7,
+  GIMP_DND_TYPE_LAYER        = 8,
+  GIMP_DND_TYPE_CHANNEL      = 9,
+  GIMP_DND_TYPE_LAYER_MASK   = 10,
+  GIMP_DND_TYPE_COMPONENT    = 11,
+  GIMP_DND_TYPE_VECTORS      = 12,
+  GIMP_DND_TYPE_BRUSH        = 13,
+  GIMP_DND_TYPE_PATTERN      = 14,
+  GIMP_DND_TYPE_GRADIENT     = 15,
+  GIMP_DND_TYPE_PALETTE      = 16,
+  GIMP_DND_TYPE_FONT         = 17,
+  GIMP_DND_TYPE_BUFFER       = 18,
+  GIMP_DND_TYPE_IMAGEFILE    = 19,
+  GIMP_DND_TYPE_TEMPLATE     = 20,
+  GIMP_DND_TYPE_TOOL         = 21,
+  GIMP_DND_TYPE_DIALOG       = 22,
 
   GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_DIALOG
 } GimpDndType;
@@ -57,56 +59,62 @@ typedef enum
 #define GIMP_TARGET_NETSCAPE_URL \
         { "_NETSCAPE_URL", 0, GIMP_DND_TYPE_NETSCAPE_URL }
 
-#define GIMP_TARGET_IMAGE \
-        { "GIMP_IMAGE", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGE }
-
-#define GIMP_TARGET_LAYER \
-        { "GIMP_LAYER", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER }
-
-#define GIMP_TARGET_CHANNEL \
-        { "GIMP_CHANNEL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_CHANNEL }
-
-#define GIMP_TARGET_LAYER_MASK \
-        { "GIMP_LAYER_MASK", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_MASK }
-
-#define GIMP_TARGET_COMPONENT \
-        { "GIMP_COMPONENT", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_COMPONENT }
-
-#define GIMP_TARGET_VECTORS \
-        { "GIMP_VECTORS", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
-
 #define GIMP_TARGET_COLOR \
         { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
 
+#define GIMP_TARGET_SVG \
+        { "image/svg", 0, GIMP_DND_TYPE_SVG }
+
+#define GIMP_TARGET_SVG_XML \
+        { "image/svg+xml", 0, GIMP_DND_TYPE_SVG_XML }
+
+#define GIMP_TARGET_IMAGE \
+        { "application/x-gimp-image-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGE }
+
+#define GIMP_TARGET_LAYER \
+        { "application/x-gimp-layer-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER }
+
+#define GIMP_TARGET_CHANNEL \
+        { "application/x-gimp-channel-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_CHANNEL }
+
+#define GIMP_TARGET_LAYER_MASK \
+        { "application/x-gimp-layer-mask-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_MASK }
+
+#define GIMP_TARGET_COMPONENT \
+        { "application/x-gimp-component", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_COMPONENT }
+
+#define GIMP_TARGET_VECTORS \
+        { "application/x-gimp-vectors-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
+
 #define GIMP_TARGET_BRUSH \
-        { "GIMP_BRUSH", 0, GIMP_DND_TYPE_BRUSH }
+        { "application/x-gimp-brush-name", 0, GIMP_DND_TYPE_BRUSH }
 
 #define GIMP_TARGET_PATTERN \
-        { "GIMP_PATTERN", 0, GIMP_DND_TYPE_PATTERN }
+        { "application/x-gimp-pattern-name", 0, GIMP_DND_TYPE_PATTERN }
 
 #define GIMP_TARGET_GRADIENT \
-        { "GIMP_GRADIENT", 0, GIMP_DND_TYPE_GRADIENT }
+        { "application/x-gimp-gradient-name", 0, GIMP_DND_TYPE_GRADIENT }
 
 #define GIMP_TARGET_PALETTE \
-        { "GIMP_PALETTE", 0, GIMP_DND_TYPE_PALETTE }
+        { "application/x-gimp-palette-name", 0, GIMP_DND_TYPE_PALETTE }
 
 #define GIMP_TARGET_FONT \
-        { "GIMP_FONT", 0, GIMP_DND_TYPE_FONT }
+        { "application/x-gimp-font-name", 0, GIMP_DND_TYPE_FONT }
 
 #define GIMP_TARGET_BUFFER \
-        { "GIMP_BUFFER", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_BUFFER }
+        { "application/x-gimp-buffer-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_BUFFER }
 
 #define GIMP_TARGET_IMAGEFILE \
-        { "GIMP_IMAGEFILE", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGEFILE }
+        { "application/x-gimp-imagefile-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGEFILE }
 
 #define GIMP_TARGET_TEMPLATE \
-        { "GIMP_TEMPLATE", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TEMPLATE }
+        { "application/x-gimp-template-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TEMPLATE }
 
 #define GIMP_TARGET_TOOL \
-        { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
+        { "application/x-gimp-tool-name", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
 
 #define GIMP_TARGET_DIALOG \
-        { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
+        { "application/x-gimp-dialog", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
 
 
 /*  dnd initialization  */
@@ -156,6 +164,25 @@ void  gimp_dnd_color_dest_add      (GtkWidget            *widget,
 				    GimpDndDropColorFunc  set_color_func,
 				    gpointer              data);
 void  gimp_dnd_color_dest_remove   (GtkWidget            *widget);
+
+
+/*  svg dnd functions  */
+
+typedef GimpVectors * (* GimpDndDragSvgFunc) (GtkWidget     *widget,
+                                              gpointer       data);
+typedef void          (* GimpDndDropSvgFunc) (GtkWidget     *widget,
+                                              GimpVectors   *vectors,
+                                              gpointer       data);
+
+void  gimp_dnd_svg_source_add    (GtkWidget          *widget,
+                                  GimpDndDragSvgFunc  get_svg_func,
+                                  gpointer            data);
+void  gimp_dnd_svg_source_remove (GtkWidget          *widget);
+
+void  gimp_dnd_svg_dest_add      (GtkWidget          *widget,
+                                  GimpDndDropSvgFunc  set_svg_func,
+                                  gpointer            data);
+void  gimp_dnd_svg_dest_remove   (GtkWidget          *widget);
 
 
 /*  GimpViewable (by GType) dnd functions  */
