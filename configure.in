@@ -234,8 +234,18 @@ fi
 dnl TVM: check for compiler characteristics
 AC_C_INLINE
 
-gimpdatadir=$datadir/$PACKAGE
+gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER
+
+brushdata=`ls -1 data/brushes | grep -v Makefile`
+gradientdata=`ls -1 data/gradients | grep -v Makefile`
+palettedata=`ls -1 data/palettes | grep -v Makefile`
+patterndata=`ls -1 data/patterns | grep -v Makefile`
+
+brushdata=`echo $brushdata`
+gradientdata=`echo $gradientdata`
+palettedata=`echo $palettedata`
+patterndata=`echo $patterndata`
 
 dnl This is for generating PDB docuemntation.
 AC_PATH_PROG(EMACS, emacs, :)
@@ -243,6 +253,10 @@ AC_PATH_PROG(EMACS, emacs, :)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
+AC_SUBST(brushdata)                                                             
+AC_SUBST(gradientdata)                                                          
+AC_SUBST(palettedata)                                                           
+AC_SUBST(patterndata)                                                           
 AC_SUBST(WEBBROWSER)
 AC_SUBST(LIBXMU_LIB)
 AC_SUBST(TIFF)
@@ -387,4 +401,9 @@ plug-ins/flarefx/Makefile
 plug-ins/webbrowser/Makefile
 app/Makefile
 docs/Makefile
+data/Makefile
+data/brushes/Makefile
+data/gradients/Makefile
+data/palettes/Makefile
+data/patterns/Makefile
 )

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = libgimp plug-ins app
+SUBDIRS = libgimp plug-ins app data
 
 EXTRA_DIST = TODO TODO-DIST NOTES gtkrc gimp_logo.ppm gimp_splash.ppm rmshm user_install gimp_tips.txt ps-menurc
 
