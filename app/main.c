@@ -70,7 +70,10 @@ static char **gimp_argv;
  *      Arguments are either switches, their associated
  *      values, or image files.  As switches and their
  *      associated values are processed, those slots in
- *      the argv[] array are NULLed.
+ *      the argv[] array are NULLed. We do this because
+ *      unparsed args are treated as images to load on
+ *      startup.
+ *
  *
  *      The GTK switches are processed first (X switches are
  *      processed here, not by any X routines).  Then the
@@ -154,20 +157,25 @@ main (int argc, char **argv)
 	  (strcmp (argv[i], "-n") == 0))
 	{
 	  no_interface = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--batch") == 0) ||
 	       (strcmp (argv[i], "-b") == 0))
 	{
-	  for (j = 0, i++ ; i < argc && argv[i][0] != '-'; j++, i++)
+	  argv[i] = NULL;
+	  for (j = 0, i++ ; i < argc; j++, i++)
+	    {
 	      batch_cmds[j] = argv[i];
+	      argv[i] = NULL;
+	    }
 	  batch_cmds[j] = NULL;
-	  if (batch_cmds[0] == NULL)	/* We need at least one batch command */
-		 show_help = TRUE;
-	  if (argv[i-1][0] != '-')		/* Did loop end due to a new argument? */
-		 --i;						/* Ensure new argument gets processed */
+
+	  if (batch_cmds[0] == NULL)  /* We need at least one batch command */
+	    show_help = TRUE;
 	}
        else if (strcmp (argv[i], "--system-gimprc") == 0)  
 	{
+ 	  argv[i] = NULL;
 	  if (argc <= ++i) 
             {
 	     show_help = TRUE;
@@ -175,6 +183,7 @@ main (int argc, char **argv)
           else 
             {
              alternate_system_gimprc = argv[i];
+ 	     argv[i] = NULL;
             }
          } 
       else if ((strcmp (argv[i], "--gimprc") == 0) || 
@@ -187,50 +196,61 @@ main (int argc, char **argv)
           else 
             {
              alternate_gimprc = argv[i];
+ 	     argv[i] = NULL;
             }
          } 
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))
 	{
 	  show_help = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--version") == 0 ||
 	       strcmp (argv[i], "-v") == 0)
 	{
 	  show_version = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--no-data") == 0)
 	{
 	  no_data = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--no-splash") == 0)
 	{
 	  no_splash = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--no-splash-image") == 0)
 	{
 	  no_splash_image = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--verbose") == 0)
 	{
 	  be_verbose = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--no-shm") == 0)
 	{
 	  use_shm = FALSE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--debug-handlers") == 0)
 	{
 	  use_debug_handler = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--console-messages") == 0)
 	{
 	  console_messages = TRUE;
+ 	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--restore-session") == 0) ||
 	       (strcmp (argv[i], "-r") == 0))
 	{
 	  restore_session = TRUE;
+ 	  argv[i] = NULL;
 	}
 /*
  *    ANYTHING ELSE starting with a '-' is an error.

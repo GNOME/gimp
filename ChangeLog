@@ -1,3 +1,14 @@
+Thu Sep 10 12:00:55 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-console.[ch]: added an eval
+	PDB interface for running arbitrary scheme code
+	
+	* app/batch.c: redid batch mode to use script-fu-eval
+
+	* app/main.c: fixed command line parsing for batch mode and
+	image loading
+	
 Wed Sep  9 03:02:17 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: added -std1 check for DU4
