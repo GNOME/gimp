@@ -1,5 +1,10 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c: use GTK_STOCK_JUMP_TO for
+	all "Set" actions (like context-foreground-red-set).
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpscaletool.c
 	* app/tools/gimptransformtool.h: applied patch from Jordi Gay
 	(attached to bug #131111) which adds an aspect ratio spinbutton to

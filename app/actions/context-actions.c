@@ -72,8 +72,8 @@ static GimpActionEntry context_actions[] =
 
 static GimpEnumActionEntry context_foreground_red_actions[] =
 {
-  { "context-foreground-red-set", NULL,
-    "Set Foreground Red", NULL, NULL,
+  { "context-foreground-red-set", GTK_STOCK_JUMP_TO,
+    "Foreground Red Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-foreground-red-minimum", GTK_STOCK_GOTO_FIRST,
@@ -104,8 +104,8 @@ static GimpEnumActionEntry context_foreground_red_actions[] =
 
 static GimpEnumActionEntry context_foreground_green_actions[] =
 {
-  { "context-foreground-green-set", NULL,
-    "Set Foreground Green", NULL, NULL,
+  { "context-foreground-green-set", GTK_STOCK_JUMP_TO,
+    "Foreground Green Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-foreground-green-minimum", GTK_STOCK_GOTO_FIRST,
@@ -136,8 +136,8 @@ static GimpEnumActionEntry context_foreground_green_actions[] =
 
 static GimpEnumActionEntry context_foreground_blue_actions[] =
 {
-  { "context-foreground-blue-set", NULL,
-    "Set Foreground Blue", NULL, NULL,
+  { "context-foreground-blue-set", GTK_STOCK_JUMP_TO,
+    "Foreground Blue Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-foreground-blue-minimum", GTK_STOCK_GOTO_FIRST,
@@ -168,8 +168,8 @@ static GimpEnumActionEntry context_foreground_blue_actions[] =
 
 static GimpEnumActionEntry context_background_red_actions[] =
 {
-  { "context-background-red-set", NULL,
-    "Set Background Red", NULL, NULL,
+  { "context-background-red-set", GTK_STOCK_JUMP_TO,
+    "Background Red Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-background-red-minimum", GTK_STOCK_GOTO_FIRST,
@@ -200,8 +200,8 @@ static GimpEnumActionEntry context_background_red_actions[] =
 
 static GimpEnumActionEntry context_background_green_actions[] =
 {
-  { "context-background-green-set", NULL,
-    "Set Background Green", NULL, NULL,
+  { "context-background-green-set", GTK_STOCK_JUMP_TO,
+    "Background Green Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-background-green-minimum", GTK_STOCK_GOTO_FIRST,
@@ -232,8 +232,8 @@ static GimpEnumActionEntry context_background_green_actions[] =
 
 static GimpEnumActionEntry context_background_blue_actions[] =
 {
-  { "context-background-blue-set", NULL,
-    "Set Background Blue", NULL, NULL,
+  { "context-background-blue-set", GTK_STOCK_JUMP_TO,
+    "Background Blue Set", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
   { "context-background-blue-minimum", GTK_STOCK_GOTO_FIRST,
@@ -264,7 +264,7 @@ static GimpEnumActionEntry context_background_blue_actions[] =
 
 static GimpEnumActionEntry context_opacity_actions[] =
 {
-  { "context-opacity-set", NULL,
+  { "context-opacity-set", GTK_STOCK_JUMP_TO,
     "Set Transparency", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
@@ -432,7 +432,7 @@ static GimpEnumActionEntry context_brush_shape_actions[] =
 
 static GimpEnumActionEntry context_brush_radius_actions[] =
 {
-  { "context-brush-radius-set", NULL,
+  { "context-brush-radius-set", GTK_STOCK_JUMP_TO,
     "Set Brush Radius", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
@@ -464,7 +464,7 @@ static GimpEnumActionEntry context_brush_radius_actions[] =
 
 static GimpEnumActionEntry context_brush_spikes_actions[] =
 {
-  { "context-brush-spikes-set", NULL,
+  { "context-brush-spikes-set", GTK_STOCK_JUMP_TO,
     "Set Brush Spikes", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
@@ -496,7 +496,7 @@ static GimpEnumActionEntry context_brush_spikes_actions[] =
 
 static GimpEnumActionEntry context_brush_hardness_actions[] =
 {
-  { "context-brush-hardness-set", NULL,
+  { "context-brush-hardness-set", GTK_STOCK_JUMP_TO,
     "Set Brush Hardness", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
@@ -528,7 +528,7 @@ static GimpEnumActionEntry context_brush_hardness_actions[] =
 
 static GimpEnumActionEntry context_brush_aspect_actions[] =
 {
-  { "context-brush-aspect-set", NULL,
+  { "context-brush-aspect-set", GTK_STOCK_JUMP_TO,
     "Set Brush Aspect", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
@@ -560,7 +560,7 @@ static GimpEnumActionEntry context_brush_aspect_actions[] =
 
 static GimpEnumActionEntry context_brush_angle_actions[] =
 {
-  { "context-brush-angle-set", NULL,
+  { "context-brush-angle-set", GTK_STOCK_JUMP_TO,
     "Set Brush Angle", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
