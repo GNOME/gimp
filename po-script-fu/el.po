@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:02+0100\n"
+"POT-Creation-Date: 2003-11-22 22:31+0100\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -15,28 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-console.c:144
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:170
+#: plug-ins/script-fu/script-fu-console.c:171
 msgid "Script-Fu Console"
 msgstr "Κονσόλα Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:194
+#: plug-ins/script-fu/script-fu-console.c:193
 #, fuzzy
 msgid "SIOD Output"
 msgstr "Έξοδος DSP"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:266
 #, fuzzy
 msgid "Current Command"
 msgstr "Εντολή Εκτύπωσης"
 
 #
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Εξερεύνηση..."
 
@@ -58,106 +58,106 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1118
+#: plug-ins/script-fu/script-fu-scripts.c:1120
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Πρόγραμμα εντολών:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1132
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Πρόγραμμα εντολών:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1163
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "About"
 msgstr "Περί"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 #, fuzzy
 msgid "Script Arguments"
 msgstr "Ορίσματα"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1205
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1249
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1322
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1329
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1354
+#: plug-ins/script-fu/script-fu-scripts.c:1347
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1361
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1360
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1863
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1946
+#: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1869
-#: plug-ins/dbbrowser/dbbrowser_utils.c:508
+#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/dbbrowser/dbbrowser_utils.c:502
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1875
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1958
+#: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1883
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2005
+#: plug-ins/script-fu/script-fu-scripts.c:1995
 #, fuzzy, c-format
 msgid ""
-"Script-Fu Error while executing\n"
-" %s\n"
+"Error while executing\n"
+"%s\n"
 "%s"
 msgstr ""
 "Σφάλμα κατά την ανάγνωση του αρχείου %s:\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 #, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Λιγότερες Επιλογές"
@@ -194,71 +194,71 @@ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Κονσόλα Script-Fu"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:119
-#: plug-ins/dbbrowser/dbbrowser_utils.c:138
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #, fuzzy
 msgid "DB Browser"
 msgstr "Εξερεύνηση"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:124
-#: plug-ins/dbbrowser/dbbrowser_utils.c:143
+#: plug-ins/dbbrowser/dbbrowser_utils.c:122
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
 #, fuzzy
 msgid "Search by _Name"
 msgstr "Βάση αναζήτησης:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:126
-#: plug-ins/dbbrowser/dbbrowser_utils.c:145
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 #, fuzzy
 msgid "Search by _Blurb"
 msgstr "Εύρεση στη Μνήμη.."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:211
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 #, fuzzy
 msgid "_Search:"
 msgstr "Αναζήτηση: "
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
 msgstr "Όνομα:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:354
 #, fuzzy
 msgid "Blurb:"
 msgstr "Μπλέ:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:366
 #, fuzzy
 msgid "In:"
 msgstr "Μέσα"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:420
+#: plug-ins/dbbrowser/dbbrowser_utils.c:414
 #, fuzzy
 msgid "Out:"
 msgstr "Έξω"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:474
+#: plug-ins/dbbrowser/dbbrowser_utils.c:468
 #, fuzzy
 msgid "Help:"
 msgstr "Βοήθεια"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:579
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:603
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:669
+#: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
 msgstr ""
 

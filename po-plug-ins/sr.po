@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-23 01:59+0100\n"
+"POT-Creation-Date: 2003-11-24 01:38+0100\n"
 "PO-Revision-Date: 2003-11-23 02:05+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -2186,36 +2186,42 @@ msgstr "Корак"
 msgid "Frame %d of %d"
 msgstr "Оквир %d од %d"
 
-#: plug-ins/common/animoptimize.c:185
-msgid "<Image>/Filters/Animation/_Optimize"
+#: plug-ins/common/animoptimize.c:196
+#, fuzzy
+msgid "<Image>/Filters/Animation/_Optimize (for GIF)"
 msgstr "<Слика>/Филтери/Анимација/Оптимизација"
 
-#: plug-ins/common/animoptimize.c:202
+#: plug-ins/common/animoptimize.c:214
+#, fuzzy
+msgid "<Image>/Filters/Animation/_Optimize (difference)"
+msgstr "<Слика>/Филтери/Анимација/Оптимизација"
+
+#: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"
 msgstr "<Слика>/Филтери/Анимација/Де-оптимизација"
 
-#: plug-ins/common/animoptimize.c:218
+#: plug-ins/common/animoptimize.c:247
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
 msgstr "<Слика>/Филтери/Анимација/Уклони позадину"
 
 #
-#: plug-ins/common/animoptimize.c:234
+#: plug-ins/common/animoptimize.c:263
 msgid "<Image>/Filters/Animation/_Find Backdrop"
 msgstr "<Слика>/Филтери/Анимација/Нађи позадину..."
 
-#: plug-ins/common/animoptimize.c:434
+#: plug-ins/common/animoptimize.c:470
 msgid "UnOptimizing Animation..."
 msgstr "Де-оптимизирам Анимацију"
 
-#: plug-ins/common/animoptimize.c:437
+#: plug-ins/common/animoptimize.c:473
 msgid "Removing Animation Background..."
 msgstr "Уклањам позадину анимације..."
 
-#: plug-ins/common/animoptimize.c:440
+#: plug-ins/common/animoptimize.c:476
 msgid "Finding Animation Background..."
 msgstr "Тражим позадину анимације..."
 
-#: plug-ins/common/animoptimize.c:444
+#: plug-ins/common/animoptimize.c:480
 msgid "Optimizing Animation..."
 msgstr "Оптимизирам Анимацију..."
 

@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-11-22 01:51+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-24 01:38+0100\n"
 "PO-Revision-Date: 2003-11-22 02:20+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -1905,7 +1905,9 @@ msgstr "Aviso: '%s' é um ficheiro de formato antigo."
 #: plug-ins/common/CML_explorer.c:2358
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Aviso: '%s' é um ficheiro de parâmetro para um CML_explorer mais recente que este."
+msgstr ""
+"Aviso: '%s' é um ficheiro de parâmetro para um CML_explorer mais recente que "
+"este."
 
 #: plug-ins/common/CML_explorer.c:2420
 msgid "Error: failed to load parameters"
@@ -2038,35 +2040,41 @@ msgstr "Etapa"
 msgid "Frame %d of %d"
 msgstr "Quadro %d de %d"
 
-#: plug-ins/common/animoptimize.c:185
-msgid "<Image>/Filters/Animation/_Optimize"
+#: plug-ins/common/animoptimize.c:196
+#, fuzzy
+msgid "<Image>/Filters/Animation/_Optimize (for GIF)"
 msgstr "<Image>/Filtros/Animação/_Optimizar"
 
-#: plug-ins/common/animoptimize.c:202
+#: plug-ins/common/animoptimize.c:214
+#, fuzzy
+msgid "<Image>/Filters/Animation/_Optimize (difference)"
+msgstr "<Image>/Filtros/Animação/_Optimizar"
+
+#: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"
 msgstr "<Image>/Filtros/Animação/_Não Optimizar"
 
-#: plug-ins/common/animoptimize.c:218
+#: plug-ins/common/animoptimize.c:247
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
 msgstr "<Image>/Filtros/Animação/_Remover Fundo"
 
-#: plug-ins/common/animoptimize.c:234
+#: plug-ins/common/animoptimize.c:263
 msgid "<Image>/Filters/Animation/_Find Backdrop"
 msgstr "<Image>/Filtros/Animação/_Encontrar Fundo"
 
-#: plug-ins/common/animoptimize.c:434
+#: plug-ins/common/animoptimize.c:470
 msgid "UnOptimizing Animation..."
 msgstr "A Desfazer Optimização Animação..."
 
-#: plug-ins/common/animoptimize.c:437
+#: plug-ins/common/animoptimize.c:473
 msgid "Removing Animation Background..."
 msgstr "A Remover Fundo Animação..."
 
-#: plug-ins/common/animoptimize.c:440
+#: plug-ins/common/animoptimize.c:476
 msgid "Finding Animation Background..."
 msgstr "A Procurar Fundo Animação..."
 
-#: plug-ins/common/animoptimize.c:444
+#: plug-ins/common/animoptimize.c:480
 msgid "Optimizing Animation..."
 msgstr "A Optimizar Animação..."
 
@@ -3759,8 +3767,8 @@ msgstr ""
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Incapaz de gravar imagens coloridas RGB. Converta primeiro para cor indexada ou "
-"cinza."
+"Incapaz de gravar imagens coloridas RGB. Converta primeiro para cor indexada "
+"ou cinza."
 
 #: plug-ins/common/gif.c:1114
 msgid ""
@@ -9608,7 +9616,7 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr "Navegador Ajuda GIMP"
 
-#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:585
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:587
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Sem título>"
@@ -10178,36 +10186,36 @@ msgstr "_Antever"
 msgid "<Image>/Filters/Web/_ImageMap..."
 msgstr "<Image>/Filtros/Web/Mapa _Imagens..."
 
-#: plug-ins/imagemap/imap_main.c:737
+#: plug-ins/imagemap/imap_main.c:739
 msgid "Some data has been changed!"
 msgstr "Alguns dados foram alterados!"
 
-#: plug-ins/imagemap/imap_main.c:738
+#: plug-ins/imagemap/imap_main.c:740
 msgid "Do you really want to discard your changes?"
 msgstr "Deseja mesmo descartar as suas alterações?"
 
-#: plug-ins/imagemap/imap_main.c:946
+#: plug-ins/imagemap/imap_main.c:948
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Ficheiro \"%s\" gravado."
 
-#: plug-ins/imagemap/imap_main.c:950
+#: plug-ins/imagemap/imap_main.c:952
 msgid "Couldn't save file:"
 msgstr "Incapaz de gravar ficheiro:"
 
-#: plug-ins/imagemap/imap_main.c:976
+#: plug-ins/imagemap/imap_main.c:978
 msgid "Image size has changed."
 msgstr "Tamanho da imagem alterado."
 
-#: plug-ins/imagemap/imap_main.c:977
+#: plug-ins/imagemap/imap_main.c:979
 msgid "Resize area's?"
 msgstr "Redimensionar áreas?"
 
-#: plug-ins/imagemap/imap_main.c:1005
+#: plug-ins/imagemap/imap_main.c:1007
 msgid "Couldn't read file:"
 msgstr "Incapaz de ler ficheiro:"
 
-#: plug-ins/imagemap/imap_main.c:1052
+#: plug-ins/imagemap/imap_main.c:1054
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -10549,8 +10557,8 @@ msgid ""
 "algorithm.  Can make tileable mazes too.  See %s for more help."
 msgstr ""
 "Gera um labirinto utilizando ou o método de procura de primeiro-profundidade "
-"ou o algorítmo de Prim. Pode também gerar labirintos em mosaico.  Consulte "
-"%s para mais detalhes."
+"ou o algorítmo de Prim. Pode também gerar labirintos em mosaico.  Consulte %"
+"s para mais detalhes."
 
 #: plug-ins/maze/maze.c:159
 msgid "Draws a maze."
@@ -11384,11 +11392,11 @@ msgstr "Variadas"
 msgid "Selection to Path..."
 msgstr "Selecção para o Caminho..."
 
-#: plug-ins/sel2path/sel2path.c:186
+#: plug-ins/sel2path/sel2path.c:185
 msgid "No selection to convert"
 msgstr "Nenhuma selecção para converter"
 
-#: plug-ins/sel2path/sel2path.c:308
+#: plug-ins/sel2path/sel2path.c:302
 msgid "Selection To Path Advanced Settings"
 msgstr "Configurações Avançadas De Selecção Para Caminho"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:02+0100\n"
+"POT-Creation-Date: 2003-11-22 22:31+0100\n"
 "PO-Revision-Date: 2003-01-26 17:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -14,25 +14,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-console.c:144
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konsollmodus tillater bare interaktiv kjøring"
 
-#: plug-ins/script-fu/script-fu-console.c:170
+#: plug-ins/script-fu/script-fu-console.c:171
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsoll"
 
-#: plug-ins/script-fu/script-fu-console.c:194
+#: plug-ins/script-fu/script-fu-console.c:193
 msgid "SIOD Output"
 msgstr "SIOD utskrift"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:266
 msgid "Current Command"
 msgstr "Aktiv kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Bla gjennom..."
 
@@ -49,91 +49,91 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringsmodus tillater bare ikke-interaktiv kjøring"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1118
+#: plug-ins/script-fu/script-fu-scripts.c:1120
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1132
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1163
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "About"
 msgstr "Om"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 msgid "Script Arguments"
 msgstr "Skriptargumenter"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1205
 #, c-format
 msgid "%s:"
 msgstr "%s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1249
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1322
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu filvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1329
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu skrifttypevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1354
+#: plug-ins/script-fu/script-fu-scripts.c:1347
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu mønstervalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1361
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu gradientvalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1360
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu børstevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1863
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1946
+#: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1869
-#: plug-ins/dbbrowser/dbbrowser_utils.c:508
+#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1875
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1958
+#: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1883
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Image Types:"
 msgstr "Bildetyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2005
-#, c-format
+#: plug-ins/script-fu/script-fu-scripts.c:1995
+#, fuzzy, c-format
 msgid ""
-"Script-Fu Error while executing\n"
-" %s\n"
+"Error while executing\n"
+"%s\n"
 "%s"
 msgstr ""
 "Script-Fu feil under kjøring\n"
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tjeneralternativer"
 
@@ -164,58 +164,58 @@ msgstr "Gjenles alle tilgjengelige skript"
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:119
-#: plug-ins/dbbrowser/dbbrowser_utils.c:138
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
 msgid "DB Browser"
 msgstr "DB-leser"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:124
-#: plug-ins/dbbrowser/dbbrowser_utils.c:143
+#: plug-ins/dbbrowser/dbbrowser_utils.c:122
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
 msgid "Search by _Name"
 msgstr "Søk etter _navn"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:126
-#: plug-ins/dbbrowser/dbbrowser_utils.c:145
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 msgid "Search by _Blurb"
 msgstr "Søk etter _blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:211
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
 msgstr "_Søk:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:354
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:366
 msgid "In:"
 msgstr "Inn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:420
+#: plug-ins/dbbrowser/dbbrowser_utils.c:414
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:474
+#: plug-ins/dbbrowser/dbbrowser_utils.c:468
 msgid "Help:"
 msgstr "Hjelp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:579
 msgid "Searching by name - please wait"
 msgstr "Søker etter navn - vennligst vent"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:603
 msgid "Searching by blurb - please wait"
 msgstr "Søker etter blurb - vennligst vent"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
 msgstr "Søker - vennligst vent"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:669
+#: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
 msgstr "Ingen treff"
 

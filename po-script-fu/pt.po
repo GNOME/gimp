@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-11-20 01:10+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-22 22:31+0100\n"
 "PO-Revision-Date: 2003-11-20 01:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -108,30 +108,30 @@ msgstr "Selecção de Gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selecção de Pincel Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-scripts.c:1946
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1952
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1969
+#: plug-ins/script-fu/script-fu-scripts.c:1958
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1977
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Image Types:"
 msgstr "Tipos de Imagem:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
-#, c-format
+#: plug-ins/script-fu/script-fu-scripts.c:1995
+#, fuzzy, c-format
 msgid ""
-"Script-Fu Error while executing\n"
-" %s\n"
+"Error while executing\n"
+"%s\n"
 "%s"
 msgstr ""
 "Erro do Script-Fu durante a execução\n"
@@ -865,7 +865,9 @@ msgstr "Gravar: Necessárias duas camadas!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr "Efeito tipo marcar a ferro quente numa camada de 1º plano (texto) e fundo; V2.1"
+msgstr ""
+"Efeito tipo marcar a ferro quente numa camada de 1º plano (texto) e fundo; "
+"V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"

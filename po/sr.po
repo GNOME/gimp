@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-23 01:33+0100\n"
+"POT-Creation-Date: 2003-11-24 02:46+0100\n"
 "PO-Revision-Date: 2003-11-23 01:49+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -405,7 +405,9 @@ msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
-msgstr "Када је укључено, слика ће постати активна када њен прозор буде фокусиран. Ово је корисно за управљаче прозорима који користи „клик за фокус“."
+msgstr ""
+"Када је укључено, слика ће постати активна када њен прозор буде фокусиран. "
+"Ово је корисно за управљаче прозорима који користи „клик за фокус“."
 
 #: app/config/gimprc-blurbs.h:21
 msgid "Specifies how the area around the image should be drawn."
@@ -460,7 +462,10 @@ msgstr ""
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr "Ознака врсте прозора која се поставља за прилепљене прозоре. Ово може утицати на то како ваш управљач прозорима исцртава и поставља прилепљене прозоре."
+msgstr ""
+"Ознака врсте прозора која се поставља за прилепљене прозоре. Ово може "
+"утицати на то како ваш управљач прозорима исцртава и поставља прилепљене "
+"прозоре."
 
 #: app/config/gimprc-blurbs.h:118
 msgid "Sets the browser used by the help system."
@@ -765,7 +770,9 @@ msgstr ""
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
-msgstr "Ознака врсте прозора која се поставља за алатке. Ово може утицати на то како ваш управљач прозорима исцртава и поставља прозор са алаткама."
+msgstr ""
+"Ознака врсте прозора која се поставља за алатке. Ово може утицати на то како "
+"ваш управљач прозорима исцртава и поставља прозор са алаткама."
 
 #: app/config/gimprc-blurbs.h:325
 msgid "Sets the manner in which transparency is displayed in images."
@@ -1712,7 +1719,7 @@ msgstr "Инвертуј"
 msgid "Offset Drawable"
 msgstr "Померај Цртежа"
 
-#: app/core/gimpdrawable-stroke.c:321
+#: app/core/gimpdrawable-stroke.c:324
 msgid "Render Stroke"
 msgstr "Исцртај потеѕ"
 
@@ -2432,50 +2439,9 @@ msgstr "Одбаци нови слој"
 msgid "Drop New Path"
 msgstr "Одбаци нову путању"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:156
+#: app/display/gimpdisplayshell-filter-dialog.c:68
 msgid "Color Display Filters"
 msgstr "Филтри за приказивање боја"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:197
-msgid "Available Filters"
-msgstr "Доступни филтери"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:223
-msgid "Add the selected filter to the list of active filters."
-msgstr "Додај изабрани филтер у листу активних филтера."
-
-#: app/display/gimpdisplayshell-filter-dialog.c:240
-msgid "Remove the selected filter from the list of active filters."
-msgstr "Избаци изабрани филтер из листе активних филтера."
-
-#: app/display/gimpdisplayshell-filter-dialog.c:254
-msgid "Move the selected filter up"
-msgstr "Помери изабрани филтер навише"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:263
-msgid "Move the selected filter down"
-msgstr "Помери изабрани филтер наниже"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:289
-msgid "Active Filters"
-msgstr "Активни филтери"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:321
-msgid "Reset the selected filter to default values"
-msgstr "Подеси изабрани филтер на подразумеване вредности"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:624
-#, c-format
-msgid "Configure Selected Filter: %s"
-msgstr "Подеси изабрани филтер: %s"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:631
-msgid "No Filter Selected"
-msgstr "Није изабран ниједан филтер"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:635
-msgid "Configure Selected Filter"
-msgstr "Подеси Изабрани Филтер"
 
 #: app/display/gimpdisplayshell-layer-select.c:123
 msgid "Layer Select"
@@ -3180,7 +3146,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Сачувај селекцију у датотеку..."
 
 #: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:713
-#: app/widgets/gimpdnd.c:1228 app/widgets/gimpdocumentview.c:476
+#: app/widgets/gimpdnd.c:1233 app/widgets/gimpdocumentview.c:476
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -6851,37 +6817,37 @@ msgstr "Калибриши"
 msgid "Path to Selection"
 msgstr "Путања у селекцију"
 
-#: app/gui/vectors-commands.c:443
+#: app/gui/vectors-commands.c:441
 msgid "Empty Vectors Copy"
 msgstr "Испразни копију вектора"
 
-#: app/gui/vectors-commands.c:457 app/gui/vectors-commands.c:505
+#: app/gui/vectors-commands.c:455 app/gui/vectors-commands.c:503
 #: app/widgets/gimpvectorstreeview.c:131
 msgid "New Path"
 msgstr "Нова Путања"
 
-#: app/gui/vectors-commands.c:459
+#: app/gui/vectors-commands.c:457
 msgid "New Path Options"
 msgstr "Опције за нову путању"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:494 app/gui/vectors-commands.c:612
+#: app/gui/vectors-commands.c:492 app/gui/vectors-commands.c:610
 msgid "Path name:"
 msgstr "Назив путање:"
 
-#: app/gui/vectors-commands.c:575
+#: app/gui/vectors-commands.c:573
 msgid "Path Attributes"
 msgstr "Својства путање"
 
-#: app/gui/vectors-commands.c:577 app/widgets/gimpvectorstreeview.c:129
+#: app/gui/vectors-commands.c:575 app/widgets/gimpvectorstreeview.c:129
 msgid "Edit Path Attributes"
 msgstr "Измени својства путање"
 
-#: app/gui/vectors-commands.c:672
+#: app/gui/vectors-commands.c:670
 msgid "Import Paths from SVG"
 msgstr "Увези путању из СВГ-а"
 
-#: app/gui/vectors-commands.c:736
+#: app/gui/vectors-commands.c:734
 msgid "Export Path to SVG"
 msgstr "Извези путању у СВГ-а"
 
@@ -8982,7 +8948,7 @@ msgstr "Боја четке: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Позадина: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1192
+#: app/widgets/gimpdnd.c:1197
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -8993,7 +8959,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1196
+#: app/widgets/gimpdnd.c:1201
 msgid "Invalid UTF-8"
 msgstr "Неисправан УТФ-8"
 
@@ -9458,7 +9424,7 @@ msgstr "Промени боју четке"
 msgid "Change Background Color"
 msgstr "Промени боју позадине"
 
-#: app/widgets/gimptoolbox-indicator-area.c:147
+#: app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
@@ -9466,7 +9432,7 @@ msgstr ""
 "Активна четка.\n"
 "Кликните да отворите прозор за четке."
 
-#: app/widgets/gimptoolbox-indicator-area.c:175
+#: app/widgets/gimptoolbox-indicator-area.c:180
 msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
@@ -9474,7 +9440,7 @@ msgstr ""
 "Активни одсечак.\n"
 "Кликните да отворите прозор за одсечке."
 
-#: app/widgets/gimptoolbox-indicator-area.c:203
+#: app/widgets/gimptoolbox-indicator-area.c:211
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
@@ -9787,6 +9753,36 @@ msgstr "Направи и уреди слике или фотографије"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "ГИМП (нестабилна верзија)"
+
+#~ msgid "Available Filters"
+#~ msgstr "Доступни филтери"
+
+#~ msgid "Add the selected filter to the list of active filters."
+#~ msgstr "Додај изабрани филтер у листу активних филтера."
+
+#~ msgid "Remove the selected filter from the list of active filters."
+#~ msgstr "Избаци изабрани филтер из листе активних филтера."
+
+#~ msgid "Move the selected filter up"
+#~ msgstr "Помери изабрани филтер навише"
+
+#~ msgid "Move the selected filter down"
+#~ msgstr "Помери изабрани филтер наниже"
+
+#~ msgid "Active Filters"
+#~ msgstr "Активни филтери"
+
+#~ msgid "Reset the selected filter to default values"
+#~ msgstr "Подеси изабрани филтер на подразумеване вредности"
+
+#~ msgid "Configure Selected Filter: %s"
+#~ msgstr "Подеси изабрани филтер: %s"
+
+#~ msgid "No Filter Selected"
+#~ msgstr "Није изабран ниједан филтер"
+
+#~ msgid "Configure Selected Filter"
+#~ msgstr "Подеси Изабрани Филтер"
 
 #~ msgid "Error opening file '%s': %s"
 #~ msgstr "Грешка при отварању датотеке „%s“: %s"

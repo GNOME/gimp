@@ -185,10 +185,6 @@
 # 
 # (thumbnail-size normal)
 
-# This setting is ignored.  This is a float value.
-# 
-# (gamma-correction 1.000000)
-
 # Install a private colormap; might be useful on pseudocolor visuals. 
 # Possible values are yes and no.
 # 
@@ -204,12 +200,6 @@
 # value.
 # 
 # (marching-ants-speed 300)
-
-# Specify that marching ants for selected regions will be drawn with colormap
-# cycling as opposed to be drawn as animated lines.  This color cycling
-# option works only with 8-bit displays.  Possible values are yes and no.
-# 
-# (colormap-cycling no)
 
 # When enabled, the image window will automatically resize itself, when
 # zooming into and out of images.  Possible values are yes and no.
@@ -370,6 +360,12 @@
 #     (padding-mode custom)
 #     (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
 
+# When enabled, an image will become the active image when its image window
+# receives the focus. This is useful for window managers using "click to
+# focus".  Possible values are yes and no.
+# 
+# (activate-on-focus no)
+
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
 # 
@@ -427,8 +423,9 @@
 # 
 # (tearoff-menus yes)
 
-# When enabled, you can change keyboard shortcuts for menu items on the fly. 
-# Possible values are yes and no.
+# When enabled, you can change keyboard shortcuts for menu items by hitting a
+# key combination while the menu item is highlighted.  Possible values are
+# yes and no.
 # 
 # (can-change-accels no)
 
@@ -470,7 +467,7 @@
 # (use-help yes)
 
 # Sets the browser used by the help system.  Possible values are gimp and
-# webbrowser.
+# web-browser.
 # 
 # (help-browser gimp)
 
@@ -480,7 +477,19 @@
 # appended to the command with a space separating the two.  This is a single
 # filename.
 # 
-# (web-browser "mozilla \"%s\"")
+# (web-browser "mozilla %s")
+
+# The window type hint that is set on the toolbox. This may affect how your
+# window manager decorates and handles the toolbox window.  Possible values
+# are normal and utility.
+# 
+# (toolbox-window-type normal)
+
+# The window type hint that is set on dock windows. This may affect the way
+# your window manager decorates and handles dock windows.  Possible values
+# are normal and utility.
+# 
+# (dock-window-type utility)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.

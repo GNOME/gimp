@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-07 00:23+0800\n"
+"POT-Creation-Date: 2003-11-22 22:31+0100\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -71,63 +71,63 @@ msgstr "Argumen Skrip"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1204
+#: plug-ins/script-fu/script-fu-scripts.c:1205
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1250
+#: plug-ins/script-fu/script-fu-scripts.c:1249
 msgid "Script-Fu Color Selection"
 msgstr "Pemilihan Warna Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1322
 msgid "Script-Fu File Selection"
 msgstr "Pemilihan Fail Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1333
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Folder Selection"
 msgstr "Pemilihan Folder Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-Fu Font Selection"
 msgstr "Pemilihan Fon Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1358
+#: plug-ins/script-fu/script-fu-scripts.c:1347
 msgid "Script-fu Pattern Selection"
 msgstr "Pemilihan Corak Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 msgid "Script-Fu Gradient Selection"
 msgstr "Pemilihan Kecerunan Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1373
+#: plug-ins/script-fu/script-fu-scripts.c:1360
 msgid "Script-Fu Brush Selection"
 msgstr "Pemilihan Berus Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-scripts.c:1946
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Pengarang"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1952
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Hak cipta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1969
+#: plug-ins/script-fu/script-fu-scripts.c:1958
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Tarikh"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1977
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Image Types:"
 msgstr "Jenis Imej"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
-#, c-format
+#: plug-ins/script-fu/script-fu-scripts.c:1995
+#, fuzzy, c-format
 msgid ""
-"Script-Fu Error while executing\n"
-" %s\n"
+"Error while executing\n"
+"%s\n"
 "%s"
 msgstr ""
 "Ralat Script-Fu semasa melaksanakan\n"

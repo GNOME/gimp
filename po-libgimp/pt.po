@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-11-20 01:18+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-24 01:38+0100\n"
 "PO-Revision-Date: 2003-11-20 01:20+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -279,36 +279,36 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpmodule/gimpmodule.c:174
+#: libgimpmodule/gimpmodule.c:175
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "A ler módulo: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
-#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
-#: libgimpmodule/gimpmodule.c:434
+#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
+#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
+#: libgimpmodule/gimpmodule.c:435
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Erro de leitura do módulo '%s': %s"
 
-#: libgimpmodule/gimpmodule.c:271
+#: libgimpmodule/gimpmodule.c:272
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "A ignorar módulo: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
 msgstr "Erro módulo"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
 msgstr "Lido"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
 msgstr "Falha leitura"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Não lido"
 
@@ -365,6 +365,7 @@ msgid "Hue"
 msgstr "Matiz"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Saturação"
 
@@ -396,11 +397,19 @@ msgstr "Notação de cor hexadecimal como utilizado em HTML"
 msgid "He_x Triplet:"
 msgstr "Tripla He_x:"
 
-#: libgimpwidgets/gimpfileselection.c:335
+#: libgimpwidgets/gimpcolorselection.c:203
+msgid "Current:"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorselection.c:225
+msgid "Old:"
+msgstr ""
+
+#: libgimpwidgets/gimpfileentry.c:331
 msgid "Select Folder"
 msgstr "Seleccionar Pasta"
 
-#: libgimpwidgets/gimpfileselection.c:349
+#: libgimpwidgets/gimpfileentry.c:345
 msgid "Select File"
 msgstr "Seleccionar Ficheiro"
 
@@ -520,32 +529,29 @@ msgstr "Aleató_rio"
 msgid "Seed random number generator with a generated random number"
 msgstr "Semente de geração aleatória com número gerado aleatoriamente"
 
-#: modules/cdisplay_colorblind.c:122
+#: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Filtro de simulação de déficit de cor (algorítmo Brettel-Vienot-Mollon)"
 
-#: modules/cdisplay_colorblind.c:188
+#: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
 msgstr "Visão Deficiente Cor"
 
-#: modules/cdisplay_colorblind.c:473
-msgid "Color Deficiency Type:"
+#: modules/cdisplay_colorblind.c:464
+#, fuzzy
+msgid "Color _Deficiency Type:"
 msgstr "Tipo Deficiência Cor:"
 
-#: modules/cdisplay_colorblind.c:482
-msgid "None (normal vision)"
-msgstr "Nenhuma (visão normal)"
-
-#: modules/cdisplay_colorblind.c:485
+#: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (insensibilidade ao vermelho)"
 
-#: modules/cdisplay_colorblind.c:488
+#: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensibilidade ao verde)"
 
-#: modules/cdisplay_colorblind.c:491
+#: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Trinatopia (insensibilidade ao azul)"
 
@@ -557,8 +563,9 @@ msgstr "Filtro de visualização gama de cor"
 msgid "Gamma"
 msgstr "Gama"
 
-#: modules/cdisplay_gamma.c:320
-msgid "Gamma:"
+#: modules/cdisplay_gamma.c:311
+#, fuzzy
+msgid "_Gamma:"
 msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
@@ -569,9 +576,46 @@ msgstr "Filtro de visualização de Alto Contraste de cor"
 msgid "Contrast"
 msgstr "Contraste"
 
-#: modules/cdisplay_highcontrast.c:318
-msgid "Contrast Cycles:"
+#: modules/cdisplay_highcontrast.c:308
+#, fuzzy
+msgid "Contrast C_ycles:"
 msgstr "Cíclos Contraste:"
+
+#: modules/cdisplay_proof.c:102
+msgid "Color proof filter using ICC color profile"
+msgstr ""
+
+#: modules/cdisplay_proof.c:166
+msgid "Color Proof"
+msgstr ""
+
+#: modules/cdisplay_proof.c:319
+msgid "Perceptual"
+msgstr ""
+
+#: modules/cdisplay_proof.c:321
+msgid "Relative Colorimetric"
+msgstr ""
+
+#: modules/cdisplay_proof.c:325
+msgid "Absolute Colorimetric"
+msgstr ""
+
+#: modules/cdisplay_proof.c:331
+msgid "_Intent:"
+msgstr ""
+
+#: modules/cdisplay_proof.c:334
+msgid "Choose an ICC Color Profile"
+msgstr ""
+
+#: modules/cdisplay_proof.c:337
+msgid "_Profile:"
+msgstr ""
+
+#: modules/cdisplay_proof.c:345
+msgid "_Black Point Compensation"
+msgstr ""
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -636,6 +680,9 @@ msgstr "Aguarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressão"
+
+#~ msgid "None (normal vision)"
+#~ msgstr "Nenhuma (visão normal)"
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "um canal (selecção gravada)"

@@ -234,11 +234,6 @@ save thumbnails if layer previews are disabled.  Possible values are none,
 normal and large.
 
 .TP
-(gamma-correction 1.000000)
-
-This setting is ignored.  This is a float value.
-
-.TP
 (install-colormap no)
 
 Install a private colormap; might be useful on pseudocolor visuals.  Possible
@@ -255,13 +250,6 @@ system colors allocated for the GIMP.  This is an integer value.
 
 Speed of marching ants in the selection outline.  This value is in
 milliseconds (less time indicates faster marching).  This is an integer value.
-
-.TP
-(colormap-cycling no)
-
-Specify that marching ants for selected regions will be drawn with colormap
-cycling as opposed to be drawn as animated lines.  This color cycling option
-works only with 8-bit displays.  Possible values are yes and no.
 
 .TP
 (resize-windows-on-zoom no)
@@ -487,6 +475,13 @@ Sets the default settings used when an image is viewed in fullscreen mode.
 This is a parameter list.
 
 .TP
+(activate-on-focus no)
+
+When enabled, an image will become the active image when its image window
+receives the focus. This is useful for window managers using "click to focus".
+ Possible values are yes and no.
+
+.TP
 (transparency-size medium-checks)
 
 Sets the size of the checkerboard used to display transparency.  Possible
@@ -557,8 +552,9 @@ When enabled, menus can be torn off.  Possible values are yes and no.
 .TP
 (can-change-accels no)
 
-When enabled, you can change keyboard shortcuts for menu items on the fly. 
-Possible values are yes and no.
+When enabled, you can change keyboard shortcuts for menu items by hitting a
+key combination while the menu item is highlighted.  Possible values are yes
+and no.
 
 .TP
 (save-accels yes)
@@ -608,15 +604,29 @@ and no.
 (help-browser gimp)
 
 Sets the browser used by the help system.  Possible values are gimp and
-webbrowser.
+web-browser.
 
 .TP
-(web-browser "mozilla \"%s\"")
+(web-browser "mozilla %s")
 
 Sets the external web browser to be used.  This can be an absolute path or the
 name of an executable to search for in the user's PATH. If the command
 contains '%s' it will be replaced with the URL, else the URL will be appended
 to the command with a space separating the two.  This is a single filename.
+
+.TP
+(toolbox-window-type normal)
+
+The window type hint that is set on the toolbox. This may affect how your
+window manager decorates and handles the toolbox window.  Possible values are
+normal and utility.
+
+.TP
+(dock-window-type utility)
+
+The window type hint that is set on dock windows. This may affect the way your
+window manager decorates and handles dock windows.  Possible values are normal
+and utility.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")

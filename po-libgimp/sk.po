@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.sk\n"
-"POT-Creation-Date: 2003-11-13 03:58+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-24 01:38+0100\n"
 "PO-Revision-Date: 2003-11-13 15:13+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -17,80 +18,75 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Výber štetca"
 
-#: libgimp/gimpbrushmenu.c:161
-#: libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
 msgstr "_Prehľadávať..."
 
-#: libgimp/gimpexport.c:183
-#: libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s nevie pracovať s vrstvami"
 
-#: libgimp/gimpexport.c:184
-#: libgimp/gimpexport.c:193
-#: libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Zlúčiť viditeľné vrstvy"
 
-#: libgimp/gimpexport.c:192
+#: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s nevie pracovať s posunom, veľkosťou alebo krytím vrstvy"
 
-#: libgimp/gimpexport.c:201
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s môže spracovať vrstvy iba ako políčka animácie"
 
-#: libgimp/gimpexport.c:202
-#: libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
 msgstr "Uložiť ako animáciu"
 
-#: libgimp/gimpexport.c:211
-#: libgimp/gimpexport.c:220
-#: libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
 msgid "Flatten Image"
 msgstr "Do jednej vrstvy"
 
-#: libgimp/gimpexport.c:228
+#: libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
 msgstr "%s nevie pracovať s priesvitnosťou"
 
-#: libgimp/gimpexport.c:237
+#: libgimp/gimpexport.c:269
+#, fuzzy, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s nevie pracovať s vrstvami"
+
+#: libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr ""
+
+#: libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
 msgstr "%s vie pracovať iba s RGB obrázkami"
 
-#: libgimp/gimpexport.c:238
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Konverzia do RGB"
 
-#: libgimp/gimpexport.c:246
+#: libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s vie pracovať iba s obrázkami v odtieňoch šedej"
 
-#: libgimp/gimpexport.c:247
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:287
+#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Konverzia do odtieňov šedej"
 
-#: libgimp/gimpexport.c:255
+#: libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s vie pracovať iba s indexovanými obrázkami"
 
-#: libgimp/gimpexport.c:256
-#: libgimp/gimpexport.c:275
-#: libgimp/gimpexport.c:285
+#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -98,61 +94,79 @@ msgstr ""
 "Skonvertovať na indexované použitím štandardných nastavení\n"
 "(Použite manuálne nastavenie pre vylepšenie výsledku)"
 
-#: libgimp/gimpexport.c:265
+#: libgimp/gimpexport.c:306
+#, fuzzy, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s vie pracovať iba s RGB/indexovanými obrázkami"
+
+#: libgimp/gimpexport.c:307
+#, fuzzy
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Skonvertovať na indexované použitím štandardných nastavení\n"
+"(Použite manuálne nastavenie pre vylepšenie výsledku)"
+
+#: libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%s vie pracovať iba s obrázkami v odtieňoch šedi a RGB"
 
-#: libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s vie pracovať iba s RGB/indexovanými obrázkami"
 
-#: libgimp/gimpexport.c:284
+#: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s vie pracovať iba s indexovanými obrázkami a v odtieňoch šedi"
 
-#: libgimp/gimpexport.c:295
+#: libgimp/gimpexport.c:346
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s potrebuje alfa kanál"
 
-#: libgimp/gimpexport.c:296
+#: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
 msgstr "Pridať alfa kanál"
 
-#: libgimp/gimpexport.c:331
+#: libgimp/gimpexport.c:382
 msgid "Confirm Save"
 msgstr "Potvrdiť ukladanie"
 
-#: libgimp/gimpexport.c:336
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Potvrdiť"
 
-#: libgimp/gimpexport.c:405
+#: libgimp/gimpexport.c:456
 msgid "Export File"
 msgstr "Exportovať súbor"
 
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:460
 msgid "_Ignore"
 msgstr "_Ignorovať"
 
-#: libgimp/gimpexport.c:411
+#: libgimp/gimpexport.c:462
 msgid "_Export"
 msgstr "_Export"
 
 #. the headline
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexport.c:484
 #, c-format
-msgid "Your image should be exported before it can be saved as %s for the following reasons:"
-msgstr "Váš obrázok by mal byť exportovaný predtým, ako bude uložený ako %s, z nasledovných dôvodov:"
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"Váš obrázok by mal byť exportovaný predtým, ako bude uložený ako %s, z "
+"nasledovných dôvodov:"
 
-#: libgimp/gimpexport.c:511
+#: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
 msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
 
-#: libgimp/gimpexport.c:607
+#: libgimp/gimpexport.c:664
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -161,7 +175,7 @@ msgstr ""
 "Idete uložiť masku vrstvy ako %s.\n"
 "Viditeľné vrstvy nebudú uložené."
 
-#: libgimp/gimpexport.c:613
+#: libgimp/gimpexport.c:670
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -207,131 +221,144 @@ msgstr "Nastavenie parametrov"
 msgid "Pattern Selection"
 msgstr "Výber vzorky"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "percent"
 
-#: libgimpbase/gimputils.c:161
-#: libgimpbase/gimputils.c:166
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný UTF-8 reťazec)"
 
-#: libgimpbase/gimputils.c:189
+#: libgimpbase/gimputils.c:198
 #, c-format
 msgid "%d Bytes"
 msgstr "%d bytov"
 
-#: libgimpbase/gimputils.c:193
+#: libgimpbase/gimputils.c:203
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:197
+#: libgimpbase/gimputils.c:207
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:201
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:206
+#: libgimpbase/gimputils.c:218
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:222
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpmodule/gimpmodule.c:174
+#: libgimpbase/gimputils.c:226
+#, fuzzy, c-format
+msgid "%d MB"
+msgstr "%d KB"
+
+#: libgimpbase/gimputils.c:233
+#, fuzzy, c-format
+msgid "%.2f GB"
+msgstr "%.2f MB"
+
+#: libgimpbase/gimputils.c:237
+#, fuzzy, c-format
+msgid "%.1f GB"
+msgstr "%.1f MB"
+
+#: libgimpbase/gimputils.c:241
+#, fuzzy, c-format
+msgid "%d GB"
+msgstr "%d KB"
+
+#: libgimpmodule/gimpmodule.c:175
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Načítavanie modulu: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:207
-#: libgimpmodule/gimpmodule.c:314
-#: libgimpmodule/gimpmodule.c:341
-#: libgimpmodule/gimpmodule.c:434
-#, c-format
-msgid ""
-"Module '%s' load error:\n"
-"%s"
+#: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
+#: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
+#: libgimpmodule/gimpmodule.c:435
+#, fuzzy, c-format
+msgid "Module '%s' load error: %s"
 msgstr ""
 "Chyba pri načítavaní modulu '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:271
+#: libgimpmodule/gimpmodule.c:272
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynecháva sa modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
 msgstr "Načítané"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
 msgstr "Načítavanie zlyhalo"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Nenačítané"
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/Foreground Color"
+#, fuzzy
+msgid "/_Foreground Color"
 msgstr "/Farba popredia"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/Background Color"
+#, fuzzy
+msgid "/_Background Color"
 msgstr "/Farba pozadia"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Black"
+#, fuzzy
+msgid "/Blac_k"
 msgstr "/Čierna"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/White"
+#, fuzzy
+msgid "/_White"
 msgstr "/Biela"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr "Mierky"
 
-#: libgimpwidgets/gimpcolorscales.c:164
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:169
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr "_B"
 
@@ -339,38 +366,32 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174
-#: libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr "Odtieň"
 
-#: libgimpwidgets/gimpcolorscales.c:175
-#: libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+#: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Sýtosť"
 
-#: libgimpwidgets/gimpcolorscales.c:176
-#: libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr "Hodnota"
 
-#: libgimpwidgets/gimpcolorscales.c:177
-#: libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr "Červená"
 
-#: libgimpwidgets/gimpcolorscales.c:178
-#: libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr "Zelená"
 
-#: libgimpwidgets/gimpcolorscales.c:179
-#: libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr "Modrá"
 
-#: libgimpwidgets/gimpcolorscales.c:180
-#: libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -382,29 +403,41 @@ msgstr "Hexadecimálny zápis farby ako v HTML"
 msgid "He_x Triplet:"
 msgstr "Trojica he_x:"
 
-#: libgimpwidgets/gimpfileselection.c:352
+#: libgimpwidgets/gimpcolorselection.c:203
+msgid "Current:"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorselection.c:225
+msgid "Old:"
+msgstr ""
+
+#: libgimpwidgets/gimpfileentry.c:331
 msgid "Select Folder"
 msgstr "Výber priečinka"
 
-#: libgimpwidgets/gimpfileselection.c:366
+#: libgimpwidgets/gimpfileentry.c:345
 msgid "Select File"
 msgstr "Výber súboru"
 
-#: libgimpwidgets/gimpmemsizeentry.c:219
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "KiloBytes"
 msgstr "v kilobytoch"
 
-#: libgimpwidgets/gimpmemsizeentry.c:220
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "MegaBytes"
 msgstr "v megabytoch"
 
-#: libgimpwidgets/gimpmemsizeentry.c:221
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "GigaBytes"
 msgstr "Gigabyty"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "Farbu vyberiete tak, že kliknete na kvapkadlo a potom kliknite na farbu kdekoľvek na obrazovke."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Farbu vyberiete tak, že kliknete na kvapkadlo a potom kliknite na farbu "
+"kdekoľvek na obrazovke."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -450,8 +483,7 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:185
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "_Mierka"
 
@@ -471,59 +503,60 @@ msgstr "_Otočenie"
 msgid "_Shear"
 msgstr "_Skosenie"
 
-#: libgimpwidgets/gimpunitmenu.c:268
+#: libgimpwidgets/gimpunitmenu.c:298
 msgid "More..."
 msgstr "Viac..."
 
-#: libgimpwidgets/gimpunitmenu.c:578
+#: libgimpwidgets/gimpunitmenu.c:608
 msgid "Unit Selection"
 msgstr "Výber jednotiek"
 
-#: libgimpwidgets/gimpunitmenu.c:625
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "Jednotka"
 
-#: libgimpwidgets/gimpunitmenu.c:629
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:943
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Použite túto hodnotu na náhodný číselný generátor hniezda - toto vám umožní opakovať danú \"náhodnú\" operáciu"
+#: libgimpwidgets/gimpwidgets.c:1252
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Použite túto hodnotu na náhodný číselný generátor hniezda - toto vám umožní "
+"opakovať danú \"náhodnú\" operáciu"
 
-#: libgimpwidgets/gimpwidgets.c:947
+#: libgimpwidgets/gimpwidgets.c:1256
 msgid "_Randomize"
 msgstr "_Náhodnosť"
 
-#: libgimpwidgets/gimpwidgets.c:958
+#: libgimpwidgets/gimpwidgets.c:1267
 msgid "Seed random number generator with a generated random number"
 msgstr "Hniezdo náhodného generátoru s generovaným náhodným číslom"
 
-#: modules/cdisplay_colorblind.c:122
+#: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filter simulácie farebnej poruchy (algoritmus Brettel-Vienot-Mollon)"
 
-#: modules/cdisplay_colorblind.c:188
+#: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
 msgstr "Videnie s farebnou poruchou"
 
-#: modules/cdisplay_colorblind.c:473
-msgid "Color Deficiency Type:"
+#: modules/cdisplay_colorblind.c:464
+#, fuzzy
+msgid "Color _Deficiency Type:"
 msgstr "Typ farebnej poruchy:"
 
-#: modules/cdisplay_colorblind.c:483
-msgid "None (normal vision)"
-msgstr "Žiadny (normálne videnie)"
-
-#: modules/cdisplay_colorblind.c:487
+#: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (necitlivosť na červenú)"
 
-#: modules/cdisplay_colorblind.c:491
+#: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (necitlivosť na zelenú)"
 
-#: modules/cdisplay_colorblind.c:495
+#: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (necitlivosť na modrú)"
 
@@ -535,8 +568,9 @@ msgstr "Filter farebného zobrazenia gama"
 msgid "Gamma"
 msgstr "Gama"
 
-#: modules/cdisplay_gamma.c:320
-msgid "Gamma:"
+#: modules/cdisplay_gamma.c:311
+#, fuzzy
+msgid "_Gamma:"
 msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
@@ -547,9 +581,46 @@ msgstr "Filter farebného zobrazenia vysokého kontrastu"
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:318
-msgid "Contrast Cycles:"
+#: modules/cdisplay_highcontrast.c:308
+#, fuzzy
+msgid "Contrast C_ycles:"
 msgstr "Cykly kontrastu:"
+
+#: modules/cdisplay_proof.c:102
+msgid "Color proof filter using ICC color profile"
+msgstr ""
+
+#: modules/cdisplay_proof.c:166
+msgid "Color Proof"
+msgstr ""
+
+#: modules/cdisplay_proof.c:319
+msgid "Perceptual"
+msgstr ""
+
+#: modules/cdisplay_proof.c:321
+msgid "Relative Colorimetric"
+msgstr ""
+
+#: modules/cdisplay_proof.c:325
+msgid "Absolute Colorimetric"
+msgstr ""
+
+#: modules/cdisplay_proof.c:331
+msgid "_Intent:"
+msgstr ""
+
+#: modules/cdisplay_proof.c:334
+msgid "Choose an ICC Color Profile"
+msgstr ""
+
+#: modules/cdisplay_proof.c:337
+msgid "_Profile:"
+msgstr ""
+
+#: modules/cdisplay_proof.c:345
+msgid "_Black Point Compensation"
+msgstr ""
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -615,3 +686,5 @@ msgstr "Vodné farby"
 msgid "Pressure"
 msgstr "Tlak"
 
+#~ msgid "None (normal vision)"
+#~ msgstr "Žiadny (normálne videnie)"
