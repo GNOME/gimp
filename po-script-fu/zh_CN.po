@@ -102,7 +102,7 @@ msgstr "Script-Fu 渐变选择"
 
 #: plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu 笔刷选择"
+msgstr "Script-Fu 画笔选择"
 
 #. the script progress frame
 #: plug-ins/script-fu/script-fu-interface.c:533
@@ -1796,19 +1796,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/扩展(X)/Script-Fu/制作笔刷/椭圆、羽化(_P)..."
+msgstr "<Toolbox>/扩展(X)/Script-Fu/制作画笔/椭圆、羽化(_P)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/扩展(X)/Script-Fu/制作笔刷/矩形、羽化(_C)..."
+msgstr "<Toolbox>/扩展(X)/Script-Fu/制作画笔/矩形、羽化(_C)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/扩展(X)/Script-Fu/制作笔刷/椭圆(_E)..."
+msgstr "<Toolbox>/扩展(X)/Script-Fu/制作画笔/椭圆(_E)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/扩展(X)/Script-Fu/制作笔刷/矩形(_R)..."
+msgstr "<Toolbox>/扩展(X)/Script-Fu/制作画笔/矩形(_R)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Feathering"
@@ -2024,11 +2024,11 @@ msgstr "边缘半径"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr "<Image>/Script-Fu/选区/到笔刷(_B)..."
+msgstr "<Image>/Script-Fu/选区/到画笔(_B)..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush name"
-msgstr "笔刷名字"
+msgstr "画笔名字"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To _Image"
@@ -2119,7 +2119,7 @@ msgstr "喷枪"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr "笔刷"
+msgstr "画笔"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"

@@ -17,7 +17,7 @@ msgstr ""
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
-msgstr "笔刷选择"
+msgstr "画笔选择"
 
 #: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."

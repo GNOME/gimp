@@ -3771,21 +3771,21 @@ msgstr "RLE(_R)"
 
 #: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:151
 msgid "GIMP brush"
-msgstr "GIMP 笔刷"
+msgstr "GIMP 画笔"
 
 #: plug-ins/common/gbr.c:369 plug-ins/common/gbr.c:381
 msgid "Unsupported brush format"
-msgstr "不支持的笔刷格式"
+msgstr "不支持的画笔格式"
 
 #: plug-ins/common/gbr.c:392
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "GIMP 笔刷文件“%s”有错"
+msgstr "GIMP 画笔文件“%s”有错"
 
 #: plug-ins/common/gbr.c:400
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "笔刷文件“%s”中存在无效的 UTF-8 字符串。"
+msgstr "画笔文件“%s”中存在无效的 UTF-8 字符串。"
 
 #: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:495
 #: plug-ins/common/gih.c:1152 plug-ins/gflare/gflare.c:2991
@@ -3794,11 +3794,11 @@ msgstr "未命名"
 
 #: plug-ins/common/gbr.c:578
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP 笔刷只能是灰度或 RGBA"
+msgstr "GIMP 画笔只能是灰度或 RGBA"
 
 #: plug-ins/common/gbr.c:663
 msgid "Save as Brush"
-msgstr "保存为笔刷"
+msgstr "保存为画笔"
 
 #. attach labels
 #: plug-ins/common/gbr.c:683 plug-ins/common/grid.c:769
@@ -3991,7 +3991,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:205 plug-ins/common/gih.c:226
 msgid "GIMP brush (animated)"
-msgstr "GIMP 笔刷(动画)"
+msgstr "GIMP 画笔(动画)"
 
 #: plug-ins/common/gih.c:319
 #, c-format
@@ -4000,19 +4000,19 @@ msgstr "图层 %s 没有 alpha 通道，跳过"
 
 #: plug-ins/common/gih.c:488
 msgid "Error in GIMP brush pipe file."
-msgstr "GIMP 笔刷管道文件有错。"
+msgstr "GIMP 画笔管道文件有错。"
 
 #: plug-ins/common/gih.c:554
 msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP 笔刷文件看来已损坏。"
+msgstr "GIMP 画笔文件看来已损坏。"
 
 #: plug-ins/common/gih.c:702
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "无法加载管道中的一个笔刷，放弃。"
+msgstr "无法加载管道中的一个画笔，放弃。"
 
 #: plug-ins/common/gih.c:865
 msgid "Save as Brush Pipe"
-msgstr "保存为笔刷管道"
+msgstr "保存为画笔管道"
 
 #: plug-ins/common/gih.c:888
 msgid "Spacing (percent):"
@@ -8943,11 +8943,11 @@ msgstr "只能保存可绘对象！"
 
 #: plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
-msgstr "保存笔刷"
+msgstr "保存画笔"
 
 #: plug-ins/gimpressionist/brush.c:481
 msgid "_Brush"
-msgstr "笔刷(_B)"
+msgstr "画笔(_B)"
 
 #: plug-ins/gimpressionist/brush.c:518 plug-ins/print/gimp_color_window.c:407
 msgid "Gamma:"
@@ -8955,7 +8955,7 @@ msgstr "Gamma："
 
 #: plug-ins/gimpressionist/brush.c:536
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "改变所选笔刷的 gamma(亮度)"
+msgstr "改变所选画笔的 gamma(亮度)"
 
 #: plug-ins/gimpressionist/brush.c:544
 msgid "Select:"
@@ -8967,7 +8967,7 @@ msgstr "宽高比："
 
 #: plug-ins/gimpressionist/brush.c:577
 msgid "Specifies the aspect ratio of the brush"
-msgstr "指定笔刷的宽高比"
+msgstr "指定画笔的宽高比"
 
 #: plug-ins/gimpressionist/brush.c:586 plug-ins/gimpressionist/paper.c:188
 msgid "Relief:"
@@ -8983,19 +8983,19 @@ msgstr "颜色(_L)"
 
 #: plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
-msgstr "笔刷下方的平均值(_V)"
+msgstr "画笔下方的平均值(_V)"
 
 #: plug-ins/gimpressionist/color.c:54
 msgid "C_enter of brush"
-msgstr "笔刷的中心(_E)"
+msgstr "画笔的中心(_E)"
 
 #: plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "颜色以笔刷下方的所有像素的平均值来计算"
+msgstr "颜色以画笔下方的所有像素的平均值来计算"
 
 #: plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr "颜色取笔刷的中心位置的像素值"
+msgstr "颜色取画笔的中心位置的像素值"
 
 #: plug-ins/gimpressionist/color.c:76
 msgid "Color _noise:"
@@ -9125,7 +9125,7 @@ msgstr "方向数："
 
 #: plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "方向(比如笔刷)使用的数量"
+msgstr "方向(比如画笔)使用的数量"
 
 #: plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
@@ -9133,7 +9133,7 @@ msgstr "起始角度："
 
 #: plug-ins/gimpressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
-msgstr "创建的第一个笔刷的起始角度"
+msgstr "创建的第一个画笔的起始角度"
 
 #: plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
@@ -9141,7 +9141,7 @@ msgstr "角度跨度："
 
 #: plug-ins/gimpressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
-msgstr "创建的第一个笔刷的跨度"
+msgstr "创建的第一个画笔的跨度"
 
 #: plug-ins/gimpressionist/orientation.c:139
 msgid ""
@@ -9435,7 +9435,7 @@ msgstr "大小："
 
 #: plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
-msgstr "使用的笔刷大小的数量"
+msgstr "使用的画笔大小的数量"
 
 #: plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
@@ -9443,7 +9443,7 @@ msgstr "最小大小："
 
 #: plug-ins/gimpressionist/size.c:107
 msgid "The smallest brush to create"
-msgstr "要创建的最小的笔刷"
+msgstr "要创建的最小的画笔"
 
 #: plug-ins/gimpressionist/size.c:115
 msgid "Maximum size:"
@@ -9451,7 +9451,7 @@ msgstr "最大大小："
 
 #: plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
-msgstr "要创建的最大的笔刷"
+msgstr "要创建的最大的画笔"
 
 #: plug-ins/gimpressionist/size.c:133
 msgid "Size:"
@@ -9481,7 +9481,7 @@ msgstr "笔划的大小由区域的色调决定"
 
 #: plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "选择最适合原始图像的笔刷大小"
+msgstr "选择最适合原始图像的画笔大小"
 
 #: plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
@@ -11833,7 +11833,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgstr "图像必须是 RGB 或者灰度"
 
 #~ msgid "Brush"
-#~ msgstr "笔刷"
+#~ msgstr "画笔"
 
 #~ msgid "Airbrush"
 #~ msgstr "喷枪"
@@ -11876,7 +11876,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgstr "绘画时缩放到图像大小"
 
 #~ msgid "Gfig Brush Selection"
-#~ msgstr "几何图形笔刷选择"
+#~ msgstr "几何图形画笔选择"
 
 #~ msgid "Fade out:"
 #~ msgstr "淡出："
@@ -11893,7 +11893,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 
 #, fuzzy
 #~ msgid "Set brush..."
-#~ msgstr "设置笔刷..."
+#~ msgstr "设置画笔..."
 
 #~ msgid "Add"
 #~ msgstr "添加"
@@ -12567,7 +12567,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgstr "没有找到“%s”：使用“%s”替代"
 
 #~ msgid "Brush Preview:"
-#~ msgstr "笔刷预览："
+#~ msgstr "画笔预览："
 
 #~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
 #~ msgstr "<Image>/滤镜(R)/艺术(A)/印象派艺术家(GIMPressionist)(_G)..."
@@ -12587,7 +12587,7 @@ msgstr "错误：XJT 属性文件“%s”为空。"
 #~ msgstr ""
 #~ "\n"
 #~ "如果您有一些好的预设值，\n"
-#~ "(或者这方面的笔刷和画纸)\n"
+#~ "(或者这方面的画笔和画纸)\n"
 #~ "欢迎把它们发给我 <vidar@prosalg.no>\n"
 #~ "以添加到下一次发布当中！\n"
 

@@ -120,7 +120,7 @@ msgstr "  --no-cpu-accel           不使用特定 CPU 加速。\n"
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data            不加载笔刷、渐变、色板、图案。\n"
+msgstr "  -d, --no-data            不加载画笔、渐变、色板、图案。\n"
 
 #: app/main.c:518
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
@@ -224,7 +224,7 @@ msgstr ""
 #: app/actions/actions.c:93 app/core/gimp.c:856 app/dialogs/dialogs.c:138
 #: app/dialogs/preferences-dialog.c:2268 app/pdb/internal_procs.c:92
 msgid "Brushes"
-msgstr "笔刷"
+msgstr "画笔"
 
 #: app/actions/actions.c:96 app/dialogs/dialogs.c:150
 msgid "Buffers"
@@ -368,47 +368,47 @@ msgstr "查看"
 
 #: app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
-msgstr "笔刷菜单"
+msgstr "画笔菜单"
 
 #: app/actions/brushes-actions.c:47
 msgid "_New Brush"
-msgstr "新建笔刷(_N)"
+msgstr "新建画笔(_N)"
 
 #: app/actions/brushes-actions.c:48
 msgid "New brush"
-msgstr "新建笔刷"
+msgstr "新建画笔"
 
 #: app/actions/brushes-actions.c:53
 msgid "D_uplicate Brush"
-msgstr "复制笔刷(_U)"
+msgstr "复制画笔(_U)"
 
 #: app/actions/brushes-actions.c:54
 msgid "Duplicate brush"
-msgstr "复制笔刷"
+msgstr "复制画笔"
 
 #: app/actions/brushes-actions.c:59
 msgid "_Delete Brush"
-msgstr "删除笔刷(_D)"
+msgstr "删除画笔(_D)"
 
 #: app/actions/brushes-actions.c:60
 msgid "Delete brush"
-msgstr "删除笔刷"
+msgstr "删除画笔"
 
 #: app/actions/brushes-actions.c:65
 msgid "_Refresh Brushes"
-msgstr "刷新笔刷(_R)"
+msgstr "刷新画笔(_R)"
 
 #: app/actions/brushes-actions.c:66
 msgid "Refresh brushes"
-msgstr "刷新笔刷"
+msgstr "刷新画笔"
 
 #: app/actions/brushes-actions.c:74
 msgid "_Edit Brush..."
-msgstr "编辑笔刷(_E)..."
+msgstr "编辑画笔(_E)..."
 
 #: app/actions/brushes-actions.c:75
 msgid "Edit brush"
-msgstr "编辑笔刷"
+msgstr "编辑画笔"
 
 #: app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
@@ -661,7 +661,7 @@ msgstr "工具(_T)"
 
 #: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1598
 msgid "_Brush"
-msgstr "笔刷(_B)"
+msgstr "画笔(_B)"
 
 #: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:78
 #: app/dialogs/preferences-dialog.c:1601
@@ -743,7 +743,7 @@ msgstr "图层、通道和路径(_L)"
 
 #: app/actions/dialogs-actions.c:47
 msgid "_Brushes, Patterns & Gradients"
-msgstr "笔刷、图案和渐变(_B)"
+msgstr "画笔、图案和渐变(_B)"
 
 #: app/actions/dialogs-actions.c:52
 msgid "_Misc. Stuff"
@@ -799,7 +799,7 @@ msgstr "颜色(_R)"
 
 #: app/actions/dialogs-actions.c:120
 msgid "_Brushes"
-msgstr "笔刷(_B)"
+msgstr "画笔(_B)"
 
 #: app/actions/dialogs-actions.c:125
 msgid "P_atterns"
@@ -3420,7 +3420,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:121
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "如果启用，所有的工具都将使用选中的笔刷。"
+msgstr "如果启用，所有的工具都将使用选中的画笔。"
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -3539,7 +3539,7 @@ msgid ""
 "painting."
 msgstr ""
 "如果启用，每次移动鼠标的时候都将向 X 服务器查询当前的鼠标位置，而不是依赖于位"
-"置提示。这意味着用大的笔刷涂画的时候将更加精确，不过可能也更慢。反常的是，在"
+"置提示。这意味着用大的画笔涂画的时候将更加精确，不过可能也更慢。反常的是，在"
 "某些 X 服务器上启用该选项将会加快涂画速度。"
 
 #: app/config/gimprc-blurbs.h:245
@@ -3576,7 +3576,7 @@ msgstr "每次启动时让 GIMP 尝试恢复您上次保存的会话。"
 #: app/config/gimprc-blurbs.h:265
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "GIMP 会话中记住当前的工具、图案、颜色和笔刷。"
+msgstr "GIMP 会话中记住当前的工具、图案、颜色和画笔。"
 
 #: app/config/gimprc-blurbs.h:269
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -3586,7 +3586,7 @@ msgstr "GIMP 退出时保存主要的对话框的位置和大小。"
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr "如果启用，所有涂画工具都将显示当前笔刷的轮廓预览。"
+msgstr "如果启用，所有涂画工具都将显示当前画笔的轮廓预览。"
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
@@ -4478,23 +4478,23 @@ msgstr "无法从“%2$s”中读取 %1$d 字节：%3$s"
 #: app/core/gimpbrush.c:566
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "笔刷文件“%s”出现严重解析错误：未知深度 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
 
 #: app/core/gimpbrush.c:579
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "笔刷文件“%s”出现严重解析错误：未知版本 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：未知版本 %d。"
 
 #: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "笔刷文件“%s”出现严重解析错误：文件看来已被截断。"
+msgstr "画笔文件“%s”出现严重解析错误：文件看来已被截断。"
 
 #: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
 #: app/core/gimpbrushpipe.c:360
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "笔刷文件“%s”中含有无效的 UTF-8 字符串。"
+msgstr "画笔文件“%s”中含有无效的 UTF-8 字符串。"
 
 #: app/core/gimpbrush.c:610 app/core/gimpcontext.c:1299
 #: app/core/gimpitem.c:479 app/core/gimppattern.c:400
@@ -4508,28 +4508,28 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"笔刷文件“%s”出现严重解析错误：不支持的笔刷深度 %d\n"
-"GIMP 笔刷必须为灰度或 RGBA。"
+"画笔文件“%s”出现严重解析错误：不支持的画笔深度 %d\n"
+"GIMP 画笔必须为灰度或 RGBA。"
 
 #: app/core/gimpbrushgenerated.c:614
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "笔刷文件“%s”出现严重解析错误：不是 GIMP 笔刷文件。"
+msgstr "画笔文件“%s”出现严重解析错误：不是 GIMP 画笔文件。"
 
 #: app/core/gimpbrushgenerated.c:630
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "笔刷文件“%s”出现严重解析错误：未知 GIMP 笔刷版本。"
+msgstr "画笔文件“%s”出现严重解析错误：未知 GIMP 画笔版本。"
 
 #: app/core/gimpbrushgenerated.c:669
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "笔刷文件“%s”出现严重解析错误：未知 GIMP 笔刷形状。"
+msgstr "画笔文件“%s”出现严重解析错误：未知 GIMP 画笔形状。"
 
 #: app/core/gimpbrushgenerated.c:750
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "读取笔刷文件“%s”时出错：%s"
+msgstr "读取画笔文件“%s”时出错：%s"
 
 #: app/core/gimpbrushgenerated.c:752
 msgid "File is truncated"
@@ -4539,7 +4539,7 @@ msgstr "文件被截断"
 #: app/core/gimpbrushpipe.c:485
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "笔刷文件“%s”出现严重解析错误：文件已损坏。"
+msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
 
 #: app/core/gimpchannel.c:280 app/pdb/internal_procs.c:95
 msgid "Channel"
@@ -5549,7 +5549,7 @@ msgstr "前景/背景 颜色"
 
 #: app/dialogs/dialogs.c:201
 msgid "Brush Editor"
-msgstr "笔刷编辑器"
+msgstr "画笔编辑器"
 
 #: app/dialogs/file-open-location-dialog.c:71
 msgid "Open Location"
@@ -6266,7 +6266,7 @@ msgstr "显示背景色和背景色(_F)"
 
 #: app/dialogs/preferences-dialog.c:1642
 msgid "Show active _brush, pattern & gradient"
-msgstr "显示活动笔刷、图案和渐变(_B)"
+msgstr "显示活动画笔、图案和渐变(_B)"
 
 #: app/dialogs/preferences-dialog.c:1646
 msgid "Show active _image"
@@ -6312,7 +6312,7 @@ msgstr "鼠标光标"
 
 #: app/dialogs/preferences-dialog.c:1704
 msgid "Show _brush outline"
-msgstr "显示笔刷轮廓(_B)"
+msgstr "显示画笔轮廓(_B)"
 
 #: app/dialogs/preferences-dialog.c:1707
 msgid "Show paint _tool cursor"
@@ -6551,11 +6551,11 @@ msgstr "选择交换文件夹"
 
 #: app/dialogs/preferences-dialog.c:2268
 msgid "Brush Folders"
-msgstr "笔刷文件夹"
+msgstr "画笔文件夹"
 
 #: app/dialogs/preferences-dialog.c:2270
 msgid "Select Brush Folders"
-msgstr "选择笔刷文件夹"
+msgstr "选择画笔文件夹"
 
 #: app/dialogs/preferences-dialog.c:2272
 msgid "Pattern Folders"
@@ -6781,7 +6781,7 @@ msgid ""
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 msgstr ""
-"gimprc 用于保存个人偏好设置，这些设置将影响到 GIMP 的默认行为。搜索笔刷、色"
+"gimprc 用于保存个人偏好设置，这些设置将影响到 GIMP 的默认行为。搜索画笔、色"
 "板、渐变、图案、插件以及模块的路径也可以在这里设置。"
 
 #: app/dialogs/user-install-dialog.c:141
@@ -6845,7 +6845,7 @@ msgid ""
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
-"这个文件夹用于储存用户自定义的笔刷。GIMP 在搜索笔刷时除了检查系统的 GIMP 笔刷"
+"这个文件夹用于储存用户自定义的画笔。GIMP 在搜索画笔时除了检查系统的 GIMP 画笔"
 "安装以外还将搜索这个文件夹。"
 
 #: app/dialogs/user-install-dialog.c:197
@@ -7386,7 +7386,7 @@ msgstr "喷枪"
 
 #: app/paint/gimpbrushcore.c:369
 msgid "No brushes available for use with this tool."
-msgstr "没有可供此工具使用的笔刷。"
+msgstr "没有可供此工具使用的画笔。"
 
 #: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:89
 msgid "Clone"
@@ -7536,11 +7536,11 @@ msgstr "内部过程"
 
 #: app/pdb/internal_procs.c:86
 msgid "Brush"
-msgstr "笔刷"
+msgstr "画笔"
 
 #: app/pdb/internal_procs.c:89
 msgid "Brush UI"
-msgstr "笔刷用户界面"
+msgstr "画笔用户界面"
 
 #: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:282
 #: app/widgets/gimpwidgets-constructors.c:75
@@ -8716,7 +8716,7 @@ msgstr "模式："
 
 #: app/tools/gimppaintoptions-gui.c:125
 msgid "Brush:"
-msgstr "笔刷："
+msgstr "画笔："
 
 #: app/tools/gimppaintoptions-gui.c:134 app/tools/gimppaintoptions-gui.c:383
 msgid "Gradient:"
@@ -9396,7 +9396,7 @@ msgstr "间距："
 
 #: app/widgets/gimpbrusheditor.c:223 app/widgets/gimpbrushfactoryview.c:117
 msgid "Percentage of width of brush"
-msgstr "笔刷宽度的百分比"
+msgstr "画笔宽度的百分比"
 
 #: app/widgets/gimpbufferview.c:165 app/widgets/gimpbufferview.c:246
 #: app/widgets/gimpcontainergridview.c:206
@@ -10259,8 +10259,8 @@ msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
-"活动笔刷。\n"
-"点击打开笔刷对话框。"
+"活动画笔。\n"
+"点击打开画笔对话框。"
 
 #: app/widgets/gimptoolbox-indicator-area.c:174
 msgid ""
@@ -10312,7 +10312,7 @@ msgstr "空白路径"
 
 #: app/widgets/gimpviewablebox.c:75
 msgid "Open the brush selection dialog"
-msgstr "打开笔刷选择对话框"
+msgstr "打开画笔选择对话框"
 
 #: app/widgets/gimpviewablebox.c:115
 msgid "Open the pattern selection dialog"
@@ -10596,7 +10596,7 @@ msgstr "图像编辑器"
 
 #, fuzzy
 #~ msgid "Brus_hes"
-#~ msgstr "笔刷"
+#~ msgstr "画笔"
 
 #, fuzzy
 #~ msgid "Show Image _Menu"
@@ -11005,7 +11005,7 @@ msgstr "图像编辑器"
 #~ msgstr "/添加页签(A)/颜色(_R)"
 
 #~ msgid "/Add Tab/Brus_hes"
-#~ msgstr "/添加页签(A)/笔刷(_H)"
+#~ msgstr "/添加页签(A)/画笔(_H)"
 
 #~ msgid "/Add Tab/P_atterns"
 #~ msgstr "/添加页签(A)/图案(_A)"
@@ -11522,7 +11522,7 @@ msgstr "图像编辑器"
 #~ msgstr "/对话框(D)/颜色(_R)"
 
 #~ msgid "/Dialogs/Brus_hes"
-#~ msgstr "/对话框(D)/笔刷(_H)"
+#~ msgstr "/对话框(D)/画笔(_H)"
 
 #~ msgid "/Dialogs/P_atterns"
 #~ msgstr "/对话框(D)/图案(_A)"
@@ -11736,7 +11736,7 @@ msgstr "图像编辑器"
 #~ msgstr "/文件(F)/对话框(D)/创建新停靠栏(K)/图层、通道和路径(_L)"
 
 #~ msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-#~ msgstr "/文件(F)/对话框(D)/创建新停靠栏(K)/笔刷、图案和渐变(_B)"
+#~ msgstr "/文件(F)/对话框(D)/创建新停靠栏(K)/画笔、图案和渐变(_B)"
 
 #~ msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
 #~ msgstr "/文件(F)/对话框(D)/创建新停靠栏(K)/杂项(_M)"
@@ -11775,7 +11775,7 @@ msgstr "图像编辑器"
 #~ msgstr "/文件(F)/对话框(D)/颜色(_R)"
 
 #~ msgid "/File/Dialogs/Brus_hes"
-#~ msgstr "/文件(F)/对话框(D)/笔刷(_H)"
+#~ msgstr "/文件(F)/对话框(D)/画笔(_H)"
 
 #~ msgid "/File/Dialogs/P_atterns"
 #~ msgstr "/文件(F)/对话框(D)/图案(_A)"
