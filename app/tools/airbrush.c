@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <stdlib.h>
 #include "appenv.h"
 #include "gimpbrushlist.h"
@@ -309,7 +310,8 @@ airbrush_motion (PaintCore	      *paint_core,
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       mode = INCREMENTAL;
-      color_area_with_pixmap (paint_core, gimage, drawable, area, SOFT);
+      paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
+					 scale, SOFT);
     }
   else
     {

@@ -29,6 +29,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpbrushlist.h"
+#include "gimpbrushpipe.h"
 #include "gimprc.h"
 #include "gradient.h"  /* for grad_get_color_at() */
 #include "paint_funcs.h"
@@ -61,6 +62,7 @@ static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
 static MaskBuf * paint_core_pressurize_mask (MaskBuf *, double, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
 static MaskBuf * paint_core_scale_mask      (MaskBuf *, gdouble);
+static MaskBuf * paint_core_scale_pixmap    (MaskBuf *, gdouble);
 static MaskBuf * paint_core_get_brush_mask  (PaintCore *, BrushApplicationMode, gdouble);
 static void      paint_core_paste           (PaintCore *, MaskBuf *,
 					     GimpDrawable *, int, int,
@@ -96,12 +98,17 @@ static TempBuf *  canvas_buf = NULL;
 static MaskBuf *  pressure_brush;
 static MaskBuf *  solid_brush;
 static MaskBuf *  scale_brush = NULL;
+static MaskBuf *  scale_pixmap = NULL;
 static MaskBuf *  kernel_brushes[5][5];
 
 
 /*  paint buffers utility functions  */
 static void        free_paint_buffers     (void);
 
+/*  brush pipe utility functions  */
+static void        paint_line_pixmap_mask (GImage *, GimpDrawable *,
+					   TempBuf *, TempBuf *, guchar *,
+					   int, int, int, int, int);
 
 /***********************************************************************/
 
@@ -1373,7 +1380,7 @@ paint_core_scale_mask (MaskBuf *brush_mask,
   paint_core_calculate_brush_size (brush_mask, scale, 
 				   &dest_width, &dest_height);
 
-  if (brush_mask == last_brush && 
+  if (brush_mask == last_brush && !cache_invalid &&
       dest_width == last_width && dest_height == last_height)
     return scale_brush;
 
@@ -1388,6 +1395,41 @@ paint_core_scale_mask (MaskBuf *brush_mask,
   cache_invalid = TRUE;
 
   return scale_brush;
+}
+
+static MaskBuf *
+paint_core_scale_pixmap (MaskBuf *brush_mask, 
+			 gdouble  scale)
+{
+  static MaskBuf *last_brush = NULL;
+  static gint last_width  = 0.0; 
+  static gint last_height = 0.0; 
+  gint dest_width, dest_height;
+
+  if (scale == 0.0) 
+    return NULL;
+
+  if (scale == 1.0)
+    return brush_mask;
+  
+  paint_core_calculate_brush_size (brush_mask, scale, 
+				   &dest_width, &dest_height);
+
+  if (brush_mask == last_brush && !cache_invalid &&
+      dest_width == last_width && dest_height == last_height)
+    return scale_pixmap;
+
+  if (scale_pixmap)
+    mask_buf_free (scale_pixmap);
+
+  last_brush  = brush_mask;
+  last_width  = dest_width;
+  last_height = dest_height;
+ 
+  scale_pixmap = brush_scale_pixmap (brush_mask, dest_width, dest_height);
+  cache_invalid = TRUE;
+
+  return scale_pixmap;
 }
 
 static MaskBuf *
@@ -1817,4 +1859,141 @@ free_paint_buffers ()
   if (canvas_buf)
     temp_buf_free (canvas_buf);
   canvas_buf = NULL;
+}
+
+
+/**************************************************/
+/*  Brush pipe utility functions                  */
+/**************************************************/
+
+void
+paint_core_color_area_with_pixmap (PaintCore    *paint_core,
+				   GImage       *dest,
+				   GimpDrawable *drawable,
+				   TempBuf      *area,
+				   gdouble       scale,
+				   int           mode)
+{
+
+  PixelRegion destPR;
+  void *pr;
+  guchar *d;
+  int ulx, uly, offsetx, offsety, y;
+  TempBuf *pixmap_mask;
+  TempBuf *brush_mask;
+  
+  g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush));
+
+  /*  scale the brushes  */
+  pixmap_mask = 
+    paint_core_scale_pixmap (gimp_brush_pixmap_pixmap (GIMP_BRUSH_PIXMAP (paint_core->brush)), scale);
+  if (mode == SOFT)
+    brush_mask = paint_core_scale_mask (paint_core->brush->mask, scale);
+  else
+    brush_mask = NULL;
+
+  destPR.bytes = area->bytes;
+  destPR.x = 0; destPR.y = 0;
+  destPR.w = area->width;
+  destPR.h = area->height;
+  destPR.rowstride = destPR.bytes * area->width;
+  destPR.data = temp_buf_data (area);
+		
+  pr = pixel_regions_register (1, &destPR);
+
+  /* Calculate upper left corner of brush as in
+   * paint_core_get_paint_area.  Ugly to have to do this here, too.
+   */
+
+  ulx = (int) paint_core->curx - (pixmap_mask->width >> 1);
+  uly = (int) paint_core->cury - (pixmap_mask->height >> 1);
+
+  offsetx = area->x - ulx;
+  offsety = area->y - uly;
+
+  for (; pr != NULL; pr = pixel_regions_process (pr))
+    {
+      d = destPR.data;
+      for (y = 0; y < destPR.h; y++)
+	{
+	  paint_line_pixmap_mask (dest, drawable, pixmap_mask, brush_mask,
+				  d, offsetx, y + offsety,
+				  destPR.bytes, destPR.w, mode);
+	  d += destPR.rowstride;
+	}
+    }
+}
+
+static void
+paint_line_pixmap_mask (GImage          *dest,
+			GimpDrawable    *drawable,
+			TempBuf         *pixmap_mask,
+			TempBuf         *brush_mask,
+			guchar	        *d,
+			int		 x,
+			int              y,
+			int              bytes,
+			int              width,
+			int              mode)
+{
+  guchar *b, *p;
+  int x_index;
+  gdouble alpha;
+  gdouble factor = 0.00392156986;  /* 1.0/255.0 */
+  gint i;
+  guchar *mask;
+
+  /*  Make sure x, y are positive  */
+  while (x < 0)
+    x += pixmap_mask->width;
+  while (y < 0)
+    y += pixmap_mask->height;
+
+  /* Point to the approriate scanline */
+  b = temp_buf_data (pixmap_mask) +
+    (y % pixmap_mask->height) * pixmap_mask->width * pixmap_mask->bytes;
+    
+  if (mode == SOFT && brush_mask)
+    {
+      /* ditto, except for the brush mask, so we can pre-multiply the alpha value */
+      mask = temp_buf_data (brush_mask) +
+	(y % brush_mask->height) * brush_mask->width;
+      for (i = 0; i < width; i++)
+	{
+	  /* attempt to avoid doing this calc twice in the loop */
+	  x_index = ((i + x) % pixmap_mask->width);
+	  p = b + x_index * pixmap_mask->bytes;
+	  d[bytes-1] = mask[x_index];
+	  
+	  /* multiply alpha into the pixmap data */
+	  /* maybe we could do this at tool creation or brush switch time? */
+	  /* and compute it for the whole brush at once and cache it?  */
+	  alpha = d[bytes-1] * factor;
+	  if (alpha)
+	    {
+	     d[0] *= alpha;
+	     d[1] *= alpha;
+	     d[2] *= alpha;
+	    }
+	  /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
+	  gimage_transform_color (dest, drawable, p, d, RGB);
+	  d += bytes;
+	}
+    }
+  else
+    {
+      for (i = 0; i < width; i++)
+	{
+	  /* attempt to avoid doing this calc twice in the loop */
+	  x_index = ((i + x) % pixmap_mask->width);
+	  p = b + x_index * pixmap_mask->bytes;
+	  d[bytes-1] = 255;
+	  
+	  /* multiply alpha into the pixmap data */
+	  /* maybe we could do this at tool creation or brush switch time? */
+	  /* and compute it for the whole brush at once and cache it?  */
+	  gimage_transform_color (dest, drawable, p, d, RGB);
+	  d += bytes;
+	}
+    }
 }

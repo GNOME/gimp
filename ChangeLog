@@ -1,3 +1,12 @@
+Thu Sep  9 21:02:46 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/airbrush.c
+	* app/gimpbrushpipe.[ch]
+	* app/paint_core.[ch]
+	* app/paintbrush.c
+	* app/pencil.c: scaling of brush pipes should now work correctly.
+	Needs a little bit of optimization though...
+
 Thu Sep  9 19:16:25 MEST 1999  Simon Budig <Simon.Budig@unix-ag.org>
                                (checked in by Sven Neumann <sven@gimp.org>)
 

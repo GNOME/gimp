@@ -143,5 +143,8 @@ void          paint_core_replace_canvas    (PaintCore *,
 					    BrushApplicationMode,
 					    gdouble,
 					    PaintApplicationMode);
+void          paint_core_color_area_with_pixmap (PaintCore *,
+						 GImage *, GimpDrawable *,
+						 TempBuf *, gdouble, int);
 
 #endif  /*  __PAINT_CORE_H__  */

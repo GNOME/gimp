@@ -156,7 +156,8 @@ pencil_motion (PaintCore            *paint_core,
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       /* if its a pixmap, do pixmap stuff */      
-      color_area_with_pixmap (paint_core, gimage, drawable, area, HARD);
+      paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
+					 scale, HARD);
       paint_appl_mode = INCREMENTAL;
     }
   else
