@@ -8,6 +8,30 @@ development takes place on the road to the next stable release
 GIMP version 2.0.
 
 
+Bugs fixed in GIMP 2.0pre4
+==========================
+- 128825: Improved misleading debug output and hide it in the stable branch
+  (Raphael)
+- 133467: Fixed autoshrink selection (Mitch)
+- 131634: Fixed text-circle script-fu (David Odin)
+- 133532: Quit the imagemap plug-in when it is finished (Sven)
+- 133456: Disallow editing of data objects which have no save functionality
+  (Mitch)
+- 113142: Don't attempt to render the display out of bounds (Mitch)
+- 133763: Fix use of EXEEXT in tiff checks (Mitch)
+- 131044: Attempt to read layer names from TIFF files (Pablo d'Angelo)
+- 133490: Fixed handling of missing pluginrc file (Sven)
+- 121074: Suppress some harmless warnings in the stable branch (Sven)
+- 132351: Fixed harmless iscissor tool warnings (Sven)
+- 97999:  Indicate progress when scaling a drawable (Sven)
+- 133244: Fixed crash in Curve Bend plug-in (Wolfgang Hofer)
+- 133818: Added a runtime check for fontconfig >= 2.2.0 (Mitch)
+- 130636: Fixed undo handling in Add Bevel script (Simon)
+- 133067: Connect the text tool font with the global font selector (Sven)
+- 133958: Made color values in color picker selectable (Mariano Suárez-Alvarez)
+- 125283: Have configure warn when gimp-print is older than 4.2.6 (Sven)
+
+
 Bugs fixed in GIMP 2.0pre3
 ==========================
 - 127451: Anchor floating selection when creating a text layer (Mitch)
