@@ -2,12 +2,12 @@
 GimpColorDisplay
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions and definitiions for creating a pluggable GIMP
+Functions and definitions for creating a pluggable GIMP
 display color correction module.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions and definitiions for creating a pluggable GIMP
+Functions and definitions for creating a pluggable GIMP
 display color correction module.
 </para>
 

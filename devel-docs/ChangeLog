@@ -1,3 +1,9 @@
+2003-03-02  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: fix typo. "definitiions"
+	should be "definitions"
+
 2003-03-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/libgimpcolor-sections.txt
