@@ -1,3 +1,20 @@
+Sat Nov 20 00:27:26 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/commands.c
+	* app/gdisplay.c
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/nav_window.c
+	* app/nav_window.h
+	* app/preferences_dialog.c
+	* app/scale.c
+	* app/scroll.c
+
+	Nav dialog now follows auto. There is an option in the
+	preferences dialog (interface) that allow you to switch
+	between this behaviour and the "original" way of having
+	one nav dialog per display.
+
 Sat Nov 20 01:27:12 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* convolve.c
