@@ -1,3 +1,7 @@
+Sat May  8 22:38:03 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* gimp1_1_splash.ppm: new splash_screen ...
+
 Sat May  8 18:31:04 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* modules/Makefile.am
