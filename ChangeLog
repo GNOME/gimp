@@ -1,3 +1,9 @@
+2004-03-02  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/bumpmap.c (bumpmap): Fix handling of positive Y
+	displacements of the bumpmap. Thanks to Joao S.O. Bueno for
+	tracking this. Fixes bug #135866.
+
 2004-03-01  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: define a gimp_stable symbol based on the version

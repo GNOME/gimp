@@ -559,8 +559,8 @@ bumpmap (void)
     }
   else
     {
-      yofs1 = 0;
-      yofs2 = 0;
+      yofs2 = CLAMP (bmvals.yofs + sel_y1, 0, bm_height - 1);
+      yofs1 = yofs2;
       yofs3 = CLAMP (yofs2 + 1, 0, bm_height - 1);
     }
 
