@@ -33,6 +33,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.18  2000/01/27 18:42:27  asbjoer
+ *   os/2 patch
+ *
  *   Revision 1.17  2000/01/26 16:00:48  neo
  *   updated print plug-in
  *
@@ -445,7 +448,7 @@ ps_parameters(int  model,	/* I - Printer model */
     if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0)
+    if (g_strcasecmp(lname, name) == 0)
     {
       valptrs[(*count)] = malloc(strlen(loption) + 1);
       strcpy(valptrs[(*count)], loption);
@@ -1124,7 +1127,7 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     if (line[0] != '*')
       continue;
 
-    if (strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
+    if (g_strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
     {
       sscanf(line, "%*s%d", order);
       continue;
@@ -1132,8 +1135,8 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     else if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0 &&
-        strcasecmp(loption, option) == 0)
+    if (g_strcasecmp(lname, name) == 0 &&
+        g_strcasecmp(loption, option) == 0)
     {
       opt = strchr(line, ':') + 1;
       while (*opt == ' ' || *opt == '\t')

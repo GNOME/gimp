@@ -1,3 +1,11 @@
+2000-01-28  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/print/print-ps.c: use g_strcasecmp() instead of
+	strcasecmp().
+
+	* plug-ins/print/print.c: Fix output_to,driver settings
+	for OS/2 version.
+
 Fri Jan 28 10:48:55 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/libgimp-intl.h: bind gimp-libgimp domain

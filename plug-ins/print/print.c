@@ -3204,8 +3204,8 @@ get_printers(void)
       for (i = 1; i <= pnum; i++)
 	{
 	  sprintf(plist[plist_count].name, "LPT%d:", i);
-	  sprintf(plist[plist_count].output_to, "PRINT /D:LPT%d /B ", i);
-          strcpy(plist[plist_count].driver, "ps2");
+	  sprintf(plist[plist_count].v.output_to, "PRINT /D:LPT%d /B ", i);
+          strcpy(plist[plist_count].v.driver, "ps2");
 	  initialize_printer(&plist[plist_count]);
           plist_count ++;
 	}
