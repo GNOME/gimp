@@ -36,7 +36,6 @@
 #include "gimpdatafactory.h"
 #include "gimppattern.h"
 #include "pattern_select.h"
-#include "session.h"
 #include "temp_buf.h"
 
 #include "pdb/procedural_db.h"
@@ -75,7 +74,7 @@ PatternSelect   *pattern_select_dialog = NULL;
 GSList *pattern_active_dialogs = NULL;
 
 
-void
+GtkWidget *
 pattern_dialog_create (void)
 {
   if (! pattern_select_dialog)
@@ -89,6 +88,8 @@ pattern_dialog_create (void)
       else
 	gdk_window_raise (pattern_select_dialog->shell->window);
     }
+
+  return pattern_select_dialog->shell;
 }
 
 void
@@ -96,9 +97,6 @@ pattern_dialog_free (void)
 {
   if (pattern_select_dialog)
     {
-      session_get_window_info (pattern_select_dialog->shell,
-			       &pattern_select_session_info);
-
       pattern_select_free (pattern_select_dialog);
       pattern_select_dialog = NULL;
     }
@@ -145,8 +143,6 @@ pattern_select_new (gchar *title,
     {
       psp->context = gimp_context_get_user ();
 
-      session_set_window_geometry (psp->shell, &pattern_select_session_info,
-				   TRUE);
       dialog_register (psp->shell);
     }
 

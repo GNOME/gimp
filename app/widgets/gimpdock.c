@@ -136,8 +136,6 @@ gimp_dock_destroy (GtkObject *object)
 
   dock = GIMP_DOCK (object);
 
-  gimp_dialog_factory_remove_toplevel (dock->factory, GTK_WIDGET (dock));
-
   g_list_free (dock->dockbooks);
 
   if (GTK_OBJECT_CLASS (parent_class))

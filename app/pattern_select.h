@@ -56,7 +56,7 @@ void            pattern_select_dialogs_check (void);
 
 
 /*  the main pattern selection  */
-void            pattern_dialog_create        (void);
+GtkWidget     * pattern_dialog_create        (void);
 void            pattern_dialog_free          (void);
 
 

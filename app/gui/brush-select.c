@@ -39,7 +39,6 @@
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
 #include "gimprc.h"
-#include "session.h"
 #include "temp_buf.h"
 
 #include "tools/paint_options.h"
@@ -97,7 +96,7 @@ static BrushEditGeneratedWindow *brush_edit_generated_dialog = NULL;
 
 /*  public functions  */
 
-void
+GtkWidget *
 brush_dialog_create (void)
 {
   if (! brush_select_dialog)
@@ -111,6 +110,8 @@ brush_dialog_create (void)
       else
 	gdk_window_raise (brush_select_dialog->shell->window);
     }
+
+  return brush_select_dialog->shell;
 }
 
 void
@@ -118,15 +119,6 @@ brush_dialog_free (void)
 {
   if (brush_select_dialog)
     {
-      session_get_window_info (brush_select_dialog->shell,
-			       &brush_select_session_info);
-
-      /*  save the size of the preview  */
-      brush_select_session_info.width =
-	brush_select_dialog->view->allocation.width;
-      brush_select_session_info.height =
-	brush_select_dialog->view->allocation.height;
-
       brush_select_free (brush_select_dialog);
       brush_select_dialog = NULL;
     }
@@ -182,8 +174,6 @@ brush_select_new (gchar   *title,
     {
       bsp->context = gimp_context_get_user ();
 
-      session_set_window_geometry (bsp->shell, &brush_select_session_info,
-				   FALSE);
       dialog_register (bsp->shell);
     }
 

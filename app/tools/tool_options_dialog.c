@@ -31,7 +31,6 @@
 #include "gimpdnd.h"
 #include "gimplist.h"
 #include "gimpui.h"
-#include "session.h"
 
 #include "gimptool.h"
 #include "gimptoolinfo.h"
@@ -72,14 +71,17 @@ static ToolOptions *visible_tool_options = NULL;
 
 /*  public functions  */
 
-void
-tool_options_dialog_new (void)
+GtkWidget *
+tool_options_dialog_create (void)
 {
   GimpToolInfo *tool_info;
   GtkWidget    *frame;
   GtkWidget    *hbox;
   GtkWidget    *vbox;
   GList        *list;
+
+  if (options_shell)
+    return options_shell;
 
   tool_info = gimp_context_get_tool (gimp_context_get_user ());
 
@@ -110,8 +112,6 @@ tool_options_dialog_new (void)
 
   /*  Register dialog  */
   dialog_register (options_shell);
-  session_set_window_geometry (options_shell, &tool_options_session_info,
-			       FALSE );
 
   /*  The outer frame  */
   frame = gtk_frame_new (NULL);
@@ -192,26 +192,18 @@ tool_options_dialog_new (void)
   tool_options_dialog_tool_changed (gimp_context_get_user (),
 				    tool_info,
 				    NULL);
-}
 
-void
-tool_options_dialog_show (void)
-{
-  if (!GTK_WIDGET_VISIBLE (options_shell))
-    {
-      gtk_widget_show (options_shell);
-    }
-  else
-    {
-      gdk_window_raise (options_shell->window);
-    }
+  return options_shell;
 }
 
 void
 tool_options_dialog_free (void)
 {
-  session_get_window_info (options_shell, &tool_options_session_info);
-  gtk_widget_destroy (options_shell);
+  if (options_shell)
+    {
+      gtk_widget_destroy (options_shell);
+      options_shell = NULL;
+    }
 }
 
 void

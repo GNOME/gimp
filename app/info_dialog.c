@@ -29,7 +29,6 @@
 #include "dialog_handler.h"
 #include "gimprc.h"
 #include "info_dialog.h"
-#include "session.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -176,7 +175,6 @@ info_dialog_new_extended (gchar        *title,
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
-  session_set_window_geometry (shell, &info_dialog_session_info, FALSE );
 
   dialog_register (shell);
 
@@ -255,8 +253,6 @@ info_dialog_free (InfoDialog *idialog)
   g_slist_free (idialog->field_list);
 
   dialog_unregister (idialog->shell);
-
-  session_get_window_info (idialog->shell, &info_dialog_session_info);
 
   /*  Destroy the associated widgets  */
   gtk_widget_destroy (idialog->shell);

@@ -117,17 +117,8 @@ void filters_repeat_cmd_callback           (GtkWidget *widget,
 					    guint      callback_action);
 
 void dialogs_preferences_cmd_callback      (GtkWidget *, gpointer);
-void dialogs_lc_cmd_callback               (GtkWidget *, gpointer);
-void dialogs_tool_options_cmd_callback     (GtkWidget *, gpointer);
-void dialogs_brushes_cmd_callback          (GtkWidget *, gpointer);
-void dialogs_patterns_cmd_callback         (GtkWidget *, gpointer);
-void dialogs_gradients_cmd_callback        (GtkWidget *, gpointer);
-void dialogs_palette_cmd_callback          (GtkWidget *, gpointer);
 void dialogs_indexed_palette_cmd_callback  (GtkWidget *, gpointer);
 void dialogs_input_devices_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_device_status_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_document_index_cmd_callback   (GtkWidget *, gpointer);
-void dialogs_error_console_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_undo_history_cmd_callback     (GtkWidget *, gpointer);
 void dialogs_module_browser_cmd_callback   (GtkWidget *, gpointer);
 

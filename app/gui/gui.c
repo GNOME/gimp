@@ -28,6 +28,8 @@
 
 #include "tools/tool_options_dialog.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "devices.h"
 #include "dialogs.h"
 #include "docindex.h"
@@ -35,6 +37,7 @@
 #include "gui.h"
 #include "gximage.h"
 #include "image_render.h"
+#include "lc_dialog.h"
 #include "menus.h"
 #include "session.h"
 #include "toolbox.h"
@@ -64,7 +67,7 @@ gui_init (void)
   devices_init ();
   session_init ();
 
-  toolbox_create ();
+  gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
 
   /*  Fill the "last opened" menu items with the first last_opened_size
    *  elements of the docindex
@@ -93,8 +96,6 @@ gui_init (void)
 
     g_free (filenames);
   }
-
-  tool_options_dialog_new ();
 }
 
 void
@@ -107,6 +108,7 @@ gui_restore (void)
 void
 gui_shutdown (void)
 {
+  session_save ();
   device_status_free ();
 }
 
@@ -114,13 +116,16 @@ void
 gui_exit (void)
 {
   menus_quit ();
-  toolbox_free ();
-  document_index_free ();
   gximage_free ();
   render_free ();
-  tool_options_dialog_free ();
-  save_sessionrc ();
+
   dialogs_exit ();
+
+  /*  handle this in the dialog factory:  */
+  lc_dialog_free ();
+  document_index_free ();
+  tool_options_dialog_free ();
+  toolbox_free ();
 }
 
 void

@@ -26,15 +26,15 @@
 #define COLOR_UPDATE      2
 
 
-void   palette_dialog_create       (void);
-void   palette_dialog_free         (void);
+GtkWidget * palette_dialog_create       (void);
+void        palette_dialog_free         (void);
 
-void   palette_dialog_edit_palette (GimpData *data);
+void        palette_dialog_edit_palette (GimpData *data);
 
-void   palette_set_active_color    (gint      r,
-				    gint      g,
-				    gint      b,
-				    gint      state);
+void        palette_set_active_color    (gint      r,
+					 gint      g,
+					 gint      b,
+					 gint      state);
 
 
 #endif /* __PALETTE_H__ */

@@ -34,7 +34,6 @@
 #include "colormaps.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
-#include "session.h"
 #include "color_area.h"
 
 #include "libgimp/gimpcolorselector.h"

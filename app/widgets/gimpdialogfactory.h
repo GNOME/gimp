@@ -37,6 +37,8 @@ struct _GimpDialogFactoryEntry
 {
   gchar             *identifier;
   GimpDialogNewFunc  new_func;
+  gboolean           singleton;
+  gboolean           session_managed;
 };
 
 
@@ -49,8 +51,10 @@ struct _GimpSessionInfo
   gint       width;
   gint       height;
 
-  gboolean   open;
   GtkWidget *widget;
+
+  /*  only valid while restoring and saving the session  */
+  gboolean   open;
 
   /*  only one of these is valid  */
   GimpDialogFactoryEntry *toplevel_entry;
@@ -94,11 +98,18 @@ GimpDialogFactory * gimp_dialog_factory_new       (const gchar      *name,
 						   GimpContext      *context,
 						   GtkItemFactory   *item_factory);
 
-GimpDialogFactory * gimp_dialog_factory_from_name (const gchar      *name);
+GimpDialogFactory * gimp_dialog_factory_from_name       (const gchar       *name);
+
+GimpDialogFactoryEntry * gimp_dialog_factory_find_entry (GimpDialogFactory *factory,
+							 const gchar       *identifier);
+GimpSessionInfo * gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
+							 const gchar       *identifier);
 
 void        gimp_dialog_factory_register         (GimpDialogFactory *factory,
 						  const gchar       *identifier,
-						  GimpDialogNewFunc  new_func);
+						  GimpDialogNewFunc  new_func,
+						  gboolean           singleton,
+						  gboolean           session_managed);
 GtkWidget * gimp_dialog_factory_dialog_new       (GimpDialogFactory *factory,
 						  const gchar       *identifier);
 

@@ -55,7 +55,6 @@
 
 #include "appenv.h"
 #include "commands.h"
-#include "session.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
@@ -90,7 +89,10 @@ void
 error_console_free (void)
 {                                     
   if (error_console)
-    session_get_window_info (error_console, &error_console_session_info);
+    {
+      gtk_widget_destroy (error_console);
+      error_console = NULL;
+    }
 }
 
 gint
@@ -267,13 +269,16 @@ text_clicked_callback (GtkWidget      *widget,
   return TRUE; 
 }
 
-static void
-error_console_create_window (void)
+GtkWidget *
+error_console_create (void)
 {
   GtkWidget *table;
   GtkWidget *vscrollbar;
   GtkWidget *menu;
   GtkWidget *menuitem;
+
+  if (error_console)
+    return error_console;
 
   error_console = gimp_dialog_new (_("GIMP Error Console"), "error_console",
 				   gimp_standard_help_func,
@@ -289,8 +294,6 @@ error_console_create_window (void)
 				   NULL);
   /* register this one only */
   dialog_register (error_console);
-  session_set_window_geometry (error_console, &error_console_session_info,
-			       TRUE); 
 
   /* The next line should disappear when setting the size works in SM */
   gtk_widget_set_usize (error_console, 250, 300);
@@ -338,6 +341,11 @@ error_console_create_window (void)
   gtk_widget_show (vscrollbar);
 
   gtk_widget_show (error_console);
+
+  /* FIXME: interact with preferences */
+  message_handler = ERROR_CONSOLE;
+
+  return error_console;
 }
 
 void
@@ -345,14 +353,11 @@ error_console_add (gchar *errormsg)
 {
   if (!error_console)
     {
-      error_console_create_window ();
-
-      /* FIMXE: interact with preferences */
-      message_handler = ERROR_CONSOLE;
-    } 
+      error_console_create ();
+    }
   else 
     {
-      if (!GTK_WIDGET_VISIBLE (error_console))
+      if (! GTK_WIDGET_VISIBLE (error_console))
 	{
 	  gtk_widget_show (error_console);
 

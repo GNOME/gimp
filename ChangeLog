@@ -1,3 +1,41 @@
+2001-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/session.[ch]
+	* app/gimprc.c: removed the old dialog session management code...
+
+	* app/widgets/gimpdialogfactory.[ch]: ...and manage all dialogs here.
+
+	* app/gui/dialogs-constructors.[ch]: dialog factory compliant
+	constructors for all session managed toplevel dialogs.
+
+	* app/brush_select.[ch]
+	* app/devices.[ch]
+	* app/docindex.[ch]
+	* app/errorconsole.[ch]
+	* app/gradient_select.[ch]
+	* app/info_dialog.c
+	* app/lc_dialog.[ch]
+	* app/palette.[ch]
+	* app/pattern_select.[ch]
+	* app/toolbox.[ch]
+	* app/tools/tool_options_dialog.[ch]: all dialog constructors have
+	to return the dialog now (even the legacy ones that will go away).
+	Removed the session management code as this is now done for the
+	dialogs, not by them.
+
+	* app/app_procs.c
+	* app/color_select.c
+	* app/commands.[ch]
+	* app/indicator_area.c
+	* app/menus.c
+	* app/palette_select.c
+	* app/preferences_dialog.c
+	* app/gui/dialogs.c
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/gui.c
+	* app/tools/gimptool.c
+	* app/widgets/gimpdock.c: changed accordingly.
+
 2001-04-16  Michael Natterer  <mitch@gimp.org>
 
 	First attempt to get the docks session managed:

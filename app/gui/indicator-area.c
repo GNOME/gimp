@@ -27,17 +27,17 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppreview.h"
 
-#include "brush_select.h"
+#include "gui/dialogs.h"
+
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
 #include "gimpdnd.h"
-#include "gradient_select.h"
 #include "indicator_area.h"
-#include "pattern_select.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -58,7 +58,8 @@ static void
 brush_preview_clicked (GtkWidget *widget, 
 		       gpointer   data)
 {
-  brush_dialog_create ();
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+				  "gimp:brush-select-dialog");
 }
 
 static void
@@ -77,7 +78,8 @@ static void
 pattern_preview_clicked (GtkWidget *widget, 
 			 gpointer   data)
 {
-  pattern_dialog_create (); 
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+				  "gimp:pattern-select-dialog");
 }
 
 static void
@@ -96,7 +98,8 @@ static void
 gradient_preview_clicked (GtkWidget *widget, 
 			  gpointer   data)
 {
-  gradient_dialog_create ();
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+				  "gimp:gradient-select-dialog");
 }
 
 static void

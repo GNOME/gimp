@@ -20,6 +20,17 @@
 #define __DIALOGS_CONSTRUCTORS_H__
 
 
+GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory);
+GtkWidget * dialogs_lc_get                 (GimpDialogFactory *factory);
+GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory);
+GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory);
+GtkWidget * dialogs_brush_select_get       (GimpDialogFactory *factory);
+GtkWidget * dialogs_pattern_select_get     (GimpDialogFactory *factory);
+GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory);
+GtkWidget * dialogs_palette_get            (GimpDialogFactory *factory);
+GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory);
+GtkWidget * dialogs_document_index_get     (GimpDialogFactory *factory);
+
 GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory);
 GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory);
 GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory);

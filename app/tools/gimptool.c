@@ -30,8 +30,6 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
-#include "gimpui.h"
-#include "session.h"
 #include "dialog_handler.h"
 
 #include "gimptool.h"

@@ -74,8 +74,8 @@ void          brush_select_show_paint_options (BrushSelect *bsp,
 
 
 /*  the main brush selection  */
+GtkWidget   * brush_dialog_create (void);
 void          brush_dialog_free   (void);
-void          brush_dialog_create (void);
 
 
 #endif  /*  __BRUSH_SELECT_H__  */

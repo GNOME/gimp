@@ -39,7 +39,6 @@
 #include "gimppalette.h"
 #include "palette_select.h"
 #include "palette.h"
-#include "session.h"
 
 #include "libgimp/gimpintl.h"
 

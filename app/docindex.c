@@ -33,7 +33,6 @@
 #include "gimpimage.h"
 #include "gimpdnd.h"
 #include "ops_buttons.h"
-#include "session.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -149,13 +148,15 @@ static gint n_drag_types = sizeof (drag_types) / sizeof (drag_types[0]);
 
 /*  public functions  */
 
-void
+GtkWidget *
 document_index_create (void)
 {
   if (ideas)
     gdk_window_raise (ideas->window->window);
   else
     open_idea_window ();
+
+  return ideas->window;
 }
 
 void
@@ -729,7 +730,7 @@ idea_hide_callback (GtkWidget *widget,
     {
       create_idea_list ();
       dialog_unregister (ideas->window);
-      session_get_window_info (ideas->window, &document_index_session_info);
+
       gtk_widget_destroy (ideas->window);
       g_free (ideas);
       ideas = 0;
@@ -793,8 +794,6 @@ open_idea_window (void)
   gimp_dnd_file_dest_set (ideas->window);
 
   dialog_register (ideas->window);
-  session_set_window_geometry (ideas->window, &document_index_session_info,
-			       TRUE);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

@@ -1090,8 +1090,11 @@ static void
 prefs_clear_session_info_callback (GtkWidget *widget,
 				   gpointer   data)
 {
+  /* FIXME */
+  /*
   g_list_free (session_info_updates);
   session_info_updates = NULL;
+  */
 }
 
 static void

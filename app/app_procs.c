@@ -315,7 +315,6 @@ app_exit_finish (void)
     }
 
   module_db_free ();
-  lc_dialog_free ();
   gdisplays_delete ();
   global_edit_free ();
   named_buffers_free ();

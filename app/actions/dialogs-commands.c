@@ -27,8 +27,21 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 
+#include "dialogs.h"
 #include "dialogs-commands.h"
 
+
+void
+dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
+				      gpointer   data,
+				      guint      action)
+{
+  if (action)
+    {
+      gimp_dialog_factory_dialog_new (global_dialog_factory,
+				      GUINT_TO_POINTER (action));
+    }
+}
 
 void
 dialogs_add_tab_cmd_callback (GtkWidget *widget,

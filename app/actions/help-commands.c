@@ -31,12 +31,10 @@
 
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
-#include "tools/tool_options_dialog.h"
 #include "tools/tool_manager.h"
 
 #include "about_dialog.h"
 #include "app_procs.h"
-#include "brush_select.h"
 #include "colormap_dialog.h"
 #include "color_area.h"
 #include "commands.h"
@@ -44,7 +42,6 @@
 #include "convert.h"
 #include "desaturate.h"
 #include "devices.h"
-#include "docindex.h"
 #include "channel_ops.h"
 #include "equalize.h"
 #include "errorconsole.h"
@@ -62,7 +59,6 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "global_edit.h"
-#include "gradient_select.h"
 #include "image_render.h"
 #include "info_dialog.h"
 #include "info_window.h"
@@ -72,8 +68,6 @@
 #include "layer_select.h"
 #include "layers_dialogP.h"
 #include "module_db.h"
-#include "palette.h"
-#include "pattern_select.h"
 #include "plug_in.h"
 #include "preferences_dialog.h"
 #include "resize.h"
@@ -1206,51 +1200,6 @@ dialogs_preferences_cmd_callback (GtkWidget *widget,
   preferences_dialog_create ();
 }
 
-void
-dialogs_lc_cmd_callback (GtkWidget *widget,
-			 gpointer   client_data)
-{
-  GDisplay *gdisp;
-  gdisp = gdisplay_active ();
-
-  lc_dialog_create (gdisp ? gdisp->gimage : NULL);
-}
-
-void
-dialogs_tool_options_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  tool_options_dialog_show ();
-}
-
-void
-dialogs_brushes_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  brush_dialog_create ();
-}
-
-void
-dialogs_patterns_cmd_callback (GtkWidget *widget,
-			       gpointer   client_data)
-{
-  pattern_dialog_create ();
-}
-
-void
-dialogs_gradients_cmd_callback (GtkWidget *widget,
-				gpointer   client_data)
-{
-  gradient_dialog_create ();
-}
-
-void
-dialogs_palette_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  palette_dialog_create ();
-}
-
 static void
 dialogs_indexed_palette_select_callback (GimpColormapDialog *dialog,
 					 gpointer            data)
@@ -1301,27 +1250,6 @@ dialogs_input_devices_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   input_dialog_create ();
-}
-
-void
-dialogs_device_status_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data)
-{
-  device_status_create ();
-}
-
-void
-dialogs_document_index_cmd_callback (GtkWidget *widget,
-				     gpointer   client_data) 
-{
-  document_index_create ();
-}
-
-void
-dialogs_error_console_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data) 
-{
-  error_console_add (NULL);
 }
 
 #ifdef DISPLAY_FILTERS

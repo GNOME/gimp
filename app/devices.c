@@ -45,7 +45,6 @@
 #include "gimppattern.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "session.h"
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
@@ -210,7 +209,7 @@ device_info_get_by_name (gchar *name)
 
 /*  the gtk input dialog  */
 
-void 
+void
 input_dialog_create (void)
 {
   static GtkWidget *inputd = NULL;
@@ -738,7 +737,7 @@ devices_write_rc (void)
   fclose (fp);
 }
 
-void 
+GtkWidget *
 device_status_create (void)
 {
   DeviceInfo *device_info;
@@ -747,220 +746,218 @@ device_status_create (void)
   GList      *list;
   gint        i;
 
-  if (deviceD == NULL)
+  if (deviceD)
     {
-      deviceD = g_new (DeviceInfoDialog, 1);
-
-      deviceD->shell =
-	gimp_dialog_new (_("Device Status"), "device_status",
-			 gimp_standard_help_func,
-			 "dialogs/device_status.html",
-			 GTK_WIN_POS_NONE,
-			 FALSE, FALSE, TRUE,
-
-			 _("Save"), (GtkSignalFunc) devices_write_rc,
-			 NULL, NULL, NULL, FALSE, FALSE,
-			 _("Close"), devices_close_callback,
-			 NULL, NULL, NULL, TRUE, TRUE,
-
-			 NULL);
-
-      dialog_register (deviceD->shell);
-      session_set_window_geometry (deviceD->shell, &device_status_session_info,
-				   FALSE);
-
-      deviceD->num_devices = 0;
-
-      for (list = device_info_list; list; list = g_list_next (list))
-	{
-	  if (((DeviceInfo *) list->data)->is_present)
-	    deviceD->num_devices++;
-	}
-
-      /*  devices table  */
-      deviceD->table = gtk_table_new (deviceD->num_devices, 7, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER (deviceD->table), 3);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (deviceD->shell)->vbox),
-			 deviceD->table);
-      gtk_widget_realize (deviceD->table);
-      gtk_widget_show (deviceD->table);
-
-      deviceD->ids         = g_new (guint32, deviceD->num_devices);
-      deviceD->frames      = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->tools       = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->foregrounds = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->backgrounds = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->brushes     = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->patterns    = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->gradients   = g_new (GtkWidget *, deviceD->num_devices);
-
-      for (list = device_info_list, i = 0; list; list = g_list_next (list), i++)
-	{
-	  if (!((DeviceInfo *) list->data)->is_present)
-	    continue;
-
-	  device_info = (DeviceInfo *) list->data;
-
-	  deviceD->ids[i] = device_info->device;
-
-	  /*  the device name  */
-
-	  deviceD->frames[i] = gtk_frame_new (NULL);
-
-	  gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]),
-				     GTK_SHADOW_OUT);
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->frames[i],
-			    0, 1, i, i+1,
-			    GTK_FILL, GTK_FILL, 2, 0);
-
-	  label = gtk_label_new (device_info->name);
-	  gtk_misc_set_padding (GTK_MISC(label), 2, 0);
-	  gtk_container_add (GTK_CONTAINER(deviceD->frames[i]), label);
-	  gtk_widget_show(label);
-
-	  /*  the tool  */
-
-	  deviceD->tools[i] =
-	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (device_info->context)),
-				   CELL_SIZE, CELL_SIZE, 0,
-				   FALSE, FALSE, TRUE);
-	  gtk_signal_connect_object_while_alive
-	    (GTK_OBJECT (device_info->context),
-	     "tool_changed",
-	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	     GTK_OBJECT (deviceD->tools[i]));
-	  gimp_gtk_drag_dest_set_by_type (deviceD->tools[i],
-					  GTK_DEST_DEFAULT_ALL,
-					  GIMP_TYPE_TOOL_INFO,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (deviceD->tools[i],
-				      GIMP_TYPE_TOOL_INFO,
-				      device_status_drop_tool,
-				      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->tools[i],
-			    1, 2, i, i+1,
-			    0, 0, 2, 2);
-
-	  /*  the foreground color  */
-
-	  deviceD->foregrounds[i] = 
-	    gimp_color_area_new (&color,
-				 GIMP_COLOR_AREA_FLAT,
-				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-	  gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
-	  gtk_signal_connect (GTK_OBJECT (deviceD->foregrounds[i]), 
-			      "color_changed",
-			      GTK_SIGNAL_FUNC (device_status_foreground_changed),
-			      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE (deviceD->table), 
-			    deviceD->foregrounds[i],
-			    2, 3, i, i+1,
-			    0, 0, 2, 2);
-
-	  /*  the background color  */
-
-	  deviceD->backgrounds[i] = 
-	    gimp_color_area_new (&color,
-				 GIMP_COLOR_AREA_FLAT,
-				 GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
-	  gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
-	  gtk_signal_connect (GTK_OBJECT (deviceD->backgrounds[i]), 
-			      "color_changed",
-			      GTK_SIGNAL_FUNC (device_status_background_changed),
-			      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE (deviceD->table), 
-			    deviceD->backgrounds[i],
-			    3, 4, i, i+1,
-			    0, 0, 2, 2);
-
-	  /*  the brush  */
-
-	  deviceD->brushes[i] =
-	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (device_info->context)),
-				   CELL_SIZE, CELL_SIZE, 0,
-				   FALSE, FALSE, TRUE);
-	  gtk_signal_connect_object_while_alive
-	    (GTK_OBJECT (device_info->context),
-	     "brush_changed",
-	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	     GTK_OBJECT (deviceD->brushes[i]));
-	  gimp_gtk_drag_dest_set_by_type (deviceD->brushes[i],
-					  GTK_DEST_DEFAULT_ALL,
-					  GIMP_TYPE_BRUSH,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (deviceD->brushes[i],
-				      GIMP_TYPE_BRUSH,
-				      device_status_drop_brush,
-				      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->brushes[i],
-			    4, 5, i, i+1,
-			    0, 0, 2, 2);
-
-	  /*  the pattern  */
-
-	  deviceD->patterns[i] =
-	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (device_info->context)),
-				   CELL_SIZE, CELL_SIZE, 0,
-				   FALSE, FALSE, TRUE);
-	  gtk_signal_connect_object_while_alive
-	    (GTK_OBJECT (device_info->context),
-	     "pattern_changed",
-	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	     GTK_OBJECT (deviceD->patterns[i]));
-	  gimp_gtk_drag_dest_set_by_type (deviceD->patterns[i],
-					  GTK_DEST_DEFAULT_ALL,
-					  GIMP_TYPE_PATTERN,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (deviceD->patterns[i],
-				      GIMP_TYPE_PATTERN,
-				      device_status_drop_pattern,
-				      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
-			    5, 6, i, i+1,
-			    0, 0, 2, 2);
-
-	  /*  the gradient  */
-
-	  deviceD->gradients[i] =
-	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (device_info->context)),
-				   CELL_SIZE * 2, CELL_SIZE, 0,
-				   FALSE, FALSE, TRUE);
-	  gtk_signal_connect_object_while_alive
-	    (GTK_OBJECT (device_info->context),
-	     "gradient_changed",
-	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	     GTK_OBJECT (deviceD->gradients[i]));
-	  gimp_gtk_drag_dest_set_by_type (deviceD->gradients[i],
-					  GTK_DEST_DEFAULT_ALL,
-					  GIMP_TYPE_GRADIENT,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (deviceD->gradients[i],
-				      GIMP_TYPE_GRADIENT,
-				      device_status_drop_gradient,
-				      GUINT_TO_POINTER (device_info->device));
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
-			    6, 7, i, i+1,
-			    0, 0, 2, 2);
-
-	  device_status_update (device_info->device);
-	}
-
-      deviceD->current = 0xffffffff; /* random, but doesn't matter */
-      device_status_update_current ();
-
-      gtk_widget_show (deviceD->shell);
-
-      gtk_signal_connect (GTK_OBJECT (deviceD->shell), "destroy",
-			  GTK_SIGNAL_FUNC (device_status_destroy_callback),
-			  NULL);
-    }
-  else
-    {
-      if (!GTK_WIDGET_MAPPED (deviceD->shell))
+      if (! GTK_WIDGET_MAPPED (deviceD->shell))
 	gtk_widget_show (deviceD->shell);
       else
 	gdk_window_raise (deviceD->shell->window);
+
+      return deviceD->shell;
     }
+
+  deviceD = g_new (DeviceInfoDialog, 1);
+
+  deviceD->shell = gimp_dialog_new (_("Device Status"), "device_status",
+				    gimp_standard_help_func,
+				    "dialogs/device_status.html",
+				    GTK_WIN_POS_NONE,
+				    FALSE, FALSE, TRUE,
+
+				    _("Save"), (GtkSignalFunc) devices_write_rc,
+				    NULL, NULL, NULL, FALSE, FALSE,
+				    _("Close"), devices_close_callback,
+				    NULL, NULL, NULL, TRUE, TRUE,
+
+				    NULL);
+
+  dialog_register (deviceD->shell);
+
+  deviceD->num_devices = 0;
+
+  for (list = device_info_list; list; list = g_list_next (list))
+    {
+      if (((DeviceInfo *) list->data)->is_present)
+	deviceD->num_devices++;
+    }
+
+  /*  devices table  */
+  deviceD->table = gtk_table_new (deviceD->num_devices, 7, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (deviceD->table), 3);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (deviceD->shell)->vbox),
+		     deviceD->table);
+  gtk_widget_realize (deviceD->table);
+  gtk_widget_show (deviceD->table);
+
+  deviceD->ids         = g_new (guint32, deviceD->num_devices);
+  deviceD->frames      = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->tools       = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->foregrounds = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->backgrounds = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->brushes     = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->patterns    = g_new (GtkWidget *, deviceD->num_devices);
+  deviceD->gradients   = g_new (GtkWidget *, deviceD->num_devices);
+
+  for (list = device_info_list, i = 0; list; list = g_list_next (list), i++)
+    {
+      if (!((DeviceInfo *) list->data)->is_present)
+	continue;
+
+      device_info = (DeviceInfo *) list->data;
+
+      deviceD->ids[i] = device_info->device;
+
+      /*  the device name  */
+
+      deviceD->frames[i] = gtk_frame_new (NULL);
+
+      gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]), GTK_SHADOW_OUT);
+      gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->frames[i],
+			0, 1, i, i+1,
+			GTK_FILL, GTK_FILL, 2, 0);
+
+      label = gtk_label_new (device_info->name);
+      gtk_misc_set_padding (GTK_MISC(label), 2, 0);
+      gtk_container_add (GTK_CONTAINER(deviceD->frames[i]), label);
+      gtk_widget_show(label);
+
+      /*  the tool  */
+
+      deviceD->tools[i] =
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (device_info->context)),
+			       CELL_SIZE, CELL_SIZE, 0,
+			       FALSE, FALSE, TRUE);
+      gtk_signal_connect_object_while_alive
+	(GTK_OBJECT (device_info->context),
+	 "tool_changed",
+	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	 GTK_OBJECT (deviceD->tools[i]));
+      gimp_gtk_drag_dest_set_by_type (deviceD->tools[i],
+				      GTK_DEST_DEFAULT_ALL,
+				      GIMP_TYPE_TOOL_INFO,
+				      GDK_ACTION_COPY);
+      gimp_dnd_viewable_dest_set (deviceD->tools[i],
+				  GIMP_TYPE_TOOL_INFO,
+				  device_status_drop_tool,
+				  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->tools[i],
+			1, 2, i, i+1,
+			0, 0, 2, 2);
+
+      /*  the foreground color  */
+
+      deviceD->foregrounds[i] = 
+	gimp_color_area_new (&color,
+			     GIMP_COLOR_AREA_FLAT,
+			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+      gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
+      gtk_signal_connect (GTK_OBJECT (deviceD->foregrounds[i]), 
+			  "color_changed",
+			  GTK_SIGNAL_FUNC (device_status_foreground_changed),
+			  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE (deviceD->table), 
+			deviceD->foregrounds[i],
+			2, 3, i, i+1,
+			0, 0, 2, 2);
+
+      /*  the background color  */
+
+      deviceD->backgrounds[i] = 
+	gimp_color_area_new (&color,
+			     GIMP_COLOR_AREA_FLAT,
+			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+      gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
+      gtk_signal_connect (GTK_OBJECT (deviceD->backgrounds[i]), 
+			  "color_changed",
+			  GTK_SIGNAL_FUNC (device_status_background_changed),
+			  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE (deviceD->table), 
+			deviceD->backgrounds[i],
+			3, 4, i, i+1,
+			0, 0, 2, 2);
+
+      /*  the brush  */
+
+      deviceD->brushes[i] =
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (device_info->context)),
+			       CELL_SIZE, CELL_SIZE, 0,
+			       FALSE, FALSE, TRUE);
+      gtk_signal_connect_object_while_alive
+	(GTK_OBJECT (device_info->context),
+	 "brush_changed",
+	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	 GTK_OBJECT (deviceD->brushes[i]));
+      gimp_gtk_drag_dest_set_by_type (deviceD->brushes[i],
+				      GTK_DEST_DEFAULT_ALL,
+				      GIMP_TYPE_BRUSH,
+				      GDK_ACTION_COPY);
+      gimp_dnd_viewable_dest_set (deviceD->brushes[i],
+				  GIMP_TYPE_BRUSH,
+				  device_status_drop_brush,
+				  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->brushes[i],
+			4, 5, i, i+1,
+			0, 0, 2, 2);
+
+      /*  the pattern  */
+
+      deviceD->patterns[i] =
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (device_info->context)),
+			       CELL_SIZE, CELL_SIZE, 0,
+			       FALSE, FALSE, TRUE);
+      gtk_signal_connect_object_while_alive
+	(GTK_OBJECT (device_info->context),
+	 "pattern_changed",
+	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	 GTK_OBJECT (deviceD->patterns[i]));
+      gimp_gtk_drag_dest_set_by_type (deviceD->patterns[i],
+				      GTK_DEST_DEFAULT_ALL,
+				      GIMP_TYPE_PATTERN,
+				      GDK_ACTION_COPY);
+      gimp_dnd_viewable_dest_set (deviceD->patterns[i],
+				  GIMP_TYPE_PATTERN,
+				  device_status_drop_pattern,
+				  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
+			5, 6, i, i+1,
+			0, 0, 2, 2);
+
+      /*  the gradient  */
+
+      deviceD->gradients[i] =
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (device_info->context)),
+			       CELL_SIZE * 2, CELL_SIZE, 0,
+			       FALSE, FALSE, TRUE);
+      gtk_signal_connect_object_while_alive
+	(GTK_OBJECT (device_info->context),
+	 "gradient_changed",
+	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	 GTK_OBJECT (deviceD->gradients[i]));
+      gimp_gtk_drag_dest_set_by_type (deviceD->gradients[i],
+				      GTK_DEST_DEFAULT_ALL,
+				      GIMP_TYPE_GRADIENT,
+				      GDK_ACTION_COPY);
+      gimp_dnd_viewable_dest_set (deviceD->gradients[i],
+				  GIMP_TYPE_GRADIENT,
+				  device_status_drop_gradient,
+				  GUINT_TO_POINTER (device_info->device));
+      gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
+			6, 7, i, i+1,
+			0, 0, 2, 2);
+
+      device_status_update (device_info->device);
+    }
+
+  deviceD->current = 0xffffffff; /* random, but doesn't matter */
+  device_status_update_current ();
+
+  gtk_signal_connect (GTK_OBJECT (deviceD->shell), "destroy",
+		      GTK_SIGNAL_FUNC (device_status_destroy_callback),
+		      NULL);
+
+  gtk_widget_show (deviceD->shell);
+
+  return deviceD->shell;
 }
 
 static void
@@ -994,10 +991,7 @@ device_status_free (void)
     devices_write_rc ();
 
   if (deviceD)
-    {
-      session_get_window_info (deviceD->shell, &device_status_session_info);
-      device_status_destroy_callback (); 
-    }
+    device_status_destroy_callback (); 
 }
 
 static void

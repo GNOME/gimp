@@ -38,7 +38,6 @@
 #include "gimpgradient.h"
 #include "gradient_editor.h"
 #include "gradient_select.h"
-#include "session.h"
 
 #include "pdb/procedural_db.h"
 
@@ -68,7 +67,7 @@ static GradientEditor *gradient_editor_dialog = NULL;
 
 /*  public functions  */
 
-void
+GtkWidget *
 gradient_dialog_create (void)
 {
   if (! gradient_select_dialog)
@@ -82,6 +81,8 @@ gradient_dialog_create (void)
       else
 	gdk_window_raise (gradient_select_dialog->shell->window);
     }
+
+  return gradient_select_dialog->shell;
 }
 
 void
@@ -89,9 +90,6 @@ gradient_dialog_free (void)
 {
   if (gradient_select_dialog)
     {
-      session_get_window_info (gradient_select_dialog->shell,
-			       &gradient_select_session_info);
-
       gradient_select_free (gradient_select_dialog);
       gradient_select_dialog = NULL;
 
@@ -136,8 +134,6 @@ gradient_select_new (gchar *title,
     {
       gsp->context = gimp_context_get_user ();
 
-      session_set_window_geometry (gsp->shell, &gradient_select_session_info,
-				   TRUE);
       dialog_register (gsp->shell);
     }
 

@@ -29,11 +29,12 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "tools/gimptoolinfo.h"
-#include "tools/tool_options_dialog.h"
 #include "tools/tool_manager.h"
 
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
+
+#include "gui/dialogs-commands.h"
 
 #include "app_procs.h"
 #include "color_area.h"
@@ -48,7 +49,6 @@
 #include "gimprc.h"
 #include "indicator_area.h"
 #include "menus.h"
-#include "session.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 
@@ -125,7 +125,10 @@ toolbox_tool_button_press (GtkWidget      *widget,
 			   gpointer        data)
 {
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
-    tool_options_dialog_show ();
+    {
+      dialogs_create_toplevel_cmd_callback (NULL, NULL,
+					    GPOINTER_TO_UINT ("gimp:tool-options-dialog"));
+    }
 
   return FALSE;
 }
@@ -324,7 +327,7 @@ create_tools (GtkWidget   *parent,
   gtk_widget_show (wbox);
 }
 
-void
+GtkWidget *
 toolbox_create (void)
 {
   GtkItemFactory *toolbox_factory;
@@ -380,8 +383,6 @@ toolbox_create (void)
   gtk_signal_connect (GTK_OBJECT (window), "style_set",
 		      GTK_SIGNAL_FUNC (toolbox_style_set_callback),
 		      NULL);
-
-  session_set_window_geometry (window, &toolbox_session_info, TRUE);
 
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 1);
@@ -450,13 +451,13 @@ toolbox_create (void)
   gtk_widget_show (window);
 
   toolbox_shell = window;
+
+  return toolbox_shell;
 }
 
 void
 toolbox_free (void)
 {
-  session_get_window_info (toolbox_shell, &toolbox_session_info);
-
   gtk_widget_destroy (toolbox_shell);
 
   gimp_help_free ();

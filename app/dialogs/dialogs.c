@@ -31,14 +31,72 @@
 #include "gimpcontext.h"
 
 
+typedef struct _DialogEntry DialogEntry;
+
+struct _DialogEntry
+{
+  const gchar       *identifier;
+  GimpDialogNewFunc  new_func;
+  gboolean           singleton;
+  gboolean           session_managed;
+};
+
+
 GimpDialogFactory *global_dialog_factory     = NULL;
 GimpDialogFactory *global_dock_factory       = NULL;
 GimpDialogFactory *global_image_dock_factory = NULL;
 
 
+static const DialogEntry toplevel_entries[] =
+{
+  { "gimp:toolbox",                dialogs_toolbox_get,         TRUE, TRUE },
+  { "gimp:lc-dialog",              dialogs_lc_get,              TRUE, TRUE },
+  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    TRUE, TRUE },
+  { "gimp:device-status-dialog",   dialogs_device_status_get,   TRUE, TRUE },
+  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE, TRUE },
+  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE, TRUE },
+  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE, TRUE },
+  { "gimp:palette-dialog",         dialogs_palette_get,         TRUE, TRUE },
+  { "gimp:error-console-dialog",   dialogs_error_console_get,   TRUE, TRUE },
+  { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE, TRUE }
+};
+static const gint n_toplevel_entries = (sizeof (toplevel_entries) /
+					sizeof (toplevel_entries[0]));
+
+static const DialogEntry dock_entries[] =
+{
+  { "gimp:image-list",    dialogs_image_list_view_new,    FALSE, FALSE },
+  { "gimp:brush-list",    dialogs_brush_list_view_new,    FALSE, FALSE },
+  { "gimp:pattern-list",  dialogs_pattern_list_view_new,  FALSE, FALSE },
+  { "gimp:gradient-list", dialogs_gradient_list_view_new, FALSE, FALSE },
+  { "gimp:palette-list",  dialogs_palette_list_view_new,  FALSE, FALSE },
+  { "gimp:tool-list",     dialogs_tool_list_view_new,     FALSE, FALSE },
+  { "gimp:image-grid",    dialogs_image_grid_view_new,    FALSE, FALSE },
+  { "gimp:brush-grid",    dialogs_brush_grid_view_new,    FALSE, FALSE },
+  { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE },
+  { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE },
+  { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE },
+  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE }
+};
+static const gint n_dock_entries = (sizeof (dock_entries) /
+				    sizeof (dock_entries[0]));
+
+/*
+static const DialogEntry image_dock_entries[] =
+{
+};
+static const gint n_image_dock_entries = (sizeof (image_dock_entries) /
+					  sizeof (image_dock_entries[0]));
+*/
+
+
+/*  public functions  */
+
 void
 dialogs_init (void)
 {
+  gint i;
+
   global_dialog_factory =
     gimp_dialog_factory_new ("toplevel",
 			     gimp_context_get_user (),
@@ -54,43 +112,28 @@ dialogs_init (void)
 			     gimp_context_get_user (),
 			     NULL);
 
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:image-list",
-				dialogs_image_list_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:brush-list",
-				dialogs_brush_list_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:pattern-list",
-				dialogs_pattern_list_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:gradient-list",
-				dialogs_gradient_list_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:palette-list",
-				dialogs_palette_list_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:tool-list",
-				dialogs_tool_list_view_new);
+  for (i = 0; i < n_toplevel_entries; i++)
+    gimp_dialog_factory_register (global_dialog_factory,
+				  toplevel_entries[i].identifier,
+				  toplevel_entries[i].new_func,
+				  toplevel_entries[i].singleton,
+				  toplevel_entries[i].session_managed);
 
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:image-grid",
-				dialogs_image_grid_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:brush-grid",
-				dialogs_brush_grid_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:pattern-grid",
-				dialogs_pattern_grid_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:gradient-grid",
-				dialogs_gradient_grid_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:palette-grid",
-				dialogs_palette_grid_view_new);
-  gimp_dialog_factory_register (global_dock_factory,
-				"gimp:tool-grid",
-				dialogs_tool_grid_view_new);
+  for (i = 0; i < n_dock_entries; i++)
+    gimp_dialog_factory_register (global_dock_factory,
+				  dock_entries[i].identifier,
+				  dock_entries[i].new_func,
+				  dock_entries[i].singleton,
+				  dock_entries[i].session_managed);
+
+  /*
+  for (i = 0; i < n_image_dock_entries; i++)
+    gimp_dialog_factory_register (global_image_dock_factory,
+				  image_dock_entries[i].identifier,
+				  image_dock_entries[i].new_func,
+				  image_dock_entries[i].singleton,
+				  image_dock_entries[i].session_managed);
+  */
 }
 
 void

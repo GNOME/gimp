@@ -43,7 +43,6 @@
 #include "palette.h"
 #include "palette_import.h"
 #include "palette_select.h"
-#include "session.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -174,14 +173,13 @@ static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
 
 /*  public functions  ********************************************************/
 
-void 
+GtkWidget *
 palette_dialog_create (void)
 {
   if (top_level_palette == NULL)
     {
       top_level_palette = palette_dialog_new (FALSE);
-      session_set_window_geometry (top_level_palette->shell,
-				   &palette_session_info, TRUE);
+
       dialog_register (top_level_palette->shell);
 
       gtk_widget_show (top_level_palette->shell);
@@ -189,14 +187,12 @@ palette_dialog_create (void)
   else
     {
       if (! GTK_WIDGET_VISIBLE (top_level_palette->shell))
-	{
-	  gtk_widget_show (top_level_palette->shell);
-	}
+	gtk_widget_show (top_level_palette->shell);
       else
-	{
-	  gdk_window_raise (top_level_palette->shell->window);
-	}
+	gdk_window_raise (top_level_palette->shell->window);
     }
+
+  return top_level_palette->shell;
 }
 
 void
@@ -222,9 +218,6 @@ palette_dialog_free (void)
 
   if (top_level_palette)
     {
-      session_get_window_info (top_level_palette->shell,
-			       &palette_session_info);  
-
       if (top_level_palette->color_notebook) 
 	color_notebook_free (top_level_palette->color_notebook); 
 

@@ -43,7 +43,7 @@ void   devices_restore      (void);
 void   input_dialog_create  (void);
 
 /*  Create the device status dialog  */
-void   device_status_create (void);
+GtkWidget * device_status_create (void);
 
 /*  Returns TRUE, and makes necessary global changes
  *  event is not for current_device

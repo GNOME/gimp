@@ -25,6 +25,10 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdialogfactory.h"
+
+#include "gui/dialogs.h"
+
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
@@ -36,7 +40,6 @@
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
 #include "layers_dialogP.h"
-#include "session.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimplimits.h"
@@ -90,7 +93,7 @@ LCDialog * lc_dialog = NULL;
 /*  Public L&C dialog functions  */
 /*********************************/
 
-void
+GtkWidget *
 lc_dialog_create (GimpImage *gimage)
 {
   GtkWidget *util_box;
@@ -101,21 +104,12 @@ lc_dialog_create (GimpImage *gimage)
 
   if (lc_dialog)
     {
-      if (! GTK_WIDGET_VISIBLE (lc_dialog->shell))
-	{
-	  gtk_widget_show (lc_dialog->shell);
-	}
-      else 
-	{
-	  gdk_window_raise (lc_dialog->shell->window);
-	}
-
       if (gimage)
 	lc_dialog_update (gimage);
 
       lc_dialog_update_image_list ();
 
-      return;
+      return lc_dialog->shell;
     }
 
   lc_dialog = g_new0 (LCDialog, 1);
@@ -141,7 +135,6 @@ lc_dialog_create (GimpImage *gimage)
 
   /*  Register the dialog  */
   dialog_register (lc_dialog->shell);
-  session_set_window_geometry (lc_dialog->shell, &lc_dialog_session_info, TRUE);
 
   /*  The toplevel vbox  */
   lc_dialog->subshell = gtk_vbox_new (FALSE, 1);
@@ -236,9 +229,10 @@ lc_dialog_create (GimpImage *gimage)
   lc_dialog_update_image_list ();
 
   gtk_widget_show (lc_dialog->subshell);
-  gtk_widget_show (lc_dialog->shell);
 
   gdisplays_flush ();
+
+  return lc_dialog->shell;
 }
 
 void
@@ -246,8 +240,6 @@ lc_dialog_free (void)
 {
   if (lc_dialog == NULL)
     return;
-
-  session_get_window_info (lc_dialog->shell, &lc_dialog_session_info);
 
   layers_dialog_free ();
   channels_dialog_free ();
@@ -269,7 +261,7 @@ lc_dialog_rebuild (gint new_preview_size)
 
   if (lc_dialog)
     {
-      flag = TRUE;
+      flag   = TRUE;
       gimage = lc_dialog->gimage;
       /*  Unregister the dialog  */
       dialog_unregister (lc_dialog->shell);
@@ -280,7 +272,7 @@ lc_dialog_rebuild (gint new_preview_size)
   render_setup (transparency_type, transparency_size);
 
   if (flag)
-    lc_dialog_create (gimage);
+    gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:lc-dialog");
 }
 
 void

@@ -25,6 +25,7 @@
 #include "apptypes.h"
 
 #include "tools/tool_manager.h"
+#include "tools/tool_options_dialog.h"
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -34,6 +35,16 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimppreview.h"
+
+#include "brush_select.h"
+#include "devices.h"
+#include "dialogs-constructors.h"
+#include "docindex.h"
+#include "gdisplay.h"
+#include "gradient_select.h"
+#include "palette.h"
+#include "pattern_select.h"
+#include "toolbox.h"
 
 #include "context_manager.h"
 #include "gradient_editor.h"
@@ -66,6 +77,71 @@ static GtkWidget * dialogs_dockable_new (GtkWidget              *widget,
 
 
 /*  public functions  */
+
+GtkWidget *
+dialogs_toolbox_get (GimpDialogFactory *factory)
+{
+  return toolbox_create ();
+}
+
+GtkWidget *
+dialogs_lc_get (GimpDialogFactory *factory)
+{
+  GDisplay *gdisp;
+
+  gdisp = gimp_context_get_display (factory->context);
+
+  return lc_dialog_create (gdisp ? gdisp->gimage : NULL);
+}
+
+GtkWidget *
+dialogs_tool_options_get (GimpDialogFactory *factory)
+{
+  return tool_options_dialog_create ();
+}
+
+GtkWidget *
+dialogs_device_status_get (GimpDialogFactory *factory)
+{
+  return device_status_create ();
+}
+
+GtkWidget *
+dialogs_brush_select_get (GimpDialogFactory *factory)
+{
+  return brush_dialog_create ();
+}
+
+GtkWidget *
+dialogs_pattern_select_get (GimpDialogFactory *factory)
+{
+  return pattern_dialog_create ();
+}
+
+GtkWidget *
+dialogs_gradient_select_get (GimpDialogFactory *factory)
+{
+  return gradient_dialog_create ();
+}
+
+GtkWidget *
+dialogs_palette_get (GimpDialogFactory *factory)
+{
+  return palette_dialog_create ();
+}
+
+GtkWidget *
+dialogs_error_console_get (GimpDialogFactory *factory)
+{
+  return error_console_create ();
+}
+
+GtkWidget *
+dialogs_document_index_get (GimpDialogFactory *factory)
+{
+  return document_index_create ();
+}
+
 
 GtkWidget *
 dialogs_image_list_view_new (GimpDialogFactory *factory)

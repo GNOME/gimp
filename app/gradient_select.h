@@ -55,7 +55,7 @@ void             gradient_select_dialogs_check (void);
 
 
 /*  the main gradient selection  */
-void             gradient_dialog_create        (void);
+GtkWidget      * gradient_dialog_create        (void);
 void             gradient_dialog_free          (void);
 
 

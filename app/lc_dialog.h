@@ -20,17 +20,17 @@
 #define  __LC_DIALOG_H__
 
 
-void   lc_dialog_create            (GimpImage *gimage);
-void   lc_dialog_free              (void);
+GtkWidget * lc_dialog_create            (GimpImage *gimage);
+void        lc_dialog_free              (void);
 
 /*  implies free & create
  */
-void   lc_dialog_rebuild           (gint       new_preview_size);
+void        lc_dialog_rebuild           (gint       new_preview_size);
 
-void   lc_dialog_flush             (void);
+void        lc_dialog_flush             (void);
 
-void   lc_dialog_update_image_list (void);
-void   lc_dialog_preview_update    (GimpImage *gimage);
+void        lc_dialog_update_image_list (void);
+void        lc_dialog_preview_update    (GimpImage *gimage);
 
 
 #endif  /*  __LC_DIALOG_H__  */

@@ -25,8 +25,8 @@
 
 void   error_console_add  (gchar *errormsg);
 
-/* Free error_console (only for session-managment) */
-void   error_console_free (void);
+GtkWidget * error_console_create (void);
+void        error_console_free   (void);
 
 
 #endif /* __ERROR_CONSOLE_H__ */
