@@ -9,15 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:58+0200\n"
-"PO-Revision-Date: 2004-03-09 06:05+0100\n"
+"POT-Creation-Date: 2004-08-08 14:26+0200\n"
+"PO-Revision-Date: 2004-08-08 14:44+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
-"Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
+"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -37,7 +36,7 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr ""
+msgstr "Ne mogu da otvorim probnu datoteku za razmenu. Da izbegnete gubitak podataka, proverite putanju i ovlašćenja za direktorijum razmene koji je određen među vašim postavkama (trenutno „%s“)."
 
 #: app/app_procs.c:282
 #, c-format
@@ -281,7 +280,7 @@ msgstr "Senke"
 
 #: app/base/base-enums.c:158
 msgid "Midtones"
-msgstr "Srednjni tonovi"
+msgstr "Srednji tonovi"
 
 #: app/base/base-enums.c:159
 msgid "Highlights"
@@ -293,7 +292,7 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr ""
+msgstr "Ne mogu da otvorim datoteku razmene. Gimpu je ponestalo memorije a ne može da koristi datoteku razmene. Neki delovi vaših slika mogu biti oštećeni. Pokušajte da sačuvate vaš rad pod drugim imenima, ponovo pokrenite Gimp, i proverite putanju direktorijuma razmene u vašim postavkama."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -454,8 +453,8 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano "
-"su uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
+"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano su "
+"uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
 
 #: app/config/gimprc-blurbs.h:44
 msgid ""
@@ -468,23 +467,16 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Ovo je rastojanje u tačkama na kojem se koristi prijanjanje uz vođice i "
-"mrežu."
+"Ovo je rastojanje u tačkama na kojem se koristi prijanjanje uz vođice i mrežu."
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
-"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine "
-"prema algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i "
-"nastavlja dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu "
-"ne bude veća od odrećene granične vrednosti. Ova vrednost predstavlja "
-"podrazumevanu graničnu vrednost."
+msgstr "Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine prema algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i nastavlja dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu ne bude veća od izabranog praga. Ova vrednost predstavlja podrazumevani prag."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -531,8 +523,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se "
-"otvori datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
+"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se otvori "
+"datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -577,22 +569,22 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr ""
+msgstr "Postavlja vodoravnu rezoluciju monitora, kao broj tačaka po inču. Ako je postavljeno na 0, od Iks servera se zahtevaju podaci i o vodoravnoj i o uspravnoj rezoluciji."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr ""
+msgstr "Postavlja uspravnu rezoluciju monitora, kao broj tačaka po inču. Ako je postavljeno na 0, od Iks servera se zahtevaju podaci i o vodoravnoj i o uspravnoj rezoluciji."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
-"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu "
-"prozora slike."
+"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu prozora "
+"slike."
 
 #: app/config/gimprc-blurbs.h:207
 msgid ""
@@ -612,9 +604,9 @@ msgid ""
 msgstr ""
 "Kada je uključeno, X server će na svaki pokret biti upitan za trenutni "
 "položaj miša, radije nego da se oslanjamo na nagoveštaj položaja. Ovo znači "
-"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da "
-"stvar bude čudnija, na nekim X serverima uključivanje ove opcije će "
-"rezultirati bržim crtanjem."
+"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da stvar "
+"bude čudnija, na nekim X serverima uključivanje ove opcije će rezultirati "
+"bržim crtanjem."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
@@ -666,8 +658,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz "
-"konture trenutne četke"
+"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz konture "
+"trenutne četke"
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
@@ -682,16 +674,16 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati "
-"preko „Pregled->Prikaži lenjire“ naredbe."
+"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati preko "
+"„Pregled->Prikaži lenjire“ naredbe."
 
 #: app/config/gimprc-blurbs.h:275
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se "
-"takođe može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
+"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se takođe "
+"može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
@@ -722,16 +714,16 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati "
-"preko naredbe „Pregled->Prikaži vođice“."
+"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati preko "
+"naredbe „Pregled->Prikaži vođice“."
 
 #: app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati "
-"preko naredbe „Pregled->Prikaži mrežu“."
+"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati preko "
+"naredbe „Pregled->Prikaži mrežu“."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
@@ -797,16 +789,16 @@ msgid ""
 msgstr ""
 "Podešava direktorijum za privremene datoteke. Datoteke će se pojavljivati tu "
 "tokom rada u GIMP-u. Većina datoteka će nestati kada se GIMP zatvori, ali "
-"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude "
-"direktorijum koji delite sa drugim korisnicima."
+"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude direktorijum "
+"koji delite sa drugim korisnicima."
 
 #: app/config/gimprc-blurbs.h:344
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
-"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte "
-"da GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
+"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte da "
+"GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
 
 #: app/config/gimprc-blurbs.h:348
 msgid ""
@@ -817,16 +809,16 @@ msgid ""
 msgstr ""
 "Ostava za deliće osigurava da GIMP ne izgubi delić između memorije i diska. "
 "Postavljanje biše vrednosti znači da će GIMP koristiti manju privremenu "
-"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da "
-"će GIMP više koristiti privremenu datoteku a manje memoriju."
+"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da će "
+"GIMP više koristiti privremenu datoteku a manje memoriju."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
-"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to "
-"kako vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
+"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to kako "
+"vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
 
 #: app/config/gimprc-blurbs.h:359
 msgid "Sets the manner in which transparency is displayed in images."
@@ -858,9 +850,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Podešava gornju granicu količine memorije koja može biti korišćena za "
-"čuvanje operacija za poništavanje po slici. Nezavisno od ovog podešavanja, "
-"može se opozvati najviše onoliko operacija koliko je podešeno."
+"Podešava gornju granicu količine memorije koja može biti korišćena za čuvanje "
+"operacija za poništavanje po slici. Nezavisno od ovog podešavanja, može se "
+"opozvati najviše onoliko operacija koliko je podešeno."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -878,10 +870,10 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna "
-"putanja ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji "
-"(PATH). Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će "
-"adresa biti dodata na naredbu razdvojena razmakom."
+"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna putanja "
+"ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji (PATH). "
+"Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će adresa "
+"biti dodata na naredbu razdvojena razmakom."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -910,7 +902,7 @@ msgstr "_Prenesi alfa kanal sloja"
 
 #: app/core/core-enums.c:17
 msgid "_Selection"
-msgstr "_Selekcija"
+msgstr "_Izbor"
 
 #: app/core/core-enums.c:18
 msgid "_Grayscale Copy of Layer"
@@ -946,19 +938,19 @@ msgstr "Popunjavanje mustrom"
 
 #: app/core/core-enums.c:77
 msgid "Add to the current selection"
-msgstr "Dodaj u tekuću selekciju"
+msgstr "Dodaj u tekući izbor"
 
 #: app/core/core-enums.c:78
 msgid "Subtract from the current selection"
-msgstr "Izbaci iz tekuće selekcije"
+msgstr "Izbaci iz tekućeg izbora"
 
 #: app/core/core-enums.c:79
 msgid "Replace the current selection"
-msgstr "Zameni tekuću selekciju"
+msgstr "Zameni tekući izbor"
 
 #: app/core/core-enums.c:80
 msgid "Intersect with the current selection"
-msgstr "Presek sa tekućom selekcijom"
+msgstr "Presek sa tekućim izborom"
 
 #: app/core/core-enums.c:101
 msgid "Gray"
@@ -1269,14 +1261,12 @@ msgid "Guide"
 msgstr "Vođice"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#, fuzzy
 msgid "Drawable"
-msgstr "Pomeraj Crteža"
+msgstr "Crtež"
 
 #: app/core/core-enums.c:595 app/core/core-enums.c:625
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "Procedure crteža"
+msgstr "Režim crteža"
 
 #: app/core/core-enums.c:596 app/core/core-enums.c:626
 #: app/core/gimpchannel.c:1617 app/core/gimpselection.c:570
@@ -1300,14 +1290,12 @@ msgid "Move Item"
 msgstr "Pomeri predmet"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Povećaj ili smanji sliku"
+msgstr "Povećaj ili smanji stavku"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "Promeni veličinu slike"
+msgstr "Promeni veličinu stavke"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
@@ -1321,25 +1309,24 @@ msgstr "Primeni Masku za slojeve"
 
 #: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:229
 msgid "Floating Selection to Layer"
-msgstr "Plutajuću selekciju prebaci u sloj"
+msgstr "Plutajući izbor prebaci u sloj"
 
 #: app/core/core-enums.c:606 app/core/gimpselection.c:827
 msgid "Float Selection"
-msgstr "Plutajuća selekcija"
+msgstr "Plutajući izbor"
 
 #: app/core/core-enums.c:607 app/core/gimplayer-floating-sel.c:135
 msgid "Anchor Floating Selection"
-msgstr "Usidri plutajuću selekciju"
+msgstr "Usidri plutajući izbor"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Plutajuća selekcija"
+msgstr "Ukloni plutajući izbor"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
 msgid "Paste"
-msgstr "Prenesi"
+msgstr "Ubaci"
 
 #: app/core/core-enums.c:610 app/core/gimp-edit.c:321
 msgid "Cut"
@@ -1353,7 +1340,7 @@ msgstr "Tekst"
 #: app/core/core-enums.c:612 app/core/core-enums.c:652
 #: app/core/gimpdrawable-transform.c:855
 msgid "Transform"
-msgstr "Trasformacija"
+msgstr "Transformacija"
 
 #: app/core/core-enums.c:613 app/core/core-enums.c:653
 #: app/paint/gimppaintcore.c:475
@@ -1432,9 +1419,8 @@ msgid "Set Preserve Trans"
 msgstr "Podesi očuvanje providnosti"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Samo kad su menjane"
+msgstr "Tekst izmenjen"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -1607,8 +1593,7 @@ msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznata dubina
 #: app/core/gimpbrush.c:582
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
+msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
 
 #: app/core/gimpbrush.c:598 app/core/gimpbrush.c:718
 #, c-format
@@ -1746,12 +1731,12 @@ msgstr "Izaberi elipsu"
 
 #: app/core/gimpchannel-select.c:367
 msgid "Alpha to Selection"
-msgstr "Alfa u selekciju"
+msgstr "Alfa u izbor"
 
 #: app/core/gimpchannel-select.c:409
 #, c-format
 msgid "%s Channel to Selection"
-msgstr "Napravi selekciju na osnovu %s kanala"
+msgstr "Napravi izbor na osnovu %s kanala"
 
 #: app/core/gimpchannel-select.c:455 app/tools/gimpfuzzyselecttool.c:100
 msgid "Fuzzy Select"
@@ -1959,8 +1944,7 @@ msgstr "Spoji vidljive slojeve"
 
 #: app/core/gimpimage-merge.c:105
 msgid "Not enough visible layers for a merge. There must be at least two."
-msgstr ""
-"Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
+msgstr "Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
 
 #: app/core/gimpimage-merge.c:138
 msgid "Flatten Image"
@@ -1980,8 +1964,7 @@ msgstr "Spoji vidljive putanje"
 
 #: app/core/gimpimage-merge.c:574
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr ""
-"Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
+msgstr "Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable QuickMask"
@@ -2323,8 +2306,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Kobna greška pri obradi datoteke sa mustrom „%s“: nepoznato izdanje odsečaka "
-"%d."
+"Kobna greška pri obradi datoteke sa mustrom „%s“: nepoznato izdanje odsečaka %"
+"d."
 
 #: app/core/gimppattern.c:367
 #, c-format
@@ -2345,19 +2328,19 @@ msgstr "Neispravna UTF-8 niska u datoteci sa mustrom „%s“."
 #: app/tools/gimpeditselectiontool.c:1116 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
-msgstr "Pomeri selekciju"
+msgstr "Pomeri izbor"
 
 #: app/core/gimpselection.c:197 app/gui/select-commands.c:177
 msgid "Feather Selection"
-msgstr "Obuci selekciju"
+msgstr "Obuci izbor"
 
 #: app/core/gimpselection.c:198
 msgid "Sharpen Selection"
-msgstr "Izoštri selekciju"
+msgstr "Izoštri izbor"
 
 #: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
-msgstr "Poništi selekciju"
+msgstr "Poništi izbor"
 
 #: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:164
 msgid "Select All"
@@ -2365,33 +2348,33 @@ msgstr "Izaberi sve"
 
 #: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:180
 msgid "Invert Selection"
-msgstr "Invertuj selekciju"
+msgstr "Obrni izbor"
 
 #: app/core/gimpselection.c:202 app/gui/select-commands.c:270
 msgid "Border Selection"
-msgstr "Ograniči selekciju"
+msgstr "Ograniči izbor"
 
 #: app/core/gimpselection.c:203 app/gui/select-commands.c:247
 msgid "Grow Selection"
-msgstr "Povećaj selekciju"
+msgstr "Povećaj izbor"
 
 #: app/core/gimpselection.c:204 app/gui/select-commands.c:213
 msgid "Shrink Selection"
-msgstr "Smanji selekciju"
+msgstr "Smanji izbor"
 
 #: app/core/gimpselection.c:303
 msgid "No selection to stroke."
-msgstr "Nema selekcije koja bi bila uzeta za konturu."
+msgstr "Nema izbora koji bi bio uzet za konturu."
 
 #: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
-msgstr "Uzmi selekciju kao konturu"
+msgstr "Uzmi izbor kao konturu"
 
 #: app/core/gimpselection.c:602 app/gui/channels-commands.c:209
 #: app/pdb/selection_cmds.c:923 app/pdb/selection_cmds.c:1041
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
-msgstr "Napravi selekciju na osnovu kanala"
+msgstr "Napravi izbor na osnovu kanala"
 
 #: app/core/gimpselection.c:674
 msgid "Unable to cut or copy because the selected region is empty."
@@ -2400,18 +2383,17 @@ msgstr ""
 
 #: app/core/gimpselection.c:820
 msgid "Cannot float selection because the selected region is empty."
-msgstr "Ne mogu da postavim plutajuću selekciju jer je izabrana oblast prazna."
+msgstr "Ne mogu da postavim plutajući izbor jer je izabrana oblast prazna."
 
 #: app/core/gimpselection.c:843 app/gui/layers-commands.c:989
 msgid "Floating Selection"
-msgstr "Plutajuća selekcija"
+msgstr "Plutajući izbor"
 
 #: app/core/gimptemplate.c:143
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Jedinica koordinatnog sistema kada se ne koristi režim tačka-za-tačku."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
 msgstr "Vodoravna rezolucija slike."
 
@@ -2760,9 +2742,8 @@ msgid "%s Channel Copy"
 msgstr "Kopija kanala %s"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Isprazni kopije kanala"
+msgstr "Prazan kanal"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -2818,19 +2799,19 @@ msgstr "/_Obriši kanal"
 
 #: app/gui/channels-menu.c:80
 msgid "/Channel to Sele_ction"
-msgstr "/Napravi selekciju od kanala"
+msgstr "/Napravi izbor od kanala"
 
 #: app/gui/channels-menu.c:85 app/gui/vectors-menu.c:95
 msgid "/_Add to Selection"
-msgstr "/Dodaj u selekciju"
+msgstr "/Dodaj u izbor"
 
 #: app/gui/channels-menu.c:90 app/gui/vectors-menu.c:100
 msgid "/_Subtract from Selection"
-msgstr "/Oduzmi od selekcije"
+msgstr "/Oduzmi od izbora"
 
 #: app/gui/channels-menu.c:95 app/gui/vectors-menu.c:105
 msgid "/_Intersect with Selection"
-msgstr "/Presek sa selekcijom"
+msgstr "/Presek sa izborom"
 
 #: app/gui/color-notebook.c:184
 msgid "Add the current color to the color history"
@@ -2988,11 +2969,11 @@ msgstr "Histogram"
 
 #: app/gui/dialogs-constructors.c:794
 msgid "Selection"
-msgstr "Selekcija"
+msgstr "Izbor"
 
 #: app/gui/dialogs-constructors.c:794
 msgid "Selection Editor"
-msgstr "Urednik selekcija"
+msgstr "Uređivač izbora"
 
 #: app/gui/dialogs-constructors.c:819 app/pdb/internal_procs.c:185
 #: app/widgets/gimpundoeditor.c:144
@@ -3065,7 +3046,7 @@ msgstr "/Dodaj karticu/_Histogram"
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/_Selection Editor"
-msgstr "/Dodaj karticu/Urednik za selekcije"
+msgstr "/Dodaj karticu/Uređivač izbora"
 
 #: app/gui/dialogs-menu.c:87
 msgid "/Add Tab/Na_vigation"
@@ -3294,7 +3275,7 @@ msgstr "/_Sačuvaj sve greške u datoteku..."
 
 #: app/gui/error-console-menu.c:52
 msgid "/Save _Selection to File..."
-msgstr "/Sačuvaj selekciju u datoteku..."
+msgstr "/Sačuvaj izbor u datoteku..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
 #: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
@@ -3469,11 +3450,11 @@ msgstr "Dupliraj prelivni segment"
 
 #: app/gui/gradient-editor-commands.c:519
 msgid "Replicate Selection"
-msgstr "Dupliraj Selekciju"
+msgstr "Dupliraj izbor"
 
 #: app/gui/gradient-editor-commands.c:520
 msgid "Replicate Gradient Selection"
-msgstr "Dupliraj prelivnu selekciju"
+msgstr "Dupliraj prelivni izbor"
 
 #: app/gui/gradient-editor-commands.c:532
 msgid "Replicate"
@@ -3493,7 +3474,7 @@ msgid ""
 "to replicate the selection."
 msgstr ""
 "Izaberite broj duplikata\n"
-"selekcije."
+"izbora."
 
 #: app/gui/gradient-editor-commands.c:620
 msgid "Split Segment Uniformly"
@@ -3596,9 +3577,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/funkcija stapanja/Zakrivljena"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
-msgstr "/funkcija stapanja/Sinusoidna"
+msgstr "/funkcija stapanja/_Sinusoidna"
 
 #: app/gui/gradient-editor-menu.c:183
 msgid "/blendingfunction/Spherical (i_ncreasing)"
@@ -3674,19 +3654,19 @@ msgstr "Ponovo postavi ručke u segmentu"
 
 #: app/gui/gradient-editor-menu.c:413
 msgid "_Blending Function for Selection"
-msgstr "Funkcije stapanja za selekciju"
+msgstr "Funkcije stapanja za izbor"
 
 #: app/gui/gradient-editor-menu.c:414
 msgid "Coloring _Type for Selection"
-msgstr "Tip bojenja selekcije"
+msgstr "Tip bojenja izbora"
 
 #: app/gui/gradient-editor-menu.c:416
 msgid "_Flip Selection"
-msgstr "Okreni selekciju"
+msgstr "Okreni izbor"
 
 #: app/gui/gradient-editor-menu.c:417
 msgid "_Replicate Selection..."
-msgstr "Dupliraj selekciju..."
+msgstr "Dupliraj izbor..."
 
 #: app/gui/gradient-editor-menu.c:418
 msgid "Split Segments at _Midpoints"
@@ -3698,15 +3678,15 @@ msgstr "Podeli segmente istovetno..."
 
 #: app/gui/gradient-editor-menu.c:420
 msgid "_Delete Selection"
-msgstr "Obriši selekciju"
+msgstr "Obriši izbor"
 
 #: app/gui/gradient-editor-menu.c:421
 msgid "Re-_center Midpoints in Selection"
-msgstr "Ponovo centriraj srednje tačke u selekciji"
+msgstr "Ponovo centriraj srednje tačke u izboru"
 
 #: app/gui/gradient-editor-menu.c:422
 msgid "Re-distribute _Handles in Selection"
-msgstr "Ponovo postavi ručke u selekciji"
+msgstr "Ponovo postavi ručke u izboru"
 
 #: app/gui/gradient-select.c:272
 msgid ""
@@ -3774,7 +3754,7 @@ msgstr "Rotiram..."
 
 #: app/gui/image-commands.c:269 app/gui/layers-commands.c:373
 msgid "Cannot crop because the current selection is empty."
-msgstr "Ne mogu da isečem jer ke tekuća selekcija prazna."
+msgstr "Ne mogu da isečem jer je tekući izbor prazan."
 
 #: app/gui/image-commands.c:398
 msgid "Layers Merge Options"
@@ -4006,9 +3986,8 @@ msgid "/Select/_Invert"
 msgstr "/Izaberi/Suprotno"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Selekcija/U putanju"
+msgstr "/Izaberi/I_z putanje"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -4048,7 +4027,7 @@ msgstr "/Izaberi/Sačuvaj u kanal"
 
 #: app/gui/image-menu.c:346
 msgid "/Select/To _Path"
-msgstr "/Selekcija/U putanju"
+msgstr "/Izaberi/U _putanju"
 
 #. <Image>/View
 #: app/gui/image-menu.c:354
@@ -4407,11 +4386,11 @@ msgstr "/Sloj/Maska/Izaberi masku"
 
 #: app/gui/image-menu.c:803
 msgid "/Layer/Mask/_Subtract from Selection"
-msgstr "/Sloj/Maska/Oduzmi od selekcije"
+msgstr "/Sloj/Maska/Oduzmi od izbora"
 
 #: app/gui/image-menu.c:808
 msgid "/Layer/Mask/_Intersect with Selection"
-msgstr "/Sloj/Maska/Presek sa selekcijom"
+msgstr "/Sloj/Maska/Presek sa izborom"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:816
@@ -4424,19 +4403,19 @@ msgstr "/Sloj/Providnost/Dodaj Alfa kanal"
 
 #: app/gui/image-menu.c:826
 msgid "/Layer/Transparency/Al_pha to Selection"
-msgstr "/Sloj/Providnost/Alfa u selekciju"
+msgstr "/Sloj/Providnost/Alfa u izbor"
 
 #: app/gui/image-menu.c:831
 msgid "/Layer/Transparency/A_dd to Selection"
-msgstr "/Sloj/Providnost/Dodaj u selekciju"
+msgstr "/Sloj/Providnost/Dodaj u izbor"
 
 #: app/gui/image-menu.c:836
 msgid "/Layer/Transparency/_Subtract from Selection"
-msgstr "/Sloj/Providnost/Ukloni iz selekcije"
+msgstr "/Sloj/Providnost/Ukloni iz izbora"
 
 #: app/gui/image-menu.c:841
 msgid "/Layer/Transparency/_Intersect with Selection"
-msgstr "/Sloj/Providnost/Presek sa selekcijom"
+msgstr "/Sloj/Providnost/Presek sa izborom"
 
 #. <Image>/Layer/Transform
 #: app/gui/image-menu.c:851
@@ -4506,7 +4485,7 @@ msgstr "/Alati/Zameni boje"
 
 #: app/gui/image-menu.c:940
 msgid "/Tools/_Selection Tools"
-msgstr "/Alati/Alatke za selekcije"
+msgstr "/Alati/Alatke za izbor"
 
 #: app/gui/image-menu.c:941
 msgid "/Tools/_Paint Tools"
@@ -4571,7 +4550,7 @@ msgstr "/Prozorčići/Histogra_m"
 
 #: app/gui/image-menu.c:1002
 msgid "/Dialogs/_Selection Editor"
-msgstr "/Prozorčići/Urednik selekcija"
+msgstr "/Prozorčići/Uređivač izbora"
 
 #: app/gui/image-menu.c:1007
 msgid "/Dialogs/Na_vigation"
@@ -4899,12 +4878,11 @@ msgstr "Iseci sloj"
 
 #: app/gui/layers-commands.c:455
 msgid "Layer Mask to Selection"
-msgstr "Maska sloj u selekciju"
+msgstr "Maska sloja u izbor"
 
 #: app/gui/layers-commands.c:717
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Prazan sloj za tekst"
+msgstr "Prazan sloj"
 
 #: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
@@ -4944,9 +4922,8 @@ msgid "Layer _Name"
 msgstr "Naziv sloja"
 
 #: app/gui/layers-commands.c:1003
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "/Napravi putanju od teksta..."
+msgstr "Postavi ime iz _teksta"
 
 #: app/gui/layers-commands.c:1090
 msgid "Add a Mask to the Layer"
@@ -5462,7 +5439,7 @@ msgstr "Prikaži statusnu liniju"
 
 #: app/gui/preferences-dialog.c:912
 msgid "Show S_election"
-msgstr "Prikaži selekciju"
+msgstr "Prikaži izbor"
 
 #: app/gui/preferences-dialog.c:915
 msgid "Show _Layer Boundary"
@@ -5699,7 +5676,6 @@ msgid "Fit to Window"
 msgstr "Po meri prozora"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "Početna razmera:"
 
@@ -6221,7 +6197,7 @@ msgstr "_Uspravno:"
 #: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
-msgstr "Putanja u selekciju"
+msgstr "Putanja u izbor"
 
 #: app/gui/select-commands.c:181
 msgid "Feather selection by"
@@ -6233,7 +6209,7 @@ msgstr "Smanji izbor za"
 
 #: app/gui/select-commands.c:226
 msgid "Shrink from image border"
-msgstr "Smanji selekciju od granice slike"
+msgstr "Smanji od granice slike"
 
 #: app/gui/select-commands.c:251
 msgid "Grow selection by"
@@ -6370,44 +6346,36 @@ msgid "Enter a new name for the saved options"
 msgstr "Unesite novo ime za sačuvane opcije alata"
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "Sačuvane opcije"
+msgstr "/Sačuvaj opcije _u"
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "/_Sačuvaj opcije u/_Novi unos..."
+msgstr "/Sačuvaj opcije u/_Novi unos..."
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "/_Izvuci opcije iz/(ništa)"
+msgstr "/Izvuci opcije iz"
 
 #: app/gui/tool-options-menu.c:73
-#, fuzzy
 msgid "/Restore Options from/(None)"
-msgstr "/_Izvuci opcije iz/(ništa)"
+msgstr "/Izvuci opcije iz/(ništa)"
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "/Prei_menuj sačuvane opcije/(ništa)"
+msgstr "/Prei_menuj sačuvane opcije"
 
 #: app/gui/tool-options-menu.c:81
-#, fuzzy
 msgid "/Rename Saved Options/(None)"
-msgstr "/Prei_menuj sačuvane opcije/(ništa)"
+msgstr "/Preimenuj sačuvane opcije/(ništa)"
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "/_Ukloni sačuvane opcije/(ništa)"
+msgstr "/_Ukloni sačuvane opcije"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Delete Saved Options/(None)"
-msgstr "/_Ukloni sačuvane opcije/(ništa)"
+msgstr "/Ukloni sačuvane opcije/(ništa)"
 
 #: app/gui/tool-options-menu.c:98
 msgid "/R_eset Tool Options"
@@ -6477,7 +6445,7 @@ msgstr "/Datoteka/Prozorčići/Histogra_m"
 
 #: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/_Selection Editor"
-msgstr "/Datoteka/Prozorčići/Urednik _selekcija"
+msgstr "/Datoteka/Prozorčići/Uređivač _izbora"
 
 #: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/Na_vigation"
@@ -6576,8 +6544,8 @@ msgid ""
 "ins and modules can also configured here."
 msgstr ""
 "Datoteka gimprc služi za čuvanje ličnih podešavanja koje se tiču GIMPovog "
-"podrazumevanog ponašanja. Putanje pretrage za četke, palete, prelive,  "
-"mustre, dodatke i module se takođe mogu podesiti ovde."
+"podrazumevanog ponašanja. Putanje pretrage za četke, palete, prelive,  mustre, "
+"dodatke i module se takođe mogu podesiti ovde."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
@@ -6608,8 +6576,8 @@ msgid ""
 msgstr ""
 "Ključne prečice mogu se dinamički podesiti u GIMPu. Datoteka menurc je skup "
 "vaših podešavanja, pa se može sačuvati za sledeću sesiju. Možete menjati ovu "
-"datoteku po želji, ali je mnogo lakše podesiti prečice iz GIMPa. Brisanje "
-"ove datoteke će vratiti u upotrebu podrazmevane prečice."
+"datoteku po želji, ali je mnogo lakše podesiti prečice iz GIMPa. Brisanje ove "
+"datoteke će vratiti u upotrebu podrazmevane prečice."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
@@ -6618,8 +6586,8 @@ msgid ""
 "the saved position."
 msgstr ""
 "Datoteka sessionrc se koristi za smeštanje podatka o tome koji prozor je bio "
-"otvoren kada ste poslednji put zatvorili GIMP. Možete podesiti GIMP da "
-"ponovo otvori ove prozore."
+"otvoren kada ste poslednji put zatvorili GIMP. Možete podesiti GIMP da ponovo "
+"otvori ove prozore."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
@@ -6752,8 +6720,8 @@ msgid ""
 msgstr ""
 "Ovaj direktorijum se koristi kao privremena ostava bafera za poništavanje, "
 "kao bi se smanjilo korišćenje memorije. Ako je GIMP nepropisno ubijen, "
-"daototeke tipa: gimp<#>.<#> mogu ostati u njemu. Ove datoteke su beskorisne "
-"i mogu se slobodno izbrisati."
+"daototeke tipa: gimp<#>.<#> mogu ostati u njemu. Ove datoteke su beskorisne i "
+"mogu se slobodno izbrisati."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
@@ -6815,8 +6783,8 @@ msgid ""
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
 msgstr ""
-"Ovaj program je besplatan softver; možete ga deliti i/ili menjati u skladu "
-"sa uslovima GNU Opšte Javne Licence objavljenom od strane Free Software "
+"Ovaj program je besplatan softver; možete ga deliti i/ili menjati u skladu sa "
+"uslovima GNU Opšte Javne Licence objavljenom od strane Free Software "
 "Foundation; ili verzijom 2 Licence, ili (po vešem izboru) bilo koje novije "
 "verzije."
 
@@ -6886,8 +6854,8 @@ msgstr "Kliknite na „Nastavi“ da prihvatite navedena podešavanja."
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti."
-"</b>"
+"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti.</"
+"b>"
 
 #: app/gui/user-install-dialog.c:965
 msgid "Click \"Continue\" to start The GIMP."
@@ -6977,9 +6945,8 @@ msgid "Calibrate"
 msgstr "Kalibriši"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "Uvezi putanje"
+msgstr "Prazna putanja"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -7045,11 +7012,11 @@ msgstr "/Spoji _vidljive putanje"
 
 #: app/gui/vectors-menu.c:90
 msgid "/Path to Sele_ction"
-msgstr "/Putanja u selekciju"
+msgstr "/Putanja u izbor"
 
 #: app/gui/vectors-menu.c:111
 msgid "/Selecti_on to Path"
-msgstr "/Selekcija u putanju"
+msgstr "/Izbor u putanju"
 
 #: app/gui/vectors-menu.c:116
 msgid "/Stro_ke Path..."
@@ -7224,7 +7191,7 @@ msgstr "Operacije sa datotekom"
 
 #: app/pdb/internal_procs.c:107
 msgid "Floating selections"
-msgstr "Plutajuće selekcije"
+msgstr "Plutajući izbori"
 
 #: app/pdb/internal_procs.c:110
 msgid "Font UI"
@@ -7292,7 +7259,7 @@ msgstr "Maska slike"
 
 #: app/pdb/internal_procs.c:176
 msgid "Selection Tool procedures"
-msgstr "Procedure alatke za selekcije"
+msgstr "Procedure alatke za izbor"
 
 #: app/pdb/internal_procs.c:179
 msgid "Text procedures"
@@ -7339,7 +7306,7 @@ msgstr "Privremena procedura"
 #: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:53
 #: app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
-msgstr "Slobodna selekcija"
+msgstr "Slobodan izbor"
 
 #: app/plug-in/plug-in.c:702
 #, c-format
@@ -7507,7 +7474,7 @@ msgstr "Fiksna razmera"
 
 #: app/tools/tools-enums.c:74
 msgid "Transform Selection"
-msgstr "Transformiši selekciju"
+msgstr "Transformiši izbor"
 
 #: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:238
 #: app/vectors/gimpvectors.c:537
@@ -7697,7 +7664,7 @@ msgstr "Izaberi regione po boji"
 
 #: app/tools/gimpbycolorselecttool.c:84
 msgid "/Tools/Selection Tools/_By Color Select"
-msgstr "/Alati/Alatke za selekcije/Izbor po boji"
+msgstr "/Alati/Alatke za izbor/Izbor po boji"
 
 #: app/tools/gimpclonetool.c:102
 msgid "Paint using Patterns or Image Regions"
@@ -7893,7 +7860,7 @@ msgstr "Širina:"
 
 #: app/tools/gimpcroptool.c:1025
 msgid "From Selection"
-msgstr "Iz selekcije"
+msgstr "Iz izbora"
 
 #: app/tools/gimpcroptool.c:1033
 msgid "Auto Shrink"
@@ -7998,7 +7965,7 @@ msgstr "Izaberi elipsasti region"
 
 #: app/tools/gimpellipseselecttool.c:73
 msgid "/Tools/Selection Tools/_Ellipse Select"
-msgstr "/Alati/Alatke za selekcije/Označi elipsom"
+msgstr "/Alati/Alatke za izbor/Označi elipsom"
 
 #: app/tools/gimperasertool.c:71
 msgid "Erase to background or transparency"
@@ -8027,7 +7994,7 @@ msgstr "Tip izvrtanja %s"
 
 #: app/tools/gimpfliptool.c:85
 msgid "Flip the layer or selection"
-msgstr "Izvrni sloj ili selekciju"
+msgstr "Izvrni sloj ili izbor"
 
 #: app/tools/gimpfliptool.c:86
 msgid "/Tools/Transform Tools/_Flip"
@@ -8039,7 +8006,7 @@ msgstr "Izaberi rukom-crtane regione"
 
 #: app/tools/gimpfreeselecttool.c:99
 msgid "/Tools/Selection Tools/_Free Select"
-msgstr "/Alati/Alatke za selekciju/Slobodna selekcija"
+msgstr "/Alati/Alatke za izbor/Slobodan izbor"
 
 #: app/tools/gimpfuzzyselecttool.c:101
 msgid "Select contiguous regions"
@@ -8047,7 +8014,7 @@ msgstr "Izaberi nastavljajuće regione"
 
 #: app/tools/gimpfuzzyselecttool.c:102
 msgid "/Tools/Selection Tools/Fu_zzy Select"
-msgstr "/Alati/Alatke za selekciju/Nejasna selekcija"
+msgstr "/Alati/Alatke za izbor/Nejasan izbor"
 
 #: app/tools/gimphistogramoptions.c:151
 msgid "Histogram Scale"
@@ -8070,7 +8037,6 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Tip-zasićenost rade samo na slojevima u RGB bojama."
 
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
 msgstr "_Glavni"
 
@@ -8176,7 +8142,7 @@ msgstr "Izaberi oblike sa slike"
 
 #: app/tools/gimpiscissorstool.c:280
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
-msgstr "/Alati/Alatke za selekcije/Pametne makaze"
+msgstr "/Alati/Alatke za izbor/Pametne makaze"
 
 #: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
@@ -8307,7 +8273,7 @@ msgstr "Pomeri tekuću putanju"
 
 #: app/tools/gimpmovetool.c:110
 msgid "Move layers & selections"
-msgstr "Pomeri slojeve i selekcije"
+msgstr "Pomeri slojeve i izbore"
 
 #: app/tools/gimpmovetool.c:111
 msgid "/Tools/Transform Tools/_Move"
@@ -8395,7 +8361,7 @@ msgstr "Perspektiva"
 
 #: app/tools/gimpperspectivetool.c:84
 msgid "Change perspective of the layer or selection"
-msgstr "Promeni perspektivu sloja ili selekcije"
+msgstr "Promeni perspektivu sloja ili izbora"
 
 #: app/tools/gimpperspectivetool.c:85
 msgid "/Tools/Transform Tools/_Perspective"
@@ -8439,31 +8405,31 @@ msgstr "Izaberi četvoroutaone regione"
 
 #: app/tools/gimprectselecttool.c:100
 msgid "/Tools/Selection Tools/_Rect Select"
-msgstr "/Alati/Alatke za selekcije/Četvorougaona selekcija"
+msgstr "/Alati/Alatke za izbor/Četvorougaoni izbor"
 
 #: app/tools/gimprectselecttool.c:243
 msgid "Selection: ADD"
-msgstr "Selekcija: DODAJ"
+msgstr "Izbor: DODAJ"
 
 #: app/tools/gimprectselecttool.c:246
 msgid "Selection: SUBTRACT"
-msgstr "Selekcija: ODUZMI"
+msgstr "Izbor: ODUZMI"
 
 #: app/tools/gimprectselecttool.c:249
 msgid "Selection: INTERSECT"
-msgstr "Selekcija: NAPRAVI PRESEK"
+msgstr "Izbor: NAPRAVI PRESEK"
 
 #: app/tools/gimprectselecttool.c:252
 msgid "Selection: REPLACE"
-msgstr "Selekcija: ZAMENI"
+msgstr "Izbor: ZAMENI"
 
 #: app/tools/gimprectselecttool.c:494
 msgid "Selection: "
-msgstr "Selekcija:"
+msgstr "Izbor:"
 
 #: app/tools/gimprotatetool.c:104
 msgid "Rotate the layer or selection"
-msgstr "Rotiraj sloj ili selekciju"
+msgstr "Rotiraj sloj ili izbor"
 
 #: app/tools/gimprotatetool.c:105
 msgid "/Tools/Transform Tools/_Rotate"
@@ -8483,7 +8449,7 @@ msgstr "Veličina"
 
 #: app/tools/gimpscaletool.c:100
 msgid "Scale the layer or selection"
-msgstr "Promeni veličinu sloja ili selekcije"
+msgstr "Promeni veličinu sloja ili izbora"
 
 #: app/tools/gimpscaletool.c:101
 msgid "/Tools/Transform Tools/_Scale"
@@ -8491,7 +8457,7 @@ msgstr "/Alati/Alatke za transformaciju/Veličina"
 
 #: app/tools/gimpscaletool.c:161
 msgid "Scaling Information"
-msgstr "Inforamcija o promeni veličine"
+msgstr "Informacija o promeni veličine"
 
 #: app/tools/gimpscaletool.c:178
 msgid "Current Width:"
@@ -8511,11 +8477,11 @@ msgstr "Dozvoli biranje potpuno providnih regiona"
 
 #: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
-msgstr "Baziraj selekciju na svim vidljivim slojevima"
+msgstr "Zasnuj izbor na svim vidljivim slojevima"
 
 #: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Koristi sve vidljive slojeve prilikom smaljivanja selekcije"
+msgstr "Koristi sve vidljive slojeve prilikom smaljivanja izbora"
 
 #: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:460
 msgid "Antialiasing"
@@ -8535,7 +8501,7 @@ msgstr "Izaberi providne oblasti"
 
 #: app/tools/gimpselectionoptions.c:529
 msgid "Auto Shrink Selection"
-msgstr "Automatski smanji selekciju"
+msgstr "Automatski smanji izbor"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
@@ -8543,7 +8509,7 @@ msgstr "Odseci"
 
 #: app/tools/gimpsheartool.c:101
 msgid "Shear the layer or selection"
-msgstr "Odseci sloj ili selekciju"
+msgstr "Odseci sloj ili izbor"
 
 #: app/tools/gimpsheartool.c:102
 msgid "/Tools/Transform Tools/S_hear"
@@ -8652,7 +8618,7 @@ msgstr "GIMP urednik teksta"
 
 #: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Potvrdi uređivanje teksta"
 
 #: app/tools/gimptexttool.c:866
 msgid ""
@@ -8662,6 +8628,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Sloj koji ste izabrali je tekstualni, ali je menjan pomoću drugih alata. Izmena sloja tekstualnim alatom će odbaciti ove izmene.\n"
+"\n"
+"Možete menjati ovaj sloj ili napraviti novi tekstualni sloj na osnovu njegovih tekstualnih osobina."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8688,9 +8657,8 @@ msgid "Transform Direction"
 msgstr "Transformiši pravac"
 
 #: app/tools/gimptransformoptions.c:353
-#, fuzzy
 msgid "Supersampling"
-msgstr "Prilagodljivo superodsecanje"
+msgstr "Superodsecanje"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:358
@@ -8759,7 +8727,7 @@ msgid ""
 "%s  Subtract\n"
 "%s%s%s  Intersect"
 msgstr ""
-"Putanja u selekciju\n"
+"Putanja u izbor\n"
 "%s  Dodaj\n"
 "%s  Oduzmi\n"
 "%s%s%s  Presek"
@@ -8971,11 +8939,13 @@ msgid "Delete"
 msgstr "Obriši"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "Boja novog kanala"
+msgstr ""
+"Novi kanal\n"
+"%s Prozorče za novi kanal"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9001,7 +8971,7 @@ msgid ""
 "%s  Subtract\n"
 "%s%s%s  Intersect"
 msgstr ""
-"Kanal u selekciju\n"
+"Kanal u izbor\n"
 "%s  Dodaj\n"
 "%s  Oduzmi\n"
 "%s%s%s  Presek"
@@ -9266,7 +9236,7 @@ msgid ""
 "%s  Save Selection"
 msgstr ""
 "Sačuvaj sve greške\n"
-"%s  Sačuvaj selekcije"
+"%s  Sačuvaj izbor"
 
 #: app/widgets/gimperrorconsole.c:271 app/widgets/gimpwidgets-utils.c:199
 #, c-format
@@ -9370,7 +9340,7 @@ msgstr "Prevuci: premesti"
 #: app/widgets/gimpgradienteditor.c:1097 app/widgets/gimpgradienteditor.c:1118
 #, c-format
 msgid "%s%sClick: extend selection"
-msgstr "%s%sKlik: produži selekciju"
+msgstr "%s%sKlik: proširi izbor"
 
 #: app/widgets/gimpgradienteditor.c:1077 app/widgets/gimpgradienteditor.c:1090
 msgid "Click: select"
@@ -9532,6 +9502,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"Novi sloj\n"
+"%s  prozorče za novi sloj"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9585,7 +9557,7 @@ msgstr "Ovo polje za unos teksta je ograničeno na %d slova."
 
 #: app/widgets/gimpselectioneditor.c:189
 msgid "Save Selection to Channel"
-msgstr "Sačuvaj selekciju u kanal"
+msgstr "Sačuvaj izbor u kanal"
 
 #: app/widgets/gimpselectioneditor.c:195 app/widgets/gimpvectorstreeview.c:180
 #, c-format
@@ -9593,7 +9565,7 @@ msgid ""
 "Selection to Path\n"
 "%s  Advanced Options"
 msgstr ""
-"Selekcija u putanju\n"
+"Izbor u putanju\n"
 "%s  Napredne opcije"
 
 #: app/widgets/gimpstrokeeditor.c:202
@@ -9700,7 +9672,7 @@ msgstr ""
 
 #: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 msgid "No Selection"
-msgstr "Nema selekcije"
+msgstr "Nema izbora"
 
 #: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
@@ -9796,6 +9768,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"Nova putanja\n"
+"%s Prozorče za nove putanje"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -10300,9 +10274,8 @@ msgstr "Napravi i uredi slike ili fotografije"
 #~ "When enabled, the rulers are visible by default in fullscreen mode. This "
 #~ "can also be toggled with the \"View->Show Rulers\" command."
 #~ msgstr ""
-#~ "Kada je uključeno, lenjiri su podrazumevano vidljivi u prikazu preko "
-#~ "celog ekrana. Ovo se može menjati preko „Pregled->Prikaži lenjire“ "
-#~ "naredbe."
+#~ "Kada je uključeno, lenjiri su podrazumevano vidljivi u prikazu preko celog "
+#~ "ekrana. Ovo se može menjati preko „Pregled->Prikaži lenjire“ naredbe."
 
 #~ msgid ""
 #~ "When enabled, the scrollbars are visible by default in fullscreen mode. "
