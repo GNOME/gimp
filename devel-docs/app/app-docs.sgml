@@ -139,7 +139,6 @@
       <title>Base Classes</title>
       <xi:include href="xml/gimpobject.xml" />
       <xi:include href="xml/gimpviewable.xml" />
-      <xi:include href="xml/gimpdata.xml" />
       <xi:include href="xml/gimpitem.xml" />
       <xi:include href="xml/gimpitem-linked.xml" />
       <xi:include href="xml/gimpitem-preview.xml" />
@@ -166,19 +165,6 @@
       <xi:include href="xml/gimp-units.xml" />
     </chapter>
 
-    <chapter id="app-core-data">
-      <title>GimpData Objects</title>
-      <xi:include href="xml/gimpbrush.xml" />
-      <xi:include href="xml/gimpbrush-header.xml" />
-      <xi:include href="xml/gimpbrushgenerated.xml" />
-      <xi:include href="xml/gimpbrushpipe.xml" />
-      <xi:include href="xml/gimpgradient.xml" />
-      <xi:include href="xml/gimppalette.xml" />
-      <xi:include href="xml/gimppalette-import.xml" />
-      <xi:include href="xml/gimppattern.xml" />
-      <xi:include href="xml/gimppattern-header.xml" />
-    </chapter>
-
     <chapter id="app-core-context">
       <title>GimpContext Objects</title>
       <xi:include href="xml/gimpcontext.xml" />
@@ -190,6 +176,29 @@
       <title>Info Objects</title>
       <xi:include href="xml/gimppaintinfo.xml" />
       <xi:include href="xml/gimptoolinfo.xml" />
+    </chapter>
+
+    <chapter id="app-core-data">
+      <title>GimpData Objects</title>
+
+      <para>
+        Object hierarchy of auxilary data objects which share a common
+        API. Data objects have an on-disk representation and live in a
+        <link linkend="GimpDataFactory">GimpDataFactory</link> which
+        manages them.
+      </para>
+
+      <xi:include href="xml/gimpdatafactory.xml" />
+      <xi:include href="xml/gimpdata.xml" />
+      <xi:include href="xml/gimpbrush.xml" />
+      <xi:include href="xml/gimpbrush-header.xml" />
+      <xi:include href="xml/gimpbrushgenerated.xml" />
+      <xi:include href="xml/gimpbrushpipe.xml" />
+      <xi:include href="xml/gimpgradient.xml" />
+      <xi:include href="xml/gimppalette.xml" />
+      <xi:include href="xml/gimppalette-import.xml" />
+      <xi:include href="xml/gimppattern.xml" />
+      <xi:include href="xml/gimppattern-header.xml" />
     </chapter>
 
     <chapter id="app-core-drawable">
@@ -234,8 +243,8 @@
       <xi:include href="xml/gimpimage-rotate.xml" />
       <xi:include href="xml/gimpimage-scale.xml" />
       <xi:include href="xml/gimpimage-snap.xml" />
-      <xi:include href="xml/gimpimage-undo-push.xml" />
       <xi:include href="xml/gimpimage-undo.xml" />
+      <xi:include href="xml/gimpimage-undo-push.xml" />
     </chapter>
 
     <chapter id="app-core-undo">
@@ -248,15 +257,19 @@
     <chapter id="app-core-misc-objects">
       <title>Misc. Objects</title>
       <xi:include href="xml/gimpbuffer.xml" />
+      <xi:include href="xml/gimpenvirontable.xml" />
+      <xi:include href="xml/gimpgrid.xml" />
       <xi:include href="xml/gimpimagefile.xml" />
       <xi:include href="xml/gimpimagemap.xml" />
       <xi:include href="xml/gimpparasitelist.xml" />
-      <xi:include href="xml/gimptemplate.xml" />
-      <xi:include href="xml/gimpdatafactory.xml" />
-      <xi:include href="xml/gimpenvirontable.xml" />
-      <xi:include href="xml/gimpgrid.xml" />
       <xi:include href="xml/gimpprojection.xml" />
       <xi:include href="xml/gimpprojection-construct.xml" />
+      <xi:include href="xml/gimptemplate.xml" />
+    </chapter>
+
+    <chapter id="app-core-interfaces">
+      <title>Interfaces</title>
+      <xi:include href="xml/gimppickable.xml" />
     </chapter>
 
     <chapter id="app-core-misc-utils">
@@ -273,6 +286,14 @@
 
   <part id="app-file-part">
     <title>File</title>
+
+    <partintro>
+      <para>
+        Functions to open and save images in any registered file format
+        as well as various image file related utility functions.
+      </para>
+    </partintro>
+
     <xi:include href="xml/file-open.xml" />
     <xi:include href="xml/file-save.xml" />
     <xi:include href="xml/file-utils.xml" />
@@ -293,6 +314,13 @@
 
   <part id="app-xcf-part">
     <title>XCF</title>
+
+    <partintro>
+      <para>
+        Functions to open and save images in GIMP's native "XCF" format.
+      </para>
+    </partintro>
+
     <chapter id="app-xcf-highlevel">
       <title>Initialization, Loading &amp; Saving</title>
       <xi:include href="xml/xcf.xml" />
@@ -596,7 +624,6 @@
 
     <chapter id="app-widgets-docks">
       <title>Dock Windows &amp; Widgets</title>
-      <xi:include href="xml/gimpdocked.xml" />
       <xi:include href="xml/gimpdock.xml" />
       <xi:include href="xml/gimpimagedock.xml" />
       <xi:include href="xml/gimptoolbox.xml" />
@@ -606,6 +633,7 @@
       <xi:include href="xml/gimptoolbox-indicator-area.xml" />
       <xi:include href="xml/gimpdockbook.xml" />
       <xi:include href="xml/gimpdockable.xml" />
+      <xi:include href="xml/gimpdocked.xml" />
     </chapter>
 
     <chapter id="app-widgets-editors">
@@ -639,9 +667,9 @@
       <title>GimpContainerView Widgets</title>
       <xi:include href="xml/gimpcontainerview.xml" />
       <xi:include href="xml/gimpcontainerview-utils.xml" />
+      <xi:include href="xml/gimpcontainerbox.xml" />
       <xi:include href="xml/gimpcontainercombobox.xml" />
       <xi:include href="xml/gimpcontainerentry.xml" />
-      <xi:include href="xml/gimpcontainerbox.xml" />
       <xi:include href="xml/gimpcontainergridview.xml" />
       <xi:include href="xml/gimpcontainertreeview.xml" />
       <xi:include href="xml/gimpcontainertreeview-dnd.xml" />
