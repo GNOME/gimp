@@ -121,8 +121,6 @@ void check_drawables(GDrawable *drawable)
     }
 }
 
-MAIN();
-
 static void query(void)
 {
   static GParamDef args[] =
@@ -354,4 +352,6 @@ void mapobject_interactive(GDrawable *drawable)
   gtk_main();
   gdk_flush();
 }
+
+MAIN();
 

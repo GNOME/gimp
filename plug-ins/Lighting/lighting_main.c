@@ -131,8 +131,6 @@ void check_drawables(void)
     }
 }
 
-MAIN();
-
 static void query(void)
 {
   static GParamDef args[] =
@@ -338,4 +336,6 @@ void lighting_noninteractive(GDrawable *drawable)
 {
   printf("Noninteractive not yet implemented! Sorry.\n");
 }
+
+MAIN();
 
