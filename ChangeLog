@@ -1,3 +1,15 @@
+2003-11-11  Maurits Rijk  <lpeek.mrijk@consunet.nl
+
+	* plug-ins/gfig/gfig-preview.[ch]
+	* plug-ins/gfig/gfig-grid.[ch]: new files.
+	
+	* plug-ins/gfig/Makefile.am: changed accordingly.
+	* po-plug-ins/POTFILES.in: added new files for translation.
+
+	* plug-ins/gfig/gfig.[ch]: moved preview and grid code to their own
+	file.
+	
+
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolornotebook.c

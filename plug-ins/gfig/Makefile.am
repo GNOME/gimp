@@ -25,10 +25,14 @@ gfig_SOURCES = \
 	gfig-dobject.h	\
 	gfig-ellipse.c	\
 	gfig-ellipse.h	\
+	gfig-grid.c	\
+	gfig-grid.h	\
 	gfig-line.c	\
 	gfig-line.h	\
 	gfig-poly.c	\
 	gfig-poly.h	\
+	gfig-preview.c	\
+	gfig-preview.h	\
 	gfig-spiral.c	\
 	gfig-spiral.h	\
 	gfig-star.c	\

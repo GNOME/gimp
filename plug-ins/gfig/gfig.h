@@ -169,6 +169,7 @@ typedef struct DFigObj
 } GFigObj;  
 
 extern GFigObj  *current_obj;
+extern GFigObj  *pic_obj;
 
 extern selection_option selopt;
 extern SelectItVals selvals;
@@ -196,11 +197,15 @@ void gfig_paint (BrushType brush_type,
 void draw_circle (GdkPoint *p);
 void draw_sqr (GdkPoint *p);
 
-void num_sides_dialog (gchar *d_title,
-		       gint  *num_sides,
-		       gint  *which_way,
-		       gint   adj_min,
-		       gint   adj_max);
+void    list_button_update      (GFigObj *obj);
+void	num_sides_dialog 	(gchar *d_title,
+				 gint  *num_sides,
+				 gint  *which_way,
+				 gint   adj_min,
+				 gint   adj_max);
+void	toggle_obj_type		(GtkWidget *widget,
+				 gpointer   data);
+
 void	setup_undo              (void);
 void	draw_grid_clear		(void);
 void	prepend_to_all_obj      (GFigObj *fobj, 
