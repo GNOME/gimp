@@ -1,3 +1,12 @@
+1998-08-16  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindexif.c: Fixed up the UI to make the document index
+	look a bit more like a dialog.
+
+	* app/docindex.h: 
+	* app/docindex.c: Just fixed a few small nits.  Might have made
+	the document index a bit more robust during gimp crashes.
+
 Sat Aug 15 22:53:36 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/gdisplay.c (gdisplay_update_cursor): Make sure we check the

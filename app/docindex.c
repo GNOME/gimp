@@ -23,12 +23,12 @@
 
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
-static gint x, y, width, height;
+static gint x = 0, y = 0, width = 0, height = 0;
 
 
 static char *image_drop_types[] = {"url:ALL"};
 
-static void create_idea_list();
+static void create_idea_list( void );
 static void load_idea_manager( idea_manager * );
 
 static void
@@ -94,7 +94,8 @@ idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer 
 void
 idea_hide_callback( GtkWidget *widget, gpointer data )
 {
-  save_idea_manager( ideas );
+  if ( ideas || idea_list || width || height )
+    save_idea_manager( ideas );
 
   /* False if exitting */
   if( ( ! exit_from_go() ) && ideas)
@@ -107,7 +108,7 @@ idea_hide_callback( GtkWidget *widget, gpointer data )
 }
 
 void
-open_idea_window()
+open_idea_window( void )
 {
   make_idea_window( -1, -1 );
 }
@@ -139,8 +140,6 @@ make_idea_window( int x, int y )
   menu = ideas->menubar->widget;
   /* Setup accelerator (hotkey) table */
   accel = ideas->menubar->accel_group;
-  /* Setup the window_menu widget for additions and removals */
-  ideas->window_menu = GTK_WIDGET( GTK_MENU_ITEM( g_list_nth( GTK_MENU_SHELL( menu )->children, 1 )->data )->submenu );
 
   /* Add accelerators to window widget */
   gtk_window_add_accel_group( GTK_WINDOW( ideas->window ), accel );
@@ -328,7 +327,7 @@ save_to_list( gpointer data, gpointer null_data )
 }
 
 static void
-create_idea_list()
+create_idea_list( void )
 {
   gdk_window_get_geometry( ideas->window->window, &x, &y, &width, &height, NULL );
   gdk_window_get_origin( ideas->window->window, &x, &y );
@@ -553,7 +552,7 @@ void idea_remove_callback( GtkWidget *widget, gpointer data )
 }
 
 void
-close_idea_window()
+close_idea_window( void )
 {
   idea_hide_callback( NULL, NULL );
 }

@@ -65,9 +65,7 @@ static GtkMenuEntry idea_menu [] =
   { "<Main>/File/New", "<control>N", file_new_cmd_callback, NULL },
   { "<Main>/File/Open...", "<control>O", file_open_callback, NULL },
   { "<Main>/File/<separator>", NULL, NULL, NULL },
-  { "<Main>/File/Hide Index", "<control>W",idea_hide_callback, NULL },
-  { "<Main>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
-  { "<Main>/Help/About...", NULL, about_dialog_cmd_callback, NULL }
+  { "<Main>/File/Close Index", "<control>W",idea_hide_callback, NULL },
 };    
 
 GtkMenuFactory *create_idea_menu()
@@ -99,7 +97,7 @@ GtkWidget *create_idea_toolbar()
   gtk_toolbar_set_button_relief( GTK_TOOLBAR( toolbar ), GTK_RELIEF_NONE );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Open File", "Open a file", "Toolbar/Open",
+			   "Open", "Open a file", "Toolbar/Open",
 			   NULL,
 			   (GtkSignalFunc) file_open_callback, NULL);
   
@@ -119,14 +117,9 @@ GtkWidget *create_idea_toolbar()
 			   (GtkSignalFunc) idea_remove_callback, NULL );
   
   gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Hide", "Hide the Document Index", "Toolbar/Hide",
+			   "Close", "Close the Document Index", "Toolbar/Hide",
 			   NULL,
 			   (GtkSignalFunc) idea_hide_callback, NULL );
-  
-  gtk_toolbar_append_item( GTK_TOOLBAR( toolbar ),
-			   "Quit", "Duh", "Toolbar/Quit",
-			   NULL,
-			   (GtkSignalFunc) file_quit_cmd_callback, NULL );
   return toolbar;
 }
 
