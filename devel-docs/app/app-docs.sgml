@@ -187,6 +187,7 @@
       <xi:include href="xml/gimpdrawable.xml"/>
       <xi:include href="xml/gimpdrawable-blend.xml"/>
       <xi:include href="xml/gimpdrawable-bucket-fill.xml"/>
+      <xi:include href="xml/gimpdrawable-combine.xml"/>
       <xi:include href="xml/gimpdrawable-desaturate.xml"/>
       <xi:include href="xml/gimpdrawable-equalize.xml"/>
       <xi:include href="xml/gimpdrawable-histogram.xml"/>
@@ -195,6 +196,7 @@
       <xi:include href="xml/gimpdrawable-preview.xml"/>
       <xi:include href="xml/gimpdrawable-transform.xml"/>
       <xi:include href="xml/gimpchannel.xml"/>
+      <xi:include href="xml/gimpchannel-select.xml"/>
       <xi:include href="xml/gimplayermask.xml"/>
       <xi:include href="xml/gimpselection.xml"/>
       <xi:include href="xml/gimplayer.xml"/>
@@ -213,8 +215,6 @@
       <xi:include href="xml/gimpimage-flip.xml"/>
       <xi:include href="xml/gimpimage-grid.xml"/>
       <xi:include href="xml/gimpimage-guides.xml"/>
-      <xi:include href="xml/gimpimage-mask-select.xml"/>
-      <xi:include href="xml/gimpimage-mask.xml"/>
       <xi:include href="xml/gimpimage-merge.xml"/>
       <xi:include href="xml/gimpimage-new.xml"/>
       <xi:include href="xml/gimpimage-pick-color.xml"/>
