@@ -901,19 +901,12 @@ plugin_run (gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS && p.run)
     {
-      if(p.run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  params_save_to_gimp ();
-	  gimp_undo_push_group_start (p.image);
-	}
+      params_save_to_gimp ();
 
       filter ();
 
-      if (p.run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  gimp_undo_push_group_end (p.image);
-	  gimp_displays_flush ();
-	}
+      if (p.run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
     }
   
   gimp_drawable_detach (p.drawable);

@@ -1,16 +1,26 @@
+2002-07-09  Sven Neumann  <sven@gimp.org>
+
+	Merged bug-fixes from the stable branch:
+	
+	* plug-ins/common/papertile.c: bug #86868.
+
+	* plug-ins/common/tileit.c: bug #86637.
+
+	* plug-ins/common/xpm.c: bug #87588.
+
+	* plug-ins/print/print.c: bug #87428.
+
 2002-07-08  Zbigniew Chyla  <cyba@gnome.pl>
 
 	i18n fixes
 
-	* plug-ins/script-fu/script-fu.c (script_fu_query):
-	Pass "gimp14-script-fu" to gimp_plugin_domain_register
+	* plug-ins/script-fu/script-fu.c (script_fu_query): Pass
+	"gimp14-script-fu" to gimp_plugin_domain_register
 	(not "gimp-script-fu").
 
-	* libgimp/libgimp-intl.h:
-	s/gimp-libgimp/gimp14-libgimp/
+	* libgimp/libgimp-intl.h: s/gimp-libgimp/gimp14-libgimp/
 
-	* libgimpwidgets/gimpstock.c (gimp_stock_items[]):
-	ditto
+	* libgimpwidgets/gimpstock.c (gimp_stock_items[]): ditto
 
 2002-06-29  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

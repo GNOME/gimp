@@ -16,9 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* XPM plugin version 1.2.3 */
+/* XPM plugin version 1.2.4 */
 
 /*
+1.2.4 displays an error message if saving fails (bug #87588)
+
 1.2.3 fixes bug when running in noninteractive mode
 changes alpha_threshold range from [0, 1] to [0,255] for consistency with
 the threshold_alpha plugin
@@ -708,8 +710,7 @@ save_image (gchar  *filename,
   image->data = ibuff;
   
   /* do the save */
-  XpmWriteFileFromXpmImage (filename, image, NULL);
-  rc = TRUE;
+  rc = (XpmWriteFileFromXpmImage (filename, image, NULL) == XpmSuccess);
 
  cleanup:
   /* clean up resources */  

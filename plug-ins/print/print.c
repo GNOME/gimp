@@ -1146,8 +1146,6 @@ compare_printers (gp_plist_t *p1,	/* I - First printer to compare */
 #define PRINTERS_LPC	1
 #define PRINTERS_LPSTAT	2
 
-extern int asprintf (char **result, const char *format, ...);
-
 static void
 get_system_printers (void)
 {
@@ -1248,7 +1246,7 @@ get_system_printers (void)
                 fprintf(stderr, "Adding new printer from lpc: <%s>\n",
                   line);
 #endif
-		asprintf(&result, "lpr -P%s -l", line);
+		result = g_strdup_printf("lpr -P%s -l", line);
 		stp_set_output_to(plist[plist_count].v, result);
 		g_free(result);
 		stp_set_driver(plist[plist_count].v, "ps2");
@@ -1268,7 +1266,7 @@ get_system_printers (void)
                 fprintf(stderr, "Adding new printer from lpc: <%s>\n",
                   name);
 #endif
-		asprintf(&result, "lp -s -d%s -oraw", name);
+		result = g_strdup_printf("lp -s -d%s -oraw", name);
 		stp_set_output_to(plist[plist_count].v, result);
 		g_free(result);
 		stp_set_driver(plist[plist_count].v, "ps2");
