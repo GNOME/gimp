@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-12-21 19:32+03:00\n"
+"Project-Id-Version: 1.2/1.3\n"
+"POT-Creation-Date: 2001-01-23 17:44+0300\n"
+"PO-Revision-Date: 2001-01-23 17:45+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Консоль Скрипт-Фу"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2048
 msgid "Close"
 msgstr "Закрыть"
 
@@ -32,91 +32,91 @@ msgid "SIOD Output"
 msgstr "Вывод SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "Текущая команда"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:309
 msgid "Browse..."
 msgstr "Просмотр..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:586
 msgid "Unable to open SIOD output pipe"
 msgstr "Не удалось открыть канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:590
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Не удалось открыть поток в канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:635
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1211
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1210
+#: plug-ins/script-fu/script-fu-scripts.c:1213
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1236
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1259
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1383
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1418
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1425
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1433
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1480
 msgid "Reset to Defaults"
 msgstr "Сбросить в исходное"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1506
 msgid "About"
 msgstr "О программе"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-scripts.c:1520
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "OK"
 msgstr "Да"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
+#: plug-ins/script-fu/script-fu-scripts.c:1529
+#: plug-ins/script-fu/script-fu-server.c:556
 msgid "Cancel"
 msgstr "Отмена"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1696
 msgid "NOT SET"
 msgstr "НЕ УСТАНОВЛЕНО"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1726
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -124,27 +124,27 @@ msgstr ""
 "По крайней мере один из выбранных вами шрифтов неисправен.\n"
 "Пожалуйста проверьте ваши настройки.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:2019
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-scripts.c:2025
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/script-fu/script-fu-scripts.c:2031
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:2039
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2202
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2270
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -155,31 +155,31 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу: Параметры сервера"
 
-#: plug-ins/script-fu/script-fu-server.c:566
+#: plug-ins/script-fu/script-fu-server.c:576
 msgid "Server Port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
+#: plug-ins/script-fu/script-fu-server.c:582
 msgid "Server Logfile:"
 msgstr "Регистрационный файл сервера:"
 
-#: plug-ins/script-fu/script-fu.c:165
+#: plug-ins/script-fu/script-fu.c:166
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
 
-#: plug-ins/script-fu/script-fu.c:178
+#: plug-ins/script-fu/script-fu.c:179
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1107 plug-ins/script-fu/script-fu.c:1108
 msgid "Re-read all available scripts"
 msgstr "Перечитать все доступные скрипты"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1112
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
 
@@ -2143,7 +2143,7 @@ msgstr "Использовать для текста шаблон вместо градиента"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr ""
+msgstr "Использовать границы выделения вместо нижних"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
