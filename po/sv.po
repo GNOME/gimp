@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
 "POT-Creation-Date: 2000-01-13 11:27-0800\n"
 "PO-Revision-Date: 2000-01-08 03:32+0100\n"
-"Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
+"Last-Translator: andreas.hyden <andreas.hyden@telia.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -4970,7 +4970,7 @@ msgstr "Slå av marköruppdatering"
 
 #: app/preferences_dialog.c:1895
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Använd \"punkt till punkt\" som standard"
 
 #: app/preferences_dialog.c:1906
 msgid "Tool Options Settings"
