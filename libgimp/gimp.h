@@ -35,6 +35,7 @@
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
+#include <libgimp/gimpmisc.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpselection.h>

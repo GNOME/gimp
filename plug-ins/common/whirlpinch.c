@@ -96,17 +96,6 @@ typedef struct
   gint run;
 } whirl_pinch_interface_t;
 
-typedef struct
-{
-  gint          col, row;
-  gint          img_width, img_height, img_bpp, img_has_alpha;
-  gint          tile_width, tile_height;
-  guchar        bg_color[4];
-  GimpDrawable *drawable;
-  GimpTile     *tile;
-} pixel_fetcher_t;
-
-
 /***** Prototypes *****/
 
 static void query (void);
@@ -120,13 +109,6 @@ static void   whirl_pinch (void);
 static int    calc_undistorted_coords (double wx, double wy,
 				       double whirl, double pinch,
 				       double *x, double *y);
-
-static pixel_fetcher_t *pixel_fetcher_new (GimpDrawable *drawable);
-static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf);
-static void             pixel_fetcher_get_pixel (pixel_fetcher_t *pf, int x,
-						 int y, guchar *pixel);
-static void             pixel_fetcher_destroy (pixel_fetcher_t *pf);
-
 static void build_preview_source_image (void);
 
 static gint whirl_pinch_dialog    (void);
@@ -374,7 +356,7 @@ whirl_pinch (void)
   double           cx, cy;
   int              ix, iy;
   int              i;
-  pixel_fetcher_t *pft, *pfb;
+  GimpPixelFetcher *pft, *pfb;
 
   /* Initialize rows */
   top_row = g_malloc (img_bpp * sel_width);
@@ -384,11 +366,11 @@ whirl_pinch (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  pft = pixel_fetcher_new (drawable);
-  pfb = pixel_fetcher_new (drawable);
+  pft = gimp_pixel_fetcher_new (drawable);
+  pfb = gimp_pixel_fetcher_new (drawable);
 
-  pixel_fetcher_set_bg_color (pft);
-  pixel_fetcher_set_bg_color (pfb);
+  gimp_pixel_fetcher_set_bg_color (pft);
+  gimp_pixel_fetcher_set_bg_color (pfb);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -421,10 +403,10 @@ whirl_pinch (void)
 	      else
 		iy = -((int) -cy + 1);
 
-	      pixel_fetcher_get_pixel (pft, ix,     iy,     pixel[0]);
-	      pixel_fetcher_get_pixel (pft, ix + 1, iy,     pixel[1]);
-	      pixel_fetcher_get_pixel (pft, ix,     iy + 1, pixel[2]);
-	      pixel_fetcher_get_pixel (pft, ix + 1, iy + 1, pixel[3]);
+	      gimp_pixel_fetcher_get_pixel (pft, ix,     iy,     pixel[0]);
+	      gimp_pixel_fetcher_get_pixel (pft, ix + 1, iy,     pixel[1]);
+	      gimp_pixel_fetcher_get_pixel (pft, ix,     iy + 1, pixel[2]);
+	      gimp_pixel_fetcher_get_pixel (pft, ix + 1, iy + 1, pixel[3]);
 
 	      for (i = 0; i < img_bpp; i++)
 		{
@@ -451,10 +433,10 @@ whirl_pinch (void)
 	      else
 		iy = -((int) -cy + 1);
 
-	      pixel_fetcher_get_pixel (pfb, ix,     iy,     pixel[0]);
-	      pixel_fetcher_get_pixel (pfb, ix + 1, iy,     pixel[1]);
-	      pixel_fetcher_get_pixel (pfb, ix,     iy + 1, pixel[2]);
-	      pixel_fetcher_get_pixel (pfb, ix + 1, iy + 1, pixel[3]);
+	      gimp_pixel_fetcher_get_pixel (pfb, ix,     iy,     pixel[0]);
+	      gimp_pixel_fetcher_get_pixel (pfb, ix + 1, iy,     pixel[1]);
+	      gimp_pixel_fetcher_get_pixel (pfb, ix,     iy + 1, pixel[2]);
+	      gimp_pixel_fetcher_get_pixel (pfb, ix + 1, iy + 1, pixel[3]);
 
 	      for (i = 0; i < img_bpp; i++)
 		{
@@ -476,14 +458,14 @@ whirl_pinch (void)
 
 	      /* Top */
 
-	      pixel_fetcher_get_pixel (pft, col, row, pixel[0]);
+	      gimp_pixel_fetcher_get_pixel (pft, col, row, pixel[0]);
 
 	      for (i = 0; i < img_bpp; i++)
 		*top_p++ = pixel[0][i];
 
 	      /* Bottom */
 
-	      pixel_fetcher_get_pixel (pfb,
+	      gimp_pixel_fetcher_get_pixel (pfb,
 				       (sel_x2 - 1) - (col - sel_x1),
 				       (sel_y2 - 1) - (row - sel_y1),
 				       pixel[0]);
@@ -507,8 +489,8 @@ whirl_pinch (void)
       gimp_progress_update ((double) progress / max_progress);
     }
 
-  pixel_fetcher_destroy (pft);
-  pixel_fetcher_destroy (pfb);
+  gimp_pixel_fetcher_destroy (pft);
+  gimp_pixel_fetcher_destroy (pfb);
 
   g_free (top_row);
   g_free (bot_row);
@@ -580,108 +562,6 @@ calc_undistorted_coords (gdouble  wx,
   return inside;
 }
 
-static pixel_fetcher_t *
-pixel_fetcher_new (GimpDrawable *drawable)
-{
-  pixel_fetcher_t *pf;
-
-  pf = g_new (pixel_fetcher_t, 1);
-
-  pf->col           = -1;
-  pf->row           = -1;
-  pf->img_width     = gimp_drawable_width (drawable->drawable_id);
-  pf->img_height    = gimp_drawable_height (drawable->drawable_id);
-  pf->img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
-  pf->img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  pf->tile_width    = gimp_tile_width ();
-  pf->tile_height   = gimp_tile_height ();
-  pf->bg_color[0]   = 0;
-  pf->bg_color[1]   = 0;
-  pf->bg_color[2]   = 0;
-  pf->bg_color[3]   = 0;
-
-  pf->drawable    = drawable;
-  pf->tile        = NULL;
-
-  return pf;
-}
-
-static void
-pixel_fetcher_set_bg_color (pixel_fetcher_t *pf)
-{
-  GimpRGB  background;
-
-  gimp_palette_get_background (&background);
-
-  switch (pf->img_bpp)
-    {
-    case 1:
-    case 2:
-      pf->bg_color[0] = gimp_rgb_intensity (&background) * 255.0;
-      break;
-
-    case 3:
-    case 4:
-      gimp_rgb_get_uchar (&background,
-			  pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
-      break;
-    }
-}
-
-static void
-pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
-			 gint             x,
-			 gint             y,
-			 guchar          *pixel)
-{
-  gint    col, row;
-  gint    coloff, rowoff;
-  guchar *p;
-  gint    i;
-
-  if ((x < sel_x1) || (x >= sel_x2) ||
-      (y < sel_y1) || (y >= sel_y2))
-    {
-      for (i = 0; i < pf->img_bpp; i++)
-	pixel[i] = pf->bg_color[i];
-
-      return;
-    }
-
-  col    = x / pf->tile_width;
-  coloff = x % pf->tile_width;
-  row    = y / pf->tile_height;
-  rowoff = y % pf->tile_height;
-
-  if ((col != pf->col) ||
-      (row != pf->row) ||
-      (pf->tile == NULL))
-    {
-      if (pf->tile != NULL)
-	gimp_tile_unref (pf->tile, FALSE);
-
-      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
-      gimp_tile_ref (pf->tile);
-
-      pf->col = col;
-      pf->row = row;
-    }
-
-  p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
-
-  for (i = pf->img_bpp; i; i--)
-    *pixel++ = *p++;
-}
-
-static void
-pixel_fetcher_destroy (pixel_fetcher_t *pf)
-{
-  if (pf->tile != NULL)
-    gimp_tile_unref (pf->tile, FALSE);
-
-  g_free (pf);
-}
-
 static void
 build_preview_source_image (void)
 {
@@ -691,7 +571,7 @@ build_preview_source_image (void)
   gint             x, y;
   guchar          *p;
   guchar           pixel[4];
-  pixel_fetcher_t *pf;
+  GimpPixelFetcher *pf;
 
   wpint.check_row_0 = g_new (guchar, preview_width);
   wpint.check_row_1 = g_new (guchar, preview_width);
@@ -708,7 +588,7 @@ build_preview_source_image (void)
 
   py = top;
 
-  pf = pixel_fetcher_new (drawable);
+  pf = gimp_pixel_fetcher_new (drawable);
 
   p = wpint.image;
 
@@ -733,7 +613,7 @@ build_preview_source_image (void)
 
 	  /* Thumbnail image */
 
-	  pixel_fetcher_get_pixel (pf, (int) px, (int) py, pixel);
+	  gimp_pixel_fetcher_get_pixel (pf, (int) px, (int) py, pixel);
 
 	  if (img_bpp < 3)
 	    {
@@ -760,7 +640,7 @@ build_preview_source_image (void)
       py += dy;
     }
 
-  pixel_fetcher_destroy (pf);
+  gimp_pixel_fetcher_destroy (pf);
 }
 
 static gint

@@ -113,6 +113,8 @@ libgimp_1_3_la_SOURCES = \
 	gimpimage.h		\
 	gimplayer.c		\
 	gimplayer.h		\
+	gimpmisc.c		\
+	gimpmisc.h		\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
 	gimpproceduraldb.c	\
@@ -148,6 +150,7 @@ gimpinclude_HEADERS = \
 	gimpenums.h		\
 	gimpimage.h		\
 	gimplayer.h		\
+	gimpmisc.h		\
 	gimppixelrgn.h		\
 	gimpproceduraldb.h	\
 	gimpselection.h		\

@@ -1,6 +1,24 @@
 2002-11-20  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/mblur.c: use pixel_fetcher routines that are now in
+	libgimp.
+
+2002-11-20  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/Makefile.am: added gimpmisc.[ch]
+
+	* libgimp/gimp.h: include gimpmisc.h
+
+	* libgimp/gimpmisc.[ch]: new files, containing all kinds of 
+	miscellaneous routines factored out from different plug-ins. They stay
+	here until their API has crystalized a bit and we can put them into 
+	the file where they belong.
+
+2002-11-20  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/whirlpinch.c
 	* plug-ins/common/waves.c
 	* plug-ins/common/polar.c
 	* plug-ins/common/warp.c
