@@ -1,3 +1,9 @@
+Thu Feb 24 18:44:58 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: Applied patch provided by Daniel Egger that 
+	enables shortcuts for the toolbox menus. Nice for tall toolbox
+	layouts.
+
 Thu Feb 24 17:06:02 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/fileops_cmds.c

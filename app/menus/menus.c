@@ -122,7 +122,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 {
   /*  <Toolbox>/File  */
 
-  { { N_("/File"), NULL, NULL, 0, "<Branch>" },
+  { { N_("/_File"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/File/New..."), "<control>N", file_new_cmd_callback, 0 },
     "file/dialogs/file_new.html", NULL },
@@ -193,7 +193,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/Xtns  */
 
-  { { N_("/Xtns"), NULL, NULL, 0, "<Branch>" },
+  { { N_("/_Xtns"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/Xtns/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
     "dialogs/module_browser.html", NULL },
@@ -203,7 +203,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/Help  */
 
-  { { N_("/Help"), NULL, NULL, 0, "<Branch>" },
+  { { N_("/_Help"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/Help/Help..."), "F1", help_help_cmd_callback, 0 },
     "help/dialogs/help.html", NULL },
@@ -1781,7 +1781,6 @@ menu_translate (const gchar *path,
   gchar *factory;
   gchar *translation;
   gchar *domain = NULL;
-  gint   i;
 
   factory = (gchar *) data;
 
