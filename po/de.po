@@ -10252,7 +10252,7 @@ msgstr "Alle Dateien"
 #: app/widgets/gimpfiledialog.c:635
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Datei_typ %s:"
+msgstr "Datei_typ: %s"
 
 #: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
