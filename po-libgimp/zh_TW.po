@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-08-20 01:07+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -198,28 +198,6 @@ msgstr "漸層選擇"
 msgid "None"
 msgstr "無"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "預覽"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"gimprc 中缺少了 %1$s 項目：\n"
-"請在 %4$s 檔案加入類似\n"
-"(%2$s \"%3$s\")\n"
-"的項目。"
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "圖樣選擇"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "圖樣選擇"
@@ -316,6 +294,11 @@ msgstr "載入失敗"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "未載入"
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 #, fuzzy
@@ -414,23 +397,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "選取資料夾"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "選取檔案"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "KB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "MB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "GB"
 
@@ -504,34 +487,34 @@ msgstr "旋轉(_R)"
 msgid "_Shear"
 msgstr "推移(_S)"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "其它..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "選擇單位"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "單位"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "比例"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
@@ -685,6 +668,24 @@ msgstr "水彩"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "壓力"
+
+#~ msgid "Preview"
+#~ msgstr "預覽"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "gimprc 中缺少了 %1$s 項目：\n"
+#~ "請在 %4$s 檔案加入類似\n"
+#~ "(%2$s \"%3$s\")\n"
+#~ "的項目。"
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "圖樣選擇"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "無 (正常視力)"

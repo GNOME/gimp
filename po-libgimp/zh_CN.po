@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -201,24 +201,6 @@ msgstr "单位选择"
 msgid "None"
 msgstr "无"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr ""
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "单位选择"
-
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
@@ -313,6 +295,11 @@ msgstr ""
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
+msgstr ""
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
@@ -413,23 +400,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "选择文件"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "K 字节"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "M 字节"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "G 字节"
 
@@ -505,23 +492,23 @@ msgstr "旋转(_R)"
 msgid "_Shear"
 msgstr "切变(_S)"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "更多..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "单位"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -530,11 +517,11 @@ msgstr ""
 "如果“时间”按钮没有按下，将使用这个值作为随机数生成种子 - 这将允许你重复一个指"
 "定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr "以当前时间作为随机数生成器的种子 - 这保证了一定程度的随机性"
@@ -688,6 +675,10 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "单位选择"
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "通道(已保存的选区)"

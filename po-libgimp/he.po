@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -200,28 +200,6 @@ msgstr "בחירת מדרג צבעים"
 msgid "None"
 msgstr "כלום"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "תצוגה מוקדמת"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"אין %s ב gimprc:\n"
-"אתה צריך להוסיף ערך כמו\n"
-"(%s \"%s\")\n"
-"לקובץ %s שלך."
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "בחירת דוגמה"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "בחירת דוגמה"
@@ -318,6 +296,11 @@ msgstr "הטעינה נכשלה"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "לא טעון"
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 #, fuzzy
@@ -416,23 +399,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "בחירת תיקייה"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "בחירת קובץ"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "קילו בתים"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "מגה בתים"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "גיגה בתים"
 
@@ -507,23 +490,23 @@ msgstr "_סיבוב"
 msgid "_Shear"
 msgstr "_חתיכה"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "עוד..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "בחירת יחידה"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "יחידה"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "יחס"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -531,11 +514,11 @@ msgstr ""
 "השתמש בערך זה כזרע למחולל מספר אקראי - זה מאפשר לך לחזור על פעולה \"אקראית\" "
 "נתונה"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "א_קראי"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "זרע למחולל מספרים אקראיים עם מספר אקראי מחולל"
 
@@ -689,6 +672,24 @@ msgstr "צבע מים"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "לחץ"
+
+#~ msgid "Preview"
+#~ msgstr "תצוגה מוקדמת"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "אין %s ב gimprc:\n"
+#~ "אתה צריך להוסיף ערך כמו\n"
+#~ "(%s \"%s\")\n"
+#~ "לקובץ %s שלך."
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "בחירת דוגמה"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "כלום (צפייה רגילה)"

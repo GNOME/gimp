@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 03:41+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-11-24 10:25-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -102,7 +102,8 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr ""
+"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -163,8 +164,8 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Su imagen debería ser exportada antes de que pueda guardarse como «%s» por las "
-"siguientes razones:"
+"Su imagen debería ser exportada antes de que pueda guardarse como «%s» por "
+"las siguientes razones:"
 
 #: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
@@ -199,27 +200,6 @@ msgstr "Selección de gradiente"
 #: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Ninguno"
-
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Vista previa"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"No existe %s en gimprc:\n"
-"Necesita agregar una entrada como\n"
-"(%s «%s»)\n"
-"a su archivo %s"
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Configuración de los parámetros"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -316,6 +296,11 @@ msgstr "La carga falló"
 msgid "Not loaded"
 msgstr "No cargado"
 
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr ""
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
 msgstr "/Color de _frente"
@@ -409,23 +394,23 @@ msgstr "Actual:"
 msgid "Old:"
 msgstr "Anterior:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Seleccione carpeta"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Seleccione archivo"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -501,23 +486,23 @@ msgstr "_Rotar"
 msgid "_Shear"
 msgstr "_Cizallar"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Más..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Selección de unidad"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unidad"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -525,11 +510,11 @@ msgstr ""
 "Use este valor como semilla para el generador de números aleatorios - "
 "permite que repita cualquier operación «aleatoria»"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "_Aleatorizar"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Tomar semilla para generador de números aleatorios con un número aleatorio "
@@ -685,6 +670,23 @@ msgstr "Acuarela"
 msgid "Pressure"
 msgstr "Presión"
 
+#~ msgid "Preview"
+#~ msgstr "Vista previa"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "No existe %s en gimprc:\n"
+#~ "Necesita agregar una entrada como\n"
+#~ "(%s «%s»)\n"
+#~ "a su archivo %s"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Configuración de los parámetros"
+
 #~ msgid "None (normal vision)"
 #~ msgstr "Ninguno (visión normal)"
 
@@ -722,4 +724,3 @@ msgstr "Presión"
 
 #~ msgid "OK"
 #~ msgstr "Aceptar"
-

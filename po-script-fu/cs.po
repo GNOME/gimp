@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-08 03:43+0100\n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2003-12-08 13:27+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -17,37 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Pouze interaktivní spuštění umožňuje režim konzole Skript-fu"
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr "Konzole skript-fu"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr "Výstup SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 msgid "Current Command"
 msgstr "Aktuální příkaz"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr "Procházet..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Nepodařilo se otevřít proud na výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
 msgstr "Nepodařilo se otevřít výstupní rouru SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spuštění umožňuje režim provádění Skript-fu"
 
@@ -136,15 +136,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Script-Fu Server Options"
 msgstr "Volby serveru Skript-fu"
 
-#: plug-ins/script-fu/script-fu-server.c:628
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr "Port serveru:"
 
-#: plug-ins/script-fu/script-fu-server.c:634
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr "Žurnálový soubor serveru:"
 

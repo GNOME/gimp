@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-30 19:53+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-12-30 22:12+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -392,13 +392,13 @@ msgid "_Fractals"
 msgstr "_Fraktály"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1823 plug-ins/bmp/bmpwrite.c:198
-#: plug-ins/common/CEL.c:498 plug-ins/common/CML_explorer.c:2115
+#: plug-ins/common/CEL.c:546 plug-ins/common/CML_explorer.c:2115
 #: plug-ins/common/channel_mixer.c:1238 plug-ins/common/curve_bend.c:834
 #: plug-ins/common/dicom.c:643 plug-ins/common/gbr.c:541
 #: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1217
 #: plug-ins/common/gtm.c:226 plug-ins/common/jpeg.c:1296
 #: plug-ins/common/pat.c:380 plug-ins/common/pcx.c:580
-#: plug-ins/common/pix.c:515 plug-ins/common/png.c:984
+#: plug-ins/common/pix.c:515 plug-ins/common/png.c:1160
 #: plug-ins/common/ps.c:975 plug-ins/common/psd_save.c:1555
 #: plug-ins/common/spheredesigner.c:2082 plug-ins/common/sunras.c:510
 #: plug-ins/common/tiff.c:1547 plug-ins/common/xbm.c:991
@@ -434,13 +434,13 @@ msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #: plug-ins/FractalExplorer/Dialogs.c:2124 plug-ins/bmp/bmpread.c:118
-#: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2319
+#: plug-ins/common/CEL.c:275 plug-ins/common/CML_explorer.c:2319
 #: plug-ins/common/channel_mixer.c:1153 plug-ins/common/curve_bend.c:886
 #: plug-ins/common/dicom.c:293 plug-ins/common/gbr.c:294
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:335 plug-ins/common/jpeg.c:761
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:301
-#: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
+#: plug-ins/common/pix.c:333 plug-ins/common/png.c:663
 #: plug-ins/common/pnm.c:394 plug-ins/common/ps.c:855
 #: plug-ins/common/psd.c:1738 plug-ins/common/psp.c:1459
 #: plug-ins/common/spheredesigner.c:1990 plug-ins/common/sunras.c:381
@@ -1149,12 +1149,12 @@ msgid "Bad colormap"
 msgstr "Špatná barevná mapa"
 
 #. Set up progress display
-#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:258
+#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:280
 #: plug-ins/common/dicom.c:284 plug-ins/common/gbr.c:299
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:768
 #: plug-ins/common/pat.c:268 plug-ins/common/pcx.c:306
-#: plug-ins/common/pix.c:339 plug-ins/common/png.c:494
+#: plug-ins/common/pix.c:339 plug-ins/common/png.c:670
 #: plug-ins/common/pnm.c:399 plug-ins/common/ps.c:861
 #: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:434
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:441
@@ -1181,23 +1181,26 @@ msgstr "'%s' není platný soubor BMP"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
-#. Create an indexed-alpha layer to hold the image...
+#.
+#. * Create the "background" layer to hold the image...
+#.
 #: plug-ins/bmp/bmpread.c:383 plug-ins/bmp/bmpread.c:391
-#: plug-ins/bmp/bmpread.c:399 plug-ins/common/CEL.c:296
-#: plug-ins/common/blinds.c:312 plug-ins/common/compose.c:614
-#: plug-ins/common/decompose.c:576 plug-ins/common/dicom.c:438
-#: plug-ins/common/film.c:974 plug-ins/common/gifload.c:856
-#: plug-ins/common/hrz.c:372 plug-ins/common/jpeg.c:925
-#: plug-ins/common/pat.c:333 plug-ins/common/pcx.c:330
-#: plug-ins/common/pcx.c:336 plug-ins/common/pix.c:374
-#: plug-ins/common/png.c:618 plug-ins/common/pnm.c:478
-#: plug-ins/common/psd.c:2129 plug-ins/common/smooth_palette.c:252
-#: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:914
-#: plug-ins/common/tiff.c:686 plug-ins/common/tile.c:263
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:862
-#: plug-ins/faxg3/faxg3.c:463 plug-ins/fits/fits.c:506
-#: plug-ins/gfig/gfig.c:2076 plug-ins/gfig/gfig.c:2444 plug-ins/sgi/sgi.c:366
-#: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
+#: plug-ins/bmp/bmpread.c:399 plug-ins/common/CEL.c:326
+#: plug-ins/common/CEL.c:329 plug-ins/common/blinds.c:312
+#: plug-ins/common/compose.c:614 plug-ins/common/decompose.c:576
+#: plug-ins/common/dicom.c:438 plug-ins/common/film.c:974
+#: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:372
+#: plug-ins/common/jpeg.c:925 plug-ins/common/pat.c:333
+#: plug-ins/common/pcx.c:330 plug-ins/common/pcx.c:336
+#: plug-ins/common/pix.c:374 plug-ins/common/png.c:794
+#: plug-ins/common/pnm.c:478 plug-ins/common/psd.c:2129
+#: plug-ins/common/smooth_palette.c:252 plug-ins/common/sunras.c:921
+#: plug-ins/common/tga.c:914 plug-ins/common/tiff.c:686
+#: plug-ins/common/tile.c:263 plug-ins/common/winclipboard.c:556
+#: plug-ins/common/xbm.c:862 plug-ins/faxg3/faxg3.c:463
+#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig.c:2076
+#: plug-ins/gfig/gfig.c:2444 plug-ins/sgi/sgi.c:366 plug-ins/twain/twain.c:743
+#: plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Pozadí"
 
@@ -1213,12 +1216,12 @@ msgid "Cannot operate on unknown image types."
 msgstr "Nemohu pracovat s neznámými typy obrázků."
 
 #. And let's begin the progress
-#: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:503
+#: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:551
 #: plug-ins/common/gbr.c:546 plug-ins/common/gif.c:1003
 #: plug-ins/common/gih.c:1222 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:469 plug-ins/common/jpeg.c:1252
 #: plug-ins/common/pat.c:385 plug-ins/common/pcx.c:541
-#: plug-ins/common/pix.c:521 plug-ins/common/png.c:991
+#: plug-ins/common/pix.c:521 plug-ins/common/png.c:1167
 #: plug-ins/common/pnm.c:775 plug-ins/common/ps.c:980
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:515
 #: plug-ins/common/tga.c:1020 plug-ins/common/tiff.c:1552
@@ -1450,23 +1453,18 @@ msgstr "Užití funkce pro komponentu modrá/jas"
 msgid "About AlienMap2"
 msgstr "O mimozemském mapování 2"
 
-#. Let user choose KCF palette (cancel ignores)
-#: plug-ins/common/CEL.c:185
+#: plug-ins/common/CEL.c:188
 msgid "Load KISS Palette"
 msgstr "Načíst KISS paletu"
 
-#: plug-ins/common/CEL.c:288
+#: plug-ins/common/CEL.c:318
 msgid "Can't create a new image"
 msgstr "Nemohu vytvořit nový obrázek"
 
-#: plug-ins/common/CEL.c:362
-#, c-format
-msgid "Unsupported number of colors (%d)"
+#: plug-ins/common/CEL.c:407
+#, fuzzy, c-format
+msgid "Unsupported bit depth (%d)!"
 msgstr "Nepodporovaný počet barev (%d)"
-
-#: plug-ins/common/CEL.c:484
-msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr "Ve formátu CEL lze zapsat pouze indexované alfa obrázky"
 
 #: plug-ins/common/CML_explorer.c:132
 msgid "Keep image's values"
@@ -4887,7 +4885,7 @@ msgstr "Implicitní dispozice políčka:"
 msgid "PNG Compression Level:"
 msgstr "Úroveň komprese PNG:"
 
-#: plug-ins/common/mng.c:1330 plug-ins/common/png.c:1435
+#: plug-ins/common/mng.c:1330 plug-ins/common/png.c:1661
 msgid "Choose a high compression level for small file size"
 msgstr "Zvolte vysokou úroveň komprese pro malou velikost souboru"
 
@@ -5477,18 +5475,18 @@ msgstr "Pohled přes strom"
 msgid "Search:"
 msgstr "Hledat:"
 
-#: plug-ins/common/png.c:471
+#: plug-ins/common/png.c:647
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Chyba při čtení '%s'. Poškozený soubor?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:603
+#: plug-ins/common/png.c:779
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznámý model barev v souboru PNG '%s'."
 
-#: plug-ins/common/png.c:656
+#: plug-ins/common/png.c:832
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -5496,58 +5494,78 @@ msgstr ""
 "Soubor PNG určuje posunutí, které způsobilo, že vrstva je umístěna mimo "
 "obrázek."
 
-#: plug-ins/common/png.c:970
+#: plug-ins/common/png.c:1146
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Chyba při ukládání '%s'. Nemohu uložit obrázek."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1318
+#: plug-ins/common/png.c:1518
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
-#: plug-ins/common/png.c:1343
+#: plug-ins/common/png.c:1544
 msgid "Save as PNG"
 msgstr "Zapsat jako PNG"
 
+#: plug-ins/common/png.c:1548
+#, fuzzy
+msgid "_Load Defaults"
+msgstr "_Tovární nastavení"
+
+#: plug-ins/common/png.c:1549
+#, fuzzy
+msgid "_Save Defaults"
+msgstr "_Tovární nastavení"
+
 #. parameter settings
-#: plug-ins/common/png.c:1352 plug-ins/common/sample_colorize.c:1376
+#: plug-ins/common/png.c:1562 plug-ins/common/sample_colorize.c:1376
 msgid "Settings"
 msgstr "Nastavení"
 
-#: plug-ins/common/png.c:1364
+#: plug-ins/common/png.c:1575
 msgid "_Interlacing (Adam7)"
 msgstr "_Prokládání (Adam7)"
 
-#: plug-ins/common/png.c:1374
+#: plug-ins/common/png.c:1586
 msgid "Save _Background Color"
 msgstr "Uložit barvu _pozadí"
 
-#: plug-ins/common/png.c:1382
+#: plug-ins/common/png.c:1594
 msgid "Save _Gamma"
 msgstr "Uložit _gama"
 
-#: plug-ins/common/png.c:1390
-msgid "Save _Layer Offset"
+#: plug-ins/common/png.c:1603
+#, fuzzy
+msgid "Save Layer O_ffset"
 msgstr "Uložit posun _vrstvy"
 
-#: plug-ins/common/png.c:1398
+#: plug-ins/common/png.c:1612
 msgid "Save _Resolution"
 msgstr "Uložit _rozlišení"
 
-#: plug-ins/common/png.c:1406
+#: plug-ins/common/png.c:1621
 msgid "Save Creation _Time"
 msgstr "Uložit _čas vytvoření"
 
-#: plug-ins/common/png.c:1414
+#: plug-ins/common/png.c:1629
 msgid "Save Comme_nt"
 msgstr "Uložit _komentář"
 
-#: plug-ins/common/png.c:1431
+#: plug-ins/common/png.c:1644
+msgid "Save Color _Values From Transparent Pixels"
+msgstr ""
+
+#: plug-ins/common/png.c:1657
 msgid "Co_mpression Level:"
 msgstr "Úroveň ko_mprese:"
+
+#: plug-ins/common/png.c:1777
+#, fuzzy
+msgid "Could not load PNG defaults"
+msgstr "Nemohu nalézt dokument nápovědy"
 
 #: plug-ins/common/pnm.c:426 plug-ins/common/pnm.c:447
 #: plug-ins/common/pnm.c:454 plug-ins/common/pnm.c:463
@@ -11567,6 +11585,9 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
+#~ msgid "Only an indexed-alpha image can be saved in CEL format"
+#~ msgstr "Ve formátu CEL lze zapsat pouze indexované alfa obrázky"
 
 #~ msgid "Image dimensions: %dx%d"
 #~ msgstr "Rozměry obrázku: %d×%d"

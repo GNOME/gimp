@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-11 19:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-12-11 19:38+0100\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -198,19 +198,6 @@ msgstr "Selekcija nagiba"
 msgid "None"
 msgstr "Nijedan"
 
-#: libgimp/gimpmiscui.c:66
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Nema %s u gimprc:\n"
-"Treba da dodate unos kao\n"
-"(%s \"%s\")\n"
-"u bašu %s datoteku."
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Selekcija obrasca"
@@ -307,7 +294,7 @@ msgstr "Neuspelo učitavanje"
 msgid "Not loaded"
 msgstr "Nije učitano"
 
-#: libgimpthumb/gimpthumb-utils.c:143
+#: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Neuspešno pravljenje direktorijuma sa sličicama „%s“."
@@ -405,11 +392,11 @@ msgstr "Tekuće:"
 msgid "Old:"
 msgstr "Staro:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Odaberite direktorijum"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Odaberi datoteku"
 
@@ -497,23 +484,23 @@ msgstr "_Rotiraj"
 msgid "_Shear"
 msgstr "_Deli"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Još..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Izbor jedinice"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -521,11 +508,11 @@ msgstr ""
 "Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
 "omogućiti da ponovite datu \"slučajno\" operaciju"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "_Slučajno"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
 
@@ -678,6 +665,17 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Nema %s u gimprc:\n"
+#~ "Treba da dodate unos kao\n"
+#~ "(%s \"%s\")\n"
+#~ "u bašu %s datoteku."
 
 #~ msgid "Preview"
 #~ msgstr "Izgled"

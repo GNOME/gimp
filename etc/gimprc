@@ -364,7 +364,7 @@
 # receives the focus. This is useful for window managers using "click to
 # focus".  Possible values are yes and no.
 # 
-# (activate-on-focus no)
+# (activate-on-focus yes)
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
@@ -489,7 +489,7 @@
 # your window manager decorates and handles dock windows.  Possible values
 # are normal and utility.
 # 
-# (dock-window-type utility)
+# (dock-window-type normal)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.

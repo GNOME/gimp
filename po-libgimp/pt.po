@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-12-13 01:40+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-12-13 01:45+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -196,19 +196,6 @@ msgstr "Selecção Gradiente"
 msgid "None"
 msgstr "Nenhum"
 
-#: libgimp/gimpmiscui.c:66
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Nenhum %s em gimprc:\n"
-"Tem de adicionar uma entrada tal como\n"
-"(%s \"%s\")\n"
-"ao seu ficheiro %s."
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Selecção Padrão"
@@ -304,7 +291,7 @@ msgstr "Falha leitura"
 msgid "Not loaded"
 msgstr "Não lido"
 
-#: libgimpthumb/gimpthumb-utils.c:143
+#: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Falha ao criar pasta de amostras '%s'."
@@ -402,11 +389,11 @@ msgstr "Actual:"
 msgid "Old:"
 msgstr "Antigo:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Seleccionar Pasta"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Seleccionar Ficheiro"
 
@@ -494,23 +481,23 @@ msgstr "_Rodar"
 msgid "_Shear"
 msgstr "Retal_har"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Mais..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Selecção Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -518,11 +505,11 @@ msgstr ""
 "Utilize este valor para a semente da geração de números aleatórios - isto "
 "permite-lhe repetir uma dada operação \"aleatória\""
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "Aleató_rio"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Semente de geração aleatória com número gerado aleatoriamente"
 
@@ -674,6 +661,17 @@ msgstr "Aguarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressão"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Nenhum %s em gimprc:\n"
+#~ "Tem de adicionar uma entrada tal como\n"
+#~ "(%s \"%s\")\n"
+#~ "ao seu ficheiro %s."
 
 #~ msgid "Preview"
 #~ msgstr "Antever"

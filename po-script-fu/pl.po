@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-19 16:02+0100\n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2003-11-24 08:54+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -21,37 +21,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Konsola Script-Fu może być uruchamiana tylko w trybie interaktywnym"
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr "Konsola Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr "Wyjście SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 msgid "Current Command"
 msgstr "Bieżące polecenie"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr "Przeglądaj..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Nie można otworzyć strumienia z wyjścia SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
 msgstr "Nie można otworzyć potoku wyjściowego SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Tryb obliczeniowy Script-Fu pozwala tylko na uruchamianie nieinteraktywne"
@@ -141,15 +141,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Script-Fu Server Options"
 msgstr "Ustawienia serwera Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:628
+#: plug-ins/script-fu/script-fu-server.c:629
 msgid "Server Port:"
 msgstr "Port serwera:"
 
-#: plug-ins/script-fu/script-fu-server.c:634
+#: plug-ins/script-fu/script-fu-server.c:635
 msgid "Server Logfile:"
 msgstr "Dziennik serwera:"
 

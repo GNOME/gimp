@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-07-31 22:12+0200\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -206,28 +206,6 @@ msgstr "Sélection des dégradés"
 msgid "None"
 msgstr "Aucun"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Aperçu"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Pas de %s dans gimprc :\n"
-"Vous devez ajouter une entrée telle\n"
-"(%s \"%s\")\n"
-"à votre fichier %s."
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "Sélection des motifs"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Sélection des motifs"
@@ -324,6 +302,11 @@ msgstr "Échec du chargement"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Non chargé"
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 #, fuzzy
@@ -422,23 +405,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Sélectionnez un répertoire"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "Kilo-octets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "Méga-octets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "Giga-octets"
 
@@ -514,23 +497,23 @@ msgstr "_Pivoter"
 msgid "_Shear"
 msgstr "_Cisailler"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Suite..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Sélection des unités"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unité"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Facteur"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -538,11 +521,11 @@ msgstr ""
 "Utiliser cette valeur comme graine du générateur de nombres aléatoires - "
 "cela vous permet de répéter une opération « aléatoire » donnée."
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "Aléatoi_re"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialise le générateur de nombre aléatoire avec un nombre aléatoire"
 
@@ -697,6 +680,24 @@ msgstr "Aquarelle"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pression"
+
+#~ msgid "Preview"
+#~ msgstr "Aperçu"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Pas de %s dans gimprc :\n"
+#~ "Vous devez ajouter une entrée telle\n"
+#~ "(%s \"%s\")\n"
+#~ "à votre fichier %s."
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "Sélection des motifs"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Aucune (vision normale)"

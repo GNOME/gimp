@@ -5,46 +5,46 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2004-01-05 23:03+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2003-11-19 18:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "La modalità console Script-Fu permette solo invocazioni interattive"
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr "Uscita SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 msgid "Current Command"
 msgstr "Comando corrente"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr "Naviga..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Impossibile aprire un flusso sulla pipe SIOD di uscita"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
 msgstr "Impossibile aprire una pipe SIOD di uscita"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -105,18 +105,18 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:486
 #: plug-ins/script-fu/script-fu-scripts.c:1947
+#: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autore:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:502
 #: plug-ins/script-fu/script-fu-scripts.c:1953
+#: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:494
 #: plug-ins/script-fu/script-fu-scripts.c:1959
+#: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
@@ -1795,7 +1795,7 @@ msgid ""
 msgstr ""
 ")))\n"
 "     (nomefile (stringa-in-append dati-dir\n"
-"               "  
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -2137,7 +2137,8 @@ msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
-"Disegna spirografi, epitrocoidi e figure di Lissajous. Ulteriori informazioni\n"
+"Disegna spirografi, epitrocoidi e figure di Lissajous. Ulteriori "
+"informazioni\n"
 "su http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-06 20:38+0900\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2004-01-05 20:39+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -5573,7 +5573,7 @@ msgstr "Spara färg_värden från genomskinsliga bildpunkter"
 msgid "Co_mpression Level:"
 msgstr "Ko_mpressionsnivå"
 
-#: plug-ins/common/png.c:1762
+#: plug-ins/common/png.c:1777
 msgid "Could not load PNG defaults"
 msgstr "Kunde inte läsa in standardvärden för PNG"
 

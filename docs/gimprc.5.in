@@ -475,7 +475,7 @@ Sets the default settings used when an image is viewed in fullscreen mode.
 This is a parameter list.
 
 .TP
-(activate-on-focus no)
+(activate-on-focus yes)
 
 When enabled, an image will become the active image when its image window
 receives the focus. This is useful for window managers using "click to focus".
@@ -622,7 +622,7 @@ window manager decorates and handles the toolbox window.  Possible values are
 normal and utility.
 
 .TP
-(dock-window-type utility)
+(dock-window-type normal)
 
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are normal

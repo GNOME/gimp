@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-12 14:40+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-12-12 18:43+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -197,19 +197,6 @@ msgstr "Výběr přechodu"
 msgid "None"
 msgstr "Nic"
 
-#: libgimp/gimpmiscui.c:66
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"V gimprc chybí %1$s:\n"
-"Do svého souboru %4$s\n"
-"musíte přidat položku jako\n"
-"(%2$s \"%3$s\")."
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Výběr vzorku"
@@ -305,7 +292,7 @@ msgstr "Načtení selhalo"
 msgid "Not loaded"
 msgstr "Nenačteno"
 
-#: libgimpthumb/gimpthumb-utils.c:143
+#: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nemohu vytvořit adresář miniatur '%s'."
@@ -403,11 +390,11 @@ msgstr "Aktuální:"
 msgid "Old:"
 msgstr "Staré:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Výběr adresáře"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Výběr souboru"
 
@@ -495,23 +482,23 @@ msgstr "_Rotovat"
 msgid "_Shear"
 msgstr "Na_klonění"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Více..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Výběr jednotek"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Jednotka"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -519,11 +506,11 @@ msgstr ""
 "Tato hodnota se použije pro hnízdo náhodného generátoru - umožňuje to "
 "zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "Gene_rovat náhodná čísla"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čísla"
 
@@ -674,6 +661,17 @@ msgstr "Vodová barva"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tlak"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "V gimprc chybí %1$s:\n"
+#~ "Do svého souboru %4$s\n"
+#~ "musíte přidat položku jako\n"
+#~ "(%2$s \"%3$s\")."
 
 #~ msgid "Preview"
 #~ msgstr "Náhled"

@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
-"POT-Creation-Date: 2004-01-05 22:59+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2004-01-05 23:01+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:529 plug-ins/gfig/gfig.c:2904
 #: plug-ins/gflare/gflare.c:894
@@ -398,7 +398,7 @@ msgstr "_Frattali"
 #: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1217
 #: plug-ins/common/gtm.c:226 plug-ins/common/jpeg.c:1296
 #: plug-ins/common/pat.c:380 plug-ins/common/pcx.c:580
-#: plug-ins/common/pix.c:515 plug-ins/common/png.c:1026
+#: plug-ins/common/pix.c:515 plug-ins/common/png.c:1160
 #: plug-ins/common/ps.c:975 plug-ins/common/psd_save.c:1555
 #: plug-ins/common/spheredesigner.c:2082 plug-ins/common/sunras.c:510
 #: plug-ins/common/tiff.c:1547 plug-ins/common/xbm.c:991
@@ -440,7 +440,7 @@ msgstr "Salva parametri frattali"
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:335 plug-ins/common/jpeg.c:761
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:301
-#: plug-ins/common/pix.c:333 plug-ins/common/png.c:529
+#: plug-ins/common/pix.c:333 plug-ins/common/png.c:663
 #: plug-ins/common/pnm.c:394 plug-ins/common/ps.c:855
 #: plug-ins/common/psd.c:1738 plug-ins/common/psp.c:1459
 #: plug-ins/common/spheredesigner.c:1990 plug-ins/common/sunras.c:381
@@ -1154,7 +1154,7 @@ msgstr "Mappa colore non valida"
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:768
 #: plug-ins/common/pat.c:268 plug-ins/common/pcx.c:306
-#: plug-ins/common/pix.c:339 plug-ins/common/png.c:536
+#: plug-ins/common/pix.c:339 plug-ins/common/png.c:670
 #: plug-ins/common/pnm.c:399 plug-ins/common/ps.c:861
 #: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:434
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:441
@@ -1192,7 +1192,7 @@ msgstr "Errore lettura intestazione file BMP da '%s'"
 #: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:372
 #: plug-ins/common/jpeg.c:925 plug-ins/common/pat.c:333
 #: plug-ins/common/pcx.c:330 plug-ins/common/pcx.c:336
-#: plug-ins/common/pix.c:374 plug-ins/common/png.c:660
+#: plug-ins/common/pix.c:374 plug-ins/common/png.c:794
 #: plug-ins/common/pnm.c:478 plug-ins/common/psd.c:2129
 #: plug-ins/common/smooth_palette.c:252 plug-ins/common/sunras.c:921
 #: plug-ins/common/tga.c:914 plug-ins/common/tiff.c:686
@@ -1221,7 +1221,7 @@ msgstr "Impossibile manipolare tipi immagine sconosciuti"
 #: plug-ins/common/gih.c:1222 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:469 plug-ins/common/jpeg.c:1252
 #: plug-ins/common/pat.c:385 plug-ins/common/pcx.c:541
-#: plug-ins/common/pix.c:521 plug-ins/common/png.c:1033
+#: plug-ins/common/pix.c:521 plug-ins/common/png.c:1167
 #: plug-ins/common/pnm.c:775 plug-ins/common/ps.c:980
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:515
 #: plug-ins/common/tga.c:1020 plug-ins/common/tiff.c:1552
@@ -4892,7 +4892,7 @@ msgstr "Disposizione quadri predefinita:"
 msgid "PNG Compression Level:"
 msgstr "Livello di compressione PNG:"
 
-#: plug-ins/common/mng.c:1330 plug-ins/common/png.c:1514
+#: plug-ins/common/mng.c:1330 plug-ins/common/png.c:1661
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere un alta compressione per ottenere file piccoli"
 
@@ -5482,18 +5482,18 @@ msgstr "Vista ad albero"
 msgid "Search:"
 msgstr "Cerca:"
 
-#: plug-ins/common/png.c:513
+#: plug-ins/common/png.c:647
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Errore durante la lettura di '%s'. File danneggiato?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:645
+#: plug-ins/common/png.c:779
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modello di colore sconosciuto nel file PNG '%s'."
 
-#: plug-ins/common/png.c:698
+#: plug-ins/common/png.c:832
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -5501,63 +5501,80 @@ msgstr ""
 "Il file PNG specifica uno spostamento che ha causato il posizionamento del "
 "livello fuori dell'immagine."
 
-#: plug-ins/common/png.c:1012
+#: plug-ins/common/png.c:1146
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1386
+#: plug-ins/common/png.c:1518
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Impossibile salvare senza perdite la trasparenza, salvataggio invece "
 "dell'opacità."
 
-#: plug-ins/common/png.c:1412
+#: plug-ins/common/png.c:1544
 msgid "Save as PNG"
 msgstr "Salva come PNG"
 
+#: plug-ins/common/png.c:1548
+#, fuzzy
+msgid "_Load Defaults"
+msgstr "_Valori predefiniti"
+
+#: plug-ins/common/png.c:1549
+#, fuzzy
+msgid "_Save Defaults"
+msgstr "_Valori predefiniti"
+
 #. parameter settings
-#: plug-ins/common/png.c:1421 plug-ins/common/sample_colorize.c:1376
+#: plug-ins/common/png.c:1562 plug-ins/common/sample_colorize.c:1376
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: plug-ins/common/png.c:1433
+#: plug-ins/common/png.c:1575
 msgid "_Interlacing (Adam7)"
 msgstr "_Interlacciamento (Adam7)"
 
-#: plug-ins/common/png.c:1443
+#: plug-ins/common/png.c:1586
 msgid "Save _Background Color"
 msgstr "Salva colore di _sfondo"
 
-#: plug-ins/common/png.c:1451
+#: plug-ins/common/png.c:1594
 msgid "Save _Gamma"
 msgstr "Salva _gamma"
 
-#: plug-ins/common/png.c:1459
-msgid "Save _Layer Offset"
+#: plug-ins/common/png.c:1603
+#, fuzzy
+msgid "Save Layer O_ffset"
 msgstr "Salva spostamento _livello"
 
-#: plug-ins/common/png.c:1467
+#: plug-ins/common/png.c:1612
 msgid "Save _Resolution"
 msgstr "Salva _risoluzione"
 
-#: plug-ins/common/png.c:1475
+#: plug-ins/common/png.c:1621
 msgid "Save Creation _Time"
 msgstr "Salva da_ta di creazione"
 
-#: plug-ins/common/png.c:1483
-msgid "Save Color Values From Transparent Pixels"
-msgstr "Salva valori colore dai punti trasparenti"
-
-#: plug-ins/common/png.c:1493
+#: plug-ins/common/png.c:1629
 msgid "Save Comme_nt"
 msgstr "Salva comme_nti"
 
-#: plug-ins/common/png.c:1510
+#: plug-ins/common/png.c:1644
+#, fuzzy
+msgid "Save Color _Values From Transparent Pixels"
+msgstr "Salva valori colore dai punti trasparenti"
+
+#: plug-ins/common/png.c:1657
 msgid "Co_mpression Level:"
 msgstr "Livello di co_mpressione:"
+
+#: plug-ins/common/png.c:1777
+#, fuzzy
+msgid "Could not load PNG defaults"
+msgstr "Impossibile trovare il documento di aiuto"
 
 #: plug-ins/common/pnm.c:426 plug-ins/common/pnm.c:447
 #: plug-ins/common/pnm.c:454 plug-ins/common/pnm.c:463
@@ -6760,6 +6777,7 @@ msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #: plug-ins/common/svg.c:822
+#, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-22 22:31+0100\n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -14,123 +14,123 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu 콘솔 모드는 오직 상호작용적 작용에서만 허용됩니다."
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr "SIOD 출력"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 msgid "Current Command"
 msgstr "현재 명령"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr "찾아보기..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 출력 파이프에서 스트림을 열수 없습니다."
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "SIOD 출력 파이프를 열수 없습니다."
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1118
-#: plug-ins/script-fu/script-fu-scripts.c:1120
+#: plug-ins/script-fu/script-fu-scripts.c:1119
+#: plug-ins/script-fu/script-fu-scripts.c:1121
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1132
+#: plug-ins/script-fu/script-fu-scripts.c:1133
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1167
+#: plug-ins/script-fu/script-fu-scripts.c:1168
 msgid "About"
 msgstr "대하여"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1205
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1249
+#: plug-ins/script-fu/script-fu-scripts.c:1250
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1322
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1327
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 폰트 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1347
+#: plug-ins/script-fu/script-fu-scripts.c:1348
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 패턴 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 색감변화도 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1946
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1958
+#: plug-ins/script-fu/script-fu-scripts.c:1959
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1995
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -152,21 +152,21 @@ msgstr "서버 포트:"
 msgid "Server Logfile:"
 msgstr "서버 로그파일:"
 
-#: plug-ins/script-fu/script-fu.c:120
+#: plug-ins/script-fu/script-fu.c:122
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu.c:145
+#: plug-ins/script-fu/script-fu.c:147
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:274
+#: plug-ins/script-fu/script-fu.c:276
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Script-Fu 콘솔"

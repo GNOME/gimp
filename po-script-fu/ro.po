@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-22 22:31+0100\n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -14,126 +14,126 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr ""
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 #, fuzzy
 msgid "Current Command"
 msgstr "Lăţimea curentă:"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Nu am putut deschide fişierul %s"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1118
-#: plug-ins/script-fu/script-fu-scripts.c:1120
+#: plug-ins/script-fu/script-fu-scripts.c:1119
+#: plug-ins/script-fu/script-fu-scripts.c:1121
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1132
+#: plug-ins/script-fu/script-fu-scripts.c:1133
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1167
+#: plug-ins/script-fu/script-fu-scripts.c:1168
 #, fuzzy
 msgid "About"
 msgstr "Automat"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1205
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1249
+#: plug-ins/script-fu/script-fu-scripts.c:1250
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecţie culoare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1322
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1327
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1347
+#: plug-ins/script-fu/script-fu-scripts.c:1348
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecţie model"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecţie pensulă"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1946
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1958
+#: plug-ins/script-fu/script-fu-scripts.c:1959
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1995
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -154,21 +154,21 @@ msgstr ""
 msgid "Server Logfile:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:120
+#: plug-ins/script-fu/script-fu.c:122
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu.c:145
+#: plug-ins/script-fu/script-fu.c:147
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:274
+#: plug-ins/script-fu/script-fu.c:276
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Micşorează selecţia"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -205,24 +205,6 @@ msgstr "Seleção da Unidade"
 msgid "None"
 msgstr "Nenhum"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr ""
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "Seleção da Unidade"
-
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
@@ -321,6 +303,11 @@ msgstr "Carregamento falhou"
 msgid "Not loaded"
 msgstr "Não carregado"
 
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr ""
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 #, fuzzy
 msgid "/_Foreground Color"
@@ -418,23 +405,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Selecionar pasta"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Selecionar arquivo"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -510,23 +497,23 @@ msgstr "_Rotacionar"
 msgid "_Shear"
 msgstr "_Inclinar"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Mais..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Seleção da Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Fator"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -534,11 +521,11 @@ msgstr ""
 "Usar este valor para a semente do gerador de números randômicos - isso "
 "permite que qualquer operação \"randômica\" possa ser repetida"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "_Randomizar"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Semear o gerador de números randômicos com o número randômico gerado"
 
@@ -698,6 +685,10 @@ msgstr "_Watercolor"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressão"
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "Seleção da Unidade"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Nenhuma (visão normal)"

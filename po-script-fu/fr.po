@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-22 22:31+0100\n"
+"POT-Creation-Date: 2004-01-07 02:25+0100\n"
 "PO-Revision-Date: 2003-10-10 01:08+0200\n"
 "Last-Translator: ostertag raymond <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -16,116 +16,116 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:144
+#: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Le mode console pour Script-Fu n'autorise que des appels interactifs"
 
-#: plug-ins/script-fu/script-fu-console.c:171
+#: plug-ins/script-fu/script-fu-console.c:168
 msgid "Script-Fu Console"
 msgstr "Console pour Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:190
 msgid "SIOD Output"
 msgstr "Sortie SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:266
+#: plug-ins/script-fu/script-fu-console.c:263
 msgid "Current Command"
 msgstr "Commande courante"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:282
 msgid "Browse..."
 msgstr "Parcourir..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Impossible d'ouvrir un flot sur le tampon de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:588
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
 msgstr "Incapable d'ouvrir le tube de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1118
-#: plug-ins/script-fu/script-fu-scripts.c:1120
+#: plug-ins/script-fu/script-fu-scripts.c:1119
+#: plug-ins/script-fu/script-fu-scripts.c:1121
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1132
+#: plug-ins/script-fu/script-fu-scripts.c:1133
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1167
+#: plug-ins/script-fu/script-fu-scripts.c:1168
 msgid "About"
 msgstr "À propos"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1205
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1249
+#: plug-ins/script-fu/script-fu-scripts.c:1250
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1322
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1327
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du répertoire Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1347
+#: plug-ins/script-fu/script-fu-scripts.c:1348
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1946
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1958
+#: plug-ins/script-fu/script-fu-scripts.c:1959
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1995
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -148,19 +148,19 @@ msgstr "Port du serveur :"
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 
-#: plug-ins/script-fu/script-fu.c:120
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Exts/Script-Fu/_Console Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:145
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Exts/Script-Fu/_Démarrer le serveur..."
 
-#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Relire la liste des scripts disponibles"
 
-#: plug-ins/script-fu/script-fu.c:274
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Exts/Script-Fu/_Rafraîchir les scripts"
 

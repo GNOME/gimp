@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-05 23:54+0100\n"
+"POT-Creation-Date: 2004-01-07 02:22+0100\n"
 "PO-Revision-Date: 2004-01-06 00:12+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -189,15 +189,15 @@ msgstr "  -b, --batch <naredbe>   Obradi naredbe u paketnom režimu.\n"
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Ovaj konzolni prozor će biti zatvoren za deset sekundi)\n"
 
-#: app/base/base-enums.c:13 app/core/core-enums.c:432
+#: app/base/base-enums.c:13 app/core/core-enums.c:433
 msgid "Small"
 msgstr "Mali"
 
-#: app/base/base-enums.c:14 app/core/core-enums.c:433
+#: app/base/base-enums.c:14 app/core/core-enums.c:434
 msgid "Medium"
 msgstr "Srednji"
 
-#: app/base/base-enums.c:15 app/core/core-enums.c:434
+#: app/base/base-enums.c:15 app/core/core-enums.c:435
 msgid "Large"
 msgstr "Veliki"
 
@@ -261,7 +261,7 @@ msgstr "Alfa"
 msgid "None (Fastest)"
 msgstr "Ništa (najbrže)"
 
-#: app/base/base-enums.c:98 app/core/core-enums.c:210
+#: app/base/base-enums.c:98 app/core/core-enums.c:211
 #: app/widgets/widgets-enums.c:73
 msgid "Linear"
 msgstr "Linijski"
@@ -441,8 +441,8 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano su "
-"uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
+"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano "
+"su uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
 
 #: app/config/gimprc-blurbs.h:42
 msgid ""
@@ -460,11 +460,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine prema "
-"algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i nastavlja "
-"dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu ne bude "
-"veća od odrećene granične vrednosti. Ova vrednost predstavlja podrazumevanu "
-"graničnu vrednost."
+"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine "
+"prema algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i "
+"nastavlja dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu "
+"ne bude veća od odrećene granične vrednosti. Ova vrednost predstavlja "
+"podrazumevanu graničnu vrednost."
 
 #: app/config/gimprc-blurbs.h:81
 msgid ""
@@ -499,8 +499,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se otvori "
-"datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
+"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se "
+"otvori datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
 
 #: app/config/gimprc-blurbs.h:134
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -545,8 +545,8 @@ msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
-"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu prozora "
-"slike."
+"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu "
+"prozora slike."
 
 #: app/config/gimprc-blurbs.h:177
 msgid ""
@@ -566,9 +566,9 @@ msgid ""
 msgstr ""
 "Kada je uključeno, X server će na svaki pokret biti upitan za trenutni "
 "položaj miša, radije nego da se oslanjamo na nagoveštaj položaja. Ovo znači "
-"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da stvar "
-"bude čudnija, na nekim X serverima uključivanje ove opcije će rezultirati "
-"bržim crtanjem."
+"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da "
+"stvar bude čudnija, na nekim X serverima uključivanje ove opcije će "
+"rezultirati bržim crtanjem."
 
 #: app/config/gimprc-blurbs.h:200
 msgid ""
@@ -620,8 +620,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz konture "
-"trenutne četke"
+"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz "
+"konture trenutne četke"
 
 #: app/config/gimprc-blurbs.h:233
 msgid ""
@@ -636,16 +636,16 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati preko "
-"„Pregled->Prikaži lenjire“ naredbe."
+"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati "
+"preko „Pregled->Prikaži lenjire“ naredbe."
 
 #: app/config/gimprc-blurbs.h:241
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se takođe "
-"može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
+"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se "
+"takođe može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
 
 #: app/config/gimprc-blurbs.h:245
 msgid ""
@@ -676,16 +676,16 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati preko "
-"naredbe „Pregled->Prikaži vođice“."
+"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati "
+"preko naredbe „Pregled->Prikaži vođice“."
 
 #: app/config/gimprc-blurbs.h:261
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati preko "
-"naredbe „Pregled->Prikaži mrežu“."
+"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati "
+"preko naredbe „Pregled->Prikaži mrežu“."
 
 #: app/config/gimprc-blurbs.h:265
 msgid "Enable to display a handy GIMP tip on startup."
@@ -751,16 +751,16 @@ msgid ""
 msgstr ""
 "Podešava direktorijum za privremene datoteke. Datoteke će se pojavljivati tu "
 "tokom rada u GIMP-u. Većina datoteka će nestati kada se GIMP zatvori, ali "
-"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude direktorijum "
-"koji delite sa drugim korisnicima."
+"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude "
+"direktorijum koji delite sa drugim korisnicima."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
-"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte da "
-"GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
+"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte "
+"da GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
 
 #: app/config/gimprc-blurbs.h:314
 msgid ""
@@ -771,16 +771,16 @@ msgid ""
 msgstr ""
 "Ostava za deliće osigurava da GIMP ne izgubi delić između memorije i diska. "
 "Postavljanje biše vrednosti znači da će GIMP koristiti manju privremenu "
-"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da će "
-"GIMP više koristiti privremenu datoteku a manje memoriju."
+"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da "
+"će GIMP više koristiti privremenu datoteku a manje memoriju."
 
 #: app/config/gimprc-blurbs.h:321
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
-"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to kako "
-"vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
+"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to "
+"kako vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
 
 #: app/config/gimprc-blurbs.h:325
 msgid "Sets the manner in which transparency is displayed in images."
@@ -812,9 +812,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Podešava gornju granicu količine memorije koja može biti korišćena za čuvanje "
-"operacija za poništavanje po slici. Nezavisno od ovog podešavanja, može se "
-"opozvati najviše onoliko operacija koliko je podešeno."
+"Podešava gornju granicu količine memorije koja može biti korišćena za "
+"čuvanje operacija za poništavanje po slici. Nezavisno od ovog podešavanja, "
+"može se opozvati najviše onoliko operacija koliko je podešeno."
 
 #: app/config/gimprc-blurbs.h:344
 msgid "When enabled, pressing F1 will open the help browser."
@@ -828,10 +828,10 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna putanja "
-"ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji (PATH). "
-"Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će adresa "
-"biti dodata na naredbu razdvojena razmakom."
+"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna "
+"putanja ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji "
+"(PATH). Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će "
+"adresa biti dodata na naredbu razdvojena razmakom."
 
 #: app/config/gimpscanner.c:217
 msgid "invalid UTF-8 string"
@@ -914,8 +914,8 @@ msgstr "Presek sa tekućom selekcijom"
 msgid "Gray"
 msgstr "Siva"
 
-#: app/core/core-enums.c:102 app/core/core-enums.c:349
-#: app/core/core-enums.c:371
+#: app/core/core-enums.c:102 app/core/core-enums.c:350
+#: app/core/core-enums.c:372
 msgid "Indexed"
 msgstr "Indeksirana"
 
@@ -951,512 +951,517 @@ msgstr "Bela"
 msgid "Transparent"
 msgstr "Transparentna"
 
-#: app/core/core-enums.c:192 app/core/core-enums.c:456
-msgid "None"
-msgstr "Ništa"
-
-#: app/core/core-enums.c:211
-msgid "Bi-Linear"
-msgstr "Bilinearno"
-
-#: app/core/core-enums.c:212
-msgid "Radial"
-msgstr "Radijalno"
-
-#: app/core/core-enums.c:213 app/core/core-enums.c:301
-msgid "Square"
-msgstr "Kvadrat"
-
-#: app/core/core-enums.c:214
-msgid "Conical (symmetric)"
-msgstr "Kupa (simetrična)"
-
-#: app/core/core-enums.c:215
-msgid "Conical (asymmetric)"
-msgstr "Kupa (asimetrična)"
-
-#: app/core/core-enums.c:216
-msgid "Shapeburst (angular)"
-msgstr "Rasprskavanje oblika (ugaono)"
-
-#: app/core/core-enums.c:217
-msgid "Shapeburst (spherical)"
-msgstr "Rasprskavanje oblika (sferično)"
-
-#: app/core/core-enums.c:218
-msgid "Shapeburst (dimpled)"
-msgstr "Rasprskavanje oblika (pomoću rupica)"
-
-#: app/core/core-enums.c:219
-msgid "Spiral (clockwise)"
-msgstr "Spirala (u smeru kazaljke na satu)"
-
-#: app/core/core-enums.c:220
-msgid "Spiral (anticlockwise)"
-msgstr "Spirala (suprotno smeru kazaljke na satu)"
-
-#: app/core/core-enums.c:238
-msgid "Intersections (dots)"
-msgstr "Preseci (tačke)"
-
-#: app/core/core-enums.c:239
-msgid "Intersections (crosshairs)"
-msgstr "Preseci (nišani)"
-
-#: app/core/core-enums.c:240
-msgid "Dashed"
-msgstr "Precrtano"
-
-#: app/core/core-enums.c:241
-msgid "Double Dashed"
-msgstr "Dvaput precrtano"
-
-#: app/core/core-enums.c:242 app/core/core-enums.c:260
-msgid "Solid"
-msgstr "Čisto"
-
-#: app/core/core-enums.c:261
+#: app/core/core-enums.c:192 app/core/core-enums.c:262
 msgid "Pattern"
 msgstr "Isečak"
 
-#: app/core/core-enums.c:279
+#: app/core/core-enums.c:193 app/core/core-enums.c:457
+msgid "None"
+msgstr "Ništa"
+
+#: app/core/core-enums.c:212
+msgid "Bi-Linear"
+msgstr "Bilinearno"
+
+#: app/core/core-enums.c:213
+msgid "Radial"
+msgstr "Radijalno"
+
+#: app/core/core-enums.c:214 app/core/core-enums.c:302
+msgid "Square"
+msgstr "Kvadrat"
+
+#: app/core/core-enums.c:215
+msgid "Conical (symmetric)"
+msgstr "Kupa (simetrična)"
+
+#: app/core/core-enums.c:216
+msgid "Conical (asymmetric)"
+msgstr "Kupa (asimetrična)"
+
+#: app/core/core-enums.c:217
+msgid "Shapeburst (angular)"
+msgstr "Rasprskavanje oblika (ugaono)"
+
+#: app/core/core-enums.c:218
+msgid "Shapeburst (spherical)"
+msgstr "Rasprskavanje oblika (sferično)"
+
+#: app/core/core-enums.c:219
+msgid "Shapeburst (dimpled)"
+msgstr "Rasprskavanje oblika (pomoću rupica)"
+
+#: app/core/core-enums.c:220
+msgid "Spiral (clockwise)"
+msgstr "Spirala (u smeru kazaljke na satu)"
+
+#: app/core/core-enums.c:221
+msgid "Spiral (anticlockwise)"
+msgstr "Spirala (suprotno smeru kazaljke na satu)"
+
+#: app/core/core-enums.c:239
+msgid "Intersections (dots)"
+msgstr "Preseci (tačke)"
+
+#: app/core/core-enums.c:240
+msgid "Intersections (crosshairs)"
+msgstr "Preseci (nišani)"
+
+#: app/core/core-enums.c:241
+msgid "Dashed"
+msgstr "Precrtano"
+
+#: app/core/core-enums.c:242
+msgid "Double Dashed"
+msgstr "Dvaput precrtano"
+
+#: app/core/core-enums.c:243 app/core/core-enums.c:261
+msgid "Solid"
+msgstr "Čisto"
+
+#: app/core/core-enums.c:280
 msgid "Miter"
 msgstr "Ugaono"
 
-#: app/core/core-enums.c:280 app/core/core-enums.c:300
+#: app/core/core-enums.c:281 app/core/core-enums.c:301
 msgid "Round"
 msgstr "Zaobljeno"
 
-#: app/core/core-enums.c:281
+#: app/core/core-enums.c:282
 msgid "Bevel"
 msgstr "Udubljenje"
 
-#: app/core/core-enums.c:299
+#: app/core/core-enums.c:300
 msgid "Butt"
 msgstr "Oštro"
 
-#: app/core/core-enums.c:319 app/gui/preferences-dialog.c:1523
+#: app/core/core-enums.c:320 app/gui/preferences-dialog.c:1523
 msgid "Custom"
 msgstr "Proizvoljno"
 
-#: app/core/core-enums.c:320
+#: app/core/core-enums.c:321
 msgid "Line"
 msgstr "Linija"
 
-#: app/core/core-enums.c:321
+#: app/core/core-enums.c:322
 msgid "Long Dashes"
 msgstr "Duge crte"
 
-#: app/core/core-enums.c:322
+#: app/core/core-enums.c:323
 msgid "Medium Dashes"
 msgstr "Srednje crte"
 
-#: app/core/core-enums.c:323
+#: app/core/core-enums.c:324
 msgid "Short Dashes"
 msgstr "Kratke crte"
 
-#: app/core/core-enums.c:324
+#: app/core/core-enums.c:325
 msgid "Sparse Dots"
 msgstr "Retke tačke"
 
-#: app/core/core-enums.c:325
+#: app/core/core-enums.c:326
 msgid "Normal Dots"
 msgstr "Obične tačke"
 
-#: app/core/core-enums.c:326
+#: app/core/core-enums.c:327
 msgid "Dense Dots"
 msgstr "Guste tačke"
 
-#: app/core/core-enums.c:327
+#: app/core/core-enums.c:328
 msgid "Stipples"
 msgstr ""
 
-#: app/core/core-enums.c:328
+#: app/core/core-enums.c:329
 msgid "Dash Dot..."
 msgstr "Crta tačka..."
 
-#: app/core/core-enums.c:329
+#: app/core/core-enums.c:330
 msgid "Dash Dot Dot..."
 msgstr "Crta tačka tačka..."
 
-#: app/core/core-enums.c:347 app/core/core-enums.c:367
+#: app/core/core-enums.c:348 app/core/core-enums.c:368
 #: app/display/gimpdisplayshell-title.c:164 app/widgets/widgets-enums.c:34
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:348 app/core/core-enums.c:369
+#: app/core/core-enums.c:349 app/core/core-enums.c:370
 #: app/gui/info-window.c:87 app/gui/info-window.c:554
 msgid "Grayscale"
 msgstr "Sivi tonovi"
 
-#: app/core/core-enums.c:368
+#: app/core/core-enums.c:369
 msgid "RGB-Alpha"
 msgstr "RGB-Alfa"
 
-#: app/core/core-enums.c:370
+#: app/core/core-enums.c:371
 msgid "Grayscale-Alpha"
 msgstr "Sivi tonovi - Alfa"
 
-#: app/core/core-enums.c:372
+#: app/core/core-enums.c:373
 msgid "Indexed-Alpha"
 msgstr "Indeksirana paleta - Alfa"
 
-#: app/core/core-enums.c:390 app/gui/preferences-dialog.c:1714
+#: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1714
 #: app/gui/user-install-dialog.c:1292
 msgid "Horizontal"
 msgstr "Vodoravno"
 
-#: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1716
+#: app/core/core-enums.c:392 app/gui/preferences-dialog.c:1716
 #: app/gui/user-install-dialog.c:1294
 msgid "Vertical"
 msgstr "Uspravno"
 
-#: app/core/core-enums.c:392
+#: app/core/core-enums.c:393
 msgid "Unknown"
 msgstr "Nepoznato"
 
-#: app/core/core-enums.c:430
+#: app/core/core-enums.c:431
 msgid "Tiny"
 msgstr "Malo"
 
-#: app/core/core-enums.c:431
+#: app/core/core-enums.c:432
 msgid "Very Small"
 msgstr "Vrlo malo"
 
-#: app/core/core-enums.c:435
+#: app/core/core-enums.c:436
 msgid "Very Large"
 msgstr "Vrlo veliko"
 
-#: app/core/core-enums.c:436
+#: app/core/core-enums.c:437
 msgid "Huge"
 msgstr "Ogromno"
 
-#: app/core/core-enums.c:437
+#: app/core/core-enums.c:438
 msgid "Enormous"
 msgstr "Nenormalno veliko"
 
-#: app/core/core-enums.c:438
+#: app/core/core-enums.c:439
 msgid "Gigantic"
 msgstr "Gigantsko"
 
-#: app/core/core-enums.c:457
+#: app/core/core-enums.c:458
 msgid "Sawtooth Wave"
 msgstr "Testerasti talas"
 
-#: app/core/core-enums.c:458
+#: app/core/core-enums.c:459
 msgid "Triangular Wave"
 msgstr "Trouglasti talas"
 
-#: app/core/core-enums.c:498
+#: app/core/core-enums.c:499
 msgid "No Thumbnails"
 msgstr "Bez umanjenog prikaza"
 
-#: app/core/core-enums.c:499
+#: app/core/core-enums.c:500
 msgid "Normal (128x128)"
 msgstr "Normalno (128h128)"
 
-#: app/core/core-enums.c:500
+#: app/core/core-enums.c:501
 msgid "Large (256x256)"
 msgstr "Veliko (256x256)"
 
-#: app/core/core-enums.c:518
+#: app/core/core-enums.c:519
 msgid "Forward (Traditional)"
 msgstr "Unapred (Tradicionalno)"
 
-#: app/core/core-enums.c:519
+#: app/core/core-enums.c:520
 msgid "Backward (Corrective)"
 msgstr "Unazad (Ispravljajuće)"
 
-#: app/core/core-enums.c:581
+#: app/core/core-enums.c:582
 msgid "<<invalid>>"
 msgstr "<<neispravno>>"
 
-#: app/core/core-enums.c:582 app/core/gimpimage-scale.c:75
+#: app/core/core-enums.c:583 app/core/gimpimage-scale.c:75
 #: app/gui/image-commands.c:612 app/gui/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Povećaj ili smanji sliku"
 
-#: app/core/core-enums.c:583 app/core/gimpimage-crop.c:144
+#: app/core/core-enums.c:584 app/core/gimpimage-crop.c:144
 #: app/core/gimpimage-resize.c:66
 msgid "Resize Image"
 msgstr "Promeni veličinu slike"
 
-#: app/core/core-enums.c:584
+#: app/core/core-enums.c:585
 msgid "Flip Image"
 msgstr "Okreni sliku"
 
-#: app/core/core-enums.c:585
+#: app/core/core-enums.c:586
 msgid "Rotate Image"
 msgstr "Rotiraj sliku"
 
-#: app/core/core-enums.c:586
+#: app/core/core-enums.c:587
 msgid "Convert Image"
 msgstr "Konvertuj sliku"
 
-#: app/core/core-enums.c:587 app/core/gimpimage-crop.c:141
+#: app/core/core-enums.c:588 app/core/gimpimage-crop.c:141
 msgid "Crop Image"
 msgstr "Iseci sliku"
 
-#: app/core/core-enums.c:588 app/gui/image-commands.c:391
+#: app/core/core-enums.c:589 app/gui/image-commands.c:391
 msgid "Merge Layers"
 msgstr "Spoji slojeve"
 
-#: app/core/core-enums.c:589
+#: app/core/core-enums.c:590
 msgid "Merge Vectors"
 msgstr "Spoji vektore"
 
-#: app/core/core-enums.c:590 app/core/core-enums.c:619
+#: app/core/core-enums.c:591 app/core/core-enums.c:620
 msgid "QuickMask"
 msgstr "BrzaMaska"
 
-#: app/core/core-enums.c:591 app/core/core-enums.c:620
+#: app/core/core-enums.c:592 app/core/core-enums.c:621
 #: app/core/gimpimage-grid.c:59 app/gui/grid-dialog.c:143
 msgid "Grid"
 msgstr "Mreža"
 
-#: app/core/core-enums.c:592 app/core/core-enums.c:621
+#: app/core/core-enums.c:593 app/core/core-enums.c:622
 msgid "Guide"
 msgstr "Vođice"
 
-#: app/core/core-enums.c:593 app/core/core-enums.c:623
+#: app/core/core-enums.c:594 app/core/core-enums.c:624
 #: app/core/gimpchannel.c:1599 app/core/gimpselection.c:565
 msgid "Selection Mask"
 msgstr "Izabrana Maska"
 
-#: app/core/core-enums.c:594
+#: app/core/core-enums.c:595
 msgid "Item Properties"
 msgstr "Svojstva predmeta"
 
-#: app/core/core-enums.c:595 app/core/core-enums.c:625
+#: app/core/core-enums.c:596 app/core/core-enums.c:626
 msgid "Move Item"
 msgstr "Pomeri predmet"
 
-#: app/core/core-enums.c:596 app/core/core-enums.c:626
+#: app/core/core-enums.c:597 app/core/core-enums.c:627
 msgid "Item Visibility"
 msgstr "Vidljivost stavke"
 
-#: app/core/core-enums.c:597
+#: app/core/core-enums.c:598
 msgid "Linked Item"
 msgstr "Povezan predmet"
 
-#: app/core/core-enums.c:598 app/core/gimplayer.c:569 app/core/gimplayer.c:571
+#: app/core/core-enums.c:599 app/core/gimplayer.c:569 app/core/gimplayer.c:571
 #: app/gui/layers-commands.c:1070 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Povećaj ili smanji sloj"
 
-#: app/core/core-enums.c:599 app/core/gimpimage-crop.c:117
+#: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:607 app/core/gimplayer.c:609
 #: app/gui/layers-commands.c:1164 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Promeni veličinu sloja"
 
-#: app/core/core-enums.c:600 app/core/core-enums.c:631
+#: app/core/core-enums.c:601 app/core/core-enums.c:632
 #: app/core/gimplayer.c:982 app/gui/layers-commands.c:945
 #: app/gui/layers-commands.c:984
 msgid "Add Layer Mask"
 msgstr "Dodaj masku za slojeve"
 
-#: app/core/core-enums.c:601 app/core/gimplayer.c:1222
+#: app/core/core-enums.c:602 app/core/gimplayer.c:1222
 msgid "Apply Layer Mask"
 msgstr "Primeni Masku za slojeve"
 
-#: app/core/core-enums.c:602 app/core/gimplayer-floating-sel.c:218
+#: app/core/core-enums.c:603 app/core/gimplayer-floating-sel.c:218
 msgid "Floating Selection to Layer"
 msgstr "Plutajuću selekciju prebaci u sloj"
 
-#: app/core/core-enums.c:603 app/core/gimpselection.c:821
+#: app/core/core-enums.c:604 app/core/gimpselection.c:821
 msgid "Float Selection"
 msgstr "Plutajuća selekcija"
 
-#: app/core/core-enums.c:604 app/core/gimplayer-floating-sel.c:128
+#: app/core/core-enums.c:605 app/core/gimplayer-floating-sel.c:128
 msgid "Anchor Floating Selection"
 msgstr "Usidri plutajuću selekciju"
 
-#: app/core/core-enums.c:605 app/core/gimp-edit.c:116
+#: app/core/core-enums.c:606 app/core/gimp-edit.c:119
 #: app/widgets/gimpbufferview.c:143
 msgid "Paste"
 msgstr "Prenesi"
 
-#: app/core/core-enums.c:606 app/core/gimp-edit.c:271
+#: app/core/core-enums.c:607 app/core/gimp-edit.c:281
 msgid "Cut"
 msgstr "Iseci"
 
-#: app/core/core-enums.c:607 app/core/core-enums.c:637
+#: app/core/core-enums.c:608 app/core/core-enums.c:638
 #: app/tools/gimptexttool.c:112 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
-#: app/core/core-enums.c:608 app/core/core-enums.c:650
+#: app/core/core-enums.c:609 app/core/core-enums.c:651
 #: app/core/gimpdrawable-transform.c:825
 msgid "Transform"
 msgstr "Trasformacija"
 
-#: app/core/core-enums.c:609 app/core/core-enums.c:651
+#: app/core/core-enums.c:610 app/core/core-enums.c:652
 #: app/paint/gimppaintcore.c:478
 msgid "Paint"
 msgstr "Crtaj"
 
-#: app/core/core-enums.c:610 app/core/core-enums.c:652 app/core/gimpitem.c:897
+#: app/core/core-enums.c:611 app/core/core-enums.c:653 app/core/gimpitem.c:897
 msgid "Attach Parasite"
 msgstr "Prikači parazita"
 
-#: app/core/core-enums.c:611 app/core/core-enums.c:653
+#: app/core/core-enums.c:612 app/core/core-enums.c:654
 msgid "Remove Parasite"
 msgstr "Odstrani parazita"
 
-#: app/core/core-enums.c:612 app/vectors/gimpvectors-import.c:257
+#: app/core/core-enums.c:613 app/vectors/gimpvectors-import.c:257
 msgid "Import Paths"
 msgstr "Uvezi putanje"
 
-#: app/core/core-enums.c:613 app/pdb/drawable_cmds.c:1515
+#: app/core/core-enums.c:614 app/pdb/drawable_cmds.c:1515
 msgid "Plug-In"
 msgstr "Dodatak"
 
-#: app/core/core-enums.c:614 app/pdb/internal_procs.c:131
+#: app/core/core-enums.c:615 app/pdb/internal_procs.c:131
 msgid "Image"
 msgstr "Slika"
 
-#: app/core/core-enums.c:615
+#: app/core/core-enums.c:616
 msgid "Image Mod"
 msgstr "Režim slike"
 
-#: app/core/core-enums.c:616 app/widgets/gimptemplateeditor.c:461
+#: app/core/core-enums.c:617 app/widgets/gimptemplateeditor.c:461
 msgid "Image Type"
 msgstr "Tip slike"
 
 #. Image size frame
-#: app/core/core-enums.c:617 app/widgets/gimptemplateeditor.c:216
+#: app/core/core-enums.c:618 app/widgets/gimptemplateeditor.c:216
 msgid "Image Size"
 msgstr "Veličina slike"
 
-#: app/core/core-enums.c:618
+#: app/core/core-enums.c:619
 msgid "Resolution Change"
 msgstr "Promena rezolucije"
 
-#: app/core/core-enums.c:622
+#: app/core/core-enums.c:623
 msgid "Change Indexed Palette"
 msgstr "Promena indeksirane palete"
 
-#: app/core/core-enums.c:624
+#: app/core/core-enums.c:625
 msgid "Rename Item"
 msgstr "Promeni naziv predmeta"
 
-#: app/core/core-enums.c:627
+#: app/core/core-enums.c:628
 msgid "Set Item Linked"
 msgstr "Podesi povezani predmet"
 
-#: app/core/core-enums.c:628 app/gui/layers-commands.c:655
+#: app/core/core-enums.c:629 app/gui/layers-commands.c:655
 #: app/gui/layers-commands.c:686 app/gui/layers-commands.c:720
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:212
 msgid "New Layer"
 msgstr "Novi sloj"
 
-#: app/core/core-enums.c:629 app/widgets/gimplayertreeview.c:216
+#: app/core/core-enums.c:630 app/widgets/gimplayertreeview.c:216
 msgid "Delete Layer"
 msgstr "Izbriši sloj"
 
-#: app/core/core-enums.c:630
+#: app/core/core-enums.c:631
 msgid "Layer Mod"
 msgstr "Režim sloja"
 
-#: app/core/core-enums.c:632
+#: app/core/core-enums.c:633
 msgid "Delete Layer Mask"
 msgstr "Izbriši masku za slojeve"
 
-#: app/core/core-enums.c:633
+#: app/core/core-enums.c:634
 msgid "Reposition Layer"
 msgstr "Ponovo smesti sloj"
 
-#: app/core/core-enums.c:634
+#: app/core/core-enums.c:635
 msgid "Set Layer Mode"
 msgstr "Podesi režim sloja"
 
-#: app/core/core-enums.c:635
+#: app/core/core-enums.c:636
 msgid "Set Layer Opacity"
 msgstr "Podesi neprovidnost sloja"
 
-#: app/core/core-enums.c:636
+#: app/core/core-enums.c:637
 msgid "Set Preserve Trans"
 msgstr "Podesi očuvanje providnosti"
 
-#: app/core/core-enums.c:638 app/gui/channels-commands.c:315
+#: app/core/core-enums.c:639 app/gui/channels-commands.c:315
 #: app/gui/channels-commands.c:346 app/gui/channels-commands.c:385
 #: app/widgets/gimpchanneltreeview.c:121
 msgid "New Channel"
 msgstr "Novi kanal"
 
-#: app/core/core-enums.c:639 app/widgets/gimpchanneltreeview.c:125
+#: app/core/core-enums.c:640 app/widgets/gimpchanneltreeview.c:125
 msgid "Delete Channel"
 msgstr "Izbriši kanal"
 
-#: app/core/core-enums.c:640
+#: app/core/core-enums.c:641
 msgid "Channel Mod"
 msgstr "Režim kanala"
 
-#: app/core/core-enums.c:641
+#: app/core/core-enums.c:642
 msgid "Reposition Channel"
 msgstr "Ponovo smesti kanal"
 
-#: app/core/core-enums.c:642
+#: app/core/core-enums.c:643
 msgid "Channel Color"
 msgstr "Boja kanala"
 
-#: app/core/core-enums.c:643
+#: app/core/core-enums.c:644
 msgid "New Vectors"
 msgstr "Novi vektori"
 
-#: app/core/core-enums.c:644
+#: app/core/core-enums.c:645
 msgid "Delete Vectors"
 msgstr "Izbriši vektore"
 
-#: app/core/core-enums.c:645
+#: app/core/core-enums.c:646
 msgid "Vectors Mod"
 msgstr "Vektorski režim"
 
-#: app/core/core-enums.c:646
+#: app/core/core-enums.c:647
 msgid "Reposition Vectors"
 msgstr "Ponovo smesti vektore"
 
-#: app/core/core-enums.c:647
+#: app/core/core-enums.c:648
 msgid "FS to Layer"
 msgstr "FS na sloj"
 
-#: app/core/core-enums.c:648
+#: app/core/core-enums.c:649
 msgid "FS Rigor"
 msgstr "FS ukrućenost"
 
-#: app/core/core-enums.c:649
+#: app/core/core-enums.c:650
 msgid "FS Relax"
 msgstr "FS opuštanje"
 
-#: app/core/core-enums.c:654
+#: app/core/core-enums.c:655
 msgid "EEK: can't undo"
 msgstr "EEK: ne mogu da poništim"
 
-#: app/core/gimp-edit.c:108 app/core/gimp-edit.c:184
+#: app/core/gimp-edit.c:111 app/core/gimp-edit.c:187
 msgid "Pasted Layer"
 msgstr "Preneseni sloj"
 
-#: app/core/gimp-edit.c:212
+#: app/core/gimp-edit.c:216
 msgid "Clear"
 msgstr "Očisti"
 
-#: app/core/gimp-edit.c:228
+#: app/core/gimp-edit.c:232
 msgid "Fill with FG Color"
 msgstr "Popuni tekućom bojom četke"
 
-#: app/core/gimp-edit.c:232 app/core/gimp-edit.c:249
+#: app/core/gimp-edit.c:236 app/core/gimp-edit.c:257
 msgid "Fill with BG Color"
 msgstr "Popuni bojom pozadine"
 
-#: app/core/gimp-edit.c:236 app/core/gimp-edit.c:339
+#: app/core/gimp-edit.c:240
 msgid "Fill with White"
 msgstr "Popuni belom bojom"
 
-#: app/core/gimp-edit.c:240
+#: app/core/gimp-edit.c:244
 msgid "Fill with Transparency"
 msgstr "Popuni providnošću"
+
+#: app/core/gimp-edit.c:248
+#, fuzzy
+msgid "Fill with Pattern"
+msgstr "/Uređivanje/Popuni bojom is_ečcima"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -1552,7 +1557,8 @@ msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznata dubina
 #: app/core/gimpbrush.c:603
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
+msgstr ""
+"Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
 
 #: app/core/gimpbrush.c:619 app/core/gimpbrush.c:735
 #, c-format
@@ -1908,7 +1914,8 @@ msgstr "Spoji vidljive slojeve"
 
 #: app/core/gimpimage-merge.c:105
 msgid "Not enough visible layers for a merge. There must be at least two."
-msgstr "Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
+msgstr ""
+"Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
 
 #: app/core/gimpimage-merge.c:138
 msgid "Flatten Image"
@@ -1928,7 +1935,8 @@ msgstr "Spoji vidljive putanje"
 
 #: app/core/gimpimage-merge.c:574
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
+msgstr ""
+"Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
 
 #: app/core/gimpimage-qmask.c:75
 msgid "Enable QuickMask"
@@ -2062,48 +2070,48 @@ msgstr "Putanja se ne može spustiti niže."
 msgid "Lower Path"
 msgstr "Spusti putanju"
 
-#: app/core/gimpimagefile.c:436
+#: app/core/gimpimagefile.c:469
 msgid "Remote image"
 msgstr "Udaljena slika"
 
 # Danilo kaže: „Malo aorista ne škodi“ :-)
-#: app/core/gimpimagefile.c:441
+#: app/core/gimpimagefile.c:474
 msgid "Could not open"
 msgstr "Ne mogoh da otvorim"
 
-#: app/core/gimpimagefile.c:462
+#: app/core/gimpimagefile.c:495
 msgid "No preview available"
 msgstr "Pregled nije dostupan"
 
-#: app/core/gimpimagefile.c:466
+#: app/core/gimpimagefile.c:499
 msgid "Loading preview ..."
 msgstr "Učitavam pregled ..."
 
-#: app/core/gimpimagefile.c:470
+#: app/core/gimpimagefile.c:503
 msgid "Preview is out of date"
 msgstr "Pregled je zastareo"
 
-#: app/core/gimpimagefile.c:474
+#: app/core/gimpimagefile.c:507
 msgid "Cannot create preview"
 msgstr "Ne mogu da napravim pregled"
 
-#: app/core/gimpimagefile.c:481 app/gui/info-window.c:505
+#: app/core/gimpimagefile.c:514 app/gui/info-window.c:505
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d tačaka"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:496
+#: app/core/gimpimagefile.c:529
 msgid "1 Layer"
 msgstr "1 sloj"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:498
+#: app/core/gimpimagefile.c:531
 #, c-format
 msgid "%d Layers"
 msgstr "Slojeva: %d"
 
-#: app/core/gimpimagefile.c:535
+#: app/core/gimpimagefile.c:568
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nisam mogao da otvorim umanjeni prikaz „%s“: %s"
@@ -2259,8 +2267,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Kobna greška pri obradi datoteke sa odsečkom „%s“: nepoznato izdanje odsečaka "
-"%d."
+"Kobna greška pri obradi datoteke sa odsečkom „%s“: nepoznato izdanje "
+"odsečaka %d."
 
 #: app/core/gimppattern.c:382
 #, c-format
@@ -2601,19 +2609,17 @@ msgstr "Verziju %s ste dobili zahvaljujući"
 msgid "Translation by"
 msgstr "Prevodili"
 
-#: app/gui/about-dialog.c:54
-msgid "<Translators: insert your names here, separated by newline>"
+#. Translators: insert your names here, separated by newline
+#. we'd prefer just the names, please no email adresses.
+#: app/gui/about-dialog.c:56
+msgid "translator-credits"
 msgstr ""
-"Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
-"Danilo Šegan <danilo@prevod.org>\n"
-"\n"
-"Prevod.org — prevod na srpski jezik."
 
-#: app/gui/about-dialog.c:59
+#: app/gui/about-dialog.c:61
 msgid "Contributions by"
 msgstr "Doprineli"
 
-#: app/gui/about-dialog.c:154
+#: app/gui/about-dialog.c:156
 msgid "About The GIMP"
 msgstr "O GIMP-u"
 
@@ -3166,24 +3172,24 @@ msgstr "Obrtanje boja ne radi kod indeksiranih slojeva."
 msgid "Equalize does not operate on indexed layers."
 msgstr "Izjednačavanje tonova ne radi kod indeksiranih slojeva."
 
-#: app/gui/edit-commands.c:195
+#: app/gui/edit-commands.c:194
 msgid "Cut Named"
 msgstr "Iseci imenovano"
 
-#: app/gui/edit-commands.c:199 app/gui/edit-commands.c:218
+#: app/gui/edit-commands.c:198 app/gui/edit-commands.c:217
 msgid "Enter a name for this buffer"
 msgstr "Unesi naziv za ovaj bafer"
 
-#: app/gui/edit-commands.c:214
+#: app/gui/edit-commands.c:213
 msgid "Copy Named"
 msgstr "Kopiraj imenovano"
 
-#: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:295
+#: app/gui/edit-commands.c:285 app/gui/stroke-dialog.c:295
 #: app/gui/vectors-commands.c:289
 msgid "There is no active layer or channel to stroke to."
 msgstr "Nema aktivnog sloja ili kanala za iscrtavanje."
 
-#: app/gui/edit-commands.c:321 app/gui/edit-commands.c:350
+#: app/gui/edit-commands.c:316 app/gui/edit-commands.c:345
 msgid "(Unnamed Buffer)"
 msgstr "(Neimenovan bafer)"
 
@@ -6796,8 +6802,8 @@ msgstr "Kliknite na „Nastavi“ da prihvatite navedena podešavanja."
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti.</"
-"b>"
+"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti."
+"</b>"
 
 #: app/gui/user-install-dialog.c:961
 msgid "Click \"Continue\" to start The GIMP."
@@ -6841,7 +6847,8 @@ msgid ""
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP koristi ograničenu količinu memorije za skladištenje podataka o slikama\n"
+"GIMP koristi ograničenu količinu memorije za skladištenje podataka o "
+"slikama\n"
 "tzv. „Ostavu za deliće“. Trebate podesiti njenu veličinu kako bi stala u "
 "memoriju.\n"
 "Mislite i na memoriju potrebnu za ostale procese na sistemu."
@@ -9493,11 +9500,11 @@ msgstr "Stil"
 msgid "Image Comment"
 msgstr "Primedba slike"
 
-#: app/widgets/gimptemplateeditor.c:597
+#: app/widgets/gimptemplateeditor.c:595
 msgid "_Name:"
 msgstr "_Ime:"
 
-#: app/widgets/gimptemplateeditor.c:608
+#: app/widgets/gimptemplateeditor.c:606
 msgid "_Icon:"
 msgstr "_Ikona:"
 
@@ -9887,6 +9894,13 @@ msgstr "Napravi i uredi slike ili fotografije"
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilna verzija)"
 
+#~ msgid "<Translators: insert your names here, separated by newline>"
+#~ msgstr ""
+#~ "Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
+#~ "Danilo Šegan <danilo@prevod.org>\n"
+#~ "\n"
+#~ "Prevod.org — prevod na srpski jezik."
+
 #~ msgid "Visit http://www.gimp.org/ for more information"
 #~ msgstr "Posetite http://www.gimp.org/ za više informacija"
 
@@ -10077,8 +10091,9 @@ msgstr "GIMP (nestabilna verzija)"
 #~ "When enabled, the rulers are visible by default in fullscreen mode. This "
 #~ "can also be toggled with the \"View->Show Rulers\" command."
 #~ msgstr ""
-#~ "Kada je uključeno, lenjiri su podrazumevano vidljivi u prikazu preko celog "
-#~ "ekrana. Ovo se može menjati preko „Pregled->Prikaži lenjire“ naredbe."
+#~ "Kada je uključeno, lenjiri su podrazumevano vidljivi u prikazu preko "
+#~ "celog ekrana. Ovo se može menjati preko „Pregled->Prikaži lenjire“ "
+#~ "naredbe."
 
 #~ msgid ""
 #~ "When enabled, the scrollbars are visible by default in fullscreen mode. "

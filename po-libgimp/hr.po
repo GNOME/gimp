@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-11-10 16:50+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -192,23 +192,6 @@ msgstr "Odabir Gradijenta"
 msgid "None"
 msgstr "Nijedan"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Pregled"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Odredi Osobitosti"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Odabir Uzorka"
@@ -302,6 +285,11 @@ msgstr "Pogreška kod učitavanja"
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
+msgstr ""
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
@@ -400,23 +388,23 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Označi mapu"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Odaberi Datoteku"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "Kilobajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "Megabajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 #, fuzzy
 msgid "GigaBytes"
 msgstr "Megabajta"
@@ -493,23 +481,23 @@ msgstr "_Rotiraj"
 msgid "_Shear"
 msgstr "_Striženje"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Više..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Odabir Mjere"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -518,11 +506,11 @@ msgstr ""
 "Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za slučajnibroj."
 "Stvoreni generator dozvoljava ponavljanje ove \"slučajne\" operacije"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "Nasumično"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
@@ -678,3 +666,9 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
+
+#~ msgid "Preview"
+#~ msgstr "Pregled"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Odredi Osobitosti"

@@ -1,11 +1,17 @@
 2004-01-07  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.0pre1 release.
+
+2004-01-07  Sven Neumann  <sven@gimp.org>
+ 
 	* configure.in: set GIMP_VERSION to 2.0pre1.
 
 	* HACKING
 	* INSTALL
 	* NEWS
 	* README: updated and changed accordingly.
+
+	* app/widgets/Makefile.am (libappwidgets_a_sources): fixed typo.
 
 2004-01-07  Simon Budig  <simon@gimp.org>
 

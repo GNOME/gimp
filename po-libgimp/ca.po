@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2002-10-28 01:03+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -200,24 +200,6 @@ msgstr "Selecció de la unitat"
 msgid "None"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr ""
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "Selecció de la unitat"
-
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
@@ -312,6 +294,11 @@ msgstr ""
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
+msgstr ""
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
@@ -409,24 +396,24 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 #, fuzzy
 msgid "Select Folder"
 msgstr "Seleccioneu un fitxer"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Seleccioneu un fitxer"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "Quilooctets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "Megaoctets"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 #, fuzzy
 msgid "GigaBytes"
 msgstr "Megaoctets"
@@ -503,23 +490,23 @@ msgstr ""
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Més..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Selecció de la unitat"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unitat"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -529,11 +516,11 @@ msgstr ""
 "partida del generador de números aleatoris; això us permetrà repetir una "
 "operació \"aleatòria\" determinada"
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
@@ -688,6 +675,10 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "Selecció de la unitat"
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "un canal (selecció desada)"

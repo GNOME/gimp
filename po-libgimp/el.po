@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
+"POT-Creation-Date: 2004-01-07 02:24+0100\n"
 "PO-Revision-Date: 2003-08-19 01:21-0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -202,25 +202,6 @@ msgstr "Επιλογή Γραμματοσειράς"
 msgid "None"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Προεπισκόπηση"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "Επιλογή Γραμματοσειράς"
-
 #
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
@@ -316,6 +297,11 @@ msgstr ""
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
+msgstr ""
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
@@ -417,26 +403,26 @@ msgid "Old:"
 msgstr ""
 
 #
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Επιλογή Φακέλου"
 
 #
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Επιλογή Αρχείου"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 #, fuzzy
 msgid "KiloBytes"
 msgstr "Kbyte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 #, fuzzy
 msgid "MegaBytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 #, fuzzy
 msgid "GigaBytes"
 msgstr "Byte"
@@ -514,35 +500,35 @@ msgid "_Shear"
 msgstr ""
 
 #
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Περισσότερα..."
 
 #
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 #, fuzzy
 msgid "Unit Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Μονάδα"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Συντελεστής"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 
@@ -698,3 +684,11 @@ msgstr "Νερομπογιά"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Πίεση"
+
+#~ msgid "Preview"
+#~ msgstr "Προεπισκόπηση"
+
+#
+#, fuzzy
+#~ msgid "Parameter Settings"
+#~ msgstr "Επιλογή Γραμματοσειράς"
