@@ -1,3 +1,10 @@
+1999-07-26  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* pixmaps/topath.xpm 
+	* pixmaps/toselection.xpm 
+	* pixmaps/anchor.xpm: some icons
+	
+
 Sun Jul 25 23:37:48 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* paint_core.c: fixed longstanding roundoff error in
