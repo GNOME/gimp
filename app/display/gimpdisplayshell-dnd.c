@@ -29,7 +29,6 @@
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-bucket-fill.h"
@@ -37,6 +36,7 @@
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
 
@@ -48,6 +48,8 @@
 
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-import.h"
+
+#include "widgets/gimpdnd.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -66,7 +68,95 @@
 #endif
 
 
+/*  local function prototypes  */
+
+static void   gimp_display_shell_drop_drawable  (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GimpViewable    *viewable,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_vectors   (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GimpViewable    *viewable,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_svg       (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 const guchar    *svg_data,
+                                                 gsize            svg_data_length,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_pattern   (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GimpViewable    *viewable,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_color     (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 const GimpRGB   *color,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_buffer    (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GimpViewable    *viewable,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_uri_list  (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GList           *uri_list,
+                                                 gpointer         data);
+static void   gimp_display_shell_drop_component (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GimpImage       *image,
+                                                 GimpChannelType  component,
+                                                 gpointer         data);
+
+
+/*  public functions  */
+
 void
+gimp_display_shell_dnd_init (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (shell),
+                               gimp_display_shell_drop_uri_list,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
+                               gimp_display_shell_drop_drawable,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
+                               gimp_display_shell_drop_drawable,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
+                               gimp_display_shell_drop_drawable,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_VECTORS,
+                               gimp_display_shell_drop_vectors,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
+                               gimp_display_shell_drop_pattern,
+                               shell);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
+                               gimp_display_shell_drop_buffer,
+                               shell);
+  gimp_dnd_color_dest_add     (GTK_WIDGET (shell),
+                               gimp_display_shell_drop_color,
+                               shell);
+  gimp_dnd_svg_dest_add       (GTK_WIDGET (shell),
+                               gimp_display_shell_drop_svg,
+                               shell);
+  gimp_dnd_component_dest_add (GTK_WIDGET (shell),
+                               gimp_display_shell_drop_component,
+                               shell);
+}
+
+
+/*  private functions  */
+
+static void
 gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   gint          x,
                                   gint          y,
@@ -121,7 +211,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
     }
 }
 
-void
+static void
 gimp_display_shell_drop_vectors (GtkWidget    *widget,
                                  gint          x,
                                  gint          y,
@@ -158,7 +248,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
     }
 }
 
-void
+static void
 gimp_display_shell_drop_svg (GtkWidget     *widget,
                              gint           x,
                              gint           y,
@@ -234,7 +324,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                             shell->gdisp);
 }
 
-void
+static void
 gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  gint          x,
                                  gint          y,
@@ -249,7 +339,7 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                     NULL, GIMP_PATTERN (viewable));
 }
 
-void
+static void
 gimp_display_shell_drop_color (GtkWidget     *widget,
                                gint           x,
                                gint           y,
@@ -263,7 +353,7 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                   color, NULL);
 }
 
-void
+static void
 gimp_display_shell_drop_buffer (GtkWidget    *widget,
                                 gint          drop_x,
                                 gint          drop_y,
@@ -296,7 +386,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                             shell->gdisp);
 }
 
-void
+static void
 gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   gint       x,
                                   gint       y,
@@ -360,7 +450,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   gimp_context_set_display (context, shell->gdisp);
 }
 
-void
+static void
 gimp_display_shell_drop_component (GtkWidget       *widget,
                                    gint             x,
                                    gint             y,

@@ -1,5 +1,15 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.[ch]: added new function
+	gimp_display_shell_dnd_init() which connects all DND callbacks.
+	Made all DND callbacks static.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init): call
+	above function instead of connecting all DND callbacks here. Removed
+	lots of now unused #includes.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.c
 	* app/core/gimpdrawable.c
 	* app/vectors/gimpvectors.c: made GimpItem::scale() and ::resize()

@@ -33,21 +33,13 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpbuffer.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
-#include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-snap.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimplist.h"
 #include "core/gimpmarshal.h"
-#include "core/gimppattern.h"
 
-#include "vectors/gimpvectors.h"
-
-#include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -348,37 +340,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
 
-  /*  dnd stuff  */
-  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (shell),
-                               gimp_display_shell_drop_uri_list,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
-                               gimp_display_shell_drop_drawable,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
-                               gimp_display_shell_drop_drawable,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
-                               gimp_display_shell_drop_drawable,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_VECTORS,
-                               gimp_display_shell_drop_vectors,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
-                               gimp_display_shell_drop_pattern,
-                               shell);
-  gimp_dnd_viewable_dest_add  (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
-                               gimp_display_shell_drop_buffer,
-                               shell);
-  gimp_dnd_color_dest_add     (GTK_WIDGET (shell),
-                               gimp_display_shell_drop_color,
-                               shell);
-  gimp_dnd_svg_dest_add       (GTK_WIDGET (shell),
-                               gimp_display_shell_drop_svg,
-                               shell);
-  gimp_dnd_component_dest_add (GTK_WIDGET (shell),
-                               gimp_display_shell_drop_component,
-                               shell);
+  gimp_display_shell_dnd_init (shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
                      GIMP_HELP_IMAGE_WINDOW, NULL);
