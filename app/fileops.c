@@ -503,11 +503,16 @@ file_save_callback (GtkWidget *widget,
 	  gint   status;
 
 	  filename     = g_strdup (gimage_filename (gdisplay->gimage));
-	  raw_filename = g_basename (filename);
 	  
 #ifdef GDK_USE_UTF8_MBS
-	  ASSERT_NOT_UTF8 (filename);
+	  ASSERT_UTF8 (filename);
+	  {
+	    gchar *tmp = filename;
+	    filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+	    g_free (tmp);
+	  }
 #endif
+	  raw_filename = g_basename (filename);
 
 	  status = file_save (gdisplay->gimage,
 			      filename,
@@ -679,25 +684,12 @@ file_revert_callback (GtkWidget *widget,
     {
       gchar *text;
 
-#ifdef GDK_USE_UTF8_MBS
-      gchar *utf8_filename = g_filename_to_utf8 (gimage_filename (gimage), -1, NULL, NULL, NULL);
-      const gchar *utf8_basename = g_basename (utf8_filename);
-
-      text = g_strdup_printf (_("Reverting %s to\n"
-				"%s\n\n"
-				"(You will lose all your changes\n"
-				"including all undo information)"),
-			      utf8_basename,
-			      utf8_filename);
-      g_free (utf8_filename);
-#else
       text = g_strdup_printf (_("Reverting %s to\n"
 				"%s\n\n"
 				"(You will lose all your changes\n"
 				"including all undo information)"),
 			      g_basename (gimage_filename (gimage)),
 			      gimage_filename (gimage));
-#endif
 
       query_box = gimp_query_boolean_box (_("Revert Image?"),
 					  gimp_standard_help_func,
@@ -2204,6 +2196,14 @@ file_revert_confirm_callback (GtkWidget *widget,
       gint       status;
 
       filename = gimage_filename (old_gimage);
+
+#ifdef GDK_USE_UTF8_MBS
+      {
+	gchar *tmp = filename;
+	filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
+	g_free (tmp);
+      }
+#endif
 
       new_gimage = file_open_image (filename, filename, NULL,
                                     _("Revert"), RUN_INTERACTIVE, &status);

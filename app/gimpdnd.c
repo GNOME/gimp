@@ -1236,12 +1236,24 @@ gimp_dnd_file_open_files (gchar *buffer)
       else
         *name = '\0';
       name = name_buffer;
-      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
-        name += sig_len;
 
+      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
+#ifdef G_OS_WIN32
+	{
+	  gchar *hostname;
+	  gchar *filename = g_filename_from_uri (name, &hostname, NULL);
+
+	  if (filename != NULL && (hostname == NULL || g_ascii_strcasecmp (hostname, "localhost") == 0))
+	    file_open (filename, filename);
+
+	  g_free (filename);
+	  g_free (hostname);
+	}
+#else
+        name += sig_len;
       if (name && strlen (name) > 2)
 	file_open (name, name);
-
+#endif
       if (*buffer)
         buffer++;
     }

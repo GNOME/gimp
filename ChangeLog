@@ -25,6 +25,9 @@
 	build. Keep old code as such on Unix (even if presumably wrong on
 	many Unix variants).
 
+	* app/gimpdnd.c (gimp_dnd_file_open_files): Use
+	g_filename_from_uri() on Win32.
+
 	* plug-ins/flame/cmap.c
 	* plug-ins/gimpressionist/plasma.c: Include gimpmath.h for random
 	number funcs on Win32.
