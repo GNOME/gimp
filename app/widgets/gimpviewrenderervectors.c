@@ -36,8 +36,11 @@
 
 static void   gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass);
 
-static void   gimp_preview_renderer_vectors_render (GimpPreviewRenderer *renderer,
-                                                    GtkWidget           *widget);
+static void   gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
+                                                  GdkWindow           *window,
+                                                  GtkWidget           *widget,
+                                                  const GdkRectangle  *draw_area,
+                                                  const GdkRectangle  *expose_area);
 
 
 static GimpPreviewRendererClass *parent_class = NULL;
@@ -80,51 +83,65 @@ gimp_preview_renderer_vectors_class_init (GimpPreviewRendererVectorsClass *klass
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->render = gimp_preview_renderer_vectors_render;
+  renderer_class->draw = gimp_preview_renderer_vectors_draw;
 }
 
 static void
-gimp_preview_renderer_vectors_render (GimpPreviewRenderer *renderer,
-                                      GtkWidget           *widget)
+gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
+                                    GdkWindow           *window,
+                                    GtkWidget           *widget,
+                                    const GdkRectangle  *draw_area,
+                                    const GdkRectangle  *expose_area)
 {
-  GimpVectors *vectors;
-  GimpStroke *stroke;
-  GArray *coordinates;
-  GimpCoords *coords;
-  GdkPoint *points;
-  gboolean closed;
-  gint i;
-  gdouble xscale, yscale;
-  
+  GimpVectors  *vectors;
+  GimpStroke   *stroke;
+  GdkRectangle  rect;
+  GArray       *coordinates;
+  GdkPoint     *points;
+  gboolean      closed;
+  gint          i;
+  gint          x, y;
+  gdouble       xscale, yscale;
+
+  if (! gdk_rectangle_intersect ((GdkRectangle *) draw_area,
+                                 (GdkRectangle *) expose_area, &rect))
+    return;
+
+  gdk_draw_rectangle (window, widget->style->white_gc, TRUE,
+                      rect.x, rect.y, rect.width, rect.height);
+
   vectors = GIMP_VECTORS (renderer->viewable);
 
-  gdk_draw_rectangle (widget->window, widget->style->white_gc, TRUE,
-                      widget->allocation.x, widget->allocation.y,
-                      widget->allocation.width, widget->allocation.height);
+  xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) renderer->width;
+  yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) renderer->height;
 
-  xscale = ((float) GIMP_ITEM (vectors)->width) /
-           ((float) widget->allocation.width);
-  yscale = ((float) GIMP_ITEM (vectors)->height) /
-           ((float) widget->allocation.height);
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, &rect);
+
+  x = draw_area->x + renderer->border_width;
+  y = draw_area->y + renderer->border_width;
 
   for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        stroke != NULL;
        stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      coordinates = gimp_stroke_interpolate (stroke, MIN (xscale, yscale),
-                                             &closed);
+      coordinates = gimp_stroke_interpolate (stroke,
+                                             MIN (xscale, yscale), &closed);
       points = g_new (GdkPoint, coordinates->len);
 
-      for (i=0; i < coordinates->len; i++)
+      for (i = 0; i < coordinates->len; i++)
         {
-          coords = &(g_array_index (coordinates, GimpCoords, i));
-          points[i].x = ROUND (coords->x / xscale) + widget->allocation.x;
-          points[i].y = ROUND (coords->y / yscale) + widget->allocation.y;
+          GimpCoords *coords = &(g_array_index (coordinates, GimpCoords, i));
+
+          points[i].x = x + ROUND (coords->x / xscale);
+          points[i].y = y + ROUND (coords->y / yscale);
         }
-      gdk_draw_lines (widget->window, widget->style->black_gc,
+
+      gdk_draw_lines (window, widget->style->black_gc,
                       points, coordinates->len);
 
       g_array_free (coordinates, TRUE);
       g_free (points);
     }
+
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
 }

@@ -62,6 +62,11 @@ static void     gimp_preview_renderer_init         (GimpPreviewRenderer      *re
 static void     gimp_preview_renderer_finalize     (GObject        *object);
 
 static gboolean gimp_preview_renderer_idle_update  (GimpPreviewRenderer *renderer);
+static void     gimp_preview_renderer_real_draw    (GimpPreviewRenderer *renderer,
+                                                    GdkWindow           *window,
+                                                    GtkWidget           *widget,
+                                                    const GdkRectangle  *draw_area,
+                                                    const GdkRectangle  *expose_area);
 static void     gimp_preview_renderer_real_render  (GimpPreviewRenderer *renderer,
                                                     GtkWidget           *widget);
 
@@ -114,7 +119,7 @@ gimp_preview_renderer_class_init (GimpPreviewRendererClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_signals[UPDATE] = 
+  renderer_signals[UPDATE] =
     g_signal_new ("update",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -125,6 +130,7 @@ gimp_preview_renderer_class_init (GimpPreviewRendererClass *klass)
 
   object_class->finalize = gimp_preview_renderer_finalize;
 
+  klass->draw            = gimp_preview_renderer_real_draw;
   klass->render          = gimp_preview_renderer_real_render;
 }
 
@@ -514,8 +520,6 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                             const GdkRectangle  *expose_area)
 {
   GdkRectangle border_rect;
-  GdkRectangle buf_rect;
-  GdkRectangle render_rect;
 
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
   g_return_if_fail (GDK_IS_WINDOW (window));
@@ -526,8 +530,9 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
   if (! GTK_WIDGET_DRAWABLE (widget) || ! renderer->viewable)
     return;
 
-  if (renderer->needs_render)
-    GIMP_PREVIEW_RENDERER_GET_CLASS (renderer)->render (renderer, widget);
+  GIMP_PREVIEW_RENDERER_GET_CLASS (renderer)->draw (renderer,
+                                                    window, widget,
+                                                    draw_area, expose_area);
 
   border_rect.x      = draw_area->x;
   border_rect.y      = draw_area->y;
@@ -540,6 +545,52 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
   if (draw_area->height > border_rect.height)
     border_rect.y += (draw_area->height - border_rect.height) / 2;
 
+  if (renderer->border_width > 0)
+    {
+      gint i;
+
+      if (! renderer->gc)
+        renderer->gc = gimp_preview_renderer_create_gc (renderer,
+                                                        window, widget);
+
+      for (i = 0; i < renderer->border_width; i++)
+        gdk_draw_rectangle (window,
+                            renderer->gc,
+                            FALSE,
+                            border_rect.x + i,
+                            border_rect.y + i,
+                            border_rect.width  - 2 * i - 1,
+                            border_rect.height - 2 * i - 1);
+    }
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_preview_renderer_idle_update (GimpPreviewRenderer *renderer)
+{
+  renderer->idle_id = 0;
+
+  if (renderer->viewable)
+    gimp_preview_renderer_update (renderer);
+
+  return FALSE;
+}
+
+static void
+gimp_preview_renderer_real_draw (GimpPreviewRenderer *renderer,
+                                 GdkWindow           *window,
+                                 GtkWidget           *widget,
+                                 const GdkRectangle  *draw_area,
+                                 const GdkRectangle  *expose_area)
+{
+  GdkRectangle buf_rect;
+  GdkRectangle render_rect;
+
+  if (renderer->needs_render)
+    GIMP_PREVIEW_RENDERER_GET_CLASS (renderer)->render (renderer, widget);
+
   if (renderer->no_preview_pixbuf)
     {
       if (renderer->bg_stock_id)
@@ -548,10 +599,15 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
             renderer->gc = gimp_preview_renderer_create_gc (renderer,
                                                             window, widget);
 
-          gdk_draw_rectangle (GDK_DRAWABLE (window), renderer->gc,
-                              TRUE,
-                              expose_area->x,     expose_area->y,
-                              expose_area->width, expose_area->height);
+          if (gdk_rectangle_intersect ((GdkRectangle *) draw_area,
+                                       (GdkRectangle *) expose_area,
+                                       &render_rect))
+            {
+              gdk_draw_rectangle (GDK_DRAWABLE (window), renderer->gc,
+                                  TRUE,
+                                  render_rect.x,     render_rect.y,
+                                  render_rect.width, render_rect.height);
+            }
         }
 
       buf_rect.width  = gdk_pixbuf_get_width  (renderer->no_preview_pixbuf);
@@ -580,10 +636,19 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
     }
   else if (renderer->buffer)
     {
-      buf_rect.x      = border_rect.x + renderer->border_width;
-      buf_rect.y      = border_rect.y + renderer->border_width;
-      buf_rect.width  = renderer->width;
-      buf_rect.height = renderer->height;
+      buf_rect.x      = draw_area->x + renderer->border_width;
+      buf_rect.y      = draw_area->y + renderer->border_width;
+      buf_rect.width  = renderer->width  + 2 * renderer->border_width;
+      buf_rect.height = renderer->height + 2 * renderer->border_width;
+
+      if (draw_area->width > buf_rect.width)
+        buf_rect.x += (draw_area->width - buf_rect.width) / 2;
+
+      if (draw_area->height > buf_rect.height)
+        buf_rect.y += (draw_area->height - buf_rect.height) / 2;
+
+      buf_rect.width  -= 2 * renderer->border_width;
+      buf_rect.height -= 2 * renderer->border_width;
 
       if (gdk_rectangle_intersect (&buf_rect, (GdkRectangle *) expose_area,
                                    &render_rect))
@@ -607,37 +672,6 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                                         expose_area->y - draw_area->y);
         }
     }
-
-  if (renderer->border_width > 0)
-    {
-      gint i;
-
-      if (! renderer->gc)
-        renderer->gc = gimp_preview_renderer_create_gc (renderer,
-                                                        window, widget);
-
-      for (i = 0; i < renderer->border_width; i++)
-        gdk_draw_rectangle (window,
-                            renderer->gc,
-                            FALSE,
-                            border_rect.x + i,
-                            border_rect.y + i,
-                            border_rect.width  - 2 * i - 1,
-                            border_rect.height - 2 * i - 1);
-    }
-}
-
-/*  private functions  */
-
-static gboolean
-gimp_preview_renderer_idle_update (GimpPreviewRenderer *renderer)
-{
-  renderer->idle_id = 0;
-
-  if (renderer->viewable)
-    gimp_preview_renderer_update (renderer);
-
-  return FALSE;
 }
 
 static void
@@ -727,7 +761,7 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
 
   if (icon_size)
     pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
-      
+
   if (pixbuf)
     {
       if (gdk_pixbuf_get_width (pixbuf)  > renderer->width ||
@@ -891,7 +925,7 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
 	  cb = pad_buf;
 	}
 
-      /*  The interesting stuff between leading & trailing 
+      /*  The interesting stuff between leading & trailing
        *  vertical transparency
        */
       if (i >= y1 && i < y2)
@@ -913,30 +947,30 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
                     {
                       if ((j + offset) & 0x4)
                         {
-                          render_temp_buf[j * 3 + 0] = 
+                          render_temp_buf[j * 3 + 0] =
                             render_blend_dark_check [(a | s[red_component])];
-                          render_temp_buf[j * 3 + 1] = 
+                          render_temp_buf[j * 3 + 1] =
                             render_blend_dark_check [(a | s[green_component])];
-                          render_temp_buf[j * 3 + 2] = 
+                          render_temp_buf[j * 3 + 2] =
                             render_blend_dark_check [(a | s[blue_component])];
                         }
                       else
                         {
-                          render_temp_buf[j * 3 + 0] = 
+                          render_temp_buf[j * 3 + 0] =
                             render_blend_light_check [(a | s[red_component])];
-                          render_temp_buf[j * 3 + 1] = 
+                          render_temp_buf[j * 3 + 1] =
                             render_blend_light_check [(a | s[green_component])];
-                          render_temp_buf[j * 3 + 2] = 
+                          render_temp_buf[j * 3 + 2] =
                             render_blend_light_check [(a | s[blue_component])];
                         }
                     }
                   else /* GIMP_PREVIEW_BG_WHITE */
                     {
-                      render_temp_buf[j * 3 + 0] = 
+                      render_temp_buf[j * 3 + 0] =
                         render_blend_white [(a | s[red_component])];
-                      render_temp_buf[j * 3 + 1] = 
+                      render_temp_buf[j * 3 + 1] =
                         render_blend_white [(a | s[green_component])];
-                      render_temp_buf[j * 3 + 2] = 
+                      render_temp_buf[j * 3 + 2] =
                         render_blend_white [(a | s[blue_component])];
                     }
                 }

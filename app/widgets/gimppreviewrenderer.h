@@ -72,6 +72,11 @@ struct _GimpPreviewRendererClass
   void (* update) (GimpPreviewRenderer *renderer);
 
   /*  virtual functions  */
+  void (* draw)   (GimpPreviewRenderer *renderer,
+                   GdkWindow           *window,
+                   GtkWidget           *widget,
+                   const GdkRectangle  *draw_area,
+                   const GdkRectangle  *expose_area);
   void (* render) (GimpPreviewRenderer *renderer,
                    GtkWidget           *widget);
 };

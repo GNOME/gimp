@@ -1,3 +1,11 @@
+2003-09-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.[ch]: made draw a virtual method
+	of GimpPreviewRenderer. Draw the border in the wrapper function.
+
+	* app/widgets/gimppreviewrenderervectors.c: implement
+	GimpPreviewRenderer::draw instead of GimpPreviewRenderer::render.
+
 2003-09-29  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimppreviewrenderervectors.c: Made these widgets
