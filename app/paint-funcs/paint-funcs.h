@@ -352,7 +352,8 @@ void  convolve_region                     (PixelRegion         *srcR,
                                            gfloat              *matrix,
                                            gint                 size,
                                            gdouble              divisor,
-                                           GimpConvolutionType  mode);
+                                           GimpConvolutionType  mode,
+                                           gboolean             alpha_weighting);
 
 void  multiply_alpha_region               (PixelRegion *srcR);
 

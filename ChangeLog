@@ -2,6 +2,13 @@
 
 	* app/paint/gimpconvolve.c
 	* app/paint-funcs/paint-funcs.[ch]
+	* app/tools/gimpiscissorstool.c: reverted last change and applied
+	new patch instead (bug #72878).
+
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpconvolve.c
+	* app/paint-funcs/paint-funcs.[ch]
 	* app/tools/gimpiscissorstool.c: applied a patch from Philip
 	Lafleur that fixes RGBA resampling in Convolve tool (bug #72878).
 

@@ -1767,7 +1767,7 @@ gradmap_tile_validate (TileManager *tm,
   /*  Blur the source to get rid of noise  */
   destPR.rowstride = TILE_WIDTH * 4;
   destPR.data      = maxgrad_conv0;
-  convolve_region (&srcPR, &destPR, blur_32, 3, 32, GIMP_NORMAL_CONVOL);
+  convolve_region (&srcPR, &destPR, blur_32, 3, 32, GIMP_NORMAL_CONVOL, FALSE);
 
   /*  Set the "src" temp buf up as the new source Pixel Region  */
   srcPR.rowstride = destPR.rowstride;
@@ -1775,11 +1775,13 @@ gradmap_tile_validate (TileManager *tm,
 
   /*  Get the horizontal derivative  */
   destPR.data = maxgrad_conv1;
-  convolve_region (&srcPR, &destPR, horz_deriv, 3, 1, GIMP_NEGATIVE_CONVOL);
+  convolve_region (&srcPR, &destPR, horz_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
+                   FALSE);
 
   /*  Get the vertical derivative  */
   destPR.data = maxgrad_conv2;
-  convolve_region (&srcPR, &destPR, vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL);
+  convolve_region (&srcPR, &destPR, vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
+                   FALSE);
 
   /* calculate overall gradient */
   tiledata = tile_data_pointer (tile, 0, 0);

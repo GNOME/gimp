@@ -2363,7 +2363,8 @@ convolve_region (PixelRegion         *srcR,
                  gfloat              *matrix,
                  gint                 size,
                  gdouble              divisor,
-                 GimpConvolutionType  mode)
+                 GimpConvolutionType  mode,
+                 gboolean             alpha_weighting)
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
@@ -2403,7 +2404,7 @@ convolve_region (PixelRegion         *srcR,
   src = srcR->data;
   dest = destR->data;
 
-  if (HAS_ALPHA (bytes))
+  if (alpha_weighting)
     {
       m = matrix;
       i = size;
@@ -2444,7 +2445,7 @@ convolve_region (PixelRegion         *srcR,
       /* now, handle the center pixels */
       x = srcR->w - margin*2;
 
-      if (HAS_ALPHA (bytes))
+      if (alpha_weighting)
         while (x--)
           {
             s = s_row;
@@ -2463,21 +2464,11 @@ convolve_region (PixelRegion         *srcR,
 
                     if (alpha && *m)
                       {
-                        if (alpha == 255)
-                          {
-                            weighted_divisor += *m;
+                        mult_alpha = *m * alpha;
+                        weighted_divisor += mult_alpha;
 
-                            for (b = 0; b < a_byte; b++)
-                              total [b] += *m * *s++;
-                          }
-                        else
-                          {
-                            mult_alpha = *m * (alpha / 255.0);
-                            weighted_divisor += mult_alpha;
-
-                            for (b = 0; b < a_byte; b++)
-                              total [b] += mult_alpha * *s++;
-                          }
+                        for (b = 0; b < a_byte; b++)
+                          total [b] += mult_alpha * *s++;
                         total [a_byte] += *m * *s++;
                       }
                     else
