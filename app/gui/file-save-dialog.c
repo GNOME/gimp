@@ -248,8 +248,6 @@ file_save_dialog_create (void)
 		    G_CALLBACK (file_save_ok_callback),
 		    filesave);
 
-  gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
-
   /*  Connect the "F1" help key  */
   gimp_help_connect (filesave,
 		     gimp_standard_help_func,

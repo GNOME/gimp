@@ -1,5 +1,11 @@
 2002-04-12  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: merged fix for bug #51781 from stable
+	branch: don't gtk_quit_add_destroy() the fileload and filesave widgets.
+
+2002-04-12  Sven Neumann  <sven@gimp.org>
+
 	* data/misc/Makefile.am: fixed uninstall target (bug #78536).
 
 2002-04-12  Sven Neumann  <sven@gimp.org>

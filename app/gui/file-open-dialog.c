@@ -207,8 +207,6 @@ file_open_dialog_create (Gimp *gimp)
 		    G_CALLBACK (file_open_ok_callback),
 		    fileload);
 
-  gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
-
   gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fileload), TRUE);
   tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GTK_FILE_SELECTION (fileload)->file_list));
 
