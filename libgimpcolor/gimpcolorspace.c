@@ -41,6 +41,15 @@
 
 /*  GimpRGB functions  */
 
+
+/**
+ * gimp_rgb_to_hsv:
+ * @rgb: A color value in the RGB colorspace
+ * @hsv: The value converted to the HSV colorspace
+ * 
+ * Does a conversion from RGB to HSV (Hue, Saturation, 
+ * Value) colorspace. 
+ **/
 void
 gimp_rgb_to_hsv (const GimpRGB *rgb,
 		 GimpHSV       *hsv)
@@ -89,6 +98,13 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
   hsv->a = rgb->a;
 }
 
+/**
+ * gimp_hsv_to_rgb:
+ * @hsv: A color value in the HSV colorspace
+ * @rgb: The returned RGB value.
+ * 
+ * Converts a color value from HSV to RGB colorspace
+ **/
 void
 gimp_hsv_to_rgb (const GimpHSV *hsv,
 		 GimpRGB       *rgb)
@@ -161,6 +177,14 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
 }
 
 
+/**
+ * gimp_rgb_to_hsl:
+ * @rgb: A color value in the RGB colorspace
+ * @hsl: The value converted to HSL
+ * 
+ * Convert an RGB color value to a HSL (Hue, Saturation, Luminosity) color 
+ * value.
+ **/
 void
 gimp_rgb_to_hsl (const GimpRGB *rgb,
                  GimpHSL       *hsl)
@@ -238,6 +262,14 @@ gimp_hsl_value (gdouble n1,
   return val;
 }
 
+
+/**
+ * gimp_hsl_to_rgb:
+ * @hsl: A color value in the HSL colorspace 
+ * @rgb: The value converted to a value in the RGB colorspace
+ * 
+ * Convert a HSL color value to an RGB color value.
+ **/
 void
 gimp_hsl_to_rgb (const GimpHSL *hsl,
 		 GimpRGB       *rgb)
@@ -272,6 +304,18 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
 }
 
 
+/**
+ * gimp_rgb_to_cmyk:
+ * @rgb: A value in the RGB colorspace 
+ * @pullout: A scaling value (0-1) indicating how much black should be pulled out
+ * @cmyk: The input value naively converted to the CMYK colorspace 
+ * 
+ * Does a naive conversion from RGB to CMYK colorspace. A simple
+ * formula that doesn't take any color-profiles into account is used.
+ * The amount of black pullout how can be controlled via the @pullout
+ * parameter. A @pullout value of 0 makes this a conversion to CMY.
+ * A value of 1 causes the maximum amount of black to be pulled out.
+ **/
 void
 gimp_rgb_to_cmyk (const GimpRGB  *rgb,
                   gdouble         pullout,
@@ -310,6 +354,14 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
   cmyk->a = rgb->a;
 }
 
+/**
+ * gimp_cmyk_to_rgb:
+ * @cmyk: A color value in the CMYK colorspace
+ * @rgb: The value converted to the RGB colorspace
+ * 
+ * Does a simple transformation from the CMYK colorspace to the RGB 
+ * colorspace, without taking color profiles into account. 
+ **/
 void
 gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
                   GimpRGB        *rgb)
@@ -758,6 +810,16 @@ gimp_rgb_to_cmyk_int (gint *red,
     }
 }
 
+/**
+ * gimp_cmyk_to_rgb_int:
+ * @cyan:    the cyan channel; returns the red value (0-255)
+ * @magenta: the magenta channel; returns the green value (0-255)
+ * @yellow:  the yellow channel; returns the blue value (0-255)
+ * @black:   the black channel (0-255); doesn't change
+ *
+ * Does a naive conversion from CMYK to RGB colorspace. A simple
+ * formula that doesn't take any color-profiles into account is used.
+ **/
 void
 gimp_cmyk_to_rgb_int (gint *cyan,
                       gint *magenta,
