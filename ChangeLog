@@ -1,5 +1,12 @@
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimpfont.c (gimp_font_get_popup_size)
+	(gimp_font_get_new_preview): take both logical and ink rectangle
+	into account to avoid clipping away parts of the font preview.
+	Fixes bug #142277.
+
+2004-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerview.[ch]: added "preview-size" and
 	"preview-border-width" properties. Cleanup.
 

@@ -221,6 +221,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
 {
   GimpFont             *font;
   PangoFontDescription *font_desc;
+  PangoRectangle        ink;
   PangoRectangle        logical;
   const gchar          *name;
 
@@ -245,10 +246,10 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
-  pango_layout_get_pixel_extents (font->popup_layout, NULL, &logical);
+  pango_layout_get_pixel_extents (font->popup_layout, &ink, &logical);
 
-  *popup_width  = logical.width  + 6;
-  *popup_height = logical.height + 6;
+  *popup_width  = MAX (ink.width,  logical.width)  + 6;
+  *popup_height = MAX (ink.height, logical.height) + 6;
 
   font->popup_width  = *popup_width;
   font->popup_height = *popup_height;
@@ -263,7 +264,12 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 {
   GimpFont       *font;
   PangoLayout    *layout;
+  PangoRectangle  ink;
   PangoRectangle  logical;
+  gint            layout_width;
+  gint            layout_height;
+  gint            layout_x;
+  gint            layout_y;
   TempBuf        *temp_buf;
   FT_Bitmap       bitmap;
   guchar         *p;
@@ -309,12 +315,21 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   bitmap.pitch  = temp_buf->width;
   bitmap.buffer = temp_buf_data (temp_buf);
 
-  pango_layout_get_pixel_extents (layout, NULL, &logical);
+  pango_layout_get_pixel_extents (layout, &ink, &logical);
 
-  pango_ft2_render_layout (&bitmap,
-                           layout,
-                           (bitmap.width - logical.width)  / 2,
-                           (bitmap.rows  - logical.height) / 2);
+  layout_width  = MAX (ink.width,  logical.width);
+  layout_height = MAX (ink.height, logical.height);
+
+  layout_x = (bitmap.width - layout_width)  / 2;
+  layout_y = (bitmap.rows  - layout_height) / 2;
+
+  if (ink.x < logical.x)
+    layout_x += logical.x - ink.x;
+
+  if (ink.y < logical.y)
+    layout_y += logical.y - ink.y;
+
+  pango_ft2_render_layout (&bitmap, layout, layout_x, layout_y);
 
   g_object_unref (layout);
 
