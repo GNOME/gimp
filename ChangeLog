@@ -1,5 +1,11 @@
 2004-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): implemented
+	so that double-clicking a text layer now only activates the text
+	tool but also set the layer's text on the tool options.
+
+2004-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptoolcontrol.c (gimp_tool_control_activate)
 	(gimp_tool_control_halt): put overly picky sanity checks into
 	#ifdef GIMP_UNSTABLE ... #endif so we won't get these harmless

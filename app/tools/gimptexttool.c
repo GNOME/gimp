@@ -466,4 +466,13 @@ gimp_text_tool_set_layer (GimpTextTool  *text_tool,
 {
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
   g_return_if_fail (text_layer == NULL || GIMP_IS_TEXT_LAYER (text_layer));
+
+  if (text_layer->text)
+    {
+      gint x, y;
+
+      gimp_item_offsets (GIMP_ITEM (text_layer), &x, &y);
+
+      gimp_text_tool_connect (text_tool, text_layer->text, x, y);
+    }
 }
