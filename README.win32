@@ -21,15 +21,18 @@ called gnu-intl.dll to reduce name clash risks. If you don't want any
 i18n stuff, undefine ENABLE_NLS in the config.h.win32 file, and remove
 references to the gnu-intl library from the makefiles.
 
-Note that while the GNU gettext package is under the GPL, the "intl"
-library part as distributed with GNU libc is under the LGPL (like GTk+
-or GLib). We want the LGPL one, even if they are the same, more or
-less. It doesn't matter much for the GIMP which itself is under the
-GPL, but does a bit for GTk+, which is under the LGPL.
+Note that while the GNU gettext package is under the GPL (GNU General
+Public License), the "intl" library part as distributed with GNU libc
+is under the LGPL (GNU Lesser General Public License, a.k.a. GNU
+Library General Public License) (like GTk+ and GLib). We want the
+LGPL-licensed version of the intl library, even if they are the same,
+more or less. It doesn't matter much for the GIMP which itself is also
+licensed under the GPL, but it does matter for GTk+, which is licensed
+under the LGPL.
 
-First, build in the libgimp directory, then in tools/gcg, then in app,
-plug-ins, and finally in modules. Check the makefile.msc or
-makefile.cygwin files in said directories.
+First, build in the libgimp directory, then in app, plug-ins, and
+finally in modules. Check the makefile.msc or makefile.cygwin files in
+said directories.
 
 The current build setup for Windows is a mess, with complex
 hand-maintained makefiles. I know. Adding parallel makefiles for gcc

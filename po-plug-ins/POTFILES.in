@@ -243,7 +243,9 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
+plug-ins/twain/twain.c
 plug-ins/webbrowser/webbrowser.c
+plug-ins/winsnap/winsnap.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c

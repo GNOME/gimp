@@ -1,3 +1,20 @@
+2000-01-18  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Some clarifications.
+
+	* PLUGIN_MAINTAINERS: I maintain psp.
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def
+	* libgimp/makefile.cygwin
+	* libgimp/makefile.msc
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc: Updates.
+
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c
+	* po-plug-ins/POTFILES.in: i18n.
+
 2000-01-18  David Monniaux  <monniaux@quatramaran.ens.fr>
 
 	* app/tools.c: clearer tool-tip for transform tool.

@@ -37,26 +37,32 @@
  *  (07/16/99)  v0.70  Switched name
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <windows.h>
+
 #include "resource.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "extension_winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
-#define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
-#define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
+#define PLUG_IN_DESCRIPTION _("Capture a Win32 window or desktop image")
+#define PLUG_IN_HELP        _("This plug-in will capture an image of a Win32 window or desktop")
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
-#define PLUG_IN_MENU_PATH   "<Toolbox>/File/Acquire/Screen Shot..."
+#define PLUG_IN_MENU_PATH   N_("<Toolbox>/File/Acquire/Screen Shot...")
 
 /*
  * Application definitions
@@ -662,7 +668,7 @@ InitApplication(HINSTANCE hInstance)
   /* Log error */
   if (!retValue) {
     formatWindowsError(buffer);
-    g_error("Error Registering class: %s", buffer);
+    g_error("Error registering class: %s", buffer);
     return retValue;
   }
 		
@@ -888,7 +894,7 @@ snap_dialog(void)
 		     NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label("Grab");
+  button = gtk_button_new_with_label(_("Grab"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT (button), "clicked",
                      (GtkSignalFunc) snap_grab_callback,
@@ -898,7 +904,7 @@ snap_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label("Cancel");
+  button = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -931,7 +937,7 @@ snap_dialog(void)
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (winsnapintf.single_button),
 				   radio_pressed[0]);
   gtk_widget_show (winsnapintf.single_button);
-  radio_label = gtk_label_new ( "Grab a single window" );
+  radio_label = gtk_label_new (_("Grab a single window"));
   gtk_box_pack_start (GTK_BOX (hbox),
 		      radio_label, TRUE, TRUE, 0);
   gtk_widget_show (radio_label);
@@ -941,7 +947,8 @@ snap_dialog(void)
 #ifdef CAN_SET_DECOR
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  winsnapintf.decor_button = gtk_check_button_new_with_label ("Include decorations");
+  winsnapintf.decor_button =
+    gtk_check_button_new_with_label (_("Include decorations"));
   gtk_signal_connect (GTK_OBJECT (winsnapintf.decor_button), "toggled",
                       (GtkSignalFunc) snap_toggle_update,
                       &decorations);
@@ -977,7 +984,7 @@ snap_dialog(void)
 				   radio_pressed[1]);
   gtk_widget_show (winsnapintf.root_button);
 
-  radio_label = gtk_label_new ( "Grab the whole screen" );
+  radio_label = gtk_label_new (_("Grab the whole screen"));
   gtk_box_pack_start (GTK_BOX (hbox), radio_label, TRUE, TRUE, 0);
   gtk_widget_show (radio_label);
 
@@ -1023,6 +1030,8 @@ query(void)
 {
   static GParamDef args[] = { IN_ARGS };
   static GParamDef return_vals[] = { OUT_ARGS };
+
+  INIT_I18N();
 
   /* the installation of the plugin */
   gimp_install_procedure(PLUG_IN_NAME,
@@ -1177,7 +1186,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 
   /* Check that we got the memory */
   if (!capBytes) {
-    g_warning("No data captured");
+    g_warning(_("No data captured"));
     return 0;
   }
 
@@ -1190,7 +1199,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 
   /* Create the GIMP image and layers */
   image_id = gimp_image_new(width, height, imageType);
-  layer_id = gimp_layer_new(image_id, "Background",
+  layer_id = gimp_layer_new(image_id, _("Background"),
 			    ROUND4(width), height,
 			    layerType, 100, NORMAL_MODE);
   gimp_image_add_layer(image_id, layer_id, 0);

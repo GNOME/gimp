@@ -53,12 +53,15 @@ gimpi_OBJECTS = \
 	gimpchainbutton.o \
 	gimpcolorbutton.o \
 	gimpcolorspace.o \
+	gimpdialog.o	\
 	gimpfileselection.o\
+	gimphelpui.o	\
 	gimpmatrix.o	\
 	gimppatheditor.o\
 	gimpprotocol.o	\
 	gimpsizeentry.o	\
 	gimpunitmenu.o	\
+	gimpwidgets.o	\
 	gimpwire.o	\
 	gserialize.o	\
 	parasite.o	\
@@ -75,6 +78,7 @@ gimp_OBJECTS = \
 	gimpdrawable.o	\
 	gimpenv.o	\
 	gimpgradient.o	\
+	gimphelp.o	\
 	gimpimage.o	\
 	gimplayer.o	\
 	gimpmatrix.o	\
@@ -137,12 +141,15 @@ gimpui_OBJECTS = \
 	gimpbrushmenu.o	\
 	gimpchainbutton.o \
 	gimpcolorbutton.o \
+	gimpdialog.o	\
 	gimpexport.o \
 	gimpfileselection.o \
+	gimphelpui.o	\
 	gimpgradientmenu.o \
 	gimppatternmenu.o \
 	gimpsizeentry.o \
-	gimpunitmenu.o
+	gimpunitmenu.o	\
+	gimpwidgets.o
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)

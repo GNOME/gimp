@@ -65,9 +65,6 @@ sub-libs:
 	cd megawidget
 	nmake -nologo -f ..\makefile.msc TOP=..\.. LIBRARY=megawidget $(TARGET)
 	cd ..
-	cd gpc
-	nmake -nologo -f ..\makefile.msc TOP=..\.. LIBRARY=gpc $(TARGET)
-	cd ..
 	cd libgck\gck
 	nmake -nologo -f ..\..\makefile.msc TOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj gcklistbox.obj gckmath.obj gckui.obj gckvector.obj" $(TARGET)
 	cd ..\..
@@ -603,7 +600,7 @@ RESOURCE = ..\..\app\gimp.res
 !ENDIF
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\megawidget\megawidget.lib $(PLUGINDIR)\gpc\gpc.lib  $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\megawidget\megawidget.lib $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc
 	rc -r -fo $(PLUGIN).res $(PLUGIN).rc

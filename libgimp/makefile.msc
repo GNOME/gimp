@@ -59,12 +59,15 @@ gimpi_OBJECTS = \
 	gimpchainbutton.obj\
 	gimpcolorbutton.obj\
 	gimpcolorspace.obj \
+	gimpdialog.obj	\
 	gimpfileselection.obj\
+	gimphelpui.obj	\
 	gimpmatrix.obj	\
 	gimppatheditor.obj\
 	gimpprotocol.obj\
 	gimpsizeentry.obj\
 	gimpunitmenu.obj\
+	gimpwidgets.obj	\
 	gimpwire.obj	\
 	gserialize.obj	\
 	parasite.obj	\
@@ -81,6 +84,7 @@ gimp_OBJECTS = \
 	gimpdrawable.obj\
 	gimpenv.obj	\
 	gimpgradient.obj\
+	gimphelp.obj	\
 	gimpimage.obj	\
 	gimplayer.obj	\
 	gimpmatrix.obj	\
@@ -143,12 +147,15 @@ gimpui_OBJECTS = \
 	gimpbrushmenu.obj\
 	gimpchainbutton.obj\
 	gimpcolorbutton.obj\
+	gimpdialog.obj	\
 	gimpexport.obj	\
 	gimpfileselection.obj\
 	gimpgradientmenu.obj\
+	gimphelpui.obj	\
 	gimppatternmenu.obj\
 	gimpsizeentry.obj\
-	gimpunitmenu.obj
+	gimpunitmenu.obj\
+	gimpwidgets.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def

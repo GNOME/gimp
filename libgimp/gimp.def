@@ -75,6 +75,7 @@ EXPORTS
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_active
 	gimp_gtkrc
+	gimp_help
 	gimp_hls_to_rgb
 	gimp_hls_value
 	gimp_hsv_to_rgb
@@ -217,6 +218,7 @@ EXPORTS
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
+	gimp_plugin_help_func
 	gimp_progress_init
 	gimp_progress_update
 	gimp_query_database
@@ -238,6 +240,7 @@ EXPORTS
 	gimp_selection_float
 	gimp_selection_is_empty
 	gimp_set_data
+	gimp_standard_help_func
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size
 	gimp_tile_flush

@@ -705,8 +705,8 @@ SIZE       :  63.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : psp
-AUTHOR     : Tor Lillqvist
-MAINTAINER : 
+AUTHOR     : Tor Lillqvist <tml@iki.fi>
+MAINTAINER : Tor Lillqvist <tml@iki.fi>
 SIZE       :  48.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

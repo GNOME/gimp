@@ -56,6 +56,8 @@
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
  *                     images.
  */
+#include "config.h"
+
 #include <glib.h>		/* Needed when compiling with gcc */
 
 #include <stdio.h>
@@ -63,9 +65,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <windows.h>
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "twain.h"
+#include "libgimp/stdplugins-intl.h"
+
 #include "tw_func.h"
 #include "tw_util.h"
 
@@ -77,12 +82,12 @@
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "twain-acquire"
-#define PLUG_IN_DESCRIPTION "Capture an image from a TWAIN datasource"
-#define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
+#define PLUG_IN_DESCRIPTION _("Capture an image from a TWAIN datasource")
+#define PLUG_IN_HELP        _("This plug-in will capture an image from a TWAIN datasource")
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.5 (03/31/1999)"
-#define PLUG_IN_MENU_PATH   "<Toolbox>/File/Acquire/TWAIN..."
+#define PLUG_IN_MENU_PATH   N_("<Toolbox>/File/Acquire/TWAIN...")
 
 #ifdef _DEBUG
 #define PLUG_IN_D_NAME        "twain-acquire-dump"
@@ -264,13 +269,13 @@ getAppIdentity(void)
   appIdentity->Version.MinorNum = 1;
   appIdentity->Version.Language = TWLG_USA;
   appIdentity->Version.Country = TWCY_USA;
-  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.1");
+  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.5");
   appIdentity->ProtocolMajor = TWON_PROTOCOLMAJOR;
   appIdentity->ProtocolMinor = TWON_PROTOCOLMINOR;
   appIdentity->SupportedGroups = DG_IMAGE;
   strcpy(appIdentity->Manufacturer, "Craig Setera");
   strcpy(appIdentity->ProductFamily, "GIMP");
-  strcpy(appIdentity->ProductName, "GIMP for WIN32");
+  strcpy(appIdentity->ProductName, "GIMP for Win32");
 		
   return appIdentity;
 }
@@ -463,6 +468,8 @@ query(void)
   static GParamDef args[] = { IN_ARGS };
   static GParamDef return_vals[] = { OUT_ARGS };
 
+  INIT_I18N ();
+
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)
     /* the installation of the plugin */
@@ -636,7 +643,7 @@ void
 preTransferCallback(void *clientData)
 {
   /* Initialize our progress dialog */
-  gimp_progress_init("Transferring TWAIN data");
+  gimp_progress_init(_("Transferring TWAIN data"));
 }
 
 /*
@@ -714,7 +721,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 			
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
-					   "Background",
+					   _("Background"),
 					   imageInfo->ImageWidth, 
 					   imageInfo->ImageLength,
 					   layerType, 100, NORMAL_MODE);
