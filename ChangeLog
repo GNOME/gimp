@@ -1,3 +1,29 @@
+2001-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpdialog.[ch]: made a real object (GtkDialog
+	subclass) out of it. The API will change soon too.
+
+	* libgimpwidgets/gimpwidgetstypes.h: added GimpDialog typedef.
+
+	* libgimpwidgets/gimpbutton.[ch]
+	* libgimpwidgets/gimpchainbutton.[ch]
+	* libgimpwidgets/gimpcolorarea.[ch]
+	* libgimpwidgets/gimpcolorbutton.[ch]
+	* libgimpwidgets/gimpfileselection.[ch]
+	* libgimpwidgets/gimpoffsetarea.[ch]
+	* libgimpwidgets/gimppatheditor.[ch]
+	* libgimpwidgets/gimppixmap.c
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpunitmenu.c: removed GtkType stuff and use
+	GType in all get_type() functions. Some random GObject porting.
+
+	* app/gui/info-dialog.c
+	* app/gui/info-window.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
 2001-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/gdisplay.c: fixed resize of cursor position label that I broke

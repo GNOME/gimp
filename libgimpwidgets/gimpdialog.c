@@ -38,33 +38,77 @@ typedef void (* GimpDialogCancelCallback) (GtkWidget *widget,
 					   gpointer   data);
 
 
-/*  local callbacks of gimp_dialog_new ()  */
-static gboolean
-gimp_dialog_delete_callback (GtkWidget *widget,
-			     GdkEvent  *event,
-			     gpointer   data) 
+static void       gimp_dialog_class_init   (GimpDialogClass  *klass);
+static void       gimp_dialog_init         (GimpDialog       *dialog);
+
+static void       gimp_dialog_realize      (GtkWidget        *widget);
+static void       gimp_dialog_real_realize (GtkWidget        *widget);
+static gboolean   gimp_dialog_delete_event (GtkWidget        *widget,
+                                            GdkEventAny      *event);
+
+
+static GtkDialogClass *parent_class = NULL;
+
+
+GType
+gimp_dialog_get_type (void)
 {
-  GimpDialogCancelCallback  cancel_callback;
-  GtkWidget                *cancel_widget;
+  static GType dialog_type = 0;
 
-  cancel_callback = (GimpDialogCancelCallback)
-    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_callback");
-
-  cancel_widget = (GtkWidget *)
-    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_widget");
-
-  /*  the cancel callback has to destroy the dialog  */
-  if (cancel_callback)
+  if (! dialog_type)
     {
-      cancel_callback (cancel_widget, data);
+      static const GTypeInfo dialog_info =
+      {
+        sizeof (GimpDialogClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_dialog_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDialog),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_dialog_init,
+      };
+
+      dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
+					    "GimpDialog",
+					    &dialog_info, 0);
     }
 
-  return TRUE;
+  return dialog_type;
 }
 
 static void
-gimp_dialog_realize_callback (GtkWidget *widget,
-			      gpointer   data) 
+gimp_dialog_class_init (GimpDialogClass *klass)
+{
+  GObjectClass   *object_class;
+  GtkWidgetClass *widget_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  widget_class->realize      = gimp_dialog_realize;
+  widget_class->delete_event = gimp_dialog_delete_event;
+}
+
+static void
+gimp_dialog_init (GimpDialog *dialog)
+{
+}
+
+static void
+gimp_dialog_realize (GtkWidget *widget)
+{
+  if (GTK_WIDGET_CLASS (parent_class)->realize)
+    GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  gimp_dialog_real_realize (widget);
+}
+
+static void
+gimp_dialog_real_realize (GtkWidget *widget)
 {
   static GdkPixmap *wilber_pixmap = NULL;
   static GdkBitmap *wilber_mask   = NULL;
@@ -81,6 +125,32 @@ gimp_dialog_realize_callback (GtkWidget *widget,
 
   gdk_window_set_icon (widget->window, NULL,
 		       wilber_pixmap, wilber_mask);
+}
+
+static gboolean
+gimp_dialog_delete_event (GtkWidget   *widget,
+                          GdkEventAny *event)
+{
+  GimpDialogCancelCallback  cancel_callback;
+  GtkWidget                *cancel_widget;
+  gpointer                  cancel_data;
+
+  cancel_callback = (GimpDialogCancelCallback)
+    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_callback");
+
+  cancel_widget = (GtkWidget *)
+    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_widget");
+
+  cancel_data =
+    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_data");
+
+  /*  the cancel callback has to destroy the dialog  */
+  if (cancel_callback)
+    {
+      cancel_callback (cancel_widget, cancel_data);
+    }
+
+  return TRUE;
 }
 
 /**
@@ -107,7 +177,7 @@ gimp_dialog_realize_callback (GtkWidget *widget,
  * For a description of the format of the @va_list describing the
  * action_area buttons see gimp_dialog_create_action_areav().
  *
- * Returns: A #GtkDialog.
+ * Returns: A #GimpDialog.
  **/
 GtkWidget *
 gimp_dialog_new (const gchar       *title,
@@ -175,7 +245,7 @@ gimp_dialog_new (const gchar       *title,
  * The @va_list describing the action_area buttons will be passed to
  * gimp_dialog_create_action_areav().
  *
- * Returns: A #GtkDialog.
+ * Returns: A #GimpDialog.
  **/
 GtkWidget *
 gimp_dialog_newv (const gchar       *title,
@@ -193,7 +263,8 @@ gimp_dialog_newv (const gchar       *title,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
 
-  dialog = gtk_dialog_new ();
+  dialog = g_object_new (GIMP_TYPE_DIALOG, NULL);
+
   gtk_window_set_title (GTK_WINDOW (dialog), title);
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
   gtk_window_set_position (GTK_WINDOW (dialog), position);
@@ -201,7 +272,7 @@ gimp_dialog_newv (const gchar       *title,
 			 allow_shrink, allow_grow, auto_shrink);
 
   /*  prepare the action_area  */
-  gimp_dialog_create_action_areav (GTK_DIALOG (dialog), args);
+  gimp_dialog_create_action_areav (GIMP_DIALOG (dialog), args);
 
   /*  connect the "F1" help key  */
   if (help_func)
@@ -211,34 +282,8 @@ gimp_dialog_newv (const gchar       *title,
 }
 
 /**
- * gimp_dialog_set_icon:
- * @dialog: The #GtkWindow you want to set the pixmap icon for.
- *
- * This function sets the WM pixmap icon for the dialog which will appear
- * e.g. in GNOME's or KDE's window list.
- *
- * Note that this function is automatically called by
- * gimp_help_connect() which in turn is called by gimp_dialog_newv(),
- * so you only have to call it for #GtkWindow's which have no help
- * page (like tear-off menus).
- **/
-void
-gimp_dialog_set_icon (GtkWindow *dialog)
-{
-  g_return_if_fail (dialog);
-  g_return_if_fail (GTK_IS_WINDOW (dialog));
-
-  if (GTK_WIDGET_REALIZED (GTK_WIDGET (dialog)))
-    gimp_dialog_realize_callback (GTK_WIDGET (dialog), NULL);
-  else
-    g_signal_connect (G_OBJECT (dialog), "realize",
-		      G_CALLBACK (gimp_dialog_realize_callback),
-		      NULL);
-}
-
-/**
  * gimp_dialog_create_action_area:
- * @dialog: The #GtkDialog you want to create the action_area for.
+ * @dialog: The #GimpDialog you want to create the action_area for.
  * @...:    A #NULL terminated @va_list destribing the action_area buttons.
  *
  * This function simply packs the action_area arguments passed in "..."
@@ -246,7 +291,7 @@ gimp_dialog_set_icon (GtkWindow *dialog)
  * gimp_dialog_create_action_areav().
  **/
 void
-gimp_dialog_create_action_area (GtkDialog *dialog,
+gimp_dialog_create_action_area (GimpDialog *dialog,
 
 				/* specify action area buttons as va_list:
 				 *  const gchar    *label,
@@ -271,7 +316,7 @@ gimp_dialog_create_action_area (GtkDialog *dialog,
 
 /**
  * gimp_dialog_create_action_areav:
- * @dialog: The #GtkDialog you want to create the action_area for.
+ * @dialog: The #GimpDialog you want to create the action_area for.
  * @args: A @va_list as obtained with va_start() describing the action_area
  *        buttons.
  *
@@ -282,8 +327,8 @@ gimp_dialog_create_action_area (GtkDialog *dialog,
  * and callback != NULL.
  **/
 void
-gimp_dialog_create_action_areav (GtkDialog *dialog,
-				 va_list    args)
+gimp_dialog_create_action_areav (GimpDialog *dialog,
+				 va_list     args)
 {
   GtkWidget    *button;
 
@@ -298,8 +343,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 
   gboolean delete_connected = FALSE;
 
-  g_return_if_fail (dialog != NULL);
-  g_return_if_fail (GTK_IS_DIALOG (dialog));
+  g_return_if_fail (GIMP_IS_DIALOG (dialog));
 
   label = va_arg (args, const gchar *);
 
@@ -336,11 +380,8 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 			     callback);
 	  g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_widget",
 			     slot_object ? slot_object : G_OBJECT (dialog));
-
-	  /*  catch the WM delete event  */
-	  g_signal_connect (G_OBJECT (dialog), "delete_event",
-			    G_CALLBACK (gimp_dialog_delete_callback),
-			    callback_data);
+	  g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_data",
+			     callback_data);
 
 	  delete_connected = TRUE;
 	}
@@ -348,7 +389,8 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
       /* otherwise just create the requested button. */
       else
         {
-	  button = gtk_dialog_add_button (dialog, label, GTK_RESPONSE_NONE);
+	  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                          label, GTK_RESPONSE_NONE);
 
 	  if (callback)
 	    {
@@ -367,17 +409,12 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 
 	  if (connect_delete && callback && ! delete_connected)
 	    {
-	      g_object_set_data (G_OBJECT (dialog),
-				 "gimp_dialog_cancel_callback",
+	      g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_callback",
 				 callback);
-	      g_object_set_data (G_OBJECT (dialog),
-				 "gimp_dialog_cancel_widget",
+	      g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_widget",
 				 slot_object ? slot_object : G_OBJECT (button));
-
-	      /*  catch the WM delete event  */
-	      g_signal_connect (G_OBJECT (dialog), "delete_event",
-				G_CALLBACK (gimp_dialog_delete_callback),
-				callback_data);
+              g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_data",
+                                 callback_data);
 
 	      delete_connected = TRUE;
 	    }
@@ -388,4 +425,29 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
 
       label = va_arg (args, gchar *);
     }
+}
+
+/**
+ * gimp_dialog_set_icon:
+ * @dialog: The #GtkWindow you want to set the pixmap icon for.
+ *
+ * This function sets the WM pixmap icon for the dialog which will appear
+ * e.g. in GNOME's or KDE's window list.
+ *
+ * Note that this function is automatically called by
+ * gimp_help_connect() which in turn is called by gimp_dialog_newv(),
+ * so you only have to call it for #GtkWindow's which have no help
+ * page (like tear-off menus).
+ **/
+void
+gimp_dialog_set_icon (GtkWindow *dialog)
+{
+  g_return_if_fail (GTK_IS_WINDOW (dialog));
+
+  if (GTK_WIDGET_REALIZED (GTK_WIDGET (dialog)))
+    gimp_dialog_real_realize (GTK_WIDGET (dialog));
+  else
+    g_signal_connect (G_OBJECT (dialog), "realize",
+		      G_CALLBACK (gimp_dialog_real_realize),
+		      NULL);
 }

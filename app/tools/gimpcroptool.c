@@ -877,7 +877,7 @@ crop_info_create (GimpTool *tool)
 			       tool_manager_help_func, NULL);
 
   /*  create the action area  */
-  gimp_dialog_create_action_area (GTK_DIALOG (crop_info->shell),
+  gimp_dialog_create_action_area (GIMP_DIALOG (crop_info->shell),
 
 				  _("Crop"), crop_crop_callback,
 				  NULL, NULL, NULL, TRUE, FALSE,

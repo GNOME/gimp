@@ -35,13 +35,14 @@ extern "C" {
 #define GIMP_PATH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
 #define GIMP_IS_PATH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
 #define GIMP_IS_PATH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
+#define GIMP_PATH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
 
 
 typedef struct _GimpPathEditorClass  GimpPathEditorClass;
 
 struct _GimpPathEditor
 {
-  GtkVBox    vbox;
+  GtkVBox    parent_instance;
 
   GtkWidget *upper_hbox;
 
@@ -60,7 +61,7 @@ struct _GimpPathEditor
 
 struct _GimpPathEditorClass
 {
-  GtkVBoxClass parent_class;
+  GtkVBoxClass  parent_class;
 
   void (* path_changed) (GimpPathEditor *gpe);
 };

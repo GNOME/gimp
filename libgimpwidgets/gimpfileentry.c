@@ -50,27 +50,27 @@
 #endif
 
 
-static void   gimp_file_selection_class_init (GimpFileSelectionClass *klass);
-static void   gimp_file_selection_init       (GimpFileSelection      *gfs);
-
-static void   gimp_file_selection_destroy                  (GtkObject *object);
-
-static void   gimp_file_selection_entry_callback           (GtkWidget *widget,
-							    gpointer   data);
-static gint   gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
-							    GdkEvent  *event,
-							    gpointer   data);
-static void   gimp_file_selection_browse_callback          (GtkWidget *widget,
-							    gpointer   data);
-
-/*  private functions  */
-static void gimp_file_selection_check_filename (GimpFileSelection *gfs);
-
 enum
 {
   FILENAME_CHANGED,
   LAST_SIGNAL
 };
+
+
+static void   gimp_file_selection_class_init (GimpFileSelectionClass *klass);
+static void   gimp_file_selection_init       (GimpFileSelection      *gfs);
+
+static void   gimp_file_selection_destroy                  (GtkObject         *object);
+
+static void   gimp_file_selection_entry_callback           (GtkWidget         *widget,
+							    gpointer           data);
+static gint   gimp_file_selection_entry_focus_out_callback (GtkWidget         *widget,
+							    GdkEvent          *event,
+							    gpointer           data);
+static void   gimp_file_selection_browse_callback          (GtkWidget         *widget,
+							    gpointer           data);
+static void   gimp_file_selection_check_filename           (GimpFileSelection *gfs);
+
 
 static guint gimp_file_selection_signals[LAST_SIGNAL] = { 0 };
 
@@ -82,7 +82,7 @@ gimp_file_selection_get_type (void)
 {
   static GType gfs_type = 0;
 
-  if (!gfs_type)
+  if (! gfs_type)
     {
       static const GTypeInfo gfs_info =
       {
@@ -97,10 +97,11 @@ gimp_file_selection_get_type (void)
 	(GInstanceInitFunc) gimp_file_selection_init,
       };
 
-      gfs_type = g_type_register_static (GTK_TYPE_HBOX, "GimpFileSelection", 
+      gfs_type = g_type_register_static (GTK_TYPE_HBOX,
+                                         "GimpFileSelection",
                                          &gfs_info, 0);
     }
-  
+
   return gfs_type;
 }
 

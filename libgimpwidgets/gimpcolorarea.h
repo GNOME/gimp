@@ -42,20 +42,14 @@ extern "C" {
 #define GIMP_COLOR_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
 #define GIMP_IS_COLOR_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_AREA))
 #define GIMP_IS_COLOR_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
+#define GIMP_COLOR_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
 
-
-typedef enum
-{
-  GIMP_COLOR_AREA_FLAT = 0,
-  GIMP_COLOR_AREA_SMALL_CHECKS,
-  GIMP_COLOR_AREA_LARGE_CHECKS
-} GimpColorAreaType;
 
 typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
 struct _GimpColorArea
 {
-  GtkPreview         preview;
+  GtkPreview         parent_instance;
 
   /*< private >*/
   GimpColorAreaType  type;
@@ -65,16 +59,18 @@ struct _GimpColorArea
 
 struct _GimpColorAreaClass
 {
-  GtkPreviewClass parent_class;
+  GtkPreviewClass  parent_class;
 
   void (* color_changed) (GimpColorArea *gca);
 };
 
 
-GtkType     gimp_color_area_get_type   (void);
+GType       gimp_color_area_get_type   (void);
+
 GtkWidget * gimp_color_area_new        (const GimpRGB     *color,
 					GimpColorAreaType  type,
 					GdkModifierType    drag_mask);
+
 void        gimp_color_area_set_color  (GimpColorArea     *gca,
 					const GimpRGB     *color);
 void        gimp_color_area_get_color  (GimpColorArea     *gca,

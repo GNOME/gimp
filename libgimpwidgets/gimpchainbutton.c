@@ -83,19 +83,22 @@ gimp_chain_button_get_type (void)
 
   if (! gcb_type)
     {
-      GtkTypeInfo gcb_info =
+      static const GTypeInfo gcb_info =
       {
-	"GimpChainButton",
-	sizeof (GimpChainButton),
-	sizeof (GimpChainButtonClass),
-	(GtkClassInitFunc) gimp_chain_button_class_init,
-	(GtkObjectInitFunc) gimp_chain_button_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpChainButtonClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_chain_button_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpChainButton),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_chain_button_init,
       };
 
-      gcb_type = gtk_type_unique (gtk_table_get_type (), &gcb_info);
+      gcb_type = g_type_register_static (GTK_TYPE_TABLE,
+                                         "GimpChainButton", 
+                                         &gcb_info, 0);
     }
 
   return gcb_type;
@@ -107,8 +110,8 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -148,7 +151,7 @@ gimp_chain_button_init (GimpChainButton *gcb)
 
   gtk_pixmap_set_build_insensitive (GTK_PIXMAP (gcb->pixmap), TRUE);
 
-  g_signal_connect (G_OBJECT(gcb->button), "clicked",
+  g_signal_connect (G_OBJECT (gcb->button), "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback), 
                     gcb);
   g_signal_connect (G_OBJECT (gcb->line1), "expose_event",

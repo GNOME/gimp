@@ -35,6 +35,13 @@ extern "C" {
 
 typedef enum
 {
+  GIMP_COLOR_AREA_FLAT = 0,
+  GIMP_COLOR_AREA_SMALL_CHECKS,
+  GIMP_COLOR_AREA_LARGE_CHECKS
+} GimpColorAreaType;
+
+typedef enum
+{
   GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
   GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
   GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
@@ -45,6 +52,7 @@ typedef struct _GimpButton        GimpButton;
 typedef struct _GimpChainButton   GimpChainButton;
 typedef struct _GimpColorArea     GimpColorArea;
 typedef struct _GimpColorButton   GimpColorButton;
+typedef struct _GimpDialog        GimpDialog;
 typedef struct _GimpFileSelection GimpFileSelection;
 typedef struct _GimpOffsetArea    GimpOffsetArea;
 typedef struct _GimpPathEditor    GimpPathEditor;

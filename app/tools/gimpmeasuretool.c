@@ -381,7 +381,7 @@ gimp_measure_tool_button_press (GimpTool       *tool,
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
 
-      gimp_dialog_create_action_area (GTK_DIALOG (measure_tool_info->shell),
+      gimp_dialog_create_action_area (GIMP_DIALOG (measure_tool_info->shell),
 
 				      GTK_STOCK_CLOSE,
 				      measure_tool_info_window_close_callback,

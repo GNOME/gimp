@@ -69,31 +69,30 @@ gimp_path_editor_get_type (void)
 
   if (! gpe_type)
     {
-      GtkTypeInfo gpe_info =
+      static const GTypeInfo gpe_info =
       {
-	"GimpPathEditor",
+        sizeof (GimpPathEditorClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_path_editor_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpPathEditor),
-	sizeof (GimpPathEditorClass),
-	(GtkClassInitFunc) gimp_path_editor_class_init,
-	(GtkObjectInitFunc) gimp_path_editor_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_path_editor_init,
       };
 
-      gpe_type = gtk_type_unique (gtk_vbox_get_type (), &gpe_info);
+      gpe_type = g_type_register_static (GTK_TYPE_VBOX,
+                                         "GimpPathEditor",
+                                         &gpe_info, 0);
     }
-  
+
   return gpe_type;
 }
 
 static void
 gimp_path_editor_class_init (GimpPathEditorClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_path_editor_signals[PATH_CHANGED] = 

@@ -173,7 +173,7 @@ info_dialog_new_extended (gchar        *title,
   idialog->field_list = NULL;
   idialog->nfields    = 0;
 
-  shell = gtk_dialog_new ();
+  shell = g_object_new (GIMP_TYPE_DIALOG, NULL);
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
 

@@ -45,7 +45,7 @@ enum
 static void          gimp_unit_menu_class_init   (GimpUnitMenuClass *klass);
 static void          gimp_unit_menu_init         (GimpUnitMenu      *gum);
 
-static void          gimp_unit_menu_destroy      (GtkObject   *object);
+static void          gimp_unit_menu_finalize     (GObject     *object);
 
 static const gchar * gimp_unit_menu_build_string (const gchar *format,
 						  GimpUnit     unit);
@@ -65,19 +65,22 @@ gimp_unit_menu_get_type (void)
 
   if (! gum_type)
     {
-      GtkTypeInfo gum_info =
+      static const GTypeInfo gum_info =
       {
-	"GimpUnitMenu",
+        sizeof (GimpUnitMenuClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_unit_menu_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpUnitMenu),
-	sizeof (GimpUnitMenuClass),
-	(GtkClassInitFunc) gimp_unit_menu_class_init,
-	(GtkObjectInitFunc) gimp_unit_menu_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_unit_menu_init,
       };
 
-      gum_type = gtk_type_unique (gtk_option_menu_get_type (), &gum_info);
+      gum_type = g_type_register_static (GTK_TYPE_OPTION_MENU,
+                                         "GimpUnitMenu",
+                                         &gum_info, 0);
     }
   
   return gum_type;
@@ -86,9 +89,9 @@ gimp_unit_menu_get_type (void)
 static void
 gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -101,9 +104,9 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_unit_menu_destroy;
+  object_class->finalize = gimp_unit_menu_finalize;
 
-  klass->unit_changed   = NULL;
+  klass->unit_changed    = NULL;
 }
 
 static void
@@ -118,7 +121,7 @@ gimp_unit_menu_init (GimpUnitMenu *gum)
 }
 
 static void
-gimp_unit_menu_destroy (GtkObject *object)
+gimp_unit_menu_finalize (GObject *object)
 {
   GimpUnitMenu *gum;
 
@@ -132,8 +135,7 @@ gimp_unit_menu_destroy (GtkObject *object)
       gum->format = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 /**
@@ -520,9 +522,8 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 
 		     NULL);
 
-  g_signal_connect (G_OBJECT (gum->selection), "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &gum->selection);
+  g_object_add_weak_pointer (G_OBJECT (gum->selection),
+                             (gpointer) &gum->selection);
 
   g_signal_connect_object (G_OBJECT (gum), "destroy",
                            G_CALLBACK (gtk_widget_destroy),

@@ -44,21 +44,24 @@ gimp_pixmap_get_type (void)
 {
   static GType pixmap_type = 0;
 
-  if (!pixmap_type)
+  if (! pixmap_type)
     {
-      GtkTypeInfo pixmap_info =
+      static const GTypeInfo pixmap_info =
       {
-	"GimpPixmap",
-	sizeof (GimpPixmap),
-	sizeof (GimpPixmapClass),
-	(GtkClassInitFunc) gimp_pixmap_class_init,
-	(GtkObjectInitFunc) gimp_pixmap_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpPixmapClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_pixmap_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPixmap),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_pixmap_init,
       };
 
-      pixmap_type = gtk_type_unique (GTK_TYPE_PIXMAP, &pixmap_info);
+      pixmap_type = g_type_register_static (GTK_TYPE_PIXMAP,
+					    "GimpPixmap",
+					    &pixmap_info, 0);
     }
 
   return pixmap_type;
@@ -69,7 +72,7 @@ gimp_pixmap_class_init (GimpPixmapClass *klass)
 {
   GtkWidgetClass *widget_class;
 
-  widget_class = (GtkWidgetClass *) klass;
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

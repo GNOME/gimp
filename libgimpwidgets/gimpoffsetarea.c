@@ -39,11 +39,13 @@ enum
 };
 
 
-static void      gimp_offset_area_destroy (GtkObject      *object);
-static void      gimp_offset_area_resize  (GimpOffsetArea *offset_area);
-static gboolean  gimp_offset_area_event   (GtkWidget      *widget,
-                                           GdkEvent       *event);
-static void      gimp_offset_area_draw    (GimpOffsetArea *offset_area);
+static void      gimp_offset_area_class_init (GimpOffsetAreaClass *klass);
+static void      gimp_offset_area_init       (GimpOffsetArea      *offset_area);
+
+static void      gimp_offset_area_resize     (GimpOffsetArea      *offset_area);
+static gboolean  gimp_offset_area_event      (GtkWidget           *widget,
+                                              GdkEvent            *event);
+static void      gimp_offset_area_draw       (GimpOffsetArea      *offset_area);
 
 
 static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
@@ -51,15 +53,32 @@ static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
 static GtkDrawingAreaClass *parent_class = NULL;
 
 
-static void
-gimp_offset_area_destroy (GtkObject *object)
+GType
+gimp_offset_area_get_type (void)
 {
-  GimpOffsetArea *offset_area = GIMP_OFFSET_AREA (object);
+  static GType offset_area_type = 0;
 
-  g_return_if_fail (offset_area != NULL);
+  if (! offset_area_type)
+    {
+      static const GTypeInfo offset_area_info =
+      {
+        sizeof (GimpOffsetAreaClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_offset_area_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
+	sizeof (GimpOffsetArea),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_offset_area_init,
+      };
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+      offset_area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+                                                 "GimpOffsetArea",
+                                                 &offset_area_info, 0);
+    }
+
+  return offset_area_type;
 }
 
 static void
@@ -68,8 +87,8 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -83,8 +102,6 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 		  G_TYPE_NONE, 2,
 		  G_TYPE_INT,
 		  G_TYPE_INT);
-
-  object_class->destroy = gimp_offset_area_destroy;
 
   widget_class->event   = gimp_offset_area_event;
 }
@@ -103,32 +120,6 @@ gimp_offset_area_init (GimpOffsetArea *offset_area)
 
   gtk_widget_add_events (GTK_WIDGET (offset_area), 
                          GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
-}
-
-GtkType
-gimp_offset_area_get_type (void)
-{
-  static GtkType offset_area_type = 0;
-
-  if (!offset_area_type)
-    {
-      GtkTypeInfo offset_area_info =
-      {
-	"GimpOffsetArea",
-	sizeof (GimpOffsetArea),
-	sizeof (GimpOffsetAreaClass),
-	(GtkClassInitFunc) gimp_offset_area_class_init,
-	(GtkObjectInitFunc) gimp_offset_area_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
-      };
-
-      offset_area_type = gtk_type_unique (gtk_drawing_area_get_type (), 
-                                          &offset_area_info);
-    }
-
-  return offset_area_type;
 }
 
 /**

@@ -36,6 +36,13 @@
 #include "libgimp/libgimp-intl.h"
 
 
+enum
+{
+  COLOR_CHANGED,
+  LAST_SIGNAL
+};
+
+
 static void    gimp_color_button_class_init     (GimpColorButtonClass *klass);
 static void    gimp_color_button_init           (GimpColorButton      *gcb);
 static void    gimp_color_button_destroy        (GtkObject            *object);
@@ -71,19 +78,99 @@ static GtkItemFactoryEntry menu_items[] =
   { N_("/Use Foreground Color"), NULL, gimp_color_button_use_fg, 2, NULL },
   { N_("/Use Background Color"), NULL, gimp_color_button_use_bg, 2, NULL }
 };
-static gint nmenu_items = sizeof (menu_items) / sizeof (menu_items[0]);
+
+static guint   gimp_color_button_signals[LAST_SIGNAL] = { 0 };
+
+static GimpButtonClass * parent_class = NULL;
 
 
-enum
+GType
+gimp_color_button_get_type (void)
 {
-  COLOR_CHANGED,
-  LAST_SIGNAL
-};
+  static GType gcb_type = 0;
 
-static guint gimp_color_button_signals[LAST_SIGNAL] = { 0 };
+  if (!gcb_type)
+    {
+      static const GTypeInfo gcb_info =
+      {
+        sizeof (GimpColorButtonClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_button_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorButton),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_button_init,
+      };
 
-static GtkPreviewClass *parent_class = NULL;
+      gcb_type = g_type_register_static (GIMP_TYPE_BUTTON,
+                                         "GimpColorButton", 
+                                         &gcb_info, 0);
+    }
+  
+  return gcb_type;
+}
 
+static void
+gimp_color_button_class_init (GimpColorButtonClass *klass)
+{
+  GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
+  GtkButtonClass *button_class;
+
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
+  button_class = GTK_BUTTON_CLASS (klass);
+ 
+  parent_class = g_type_class_peek_parent (klass);
+
+  gimp_color_button_signals[COLOR_CHANGED] = 
+    g_signal_new ("color_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpColorButtonClass, color_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  klass->color_changed        = NULL;
+
+  object_class->destroy       = gimp_color_button_destroy;
+
+  widget_class->state_changed = gimp_color_button_state_changed;
+
+  button_class->clicked       = gimp_color_button_clicked;
+}
+
+static void
+gimp_color_button_init (GimpColorButton *gcb)
+{
+  GimpRGB color;
+
+  gcb->title  = NULL;
+  gcb->dialog = NULL;
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+  gcb->color_area = gimp_color_area_new (&color, FALSE, GDK_BUTTON2_MASK);
+  g_signal_connect (G_OBJECT (gcb->color_area), "color_changed",
+		    G_CALLBACK (gimp_color_button_color_changed),
+		    gcb);
+
+  gtk_container_add (GTK_CONTAINER (gcb), gcb->color_area);
+  gtk_widget_show (gcb->color_area);
+  
+  /* right-click opens a popup */
+  gcb->item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<popup>", NULL);  
+  gtk_item_factory_set_translate_func (gcb->item_factory,
+				       gimp_color_button_menu_translate,
+	  			       NULL, NULL);
+  gtk_item_factory_create_items (gcb->item_factory, 
+				 G_N_ELEMENTS (menu_items), menu_items, gcb);
+  g_signal_connect (G_OBJECT (gcb), "button_press_event",
+                    G_CALLBACK (gimp_color_button_menu_popup),
+                    gcb); 
+}
 
 static void
 gimp_color_button_destroy (GtkObject *object)
@@ -114,90 +201,17 @@ gimp_color_button_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-
 static void
-gimp_color_button_class_init (GimpColorButtonClass *klass)
-{
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-  GtkButtonClass *button_class;
+gimp_color_button_state_changed (GtkWidget    *widget,
+				 GtkStateType  previous_state)
+{  
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (widget));
 
-  object_class = (GtkObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
-  button_class = (GtkButtonClass *) klass;
- 
-  parent_class = g_type_class_peek_parent (klass);
+  if (!GTK_WIDGET_IS_SENSITIVE (widget) && GIMP_COLOR_BUTTON (widget)->dialog)
+    gtk_widget_hide (GIMP_COLOR_BUTTON (widget)->dialog);
 
-  gimp_color_button_signals[COLOR_CHANGED] = 
-    g_signal_new ("color_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpColorButtonClass, color_changed),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
-  klass->color_changed        = NULL;
-
-  object_class->destroy       = gimp_color_button_destroy;
-
-  widget_class->state_changed = gimp_color_button_state_changed;
-
-  button_class->clicked       = gimp_color_button_clicked;
-}
-
-static void
-gimp_color_button_init (GimpColorButton *gcb)
-{
-  GimpRGB color;
-
-  gcb->title        = NULL;
-  gcb->dialog       = NULL;
-
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-  gcb->color_area = gimp_color_area_new (&color, FALSE, GDK_BUTTON2_MASK);
-  g_signal_connect (G_OBJECT (gcb->color_area), "color_changed",
-		    G_CALLBACK (gimp_color_button_color_changed),
-		    gcb);
-
-  gtk_container_add (GTK_CONTAINER (gcb), gcb->color_area);
-  gtk_widget_show (gcb->color_area);
-  
-  /* right-click opens a popup */
-  gcb->item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<popup>", NULL);  
-  gtk_item_factory_set_translate_func (gcb->item_factory,
-				       gimp_color_button_menu_translate,
-	  			       NULL, NULL);
-  gtk_item_factory_create_items (gcb->item_factory, 
-				 nmenu_items, menu_items, gcb);
-  g_signal_connect (G_OBJECT (gcb), "button_press_event",
-                    G_CALLBACK (gimp_color_button_menu_popup),
-                    gcb); 
-}
-
-GtkType
-gimp_color_button_get_type (void)
-{
-  static GtkType gcb_type = 0;
-
-  if (!gcb_type)
-    {
-      GtkTypeInfo gcb_info =
-      {
-	"GimpColorButton",
-	sizeof (GimpColorButton),
-	sizeof (GimpColorButtonClass),
-	(GtkClassInitFunc) gimp_color_button_class_init,
-	(GtkObjectInitFunc) gimp_color_button_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
-      };
-
-      gcb_type = gtk_type_unique (gtk_button_get_type (), &gcb_info);
-    }
-  
-  return gcb_type;
+  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
+    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
 }
 
 /**
@@ -301,20 +315,6 @@ gimp_color_button_set_type (GimpColorButton   *gcb,
   gimp_color_area_set_type (GIMP_COLOR_AREA (gcb->color_area), type);
 }
 
-static void
-gimp_color_button_state_changed (GtkWidget    *widget,
-				 GtkStateType  previous_state)
-{  
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GIMP_IS_COLOR_BUTTON (widget));
-
-  if (!GTK_WIDGET_IS_SENSITIVE (widget) && GIMP_COLOR_BUTTON (widget)->dialog)
-    gtk_widget_hide (GIMP_COLOR_BUTTON (widget)->dialog);
-
-  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
-}
-
 static gint
 gimp_color_button_menu_popup (GtkWidget *widget,
 			      GdkEvent  *event,
@@ -325,7 +325,6 @@ gimp_color_button_menu_popup (GtkWidget *widget,
   gint x;
   gint y;
 
-  g_return_val_if_fail (data != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_BUTTON (data), FALSE);
 
   gcb = GIMP_COLOR_BUTTON (data);
@@ -353,7 +352,6 @@ gimp_color_button_clicked (GtkButton *button)
   GimpRGB          color;
   gdouble          dcolor[4];
 
-  g_return_if_fail (button != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (button));
 
   gcb = GIMP_COLOR_BUTTON (button);
@@ -402,7 +400,6 @@ gimp_color_button_dialog_ok (GtkWidget *widget,
   GimpRGB          color;
   gdouble          dcolor[4];
 
-  g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (data));
 
   gcb = GIMP_COLOR_BUTTON (data);
@@ -419,7 +416,6 @@ static void
 gimp_color_button_dialog_cancel (GtkWidget *widget, 
 				 gpointer   data)
 {
-  g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (data));
 
   gtk_widget_hide (GIMP_COLOR_BUTTON (data)->dialog);
@@ -433,7 +429,6 @@ gimp_color_button_use_fg (gpointer   callback_data,
 {
   GimpRGB  color;
 
-  g_return_if_fail (callback_data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
@@ -448,7 +443,6 @@ gimp_color_button_use_bg (gpointer   callback_data,
 {
   GimpRGB  color;
 
-  g_return_if_fail (callback_data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);

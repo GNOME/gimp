@@ -36,16 +36,18 @@
 #define DRAG_ICON_OFFSET    -8
 
 
-static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
-
 enum
 {
   COLOR_CHANGED,
   LAST_SIGNAL
 };
 
-static guint           gimp_color_area_signals[LAST_SIGNAL] = { 0 };
-static GtkWidgetClass *parent_class = NULL;
+
+static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
+
+static guint   gimp_color_area_signals[LAST_SIGNAL] = { 0 };
+
+static GtkWidgetClass * parent_class = NULL;
 
 
 static void  gimp_color_area_class_init    (GimpColorAreaClass *klass);
@@ -84,19 +86,22 @@ gimp_color_area_get_type (void)
 
   if (!gca_type)
     {
-      GtkTypeInfo gca_info =
+      static const GTypeInfo gca_info =
       {
-	"GimpColorArea",
-	sizeof (GimpColorArea),
-	sizeof (GimpColorAreaClass),
-	(GtkClassInitFunc) gimp_color_area_class_init,
-	(GtkObjectInitFunc) gimp_color_area_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpColorAreaClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_area_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorArea),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_color_area_init,
       };
 
-      gca_type = gtk_type_unique (GTK_TYPE_PREVIEW, &gca_info);
+      gca_type = g_type_register_static (GTK_TYPE_PREVIEW,
+                                         "GimpColorArea", 
+                                         &gca_info, 0);
     }
   
   return gca_type;

@@ -75,7 +75,7 @@ struct _GimpSizeEntryField
 static void   gimp_size_entry_class_init      (GimpSizeEntryClass *class);
 static void   gimp_size_entry_init            (GimpSizeEntry      *gse);
 
-static void   gimp_size_entry_destroy         (GtkObject          *object);
+static void   gimp_size_entry_finalize        (GObject            *object);
 
 static void   gimp_size_entry_update_value    (GimpSizeEntryField *gsef,
 					       gdouble             value);
@@ -103,19 +103,22 @@ gimp_size_entry_get_type (void)
 
   if (! gse_type)
     {
-      GtkTypeInfo gse_info =
+      static const GTypeInfo gse_info =
       {
-	"GimpSizeEntry",
+        sizeof (GimpSizeEntryClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_size_entry_class_init,
+	NULL,		/* class_finalize */
+	NULL,		/* class_data     */
 	sizeof (GimpSizeEntry),
-	sizeof (GimpSizeEntryClass),
-	(GtkClassInitFunc) gimp_size_entry_class_init,
-	(GtkObjectInitFunc) gimp_size_entry_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_size_entry_init,
       };
 
-      gse_type = gtk_type_unique (GTK_TYPE_TABLE, &gse_info);
+      gse_type = g_type_register_static (GTK_TYPE_TABLE,
+                                         "GimpSizeEntry",
+                                         &gse_info, 0);
     }
   
   return gse_type;
@@ -124,9 +127,9 @@ gimp_size_entry_get_type (void)
 static void
 gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass*) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -157,11 +160,11 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->destroy = gimp_size_entry_destroy;
+  object_class->finalize = gimp_size_entry_finalize;
 
-  klass->value_changed  = NULL;
-  klass->refval_changed = NULL;
-  klass->unit_changed   = NULL;
+  klass->value_changed   = NULL;
+  klass->refval_changed  = NULL;
+  klass->unit_changed    = NULL;
 }
 
 static void
@@ -178,7 +181,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 }
 
 static void
-gimp_size_entry_destroy (GtkObject *object)
+gimp_size_entry_finalize (GObject *object)
 {
   GimpSizeEntry *gse;
 
@@ -193,8 +196,7 @@ gimp_size_entry_destroy (GtkObject *object)
       gse->fields = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 /**
@@ -465,8 +467,8 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 {
   GtkWidget* label;
 
-  g_return_if_fail (gse != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+  g_return_if_fail (text != NULL);
 
   label = gtk_label_new (text);
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);

@@ -23,6 +23,10 @@
 #ifndef __GIMP_BUTTON_H__
 #define __GIMP_BUTTON_H__
 
+
+#include <gtk/gtkbutton.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -35,6 +39,7 @@ extern "C" {
 #define GIMP_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
 #define GIMP_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUTTON))
 #define GIMP_IS_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
+#define GIMP_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUTTON, GimpButtonClass))
 
 
 typedef struct _GimpButtonClass  GimpButtonClass;

@@ -23,12 +23,39 @@
 #ifndef __GIMP_DIALOG_H__
 #define __GIMP_DIALOG_H__
 
+
+#include <gtk/gtkdialog.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 /* For information look into the C source or the html documentation */
 
+
+#define GIMP_TYPE_DIALOG            (gimp_dialog_get_type ())
+#define GIMP_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG, GimpDialog))
+#define GIMP_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG, GimpDialogClass))
+#define GIMP_IS_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DIALOG))
+#define GIMP_IS_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG))
+#define GIMP_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG, GimpDialogClass))
+
+
+typedef struct _GimpDialogClass  GimpDialogClass;
+
+struct _GimpDialog
+{
+  GtkDialog  parent_instance;
+};
+
+struct _GimpDialogClass
+{
+  GtkDialogClass  parent_class;
+};
+
+
+GType       gimp_dialog_get_type            (void);
 
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
@@ -62,9 +89,7 @@ GtkWidget * gimp_dialog_newv                (const gchar        *title,
 					     gint                auto_shrink,
 					     va_list             args);
 
-void        gimp_dialog_set_icon            (GtkWindow          *dialog);
-
-void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
+void        gimp_dialog_create_action_area  (GimpDialog         *dialog,
 
 					     /* specify action area buttons
 					      * as va_list:
@@ -79,8 +104,10 @@ void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
 
 					     ...);
 
-void        gimp_dialog_create_action_areav (GtkDialog          *dialog,
+void        gimp_dialog_create_action_areav (GimpDialog         *dialog,
 					     va_list             args);
+
+void        gimp_dialog_set_icon            (GtkWindow          *dialog);
 
 
 #ifdef __cplusplus

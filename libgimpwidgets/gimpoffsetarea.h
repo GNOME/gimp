@@ -34,6 +34,7 @@ extern "C" {
 #define GIMP_OFFSET_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
 #define GIMP_IS_OFFSET_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
 #define GIMP_IS_OFFSET_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
+#define GIMP_OFFSET_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
 
 
 typedef struct _GimpOffsetAreaClass  GimpOffsetAreaClass;
@@ -62,9 +63,11 @@ struct _GimpOffsetAreaClass
 };
 
 
-GtkType     gimp_offset_area_get_type    (void);
+GType       gimp_offset_area_get_type    (void);
+
 GtkWidget * gimp_offset_area_new         (gint            orig_width,
                                           gint            orig_height);
+
 void        gimp_offset_area_set_size    (GimpOffsetArea *offset_area,
                                           gint            width,
                                           gint            height);

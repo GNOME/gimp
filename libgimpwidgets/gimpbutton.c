@@ -57,19 +57,22 @@ gimp_button_get_type (void)
 
   if (! button_type)
     {
-      GtkTypeInfo button_info =
+      static const GTypeInfo button_info =
       {
-	"GimpButton",
-	sizeof (GimpButton),
-	sizeof (GimpButtonClass),
-	(GtkClassInitFunc) gimp_button_class_init,
-	(GtkObjectInitFunc) gimp_button_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpButtonClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_button_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpButton),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_button_init,
       };
 
-      button_type = gtk_type_unique (GTK_TYPE_BUTTON, &button_info);
+      button_type = g_type_register_static (GTK_TYPE_BUTTON,
+					    "GimpButton",
+					    &button_info, 0);
     }
 
   return button_type;
@@ -81,8 +84,8 @@ gimp_button_class_init (GimpButtonClass *klass)
   GObjectClass   *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
