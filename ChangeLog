@@ -1,3 +1,9 @@
+2003-02-13  Raphael Quinet  <quinet@gamers.org>
+
+	* docs/make-todo: fix the address of the GIMP bug database so that
+	it is possible to use bug references like <bugs>#106008</bugs> in
+	TODO.xml.  Fixes bug #106008.
+
 2003-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/plug_in.pdb: fixed plugins_query() I broke
