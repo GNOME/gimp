@@ -541,18 +541,26 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         bevent = (GdkEventButton *) event;
 
-        /*  in "click to focus" mode, the BUTTON_PRESS arrives before
-         *  FOCUS_IN, so we have to update the tool's modifier state here
-         */
-        if (state && ! GTK_WIDGET_HAS_FOCUS (canvas))
+        if (! GTK_WIDGET_HAS_FOCUS (canvas))
           {
-            gimp_display_shell_update_tool_modifiers (shell, 0, state);
+            /*  in "click to focus" mode, the BUTTON_PRESS arrives before
+             *  FOCUS_IN, so we have to update the tool's modifier state here
+             */
+            if (state)
+              {
+                gimp_display_shell_update_tool_modifiers (shell, 0, state);
 
-            tool_manager_oper_update_active (gimp,
-                                             &image_coords, state,
-                                             gdisp);
+                tool_manager_oper_update_active (gimp,
+                                                 &image_coords, state,
+                                                 gdisp);
+              }
 
             button_press_before_focus = TRUE;
+
+            /*  we expect a FOCUS_IN event to follow, but can't rely
+             *  on it, so force one
+             */
+            gdk_window_focus (canvas->window, time);
           }
 
         /*  ignore new mouse events  */
@@ -590,6 +598,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                   GDK_BUTTON_RELEASE_MASK,
                                   NULL, NULL, time);
               }
+
+            gdk_keyboard_grab (canvas->window, FALSE, time);
 
             /*  save the current modifier state because tools don't get
              *  key events while BUTTON1 is down
@@ -710,6 +720,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
               }
 
+            gdk_keyboard_ungrab (time);
             gdk_pointer_ungrab (time);
 
             /*  restore the tool's modifier state because it didn't get
@@ -1225,6 +1236,8 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
                                 GDK_BUTTON_RELEASE_MASK,
                                 NULL, NULL, event->time);
 
+              gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
+
 	      gimp_move_tool_start_hguide (active_tool, gdisp);
 	    }
 	}
@@ -1268,6 +1281,8 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
                                 GDK_BUTTON1_MOTION_MASK |
                                 GDK_BUTTON_RELEASE_MASK,
                                 NULL, NULL, event->time);
+
+              gdk_keyboard_grab (shell->canvas->window, FALSE, event->time);
 
 	      gimp_move_tool_start_vguide (active_tool, gdisp);
 	    }

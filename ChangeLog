@@ -1,5 +1,16 @@
 2003-08-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): if the canvas has no
+	focus on button_press, set it explicitly instead of asuming that
+	focus_in will follow anyway. Should once more fix bug #85202.
+
+	Grab the keyboard while button1 is down so the focus can't go away
+	while the tool can't receive modifier events. Should fix more
+	#85202-alike bugs.
+
+2003-08-16  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): moved
 	the g_signal_stop_emission_by_name() right before the calls to
 	gimp_size_entry_set_refval() so we only block the duplicate
