@@ -1,3 +1,9 @@
+2002-12-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/ripply-anim.scm: applied a patch from
+	Chris Purnell <cjp@lost.org.uk> that adds the possibility to
+	specify the edge behaviour (#83767).
+
 2002-12-10  Michael Natterer  <mitch@gimp.org>
 
 	The unbelievable happened: a menu bar per display (optionally)

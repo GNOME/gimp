@@ -16,7 +16,7 @@
       (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
 	(gimp-floating-sel-anchor floating-sel)))
 
-(define (script-fu-ripply-anim img drawable displacement num-frames)
+(define (script-fu-ripply-anim img drawable displacement num-frames edge-type)
   (let* ((old-bg (car (gimp-palette-get-background)))
 	 (width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
@@ -77,7 +77,7 @@
 	     (set! dup-layer (car (gimp-image-get-active-layer dup-image)))
 	     (plug-in-displace 1 out-imagestack this-layer
 			       displacement displacement
-			       TRUE TRUE dup-layer dup-layer 2)
+			       TRUE TRUE dup-layer dup-layer edge-type)
 	     
 	     (gimp-image-undo-enable dup-image)
 	     (gimp-image-delete dup-image)
@@ -102,4 +102,5 @@
 		    SF-IMAGE "Image to Animage" 0
 		    SF-DRAWABLE "Drawable to Animate" 0
 		    SF-ADJUSTMENT _"Rippling Strength" '(3 0 256 1 10 1 0)
-		    SF-ADJUSTMENT _"Number of Frames" '(15 0 256 1 10 0 1))
+		    SF-ADJUSTMENT _"Number of Frames" '(15 0 256 1 10 0 1)
+		    SF-OPTION _"Edge Behaviour" '(_"Warp" _"Smear" _"Black"))
