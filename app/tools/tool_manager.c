@@ -313,7 +313,7 @@ tool_manager_control_active (Gimp           *gimp,
   if (! tool_manager->active_tool)
     return;
 
-  if (tool_manager->active_tool->gdisp == gdisp)
+  if (gdisp && tool_manager->active_tool->gdisp == gdisp)
     {
       gimp_tool_control (tool_manager->active_tool,
                          action,

@@ -1,5 +1,11 @@
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/tool_manager.c (tool_manager_control_active): check
+	for gdisp != NULL to avoid to crash when being called from
+	indexed_ok_callback().
+
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: do as the gtk+ folks did and replace the gtk-doc
 	version check with an all-sh version (#99216).
 
