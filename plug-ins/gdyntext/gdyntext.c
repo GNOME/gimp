@@ -61,45 +61,42 @@ MAIN()
 
 
 static void 
-gdt_query(void)
+gdt_query (void)
 {
-  INIT_I18N_UI();
-
+  static GimpParamDef gdt_args[] = 
   {
-    static GimpParamDef gdt_args[] = 
-    {
-      /* standard params */
-      { PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
-      { PARAM_IMAGE,    "image",           "Input image"                  },
-      { PARAM_DRAWABLE, "drawable",        "Input drawable"               },
-      /* gdyntext params */
-      { PARAM_STRING,   "text",            "Text to render"               },
-      { PARAM_INT32,    "antialias",       "Generate antialiased text"    },
-      { PARAM_INT32,    "alignment",       "Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }" },
-      { PARAM_INT32,    "rotation",        "Text rotation (degrees)"      },
-      { PARAM_INT32,    "line_spacing",    "Line spacing"                 },
-      { PARAM_COLOR,    "color",           "Text color"                   },
-      { PARAM_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
-      { PARAM_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" },
-    };
-    static GimpParamDef gdt_rets[] = 
-    {
-      { PARAM_LAYER,    "layer",           "The text layer"               },
-    };
-    static int ngdt_args = sizeof(gdt_args) / sizeof(gdt_args[0]);
-    static int ngdt_rets = sizeof(gdt_rets) / sizeof(gdt_rets[0]);
+    /* standard params */
+    { PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",           "Input image"                  },
+    { PARAM_DRAWABLE, "drawable",        "Input drawable"               },
+    /* gdyntext params */
+    { PARAM_STRING,   "text",            "Text to render"               },
+    { PARAM_INT32,    "antialias",       "Generate antialiased text"    },
+    { PARAM_INT32,    "alignment",       "Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }" },
+    { PARAM_INT32,    "rotation",        "Text rotation (degrees)"      },
+    { PARAM_INT32,    "line_spacing",    "Line spacing"                 },
+    { PARAM_COLOR,    "color",           "Text color"                   },
+    { PARAM_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
+    { PARAM_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" }
+  };
+  static GimpParamDef gdt_rets[] = 
+  {
+    { PARAM_LAYER,    "layer",           "The text layer"               }
+  };
+  static gint ngdt_args = sizeof (gdt_args) / sizeof (gdt_args[0]);
+  static gint ngdt_rets = sizeof (gdt_rets) / sizeof (gdt_rets[0]);
     
-    gimp_install_procedure("plug_in_dynamic_text",
-			   "GIMP Dynamic Text",
-			   "",
-			   "Marco Lamberto <lm@geocities.com>",
-			   "Marco Lamberto",
-			   "Jan 1999",
-			   N_("<Image>/Filters/Render/Dynamic Text..."),
-			   "RGB*,GRAY*,INDEXED*",
-			   PROC_PLUG_IN,
-			   ngdt_args, ngdt_rets, gdt_args, gdt_rets);
-  }
+  gimp_install_procedure("plug_in_dynamic_text",
+			 "GIMP Dynamic Text",
+			 "",
+			 "Marco Lamberto <lm@geocities.com>",
+			 "Marco Lamberto",
+			 "Jan 1999",
+			 N_("<Image>/Filters/Render/Dynamic Text..."),
+			 "RGB*,GRAY*,INDEXED*",
+			 PROC_PLUG_IN,
+			 ngdt_args, ngdt_rets,
+			 gdt_args, gdt_rets);
 }
 
 
