@@ -1,3 +1,8 @@
+1999-02-14  Jay Cox  <jaycox@earthlink.net>
+
+	* app/layers_dialog.c: applied Michael Natterer's fix for the
+ 	layer movement bug.
+
 Sun Feb 14 01:27:29 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	New manpage plus bumper fun pack of bugfixes.

@@ -1331,11 +1331,11 @@ layers_dialog_position_layer (Layer * layer,
   gtk_list_remove_items (GTK_LIST (layersD->layer_list), list);
   layersD->layer_widgets = g_slist_remove (layersD->layer_widgets, layer_widget);
 
-  suspend_gimage_notify--;
-
   /*  Add it back at the proper index  */
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), list, new_index);
   layersD->layer_widgets = g_slist_insert (layersD->layer_widgets, layer_widget, new_index);
+
+  suspend_gimage_notify--;
 }
 
 
