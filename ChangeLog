@@ -1,3 +1,7 @@
+2003-06-29  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: fix --enable-default-binary
+
 2003-06-28  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/pat.c: Save patterns with alpha

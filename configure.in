@@ -1020,7 +1020,7 @@ AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
 # Allow to configure the gimp environment
 #########################################
 
-AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp binary (default=no)], , enable_default_binary=no)
+AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default gimp binary (default=no)], , enable_default_binary=no)
 
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 
