@@ -1,3 +1,8 @@
+2004-08-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/edge.c (edge_dialog): use a combo box instead of
+	too many radio buttons.
+
 2004-08-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpmenufactory.c (gimp_menu_factory_manager_new):
