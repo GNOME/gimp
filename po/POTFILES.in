@@ -1,15 +1,34 @@
 # Files from the Gimp ditribution which have already been
 # marked to allow runtime translation of messages
 
-
 app/about_dialog.c
+app/airbrush.c
 app/app_procs.c
 app/batch.c
+app/bezier_select.c
 app/blend.c
 app/boundary.c
+app/brightness_contrast.c
+app/brush_edit.c
+app/brush_select.c
+app/bucket_fill.c
+app/by_color_select.c
+app/channel.c
+app/channel_cmds.c
+app/channels_dialog.c
+app/clone.c
+app/color_balance.c
+app/color_picker.c
+app/color_select.c
+app/commands.c
+app/convert.c
+app/convolve.c
+app/crop.c
+app/curves.c
+app/desaturate.c
+app/devices.c
 app/docindex.c
 app/docindexif.c
-app/drawable_cmds.c
 app/edit_cmds.c
 app/edit_selection.c
 app/ellipse_select.c
@@ -22,17 +41,33 @@ app/flip_tool.c
 app/floating_sel.c
 app/floating_sel_cmds.c
 app/free_select.c
-app/fuzzy_select.c
 app/gdisplay.c
 app/gdisplay_ops.c
 app/install.c
 app/main.c
 app/menus.c
 app/plug_in.c
+app/preferences_dialog.c
+app/procedural_db.c
+app/rect_select.c
+app/resize.c
+app/rotate_tool.c
+app/scale_tool.c
+app/session.c
+app/shear_tool.c
+app/text_tool.c
+app/threshold.c
+app/tile.c
+app/tile_cache.c
+app/tile_manager.c
+app/tile_swap.c
+app/tips_dialog.c
 app/tools.c
+app/transform_core.c
 app/transform_tool.c
 app/undo_cmds.c
 app/xcf.c
+libgimp/gimpintl.h
 
 # Originally marked by the authors (GNU people)
 app/regex.c
