@@ -8,7 +8,7 @@ to be released as GIMP version 2.2 in a not too distant future.
 
 Bugs fixed in GIMP 2.0.4
 ========================
-- several build fixes (#147799, #148813)
+- several build fixes (#147799, #148813, #147013)
 - fixed bug in Polarize plug-in (#147799)
 - fixed out-of-bounds access in Ink tool code (#144856)
 - improved antialiasing of elliptical selections (#147836)
