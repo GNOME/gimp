@@ -4,6 +4,11 @@
 
 2004-10-31  Simon Budig  <simon@gimp.org>
 
+	* data/images/gimp-splash.png: new splash based on a great photo
+	(and pumpkin) by Seth Burgess <sjburges@gimp.org>.
+
+2004-10-31  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/common/plasma.c: Fixed handling of 1x1 selection and
 	selection out of drawable.
 
