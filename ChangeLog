@@ -1,3 +1,8 @@
+2002-12-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig.c (gimp_config_serialize): check the return
+	value of close().
+
 2002-12-20  Nathan Summers  <rock@gimp.org>
 
 	* app/xcf/xcf-write.[ch]

@@ -237,6 +237,10 @@ gimp_config_serialize (GObject      *object,
                write (fd, footer, strlen (footer)) != -1  &&
                write (fd, "\n", 1)                 != -1);
 
+
+  if (close (fd) != 0)
+    success = FALSE;
+
   if (! success)
     {
       gchar *msg;
@@ -258,8 +262,6 @@ gimp_config_serialize (GObject      *object,
 
       unlink (tmpname);
     }
-
-  close (fd);
 
 #ifdef G_OS_WIN32
   /* win32 rename can't overwrite */
