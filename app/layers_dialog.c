@@ -3081,8 +3081,7 @@ typedef struct _EditLayerOptions EditLayerOptions;
 struct _EditLayerOptions {
   GtkWidget *query_box;
   GtkWidget *name_entry;
-
-  LayerWidget *layer_widget;
+  int        layer_ID;
 };
 
 static void
@@ -3093,25 +3092,27 @@ edit_layer_query_ok_callback (GtkWidget *w,
   Layer *layer;
 
   options = (EditLayerOptions *) client_data;
-  layer = options->layer_widget->layer;
 
-  /*  Set the new layer name  */
-  if (GIMP_DRAWABLE(layer)->name)
+  if ((layer = layer_get_ID (options->layer_ID)))
     {
-      /*  If the layer is a floating selection, make it a channel  */
-      if (layer_is_floating_sel (layer))
+      /*  Set the new layer name  */
+      if (GIMP_DRAWABLE(layer)->name)
 	{
-	  floating_sel_to_layer (layer);
-	  gdisplays_flush ();
+	  /*  If the layer is a floating selection, make it a channel  */
+	  if (layer_is_floating_sel (layer))
+	    {
+	      floating_sel_to_layer (layer);
+	    }
+	  
+	  g_free (GIMP_DRAWABLE(layer)->name);
 	}
-
-      g_free (GIMP_DRAWABLE(layer)->name);
+      GIMP_DRAWABLE(layer)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
     }
-  GIMP_DRAWABLE(layer)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-  gtk_label_set (GTK_LABEL (options->layer_widget->label), GIMP_DRAWABLE(layer)->name);
-  gtk_widget_draw (options->layer_widget->label, NULL);
 
-  gtk_widget_destroy (options->query_box);
+  gdisplays_flush ();
+
+  gtk_widget_destroy (options->query_box); 
+  
   g_free (options);
 }
 
@@ -3151,8 +3152,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 
   /*  the new options structure  */
   options = (EditLayerOptions *) g_malloc (sizeof (EditLayerOptions));
-  options->layer_widget = layer_widget;
-
+  options->layer_ID = drawable_ID (GIMP_DRAWABLE (layer_widget->layer));
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");

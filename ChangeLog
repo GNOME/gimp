@@ -1,3 +1,9 @@
+Sun Mar 15 02:06:18 CST 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/layers_dialog.c: pass layer_ID instead of layer_widget to
+	rename funtion to prevent dereferencing freed mem. Fixes layer
+	rename bug.
+
 Sun Mar 15 06:15:37 1998  Tim Janik  <timj@gimp.org>
 
 	* app/gimage.c (gimage_remove_layer): check whether the removed layer
