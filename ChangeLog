@@ -1,3 +1,9 @@
+2000-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in.c (plug_in_proc_def_remove): pass FALSE to
+	plug_in_proc_def_destroy() so the proc_def structure gets actually
+	freed.
+
 2000-03-24  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/bmp/Makefile.am :  add bmpos2.c and bmpos2.h
@@ -75,7 +81,8 @@ Fri Mar 24 15:48:40 CET 2000  Sven Neumann <sven@gimp.org>
 Fri Mar 24 15:31:33 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/commands.[ch]
-	* app/edit_cmds.c * app/gdisplay.c
+	* app/edit_cmds.c
+	* app/gdisplay.c
 	* app/global_edit.[ch]
 	* app/menus.c
 	* tools/pdbgen/pdb/edit.pdb: applied sligthly modified versions 

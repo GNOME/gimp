@@ -2657,7 +2657,7 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
   proc_defs = g_slist_remove (proc_defs, proc_def);
 
   /*  Destroy the definition  */
-  plug_in_proc_def_destroy (proc_def, TRUE);
+  plug_in_proc_def_destroy (proc_def, FALSE);
 }
 
 static void
