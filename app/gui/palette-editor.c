@@ -857,8 +857,16 @@ palette_refresh_callback (GtkWidget *w,
     {
       palette_free_palettes (); 
       palette_init_palettes();
+      palette_create_palette_menu (palette, default_palette_entries);
+      palette_calc_scrollbar (palette);
+      palette_draw_entries (palette);
+      palette_draw_current_entry (palette);
     }
-  palette_create_palette_menu (palette, default_palette_entries); 
+  else
+    {
+      palette_free_palettes (); 
+      palette_init_palettes();
+    }
   
 }
 
@@ -1466,10 +1474,9 @@ palette_refresh_invoker (Argument *args)
    */
   
   int success = TRUE ;
-  if(palette)
-    palette_free_palettes ();      
-
+  palette_free_palettes();
   palette_init_palettes();
+
   return procedural_db_return_args (&palette_refresh_proc, success);
 }
 

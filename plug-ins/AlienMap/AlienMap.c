@@ -160,7 +160,7 @@ gint do_bluenone;
 /***** Functions *****/
 
 
-MAIN ();
+MAIN ()
 
 static void
 query ()

@@ -173,7 +173,7 @@ static gint32 load_image (char *filename) {
 	char *temp;
 	int fd;
 	PatternHeader ph;
-	gchar *buffer;
+	guchar *buffer;
 	gint32 image_ID, layer_ID;
 	GDrawable *drawable;
 	gint line;

@@ -41,7 +41,7 @@ tips_dialog_create ()
   if (tips_count == 0)
     {
       temp = g_malloc (512);
-      sprintf (temp, "%s/%s", DATADIR, TIPS_FILE_NAME);
+      sprintf ((char *)temp, "%s/%s", DATADIR, TIPS_FILE_NAME);
       read_tips_file ((char *)temp);
       g_free (temp);
     }

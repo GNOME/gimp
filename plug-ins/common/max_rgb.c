@@ -48,7 +48,7 @@ static void	run	(char	*name,
 			 GParam **return_vals);
 static GStatusType	MAIN_FUNCTION (gint32 drawable_id);
 static gint	DIALOG ();
-static void	ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message);
+static void	ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message);
 
 static void
 OK_CALLBACK (GtkWidget *widget, gpointer   data);
@@ -169,7 +169,7 @@ run (char	*name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_color(drawable_id))
 	{
-	  ERROR_DIALOG (1, (guchar *)"RGB drawable is not selected.");
+	  ERROR_DIALOG (1, "RGB drawable is not selected.");
 	  return;
 	}
       if (! DIALOG ())
@@ -302,7 +302,7 @@ DIALOG ()
 }
 
 static void
-ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message)
+ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message)
 {
   GtkWidget *dlg;
   GtkWidget *table;

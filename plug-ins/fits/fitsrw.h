@@ -68,7 +68,7 @@ typedef union {
 } FITS_DATA;
 
 typedef struct fits_record_list {        /* Record list */
- unsigned char data[FITS_RECORD_SIZE];
+ char data[FITS_RECORD_SIZE];
  struct fits_record_list *next_record;
 } FITS_RECORD_LIST;
 

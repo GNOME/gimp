@@ -760,7 +760,7 @@ void fits_print_header (FITS_HDU_LIST *hdr)
 
 static FITS_RECORD_LIST *fits_read_header (FILE *fp, int *nrec)
 
-{unsigned char record[FITS_RECORD_SIZE];
+{char record[FITS_RECORD_SIZE];
  FITS_RECORD_LIST *start_list = NULL, *cu_record = NULL, *new_record;
  FITS_DATA *fdat;
  int k, simple, xtension;

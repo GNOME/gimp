@@ -272,7 +272,7 @@ load_image (char *filename)
 		       drawable->height, TRUE, FALSE);
 
   data_buf = g_new (char, width);
-  dest     = g_new (char, width * 2);
+  dest     = g_new (guchar, width * 2);
 
   for (i = 0; i < height; i++)
     {
@@ -340,7 +340,7 @@ save_image (char   *filename,
       fprintf (fp, "static char *%s_bits [] = \n{\n", givals.icon_name);
 
       /*  write the brush data to the file  */
-      src_buf = g_new (char, w * drawable->bpp);
+      src_buf = g_new (guchar, w * drawable->bpp);
       for (i = 0; i < h; i++)
 	{
 	  gimp_pixel_rgn_get_row (&pixel_rgn, src_buf, 0, i, w);

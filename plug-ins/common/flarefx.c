@@ -243,7 +243,7 @@ static gint flare_dialog()
   GtkWidget *entry;
   gchar **argv;
   gint  argc;
-  guchar buffer[32];
+  gchar buffer[32];
 
   argc = 1;
   argv = g_new (gchar *, 1);

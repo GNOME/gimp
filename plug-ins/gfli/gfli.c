@@ -207,7 +207,7 @@ void fli_read_header(FILE *f, s_fli_header *fli_header)
 	}
 }
 
-void fli_read_frame(FILE *f, s_fli_header *fli_header, gchar *framebuf, gchar *cmap)
+void fli_read_frame(FILE *f, s_fli_header *fli_header, guchar *framebuf, gchar *cmap)
 {
 	s_fli_frame fli_frame;
 	unsigned long framepos;
@@ -257,7 +257,7 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, gchar *framebuf, gchar *c
 					break;
 				case 15 : { /* fli_brun */
 					unsigned short yc;
-					char *pos;
+					guchar *pos;
 					for (yc=0; yc< fli_header->height; yc++) {
 						unsigned short xc, pc, pcnt;
 						pc=fli_read_char(f);
@@ -286,7 +286,7 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, gchar *framebuf, gchar *c
 				}
 				case 16 : { /* fli_copy */
 					unsigned long cc;
-					char *pos;
+					guchar *pos;
 					pos=framebuf;
 					for (cc=fli_header->width * fli_header->height; cc>0; cc--) {
 						*(pos++)=fli_read_char(f);
@@ -295,7 +295,7 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, gchar *framebuf, gchar *c
 				}
 				case 12 : { /* fli_lc */ 
 					unsigned short yc, firstline, numline;
-					char *pos;
+					guchar *pos;
 					firstline = fli_read_short(f);
 					numline = fli_read_short(f);
 					for (yc=0; yc < numline; yc++) {
@@ -328,7 +328,7 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, gchar *framebuf, gchar *c
 				}
 				case 7  : { /* fli_lc2 */ 
 					unsigned short yc, lc, numline;
-					char *pos;
+					guchar *pos;
 					yc=0;
 					numline = fli_read_short(f);
 					for (lc=0; lc < numline; lc++) {
@@ -415,8 +415,8 @@ gint32 load_image (char *filename)
 	GDrawable *drawable;
 	gint32 image_ID, layer_ID;
     	
-	gchar *frame_buffer;
-	gchar cmap[768];
+	guchar *frame_buffer;
+	guchar cmap[768];
 	GPixelRgn pixel_rgn;
 	s_fli_header fli_header;
 

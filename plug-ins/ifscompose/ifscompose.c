@@ -62,7 +62,7 @@ typedef enum {
 
 typedef enum {
   VALUE_PAIR_INT,
-  VALUE_PAIR_DOUBLE,
+  VALUE_PAIR_DOUBLE
 } ValuePairType;
 
 typedef struct

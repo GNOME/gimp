@@ -729,15 +729,15 @@ create_brush(IfsComposeVals *ifsvals, gint *brush_size, gdouble *brush_offset)
 #ifdef DEBUG_BRUSH
 	  putchar(brush_chars[(int)(pixel*3.999)]);
 	  totpix += pixel;
-#endif DEBUG_BRUSH
+#endif /* DEBUG_BRUSH */
 	}
 #ifdef DEBUG_BRUSH
       putchar('\n');
-#endif DEBUG_BRUSH
+#endif /* DEBUG_BRUSH */
     }
 #ifdef DEBUG_BRUSH
   printf("Brush total / area = %f\n",totpix/SQR(ifsvals->subdivide));
-#endif DEBUG_BRUSH
+#endif /* DEBUG_BRUSH */
   return brush;
 }
 

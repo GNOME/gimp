@@ -471,7 +471,7 @@ solid_noise_dialog (void)
   GtkObject *scale_data;
   gchar **argv;
   gint  argc;
-  guchar buffer[32];
+  gchar buffer[32];
 
   /*  Set args  */
   argc = 1;

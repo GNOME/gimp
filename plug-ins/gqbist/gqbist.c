@@ -374,7 +374,7 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 
 			gimp_progress_init ("Qbist ...");
 			for (row=sel_y1; row<sel_y2; row++) {
-				qbist(qbist_info, (guchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
+				qbist(qbist_info, (gchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
 				gimp_pixel_rgn_set_row(&imagePR, row_data, sel_x1, row, (sel_x2-sel_x1));
 				if ((row % 5) == 0) 
 					gimp_progress_update((gfloat)(row-sel_y1)/(gfloat)(sel_y2-sel_y1));

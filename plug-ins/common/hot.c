@@ -94,12 +94,12 @@ struct piArgs {
 typedef enum {
   act_lredux = 0,
   act_sredux = 1,
-  act_flag = 2,
+  act_flag = 2
 } hotAction;
 
 typedef enum {
   mode_ntsc = 0,
-  mode_pal = 1,
+  mode_pal = 1
 } hotModes;
 
 #define	CHROMA_LIM      50.0		/* chroma amplitude limit */

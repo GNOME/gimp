@@ -198,7 +198,7 @@ save_image (char   *filename,
   /*int palloc[drawable->width][drawable->height];*/
   int *palloc;
   guchar *buffer, *buf2;
-  guchar *width, *height;
+  gchar *width, *height;
   GPixelRgn pixel_rgn;
   char *name;
 
@@ -227,8 +227,8 @@ save_image (char   *filename,
   buffer = g_new(guchar,drawable->bpp);
   buf2 = g_new(guchar,drawable->bpp);
 
-  width = malloc (1);
-  height = malloc (1);
+  width = malloc (2);
+  height = malloc (2);
   sprintf(width," ");
   sprintf(height," ");
   if (strcmp (gtmvals.clwidth, "") != 0) {
@@ -334,7 +334,7 @@ static gint save_dialog ()
   GtkTooltips *tips;
   GdkColor tips_fg, tips_bg;
   gchar **argv;
-  guchar buffer[32];
+  gchar buffer[32];
   gint argc;
 
   bint.run=FALSE;

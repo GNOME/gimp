@@ -48,7 +48,7 @@ static void	run	(char	*name,
 			 GParam **return_vals);
 static GStatusType	MAIN_FUNCTION ();
 static gint	DIALOG ();
-static void	ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message);
+static void	ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message);
 
 static void
 OK_CALLBACK (GtkWidget *widget, gpointer   data);
@@ -349,7 +349,7 @@ DIALOG ()
 }
 
 static void
-ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message)
+ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message)
 {
   GtkWidget *dlg;
   GtkWidget *table;

@@ -1004,7 +1004,7 @@ apply_blinds(void)
 {
   GPixelRgn des_rgn;
   GPixelRgn src_rgn;
-  gchar *src_rows,*des_rows;
+  guchar *src_rows,*des_rows;
   int x,y;
   guchar bg[4];
 

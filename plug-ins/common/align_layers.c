@@ -53,7 +53,7 @@ static void	gtkW_iscale_update (GtkAdjustment *adjustment, gpointer data);
 static void	gtkW_ientry_update (GtkWidget *widget, gpointer data);
 static GtkWidget *gtkW_dialog_new (char *name, GtkSignalFunc ok_callback,
 				   GtkSignalFunc close_callback);
-static void	gtkW_message_dialog (gint gtk_was_initialized, guchar *message);
+static void	gtkW_message_dialog (gint gtk_was_initialized, gchar *message);
 static GtkWidget *gtkW_message_dialog_new (char * name);
 static void
 gtkW_table_add_toggle (GtkWidget	*table,
@@ -83,11 +83,11 @@ GtkWidget *gtkW_table_add_button (GtkWidget	*table,
 				  gpointer value);
 typedef struct
 {
-  guchar *name;
+  gchar *name;
   gpointer data;
 } gtkW_menu_item;
 GtkWidget *gtkW_table_add_menu (GtkWidget *parent,
-				guchar *name,
+				gchar *name,
 				int x,
 				int y,
 				GtkSignalFunc imenu_update,
@@ -482,7 +482,7 @@ DIALOG ()
   GSList	*group = NULL;
 #endif
   int		index = 0;
-  guchar	buffer[10];
+  gchar	buffer[10];
   gchar	**argv;
   gint	argc;
 
@@ -733,7 +733,7 @@ gtkW_dialog_new (char * name,
 }
 
 static void
-gtkW_message_dialog (gint gtk_was_initialized, guchar *message)
+gtkW_message_dialog (gint gtk_was_initialized, gchar *message)
 {
   GtkWidget *dlg;
   GtkWidget *table;
@@ -1008,7 +1008,7 @@ gtkW_table_add_button (GtkWidget	*table,
 
 GtkWidget *
 gtkW_table_add_menu (GtkWidget *table,
-		     guchar *name,
+		     gchar *name,
 		     int x,
 		     int y,
 		     GtkSignalFunc menu_update,
@@ -1018,7 +1018,7 @@ gtkW_table_add_menu (GtkWidget *table,
 {
   GtkWidget *label;
   GtkWidget *menu, *menuitem, *option_menu;
-  guchar buf[64];
+  gchar buf[64];
   gint i;
 
   label = gtk_label_new (name);

@@ -17,9 +17,9 @@ static void run(char *name,
 								GParam * param,
 								int *nreturn_vals,
 								GParam ** return_vals);
-static int colors_equal(gchar *col1, gchar *col2, int bytes);
+static int colors_equal(guchar *col1, gchar *col2, int bytes);
 static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
-		gchar *color);
+		guchar *color);
 
 static void doit(GDrawable *drawable, gint32);
 
@@ -211,8 +211,8 @@ static void doit(GDrawable *drawable, gint32 image_id)
 }
 
 static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
-		gchar *color) {
-	gchar tl[4], tr[4], bl[4], br[4];
+		guchar *color) {
+	guchar tl[4], tr[4], bl[4], br[4];
 
 	gimp_pixel_rgn_get_pixel(pr, tl, 0, 0);
 	gimp_pixel_rgn_get_pixel(pr, tr, width - 1, 0);
@@ -256,7 +256,7 @@ static int guess_bgcolor(GPixelRgn *pr, int width, int height, int bytes,
 	}
 }
 
-static int colors_equal(gchar *col1, gchar *col2, int bytes) {
+static int colors_equal(guchar *col1, gchar *col2, int bytes) {
 	int equal = 1;
 	int b;
 

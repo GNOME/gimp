@@ -100,10 +100,10 @@ static void query () {
 /* Declare internal functions. */
 
 static gint32 load_image (char *filename);
-static void load_1(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_4(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_8(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_24(FILE *fp, int width, int height, char *buffer, int bytes);
+static void load_1(FILE *fp, int width, int height, guchar *buffer, int bytes);
+static void load_4(FILE *fp, int width, int height, guchar *buffer, int bytes);
+static void load_8(FILE *fp, int width, int height, guchar *buffer, int bytes);
+static void load_24(FILE *fp, int width, int height, guchar *buffer, int bytes);
 static void readline(FILE *fp, guchar* buffer, int bytes);
 
 static gint save_image (char *filename, gint32 image, gint32 layer);
@@ -273,7 +273,7 @@ static gint32 load_image (char *filename) {
   return image;
 }
 
-static void load_8(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void load_8(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   int row;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
@@ -287,7 +287,7 @@ static void load_8(FILE *fp, int width, int height, char *buffer, int bytes) {
   g_free(line);
 }
 
-static void load_24(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void load_24(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes * 3);
@@ -305,7 +305,7 @@ static void load_24(FILE *fp, int width, int height, char *buffer, int bytes) {
   g_free(line);
 }
 
-static void load_1(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void load_1(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   int x, y;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
@@ -324,7 +324,7 @@ static void load_1(FILE *fp, int width, int height, char *buffer, int bytes) {
   g_free(line);
 }
 
-static void load_4(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void load_4(FILE *fp, int width, int height, guchar *buffer, int bytes) {
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes);

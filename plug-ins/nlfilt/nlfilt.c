@@ -67,7 +67,7 @@ struct piArgs {
 typedef enum {
    filter_alpha_trim,
    filter_opt_est,
-   filter_edge_enhance,
+   filter_edge_enhance
 } FilterType;
 
 /* other structure declarations */

@@ -50,7 +50,8 @@ WriteBMP (filename,image,drawable_ID)
   int rows, cols, channels, MapSize, SpZeile;
   long BitsPerPixel;
   int colors;
-  char *temp_buf,*pixels;
+  char *temp_buf;
+  guchar *pixels;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
   GDrawableType drawable_type;
@@ -132,7 +133,7 @@ WriteBMP (filename,image,drawable_ID)
   
   /* fetch the image */
   
-  pixels = (char *) g_malloc(drawable->width*drawable->height*channels);
+  pixels = (guchar *) g_malloc(drawable->width*drawable->height*channels);
   gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, 0, drawable->width, drawable->height);
   
   /* And let's begin the progress */
@@ -237,10 +238,10 @@ void WriteColorMap(FILE *f, int red[MAXCOLORS], int green[MAXCOLORS],
 
 void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile)
   FILE *f;
-  char *src;
+  guchar *src;
   int width,height,encoded,channels,bpp,spzeile;
 {
-  char buf[16];
+  guchar buf[16];
   char *temp,v,g;
   int xpos,ypos,i,j,rowstride,laenge;
   

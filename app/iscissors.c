@@ -284,7 +284,7 @@ selection_to_bezier(GtkWidget *w, gpointer none)
 	tools_select(BEZIER_SELECT);
     }
    return;
-};
+}
 
 static IScissorsOptions *
 iscissors_selection_options (void)

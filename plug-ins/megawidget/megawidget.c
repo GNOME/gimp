@@ -223,14 +223,14 @@ mw_radio_result(struct mwRadioGroup *rg) {
 
 GSList *
 mw_value_radio_group_new(GtkWidget *parent, gchar *name, 
-			 struct mwValueRadioGroup *rg, gint *var)
+			 struct mwValueRadioGroup *rg, glong *var)
 {
    GSList *lst = NULL;
    GtkWidget *frame;
    GtkWidget *vbox;
    GtkWidget *button;
    struct mwValueRadioGroup *c;
-   gint value;
+   glong value;
 
    if (name != NULL) {
      frame = gtk_frame_new(name);
@@ -707,12 +707,12 @@ ui_toggle_callback(GtkWidget *widget, gpointer data) {
 
 static void
 ui_value_toggle_callback(GtkWidget *widget, gpointer data) {
-   gint id;
+   glong id;
 
    /* Get radio button ID */
-   id=(gint)gtk_object_get_data(GTK_OBJECT(widget),"Radio_ID");
+   id=(glong)gtk_object_get_data(GTK_OBJECT(widget),"Radio_ID");
    if (GTK_TOGGLE_BUTTON (widget)->active) {
-     *(gint *)data= id;
+     *(glong *)data= id;
 #ifndef NO_PREVIEW
      if (do_preview && mw_do_preview!=NULL) (*mw_do_preview)(NULL);
 #endif

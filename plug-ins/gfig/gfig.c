@@ -198,39 +198,39 @@ typedef enum DobjType {
   COPY_OBJ,
   MOVE_COPY_OBJ,
   DEL_OBJ,
-  NULL_OPER,
+  NULL_OPER
 } DOBJTYPE;
 
 typedef enum Gridtype {
   RECT_GRID = 0,
   POLAR_GRID,
-  ISO_GRID,
+  ISO_GRID
 } GRIDTYPE;
 
 typedef enum DrawonLayers {
   SINGLE_LAYER = 0,
   ORIGINAL_LAYER,
-  MULTI_LAYER,
+  MULTI_LAYER
 } DRAWONLAYERS;
 
 typedef enum LayersBGType {
   LAYER_TRANS_BG = 0,
   LAYER_BG_BG,
   LAYER_WHITE_BG,
-  LAYER_COPY_BG,
+  LAYER_COPY_BG
 } DRAWLAYERBG;
 
 typedef enum PaintType {
   PAINT_BRUSH_TYPE = 0,
   PAINT_SELECTION_TYPE,
-  PAINT_SELECTION_FILL_TYPE,
+  PAINT_SELECTION_FILL_TYPE
 } PAINTTYPE;
 
 typedef enum BrshType {
   BRUSH_BRUSH_TYPE=0,
   BRUSH_PENCIL_TYPE,
   BRUSH_AIRBRUSH_TYPE,
-  BRUSH_PATTERN_TYPE,
+  BRUSH_PATTERN_TYPE
 } BRUSH_TYPE;
 
 
@@ -333,24 +333,24 @@ typedef enum Selection_Type {
   ADD=0,
   SUBTRACT=1,
   REPLACE=2,
-  INTERSECT=3,
+  INTERSECT=3
 } SELECTION_TYPE;
     
 
 typedef enum Arc_Type { 
   ARC_SEGMENT,
-  ARC_SECTOR,
+  ARC_SECTOR
 } ARC_TYPE;
 
 typedef enum Fill_Type {
   FILL_FOREGROUND = 0,
   FILL_BACKGROUND = 1,
-  FILL_PATTERN = 2,
+  FILL_PATTERN = 2
 } FILL_TYPE;
 
 typedef enum Fill_When {
   FILL_EACH = 0,
-  FILL_AFTER,
+  FILL_AFTER
 } FILL_WHEN;
 
 struct selection_option {
@@ -443,7 +443,7 @@ typedef struct BrushDesc {
   gchar * bname; /* name of the brush */
   gint32 width;  /* Width of brush */
   gint32 height;  /* Height of brush */
-  gchar *pv_buf; /* Buffer where brush placed */
+  guchar *pv_buf; /* Buffer where brush placed */
   gint16 x_off;
   gint16 y_off;
   gint bpp; /* Depth - should ALWAYS be the same for all BRUSHDESC */
@@ -576,7 +576,7 @@ static gint   has_alpha;
 static gdouble scale_x_factor,scale_y_factor;
 static gdouble org_scale_x_factor,org_scale_y_factor;
 
-MAIN ();
+MAIN ()
 
 static void
 query ()
@@ -870,7 +870,7 @@ plug_in_parse_gfig_path()
   Tkane from gflare plugin
  */
 void
-gfig_name_encode (guchar *dest, guchar *src)
+gfig_name_encode (gchar *dest, guchar *src)
 {
   int	cnt = MAX_LOAD_LINE - 1;
 
@@ -891,7 +891,7 @@ gfig_name_encode (guchar *dest, guchar *src)
   Translate "\\040" to SPACE, etc.
  */
 void
-gfig_name_decode (guchar *dest, guchar *src)
+gfig_name_decode (gchar *dest, gchar *src)
 {
   int	cnt = MAX_LOAD_LINE - 1;
   int	tmp;
@@ -11775,7 +11775,7 @@ d_load_bezier(FILE *from)
 
 static fp_pnt_cnt = 0;
 static fp_pnt_chunk = 0;
-gdouble *fp_pnt_pnts = NULL;;
+gdouble *fp_pnt_pnts = NULL;
 
 
 static void

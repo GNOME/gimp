@@ -5920,7 +5920,7 @@ gradients_get_active_invoker(Argument *args)
 		return_args[1].value.pdb_pointer = g_strdup(curr_gradient->name);
 
 	return return_args;
-}; /* gradients_get_active_invoker */
+} /* gradients_get_active_invoker */
 
 
 /***** gradients_set_active *****/

@@ -117,7 +117,7 @@ typedef struct
 
 typedef struct
 {
-  guchar *name;
+  gchar *name;
   gpointer data;
 } gtkW_menu_item;
 /* gtkW global variables */
@@ -143,16 +143,16 @@ static void	gtkW_menu_update (GtkWidget *widget, gpointer   data);
 static void	gtkW_toggle_change_value (gtkW_widget_table	*wtable);
 /* gtkW method */
 GtkWidget	*gtkW_check_button_new (GtkWidget	*parent,
-					guchar		*name,
+					gchar		*name,
 					GtkSignalFunc	update,
 					gint		*value);
-static GtkWidget	*gtkW_dialog_new (guchar	*name,
+static GtkWidget	*gtkW_dialog_new (gchar	*name,
 					  GtkSignalFunc	ok_callback,
 					  GtkSignalFunc	close_callback);
-static GtkWidget	*gtkW_frame_new (GtkWidget *parent, guchar *name);
+static GtkWidget	*gtkW_frame_new (GtkWidget *parent, gchar *name);
 static GtkWidget	*gtkW_hbox_new (GtkWidget *parent);
-static void	gtkW_message_dialog (gint gtk_was_initialized, guchar *message);
-static GtkWidget	*gtkW_message_dialog_new (guchar * name);
+static void	gtkW_message_dialog (gint gtk_was_initialized, gchar *message);
+static GtkWidget	*gtkW_message_dialog_new (gchar * name);
 static GtkWidget	*gtkW_table_add_button (GtkWidget	*table,
 						gchar		*name,
 						gint		x0,
@@ -183,7 +183,7 @@ static GtkWidget	*gtkW_table_add_iscale_entry (GtkWidget	*table,
 						      gdouble	step,
 						      gpointer	table_entry);
 static GtkWidget	 *gtkW_table_add_menu (GtkWidget	*parent,
-					       guchar		*name,
+					       gchar		*name,
 					       gint		x,
 					       gint		y,
 					       GtkSignalFunc	imenu_update,
@@ -192,7 +192,7 @@ static GtkWidget	 *gtkW_table_add_menu (GtkWidget	*parent,
 					       gint		item_num,
 					       gpointer		table_entry);
 static GtkWidget	*gtkW_table_add_toggle (GtkWidget	*table,
-						guchar		*name,
+						gchar		*name,
 						gint		x,
 						gint		y,
 						GtkSignalFunc	update,
@@ -200,7 +200,7 @@ static GtkWidget	*gtkW_table_add_toggle (GtkWidget	*table,
 						gpointer	widget_entry);
 static GtkWidget	*gtkW_table_new (GtkWidget *parent, gint col, gint row);
 static GtkWidget	*gtkW_vbox_add_button (GtkWidget	*vbox,
-					       guchar		*name,
+					       gchar		*name,
 					       GtkSignalFunc	update,
 					       gpointer		data);
 static GtkWidget	*gtkW_vbox_new (GtkWidget *parent);
@@ -347,7 +347,7 @@ typedef struct
   gint	scale;
   gint	start_offset;
   gint	seed;
-  guchar last_file_name[256];
+  gchar last_file_name[256];
 } ValueType;
 
 static ValueType VALS =
@@ -401,10 +401,10 @@ static void	hsv_to_rgb (int *h, int *s, int *v);
 static gdouble	logistic_function (CML_PARAM *param, gdouble x, gdouble power);
 static gint	DIALOG ();
 static GtkWidget *CML_dialog_sub_panel_new (GtkWidget *parent,
-					    guchar *name,
+					    gchar *name,
 					    CML_PARAM *param,
 					    gint channel_id);
-static GtkWidget *CML_dialog_advanced_panel_new (GtkWidget *parent, guchar *name);
+static GtkWidget *CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name);
 void	preview_update ();
 static void	function_graph_new (GtkWidget *widget, gpointer data);
 static void	CML_set_or_randomize_seed_callback (GtkWidget *widget, gpointer data);
@@ -419,7 +419,7 @@ static gint	force_overwrite (char *filename);
 static void	CML_overwrite_ok_callback (GtkWidget *widget, gpointer   data);
 static void	CML_preview_update_callback (GtkWidget *widget, gpointer   data);
 static void	CML_load_from_file_callback (GtkWidget *widget, gpointer client_data);
-static gint	CML_load_parameter_file (guchar *filename, gint interactive_mode);
+static gint	CML_load_parameter_file (gchar *filename, gint interactive_mode);
 static void	CML_execute_load_from_file (GtkWidget *widget, gpointer client_data);
 static gint	parse_line_to_gint (FILE *file, gint *flag);
 static gdouble	parse_line_to_gdouble (FILE *file, gint *flag);
@@ -528,7 +528,7 @@ run (char	*name,
       break;
     case RUN_NONINTERACTIVE:
       {
-	guchar *filename = param[3].data.d_string;
+	gchar *filename = param[3].data.d_string;
 
 	if (! CML_load_parameter_file (filename, FALSE))
 	  return;
@@ -1620,7 +1620,7 @@ DIALOG ()
 
 static GtkWidget *
 CML_dialog_sub_panel_new (GtkWidget	*parent,
-			  guchar	*name,
+			  gchar	*name,
 			  CML_PARAM	*param,
 			  gint		channel_id)
 {
@@ -1733,7 +1733,7 @@ CML_dialog_sub_panel_new (GtkWidget	*parent,
 }
 
 static GtkWidget *
-CML_dialog_advanced_panel_new (GtkWidget *parent, guchar *name)
+CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name)
 {
   GtkWidget	*frame;
   GtkWidget	*subframe;
@@ -1742,7 +1742,7 @@ CML_dialog_advanced_panel_new (GtkWidget *parent, guchar *name)
   gint		index = 0;
   gint		widget_offset = 12;
   gint		channel_id;
-  guchar	*ch_name[] = { "Hue", "Saturation", "Value" };
+  gchar	*ch_name[] = { "Hue", "Saturation", "Value" };
   CML_PARAM	*param;
 
   frame = gtkW_frame_new (parent, name);
@@ -2091,7 +2091,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
     }
   if ((err != 0) && (file == NULL))
     {
-      guchar buffer[CML_LINE_SIZE];
+      gchar buffer[CML_LINE_SIZE];
 
       sprintf (buffer, "Error: could not open \"%s\"", filename);
       gtkW_message_dialog (TRUE, buffer);
@@ -2136,7 +2136,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
       fclose(file);
 #ifdef	VERBOSE_DIALOGS
       {
-	guchar buffer[CML_LINE_SIZE];
+	gchar buffer[CML_LINE_SIZE];
 
 	sprintf (buffer, "Parameters were saved to \"%s\"", filename);
 	gtkW_message_dialog (TRUE, buffer);
@@ -2266,7 +2266,7 @@ CML_execute_load_from_file (GtkWidget *widget, gpointer client_data)
 }
 
 static gint
-CML_load_parameter_file (guchar *filename, gint interactive_mode)
+CML_load_parameter_file (gchar *filename, gint interactive_mode)
 {
   FILE	*file;
   int	channel_id;
@@ -2282,7 +2282,7 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
 
   if (!file)
     {
-      guchar buffer[CML_LINE_SIZE];
+      gchar buffer[CML_LINE_SIZE];
 
       if (interactive_mode)
 	{
@@ -2293,7 +2293,7 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
     }
   else
     {
-      guchar line[CML_LINE_SIZE];
+      gchar line[CML_LINE_SIZE];
       gdouble version = 0.99;
 
       version = parse_line_to_gdouble (file, &flag); /* old format returns 1 */
@@ -2410,8 +2410,8 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
 static gint
 parse_line_to_gint (FILE *file, gint *flag)
 {
-  guchar line[CML_LINE_SIZE];
-  guchar *str;
+  gchar line[CML_LINE_SIZE];
+  gchar *str;
   gint	value;
 
   if (! *flag)
@@ -2438,8 +2438,8 @@ parse_line_to_gint (FILE *file, gint *flag)
 static gdouble
 parse_line_to_gdouble (FILE *file, gint *flag)
 {
-  guchar line[CML_LINE_SIZE];
-  guchar *str;
+  gchar line[CML_LINE_SIZE];
+  gchar *str;
   gdouble value;
 
   if (! *flag)
@@ -2636,7 +2636,7 @@ gtkW_toggle_change_value (gtkW_widget_table *wtable)
 
 GtkWidget *
 gtkW_check_button_new (GtkWidget	*parent,
-		       guchar		*name,
+		       gchar		*name,
 		       GtkSignalFunc	update,
 		       gint		*value)
 {
@@ -2653,7 +2653,7 @@ gtkW_check_button_new (GtkWidget	*parent,
 }
 
 static GtkWidget *
-gtkW_dialog_new (guchar		*name,
+gtkW_dialog_new (gchar		*name,
 		 GtkSignalFunc	ok_callback,
 		 GtkSignalFunc	close_callback)
 {
@@ -2689,7 +2689,7 @@ gtkW_dialog_new (guchar		*name,
 
 static GtkWidget *
 gtkW_frame_new (GtkWidget	*parent,
-		guchar		*name)
+		gchar		*name)
 {
   GtkWidget *frame;
 
@@ -2718,7 +2718,7 @@ gtkW_hbox_new (GtkWidget *parent)
 }
 
 static void
-gtkW_message_dialog (gint gtk_was_initialized, guchar *message)
+gtkW_message_dialog (gint gtk_was_initialized, gchar *message)
 {
   GtkWidget *dlg;
   GtkWidget *table;
@@ -2751,7 +2751,7 @@ gtkW_message_dialog (gint gtk_was_initialized, guchar *message)
 }
 
 static GtkWidget *
-gtkW_message_dialog_new (guchar * name)
+gtkW_message_dialog_new (gchar * name)
 {
   GtkWidget *dlg, *button;
 
@@ -2811,7 +2811,7 @@ gtkW_table_add_dscale_entry (GtkWidget		*table,
 {
   GtkObject *adjustment;
   GtkWidget *label, *hbox, *scale, *entry;
-  guchar *buffer;
+  gchar *buffer;
 
   label = gtk_label_new (name);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -2843,7 +2843,7 @@ gtkW_table_add_dscale_entry (GtkWidget		*table,
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, GTKW_ENTRY_WIDTH, 0);
 
-  buffer = (guchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
+  buffer = (gchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
   sprintf (buffer, "%6f", *value);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
@@ -2880,7 +2880,7 @@ gtkW_table_add_iscale_entry (GtkWidget		*table,
 {
   GtkObject *adjustment;
   GtkWidget *label, *hbox, *scale, *entry;
-  guchar *buffer;
+  gchar *buffer;
 
   label = gtk_label_new (name);
   gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
@@ -2911,7 +2911,7 @@ gtkW_table_add_iscale_entry (GtkWidget		*table,
   gtk_object_set_user_data (adjustment, entry);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, GTKW_ENTRY_WIDTH, 0);
-  buffer = (guchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
+  buffer = (gchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
   sprintf (buffer, "%d", *value);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
@@ -2935,7 +2935,7 @@ gtkW_table_add_iscale_entry (GtkWidget		*table,
 
 static GtkWidget *
 gtkW_table_add_menu (GtkWidget		*table,
-		     guchar		*name,
+		     gchar		*name,
 		     gint		x,
 		     gint		y,
 		     GtkSignalFunc	menu_update,
@@ -2995,7 +2995,7 @@ gtkW_table_add_menu (GtkWidget		*table,
 
 static GtkWidget *
 gtkW_table_add_toggle (GtkWidget	*table,
-		       guchar		*name,
+		       gchar		*name,
 		       gint		x,
 		       gint		y,
 		       GtkSignalFunc	update,
@@ -3041,7 +3041,7 @@ gtkW_table_new (GtkWidget *parent, gint col, gint row)
 
 static GtkWidget *
 gtkW_vbox_add_button (GtkWidget		*vbox,
-		      guchar		*name,
+		      gchar		*name,
 		      GtkSignalFunc	update,
 		      gpointer		data)
 {

@@ -34,7 +34,7 @@ struct mwRadioGroup {
 };
 struct mwValueRadioGroup {
    gchar *name;
-   gint val;
+   glong val;
 };
 
 struct mwPreview {
@@ -76,7 +76,7 @@ GSList *mw_radio_group_new(GtkWidget *parent, gchar *name,
                            struct mwRadioGroup *rg);
 gint mw_radio_result(struct mwRadioGroup *rg);
 GSList * mw_value_radio_group_new(GtkWidget *parent, gchar *name,
-				  struct mwValueRadioGroup *rg, gint *var);
+				  struct mwValueRadioGroup *rg, glong *var);
 
 GtkWidget *mw_toggle_button_new(GtkWidget *parent, gchar *fname,
                                 gchar *label, gint *varp);

@@ -1,3 +1,31 @@
+
+Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
+
+        * app/iscissors.c, app/tips_dialog.c, app/gradient.c,
+        libgimp/gimp.c, plug-ins/AlienMap/AlienMap.c,
+        plug-ins/bmp/bmp.c, plug-ins/fits/fitsrw.h,
+        plug-ins/fits/fitsrw.c, plug-ins/flarefx/flarefx.c,
+        plug-ins/gfig/gfig.c, plug-ins/gfli/gfli.c,
+        plug-ins/gicon/gicon.c, plug-ins/gqbist/gqbist.c,
+        plug-ins/gtm/gtm.c, plug-ins/hot/hot.c,
+        plug-ins/ifscompose/ifscompose.c,
+        plug-ins/ifscompose/ifscompose_utils.c
+        plug-ins/max_rgb/max_rgb.c, plug-ins/nlfilt/nlfilt.c,
+        plug-ins/pat/pat.c, plug-ins/pcx/pcx.c, plug-ins/rotate/rotate.c,
+        plug-ins/script-fu/script-fu-server.c, plug-ins/snoise/snoise.c,
+        plug-ins/threshold_alpha/threshold_alpha.c,
+        plug-ins/zealouscrop/zealouscrop.c :gimp-joke-980321
+
+	plug-ins/CML_explorer, plug-ins/autocrop,
+        plug-ins/align_layers, plug-ins/blinds,
+        plug-ins/bmp, plug-ins/megawidget: gimp-joke-980322
+	
+	Applied gimp-joke-980322-0.patch and gimp-joke-980321-0.patch 
+	from Yasuhiro SHIRASAKI <joke@awa.tohoku.ac.jp>. Mostly
+ 	portability for DEC osf1's cc. Lots of MAIN();'s, trailing 
+	commas in enums, and guchar/gchar madness.
+	
+
 Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* autoconfed for random/lrand48/rand madness
@@ -86,7 +114,7 @@ Thu Mar 19 01:04:56 PST 1998 Manish Singh <yosh@gimp.org>
 
 Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	 *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
+	 * AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
         align_layers/align_layers.c animationplay/animationplay.c
         bmp/bmpwrite.c dbbrowser/dbbrowser.c emboss/emboss.c
         exchange/exchange.c faxg3/faxg3.c faxg3/g3.c gbr/gbr.c

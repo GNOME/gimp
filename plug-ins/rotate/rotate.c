@@ -118,7 +118,7 @@ static void  rotate_ok_callback (GtkWidget *widget,
 				 gpointer   data);
 static void  rotate_toggle_update (GtkWidget *widget,
 				   gpointer   data);
-static void  ErrorMessage (guchar *message);
+static void  ErrorMessage (gchar *message);
 gint32 my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID);
 gint32 my_gimp_selection_is_empty (gint32 image_ID);
 
@@ -770,7 +770,7 @@ rotate_toggle_update (GtkWidget *widget,
  * This code was stolen from Pavel Greenfield's Colormap Rotation plug-in */
 
 static void 
-ErrorMessage(guchar *message)
+ErrorMessage(gchar *message)
 {
   GtkWidget *window, *label, *button, *table;
   gchar **argv=g_new (gchar *, 1);

@@ -29,7 +29,7 @@ static void run(char *name,
 		GParam * param,
 		int *nreturn_vals,
 		GParam ** return_vals);
-static inline int colours_equal(gchar *col1, gchar *col2, int bytes);
+static inline int colours_equal(guchar *col1, gchar *col2, int bytes);
 
 static void do_zcrop(GDrawable *drawable, gint32);
 
@@ -271,7 +271,7 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
 }
 
 
-static inline int colours_equal(gchar *col1, gchar *col2, int bytes)
+static inline int colours_equal(guchar *col1, gchar *col2, int bytes)
 {
   int b;
 
