@@ -36,6 +36,20 @@
 # (but try to keep the structure clean).
 #
 
+# Use $HOST_CC if defined. $CC may point to a cross-compiler
+if test x"$CC_FOR_BUILD" = x; then
+  if test x"$HOST_CC" != x; then
+    CC_FOR_BUILD="$HOST_CC"
+  else
+    if test x"$CC" != x; then
+      CC_FOR_BUILD="$CC"
+    else
+      CC_FOR_BUILD=cc
+    fi
+  fi
+fi
+
+
 # This is needed to find uname on a Pyramid OSx when run in the BSD universe.
 # (ghazi@noc.rutgers.edu 8/24/94.)
 if (test -f /.attbin/uname) >/dev/null 2>&1 ; then
@@ -78,7 +92,7 @@ main:
 	ret \$31,(\$26),1
 	.end main
 EOF
-	${CC-cc} $dummy.s -o $dummy 2>/dev/null
+	$CC_FOR_BUILD $dummy.s -o $dummy 2>/dev/null
 	if test "$?" = 0 ; then
 		./$dummy
 		case "$?" in
@@ -203,6 +217,32 @@ EOF
     atari*:OpenBSD:*:*)
 	echo m68k-unknown-openbsd${UNAME_RELEASE}
 	exit 0 ;;
+    # The situation for MiNT is a little confusing.  The machine name
+    # can be virtually everything (everything which is not
+    # "atarist" or "atariste" at least should have a processor 
+    # > m68000).  The system name ranges from "MiNT" over "FreeMiNT"
+    # to the lowercase version "mint" (or "freemint").  Finally
+    # the system name "TOS" denotes a system which is actually not
+    # MiNT.  But MiNT is downward compatible to TOS, so this should
+    # be no problem.
+    atarist[e]:*MiNT:*:* | atarist[e]:*mint:*:* | atarist[e]:*TOS:*:*)
+        echo m68k-atari-mint${UNAME_RELEASE}
+	exit 0 ;;
+    atari*:*MiNT:*:* | atari*:*mint:*:* | atarist[e]:*TOS:*:*)
+	echo m68k-atari-mint${UNAME_RELEASE}
+        exit 0 ;;
+    *falcon*:*MiNT:*:* | *falcon*:*mint:*:* | *falcon*:*TOS:*:*)
+        echo m68k-atari-mint${UNAME_RELEASE}
+	exit 0 ;;
+    milan*:*MiNT:*:* | milan*:*mint:*:* | *milan*:*TOS:*:*)
+        echo m68k-milan-mint${UNAME_RELEASE}
+        exit 0 ;;
+    hades*:*MiNT:*:* | hades*:*mint:*:* | *hades*:*TOS:*:*)
+        echo m68k-hades-mint${UNAME_RELEASE}
+        exit 0 ;;
+    *:*MiNT:*:* | *:*mint:*:* | *:*TOS:*:*)
+        echo m68k-unknown-mint${UNAME_RELEASE}
+        exit 0 ;;
     sun3*:NetBSD:*:*)
 	echo m68k-sun-netbsd${UNAME_RELEASE}
 	exit 0 ;;
@@ -236,7 +276,7 @@ EOF
     VAX*:ULTRIX*:*:*)
 	echo vax-dec-ultrix${UNAME_RELEASE}
 	exit 0 ;;
-    2020:CLIX:*:*)
+    2020:CLIX:*:* | 2430:CLIX:*:*)
 	echo clipper-intergraph-clix${UNAME_RELEASE}
 	exit 0 ;;
     mips:*:*:UMIPS | mips:*:*:RISCos)
@@ -260,7 +300,7 @@ EOF
 	  exit (-1);
 	}
 EOF
-	${CC-cc} $dummy.c -o $dummy \
+	$CC_FOR_BUILD $dummy.c -o $dummy \
 	  && ./$dummy `echo "${UNAME_RELEASE}" | sed -n 's/\([0-9]*\).*/\1/p'` \
 	  && rm $dummy.c $dummy && exit 0
 	rm -f $dummy.c $dummy
@@ -326,7 +366,7 @@ EOF
 			exit(0);
 			}
 EOF
-		${CC-cc} $dummy.c -o $dummy && ./$dummy && rm $dummy.c $dummy && exit 0
+		$CC_FOR_BUILD $dummy.c -o $dummy && ./$dummy && rm $dummy.c $dummy && exit 0
 		rm -f $dummy.c $dummy
 		echo rs6000-ibm-aix3.2.5
 	elif grep bos324 /usr/include/stdio.h >/dev/null 2>&1; then
@@ -406,7 +446,7 @@ EOF
                   exit (0);
               }
 EOF
-	(${CC-cc} $dummy.c -o $dummy 2>/dev/null ) && HP_ARCH=`./$dummy`
+	($CC_FOR_BUILD $dummy.c -o $dummy 2>/dev/null ) && HP_ARCH=`./$dummy`
 	rm -f $dummy.c $dummy
 	esac
 	HPUX_REV=`echo ${UNAME_RELEASE}|sed -e 's/[^.]*.[0B]*//'`
@@ -438,7 +478,7 @@ EOF
 	  exit (0);
 	}
 EOF
-	${CC-cc} $dummy.c -o $dummy && ./$dummy && rm $dummy.c $dummy && exit 0
+	$CC_FOR_BUILD $dummy.c -o $dummy && ./$dummy && rm $dummy.c $dummy && exit 0
 	rm -f $dummy.c $dummy
 	echo unknown-hitachi-hiuxwe2
 	exit 0 ;;
@@ -447,9 +487,6 @@ EOF
 	exit 0 ;;
     9000/8??:4.3bsd:*:*)
 	echo hppa1.0-hp-bsd
-	exit 0 ;;
-    *9??*:MPE*:*:*)
-	echo hppa1.0-hp-mpeix
 	exit 0 ;;
     *9??*:MPE*:*:*)
 	echo hppa1.0-hp-mpeix
@@ -570,8 +607,9 @@ EOF
 	esac
 
 	# The BFD linker knows what the default object file format is, so
-	# first see if it will tell us.
-	ld_help_string=`ld --help 2>&1`
+	# first see if it will tell us. cd to the root directory to prevent
+	# problems with other programs or directories called `ld' in the path.
+	ld_help_string=`cd /; ld --help 2>&1`
 	ld_supported_emulations=`echo $ld_help_string \
 			 | sed -ne '/supported emulations:/!d
 				    s/[ 	][ 	]*/ /g
@@ -606,7 +644,7 @@ EOF
 		.end main
 EOF
 		LIBC=""
-		${CC-cc} $dummy.s -o $dummy 2>/dev/null
+		$CC_FOR_BUILD $dummy.s -o $dummy 2>/dev/null
 		if test "$?" = 0 ; then
 			./$dummy
 			case "$?" in
@@ -651,7 +689,7 @@ EOF
   return 0;
 }
 EOF
-	  ${CC-cc} $dummy.c -o $dummy 2>/dev/null && ./$dummy "${UNAME_MACHINE}" && rm $dummy.c $dummy && exit 0
+	  $CC_FOR_BUILD $dummy.c -o $dummy 2>/dev/null && ./$dummy "${UNAME_MACHINE}" && rm $dummy.c $dummy && exit 0
 	  rm -f $dummy.c $dummy
 	else
 	  # Either a pre-BFD a.out linker (linux-gnuoldld)
@@ -694,7 +732,7 @@ EOF
   return 0;
 }
 EOF
-	  ${CC-cc} $dummy.c -o $dummy 2>/dev/null && ./$dummy "${UNAME_MACHINE}" && rm $dummy.c $dummy && exit 0
+	  $CC_FOR_BUILD $dummy.c -o $dummy 2>/dev/null && ./$dummy "${UNAME_MACHINE}" && rm $dummy.c $dummy && exit 0
 	  rm -f $dummy.c $dummy
 	fi ;;
 # ptx 4.0 does uname -s correctly, with DYNIX/ptx in there.  earlier versions
@@ -958,7 +996,7 @@ main ()
 }
 EOF
 
-${CC-cc} $dummy.c -o $dummy 2>/dev/null && ./$dummy && rm $dummy.c $dummy && exit 0
+$CC_FOR_BUILD $dummy.c -o $dummy 2>/dev/null && ./$dummy && rm $dummy.c $dummy && exit 0
 rm -f $dummy.c $dummy
 
 # Apollos put the system type in the environment.

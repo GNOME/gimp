@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 .deps
+.libs
 gimp
 colormap_dialog.c
 colormap_dialog.t.h

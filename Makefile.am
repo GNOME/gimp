@@ -55,7 +55,6 @@ EXTRA_DIST = \
 gimpdata_DATA = \
 	gimprc			 \
 	gimprc_user		 \
-	gimprc.5		 \
 	gtkrc			 \
 	unitrc			 \
 	gimp_logo.ppm		 \

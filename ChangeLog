@@ -1,3 +1,13 @@
+Sat May  1 12:14:54 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* acinclude.m4
+	* config.guess
+	* config.sub
+	* ltconfig
+	* ltmain.sh: upgrade to libtool 1.3
+
+	* Makefile.am: don't install gimprc.5 in our sharedir
+
 Sat May  1 11:05:02 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/print/print.c (get_printers): OS/2 printing.
@@ -1582,7 +1592,7 @@ Fri Mar 19 20:24:20 PST 1999 Manish Singh <yosh@gimp.org>
 	* ltconfig
 	* ltmain.sh: upgrade to libtool 1.2f
 
-	* autogen.sh: libtool is not required to autogen gtk+
+	* autogen.sh: libtool is not required to autogen gimp
 
 	* acconfig.h: remove WITH_SYMBOL_UNDERSCORE (not explictly
 	needed)
