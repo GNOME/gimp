@@ -1,5 +1,10 @@
 2004-06-13  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: Make sure PangoFT2 is using a recent enough fontconfig
+	since many people have broken and confused setups.
+
+2004-06-13  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/pdb/gradient_edit.pdb: cleans ups so generated
 	output doesn't warn about uninitialize variable use, and whitespace
 	cosmetic cleanups.
