@@ -43,28 +43,31 @@ extern gchar *prog_name;
 StackTraceMode stack_trace_mode = STACK_TRACE_QUERY;
 
 void
-gimp_message_func (gchar *str)
+gimp_message_func (const gchar    *log_domain,
+		   GLogLevelFlags  log_level,
+		   const gchar    *message,
+		   gpointer        data)
 {
   if (console_messages == FALSE)
     {
       switch (message_handler)
 	{
 	case MESSAGE_BOX:
-	  gimp_message_box (str, NULL, NULL);
+	  gimp_message_box ((gchar *) message, NULL, NULL);
 	  break;
 
 	case ERROR_CONSOLE:
-	  error_console_add (str);
+	  error_console_add ((gchar *) message);
 	  break;
 
 	default:
-	  g_printerr ("%s: %s\n", prog_name, str);
+	  g_printerr ("%s: %s\n", prog_name, (gchar *) message);
 	  break;
 	}
     }
   else
     {
-      g_printerr ("%s: %s\n", prog_name, str);
+      g_printerr ("%s: %s\n", prog_name, (gchar *) message);
     }
 }
 

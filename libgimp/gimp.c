@@ -94,23 +94,26 @@ void gimp_read_expect_msg   (WireMessage *msg,
 
 
 #ifndef G_OS_WIN32
-static void       gimp_plugin_sigfatal_handler (gint          sig_num);
-static void       gimp_plugin_sigchld_handler  (gint          sig_num);
+static void       gimp_plugin_sigfatal_handler (gint            sig_num);
+static void       gimp_plugin_sigchld_handler  (gint            sig_num);
 #endif
-static gboolean   gimp_plugin_io_error_handler (GIOChannel   *channel,
-						GIOCondition  cond,
-						gpointer      data);
+static gboolean   gimp_plugin_io_error_handler (GIOChannel     *channel,
+						GIOCondition    cond,
+						gpointer        data);
 
-static gboolean   gimp_write                   (GIOChannel   *channel,
-						guint8       *buf,
-						gulong        count);
-static gboolean   gimp_flush                   (GIOChannel   *channel);
+static gboolean   gimp_write                   (GIOChannel     *channel,
+						guint8         *buf,
+						gulong          count);
+static gboolean   gimp_flush                   (GIOChannel     *channel);
 static void       gimp_loop                    (void);
-static void       gimp_config                  (GPConfig     *config);
-static void       gimp_proc_run                (GPProcRun    *proc_run);
-static void       gimp_temp_proc_run           (GPProcRun    *proc_run);
-static void       gimp_message_func            (gchar        *str);
-static void       gimp_process_message         (WireMessage  *msg);
+static void       gimp_config                  (GPConfig       *config);
+static void       gimp_proc_run                (GPProcRun      *proc_run);
+static void       gimp_temp_proc_run           (GPProcRun      *proc_run);
+static void       gimp_message_func            (const gchar    *log_domain,
+						GLogLevelFlags  log_level,
+						const gchar    *message,
+						gpointer        data);
+static void       gimp_process_message         (WireMessage    *msg);
 static void       gimp_close                   (void);
 
 
@@ -256,6 +259,15 @@ gimp_main (int   argc,
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
 
+  g_log_set_handler ("LibGimp",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+  g_log_set_handler ("",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+
   if (strcmp (argv[4], "-query") == 0)
     {
       if (PLUG_IN_INFO.query_proc)
@@ -263,8 +275,6 @@ gimp_main (int   argc,
       gimp_close ();
       return 0;
     }
-
-  g_set_message_handler ((GPrintFunc) gimp_message_func);
 
   temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
 
@@ -310,9 +320,12 @@ gimp_default_display (void)
 }
 
 static void
-gimp_message_func (gchar *str)
+gimp_message_func (const gchar    *log_domain,
+		   GLogLevelFlags  log_level,
+		   const gchar    *message,
+		   gpointer        data)
 {
-  gimp_message (str);
+  gimp_message ((gchar *) message);
 }
 
 void

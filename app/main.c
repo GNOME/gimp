@@ -340,7 +340,12 @@ main (int    argc,
       exit (0);
     }
 
-  g_set_message_handler ((GPrintFunc) gimp_message_func);
+  g_log_set_handler ("Gimp",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+
+  /* g_set_message_handler ((GPrintFunc) gimp_message_func); */
 
 #ifndef G_OS_WIN32
 

@@ -1,5 +1,13 @@
 2000-07-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/errors.[ch]
+	* app/main.c
+	* libgimp/gimp.c: my last commit redirected all messages to the
+	console. Use g_log_set_handler() instead of g_set_message_handler()
+	(which is deprecated anyway).
+
+2000-07-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* libgimp/Makefile.am: set G_LOG_DOMAINs for the app and for
 	libgimp so we can distinguish their warnings from plug-in ones.

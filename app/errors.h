@@ -27,7 +27,11 @@ typedef enum
 
 extern StackTraceMode stack_trace_mode;
 
-void  gimp_message_func (gchar *);
+void  gimp_message_func (const gchar    *log_domain,
+			 GLogLevelFlags  log_level,
+			 const gchar    *message,
+			 gpointer        data);
+
 void  gimp_fatal_error  (gchar *, ...);
 void  gimp_terminate    (gchar *, ...);
 
