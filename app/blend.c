@@ -215,8 +215,8 @@ gradient_type_callback (GtkWidget *w,
 }
 
 static void
-repeat_type_callback(GtkWidget *widget,
-		     gpointer   client_data)
+repeat_type_callback (GtkWidget *widget,
+		      gpointer   client_data)
 {
   blend_options->repeat = (RepeatMode) client_data;
 }
@@ -562,14 +562,14 @@ blend_button_release (Tool           *tool,
       /* we can't do callbacks easily with the PDB, so this UI/backend
        * separation (though good) is ignored for the moment */
 #ifdef BLEND_UI_CALLS_VIA_PDB
-      return_vals =
+      return_vals = 
 	procedural_db_run_proc ("gimp_blend",
 				&nreturn_vals,
 				PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
 				PDB_INT32, (gint32) blend_options->blend_mode,
-				PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
+				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (blend_options),
 				PDB_INT32, (gint32) blend_options->gradient_type,
-				PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
+				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (blend_options) * 100,
 				PDB_FLOAT, (gdouble) blend_options->offset,
 				PDB_INT32, (gint32) blend_options->repeat,
 				PDB_INT32, (gint32) blend_options->supersample,
@@ -1154,10 +1154,10 @@ gradient_repeat_triangular (double val)
 
 /*****/
 static void
-gradient_precalc_shapeburst (GImage      *gimage,
+gradient_precalc_shapeburst (GImage       *gimage,
 			     GimpDrawable *drawable,
-			     PixelRegion *PR,
-			     double       dist)
+			     PixelRegion  *PR,
+			     double        dist)
 {
   Channel *mask;
   PixelRegion tempR;
@@ -1237,7 +1237,10 @@ gradient_precalc_shapeburst (GImage      *gimage,
 
 
 static void
-gradient_render_pixel (double x, double y, color_t *color, void *render_data)
+gradient_render_pixel (double   x, 
+		       double   y, 
+		       color_t *color, 
+		       void    *render_data)
 {
   RenderBlendData *rbd;
   double           factor;
@@ -1330,7 +1333,10 @@ gradient_render_pixel (double x, double y, color_t *color, void *render_data)
 
 
 static void
-gradient_put_pixel (int x, int y, color_t color, void *put_pixel_data)
+gradient_put_pixel (int      x, 
+		    int      y, 
+		    color_t  color, 
+		    void    *put_pixel_data)
 {
   PutPixelData  *ppd;
   unsigned char *data;
@@ -1577,7 +1583,9 @@ gradient_fill_region (GImage          *gimage,
 }
 
 static void
-calc_rgb_to_hsv (double *r, double *g, double *b)
+calc_rgb_to_hsv (double *r, 
+		 double *g, 
+		 double *b)
 {
   double red, green, blue;
   double h, s, v;
@@ -1649,7 +1657,9 @@ calc_rgb_to_hsv (double *r, double *g, double *b)
 }
 
 static void
-calc_hsv_to_rgb (double *h, double *s, double *v)
+calc_hsv_to_rgb (double *h, 
+		 double *s, 
+		 double *v)
 {
   double hue, saturation, value;
   double f, p, q, t;

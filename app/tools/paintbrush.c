@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "appenv.h"
+#include "buildmenu.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -58,7 +59,7 @@ struct _PaintbrushOptions
 
   int           gradient_type;
   int           gradient_type_d;
-  GtkWidget    *gradient_type_w[4];  /* 4 radio buttons */
+  GtkWidget    *gradient_type_w;
 
   gboolean      incremental;
   gboolean      incremental_d;
@@ -110,7 +111,7 @@ paintbrush_gradient_type_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   if (paintbrush_options)
-    paintbrush_options->gradient_type = (int) data;
+    paintbrush_options->gradient_type = (GradientPaintMode) data;
 }
 
 
@@ -127,8 +128,8 @@ paintbrush_options_reset (void)
 				options->use_gradient_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->gradient_length_w),
 			    options->gradient_length_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w[options->gradient_type_d]),
-				TRUE);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
+			       options->gradient_type_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				options->incremental_d);
 }
@@ -142,19 +143,22 @@ paintbrush_options_new (void)
   GtkWidget *abox;
   GtkWidget *table;
   GtkWidget *label;
+  GtkWidget *length_label;
+  GtkWidget *type_label;
   GtkWidget *scale;
-  GSList    *group = NULL;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
+  GtkWidget *menu;
 
-  int i;
-  char *gradient_types[4] =
+  static MenuItem gradient_type_items[] =
   {
-    N_("Once Forward"),
-    N_("Once Backward"),
-    N_("Loop Sawtooth"),
-    N_("Loop Triangle")
+    { N_("Once Forward"),  0, 0, paintbrush_gradient_type_callback, 
+      (gpointer) ONCE_FORWARD, NULL, NULL },
+    { N_("Once Backward"), 0, 0, paintbrush_gradient_type_callback, 
+      (gpointer) ONCE_BACKWARDS, NULL, NULL },
+    { N_("Loop Sawtooth"), 0, 0, paintbrush_gradient_type_callback, 
+      (gpointer) LOOP_SAWTOOTH, NULL, NULL },
+    { N_("Loop Triangle"), 0, 0, paintbrush_gradient_type_callback, 
+      (gpointer) LOOP_TRIANGLE, NULL, NULL },
+    { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
 
   /*  the new paint tool options structure  */
@@ -205,11 +209,11 @@ paintbrush_options_new (void)
 		      &options->use_gradient);
   gtk_widget_show (options->use_gradient_w);
 
-  label = gtk_label_new (_("Length:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+  length_label = gtk_label_new (_("Length:"));
+  gtk_misc_set_alignment (GTK_MISC (length_label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), length_label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  gtk_widget_show (length_label);
 
   /*  the gradient length scale  */
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
@@ -229,32 +233,26 @@ paintbrush_options_new (void)
   gtk_widget_show (scale);
   gtk_widget_show (table);
 
-   /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (_("Gradient Type"));
-  gtk_table_attach_defaults (GTK_TABLE (table), radio_frame, 0, 2, 3, 4);
-
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
-
-    /*  the radio buttons  */
-  group = NULL;  
-  for (i = 0; i < 4; i++)
-    {
-      radio_button = gtk_radio_button_new_with_label (group, gradient_types[i]);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) paintbrush_gradient_type_callback,
-			  (void *)((long) i));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_widget_show (radio_button);
-
-      options->gradient_type_w[i] = radio_button;
-    }
-
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
-
+  /*  the gradient type  */
+  type_label = gtk_label_new (_("Type:"));
+  gtk_misc_set_alignment (GTK_MISC (type_label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), type_label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (type_label);
+  
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 4);
+  gtk_widget_show (abox);
+  
+  options->gradient_type_w = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
+  gtk_widget_show (options->gradient_type_w);
+  
+  menu = build_menu (gradient_type_items, NULL);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
+			       options->gradient_type_d);
+  
   /* the incremental toggle */
   options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
   gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
@@ -265,15 +263,18 @@ paintbrush_options_new (void)
   
   /*  automatically set the sensitive state of the gradient stuff  */
   gtk_widget_set_sensitive (scale, options->use_gradient_d);
-  gtk_widget_set_sensitive (label, options->use_gradient_d);
-  gtk_widget_set_sensitive (radio_frame, options->use_gradient_d);
+  gtk_widget_set_sensitive (length_label, options->use_gradient_d);
+  gtk_widget_set_sensitive (options->gradient_type_w, options->use_gradient_d);
+  gtk_widget_set_sensitive (type_label, options->use_gradient_d);
   gtk_widget_set_sensitive (options->incremental_w, ! options->use_gradient_d);
   gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "set_sensitive",
 		       scale);
   gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
-		       label);
-  gtk_object_set_data (GTK_OBJECT (label), "set_sensitive",
-		       radio_frame);
+		       length_label);
+  gtk_object_set_data (GTK_OBJECT (length_label), "set_sensitive",
+		       options->gradient_type_w);
+  gtk_object_set_data (GTK_OBJECT (options->gradient_type_w), "set_sensitive",
+		       type_label);
   gtk_object_set_data (GTK_OBJECT (options->use_gradient_w), "inverse_sensitive",
 		       options->incremental_w);
 
@@ -283,9 +284,9 @@ paintbrush_options_new (void)
 #define TIMED_BRUSH 0
 
 void *
-paintbrush_paint_func (PaintCore *paint_core,
+paintbrush_paint_func (PaintCore    *paint_core,
 		       GimpDrawable *drawable,
-		       int        state)
+		       int           state)
 {
 #if TIMED_BRUSH
   static GTimer *timer = NULL;
@@ -362,12 +363,12 @@ tools_free_paintbrush (Tool *tool)
 
 
 static void
-paintbrush_motion (PaintCore *paint_core,
+paintbrush_motion (PaintCore    *paint_core,
 		   GimpDrawable *drawable,
-		   double     fade_out,
-		   double     gradient_length,
-		   gboolean   incremental,
-		   int gradient_type)
+		   double        fade_out,
+		   double        gradient_length,
+		   gboolean      incremental,
+		   int           gradient_type)
 {
   GImage *gimage;
   TempBuf * area;
@@ -442,24 +443,22 @@ paintbrush_motion (PaintCore *paint_core,
 
 
 static void *
-paintbrush_non_gui_paint_func (PaintCore *paint_core,
+paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
-			       int        state)
+			       int           state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out,
-		     non_gui_gradient_length, non_gui_incremental,
-		     non_gui_gradient_type);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, non_gui_gradient_type);
 
   return NULL;
 }
 
 gboolean
 paintbrush_non_gui (GimpDrawable *drawable,
-                   int           num_strokes,
-                   double       *stroke_array,
-                   double        fade_out,
-                   int           method,
-                   double        gradient_length)
+                   int            num_strokes,
+                   double        *stroke_array,
+                   double         fade_out,
+                   int            method,
+                   double         gradient_length)
 {
   int i;
 
