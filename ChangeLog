@@ -1,3 +1,7 @@
+Wed Oct 20 15:33:49 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/psp.c: make it compile
+
 Wed Oct 20 23:08:31 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c

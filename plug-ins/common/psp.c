@@ -1786,7 +1786,7 @@ run (char    *name,
     }
   else if (strcmp (name, "file_psp_save") == 0)
     {
-      image_ID = orig_image_ID = param[1].data.d_int32;
+      image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */ 
