@@ -872,14 +872,14 @@ msgid "New Fractal"
 msgstr "Uusi fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
 "(fractalexplorer-path "
 "\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
 "to your %s/gimprc file."
-msgstr "gimprc-tiedostosta puuttuu fractalexplorer-path.\n"
+msgstr "gimprc-tiedostosta puuttuu fractalexplorer-path."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1169
 msgid ""
@@ -4399,9 +4399,8 @@ msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:363
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Suotimet/Värit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/Värit/Kuvaus/Värivälikuvaus..."
 
 #: plug-ins/common/mapcolor.c:408 plug-ins/common/mapcolor.c:763
 msgid ""
@@ -7976,9 +7975,8 @@ msgid "Perform actions on all unselected Layers"
 msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:201
-#, fuzzy
 msgid "Function:"
-msgstr "Värifunktio"
+msgstr "Värifunktio:"
 
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:205
@@ -8105,9 +8103,8 @@ msgid "Move Path"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:461
-#, fuzzy
 msgid "Update Preview"
-msgstr "Tosiaikainen esikatselu"
+msgstr "Virkistä esikatselua"
 
 #: plug-ins/gap/gap_mov_dialog.c:468
 msgid ""
@@ -8779,20 +8776,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:118
 msgid "New Width:"
-msgstr ""
+msgstr "Uusi leveys:"
 
 #: plug-ins/gap/gap_range_ops.c:127
-#, fuzzy
 msgid "New Height:"
-msgstr "ei valoa"
+msgstr "Uusi korkeus:"
 
 #: plug-ins/gap/gap_range_ops.c:136
 msgid "Offset X:"
-msgstr ""
+msgstr "X-siirtymä:"
 
 #: plug-ins/gap/gap_range_ops.c:145
 msgid "Offset Y:"
-msgstr ""
+msgstr "Y-siirtymä:"
 
 #: plug-ins/gap/gap_range_ops.c:156
 msgid "Crop AnimFrames (all)"
@@ -8971,9 +8967,8 @@ msgid "Convert Frames to other Formats"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:486
-#, fuzzy
 msgid "Convert Settings"
-msgstr "Ympäristön asetukset"
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:563
 msgid "Expand as necessary"
@@ -9089,14 +9084,12 @@ msgid "Create Multilayer-Image from Frames"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1109
-#, fuzzy
 msgid "Flattening Frames..."
-msgstr "Muodostan fraktaalia..."
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1110
-#, fuzzy
 msgid "Converting Frames..."
-msgstr "Muodostan fraktaalia..."
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1221
 msgid ""
@@ -9184,9 +9177,8 @@ msgid "Split Image into Frames"
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:250
-#, fuzzy
 msgid "Split Settings"
-msgstr "Ympäristön asetukset"
+msgstr ""
 
 #: plug-ins/gap/gap_split.c:297
 msgid ""
@@ -9939,14 +9931,14 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:992
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gflare-path in gimprc:\n"
 "\n"
 "You need to add an entry like\n"
 "(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
 "to your %s/gimprc file."
-msgstr "gimprc-tiedostosta puuttuu fractalexplorer-path.\n"
+msgstr "gimprc-tiedostosta puuttuu gflare-path."
 
 #: plug-ins/gflare/gflare.c:1010
 msgid "gflare-path misconfigured - the following directories were not found"

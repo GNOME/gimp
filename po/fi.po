@@ -106,9 +106,9 @@ msgid ""
 "\n"
 "Quit the GIMP?"
 msgstr ""
-"Sinulla on tallentamattomia tiedostoja.\n"
+"Sinulla on tallentamattomia muutoksia.\n"
 "\n"
-"Poistu silti GIMPistä?"
+"Haluatko silti poistua GIMPistä?"
 
 #: app/app_procs.c:744
 msgid "Quit"
@@ -2861,23 +2861,21 @@ msgid "Swap Directory:"
 msgstr "Sivutuskansio:"
 
 #: app/install.c:1159
-#, fuzzy
 msgid "Calibrate Monitor Resolution"
-msgstr "Hae näytön resoluutio"
+msgstr "Näytön resoluution kalibrointi"
 
 #: app/install.c:1267
 msgid "Measure the rulers and enter their lengths below."
 msgstr ""
+"Mittaa viivottimet ja kirjoita niiden pituudet allaoleviin syöttökenttiin."
 
 #: app/install.c:1282
-#, fuzzy
 msgid "Horizontal:"
-msgstr "Vaaka"
+msgstr "Vaakasuuntaan:"
 
 #: app/install.c:1287
-#, fuzzy
 msgid "Vertical:"
-msgstr "Pysty"
+msgstr "Pystysuuntaan:"
 
 #: app/install.c:1328
 msgid ""
@@ -2885,7 +2883,7 @@ msgid ""
 "However, most X-servers do not return useful values."
 msgstr ""
 "GIMP voi hakea tätä tietoa ikkunointijärjestelmästä.\n"
-"Kuitenkin, useimmat X-palvelinohjelmat eivät kerro todenmukaisia arvoja."
+"Huom: Useimmat X-palvelinohjelmat eivät kerro todenmukaisia arvoja."
 
 #: app/install.c:1335
 #, c-format
@@ -3373,11 +3371,9 @@ msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers        \n"
 
 #: app/main.c:291
-#, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr ""
 "  --display <näyttö>       Käytä osoitettua X-näyttöä.\n"
-"\n"
 
 #: app/main.c:292
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
@@ -3579,14 +3575,12 @@ msgid "/Edit/Clear"
 msgstr "/Muokkaa/Tyhjennä"
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Täytä väriliukumalla"
+msgstr "/Muokkaa/Täytä edustavärillä"
 
 #: app/menus.c:249
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Täytä väriliukumalla"
+msgstr "/Muokkaa/Täytä taustavärillä"
 
 #: app/menus.c:251
 msgid "/Edit/Stroke"
