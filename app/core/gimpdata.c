@@ -58,7 +58,8 @@ enum
 
 
 static void    gimp_data_class_init   (GimpDataClass *klass);
-static void    gimp_data_init         (GimpData      *data);
+static void    gimp_data_init         (GimpData      *data,
+                                       GimpDataClass *data_class);
 
 static void    gimp_data_finalize     (GObject       *object);
 
@@ -134,7 +135,8 @@ gimp_data_class_init (GimpDataClass *klass)
 }
 
 static void
-gimp_data_init (GimpData *data)
+gimp_data_init (GimpData      *data,
+                GimpDataClass *data_class)
 {
   data->filename  = NULL;
   data->writable  = TRUE;
@@ -142,8 +144,10 @@ gimp_data_init (GimpData *data)
   data->dirty     = TRUE;
   data->internal  = FALSE;
 
-  /*  if we can't save, we are not writable  */
-  if (! GIMP_DATA_GET_CLASS (data)->save)
+  /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
+   *  here, because the latter is always GimpDataClass itself
+   */
+  if (! data_class->save)
     data->writable = FALSE;
 }
 

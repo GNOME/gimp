@@ -1,3 +1,12 @@
+2004-02-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.c (gimp_data_init): using
+	FOO_GET_CLASS(instance) in a GInstanceInitFunc doesn't work
+	because during instance init, the object's class is always set to
+	be the class of the currently called init function. Use the second
+	parameter of GInstanceInitFunc instead, which is the instance's
+	real class. Fixes bug #134274.
+
 2004-02-14  Michael Natterer  <mitch@gimp.org>
 
 	Fixed lots of QuickMask brokenness by letting the image adjust
