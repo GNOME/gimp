@@ -1,3 +1,19 @@
+2004-10-25  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/retinex.c: added this new plug-in.
+	Addresses bug #135594
+
+	* plug-ins/common/plugin-defs.pl: modified accordingly.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-arc.h
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-circle.h
+	* plug-ins/gfig/gfig-dialog.c: smallish style cleanups
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):

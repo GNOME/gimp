@@ -45,6 +45,7 @@ calc_radius (GdkPoint *center, GdkPoint *edge)
 {
   gint dx = center->x - edge->x;
   gint dy = center->y - edge->y;
+
   return (gint) sqrt (dx * dx + dy * dy);
 }
 
@@ -53,7 +54,7 @@ d_draw_circle (Dobject *obj)
 {
   DobjPoints *center_pnt;
   DobjPoints *edge_pnt;
-  gint radius;
+  gint        radius;
 
   center_pnt = obj->points;
 
@@ -77,10 +78,10 @@ d_draw_circle (Dobject *obj)
 static void
 d_paint_circle (Dobject *obj)
 {
-  DobjPoints * center_pnt;
-  DobjPoints * edge_pnt;
-  gint radius;
-  gdouble dpnts[4];
+  DobjPoints *center_pnt;
+  DobjPoints *edge_pnt;
+  gint        radius;
+  gdouble     dpnts[4];
 
   g_assert (obj != NULL);
 
@@ -90,7 +91,7 @@ d_paint_circle (Dobject *obj)
 
       d_paint_poly (obj);
       return;
-    }      
+    }
 
   /* Drawing circles is hard .
    * 1) select circle
@@ -129,7 +130,7 @@ d_paint_circle (Dobject *obj)
                        selopt.feather_radius);
 
   paint_layer_fill ();
-          
+
   gimp_edit_stroke (gfig_context->drawable_id);
 
 }
@@ -163,7 +164,7 @@ void
 d_update_circle (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *edge_pnt;
-  gint radius;
+  gint        radius;
 
   /* Undraw last one then draw new one */
   center_pnt = obj_creating->points;
@@ -176,7 +177,7 @@ d_update_circle (GdkPoint *pnt)
       /* Undraw current */
       draw_circle (&edge_pnt->pnt);
       radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
-      
+
       gdk_draw_arc (gfig_context->preview->window,
                     gfig_gc,
                     0,

@@ -210,20 +210,20 @@ static void     lower_selected_obj         (GtkWidget *widget,
 gint
 gfig_dialog (void)
 {
-  GtkWidget *main_hbox;
-  GtkWidget *vbox;
-  GFigObj   *gfig;
+  GtkWidget    *main_hbox;
+  GtkWidget    *vbox;
+  GFigObj      *gfig;
   GimpParasite *parasite;
   gint          newlayer;
-  GtkWidget *menubar;
-  GtkWidget *menuitem;
-  GtkWidget *menu;
-  GtkWidget *combo;
-  GtkWidget *frame;
-  gint       k;
-  gint       img_width;
-  gint       img_height;
-  GtkWidget *toggle;
+  GtkWidget    *menubar;
+  GtkWidget    *menuitem;
+  GtkWidget    *menu;
+  GtkWidget    *combo;
+  GtkWidget    *frame;
+  gint          k;
+  gint          img_width;
+  gint          img_height;
+  GtkWidget    *toggle;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -293,8 +293,8 @@ gfig_dialog (void)
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
-                 "gfig-path", "gfig-path", esc_path,
-                 gimp_filename_to_utf8 (gimprc));
+                   "gfig-path", "gfig-path", esc_path,
+                   gimp_filename_to_utf8 (gimprc));
 
       g_free (gimprc);
       g_free (esc_path);
@@ -599,7 +599,7 @@ gfig_response (GtkWidget *widget,
       /* if we created a new layer, delete it */
       if (gfig_context->using_new_layer)
         {
-          gimp_image_remove_layer (gfig_context->image_id, 
+          gimp_image_remove_layer (gfig_context->image_id,
                                    gfig_context->drawable_id);
         }
       else /* revert back to the original figure */
@@ -620,7 +620,7 @@ gfig_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:  /* Close button */
-      gfig_style_copy (&gfig_context->default_style, 
+      gfig_style_copy (&gfig_context->default_style,
                        gfig_context->current_style, "object");
       gfig_save_as_parasite ();
       gtk_widget_destroy (widget);
@@ -1160,7 +1160,7 @@ lower_selected_obj (GtkWidget *widget,
 
           prev_entry->next  = following_entry;
           found_entry->next = prev_entry;
- 
+
           if (prev_prev_entry)
             prev_prev_entry->next = found_entry;
           else

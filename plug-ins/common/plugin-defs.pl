@@ -95,6 +95,7 @@
     'psp' => { libdep => 'gtk', ui => 1, optional => 1, libopt => 'z' },
     'randomize' => { libdep => 'gtk', ui => 1 },
     'raw' => { libdep => 'gtk', ui => 1 },
+    'retinex' => { libdep => 'gtk', ui => 1 },
     'ripple' => { libdep => 'gtk', ui => 1 },
     'rotate' => { libdep => 'glib' },
     'sample_colorize' => { libdep => 'gtk', ui => 1 },

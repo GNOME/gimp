@@ -75,7 +75,7 @@ line_grad (gdouble x1,
            gdouble y2)
 {
   double dx, dy;
-  
+
   dx = x1 - x2;
   dy = y1 - y2;
 
@@ -118,7 +118,7 @@ line_definition (gdouble  x1,
   /* Invert grad for perpen gradient */
 
   *lgrad = -1.0/grad1;
-  
+
   *lconst = line_cons (midx, midy,*lgrad);
 }
 
@@ -179,7 +179,7 @@ arc_details (GdkPoint *vert_a,
 #ifdef DEBUG
   printf ("Area of triangle = %f\n", area);
 #endif /* DEBUG */
-  
+
   /* Circumcircle */
   circumcircle_R = len_a*len_b*len_c/(4*area);
   *radius = circumcircle_R;
@@ -201,7 +201,7 @@ arc_details (GdkPoint *vert_a,
 
           if (by > maxy)
             maxy = by;
-          
+
           if (by < miny)
             miny = by;
 
@@ -239,7 +239,7 @@ arc_details (GdkPoint *vert_a,
 
           if (bx > maxx)
             maxx = bx;
-          
+
           if (bx < minx)
             minx = bx;
 
@@ -379,7 +379,7 @@ arc_drawing_details (Dobject  *obj,
     }
 
   arc_details (&pnt1->pnt, &pnt2->pnt, &pnt3->pnt, center_pnt, radius);
-  
+
   ang1 = arc_angle (&pnt1->pnt, center_pnt);
   ang2 = arc_angle (&pnt2->pnt, center_pnt);
   ang3 = arc_angle (&pnt3->pnt, center_pnt);
@@ -390,7 +390,7 @@ arc_drawing_details (Dobject  *obj,
 
   if (ang3 > maxang)
     maxang = ang3;
-  
+
   *minang = ang1;
 
   if (ang3 < *minang)
@@ -413,7 +413,7 @@ d_draw_arc (Dobject * obj)
   if (!obj)
     return;
 
-  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE, 
+  arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE,
                        FALSE);
   gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, minang, arcang);
 }
@@ -464,7 +464,7 @@ d_paint_arc (Dobject *obj)
     {
       gdouble lx, ly;
       GdkPoint calc_pnt;
-      
+
       ang_loop = (gdouble)loop * ang_grid + minang;
 
       lx = radius * cos (ang_loop);

@@ -123,6 +123,7 @@ libexec_PROGRAMS = \
 	$(PSP) \
 	randomize \
 	raw \
+	retinex \
 	ripple \
 	rotate \
 	sample_colorize \
@@ -1420,6 +1421,19 @@ raw_SOURCES = \
 	raw.c
 
 raw_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+retinex_SOURCES = \
+	retinex.c
+
+retinex_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\

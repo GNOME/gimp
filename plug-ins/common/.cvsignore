@@ -98,6 +98,7 @@ psd_save
 psp
 randomize
 raw
+retinex
 ripple
 rotate
 sample_colorize

@@ -28,9 +28,9 @@
 
 void     d_update_arc (GdkPoint *pnt);
 void     d_arc_start  (GdkPoint *pnt,
-		       gint      shift_down);
+                       gint      shift_down);
 void     d_arc_end    (GdkPoint *pnt,
-		       gint      shift_down);
+                       gint      shift_down);
 
 void     d_arc_object_class_init (void);
 
