@@ -1,3 +1,9 @@
+2003-04-11  Raphael Quinet  <quinet@gamers.org>
+
+	* plug-ins/flame/flame.c (dialog): restore the original input
+	range from 1 to 4 for the Spatial Oversample parameter, and reset
+	the number of decimals to 0.  Fixes bug #110443.
+
 2003-04-11  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
