@@ -1,3 +1,8 @@
+Wed Nov 17 20:07:08 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: Fix multi-thumbnail code oversight
+	causing double load-and-thumbnailing of first/only image.
+
 Wed Nov 17 17:29:35 1999  ape@spacetec.no  (Asbjorn Pettersen)
 
 	* modules/colorsel_triangle.c (module_init):  Removed most of the

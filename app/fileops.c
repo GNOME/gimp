@@ -1343,40 +1343,13 @@ genbutton_callback (GtkWidget *widget,
 
   gimp_add_busy_cursors ();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
-  if ((gimage_to_be_thumbed = file_open_image (filename,
- 					       g_basename(filename),
-					       RUN_NONINTERACTIVE)))
-    {
 
-      tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
-      RGBbuf = make_RGBbuf_from_tempbuf (tempbuf, &RGBbuf_w, &RGBbuf_h);
-      switch (thumbnail_mode)
-	{
-	case 0:
-	  break;
-	default:
-	  file_save_thumbnail (gimage_to_be_thumbed, filename, tempbuf);
-	}
-      set_preview (filename, RGBbuf, RGBbuf_w, RGBbuf_h);
-
-      gimage_delete (gimage_to_be_thumbed);
-
-      if (RGBbuf)
-	g_free (RGBbuf);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL(open_options_label),
-			  _("(could not make preview)"));
-    }
 
   /* new mult-file preview make: */  
   {
     GList *row = GTK_CLIST(fs->file_list)->row_list;
     gint rownum = 0;
     gchar* temp;
-
-    /*printf("%d\n", GTK_CLIST(fs->file_list)->rows);*/
 
     filedirname = g_dirname (filename);
 
