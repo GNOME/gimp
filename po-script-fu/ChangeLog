@@ -1,3 +1,7 @@
+2001-10-27  Tomas Ögren  <stric@ing.umu.se>
+
+	* sv.po: s/satndard/standard/
+
 2001-10-24  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing file (you probably already have 
