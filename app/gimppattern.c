@@ -51,13 +51,14 @@
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_pattern_class_init      (GimpPatternClass *klass);
-static void      gimp_pattern_init            (GimpPattern      *pattern);
-static void      gimp_pattern_destroy         (GtkObject        *object);
-static TempBuf * gimp_pattern_get_new_preview (GimpViewable     *viewable,
-					       gint              width,
-					       gint              height);
-static gchar   * gimp_pattern_get_extension   (GimpData         *data);
+static void       gimp_pattern_class_init      (GimpPatternClass *klass);
+static void       gimp_pattern_init            (GimpPattern      *pattern);
+static void       gimp_pattern_destroy         (GtkObject        *object);
+static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
+                                                gint              width,
+                                                gint              height);
+static gchar    * gimp_pattern_get_extension   (GimpData         *data);
+static GimpData * gimp_pattern_duplicate       (GimpData         *data);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -106,6 +107,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   viewable_class->get_new_preview = gimp_pattern_get_new_preview;
 
   data_class->get_extension = gimp_pattern_get_extension;
+  data_class->duplicate     = gimp_pattern_duplicate;
 }
 
 static void
@@ -167,6 +169,22 @@ gimp_pattern_get_extension (GimpData *data)
   return GIMP_PATTERN_FILE_EXTENSION;
 }
 
+static GimpData *
+gimp_pattern_duplicate (GimpData *data)
+{
+  GimpPattern *pattern;
+
+  pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+
+  pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
+
+  /*  Swap the pattern to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    temp_buf_swap (pattern->mask);
+
+  return GIMP_DATA (pattern);
+}
+
 GimpData *
 gimp_pattern_new (const gchar *name)
 {
@@ -190,6 +208,10 @@ gimp_pattern_new (const gchar *name)
 	memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
 	data += 3;
       }
+
+  /*  Swap the pattern to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
 }

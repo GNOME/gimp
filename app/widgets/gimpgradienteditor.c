@@ -573,7 +573,7 @@ gradient_editor_new (void)
 
   /* Gradient's name */
   gradient_editor->name = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->name, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->name, FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->name);
 
   gtk_signal_connect (GTK_OBJECT (gradient_editor->name), "activate",

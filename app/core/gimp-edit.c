@@ -52,12 +52,12 @@ typedef enum
   PASTE,
   PASTE_INTO,
   PASTE_AS_NEW
-} PasteAction;  
+} PasteAction;
 
-/*  The named paste dialog  */
-typedef struct _PasteNamedDlg PasteNamedDlg;
 
-struct _PasteNamedDlg
+typedef struct _PasteNamedDialog PasteNamedDialog;
+
+struct _PasteNamedDialog
 {
   GtkWidget   *shell;
   GtkWidget   *list;
@@ -323,7 +323,7 @@ edit_paste (GimpImage    *gimage,
 				       paste, 
 				       _("Pasted Layer"),
 				       OPAQUE_OPACITY, NORMAL_MODE);
- 
+
   if (layer)
     {
       /*  Start a group undo  */
@@ -350,7 +350,7 @@ edit_paste (GimpImage    *gimage,
        *  this might not always be desired, but in general,
        *  it seems like the correct behavior.
        */
-      if (! gimage_mask_is_empty (gimage) && !paste_into)
+      if (! gimage_mask_is_empty (gimage) && ! paste_into)
 	gimp_channel_clear (gimp_image_get_mask (gimage));
 
       /*  if there's a drawable, add a new floating selection  */
@@ -363,8 +363,8 @@ edit_paste (GimpImage    *gimage,
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (layer), gimage);
 	  gimp_image_add_layer (gimage, layer, 0);
 	}
-      
-     /*  end the group undo  */
+
+      /*  end the group undo  */
       undo_push_group_end (gimage);
 
       return layer;
@@ -381,7 +381,7 @@ edit_paste_as_new (GimpImage   *invoke,
   GimpLayer *layer;
   GDisplay  *gdisp;
 
-  if (!global_buf)
+  if (! global_buf)
     return FALSE;
 
   /*  create a new image  (always of type RGB)  */
@@ -483,15 +483,15 @@ edit_fill (GimpImage    *gimage,
       break;
 
     case WHITE_FILL:
-      col[RED_PIX] = 255;
+      col[RED_PIX]   = 255;
       col[GREEN_PIX] = 255;
-      col[BLUE_PIX] = 255;
+      col[BLUE_PIX]  = 255;
       break;
 
     case TRANSPARENT_FILL:
-      col[RED_PIX] = 0;
+      col[RED_PIX]   = 0;
       col[GREEN_PIX] = 0;
-      col[BLUE_PIX] = 0;
+      col[BLUE_PIX]  = 0;
       if (gimp_drawable_has_alpha (drawable))
 	col [gimp_drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
       break;
@@ -500,7 +500,7 @@ edit_fill (GimpImage    *gimage,
       return TRUE;  /*  nothing to do, but the fill succeded  */
 
     default:
-      g_warning ("unknown fill type");
+      g_warning ("%s(): unknown fill type", G_GNUC_FUNCTION);
       gimp_image_get_background (gimage, drawable, col);
       break;
     }
@@ -509,7 +509,7 @@ edit_fill (GimpImage    *gimage,
 
   if (!(x2 - x1) || !(y2 - y1))
     return TRUE;  /*  nothing to do, but the fill succeded  */
- 
+
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
 				gimp_drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
@@ -620,114 +620,99 @@ static void
 named_buffer_paste_foreach (GtkWidget *widget,
 			    gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
-  NamedBuffer   *nb;
+  PasteNamedDialog *pn_dialog;
+  NamedBuffer      *nb;
 
   if (widget->state == GTK_STATE_SELECTED)
     {
-      pn_dlg = (PasteNamedDlg *) data;
-      nb     = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
+      pn_dialog = (PasteNamedDialog *) data;
+      nb        = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-      switch (pn_dlg->action)
+      switch (pn_dialog->action)
 	{
 	case PASTE:
-	  edit_paste (pn_dlg->gdisp->gimage,
-		      gimp_image_active_drawable (pn_dlg->gdisp->gimage),
+	  edit_paste (pn_dialog->gdisp->gimage,
+		      gimp_image_active_drawable (pn_dialog->gdisp->gimage),
 		      nb->buf, FALSE);
 	  break;
 
 	case PASTE_INTO:
-	  edit_paste (pn_dlg->gdisp->gimage,
-		      gimp_image_active_drawable (pn_dlg->gdisp->gimage),
+	  edit_paste (pn_dialog->gdisp->gimage,
+		      gimp_image_active_drawable (pn_dialog->gdisp->gimage),
 		      nb->buf, TRUE);
 	  break;
 
 	case PASTE_AS_NEW:
-	  edit_paste_as_new (pn_dlg->gdisp->gimage, nb->buf);
+	  edit_paste_as_new (pn_dialog->gdisp->gimage, nb->buf);
 	  break;
 
 	default:
 	  break;
 	}
     }
+
+  /*  flush the display  */
+  gdisplays_flush ();
 }
 
 static void
 named_buffer_paste_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
+  PasteNamedDialog *pn_dialog;
 
-  pn_dlg = (PasteNamedDlg *) data;
+  pn_dialog = (PasteNamedDialog *) data;
 
-  pn_dlg->action = PASTE_INTO;
-  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+  pn_dialog->action = PASTE_INTO;
+  gtk_container_foreach (GTK_CONTAINER (pn_dialog->list),
 			 named_buffer_paste_foreach, data);
 
-  /*  Destroy the box  */
-  gtk_widget_destroy (pn_dlg->shell);
-
-  g_free (pn_dlg);
-      
-  /*  flush the display  */
-  gdisplays_flush ();
+  gtk_widget_destroy (pn_dialog->shell);
 }
 
 static void
 named_buffer_paste_into_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
+  PasteNamedDialog *pn_dialog;
 
-  pn_dlg = (PasteNamedDlg *) data;
+  pn_dialog = (PasteNamedDialog *) data;
 
-  pn_dlg->action = PASTE_INTO;
-  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+  pn_dialog->action = PASTE_INTO;
+  gtk_container_foreach (GTK_CONTAINER (pn_dialog->list),
 			 named_buffer_paste_foreach, data);
 
-  /*  Destroy the box  */
-  gtk_widget_destroy (pn_dlg->shell);
-
-  g_free (pn_dlg);
-      
-  /*  flush the display  */
-  gdisplays_flush ();
+  gtk_widget_destroy (pn_dialog->shell);
 }
 
 static void
 named_buffer_paste_as_new_callback (GtkWidget *widget,
 				    gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
+  PasteNamedDialog *pn_dialog;
 
-  pn_dlg = (PasteNamedDlg *) data;
+  pn_dialog = (PasteNamedDialog *) data;
 
-  pn_dlg->action = PASTE_AS_NEW;
-  gtk_container_foreach ((GtkContainer *) pn_dlg->list,
+  pn_dialog->action = PASTE_AS_NEW;
+  gtk_container_foreach (GTK_CONTAINER (pn_dialog->list),
 			 named_buffer_paste_foreach, data);
 
-  /*  Destroy the box  */
-  gtk_widget_destroy (pn_dlg->shell);
-
-  g_free (pn_dlg);
-      
-  /*  flush the display  */
-  gdisplays_flush ();
+  gtk_widget_destroy (pn_dialog->shell);
 }
 
 static void
 named_buffer_delete_foreach (GtkWidget *widget,
 			     gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
-  NamedBuffer   *nb;
+  PasteNamedDialog *pn_dialog;
+  NamedBuffer      *nb;
 
   if (widget->state == GTK_STATE_SELECTED)
     {
-      pn_dlg = (PasteNamedDlg *) data;
-      nb     = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
+      pn_dialog = (PasteNamedDialog *) data;
+      nb        = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-      named_buffers = g_slist_remove (named_buffers, (void *) nb);
+      named_buffers = g_slist_remove (named_buffers, nb);
       g_free (nb->name);
       tile_manager_destroy (nb->buf);
       g_free (nb);
@@ -738,39 +723,25 @@ static void
 named_buffer_delete_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  PasteNamedDlg *pn_dlg;
+  PasteNamedDialog *pn_dialog;
 
-  pn_dlg = (PasteNamedDlg *) data;
+  pn_dialog = (PasteNamedDialog *) data;
 
-  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
+  gtk_container_foreach (GTK_CONTAINER (pn_dialog->list),
 			 named_buffer_delete_foreach, data);
-  set_list_of_named_buffers (pn_dlg->list);
-}
-
-static void
-named_buffer_cancel_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  PasteNamedDlg *pn_dlg;
-
-  pn_dlg = (PasteNamedDlg *) data;
-
-  /*  Destroy the box  */
-  gtk_widget_destroy (pn_dlg->shell);
-
-  g_free (pn_dlg);
+  set_list_of_named_buffers (pn_dialog->list);
 }
 
 static void
 paste_named_buffer (GDisplay *gdisp)
 {
-  PasteNamedDlg *pn_dlg;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *listbox;
-  GtkWidget *bbox;
-  GtkWidget *button;
-  gint i;
+  PasteNamedDialog *pn_dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *label;
+  GtkWidget        *listbox;
+  GtkWidget        *bbox;
+  GtkWidget        *button;
+  gint              i;
 
   static gchar *paste_action_labels[] =
   {
@@ -786,10 +757,11 @@ paste_named_buffer (GDisplay *gdisp)
     named_buffer_paste_as_new_callback,
   };
 
-  pn_dlg = g_new (PasteNamedDlg, 1);
-  pn_dlg->gdisp = gdisp;
+  pn_dialog = g_new0 (PasteNamedDialog, 1);
 
-  pn_dlg->shell =
+  pn_dialog->gdisp = gdisp;
+
+  pn_dialog->shell = 
     gimp_dialog_new (_("Paste Named Buffer"), "paste_named_buffer",
 		     gimp_standard_help_func,
 		     "dialogs/paste_named.html",
@@ -797,15 +769,19 @@ paste_named_buffer (GDisplay *gdisp)
 		     FALSE, TRUE, FALSE,
 
 		     _("Delete"), named_buffer_delete_callback,
-		     pn_dlg, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), named_buffer_cancel_callback,
-		     pn_dlg, NULL, NULL, TRUE, TRUE,
+		     pn_dialog, NULL, NULL, FALSE, FALSE,
+		     _("Cancel"), gtk_widget_destroy,
+		     NULL, 1, NULL, TRUE, TRUE,
 
 		     NULL);
-		     
+
+  gtk_signal_connect_object (GTK_OBJECT (pn_dialog->shell), "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) pn_dialog);
+
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (pn_dlg->shell)->vbox), vbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (pn_dialog->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Select a buffer to paste:"));
@@ -820,12 +796,12 @@ paste_named_buffer (GDisplay *gdisp)
   gtk_widget_set_usize (listbox, 125, 150);
   gtk_widget_show (listbox);
 
-  pn_dlg->list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (pn_dlg->list), GTK_SELECTION_BROWSE);
+  pn_dialog->list = gtk_list_new ();
+  gtk_list_set_selection_mode (GTK_LIST (pn_dialog->list), GTK_SELECTION_BROWSE);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
-					 pn_dlg->list);
-  set_list_of_named_buffers (pn_dlg->list);
-  gtk_widget_show (pn_dlg->list);
+					 pn_dialog->list);
+  set_list_of_named_buffers (pn_dialog->list);
+  gtk_widget_show (pn_dialog->list);
 
   bbox = gtk_hbutton_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (bbox), 6);
@@ -837,12 +813,12 @@ paste_named_buffer (GDisplay *gdisp)
       gtk_container_add (GTK_CONTAINER (bbox), button);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) paste_action_functions[i],
-			  pn_dlg);
+			  pn_dialog);
       gtk_widget_show (button);
     }
   gtk_widget_show (bbox);
 
-  gtk_widget_show (pn_dlg->shell);
+  gtk_widget_show (pn_dialog->shell);
 }
 
 static void
@@ -853,21 +829,22 @@ new_named_buffer (TileManager *tiles,
   NamedBuffer *nb;
   gint         width, height;
 
-  if (! tiles) 
+  if (! tiles)
     return;
 
   width  = tile_manager_width (tiles);
   height = tile_manager_height (tiles);
 
-  nb = (NamedBuffer *) g_malloc (sizeof (NamedBuffer));
+  nb = g_new0 (NamedBuffer, 1);
 
-  nb->buf = tile_manager_new (width, height, tile_manager_bpp (tiles));
+  nb->name = g_strdup (name);
+  nb->buf  = tile_manager_new (width, height, tile_manager_bpp (tiles));
+
   pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE); 
   pixel_region_init (&destPR, nb->buf, 0, 0, width, height, TRUE);
   copy_region (&srcPR, &destPR);
 
-  nb->name = g_strdup ((gchar *) name);
-  named_buffers = g_slist_append (named_buffers, (void *) nb);
+  named_buffers = g_slist_append (named_buffers, nb);
 }
 
 static void
@@ -876,14 +853,15 @@ cut_named_buffer_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   TileManager *new_tiles;
-  GDisplay    *gdisp;
+  GimpImage   *gimage;
 
-  gdisp = (GDisplay *) data;
+  gimage = (GimpImage *) data;
   
-  new_tiles = edit_cut (gdisp->gimage,
-			gimp_image_active_drawable (gdisp->gimage));
+  new_tiles = edit_cut (gimage, gimp_image_active_drawable (gimage));
+
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
+
   gdisplays_flush ();
 }
 
@@ -901,7 +879,7 @@ named_edit_cut (GDisplay *gdisp)
 				_("Enter a name for this buffer"),
 				NULL,
 				GTK_OBJECT (gdisp->gimage), "destroy",
-				cut_named_buffer_callback, gdisp);
+				cut_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 
   return TRUE;
@@ -913,12 +891,12 @@ copy_named_buffer_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   TileManager *new_tiles;
-  GDisplay    *gdisp;
+  GimpImage   *gimage;
 
-  gdisp = (GDisplay *) data;
+  gimage = (GimpImage *) data;
   
-  new_tiles = edit_copy (gdisp->gimage,
-			 gimp_image_active_drawable (gdisp->gimage));
+  new_tiles = edit_copy (gimage, gimp_image_active_drawable (gimage));
+
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
 }
@@ -934,7 +912,7 @@ named_edit_copy (GDisplay *gdisp)
 				_("Enter a name for this buffer"),
 				NULL,
 				GTK_OBJECT (gdisp->gimage), "destroy",
-				copy_named_buffer_callback, gdisp);
+				copy_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 
   return TRUE;
@@ -944,8 +922,6 @@ gboolean
 named_edit_paste (GDisplay *gdisp)
 {
   paste_named_buffer (gdisp);
-
-  gdisplays_flush ();
 
   return TRUE;
 }

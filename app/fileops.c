@@ -1039,17 +1039,17 @@ make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
 }
 
 gboolean
-file_save_thumbnail (GimpImage  *gimage,
-		     const char *full_source_filename,
-		     TempBuf    *tempbuf)
+file_save_thumbnail (GimpImage   *gimage,
+		     const gchar *full_source_filename,
+		     TempBuf     *tempbuf)
 {
-  gint i,j;
-  gint w,h;
+  gint    i,j;
+  gint    w,h;
   guchar *tbd;
-  gchar* pathname;
-  gchar* filename;
-  gchar* xvpathname;
-  gchar* thumbnailname;
+  gchar  *pathname;
+  gchar  *filename;
+  gchar  *xvpathname;
+  gchar  *thumbnailname;
   GimpImageBaseType basetype;
   FILE *fp;
   struct stat statbuf;
@@ -1093,7 +1093,7 @@ file_save_thumbnail (GimpImage  *gimage,
 
   if (fp)
     {
-      basetype = gimp_image_base_type(gimage);
+      basetype = gimp_image_base_type (gimage);
 
       fprintf (fp,
 	       "P7 332\n#IMGINFO:%dx%d %s (%d %s)\n"

@@ -176,7 +176,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Brushe List...", NULL, test_brush_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Brush List...", NULL, test_brush_container_list_view_cmd_callback, 0 },
     NULL, NULL },
   { { "/File/Test Dialogs/Pattern List...", NULL, test_pattern_container_list_view_cmd_callback, 0 },
     NULL, NULL },
@@ -188,7 +188,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Brushe Grid...", NULL, test_brush_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Brush Grid...", NULL, test_brush_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
   { { "/File/Test Dialogs/Pattern Grid...", NULL, test_pattern_container_grid_view_cmd_callback, 0 },
     NULL, NULL },

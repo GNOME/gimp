@@ -114,8 +114,7 @@
 #define SHOW_LATER 1
 #define SHOW_NOW   2
 
-/*  Function prototype for affirmation dialog when exiting application  */
-static void      really_quit_dialog                   (void);
+
 static void      make_initialization_status_window    (void);
 static void      destroy_initialization_status_window (void);
 static gboolean  splash_logo_load                     (GtkWidget *window);
@@ -123,20 +122,24 @@ static gboolean  splash_logo_load_size                (GtkWidget *window);
 static void      splash_logo_draw                     (GtkWidget *widget);
 static void      splash_text_draw                     (GtkWidget *widget);
 static void      splash_logo_expose                   (GtkWidget *widget);
+static void      really_quit_dialog                   (void);
+static void      really_quit_callback                 (GtkWidget *button,
+                                                       gboolean   quit,
+                                                       gpointer   data);
 static void      toast_old_temp_files                 (void);
 
 
 static gboolean is_app_exit_finish_done = FALSE;
 gboolean        we_are_exiting          = FALSE;
 
-static GtkWidget *logo_area   = NULL;
-static GdkPixmap *logo_pixmap = NULL;
-static gint logo_width        = 0;
-static gint logo_height       = 0;
-static gint logo_area_width   = 0;
-static gint logo_area_height  = 0;
-static gint show_logo         = SHOW_NEVER;
-static gint max_label_length  = MAXPATHLEN;
+static GtkWidget *logo_area         = NULL;
+static GdkPixmap *logo_pixmap       = NULL;
+static gint       logo_width        = 0;
+static gint       logo_height       = 0;
+static gint       logo_area_width   = 0;
+static gint       logo_area_height  = 0;
+static gint       show_logo         = SHOW_NEVER;
+static gint       max_label_length  = MAXPATHLEN;
 
 
 void
@@ -198,17 +201,17 @@ static gboolean
 splash_logo_load (GtkWidget *window)
 {
   GtkWidget *preview;
-  GdkGC *gc;
-  gchar   buf[1024];
-  guchar *pixelrow;
-  FILE *fp;
-  gint count;
-  gint i;
+  GdkGC     *gc;
+  gchar      buf[1024];
+  guchar    *pixelrow;
+  FILE      *fp;
+  gint       count;
+  gint       i;
 
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
+  g_snprintf (buf, sizeof (buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
 	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
@@ -439,39 +442,34 @@ make_initialization_status_window (void)
 }
 
 void
-app_init_update_status (gchar *label1val,
-		        gchar *label2val,
-		        float  pct_progress)
+app_init_update_status (const gchar *text1,
+		        const gchar *text2,
+		        gdouble      percentage)
 {
   gchar *temp;
 
   if (!no_interface && !no_splash && win_initstatus)
     {
-      if (label1val && strcmp (label1val, GTK_LABEL (label1)->label))
-	gtk_label_set_text (GTK_LABEL (label1), label1val);
+      if (text1)
+	gtk_label_set_text (GTK_LABEL (label1), text1);
 
-      if (label2val && strcmp (label2val, GTK_LABEL (label2)->label))
+      if (text2)
 	{
-	  while (strlen (label2val) > max_label_length)
+	  while (strlen (text2) > max_label_length)
 	    {
-	      temp = strchr (label2val, G_DIR_SEPARATOR);
+	      temp = strchr (text2, G_DIR_SEPARATOR);
 	      if (temp == NULL)  /* for sanity */
 		break;
 	      temp++;
-	      label2val = temp;
+	      text2 = temp;
 	    }
 
-	  gtk_label_set_text (GTK_LABEL (label2), label2val);
+	  gtk_label_set_text (GTK_LABEL (label2), text2);
 	}
 
-      if (pct_progress >= 0.0 && pct_progress <= 1.0 && 
-	  gtk_progress_get_current_percentage (&(GTK_PROGRESS_BAR (pbar)->progress)) != pct_progress)
-	/*
-	 GTK_PROGRESS_BAR(pbar)->percentage != pct_progress)
-	*/
-	{
-	  gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), pct_progress);
-	}
+      percentage = CLAMP (percentage, 0.0, 1.0);
+
+      gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), percentage);
 
       while (gtk_events_pending ())
 	gtk_main_iteration ();
@@ -625,7 +623,7 @@ app_init (void)
        */
       {
 	FILE   *fp;
-	gchar **filenames = g_new (gchar *, last_opened_size);
+	gchar **filenames = g_new0 (gchar *, last_opened_size);
 	gint    i;
 
 	if ((fp = document_index_parse_init ()))
@@ -644,6 +642,7 @@ app_init (void)
 
 	    fclose (fp);
 	  }
+
 	g_free (filenames);
       }
 
@@ -666,10 +665,14 @@ app_init (void)
     }
 }
 
-int
-app_exit_finish_done (void)
+void
+app_exit (gboolean kill_it)
 {
-  return is_app_exit_finish_done;
+  /*  If it's the user's perogative, and there are dirty images  */
+  if (!kill_it && gdisplays_dirty () && !no_interface)
+    really_quit_dialog ();
+  else
+    app_exit_finish ();
 }
 
 void
@@ -677,10 +680,11 @@ app_exit_finish (void)
 {
   if (app_exit_finish_done ())
     return;
+
   is_app_exit_finish_done = TRUE;
 
   message_handler = CONSOLE;
-  we_are_exiting = TRUE;
+  we_are_exiting  = TRUE;
 
   /*  do this here before brushes and patterns are freed  */
   if (!no_interface)
@@ -726,35 +730,15 @@ app_exit_finish (void)
   gtk_exit (0);   
 }
 
-void
-app_exit (gboolean kill_it)
+gboolean
+app_exit_finish_done (void)
 {
-  /*  If it's the user's perogative, and there are dirty images  */
-  if (!kill_it && gdisplays_dirty () && !no_interface)
-    really_quit_dialog ();
-  else
-    app_exit_finish ();
+  return is_app_exit_finish_done;
 }
 
 /*************************************************
  *   Routines to query exiting the application   *
  *************************************************/
-
-static void
-really_quit_callback (GtkWidget *button,
-		      gboolean   quit,
-		      gpointer   data)
-{
-  if (quit)
-    {
-      app_exit_finish ();
-    }
-  else
-    {
-      menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
-      menus_set_sensitive ("<Image>/File/Quit", TRUE);
-    }
-}
 
 static void
 really_quit_dialog (void)
@@ -778,11 +762,27 @@ really_quit_dialog (void)
 }
 
 static void
+really_quit_callback (GtkWidget *button,
+		      gboolean   quit,
+		      gpointer   data)
+{
+  if (quit)
+    {
+      app_exit_finish ();
+    }
+  else
+    {
+      menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
+      menus_set_sensitive ("<Image>/File/Quit", TRUE);
+    }
+}
+
+static void
 toast_old_temp_files (void)
 {
-  DIR *dir;
+  DIR           *dir;
   struct dirent *entry;
-  GString *filename = g_string_new ("");
+  GString       *filename = g_string_new ("");
 
   dir = opendir (swap_path);
 
