@@ -246,7 +246,8 @@ libgimpui_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimpui_export_symbols)
 
-libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpbase) $(GTK_LIBS)
+libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
+	 $(libgimpbase) $(GTK_LIBS)
 
 libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def)
 
