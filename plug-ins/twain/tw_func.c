@@ -1,8 +1,12 @@
-/*  
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
  * 03/31/1999
+ *
+ * Updated for Mac OS X support
+ * Brion Vibber <brion@pobox.com>
+ * 07/22/2004
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +29,7 @@
  * Randomize
  *
  * Any suggestions, bug-reports or patches are welcome.
- * 
+ *
  * This plug-in interfaces to the TWAIN support library in order
  * to capture images from TWAIN devices directly into GIMP images.
  * The plug-in is capable of acquiring the following type of
@@ -36,36 +40,33 @@
  * - Paletted images (both Gray and RGB)
  *
  * Prerequisites:
- *  This plug-in will not compile on anything other than a Win32
- *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a 
- *  Macintosh nor the interest in porting this.  If anyone else
- *  has an interest, consult www.twain.org for more information on
- *  interfacing to TWAIN.
+ * Should compile and run on both Win32 and Mac OS X 10.3 (possibly
+ * also on 10.2).
  *
  * Known problems:
  * - Multiple image transfers will hang the plug-in.  The current
  *   configuration compiles with a maximum of single image transfers.
+ * - On Mac OS X, canceling doesn't always close things out fully.
+ * - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
  */
 
-/* 
+/*
  * Revision history
  *  (02/07/99)  v0.1   First working version (internal)
  *  (02/09/99)  v0.2   First release to anyone other than myself
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
- *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
  */
+
+#include "config.h"
 
 #include <glib.h>		/* Needed when compiling with gcc */
 
-#include <windows.h>
-#include "twain.h"
 #include "tw_func.h"
 #include "tw_util.h"
-
-/* The DLL to be loaded for TWAIN support */
-#define TWAIN_DLL_NAME "TWAIN_32.DLL"
+#include "tw_local.h"
 
 /*
  * Twain error code to string mappings
@@ -97,12 +98,6 @@ static char *twainErrors[] = {
   NULL
 };
 
-/* Storage for the DLL handle */
-static HINSTANCE hDLL = NULL;
-
-/* Storage for the entry point into the DSM */
-static DSMENTRYPROC dsmEntryPoint = NULL;
-
 /*
  * FloatToFix32
  *
@@ -127,23 +122,6 @@ float FIX32ToFloat(TW_FIX32 fix32)
   float floater;
   floater = (float) fix32.Whole + (float) fix32.Frac / 65536.0;
   return floater;
-}
-
-/*
- * callDSM
- *
- * Call the specified function on the data source manager.
- */
-TW_UINT16
-callDSM(pTW_IDENTITY pOrigin,
-	pTW_IDENTITY pDest,
-	TW_UINT32    DG,
-	TW_UINT16    DAT,
-	TW_UINT16    MSG,
-	TW_MEMREF    pData)
-{
-  /* Call the function */
-  return (*dsmEntryPoint) (pOrigin, pDest, DG, DAT, MSG, pData);
 }
 
 /*
@@ -185,31 +163,6 @@ currentTwainError(pTW_SESSION twSession)
   return twainError(twStatus.ConditionCode);
 }
 
-/*
- * twainIsAvailable
- *
- * Return boolean indicating whether TWAIN is available
- */
-int
-twainIsAvailable(void)
-{
-  /* Already loaded? */
-  if (dsmEntryPoint) {
-    return TRUE;
-  }
-
-  /* Attempt to load the library */
-  hDLL = LoadLibrary(TWAIN_DLL_NAME);
-  if (hDLL == NULL)
-    return FALSE;
-
-  /* Look up the entry point for use */
-  dsmEntryPoint = (DSMENTRYPROC) GetProcAddress(hDLL, "DSM_Entry");
-  if (dsmEntryPoint == NULL)
-    return FALSE;
-
-  return TRUE;
-}
 
 /*
  * getImage
@@ -225,6 +178,7 @@ getImage(pTW_SESSION twSession)
   /* Do some sanity checking first and bail
    * if necessary.
    */
+
   if (!twainIsAvailable()) {
     LogMessage("TWAIN is not available for image capture\n");
     return FALSE;
@@ -245,7 +199,7 @@ getImage(pTW_SESSION twSession)
     LogMessage("Unable to open datasource\n");
     return FALSE;
   }
-       
+
   requestImageAcquire(twSession, TRUE);
 
   return TRUE;
@@ -421,11 +375,12 @@ setBufferedXfer(pTW_SESSION twSession)
   /* Create the capability information */
   bufXfer.Cap = ICAP_XFERMECH;
   bufXfer.ConType = TWON_ONEVALUE;
-  bufXfer.hContainer = GlobalAlloc(GHND, sizeof(TW_ONEVALUE));
-  pvalOneValue = (pTW_ONEVALUE) GlobalLock(bufXfer.hContainer);
+  bufXfer.hContainer = twainAllocHandle(sizeof(TW_ONEVALUE));
+
+  pvalOneValue = (pTW_ONEVALUE) twainLockHandle(bufXfer.hContainer);
   pvalOneValue->ItemType = TWTY_UINT16;
   pvalOneValue->Item = TWSX_MEMORY;
-  GlobalUnlock(bufXfer.hContainer);
+  twainUnlockHandle(bufXfer.hContainer);
 
   /* Make the call to the source manager */
   twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
@@ -433,7 +388,7 @@ setBufferedXfer(pTW_SESSION twSession)
 			    (TW_MEMREF) &bufXfer);
 
   /* Free the container */
-  GlobalFree(bufXfer.hContainer);
+  twainFreeHandle(bufXfer.hContainer);
 
   /* Let the caller know what happened */
   return (twSession->twRC==TWRC_SUCCESS);
@@ -447,13 +402,15 @@ setBufferedXfer(pTW_SESSION twSession)
  * an image to actually be transferred.
  */
 int
-requestImageAcquire(pTW_SESSION twSession, BOOL showUI)
+requestImageAcquire(pTW_SESSION twSession, gboolean showUI)
 {
   /* Make sure in the correct state */
   if (DS_IS_CLOSED(twSession)) {
     LogMessage("Can't acquire image with closed datasource\n");
     return FALSE;
   }
+
+  twainSetupCallback(twSession);
 
   /* Set the transfer mode */
   if (setBufferedXfer(twSession)) {
@@ -462,6 +419,7 @@ requestImageAcquire(pTW_SESSION twSession, BOOL showUI)
     /* Set the UI information */
     ui.ShowUI = TRUE;
     ui.ModalUI = TRUE;
+    /* In Windows, the callbacks are sent to the window message handler */
     ui.hParent = twSession->hwnd;
 
     /* Make the call to the source manager */
@@ -579,8 +537,8 @@ closeDSM(pTW_SESSION twSession)
     } else {
       twSession->twRC = callDSM(APP_IDENTITY(twSession), NULL,
 				DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM,
-				&(twSession->hwnd));
-				
+				(TW_MEMREF)&(twSession->hwnd));
+
       if (twSession->twRC != TWRC_SUCCESS) {
 				LogMessage("CloseDSM failure -- %s\n", currentTwainError(twSession));
       }
@@ -596,32 +554,6 @@ closeDSM(pTW_SESSION twSession)
   return (twSession->twRC==TWRC_SUCCESS);
 }
 
-/*
- * unloadTwainLibrary
- *
- * Unload the TWAIN dynamic link library
- */
-int
-unloadTwainLibrary(pTW_SESSION twSession)
-{
-  /* Explicitly free the SM library */
-  if (hDLL) {        
-    FreeLibrary(hDLL);
-    hDLL=NULL;
-  }
-
-  /* the data source id will no longer be valid after
-   * twain is killed.  If the id is left around the
-   * data source can not be found or opened
-	 */
-  DS_IDENTITY(twSession)->Id = 0;  
-
-	/* We are now back at state 1 */
-  twSession->twainState = 1;
-  LogMessage("Source Manager successfully closed\n");
-
-  return TRUE;
-}
 
 /*
  * beginImageTransfer
@@ -765,7 +697,7 @@ cancelPendingTransfers(pTW_SESSION twSession)
 static int
 endImageTransfer(pTW_SESSION twSession, int *pendingCount)
 {
-  BOOL continueTransfers;
+  gboolean continueTransfers;
   int exitCode = twSession->twRC;
 
   /* Have now exited the transfer for some reason... Figure out
@@ -844,87 +776,32 @@ transferImages(pTW_SESSION twSession)
 						twSession->clientData);
 }
 
-/*
- * TwainProcessMessage
- *
- * Returns TRUE if the application should process message as usual.
- * Returns FALSE if the application should skip processing of this message
- */
-int
-TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
+void
+processTwainMessage(TW_UINT16 message, pTW_SESSION twSession)
 {
-  TW_EVENT   twEvent;
-	
-  twSession->twRC = TWRC_NOTDSEVENT;
-	
-  /* Only ask Source Manager to process event if there is a Source connected. */
-  if (DSM_IS_OPEN(twSession) && DS_IS_OPEN(twSession)) {
-		/*
-		 * A Source provides a modeless dialog box as its user interface.
-		 * The following call relays Windows messages down to the Source's
-		 * UI that were intended for its dialog box.  It also retrieves TWAIN
-		 * messages sent from the Source to our Application.
-		 */
-		twEvent.pEvent = (TW_MEMREF) lpMsg;
-		twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
-			DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, 
-			(TW_MEMREF) &twEvent);
-		
-		/* Check the return code */
-		if (twSession->twRC == TWRC_NOTDSEVENT) {
-			return FALSE;
-		}
-		
-		/* Process the message as necessary */
-		switch (twEvent.TWMessage) {
-		case MSG_XFERREADY:
-			LogMessage("Source says that data is ready\n");
-			transferImages(twSession);
-			break;
-			
-		case MSG_CLOSEDSREQ:
-			/* Disable the datasource, Close the Data source
-			 * and close the data source manager
-			 */
-			LogMessage("CloseDSReq\n");
-			disableDS(twSession);
-			closeDS(twSession);
-			closeDSM(twSession);
-			break;
-			
-			/* No message from the Source to the App break;
-			 * possible new message
-			 */
-		case MSG_NULL:
-		default:
-			break;
-		}   
-  } 
-	
-  /* tell the caller what happened */
-  return (twSession->twRC == TWRC_DSEVENT);
-} 
+  switch (message) {
+  case MSG_XFERREADY:
+    LogMessage("Source says that data is ready\n");
+    transferImages(twSession);
+    break;
 
-/*
- * twainMessageLoop
- *
- * Process Win32 window messages and provide special handling
- * of TWAIN specific messages.  This loop will not exit until
- * the application exits.
- */
-int
-twainMessageLoop(pTW_SESSION twSession) 
-{
-  MSG msg;
-	
-  while (GetMessage(&msg, NULL, 0, 0)) {
-    if (DS_IS_CLOSED(twSession) || !TwainProcessMessage(&msg, twSession)) {
-      TranslateMessage((LPMSG)&msg);
-      DispatchMessage(&msg);
-    }
+  case MSG_CLOSEDSREQ:
+    /* Disable the datasource, Close the Data source
+     * and close the data source manager
+     */
+    LogMessage("CloseDSReq\n");
+    disableDS(twSession);
+    closeDS(twSession);
+    closeDSM(twSession);
+    break;
+
+  /* No message from the Source to the App break;
+   * possible new message
+   */
+  case MSG_NULL:
+  default:
+    break;
   }
-	
-  return msg.wParam;
 }
 
 /**********************************************************************
@@ -965,7 +842,7 @@ newSession(pTW_IDENTITY appIdentity) {
  * session.
  */
 void
-registerWindowHandle(pTW_SESSION session, HWND hwnd)
+registerWindowHandle(pTW_SESSION session, TW_HANDLE hwnd)
 {
   session->hwnd = hwnd;
 }

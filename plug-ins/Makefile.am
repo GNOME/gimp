@@ -3,6 +3,11 @@
 EXTRA_DIST = \
 	makefile.msc
 
+
+if BUILD_HELPBROWSER
+helpbrowser = helpbrowser
+endif
+
 if BUILD_PRINT
 print = print
 endif
@@ -11,18 +16,17 @@ if BUILD_PYTHON
 pygimp = pygimp
 endif
 
-if BUILD_HELPBROWSER
-helpbrowser = helpbrowser
+if HAVE_MAC_TWAIN
+twain = twain
+endif
+
+if OS_WIN32
+twain = twain
+winsnap = winsnap
 endif
 
 if BUILD_XJT
 xjt = xjt
-endif
-
-if OS_WIN32
-win32dirs = \
-	twain	\
-	winsnap
 endif
 
 
@@ -53,7 +57,8 @@ SUBDIRS = \
 	rcm			\
 	sgi			\
 	sel2path		\
+	$(twain)		\
 	winicon			\
-	$(win32dirs)		\
+	$(winsnap)		\
 	$(xjt)			\
 	common

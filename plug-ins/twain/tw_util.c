@@ -1,8 +1,12 @@
-/*  
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
  * 03/31/1999
+ *
+ * Updated for Mac OS X support
+ * Brion Vibber <brion@pobox.com>
+ * 07/22/2004
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +29,7 @@
  * Randomize
  *
  * Any suggestions, bug-reports or patches are welcome.
- * 
+ *
  * This plug-in interfaces to the TWAIN support library in order
  * to capture images from TWAIN devices directly into GIMP images.
  * The plug-in is capable of acquiring the following type of
@@ -36,34 +40,37 @@
  * - Paletted images (both Gray and RGB)
  *
  * Prerequisites:
- *  This plug-in will not compile on anything other than a Win32
- *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a 
- *  Macintosh nor the interest in porting this.  If anyone else
- *  has an interest, consult www.twain.org for more information on
- *  interfacing to TWAIN.
+ * Should compile and run on both Win32 and Mac OS X 10.3 (possibly
+ * also on 10.2).
  *
  * Known problems:
  * - Multiple image transfers will hang the plug-in.  The current
  *   configuration compiles with a maximum of single image transfers.
+ * - On Mac OS X, canceling doesn't always close things out fully.
+ * - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
  */
 
-/* 
+/*
  * Revision history
  *  (02/07/99)  v0.1   First working version (internal)
  *  (02/09/99)  v0.2   First release to anyone other than myself
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
- *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
  */
+
+#include "config.h"
+
 #include <glib.h>		/* Needed when compiling with gcc */
 
 #include <stdio.h>
-#include <windows.h>
+
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "tw_util.h"
 #ifdef _DEBUG
 #include "tw_func.h"
@@ -71,6 +78,7 @@ FILE *logFile = NULL;
 #endif
 
 #ifdef _DEBUG
+
 /*
  * LogMessage
  */
@@ -83,7 +91,7 @@ LogMessage(char *format, ...)
 
   /* Open the log file as necessary */
   if (!logFile)
-    logFile = fopen("c:\\twain.log", "w");
+    logFile = fopen(DEBUG_LOGFILE, "w");
 
   time_of_day = time(NULL);
   ctime_string = ctime(&time_of_day);
@@ -94,36 +102,6 @@ LogMessage(char *format, ...)
   vfprintf(logFile, format, args);
   fflush(logFile);
   va_end(args);
-}
-
-/*
- * LogLastWinError
- *
- * Log the last Windows error as returned by
- * GetLastError.
- */
-void
-LogLastWinError(void) 
-{
-	LPVOID lpMsgBuf;
-	
-	FormatMessage( 
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-		FORMAT_MESSAGE_FROM_SYSTEM | 
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
-		GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
-		(LPTSTR) &lpMsgBuf,
-		0,
-		NULL 
-		);
-	
-	LogMessage("%s\n", lpMsgBuf);
-	
-	/* Free the buffer. */
-	LocalFree( lpMsgBuf );
-	
 }
 
 void
@@ -187,17 +165,6 @@ logData(pTW_IMAGEINFO imageInfo,
  */
 void
 LogMessage(char *format, ...)
-{
-}
-
-/*
- * LogLastWinError
- *
- * Log the last Windows error as returned by
- * GetLastError.
- */
-void
-LogLastWinError(void) 
 {
 }
 

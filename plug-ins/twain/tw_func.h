@@ -1,8 +1,12 @@
-/*  
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
  * 03/31/1999
+ *
+ * Updated for Mac OS X support
+ * Brion Vibber <brion@pobox.com>
+ * 07/22/2004
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +29,7 @@
  * Randomize
  *
  * Any suggestions, bug-reports or patches are welcome.
- * 
+ *
  * This plug-in interfaces to the TWAIN support library in order
  * to capture images from TWAIN devices directly into GIMP images.
  * The plug-in is capable of acquiring the following type of
@@ -36,30 +40,30 @@
  * - Paletted images (both Gray and RGB)
  *
  * Prerequisites:
- *  This plug-in will not compile on anything other than a Win32
- *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a 
- *  Macintosh nor the interest in porting this.  If anyone else
- *  has an interest, consult www.twain.org for more information on
- *  interfacing to TWAIN.
+ * Should compile and run on both Win32 and Mac OS X 10.3 (possibly
+ * also on 10.2).
  *
  * Known problems:
  * - Multiple image transfers will hang the plug-in.  The current
  *   configuration compiles with a maximum of single image transfers.
+ * - On Mac OS X, canceling doesn't always close things out fully.
+ * - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
  */
 
-/* 
+/*
  * Revision history
  *  (02/07/99)  v0.1   First working version (internal)
  *  (02/09/99)  v0.2   First release to anyone other than myself
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
- *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
  */
 
 #ifndef _TW_FUNC_H
 #define _TW_FUNC_H
-#include "twain.h"
+
+#include "tw_platform.h"
 
 /*
  * Pre-image transfer function type
@@ -147,8 +151,8 @@ typedef struct _TXFR_CB_FUNCS {
  * session.
  */
 typedef struct _TWAIN_SESSION {
-  /* The window handle related to the TWAIN application */
-  HWND hwnd;
+  /* The window handle related to the TWAIN application on Win32 */
+  TW_HANDLE hwnd;
 
   /* The current TWAIN return code */
   TW_UINT16 twRC;
@@ -204,31 +208,27 @@ typedef struct _TWAIN_SESSION {
 #define DS_IS_DISABLED(tw_session) (tw_session->twainState < 5)
 
 /* Function declarations */
-TW_UINT16 callDSM(pTW_IDENTITY, pTW_IDENTITY, 
-		  TW_UINT32, TW_UINT16, 
-		  TW_UINT16, TW_MEMREF);
 char *twainError(int);
 char *currentTwainError(pTW_SESSION);
-int twainIsAvailable(void);
 int getImage(pTW_SESSION);
 int loadTwainLibrary(pTW_SESSION);
 int openDSM(pTW_SESSION);
 int selectDS(pTW_SESSION);
 int selectDefaultDS(pTW_SESSION);
 int openDS(pTW_SESSION);
-int requestImageAcquire(pTW_SESSION, BOOL);
+int requestImageAcquire(pTW_SESSION, gboolean);
 int disableDS(pTW_SESSION);
 int closeDS(pTW_SESSION);
 int closeDSM(pTW_SESSION);
-int unloadTwainLibrary(pTW_SESSION);
-int twainMessageLoop(pTW_SESSION);
 void cancelPendingTransfers(pTW_SESSION);
 
 TW_FIX32 FloatToFix32(float);
 float FIX32ToFloat(TW_FIX32);
 
+void processTwainMessage(TW_UINT16 message, pTW_SESSION twSession);
+
 pTW_SESSION newSession(pTW_IDENTITY);
-void registerWindowHandle(pTW_SESSION, HWND);
+void registerWindowHandle(pTW_SESSION, TW_HANDLE);
 void registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
 void setClientData(pTW_SESSION session, void *clientData);
 

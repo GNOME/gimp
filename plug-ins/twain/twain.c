@@ -4,6 +4,10 @@
  * Craig Setera <setera@home.com>
  * 03/31/1999
  *
+ * Updated for Mac OS X support
+ * Brion Vibber <brion@pobox.com>
+ * 07/22/2004
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -36,16 +40,14 @@
  * - Paletted images (both Gray and RGB)
  *
  * Prerequisites:
- *  This plug-in will not compile on anything other than a Win32
- *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a
- *  Macintosh nor the interest in porting this.  If anyone else
- *  has an interest, consult www.twain.org for more information on
- *  interfacing to TWAIN.
+ * Should compile and run on both Win32 and Mac OS X 10.3 (possibly
+ * also on 10.2).
  *
  * Known problems:
  * - Multiple image transfers will hang the plug-in.  The current
  *   configuration compiles with a maximum of single image transfers.
+ * - On Mac OS X, canceling doesn't always close things out fully.
+ * - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
  */
 
 /*
@@ -55,6 +57,7 @@
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
  *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
+ *  (07/23/04)  v0.6   Added Mac OS X support.
  */
 #include "config.h"
 
@@ -63,7 +66,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
+
+#include "tw_platform.h"
+#include "tw_local.h"
 
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
@@ -83,7 +88,7 @@
 #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
-#define PLUG_IN_VERSION     "v0.5 (03/31/1999)"
+#define PLUG_IN_VERSION     "v0.6 (07/22/2004)"
 
 #ifdef _DEBUG
 #define PLUG_IN_D_NAME      "twain-acquire-dump"
@@ -93,10 +98,7 @@
 /*
  * Application definitions
  */
-#define APP_NAME "TWAIN"
 #define MAX_IMAGES 1
-#define SHOW_WINDOW 0
-#define WM_TRANSFER_IMAGE (WM_USER + 100)
 
 /*
  * Definition of the run states
@@ -108,10 +110,10 @@
 /* Global variables */
 pTW_SESSION twSession = NULL;
 
-static HWND        hwnd = NULL;
-static HINSTANCE   hInst = NULL;
 static char        *destBuf = NULL;
+#ifdef _DEBUG
 static int         twain_run_mode = RUN_STANDARD;
+#endif
 
 /* Forward declarations */
 void preTransferCallback(void *);
@@ -120,8 +122,6 @@ int  dataTransferCallback(pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
 int  endTransferCallback(int, int, void *);
 void postTransferCallback(int, void *);
 
-static void init  (void);
-static void quit  (void);
 static void query (void);
 static void run   (const gchar      *name,
 		   gint              nparams,
@@ -139,8 +139,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
-
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 /* Data structure holding data between runs */
 /* Currently unused... Eventually may be used
@@ -188,85 +186,34 @@ TXFR_CB_FUNCS dumperCbFuncs = {
   dumpEndTransferCallback,
   dumpPostTransferCallback };
 
-static void
+void
 setRunMode(char *argv[])
 {
   char *exeName = strrchr(argv[0], '\\') + 1;
 
   LogMessage("Executable name: %s\n", exeName);
 
-  if (!_stricmp(exeName, "DTWAIN.EXE"))
+  if (!_stricmp(exeName, DUMP_NAME))
     twain_run_mode = RUN_DUMP;
 
-  if (!_stricmp(exeName, "RTWAIN.EXE"))
+  if (!_stricmp(exeName, RUNDUMP_NAME))
     twain_run_mode = RUN_READDUMP;
 }
 #endif /* _DEBUG */
 
-/******************************************************************
- * Win32 entry point and setup...
- ******************************************************************/
+#ifndef TWAIN_ALTERNATE_MAIN
+MAIN()
+#endif
 
-/*
- * WinMain
- *
- * The standard gimp entry point won't quite cut it for
- * this plug-in.  This plug-in requires creation of a
- * standard Win32 window (hidden) in order to receive
- * and process window messages on behalf of the TWAIN
- * datasource.
- */
-int APIENTRY
-WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR     lpCmdLine,
-	int       nCmdShow)
-{
-
-  /*
-   * Normally, we would do all of the Windows-ish set up of
-   * the window classes and stuff here in WinMain.  But,
-   * the only time we really need the window and message
-   * queues is during the plug-in run.  So, all of that will
-   * be done during run().  This avoids all of the Windows
-   * setup stuff for the query().  Stash the instance handle now
-   * so it is available from the run() procedure.
-   */
-  hInst = hInstance;
-
-#ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
-#endif /* _DEBUG */
-
-  /*
-   * Now, call gimp_main... This is what the MAIN() macro
-   * would usually do.
-   */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
-}
-
-/*
- * main
- *
- * allow to build as console app as well
- */
-int main (int argc, char *argv[])
+int
+scanImage (void)
 {
 #ifdef _DEBUG
-  /* When in debug version, we allow different run modes...
-   * make sure that it is correctly set.
-   */
-  setRunMode(__argv);
+  if (twain_run_mode == RUN_READDUMP)
+    return readDumpedImage (twSession);
+  else
 #endif /* _DEBUG */
-
-  /*
-   * Now, call gimp_main... This is what the MAIN() macro
-   * would usually do.
-   */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+    return getImage (twSession);
 }
 
 /*
@@ -286,13 +233,13 @@ getAppIdentity(void)
   appIdentity->Version.MinorNum = 1;
   appIdentity->Version.Language = TWLG_USA;
   appIdentity->Version.Country = TWCY_USA;
-  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.5");
+  strcpy(appIdentity->Version.Info, "GIMP TWAIN 0.6");
   appIdentity->ProtocolMajor = TWON_PROTOCOLMAJOR;
   appIdentity->ProtocolMinor = TWON_PROTOCOLMINOR;
   appIdentity->SupportedGroups = DG_IMAGE;
   strcpy(appIdentity->Manufacturer, "Craig Setera");
   strcpy(appIdentity->ProductFamily, "GIMP");
-  strcpy(appIdentity->ProductName, "GIMP for Win32");
+  strcpy(appIdentity->ProductName, "GIMP");
 
   return appIdentity;
 }
@@ -305,7 +252,7 @@ getAppIdentity(void)
  * something built by me on top of the standard TWAIN
  * datasource manager calls.
  */
-void
+pTW_SESSION
 initializeTwain(void)
 {
   pTW_IDENTITY appIdentity;
@@ -323,139 +270,7 @@ initializeTwain(void)
   else
 #endif /* _DEBUG */
     registerTransferCallbacks(twSession, &standardCbFuncs, NULL);
-}
-
-/*
- * InitApplication
- *
- * Initialize window data and register the window class
- */
-BOOL
-InitApplication(HINSTANCE hInstance)
-{
-  WNDCLASS wc;
-  BOOL retValue;
-
-  /*
-   * Fill in window class structure with parameters to describe
-   * the main window.
-   */
-  wc.style = CS_HREDRAW | CS_VREDRAW;
-  wc.lpfnWndProc = (WNDPROC) WndProc;
-  wc.cbClsExtra = 0;
-  wc.cbWndExtra = 0;
-  wc.hInstance = hInstance;
-  wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-  wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-  wc.lpszClassName = APP_NAME;
-  wc.lpszMenuName = NULL;
-
-  /* Register the window class and stash success/failure code. */
-  retValue = RegisterClass(&wc);
-
-  /* Log error */
-  if (!retValue)
-    LogLastWinError();
-
-  return retValue;
-}
-
-/*
- * InitInstance
- *
- * Create the main window for the application.  Used to
- * interface with the TWAIN datasource.
- */
-BOOL
-InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-  /* Create our window */
-  hwnd = CreateWindow(APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
-		      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
-		      NULL, NULL, hInstance, NULL);
-
-  if (!hwnd) {
-    return (FALSE);
-  }
-
-  ShowWindow(hwnd, nCmdShow);
-  UpdateWindow(hwnd);
-
-  return TRUE;
-}
-
-/*
- * twainWinMain
- *
- * This is the function that represents the code that
- * would normally reside in WinMain (see above).  This
- * function will get called during run() in order to set
- * up the windowing environment necessary for TWAIN to
- * operate.
- */
-int
-twainWinMain(void)
-{
-
-  /* Initialize the twain information */
-  initializeTwain();
-
-  /* Perform instance initialization */
-  if (!InitApplication(hInst))
-    return (FALSE);
-
-  /* Perform application initialization */
-  if (!InitInstance(hInst, SHOW_WINDOW))
-    return (FALSE);
-
-  /*
-   * Call the main message processing loop...
-   * This call will not return until the application
-   * exits.
-   */
-  return twainMessageLoop(twSession);
-}
-
-/*
- * WndProc
- *
- * Process window message for the main window.
- */
-LRESULT CALLBACK
-WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-  switch (message) {
-
-  case WM_CREATE:
-    /* Register our window handle with the TWAIN
-     * support.
-     */
-    registerWindowHandle(twSession, hWnd);
-
-    /* Schedule the image transfer by posting a message */
-    PostMessage(hWnd, WM_TRANSFER_IMAGE, 0, 0);
-    break;
-
-  case WM_TRANSFER_IMAGE:
-    /* Get an image */
-#ifdef _DEBUG
-    if (twain_run_mode == RUN_READDUMP)
-      readDumpedImage(twSession);
-    else
-#endif /* _DEBUG */
-      getImage(twSession);
-    break;
-
-  case WM_DESTROY:
-    LogMessage("Exiting application\n");
-    PostQuitMessage(0);
-    break;
-
-  default:
-    return (DefWindowProc(hWnd, message, wParam, lParam));
-  }
-  return 0;
+  return twSession;
 }
 
 /******************************************************************
@@ -625,7 +440,7 @@ run (const gchar      *name,
 
   /* Have we succeeded so far? */
   if (values[0].data.d_status == GIMP_PDB_SUCCESS)
-    twainWinMain();
+    twainMain ();
 
   /* Check to make sure we got at least one valid
    * image.
@@ -686,7 +501,6 @@ preTransferCallback(void *clientData)
 int
 beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 {
-  int done = 0;
   int imageType, layerType;
 
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
@@ -748,7 +562,13 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   /* Create the GIMP image */
   theClientData->image_id = gimp_image_new(imageInfo->ImageWidth,
 					   imageInfo->ImageLength, imageType);
-
+  
+  /* Set the actual resolution */
+  gimp_image_set_resolution (theClientData->image_id,
+                             FIX32ToFloat(imageInfo->XResolution),
+                             FIX32ToFloat(imageInfo->YResolution));
+  gimp_image_set_unit (theClientData->image_id, GIMP_UNIT_INCH);
+  
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
 					   _("Background"),
@@ -905,11 +725,9 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 {
   static float ratio = 0.00390625;
   int row, col, sample;
-  char *srcBuf, *destByte;
+  char *destByte;
   int rows = imageMemXfer->Rows;
   int cols = imageMemXfer->Columns;
-  int bitsPerSample = imageInfo->BitsPerPixel / imageInfo->SamplesPerPixel;
-  int bytesPerSample = bitsPerSample / 8;
 
   TW_UINT16 *samplePtr;
 
@@ -1163,5 +981,5 @@ postTransferCallback(int pendingCount, void *clientData)
   closeDSM(twSession);
 
   /* Post a message to close up the application */
-  PostQuitMessage(0);
+  twainQuitApplication ();
 }

@@ -1324,6 +1324,21 @@ AC_SUBST(WINPRINT)
 AC_SUBST(WMF)
 
 
+############################################################
+# Check for Mac OS X TWAIN framework (can't build on Darwin)
+############################################################
+
+AC_MSG_CHECKING([checking for Mac OS X TWAIN support])
+AC_TRY_CPP([
+#include <Carbon/Carbon.h>
+#include <TWAIN/TWAIN.h>
+],
+twain_ok=yes,
+twain_ok=no)
+AC_MSG_RESULT($twain_ok)
+AM_CONDITIONAL(HAVE_MAC_TWAIN, test x$twain_ok = xyes)
+
+
 ##########################################################
 # Determine where to install the desktop & mime info files
 ##########################################################

@@ -57,11 +57,8 @@
  *                     images.
  */
 
-#include <windows.h>
-#include "twain.h"
+#include "tw_platform.h"
 #include "tw_func.h"
-
-#define DUMP_FILE "C:\\TWAINCAP.BIN"
 
 void dumpPreTransferCallback(void *clientData);
 int dumpBeginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData);

@@ -1,3 +1,28 @@
+2004-07-28  Sven Neumann  <sven@gimp.org>
+
+	Applied a patch from Brion Vibber that makes the TWAIN plug-in
+	available on Mac OS X (bug #147962):
+
+	* configure.in
+	* plug-ins/Makefile.am: check for Mac OS X twain support.
+
+	* plug-ins/twain/Makefile.am
+	* plug-ins/twain/tw_local.h
+	* plug-ins/twain/tw_mac.c
+	* plug-ins/twain/tw_platform.h
+	* plug-ins/twain/tw_win.c: new files with platform specific code.
+
+	* plug-ins/twain/README
+	* plug-ins/twain/tw_dump.[ch]
+	* plug-ins/twain/tw_func.[ch]
+	* plug-ins/twain/tw_util.[ch]
+	* plug-ins/twain/twain.c: changed accordingly.
+
+	* plug-ins/twain/gimp-twain.png: twain application icon used by
+	the Mac port.
+
+	* plug-ins/twain/tw_sess.c: removed, doesn't seem to be used.
+
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_is_dirty): fix typo in
