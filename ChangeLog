@@ -1,3 +1,7 @@
+Fri Aug 27 18:15:33 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gdisplay_color.c: more work on the gamma correction stuff
+
 1999-08-28  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimpbrushpipe.c: Implement the selection of brush based on
