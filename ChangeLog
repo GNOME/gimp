@@ -1,3 +1,8 @@
+2004-09-26  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/exchange.c: use the same preview as in all other
+	plug-ins.
+
 2004-09-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_stock.c: removed C++ style comment.
