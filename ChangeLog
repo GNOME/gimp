@@ -1,3 +1,8 @@
+Fri Jan  7 16:06:24 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/ripple.c: Typo fixes.
+
 2000-01-07  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* modules/colorsel_water.c: Add OS/2 support.

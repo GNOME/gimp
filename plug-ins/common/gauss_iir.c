@@ -263,7 +263,7 @@ gauss_iir_dialog (void)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gimp_dialog_new (_("IIR Raussian Blur"), "gauss_iir",
+  dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
 			 gimp_plugin_help_func, "filters/gauss_iir.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
