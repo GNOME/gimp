@@ -1,7 +1,7 @@
 2005-03-02  Sven Neumann  <sven@gimp.org>
 
-	* app/text/gimptextlayout.[ch]
-	* app/tools/gimptextoptions.h: allow to adjust letter-spacing.
+	* app/text/gimptextlayout.c
+	* app/tools/gimptextoptions.[ch]: allow to adjust letter-spacing.
 
 2005-03-01  Manish Singh  <yosh@gimp.org>
 
