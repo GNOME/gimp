@@ -332,8 +332,7 @@ trace_init ()
 
 #ifndef __STDC__
 #error You need to compile with an ansi-c compiler!!!
-#error Compilation will continue at your own risk!!
-#define __STDC_VERSION__ 0
+#error Remove these lines to continue at your own risk!
 #endif
 
 #if __STDC_VERSION__ > 199900
@@ -367,31 +366,6 @@ static void trace_printf (char *frmt, ...)
   else		  sv_catpv (trace_var, buffer);
 }
 
-#else
-error need_ansi_compiler__maybe_try_c89
-#endif
-
-/* in case g_strdup_printf is missing.  */
-#if (GLIB_MAJOR_VERSION>1) || (GLIB_MAJOR_VERSION==1 && GLIB_MINOR_VERSION>1)
-#define strdup_printf g_strdup_printf
-#elif defined(__STDC__)
-#include <stdarg.h>
-static char *
-strdup_printf (char *frmt, ...)
-{
-  va_list args;
-  char buffer[MAX_STRING]; /* sorry... */
-  
-  va_start (args, frmt);
-#ifdef HAVE_VSNPRINTF
-  vsnprintf (buffer, sizeof buffer, frmt, args);
-#else
-  vsprintf (buffer, frmt, args);
-#endif
-  return g_strdup (buffer);
-}
-#else
-error need_ansi_compiler__maybe_try_c89
 #endif
 
 static int
@@ -1250,7 +1224,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 	     }
 	  
 	  if (count && !err_msg)
-	    err_msg = strdup_printf ("plug-in returned %d more values than expected", count);
+	    err_msg = g_strdup_printf ("plug-in returned %d more values than expected", count);
 	}
       
       while (count--)
@@ -1263,7 +1237,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       LEAVE;
     }
   else
-    err_msg = strdup_printf ("being called as '%s', but '%s' not registered in the pdb", name, name);
+    err_msg = g_strdup_printf ("being called as '%s', but '%s' not registered in the pdb", name, name);
   
   if (err_msg)
     {
