@@ -167,16 +167,16 @@ msgstr "prøvde å redigere en åpen bezier kurve i redigeringsutvalget"
 
 #: app/bezier_select.c:1292
 msgid "Encountered orphaned bezier control point"
-msgstr "Kom over et foreldreløst bezier-kontrollpunkt"
+msgstr "Fant et foreldreløst bezier-kontrollpunkt"
 
 #: app/bezier_select.c:1975 app/bezier_select.c:3176
 msgid "bad bezier segment"
-msgstr "dårlig bezier segment"
+msgstr "ugyldig bezier segment"
 
 #: app/bezier_select.c:1992 app/bezier_select.c:2636
 #, c-format
 msgid "unknown coordinate space: %d"
-msgstr "ukjent koorinatrom: %d"
+msgstr "ukjent koordinatrom: %d"
 
 #: app/bezier_select.c:2135
 msgid "tried to convert an open bezier curve"
@@ -463,7 +463,7 @@ msgstr "Mellomrom:"
 
 #: app/brush_select.c:536
 msgid "failed to run brush callback function"
-msgstr ""
+msgstr "klarte ikke å kjøre callback funksjon for børste"
 
 #: app/brush_select.c:1192
 msgid ""
@@ -471,7 +471,7 @@ msgid ""
 "please write your own or try back tomorrow\n"
 msgstr ""
 "Vi er helt tom for penselredigerere idag,\n"
-"vennligst skriv din egen elle prøv i morgen\n"
+"vennligst skriv din egen eller prøv igjen i morgen\n"
 
 #: app/bucket_fill.c:113
 msgid "FG Color Fill"
