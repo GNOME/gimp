@@ -548,30 +548,14 @@ tool_manager_image_dirty (GimpImage       *gimage,
   if (tool_manager->active_tool &&
       ! gimp_tool_control_preserve (tool_manager->active_tool->control))
     {
-      GimpDisplay *gdisp;
+      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
 
-      gdisp = tool_manager->active_tool->gdisp;
+      if (! gdisp || gdisp->gimage != gimage)
+        if (GIMP_IS_DRAW_TOOL (tool_manager->active_tool))
+          gdisp = GIMP_DRAW_TOOL (tool_manager->active_tool)->gdisp;
 
-      if (gdisp)
-	{
-          /*  create a new one, deleting the current
-           */
-          gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
-
-	  if (gdisp->gimage == gimage)
-            {
-              GimpTool *tool;
-
-              tool = tool_manager->active_tool;
-
-              if (gimp_image_active_drawable (gdisp->gimage) ||
-                  gimp_tool_control_handles_empty_image (tool->control))
-                {
-                  if (tool_manager_initialize_active (gimage->gimp, gdisp))
-                    tool->gdisp = gdisp;
-                }
-            }
-	}
+      if (gdisp && gdisp->gimage == gimage)
+        gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
     }
 }
 
@@ -582,9 +566,7 @@ tool_manager_image_undo_start (GimpImage       *gimage,
   if (tool_manager->active_tool &&
       ! gimp_tool_control_preserve (tool_manager->active_tool->control))
     {
-      GimpDisplay *gdisp;
-
-      gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
 
       if (! gdisp || gdisp->gimage != gimage)
         if (GIMP_IS_DRAW_TOOL (tool_manager->active_tool))

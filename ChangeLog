@@ -1,3 +1,10 @@
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tool_manager.c (tool_manager_image_dirty): don't
+	reinitialize the tool when the image becomes dirty but just cancel
+	it (fixes bug #131965). Also, only cancel the tool if the tool is
+	operating on one of the dirtied image's displays (fixes bug #12253).
+
 2004-03-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_object_popup.c: marked missing strings
