@@ -31,6 +31,7 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-types.h"
 #include "config/gimpconfig-utils.h"
+#include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -54,14 +55,15 @@
 /*  local functions  */
 
 
-static void grid_changed_cb (GtkWidget *widget,
-                             gpointer   data);
-static void reset_callback  (GtkWidget  *widget,
-                             GtkWidget  *dialog);
-static void cancel_callback (GtkWidget  *widget,
-                             GtkWidget  *dialog);
-static void ok_callback     (GtkWidget  *widget,
-                             GtkWidget  *dialog);
+static void  grid_notify_callback (GtkWidget  *widget,
+                                   GParamSpec *pspec,
+                                   gpointer    data);
+static void  reset_callback       (GtkWidget   *widget,
+                                   GtkWidget   *dialog);
+static void  cancel_callback      (GtkWidget   *widget,
+                                   GtkWidget   *dialog);
+static void  ok_callback          (GtkWidget   *widget,
+                                   GtkWidget   *dialog);
 
 
 /*  public function  */
@@ -78,10 +80,7 @@ grid_dialog_new (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (gimage));
-
-  grid_backup = g_object_new (GIMP_TYPE_GRID, NULL);
-  gimp_config_copy_properties (GIMP_CONFIG (grid),
-                               GIMP_CONFIG (grid_backup));
+  grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
 
   /* dialog */
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -108,8 +107,8 @@ grid_dialog_new (GimpImage *gimage)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
 		     editor);
 
-  g_signal_connect (editor, "grid_changed",
-                    G_CALLBACK (grid_changed_cb),
+  g_signal_connect (grid, "notify",
+                    G_CALLBACK (grid_notify_callback),
                     gimage);
 
   gtk_widget_show (editor);
@@ -128,11 +127,10 @@ grid_dialog_new (GimpImage *gimage)
 
 
 static void
-grid_changed_cb (GtkWidget *widget,
-                 gpointer   data)
+grid_notify_callback (GtkWidget  *widget,
+                      GParamSpec *pspec,
+                      gpointer    data)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (data));
-
   gimp_image_grid_changed (GIMP_IMAGE (data));
 }
 
@@ -142,13 +140,11 @@ reset_callback (GtkWidget  *widget,
 {
   GimpImage *gimage;
   GimpImage *grid;
-  GimpGrid  *grid_backup;
 
-  gimage      = g_object_get_data (G_OBJECT (dialog), "gimage");
-  grid        = g_object_get_data (G_OBJECT (dialog), "grid");
-  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
+  gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
+  grid   = g_object_get_data (G_OBJECT (dialog), "grid");
 
-  gimp_config_copy_properties (GIMP_CONFIG (grid_backup),
+  gimp_config_copy_properties (GIMP_CONFIG (gimage->gimp->config->default_grid),
                                GIMP_CONFIG (grid));
   gimp_image_grid_changed (GIMP_IMAGE (gimage));
 }
@@ -182,7 +178,9 @@ ok_callback (GtkWidget  *widget,
 
   if (! gimp_config_is_equal_to (GIMP_CONFIG (grid_backup),
                                  GIMP_CONFIG (grid)))
-    gimp_image_undo_push_image_grid (gimage, _("Grid"), grid_backup);
+    {
+      gimp_image_undo_push_image_grid (gimage, _("Grid"), grid_backup);
+    }
 
   gtk_widget_destroy (dialog);
 }

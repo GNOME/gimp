@@ -1,3 +1,16 @@
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpgrideditor.[ch]: removed "grid_changed" signal.
+	The user of GimpGridEditor can connect to notifications of the
+	grid that is being edited. There is no need for a proxy signal.
+
+	* app/core/gimpimage-grid.c (gimp_image_set_grid): don't exchange
+	the image's grid object, it is part of the image. Copy all grid
+	properties instead.
+
+	* app/core/gimpimage-undo-push.c
+	* app/gui/grid-dialog.c: changed accordingly.
+
 2003-10-14  Michael Natterer  <mitch@gimp.org>
 
 	Refactored modifier handling of displays and tools. Hopefully

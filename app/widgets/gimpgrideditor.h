@@ -48,8 +48,6 @@ struct _GimpGridEditor
 struct _GimpGridEditorClass
 {
   GtkVBoxClass  parent_class;
-
-  void (* grid_changed) (GimpGridEditor *editor);
 };
 
 

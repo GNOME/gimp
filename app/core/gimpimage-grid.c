@@ -25,6 +25,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
+
 #include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
@@ -48,21 +51,15 @@ gimp_image_set_grid (GimpImage *gimage,
                      gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (grid == NULL || GIMP_IS_GRID (grid));
+  g_return_if_fail (GIMP_IS_GRID (grid));
 
-  if (grid != gimage->grid)
-    {
-      if (push_undo)
-        gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
+  if (gimp_config_is_equal_to (GIMP_CONFIG (gimage->grid), GIMP_CONFIG (grid)))
+    return;
 
-      if (gimage->grid)
-        g_object_unref (gimage->grid);
+  if (push_undo)
+    gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
 
-      gimage->grid = grid;
-
-      if (gimage->grid)
-        g_object_ref (gimage->grid);
-    }
+  gimp_config_copy_properties (GIMP_CONFIG (grid), GIMP_CONFIG (gimage->grid));
 
   gimp_image_grid_changed (gimage);
 }

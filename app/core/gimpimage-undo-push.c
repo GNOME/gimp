@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 #include "config/gimpcoreconfig.h"
 
 #include "base/pixel-region.h"
@@ -609,10 +611,8 @@ undo_pop_image_qmask (GimpUndo            *undo,
                       GimpUndoMode         undo_mode,
                       GimpUndoAccumulator *accum)
 {
-  QmaskUndo *qu;
+  QmaskUndo *qu = undo->data;
   gboolean   tmp;
-
-  qu = (QmaskUndo *) undo->data;
 
   tmp = undo->gimage->qmask_state;
   undo->gimage->qmask_state = qu->qmask_state;
@@ -656,7 +656,7 @@ gimp_image_undo_push_image_grid (GimpImage   *gimage,
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (grid == NULL || GIMP_IS_GRID (grid), FALSE);
+  g_return_val_if_fail (GIMP_IS_GRID (grid), FALSE);
 
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (GridUndo),
@@ -666,12 +666,9 @@ gimp_image_undo_push_image_grid (GimpImage   *gimage,
                                    undo_pop_image_grid,
                                    undo_free_image_grid)))
     {
-      GridUndo *gu;
+      GridUndo *gu = new->data;
 
-      gu = new->data;
-
-      if (grid)
-        gu->grid = g_object_ref (grid);
+      gu->grid = GIMP_GRID (gimp_config_duplicate (GIMP_CONFIG (grid)));
 
       return TRUE;
     }
@@ -684,22 +681,15 @@ undo_pop_image_grid (GimpUndo            *undo,
                      GimpUndoMode         undo_mode,
                      GimpUndoAccumulator *accum)
 {
-  GridUndo *gu;
-  GimpGrid *tmp;
+  GridUndo *gu = undo->data;
+  GimpGrid *grid;
 
-  gu = (GridUndo *) undo->data;
-
-  tmp = gimp_image_get_grid (undo->gimage);
-
-  if (tmp)
-    g_object_ref (tmp);
+  grid = GIMP_GRID (gimp_config_duplicate (GIMP_CONFIG (undo->gimage->grid)));
 
   gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
 
-  if (gu->grid)
-    g_object_unref (gu->grid);
-
-  gu->grid = tmp;
+  g_object_unref (gu->grid);
+  gu->grid = grid;
 
   return TRUE;
 }
@@ -708,9 +698,7 @@ static void
 undo_free_image_grid (GimpUndo     *undo,
                       GimpUndoMode  undo_mode)
 {
-  GridUndo *gu;
-
-  gu = (GridUndo *) undo->data;
+  GridUndo *gu = undo->data;
 
   if (gu->grid)
     g_object_unref (gu->grid);
@@ -775,11 +763,9 @@ undo_pop_image_guide (GimpUndo            *undo,
                       GimpUndoMode         undo_mode,
                       GimpUndoAccumulator *accum)
 {
-  GuideUndo           *gu;
+  GuideUndo           *gu = undo->data;
   gint                 old_position;
   GimpOrientationType  old_orientation;
-
-  gu = (GuideUndo *) undo->data;
 
   old_position    = gu->guide->position;
   old_orientation = gu->guide->orientation;
@@ -814,9 +800,7 @@ static void
 undo_free_image_guide (GimpUndo     *undo,
                        GimpUndoMode  undo_mode)
 {
-  GuideUndo *gu;
-
-  gu = (GuideUndo *) undo->data;
+  GuideUndo *gu = undo->data;
 
   gimp_image_guide_unref (gu->guide);
   g_free (gu);

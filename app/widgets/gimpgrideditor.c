@@ -48,12 +48,6 @@ enum
   PROP_YRESOLUTION
 };
 
-enum
-{
-  GRID_CHANGED,
-  LAST_SIGNAL
-};
-
 
 static void      gimp_grid_editor_class_init   (GimpGridEditorClass   *klass);
 static GObject * gimp_grid_editor_constructor  (GType                  type,
@@ -68,12 +62,9 @@ static void      gimp_grid_editor_get_property (GObject               *object,
                                                 GValue                *value,
                                                 GParamSpec            *pspec);
 static void      gimp_grid_editor_finalize     (GObject               *object);
-static void      gimp_grid_editor_grid_changed (GtkWidget             *widget,
-                                                gpointer               data);
 
 
 static GtkVBoxClass *parent_class = NULL;
-static guint         grid_editor_signals[LAST_SIGNAL] = { 0 };
 
 
 GType
@@ -135,17 +126,6 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
                                                         GRID_EDITOR_DEFAULT_RESOLUTION,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  grid_editor_signals[GRID_CHANGED] =
-    g_signal_new ("grid_changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpGridEditorClass, grid_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  klass->grid_changed = NULL;
 }
 
 static void
@@ -231,9 +211,6 @@ gimp_grid_editor_constructor (GType                  type,
   style = gimp_prop_enum_option_menu_new (G_OBJECT (editor->grid), "style",
                                           GIMP_GRID_DOTS,
                                           GIMP_GRID_SOLID);
-  g_signal_connect (style, "changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Line _Style:"), 1.0, 0.5,
                              style, 1, TRUE);
@@ -243,9 +220,6 @@ gimp_grid_editor_constructor (GType                  type,
                                              GRID_EDITOR_COLOR_BUTTON_SIZE,
                                              GRID_EDITOR_COLOR_BUTTON_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (color_button, "color-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Foreground Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
@@ -255,9 +229,6 @@ gimp_grid_editor_constructor (GType                  type,
                                              GRID_EDITOR_COLOR_BUTTON_SIZE,
                                              GRID_EDITOR_COLOR_BUTTON_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (color_button, "color-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Background Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
@@ -296,16 +267,6 @@ gimp_grid_editor_constructor (GType                  type,
 				_("Height"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Pixels"), 1, 4, 0.0);
-
-  g_signal_connect (sizeentry, "refval-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
-  g_signal_connect (sizeentry, "unit-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
-  g_signal_connect (sizeentry, "value-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
@@ -353,16 +314,6 @@ gimp_grid_editor_constructor (GType                  type,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Pixels"), 1, 4, 0.0);
 
-  g_signal_connect (sizeentry, "refval-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
-  g_signal_connect (sizeentry, "unit-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
-  g_signal_connect (sizeentry, "value-changed",
-                    G_CALLBACK (gimp_grid_editor_grid_changed),
-                    editor);
-
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
 
@@ -393,21 +344,8 @@ gimp_grid_editor_new (GimpGrid *grid,
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
   return GTK_WIDGET (g_object_new (GIMP_TYPE_GRID_EDITOR,
-                                   "grid", grid,
+                                   "grid",        grid,
                                    "xresolution", xresolution,
                                    "yresolution", yresolution,
                                    NULL));
-}
-
-static void
-gimp_grid_editor_grid_changed (GtkWidget *widget,
-                               gpointer   data)
-{
-  GimpGridEditor *editor;
-
-  g_return_if_fail (GIMP_IS_GRID_EDITOR (data));
-
-  editor = GIMP_GRID_EDITOR (data);
-
-  g_signal_emit (editor, grid_editor_signals[GRID_CHANGED], 0);
 }
