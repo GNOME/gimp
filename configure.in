@@ -637,8 +637,8 @@ Makefile
 po/Makefile.in
 intl/Makefile
 libgimp/Makefile
-plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
 plug-ins/Makefile
+plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/megawidget/Makefile
