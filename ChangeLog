@@ -1,5 +1,9 @@
 2002-04-12  Sven Neumann  <sven@gimp.org>
 
+	* data/misc/Makefile.am: fixed uninstall target (bug #78536).
+
+2002-04-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gtm.c
 	* plug-ins/common/illusion.c
 	* plug-ins/common/ps.c

@@ -33,6 +33,8 @@ endif
 
 uninstall-local:
 if GNOME_DESKTOP_PATH
-	cd @GNOME_DESKTOP_PATH@ \
-	rm -f $(GNOME_DESKTOP_FILE)
+	if test -d @GNOME_DESKTOP_PATH@; then \
+		cd @GNOME_DESKTOP_PATH@ \
+		&& rm -f gimp-1.3.desktop \
+	; fi
 endif
