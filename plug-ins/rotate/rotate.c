@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.6 by Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/01/15
+ *  Rotate plug-in v0.7 by Sven Neumann, neumanns@uni-duesseldorf.de  
+ *  1998/05/28
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -39,7 +39,8 @@
  *  (10/17/97)  v0.4   now handles selections
  *  (01/09/98)  v0.5   a few fixes to support portability
  *  (01/15/98)  v0.6   fixed a line that caused rotate to crash on some 
- *                     systems                
+ *                     systems               
+ *  (05/28/98)  v0.7   use the new gimp_message function for error output
  */
 
 /* TODO List
@@ -51,7 +52,6 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_rotate"
@@ -118,7 +118,6 @@ static void  rotate_ok_callback (GtkWidget *widget,
 				 gpointer   data);
 static void  rotate_toggle_update (GtkWidget *widget,
 				   gpointer   data);
-static void  ErrorMessage (gchar *message);
 gint32 my_gimp_selection_float (gint32 image_ID, gint32 drawable_ID);
 gint32 my_gimp_selection_is_empty (gint32 image_ID);
 
@@ -497,13 +496,13 @@ rotate (void)
     {
       if ( !my_gimp_selection_is_empty (image_ID) ) 
 	{
-	  ErrorMessage("You can not rotate the whole image if there's a selection.");
+	  gimp_message("You can not rotate the whole image if there's a selection.");
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
       if ( gimp_layer_is_floating_selection (active_drawable->id) ) 
 	{
-	  ErrorMessage("You can not rotate the whole image if there's a floating selection.");
+	  gimp_message("You can not rotate the whole image if there's a floating selection.");
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
@@ -764,50 +763,6 @@ rotate_toggle_update (GtkWidget *widget,
     *toggle_val = FALSE;
 }
 
-
-/* Error Message 
- * 
- * This code was stolen from Pavel Greenfield's Colormap Rotation plug-in */
-
-static void 
-ErrorMessage(gchar *message)
-{
-  GtkWidget *window, *label, *button, *table;
-  gchar **argv=g_new (gchar *, 1);
-  gint argc=1;
-  argv[0] = g_strdup ("rotate");
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  
-  window=gtk_dialog_new();
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-  gtk_window_set_title(GTK_WINDOW(window), "Rotate Error Message");
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      (GtkSignalFunc) rotate_close_callback,
-		      NULL);
-  
-  button = gtk_button_new_with_label ("Got It!");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) rotate_ok_callback,
-                      window);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button, TRUE, TRUE, 0);
- 
-  table=gtk_table_new(2,2,FALSE);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox),table,TRUE,TRUE,0);
-  gtk_widget_show(table);
-  
-  label=gtk_label_new("");
-  gtk_label_set(GTK_LABEL(label),message);
-  gtk_widget_show(label);
-  gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,
-		   GTK_FILL|GTK_EXPAND,GTK_FILL|GTK_EXPAND,15,15);
-  
-  gtk_widget_show(window);
-  gtk_main ();
-}
 
 
 

@@ -1,6 +1,7 @@
 /*  
- *  ScreenShot plug-in v0.6 by Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/04/18
+ *  ScreenShot plug-in v0.7 
+ *  Sven Neumann, neumanns@uni-duesseldorf.de  
+ *  1998/05/28
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -36,6 +37,7 @@
  *  (98/04/02)  v0.5   it works non-interactively now and registers
  *                     itself correctly as extension
  *  (98/04/18)  v0.6   cosmetic change to the dialog
+ *  (98/05/28)  v0.7   use g_message for error output
  */
 
 #include <stdio.h>
@@ -48,7 +50,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
 #define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.6 (98/04/18)"
+#define PLUG_IN_VERSION     "v0.7 (98/05/28)"
 #define PLUG_IN_MENU_PATH   "<Toolbox>/Xtns/Screen Shot"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
@@ -209,10 +211,6 @@ run (gchar *name,		/* name of plugin */
   {
     /* Run the main function */
     shoot();
-        
-    /* Store variable states for next run */
-    if (run_mode == RUN_INTERACTIVE)
-      gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
   }
 
   status = (image_ID != -1) ? STATUS_SUCCESS : STATUS_EXECUTION_ERROR;
@@ -221,6 +219,8 @@ run (gchar *name,		/* name of plugin */
   {
     if (run_mode == RUN_INTERACTIVE)
       {
+	/* Store variable states for next run */
+	gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
 	/* display the image */
 	shoot_display_image (image_ID);
       }
@@ -273,14 +273,14 @@ shoot (void)
   /* fork off a xwd process */
   if ((pid = fork ()) < 0)
     {
-      g_warning ("screenshot: fork failed: %s\n", g_strerror (errno));
+      g_message ("screenshot: fork failed: %s\n", g_strerror (errno));
       return;
     }
   else if (pid == 0)
     {
       execvp (XWD, xwdargv);
       /* What are we doing here? exec must have failed */
-      g_warning ("screenshot: exec failed: xwd: %s\n", g_strerror (errno));
+      g_message ("screenshot: exec failed: xwd: %s\n", g_strerror (errno));
       return;
     }
   else
@@ -289,7 +289,7 @@ shoot (void)
 	      
       if (!WIFEXITED (status))
 	{
-	  g_warning ("screenshot: xwd didn't work\n");
+	  g_message ("screenshot: xwd didn't work\n");
 	  return;
 	}
     }
