@@ -59,6 +59,7 @@
 #include "invert.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
+#include "layers_dialogP.h"
 #include "module_db.h"
 #include "palette.h"
 #include "pattern_select.h"
@@ -84,20 +85,29 @@
         gdisp = gdisplay_active (); \
         if (!gdisp) return
 
-/*  external functions  */
-extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 
 /*  local functions  */
-static void     image_resize_callback        (GtkWidget *, gpointer);
-static void     image_scale_callback         (GtkWidget *, gpointer);
-static void     gimage_mask_feather_callback (GtkWidget *, gdouble, GimpUnit,
-					      gpointer);
-static void     gimage_mask_border_callback  (GtkWidget *, gdouble, GimpUnit,
-		  			      gpointer);
-static void     gimage_mask_grow_callback    (GtkWidget *, gdouble, GimpUnit,
-					      gpointer);
-static void     gimage_mask_shrink_callback  (GtkWidget *, gdouble, GimpUnit,
-					      gpointer);
+static void     image_resize_callback        (GtkWidget *,
+					      gpointer   );
+static void     image_scale_callback         (GtkWidget *,
+					      gpointer   );
+static void     gimage_mask_feather_callback (GtkWidget *,
+					      gdouble    ,
+					      GimpUnit   ,
+					      gpointer   );
+static void     gimage_mask_border_callback  (GtkWidget *,
+					      gdouble    ,
+					      GimpUnit   ,
+		  			      gpointer   );
+static void     gimage_mask_grow_callback    (GtkWidget *,
+					      gdouble    ,
+					      GimpUnit   ,
+					      gpointer   );
+static void     gimage_mask_shrink_callback  (GtkWidget *,
+					      gdouble    ,
+					      GimpUnit   ,
+					      gpointer   );
+
 
 /*  local variables  */
 static gdouble   selection_feather_radius    = 5.0;
@@ -128,6 +138,13 @@ file_save_as_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
   file_save_as_callback (widget, client_data);
+}
+
+void
+file_save_a_copy_as_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  file_save_a_copy_as_callback (widget, client_data);
 }
 
 void

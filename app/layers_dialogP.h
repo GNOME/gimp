@@ -15,11 +15,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __LAYERS_DIALOG_P_H__
 #define __LAYERS_DIALOG_P_H__
 
-void render_fs_preview                 (GtkWidget *, GdkPixmap *);
-void render_preview                    (TempBuf *, GtkWidget *, int, int, int);
-void layers_dialog_invalidate_previews (GimpImage *gimage);
+
+void   render_fs_preview                 (GtkWidget *widget,
+					  GdkPixmap *pixmap);
+void   render_preview                    (TempBuf   *preview_buf,
+					  GtkWidget *preview_widget,
+					  gint       width,
+					  gint       height,
+					  gint       channel);
+void   layers_dialog_invalidate_previews (GimpImage *gimage);
+void   layers_dialog_layer_merge_query   (GImage    *gimage,
+					  gboolean   merge_visible);
+
 
 #endif /* __LAYERS_DIALOG_P_H__ */

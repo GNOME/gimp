@@ -235,7 +235,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="0%" target="1.4">
+    <entry size="small" difficulty="easy" status="100%" target="1.4">
       <title>Implement "Save a Copy..."</title>
       <description>
 	<p>

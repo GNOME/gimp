@@ -34,6 +34,8 @@ void            file_save_callback              (GtkWidget   *widget,
 						 gpointer     data);
 void            file_save_as_callback           (GtkWidget   *widget,
 						 gpointer     data);
+void            file_save_a_copy_as_callback    (GtkWidget   *widget,
+						 gpointer     data);
 
 void            file_revert_callback            (GtkWidget   *widget,
 						 gpointer     data);

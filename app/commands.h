@@ -20,14 +20,15 @@
 #define __COMMANDS_H__
 
 
-void file_new_cmd_callback     (GtkWidget *, gpointer, guint);
-void file_open_cmd_callback    (GtkWidget *, gpointer);
-void file_save_cmd_callback    (GtkWidget *, gpointer);
-void file_save_as_cmd_callback (GtkWidget *, gpointer);
-void file_revert_cmd_callback  (GtkWidget *, gpointer);
-void file_pref_cmd_callback    (GtkWidget *, gpointer);
-void file_close_cmd_callback   (GtkWidget *, gpointer);
-void file_quit_cmd_callback    (GtkWidget *, gpointer);
+void file_new_cmd_callback            (GtkWidget *, gpointer, guint);
+void file_open_cmd_callback           (GtkWidget *, gpointer);
+void file_save_cmd_callback           (GtkWidget *, gpointer);
+void file_save_as_cmd_callback        (GtkWidget *, gpointer);
+void file_save_a_copy_as_cmd_callback (GtkWidget *, gpointer);
+void file_revert_cmd_callback         (GtkWidget *, gpointer);
+void file_pref_cmd_callback           (GtkWidget *, gpointer);
+void file_close_cmd_callback          (GtkWidget *, gpointer);
+void file_quit_cmd_callback           (GtkWidget *, gpointer);
 
 void edit_undo_cmd_callback         (GtkWidget *, gpointer);
 void edit_redo_cmd_callback         (GtkWidget *, gpointer);

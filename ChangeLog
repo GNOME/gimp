@@ -1,3 +1,16 @@
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.[ch]
+	* app/fileops.[ch]
+	* app/gdisplay.c
+	* app/menus.c: Implemented "Save a Copy as..." which saves the image
+	without changing it's filename.
+
+	* app/layers_dialogP.h: export layers_dialog_layer_merge_query()
+	here instead of defining it in commands.c
+
+	* TODO.xml: mark this entry as done :)
+
 2001-01-01  Michael Natterer  <mitch@gimp.org>
 
 	* TODO.xml: added a TODO item for "Save a Copy..."
