@@ -14,13 +14,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2005-01-06 14:28+0100\n"
+"POT-Creation-Date: 2005-01-28 18:35+0100\n"
+"PO-Revision-Date: 2005-01-28 18:36+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:283
 #: plug-ins/gflare/gflare.c:891
@@ -8567,35 +8567,35 @@ msgstr "Vorheriges Objekt zeigen"
 msgid "Show next object"
 msgstr "Nächstes Objekt zeigen"
 
-#: plug-ins/gfig/gfig-dialog.c:899
+#: plug-ins/gfig/gfig-dialog.c:899 plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Alle Objekte zeigen"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:905 plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
 msgstr "Linie erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:908
+#: plug-ins/gfig/gfig-dialog.c:908 plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
 msgstr "Kreis erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:911
+#: plug-ins/gfig/gfig-dialog.c:911 plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
 msgstr "Ellipse erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:914
+#: plug-ins/gfig/gfig-dialog.c:914 plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
 msgstr "Bogen erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:917 plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
 msgstr "Reguläres Polygon erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:920
+#: plug-ins/gfig/gfig-dialog.c:920 plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Stern erstellen"
 
-#: plug-ins/gfig/gfig-dialog.c:923
+#: plug-ins/gfig/gfig-dialog.c:923 plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Spirale erstellen"
 
@@ -8603,23 +8603,23 @@ msgstr "Spirale erstellen"
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Bezierkurve erstellen. Shift + Taste beendet Erzeugung des Objektes"
 
-#: plug-ins/gfig/gfig-dialog.c:930
+#: plug-ins/gfig/gfig-dialog.c:930 plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
 msgstr "Objekt bewegen"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:933 plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
 msgstr "Einzelnen Punkt bewegen"
 
-#: plug-ins/gfig/gfig-dialog.c:936
+#: plug-ins/gfig/gfig-dialog.c:936 plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
 msgstr "Objekt kopieren"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:939 plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
 msgstr "Objekt löschen"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:942 plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Objekt auswählen"
 
@@ -8768,6 +8768,10 @@ msgstr "Spirale Anzahl der Windungen"
 #: plug-ins/gfig/gfig-star.c:57
 msgid "Star Number of Points"
 msgstr "Stern Anzahl der Punkte"
+
+#: plug-ins/gfig/gfig-stock.c:41
+msgid "Create bezier curve"
+msgstr "Bezier-Kurve erstellen"
 
 #: plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -10253,7 +10257,7 @@ msgstr "Datei existiert bereits"
 msgid "Do you really want to overwrite?"
 msgstr "Wollen Sie sie wirklich überschreiben?"
 
-#: plug-ins/imagemap/imap_file.c:165
+#: plug-ins/imagemap/imap_file.c:166
 msgid "Save Imagemap"
 msgstr "Speichere Imagemap"
 
@@ -11714,3 +11718,4 @@ msgstr "Fehler: Konnte XJT Eigenschaften-Datei '%s' nicht lesen."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: XJT Eigenschaften-Datei '%s' ist leer."
+
