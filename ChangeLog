@@ -1,5 +1,9 @@
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
+	* app/base/cpu-accel.c: null-terminate string for vendor comparisions.
+
+2003-09-04  Manish Singh  <yosh@gimp.org>
+
 	* app/base/cpu-accel.[ch]: rewrote the x86 tests, moved debug printout
 	from base.c to here.
 

@@ -123,6 +123,8 @@ arch_get_vendor (void)
   *(int *)&id[0] = ebx;
   *(int *)&id[4] = edx;
   *(int *)&id[8] = ecx;
+  
+  id[12] = '\0';
 
 #ifdef ARCH_X86_64
   if (strcmp (id, "AuthenticAMD") == 0)
