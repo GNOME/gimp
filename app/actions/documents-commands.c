@@ -85,7 +85,7 @@ documents_file_open_dialog_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_delete_document_cmd_callback (GtkWidget *widget,
+documents_remove_document_cmd_callback (GtkWidget *widget,
                                         gpointer   data)
 {
   GimpDocumentView *view;
@@ -95,7 +95,7 @@ documents_delete_document_cmd_callback (GtkWidget *widget,
   if (! view)
     return;
 
-  gtk_button_clicked (GTK_BUTTON (view->delete_button));
+  gtk_button_clicked (GTK_BUTTON (view->remove_button));
 }
 
 

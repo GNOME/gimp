@@ -1958,8 +1958,8 @@ static GimpItemFactoryEntry documents_entries[] =
       "<StockItem>", GTK_STOCK_OPEN },
     NULL, NULL, NULL },
   { { N_("/Remove Entry"), NULL,
-      documents_delete_document_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_DELETE },
+      documents_remove_document_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_REMOVE },
     NULL, NULL, NULL },
 
   SEPARATOR ("/---"),

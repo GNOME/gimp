@@ -41,7 +41,7 @@ struct _GimpDocumentView
   GimpContainerEditor  parent_instance;
 
   GtkWidget           *open_button;
-  GtkWidget           *delete_button;
+  GtkWidget           *remove_button;
   GtkWidget           *refresh_button;
 };
 

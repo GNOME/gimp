@@ -26,7 +26,7 @@ void   documents_raise_or_open_document_cmd_callback    (GtkWidget *widget,
                                                          gpointer   data);
 void   documents_file_open_dialog_cmd_callback          (GtkWidget *widget,
                                                          gpointer   data);
-void   documents_delete_document_cmd_callback           (GtkWidget *widget,
+void   documents_remove_document_cmd_callback           (GtkWidget *widget,
                                                          gpointer   data);
 void   documents_recreate_preview_cmd_callback          (GtkWidget *widget,
                                                          gpointer   data);

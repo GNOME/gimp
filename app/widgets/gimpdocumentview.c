@@ -62,7 +62,7 @@ static void   gimp_document_view_open_clicked          (GtkWidget        *widget
 static void   gimp_document_view_open_extended_clicked (GtkWidget        *widget,
                                                         guint             state,
                                                         GimpDocumentView *view);
-static void   gimp_document_view_delete_clicked        (GtkWidget        *widget,
+static void   gimp_document_view_remove_clicked        (GtkWidget        *widget,
                                                         GimpDocumentView *view);
 static void   gimp_document_view_refresh_clicked       (GtkWidget        *widget,
                                                         GimpDocumentView *view);
@@ -124,7 +124,7 @@ static void
 gimp_document_view_init (GimpDocumentView *view)
 {
   view->open_button    = NULL;
-  view->delete_button  = NULL;
+  view->remove_button  = NULL;
   view->refresh_button = NULL;
 }
 
@@ -169,11 +169,11 @@ gimp_document_view_new (GimpViewType     view_type,
                             G_CALLBACK (gimp_document_view_open_extended_clicked),
                             editor);
 
-  document_view->delete_button =
+  document_view->remove_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_DELETE,
+                            GTK_STOCK_REMOVE,
                             _("Remove selected entry"), NULL,
-                            G_CALLBACK (gimp_document_view_delete_clicked),
+                            G_CALLBACK (gimp_document_view_remove_clicked),
                             NULL,
                             editor);
 
@@ -197,7 +197,7 @@ gimp_document_view_new (GimpViewType     view_type,
 				  GTK_BUTTON (document_view->open_button),
 				  GIMP_TYPE_IMAGEFILE);
   gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (document_view->delete_button),
+				  GTK_BUTTON (document_view->remove_button),
 				  GIMP_TYPE_IMAGEFILE);
 
   return GTK_WIDGET (document_view);
@@ -305,7 +305,7 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
 }
 
 static void
-gimp_document_view_delete_clicked (GtkWidget        *widget,
+gimp_document_view_remove_clicked (GtkWidget        *widget,
                                    GimpDocumentView *view)
 {
   GimpContainerEditor *editor;
@@ -389,8 +389,7 @@ gimp_document_view_select_item (GimpContainerEditor *editor,
                                 GimpViewable        *viewable)
 {
   GimpDocumentView *view;
-
-  gboolean  delete_sensitive = FALSE;
+  gboolean          remove_sensitive = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
@@ -400,10 +399,10 @@ gimp_document_view_select_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (editor->view->container,
                                        GIMP_OBJECT (viewable)))
     {
-      delete_sensitive = TRUE;
+      remove_sensitive = TRUE;
     }
 
-  gtk_widget_set_sensitive (view->delete_button, delete_sensitive);
+  gtk_widget_set_sensitive (view->remove_button, remove_sensitive);
 }
 
 static void

@@ -1,3 +1,12 @@
+2002-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdocumentview.[ch]
+	* app/gui/documents-commands.[ch]
+	* app/gui/menus.c: changed icon/variables/functions to say
+	"Remove" instead of "Delete" because "Delete" is misleading (we
+	don't delete the file but just remove the entry from the document
+	history).
+
 2002-09-12  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: fixed output in case automake-1.6 is not available.
