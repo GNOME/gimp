@@ -10,11 +10,11 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.2.1\n"
+"Project-Id-Version: GIMP 2.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
-"PO-Revision-Date: 2005-01-01 04:25+0200\n"
-"Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
+"POT-Creation-Date: 2005-01-18 20:48+0200\n"
+"PO-Revision-Date: 2005-01-18 20:57+0200\n"
+"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -246,7 +246,7 @@ msgstr "Kontekstas"
 
 #: app/actions/actions.c:108
 msgid "Debug"
-msgstr ""
+msgstr "Derinti"
 
 #: app/actions/actions.c:111
 msgid "Dialogs"
@@ -261,8 +261,8 @@ msgstr "Mastelis"
 msgid "Document History"
 msgstr "Dokumentų istorija"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgstr "Įrankinė"
 #: app/actions/actions.c:183 app/dialogs/dialogs.c:167
 #: app/pdb/internal_procs.c:176 app/tools/gimpvectortool.c:160
 msgid "Paths"
-msgstr "Kontūrai"
+msgstr "Keliai"
 
 #: app/actions/actions.c:186
 msgid "View"
@@ -421,36 +421,32 @@ msgid "_Paste Buffer"
 msgstr "_Įdėti buferį"
 
 #: app/actions/buffers-actions.c:47
-#, fuzzy
 msgid "Paste the selected buffer"
-msgstr "Perkelti pažymėtą filtrą aukštyn"
+msgstr "Įdėti pažymėtą buferį"
 
 #: app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
-msgstr "Įdėti buferį į"
+msgstr "Įdėt_i buferį į"
 
 #: app/actions/buffers-actions.c:53
-#, fuzzy
 msgid "Paste the selected buffer into the selection"
-msgstr "Pasukti sluoksnį arba pažymėjimą"
+msgstr "Įdėti pasirinktą buferį į pažymėjimą"
 
 #: app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
-msgstr "Įdėti buferį kaip naują"
+msgstr "Įdėti buferį kaip _naują"
 
 #: app/actions/buffers-actions.c:59
-#, fuzzy
 msgid "Paste the selected buffer as new image"
-msgstr "Atstatyti pasirinktą filtro nustatymus į įprastas vertes"
+msgstr "Įdėti pasirinktą buferį kaip naują paveikslėlį"
 
 #: app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
 msgstr "_Ištrinti buferį"
 
 #: app/actions/buffers-actions.c:65
-#, fuzzy
 msgid "Delete the selected buffer"
-msgstr "Išrinti pasitinktą šabloną"
+msgstr "Išrinti pasirinktą buferį"
 
 #: app/actions/channels-actions.c:44
 msgid "Channels Menu"
@@ -466,7 +462,7 @@ msgstr "Keisti kanalo savybes"
 
 #: app/actions/channels-actions.c:54
 msgid "_New Channel..."
-msgstr "Naujas kanalas..."
+msgstr "_Naujas kanalas..."
 
 #: app/actions/channels-actions.c:55
 msgid "New channel..."
@@ -482,7 +478,7 @@ msgstr ""
 
 #: app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
-msgstr "Padaryti kanalo kopiją"
+msgstr "_Padaryti kanalo kopiją"
 
 #: app/actions/channels-actions.c:67
 msgid "Duplicate channel"
@@ -492,7 +488,7 @@ msgstr "Padaryti kanalo kopiją"
 msgid "_Delete Channel"
 msgstr "_Ištrinti kanalą"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "Ištrinti kanalą"
 
@@ -506,7 +502,7 @@ msgstr "Pakelti kanalą"
 
 #: app/actions/channels-actions.c:84
 msgid "Raise Channel to _Top"
-msgstr "Pakelti kanalą į viršų"
+msgstr "Pakelti kanalą į _viršų"
 
 #: app/actions/channels-actions.c:85
 msgid "Raise channel to top"
@@ -522,7 +518,7 @@ msgstr "Nuleisti kanalą"
 
 #: app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
-msgstr "Nuleisti kanalą į apačią"
+msgstr "Nuleisti kanalą į _apačią"
 
 #: app/actions/channels-actions.c:97
 msgid "Lower channel to bottom"
@@ -530,7 +526,7 @@ msgstr "Nuleisti kanalą į apačią"
 
 #: app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
-msgstr "Pakeisti kanalą pažymėjimu"
+msgstr "Pakeisti kanalą paž_ymėjimu"
 
 #: app/actions/channels-actions.c:106
 msgid "Channel to selection"
@@ -543,7 +539,7 @@ msgstr "_Pridėti prie pažymėjimo"
 
 #: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr ""
+msgstr "Pridėti"
 
 #: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
 #: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:179
@@ -562,9 +558,8 @@ msgid "_Intersect with Selection"
 msgstr "_Sankirta su pažymėjimu"
 
 #: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:186
-#, fuzzy
 msgid "Intersect"
-msgstr "Sąsaja"
+msgstr "Sankirta"
 
 #: app/actions/channels-commands.c:86 app/actions/channels-commands.c:383
 msgid "Channel Attributes"
@@ -599,7 +594,7 @@ msgstr "Nauja kanalo spalva"
 #: app/actions/channels-commands.c:246
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s Kanalo kopija"
+msgstr "%s kanalo kopija"
 
 #: app/actions/channels-commands.c:311 app/core/gimpselection.c:595
 #: app/pdb/selection_cmds.c:921 app/pdb/selection_cmds.c:1045
@@ -661,13 +656,12 @@ msgid "_Opacity"
 msgstr "_Nepermatomumas"
 
 #: app/actions/context-actions.c:49
-#, fuzzy
 msgid "Paint _Mode"
-msgstr "Keitimo režimas"
+msgstr "Piešimo _režimas"
 
 #: app/actions/context-actions.c:50
 msgid "_Tool"
-msgstr "_Įrankis"
+msgstr "Įran_kis"
 
 #: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1627
 msgid "_Brush"
@@ -689,18 +683,16 @@ msgstr "_Perėjimas"
 
 #: app/actions/context-actions.c:55
 msgid "_Font"
-msgstr "_Šriftas"
+msgstr "Šri_ftas"
 
 #  Brush shape widget
 #: app/actions/context-actions.c:57
-#, fuzzy
 msgid "_Shape"
-msgstr "Forma"
+msgstr "_Forma"
 
 #: app/actions/context-actions.c:58
-#, fuzzy
 msgid "_Radius"
-msgstr "Skersmuo:"
+msgstr "_Skersmuo"
 
 #: app/actions/context-actions.c:59
 #, fuzzy
@@ -708,9 +700,8 @@ msgid "S_pikes"
 msgstr "taškeliai"
 
 #: app/actions/context-actions.c:60
-#, fuzzy
 msgid "_Hardness"
-msgstr "Kietumas"
+msgstr "_Kietumas"
 
 #: app/actions/context-actions.c:61
 #, fuzzy
@@ -719,15 +710,15 @@ msgstr "Perspektyvos"
 
 #: app/actions/context-actions.c:62
 msgid "A_ngle"
-msgstr "Kampas"
+msgstr "Ka_mpas"
 
 #: app/actions/context-actions.c:65
 msgid "_Default Colors"
-msgstr "_Įprastosios spalvos"
+msgstr "Įprast_osios spalvos"
 
 #: app/actions/context-actions.c:70
 msgid "S_wap Colors"
-msgstr "Sukeisti spalvas"
+msgstr "Suk_eisti spalvas"
 
 #: app/actions/data-commands.c:79 app/core/gimpimage.c:1283
 #: app/core/gimppalette-import.c:219 app/core/gimppalette.c:523
@@ -763,7 +754,7 @@ msgstr "_Teptukai, raštai ir perėjimai"
 
 #: app/actions/dialogs-actions.c:52
 msgid "_Misc. Stuff"
-msgstr ""
+msgstr "Įvairūs įrankiai"
 
 #: app/actions/dialogs-actions.c:57
 msgid "Tool_box"
@@ -845,19 +836,19 @@ msgstr "_Paveikslėliai"
 
 #: app/actions/dialogs-actions.c:155
 msgid "Document Histor_y"
-msgstr "Dokumentų istorija"
+msgstr "Dokumentų istori_ja"
 
 #: app/actions/dialogs-actions.c:160
 msgid "_Templates"
-msgstr "_Šablonai"
+msgstr "Ša_blonai"
 
 #: app/actions/dialogs-actions.c:165
 msgid "T_ools"
-msgstr "Įrankinė"
+msgstr "Į_rankiai"
 
 #: app/actions/dialogs-actions.c:170
 msgid "Error Co_nsole"
-msgstr "GIMP klaidų terminalas"
+msgstr "Klaidų ko_nsolė"
 
 #: app/actions/dialogs-actions.c:180
 msgid "_Preferences"
@@ -984,9 +975,8 @@ msgid "_Open Image"
 msgstr "_Atidaryti paveikslėlį"
 
 #: app/actions/documents-actions.c:47
-#, fuzzy
 msgid "Open the selected entry"
-msgstr "Pašalinti pažymėtą elementą"
+msgstr "Atidaryti pažymėtą elementą"
 
 #: app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
@@ -1014,7 +1004,7 @@ msgstr "Pašalinti pažymėtą elementą"
 
 #: app/actions/documents-actions.c:70
 msgid "Recreate _Preview"
-msgstr "Perkurti _peržiūrą"
+msgstr "Perkrauti _peržiūrą"
 
 #: app/actions/documents-actions.c:71
 msgid "Recreate preview"
@@ -1036,7 +1026,7 @@ msgstr "Naikinti pasenusius įrašus"
 msgid "Remove dangling entries"
 msgstr "Naikinti pasenusius įrašus"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1072,9 +1062,8 @@ msgid "_Offset..."
 msgstr "_Poslinkis"
 
 #: app/actions/drawable-actions.c:73 app/actions/vectors-actions.c:153
-#, fuzzy
 msgid "_Linked"
-msgstr "Linija"
+msgstr "_Susietas"
 
 #: app/actions/drawable-actions.c:79 app/actions/vectors-actions.c:147
 msgid "_Visible"
@@ -1344,7 +1333,7 @@ msgstr "Sug_rąžinti..."
 msgid "_Quit"
 msgstr "_Baigti darbą"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1355,39 +1344,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Išsaugoti paveikslėlį"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Išsaugoti paveikslėlio kopiją"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Sukurti naują šabloną"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Įveskite pavadinimą šiam šablonui"
 
-#: app/actions/file-commands.c:284
-#, fuzzy
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
-msgstr ""
-"Atstatymas nepavyko.\n"
-"Jokia byla nėra surišta su šiuo paveikslėliu."
+msgstr "Atstatymas nepavyko. Jokia byla nėra susieta su šiuo paveikslėliu."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Atstatyti paveikslėlį"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr ""
+msgstr "Atstatyti „%s“ į „%s“?"
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 #, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
@@ -1399,19 +1385,19 @@ msgstr ""
 "(Pakeitimai, įskaitant visą atstatymo informaciją,\n"
 "nebus išsaugoti)"
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 msgid "Open Image as Layer"
 msgstr "Atidaryti paveikslėlį kaip sluoksnį"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Atidaryti paveikslėlį"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Šablonas be pavadinimo)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1517,7 +1503,7 @@ msgstr "_Kreivės"
 
 #: app/actions/gradient-editor-actions.c:255
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_Sinusoidinis"
 
 #: app/actions/gradient-editor-actions.c:260
 msgid "Spherical (i_ncreasing)"
@@ -1570,9 +1556,8 @@ msgstr "Parodyti viską"
 
 #: app/actions/gradient-editor-actions.c:314
 #: app/actions/palette-editor-actions.c:90
-#, fuzzy
 msgid "Zoom all"
-msgstr "Parodyti viską"
+msgstr "Rodyti viską"
 
 #: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
@@ -2022,7 +2007,7 @@ msgstr "Padaryti sluoksnio kopiją"
 msgid "_Delete Layer"
 msgstr "_Ištrinti sluoksnį"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 msgid "Delete layer"
 msgstr "Ištrinti sluoksnį"
 
@@ -2192,7 +2177,7 @@ msgstr "Apkarpyti sluoksnį"
 msgid "Layer Mask to Selection"
 msgstr "Kaukę paversti pažymėjimu"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Pridėti sluoksnio kaukę"
@@ -2583,7 +2568,7 @@ msgstr "Išsaugoti pažymėjimą į kanalą"
 
 #: app/actions/select-actions.c:104
 msgid "_Stroke Selection..."
-msgstr "_Sumažinti pažymėjimą..."
+msgstr "_Apvesti pažymėtas vietas..."
 
 #: app/actions/select-actions.c:105
 msgid "Stroke selection..."
@@ -2898,7 +2883,7 @@ msgstr "Kon_tūrų įrankis"
 
 #: app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
-msgstr "K_eisti kelio savybes..."
+msgstr "K_eisti kontūro savybes..."
 
 #: app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
@@ -2914,7 +2899,7 @@ msgstr "Naujas kelias..."
 
 #: app/actions/vectors-actions.c:65
 msgid "_New Path"
-msgstr "_Naujas kontūras"
+msgstr "_Naujas kelias"
 
 #: app/actions/vectors-actions.c:66
 #, fuzzy
@@ -2927,7 +2912,7 @@ msgstr "Pa_daryti kelio kopiją"
 
 #: app/actions/vectors-actions.c:72
 msgid "Duplicate path"
-msgstr "Padaryti kontūro kopiją"
+msgstr "Padaryti kelio kopiją"
 
 #: app/actions/vectors-actions.c:77
 msgid "_Delete Path"
@@ -2935,15 +2920,15 @@ msgstr "_Ištrinti kelią"
 
 #: app/actions/vectors-actions.c:78
 msgid "Delete path"
-msgstr "Ištrinti kontūrą"
+msgstr "Ištrinti kelią"
 
 #: app/actions/vectors-actions.c:83
 msgid "Merge _Visible Paths"
-msgstr "Sujungti mat_omus kelius"
+msgstr "Sujungti mat_omus kontūrus"
 
 #: app/actions/vectors-actions.c:88
 msgid "_Raise Path"
-msgstr "Pak_elti kelią"
+msgstr "_Pakelti kontūrą"
 
 #: app/actions/vectors-actions.c:89
 msgid "Raise path"
@@ -2951,19 +2936,19 @@ msgstr "Pakelti kontūrą"
 
 #: app/actions/vectors-actions.c:94
 msgid "Raise Path to _Top"
-msgstr "Pakelti kelią iki viršaus"
+msgstr "Pakelti kontūrą iki viršaus"
 
 #: app/actions/vectors-actions.c:95
 msgid "Raise path to top"
-msgstr "Pakelti kelią iki viršaus"
+msgstr "Pakelti kontūrą iki viršaus"
 
 #: app/actions/vectors-actions.c:100
 msgid "_Lower Path"
-msgstr "Nuleisti ke_lią"
+msgstr "_Nuleisti kelią"
 
 #: app/actions/vectors-actions.c:101
 msgid "Lower path"
-msgstr "Nuleisti kontūrą"
+msgstr "Nuleisti kelią"
 
 #: app/actions/vectors-actions.c:106
 #, fuzzy
@@ -2985,7 +2970,7 @@ msgstr "Apvesti _kelią..."
 
 #: app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
-msgstr "Apvesti kontūrą"
+msgstr "Apvesti kelią"
 
 #: app/actions/vectors-actions.c:119
 msgid "Stroke path with last values"
@@ -3001,11 +2986,11 @@ msgstr "Įdėti ke_lią"
 
 #: app/actions/vectors-actions.c:134
 msgid "I_mport Path..."
-msgstr "I_mportuoti kontūrą..."
+msgstr "I_mportuoti kelią..."
 
 #: app/actions/vectors-actions.c:139
 msgid "E_xport Path..."
-msgstr "E_ksportuoti kontūrą..."
+msgstr "E_ksportuoti kelią..."
 
 #: app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
@@ -3013,26 +2998,23 @@ msgstr "Kelias į pažymėtą sritį"
 
 #: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1893
 msgid "Path to selection"
-msgstr "Kontūrą į pažymėjimą"
+msgstr "Kelią į pažymėjimą"
 
 #: app/actions/vectors-actions.c:168
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "Apvesti kontūrą"
+msgstr "Iš kontūro"
 
 #: app/actions/vectors-actions.c:194
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "/Pažymėta sritis į k_ontūrą"
+msgstr "Pažymėta sritis į kelią"
 
 #: app/actions/vectors-actions.c:195
-#, fuzzy
 msgid "Selection to path"
-msgstr "/Pažymėta sritis į k_ontūrą"
+msgstr "Pažymėta sritis į kelią"
 
 #: app/actions/vectors-actions.c:200
 msgid "To _Path"
-msgstr "Į Kontūrą"
+msgstr "Į Kelią"
 
 #: app/actions/vectors-actions.c:205
 #, fuzzy
@@ -3052,25 +3034,25 @@ msgstr "Kontūro savybės"
 
 #: app/actions/vectors-commands.c:143
 msgid "Edit Path Attributes"
-msgstr "Keisti kontūro savybes"
+msgstr "Keisti kelio savybes"
 
 #: app/actions/vectors-commands.c:167 app/actions/vectors-commands.c:168
 #: app/actions/vectors-commands.c:190
 msgid "New Path"
-msgstr "Naujas kontūras"
+msgstr "Naujas kelias"
 
 #: app/actions/vectors-commands.c:171
 msgid "New Path Options"
-msgstr "Naujo kontūro savybės"
+msgstr "Naujo kelio savybės"
 
 #: app/actions/vectors-commands.c:299 app/pdb/paths_cmds.c:1210
 msgid "Path to Selection"
-msgstr "Kontūras -> Pažymėjimas"
+msgstr "Kontūras į Pažymėjimą"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
-msgstr "Apvesti kontūrą"
+msgstr "Apvesti kelią"
 
 #: app/actions/view-actions.c:63
 msgid "_View"
@@ -4266,267 +4248,271 @@ msgstr "Pimyn (Tradicinis)"
 msgid "Backward (corrective)"
 msgstr "Atgal (Taisomasis)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<neteisingas>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 msgid "Scale image"
 msgstr "Keisti paveikslėlio dydį"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 msgid "Resize image"
 msgstr "Keisti paveikslėlio dydį"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "Apsukti paveikslėlį"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 msgid "Rotate image"
 msgstr "Pasukti paveikslėlį"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 msgid "Crop image"
 msgstr "Apkirpti paveikslėlį"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 msgid "Convert image"
 msgstr "Konvertuoti paveikslėlį"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 msgid "Merge layers"
 msgstr "Sujungti sluoksnius"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 msgid "Merge vectors"
 msgstr "Sujungti vektorius"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 msgid "Quick Mask"
 msgstr "Greita kaukė"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Tinklelis"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Pagalbinė linija"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Piešinio procedūros"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 msgid "Selection mask"
 msgstr "Pažymėjimo kaukė"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "Elemento matomumas"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "Susieti"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "Vidinės procedūros"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "Perkelti"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "Keisti paveikslėlio dydį"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "Keisti paveikslėlio dydį"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 msgid "Add layer mask"
 msgstr "Pridėti sluoksnio kaukę"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 msgid "Apply layer mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: app/core/core-enums.c:1051
-msgid "Floating selection to layer"
-msgstr "Plaukiojantis pažymėjimas"
-
 #: app/core/core-enums.c:1052
-#, fuzzy
-msgid "Float selection"
+msgid "Floating selection to layer"
 msgstr "Plaukiojantis pažymėjimas"
 
 #: app/core/core-enums.c:1053
 #, fuzzy
+msgid "Float selection"
+msgstr "Plaukiojantis pažymėjimas"
+
+#: app/core/core-enums.c:1054
+#, fuzzy
 msgid "Anchor floating selection"
 msgstr "Prikabinti plaukiojantį pažymėjimą"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "Plaukiojantis pažymėjimas"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Įdėti"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Iškirpti"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekstas"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Transformuoti"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Piešti"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "Prisegti parazitą"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "pašalinti papildomos informacijos bylą"
 
-#: app/core/core-enums.c:1062
-#, fuzzy
+#: app/core/core-enums.c:1063
 msgid "Import paths"
-msgstr "Importuoti kontūrą"
+msgstr "Importuoti kelią"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Priedai"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 msgid "Image type"
 msgstr "Paveikslėlio tipas"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 msgid "Image size"
 msgstr "Paveikslėlio dydis"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "Skiriamosios gebos keitimas"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Pakeisti indeksuotą paletę"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 msgid "Rename item"
 msgstr "Pervadinti elementą"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Saugojimo savybės"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 msgid "New layer"
 msgstr "Naujas sluoksnis"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 msgid "Delete layer mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Teksto sluoksnis"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 msgid "Set layer mode"
 msgstr "Nustatyti sluoksnio režimą"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 msgid "Set layer opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "Įjungti permatomumo išlaikymą"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Tik kai padaryti pakeitimai"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 msgid "New channel"
 msgstr "Naujas kanalas"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Perkelti kanalą"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 msgid "Channel color"
 msgstr "Kanalo spalva"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 msgid "New vectors"
 msgstr "Nauji vektoriai"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 msgid "Delete vectors"
 msgstr "Ištrinti vektorius"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Pažymėjimo režimas"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Perdėstyti vektorius"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 msgid "FS to layer"
 msgstr "FS sluoksniui"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 msgid "FS rigor"
 msgstr ""
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 msgid "FS relax"
 msgstr ""
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Plunksna"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "EEK: atšaukimas negalimas"
 
@@ -4645,7 +4631,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nekorektiška UTF-8 eilutė teptukų byloje %s."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Bevardis"
@@ -4818,11 +4804,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "kopija"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s kopija"
@@ -5055,11 +5041,11 @@ msgstr "Neužtenka matomų sluoksnių sujungimo su žemesniu sluoksniu veiksmui.
 
 #: app/core/gimpimage-merge.c:543
 msgid "Merge Visible Paths"
-msgstr "Sujungti matomus kontūrus"
+msgstr "Sujungti matomus kelius"
 
 #: app/core/gimpimage-merge.c:580
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Neužtenka matomų kontūrų sujungimui. Turi būti bent du."
+msgstr "Neužtenka matomų kelių sujungimui. Turi būti bent du."
 
 #: app/core/gimpimage-qmask.c:67
 #, fuzzy
@@ -5184,11 +5170,11 @@ msgstr "Nuleisti kanalą į apačią"
 
 #: app/core/gimpimage.c:3231
 msgid "Add Path"
-msgstr "Pridėti kelią"
+msgstr "Pridėti kontūrą"
 
 #: app/core/gimpimage.c:3276
 msgid "Remove Path"
-msgstr "Pašalinti kelią"
+msgstr "Pašalinti kontūrą"
 
 #: app/core/gimpimage.c:3320
 msgid "Path cannot be raised higher."
@@ -5204,7 +5190,7 @@ msgstr "Sluoksnis jau viršuje."
 
 #: app/core/gimpimage.c:3347
 msgid "Raise Path to Top"
-msgstr "Pakelti kelią iki viršaus"
+msgstr "Pakelti kontūrą iki viršaus"
 
 #: app/core/gimpimage.c:3364
 msgid "Path cannot be lowered more."
@@ -5274,16 +5260,16 @@ msgstr "%d sluoksnių(-iai)"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Negaliu atidaryti bylos %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Prisegti parazitą"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 #, fuzzy
 msgid "Attach Parasite to Item"
 msgstr "prisegti papildomos informacijos bylą"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 #, fuzzy
 msgid "Remove Parasite from Item"
 msgstr "pašalinti papildomos informacijos bylą"
@@ -5341,7 +5327,7 @@ msgstr "Apsukti sluoksnį"
 msgid "Rotate Layer"
 msgstr "Pasukti sluoksnį"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5354,46 +5340,46 @@ msgid ""
 "(%s)"
 msgstr "Plaukiojantis pažymėjimas"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 #, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Neina pridėti sluoksnio kaukės prie sluoksnio,\n"
 "neturinčio alfa kanalo"
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau turi vieną."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės prie sluoksnio,\n"
 "neturinčio alfa kanalo"
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Negaliu pridėti sluoksnio kaukės, turinčios kitokius,\n"
 "nei pasirinkto sluoksnio, matmenis."
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Transformuoti alfa į kaukę"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Sluoksnio dydį prilyginti paveikslėlio dydžiui"
 
@@ -5760,21 +5746,21 @@ msgstr "Vieta:"
 msgid "Enter location (URI):"
 msgstr "Interpoliacijos tipas:"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 msgid "File exists"
 msgstr "Byla jau egzistuoja"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "Padauginti"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -5862,7 +5848,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -5922,9 +5908,8 @@ msgid "Units"
 msgstr "Matavimo vienetai"
 
 #: app/dialogs/info-window.c:228
-#, fuzzy
 msgid "Comment"
-msgstr "Skaičius:"
+msgstr "Komentaras"
 
 #: app/dialogs/info-window.c:248 app/dialogs/info-window.c:634
 #: app/display/gimpdisplayshell-title.c:337
@@ -6058,9 +6043,8 @@ msgid "Autoload"
 msgstr "Automatinis įkėlimas"
 
 #: app/dialogs/module-dialog.c:175
-#, fuzzy
 msgid "Module path"
-msgstr "Modulių kelias"
+msgstr "Modulio kelias"
 
 #: app/dialogs/module-dialog.c:418
 msgid "<No modules>"
@@ -7478,7 +7462,7 @@ msgstr "Nurodykite Swap katalogą"
 
 #: app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
-msgstr "Eksportuoti·kelią į SVG"
+msgstr "Eksportuoti·kontūrą į SVG"
 
 #: app/dialogs/vectors-export-dialog.c:78
 #, fuzzy
@@ -7492,7 +7476,7 @@ msgstr "Sukurti naują paveikslėlio langą"
 
 #: app/dialogs/vectors-import-dialog.c:57
 msgid "Import Paths from SVG"
-msgstr "Importuoti kelią iš SVG"
+msgstr "Importuoti kontūrą iš SVG"
 
 #: app/dialogs/vectors-import-dialog.c:83
 msgid "All Files (*.*)"
@@ -7599,7 +7583,7 @@ msgstr "Pamesti naują sluoksnį"
 
 #: app/display/gimpdisplayshell-dnd.c:142
 msgid "Drop New Path"
-msgstr "Pamesti naują kelią"
+msgstr "Pamesti naują kontūrą"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:73
 #, fuzzy
@@ -7754,10 +7738,6 @@ msgstr "Blukinimas ir ryškinimas"
 msgid "Eraser"
 msgstr "Trintukas"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Plunksna"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Teptukas"
@@ -7898,7 +7878,7 @@ msgstr "Teptukas"
 msgid "Brush UI"
 msgstr "Teptuko UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8308,7 +8288,7 @@ msgstr "Poslinkis:"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Kartoti:"
 
@@ -9128,7 +9108,7 @@ msgstr "Režimas:"
 msgid "Brush:"
 msgstr "Teptukas:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Perėjimas:"
 
@@ -9142,32 +9122,32 @@ msgstr "Aštrūs kraštai"
 msgid "Pressure sensitivity"
 msgstr "Spaudimo jautrumas"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Nepermatomumas"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Kietumas"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Santykis"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Dydis"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "Išblukimas"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Ilgis:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Naudoti spalvą iš perėjimo"
@@ -9454,7 +9434,7 @@ msgstr ""
 
 #: app/tools/gimptextoptions.c:478
 msgid "Create path from text"
-msgstr "Iš teksto sukurti kelią"
+msgstr "Iš teksto sukurti kontūrą"
 
 #: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
@@ -9579,14 +9559,12 @@ msgstr ""
 "%s%s%s  Sankirta"
 
 #: app/tools/gimpvectoroptions.c:196
-#, fuzzy
 msgid "Create selection from path"
 msgstr "Sukurti pažymėjimą iš kontūro"
 
 #: app/tools/gimpvectoroptions.c:207
-#, fuzzy
 msgid "Stroke path"
-msgstr "Apvesti kontūrą"
+msgstr "Apvesti kelią"
 
 #: app/tools/gimpvectortool.c:161
 msgid "Create and edit paths"
@@ -9718,39 +9696,39 @@ msgstr ""
 "Aktyvusis sluoksnis neturi alfa kanalo,\n"
 "kurį galėčiau paversti pažymėjimu"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Kontūras"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Pervadinti kontūrą"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Perkelti kontūrą"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
-msgstr "Apibraukti kelią"
+msgstr "Apibraukti kontūrą"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Keisti kontūro dydį"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
-msgstr "Apsukti kelią"
+msgstr "Apsukti kontūrą"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Pasukti kontūrą"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Transformuoti kontūrą"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr ""
 
@@ -9760,7 +9738,7 @@ msgstr "Importuoti kontūrą"
 
 #: app/vectors/gimpvectors-import.c:298
 msgid "Imported Path"
-msgstr "Importuotas kelias"
+msgstr "Importuotas kontūras"
 
 #: app/vectors/gimpvectors-import.c:324
 #, c-format
@@ -9787,9 +9765,8 @@ msgid "Action"
 msgstr "Pridėjimas"
 
 #: app/widgets/gimpactionview.c:383
-#, fuzzy
 msgid "Shortcut"
-msgstr "Klavišų kombinacijos"
+msgstr "Nuoroda"
 
 #: app/widgets/gimpactionview.c:405
 msgid "Name"
@@ -10150,9 +10127,8 @@ msgstr "Klavišų kombinacijos"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
-#, fuzzy
 msgid "Ready"
-msgstr "Raudona"
+msgstr "Pasiruošęs"
 
 #: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10360,11 +10336,11 @@ msgstr ""
 msgid "By Extension"
 msgstr "/Pagal plėtinį"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "Visos Bylos"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "Užpildymo tipas  %s"
@@ -11083,10 +11059,3 @@ msgstr "Kurkit ir keiskit paveiklėlius ir fotografijas"
 #, fuzzy
 msgid "Image Editor"
 msgstr "Paletės savybių nustatymas"
-
-# Nesu tikra dėl Aspect.
-#, fuzzy
-#~ msgid "Keep aspect ratio"
-#~ msgstr ""
-#~ "Nustatytas dydis /\n"
-#~ "Pakrypimas plokštumos atžvilgiu"
