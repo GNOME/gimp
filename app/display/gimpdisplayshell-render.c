@@ -178,7 +178,8 @@ render_setup_notify (GObject    *config,
 
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (! tile_buf)
-    tile_buf = g_new (guchar, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH * MAX_CHANNELS);
+    tile_buf = g_new (guchar,
+                      GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   if (! render_blend_dark_check)
     render_blend_dark_check = g_new (guchar, 65536);
@@ -852,7 +853,8 @@ render_image_init_info (RenderInfo       *info,
   info->dest_bpl   = info->dest_bpp * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = GDK_MSB_FIRST;
-  info->scale      = render_image_accelerate_scaling (w, info->x, info->scalex);
+  info->scale      = render_image_accelerate_scaling (w,
+                                                      info->x, info->scalex);
   info->alpha      = NULL;
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (shell->gdisp->gimage)))
@@ -921,7 +923,6 @@ render_image_tile_fault (RenderInfo *info)
   gint    width;
   gint    tilex;
   gint    tiley;
-  gint    srctilex, srctiley;
   gint    step;
   gint    bpp = info->src_bpp;
   gint    x, b;
@@ -930,7 +931,7 @@ render_image_tile_fault (RenderInfo *info)
   tiley = info->src_y / TILE_HEIGHT;
 
   tile = tile_manager_get_tile (info->src_tiles,
-				srctilex=info->src_x, srctiley=info->src_y,
+				info->src_x, info->src_y,
 				TRUE, FALSE);
   if (!tile)
     return NULL;
@@ -960,14 +961,16 @@ render_image_tile_fault (RenderInfo *info)
 	      tile_release (tile, FALSE);
 	      tilex += 1;
 
-	      tile = tile_manager_get_tile (info->src_tiles, srctilex=x,
-					    srctiley=info->src_y, TRUE, FALSE);
+	      tile = tile_manager_get_tile (info->src_tiles,
+                                            x, info->src_y,
+                                            TRUE, FALSE);
+
 	      if (!tile)
 		return tile_buf;
 
 	      data = tile_data_pointer (tile, 
-			    x % TILE_WIDTH,
-			    info->src_y % TILE_HEIGHT);
+                                        x % TILE_WIDTH,
+                                        info->src_y % TILE_HEIGHT);
 	    }
 	}
     }

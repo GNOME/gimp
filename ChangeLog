@@ -1,3 +1,13 @@
+2002-12-04  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (render_image_tile_fault):
+	removed useless assignments.
+
+	* plug-ins/common/aa.c: removed wrong assertions that caused the
+	plug-in to crash on images with odd width or height (#100344).
+	Added support for RGB images as well as alpha channel while I was
+	on it.
+
 2002-12-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: added -DGIMP_APP_GLUE_COMPILATION to

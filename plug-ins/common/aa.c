@@ -85,7 +85,7 @@ query (void)
 			  "Tim Newsome <nuisance@cmu.edu>",
 			  "1997",
 			  "<Save>/AA",
-			  "GRAY",  /* FIXME: add support for other formats ? */
+			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
@@ -150,7 +150,8 @@ run (gchar       *name,
       INIT_I18N_UI();
       gimp_ui_init ("aa", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
-				  (GIMP_EXPORT_CAN_HANDLE_GRAY |
+				  (GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
 				   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
       if (export == GIMP_EXPORT_CANCEL)
 	{
@@ -163,7 +164,8 @@ run (gchar       *name,
       break;
     }
 
-  if (!gimp_drawable_is_gray (drawable_ID)) 
+  if (! (gimp_drawable_is_rgb (drawable_ID) ||
+         gimp_drawable_is_gray (drawable_ID))) 
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
@@ -244,9 +246,6 @@ save_aa (gint32  drawable_ID,
   if (!context)
     return FALSE;
 
-  g_assert (aa_imgwidth  (context) == gimp_drawable_width  (drawable_ID));
-  g_assert (aa_imgheight (context) == gimp_drawable_height (drawable_ID));
-
   gimp2aa (drawable_ID, context);
   aa_flush (context);
   aa_close (context);
@@ -267,6 +266,7 @@ gimp2aa (gint32      drawable_ID,
   gint    x, y;
   gint    bpp;
   guchar *buffer;
+  guchar *p;
 
   drawable = gimp_drawable_get (drawable_ID);
 
@@ -283,11 +283,35 @@ gimp2aa (gint32      drawable_ID,
   for (y = 0; y < height; y++) 
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, y, width);
-      for (x = 0; x < width; x++) 
-	{
-          /* FIXME: add support for alpha channel */
-	  aa_putpixel (context, x, y, buffer[x * bpp]);
-	}
+
+      switch (bpp)
+        {
+        case 1:  /* GRAY */
+          for (x = 0, p = buffer; x < width; x++, p++) 
+            aa_putpixel (context, x, y, *p);
+          break;
+
+        case 2:  /* GRAYA, blend over black */
+          for (x = 0, p = buffer; x < width; x++, p += 2) 
+            aa_putpixel (context, x, y, (p[0] * (p[1] + 1)) >> 8);
+          break;
+      
+        case 3:  /* RGB */
+          for (x = 0, p = buffer; x < width; x++, p += 3) 
+            aa_putpixel (context, x, y, INTENSITY (p[0], p[1], p[2]));
+          break;
+          
+        case 4:  /* RGBA, blend over black */
+          for (x = 0, p = buffer; x < width; x++, p += 4) 
+            aa_putpixel (context, x, y,
+                         ((guchar) INTENSITY (p[0], p[1], p[2]) * (p[3] + 1))
+                         >> 8);
+          break;
+
+        default:
+          g_assert_not_reached ();
+          break;
+        }
     }
 
   g_free (buffer);
