@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:19+0100\n"
-"PO-Revision-Date: 2004-11-18 14:31-0400\n"
+"POT-Creation-Date: 2004-11-20 15:45-0500\n"
+"PO-Revision-Date: 2004-11-20 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -4891,8 +4891,6 @@ msgstr "_Angle:"
 msgid "Blur Center"
 msgstr "Blur Centre"
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:494 plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -5257,9 +5255,8 @@ msgid "Scatter RGB"
 msgstr "Scatter RGB"
 
 #: plug-ins/common/noisify.c:477
-#, fuzzy
 msgid "Co_rrelated noise"
-msgstr "Create ellipse"
+msgstr "Co_rrelated noise"
 
 #: plug-ins/common/noisify.c:492
 msgid "_Independent RGB"
@@ -7950,7 +7947,6 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:960
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8421,9 +8417,8 @@ msgid "Tool options"
 msgstr "Tool options"
 
 #: plug-ins/gfig/gfig-dialog.c:368
-#, fuzzy
 msgid "_Stroke"
-msgstr "Stroke"
+msgstr "_Stroke"
 
 #. Fill frame on right side
 #: plug-ins/gfig/gfig-dialog.c:414
@@ -9613,7 +9608,6 @@ msgstr ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/utils.c:135
 #, c-format
 msgid ""
@@ -11609,6 +11603,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "Stro_ke"
-#~ msgstr "Stro_ke"
