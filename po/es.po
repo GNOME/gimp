@@ -1,3 +1,4 @@
+# translation of es.po to Spanish
 # Spanish translation file for Gimp 2.x.
 # Copyright © 1998-2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
@@ -10,17 +11,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-07 14:26+0200\n"
-"PO-Revision-Date: 2004-04-07 15:15-0300\n"
-"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
+"POT-Creation-Date: 2004-04-12 19:43+0200\n"
+"PO-Revision-Date: 2004-04-12 19:54+0200\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: app/app_procs.c:189
@@ -475,7 +476,7 @@ msgstr ""
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Esto es la distancia en píxeles desde donde el ajuste a la rejilla y la guía "
-"se activa"
+"se activa."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -657,7 +658,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
-"Permitir a El GIMP intentar recuperar la última sesión guardada durante cada "
+"Permitir a El GIMP intentar restaurar la última sesión guardada durante cada "
 "inicio."
 
 #: app/config/gimprc-blurbs.h:253
@@ -786,7 +787,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
-msgstr "Cuando se encuentre activado los menús podrán ser separados. "
+msgstr "Cuando se encuentre activado, los menús podrán ser separados."
 
 #: app/config/gimprc-blurbs.h:322
 msgid ""
@@ -1653,7 +1654,7 @@ msgstr ""
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:365
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de brocha «%s»"
+msgstr "Cadena UTF-8 inválida en el archivo de brocha «%s»."
 
 #: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
 #: app/core/gimpitem.c:457 app/core/gimppattern.c:400
@@ -1676,7 +1677,7 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Error fatal de análisis: en el archivo de brocha «%s»: No es un archivo de "
-"brocha de de El GIMP"
+"brocha de de El GIMP."
 
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
@@ -1760,7 +1761,7 @@ msgstr "Transformar el canal"
 
 #: app/core/gimpchannel.c:603
 msgid "Cannot stroke empty channel."
-msgstr "No se puede trazar un canal vacío"
+msgstr "No se puede trazar un canal vacío."
 
 #: app/core/gimpchannel.c:1518
 msgid "Set Channel Color"
@@ -1904,7 +1905,7 @@ msgstr ""
 #: app/core/gimpgradient.c:376
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de gradiente «%s»"
+msgstr "Cadena UTF-8 inválida en el archivo de gradiente «%s»."
 
 #: app/core/gimpgradient.c:404
 #, c-format
@@ -1920,11 +1921,11 @@ msgstr "Segmento corrupto %d en el archivo de gradiente «%s»."
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
-msgstr "Estilo de línea utilizado por la grilla"
+msgstr "Estilo de línea utilizado por la rejilla."
 
 #: app/core/gimpgrid.c:134
 msgid "The foreground color of the grid."
-msgstr "El color de frente de la rejilla"
+msgstr "El color de frente de la rejilla."
 
 #: app/core/gimpgrid.c:139
 msgid "The background color of the grid; only used in double dashed line style."
@@ -2373,7 +2374,7 @@ msgstr ""
 #: app/core/gimppattern.c:393
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
+msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»."
 
 #: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
 #: app/tools/gimpeditselectiontool.c:1130 app/tools/gimpmoveoptions.c:184
@@ -2415,7 +2416,7 @@ msgstr "Encoger selección"
 
 #: app/core/gimpselection.c:303
 msgid "No selection to stroke."
-msgstr "No hay selección que trazar"
+msgstr "No hay selección que trazar."
 
 #: app/core/gimpselection.c:312 app/widgets/gimpselectioneditor.c:212
 msgid "Stroke Selection"
@@ -2444,16 +2445,16 @@ msgstr "Selección flotante"
 #: app/core/gimptemplate.c:143
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
-"La unidad utilizada para coordinar la visualización cuando no se encuentra "
-"en modo de punto por punto"
+"La unidad utilizada para las coordenadas de visualización cuando no se encuentra "
+"en modo de punto por punto."
 
 #: app/core/gimptemplate.c:150
 msgid "The horizonal image resolution."
-msgstr "La resolución horizontal de la imagen"
+msgstr "La resolución horizontal de la imagen."
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
-msgstr "La resolución vertical de la imagen"
+msgstr "La resolución vertical de la imagen."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2606,11 +2607,11 @@ msgstr "Selección de capas"
 
 #: app/display/gimpdisplayshell-scale.c:503
 msgid "Zoom Ratio"
-msgstr "Relación de aumento:"
+msgstr "Relación de aumento"
 
 #: app/display/gimpdisplayshell-scale.c:505
 msgid "Select Zoom Ratio"
-msgstr "Seleccione la relación de aumento:"
+msgstr "Seleccione la relación de aumento"
 
 #: app/display/gimpdisplayshell-scale.c:540
 msgid "Zoom Ratio:"
@@ -3313,7 +3314,7 @@ msgstr "No hay una capa o canal activo adonde se pueda trazar."
 
 #: app/gui/edit-commands.c:316
 msgid "There is no active layer or channel to cut from."
-msgstr "No hay una capa o canal activo desde donde cortar"
+msgstr "No hay una capa o canal activo desde donde cortar."
 
 #: app/gui/edit-commands.c:327 app/gui/edit-commands.c:363
 msgid "(Unnamed Buffer)"
@@ -3321,7 +3322,7 @@ msgstr "(Búfer sin nombre)"
 
 #: app/gui/edit-commands.c:352
 msgid "There is no active layer or channel to copy from."
-msgstr "No hay una capa o canal activo desde donde se pueda copiar"
+msgstr "No hay una capa o canal activo desde donde se pueda copiar."
 
 #: app/gui/error-console-menu.c:39
 msgid "/_Clear Errors"
@@ -3368,7 +3369,7 @@ msgstr "Ingrese el nombre para esta plantilla"
 #: app/gui/file-commands.c:301
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
-"Falló al dar marcha atrás. No hay un nombre de archivo asociado con esta "
+"Falló al revertir. No hay un nombre de archivo asociado con esta "
 "imagen."
 
 #: app/gui/file-commands.c:314
@@ -3379,14 +3380,14 @@ msgid ""
 "\n"
 "You will lose all your changes, including all undo information."
 msgstr ""
-"¿Recuperar «%s» sobre\n"
+"¿Revertir «%s» sobre\n"
 "«%s»?\n"
 "\n"
 "Perderá todos sus cambios, incluyendo toda la información de deshacer."
 
 #: app/gui/file-commands.c:322
 msgid "Revert Image"
-msgstr "¿Recuperar la imagen?"
+msgstr "Revertir imagen"
 
 #: app/gui/file-commands.c:390
 msgid "(Unnamed Template)"
@@ -3399,7 +3400,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"La recuperación de «%s» ha fallado:\n"
+"La reversión de «%s» ha fallado:\n"
 "\n"
 "%s"
 
@@ -3848,7 +3849,7 @@ msgstr "Redimensionando..."
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Error de cambio de tamaño: Tanto la anchura como la altura deben ser mayores "
-"que cero"
+"que cero."
 
 #: app/gui/image-commands.c:523
 #, c-format
@@ -4024,7 +4025,7 @@ msgstr "/Editar/Rellenar con un p_atrón"
 
 #: app/gui/image-menu.c:260
 msgid "/Edit/_Stroke Selection..."
-msgstr "/Editar/Trazar _selección"
+msgstr "/Editar/Trazar _selección..."
 
 #: app/gui/image-menu.c:265
 msgid "/Edit/St_roke Path..."
@@ -5922,7 +5923,7 @@ msgstr "Cantidad mínima de niveles de deshacer:"
 
 #: app/gui/preferences-dialog.c:1908
 msgid "Maximum Undo Memory:"
-msgstr "Memoria máxima para deshacer"
+msgstr "Memoria máxima para deshacer:"
 
 #: app/gui/preferences-dialog.c:1911 app/gui/user-install-dialog.c:1178
 msgid "Tile Cache Size:"
@@ -7289,7 +7290,7 @@ msgstr "Selecciones flotantes"
 
 #: app/pdb/internal_procs.c:110
 msgid "Font UI"
-msgstr "Tipografía de la UI:"
+msgstr "Tipografía de la IU"
 
 #: app/pdb/internal_procs.c:116
 msgid "Gimprc procedures"
@@ -7492,7 +7493,7 @@ msgstr ""
 "Fidel exporta gazpacho,\n"
 "jamón, kiwi, viñas y buques."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:688
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -7663,7 +7664,7 @@ msgstr "/Herramientas/Herramientas de pintura/M_ezcla"
 
 #: app/tools/gimpblendtool.c:188
 msgid "Blend: Invalid for indexed images."
-msgstr "Mezcla: No válido para imágenes indexadas"
+msgstr "Mezcla: No válido para imágenes indexadas."
 
 #. initialize the statusbar display
 #: app/tools/gimpblendtool.c:206 app/tools/gimpblendtool.c:329
@@ -8201,11 +8202,11 @@ msgstr "Ángulo:"
 #. sens sliders
 #: app/tools/gimpinkoptions.c:282
 msgid "Sensitivity"
-msgstr "Sensibilidad:"
+msgstr "Sensibilidad"
 
 #: app/tools/gimpinkoptions.c:302
 msgid "Tilt:"
-msgstr "Ladeo"
+msgstr "Alabeo:"
 
 #: app/tools/gimpinkoptions.c:309
 msgid "Speed:"
@@ -8705,7 +8706,7 @@ msgid ""
 "Spacing:"
 msgstr ""
 "Espaciado\n"
-"de línea"
+"de línea:"
 
 #: app/tools/gimptextoptions.c:491
 msgid "Create Path from Text"
@@ -8719,15 +8720,15 @@ msgstr "Añadir texto a la imagen"
 msgid "/Tools/Te_xt"
 msgstr "/Herramientas/Te_xto"
 
-#: app/tools/gimptexttool.c:719
+#: app/tools/gimptexttool.c:724
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de El GIMP"
 
-#: app/tools/gimptexttool.c:829 app/tools/gimptexttool.c:832
+#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: app/tools/gimptexttool.c:853
+#: app/tools/gimptexttool.c:858
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8735,10 +8736,12 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"La capa que ha seleccionado es una capa de texto pero ha sido modificada utilizando otras herramientas. Al editar la capa con "
-"la herramienta de texto se perderán estas modificaciones.\n"
+"La capa que ha seleccionado es una capa de texto pero ha sido modificada "
+"utilizando otras herramientas. Al editar la capa con la herramienta de texto "
+"se perderán estas modificaciones.\n"
 "\n"
-"Puede editar la capa o crear una capa de texto nueva desde sus atributos de texto."
+"Puede editar la capa o crear una capa de texto nueva desde sus atributos de "
+"texto."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8911,7 +8914,7 @@ msgstr "Mover las anclas"
 
 #: app/tools/gimpvectortool.c:1158
 msgid "Click to pick path to edit."
-msgstr "Pulse para seleccionar la ruta a editar"
+msgstr "Pulse para seleccionar la ruta a editar."
 
 #: app/tools/gimpvectortool.c:1161
 msgid "Click to create a new path."
@@ -8967,7 +8970,7 @@ msgstr "Pulse para abrir la ruta."
 
 #: app/tools/gimpvectortool.c:1203
 msgid "Click to make this node angular."
-msgstr "Pulse para convertir este nodo en angular"
+msgstr "Pulse para hacer este nodo angular."
 
 #: app/tools/gimpvectortool.c:1844
 msgid "There is no active layer or channel to stroke to"
@@ -8999,7 +9002,7 @@ msgstr "Rotar la ruta"
 
 #: app/vectors/gimpvectors.c:560
 msgid "Cannot stroke empty path."
-msgstr "No se puede trazar una ruta vacía"
+msgstr "No se puede trazar una ruta vacía."
 
 #: app/vectors/gimpvectors-import.c:268
 msgid "Imported Path"
@@ -9091,7 +9094,7 @@ msgstr "Filtros disponibles"
 
 #: app/widgets/gimpcolordisplayeditor.c:205
 msgid "Add the selected filter to the list of active filters."
-msgstr "Añadir el filtro seleccionado a la lista de filtros activos"
+msgstr "Añadir el filtro seleccionado a la lista de filtros activos."
 
 #: app/widgets/gimpcolordisplayeditor.c:222
 msgid "Remove the selected filter from the list of active filters."
@@ -9549,7 +9552,7 @@ msgstr "Cuenta:"
 
 #: app/widgets/gimphistogrameditor.c:129
 msgid "Percentile:"
-msgstr "Percentil: "
+msgstr "Percentil:"
 
 #: app/widgets/gimphistogrameditor.c:135
 msgid "Intensity Range:"
@@ -9666,7 +9669,7 @@ msgstr "Editar la entrada de la paleta de colores"
 #: app/widgets/gimppropwidgets.c:1241
 #, c-format
 msgid "This text input field is limited to %d characters."
-msgstr "Este campo de entrada de texto está limitado a %d caracteres"
+msgstr "Este campo de entrada de texto está limitado a %d caracteres."
 
 #: app/widgets/gimpselectioneditor.c:189
 msgid "Save Selection to Channel"
@@ -9770,7 +9773,7 @@ msgstr "Abrir archivo de texto (UTF-8)"
 #: app/widgets/gimptexteditor.c:449
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Datos UTF-8 inválidos en el archivo «%s»"
+msgstr "Datos UTF-8 inválidos en el archivo «%s»."
 
 #: app/widgets/gimpthumbbox.c:189
 #, c-format
@@ -10014,8 +10017,8 @@ msgid ""
 "Messages are redirected to stderr."
 msgstr ""
 "AVISO:\n"
-"Hay demasiados diálogos de mensaje.\n"
-"Los mensajes serán re-dirigidos a stderr"
+"Hay demasiados diálogos de mensaje abiertos.\n"
+"Los mensajes serán re-dirigidos a stderr."
 
 #: app/widgets/gimpwidgets-utils.c:157
 msgid "GIMP Message"
