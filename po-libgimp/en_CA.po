@@ -1,15 +1,15 @@
 # Canadian English translation for libgimp
-# Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
+# Copyright (C) 2004-2005 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same licence as the libgimp package.
-# Maintainer: Adam Weinberger <adamw@FreeBSD.org>
+# Adam Weinberger <adamw@gnome.org>, 2004, 2005.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
-"PO-Revision-Date: 2004-11-18 20:02-0400\n"
+"POT-Creation-Date: 2005-01-24 20:44-0500\n"
+"PO-Revision-Date: 2005-01-24 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,73 +210,297 @@ msgstr "Pattern Selection"
 msgid "percent"
 msgstr "percent"
 
-#: libgimpbase/gimpbaseenums.c:23
-msgid "Small"
-msgstr "Small"
+#: libgimpbase/gimpbaseenums.c:26
+msgid "_White (full opacity)"
+msgstr "_White (full opacity)"
 
-#: libgimpbase/gimpbaseenums.c:24
-msgid "Medium"
-msgstr "Medium"
+#: libgimpbase/gimpbaseenums.c:27
+msgid "_Black (full transparency)"
+msgstr "_Black (full transparency)"
 
-#: libgimpbase/gimpbaseenums.c:25
-msgid "Large"
-msgstr "Large"
+#: libgimpbase/gimpbaseenums.c:28
+msgid "Layer's _alpha channel"
+msgstr "Layer's _alpha channel"
 
-#: libgimpbase/gimpbaseenums.c:57
-msgid "Light Checks"
-msgstr "Light Checks"
+#: libgimpbase/gimpbaseenums.c:29
+msgid "_Transfer layer's alpha channel"
+msgstr "_Transfer layer's alpha channel"
 
-#: libgimpbase/gimpbaseenums.c:58
-msgid "Mid-Tone Checks"
-msgstr "Mid-Tone Checks"
+#: libgimpbase/gimpbaseenums.c:30
+msgid "_Selection"
+msgstr "_Selection"
 
-#: libgimpbase/gimpbaseenums.c:59
-msgid "Dark Checks"
-msgstr "Dark Checks"
-
-#: libgimpbase/gimpbaseenums.c:60
-msgid "White Only"
-msgstr "White Only"
+#: libgimpbase/gimpbaseenums.c:31
+msgid "_Grayscale copy of layer"
+msgstr "_Grayscale copy of layer"
 
 #: libgimpbase/gimpbaseenums.c:61
-msgid "Gray Only"
-msgstr "Gray Only"
+msgid "FG to BG (RGB)"
+msgstr "FG to BG (RGB)"
 
 #: libgimpbase/gimpbaseenums.c:62
-msgid "Black Only"
-msgstr "Black Only"
+msgid "FG to BG (HSV)"
+msgstr "FG to BG (HSV)"
 
-#: libgimpbase/gimpbaseenums.c:91
-msgid "RGB color"
-msgstr "RGB colour"
+#: libgimpbase/gimpbaseenums.c:63
+msgid "FG to transparent"
+msgstr "FG to transparent"
 
-#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-msgid "Grayscale"
-msgstr "Grayscale"
+#: libgimpbase/gimpbaseenums.c:64
+msgid "Custom gradient"
+msgstr "Custom gradient"
 
 #: libgimpbase/gimpbaseenums.c:93
-msgid "Indexed color"
-msgstr "Indexed colour"
+msgid "FG color fill"
+msgstr "FG colour fill"
+
+#: libgimpbase/gimpbaseenums.c:94
+msgid "BG color fill"
+msgstr "BG colour fill"
+
+#: libgimpbase/gimpbaseenums.c:95
+msgid "Pattern fill"
+msgstr "Pattern fill"
 
 #: libgimpbase/gimpbaseenums.c:125
-msgid "RGB"
-msgstr "RGB"
+msgid "Add to the current selection"
+msgstr "Add to the current selection"
 
 #: libgimpbase/gimpbaseenums.c:126
-msgid "RGB-alpha"
-msgstr "RGB-alpha"
+msgid "Subtract from the current selection"
+msgstr "Subtract from the current selection"
+
+#: libgimpbase/gimpbaseenums.c:127
+msgid "Replace the current selection"
+msgstr "Replace the current selection"
 
 #: libgimpbase/gimpbaseenums.c:128
-msgid "Grayscale-alpha"
-msgstr "Grayscale-alpha"
+msgid "Intersect with the current selection"
+msgstr "Intersect with the current selection"
 
-#: libgimpbase/gimpbaseenums.c:129
+#: libgimpbase/gimpbaseenums.c:160 libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorselect.c:352
+msgid "Red"
+msgstr "Red"
+
+#: libgimpbase/gimpbaseenums.c:161 libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorselect.c:353
+msgid "Green"
+msgstr "Green"
+
+#: libgimpbase/gimpbaseenums.c:162 libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorselect.c:354
+msgid "Blue"
+msgstr "Blue"
+
+#: libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "Gray"
+
+#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:436
 msgid "Indexed"
 msgstr "Indexed"
 
-#: libgimpbase/gimpbaseenums.c:130
+#: libgimpbase/gimpbaseenums.c:165 libgimpwidgets/gimpcolorscales.c:171
+#: libgimpwidgets/gimpcolorselect.c:355
+msgid "Alpha"
+msgstr "Alpha"
+
+#: libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "Small"
+
+#: libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "Medium"
+
+#: libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "Large"
+
+#: libgimpbase/gimpbaseenums.c:228
+msgid "Light Checks"
+msgstr "Light Checks"
+
+#: libgimpbase/gimpbaseenums.c:229
+msgid "Mid-Tone Checks"
+msgstr "Mid-Tone Checks"
+
+#: libgimpbase/gimpbaseenums.c:230
+msgid "Dark Checks"
+msgstr "Dark Checks"
+
+#: libgimpbase/gimpbaseenums.c:231
+msgid "White Only"
+msgstr "White Only"
+
+#: libgimpbase/gimpbaseenums.c:232
+msgid "Gray Only"
+msgstr "Gray Only"
+
+#: libgimpbase/gimpbaseenums.c:233
+msgid "Black Only"
+msgstr "Black Only"
+
+#: libgimpbase/gimpbaseenums.c:261
+msgid "Image source"
+msgstr "Image source"
+
+#: libgimpbase/gimpbaseenums.c:262
+msgid "Pattern source"
+msgstr "Pattern source"
+
+#: libgimpbase/gimpbaseenums.c:290
+msgid "Dodge"
+msgstr "Dodge"
+
+#: libgimpbase/gimpbaseenums.c:291
+msgid "Burn"
+msgstr "Burn"
+
+#: libgimpbase/gimpbaseenums.c:328 libgimpbase/gimpbaseenums.c:468
+msgid "Linear"
+msgstr "Linear"
+
+#: libgimpbase/gimpbaseenums.c:329
+msgid "Bi-linear"
+msgstr "Bi-linear"
+
+#: libgimpbase/gimpbaseenums.c:330
+msgid "Radial"
+msgstr "Radial"
+
+#: libgimpbase/gimpbaseenums.c:331
+msgid "Square"
+msgstr "Square"
+
+#: libgimpbase/gimpbaseenums.c:332
+msgid "Conical (sym)"
+msgstr "Conical (sym)"
+
+#: libgimpbase/gimpbaseenums.c:333
+msgid "Conical (asym)"
+msgstr "Conical (asym)"
+
+#: libgimpbase/gimpbaseenums.c:334
+msgid "Shaped (angular)"
+msgstr "Shaped (angular)"
+
+#: libgimpbase/gimpbaseenums.c:335
+msgid "Shaped (spherical)"
+msgstr "Shaped (spherical)"
+
+#: libgimpbase/gimpbaseenums.c:336
+msgid "Shaped (dimpled)"
+msgstr "Shaped (dimpled)"
+
+#: libgimpbase/gimpbaseenums.c:337
+msgid "Spiral (cw)"
+msgstr "Spiral (cw)"
+
+#: libgimpbase/gimpbaseenums.c:338
+msgid "Spiral (ccw)"
+msgstr "Spiral (ccw)"
+
+#: libgimpbase/gimpbaseenums.c:367
+msgid "Stock ID"
+msgstr "Stock ID"
+
+#: libgimpbase/gimpbaseenums.c:368
+msgid "Inline pixbuf"
+msgstr "Inline pixbuf"
+
+#: libgimpbase/gimpbaseenums.c:369
+msgid "Image file"
+msgstr "Image file"
+
+#: libgimpbase/gimpbaseenums.c:398
+msgid "RGB color"
+msgstr "RGB colour"
+
+#: libgimpbase/gimpbaseenums.c:399 libgimpbase/gimpbaseenums.c:434
+msgid "Grayscale"
+msgstr "Grayscale"
+
+#: libgimpbase/gimpbaseenums.c:400
+msgid "Indexed color"
+msgstr "Indexed colour"
+
+#: libgimpbase/gimpbaseenums.c:432
+msgid "RGB"
+msgstr "RGB"
+
+#: libgimpbase/gimpbaseenums.c:433
+msgid "RGB-alpha"
+msgstr "RGB-alpha"
+
+#: libgimpbase/gimpbaseenums.c:435
+msgid "Grayscale-alpha"
+msgstr "Grayscale-alpha"
+
+#: libgimpbase/gimpbaseenums.c:437
 msgid "Indexed-alpha"
 msgstr "Indexed-alpha"
+
+#: libgimpbase/gimpbaseenums.c:467
+msgid "None (Fastest)"
+msgstr "None (Fastest)"
+
+#: libgimpbase/gimpbaseenums.c:469
+msgid "Cubic"
+msgstr "Cubic"
+
+#: libgimpbase/gimpbaseenums.c:470
+msgid "Lanczos (Best)"
+msgstr "Lanczos (Best)"
+
+#: libgimpbase/gimpbaseenums.c:498
+msgid "Constant"
+msgstr "Constant"
+
+#: libgimpbase/gimpbaseenums.c:499
+msgid "Incremental"
+msgstr "Incremental"
+
+#: libgimpbase/gimpbaseenums.c:528
+msgid "None"
+msgstr "None"
+
+#: libgimpbase/gimpbaseenums.c:529
+msgid "Sawtooth wave"
+msgstr "Sawtooth wave"
+
+#: libgimpbase/gimpbaseenums.c:530
+msgid "Triangular wave"
+msgstr "Triangular wave"
+
+#: libgimpbase/gimpbaseenums.c:558
+msgid "Pixels"
+msgstr "Pixels"
+
+#: libgimpbase/gimpbaseenums.c:559
+msgid "Points"
+msgstr "Points"
+
+#: libgimpbase/gimpbaseenums.c:588
+msgid "Shadows"
+msgstr "Shadows"
+
+#: libgimpbase/gimpbaseenums.c:589
+msgid "Midtones"
+msgstr "Midtones"
+
+#: libgimpbase/gimpbaseenums.c:590
+msgid "Highlights"
+msgstr "Highlights"
+
+#: libgimpbase/gimpbaseenums.c:618
+msgid "Forward (traditional)"
+msgstr "Forward (traditional)"
+
+#: libgimpbase/gimpbaseenums.c:619
+msgid "Backward (corrective)"
+msgstr "Backward (corrective)"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -395,27 +619,27 @@ msgstr "_White"
 msgid "Scales"
 msgstr "Scales"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:345
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:345
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:345
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:345
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:345
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:345
 msgid "_B"
 msgstr "_B"
 
@@ -423,34 +647,18 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:349
 msgid "Hue"
 msgstr "Hue"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
-#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:350
+#: modules/cdisplay_proof.c:59
 msgid "Saturation"
 msgstr "Saturation"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:351
 msgid "Value"
 msgstr "Value"
-
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
-msgid "Red"
-msgstr "Red"
-
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
-msgid "Green"
-msgstr "Green"
-
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
-msgid "Blue"
-msgstr "Blue"
-
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
-msgid "Alpha"
-msgstr "Alpha"
 
 #: libgimpwidgets/gimpcolorscales.c:243
 msgid "Hexadecimal color notation as used in HTML and CSS"
@@ -625,27 +833,27 @@ msgstr "Seed random number generator with a generated random number"
 msgid "_Randomize"
 msgstr "_Randomize"
 
-#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
-msgid "Protanopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:68
+msgid "Protanopia (insensitivity to red"
 msgstr "Protanopia (insensitivity to red)"
 
-#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
+#: modules/cdisplay_colorblind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensitivity to green)"
 
-#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
+#: modules/cdisplay_colorblind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensitivity to blue)"
 
-#: modules/cdisplay_colorblind.c:153
+#: modules/cdisplay_colorblind.c:163
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Colour deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 
-#: modules/cdisplay_colorblind.c:242
+#: modules/cdisplay_colorblind.c:256
 msgid "Color Deficient Vision"
 msgstr "Colour Deficient Vision"
 
-#: modules/cdisplay_colorblind.c:540
+#: modules/cdisplay_colorblind.c:554
 msgid "Color _Deficiency Type:"
 msgstr "Colour _Deficiency Type:"
 
@@ -673,39 +881,39 @@ msgstr "Contrast"
 msgid "Contrast C_ycles:"
 msgstr "Contrast C_ycles:"
 
-#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
+#: modules/cdisplay_proof.c:57
 msgid "Perceptual"
 msgstr "Perceptual"
 
-#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
+#: modules/cdisplay_proof.c:58
 msgid "Relative Colorimetric"
 msgstr "Relative Colourimetric"
 
-#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
+#: modules/cdisplay_proof.c:60
 msgid "Absolute Colorimetric"
 msgstr "Absolute Colourimetric"
 
-#: modules/cdisplay_proof.c:138
+#: modules/cdisplay_proof.c:147
 msgid "Color proof filter using ICC color profile"
 msgstr "Colour proof filter using ICC colour profile"
 
-#: modules/cdisplay_proof.c:238
+#: modules/cdisplay_proof.c:251
 msgid "Color Proof"
 msgstr "Colour Proof"
 
-#: modules/cdisplay_proof.c:457
+#: modules/cdisplay_proof.c:462
 msgid "_Intent:"
 msgstr "_Intent:"
 
-#: modules/cdisplay_proof.c:460
+#: modules/cdisplay_proof.c:465
 msgid "Choose an ICC Color Profile"
 msgstr "Choose an ICC Colour Profile"
 
-#: modules/cdisplay_proof.c:463
+#: modules/cdisplay_proof.c:468
 msgid "_Profile:"
 msgstr "_Profile:"
 
-#: modules/cdisplay_proof.c:471
+#: modules/cdisplay_proof.c:476
 msgid "_Black Point Compensation"
 msgstr "_Black Point Compensation"
 
