@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-03-15 11:52+0100\n"
-"PO-Revision-Date: 2003-03-15 16:53+0100\n"
+"POT-Creation-Date: 2003-03-16 11:49+0100\n"
+"PO-Revision-Date: 2003-03-16 14:55+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -397,7 +397,9 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "Je-li povoleno, zajistí, že každý pixel obrázku bude mapován na pixel na obrazovce."
+msgstr ""
+"Je-li povoleno, zajistí, že každý pixel obrázku bude mapován na pixel na "
+"obrazovce."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -426,13 +428,17 @@ msgstr "Nastavuje text, který se objeví v nadpisech okna obrázku."
 
 #: app/config/gimprc-blurbs.h:133
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr "Je-li povoleno, bude GIMP používat pro každý pohled na obrázek jiné informační okno."
+msgstr ""
+"Je-li povoleno, bude GIMP používat pro každý pohled na obrázek jiné "
+"informační okno."
 
 #: app/config/gimprc-blurbs.h:136
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "Je-li povoleno, zajistí, že po otevření souboru bude vidět celý obrázek, jinak bude zobrazen s měřítkem 1:1."
+msgstr ""
+"Je-li povoleno, zajistí, že po otevření souboru bude vidět celý obrázek, "
+"jinak bude zobrazen s měřítkem 1:1."
 
 #: app/config/gimprc-blurbs.h:140
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -498,14 +504,22 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "Je-li povoleno, posílají se X serveru dotazy na aktuální pozici myši při každé události pohybu místo spoléhání se na hint pozice. To znamená, že kreslení s velkými stopami by mělo být přesnější, ale možná pomalejší. Na některých X serverech zapnutí této volby zvráceně vede k rychlejšímu kreslení."
+msgstr ""
+"Je-li povoleno, posílají se X serveru dotazy na aktuální pozici myši při "
+"každé události pohybu místo spoléhání se na hint pozice. To znamená, že "
+"kreslení s velkými stopami by mělo být přesnější, ale možná pomalejší. Na "
+"některých X serverech zapnutí této volby zvráceně vede k rychlejšímu "
+"kreslení."
 
 #: app/config/gimprc-blurbs.h:209
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "Nastavuje, jestli má GIMP vytvářet náhledy vrstev a kanálů. Je hezké mít náhledy v dialogu vrstev a kanálů, ale mohou program při práci s velkými obrázky zpomalovat."
+msgstr ""
+"Nastavuje, jestli má GIMP vytvářet náhledy vrstev a kanálů. Je hezké mít "
+"náhledy v dialogu vrstev a kanálů, ale mohou program při práci s velkými "
+"obrázky zpomalovat."
 
 #: app/config/gimprc-blurbs.h:214
 msgid "Sets the default preview size for layers and channels."
@@ -515,13 +529,17 @@ msgstr "Nastavuje implicitní velikost náhledu pro vrstvy a kanály."
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "Je-li povoleno, bude okno obrázku automaticky měnit svou velikost, kdykoli se změní fyzická velikost obrázku."
+msgstr ""
+"Je-li povoleno, bude okno obrázku automaticky měnit svou velikost, kdykoli "
+"se změní fyzická velikost obrázku."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "Je-li povoleno, bude okno obrázku automaticky měnit svou velikost při zvětšování a zmenšování obrázků."
+msgstr ""
+"Je-li povoleno, bude okno obrázku automaticky měnit svou velikost při "
+"zvětšování a zmenšování obrázků."
 
 #: app/config/gimprc-blurbs.h:225
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -543,19 +561,25 @@ msgstr "Uložit pozice a velikosti hlavních dialogů při ukončení GIMP."
 msgid ""
 "Sets the default menubar visibility. This can also be toggled with the "
 "\"View->Toggle\" Menubar command."
-msgstr "Nastavuje implicitní viditelnost lišty s menu. Může být také přepnuto příkazem \"Zobrazení->Zobrazit lištu s menu\"."
+msgstr ""
+"Nastavuje implicitní viditelnost lišty s menu. Může být také přepnuto "
+"příkazem \"Zobrazení->Zobrazit lištu s menu\"."
 
 #: app/config/gimprc-blurbs.h:242
 msgid ""
 "Sets the default ruler visibility. This can also be toggled with the \"View-"
 ">Toggle Rulers\" command."
-msgstr "Nastavuje implicitní viditelnost pravítek. Může být také přepnuto příkazem \"Zobrazení->Zobrazit pravítka\"."
+msgstr ""
+"Nastavuje implicitní viditelnost pravítek. Může být také přepnuto příkazem "
+"\"Zobrazení->Zobrazit pravítka\"."
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Toggle Statusbar\" command."
-msgstr "Je-li povoleno, je stavová lišta implicitně viditelná. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat stavovou lištu\"."
+msgstr ""
+"Je-li povoleno, je stavová lišta implicitně viditelná. Může být také "
+"přepnuto příkazem \"Zobrazení->Zobrazovat stavovou lištu\"."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Enable to display a handy GIMP tip on startup."
@@ -612,7 +636,9 @@ msgstr ""
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
-msgstr "Nastavuje velikost miniatury ukládané s každým obrázkem. Všimněte si, že GIMP nemůže ukládat miniatury, jsou-li zakázány náhledy vrstev."
+msgstr ""
+"Nastavuje velikost miniatury ukládané s každým obrázkem. Všimněte si, že "
+"GIMP nemůže ukládat miniatury, jsou-li zakázány náhledy vrstev."
 
 #: app/config/gimprc-blurbs.h:289
 msgid ""
@@ -639,7 +665,9 @@ msgstr "Nastavuje velikost šachovnice používané pro zobrazení průhlednosti
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
-msgstr "Je-li povoleno, nebude GIMP ukládat, nebyl-li obrázek od svého otevření změněn."
+msgstr ""
+"Je-li povoleno, nebude GIMP ukládat, nebyl-li obrázek od svého otevření "
+"změněn."
 
 #: app/config/gimprc-blurbs.h:309
 msgid ""
@@ -663,7 +691,7 @@ msgstr "Je-li povoleno, stisknutí F1 otevře prohlížeč nápovědy."
 
 #: app/config/gimpscanner.c:76 app/gui/paths-dialog.c:1962
 #: app/gui/paths-dialog.c:2087 app/tools/gimpcurvestool.c:1405
-#: app/tools/gimplevelstool.c:1384
+#: app/tools/gimplevelstool.c:1473
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Nepodařilo se otevřít soubor '%s': %s"
@@ -2739,7 +2767,7 @@ msgstr "Výběr"
 msgid "Undo History"
 msgstr "Historie vracení"
 
-#: app/gui/dialogs-constructors.c:941 app/gui/image-menu.c:1222
+#: app/gui/dialogs-constructors.c:941 app/gui/image-menu.c:1208
 #: app/pdb/internal_procs.c:181 app/widgets/gimpundoeditor.c:123
 msgid "Undo"
 msgstr "Vrátit"
@@ -3733,479 +3761,484 @@ msgstr "/_Zobrazení"
 msgid "/View/New View"
 msgstr "/Zobrazení/Nový pohled"
 
-#. <Image>/View/Zoom
-#: app/gui/image-menu.c:296
-msgid "/View/Zoom/Zoom In"
-msgstr "/Zobrazení/Zvětšení/Přiblížit"
-
-#: app/gui/image-menu.c:301
-msgid "/View/Zoom/Zoom Out"
-msgstr "/Zobrazení/Zvětšení/Vzdálit"
-
-#: app/gui/image-menu.c:306
-msgid "/View/Zoom/Zoom to Fit Window"
-msgstr "/Zobrazení/Zvětšení/Přizpůsobit velikosti okna"
-
-#: app/gui/image-menu.c:314
-msgid "/View/Zoom/16:1"
-msgstr "/Zobrazení/Zvětšení/16:1"
-
-#: app/gui/image-menu.c:318
-msgid "/View/Zoom/8:1"
-msgstr "/Zobrazení/Zvětšení/8:1"
-
-#: app/gui/image-menu.c:322
-msgid "/View/Zoom/4:1"
-msgstr "/Zobrazení/Zvětšení/4:1"
-
-#: app/gui/image-menu.c:326
-msgid "/View/Zoom/2:1"
-msgstr "/Zobrazení/Zvětšení/2:1"
-
-#: app/gui/image-menu.c:330
-msgid "/View/Zoom/1:1"
-msgstr "/Zobrazení/Zvětšení/1:1"
-
-#: app/gui/image-menu.c:334
-msgid "/View/Zoom/1:2"
-msgstr "/Zobrazení/Zvětšení/1:2"
-
-#: app/gui/image-menu.c:338
-msgid "/View/Zoom/1:4"
-msgstr "/Zobrazení/Zvětšení/1:4"
-
-#: app/gui/image-menu.c:342
-msgid "/View/Zoom/1:8"
-msgstr "/Zobrazení/Zvětšení/1:8"
-
-#: app/gui/image-menu.c:346
-msgid "/View/Zoom/1:16"
-msgstr "/Zobrazení/Zvětšení/1:16"
-
-#: app/gui/image-menu.c:356
+#: app/gui/image-menu.c:293
 msgid "/View/Dot for Dot"
 msgstr "/Zobrazení/Bod na bod"
 
-#: app/gui/image-menu.c:363
+#. <Image>/View/Zoom
+#: app/gui/image-menu.c:300
+msgid "/View/Zoom/Zoom In"
+msgstr "/Zobrazení/Zvětšení/Přiblížit"
+
+#: app/gui/image-menu.c:305
+msgid "/View/Zoom/Zoom Out"
+msgstr "/Zobrazení/Zvětšení/Vzdálit"
+
+#: app/gui/image-menu.c:310
+msgid "/View/Zoom/Zoom to Fit Window"
+msgstr "/Zobrazení/Zvětšení/Přizpůsobit velikosti okna"
+
+#: app/gui/image-menu.c:318
+msgid "/View/Zoom/16:1"
+msgstr "/Zobrazení/Zvětšení/16:1"
+
+#: app/gui/image-menu.c:322
+msgid "/View/Zoom/8:1"
+msgstr "/Zobrazení/Zvětšení/8:1"
+
+#: app/gui/image-menu.c:326
+msgid "/View/Zoom/4:1"
+msgstr "/Zobrazení/Zvětšení/4:1"
+
+#: app/gui/image-menu.c:330
+msgid "/View/Zoom/2:1"
+msgstr "/Zobrazení/Zvětšení/2:1"
+
+#: app/gui/image-menu.c:334
+msgid "/View/Zoom/1:1"
+msgstr "/Zobrazení/Zvětšení/1:1"
+
+#: app/gui/image-menu.c:338
+msgid "/View/Zoom/1:2"
+msgstr "/Zobrazení/Zvětšení/1:2"
+
+#: app/gui/image-menu.c:342
+msgid "/View/Zoom/1:4"
+msgstr "/Zobrazení/Zvětšení/1:4"
+
+#: app/gui/image-menu.c:346
+msgid "/View/Zoom/1:8"
+msgstr "/Zobrazení/Zvětšení/1:8"
+
+#: app/gui/image-menu.c:350
+msgid "/View/Zoom/1:16"
+msgstr "/Zobrazení/Zvětšení/1:16"
+
+#: app/gui/image-menu.c:361
 msgid "/View/Info Window..."
 msgstr "/Zobrazení/Informační okno..."
 
-#: app/gui/image-menu.c:368
+#: app/gui/image-menu.c:366
 msgid "/View/Navigation Window..."
 msgstr "/Zobrazení/Navigační okno..."
 
-#: app/gui/image-menu.c:373
+#: app/gui/image-menu.c:371
 msgid "/View/Display Filters..."
 msgstr "/Zobrazení/Zobrazovací filtry..."
 
-#: app/gui/image-menu.c:380
+#: app/gui/image-menu.c:378
 msgid "/View/Show Selection"
 msgstr "/Zobrazení/Zobrazit výběr"
 
-#: app/gui/image-menu.c:384
+#: app/gui/image-menu.c:382
 msgid "/View/Show Layer Boundary"
 msgstr "/Zobrazení/Zobrazit hranici vrstvy"
 
-#: app/gui/image-menu.c:388
+#: app/gui/image-menu.c:386
 msgid "/View/Show Guides"
 msgstr "/Zobrazení/Zobrazit vodítka"
 
-#: app/gui/image-menu.c:392
+#: app/gui/image-menu.c:390
 msgid "/View/Snap to Guides"
 msgstr "/Zobrazení/Chytat na vodítka"
 
-#: app/gui/image-menu.c:399
+#: app/gui/image-menu.c:397
 msgid "/View/Show Menubar"
 msgstr "/Zobrazení/Zobrazit lištu s menu"
 
-#: app/gui/image-menu.c:403
+#: app/gui/image-menu.c:401
 msgid "/View/Show Rulers"
 msgstr "/Zobrazení/Zobrazit pravítka"
 
-#: app/gui/image-menu.c:407
+#: app/gui/image-menu.c:405
 msgid "/View/Show Scrollbars"
 msgstr "/Zobrazení/Zobrazovat posuvné pruhy"
 
-#: app/gui/image-menu.c:411
+#: app/gui/image-menu.c:409
 msgid "/View/Show Statusbar"
 msgstr "/Zobrazení/Zobrazovat stavovou lištu"
 
-#: app/gui/image-menu.c:418
+#: app/gui/image-menu.c:416
 msgid "/View/Shrink Wrap"
 msgstr "/Zobrazení/Stáhnout okolí"
 
-#: app/gui/image-menu.c:423
+#: app/gui/image-menu.c:421
 msgid "/View/Fullscreen"
 msgstr "/Zobrazení/Přes celou obrazovku"
 
 #. <Image>/Image
-#: app/gui/image-menu.c:430
+#: app/gui/image-menu.c:428
 msgid "/_Image"
 msgstr "/_Obrázek"
 
 #. <Image>/Image/Mode
-#: app/gui/image-menu.c:434
+#: app/gui/image-menu.c:432
 msgid "/Image/Mode/RGB"
 msgstr "/Obrázek/Režim/RGB barvy"
 
-#: app/gui/image-menu.c:439
+#: app/gui/image-menu.c:437
 msgid "/Image/Mode/Grayscale"
 msgstr "/Obrázek/Režim/Odstíny šedi"
 
-#: app/gui/image-menu.c:444
+#: app/gui/image-menu.c:442
 msgid "/Image/Mode/Indexed..."
 msgstr "/Obrázek/Režim/Indexovaný..."
 
 #. <Image>/Image/Transform
-#: app/gui/image-menu.c:452
+#: app/gui/image-menu.c:450
 msgid "/Image/Transform"
 msgstr "/Obrázek/Transformace"
 
-#: app/gui/image-menu.c:458
+#: app/gui/image-menu.c:456
 msgid "/Image/Canvas Size..."
 msgstr "/Obrázek/Rozměry plátna..."
 
-#: app/gui/image-menu.c:463
+#: app/gui/image-menu.c:461
 msgid "/Image/Scale Image..."
 msgstr "/Obrázek/Velikost obrázku..."
 
-#: app/gui/image-menu.c:468
+#: app/gui/image-menu.c:466
 msgid "/Image/Crop Image"
 msgstr "/Obrázek/Ořezat obrázek"
 
-#: app/gui/image-menu.c:473
+#: app/gui/image-menu.c:471
 msgid "/Image/Duplicate"
 msgstr "/Obrázek/Kanály/Duplikovat"
 
-#: app/gui/image-menu.c:481
+#: app/gui/image-menu.c:479
 msgid "/Image/Merge Visible Layers..."
 msgstr "/Obrázek/Sloučit viditelné vrstvy..."
 
-#: app/gui/image-menu.c:485
+#: app/gui/image-menu.c:483
 msgid "/Image/Flatten Image"
 msgstr "/Obrázek/Zploštit obrázek"
 
 #. <Image>/Layer
-#: app/gui/image-menu.c:492
+#: app/gui/image-menu.c:490
 msgid "/_Layer"
 msgstr "/_Vrstva"
 
-#. <Image>/Layer/Stack
-#: app/gui/image-menu.c:496
-msgid "/Layer/Stack/Previous Layer"
-msgstr "/Vrstva/Zásobník/Předchozí vrstva"
-
-#: app/gui/image-menu.c:500
-msgid "/Layer/Stack/Next Layer"
-msgstr "/Vrstva/Zásobník/Následující vrstva"
-
-#: app/gui/image-menu.c:504
-msgid "/Layer/Stack/Raise Layer"
-msgstr "/Vrstva/Zásobník/Vrstvu výš"
-
-#: app/gui/image-menu.c:509
-msgid "/Layer/Stack/Lower Layer"
-msgstr "/Vrstva/Zásobník/Vrstvu níž"
-
-#: app/gui/image-menu.c:514
-msgid "/Layer/Stack/Layer to Top"
-msgstr "/Vrstva/Zásobník/Vrstvu nahoru"
-
-#: app/gui/image-menu.c:519
-msgid "/Layer/Stack/Layer to Bottom"
-msgstr "/Vrstva/Zásobník/Vrstvu dospod"
-
-#: app/gui/image-menu.c:527
+#: app/gui/image-menu.c:492
 msgid "/Layer/New Layer..."
 msgstr "/Vrstva/Nová vrstva..."
 
-#: app/gui/image-menu.c:532
+#: app/gui/image-menu.c:497
 msgid "/Layer/Duplicate Layer"
 msgstr "/Vrstva/Duplikovat vrstvu"
 
-#: app/gui/image-menu.c:537
+#: app/gui/image-menu.c:502
 msgid "/Layer/Anchor Layer"
 msgstr "/Vrstva/Ukotvit vrstvu"
 
-#: app/gui/image-menu.c:542
+#: app/gui/image-menu.c:507
 msgid "/Layer/Merge Down"
 msgstr "/Vrstva/Sloučit dolů"
 
-#: app/gui/image-menu.c:547
+#: app/gui/image-menu.c:512
 msgid "/Layer/Delete Layer"
 msgstr "/Vrstva/Smazat vrstvu"
 
-#: app/gui/image-menu.c:555
+#. <Image>/Layer/Stack
+#: app/gui/image-menu.c:520
+msgid "/Layer/Stack/Previous Layer"
+msgstr "/Vrstva/Zásobník/Předchozí vrstva"
+
+#: app/gui/image-menu.c:524
+msgid "/Layer/Stack/Next Layer"
+msgstr "/Vrstva/Zásobník/Následující vrstva"
+
+#: app/gui/image-menu.c:528
+msgid "/Layer/Stack/Raise Layer"
+msgstr "/Vrstva/Zásobník/Vrstvu výš"
+
+#: app/gui/image-menu.c:533
+msgid "/Layer/Stack/Lower Layer"
+msgstr "/Vrstva/Zásobník/Vrstvu níž"
+
+#: app/gui/image-menu.c:538
+msgid "/Layer/Stack/Layer to Top"
+msgstr "/Vrstva/Zásobník/Vrstvu nahoru"
+
+#: app/gui/image-menu.c:543
+msgid "/Layer/Stack/Layer to Bottom"
+msgstr "/Vrstva/Zásobník/Vrstvu dospod"
+
+#: app/gui/image-menu.c:551
 msgid "/Layer/Layer Boundary Size..."
 msgstr "/Vrstva/Rozměry hranic vrstvy..."
 
-#: app/gui/image-menu.c:560
+#: app/gui/image-menu.c:556
 msgid "/Layer/Layer to Imagesize"
 msgstr "/Vrstva/Velikost vrstvy dle obrázku"
 
-#: app/gui/image-menu.c:565
+#: app/gui/image-menu.c:561
 msgid "/Layer/Scale Layer..."
 msgstr "/Vrstva/Škálovat vrstvu..."
 
-#: app/gui/image-menu.c:570
+#: app/gui/image-menu.c:566
 msgid "/Layer/Crop Layer"
 msgstr "/Vrstva/Ořezat vrstvu"
 
-#: app/gui/image-menu.c:580
+#: app/gui/image-menu.c:576
 msgid "/Layer/Transform/Offset..."
 msgstr "/Vrstva/Transformace/Posun..."
 
-#: app/gui/image-menu.c:591
+#: app/gui/image-menu.c:587
 msgid "/Layer/Colors/Desaturate"
 msgstr "/Vrstva/Barvy/Odbarvit"
 
-#: app/gui/image-menu.c:596
+#: app/gui/image-menu.c:592
 msgid "/Layer/Colors/Invert"
 msgstr "/Vrstva/Barvy/Invertovat"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:606
+#: app/gui/image-menu.c:600
 msgid "/Layer/Colors/Auto/Equalize"
 msgstr "/Vrstva/Barvy/Auto/Ekvalizace"
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:615
+#: app/gui/image-menu.c:609
 msgid "/Layer/Mask/Add Layer Mask..."
 msgstr "/Vrstva/Maska/Přidat masku vrstvy..."
 
-#: app/gui/image-menu.c:619
+#: app/gui/image-menu.c:613
 msgid "/Layer/Mask/Apply Layer Mask"
 msgstr "/Vrstva/Maska/Použít masku vrstvy"
 
-#: app/gui/image-menu.c:623
+#: app/gui/image-menu.c:617
 msgid "/Layer/Mask/Delete Layer Mask"
 msgstr "/Vrstva/Maska/Smazat masku vrstvy"
 
-#: app/gui/image-menu.c:628
+#: app/gui/image-menu.c:622
 msgid "/Layer/Mask/Mask to Selection"
 msgstr "/Vrstva/Maska/Maska do výběru"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:636
+#: app/gui/image-menu.c:630
 msgid "/Layer/Transparency/Add Alpha Channel"
 msgstr "/Vrstvy/Průhlednost/Přidat alfa kanál"
 
-#: app/gui/image-menu.c:640
+#: app/gui/image-menu.c:634
 msgid "/Layer/Transparency/Alpha to Selection"
 msgstr "/Vrstva/Průhlednost/Alfa do výběru"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:652
+#: app/gui/image-menu.c:646
 msgid "/_Tools"
 msgstr "/_Nástroje"
 
-#: app/gui/image-menu.c:654
+#: app/gui/image-menu.c:648
 msgid "/Tools/Toolbox"
 msgstr "/Nástroje/Panel nástrojů"
 
-#: app/gui/image-menu.c:658
+#: app/gui/image-menu.c:652
 msgid "/Tools/Default Colors"
 msgstr "/Nástroje/Implicitní Barvy"
 
-#: app/gui/image-menu.c:663
+#: app/gui/image-menu.c:657
 msgid "/Tools/Swap Colors"
 msgstr "/Nástroje/Prohodit Barvy"
 
-#: app/gui/image-menu.c:671
+#: app/gui/image-menu.c:665
 msgid "/Tools/Selection Tools"
 msgstr "/Nástroje/Nástroje pro výběr"
 
-#: app/gui/image-menu.c:672
+#: app/gui/image-menu.c:666
 msgid "/Tools/Paint Tools"
 msgstr "/Nástroje/Nástroje kreslení"
 
-#: app/gui/image-menu.c:673
+#: app/gui/image-menu.c:667
 msgid "/Tools/Transform Tools"
 msgstr "/Nástroje/Nástroje transformace"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:677
+#: app/gui/image-menu.c:671
 msgid "/_Dialogs"
 msgstr "/_Dialogy"
 
-#: app/gui/image-menu.c:679
+#: app/gui/image-menu.c:673
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialogy/Vrstvy, kanály a cesty..."
 
-#: app/gui/image-menu.c:683
+#: app/gui/image-menu.c:677
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
 msgstr "/Dialogy/Stopy, vzorky a další..."
 
-#: app/gui/image-menu.c:687
+#: app/gui/image-menu.c:681
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialogy/Volby nástrojů..."
 
-#: app/gui/image-menu.c:692
+#: app/gui/image-menu.c:686
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialogy/Stav zařízení..."
 
-#: app/gui/image-menu.c:700
+#: app/gui/image-menu.c:694
 msgid "/Dialogs/Layers..."
 msgstr "/Dialogy/Vrstvy..."
 
-#: app/gui/image-menu.c:705
+#: app/gui/image-menu.c:699
 msgid "/Dialogs/Channels..."
 msgstr "/Dialogy/Kanály..."
 
-#: app/gui/image-menu.c:710
+#: app/gui/image-menu.c:704
 msgid "/Dialogs/Paths..."
 msgstr "/Dialogy/Cesty..."
 
-#: app/gui/image-menu.c:715
+#: app/gui/image-menu.c:709
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialogy/Indexovaná paleta..."
 
-#: app/gui/image-menu.c:720
+#: app/gui/image-menu.c:714
 msgid "/Dialogs/Selection Editor..."
 msgstr "/Dialogy/Editor výběru..."
 
-#: app/gui/image-menu.c:725
+#: app/gui/image-menu.c:719
 msgid "/Dialogs/Navigation..."
 msgstr "/Dialogy/Navigace..."
 
-#: app/gui/image-menu.c:730
+#: app/gui/image-menu.c:724
 msgid "/Dialogs/Undo History..."
 msgstr "/Dialogy/Historie vracení..."
 
-#: app/gui/image-menu.c:738
+#: app/gui/image-menu.c:732
 msgid "/Dialogs/Colors..."
 msgstr "/Dialogy/Barvy..."
 
-#: app/gui/image-menu.c:743
+#: app/gui/image-menu.c:737
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialogy/Stopy..."
 
-#: app/gui/image-menu.c:748
+#: app/gui/image-menu.c:742
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialogy/Vzorky..."
 
-#: app/gui/image-menu.c:753
+#: app/gui/image-menu.c:747
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialogy/Přechody..."
 
-#: app/gui/image-menu.c:758
+#: app/gui/image-menu.c:752
 msgid "/Dialogs/Palettes..."
 msgstr "/Dialogy/Palety..."
 
-#: app/gui/image-menu.c:763
+#: app/gui/image-menu.c:757
 msgid "/Dialogs/Buffers..."
 msgstr "/Dialogy/Buffery..."
 
-#: app/gui/image-menu.c:771
+#: app/gui/image-menu.c:765
 msgid "/Dialogs/Images..."
 msgstr "/Dialogy/Obrázky..."
 
-#: app/gui/image-menu.c:776
+#: app/gui/image-menu.c:770
 msgid "/Dialogs/Document History..."
 msgstr "/Dialogy/Historie dokumentu..."
 
-#: app/gui/image-menu.c:781
+#: app/gui/image-menu.c:775
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialogy/Chybová konzola..."
 
-#: app/gui/image-menu.c:791
+#: app/gui/image-menu.c:785
 msgid "/Filte_rs"
 msgstr "/_Filtry"
 
-#: app/gui/image-menu.c:793
+#: app/gui/image-menu.c:787
 msgid "/Filters/Repeat Last"
 msgstr "/Filtry/Opakovat minulý"
 
-#: app/gui/image-menu.c:798
+#: app/gui/image-menu.c:792
 msgid "/Filters/Re-Show Last"
 msgstr "/Filtry/Zobrazit minulý"
 
-#: app/gui/image-menu.c:806
+#: app/gui/image-menu.c:800
 msgid "/Filters/Blur"
 msgstr "/Filtry/Rozostření"
 
-#: app/gui/image-menu.c:807
+#: app/gui/image-menu.c:801
 msgid "/Filters/Colors"
 msgstr "/Filtry/Barvy"
 
-#: app/gui/image-menu.c:808
+#: app/gui/image-menu.c:802
 msgid "/Filters/Noise"
 msgstr "/Filtry/Šum"
 
-#: app/gui/image-menu.c:809
+#: app/gui/image-menu.c:803
 msgid "/Filters/Edge-Detect"
 msgstr "/Filtry/Detekce hran"
 
-#: app/gui/image-menu.c:810
+#: app/gui/image-menu.c:804
 msgid "/Filters/Enhance"
 msgstr "/Filtry/Vylepšení"
 
-#: app/gui/image-menu.c:811
+#: app/gui/image-menu.c:805
 msgid "/Filters/Generic"
 msgstr "/Filtry/Obecné"
 
-#: app/gui/image-menu.c:815
+#: app/gui/image-menu.c:809
 msgid "/Filters/Glass Effects"
 msgstr "/Filtry/Efekty se sklem"
 
-#: app/gui/image-menu.c:816
+#: app/gui/image-menu.c:810
 msgid "/Filters/Light Effects"
 msgstr "/Filtry/Efekty se světlem"
 
-#: app/gui/image-menu.c:817
+#: app/gui/image-menu.c:811
 msgid "/Filters/Distorts"
 msgstr "/Filtry/Zkreslení"
 
-#: app/gui/image-menu.c:818
+#: app/gui/image-menu.c:812
 msgid "/Filters/Artistic"
 msgstr "/Filtry/Umění"
 
-#: app/gui/image-menu.c:819
+#: app/gui/image-menu.c:813
 msgid "/Filters/Map"
 msgstr "/Filtry/Mapování"
 
-#: app/gui/image-menu.c:820
+#: app/gui/image-menu.c:814
 msgid "/Filters/Render"
 msgstr "/Filtry/Vyobrazení"
 
-#: app/gui/image-menu.c:821
+#: app/gui/image-menu.c:815
 msgid "/Filters/Web"
 msgstr "/Filtry/Web"
 
-#: app/gui/image-menu.c:825
+#: app/gui/image-menu.c:819
 msgid "/Filters/Animation"
 msgstr "/Filtry/Animace"
 
-#: app/gui/image-menu.c:826
+#: app/gui/image-menu.c:820
 msgid "/Filters/Combine"
 msgstr "/Filtry/Kombinace"
 
-#: app/gui/image-menu.c:830
+#: app/gui/image-menu.c:824
 msgid "/Filters/Toys"
 msgstr "/Filtry/Hračky"
 
-#: app/gui/image-menu.c:1213
+#: app/gui/image-menu.c:1199
 #, c-format
 msgid "Undo %s"
 msgstr "Vrátit %s"
 
-#: app/gui/image-menu.c:1218
+#: app/gui/image-menu.c:1204
 #, c-format
 msgid "Redo %s"
 msgstr "Zrušit vrácení %s"
 
-#: app/gui/image-menu.c:1223 app/widgets/gimpundoeditor.c:131
+#: app/gui/image-menu.c:1209 app/widgets/gimpundoeditor.c:131
 msgid "Redo"
 msgstr "Zrušit vrácení"
 
-#: app/gui/image-menu.c:1441
+#: app/gui/image-menu.c:1428
 msgid "Other"
 msgstr "Jiný"
 
-#: app/gui/image-menu.c:1450
+#: app/gui/image-menu.c:1435
 #, c-format
 msgid "Other (%d:%d)"
 msgstr "Jiný (%d:%d)"
+
+#: app/gui/image-menu.c:1445
+#, c-format
+msgid "Zoom (%d:%d)"
+msgstr "Zvětšení (%d:%d)"
 
 #: app/gui/images-menu.c:42
 msgid "/Raise Displays"
@@ -6337,7 +6370,7 @@ msgstr "Zaostření"
 msgid "Brightness-Contrast"
 msgstr "Jas-kontrast"
 
-#: app/pdb/color_cmds.c:256 app/tools/gimplevelstool.c:160
+#: app/pdb/color_cmds.c:256 app/tools/gimplevelstool.c:172
 msgid "Levels"
 msgstr "Úrovně"
 
@@ -7007,7 +7040,7 @@ msgstr "Úprava barevných křivek"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Křivky nemohou být nastaveny v indexovaných obrazovkách."
 
-#: app/tools/gimpcurvestool.c:607 app/tools/gimplevelstool.c:403
+#: app/tools/gimpcurvestool.c:607 app/tools/gimplevelstool.c:438
 msgid "R_eset Channel"
 msgstr "O_bnovit kanál"
 
@@ -7016,7 +7049,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Upravit křivky pro kanál:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:680 app/tools/gimplevelstool.c:658
+#: app/tools/gimpcurvestool.c:680 app/tools/gimplevelstool.c:693
 msgid "All Channels"
 msgstr "Všechny kanály"
 
@@ -7311,73 +7344,73 @@ msgstr "Výběr tvarů z obrázku"
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Nástroje/Nástroje pro výběr/Inteligentní nůžky"
 
-#: app/tools/gimplevelstool.c:161
+#: app/tools/gimplevelstool.c:173
 msgid "Adjust color levels"
 msgstr "Úprava úrovní barev"
 
-#: app/tools/gimplevelstool.c:162
+#: app/tools/gimplevelstool.c:174
 msgid "/Layer/Colors/Levels..."
 msgstr "/Vrstva/Barvy/Úrovně..."
 
-#: app/tools/gimplevelstool.c:229
+#: app/tools/gimplevelstool.c:243
 msgid "Adjust Color Levels"
 msgstr "Úprava úrovní barev"
 
-#: app/tools/gimplevelstool.c:281
+#: app/tools/gimplevelstool.c:295
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Úrovně nemohou být nastaveny v indexovaných obrazovkách."
 
-#: app/tools/gimplevelstool.c:391
+#: app/tools/gimplevelstool.c:426
 msgid "Modify Levels for Channel:"
 msgstr "Úpravy úrovní pro kanál:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:413
+#: app/tools/gimplevelstool.c:448
 msgid "Input Levels"
 msgstr "Vstupní úrovně"
 
-#: app/tools/gimplevelstool.c:490
+#: app/tools/gimplevelstool.c:525
 msgid "Pick Black Point"
 msgstr "Vyberte černý bod"
 
-#: app/tools/gimplevelstool.c:522
+#: app/tools/gimplevelstool.c:557
 msgid "Pick Gray Point"
 msgstr "Vyberte šedý bod"
 
-#: app/tools/gimplevelstool.c:538
+#: app/tools/gimplevelstool.c:573
 msgid "Gamma"
 msgstr "Gama"
 
-#: app/tools/gimplevelstool.c:555
+#: app/tools/gimplevelstool.c:590
 msgid "Pick White Point"
 msgstr "Vyberte bílý bod"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:579
+#: app/tools/gimplevelstool.c:614
 msgid "Output Levels"
 msgstr "Výstupní úrovně"
 
-#: app/tools/gimplevelstool.c:669
+#: app/tools/gimplevelstool.c:704
 msgid "_Auto"
 msgstr "_Automaticky"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:707
 msgid "Adjust levels automatically"
 msgstr "Automaticky upravit úrovně"
 
-#: app/tools/gimplevelstool.c:682
+#: app/tools/gimplevelstool.c:717
 msgid "Read levels settings from file"
 msgstr "Načíst nastavení úrovní ze souboru"
 
-#: app/tools/gimplevelstool.c:692
+#: app/tools/gimplevelstool.c:727
 msgid "Save levels settings to file"
 msgstr "Uložit nastavení úrovní do souboru"
 
-#: app/tools/gimplevelstool.c:1315
+#: app/tools/gimplevelstool.c:1404
 msgid "Load Levels"
 msgstr "Načíst úrovně"
 
-#: app/tools/gimplevelstool.c:1330
+#: app/tools/gimplevelstool.c:1419
 msgid "Save Levels"
 msgstr "Zapsat úrovně"
 
