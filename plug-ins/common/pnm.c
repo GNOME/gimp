@@ -923,7 +923,7 @@ save_dialog (void)
 			 NULL);
 
   /*  file save type  */
-  frame = gimp_int_radio_group_new (TRUE, _("Data Formatting"),
+  frame = gimp_int_radio_group_new (TRUE, _("Data formatting"),
 				    G_CALLBACK (gimp_radio_button_update),
 				    &psvals.raw, psvals.raw,
 

@@ -871,7 +871,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.optimize);
 
-  toggle = gtk_check_button_new_with_label (_("Clear Transparent"));
+  toggle = gtk_check_button_new_with_label (_("Clear transparent"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 			       jsvals.clr_transparent);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2,

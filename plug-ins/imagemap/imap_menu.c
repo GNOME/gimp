@@ -183,7 +183,7 @@ make_file_menu(GtkWidget *menu_bar)
    _menu.file_menu = file_menu;
    make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
 			&_menu.cmd_open);
-   _menu.open_recent = make_sub_menu(file_menu, _("Open Recent"));
+   _menu.open_recent = make_sub_menu(file_menu, _("Open recent"));
    make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command, 
 			&_menu.cmd_save);
    item = make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
@@ -267,15 +267,15 @@ make_edit_menu(GtkWidget *menu_bar)
 				      &_menu.cmd_clear);
    add_accelerator(_menu.clear, 'K', GDK_CONTROL_MASK);
    make_separator(edit_menu);
-   item = make_item_with_label(edit_menu, _("Select _All"), menu_command,
+   item = make_item_with_label(edit_menu, _("Select _all"), menu_command,
 			       &_menu.cmd_select_all);
    add_accelerator(item, 'A', GDK_CONTROL_MASK);
-   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _All"), 
+   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _all"), 
 					     menu_command, 
 					     &_menu.cmd_deselect_all);
    add_accelerator(_menu.deselect_all, 'A', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
    make_separator(edit_menu);
-   _menu.edit = make_item_with_label(edit_menu, _("Edit Area Info..."),
+   _menu.edit = make_item_with_label(edit_menu, _("Edit area info..."),
 				     menu_command, &_menu.cmd_edit_area_info);
    make_separator(edit_menu);
    make_item_with_image(edit_menu, GTK_STOCK_PREFERENCES, menu_command,
@@ -294,7 +294,7 @@ make_view_menu(GtkWidget *menu_bar)
    GtkWidget *zoom_menu, *item;
    GSList *group = NULL;
 
-   item = make_check_item(view_menu, _("Area List"), menu_command,
+   item = make_check_item(view_menu, _("Area list"), menu_command,
 			  &_menu.cmd_area_list);
    GTK_CHECK_MENU_ITEM(item)->active = TRUE;
 
@@ -324,7 +324,7 @@ make_view_menu(GtkWidget *menu_bar)
 					 menu_command, &_menu.cmd_zoom_out);
    gtk_widget_set_sensitive(_menu.zoom_out, FALSE);
 
-   zoom_menu = make_sub_menu(view_menu, _("Zoom To"));
+   zoom_menu = make_sub_menu(view_menu, _("Zoom to"));
 
    _menu.zoom[0] = make_radio_item(zoom_menu, NULL, "1:1", menu_zoom_to,
 				   (gpointer) 1);
@@ -360,7 +360,7 @@ make_mapping_menu(GtkWidget *menu_bar)
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
    _menu.fuzzy_select = make_radio_item(menu, group, 
-					_("Select Contiguous Region"),
+					_("Select contiguous region"),
 					menu_fuzzy_select, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.fuzzy_select));
    _menu.rectangle = make_radio_item(menu, group, _("Rectangle"),
@@ -380,12 +380,12 @@ make_tools_menu(GtkWidget *menu_bar)
 {
    GtkWidget *tools_menu = make_menu_bar_item(menu_bar, _("_Tools"));
    _menu.grid = make_check_item(tools_menu, _("Grid"), menu_grid, NULL);
-   make_item_with_label(tools_menu, _("Grid Settings..."), menu_command,
+   make_item_with_label(tools_menu, _("Grid settings..."), menu_command,
 			&_menu.cmd_grid_settings);
    make_separator(tools_menu);
-   make_item_with_label(tools_menu, _("Use GIMP Guides..."), menu_command,
+   make_item_with_label(tools_menu, _("Use GIMP guides..."), menu_command,
 			&_menu.cmd_use_gimp_guides);
-   make_item_with_label(tools_menu, _("Create Guides..."), menu_command,
+   make_item_with_label(tools_menu, _("Create guides..."), menu_command,
 			&_menu.cmd_create_guides);
 }
 

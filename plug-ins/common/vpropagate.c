@@ -1023,7 +1023,6 @@ vpropagate_dialog (GimpImageBaseType image_type)
   GtkWidget *table;
   GtkWidget *toggle_vbox;
   GtkWidget *button;
-  GtkWidget *sep;
   GtkObject *adj;
   GSList    *group = NULL;
   gint	     index = 0;

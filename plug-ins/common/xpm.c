@@ -790,7 +790,7 @@ save_dialog (void)
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("_Alpha Threshold:"), SCALE_WIDTH, 0,
+                                     _("_Alpha threshold:"), SCALE_WIDTH, 0,
                                      xpmvals.threshold, 0, 255, 1, 8, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);

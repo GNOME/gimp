@@ -822,7 +822,7 @@ create_new_printer_dialog (void)
 
   new_printer_entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (new_printer_entry), 127);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Printer Name:"),
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Printer name:"),
                              0.0, 0.5, new_printer_entry, 1, FALSE);
 
   gimp_help_set_help_data (new_printer_entry,
@@ -917,13 +917,13 @@ create_printer_settings_frame (void)
                              "or model, of printer) that you wish to print to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Printer Name:"), 0.0, 0.5,
+                             _("Printer name:"), 0.0, 0.5,
                              event_box, 1, FALSE);
 
   printer_model_label = gtk_label_new ("");
   gtk_misc_set_alignment (GTK_MISC (printer_model_label), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Printer Model:"), 0.0, 0.5,
+                             _("Printer model:"), 0.0, 0.5,
                              printer_model_label, 2, FALSE);
 
   printer_hbox = gtk_hbox_new (TRUE, 6);
@@ -934,7 +934,7 @@ create_printer_settings_frame (void)
    * Setup printer button
    */
 
-  button = gtk_button_new_with_label (_("Setup Printer..."));
+  button = gtk_button_new_with_label (_("Setup printer..."));
   gimp_help_set_help_data (button,
                            _("Choose the printer model, PPD file, and command "
                              "that is used to print to this printer"),
@@ -951,7 +951,7 @@ create_printer_settings_frame (void)
    * New printer button
    */
 
-  button = gtk_button_new_with_label (_("New Printer..."));
+  button = gtk_button_new_with_label (_("New printer..."));
   gimp_help_set_help_data (button,
                            _("Define a new logical printer. This can be used to "
                              "name a collection of settings that you wish to "
@@ -977,7 +977,7 @@ create_printer_settings_frame (void)
                            _("Size of paper that you wish to print to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Media Size:"), 0.0, 0.5,
+                             _("Media size:"), 0.0, 0.5,
                              event_box, 1, FALSE);
 
   /*
@@ -1036,7 +1036,7 @@ create_printer_settings_frame (void)
                            _("Type of media you're printing to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Media Type:"), 0.0, 0.5,
+                             _("Media type:"), 0.0, 0.5,
                              event_box, 1, FALSE);
 
   /*
@@ -1052,7 +1052,7 @@ create_printer_settings_frame (void)
                            _("Source (input slot) of media you're printing to"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("Media Source:"), 0.0, 0.5,
+                             _("Media source:"), 0.0, 0.5,
                              event_box, 1, FALSE);
 
   /*
@@ -1068,7 +1068,7 @@ create_printer_settings_frame (void)
                            _("Type of ink in the printer"),
                            NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
-                             _("Ink Type:"), 0.0, 0.5,
+                             _("Ink type:"), 0.0, 0.5,
                              event_box, 1, FALSE);
 
   /*
@@ -1314,7 +1314,7 @@ create_image_settings_frame (void)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (event_box);
 
-  label = gtk_label_new (_("Image Type:"));
+  label = gtk_label_new (_("Image type:"));
   gtk_container_add (GTK_CONTAINER (event_box), label);
   gtk_widget_show (label);
 
@@ -1326,7 +1326,7 @@ create_image_settings_frame (void)
                              "being printed"),
                            NULL);
 
-  image_line_art = gtk_radio_button_new_with_label (NULL, _("Line Art"));
+  image_line_art = gtk_radio_button_new_with_label (NULL, _("Line art"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (image_line_art));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              NULL, 0.5, 0.5,
@@ -1340,7 +1340,7 @@ create_image_settings_frame (void)
                     G_CALLBACK (gimp_image_type_callback),
                     GINT_TO_POINTER (IMAGE_LINE_ART));
 
-  image_solid_tone = gtk_radio_button_new_with_label (group, _("Solid Colors"));
+  image_solid_tone = gtk_radio_button_new_with_label (group, _("Solid colors"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (image_solid_tone));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              NULL, 0.5, 0.5,
@@ -1386,7 +1386,7 @@ create_image_settings_frame (void)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (event_box);
 
-  label = gtk_label_new (_("Output Type:"));
+  label = gtk_label_new (_("Output type:"));
   gtk_container_add (GTK_CONTAINER (event_box), label);
   gtk_widget_show (label);
 
@@ -1421,7 +1421,7 @@ create_image_settings_frame (void)
                     GINT_TO_POINTER (OUTPUT_GRAY));
 
   output_monochrome = gtk_radio_button_new_with_label (group,
-                                                       _("Black and White"));
+                                                       _("Black and white"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (output_monochrome));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              NULL, 0.5, 0.5,
@@ -1439,7 +1439,7 @@ create_image_settings_frame (void)
    *  Color adjust button
    */
 
-  adjust_color_button = gtk_button_new_with_label (_("Adjust Output..."));
+  adjust_color_button = gtk_button_new_with_label (_("Adjust output..."));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (adjust_color_button)->child), 4, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              NULL, 0.5, 0.5,

@@ -2893,7 +2893,7 @@ load_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Text Antialiasing"),
+  frame = gimp_int_radio_group_new (TRUE, _("Text antialiasing"),
 				    G_CALLBACK (gimp_radio_button_update),
 				    &plvals.textalpha, plvals.textalpha,
 
@@ -2905,7 +2905,7 @@ load_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Graphic Antialiasing"),
+  frame = gimp_int_radio_group_new (TRUE, _("Graphic antialiasing"),
 				    G_CALLBACK (gimp_radio_button_update),
 				    &plvals.graphicsalpha, plvals.graphicsalpha,
 
@@ -3015,7 +3015,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_X Offset:"), 0.0, 0.5,
+			     _("_X offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[2], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -3024,13 +3024,13 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("_Y Offset:"), 0.0, 0.5,
+			     _("_Y offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[3], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Keep Aspect Ratio"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Keep aspect ratio"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);
@@ -3082,7 +3082,7 @@ save_dialog (void)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_PostScript Level 2"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_PostScript level 2"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->level);
   gtk_widget_show (toggle);
@@ -3121,7 +3121,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
 				     0, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Preview _Size:"), 1.0, 0.5,
+			     _("Preview _size:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   gtk_widget_show (spinbutton);
 

@@ -1021,7 +1021,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Ins Date"),
+  column = gtk_tree_view_column_new_with_attributes (_("Ins date"),
                                                      renderer,
                                                      "text",
                                                      LIST_DATE_COLUMN,
@@ -1029,7 +1029,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
+  column = gtk_tree_view_column_new_with_attributes (_("Menu path"),
                                                      renderer,
                                                      "text",
                                                      LIST_PATH_COLUMN,
@@ -1037,7 +1037,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
+  column = gtk_tree_view_column_new_with_attributes (_("Image types"),
                                                      renderer,
                                                      "text",
                                                      LIST_IMAGE_TYPES_COLUMN,
@@ -1079,7 +1079,7 @@ gimp_plugin_desc (void)
   plugindesc->tree_view = GTK_TREE_VIEW (tree_view);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"),
+  column = gtk_tree_view_column_new_with_attributes (_("Menu path/name"),
                                                      renderer,
                                                      "text",
                                                      TREE_PATH_NAME_COLUMN,
@@ -1087,7 +1087,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Ins Date"),
+  column = gtk_tree_view_column_new_with_attributes (_("Ins date"),
                                                      renderer,
                                                      "text",
                                                      TREE_DATE_COLUMN,
@@ -1095,7 +1095,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
+  column = gtk_tree_view_column_new_with_attributes (_("Image types"),
                                                      renderer,
                                                      "text",
                                                      TREE_IMAGE_TYPES_COLUMN,
@@ -1116,7 +1116,7 @@ gimp_plugin_desc (void)
                     G_CALLBACK (tree_store_select_callback),
                     plugindesc);
 
-  label = gtk_label_new (_("Tree View"));
+  label = gtk_label_new (_("Tree view"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), tree_view);
 

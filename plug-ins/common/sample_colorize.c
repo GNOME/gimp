@@ -1373,7 +1373,7 @@ p_smp_dialog (void)
                      gimp_standard_help_func, HELP_ID,
 
                      GIMP_STOCK_RESET,       RESPONSE_RESET,
-                     _("Get Sample Colors"), RESPONSE_GET_COLORS,
+                     _("Get sample colors"), RESPONSE_GET_COLORS,
                      GTK_STOCK_CLOSE,        GTK_RESPONSE_CLOSE,
                      _("Apply"),             GTK_RESPONSE_APPLY,
 
@@ -1419,12 +1419,12 @@ p_smp_dialog (void)
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
                               GIMP_INT_STORE_VALUE,    SMP_INV_GRADIENT,
-                              GIMP_INT_STORE_LABEL,    _("From Reverse Gradient"),
+                              GIMP_INT_STORE_LABEL,    _("From reverse gradient"),
                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
                               -1);
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
                               GIMP_INT_STORE_VALUE,    SMP_GRADIENT,
-                              GIMP_INT_STORE_LABEL,    _("From Gradient"),
+                              GIMP_INT_STORE_LABEL,    _("From gradient"),
                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
                               -1);
 
@@ -1445,7 +1445,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show Selection"));
+  check_button = gtk_check_button_new_with_label (_("Show selection"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1456,7 +1456,7 @@ p_smp_dialog (void)
                                 g_di.dst_show_selection);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show Color"));
+  check_button = gtk_check_button_new_with_label (_("Show color"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1472,7 +1472,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show Selection"));
+  check_button = gtk_check_button_new_with_label (_("Show selection"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1483,7 +1483,7 @@ p_smp_dialog (void)
                                 g_di.sample_show_selection);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Show Color"));
+  check_button = gtk_check_button_new_with_label (_("Show color"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1596,7 +1596,7 @@ p_smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, l_ty, l_ty+1,
                     GTK_FILL, 0, 0, 0);
 
-  label = gtk_label_new (_("Input Levels:"));
+  label = gtk_label_new (_("Input levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1686,7 +1686,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Hold Intensity"));
+  check_button = gtk_check_button_new_with_label (_("Hold intensity"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1697,7 +1697,7 @@ p_smp_dialog (void)
                                 g_values.hold_inten);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Original Intensity"));
+  check_button = gtk_check_button_new_with_label (_("Original intensity"));
   g_di.orig_inten_button = check_button;
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (g_di.orig_inten_button, g_values.hold_inten);
@@ -1715,7 +1715,7 @@ p_smp_dialog (void)
   gtk_widget_show (hbox);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Use Subcolors"));
+  check_button = gtk_check_button_new_with_label (_("Use subcolors"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 
@@ -1726,7 +1726,7 @@ p_smp_dialog (void)
                                 g_values.rnd_subcolors);
 
   /* check button */
-  check_button = gtk_check_button_new_with_label (_("Smooth Samples"));
+  check_button = gtk_check_button_new_with_label (_("Smooth samples"));
   gtk_box_pack_start (GTK_BOX (hbox), check_button, FALSE, FALSE, 0);
   gtk_widget_show (check_button);
 

@@ -632,15 +632,15 @@ save_dialog (void)
 
 			 NULL);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Compression Type"),
+  frame = gimp_int_radio_group_new (TRUE, _("Compression type"),
 				    G_CALLBACK (gimp_radio_button_update),
 				    &compression, compression,
 
-				    _("No Compression"),
+				    _("No compression"),
 				    SGI_COMP_NONE, NULL,
-				    _("RLE Compression"),
+				    _("RLE compression"),
 				    SGI_COMP_RLE, NULL,
-				    _("Aggressive RLE\n(Not Supported by SGI)"),
+				    _("Aggressive RLE\n(not supported by SGI)"),
 				    SGI_COMP_ARLE, NULL,
 
 				    NULL);

@@ -998,7 +998,7 @@ load_dialog (void)
   gtk_widget_show (frame);
 
   frame =
-    gimp_int_radio_group_new (TRUE, _("Pixel Value Scaling"),
+    gimp_int_radio_group_new (TRUE, _("Pixel value scaling"),
 			      G_CALLBACK (gimp_radio_button_update),
 			      &plvals.use_datamin, plvals.use_datamin,
 

@@ -145,7 +145,7 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_set_sensitive(data->zoom_out, FALSE);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    make_toolbar_stock_icon(toolbar, IMAP_STOCK_MAP_INFO, "EditMapInfo",
-			   _("Edit Map Info"), toolbar_command, 
+			   _("Edit map info"), toolbar_command, 
 			   &data->cmd_edit_map_info);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    data->to_front = make_toolbar_stock_icon(toolbar, IMAP_STOCK_TO_FRONT, 

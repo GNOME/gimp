@@ -772,7 +772,7 @@ load_dialog (const gchar *filename)
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
-  label = gtk_label_new_with_mnemonic (_("_X Ratio:"));
+  label = gtk_label_new_with_mnemonic (_("_X ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
@@ -794,7 +794,7 @@ load_dialog (const gchar *filename)
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
-  label = gtk_label_new_with_mnemonic (_("_Y Ratio:"));
+  label = gtk_label_new_with_mnemonic (_("_Y ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
@@ -839,7 +839,7 @@ load_dialog (const gchar *filename)
                     (gpointer) filename);
 
   /*  Path Import  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Import _Paths"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Import _paths"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
@@ -858,7 +858,7 @@ load_dialog (const gchar *filename)
                     G_CALLBACK (gimp_toggle_button_sensitive_update),
                     NULL);
 
-  toggle2 = gtk_check_button_new_with_mnemonic (_("Merge Imported Paths"));
+  toggle2 = gtk_check_button_new_with_mnemonic (_("Merge imported paths"));
   gtk_table_attach (GTK_TABLE (table), toggle2, 0, 2, 6, 7,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_set_sensitive (toggle2, load_vals.import);

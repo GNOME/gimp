@@ -1,3 +1,8 @@
+2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins: finish implementing HIG capitalization in dialogs.
+	Scripts remain to be done.  More progress on bug #123699.
+
 2004-06-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-enums.[ch] (enum GimpCursorFormat): removed
@@ -34,7 +39,7 @@
 2004-06-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/url.c: if url does not end in a recognized
-	extension, open it as an unnamed image.  Fixes bug # 118811.
+	extension, open it as an unnamed image.  Fixes bug #118811.
 
 2004-06-20  Sven Neumann  <sven@gimp.org>
 

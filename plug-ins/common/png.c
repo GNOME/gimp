@@ -1572,8 +1572,8 @@ save_dialog (gint32    image_ID,
                          NULL, 0,
                          gimp_standard_help_func, "file-png-save-defaults",
 
-			 _("_Load Defaults"), RESPONSE_LOAD_DEFAULTS,
-			 _("_Save Defaults"), RESPONSE_SAVE_DEFAULTS,
+			 _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
+			 _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
                          GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,       GTK_RESPONSE_OK,
 
@@ -1605,7 +1605,7 @@ save_dialog (gint32    image_ID,
                     &pngvals.interlaced);
 
   pg.bkgd = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _Background Color"));
+    gtk_check_button_new_with_mnemonic (_("Save _background color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
   gtk_widget_show (toggle);
@@ -1613,7 +1613,7 @@ save_dialog (gint32    image_ID,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.bkgd);
 
-  pg.gama = toggle = gtk_check_button_new_with_mnemonic (_("Save _Gamma"));
+  pg.gama = toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
   gtk_widget_show (toggle);
@@ -1622,7 +1622,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.gama);
 
   pg.offs = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save Layer O_ffset"));
+    gtk_check_button_new_with_mnemonic (_("Save layer o_ffset"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
   gtk_widget_show (toggle);
@@ -1631,7 +1631,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.offs);
 
-  pg.phys = toggle = gtk_check_button_new_with_mnemonic (_("Save _Resolution"));
+  pg.phys = toggle = gtk_check_button_new_with_mnemonic (_("Save _resolution"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
   gtk_widget_show (toggle);
@@ -1640,7 +1640,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.phys);
 
   pg.time = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save Creation _Time"));
+    gtk_check_button_new_with_mnemonic (_("Save creation _time"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 5, 6, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
   gtk_widget_show (toggle);
@@ -1648,7 +1648,7 @@ save_dialog (gint32    image_ID,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
 
-  pg.comment = toggle = gtk_check_button_new_with_mnemonic (_("Save Comme_nt"));
+  pg.comment = toggle = gtk_check_button_new_with_mnemonic (_("Save comme_nt"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.comment);
   gtk_widget_show (toggle);
@@ -1663,7 +1663,7 @@ save_dialog (gint32    image_ID,
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.comment);
 
   pg.save_transp_pixels = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save Color _Values From Transparent Pixels"));
+    gtk_check_button_new_with_mnemonic (_("Save color _values from transparent pixels"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 alpha && pngvals.save_transp_pixels);
@@ -1676,7 +1676,7 @@ save_dialog (gint32    image_ID,
 
   pg.compression_level = scale =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
-                          _("Co_mpression Level:"),
+                          _("Co_mpression level:"),
                           SCALE_WIDTH, 0,
                           pngvals.compression_level,
                           0.0, 9.0, 1.0, 1.0, 0, TRUE, 0.0, 0.0,

@@ -164,11 +164,11 @@ static const gchar *ctext[][2] =
 
 static const gchar *etext[][2] =
 {
-  { N_("Red _Frequency:"),       N_("Hue _Frequency:")            },
+  { N_("Red _frequency:"),       N_("Hue _frequency:")            },
   { N_("Green fr_equency:"),     N_("Saturation fr_equency:")     },
   { N_("Blue freq_uency:"),      N_("Luminosity freq_uency:")     },
 
-  { N_("Red _Phaseshift:"),      N_("Hue _Phaseshift:")           },
+  { N_("Red _phaseshift:"),      N_("Hue _phaseshift:")           },
   { N_("Green ph_aseshift:"),    N_("Saturation ph_aseshift:")    },
   { N_("Blue pha_seshift:"),     N_("Luminosity pha_seshift:")    },
 };

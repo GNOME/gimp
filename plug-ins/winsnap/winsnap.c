@@ -1016,7 +1016,7 @@ snap_dialog(void)
   gtk_box_pack_start (GTK_BOX(hbox), winsnapintf.delay_spinner, FALSE, FALSE, 0);
   gtk_widget_show (winsnapintf.delay_spinner);
 
-  label = gtk_label_new (_("Seconds Delay"));
+  label = gtk_label_new (_("Seconds delay"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

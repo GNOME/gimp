@@ -1223,7 +1223,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save Background Color"));
+  toggle = gtk_check_button_new_with_label (_("Save background color"));
   gtk_widget_set_sensitive (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
@@ -1234,7 +1234,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save Gamma"));
+  toggle = gtk_check_button_new_with_label (_("Save gamma"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -1244,7 +1244,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save Resolution"));
+  toggle = gtk_check_button_new_with_label (_("Save resolution"));
   gtk_widget_set_sensitive (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
@@ -1255,7 +1255,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save Creation Time"));
+  toggle = gtk_check_button_new_with_label (_("Save creation time"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
@@ -1278,8 +1278,8 @@ mng_save_dialog (gint32 image_id)
                                     _("JNG"), CHUNKS_JNG_D,
                                     NULL);
   else
-    combo = gimp_int_combo_box_new (_("PNG + Delta PNG"), CHUNKS_PNG_D,
-                                    _("JNG + Delta PNG"), CHUNKS_JNG_D,
+    combo = gimp_int_combo_box_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
+                                    _("JNG + delta PNG"), CHUNKS_JNG_D,
                                     _("All PNG"),         CHUNKS_PNG,
                                     _("All JNG"),         CHUNKS_JNG,
                                     NULL);
@@ -1293,7 +1293,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_set_sensitive (combo, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Default Chunks Type:"), 0.0, 0.5,
+                             _("Default chunks type:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   combo = gimp_int_combo_box_new (_("Combine"), DISPOSE_COMBINE,
@@ -1308,7 +1308,7 @@ mng_save_dialog (gint32 image_id)
                     &mng_data.default_dispose);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Default Frame Disposal:"), 0.0, 0.5,
+                             _("Default frame disposal:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   scale_adj = gtk_adjustment_new (mng_data.compression_level,
@@ -1320,7 +1320,7 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("PNG Compression Level:"), 0.0, 0.9,
+                             _("PNG compression level:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1342,7 +1342,7 @@ mng_save_dialog (gint32 image_id)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("JPEG Compression Quality:"), 0.0, 0.9,
+                             _("JPEG compression quality:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1359,7 +1359,7 @@ mng_save_dialog (gint32 image_id)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("JPEG Smoothing Factor:"), 0.0, 0.9,
+                             _("JPEG smoothing factor:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1369,7 +1369,7 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  frame = gimp_frame_new (_("Animated MNG Options"));
+  frame = gimp_frame_new (_("Animated MNG options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 6);
@@ -1389,7 +1389,7 @@ mng_save_dialog (gint32 image_id)
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Default Frame Delay:"));
+  label = gtk_label_new (_("Default frame delay:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

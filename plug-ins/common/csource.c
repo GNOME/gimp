@@ -686,7 +686,7 @@ run_save_dialog	(Config *config)
 
   /* GLib types
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use GLib Types (guint8*)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use GLib types (guint8*)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->glib_types);

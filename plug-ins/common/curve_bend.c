@@ -1309,7 +1309,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   /*  The preview button  */
-  button = gtk_button_new_with_mnemonic (_("_Preview Once"));
+  button = gtk_button_new_with_mnemonic (_("_Preview once"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
