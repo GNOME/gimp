@@ -472,7 +472,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-preserve-transparency", layer);
   SET_ACTIVE    ("layers-preserve-transparency", preserve);
 
-  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask && alpha);
+  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask);
   SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);
   SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask);
 
