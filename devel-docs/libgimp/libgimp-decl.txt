@@ -1458,11 +1458,11 @@ gchar *domain_name,gchar *domain_path
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(17)
+#define GIMP_MICRO_VERSION				(18)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.17"
+#define GIMP_VERSION					"1.1.18"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>
@@ -2859,19 +2859,19 @@ struct GPConfig
   guint32 version;
   guint32 tile_width;
   guint32 tile_height;
-  gint32 shm_ID;
+  gint32  shm_ID;
   gdouble gamma;
-  gint8 install_cmap;
-  gint8 use_xshm;
-  guint8 color_cube[4];
-  gint32 gdisp_ID;
+  gint8   install_cmap;
+  gint8   use_xshm;
+  guint8  color_cube[4];
+  gint32  gdisp_ID;
 };
 </STRUCT>
 <STRUCT>
 <NAME>GPTileReq</NAME>
 struct GPTileReq
 {
-  gint32 drawable_ID;
+  gint32  drawable_ID;
   guint32 tile_num;
   guint32 shadow;
 };
@@ -2880,14 +2880,14 @@ struct GPTileReq
 <NAME>GPTileData</NAME>
 struct GPTileData
 {
-  gint32 drawable_ID;
-  guint32 tile_num;
-  guint32 shadow;
-  guint32 bpp;
-  guint32 width;
-  guint32 height;
-  guint32 use_shm;
-  guchar *data;
+  gint32   drawable_ID;
+  guint32  tile_num;
+  guint32  shadow;
+  guint32  bpp;
+  guint32  width;
+  guint32  height;
+  guint32  use_shm;
+  guchar  *data;
 };
 </STRUCT>
 <STRUCT>
@@ -2896,23 +2896,26 @@ struct GPParam
 {
   guint32 type;
 
-  union {
-    gint32 d_int32;
-    gint16 d_int16;
-    gint8 d_int8;
-    gdouble d_float;
-    gchar *d_string;
-    gint32 *d_int32array;
-    gint16 *d_int16array;
-    gint8 *d_int8array;
-    gdouble *d_floatarray;
-    gchar **d_stringarray;
-    struct {
+  union
+  {
+    gint32    d_int32;
+    gint16    d_int16;
+    gint8     d_int8;
+    gdouble   d_float;
+    gchar    *d_string;
+    gint32   *d_int32array;
+    gint16   *d_int16array;
+    gint8    *d_int8array;
+    gdouble  *d_floatarray;
+    gchar   **d_stringarray;
+    struct
+    {
       guint8 red;
       guint8 green;
       guint8 blue;
     } d_color;
-    struct {
+    struct
+    {
       gint32 x;
       gint32 y;
       gint32 width;
@@ -2928,10 +2931,10 @@ struct GPParam
     gint32 d_path;
     struct
     {
-      char *name;
-      guint32 flags;
-      guint32 size;
-      void *data;
+      gchar    *name;
+      guint32   flags;
+      guint32   size;
+      gpointer  data;
     } d_parasite;
     gint32 d_status;
   } data;
@@ -2941,17 +2944,17 @@ struct GPParam
 <NAME>GPParamDef</NAME>
 struct GPParamDef
 {
-  guint32 type;
-  char *name;
-  char *description;
+  guint32  type;
+  gchar   *name;
+  gchar   *description;
 };
 </STRUCT>
 <STRUCT>
 <NAME>GPProcRun</NAME>
 struct GPProcRun
 {
-  char *name;
-  guint32 nparams;
+  gchar   *name;
+  guint32  nparams;
   GPParam *params;
 };
 </STRUCT>
@@ -2959,8 +2962,8 @@ struct GPProcRun
 <NAME>GPProcReturn</NAME>
 struct GPProcReturn
 {
-  char *name;
-  guint32 nparams;
+  gchar   *name;
+  guint32  nparams;
   GPParam *params;
 };
 </STRUCT>
@@ -2968,17 +2971,17 @@ struct GPProcReturn
 <NAME>GPProcInstall</NAME>
 struct GPProcInstall
 {
-  char *name;
-  char *blurb;
-  char *help;
-  char *author;
-  char *copyright;
-  char *date;
-  char *menu_path;
-  char *image_types;
-  guint32 type;
-  guint32 nparams;
-  guint32 nreturn_vals;
+  gchar      *name;
+  gchar      *blurb;
+  gchar      *help;
+  gchar      *author;
+  gchar      *copyright;
+  gchar      *date;
+  gchar      *menu_path;
+  gchar      *image_types;
+  guint32     type;
+  guint32     nparams;
+  guint32     nreturn_vals;
   GPParamDef *params;
   GPParamDef *return_vals;
 };
@@ -2987,7 +2990,7 @@ struct GPProcInstall
 <NAME>GPProcUninstall</NAME>
 struct GPProcUninstall
 {
-  char *name;
+  gchar *name;
 };
 </STRUCT>
 <FUNCTION>
@@ -2997,68 +3000,68 @@ void
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_quit_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_config_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPConfig      *config
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPConfig        *config
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_tile_req_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPTileReq     *tile_req
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPTileReq       *tile_req
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_tile_ack_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_tile_data_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPTileData    *tile_data
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPTileData      *tile_data
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_proc_run_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcRun     *proc_run
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcRun       *proc_run
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_proc_return_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcReturn  *proc_return
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcReturn    *proc_return
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_temp_proc_run_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcRun     *proc_run
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcRun       *proc_run
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_temp_proc_return_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcReturn  *proc_return
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcReturn    *proc_return
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_proc_install_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcInstall *proc_install
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcInstall   *proc_install
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_proc_uninstall_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel,GPProcUninstall *proc_uninstall
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel,GPProcUninstall *proc_uninstall
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_extension_ack_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
 </FUNCTION>
 <FUNCTION>
 <NAME>gp_request_wakeups_write</NAME>
-<RETURNS>int  </RETURNS>
-GIOChannel    *channel
+<RETURNS>gboolean  </RETURNS>
+GIOChannel      *channel
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_TYPE_SIZE_ENTRY</NAME>
@@ -3980,7 +3983,7 @@ GtkObject         **adjustment,gfloat              value,gfloat              low
 <FUNCTION>
 <NAME>gimp_scale_entry_new</NAME>
 <RETURNS>GtkObject  *</RETURNS>
-GtkTable           *table,gint                column,gint                row,gchar              *text,gint                scale_usize,gint                spinbutton_usize,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,guint               digits,gboolean            constrain,gfloat              unconstrained_lower,gfloat              unconstrained_upper,gchar              *tooltip,gchar              *private_tip
+GtkTable           *table,gint                column,gint                row,gchar              *text,gint                scale_usize,gint                spinbutton_usize,gfloat              value,gfloat              lower,gfloat              upper,gfloat              step_increment,gfloat              page_increment,guint               digits,gboolean            constrain,gfloat              unconstrained_lower,gfloat              unconstrained_upper,gchar              *tooltip,gchar              *help_data
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_RANDOM_SEED_SPINBUTTON</NAME>

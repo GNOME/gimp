@@ -136,7 +136,7 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gfloat              unconstrained_lower,
 				    gfloat              unconstrained_upper,
 				    gchar              *tooltip,
-				    gchar              *private_tip);
+				    gchar              *help_data);
 
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
         GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT( hbox), "spinbutton"))

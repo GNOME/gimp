@@ -1,3 +1,8 @@
+2000-03-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp-decl.txt
+	* tmpl/gimpwidgets.sgml: updated.
+
 2000-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpdialog.sgml

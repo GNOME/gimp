@@ -531,7 +531,7 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
  * @unconstrained_upper: The spinbutton's upper boundary
  *                       if @constrain == #FALSE.
  * @tooltip: A tooltip message for the scale and the spinbutton.
- * @private_tip: The widgets' private_tip (see gimp_help_set_help_data()).
+ * @help_data: The widgets' help_data (see gimp_help_set_help_data()).
  *
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkTable.
@@ -559,7 +559,7 @@ gimp_scale_entry_new (GtkTable *table,
 		      gfloat    unconstrained_lower,
 		      gfloat    unconstrained_upper,
 		      gchar    *tooltip,
-		      gchar    *private_tip)
+		      gchar    *help_data)
 {
   GtkWidget *label;
   GtkWidget *scale;
@@ -631,10 +631,10 @@ gimp_scale_entry_new (GtkTable *table,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
-  if (tooltip || private_tip)
+  if (tooltip || help_data)
     {
-      gimp_help_set_help_data (scale, tooltip, private_tip);
-      gimp_help_set_help_data (spinbutton, tooltip, private_tip);
+      gimp_help_set_help_data (scale, tooltip, help_data);
+      gimp_help_set_help_data (spinbutton, tooltip, help_data);
     }
 
   gtk_object_set_data (GTK_OBJECT (return_adj), "label", label);
@@ -808,7 +808,7 @@ gimp_coordinates_callback (GtkWidget *widget,
 
 /**
  * gimp_coordinates_new:
- * @unit: The unitial unit of the #GimpUnitMenu.
+ * @unit: The initial unit of the #GimpUnitMenu.
  * @unit_format: The unit format string as passed to gimp_size_entry_new().
  * @menu_show_pixels: #TRUE if the #GimpUnitMenu should contain an item for
  *                    GIMP_UNIT_PIXEL.

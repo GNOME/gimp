@@ -238,8 +238,10 @@ gtk_object_set_user_data().</entry>
 @unconstrained_lower: 
 @unconstrained_upper: 
 @tooltip: 
-@private_tip: 
+@help_data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@private_tip: 
 
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_LABEL ##### -->
