@@ -1242,6 +1242,60 @@ gimp_prop_memsize_notify (GObject          *config,
 
 
 /***********/
+/*  label  */
+/***********/
+
+static void   gimp_prop_label_notify (GObject    *config,
+                                      GParamSpec *param_spec,
+                                      GtkWidget  *label);
+
+GtkWidget *
+gimp_prop_label_new (GObject     *config,
+                     const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *label;
+  gchar      *value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  label = gtk_label_new (value ? value : "");
+  g_free (value);
+
+  set_param_spec (G_OBJECT (label), label, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_label_notify),
+                  label);
+
+  return label;
+}
+
+static void
+gimp_prop_label_notify (GObject    *config,
+                        GParamSpec *param_spec,
+                        GtkWidget  *label)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gtk_label_set_text (GTK_LABEL (label), value ? value : "");
+
+  g_free (value);
+}
+
+
+/***********/
 /*  entry  */
 /***********/
 

@@ -111,6 +111,8 @@ GtkWidget     * gimp_prop_memsize_entry_new       (GObject     *config,
 
 /*  GParamString  */
 
+GtkWidget     * gimp_prop_label_new               (GObject     *config,
+                                                   const gchar *property_name);
 GtkWidget     * gimp_prop_entry_new               (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         max_len);

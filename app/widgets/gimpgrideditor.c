@@ -234,7 +234,7 @@ gimp_grid_editor_constructor (GType                  type,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Background Color:"), 0.0, 0.5,
+                             _("_Background color:"), 0.0, 0.5,
                              color_button, 1, TRUE);
 
   gtk_widget_show (table);
