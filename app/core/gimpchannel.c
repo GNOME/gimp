@@ -52,7 +52,7 @@
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimpprojection.h"
-#include "gimpstrokeoptions.h"
+#include "gimpstrokedesc.h"
 
 #include "gimp-intl.h"
 
@@ -119,7 +119,7 @@ static void       gimp_channel_transform     (GimpItem         *item,
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
                                               GimpContext      *context,
-                                              GimpObject       *stroke_desc);
+                                              GimpStrokeDesc   *stroke_desc);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -610,10 +610,10 @@ gimp_channel_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_channel_stroke (GimpItem     *item,
-                     GimpDrawable *drawable,
-                     GimpContext  *context,
-                     GimpObject   *stroke_desc)
+gimp_channel_stroke (GimpItem       *item,
+                     GimpDrawable   *drawable,
+                     GimpContext    *context,
+                     GimpStrokeDesc *stroke_desc)
 
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
@@ -634,27 +634,33 @@ gimp_channel_stroke (GimpItem     *item,
 
   gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
 
-  if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
+  switch (stroke_desc->method)
     {
+    case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_boundary (drawable,
-                                     GIMP_STROKE_OPTIONS (stroke_desc),
+                                     stroke_desc->stroke_options,
                                      segs_in, n_segs_in,
                                      offset_x, offset_y);
       retval = TRUE;
-    }
-  else if (GIMP_IS_PAINT_OPTIONS (stroke_desc))
-    {
-      GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
-      GimpPaintCore    *core;
+      break;
 
-      core = g_object_new (paint_options->paint_info->paint_type, NULL);
+    case GIMP_STROKE_METHOD_PAINT_CORE:
+      {
+        GimpPaintCore *core;
 
-      retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                                paint_options,
-                                                segs_in, n_segs_in,
-                                                offset_x, offset_y);
+        core = g_object_new (stroke_desc->paint_info->paint_type, NULL);
 
-      g_object_unref (core);
+        retval = gimp_paint_core_stroke_boundary (core, drawable,
+                                                  stroke_desc->paint_options,
+                                                  segs_in, n_segs_in,
+                                                  offset_x, offset_y);
+
+        g_object_unref (core);
+      }
+      break;
+
+    default:
+      g_return_val_if_reached (FALSE);
     }
 
   return retval;

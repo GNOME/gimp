@@ -200,6 +200,8 @@ libappcore_a_sources = \
 	gimpscanconvert.h		\
 	gimpselection.c			\
 	gimpselection.h			\
+	gimpstrokedesc.c		\
+	gimpstrokedesc.h		\
 	gimpstrokeoptions.c		\
 	gimpstrokeoptions.h		\
 	gimptemplate.c			\

@@ -36,7 +36,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/gimpstrokedesc.h"
 
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
@@ -113,7 +113,7 @@ static void       gimp_vectors_transform    (GimpItem         *item,
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
                                              GimpContext      *context,
-                                             GimpObject       *stroke_desc);
+                                             GimpStrokeDesc   *stroke_desc);
 
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
@@ -555,10 +555,10 @@ gimp_vectors_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_vectors_stroke (GimpItem     *item,
-                     GimpDrawable *drawable,
-                     GimpContext  *context,
-                     GimpObject   *stroke_desc)
+gimp_vectors_stroke (GimpItem       *item,
+                     GimpDrawable   *drawable,
+                     GimpContext    *context,
+                     GimpStrokeDesc *stroke_desc)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   gboolean     retval  = FALSE;
@@ -569,25 +569,31 @@ gimp_vectors_stroke (GimpItem     *item,
       return FALSE;
     }
 
-  if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
+  switch (stroke_desc->method)
     {
+    case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_vectors (drawable,
-                                    GIMP_STROKE_OPTIONS (stroke_desc),
+                                    stroke_desc->stroke_options,
                                     vectors);
       retval = TRUE;
-    }
-  else if (GIMP_IS_PAINT_OPTIONS (stroke_desc))
-    {
-      GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (stroke_desc);
-      GimpPaintCore    *core;
+      break;
 
-      core = g_object_new (paint_options->paint_info->paint_type, NULL);
+    case GIMP_STROKE_METHOD_PAINT_CORE:
+      {
+        GimpPaintCore *core;
 
-      retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                               paint_options,
-                                               vectors);
+        core = g_object_new (stroke_desc->paint_info->paint_type, NULL);
 
-      g_object_unref (core);
+        retval = gimp_paint_core_stroke_vectors (core, drawable,
+                                                 stroke_desc->paint_options,
+                                                 vectors);
+
+        g_object_unref (core);
+      }
+      break;
+
+    default:
+      g_return_val_if_reached (FALSE);
     }
 
   return retval;

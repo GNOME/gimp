@@ -354,20 +354,18 @@ HELP
     &inargs('stroke to');
 
     %invoke = (
-	headers => [ qw("core/gimpcontext.h" "core/gimptoolinfo.h") ],
+	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  GimpImage    *gimage;
-  GimpToolInfo *tool_info;
+  GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  tool_info = gimp_context_get_tool (context);
+  g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
   success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                              drawable, context,
-                              GIMP_OBJECT (tool_info->paint_info),
-                              TRUE /* use defaults, not tool option values */);
+                              drawable, context, desc, TRUE);
+
+  g_object_unref (desc);
 }
 CODE
     );

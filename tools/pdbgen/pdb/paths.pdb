@@ -302,19 +302,22 @@ HELP
 			  stroke.';
 
     %invoke = (
-	vars => [ 'GimpVectors *vectors', 'GimpDrawable *drawable' ],
+	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  vectors  = gimp_image_get_active_vectors (gimage);
-  drawable = gimp_image_active_drawable (gimage);
+  GimpVectors  *vectors  = gimp_image_get_active_vectors (gimage);
+  GimpDrawable *drawable = gimp_image_active_drawable (gimage);
 
   if (vectors && drawable)
     {
-      GimpToolInfo *tool_info = gimp_context_get_tool (context);
+      GimpStrokeDesc *desc = gimp_stroke_desc_new (gimp, context);
 
-      success = gimp_item_stroke (GIMP_ITEM (vectors), drawable, context,
-                                  GIMP_OBJECT (tool_info->paint_info),
-                                  TRUE /* use defaults, not tool option values */);
+      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+
+      success = gimp_item_stroke (GIMP_ITEM (vectors),
+                                  drawable, context, desc, TRUE);
+
+      g_object_unref (desc);
     }
   else
     success = FALSE;
@@ -703,8 +706,8 @@ HELP
     );
 }
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimptoolinfo.h" "core/gimpchannel-select.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
+              "core/gimpchannel-select.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
               "gimp-intl.h");

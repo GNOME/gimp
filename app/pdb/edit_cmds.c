@@ -29,14 +29,13 @@
 #include "core/gimp-edit.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
 
 static ProcRecord edit_cut_proc;
@@ -729,17 +728,15 @@ edit_stroke_invoker (Gimp         *gimp,
 
   if (success)
     {
-      GimpImage    *gimage;
-      GimpToolInfo *tool_info;
+      GimpImage      *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpStrokeDesc *desc   = gimp_stroke_desc_new (gimp, context);
 
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      tool_info = gimp_context_get_tool (context);
+      g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                                  drawable, context,
-                                  GIMP_OBJECT (tool_info->paint_info),
-                                  TRUE /* use defaults, not tool option values */);
+                                  drawable, context, desc, TRUE);
+
+      g_object_unref (desc);
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

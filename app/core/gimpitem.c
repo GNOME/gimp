@@ -27,11 +27,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpcoreconfig.h"
-
-#include "paint/gimppaintoptions.h"
-
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpdrawable.h"
@@ -42,10 +37,9 @@
 #include "gimpitem-preview.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
-#include "gimpstrokeoptions.h"
+#include "gimpstrokedesc.h"
 
 #include "gimp-intl.h"
 
@@ -973,11 +967,11 @@ gimp_item_transform (GimpItem               *item,
 }
 
 gboolean
-gimp_item_stroke (GimpItem      *item,
-                  GimpDrawable  *drawable,
-                  GimpContext   *context,
-                  GimpObject    *stroke_desc,
-                  gboolean       use_default_values)
+gimp_item_stroke (GimpItem       *item,
+                  GimpDrawable   *drawable,
+                  GimpContext    *context,
+                  GimpStrokeDesc *stroke_desc,
+                  gboolean        use_default_values)
 {
   GimpItemClass *item_class;
   gboolean       retval = FALSE;
@@ -985,8 +979,7 @@ gimp_item_stroke (GimpItem      *item,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
-                        GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE_DESC (stroke_desc), FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
@@ -994,66 +987,16 @@ gimp_item_stroke (GimpItem      *item,
     {
       GimpImage *gimage = gimp_item_get_image (item);
 
+      gimp_stroke_desc_prepare (stroke_desc, context, use_default_values);
+
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                    item_class->stroke_desc);
 
-      if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
-        {
-          g_object_ref (stroke_desc);
-        }
-      else if (GIMP_IS_PAINT_INFO (stroke_desc))
-        {
-          GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);
-          GimpPaintOptions *paint_options;
-
-          if (use_default_values)
-            {
-              paint_options = gimp_paint_options_new (paint_info);
-
-              /*  undefine the paint-relevant context properties and get them
-               *  from the passed context
-               */
-              gimp_context_define_properties (GIMP_CONTEXT (paint_options),
-                                              GIMP_CONTEXT_PAINT_PROPS_MASK,
-                                              FALSE);
-              gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
-            }
-          else
-            {
-              GimpCoreConfig      *config       = context->gimp->config;
-              GimpContextPropMask  global_props = 0;
-
-              paint_options =
-                gimp_config_duplicate (GIMP_CONFIG (paint_info->paint_options));
-
-              /*  FG and BG are always shared between all tools  */
-              global_props |= GIMP_CONTEXT_FOREGROUND_MASK;
-              global_props |= GIMP_CONTEXT_BACKGROUND_MASK;
-
-              if (config->global_brush)
-                global_props |= GIMP_CONTEXT_BRUSH_MASK;
-              if (config->global_pattern)
-                global_props |= GIMP_CONTEXT_PATTERN_MASK;
-              if (config->global_palette)
-                global_props |= GIMP_CONTEXT_PALETTE_MASK;
-              if (config->global_gradient)
-                global_props |= GIMP_CONTEXT_GRADIENT_MASK;
-              if (config->global_font)
-                global_props |= GIMP_CONTEXT_FONT_MASK;
-
-              gimp_context_copy_properties (context,
-                                            GIMP_CONTEXT (paint_options),
-                                            global_props);
-            }
-
-          stroke_desc = GIMP_OBJECT (paint_options);
-        }
-
       retval = item_class->stroke (item, drawable, context, stroke_desc);
 
-      g_object_unref (stroke_desc);
-
       gimp_image_undo_group_end (gimage);
+
+      gimp_stroke_desc_finish (stroke_desc);
     }
 
   return retval;

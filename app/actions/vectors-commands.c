@@ -36,7 +36,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
 #include "core/gimpprogress.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/gimpstrokedesc.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -371,12 +371,11 @@ void
 vectors_stroke_last_vals_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
-  GimpImage    *image;
-  GimpVectors  *vectors;
-  GimpDrawable *drawable;
-  GimpContext  *context;
-  GimpObject   *options;
-  gboolean      libart_stroking;
+  GimpImage      *image;
+  GimpVectors    *vectors;
+  GimpDrawable   *drawable;
+  GimpContext    *context;
+  GimpStrokeDesc *desc;
   return_if_no_vectors (image, vectors, data);
 
   drawable = gimp_image_active_drawable (image);
@@ -389,36 +388,16 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
 
   context = gimp_get_user_context (image->gimp);
 
-  options = g_object_get_data (G_OBJECT (context), "saved-stroke-options");
+  desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
 
-  if (options)
-    {
-      g_object_ref (options);
-      libart_stroking = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (options),
-                                                            "libart-stroking"));
-    }
+  if (desc)
+    g_object_ref (desc);
   else
-    {
-      options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
-                              "gimp", image->gimp,
-                              NULL);
-      libart_stroking = TRUE;
-    }
+    desc = gimp_stroke_desc_new (image->gimp, context);
 
-  if (libart_stroking)
-    {
-      gimp_item_stroke (GIMP_ITEM (vectors),
-                        drawable, context, options, FALSE);
-    }
-  else
-    {
-      gimp_item_stroke (GIMP_ITEM (vectors),
-                        drawable, context,
-                        g_object_get_data (G_OBJECT (options),
-                                           "gimp-paint-info"), FALSE);
-    }
+  gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE);
 
-  g_object_unref (options);
+  g_object_unref (desc);
 
   gimp_image_flush (image);
 }

@@ -265,6 +265,24 @@ gimp_grid_style_get_type (void)
 }
 
 GType
+gimp_stroke_method_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_STROKE_METHOD_LIBART, N_("Stroke line"), "libart" },
+    { GIMP_STROKE_METHOD_PAINT_CORE, N_("Stroke with a paint tool"), "paint-core" },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    type = g_enum_register_static ("GimpStrokeMethod", values);
+
+  return type;
+}
+
+GType
 gimp_stroke_style_get_type (void)
 {
   static const GEnumValue values[] =

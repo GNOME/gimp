@@ -1,5 +1,32 @@
 2004-10-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: added new enum GimpStrokeMethod which
+	can be one of { LIBART, PAINT_CORE }.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpstrokedesc.[ch]: new object which encapsulates
+	the params and setup logic for the different stroke methods.
+
+	* app/core/gimpitem.[ch]: use it in GimpItem::stroke() and
+	in the gimp_item_stroke() wrapper.
+
+	* app/core/gimpchannel.c (gimp_channel_stroke)
+	* app/core/gimpselection.c (gimp_selection_stroke)
+	* app/vectors/gimpvectors.c (gimp_vectors_stroke): changed accprdingly.
+
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/dialogs/stroke-dialog.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: use GimpStrokeDesc. Simplifies the
+	code quite a bit.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
+2004-10-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.c: remember the param_spec with each
 	radio button instead of with the box/frame around them.
 

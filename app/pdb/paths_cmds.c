@@ -29,10 +29,9 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
@@ -601,8 +600,6 @@ path_stroke_current_invoker (Gimp         *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  GimpVectors *vectors;
-  GimpDrawable *drawable;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -610,16 +607,19 @@ path_stroke_current_invoker (Gimp         *gimp,
 
   if (success)
     {
-      vectors  = gimp_image_get_active_vectors (gimage);
-      drawable = gimp_image_active_drawable (gimage);
+      GimpVectors  *vectors  = gimp_image_get_active_vectors (gimage);
+      GimpDrawable *drawable = gimp_image_active_drawable (gimage);
 
       if (vectors && drawable)
         {
-          GimpToolInfo *tool_info = gimp_context_get_tool (context);
+          GimpStrokeDesc *desc = gimp_stroke_desc_new (gimp, context);
 
-          success = gimp_item_stroke (GIMP_ITEM (vectors), drawable, context,
-                                      GIMP_OBJECT (tool_info->paint_info),
-                                      TRUE /* use defaults, not tool option values */);
+          g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
+
+          success = gimp_item_stroke (GIMP_ITEM (vectors),
+                                      drawable, context, desc, TRUE);
+
+          g_object_unref (desc);
         }
       else
         success = FALSE;
