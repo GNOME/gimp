@@ -1,6 +1,6 @@
 # Canadian English translations for gimp plug-ins
 # Copyright (C) Adam Weinberger and the GNOME Foundation
-# This file is distributed under the same license as the gimp plug-ins package.
+# This file is distributed under the same licence as the gimp plug-ins package.
 # Maintainer: Adam Weinberger <adamw@FreeBSD.org>
 # 
 # 
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:31+0200\n"
-"PO-Revision-Date: 2004-05-30 14:31-0700\n"
+"POT-Creation-Date: 2004-08-04 20:35-0400\n"
+"PO-Revision-Date: 2004-08-04 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr "About"
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
-#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
+#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:609
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
 #: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
@@ -464,7 +464,7 @@ msgstr "Save Fractal Parameters"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
+#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
@@ -1179,7 +1179,7 @@ msgstr "Show Preview _Wireframe"
 msgid "Show/hide preview wireframe"
 msgstr "Show/hide preview wireframe"
 
-#: plug-ins/bmp/bmpread.c:87
+#: plug-ins/bmp/bmpread.c:86
 msgid "Bad colormap"
 msgstr "Bad colourmap"
 
@@ -1189,7 +1189,7 @@ msgstr "Bad colourmap"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
+#: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
@@ -1206,26 +1206,30 @@ msgstr "Bad colourmap"
 msgid "Opening '%s'..."
 msgstr "Opening '%s'..."
 
-#: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
-#: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
-#: plug-ins/bmp/bmpread.c:172 plug-ins/bmp/bmpread.c:307
+#: plug-ins/bmp/bmpread.c:170 plug-ins/bmp/bmpread.c:179
+#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:193
+#: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:339
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' is not a valid BMP file"
 
-#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:204
-#: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
-#: plug-ins/bmp/bmpread.c:263 plug-ins/bmp/bmpread.c:269
-#: plug-ins/bmp/bmpread.c:275
+#: plug-ins/bmp/bmpread.c:220 plug-ins/bmp/bmpread.c:239
+#: plug-ins/bmp/bmpread.c:260 plug-ins/bmp/bmpread.c:279
+#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:304
+#: plug-ins/bmp/bmpread.c:310
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Error reading BMP file header from '%s'"
 
+#: plug-ins/bmp/bmpread.c:435
+msgid "Unrecognized or invalid BMP compression format."
+msgstr "Unrecognized or invalid BMP compression format."
+
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
-#: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
+#: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
@@ -2024,7 +2028,7 @@ msgstr "Align Visible Layers"
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
-#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:623
+#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:628
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
@@ -2514,9 +2518,9 @@ msgid "Save Channel Mixer Settings"
 msgstr "Save Channel Mixer Settings"
 
 #: plug-ins/common/channel_mixer.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
-msgstr "Parameters were Saved to '%s'"
+msgstr "Parameters were saved to '%s'"
 
 #: plug-ins/common/channel_mixer.c:1242
 msgid "Channel Mixer File Operation Warning"
@@ -2916,9 +2920,8 @@ msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Can operate on layers only (but was called on channel or mask)."
 
 #: plug-ins/common/curve_bend.c:727
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "Cannot operate on indexed colour images."
+msgstr "Cannot operate on layers with masks."
 
 #: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
@@ -4588,7 +4591,7 @@ msgstr "Export Preview"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "EXIF data will be ignored."
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -5705,27 +5708,27 @@ msgstr "Ascii"
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr "<Image>/Filters/Distorts/P_olar Coords..."
 
-#: plug-ins/common/polar.c:353
+#: plug-ins/common/polar.c:358
 msgid "Polarizing..."
 msgstr "Polarizing..."
 
-#: plug-ins/common/polar.c:588
+#: plug-ins/common/polar.c:593
 msgid "Polarize"
 msgstr "Polarize"
 
-#: plug-ins/common/polar.c:639
+#: plug-ins/common/polar.c:644
 msgid "Circle _Depth in Percent:"
 msgstr "Circle _Depth in Percent:"
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:653
 msgid "Offset _Angle:"
 msgstr "Offset _Angle:"
 
-#: plug-ins/common/polar.c:660
+#: plug-ins/common/polar.c:665
 msgid "_Map Backwards"
 msgstr "_Map Backwards"
 
-#: plug-ins/common/polar.c:666
+#: plug-ins/common/polar.c:671
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
@@ -5733,11 +5736,11 @@ msgstr ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 
-#: plug-ins/common/polar.c:674
+#: plug-ins/common/polar.c:679
 msgid "Map from _Top"
 msgstr "Map from _Top"
 
-#: plug-ins/common/polar.c:680
+#: plug-ins/common/polar.c:685
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5745,11 +5748,11 @@ msgstr ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 
-#: plug-ins/common/polar.c:689
+#: plug-ins/common/polar.c:694
 msgid "To _Polar"
 msgstr "To _Polar"
 
-#: plug-ins/common/polar.c:695
+#: plug-ins/common/polar.c:700
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -10060,7 +10063,7 @@ msgstr "lpeek.mrijk@consunet.nl"
 
 #: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
-msgstr "  Released under the GNU General Public License  "
+msgstr "  Released under the GNU General Public Licence  "
 
 #: plug-ins/imagemap/imap_circle.c:64
 msgid "C_ircle"
@@ -11272,16 +11275,16 @@ msgstr ""
 "Please visit our web site at http://gimp-print.sourceforge.net.\n"
 "\n"
 "This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
+"it under the terms of the GNU General Public Licence as published by\n"
+"the Free Software Foundation; either version 2 of the Licence, or\n"
 "(at your option) any later version.\n"
 "\n"
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
+"GNU General Public Licence for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License\n"
+"You should have received a copy of the GNU General Public Licence\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 
@@ -11766,9 +11769,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "write error occured"
-#~ msgstr "write error occured"
-
-#~ msgid "Preview (in image window, will modify image's undo history!)"
-#~ msgstr "Preview (in image window, will modify image's undo history!)"
