@@ -886,44 +886,6 @@ object_end (GdkPoint *pnt,
     }
 }
 
-void
-object_update (GdkPoint *pnt)
-{
-  /* update for the current object */
-  /* New position xy */
-  switch (selvals.otype)
-    {
-    case LINE:
-      d_update_line (pnt);
-      break;
-    case CIRCLE:
-      d_update_circle (pnt);
-      break;
-    case ELLIPSE:
-      d_update_ellipse (pnt);
-      break;
-    case POLY:
-      d_update_poly (pnt);
-      break;
-    case STAR:
-      d_update_star (pnt);
-      break;
-    case ARC:
-      d_update_arc (pnt);
-      break;
-    case SPIRAL:
-      d_update_spiral (pnt);
-      break;
-    case BEZIER:
-      d_update_bezier (pnt);
-      break;
-    default:
-      /* Internal error */
-      break;
-    }
-}
-
-
 /* Stuff for the generation/deletion of objects. */
 
 /* Objects are easy one they are created - you just go down the object
@@ -1073,6 +1035,49 @@ new_obj_2edit (GFigObj *obj)
   else
     {
       gfig_dialog_action_set_sensitive ("save", TRUE);
+    }
+}
+
+/* Add a point to a line (given x, y)
+ * pos = 0 = head
+ * pos = -1 = tail
+ * 0 < pos = nth position
+ */
+
+void
+d_pnt_add_line (GfigObject *obj,
+                gint        x,
+                gint        y,
+                gint        pos)
+{
+  DobjPoints *npnts = new_dobjpoint (x, y);
+
+  g_assert (obj != NULL);
+
+  if (!pos)
+    {
+      /* Add to head */
+      npnts->next = obj->points;
+      obj->points = npnts;
+    }
+  else
+    {
+      DobjPoints *pnt = obj->points;
+
+      /* Go down chain until the end if pos */
+      while (pos < 0 || pos-- > 0)
+        {
+          if (!(pnt->next) || !pos)
+            {
+              npnts->next = pnt->next;
+              pnt->next = npnts;
+              break;
+            }
+          else
+            {
+              pnt = pnt->next;
+            }
+        }
     }
 }
 

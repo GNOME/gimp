@@ -36,7 +36,6 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
-#include "gfig-line.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -90,6 +89,13 @@ static void        d_draw_arc          (GfigObject *obj);
 static void        d_paint_arc         (GfigObject *obj);
 
 static GfigObject *d_copy_arc          (GfigObject *obj);
+
+static void        d_update_arc_line   (GdkPoint   *pnt);
+static void        d_update_arc        (GdkPoint   *pnt);
+static void        d_arc_line_start    (GdkPoint   *pnt,
+                                        gboolean    shift_down);
+static void        d_arc_line_end      (GdkPoint *pnt,
+                                        gboolean  shift_down);
 
 /* Distance between two points. */
 static gdouble
@@ -565,9 +571,58 @@ d_arc_object_class_init (void)
   class->drawfunc  = d_draw_arc;
   class->paintfunc = d_paint_arc;
   class->copyfunc  = d_copy_arc;
+  class->update    = d_update_arc;
 }
 
-void
+/* Update end point of line */
+static void
+d_update_arc_line (GdkPoint *pnt)
+{
+  DobjPoints *spnt, *epnt;
+  /* Get last but one segment and undraw it -
+   * Then draw new segment in.
+   * always dealing with the static object.
+   */
+
+  /* Get start of segments */
+  spnt = obj_creating->points;
+
+  if (!spnt)
+    return; /* No points */
+
+  if ((epnt = spnt->next))
+    {
+      /* undraw  current */
+      /* Draw square on point */
+      draw_circle (&epnt->pnt, TRUE);
+
+      gdk_draw_line (gfig_context->preview->window,
+                     /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
+                     gfig_gc,
+                     spnt->pnt.x,
+                     spnt->pnt.y,
+                     epnt->pnt.x,
+                     epnt->pnt.y);
+      g_free (epnt);
+    }
+
+  /* draw new */
+  /* Draw circle on point */
+  draw_circle (pnt, TRUE);
+
+  epnt = new_dobjpoint (pnt->x, pnt->y);
+
+  gdk_draw_line (gfig_context->preview->window,
+                 /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
+                 gfig_gc,
+                 spnt->pnt.x,
+                 spnt->pnt.y,
+                 epnt->pnt.x,
+                 epnt->pnt.y);
+  spnt->next = epnt;
+}
+
+static void
 d_update_arc (GdkPoint *pnt)
 {
   DobjPoints *pnt1 = NULL;
@@ -584,12 +639,29 @@ d_update_arc (GdkPoint *pnt)
       !(pnt2 = pnt1->next) ||
       !(pnt3 = pnt2->next))
     {
-      d_update_line (pnt);
+      d_update_arc_line (pnt);
       return; /* Not fully drawn */
     }
 
   /* Update a real curve */
   /* Nothing to be done ... */
+}
+
+static void
+d_arc_line_start (GdkPoint *pnt,
+                  gboolean  shift_down)
+{
+  if (!obj_creating || !shift_down)
+    {
+      /* Draw square on point */
+      /* Must delete obj_creating if we have one */
+      obj_creating = d_new_object (LINE, pnt->x, pnt->y);
+    }
+  else
+    {
+      /* Contniuation */
+      d_update_arc_line (pnt);
+    }
 }
 
 void
@@ -599,7 +671,64 @@ d_arc_start (GdkPoint *pnt,
   /* Draw lines to start with -- then convert to an arc */
   if (!tmp_line)
     draw_sqr (pnt, TRUE);
-  d_line_start (pnt, TRUE); /* TRUE means multiple pointed line */
+  d_arc_line_start (pnt, TRUE); /* TRUE means multiple pointed line */
+}
+
+static void
+d_arc_line_end (GdkPoint *pnt,
+                gboolean  shift_down)
+{
+  /* Undraw the last circle */
+  draw_circle (pnt, TRUE);
+
+  if (shift_down)
+    {
+      if (tmp_line)
+        {
+          GdkPoint tmp_pnt = *pnt;
+
+          if (need_to_scale)
+            {
+              tmp_pnt.x = pnt->x * scale_x_factor;
+              tmp_pnt.y = pnt->y * scale_y_factor;
+            }
+
+          d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
+          free_one_obj (obj_creating);
+          /* Must free obj_creating */
+        }
+      else
+        {
+          tmp_line = obj_creating;
+          add_to_all_obj (gfig_context->current_obj, obj_creating);
+        }
+
+      obj_creating = d_new_object (LINE, pnt->x, pnt->y);
+    }
+  else
+    {
+      if (tmp_line)
+        {
+          GdkPoint tmp_pnt = *pnt;
+
+          if (need_to_scale)
+            {
+              tmp_pnt.x = pnt->x * scale_x_factor;
+              tmp_pnt.y = pnt->y * scale_y_factor;
+            }
+
+          d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
+          free_one_obj (obj_creating);
+          /* Must free obj_creating */
+        }
+      else
+        {
+          add_to_all_obj (gfig_context->current_obj, obj_creating);
+        }
+      obj_creating = NULL;
+      tmp_line = NULL;
+    }
+  /*gtk_widget_queue_draw (gfig_context->preview);*/
 }
 
 void
@@ -612,7 +741,7 @@ d_arc_end (GdkPoint *pnt,
       !tmp_line->points->next)
     {
       /* No arc created  - yet. Must have three points */
-      d_line_end (pnt, TRUE);
+      d_arc_line_end (pnt, TRUE);
     }
   else
     {
@@ -620,7 +749,7 @@ d_arc_end (GdkPoint *pnt,
       /* Convert to an arc ... */
       tmp_line->type = ARC;
       tmp_line->class = &dobj_class[ARC];
-      d_line_end (pnt, FALSE);
+      d_arc_line_end (pnt, FALSE);
       if (need_to_scale)
         {
           selvals.scaletoimage = 0;

@@ -28,13 +28,6 @@
 
 void        d_line_object_class_init (void);
 
-void        d_pnt_add_line           (GfigObject *obj,
-                                      gint        x,
-                                      gint        y,
-                                      gint        pos);
-
-void        d_update_line            (GdkPoint   *pnt);
-
 void        d_line_start             (GdkPoint   *pnt,
                                       gboolean    shift_down);
 void        d_line_end               (GdkPoint   *pnt,

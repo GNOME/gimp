@@ -28,8 +28,6 @@
 
 void d_ellipse_object_class_init (void);
 
-void d_update_ellipse            (GdkPoint *pnt);
-
 void d_ellipse_start             (GdkPoint *pnt,
                                   gboolean  shift_down);
 void d_ellipse_end               (GdkPoint *pnt,

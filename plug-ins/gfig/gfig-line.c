@@ -40,9 +40,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static GfigObject *d_copy_line  (GfigObject *obj);
-static void        d_draw_line  (GfigObject *obj);
-static void        d_paint_line (GfigObject *obj);
+static GfigObject *d_copy_line   (GfigObject *obj);
+static void        d_draw_line   (GfigObject *obj);
+static void        d_paint_line  (GfigObject *obj);
+
+static void        d_update_line (GdkPoint   *pnt);
 
 static GfigObject *
 d_copy_line (GfigObject *obj)
@@ -139,6 +141,7 @@ d_line_object_class_init (void)
   class->drawfunc  = d_draw_line;
   class->paintfunc = d_paint_line;
   class->copyfunc  = d_copy_line;
+  class->update    = d_update_line;
 }
 
 /* You guessed it delete the object !*/
@@ -153,51 +156,8 @@ d_delete_line (Dobject *obj)
 }
 */
 
-/* Add a point to a line (given x, y)
- * pos = 0 = head
- * pos = -1 = tail
- * 0 < pos = nth position
- */
-
-void
-d_pnt_add_line (GfigObject *obj,
-                gint        x,
-                gint        y,
-                gint        pos)
-{
-  DobjPoints *npnts = new_dobjpoint (x, y);
-
-  g_assert (obj != NULL);
-
-  if (!pos)
-    {
-      /* Add to head */
-      npnts->next = obj->points;
-      obj->points = npnts;
-    }
-  else
-    {
-      DobjPoints *pnt = obj->points;
-
-      /* Go down chain until the end if pos */
-      while (pos < 0 || pos-- > 0)
-        {
-          if (!(pnt->next) || !pos)
-            {
-              npnts->next = pnt->next;
-              pnt->next = npnts;
-              break;
-            }
-          else
-            {
-              pnt = pnt->next;
-            }
-        }
-    }
-}
-
 /* Update end point of line */
-void
+static void
 d_update_line (GdkPoint *pnt)
 {
   DobjPoints *spnt, *epnt;

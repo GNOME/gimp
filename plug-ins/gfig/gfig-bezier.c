@@ -53,19 +53,20 @@ static gdouble  *fp_pnt_pnts = NULL;
 
 GfigObject      *tmp_bezier;       /* Needed when drawing bezier curves */
 
-static void        fp_pnt_start   (void);
-static void        fp_pnt_add     (gdouble     p1,
-                                   gdouble     p2,
-                                   gdouble     p3,
-                                   gdouble     p4);
-static gdouble    *d_bz_get_array (gint       *sz);
-static void        d_bz_line      (void);
-static void        DrawBezier     (fp_pnt      points,
-                                   gint        np,
-                                   gdouble     mid,
-                                   gint        depth);
-static void        d_paint_bezier (GfigObject *obj);
-static GfigObject *d_copy_bezier  (GfigObject *obj);
+static void        fp_pnt_start    (void);
+static void        fp_pnt_add      (gdouble     p1,
+                                    gdouble     p2,
+                                    gdouble     p3,
+                                    gdouble     p4);
+static gdouble    *d_bz_get_array  (gint       *sz);
+static void        d_bz_line       (void);
+static void        DrawBezier      (fp_pnt      points,
+                                    gint        np,
+                                    gdouble     mid,
+                                    gint        depth);
+static void        d_paint_bezier  (GfigObject *obj);
+static GfigObject *d_copy_bezier   (GfigObject *obj);
+static void        d_update_bezier (GdkPoint   *pnt);
 
 static void
 fp_pnt_start (void)
@@ -304,9 +305,10 @@ d_bezier_object_class_init (void)
   class->drawfunc  = d_draw_bezier;
   class->paintfunc = d_paint_bezier;
   class->copyfunc  = d_copy_bezier;
+  class->update    = d_update_bezier;
 }
 
-void
+static void
 d_update_bezier (GdkPoint *pnt)
 {
   DobjPoints *s_pnt, *l_pnt;

@@ -42,9 +42,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void        d_draw_spiral  (GfigObject *obj);
-static void        d_paint_spiral (GfigObject *obj);
-static GfigObject *d_copy_spiral  (GfigObject *obj);
+static void        d_draw_spiral   (GfigObject *obj);
+static void        d_paint_spiral  (GfigObject *obj);
+static GfigObject *d_copy_spiral   (GfigObject *obj);
+
+static void        d_update_spiral (GdkPoint  *pnt);
 
 static gint spiral_num_turns = 4; /* Default to 4 turns */
 static gint spiral_toggle    = 0; /* 0 = clockwise -1 = anti-clockwise */
@@ -277,9 +279,10 @@ d_spiral_object_class_init (void)
   class->drawfunc  = d_draw_spiral;
   class->paintfunc = d_paint_spiral;
   class->copyfunc  = d_copy_spiral;
+  class->update    = d_update_spiral;
 }
 
-void
+static void
 d_update_spiral (GdkPoint *pnt)
 {
   DobjPoints *center_pnt;

@@ -43,8 +43,10 @@
 
 static gint poly_num_sides = 3; /* Default to three sided object */
 
-static void        d_draw_poly (GfigObject *obj);
-static GfigObject *d_copy_poly (GfigObject *obj);
+static void        d_draw_poly   (GfigObject *obj);
+static GfigObject *d_copy_poly   (GfigObject *obj);
+
+static void        d_update_poly (GdkPoint   *pnt);
 
 void
 tool_options_poly (GtkWidget *notebook)
@@ -488,9 +490,10 @@ d_poly_object_class_init (void)
   class->drawfunc  = d_draw_poly;
   class->paintfunc = d_paint_poly;
   class->copyfunc  = d_copy_poly;
+  class->update    = d_update_poly;
 }
 
-void
+static void
 d_update_poly (GdkPoint *pnt)
 {
   DobjPoints *center_pnt;

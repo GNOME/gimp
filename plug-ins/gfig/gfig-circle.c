@@ -40,11 +40,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static gint        calc_radius    (GdkPoint *center,
-                                   GdkPoint *edge);
-static void        d_draw_circle  (GfigObject *obj);
-static void        d_paint_circle (GfigObject *obj);
-static GfigObject *d_copy_circle  (GfigObject *obj);
+static gint        calc_radius     (GdkPoint *center,
+                                    GdkPoint *edge);
+static void        d_draw_circle   (GfigObject *obj);
+static void        d_paint_circle  (GfigObject *obj);
+static GfigObject *d_copy_circle   (GfigObject *obj);
+
+static void        d_update_circle (GdkPoint   *pnt);
 
 static gint
 calc_radius (GdkPoint *center, GdkPoint *edge)
@@ -157,9 +159,10 @@ d_circle_object_class_init (void)
   class->drawfunc  = d_draw_circle;
   class->paintfunc = d_paint_circle;
   class->copyfunc  = d_copy_circle;
+  class->update    = d_update_circle;
 }
 
-void
+static void
 d_update_circle (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *edge_pnt;

@@ -43,9 +43,11 @@
 
 static gint star_num_sides = 3; /* Default to three sided object */
 
-static void        d_draw_star  (GfigObject *obj);
-static void        d_paint_star (GfigObject *obj);
-static GfigObject *d_copy_star  (GfigObject * obj);
+static void        d_draw_star   (GfigObject *obj);
+static void        d_paint_star  (GfigObject *obj);
+static GfigObject *d_copy_star   (GfigObject *obj);
+
+static void        d_update_star (GdkPoint   *pnt);
 
 void
 tool_options_star (GtkWidget *notebook)
@@ -330,9 +332,10 @@ d_star_object_class_init (void)
   class->drawfunc  = d_draw_star;
   class->paintfunc = d_paint_star;
   class->copyfunc  = d_copy_star;
+  class->update    = d_update_star;
 }
 
-void
+static void
 d_update_star (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *inner_pnt, *outer_pnt;

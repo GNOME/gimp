@@ -295,7 +295,7 @@ gfig_preview_events (GtkWidget *widget,
 
       if (obj_creating)
         {
-          object_update (&point);
+          obj_creating->class->update (&point);
         }
       gfig_pos_update (point.x, point.y);
       break;

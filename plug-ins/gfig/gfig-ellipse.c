@@ -37,13 +37,14 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
-#include "gfig-poly.h"
 
 #include "libgimp/stdplugins-intl.h"
 
-static void        d_draw_ellipse  (GfigObject *obj);
-static void        d_paint_ellipse (GfigObject *obj);
-static GfigObject *d_copy_ellipse  (GfigObject *obj);
+static void        d_draw_ellipse   (GfigObject *obj);
+static void        d_paint_ellipse  (GfigObject *obj);
+static GfigObject *d_copy_ellipse   (GfigObject *obj);
+
+static void        d_update_ellipse (GdkPoint   *pnt);
 
 static void
 d_draw_ellipse (GfigObject * obj)
@@ -177,9 +178,10 @@ d_ellipse_object_class_init (void)
   class->drawfunc  = d_draw_ellipse;
   class->paintfunc = d_paint_ellipse;
   class->copyfunc  = d_copy_ellipse;
+  class->update    = d_update_ellipse;
 }
 
-void
+static void
 d_update_ellipse (GdkPoint *pnt)
 {
   DobjPoints *center_pnt, *edge_pnt;

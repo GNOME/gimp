@@ -42,9 +42,12 @@ typedef struct
 {
   DobjType      type;       /* the object type for this class */
   gchar        *name;
+
+  /* virtuals */
   DobjFunc      drawfunc;   /* How do I draw myself */
   DobjFunc      paintfunc;  /* Draw me on canvas */
   DobjGenFunc   copyfunc;   /* copy */
+  void         (*update) (GdkPoint   *pnt);
 } GfigObjectClass;
 
 GfigObjectClass dobj_class[10];
@@ -99,6 +102,11 @@ void        clear_undo               (void);
 void        new_obj_2edit            (GFigObj    *obj);
 
 void        gfig_init_object_classes (void);
+
+void        d_pnt_add_line           (GfigObject *obj,
+                                      gint        x,
+                                      gint        y,
+                                      gint        pos);
 
 #endif /* __GFIG_DOBJECT_H__ */
 
