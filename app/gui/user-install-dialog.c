@@ -55,9 +55,8 @@
 #  define USER_INSTALL "user_install.cmd"
 #  endif
 #else
-#  define STRICT
-#  include <windows.h>
-#  define USER_INSTALL "user_install.bat"
+#  include <io.h>
+#  define mkdir(path, mode) _mkdir(path)
 #endif
 
 #define NUM_PAGES    6
@@ -109,12 +108,21 @@ static GdkColor    black_color;
 static GdkColor    white_color;
 static GdkColor    title_color;
 
+typedef enum
+  {
+    TREE_ITEM_DONT,		/* Don't pre-create */
+    TREE_ITEM_MKDIR_ONLY,	/* Just mkdir */
+    TREE_ITEM_FROM_SYSCONF_DIR,	/* Copy from sysconf directory */
+    TREE_ITEM_FROM_DATA_DIR	/* ... from data directory */
+  } TreeItemType;
 
 static struct
 {
   gboolean  directory;
   gchar    *text;
   gchar    *description;
+  TreeItemType type;
+  gchar       *source_filename;	/* If NULL, use text */
 }
 tree_items[] =
 {
@@ -124,12 +132,14 @@ tree_items[] =
        "that affect GIMP's default behavior.\n"
        "Paths to search for brushes, palettes, gradients,\n"
        "patterns, plug-ins and modules can also configured\n"
-       "here.")
+       "here."),
+    TREE_ITEM_FROM_SYSCONF_DIR, "gimprc_user"
   },
   {
     FALSE, "gtkrc",
     N_("GIMP uses an additional gtkrc file so you can\n"
-       "configure it to look differently than other GTK apps.")
+       "configure it to look differently than other GTK apps."),
+    TREE_ITEM_FROM_SYSCONF_DIR, "gtkrc_user"
   },
   {
     FALSE, "pluginrc",
@@ -138,7 +148,8 @@ tree_items[] =
        "These programs are searched for at run-time and\n"
        "information about their functionality and mod-times\n"
        "is cached in this file.  This file is intended to\n"
-       "be GIMP-readable only, and should not be edited.")
+       "be GIMP-readable only, and should not be edited."),
+    TREE_ITEM_DONT, NULL
   },
   {
     FALSE, "menurc",
@@ -147,13 +158,15 @@ tree_items[] =
        "be remembered for the next session.  You may edit this\n"
        "file if you wish, but it is much easier to define the\n"
        "keys from within The GIMP.  Deleting this file will\n"
-       "restore the default shortcuts.")
+       "restore the default shortcuts."),
+    TREE_ITEM_DONT, NULL
   },
   {
     FALSE, "sessionrc",
     N_("The sessionrc is used to store what dialog windows were\n"
        "open the last time you quit The GIMP.  You can configure\n"
-       "The GIMP to reopen these dialogs at the saved position.")
+       "The GIMP to reopen these dialogs at the saved position."),
+    TREE_ITEM_DONT, NULL
   },
   {
     FALSE, "unitrc",
@@ -161,47 +174,54 @@ tree_items[] =
        "You can define additional units and use them just\n"
        "like you use the built-in units inches, millimeters,\n"
        "points and picas.  This file is overwritten each time\n"
-       "you quit the GIMP.")
+       "you quit the GIMP."),
+    TREE_ITEM_FROM_SYSCONF_DIR, NULL
   },
   {
     TRUE, "brushes",
     N_("This folder is used to store user defined brushes.\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP brushes installation when searching for\n"
-       "brushes.")
+       "brushes."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "generated_brushes",
     N_("This folder is used to store brushes that are created\n"
-       "with the brush editor.")
+       "with the brush editor."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "gradients",
     N_("This folder is used to store user defined gradients\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP gradients installation when searching for\n"
-       "gradients.")
+       "gradients."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "palettes",
     N_("This folder is used to store user defined palettes.\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP palettes installation when searching for\n"
-       "palettes.")
+       "palettes."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "patterns",
     N_("This folder is used to store user defined patterns.\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP patterns installation when searching for\n"
-       "patterns.")
+       "patterns."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "plug-ins",
     N_("This folder is used to store user created, temporary,\n"
        "or otherwise non-system-supported plug-ins.  The GIMP\n"
        "checks this folder in addition to the system-wide\n"
-       "GIMP plug-in folder when searching for plug-ins.")
+       "GIMP plug-in folder when searching for plug-ins."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "modules",
@@ -209,7 +229,8 @@ tree_items[] =
        "or otherwise non-system-supported DLL modules.  The\n"
        "GIMP checks this folder in addition to the system-wide\n"
        "GIMP module folder when searching for modules to load\n"
-       "during initialization.")
+       "during initialization."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "environ",
@@ -218,14 +239,16 @@ tree_items[] =
        "plug-in environment.  The GIMP checks this folder in\n"
        "addition to the system-wide GIMP environment folder\n"
        "when searching for plug-in environment modification\n"
-       "files.")
+       "files."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "scripts",
     N_("This folder is used to store user created and installed\n"
        "scripts.  The GIMP checks this folder in addition to\n"
        "the systemwide GIMP scripts folder when searching for\n"
-       "scripts.")
+       "scripts."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "tmp",
@@ -233,45 +256,52 @@ tree_items[] =
        "to reduce memory usage.  If The GIMP is unceremoniously\n"
        "killed, files of the form: gimp<#>.<#> may persist in\n"
        "this folder.  These files are useless across GIMP\n"
-       "sessions and can be destroyed with impunity.")
+       "sessions and can be destroyed with impunity."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "curves",
     N_("This folder is used to store parameter files for the\n"
-       "Curves tool.")
+       "Curves tool."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "levels",
     N_("This folder is used to store parameter files for the\n"
-       "Levels tool.")
+       "Levels tool."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "fractalexplorer",
     N_("This is folder used to store user defined fractals to\n"
        "be used by the FractalExplorer plug-in.  The GIMP\n"
        "checks this folder in addition to the systemwide\n"
-       "FractalExplorer installation when searching for fractals.")
+       "FractalExplorer installation when searching for fractals."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },  
   {
     TRUE, "gfig",
     N_("This folder is used to store user defined figures to\n"
        "be used by the GFig plug-in.  The GIMP checks this\n"
        "folder in addition to the systemwide GFig installation\n"
-       "when searching for gfig figures.")
+       "when searching for gfig figures."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "gflare",
     N_("This folder is used to store user defined gflares to\n"
        "be used by the GFlare plug-in.  The GIMP checks this\n"
        "folder in addition to the systemwide GFlares\n"
-       "installation when searching for gflares.")
+       "installation when searching for gflares."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "gimpressionist",
     N_("This folder is used to store user defined data to be\n"
        "used by the Gimpressionist plug-in.  The GIMP checks\n"
        "this folder in addition to the systemwide Gimpressionist\n"
-       "installation when searching for data.") 
+       "installation when searching for data."),
+    TREE_ITEM_MKDIR_ONLY, NULL
   }  
 };
 static gint num_tree_items = G_N_ELEMENTS (tree_items);
@@ -344,9 +374,6 @@ user_install_continue_callback (GtkWidget *widget,
       break;
 
     case 2:
-#ifdef G_OS_WIN32
-      FreeConsole ();
-#endif
       user_install_tuning (gimprc);
       break;
 
@@ -908,48 +935,65 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 
 #ifdef G_OS_WIN32
 
-static gchar *
-quote_spaces (const gchar *string)
+static gchar *install_error_message;
+
+static int
+copy_file (gchar *source,
+	   gchar *dest)
 {
-  const gchar *p;
-  gchar       *q;
-  gchar       *new;
-  gint         nspaces;
-  
-  for (p = string, nspaces = 0; *p; p++)
+  char buffer[4096];
+  FILE *sfile, *dfile;
+  int nbytes;
+
+  sfile = fopen (source, "rb");
+  if (sfile == NULL)
     {
-      if (*p == ' ')
-	nspaces++;
+      install_error_message = g_strdup_printf (_("Cannot open %s for reading"),
+					       source);
+      return -1;
     }
 
-  if (nspaces == 0)
-    return g_strdup (string);
+  dfile = fopen (dest, "wb");
+  if (dfile == NULL)
+    {
+      install_error_message = g_strdup_printf (_("Cannot open %s for writing"),
+					       dest);
+      fclose (sfile);
+      return -1;
+    }
 
-  new = g_new (gchar, strlen (string) + nspaces * 2 + 1);
+  while ((nbytes = fread (buffer, 1, sizeof (buffer), sfile)) > 0)
+    {
+      if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
+	{
+	  install_error_message = g_strdup_printf (_("Error while writing %s"),
+						   dest);
+	  fclose (sfile);
+	  fclose (dfile);
+	  return -1;
+	}
+    }
 
-  for (p = string, q = new; *p; p++)
-    if (*p == ' ')
-      {
-	*q++ = '"';
-	*q++ = ' ';
-	*q++ = '"';
-      }
-    else
-      {	  
-	*q++ = *p;
-      }
+  if (ferror (sfile))
+    {
+      install_error_message = g_strdup_printf (_("Error while reading %s"),
+					       source);
+      fclose (sfile);
+      fclose (dfile);
+      return -1;
+    }
 
-  *q = '\0';
-
-  return new;
+  fclose (sfile);
+  fclose (dfile);
+  return 0;
 }
 
 #endif
 
-
 static gboolean
 user_install_run (void)
 {
+#ifndef G_OS_WIN32
   FILE        *pfp;
   gchar       *filename = NULL;
   gchar       *command  = NULL;
@@ -987,49 +1031,6 @@ user_install_run (void)
 
   if (executable)
     {
-#ifdef G_OS_WIN32
-      gchar *quoted_data_dir, *quoted_user_dir, *quoted_sysconf_dir;
-
-      /* On Windows, it is common for the GIMP data directory
-       * to have spaces in it ("c:\Program Files\GIMP"). Put spaces in quotes.
-       */
-      quoted_data_dir    = quote_spaces (gimp_data_directory ());
-      quoted_user_dir    = quote_spaces (gimp_directory ());
-      quoted_sysconf_dir = quote_spaces (gimp_sysconf_directory ());
-
-      /* The Microsoft _popen doesn't work in Windows applications, sigh.
-       * Do the installation by calling system(). The user_install.bat
-       * ends with a pause command, so the user has to press enter in
-       * the console window to continue, and thus has a chance to read
-       * at the window contents.
-       */
-
-      AllocConsole ();
-
-      g_free (filename);
-
-      filename = g_build_filename (quoted_data_dir, "misc",
-                                   USER_INSTALL, NULL);
-
-      command = g_strdup_printf ("%s %s %s %s",
-                                 filename,
-                                 quoted_data_dir,
-                                 quoted_user_dir,
-                                 quoted_sysconf_dir);
-
-      g_free (quoted_data_dir);
-      g_free (quoted_user_dir);
-      g_free (quoted_sysconf_dir);
-
-      if (system (command) == -1)
-	executable = FALSE;
-
-      if (executable)
-	add_label (GTK_BOX (log_page),
-		   _("Did you notice any error messages in the console window?\n"
-		     "If not, installation was successful!\n"
-		     "Otherwise, quit and investigate the possible reason..."));
-#else
 #ifdef __EMX__
       command = g_strdup_printf ("cmd.exe /c %s %s %s %s",
                                  filename,
@@ -1098,7 +1099,6 @@ user_install_run (void)
         {
           executable = FALSE;
         }
-#endif /* !G_OS_WIN32 */
     }
 
   g_free (command);
@@ -1115,6 +1115,111 @@ user_install_run (void)
     }
 
   return executable;
+#else
+  GtkWidget *scrolled_window;
+  GtkTextBuffer *log_buffer;
+  GtkWidget *log_view;
+  gchar dest[1000];
+  gchar source[1000];
+  gchar log_line[1000];
+  gint i;
+  
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_window);
+
+  log_buffer = gtk_text_buffer_new (NULL);
+
+  log_view = gtk_text_view_new_with_buffer (log_buffer);
+  g_object_unref (log_buffer);
+  
+  PAGE_STYLE (log_view);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
+  
+  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
+  gtk_widget_show (log_view);
+  
+  for (i = 0; i < num_tree_items; i++)
+    {
+      if (i == 0)
+	{
+	  g_snprintf (log_line, sizeof (log_line), _("Creating directory %s\n"),
+		      gimp_directory ());
+	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+	  if (mkdir (gimp_directory (), 0666) == -1)
+	    {
+	      install_error_message = g_strdup_printf (_("Cannot create directory -- %s"),
+						       g_strerror (errno));
+	      goto break_out_of_loop;
+	    }
+	  gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
+	}
+      g_snprintf (dest, sizeof (dest), "%s%c%s",
+		  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].text);
+      switch (tree_items[i].type)
+	{
+	case TREE_ITEM_DONT:
+	  break;
+
+	case TREE_ITEM_MKDIR_ONLY:
+	  g_snprintf (log_line, sizeof (log_line), _("Creating directory %s\n"),
+		      dest);
+	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+	  if (mkdir (dest, 0666) == -1)
+	    {
+	      install_error_message = g_strdup_printf (_("Cannot create directory -- %s"),
+						       g_strerror (errno));
+	      goto break_out_of_loop;
+	    }
+	  break;
+
+	case TREE_ITEM_FROM_SYSCONF_DIR:
+	  g_snprintf (source, sizeof (source), "%s%c%s",
+		      gimp_sysconf_directory (), G_DIR_SEPARATOR,
+		      tree_items[i].source_filename ?
+		      tree_items[i].source_filename : tree_items[i].text);
+	  goto do_copy;
+
+	case TREE_ITEM_FROM_DATA_DIR:
+	  g_snprintf (source, sizeof (source), "%s%c%s",
+		      gimp_data_directory (), G_DIR_SEPARATOR,
+		      tree_items[i].source_filename ?
+		      tree_items[i].source_filename : tree_items[i].text);
+	do_copy:
+	  g_assert (!tree_items[i].directory);
+	  g_snprintf (log_line, sizeof (log_line), _("Copying file %s from %s\n"),
+		      dest, source);
+	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+	  if (copy_file (source, dest) == -1)
+	    goto break_out_of_loop;
+
+	  break;
+
+	default:
+	  g_assert_not_reached ();
+	}
+      if (tree_items[i].type != TREE_ITEM_DONT)
+	gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
+    }
+
+ break_out_of_loop:
+
+  if (i < num_tree_items)
+    {
+      g_snprintf (log_line, sizeof (log_line), _("  Failure -- %s\n"),
+		  install_error_message);
+      gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+      add_label (GTK_BOX (log_page),
+		 _("Installation failed.  Contact system administrator."));
+      return FALSE;
+    }
+
+  return TRUE;
+#endif
 }
 
 static void

@@ -2,6 +2,11 @@
 
 	* app/Makefile.am (EXTRA_DIST): Drop makefile.mingw{,.in}.
 
+	* app/gui/user-install-dialog.c (user_install_run): On Win32, use
+	similar code as in GIMP 1.2, i.e. don't run a script to do the
+	mkdirs and copying, but do it ourselves. Markup the tree_items
+	elements accordingly to direct the action.
+
 	* libgimp/gimp.c: Define LIBGIMP_COMPILATION.
 	(gimp_main) [Win32] Use g_ascii_strcasecmp().
 
