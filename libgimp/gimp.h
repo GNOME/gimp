@@ -38,9 +38,10 @@
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
-#include <libgimp/gimpmisc.h>
 #include <libgimp/gimppatternselect.h>
+#include <libgimp/gimppixelfetcher.h>
 #include <libgimp/gimppixelrgn.h>
+#include <libgimp/gimpregioniterator.h>
 #include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>

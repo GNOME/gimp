@@ -173,14 +173,16 @@ libgimp_1_3_la_SOURCES = \
 	gimpimage.h		\
 	gimplayer.c		\
 	gimplayer.h		\
-	gimpmisc.c		\
-	gimpmisc.h		\
 	gimppatternselect.c	\
 	gimppatternselect.h	\
+	gimppixelfetcher.c	\
+	gimppixelfetcher.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
 	gimpproceduraldb.c	\
 	gimpproceduraldb.h	\
+	gimpregioniterator.c	\
+	gimpregioniterator.h	\
 	gimpselection.c		\
 	gimpselection.h		\
 	gimptile.c		\
@@ -220,10 +222,11 @@ gimpinclude_HEADERS = \
 	gimpgradientselect.h	\
 	gimpimage.h		\
 	gimplayer.h		\
-	gimpmisc.h		\
 	gimppatternselect.h	\
+	gimppixelfetcher.h	\
 	gimppixelrgn.h		\
 	gimpproceduraldb.h	\
+	gimpregioniterator.h	\
 	gimpselection.h		\
 	gimptile.h		\
 	\
