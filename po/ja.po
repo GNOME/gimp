@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-09-08 17:05+0900\n"
-"PO-Revision-Date: 1999-08-30 00:53+0900\n"
+"POT-Creation-Date: 1999-09-09 13:32+0900\n"
+"PO-Revision-Date: 1999-09-09 14:00+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,16 +37,16 @@ msgstr "Spencer Kimball と Peter Mattis"
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "詳しくは http://www.gimp.org/ を見て下さい"
 
-#: app/airbrush.c:129
+#: app/airbrush.c:131
 msgid "Rate:"
 msgstr "割合:"
 
 #. the pressure scale
-#: app/airbrush.c:147 app/convolve.c:153 app/smudge.c:118
+#: app/airbrush.c:149 app/convolve.c:154 app/smudge.c:119
 msgid "Pressure:"
 msgstr "圧力:"
 
-#: app/airbrush.c:209
+#: app/airbrush.c:211
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr "偶発タイマーを停止しました, lewing@gimp.org まで報告して下さい."
 
@@ -428,7 +428,7 @@ msgid "Brush Editor"
 msgstr "ブラシエディタ"
 
 #. brush radius scale
-#: app/brush_edit.c:277 app/color_picker.c:179 app/tool_options.c:285
+#: app/brush_edit.c:277 app/color_picker.c:179 app/tool_options.c:288
 msgid "Radius:"
 msgstr "半径:"
 
@@ -461,12 +461,12 @@ msgid "Active"
 msgstr "有効"
 
 #. Create the opacity scale widget
-#: app/brush_select.c:304 app/layers_dialog.c:386 app/tool_options.c:599
+#: app/brush_select.c:304 app/layers_dialog.c:386 app/tool_options.c:603
 msgid "Opacity:"
 msgstr "不透明度:"
 
 #. Create the paint mode option menu
-#: app/brush_select.c:322 app/layers_dialog.c:360 app/tool_options.c:629
+#: app/brush_select.c:322 app/layers_dialog.c:360 app/tool_options.c:633
 msgid "Mode:"
 msgstr "モード:"
 
@@ -513,7 +513,7 @@ msgstr "背景色塗り"
 msgid "Pattern Fill"
 msgstr "パターン塗り"
 
-#: app/bucket_fill.c:152 app/color_picker.c:154 app/tool_options.c:359
+#: app/bucket_fill.c:152 app/color_picker.c:154 app/tool_options.c:362
 msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
@@ -539,7 +539,7 @@ msgstr "置換"
 msgid "Add"
 msgstr "追加"
 
-#: app/by_color_select.c:544 app/layers_dialog.c:243 app/tool_options.c:839
+#: app/by_color_select.c:544 app/layers_dialog.c:243 app/tool_options.c:999
 msgid "Subtract"
 msgstr "減算"
 
@@ -775,7 +775,7 @@ msgstr "画像源"
 msgid "Alignment"
 msgstr "位置揃え"
 
-#: app/clone.c:320
+#: app/clone.c:322
 msgid "No patterns available for this operation."
 msgstr "有効なパターンがありません."
 
@@ -787,15 +787,15 @@ msgstr "カラーバランスオプション"
 msgid "Color balance operates only on RGB color drawables."
 msgstr "カラーバランスは RGB 描画対象にのみ有効です"
 
-#: app/color_balance.c:282 app/dodgeburn.c:125
+#: app/color_balance.c:282 app/dodgeburn.c:128
 msgid "Shadows"
 msgstr "影"
 
-#: app/color_balance.c:283 app/dodgeburn.c:124
+#: app/color_balance.c:283 app/dodgeburn.c:127
 msgid "Midtones"
 msgstr "中間色"
 
-#: app/color_balance.c:284 app/dodgeburn.c:123
+#: app/color_balance.c:284 app/dodgeburn.c:126
 msgid "Highlights"
 msgstr "ハイライト"
 
@@ -1029,15 +1029,15 @@ msgstr ""
 "アニメ GIF 形式のファイルを作成する場合には\n"
 "256 色以上のパレットを生成してはいけません。"
 
-#: app/convolve.c:135
+#: app/convolve.c:136
 msgid "Blur"
 msgstr "ぼかす"
 
-#: app/convolve.c:135
+#: app/convolve.c:136
 msgid "Sharpen"
 msgstr "明確化"
 
-#: app/convolve.c:170
+#: app/convolve.c:171
 msgid "Convolve Type"
 msgstr "操作の種類"
 
@@ -1087,13 +1087,13 @@ msgstr "開始点 の X:"
 
 #. the pixel size labels
 #: app/crop.c:1052 app/file_new_dialog.c:451 app/file_new_dialog.c:469
-#: app/tool_options.c:406
+#: app/tool_options.c:409
 msgid "Width:"
 msgstr "幅:"
 
 #: app/crop.c:1055 app/file_new_dialog.c:457 app/file_new_dialog.c:475
 #: app/layers_dialog.c:3357 app/resize.c:246 app/resize.c:271 app/resize.c:515
-#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:428
+#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:431
 msgid "Height:"
 msgstr "高さ:"
 
@@ -1110,7 +1110,7 @@ msgid "Curves Options"
 msgstr "カーブオプション"
 
 #: app/curves.c:414 app/histogram_tool.c:278 app/layers_dialog.c:255
-#: app/levels.c:243 app/paint_funcs.c:96 app/tool_options.c:845
+#: app/levels.c:243 app/paint_funcs.c:96 app/tool_options.c:1005
 msgid "Value"
 msgstr "明度"
 
@@ -1225,25 +1225,25 @@ msgstr "文書目次"
 msgid "GTK successfully started"
 msgstr "GTK 起動成功"
 
-#: app/dodgeburn.c:120
+#: app/dodgeburn.c:123
 msgid "Dodge"
 msgstr "覆い焼き"
 
-#: app/dodgeburn.c:120
+#: app/dodgeburn.c:123
 msgid "Burn"
 msgstr "焼き込み"
 
-#: app/dodgeburn.c:148
+#: app/dodgeburn.c:151
 msgid "Exposure:"
 msgstr "露出:"
 
 #. the type (dodge or burn)
-#: app/dodgeburn.c:168 app/ink.c:418
+#: app/dodgeburn.c:171 app/ink.c:418
 msgid "Type"
 msgstr "種類"
 
 #. mode (highlights, midtones, or shadows)
-#: app/dodgeburn.c:179
+#: app/dodgeburn.c:182
 msgid "Mode"
 msgstr "モード"
 
@@ -1264,12 +1264,12 @@ msgid "Equalize does not operate on indexed drawables."
 msgstr "平均化処理はインデックス描画対象にはできません."
 
 #. the hard toggle
-#: app/eraser.c:106
+#: app/eraser.c:107
 msgid "Hard edge"
 msgstr "ハードエッジ"
 
 #. the anti_erase toggle
-#: app/eraser.c:116
+#: app/eraser.c:117
 msgid "Anti erase"
 msgstr "あぶり出し"
 
@@ -2052,7 +2052,7 @@ msgstr "%s に書き込めません; %s"
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:458
+#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:463
 #: libgimp/gimpunit.c:44
 msgid "pixels"
 msgstr "ピクセル"
@@ -2189,7 +2189,7 @@ msgstr "grad_get_color_at(): 不明な混色モード %d"
 msgid "Gradient Editor"
 msgstr "グラデーションエディタ"
 
-#: app/gradient.c:730 app/gradient_select.c:478 app/paintbrush.c:211
+#: app/gradient.c:730 app/gradient_select.c:478 app/paintbrush.c:212
 #: app/palette.c:2895
 msgid "Gradient"
 msgstr "グラデーション"
@@ -2644,7 +2644,7 @@ msgstr "色相 / 明度 / 彩度 調整"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:466 app/layers_dialog.c:249 app/paint_funcs.c:93
-#: app/tool_options.c:842
+#: app/tool_options.c:1002
 msgid "Hue"
 msgstr "色相"
 
@@ -2655,7 +2655,7 @@ msgstr "明度"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:534 app/layers_dialog.c:251 app/paint_funcs.c:94
-#: app/tool_options.c:843
+#: app/tool_options.c:1003
 msgid "Saturation"
 msgstr "彩度"
 
@@ -2777,7 +2777,7 @@ msgstr "大きさ (幅 x 高さ):"
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: app/info_window.c:306 app/tool_options.c:450
+#: app/info_window.c:306 app/tool_options.c:453
 msgid "Unit:"
 msgstr "単位:"
 
@@ -3188,7 +3188,7 @@ msgid "Channel Ops"
 msgstr "チャンネル操作"
 
 #: app/internal_procs.c:79 app/layers_dialog.c:253 app/paint_funcs.c:95
-#: app/tool_options.c:844
+#: app/tool_options.c:895 app/tool_options.c:1004
 msgid "Color"
 msgstr "色"
 
@@ -3333,43 +3333,43 @@ msgstr "%s マスク"
 msgid "Layer Select"
 msgstr "レイヤー選択"
 
-#: app/layers_dialog.c:227 app/paint_funcs.c:82 app/tool_options.c:830
+#: app/layers_dialog.c:227 app/paint_funcs.c:82 app/tool_options.c:990
 msgid "Normal"
 msgstr "標準"
 
-#: app/layers_dialog.c:229 app/paint_funcs.c:83 app/tool_options.c:831
+#: app/layers_dialog.c:229 app/paint_funcs.c:83 app/tool_options.c:991
 msgid "Dissolve"
 msgstr "消散"
 
-#: app/layers_dialog.c:231 app/paint_funcs.c:85 app/tool_options.c:833
+#: app/layers_dialog.c:231 app/paint_funcs.c:85 app/tool_options.c:993
 msgid "Multiply (Burn)"
 msgstr "乗算"
 
-#: app/layers_dialog.c:233 app/paint_funcs.c:97 app/tool_options.c:834
+#: app/layers_dialog.c:233 app/paint_funcs.c:97 app/tool_options.c:994
 msgid "Divide (Dodge)"
 msgstr "除算"
 
-#: app/layers_dialog.c:235 app/paint_funcs.c:86 app/tool_options.c:835
+#: app/layers_dialog.c:235 app/paint_funcs.c:86 app/tool_options.c:995
 msgid "Screen"
 msgstr "スクリーン"
 
-#: app/layers_dialog.c:237 app/paint_funcs.c:87 app/tool_options.c:836
+#: app/layers_dialog.c:237 app/paint_funcs.c:87 app/tool_options.c:996
 msgid "Overlay"
 msgstr "オーバーレイ"
 
-#: app/layers_dialog.c:239 app/paint_funcs.c:88 app/tool_options.c:837
+#: app/layers_dialog.c:239 app/paint_funcs.c:88 app/tool_options.c:997
 msgid "Difference"
 msgstr "差分"
 
-#: app/layers_dialog.c:241 app/paint_funcs.c:89 app/tool_options.c:838
+#: app/layers_dialog.c:241 app/paint_funcs.c:89 app/tool_options.c:998
 msgid "Addition"
 msgstr "加算"
 
-#: app/layers_dialog.c:245 app/paint_funcs.c:91 app/tool_options.c:840
+#: app/layers_dialog.c:245 app/paint_funcs.c:91 app/tool_options.c:1000
 msgid "Darken Only"
 msgstr "比較(暗)"
 
-#: app/layers_dialog.c:247 app/paint_funcs.c:92 app/tool_options.c:841
+#: app/layers_dialog.c:247 app/paint_funcs.c:92 app/tool_options.c:1001
 msgid "Lighten Only"
 msgstr "比較(明)"
 
@@ -4380,15 +4380,15 @@ msgstr "移動ツールオプション"
 msgid "%s: Window Navigation"
 msgstr "%s: ウィンドウなび"
 
-#: app/paint_core.c:671
+#: app/paint_core.c:676
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
-#: app/paint_core.c:1682
+#: app/paint_core.c:1763
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles が null だ"
 
-#: app/paint_funcs.c:84 app/tool_options.c:832
+#: app/paint_funcs.c:84 app/tool_options.c:992
 msgid "Behind"
 msgstr "後ろ"
 
@@ -4420,16 +4420,16 @@ msgstr "鋸歯繰り返し"
 msgid "Loop Triangle"
 msgstr "三角波繰り返し"
 
-#: app/paintbrush.c:192
+#: app/paintbrush.c:193
 msgid "Fade Out:"
 msgstr "フェードアウト:"
 
-#: app/paintbrush.c:219
+#: app/paintbrush.c:220
 msgid "Length:"
 msgstr "長さ:"
 
 #. the gradient type
-#: app/paintbrush.c:244
+#: app/paintbrush.c:245
 msgid "Type:"
 msgstr "種類:"
 
@@ -4745,10 +4745,6 @@ msgstr "GIMP パターンファイル中に問題がある...中断."
 #: app/patterns.c:273
 msgid "GIMP pattern file appears to be truncated."
 msgstr "GIMP パターンファイルが切り詰められています."
-
-#: app/pencil.c:112
-msgid "Use Pressure"
-msgstr "圧力検知"
 
 #: app/perspective_tool.c:60
 msgid "Perspective Transform Information"
@@ -5421,7 +5417,7 @@ msgstr "選択: "
 msgid "Scale Layer"
 msgstr "レイヤー拡大縮小"
 
-#: app/resize.c:161 app/resize.c:182
+#: app/resize.c:161 app/resize.c:182 app/tool_options.c:875
 msgid "Size"
 msgstr "大きさ"
 
@@ -5539,7 +5535,7 @@ msgstr ""
 msgid "Text Tool Options"
 msgstr "文字ツールオプション"
 
-#: app/text_tool.c:168 app/tool_options.c:318
+#: app/text_tool.c:168 app/tool_options.c:321
 msgid "Antialiasing"
 msgstr "アンチエイリアシング"
 
@@ -5654,105 +5650,117 @@ msgstr ""
 "データディレクトリにあるはずです. GIMP が正しく\n"
 "インストールされているか確認してください. "
 
-#: app/tool_options.c:207
+#: app/tool_options.c:210
 msgid "This tool has no options."
 msgstr "このツールにはオプションはありません."
 
-#: app/tool_options.c:231
+#: app/tool_options.c:234
 msgid "Rectangular Select Options"
 msgstr "矩形選択オプション"
 
-#: app/tool_options.c:233
+#: app/tool_options.c:236
 msgid "Elliptical Selection Options"
 msgstr "楕円形選択オプション"
 
-#: app/tool_options.c:235
+#: app/tool_options.c:238
 msgid "Free-hand Selection Options"
 msgstr "自由選択オプション"
 
-#: app/tool_options.c:237
+#: app/tool_options.c:240
 msgid "Fuzzy Selection Options"
 msgstr "ファジー選択オプション"
 
-#: app/tool_options.c:239
+#: app/tool_options.c:242
 msgid "Bezier Selection Options"
 msgstr "ベジエ選択オプション"
 
-#: app/tool_options.c:241
+#: app/tool_options.c:244
 msgid "Intelligent Scissors Options"
 msgstr "電脳ばさみオプション"
 
-#: app/tool_options.c:243
+#: app/tool_options.c:246
 msgid "By-Color Select Options"
 msgstr "色で選択オプション"
 
-#: app/tool_options.c:244
+#: app/tool_options.c:247
 msgid "ERROR: Unknown Selection Type"
 msgstr "エラー: 不明な選択種"
 
-#: app/tool_options.c:274
+#: app/tool_options.c:277
 msgid "Feather"
 msgstr "ぼかす"
 
-#: app/tool_options.c:382
+#: app/tool_options.c:385
 msgid "Fixed size / aspect ratio"
 msgstr "固定サイズ / 縦横比"
 
-#: app/tool_options.c:553
+#: app/tool_options.c:556
 msgid "Bucket Fill Options"
 msgstr "塗りつぶしオプション"
 
-#: app/tool_options.c:555
+#: app/tool_options.c:558
 msgid "Blend Options"
 msgstr "ブレンドオプション"
 
-#: app/tool_options.c:557
+#: app/tool_options.c:560
 msgid "Pencil Options"
 msgstr "鉛筆オプション"
 
-#: app/tool_options.c:559
+#: app/tool_options.c:562
 msgid "Paintbrush Options"
 msgstr "絵筆オプション"
 
-#: app/tool_options.c:561
+#: app/tool_options.c:564
 msgid "Erazer Options"
 msgstr "消しゴムオプション"
 
-#: app/tool_options.c:563
+#: app/tool_options.c:566
 msgid "Airbrush Options"
 msgstr "エアブラシオプション"
 
-#: app/tool_options.c:565
+#: app/tool_options.c:568
 msgid "Clone Tool Options"
 msgstr "スタンプオプション"
 
-#: app/tool_options.c:567
+#: app/tool_options.c:570
 msgid "Convolver Options"
 msgstr "色混ぜオプション"
 
-#: app/tool_options.c:569
+#: app/tool_options.c:572
 msgid "Ink Options"
 msgstr "インクオプション"
 
-#: app/tool_options.c:571
+#: app/tool_options.c:574
 msgid "Dodge or Burn Options"
 msgstr "暗室オプション"
 
-#: app/tool_options.c:573
+#: app/tool_options.c:576
 msgid "Smudge Options"
 msgstr "にじみオプション"
 
-#: app/tool_options.c:575
+#: app/tool_options.c:578
 msgid "Xinput Airbrush Options"
 msgstr "Xinput エアブラシオプション"
 
-#: app/tool_options.c:576
+#: app/tool_options.c:579
 msgid "ERROR: Unknown Paint Type"
 msgstr "エラー: 不明な塗り種"
 
-#: app/tool_options.c:699
+#: app/tool_options.c:703
 msgid "Incremental"
 msgstr "重ね塗り"
+
+#: app/tool_options.c:811
+msgid "Pressure sensitivity"
+msgstr "圧力感度"
+
+#: app/tool_options.c:829
+msgid "Opacity"
+msgstr "不透明度"
+
+#: app/tool_options.c:851
+msgid "Pressure"
+msgstr "圧力"
 
 #: app/tools.c:83
 msgid "Rect Select"
@@ -6054,7 +6062,7 @@ msgstr "/道具/Xinput エアブラシ"
 
 #: app/tools.c:508
 msgid "Natural Airbrush"
-msgstr "ナチュラルエアブラシ"
+msgstr "自然なエアブラシ"
 
 #: app/tools.c:520
 msgid "By Color Select"
@@ -6338,6 +6346,9 @@ msgstr ") もしくは \\) が対応していません"
 #: app/regex.c:5442
 msgid "No previous regular expression"
 msgstr "まだ正規表現が使用されていません"
+
+#~ msgid "Use Pressure"
+#~ msgstr "圧力検知"
 
 #~ msgid "/Image/Transforms"
 #~ msgstr "/画像/変形"
