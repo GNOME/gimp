@@ -2,6 +2,16 @@
 
 	Merged from HEAD branch:
 
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_constructor): disable search for tree
+	views so that treeview typeahead doesn't collide with global
+	accelerators. Fixes bug #169339 and would suck less if bug #170435
+	was fixed.
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/winicon/icosave.c (ico_create_palette): fixed parameter
 	check, NULL is valid for an empty palette. Fixes bug #170812.
 

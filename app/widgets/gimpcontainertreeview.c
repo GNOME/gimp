@@ -226,9 +226,9 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view->view = g_object_new (GTK_TYPE_TREE_VIEW,
                                   "model",           list,
-                                  "search_column",   COLUMN_NAME,
-                                  "enable_search",   TRUE,
-                                  "headers_visible", FALSE,
+                                  "search-column",   COLUMN_NAME,
+                                  "enable-search",   FALSE,
+                                  "headers-visible", FALSE,
                                   NULL);
   g_object_unref (list);
 
