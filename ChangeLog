@@ -1,3 +1,8 @@
+2000-05-09  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: tRNS expansion using transforms for
+	the RGB and Grayscale cases, for Steven Grady
+
 2000-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/errors.c (gimp_fatal_error): oops, forgot a debugging

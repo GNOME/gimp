@@ -60,7 +60,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.3.1 - 25 April 2000"
+#define PLUG_IN_VERSION  "1.3.2 - 9 May 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -429,6 +429,10 @@ load_image (gchar *filename)	/* I - File to load */
   * Latest attempt, this should be my best yet :)
   */
 
+  if (info->bit_depth == 16) {
+    png_set_strip_16(pp);
+  }
+
   if (info->color_type == PNG_COLOR_TYPE_GRAY && info->bit_depth < 8) {
     png_set_expand(pp);
   }
@@ -437,8 +441,13 @@ load_image (gchar *filename)	/* I - File to load */
     png_set_packing(pp);
   }
 
-  if (info->bit_depth == 16) {
-    png_set_strip_16(pp);
+ /*
+  * Expand G+tRNS to GA, RGB+tRNS to RGBA
+  */
+
+  if (info->color_type != PNG_COLOR_TYPE_PALETTE &&
+                       (info->valid & PNG_INFO_tRNS)) {
+    png_set_expand(pp);
   }
 
  /*
