@@ -2,12 +2,11 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.14\n"
 "POT-Creation-Date: Sun Jan 20 10:39:21 2002\n"
-"PO-Revision-Date: 2000-06-07 17:00+0300\n"
+"PO-Revision-Date: 2002-08-28 15:30+0200\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
