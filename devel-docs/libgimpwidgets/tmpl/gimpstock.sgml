@@ -376,9 +376,16 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_INDEXED_PALETTE ##### -->
+<para>
+<inlinegraphic fileref="stock-indexed-palette-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-indexed-palette-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SELECTION ##### -->
 <para>
-<inlinegraphic fileref="stock-selection-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-selection-16.png" format="png"></inlinegraphic>
 </para>
 
@@ -716,6 +723,13 @@ size).
 <!-- ##### MACRO GIMP_STOCK_SWAP_COLORS ##### -->
 <para>
 <inlinegraphic fileref="stock-swap-colors-12.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_UNDO_HISTORY ##### -->
+<para>
+<inlinegraphic fileref="stock-undo-history-24.png" format="png"></inlinegraphic><inlinegraphic fileref="stock-undo-history-16.png" format="png"></inlinegraphic>
 </para>
 
 
