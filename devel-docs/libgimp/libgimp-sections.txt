@@ -31,6 +31,7 @@ gimp_use_xshm
 gimp_color_cube
 gimp_min_colors
 gimp_get_progname
+set_gimp_PLUG_IN_INFO_PTR
 </SECTION>
 
 <SECTION>
