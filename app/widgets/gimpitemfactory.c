@@ -70,6 +70,9 @@ static gchar *menu_translate        (const gchar          *path,
 static void   tearoff_cmd_callback  (GtkWidget            *widget,
 				     gpointer              callback_data,
 				     guint                 callback_action);
+static gint   tearoff_delete_cb     (GtkWidget		  *widget, 
+    				     GdkEvent		  *event,
+				     gpointer		   data);
 
 static void   menus_debug_recurse_menu (GtkWidget *menu,
 					gint       depth,

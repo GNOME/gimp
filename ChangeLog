@@ -1,3 +1,7 @@
+2000-08-14  Daniel Egger  <egger@suse.de>
+
+	* app/menus.c: Added missing tearoff_delete_cb prototype.
+
 2000-08-10  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	* tools/pdbgen/enumcode-py.pl: 
