@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-utils.h"
+
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
 

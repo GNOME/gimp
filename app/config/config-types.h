@@ -23,6 +23,9 @@
 #define __CONFIG_TYPES_H__
 
 
+#include "libgimpconfig/gimpconfigtypes.h"
+
+
 typedef struct _GimpBaseConfig       GimpBaseConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
 typedef struct _GimpDisplayConfig    GimpDisplayConfig;

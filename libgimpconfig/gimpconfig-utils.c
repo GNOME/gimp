@@ -25,10 +25,13 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "gimpconfigtypes.h"
+
 #include "gimpconfigwriter.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-utils.h"
+
 
 static gboolean
 gimp_config_diff_property (GObject    *a,

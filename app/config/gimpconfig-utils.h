@@ -19,14 +19,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_UTILS_H__
-#define __GIMP_CONFIG_UTILS_H__
+#ifndef __APP_GIMP_CONFIG_UTILS_H__
+#define __APP_GIMP_CONFIG_UTILS_H__
 
 
-void       gimp_config_connect               (GObject      *a,
-                                              GObject      *b,
-                                              const gchar  *property_name);
-void       gimp_config_disconnect            (GObject      *a,
-                                              GObject      *b);
+void   gimp_config_connect    (GObject     *a,
+                               GObject     *b,
+                               const gchar *property_name);
+void   gimp_config_disconnect (GObject     *a,
+                               GObject     *b);
 
-#endif  /* __GIMP_CONFIG_UTILS_H__ */
+
+#endif  /* __APP_GIMP_CONFIG_UTILS_H__ */

@@ -21,7 +21,7 @@
  */
 
 #ifndef __GIMP_CONFIG_IFACE_H__
-#define __GIMP_CONFIG__IFACE_H__
+#define __GIMP_CONFIG_IFACE_H__
 
 
 #define GIMP_TYPE_CONFIG               (gimp_config_interface_get_type ())
@@ -29,8 +29,6 @@
 #define GIMP_CONFIG(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONFIG, GimpConfig))
 #define GIMP_CONFIG_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG, GimpConfigInterface))
 
-
-typedef struct _GimpConfig          GimpConfig; /* dummy typedef */
 
 typedef struct _GimpConfigInterface GimpConfigInterface;
 

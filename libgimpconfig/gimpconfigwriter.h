@@ -23,8 +23,6 @@
 #ifndef __GIMP_CONFIG_WRITER_H__
 #define __GIMP_CONFIG_WRITER_H__
 
-typedef struct _GimpConfigWriter     GimpConfigWriter;
-
 
 GimpConfigWriter * gimp_config_writer_new_file     (const gchar       *filename,
                                                     gboolean           atomic,

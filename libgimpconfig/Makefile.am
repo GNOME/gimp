@@ -40,13 +40,7 @@ endif
 libgimpconfigincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpconfig
 
 AM_CPPFLAGS = \
-	-DPREFIX=\""$(prefix)"\"		\
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DLOCALEDIR=\""$(localedir)"\"		\
-	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
-	-DG_LOG_DOMAIN=\"LibGimpConfig\"		\
+	-DG_LOG_DOMAIN=\"LibGimpConfig\"	\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
@@ -60,14 +54,9 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpconfig-2.0.la
 
-# help `make' along by giving another name for the file, which it knows
-# how to build
-../libgimpconfig/gimpversion.h: gimpversion.h
-	@:
-
-
 libgimpconfig_sources = 		\
 	gimpconfig.h			\
+	gimpconfigtypes.h		\
 	gimpconfig-iface.c		\
 	gimpconfig-iface.h		\
 	gimpconfig-deserialize.c	\
@@ -94,6 +83,7 @@ libgimpconfig_2_0_la_SOURCES = $(libgimpconfig_sources) $(libgimpconfig_built_so
 
 libgimpconfiginclude_HEADERS = \
 	gimpconfig.h			\
+	gimpconfigtypes.h		\
 	gimpconfig-iface.h		\
 	gimpconfig-deserialize.h	\
 	gimpconfig-error.h		\

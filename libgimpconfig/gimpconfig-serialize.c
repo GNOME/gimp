@@ -27,6 +27,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "gimpconfigtypes.h"
+
 #include "gimpconfigwriter.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"

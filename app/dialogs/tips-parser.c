@@ -23,7 +23,7 @@
 
 #include <string.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "config/config-types.h"
 #include "config/gimpxmlparser.h"

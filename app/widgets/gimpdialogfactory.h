@@ -23,7 +23,6 @@
 #define __GIMP_DIALOG_FACTORY_H__
 
 
-#include "libgimpconfig/gimpconfig.h"
 #include "core/gimpobject.h"
 
 #define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"

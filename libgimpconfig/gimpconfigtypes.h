@@ -1,5 +1,8 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
+ * Config file serialization and deserialization interface
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,21 +20,15 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONFIG_H__
-#define __GIMP_CONFIG_H__
+#ifndef __GIMP_CONFIG_TYPES_H__
+#define __GIMP_CONFIG_TYPES_H__
 
 
-#include <libgimpconfig/gimpconfigtypes.h>
-
-#include <libgimpconfig/gimpconfigwriter.h>
-#include <libgimpconfig/gimpconfig-iface.h>
-#include <libgimpconfig/gimpconfig-error.h>
-#include <libgimpconfig/gimpconfig-serialize.h>
-#include <libgimpconfig/gimpconfig-deserialize.h>
-#include <libgimpconfig/gimpconfig-utils.h>
-#include <libgimpconfig/gimpconfig-params.h>
-#include <libgimpconfig/gimpconfig-path.h>
-#include <libgimpconfig/gimpscanner.h>
+#include <libgimpbase/gimpbasetypes.h>
 
 
-#endif  /* __GIMP_CONFIG_H__ */
+typedef struct _GimpConfig       GimpConfig; /* dummy typedef */
+typedef struct _GimpConfigWriter GimpConfigWriter;
+
+
+#endif  /* __GIMP_CONFIG_TYPES_H__ */

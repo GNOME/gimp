@@ -27,6 +27,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "gimpconfigtypes.h"
+
 #include "gimpconfigwriter.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-deserialize.h"

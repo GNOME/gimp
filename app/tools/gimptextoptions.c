@@ -27,6 +27,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
