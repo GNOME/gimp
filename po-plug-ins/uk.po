@@ -4774,7 +4774,7 @@ msgstr ""
 
 #: plug-ins/common/plasma.c:290
 msgid "Plasma"
-msgstr ""
+msgstr "Плазма"
 
 #: plug-ins/common/plasma.c:328 plug-ins/common/spheredesigner.c:2429
 msgid "Turbulence:"
@@ -4782,31 +4782,31 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:44
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Внутр╕шня процедура GIMP"
 
 #: plug-ins/common/plugindetails.c:45
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "Доповнення GIMP"
 
 #: plug-ins/common/plugindetails.c:46
 msgid "GIMP Extension"
-msgstr ""
+msgstr "Розширення GIMP"
 
 #: plug-ins/common/plugindetails.c:47
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Тимчасова процедура"
 
 #: plug-ins/common/plugindetails.c:98
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr ""
+msgstr "<Toolbox>/Додаткове/Подробиц╕ доповнення..."
 
 #: plug-ins/common/plugindetails.c:213
 msgid "Details <<"
-msgstr ""
+msgstr "Подробиц╕ <<"
 
 #: plug-ins/common/plugindetails.c:224 plug-ins/common/plugindetails.c:1109
 msgid "Details >>"
-msgstr ""
+msgstr "Подробиц╕ >>"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:312
@@ -6039,15 +6039,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:71
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr ""
+msgstr "<Toolbox>/Додатково/Редактор одиниць..."
 
 #: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
 msgid "New Unit"
-msgstr ""
+msgstr "Нови одиниця"
 
 #: plug-ins/common/uniteditor.c:193
 msgid "ID:"
-msgstr ""
+msgstr "╤дентиф╕катор:"
 
 #: plug-ins/common/uniteditor.c:205
 msgid "Factor:"
@@ -6810,12 +6810,12 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr ""
+msgstr "<Toolbox>/Додатково/Перегляд БД..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:147
 #: plug-ins/dbbrowser/dbbrowser_utils.c:166
 msgid "DB Browser (init...)"
-msgstr ""
+msgstr "Перегляд БД (╕н╕ц╕ал╕зац╕я...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:154
 #: plug-ins/dbbrowser/dbbrowser_utils.c:173
@@ -7217,19 +7217,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
-msgstr ""
+msgstr "<Image>/В╕део/Розбити в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr ""
+msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Image>/В╕део/Розбити в╕део на кадри/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
 #: plug-ins/gap/gap_range_ops.c:1200
@@ -7418,7 +7418,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:296
 msgid "Split any Xanim readable Video to Frames"
-msgstr ""
+msgstr "Розбити будь-яке зчитуване Xanim в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_xanim.c:539
 #, c-format
@@ -7553,11 +7553,11 @@ msgstr "<Image>/Ф╕льтри/Ф╕льтрувати вс╕ шари..."
 
 #: plug-ins/gap/gap_frontends_main.c:127
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Image>/В╕део/Розбити в╕део на кадри/Будь-яке зчитуване XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:139
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Toolbox>/Додатково/Розбити в╕део на кадри/Будь-яке зчитуване XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:151
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -12375,7 +12375,7 @@ msgstr "Передача даних TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:130
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Розширення/Нав╕гатор WWW/В╕дкрити URL..."
+msgstr "<Toolbox>/Додатково/Нав╕гатор WWW/В╕дкрити URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:265
 msgid "Open URL"
