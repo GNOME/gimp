@@ -13,7 +13,8 @@ sub new_scratchlayer {
     $layer->fill (WHITE_IMAGE_FILL);
     $layer->noisify (0, 1, 1, 1, 0);
     $layer->mblur (0, $length, $angle);
-    $layer->levels (VALUE_LUT, 120, 255, $gamma, 0, 255);
+    #$layer->levels (VALUE_LUT, 120, 255, $gamma, 0, 255);
+    $layer->levels (VALUE_LUT, 120, 255, 0.3, 0, 255);
 
     $layer;
 }

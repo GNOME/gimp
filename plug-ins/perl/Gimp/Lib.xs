@@ -895,7 +895,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
   PUTBACK;
 }
 
-#define SvPv(sv) SvPV_nolen(sv)
+#define SvPv(sv) (SvOK(sv) ? SvPV_nolen(sv) : NULL)
 #define Sv32(sv) unbless ((sv), PKG_ANY, croak_str)
 
 #define av2gimp(arg,sv,datatype,type,svxv) { \
@@ -1612,14 +1612,14 @@ gimp_call_procedure (proc_name, ...)
 	}
 
 void
-gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, image_types, type, params, return_vals)
+gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path_sv, image_types, type, params, return_vals)
 	char *	name
 	char *	blurb
 	char *	help
 	char *	author
 	char *	copyright
 	char *	date
-	char *	menu_path
+	SV *	menu_path_sv
 	char *	image_types
 	int	type
 	SV *	params
@@ -1628,6 +1628,8 @@ gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, im
 		gimp_install_temp_proc = 1
 	CODE:
 	{
+         	char *menu_path = SvPv (menu_path_sv);
+
 		if (SvROK(params) && SvTYPE(SvRV(params)) == SVt_PVAV
 		    && SvROK(return_vals) && SvTYPE(SvRV(return_vals)) == SVt_PVAV)
 		  {

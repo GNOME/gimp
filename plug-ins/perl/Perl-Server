@@ -315,7 +315,7 @@ sub query {
                            "Plug-ins should register their custom constants using this function, so".
                            "other plug-ins (notably script-languages) can access these using symbolic names",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-07-07",
-                           "<None>", "*",&Gimp::PROC_EXTENSION,
+                           undef, "*",&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_STRING, "procedure", "The name of the function that uses this constant"],
                             [&Gimp::PARAM_STRING, "arg_num", "The name of the argument that this constant is used for"],
@@ -325,7 +325,7 @@ sub query {
    Gimp->install_procedure("gimp_procedural_db_set_default", "Set the default value for a plug-in argument",
                            "Plug-ins should register default values for their arguments",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1999-07-07",
-                           "<None>", "*",&Gimp::PROC_EXTENSION,
+                           undef, "*",&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_STRING, "procedure", "The name of the function that uses this constant"],
                             [&Gimp::PARAM_STRING, "arg_num", "The name of the argument that this constant is used for"],
