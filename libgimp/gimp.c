@@ -1422,8 +1422,7 @@ gimp_flush (GIOChannel *channel,
 		}
 	      else
 		{
-		  g_warning ("%s: gimp_flush(): error",
-			     g_get_prgname ());
+		  g_warning ("%s: gimp_flush(): error", g_get_prgname ());
 		}
 
 	      return FALSE;
@@ -1494,7 +1493,7 @@ gimp_config (GPConfig *config)
 {
   if (config->version < GP_VERSION)
     {
-      g_message ("Could not execute plug-in \"%s\"\n(%s)"
+      g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because the GIMP is using an older version of the "
 		 "plug-in protocol.",
 		 g_get_prgname (), progname);
@@ -1502,7 +1501,7 @@ gimp_config (GPConfig *config)
     }
   else if (config->version > GP_VERSION)
     {
-      g_message ("Could not execute plug-in \"%s\"\n(%s)"
+      g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
 		 "because it uses an obsolete version of the " 
 		 "plug-in protocol.",
 		 g_get_prgname (), progname);

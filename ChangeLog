@@ -1,3 +1,10 @@
+2003-06-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.c (gimp_config): fixed error messages.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_message_box): use a
+	selectable label so you can copy from message dialogs.
+
 2003-06-20  Michael Natterer  <mitch@gimp.org>
 
 	Really commit the changes this time:
