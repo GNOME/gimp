@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-02-07 18:54+0100\n"
-"PO-Revision-Date: 2003-02-07 17:46+EDT\n"
+"POT-Creation-Date: 2003-02-09 10:57+0100\n"
+"PO-Revision-Date: 2003-02-09 07:43+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -446,8 +446,8 @@ msgid "Highlights"
 msgstr ""
 
 #: app/config/gimpconfig-deserialize.c:192 app/config/gimpconfig.c:357
-#: app/config/gimpconfig.c:370 app/config/gimpscanner.c:324
-#: app/config/gimpscanner.c:387 app/core/gimpunits.c:158 app/gui/session.c:169
+#: app/config/gimpconfig.c:370 app/config/gimpscanner.c:325
+#: app/config/gimpscanner.c:388 app/core/gimpunits.c:158 app/gui/session.c:169
 #: app/plug-in/plug-in-rc.c:130
 msgid "fatal parse error"
 msgstr ""
@@ -762,11 +762,11 @@ msgstr ""
 msgid "Failed to open file: '%s': %s"
 msgstr ""
 
-#: app/config/gimpscanner.c:146
+#: app/config/gimpscanner.c:147
 msgid "invalid UTF-8 string"
 msgstr ""
 
-#: app/config/gimpscanner.c:412
+#: app/config/gimpscanner.c:413
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -1813,8 +1813,8 @@ msgstr ""
 msgid "Opacity:"
 msgstr ""
 
-#: app/gui/brush-select.c:196 app/tools/paint_options.c:113
-#: app/tools/selection_options.c:399 app/widgets/gimplayerlistview.c:172
+#: app/gui/brush-select.c:196 app/tools/gimpselectionoptions.c:398
+#: app/tools/paint_options.c:113 app/widgets/gimplayerlistview.c:172
 msgid "Mode:"
 msgstr "የአሠራሩ ዘዴ፦"
 
@@ -2469,7 +2469,7 @@ msgstr ""
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:162 app/gui/file-new-dialog.c:180
-#: app/tools/gimpcroptool.c:984 app/tools/selection_options.c:569
+#: app/tools/gimpcroptool.c:984 app/tools/gimpselectionoptions.c:568
 msgid "Width:"
 msgstr "ስፋት፦"
 
@@ -2477,7 +2477,7 @@ msgstr "ስፋት፦"
 #: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:987 app/tools/gimpscaletool.c:174
-#: app/tools/gimpscaletool.c:182 app/tools/selection_options.c:577
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:576
 msgid "Height:"
 msgstr "እርዝማኔ፦"
 
@@ -4804,7 +4804,7 @@ msgstr "መሀከል"
 msgid "Print Size & Display Unit"
 msgstr ""
 
-#: app/gui/resize-dialog.c:695 app/tools/transform_options.c:300
+#: app/gui/resize-dialog.c:695 app/tools/gimptransformoptions.c:300
 msgid "Interpolation:"
 msgstr "Interpolation"
 
@@ -4904,15 +4904,15 @@ msgstr ""
 msgid "tips-locale:C"
 msgstr ""
 
-#: app/gui/tool-options-dialog.c:112
+#: app/gui/tool-options-dialog.c:100
 msgid "Save current settings to disk"
 msgstr ""
 
-#: app/gui/tool-options-dialog.c:121
+#: app/gui/tool-options-dialog.c:109
 msgid "Restore saved settings"
 msgstr ""
 
-#: app/gui/tool-options-dialog.c:130
+#: app/gui/tool-options-dialog.c:118
 msgid "Reset"
 msgstr "እንደነበረ አድረግ"
 
@@ -5747,11 +5747,11 @@ msgid "Filled"
 msgstr ""
 
 #: app/text/gimptext.c:155
-msgid "How many pixels the first line should be shorter."
+msgid "How many pixels the first line should be shorter"
 msgstr ""
 
 #: app/text/gimptext.c:161
-msgid "Additional line spacing (in pixels)."
+msgid "Additional line spacing (in pixels)"
 msgstr ""
 
 #: app/tools/gimpairbrushtool.c:62
@@ -5801,6 +5801,35 @@ msgstr ""
 
 #: app/tools/gimpbezierselecttool.c:3470
 msgid "Paintbrush operation failed."
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:269
+msgid "Offset:"
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:289
+msgid "Gradient:"
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:304
+msgid "Shape:"
+msgstr "ቅርጽ፦"
+
+#: app/tools/gimpblendoptions.c:310
+msgid "Repeat:"
+msgstr "እንደነበረ አድረግ፦"
+
+#: app/tools/gimpblendoptions.c:333
+msgid "Adaptive Supersampling"
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:343
+msgid "Max Depth:"
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:350 app/tools/gimpbucketfilloptions.c:276
+#: app/tools/gimpmagnifyoptions.c:241 app/tools/gimpselectionoptions.c:507
+msgid "Threshold:"
 msgstr ""
 
 #: app/tools/gimpblendtool.c:99
@@ -5858,6 +5887,38 @@ msgstr ""
 
 #: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:118
+msgid "Allow completely transparent regions to be filled"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:124
+msgid "Base filled area on all visible layers"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:130 app/tools/gimpselectionoptions.c:164
+msgid "Maximum color difference"
+msgstr ""
+
+#. fill type
+#: app/tools/gimpbucketfilloptions.c:238
+#, c-format
+msgid "Fill Type  %s"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:247 app/tools/gimpselectionoptions.c:478
+msgid "Finding Similar Colors"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:258
+msgid "Fill Transparent Areas"
+msgstr ""
+
+#: app/tools/gimpbucketfilloptions.c:264
+#: app/tools/gimpcolorpickeroptions.c:200 app/tools/gimpselectionoptions.c:495
+#: app/tools/gimpselectionoptions.c:542
+msgid "Sample Merged"
 msgstr ""
 
 #: app/tools/gimpbucketfilltool.c:87
@@ -5952,6 +6013,19 @@ msgstr ""
 msgid "Preserve _Luminosity"
 msgstr ""
 
+#: app/tools/gimpcolorpickeroptions.c:217
+msgid "Sample Average"
+msgstr ""
+
+#: app/tools/gimpcolorpickeroptions.c:227 app/tools/gimpselectionoptions.c:440
+#: app/widgets/gimpbrusheditor.c:150
+msgid "Radius:"
+msgstr ""
+
+#: app/tools/gimpcolorpickeroptions.c:233
+msgid "Update Active Color"
+msgstr ""
+
 #: app/tools/gimpcolorpickertool.c:131 app/tools/gimpcolorpickertool.c:492
 msgid "Color Picker"
 msgstr ""
@@ -6018,6 +6092,23 @@ msgstr ""
 #: app/tools/gimpconvolvetool.c:229
 #, c-format
 msgid "Convolve Type  %s"
+msgstr ""
+
+#. tool toggle
+#: app/tools/gimpcropoptions.c:190 app/tools/gimpflipoptions.c:169
+#: app/tools/gimpmagnifyoptions.c:224 app/tools/gimpmoveoptions.c:179
+#, c-format
+msgid "Tool Toggle  %s"
+msgstr ""
+
+#: app/tools/gimpcropoptions.c:201
+msgid "Current Layer only"
+msgstr ""
+
+#. enlarge toggle
+#: app/tools/gimpcropoptions.c:206
+#, c-format
+msgid "Allow Enlarging  %s"
 msgstr ""
 
 #: app/tools/gimpcroptool.c:153
@@ -6357,6 +6448,42 @@ msgstr ""
 msgid "R_eset Color"
 msgstr ""
 
+#. adjust sliders
+#: app/tools/gimpinkoptions.c:260
+msgid "Adjustment"
+msgstr ""
+
+#: app/tools/gimpinkoptions.c:274 app/tools/gimpinkoptions.c:300
+msgid "Size:"
+msgstr "መጠን፦"
+
+#: app/tools/gimpinkoptions.c:281 app/tools/gimpmeasuretool.c:385
+#: app/tools/gimprotatetool.c:178 app/widgets/gimpbrusheditor.c:189
+msgid "Angle:"
+msgstr ""
+
+#. sens sliders
+#: app/tools/gimpinkoptions.c:286
+msgid "Sensitivity"
+msgstr ""
+
+#: app/tools/gimpinkoptions.c:307
+msgid "Tilt:"
+msgstr ""
+
+#: app/tools/gimpinkoptions.c:314
+msgid "Speed:"
+msgstr "ፍጥነት፦"
+
+#: app/tools/gimpinkoptions.c:325
+msgid "Type"
+msgstr "ዓይነት"
+
+#. Brush shape widget
+#: app/tools/gimpinkoptions.c:357
+msgid "Shape"
+msgstr "ቅርጽ"
+
 #: app/tools/gimpinktool.c:166
 msgid "Ink"
 msgstr ""
@@ -6455,6 +6582,10 @@ msgstr ""
 msgid "Save Levels"
 msgstr ""
 
+#: app/tools/gimpmagnifyoptions.c:219
+msgid "Allow Window Resizing"
+msgstr ""
+
 #: app/tools/gimpmagnifytool.c:101
 msgid "Magnify"
 msgstr ""
@@ -6466,6 +6597,10 @@ msgstr ""
 #: app/tools/gimpmagnifytool.c:103
 msgid "/Tools/Magnify"
 msgstr ""
+
+#: app/tools/gimpmeasureoptions.c:170
+msgid "Use Info Window"
+msgstr "የመረጃ መስኮትን ተጠቀም"
 
 #: app/tools/gimpmeasuretool.c:127
 msgid "Measure"
@@ -6487,14 +6622,31 @@ msgstr ""
 msgid "Distance:"
 msgstr ""
 
-#: app/tools/gimpmeasuretool.c:385 app/tools/gimprotatetool.c:178
-#: app/widgets/gimpbrusheditor.c:189
-msgid "Angle:"
-msgstr ""
-
 #: app/tools/gimpmeasuretool.c:570 app/tools/gimpmeasuretool.c:575
 #: app/tools/gimpmeasuretool.c:583 app/tools/gimpmeasuretool.c:613
 msgid "degrees"
+msgstr ""
+
+#: app/tools/gimpmoveoptions.c:183
+msgid "Move Current Layer"
+msgstr "የአሁኑን ደረጃ አንቀሳቅስ"
+
+#: app/tools/gimpmoveoptions.c:184
+msgid "Pick a Layer to Move"
+msgstr ""
+
+#. move mask
+#: app/tools/gimpmoveoptions.c:191
+#, c-format
+msgid "Move Mode  %s"
+msgstr ""
+
+#: app/tools/gimpmoveoptions.c:195
+msgid "Move Selection Outline"
+msgstr " "
+
+#: app/tools/gimpmoveoptions.c:196
+msgid "Move Pixels"
 msgstr ""
 
 #: app/tools/gimpmovetool.c:104
@@ -6673,6 +6825,46 @@ msgstr ""
 msgid "Scale Ratio X:"
 msgstr ""
 
+#: app/tools/gimpselectionoptions.c:139
+msgid "Smooth edges"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:153
+msgid "Allow completely transparent regions to be selected"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:159
+msgid "Base selection on all visible layers"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:174
+msgid "Use all visible layers when shrinking the selection"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:407
+msgid "Antialiasing"
+msgstr "Antialiasing"
+
+#: app/tools/gimpselectionoptions.c:430
+msgid "Feather Edges"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:465
+msgid "Show Interactive Boundary"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:489
+msgid "Select Transparent Areas"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:534
+msgid "Auto Shrink Selection"
+msgstr ""
+
+#: app/tools/gimpselectionoptions.c:584
+msgid "Unit:"
+msgstr "ክፍል፦"
+
 #: app/tools/gimpsheartool.c:98
 msgid "Shear"
 msgstr ""
@@ -6709,6 +6901,38 @@ msgstr ""
 msgid "/Tools/Paint Tools/Smudge"
 msgstr ""
 
+#: app/tools/gimptextoptions.c:144
+msgid "_Font:"
+msgstr "የፊደል ቅርጽ፦ (_F)"
+
+#: app/tools/gimptextoptions.c:152
+msgid "_Size:"
+msgstr "_መጠን፦ (_S)"
+
+#: app/tools/gimptextoptions.c:163
+msgid "Text Color"
+msgstr "የጽሑፍ ቀለም፦"
+
+#: app/tools/gimptextoptions.c:168
+msgid "Color:"
+msgstr "ቀለም፦"
+
+#: app/tools/gimptextoptions.c:173
+msgid "Justify:"
+msgstr ""
+
+#: app/tools/gimptextoptions.c:179
+msgid "Indent:"
+msgstr "አዲስ አንቀጽ፦"
+
+#: app/tools/gimptextoptions.c:185
+msgid ""
+"Line\n"
+"Spacing:"
+msgstr ""
+"የመስመር\n"
+"ክፍተት፦"
+
 #: app/tools/gimptexttool.c:110
 msgid "Add text to the image"
 msgstr ""
@@ -6743,6 +6967,51 @@ msgstr ""
 
 #: app/tools/gimpthresholdtool.c:260
 msgid "Threshold Range:"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:291
+msgid "Transform Direction"
+msgstr ""
+
+#. the clip resulting image toggle button
+#: app/tools/gimptransformoptions.c:309
+msgid "Clip Result"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:336
+msgid "Density:"
+msgstr ""
+
+#. the show_path toggle button
+#: app/tools/gimptransformoptions.c:341
+msgid "Show Path"
+msgstr "መተላለፊያ አሳይ"
+
+#. the constraints frame
+#: app/tools/gimptransformoptions.c:352
+msgid "Constraints"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:363
+#, c-format
+msgid "15 Degrees  %s"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:374
+#, c-format
+msgid "Keep Height  %s"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:384 app/tools/gimptransformoptions.c:398
+msgid ""
+"Activate both the \"Keep Height\" and\n"
+"\"Keep Width\" toggles to constrain\n"
+"the aspect ratio"
+msgstr ""
+
+#: app/tools/gimptransformoptions.c:388
+#, c-format
+msgid "Keep Width  %s"
 msgstr ""
 
 #: app/tools/gimptransformtool.c:226
@@ -6811,113 +7080,8 @@ msgstr "ዓይነት፦"
 msgid "Path Tool"
 msgstr "የመተላለፊያ መሣሪያዎች"
 
-#: app/tools/selection_options.c:140
-msgid "Smooth edges"
-msgstr ""
-
-#: app/tools/selection_options.c:154
-msgid "Allow completely transparent regions to be selected"
-msgstr ""
-
-#: app/tools/selection_options.c:160
-msgid "Base selection on all visible layers"
-msgstr ""
-
-#: app/tools/selection_options.c:165
-msgid "Maximum color difference"
-msgstr ""
-
-#: app/tools/selection_options.c:175
-msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-
-#: app/tools/selection_options.c:408
-msgid "Antialiasing"
-msgstr "Antialiasing"
-
-#: app/tools/selection_options.c:431
-msgid "Feather Edges"
-msgstr ""
-
-#: app/tools/selection_options.c:441 app/widgets/gimpbrusheditor.c:150
-msgid "Radius:"
-msgstr ""
-
-#: app/tools/selection_options.c:466
-msgid "Show Interactive Boundary"
-msgstr ""
-
-#: app/tools/selection_options.c:479
-msgid "Finding Similar Colors"
-msgstr ""
-
-#: app/tools/selection_options.c:490
-msgid "Select Transparent Areas"
-msgstr ""
-
-#: app/tools/selection_options.c:496 app/tools/selection_options.c:543
-msgid "Sample Merged"
-msgstr ""
-
-#: app/tools/selection_options.c:508
-msgid "Threshold:"
-msgstr ""
-
-#: app/tools/selection_options.c:535
-msgid "Auto Shrink Selection"
-msgstr ""
-
-#: app/tools/selection_options.c:585
-msgid "Unit:"
-msgstr "ክፍል፦"
-
-#: app/tools/tool_options.c:180
+#: app/tools/tool_options.c:234
 msgid "This tool has no options."
-msgstr ""
-
-#: app/tools/transform_options.c:291
-msgid "Transform Direction"
-msgstr ""
-
-#. the clip resulting image toggle button
-#: app/tools/transform_options.c:309
-msgid "Clip Result"
-msgstr ""
-
-#: app/tools/transform_options.c:336
-msgid "Density:"
-msgstr ""
-
-#. the show_path toggle button
-#: app/tools/transform_options.c:341
-msgid "Show Path"
-msgstr "መተላለፊያ አሳይ"
-
-#. the constraints frame
-#: app/tools/transform_options.c:352
-msgid "Constraints"
-msgstr ""
-
-#: app/tools/transform_options.c:363
-#, c-format
-msgid "15 Degrees  %s"
-msgstr ""
-
-#: app/tools/transform_options.c:374
-#, c-format
-msgid "Keep Height  %s"
-msgstr ""
-
-#: app/tools/transform_options.c:384 app/tools/transform_options.c:398
-msgid ""
-"Activate both the \"Keep Height\" and\n"
-"\"Keep Width\" toggles to constrain\n"
-"the aspect ratio"
-msgstr ""
-
-#: app/tools/transform_options.c:388
-#, c-format
-msgid "Keep Width  %s"
 msgstr ""
 
 #: app/widgets/widgets-enums.c:13
@@ -7048,6 +7212,10 @@ msgid ""
 "Recreate preview\n"
 "%s  Reload all previews\n"
 "%s  Remove Dangling Entries"
+msgstr ""
+
+#: app/widgets/gimpfontselection.c:171
+msgid "Click to open the Font Selection Dialog"
 msgstr ""
 
 #: app/widgets/gimpfontselection-dialog.c:128
@@ -7235,7 +7403,7 @@ msgstr ""
 msgid "Columns:"
 msgstr "ዐምዶች፦"
 
-#: app/widgets/gimppropwidgets.c:1103
+#: app/widgets/gimppropwidgets.c:1106
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr ""
@@ -7513,21 +7681,6 @@ msgstr ""
 msgid "Grid Line Spacing"
 msgstr ""
 
-#~ msgid "Size:"
-#~ msgstr "መጠን፦"
-
-#~ msgid "Speed:"
-#~ msgstr "ፍጥነት፦"
-
-#~ msgid "Type"
-#~ msgstr "ዓይነት"
-
-#~ msgid "Font:"
-#~ msgstr "የፊደል ቅርጽ፦"
-
-#~ msgid "_Size:"
-#~ msgstr "_መጠን፦"
-
 #~ msgid "_Border:"
 #~ msgstr "_ወሰን፦"
 
@@ -7551,6 +7704,3 @@ msgstr ""
 
 #~ msgid "Type (<Ctrl>)"
 #~ msgstr "ዓይነት (<Ctrl>)"
-
-#~ msgid "Text Tool"
-#~ msgstr "የጽሑፍ መሣሪያዎች"
