@@ -1,7 +1,11 @@
 2000-04-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint_funcs.c: removed C++ comments (#9444).
+
+2000-04-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/free_select.c: fill empty "default" with a "break" (#9431).
-	* libgimp/gimpenv.c: g_path_is_absolute wants a parameter (#9400)
+	* libgimp/gimpenv.c: g_path_is_absolute wants a parameter (#9400).
 
 2000-04-25  Nick Lamb  <njl195@zepler.org.uk>
 

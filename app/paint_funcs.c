@@ -4127,7 +4127,7 @@ scale_region (PixelRegion *srcPR,
     }      
     else if (height > orig_height)
     {
-      //      new_y = floor((y - 0.5) * y_rat);
+      /* new_y = floor((y - 0.5) * y_rat); */
       new_y = floor((y) * y_rat - .5);
     
       while (old_y <= new_y)
@@ -4142,7 +4142,7 @@ scale_region (PixelRegion *srcPR,
        case CUBIC_INTERPOLATION:
        {
 	 double p0, p1, p2, p3;
-	 //	 double dy = ((y - 0.5) * y_rat) - new_y;
+	 /* double dy = ((y - 0.5) * y_rat) - new_y; */
 	 double dy = ((y) * y_rat - .5) - new_y;
 	 p0 = cubic(dy, 1, 0, 0, 0);
 	 p1 = cubic(dy, 0, 1, 0, 0);
