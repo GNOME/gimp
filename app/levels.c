@@ -301,6 +301,10 @@ levels_button_press (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -381,6 +385,8 @@ tools_new_levels ()
   tool->cursor_update_func = levels_cursor_update;
   tool->control_func = levels_control;
   tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -394,7 +400,7 @@ tools_free_levels (Tool *tool)
 
   /*  Close the color select dialog  */
   if (levels_dialog)
-    levels_ok_callback (NULL, (gpointer) levels_dialog);
+    levels_cancel_callback (NULL, (gpointer) levels_dialog);
 
   g_free (_levels);
 }

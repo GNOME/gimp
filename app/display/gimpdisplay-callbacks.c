@@ -66,7 +66,7 @@ gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
 {
-  GDisplay *gdisp, *tool_gdisp;
+  GDisplay *gdisp;
   GdkEventExpose *eevent;
   GdkEventMotion *mevent;
   GdkEventButton *bevent;
@@ -147,11 +147,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    bevent->x = tx;
 		    bevent->y = ty;
 		  }
-		/* Reset the current tool if we're changing displays... */
-		tool_gdisp = active_tool->gdisp_ptr;
-		if (tool_gdisp)
-		  if (tool_gdisp->ID != gdisp->ID && !active_tool->preserve)
-		    tools_select(active_tool->type);
+		/* Reset the current tool if we're changing drawables... */
+		
+		if (active_tool->drawable) 
+		  if ((drawable_ID(gimage_active_drawable(gdisp->gimage)) !=
+		       drawable_ID(GIMP_DRAWABLE(active_tool->drawable))) &&
+		      !active_tool->preserve) 
+		    tools_initialize (active_tool->type, gdisp);
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;

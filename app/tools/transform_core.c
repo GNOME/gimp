@@ -83,6 +83,8 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
   /*  Save the current transformation info  */
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     old_trans_info [i] = transform_core->trans_info [i];
@@ -517,7 +519,6 @@ transform_core_new (type, interactive)
   tool->state = INACTIVE;
   tool->scroll_lock = 1;    /*  Do not allow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
 
   tool->preserve = FALSE;   /*  Destroy when the image is dirtied. */

@@ -19,7 +19,7 @@
 #define __TOOLS_H__
 
 #include "layer.h"
-
+#include "gdisplay.h"
 
 /*  The possible states for tools  */
 #define  INACTIVE               0
@@ -108,6 +108,8 @@ struct _tool
   int            auto_snap_to;         /*  should the mouse snap to guides automatically */
   void *         private;              /*  Tool-specific information  */
   void *         gdisp_ptr;            /*  pointer to currently active gdisp  */
+  void *         drawable;             /*  pointer to the drawable that was
+					   active when the tool was created */
   int            ID;                   /*  unique tool ID  */
 
   int            preserve;             /*  Perserve this tool through the current image changes */
@@ -139,6 +141,7 @@ extern ToolInfo tool_info[];
 /*  Function declarations  */
 
 void     tools_select              (ToolType);
+void     tools_initialize          (ToolType, GDisplay *);
 void     tools_options_dialog_new  (void);
 void     tools_options_dialog_show (void);
 void     tools_options_dialog_free (void);

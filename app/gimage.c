@@ -2625,16 +2625,20 @@ int
 gimage_dirty (GImage *gimage)
 {
   GDisplay *gdisp;
-
+  
   if (gimage->dirty < 0)
     gimage->dirty = 2;
   else
     gimage->dirty ++;
-  if (active_tool) {
+  if (active_tool && !active_tool->preserve) {
     gdisp = active_tool->gdisp_ptr;
-    if (gdisp) 
-      if ((gdisp->gimage == gimage) && (!active_tool->preserve))
-	tools_select (active_tool->type);
+    if (gdisp)
+      if (gdisp->gimage->ID == gimage->ID)
+	tools_initialize (active_tool->type, gdisp);
+      else
+	active_tool_control(DESTROY, gdisp);
+    else
+      active_tool_control(DESTROY, gdisp);
   }
   return gimage->dirty;
 }

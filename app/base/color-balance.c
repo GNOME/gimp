@@ -206,6 +206,10 @@ color_balance_button_press (Tool           *tool,
 			    GdkEventButton *bevent,
 			    gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -286,6 +290,8 @@ tools_new_color_balance ()
   tool->cursor_update_func = color_balance_cursor_update;
   tool->control_func = color_balance_control;
   tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -299,7 +305,7 @@ tools_free_color_balance (Tool *tool)
 
   /*  Close the color select dialog  */
   if (color_balance_dialog)
-    color_balance_ok_callback (NULL, (gpointer) color_balance_dialog);
+    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 
   g_free (color_bal);
 }

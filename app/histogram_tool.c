@@ -287,6 +287,10 @@ histogram_tool_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -370,7 +374,7 @@ tools_free_histogram_tool (Tool *tool)
 
   /*  Close the histogram dialog  */
   if (histogram_tool_dialog)
-    histogram_tool_ok_callback (NULL, (gpointer) histogram_tool_dialog);
+    histogram_tool_cancel_callback (NULL, (gpointer) histogram_tool_dialog);
 
   g_free (hist);
 }

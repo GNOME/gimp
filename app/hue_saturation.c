@@ -250,6 +250,10 @@ hue_saturation_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -330,6 +334,8 @@ tools_new_hue_saturation ()
   tool->cursor_update_func = hue_saturation_cursor_update;
   tool->control_func = hue_saturation_control;
   tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -343,7 +349,7 @@ tools_free_hue_saturation (Tool *tool)
 
   /*  Close the color select dialog  */
   if (hue_saturation_dialog)
-    hue_saturation_ok_callback (NULL, (gpointer) hue_saturation_dialog);
+    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
 
   g_free (color_bal);
 }

@@ -1,3 +1,27 @@
+Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org
+	
+	* app/brightness_contrast.c
+	* app/by_color_select.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/curves.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c
+	* app/transform_core.c: modified to call the cancel callback
+	instead of the ok callback when freed.  modified to save the
+	last used drawable so that we might be able to check later
+	and restart the tool if need be.
+
+	* app/disp_callbacks.c
+	* app/gimage.c: modified tool restart/destruction code
+
+	* app/tools.c
+	* app/tools.h: added tools_initialize, made changes to
+	be able save the last used drawable in the tool.
+
 Wed Apr  1 23:14:42 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* configure.in: added checks for print-systems as suggested by

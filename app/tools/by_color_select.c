@@ -292,6 +292,8 @@ by_color_select_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
 
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
   if (!by_color_dialog)
     return;
 
@@ -477,6 +479,8 @@ tools_new_by_color_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = by_color_select_cursor_update;
   tool->control_func = by_color_select_control;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }

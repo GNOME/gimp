@@ -225,6 +225,10 @@ threshold_button_press (Tool           *tool,
 			GdkEventButton *bevent,
 			gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -270,7 +274,9 @@ threshold_control (Tool     *tool,
     case HALT :
       if (threshold_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (threshold_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  threshold_dialog->image_map = NULL;
 	  threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 	}
@@ -309,6 +315,7 @@ tools_new_threshold ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = threshold_cursor_update;
   tool->control_func = threshold_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -322,7 +329,7 @@ tools_free_threshold (Tool *tool)
 
   /*  Close the color select dialog  */
   if (threshold_dialog)
-    threshold_ok_callback (NULL, (gpointer) threshold_dialog);
+    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 
   g_free (thresh);
 }
@@ -496,11 +503,14 @@ threshold_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (td->shell))
     gtk_widget_hide (td->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!td->preview)
     image_map_apply (td->image_map, threshold, (void *) td);
-
   if (td->image_map)
     image_map_commit (td->image_map);
+
+  active_tool->preserve = FALSE;
 
   td->image_map = NULL;
 }
@@ -527,7 +537,9 @@ threshold_cancel_callback (GtkWidget *widget,
 
   if (td->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (td->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 
