@@ -1,5 +1,11 @@
 2001-11-22  Tor Lillqvist  <tml@iki.fi>
 
+	* accompat.m4: New file. Should solve the AM_GLIB_GNU_GETTEXT and
+	PKG_CHECK_MODULES problem when building for Unix on a system
+	without glib-2.0.m4 or pkg.m4. Idea taken from GLib.
+
+	* configure.in: Include accompat.m4.
+
 	* plug-ins/winsnap/winsnap.c (snap_dialog): gtk_window_position()
 	-> gtk_window_set_position().
 
