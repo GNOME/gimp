@@ -741,7 +741,8 @@ bezier_edit_point_on_curve(int             x,
 		  break;
 		case BEZIER_CONTROL:
 		  bezier_sel->cur_control = points;
-		  if (bezier_sel->cur_control->next->type == BEZIER_ANCHOR)
+		  if (bezier_sel->cur_control->next &&
+		      bezier_sel->cur_control->next->type == BEZIER_ANCHOR)
 		    bezier_sel->cur_anchor = bezier_sel->cur_control->next;
 		  else
 		    bezier_sel->cur_anchor = bezier_sel->cur_control->prev;

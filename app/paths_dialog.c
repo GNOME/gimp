@@ -1524,6 +1524,10 @@ paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
   plp = paths_dialog->current_path_list;
   bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
 
+  /* Return if no point list */
+  if (!bzp->path_details)
+    return;
+
   /* Now do the selection....*/
   gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
 				paths_dialog->gimage);

@@ -1,3 +1,12 @@
+
+Sun Jun  6 14:19:08 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/bezier_select.c
+	* app/paths_dialog.c
+
+	Applied bezier/paths patches supplied by David LE CORFEC. 
+	These fix a couple of segv. problems.
+
 Sat Jun  5 17:03:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.6 release
