@@ -38,6 +38,7 @@
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include <plug-ins/megawidget/megawidget.h>
+#include "libgimp/stdplugins-intl.h"
 
 static mw_preview_t emboss_do_preview;
 
@@ -115,13 +116,14 @@ query(void){
   static GParamDef *rets = NULL;
   static gint nrets = 0;
 
+  INIT_I18N();
   gimp_install_procedure("plug_in_emboss",
-                         "Emboss filter",
-                         "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
+                         _("Emboss filter"),
+                         _("Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source."),
                          "Eric L. Hernes, John Schlag",
                          "Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Distorts/Emboss...",
+                         N_("<Image>/Filters/Distorts/Emboss..."),
                          "RGB",
                          PROC_PLUG_IN,
                          nargs, nrets,
@@ -146,6 +148,7 @@ run(gchar *name, gint nparam, GParam *param,
   switch (param[0].data.d_int32)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data("plug_in_emboss", &args);
       if (args.img == 0 && args.drw == 0)
 	{
@@ -179,6 +182,7 @@ run(gchar *name, gint nparam, GParam *param,
 	  break;
 	}
 
+      INIT_I18N();
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
       args.azimuth = param[3].data.d_float;
@@ -194,6 +198,7 @@ run(gchar *name, gint nparam, GParam *param,
     break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data("plug_in_emboss", &args);
       /* use this image and drawable, even with last args */
       args.img = param[1].data.d_image;
@@ -341,7 +346,7 @@ int pluginCore(struct piArgs *argp) {
   memset(dstbuf,(int)0,(size_t)rowsize);
 
   EmbossInit(DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
-  gimp_progress_init("Emboss");
+  gimp_progress_init( _("Emboss"));
 
   gimp_tile_cache_ntiles((width + gimp_tile_width() - 1) / gimp_tile_width());
 
@@ -387,12 +392,13 @@ int pluginCoreIA(struct piArgs *argp) {
 
   gint runp;
   struct mwRadioGroup functions[] = {
-     { "Emboss", 0 },
-     { "Bumpmap", 0 },
+     { N_("Emboss"), 0 },
+     { N_("Bumpmap"), 0 },
      { NULL, 0 },
   };
   gchar **argv;
   gint argc;
+  gint i;
  
   /* Set args */
   argc = 1;
@@ -400,10 +406,12 @@ int pluginCoreIA(struct piArgs *argp) {
   argv[0] = g_strdup("emboss");
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc ());
+  for (i = 0; functions[i].name != NULL; i++)
+    functions[i].name = gettext(functions[i].name);
 
   functions[!argp->embossp].var = 1;
 
-  dlg = mw_app_new("plug_in_emboss", "Emboss", &runp);
+  dlg = mw_app_new("plug_in_emboss", _("Emboss"), &runp);
 
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_container_border_width(GTK_CONTAINER(hbox), 5);
@@ -415,9 +423,9 @@ int pluginCoreIA(struct piArgs *argp) {
   gtk_object_set_data(GTK_OBJECT(preview), "mwRadioGroup", &functions);
   emboss_do_preview(preview);
 
-  mw_radio_group_new(hbox, "Function", functions);
+  mw_radio_group_new(hbox, _("Function"), functions);
 
-  frame = gtk_frame_new("Parameters");
+  frame = gtk_frame_new( _("Parameters"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -428,11 +436,11 @@ int pluginCoreIA(struct piArgs *argp) {
   gtk_container_add(GTK_CONTAINER(frame), table);
 
 
-  mw_fscale_entry_new(table, "Azimuth", 0.0, 360.0, 1.0, 10.0, 0.0,
+  mw_fscale_entry_new(table, _("Azimuth"), 0.0, 360.0, 1.0, 10.0, 0.0,
                       0, 1, 1, 2, &argp->azimuth);
-  mw_fscale_entry_new(table, "Elevation", 0.0, 180.0, 1.0, 10.0, 0.0,
+  mw_fscale_entry_new(table, _("Elevation"), 0.0, 180.0, 1.0, 10.0, 0.0,
                       0, 1, 2, 3, &argp->elevation);
-  mw_iscale_entry_new(table, "Depth", 1, 100, 1, 5, 0,
+  mw_iscale_entry_new(table, _("Depth"), 1, 100, 1, 5, 0,
                       0, 1, 3, 4, &argp->depth);
   gtk_widget_show(table);
 

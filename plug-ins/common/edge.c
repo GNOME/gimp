@@ -46,9 +46,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -152,19 +154,16 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
   gchar *help_string =
-    " Perform edge detection on the contents of the specified"
-    " drawable. It applies, I think, convolusion with 3x3 kernel. AMOUNT"
-    " is an arbitrary constant, WRAPMODE is like displace plug-in"
-    " (useful for tilable image).";
+    _(" Perform edge detection on the contents of the specified drawable. It applies, I think, convolusion with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).");
 
-
+  INIT_I18N();
   gimp_install_procedure ("plug_in_edge",
-			  "Perform edge detection on the contents of the specified drawable",
+			  _("Perform edge detection on the contents of the specified drawable"),
 			  help_string,
 			  "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
 			  "Peter Mattis",
 			  "1996",
-			  "<Image>/Filters/Edge-Detect/Edge...",
+			  N_("<Image>/Filters/Edge-Detect/Edge..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -197,6 +196,7 @@ run (gchar  *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
 
@@ -214,11 +214,13 @@ run (gchar  *name,
 	  evals.amount = param[3].data.d_float;
 	  evals.wrapmode = param[4].data.d_int32;
 	}
+      INIT_I18N();
       break;
 
     case RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
+      INIT_I18N();
       break;
 
     default:
@@ -228,7 +230,7 @@ run (gchar  *name,
   /* make sure the drawable exist and is not indexed */
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ("Edge detection...");
+      gimp_progress_init ( _("Edge detection..."));
 
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -641,7 +643,7 @@ edge_dialog(GDrawable *drawable)
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Edge Detection");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Edge Detection"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) edge_close_callback,
@@ -655,7 +657,7 @@ edge_dialog(GDrawable *drawable)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) edge_ok_callback,
@@ -664,7 +666,7 @@ edge_dialog(GDrawable *drawable)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -673,7 +675,7 @@ edge_dialog(GDrawable *drawable)
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Edge Detection Options");
+  frame = gtk_frame_new ( _("Edge Detection Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -686,7 +688,7 @@ edge_dialog(GDrawable *drawable)
     Label, scale, entry for	evals.amount
    */
 
-  label = gtk_label_new ("Amount:");
+  label = gtk_label_new ( _("Amount:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_widget_show (label);
 
@@ -739,7 +741,7 @@ edge_dialog(GDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, "Wrap");
+  toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -748,7 +750,7 @@ edge_dialog(GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Smear");
+  toggle = gtk_radio_button_new_with_label (group, _("Smear"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -757,7 +759,7 @@ edge_dialog(GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Black");
+  toggle = gtk_radio_button_new_with_label (group, _("Black"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

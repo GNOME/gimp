@@ -1,3 +1,14 @@
+1999-12-22  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* po-plug-ins/POTFILES.in: Added gettext support
+
+	* plug-ins/megawidget/megawidget.c: Added #include "config.h"
+	* po-plug-ins/POTFILES.in: Include megawidget
+
 1999-12-21  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/gfig/gfig.c (gfig_update_stat_labels): 

@@ -33,7 +33,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
 #define ITERATIONS   100      /* 100 */
@@ -168,13 +168,15 @@ query(void)
 	static int        nargs = sizeof(args) / sizeof(args[0]);
 	static int        nreturn_vals = 0;
 
+    INIT_I18N();
+
 	gimp_install_procedure("plug_in_diffraction",
-			       "Generate diffraction patterns",
-			       "Help?  What help?  Real men do not need help :-)",  /* FIXME */
+			       _("Generate diffraction patterns"),
+			       _("Help?  What help?  Real men do not need help :-)"),  /* FIXME */
 			       "Federico Mena Quintero",
 			       "Federico Mena Quintero & David Bleecker",
 			       "April 1997, 0.5",
-			       "<Image>/Filters/Render/Pattern/Diffraction Patterns...",
+			       N_("<Image>/Filters/Render/Pattern/Diffraction Patterns..."),
 			       "RGB*",
 			       PROC_PLUG_IN,
 			       nargs,
@@ -216,6 +218,8 @@ run(char    *name,
 		case RUN_INTERACTIVE:
 			/* Possibly retrieve data */
 
+
+            INIT_I18N_UI();
 			gimp_get_data("plug_in_diffraction", &dvals);
 
 			/* Get information from the dialog */
@@ -231,6 +235,7 @@ run(char    *name,
 			if (nparams != 15)
 				status = STATUS_CALLING_ERROR;
 
+            INIT_I18N();
 			if (status == STATUS_SUCCESS) {
 				dvals.lam_r 	   = param[3].data.d_float;
 				dvals.lam_g 	   = param[4].data.d_float;
@@ -251,6 +256,7 @@ run(char    *name,
 		case RUN_WITH_LAST_VALS:
 			/* Possibly retrieve data */
 
+            INIT_I18N();
 			gimp_get_data("plug_in_diffraction", &dvals);
 			break;
 
@@ -326,7 +332,7 @@ diffraction(GDrawable *drawable)
 	progress     = 0;
 	max_progress = width * height;
 
-	gimp_progress_init("Creating diffraction pattern...");
+	gimp_progress_init( _("Creating diffraction pattern..."));
 
 	/* Create diffraction pattern */
 
@@ -543,7 +549,7 @@ diffraction_dialog(void)
 	gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
 	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), "Diffraction patterns");
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Diffraction patterns"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -580,7 +586,7 @@ diffraction_dialog(void)
 	gtk_box_pack_start(GTK_BOX(vbox), dint.progress, TRUE, FALSE, 0);
 	gtk_widget_show(dint.progress);
 
-	button = gtk_button_new_with_label("Preview!");
+	button = gtk_button_new_with_label( _("Preview!"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) dialog_update_callback,
 			   NULL);
@@ -605,11 +611,11 @@ diffraction_dialog(void)
 	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Red",   GTK_TABLE(table), 0, &dvals.lam_r, 0.0, 20.0);
-	dialog_create_value("Green", GTK_TABLE(table), 1, &dvals.lam_g, 0.0, 20.0);
-	dialog_create_value("Blue",  GTK_TABLE(table), 2, &dvals.lam_b, 0.0, 20.0);
+	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.lam_r, 0.0, 20.0);
+	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.lam_g, 0.0, 20.0);
+	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.lam_b, 0.0, 20.0);
 
-	label = gtk_label_new("Frequencies");
+	label = gtk_label_new( _("Frequencies"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	gtk_widget_show(vbox);
@@ -624,11 +630,11 @@ diffraction_dialog(void)
 	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Red",   GTK_TABLE(table), 0, &dvals.contour_r, 0.0, 10.0);
-	dialog_create_value("Green", GTK_TABLE(table), 1, &dvals.contour_g, 0.0, 10.0);
-	dialog_create_value("Blue",  GTK_TABLE(table), 2, &dvals.contour_b, 0.0, 10.0);
+	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.contour_r, 0.0, 10.0);
+	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.contour_g, 0.0, 10.0);
+	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.contour_b, 0.0, 10.0);
 
-	label = gtk_label_new("Contours");
+	label = gtk_label_new( _("Contours"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	gtk_widget_show(vbox);
@@ -643,11 +649,11 @@ diffraction_dialog(void)
 	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Red",   GTK_TABLE(table), 0, &dvals.edges_r, 0.0, 1.0);
-	dialog_create_value("Green", GTK_TABLE(table), 1, &dvals.edges_g, 0.0, 1.0);
-	dialog_create_value("Blue",  GTK_TABLE(table), 2, &dvals.edges_b, 0.0, 1.0);
+	dialog_create_value( _("Red"),   GTK_TABLE(table), 0, &dvals.edges_r, 0.0, 1.0);
+	dialog_create_value( _("Green"), GTK_TABLE(table), 1, &dvals.edges_g, 0.0, 1.0);
+	dialog_create_value( _("Blue"),  GTK_TABLE(table), 2, &dvals.edges_b, 0.0, 1.0);
 
-	label = gtk_label_new("Sharp edges");
+	label = gtk_label_new( _("Sharp edges"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	gtk_widget_show(vbox);
@@ -662,11 +668,11 @@ diffraction_dialog(void)
 	gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
 	gtk_widget_show(table);
 
-	dialog_create_value("Brightness",   GTK_TABLE(table), 0, &dvals.brightness, 0.0, 1.0);
-	dialog_create_value("Scattering",   GTK_TABLE(table), 1, &dvals.scattering, 0.0, 100.0);
-	dialog_create_value("Polarization", GTK_TABLE(table), 2, &dvals.polarization, -1.0, 1.0);
+	dialog_create_value( _("Brightness"),   GTK_TABLE(table), 0, &dvals.brightness, 0.0, 1.0);
+	dialog_create_value( _("Scattering"),   GTK_TABLE(table), 1, &dvals.scattering, 0.0, 100.0);
+	dialog_create_value( _("Polarization"), GTK_TABLE(table), 2, &dvals.polarization, -1.0, 1.0);
 
-	label = gtk_label_new("Other options");
+	label = gtk_label_new( _("Other options"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	gtk_widget_show(vbox);
@@ -679,7 +685,7 @@ diffraction_dialog(void)
 	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbbox);
 	
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label ( _("OK"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) dialog_ok_callback,
@@ -688,7 +694,7 @@ diffraction_dialog(void)
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 	
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label ( _("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) dialog_cancel_callback,

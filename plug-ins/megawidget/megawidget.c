@@ -41,9 +41,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpintl.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include <plug-ins/megawidget/megawidget.h>
 

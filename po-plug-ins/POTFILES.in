@@ -36,7 +36,11 @@ plug-ins/common/deinterlace.c
 plug-ins/common/depthmerge.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
+plug-ins/common/diffraction.c
 plug-ins/common/displace.c
+plug-ins/common/edge.c
+plug-ins/common/emboss.c
+plug-ins/common/engrave.c
 plug-ins/common/film.c
 plug-ins/flame/flame.c
 plug-ins/common/gif.c
@@ -154,6 +158,7 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sinus/sinus.c
 plug-ins/common/spheredesigner.c
 plug-ins/struc/struc.c
+plug-ins/megawidget/megawidget.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c
