@@ -55,6 +55,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   ADD_TAB (N_("/Add Tab/Tool Options..."),     "gimp-tool-options",
            "<StockItem>",                      GIMP_STOCK_TOOL_OPTIONS),
+  ADD_TAB (N_("/Add Tab/Device Status..."),    "gimp-device-status",
+           "<StockItem>",                      GIMP_STOCK_DEVICE_STATUS),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 

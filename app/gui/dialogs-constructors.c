@@ -56,6 +56,7 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpimageview.h"
 #include "widgets/gimpitemtreeview.h"
+#include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
@@ -76,7 +77,6 @@
 
 #include "about-dialog.h"
 #include "channels-commands.h"
-#include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 #include "file-commands.h"
@@ -156,14 +156,6 @@ dialogs_file_new_new (GimpDialogFactory *factory,
                       gint               preview_size)
 {
   return file_new_dialog_new (context->gimp);
-}
-
-GtkWidget *
-dialogs_device_status_get (GimpDialogFactory *factory,
-			   GimpContext       *context,
-                           gint               preview_size)
-{
-  return device_status_dialog_create (context->gimp);
 }
 
 GtkWidget *
@@ -271,6 +263,26 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
                                _("Tool Options"), _("Tool Options"), NULL,
                                dialogs_tool_options_tab_func, NULL,
+                               NULL);
+}
+
+GtkWidget *
+dialogs_device_status_get (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           gint               preview_size)
+{
+  static GtkWidget *view = NULL;
+
+  if (view)
+    return NULL;
+
+  view = gimp_device_status_new (context->gimp);
+
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
+
+  return dialogs_dockable_new (view,
+                               _("Device Status"), _("Devices"), NULL,
+                               NULL, NULL,
                                NULL);
 }
 

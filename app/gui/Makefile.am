@@ -11,8 +11,6 @@ dialogs_sources = \
 	color-notebook.h		\
 	convert-dialog.c		\
 	convert-dialog.h		\
-	device-status-dialog.c		\
-	device-status-dialog.h		\
 	dialogs.c			\
 	dialogs.h			\
 	dialogs-constructors.c		\

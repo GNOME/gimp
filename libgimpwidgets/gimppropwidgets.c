@@ -2056,6 +2056,106 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
 }
 
 
+/****************/
+/*  color area  */
+/****************/
+
+static void   gimp_prop_color_area_callback (GtkWidget  *widget,
+                                             GObject    *config);
+static void   gimp_prop_color_area_notify   (GObject    *config,
+                                             GParamSpec *param_spec,
+                                             GtkWidget  *area);
+
+GtkWidget *
+gimp_prop_color_area_new (GObject           *config,
+                          const gchar       *property_name,
+                          gint               width,
+                          gint               height,
+                          GimpColorAreaType  type)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *area;
+  GimpRGB    *value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_COLOR, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  area = gimp_color_area_new (value, type,
+                              GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+  gtk_widget_set_size_request (area, width, height);
+
+  g_free (value);
+
+  set_param_spec (G_OBJECT (area), area, param_spec);
+
+  g_signal_connect (area, "color_changed",
+		    G_CALLBACK (gimp_prop_color_area_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_color_area_notify),
+                  area);
+
+  return area;
+}
+
+static void
+gimp_prop_color_area_callback (GtkWidget *area,
+                               GObject   *config)
+{
+  GParamSpec *param_spec;
+  GimpRGB     value;
+
+  param_spec = get_param_spec (G_OBJECT (area));
+  if (! param_spec)
+    return;
+
+  gimp_color_area_get_color (GIMP_COLOR_AREA (area), &value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_color_area_notify,
+                                   area);
+
+  g_object_set (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_color_area_notify,
+                                     area);
+}
+
+static void
+gimp_prop_color_area_notify (GObject    *config,
+                             GParamSpec *param_spec,
+                             GtkWidget  *area)
+{
+  GimpRGB *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (area,
+                                   gimp_prop_color_area_callback,
+                                   config);
+
+  gimp_color_area_set_color (GIMP_COLOR_AREA (area), value);
+
+  g_free (value);
+
+  g_signal_handlers_unblock_by_func (area,
+                                     gimp_prop_color_area_callback,
+                                     config);
+}
+
+
 /******************/
 /*  color button  */
 /******************/
@@ -2358,6 +2458,67 @@ gimp_prop_preview_notify (GObject      *config,
 
   if (viewable)
     g_object_unref (viewable);
+}
+
+
+/*****************/
+/*  stock image  */
+/*****************/
+
+static void   gimp_prop_stock_image_notify (GObject    *config,
+                                            GParamSpec *param_spec,
+                                            GtkWidget  *image);
+
+GtkWidget *
+gimp_prop_stock_image_new (GObject     *config,
+                           const gchar *property_name,
+                           GtkIconSize  icon_size)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *image;
+  gchar      *stock_id;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_STRING, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &stock_id,
+                NULL);
+
+  g_print ("stock_id: %s\n", stock_id);
+
+  image = gtk_image_new_from_stock (stock_id, icon_size);
+
+  if (stock_id)
+    g_free (stock_id);
+
+  set_param_spec (G_OBJECT (image), image, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_stock_image_notify),
+                  image);
+
+  return image;
+}
+
+static void
+gimp_prop_stock_image_notify (GObject    *config,
+                              GParamSpec *param_spec,
+                              GtkWidget  *image)
+{
+  gchar *stock_id;
+
+  g_object_get (config,
+                param_spec->name, &stock_id,
+                NULL);
+
+  gtk_image_set_from_stock (GTK_IMAGE (image), stock_id,
+                            GTK_IMAGE (image)->icon_size);
+
+  if (stock_id)
+    g_free (stock_id);
 }
 
 

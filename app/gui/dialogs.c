@@ -98,8 +98,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
     0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  singleton toplevels  */
-  { "gimp-device-status-dialog",   dialogs_device_status_get,
-    0, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp-preferences-dialog",     dialogs_preferences_get,
     0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-module-manager-dialog",  dialogs_module_browser_get,
@@ -115,6 +113,8 @@ static const GimpDialogFactoryEntry dock_entries[] =
   /*  singleton dockables  */
   { "gimp-tool-options",     dialogs_tool_options_get,
     0, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp-device-status",    dialogs_device_status_get,
+    0, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp-error-console",    dialogs_error_console_get,
     0, TRUE,  FALSE, FALSE, TRUE },
 

@@ -44,6 +44,7 @@
 #include "display/gimpdisplayshell-render.h"
 
 #include "widgets/gimpdevices.h"
+#include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp.h"
@@ -51,7 +52,6 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "gui.h"
@@ -91,6 +91,8 @@ static void         gui_really_quit_callback    (GtkWidget        *button,
 static void         gui_show_tooltips_notify    (GObject          *config,
                                                  GParamSpec       *param_spec,
                                                  Gimp             *gimp);
+static void         gui_device_change_notify    (Gimp             *gimp);
+
 static void         gui_display_changed         (GimpContext      *context,
                                                  GimpDisplay      *display,
                                                  Gimp             *gimp);
@@ -297,7 +299,7 @@ gui_init (Gimp *gimp)
 
   dialogs_init (gimp);
 
-  gimp_devices_init (gimp, device_status_dialog_update_current);
+  gimp_devices_init (gimp, gui_device_change_notify);
   session_init (gimp);
 }
 
@@ -582,6 +584,18 @@ gui_show_tooltips_notify (GObject    *config,
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();
+}
+
+static void
+gui_device_change_notify (Gimp *gimp)
+{
+  GimpSessionInfo *session_info;
+
+  session_info = gimp_dialog_factory_find_session_info (global_dock_factory,
+                                                        "gimp-device-status");
+
+  if (session_info && session_info->widget)
+    gimp_device_status_update (GIMP_DEVICE_STATUS (session_info->widget));
 }
 
 

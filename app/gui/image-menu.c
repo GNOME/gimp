@@ -876,9 +876,9 @@ GimpItemFactoryEntry image_menu_entries[] =
     "gimp-tool-options",
     "dialogs/tool_options.html", NULL },
   { { N_("/Dialogs/_Device Status..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0,
+      dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DEVICE_STATUS },
-    "gimp-device-status-dialog",
+    "gimp-device-status",
     "dialogs/device_status.html", NULL },
 
   MENU_SEPARATOR ("/Dialogs/---"),

@@ -1,3 +1,26 @@
+2003-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/device-status-dialog.[ch]: removed...
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpdevicestatus.[ch]: ...added here as widget. The
+	thing is narrower now but not nicer and needs some polishing.
+
+	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_color_area_new()
+	and gimp_prop_stock_image_new() (the latter is still unused).
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: made the device status a dockable.
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: changed accordingly.
+
+	* app/gui/gui.c: update the device status dialog indirectly now
+	using the new gui_device_change_notify() callback.
+
 2003-07-06  Sven Neumann  <sven@gimp.org>
 	
 	* app/text/Makefile.am

@@ -67,6 +67,8 @@ libappwidgets_a_sources = \
 	gimpdeviceinfo.h		\
 	gimpdevices.c			\
 	gimpdevices.h			\
+	gimpdevicestatus.c		\
+	gimpdevicestatus.h		\
 	gimpdialogfactory.c		\
 	gimpdialogfactory.h		\
 	gimpdnd.c			\

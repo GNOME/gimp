@@ -152,6 +152,11 @@ gboolean        gimp_prop_size_entry_connect      (GObject     *config,
 
 /*  GimpParamColor  */
 
+GtkWidget     * gimp_prop_color_area_new          (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gint         width,
+                                                   gint         height,
+                                                   GimpColorAreaType  type);
 GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *title,
@@ -171,6 +176,13 @@ GtkWidget     * gimp_prop_unit_menu_new           (GObject     *config,
 GtkWidget     * gimp_prop_preview_new             (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         size);
+
+
+/*  GParamString (stock_id)  */
+
+GtkWidget     * gimp_prop_stock_image_new         (GObject     *config,
+                                                   const gchar *property_name,
+                                                   GtkIconSize  icon_size);
 
 
 #endif /* __GIMP_PROP_WIDGETS_H__ */
