@@ -1,3 +1,11 @@
+2004-08-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c: don't compress undos if the
+	image is clean. Fixes bug #148853.
+
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
 	Applied a bunch of small changes contributed by Tim Mooney to fix

@@ -809,7 +809,8 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
           /*  compress layer mode undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+          if (gimage->dirty != 0                          &&
+              ! gimp_undo_stack_peek (gimage->redo_stack) &&
               GIMP_IS_ITEM_UNDO (undo)                    &&
               undo->undo_type == GIMP_UNDO_LAYER_MODE     &&
               GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
@@ -878,7 +879,8 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
           /*  compress opacity undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+          if (gimage->dirty != 0                          &&
+              ! gimp_undo_stack_peek (gimage->redo_stack) &&
               GIMP_IS_ITEM_UNDO (undo)                    &&
               undo->undo_type == GIMP_UNDO_LAYER_OPACITY  &&
               GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))

@@ -1461,7 +1461,8 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
               gboolean  push_undo = TRUE;
 
               /*  compress exclusive visibility/linked undos  */
-              if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+              if (gimage->dirty != 0                          &&
+                  ! gimp_undo_stack_peek (gimage->redo_stack) &&
                   GIMP_IS_UNDO_STACK (undo)                   &&
                   undo->undo_type == group_type               &&
                   g_object_get_data (G_OBJECT (undo), "item-type")
@@ -1523,7 +1524,8 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
           /*  compress undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+          if (gimage->dirty != 0                          &&
+              ! gimp_undo_stack_peek (gimage->redo_stack) &&
               GIMP_IS_ITEM_UNDO (undo)                    &&
               GIMP_ITEM_UNDO (undo)->item == item         &&
               undo->undo_type == undo_type)

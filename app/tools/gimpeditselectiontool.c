@@ -1226,7 +1226,8 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 
   /* compress undo */
-  if (! gimp_undo_stack_peek (gdisp->gimage->redo_stack) &&
+  if (gdisp->gimage->dirty != 0                          &&
+      ! gimp_undo_stack_peek (gdisp->gimage->redo_stack) &&
       GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
     {
       if (g_object_get_data (G_OBJECT (undo), "edit-selection-tool") ==

@@ -556,6 +556,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
        */
 
       if (undo && GIMP_IS_TEXT_UNDO (undo) &&
+          image->dirty != 0                &&
           ! gimp_undo_stack_peek (image->redo_stack))
         {
           GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
