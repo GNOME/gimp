@@ -1,15 +1,15 @@
 # traditional chinese translation for gimp-libgimp.
-# Copyright (C) 2001, 03 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001,2003.
+# Abel Cheung <maddog@linux.org.hk>, 2001, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.15\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-10 15:17+0200\n"
-"PO-Revision-Date: 2003-04-24 21:38+0800\n"
+"Project-Id-Version: gimp-libgimp 1.3.18\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=l10n\n"
+"POT-Creation-Date: 2003-08-20 00:16+0800\n"
+"PO-Revision-Date: 2003-08-20 01:07+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "選擇單位"
+msgstr "筆刷選擇"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -38,7 +37,7 @@ msgstr "%s 無法處理圖層的偏移、尺寸或透明度"
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s 只能以動畫影格的方式處理圖層"
+msgstr "%s 只能以動畫畫格的方式處理圖層"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -168,14 +167,12 @@ msgstr ""
 "本程序不會儲存可見的圖層。"
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "選擇單位"
+msgstr "字型選擇"
 
-#: libgimp/gimpgradientmenu.c:102
-#, fuzzy
+#: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
-msgstr "選擇單位"
+msgstr "漸層選擇"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
@@ -183,7 +180,7 @@ msgstr "無"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "預覽"
 
 #: libgimp/gimpmiscui.c:536
 #, c-format
@@ -193,11 +190,14 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"gimprc 中缺少了 %1$s 項目：\n"
+"請在 %4$s 檔案加入類似\n"
+"(%2$s \"%3$s\")\n"
+"的項目。"
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "選擇單位"
+msgstr "圖樣選擇"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -292,31 +292,31 @@ msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr "_H"
+msgstr "色相(_H)"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr "_S"
+msgstr "彩度(_S)"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr "_V"
+msgstr "明度(_V)"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr "_R"
+msgstr "紅(_R)"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr "_G"
+msgstr "綠(_G)"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr "_B"
+msgstr "藍(_B)"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr "_A"
+msgstr "透明(_A)"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
@@ -398,11 +398,11 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
-msgstr "貼上至新圖像"
+msgstr "貼上成為新圖像"
 
 #: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
-msgstr ""
+msgstr "貼上成為圖層"
 
 #: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
@@ -481,7 +481,7 @@ msgstr "色盲模擬濾鏡 (Brettel-Vienot-Mollon 演算法)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr "模擬色盲視覺"
+msgstr "模擬色盲人士的視覺"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
@@ -528,65 +528,60 @@ msgid "Contrast Cycles:"
 msgstr ""
 
 #: modules/colorsel_cmyk.c:70
-#, fuzzy
 msgid "CMYK color selector"
-msgstr "水彩方式色彩選擇窗"
+msgstr "CMYK 色彩選擇程序"
 
 #: modules/colorsel_cmyk.c:129
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:143
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:144
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:145
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:146
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:150
-#, fuzzy
 msgid "Cyan"
-msgstr "取消"
+msgstr "氰藍"
 
 #: modules/colorsel_cmyk.c:151
 msgid "Magenta"
-msgstr ""
+msgstr "洋紅"
 
 #: modules/colorsel_cmyk.c:152
 msgid "Yellow"
-msgstr ""
+msgstr "黃"
 
 #: modules/colorsel_cmyk.c:153
-#, fuzzy
 msgid "Black"
-msgstr "/黑"
+msgstr "黑"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr "畫家方式的三角形色彩選擇窗"
+msgstr "畫家方式的三角形色彩選擇程序"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
-msgstr "三角(_T)"
+msgstr "三角"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr "水彩方式色彩選擇窗"
+msgstr "水彩方式色彩選擇程序"
 
 #: modules/colorsel_water.c:176
-#, fuzzy
 msgid "Watercolor"
-msgstr "水彩(_W)"
+msgstr "水彩"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
