@@ -1,5 +1,13 @@
 2002-05-11  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/Makefile.am: removed LOCALEDIR definition ...
+
+	* libgimpbase/Makefile.am: ... and added it here.
+
+	* app/widgets/gimpdnd.c: corrected pointer arithmetic.
+	
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/Makefile.am (SOURCES): removed gimptool.h.
 
 	* libgimptool/Makefile.am (SOURCES): added gimptoolcontrol.h.

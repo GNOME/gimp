@@ -697,7 +697,7 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
   {
     gchar name_buffer[1024];
 
-    while (*buffer && buffer - vals < length)
+    while (*buffer && (buffer - (gchar *) vals < length))
       {
 	gchar *name = name_buffer;
 	gint   len  = 0;

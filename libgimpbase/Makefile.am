@@ -41,6 +41,7 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DPREFIX=\""$(prefix)"\"		\
 	-DGIMPDIR=\""$(gimpdir)"\"		\
 	-DDATADIR=\""$(gimpdatadir)"\"		\
+	-DLOCALEDIR=\""$(localedir)"\"		\
 	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
