@@ -67,6 +67,11 @@ static GHashTable *gimp_progress_ht = NULL;
  * Return value: the name of the temporary procedure that's been installed
  *
  * Since: GIMP 2.2
+ *
+ * Note that since GIMP 2.4, the @value_callback can be called with
+ * nagative values. This is triggered by calls to gimp_progress_pulse().
+ * The callback should then implement a progress indicating busyness,
+ * e.g. by calling gtk_progress_bar_pulse().
  **/
 const gchar *
 gimp_progress_install (GimpProgressStartCallback start_callback,
@@ -215,6 +220,11 @@ gimp_temp_progress_run (const gchar      *name,
 
         case GIMP_PROGRESS_COMMAND_SET_VALUE:
           progress_data->value_callback (param[2].data.d_float,
+                                         progress_data->data);
+          break;
+
+        case GIMP_PROGRESS_COMMAND_PULSE:
+          progress_data->value_callback (-1.0,
                                          progress_data->data);
           break;
 

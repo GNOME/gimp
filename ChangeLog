@@ -1,3 +1,20 @@
+2005-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpbaseenums.h (enum GimpProgressCommand):
+	added GIMP_PROGRESS_COMMAND_PULSE.
+
+	* libgimpbase/gimpbaseenums.c
+	* plug-ins/pygimp/gimpenums.py
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimppdbprogress.c: implement GimpProgress::pulse()
+	and send a PULSE command to the callback.
+
+	* libgimp/gimpprogress.c: handle PULSE by calling the set_value()
+	callback with a value of -1 and document that hack in the API docs.
+
+	* libgimp/gimpprogressbar.c: interpret -1 as request to pulse.
+
 2005-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprogress.[ch]: added GimpProgress::pulse.

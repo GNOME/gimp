@@ -160,7 +160,10 @@ gimp_progress_bar_set_value (gdouble  percentage,
 {
   GimpProgressBar *bar = GIMP_PROGRESS_BAR (user_data);
 
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+  if (percentage >= 0.0)
+    gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+  else
+    gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
   if (GTK_WIDGET_DRAWABLE (bar))
     while (g_main_context_pending (NULL))
