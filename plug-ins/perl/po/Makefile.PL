@@ -19,9 +19,10 @@ if ($MSGFMT =~ /./) {
 print "\n";
 
 WriteMakefile(
-    'macro'	=> \%cfg,
-    'realclean'	=> { FILES => "gimp-perl.pot" },
-    'clean'	=> { FILES => "*.mo" },
+    NAME	=> 'i18n translation tables',
+    macro	=> \%cfg,
+    realclean	=> { FILES => "gimp-perl.pot" },
+    clean	=> { FILES => "*.mo" },
 );
 
 sub MY::postamble {
