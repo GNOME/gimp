@@ -35,6 +35,8 @@
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gui/info-dialog.h"
@@ -147,7 +149,10 @@ gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
       if (! transform_tool->info_dialog)
 	{
 	  transform_tool->info_dialog =
-	    info_dialog_new (_("Perspective Transform Information"),
+	    info_dialog_new (NULL,
+                             _("Perspective Transform"), "perspective",
+                             GIMP_STOCK_TOOL_PERSPECTIVE,
+                             _("Perspective Transform Information"),
 			     gimp_standard_help_func,
 			     "tools/transform_perspective.html");
 
@@ -161,6 +166,9 @@ gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
 	  info_dialog_add_label (transform_tool->info_dialog, "",
                                  matrix_row_buf[2]);
 	}
+
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (transform_tool->info_dialog->shell),
+                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
                                 TRUE);

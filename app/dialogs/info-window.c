@@ -322,7 +322,10 @@ info_window_create (GimpDisplay *gdisp)
   type = gimp_image_base_type (gdisp->gimage);
 
   title = info_window_title (gdisp);
-  info_win = info_dialog_notebook_new (title,
+  info_win = info_dialog_notebook_new (GIMP_VIEWABLE (gdisp->gimage),
+                                       title, "image_info",
+                                       GIMP_STOCK_INFO,
+                                       _("Image Information"),
 				       gimp_standard_help_func,
 				       "dialogs/info_window.html");
   g_free (title);

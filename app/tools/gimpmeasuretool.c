@@ -40,6 +40,8 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -377,7 +379,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       if (gimp_tool_control_is_active (tool->control))
 	{
 	  gimp_tool_pop_status (tool);
-	  gimp_tool_push_status (tool, "");
+	  gimp_tool_push_status (tool, " ");
         }
 
       /*  start drawing the measure tool  */
@@ -388,7 +390,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
   if (! measure_tool_info && (options->use_info_window ||
                               ! GTK_WIDGET_VISIBLE (shell->statusbar)))
     {
-      measure_tool_info = info_dialog_new (_("Measure Tool"),
+      measure_tool_info = info_dialog_new (NULL,
+                                           _("Measure Tool"), "measure",
+                                           GIMP_STOCK_TOOL_MEASURE,
+                                           _("Measure Tool Information"),
 					   tool_manager_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
@@ -401,6 +406,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
 				      NULL);
     }
+
+  if (measure_tool_info)
+    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (measure_tool_info->shell),
+                                       GIMP_VIEWABLE (tool->gdisp->gimage));
 
   gimp_tool_control_activate (tool->control);
 }

@@ -143,6 +143,8 @@ libappwidgets_a_sources = \
 	gimptoolinfopreview.h		\
 	gimpvectorslistview.c		\
 	gimpvectorslistview.h		\
+	gimpviewabledialog.c		\
+	gimpviewabledialog.h		\
 	gimpwidgets-constructors.c	\
 	gimpwidgets-constructors.h	\
 	gimpwidgets-utils.c		\

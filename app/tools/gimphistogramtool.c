@@ -38,6 +38,7 @@
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 
@@ -184,7 +185,8 @@ static void
 gimp_histogram_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
-  PixelRegion PR;
+  GimpDrawable *drawable;
+  PixelRegion   PR;
 
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -196,10 +198,15 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
   if (! histogram_dialog)
     histogram_dialog = histogram_tool_dialog_new ();
 
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (histogram_dialog->shell),
+                                     GIMP_VIEWABLE (drawable));
+
   gtk_widget_show (histogram_dialog->shell);
 
-  histogram_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  histogram_dialog->color = gimp_drawable_is_rgb (histogram_dialog->drawable);
+  histogram_dialog->drawable = drawable;
+  histogram_dialog->color    = gimp_drawable_is_rgb (drawable);
 
   gimp_option_menu_set_sensitive (GTK_OPTION_MENU (histogram_dialog->channel_menu),
                                   (GimpOptionMenuSensitivityCallback) histogram_set_sensitive_callback,
@@ -208,10 +215,10 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
                                 GINT_TO_POINTER (histogram_dialog->channel));
 
   /* calculate the histogram */
-  pixel_region_init (&PR, gimp_drawable_data (histogram_dialog->drawable),
+  pixel_region_init (&PR, gimp_drawable_data (drawable),
 		     0, 0,
-		     gimp_drawable_width (histogram_dialog->drawable),
-		     gimp_drawable_height (histogram_dialog->drawable),
+		     gimp_drawable_width (drawable),
+		     gimp_drawable_height (drawable),
 		     FALSE);
   gimp_histogram_calculate (histogram_dialog->hist, &PR, NULL);
 
@@ -352,15 +359,18 @@ histogram_tool_dialog_new (void)
   htd->hist    = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
-  htd->shell = gimp_dialog_new (_("Histogram"), "histogram",
-				tool_manager_help_func, NULL,
-				GTK_WIN_POS_NONE,
-				FALSE, TRUE, FALSE,
+  htd->shell =
+    gimp_viewable_dialog_new (NULL,
+                              _("Histogram"),
+                              "histogram",
+                              GIMP_STOCK_TOOL_HISTOGRAM,
+                              _("View Image Histogram"),
+                              tool_manager_help_func, NULL,
 
-				GTK_STOCK_CLOSE, histogram_tool_close_callback,
-				htd, NULL, NULL, TRUE, TRUE,
+                              GTK_STOCK_CLOSE, histogram_tool_close_callback,
+                              htd, NULL, NULL, TRUE, TRUE,
 
-				NULL);
+                              NULL);
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), hbox);

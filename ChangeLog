@@ -1,3 +1,40 @@
+2002-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpviewabledialog.[ch]: new dialog widget featuring
+	a title bar containing a stock icon, a description, the viewable's
+	name and a preview. Will be used for all viewable related dialogs
+	and serves as a common place to control their look & feel.
+
+	* app/tools/gimpimagemaptool.[ch]: removed the code which did
+	almost the same and use GimpViewableDialog.
+
+	* app/gui/info-dialog.[ch]: extended the API so it has enough
+	information to create a GimpViewableDialog.
+
+	* app/gui/channels-commands.c
+	* app/gui/convert-dialog.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: use GimpViewableDialogs
+
+	* themes/Default/gtkrc: apply the dialog style to "*Gimp*Dialog*",
+	not only "*GimpDialog*" so it covers GimpViewableDialog.
+
 2002-08-31  James Henstridge  <james@daa.com.au>
 
 	* libgimp/gimp.c (gimp_run_procedure): handle GIMP_PDB_COLOR

@@ -45,6 +45,7 @@
 #include "gui/info-dialog.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "gimpcroptool.h"
 #include "tool_manager.h"
@@ -888,6 +889,9 @@ crop_start (GimpTool     *tool,
   if (! crop_info)
     crop_info_create (tool);
 
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (crop_info->shell),
+                                     GIMP_VIEWABLE (tool->gdisp->gimage));
+
   g_signal_handlers_block_by_func (G_OBJECT (origin_sizeentry), 
                                    crop_origin_changed,
                                    crop_info);
@@ -968,7 +972,10 @@ crop_info_create (GimpTool *tool)
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  create the info dialog  */
-  crop_info = info_dialog_new (_("Crop & Resize Information"),
+  crop_info = info_dialog_new (NULL,
+                               _("Crop & Resize"), "crop",
+                               GIMP_STOCK_TOOL_CROP,
+                               _("Crop & Resize Information"),
 			       tool_manager_help_func, NULL);
 
   /*  create the action area  */

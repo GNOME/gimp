@@ -42,6 +42,7 @@
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "layers-commands.h"
@@ -577,19 +578,20 @@ layers_new_layer_query (GimpImage *gimage,
 
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("New Layer Options"), "new_layer_options",
-		     gimp_standard_help_func,
-		     "dialogs/layers/new_layer.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                              _("New Layer"), "new_layer_options",
+                              GTK_STOCK_NEW,
+                              _("New Layer Options"),
+                              gimp_standard_help_func,
+                              "dialogs/layers/new_layer.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, new_layer_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, new_layer_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
@@ -766,19 +768,21 @@ layers_edit_layer_query (GimpLayer *layer)
 
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("Edit Layer Attributes"), "edit_layer_attributes",
-		     gimp_standard_help_func,
-		     "dialogs/layers/edit_layer_attributes.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
+                              _("Layer Attributes"),
+                              "edit_layer_attributes",
+                              GIMP_STOCK_EDIT,
+                              _("Edit Layer Attributes"),
+                              gimp_standard_help_func,
+                              "dialogs/layers/edit_layer_attributes.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, edit_layer_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, edit_layer_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
@@ -871,19 +875,20 @@ layers_add_mask_query (GimpLayer *layer)
   
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("Add Mask Options"), "add_mask_options",
-		     gimp_standard_help_func,
-		     "dialogs/layers/add_layer_mask.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
+                              _("Add Mask"), "add_mask_options",
+                              GTK_STOCK_ADD,
+                              _("Add Layer Mask Options"),
+                              gimp_standard_help_func,
+                              "dialogs/layers/add_layer_mask.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, add_mask_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, add_mask_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,

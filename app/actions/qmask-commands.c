@@ -31,6 +31,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -173,19 +174,20 @@ qmask_channel_query (GimpDisplayShell *shell)
 
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("Edit Qmask Attributes"), "edit_qmask_attributes",
-		     gimp_standard_help_func,
-		     "dialogs/edit_qmask_attributes.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
+                              _("Qmask Attributes"), "edit_qmask_attributes",
+                              GIMP_STOCK_QMASK_ON,
+                              _("Edit QuickMask Attributes"),
+                              gimp_standard_help_func,
+                              "dialogs/edit_qmask_attributes.html",
 
-		     GTK_STOCK_CANCEL, qmask_query_cancel_callback,
-		     options, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, qmask_query_cancel_callback,
+                              options, NULL, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, qmask_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, qmask_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 4);

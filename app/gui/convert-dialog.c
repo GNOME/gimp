@@ -83,6 +83,8 @@ static GimpConvertPaletteType  spalette_type = GIMP_MAKE_PALETTE;
 void
 convert_to_rgb (GimpImage *gimage)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   gimp_image_convert (gimage, GIMP_RGB, 0, 0, 0, 0, 0, NULL);
   gimp_image_flush (gimage);
 }
@@ -90,6 +92,8 @@ convert_to_rgb (GimpImage *gimage)
 void
 convert_to_grayscale (GimpImage* gimage)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   gimp_image_convert (gimage, GIMP_GRAY, 0, 0, 0, 0, 0, NULL);
   gimp_image_flush (gimage);
 }
@@ -108,6 +112,8 @@ convert_to_indexed (GimpImage *gimage)
   GtkWidget     *toggle;
   GSList        *group = NULL;
 
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   dialog = g_new0 (IndexedDialog, 1);
 
   dialog->gimage = gimage;
@@ -120,19 +126,21 @@ convert_to_indexed (GimpImage *gimage)
   dialog->palette_type          = spalette_type;
 
   dialog->shell =
-    gimp_dialog_new (_("Indexed Color Conversion"), "indexed_color_conversion",
-		     gimp_standard_help_func,
-		     "dialogs/convert_to_indexed.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, FALSE, TRUE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                              _("Indexed Color Conversion"),
+                              "indexed_color_conversion",
+                              GIMP_STOCK_CONVERT_INDEXED,
+                              _("Convert Image to Indexed Colors"),
+                              gimp_standard_help_func,
+                              "dialogs/convert_to_indexed.html",
 
-		     GTK_STOCK_CANCEL, indexed_cancel_callback,
-		     dialog, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, indexed_cancel_callback,
+                              dialog, NULL, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, indexed_ok_callback,
-		     dialog, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, indexed_ok_callback,
+                              dialog, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

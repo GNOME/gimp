@@ -35,6 +35,8 @@
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -176,7 +178,10 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
           GtkWidget *spinbutton2;
 
 	  transform_tool->info_dialog =
-            info_dialog_new (_("Rotation Information"),
+            info_dialog_new (NULL,
+                             _("Rotate"), "rotate",
+                             GIMP_STOCK_TOOL_ROTATE,
+                             _("Rotation Information"),
                              gimp_standard_help_func,
                              "tools/transform_rotate.html");
 
@@ -221,6 +226,9 @@ gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_tool->info_dialog->info_table),
 				     2, 0);
 	}
+
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (transform_tool->info_dialog->shell),
+                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
 
       g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
                                        rotate_center_changed,

@@ -41,6 +41,7 @@
 
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimptoolbox-color-area.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "gui/info-dialog.h"
 
@@ -269,9 +270,12 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
       GtkWidget *frame;
       GimpRGB    color;
 
-      gimp_color_picker_tool_info = info_dialog_new (_("Color Picker"),
-                                                     tool_manager_help_func,
-                                                     NULL);
+      gimp_color_picker_tool_info =
+        info_dialog_new (NULL,
+                         _("Color Picker"), "color_picker",
+                         GIMP_STOCK_TOOL_COLOR_PICKER,
+                         _("Color Picker Information"),
+                         tool_manager_help_func, NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
       switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (tool->drawable)))
@@ -351,6 +355,9 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
 
 	 NULL);
     }
+
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (gimp_color_picker_tool_info->shell),
+                                     GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
 
   /*  Keep the coordinates of the target  */
   gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),

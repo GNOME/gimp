@@ -32,6 +32,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "offset-dialog.h"
 
 #include "libgimp/gimpintl.h"
@@ -79,6 +81,8 @@ offset_dialog_create (GimpDrawable *drawable)
   GtkWidget    *radio_button;
   const gchar  *title = NULL;
 
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
   off_d = g_new0 (OffsetDialog, 1);
 
   off_d->wrap_around = TRUE;
@@ -94,19 +98,21 @@ offset_dialog_create (GimpDrawable *drawable)
   else
     g_warning ("%s: unexpected drawable type", G_STRLOC);
 
-  off_d->dlg = gimp_dialog_new (title, "offset",
-				gimp_standard_help_func,
-				"dialogs/offset.html",
-				GTK_WIN_POS_NONE,
-				FALSE, TRUE, FALSE,
+  off_d->dlg =
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
+                              _("Offset"), "offset",
+                              GIMP_STOCK_TOOL_MOVE,
+                              title,
+                              gimp_standard_help_func,
+                              "dialogs/offset.html",
 
-				GTK_STOCK_CANCEL, offset_cancel_callback,
-				off_d, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, offset_cancel_callback,
+                              off_d, NULL, NULL, FALSE, TRUE,
 
-				GTK_STOCK_OK, offset_ok_callback,
-				off_d, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, offset_ok_callback,
+                              off_d, NULL, NULL, TRUE, FALSE,
 
-				NULL);
+                              NULL);
 				
   /*  The vbox for first column of options  */
   vbox = gtk_vbox_new (FALSE, 2);

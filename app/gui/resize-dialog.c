@@ -32,6 +32,7 @@
 #include "core/gimplayer.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "resize-dialog.h"
 
@@ -167,11 +168,14 @@ resize_widget_new (GimpImage    *gimage,
   {
     const gchar *wmclass      = NULL;
     const gchar *window_title = NULL;
+    const gchar *stock_id     = NULL;
     gchar *help_page          = NULL;
 
     switch (type)
       {
       case ScaleWidget:
+        stock_id = GIMP_STOCK_SCALE;
+
 	switch (target)
 	  {
 	  case ResizeLayer:
@@ -190,6 +194,8 @@ resize_widget_new (GimpImage    *gimage,
 	break;
 
       case ResizeWidget:
+        stock_id = GIMP_STOCK_RESIZE;
+
 	switch (target)
 	  {
 	  case ResizeLayer:
@@ -208,24 +214,25 @@ resize_widget_new (GimpImage    *gimage,
       }	
 
     resize->resize_shell =
-      gimp_dialog_new (window_title, wmclass,
-		       gimp_standard_help_func, help_page,
-		       GTK_WIN_POS_MOUSE,
-		       FALSE, FALSE, TRUE,
+      gimp_viewable_dialog_new (GIMP_IS_VIEWABLE (object) ?
+                                GIMP_VIEWABLE (object) : GIMP_VIEWABLE (gimage),
+                                window_title, wmclass,
+                                stock_id, window_title,
+                                gimp_standard_help_func, help_page,
 
-		       GTK_STOCK_CANCEL, 
-                       cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
-		       cancel_cb ? user_data : NULL,
-		       cancel_cb ? NULL : (gpointer) 1,
-		       NULL, FALSE, TRUE,
+                                GTK_STOCK_CANCEL, 
+                                cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
+                                cancel_cb ? user_data : NULL,
+                                cancel_cb ? NULL : (gpointer) 1,
+                                NULL, FALSE, TRUE,
 
-		       GIMP_STOCK_RESET, reset_callback,
-		       resize, NULL, NULL, FALSE, FALSE,
+                                GIMP_STOCK_RESET, reset_callback,
+                                resize, NULL, NULL, FALSE, FALSE,
 
-		       GTK_STOCK_OK, ok_cb,
-		       user_data, NULL, NULL, TRUE, FALSE,
+                                GTK_STOCK_OK, ok_cb,
+                                user_data, NULL, NULL, TRUE, FALSE,
 
-		       NULL);
+                                NULL);
 
     g_object_weak_ref (G_OBJECT (resize->resize_shell),
 		       (GWeakNotify) g_free,

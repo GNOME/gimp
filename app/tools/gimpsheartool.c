@@ -37,6 +37,8 @@
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gui/info-dialog.h"
@@ -167,7 +169,10 @@ gimp_shear_tool_transform (GimpTransformTool *transform_tool,
       if (! transform_tool->info_dialog)
 	{
 	  transform_tool->info_dialog =
-            info_dialog_new (_("Shear Information"),
+            info_dialog_new (NULL,
+                             _("Shear"), "shear",
+                             GIMP_STOCK_TOOL_SHEAR,
+                             _("Shearing Information"),
                              gimp_standard_help_func,
                              "tools/transform_shear.html");
 
@@ -188,6 +193,9 @@ gimp_shear_tool_transform (GimpTransformTool *transform_tool,
 				      G_CALLBACK (shear_y_mag_changed),
 				      transform_tool);
 	}
+
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (transform_tool->info_dialog->shell),
+                                         GIMP_VIEWABLE (gimp_image_active_drawable (gdisp->gimage)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (transform_tool->info_dialog->shell),
                                 TRUE);

@@ -57,10 +57,18 @@ struct _InfoDialog
 
 /*  Info Dialog functions  */
 
-InfoDialog *info_dialog_new            (gchar           *title,
+InfoDialog *info_dialog_new            (GimpViewable    *viewable,
+                                        const gchar     *title,
+                                        const gchar     *wmclass_name,
+                                        const gchar     *stock_id,
+                                        const gchar     *desc,
 					GimpHelpFunc     help_func,
 					gpointer         help_data);
-InfoDialog *info_dialog_notebook_new   (gchar           *title,
+InfoDialog *info_dialog_notebook_new   (GimpViewable    *viewable,
+                                        const gchar     *title,
+                                        const gchar     *wmclass_name,
+                                        const gchar     *stock_id,
+                                        const gchar     *desc,
 					GimpHelpFunc     help_func,
 					gpointer         help_data);
 void        info_dialog_free           (InfoDialog      *idialog);

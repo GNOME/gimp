@@ -26,6 +26,8 @@
 
 #include "gui-types.h"
 
+#include "widgets/gimpviewabledialog.h"
+
 #include "info-dialog.h"
 
 #include "gimprc.h"
@@ -158,7 +160,11 @@ info_dialog_delete_callback (GtkWidget *widget,
 }
 
 static InfoDialog *
-info_dialog_new_extended (gchar        *title,
+info_dialog_new_extended (GimpViewable *viewable,
+                          const gchar  *title,
+                          const gchar  *wmclass_name,
+                          const gchar  *stock_id,
+                          const gchar  *desc,
 			  GimpHelpFunc  help_func,
 			  gpointer      help_data,
 			  gboolean      in_notebook)
@@ -173,9 +179,11 @@ info_dialog_new_extended (gchar        *title,
   idialog->field_list = NULL;
   idialog->nfields    = 0;
 
-  shell = g_object_new (GIMP_TYPE_DIALOG, NULL);
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (shell), title);
+  shell = gimp_viewable_dialog_new (viewable,
+                                    title, wmclass_name,
+                                    stock_id, desc,
+                                    help_func, help_data,
+                                    NULL);
 
   g_signal_connect (G_OBJECT (shell), "delete_event",
 		    G_CALLBACK (info_dialog_delete_callback),
@@ -213,28 +221,37 @@ info_dialog_new_extended (gchar        *title,
   gtk_widget_show (idialog->info_table);
   gtk_widget_show (idialog->vbox);
 
-  /*  Connect the "F1" help key  */
-  gimp_help_connect (idialog->shell, help_func, help_data);
-
   return idialog;
 }
 
 /*  public functions  */
 
 InfoDialog *
-info_dialog_notebook_new (gchar        *title,
-			  GimpHelpFunc  help_func,
+info_dialog_notebook_new (GimpViewable *viewable,
+                          const gchar  *title,
+                          const gchar  *wmclass_name,
+                          const gchar  *stock_id,
+                          const gchar  *desc,
+                          GimpHelpFunc  help_func,
 			  gpointer      help_data)
 {
-  return info_dialog_new_extended (title, help_func, help_data, TRUE);
+  return info_dialog_new_extended (viewable, title, wmclass_name,
+                                   stock_id, desc,
+                                   help_func, help_data, TRUE);
 }
 
 InfoDialog *
-info_dialog_new (gchar        *title,
+info_dialog_new (GimpViewable *viewable,
+                 const gchar  *title,
+                 const gchar  *wmclass_name,
+                 const gchar  *stock_id,
+                 const gchar  *desc,
 		 GimpHelpFunc  help_func,
 		 gpointer      help_data)
 {
-  return info_dialog_new_extended (title, help_func, help_data, FALSE);
+  return info_dialog_new_extended (viewable, title, wmclass_name,
+                                   stock_id, desc,
+                                   help_func, help_data, FALSE);
 }
 
 void

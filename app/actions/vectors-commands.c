@@ -42,6 +42,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimppainttool.h"
@@ -435,19 +436,20 @@ vectors_new_vectors_query (GimpImage   *gimage,
   
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("New Path Options"), "new_path_options",
-		     gimp_standard_help_func,
-		     "dialogs/vectors/new_vectors.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                              _("New Path"), "new_path_options",
+                              GTK_STOCK_NEW,
+                              _("New Path Options"),
+                              gimp_standard_help_func,
+                              "dialogs/vectors/new_vectors.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, new_vectors_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, new_vectors_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
@@ -550,19 +552,20 @@ vectors_edit_vectors_query (GimpVectors *vectors)
 
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("Edit Path Attributes"), "edit_path_attributes",
-		     gimp_standard_help_func,
-		     "dialogs/paths/edit_path_attributes.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (vectors),
+                              _("Path Attributes"), "edit_path_attributes",
+                              GIMP_STOCK_EDIT,
+                              _("Edit Path Attributes"),
+                              gimp_standard_help_func,
+                              "dialogs/paths/edit_path_attributes.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, edit_vectors_query_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK, edit_vectors_query_ok_callback,
+                              options, NULL, NULL, TRUE, FALSE,
 
-		     NULL);
+                              NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,

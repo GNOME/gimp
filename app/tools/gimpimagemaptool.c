@@ -30,7 +30,7 @@
 
 #include "file/file-utils.h"
 
-#include "widgets/gimppreview.h"
+#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -185,8 +185,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 {
   GimpImageMapTool *image_map_tool;
   GimpDrawable     *drawable;
-  gchar            *basename;
-  gchar            *str;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
@@ -201,67 +199,31 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   if (! image_map_tool->shell)
     {
       GtkWidget *shell;
-      GtkWidget *frame;
       GtkWidget *vbox;
       GtkWidget *hbox;
-      GtkWidget *image;
-      GtkWidget *preview;
-      GtkWidget *label;
       GtkWidget *toggle;
 
       image_map_tool->shell = shell =
-        gimp_dialog_new (image_map_tool->shell_title,
-                         image_map_tool->shell_name,
-                         tool_manager_help_func, NULL,
-                         GTK_WIN_POS_NONE,
-                         FALSE, TRUE, FALSE,
+        gimp_viewable_dialog_new (NULL,
+                                  image_map_tool->shell_title,
+                                  image_map_tool->shell_name,
+                                  image_map_tool->stock_id,
+                                  image_map_tool->shell_desc,
+                                  tool_manager_help_func, NULL,
 
-                         GTK_STOCK_CANCEL, gimp_image_map_tool_cancel_clicked,
-                         image_map_tool, NULL, NULL, FALSE, TRUE,
+                                  GTK_STOCK_CANCEL,
+                                  gimp_image_map_tool_cancel_clicked,
+                                  image_map_tool, NULL, NULL, FALSE, TRUE,
 
-                         GIMP_STOCK_RESET, gimp_image_map_tool_reset_clicked,
-                         image_map_tool, NULL, NULL, TRUE, FALSE,
+                                  GIMP_STOCK_RESET,
+                                  gimp_image_map_tool_reset_clicked,
+                                  image_map_tool, NULL, NULL, TRUE, FALSE,
 
-                         GTK_STOCK_OK, gimp_image_map_tool_ok_clicked,
-                         image_map_tool, NULL, NULL, TRUE, FALSE,
+                                  GTK_STOCK_OK,
+                                  gimp_image_map_tool_ok_clicked,
+                                  image_map_tool, NULL, NULL, TRUE, FALSE,
 
-                         NULL);
-
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), frame,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_widget_show (hbox);
-
-      image = gtk_image_new_from_stock (image_map_tool->stock_id,
-                                        GTK_ICON_SIZE_BUTTON);
-      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
-
-      image_map_tool->title_preview = preview =
-        gimp_preview_new_by_type (GIMP_TYPE_DRAWABLE, 32, 1, TRUE);
-      gtk_box_pack_end (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-      gtk_widget_show (preview);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (hbox), vbox);
-      gtk_widget_show (vbox);
-
-      label = gtk_label_new (image_map_tool->shell_desc);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      image_map_tool->title_label = label = gtk_label_new (NULL);
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+                                  NULL);
 
       image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -290,20 +252,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  basename =
-    file_utils_uri_to_utf8_basename (gimp_image_get_uri (gdisp->gimage));
-
-  str = g_strdup_printf ("%s (%s)",
-                         basename,
-                         gimp_object_get_name (GIMP_OBJECT (drawable)));
-
-  g_free (basename);
-
-  gimp_preview_set_viewable (GIMP_PREVIEW (image_map_tool->title_preview),
-                             GIMP_VIEWABLE (drawable));
-  gtk_label_set_text (GTK_LABEL (image_map_tool->title_label), str);
-
-  g_free (str);
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
+                                     GIMP_VIEWABLE (drawable));
 
   gtk_widget_show (image_map_tool->shell);
 

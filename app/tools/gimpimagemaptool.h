@@ -50,8 +50,6 @@ struct _GimpImageMapTool
   const gchar  *stock_id;
 
   GtkWidget    *shell;
-  GtkWidget    *title_preview;
-  GtkWidget    *title_label;
   GtkWidget    *main_vbox;
 };
 

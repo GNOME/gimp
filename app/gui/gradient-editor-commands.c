@@ -535,7 +535,6 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
   if (! editor)
     return;
 
-  /*  Create dialog window  */
   dialog =
     gimp_dialog_new ((editor->control_sel_l == editor->control_sel_r) ?
 		     _("Replicate segment") :
@@ -584,7 +583,6 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &editor->replicate_times);
 
-  /*  Show!  */
   gtk_widget_show (dialog);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
