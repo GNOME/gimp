@@ -18,7 +18,7 @@ $font   = "engraver";
 $example = 1;
 
 # set trace level to watch functions as they are executed
-Gimp::set_trace(TRACE_NAME);
+#Gimp::set_trace(TRACE_NAME);
 
 # convert image to indexed
 # and automatically save it as interlaced gif.
@@ -103,5 +103,5 @@ sub net {
   extension_create_images;
 }
 
-exit gimp_main;
+exit main;
 

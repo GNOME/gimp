@@ -3,7 +3,7 @@
 use Gimp;
 use Gimp::Fu;
 
-Gimp::set_trace(TRACE_ALL);
+#Gimp::set_trace(TRACE_ALL);
 
 register "webify",
          "Make an image suitable for the web",

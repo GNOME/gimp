@@ -2,6 +2,9 @@
 
 # Revision 1.0: Released it
 #          1.1: Marc Lehman added undo capability! <pcg@goof.com>
+#          1.2: Added my email, and put it in "Noise" where it belongs 
+#                <sjburges@gimp.org>
+
 
 use Gimp;
 use Gimp::Fu;
@@ -10,9 +13,9 @@ register "feedback",
          "Take an image and feed it back onto itself multiple times",
          "This plug-in simulates video feedback.  It makes for kinda a neat desktop if you're into that sort of thing",
          "Seth Burgess",
-         "Seth Burgess",
-         "1.1",
-         "<Image>/Filters/Misc/feedback",
+         "Seth Burgess <sjburges\@gimp.org>",
+         "2-15-99",
+         "<Image>/Filters/Noise/Feedback",
          "RGB, GRAY",
          [
           [PF_SLIDER,	"offset",	"the amount the frames will offset", 3, [0, 255, 1]],

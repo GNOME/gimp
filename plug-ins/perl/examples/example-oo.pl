@@ -33,5 +33,5 @@ sub query {
                          [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
 }
 
-exit gimp_main;
+exit main;
 

@@ -113,18 +113,18 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
             PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
             PF_BRUSH PF_PATTERN PF_GRADIENT);
 
-@EXPORT = (qw(register main gimp_main),@_params);
+@EXPORT = (qw(register main),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
 %EXPORT_TAGS = (params => [@_params]);
 
+sub import {
+   local $^W=0;
+   shift @_ if $_[0] =~ /::/;
+   Gimp::Fu->export_to_level(1,@_);
+}
+
 # the old value of the trace flag
 my $old_trace;
-
-sub import {
-   undef *{caller()."::main"};
-   undef *{caller()."::gimp_main"};
-   goto &Exporter::import;
-}
 
 sub _default {
    my $d = shift;
@@ -212,7 +212,7 @@ sub interact($$$@) {
            
         } elsif($type == PF_FONT) {
            my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-           my $def = "-*-helvetica-o-normal--34-*-*-*-*-*-*-*";
+           my $def = "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1";
            my $val;
            
            my $l=new Gtk::Label "!error!";
@@ -893,8 +893,10 @@ sub save_image($$) {
    my $layer = $img->get_active_layer;
    
    if ($type eq "JPG" or $type eq "JPEG") {
-      Gimp->file_jpeg_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$quality,$smooth,1);
+      eval { Gimp->file_jpeg_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$quality,$smooth,1) };
+      Gimp->file_jpeg_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$quality,$smooth,1,1,"") if $@;
    } elsif ($type eq "GIF") {
+      $img->convert_indexed (1,256) unless $layer->indexed;
       Gimp->file_gif_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$interlace,0,0,0);
    } elsif ($type eq "PNG") {
       Gimp->file_png_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$interlace,$compress);
@@ -915,12 +917,9 @@ sub print_switches {
    }
 }
 
-*main = *gimp_main = sub {
-   if (!@scripts) {
-      # it is now legal to register no scripts (i.e. when PDL is required but not found
-      #die "well, there are no scripts registered.. what do you expect?\n";
-      Gimp::main;
-   } elsif ($Gimp::help) {
+sub main {
+   $old_trace = Gimp::set_trace (0);
+   if ($Gimp::help) {
       my $this=this_script;
       print <<EOF;
        interface-arguments are
@@ -929,10 +928,8 @@ sub print_switches {
        script-arguments are
 EOF
       print_switches ($this);
-   } else {
-      $old_trace = Gimp::set_trace (0);
-      Gimp::main;
    }
+   Gimp::main;
 };
 
 sub logo {

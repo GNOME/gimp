@@ -78,11 +78,6 @@ sub alpha2col {
 		}		
 	$target_layer->set_visible(1);
 	gimp_palette_set_background($color);
-#	$newlay = gimp_layer_new (  $img, 
-#								$target_layer->width, 
-#								$target_layer->height, 
-#								1, "NewLayer", 100, NORMAL);
-#	$img->add_layer($newlay, scalar(@layers));	
 	$newlay = $target_layer->copy(1);
 	$img->add_layer($newlay, 0);	
 	$newlay->set_offsets(@offsets);
@@ -107,8 +102,8 @@ register
 	"Change the current alpha to a selected color.",
 	"Seth Burgess",
 	"Seth Burgess<sjburges\@gimp.org>",
-	"1998-10-18",
-	"<Image>/Filters/Misc/Alpha2Color",
+	"2-15-98",
+	"<Image>/Image/Colors/Alpha2Color",
 	"RGBA",
 	[
 	 [PF_COLOR, "Color", "Color for current alpha", [127,127,127]]

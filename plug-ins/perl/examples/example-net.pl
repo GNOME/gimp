@@ -29,7 +29,7 @@ sub net {
 #  Gimp::Net::server_quit;  # kill the gimp-perl-server-extension (ugly name)
 }
 
-exit gimp_main;
+exit main;
 
 
 

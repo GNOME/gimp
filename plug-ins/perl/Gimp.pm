@@ -6,13 +6,13 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
             @gimp_gui_functions
-            $help $verbose $host $gimp_main);
+            $help $verbose $host);
 
 use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.054;
+$VERSION = 1.055;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -57,7 +57,7 @@ $VERSION = 1.054;
 ));
 
 @_procs = qw(
-	gimp_main	main
+	main
 );
 
 bootstrap Gimp $VERSION;
@@ -155,7 +155,7 @@ sub import($;@) {
    
    # make a quick but dirty guess ;)
    
-   @_=qw(gimp_main main xlfd_size :auto) unless @_;
+   @_=qw(main xlfd_size :auto) unless @_;
    
    for(@_) {
       if ($_ eq ":auto") {
@@ -277,9 +277,9 @@ for(qw(_gimp_procedure_available gimp_call_procedure set_trace)) {
    *$_ = \&{"${interface_pkg}::$_"};
 }
 
-*main  = *gimp_main = \&{"${interface_pkg}::gimp_main"};
-*init  = *gimp_init = \&{"${interface_pkg}::gimp_init"};
-*end   = *gimp_end  = \&{"${interface_pkg}::gimp_end" };
+*main               = \&{"${interface_pkg}::gimp_main"};
+*init               = \&{"${interface_pkg}::gimp_init"};
+*end                = \&{"${interface_pkg}::gimp_end" };
 
 *lock  = \&{"${interface_pkg}::lock" };
 *unlock= \&{"${interface_pkg}::unlock" };
@@ -484,7 +484,7 @@ All constants from gimpenums.h (BG_IMAGE_FILL, RUN_NONINTERACTIVE, NORMAL_MODE, 
 
 =back
 
-The default (unless '' is specified) is C<gimp_main main :auto>.
+The default (unless '' is specified) is C<main xlfd_size :auto>.
 
 =head1 GETTING STARTED
 
@@ -553,7 +553,7 @@ main eventloop.
 =head1 CALLBACKS
 
 If you use the plain Gimp module (as opposed to Gimp::Fu), your program
-should only call one function: C<gimp_main>. Everything else is going to be
+should only call one function: C<main>. Everything else is going to be
 B<called> from The Gimp at a later stage. For this to work, you should
 define certain call-backs in the same module you called C<Gimp::main>:
 
@@ -641,7 +641,7 @@ speak for you), or just plain interesting functions.
 
 =over 4
 
-=item main(), gimp_main()
+=item main(), Gimp::main()
 
 Should be called immediately when perl is initialized. Arguments are not yet
 supported. Initializations can later be done in the init function.
@@ -658,7 +658,7 @@ size (no joke ;). Example:
 =item Gimp::init([connection-argument]), Gimp::end()
 
 These is an alternative and experimental interface that replaces the call to
-gimp_main and the net callback. At the moment it only works for the Net
+Gimp::main and the net callback. At the moment it only works for the Net
 interface (L<Gimp::Net>), and not as a native plug-in. Here's an example:
 
  use Gimp;

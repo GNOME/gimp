@@ -342,7 +342,7 @@ sub delete_images {
 }
 
 ######################################################################
-#  Net is where gimp_main continues after it has connected to
+#  Net is where main continues after it has connected to
 #  gimp.
 ######################################################################
 sub net {
@@ -446,4 +446,4 @@ __
 }
 
 # Translate background into a color according to the X11 color dbase.
-exit gimp_main;
+exit main;

@@ -87,7 +87,7 @@ sub write_logo {
   gimp_layer_translate ($shadow, $th*0.1, $th*0.3);
   plug_in_gauss_rle ($shadow, 1, 1, 1);
   
-  gimp_hue_saturation($img, $bg, ALL_HUES, 0, 0, $active ? 10 : -40);
+  gimp_hue_saturation($bg, ALL_HUES, 0, 0, $active ? 10 : -40);
   
   plug_in_nova ($bg, $h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
   plug_in_nova ($bg, $w-$h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
@@ -96,7 +96,7 @@ sub write_logo {
   if ($uc) {
     set_fg($active ? "#a00000" : "#000000");
     my ($uc,$tw,$th,$ta,$td) = text ($img, "u/c", 1, $font, $h*0.4);
-    gimp_rotate ($img,$uc,1,0.2);
+    gimp_rotate ($uc,1,0.2);
     gimp_layer_translate ($uc,$w*0.84,($h-$th+$td)/2);
   }
   
@@ -145,5 +145,5 @@ sub net {
   extension_homepage_logo;
 }
 
-exit gimp_main;
+exit main;
 

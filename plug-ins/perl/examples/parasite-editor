@@ -2,10 +2,9 @@
 
 #BEGIN {$^W=1};
 
-require 5.005;
-
 use Gimp ();
 use Gimp::Fu;
+BEGIN { $] >= 5.005 or exit main }
 use Gtk;
 
 Gtk->init;

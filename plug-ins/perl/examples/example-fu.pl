@@ -28,7 +28,6 @@ register "my_first_gimp_fu",				# fill in name
    # now do sth. useful with the garbage we got ;)
    my($width,$height,$text,$font,$fg,$bg,$ignore,$brush,$pattern,$gradient)=@_;
    
-   # uncomment the next line to enable tracing
    Gimp::set_trace(TRACE_ALL);
 
    my $img=new Image($width,$height,RGB);

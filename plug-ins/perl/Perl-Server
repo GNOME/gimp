@@ -16,6 +16,7 @@ use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
             %object_dynamic $object_uid %objects $auth @authorized $exclusive
             $rm $saved_rm);
+# the '' might be required (i.e. no ())
 use Gimp '';
 use Gimp::Net qw(:server);
 

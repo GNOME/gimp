@@ -31,10 +31,10 @@ REGION						T_PREF
 INPUT
 
 T_PREF
-	$var = unbless ($arg, PKG_$ntype, 0)
+	$var = unbless_croak ($arg, PKG_$ntype)
 
 T_PREF_ANY
-	$var = unbless ($arg, PKG_ANY, 0)
+	$var = unbless_croak ($arg, PKG_ANY)
 
 T_GDRAWABLE
 	$var = old_gdrawable ($arg)
