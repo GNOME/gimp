@@ -33,6 +33,7 @@ my %description = (
    'dumper'     => 'the Data::Dumper module',
    'never'      => '(for testing, will never be present)',
    'unix'	=> 'a unix-like operating system',
+   'persistency'=> 'Gimp::Data can handle persistency',
 );
 
 sub import {
@@ -85,6 +86,8 @@ sub present {
       eval { require Gtk::XmHTML }; $@ eq "";
    } elsif ($_ eq "dumper") {
       eval { require Data::Dumper }; $@ eq "";
+   } elsif ($_ eq "persistency") {
+      eval { require Data::Dumper }; $@ eq "";
    } elsif ($_ eq "unix") {
       !{
          MacOS		=> 1,
@@ -128,15 +131,15 @@ __END__
 
 =head1 NAME
 
-Gimp::Features - check for specific features to be present before registering the script.
+Gimp::Feature - check for specific features to be present before registering the script.
 
 =head1 SYNOPSIS
 
-  use Gimp::Features;
+  use Gimp::Feature;
 
 or
 
-  use Gimp::Features qw(feature1 feature2 ...);
+  use Gimp::Feature qw(feature1 feature2 ...);
 
 =head1 DESCRIPTION
 
@@ -175,6 +178,12 @@ checks for the presence of the Gtk::XmHTML module.
 
 checks wether the script runs on a unix-like operating system. At the
 moment, this is every system except windows, macos, os2 and vms.
+
+=item C<persistency>
+
+checks wether the C<Gimp::Data> module (L<Gimp::Data>) can handle complex
+persistent data structures, i.e. perl references in addition to plain
+strings.
 
 =back
 

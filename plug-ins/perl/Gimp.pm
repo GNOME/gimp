@@ -242,6 +242,7 @@ $spawn_opts = "";
 # extra check for Gimp::Feature::import
 $in_query=0 unless defined $in_query;		# perl -w is SOOO braindamaged
 $in_top=$in_quit=$in_run=$in_net=$in_init=0;	# perl -w is braindamaged
+($function)=$0=~/([^\/\\]+)$/;
 
 $verbose=0;
 
@@ -402,6 +403,7 @@ sub main {
    $caller=caller;
    #d# #D# # BIG BUG LURKING SOMEWHERE
    # just calling exit() will be too much for bigexitbug.pl
+   #&{"$interface_pkg\::gimp_main"};
    xs_exit(&{"$interface_pkg\::gimp_main"});
 }
 

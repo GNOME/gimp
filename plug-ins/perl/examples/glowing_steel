@@ -316,9 +316,7 @@ register
    [PF_TOGGLE, "highlight_edges", "", 1],
    [PF_TOGGLE, "antialias", "", 1]
   ],
-  [
-   [PF_IMAGE, "image", "resulting image"]
-  ],
+  [PF_IMAGE],
   \&perl_fu_glowing_steel;
 
 exit main;

@@ -18,14 +18,12 @@ script-fu 4.9 vs. 3.3
 
 bugs
 
+  * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-[DONE]  * /root/gimprelease && TODO -> publish!
+[DONE]  * /root/gimprelease && TODO -> publish! PUSH PUSH
   * perl_require_pv with _59?
   * scroll behaviour, use clist instead of list?
-[DONE]  * can_Default for oter OK-buttons
   * document Gimp::PDL and rect2, ...2 functions!
-[DONE]  * MJH: glib-config(!!!)
-[KILL]  * empty desfiption -> no display in PDB?`
   * podestions are not expanded in dialog help strings etc..
   * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.

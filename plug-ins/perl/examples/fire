@@ -59,11 +59,11 @@ register "firetext",
           [PF_TEXT,	"text",		"The text to render (can be multi-line)", "burn,\nBurn,\nBURN!"],
           [PF_FONT,	"font",		"The font to use"],
           [PF_TOGGLE,	"inverse",	"Invert source mask?", 1],
-          [PF_SLIDER,	"strength",	"The strength (length) of the bursts", 50, [1,300,5]],
+          [PF_SLIDER,	"strength",	"The strength (length) of the bursts", 10, [1,300,5]],
           [PF_GRADIENT,	"gradient",	"The gradient to use for the colour, e.g. 'Incandescent' or 'Burning_Paper'", 'Burning_Transparency'],
           [PF_TOGGLE,	"displace",	"Additionally displace with itself?", 0],
          ],
-         [[PF_IMAGE,	"image",	"The resulting image"]],
+         [PF_IMAGE],
          ['gimp-1.1'],
 	 sub {
    my ($text, $font, $inverse, $strength, $gradient, $displace) = @_;

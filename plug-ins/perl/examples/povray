@@ -1,0 +1,186 @@
+#!/usr/bin/perl
+
+use Gimp;
+use Gimp::Feature qw(gimp-1.1 persistency);
+use Gimp::Fu;
+use Gimp::Data;
+
+use constant DEG2RAD => 4 / 180 * atan2 1,1;
+
+sub set_preferences {
+   $Gimp::Data{povray_preferences} = \@_;
+   ();
+}
+
+sub get_preferences {
+   my $data;
+   while (!ref ($data=$Gimp::Data{povray_preferences})) {
+      Gimp->perl_fu_povray_preferences_set(RUN_INTERACTIVE,(undef)x3);
+   }
+   ($pov_path,$pov_quality,$pov_args)=@$data;
+}
+
+register "povray_preferences_set",
+	 "Set povray preferences",
+	 "=pod(DESCRIPTION)",
+	 "Marc Lehmann <pcg\@goof.com>",
+	 "Marc Lehmann",
+	 "19990803",
+	 "<Toolbox>/Xtns/Render/Povray/Preferences",
+	 "*",
+	 [
+          [PF_FILE,	"povray_path",	"The path to the povray executable",	"x-povray"],
+          [PF_STRING,	"quality",	"The quality setting (0..9, R)",	"R"],
+          [PF_STRING,	"extra_args",	"Extra arguments for povray invocation","+d"],
+         ],
+         \&set_preferences;
+
+my @camera = (
+   [PF_SLIDER,	'cam_phi',	'The camera angle around the z axis',	 	 0, [-180,180,1]],
+   [PF_SLIDER,	'cam_theta',	'The camera angle relative to the z-Axis',	 0, [0,90,1]],
+   [PF_SLIDER,	'cam_radius',	'The camera distance',				 1, [0,25,0.3]],
+   [PF_SLIDER,	'cam_fov',	'The camera field-of-view',			30, [0,90,1]],
+);
+
+sub get_camera(\@) {
+   (shift @{$_[0]},shift @{$_[0]},shift @{$_[0]},shift @{$_[0]});
+}
+
+sub gen_camera {
+   my($p,$v,$r,$fov)=@_;
+   my($x,$y,$z);
+   $x = $r * sin ($v * DEG2RAD) * cos ($p * DEG2RAD);
+   $y = $r * sin ($v * DEG2RAD) * sin ($p * DEG2RAD);
+   $z = $r * cos ($v * DEG2RAD);
+   "camera { location <$x, $y, $z> angle $fov look_at <0,0,0> }";
+}
+
+$prelude = <<I;
+#include "colors.inc"
+#include "textures.inc"
+#include "woods.inc"
+#include "skies.inc"
+#include "stars.inc"
+#include "stones.inc"
+#include "stoneold.inc"
+#include "golds.inc"
+/*#include "glass.inc"*/
+I
+
+my @unlink;
+
+sub cleanup {
+   unlink @unlink;
+   undef @unlink;
+}
+
+END { cleanup }
+
+sub run_povray {
+   my($w,$h,$script)=@_;
+   my($scr_path) = Gimp->temp_name("pov");
+   my($ppm_path) = Gimp->temp_name("ppm");
+   my($err_path) = Gimp->temp_name("err");
+   my($msg_path) = Gimp->temp_name("msg");
+   push @unlink, $scr_path, $ppm_path, $err_path, $msg_path;
+   open SCR, ">$scr_path" or die "Unable to create pov script '$scr_path': $!\n";
+   print SCR $prelude;
+   print SCR $script;
+   close SCR;
+   get_preferences,
+   my $cmd ="$pov_path +V -GS -GD -GR ".
+            "+GF$err_path +GW$msg_path ".
+            "+Q$pov_quality +i$scr_path $pov_args +FP +O$ppm_path +W$w +H$h";
+   open POV,"$cmd 2>&1 |" or die "Unable to run '$cmd': $!\n";
+   init Progress "Rendering...";
+   local $/ = "\r";
+   while (<POV>) {
+      for (split /\n/) {
+         if (/endering line\s+(\d+) of\s+(\d+)/) {
+            update Progress $1/$2;
+         } else {
+            #print "POV: $_\n";
+         }
+      }
+   }
+   my $res = close POV >> 8;
+   if (open ERR, "<$err_path") {
+      my $err = do { local $/; <ERR> };
+      close ERR;
+      $err =~ s/^\s+//; $err =~ s/\s+$//;
+      die "POVRAY ERROR OUTPUT:\n$err\n" if $err;
+   }
+   if (open MSG, "<$msg_path") {
+      my $err = do { local $/; <MSG> };
+      close MSG;
+      $err =~ s/^\s+//; $err =~ s/\s+$//;
+      Gimp->message("POVRAY WARNING OUTPUT:\n$err\n") if $err;
+   }
+   die "Povray returned with non-zero exit status ($res)\n" if $res;
+   -f $ppm_path or die "Povray produced no output image\n";
+
+   $ppm_path;
+}
+
+sub load_img {
+   my $img = Gimp->file_load((shift)x2);
+   $img->clean_all;
+   cleanup; # FIXME: remove when xs_exit repaired
+   $img;
+}
+
+register "povray_render_texture",
+	 "Render a povray texture into a new image",
+	 "=pod(DESCRIPTION)",
+	 "Marc Lehmann <pcg\@goof.com>",
+	 "Marc Lehmann",
+	 "19990803",
+	 "<Toolbox>/Xtns/Render/Povray/Texture",
+	 "*",
+	 [
+          @camera,
+          [PF_SPINNER,	"width",	"The resulting image width",	200, [1, 4096, 1]],
+          [PF_SPINNER,	"height",	"The resulting image height",	200, [1, 4096, 1]],
+          [PF_STRING,	'texture',	'The Povray texture name',	'T_Wood1'],
+          [PF_SLIDER,	"xscale",	"Horizontal Scale Factor", 1, [0.0001, 5, 0.1]],
+          [PF_SLIDER,	"yscale",	"Vertical Scale Factor", 1, [0.0001, 5, 0.1]],
+          [PF_SLIDER,	"rotation",	"Rotate about y (deg)", 0, [0, 360]],
+         ],
+         [PF_IMAGE],
+         sub {
+   my(@cam)=get_camera(@_);
+   my($w,$h,$texturename,$xscale,$yscale,$rotation)=@_;
+   load_img run_povray $w,$h,<<I . gen_camera @cam;
+#declare TileTexture = texture { $texturename scale <$xscale,$yscale,1> rotate $rotation * y }
+#declare TileSize = <1, 1, 1>;
+
+#declare _TX_tempver = version;
+#declare _TX_size = TileSize * <1, 1, 1>;
+#declare TileSeam = 1;
+/*camera {location <.5, .5, -1> look_at <.5, .5, 0> orthographic up y right $aspectratio * x} */
+
+#declare _TX_xtexture = texture {gradient x texture_map {
+   [.5 - (TileSeam / 2) TileTexture scale <1 / _TX_size.x, 1, 1>]
+   [.5 + (TileSeam / 2) TileTexture scale <1 / _TX_size.x, 1, 1> translate x]}}
+plane {z, 0 texture {gradient y texture_map {
+   [.5 - (TileSeam / 2) _TX_xtexture scale <1, 1 / _TX_size.y, 1>]
+   [.5 + (TileSeam / 2) _TX_xtexture scale <1, 1 / _TX_size.y, 1> 
+       translate y]}}}
+
+light_source {z*100000 rgb <1, 1, 1>}
+
+I
+};
+
+exit main;
+
+=head1 DESCRIPTION
+
+No docs. Yet. Bug me to provide them.
+
+=head1 ACK!
+
+Thanks to Aaron Sherman who inspired me, to John Pitney who wrote some
+other, similar plug-in and to Adrian Likins who knew that. Not that this
+plug-in is cool enough to warrant a long list of thanks ;)
+

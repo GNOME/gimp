@@ -834,7 +834,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
       case PARAM_FLOAT:		sv = newSVnv(arg->data.d_float	); break;
       case PARAM_STRING:
 	sv = arg->data.d_string ? neuSVpv(arg->data.d_string)
-	                        : sv_newmortal ();
+	                        : newSVsv (&PL_sv_undef);
 	break;
 	
       case PARAM_DISPLAY:
@@ -864,7 +864,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
           }
 
           if (id == -1)
-            PUSHs (sv_newmortal ());
+            PUSHs (newSVsv (&PL_sv_undef));
           else
             sv = newSViv (id);
         }

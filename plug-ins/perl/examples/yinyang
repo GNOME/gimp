@@ -116,9 +116,7 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 		[PF_STRING, "aobttom_eye_filename", "eye 2", ""],
 		[PF_TOGGLE, "anti_aliasing", "", 1]
 	],
-        [
-        	[PF_IMAGE, "image", "Resulting Image"],
-        ],
+        [PF_IMAGE],
 	\&yinyang);
 
 exit main;

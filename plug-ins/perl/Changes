@@ -1,5 +1,9 @@
 Revision history for Gimp-Perl extension.
 
+1.11  Tue Aug  3 03:23:23 CEST 1999
+	NOTYET - EXPERIMENTALLY re-enabled the return path from main. It works
+        NOTYET   with perl 5.005_58, but I remember problems with other versions.
+        NOTYET  This re-enables END handlers etc.
 	- updated seths scripts, added remove_guides...
         - examples/glowing_steel was missing from the MANIFEST!!
         - data types for RADIO, SPINNER etc.. are guessed better now.
@@ -18,6 +22,10 @@ Revision history for Gimp-Perl extension.
         - gimpdoc can now output a html file tree.
         - moved the Perl-Server and Perl Control Center into the Perl submenu.
         - Gimp::Parasite no longer has a search path.
+        - Gimp::Data now handles data persistency.
+        - Gimp::Fu augments (some) return value specifications.
+        - fixed a "Attempt to free unreferenced scalar" bug that was caused
+          by passing undef for strings.
         
 1.1   Fri Jul 30 07:37:30 CEST 1999
 	- one of the most successful releases, in terms of features & bugfixes.

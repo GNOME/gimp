@@ -1,5 +1,21 @@
 package Gimp::Data;
 
+sub freeze($) {
+   my $data = shift;
+   eval { require Data::Dumper } or return;
+   $data = new Data::Dumper [$data];
+   $data->Purity(1)->Terse(0);
+   $data = $data->Dump;
+}
+
+sub thaw {
+   my $data = shift;
+   eval { require Data::Dumper } or return;
+   my $VAR1; # Data::Dumper is braindamaged
+   local $^W=0; # perl -w is braindamaged
+   eval $data;
+}
+
 sub TIEHASH {
    my $pkg = shift;
    my $self;
@@ -8,13 +24,22 @@ sub TIEHASH {
 }
 
 sub FETCH {
-   eval { Gimp->find_parasite ($_[1])->data }
-    || ($@ ? Gimp->get_data ($_[1]) : ());
+   my $data = eval { Gimp->find_parasite ($_[1])->data }
+                || ($@ ? Gimp->get_data ($_[1]) : ());
+   if ($data =~ /^\$VAR1 = \[/) {
+      thaw $data;
+   } else {
+      $data;
+   }
 }
      
 sub STORE {
-   eval { Gimp->attach_parasite ([$_[1], Gimp::PARASITE_PERSISTENT, $_[2]]) };
-   Gimp->set_data ($_[1], $_[2]) if $@;
+   my $data = $_[2];
+   if (ref $data) {
+      $data = freeze $data or return;
+   }
+   eval { Gimp->attach_parasite ([$_[1], Gimp::PARASITE_PERSISTENT, $data]) };
+   Gimp->set_data ($_[1], $data) if $@;
 }
 
 sub EXISTS {
@@ -58,6 +83,28 @@ like your plug-in's name. As an example, the Gimp::Fu module uses
 
 This module might use a persistant implementation, i.e. your data might
 survive a restart of the Gimp application, but you cannot count on this.
+
+Gimp::Data will try to freeze your data when you pass in a reference. On
+retrieval, the data is thawed again. See L<Storable> for more info. This
+might be implemented through either Storable or Data::Dumper, or not
+implemented at all (i.e. silently fail) ;)
+
+=head1 PERSISTANCE
+
+Gimp::Data contains the following functions to ease applications where
+persistence for perl data structures is required:
+
+=over 4
+
+=item Gimp::Data::freeze(reference)
+
+Freeze (serialize) the reference.
+
+=item Gimp::Data::thaw(data)
+
+Thaw (unserialize) the dsata and return the original reference.
+
+=back
 
 =head1 LIMITATIONS
 

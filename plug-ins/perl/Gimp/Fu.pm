@@ -760,6 +760,8 @@ Gimp::on_net {
 
 @load_retvals = ([&Gimp::PARAM_IMAGE	, "image",	"Output image"]);
 
+$image_retval = [&Gimp::PARAM_IMAGE	, "image",	"The resulting image"];
+
 Gimp::on_query {
    my($type);
    expand_podsections;
@@ -767,6 +769,13 @@ Gimp::on_query {
    for(@scripts) {
       my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
          $menupath,$imagetypes,$params,$results,$features,$code)=@$_;
+
+      for (@$results) {
+         next if ref $_;
+         if ($_ == &Gimp::PARAM_IMAGE) {
+            $_ = $image_retval;
+         }
+      }
 
       for(@$features) {
          next script unless fu_feature_present($_,$function);
@@ -918,8 +927,13 @@ See the section PARAMETER TYPES for the supported types.
 =item the return values
 
 This is just like the parameter array, just that it describes the return
-values. Of course, default values don't make much sense here. (Even if they
-did, it's not implemented anyway..). This argument is optional.
+values. Of course, default values and the enhanced Gimp::Fu parameter
+types don't make much sense here. (Even if they did, it's not implemented
+anyway..). This argument is optional.
+
+If you supply a parameter type (e.g. C<PF_IMAGE>) instead of a full
+specification (C<[PF_IMAGE, ...]>), Gimp::Fu might supply some default
+values. This is only implemented for C<PF_IMAGE> at the moment.
 
 =item the features requirements
 
@@ -1080,6 +1094,7 @@ sub register($$$$$$$$$;@) {
    @_==0 or die "register called with too many or wrong arguments\n";
    
    for my $p (@$params,@$results) {
+      next unless ref $p;
       int($p->[0]) eq $p->[0] or croak "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
       $p->[1]=~/^[0-9a-z_]+$/ or carp "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
    }
@@ -1125,17 +1140,15 @@ sub register($$$$$$$$$;@) {
       if ($run_mode == &Gimp::RUN_INTERACTIVE
           || $run_mode == &Gimp::RUN_WITH_LAST_VALS) {
          my $fudata = $Gimp::Data{"$function/_fu_data"};
-         my $VAR1; # Data::Dumper is braindamaged
-         local $^W=0; # perl -w is braindamaged
 
-         if ($run_mode == &Gimp::RUN_WITH_LAST_VALS && $fudata ne "") {
-            @_ = @{eval $fudata};
+         if ($run_mode == &Gimp::RUN_WITH_LAST_VALS && $fudata) {
+            @_ = @{$fudata};
          } else {
             if (@_) {
                my $res;
                local $^W=0; # perl -w is braindamaged
                # gimp is braindamaged, is doesn't deliver useful values!!
-               ($res,@_)=interact($function,$blurb,$help,$params,@{eval $fudata});
+               ($res,@_)=interact($function,$blurb,$help,$params,@{$fudata});
                return unless $res;
             }
          }
@@ -1151,8 +1164,7 @@ sub register($$$$$$$$$;@) {
       $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
       $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
       
-      eval { require Data::Dumper };
-      $Gimp::Data{"$function/_fu_data"}=Data::Dumper::Dumper([@_]) unless $@;
+      $Gimp::Data{"$function/_fu_data"}=[@_];
       
       print $function,"(",join(",",(@pre,@_)),")\n" if $Gimp::verbose;
       

@@ -26,9 +26,7 @@ register "random_art_1",			# Funktionsname
           [PF_SLIDER,	'feather',	'Feather Radius',	30, [1, 100]],
           [PF_BOOL,	'supersample',	'Adaptive Supersampling?', 0],
          ],
-         [
-          [PF_IMAGE,	'image',	'the resulting image'],
-         ],
+         [PF_IMAGE],
          sub {					# Perl-Code
    # Die Parameter werden ganz "normal" übergeben:
    my ($w,$h,$num_poly,$edges,$revolutions,$feather,$super)=@_;
