@@ -161,7 +161,7 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
 {
   (* callback) (GIMP_TYPE_CURVES_TOOL,
                 GIMP_TYPE_HISTOGRAM_OPTIONS,
-                gimp_histogram_options_gui,
+                gimp_color_options_gui,
                 0,
                 "gimp-curves-tool",
                 _("Curves"),
