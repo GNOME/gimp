@@ -1,8 +1,56 @@
+1999-02-16  Jay Cox  <jaycox@earthlink.net>
+
+	* app/gimplut[FP].h: oops, these should have been added with the
+ 	last commit.
+
+1999-02-16  Jay Cox  <jaycox@earthlink.net>
+
+	* app/gimplut.[ch]: new source files that implement pixel Look Up
+ 	Table functions.
+	
+	* app/Makefile.am: build gimplut.[ch]
+
+	* app/brightness_contrast.c
+	* app/curves.c
+	* app/invert.c
+	* app/levels.c
+	* app/posterize.c: Use the new lut functions.  Use
+ 	pixel_region_process_parallel in the PDB versions of these routines.
+
+	* libgimp/parasite.h
+	* libgimp/parasite.c: new functions parasite_name and
+ 	parasite_compare.
+	
+	* app/gimpdrawable.c:
+	* app/gimpdrawable.h: new function
+ 	gimp_drawable_get_color_at(...) returns the RGBA[color index]
+ 	value at a specified position in the drawable.  Don't set the dirty
+ 	bit on the image if a new parasite is the same as the old.
+	
+	* app/gimpimage.c
+	* app/gimpimage.h new function
+ 	gimp_image_get_color_at(...) returns the RGBA[color index]
+ 	value at a specified position in the drawable.  Don't set the dirty
+ 	bit on the image if a new parasite is the same as the old.
+	
+	* app/by_color_select.c
+	* app/color_picker.c: use the new gimp_*_get_color_at
+ 	functions instead of messing with the tiles.
+	
+	* app/layer.c: fixed a minor warning.
+
+	* app/commands.c: 
+	don't scale the image if the new size == the old size
+	
+	* app/channel.c: optimized channel_bounds by only checking the
+ 	pixels in a tile if it is not already entirely within the
+ 	currently computed bounds.
+	
 Mon Feb 15  21:14:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* plug-ins/perl/examples/prep4gif.pl
 	* plug-ins/perl/examples/alpha2color.pl
 	* plug-ins/perl/examples/windy.pl
-    * plug-ins/perl/examples/feedback.pl 
+	* plug-ins/perl/examples/feedback.pl 
 	* plug-ins/perl/examples/xachlego.pl 
 	* plug-ins/perl/examples/xachshadows.pl: added email addresses and 
        put things in a more sane spot in the menus
