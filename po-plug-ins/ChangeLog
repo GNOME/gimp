@@ -1,3 +1,7 @@
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/common/retinex.c.
+
 2004-10-26  Raphael Higino  <raphaelh@cvs.gnome.org>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation.
