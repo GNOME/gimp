@@ -34,6 +34,15 @@
 #define INDEXEDA_IMAGE  0x20
 
 
+
+typedef enum
+{
+  RUN_INTERACTIVE    = 0x0,
+  RUN_NONINTERACTIVE = 0x1,
+  RUN_WITH_LAST_VALS = 0x2
+} RunModeType;
+
+
 typedef struct _PlugIn             PlugIn;
 typedef struct _PlugInDef          PlugInDef;
 typedef struct _PlugInProcDef      PlugInProcDef;

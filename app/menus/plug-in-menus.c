@@ -68,13 +68,6 @@
 
 typedef struct _PlugInBlocked  PlugInBlocked;
 
-typedef enum
-{
-  RUN_INTERACTIVE    = 0x0,
-  RUN_NONINTERACTIVE = 0x1,
-  RUN_WITH_LAST_VALS = 0x2
-} RunModeType;
-
 struct _PlugInBlocked
 {
   PlugIn *plug_in;

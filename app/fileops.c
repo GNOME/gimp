@@ -83,7 +83,8 @@ static gint file_overwrite_delete_callback  (GtkWidget *w,
 					     gpointer   client_data);
 
 static GimpImage* file_open_image   (char *filename,
-				     char *raw_filename);
+				     char *raw_filename,
+				     RunModeType runmode);
 
 static void genbutton_callback (GtkWidget *w,
 				gpointer   client_data);
@@ -136,7 +137,7 @@ static GtkPreview *open_options_preview = NULL;
 static GtkWidget  *open_options_fixed = NULL;
 static GtkWidget  *open_options_label = NULL;
 static GtkWidget  *open_options_frame = NULL;
-static GtkWidget  *open_options_genbutton = NULL;
+static GtkWidget  *open_options_genbuttonlabel = NULL;
 /* Some state for the thumbnailer */
 static gchar      *preview_fullname = NULL;
 
@@ -186,7 +187,7 @@ static ProcRecord file_save_proc =
 {
   "gimp_file_save",
   "Saves a file by extension",
-  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
+  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp she wants to fetch a URL, and the full pathname will not look like a URL.",
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -516,6 +517,7 @@ file_open_callback (GtkWidget *w,
   GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *load_menu;
+  GtkWidget *open_options_genbutton;
   GDisplay *gdisplay;
 
   if (!fileload)
@@ -568,25 +570,25 @@ file_open_callback (GtkWidget *w,
 	
 	vbox = gtk_vbox_new (FALSE, 0);
 	{
-	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 	  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-	  hbox = gtk_hbox_new (TRUE, 1);
+	  hbox = gtk_hbox_new (FALSE, 1);
 	  {
-	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
 	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 	    
 	    label = gtk_label_new (_("Determine file type:"));
-	    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+	    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
 	    gtk_widget_show (label);
 	    
 	    option_menu = gtk_option_menu_new ();
-	    gtk_box_pack_start (GTK_BOX (hbox), option_menu, TRUE, TRUE, 0);
+	    gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, TRUE, 0);
 	    gtk_widget_show (option_menu);
 	    
 	    menus_get_load_menu (&load_menu, NULL);
 	    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
-	    gtk_box_pack_start (GTK_BOX (open_options), frame, FALSE, TRUE, 5);
+	    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 5);
 	  }
 	  gtk_widget_show (hbox);
 	}
@@ -612,31 +614,66 @@ file_open_callback (GtkWidget *w,
 	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
 	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	    open_options_genbutton = gtk_button_new_with_label
-	      ("generate\npreview");
+	    open_options_genbutton = gtk_button_new();
 	    {
 	      gtk_signal_connect (GTK_OBJECT (open_options_genbutton),
 				  "clicked",
 				  (GtkSignalFunc) genbutton_callback,
 				  open_options_genbutton);
 	      gtk_box_pack_end (GTK_BOX (hbox), open_options_genbutton,
-				FALSE, FALSE, 0);
+				TRUE, FALSE, 0);
 	    }
 	    gtk_widget_show (open_options_genbutton);	
 	    
 	    open_options_fixed = gtk_fixed_new ();
 	    {
-	      gtk_widget_set_usize (open_options_fixed, 80, 60);
-	      gtk_box_pack_start (GTK_BOX (hbox), open_options_fixed,
-				  FALSE, FALSE, 0);
+	      GtkWidget* abox;
+	      GtkWidget* sbox;
 	      
-	      open_options_preview = GTK_PREVIEW (gtk_preview_new
-						  (GTK_PREVIEW_COLOR));
+	      gtk_widget_set_usize (open_options_fixed, 80, 60);
+	      gtk_container_add (GTK_CONTAINER (GTK_BIN (open_options_genbutton)), open_options_fixed);
+	      
+	      sbox = gtk_vbox_new(TRUE, 0);
 	      {
+		GtkWidget* align;
+
 		gtk_container_add (GTK_CONTAINER (open_options_fixed),
-				   GTK_WIDGET (open_options_preview));
+				   GTK_WIDGET (sbox));
+
+		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+		{
+		  gtk_widget_set_usize (align, 80, 60);
+		  
+		  gtk_box_pack_start (GTK_BOX (sbox),
+				      GTK_WIDGET (align),
+				      FALSE, TRUE, 0);
+		  
+		  abox = gtk_hbox_new (FALSE, 0);
+		  {
+		    gtk_container_add (GTK_CONTAINER (align), abox);
+		    
+		    open_options_preview = GTK_PREVIEW (gtk_preview_new
+							(GTK_PREVIEW_COLOR));
+		    {
+		      gtk_box_pack_start (GTK_BOX (abox),
+					  GTK_WIDGET (open_options_preview),
+					  FALSE, TRUE, 0);
+		    }
+		    gtk_widget_show(GTK_WIDGET (open_options_preview));
+		    
+		    open_options_genbuttonlabel = gtk_label_new("generate\npreview");
+		    {
+		      gtk_box_pack_start (GTK_BOX (abox),
+					  GTK_WIDGET (open_options_genbuttonlabel),
+					  FALSE, TRUE, 0);
+		    }
+		    gtk_widget_show(GTK_WIDGET (open_options_genbuttonlabel));
+		  }
+		  gtk_widget_show(abox);
+		}
+		gtk_widget_show(align);
 	      }
-	      gtk_widget_show(GTK_WIDGET (open_options_preview));
+	      gtk_widget_show(sbox);
 	    }
 	    gtk_widget_show (open_options_fixed);
 	  }
@@ -655,13 +692,16 @@ file_open_callback (GtkWidget *w,
 
       /* pack the containing open_options hbox into the load-dialog */
       gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
-			open_options, FALSE, FALSE, 5);
+			open_options, FALSE, FALSE, 1);
     }
 
   gtk_frame_set_label (GTK_FRAME(open_options_frame), _("Preview"));
   gtk_label_set_text (GTK_LABEL(open_options_label), "No selection.");
-  gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), FALSE);
+
+  gtk_widget_show (GTK_WIDGET(open_options_genbuttonlabel));
   gtk_widget_hide (GTK_WIDGET(open_options_preview));
+  gtk_widget_set_sensitive (GTK_WIDGET(open_options_frame), FALSE);
+
   gtk_widget_show (open_options);
 
   file_dialog_show (fileload);
@@ -788,7 +828,7 @@ file_revert_callback (GtkWidget *w,
       filename = gimage_filename (gdisplay->gimage);
       raw_filename = g_basename (filename);
 
-      if ((gimage = file_open_image (filename, raw_filename)) != NULL)
+      if ((gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE)) != NULL)
         gdisplay_reconnect (gdisplay, gimage);
       else
         g_message (_("Revert failed."));
@@ -858,7 +898,7 @@ file_save_type_callback (GtkWidget *w,
 }
 
 static GimpImage*
-file_open_image (char *filename, char *raw_filename)
+file_open_image (char *filename, char *raw_filename, RunModeType runmode)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -886,7 +926,7 @@ file_open_image (char *filename, char *raw_filename)
   for (i = 0; i < proc->num_args; i++)
     args[i].arg_type = proc->args[i].arg_type;
 
-  args[0].value.pdb_int = 0;
+  args[0].value.pdb_int = runmode;
   args[1].value.pdb_pointer = filename;
   args[2].value.pdb_pointer = raw_filename;
 
@@ -908,7 +948,7 @@ file_open (char *filename, char *raw_filename)
 {
   GimpImage *gimage;
 
-  if ((gimage = file_open_image (filename, raw_filename)) != NULL)
+  if ((gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE)) != NULL)
     {
       /* enable & clear all undo steps */
       gimage_enable_undo (gimage);
@@ -986,14 +1026,14 @@ file_save_thumbnail (GimpImage* gimage,
 	}
     }
 
-  printf("tn: %d x %d -> ", w, h);fflush(stdout);
+  /*printf("tn: %d x %d -> ", w, h);fflush(stdout);*/
 
   tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
   tbd = temp_buf_data(tempbuf);
 
   w = tempbuf->width;
   h = tempbuf->height;
-  printf("tn: %d x %d\n", w, h);fflush(stdout);
+  /*printf("tn: %d x %d\n", w, h);fflush(stdout);*/
 
   mkdir (xvpathname, 0755);
 
@@ -1242,6 +1282,7 @@ readXVThumb(const gchar *fnam,
 }
 
 
+/* don't call with preview_fullname as parameter!  will be clobbered! */
 static void
 set_preview (const gchar* fullfname)
 {
@@ -1255,8 +1296,8 @@ set_preview (const gchar* fullfname)
   struct stat file_stat;
   struct stat thumb_stat;
   gboolean thumb_may_be_outdated = FALSE;
-  gboolean show_generate_button = FALSE;
-  
+  gboolean show_generate_label = TRUE;
+
 
   pname = g_dirname (fullfname);
   fname = g_basename (fullfname); /* Don't free this! */
@@ -1274,7 +1315,6 @@ set_preview (const gchar* fullfname)
       if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
 	{
 	  thumb_may_be_outdated = TRUE;
-	  show_generate_button = TRUE;
 	}
     }
 
@@ -1284,8 +1324,11 @@ set_preview (const gchar* fullfname)
 
   gtk_frame_set_label (GTK_FRAME(open_options_frame),
 		       fname);
+
   if (preview_fullname)
-    g_free (preview_fullname);
+    {
+      g_free (preview_fullname);
+    }
   preview_fullname = g_strdup (fullfname);
 
   if (raw_thumb)
@@ -1315,6 +1358,8 @@ set_preview (const gchar* fullfname)
 			  (imginfo ? imginfo : "(no information)"));
       gtk_widget_show (GTK_WIDGET(open_options_preview));
       gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
+
+      show_generate_label = FALSE;
       
       g_free (thumb_rgb);
       g_free (raw_thumb);
@@ -1324,17 +1369,21 @@ set_preview (const gchar* fullfname)
       if (imginfo)
 	g_free(imginfo);
 
-      show_generate_button = TRUE;
-
       gtk_widget_hide (GTK_WIDGET(open_options_preview));
       gtk_label_set_text (GTK_LABEL(open_options_label),
 			  "no preview available");
     }
 
-  if (show_generate_button)
-    gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), TRUE);
+  if (show_generate_label)
+    {
+      gtk_widget_hide (GTK_WIDGET(open_options_preview));
+      gtk_widget_show (GTK_WIDGET(open_options_genbuttonlabel));
+    }
   else
-    gtk_widget_set_sensitive (GTK_WIDGET(open_options_genbutton), FALSE);  
+    {
+      gtk_widget_hide (GTK_WIDGET(open_options_genbuttonlabel));
+      gtk_widget_show (GTK_WIDGET(open_options_preview));
+    }
 }
 
 
@@ -1346,6 +1395,7 @@ file_open_clistrow_callback (GtkWidget *w,
 
   fullfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
 
+  gtk_widget_set_sensitive (GTK_WIDGET(open_options_frame), TRUE);
   set_preview (fullfname);
 }
 
@@ -1355,24 +1405,36 @@ genbutton_callback (GtkWidget *w,
 		    gpointer   client_data)
 {
   GimpImage* gimage_to_be_thumbed;
+  gchar* filename;
 
   if (!preview_fullname)
     {
       g_warning ("Tried to generate thumbnail for NULL filename.");
       return;
     }
+  
+  filename = g_strdup(preview_fullname);
 
   gimp_add_busy_cursors();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
-  if ((gimage_to_be_thumbed = file_open_image (preview_fullname,
- 					       g_basename(preview_fullname))))
+  if ((gimage_to_be_thumbed = file_open_image (filename,
+ 					       g_basename(filename),
+					       RUN_NONINTERACTIVE)))
     {
-      file_save_thumbnail (gimage_to_be_thumbed, preview_fullname);
+      file_save_thumbnail (gimage_to_be_thumbed, filename);
+      set_preview(filename);
       gimage_delete (gimage_to_be_thumbed);
     }
-  set_preview(preview_fullname);
+  else
+    {
+      gtk_label_set_text (GTK_LABEL(open_options_label),
+			  "(could not make preview)");
+    }
+
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   gimp_remove_busy_cursors(NULL);
+
+  g_free (filename);
 }
 
 

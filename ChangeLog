@@ -1,3 +1,20 @@
+Tue Feb 23 00:05:39 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/plug_in.c
+	app/plug_in.h: Moved the RunModeType enum
+	into the header so we can use it elsewhere (e.g. fileops)
+
+	* plug-ins/gif/gif.c
+	plug-ins/jpeg/jpeg.c: Don't show progress-bars if we're
+	running noninteractively.  This makes thumbnail updating
+	look more pleasant.  Try to do the same for all file plugins
+	(and others)!
+
+	* app/fileops.c: Reworked the thumbnail display again, fixed
+	some buglets, file_open_image() is RunMode aware, added some
+	tweaks, rhubarb rhubarb, merged in some 'cosmetic' tweaks
+	from Marco.
+
 1999-02-22 adam, blah blah
 
 	* app/appenv.h: fixed a macro bug waiting to happen

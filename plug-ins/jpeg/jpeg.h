@@ -94,7 +94,7 @@ static void   run        (char    *name,
 			  GParam  *param,
 			  int     *nreturn_vals,
 			  GParam **return_vals);
-static gint32 load_image (char   *filename);
+static gint32 load_image (char   *filename, GRunModeType runmode);
 static gint   save_image (char   *filename,
 			  gint32  image_ID,
 			  gint32  drawable_ID);
@@ -220,7 +220,7 @@ run (char    *name,
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      image_ID = load_image (param[1].data.d_string, run_mode);
 
       if (image_ID != -1)
 	{
@@ -445,7 +445,7 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (char *filename)
+load_image (char *filename, GRunModeType runmode)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -480,10 +480,13 @@ load_image (char *filename)
       gimp_quit ();
     }
 
-  name = malloc (strlen (filename) + 12);
-  sprintf (name, "Loading %s:", filename);
-  gimp_progress_init (name);
-  free (name);
+  if (runmode != RUN_NONINTERACTIVE)
+    {
+      name = malloc (strlen (filename) + 12);
+      sprintf (name, "Loading %s:", filename);
+      gimp_progress_init (name);
+      free (name);
+    }
 
   image_ID = -1;
   /* Establish the setjmp return context for my_error_exit to use. */
@@ -668,7 +671,10 @@ load_image (char *filename)
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, start, drawable->width, scanlines);
 
-      gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
+      if (runmode != RUN_NONINTERACTIVE)
+	{
+	  gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
+	}
     }
 
   /* Step 7: Finish decompression */

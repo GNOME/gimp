@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.1.1 - 99/01/23
+ * Version 2.1.2 - 99/02/22
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,9 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/02/22
+ * 2.01.02 - Don't show a progress bar when loading non-interactively
  *
  * 99/01/23
  * 2.01.01 - Use a text-box to permit multi-line comments.  Don't
@@ -270,7 +273,7 @@
 #define FACEHUGGERS aieee
 #endif
 /* PS: I know that technically facehuggers aren't parasites,
-   the pupal-forms are.  But facehuggers are cute. */
+   the pupal-forms are.  But facehuggers are ky00te. */
 
 
 typedef struct
@@ -301,10 +304,8 @@ static gint   save_image (char   *filename,
 			  gint32  image_ID,
 			  gint32  drawable_ID);
 
-static gboolean
-boundscheck (gint32 image_ID);
-static gboolean
-badbounds_dialog ( void );
+static gboolean boundscheck (gint32 image_ID);
+static gboolean badbounds_dialog ( void );
 
 static void
 cropok_callback (GtkWidget *widget,
@@ -341,6 +342,7 @@ static gint     radio_pressed[3];
 
 static guchar   used_cmap[3][256];
 static gboolean can_crop;
+static GRunModeType run_mode;
 static guchar   highest_used_index;
 static gboolean promote_to_rgb   = FALSE;
 static guchar   gimp_cmap[768];
@@ -446,7 +448,6 @@ run (char    *name,
 {
   static GParam values[2];
   GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
   gint32 image_ID;
   gchar **argv;
   gint argc;
@@ -661,9 +662,12 @@ load_image (char *filename)
 
   name_buf = g_malloc (strlen (filename) + 11);
 
-  sprintf (name_buf, "Loading %s:", filename);
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  if (run_mode != RUN_NONINTERACTIVE)
+    {
+      sprintf (name_buf, "Loading %s:", filename);
+      gimp_progress_init (name_buf);
+      g_free (name_buf);
+    }
 
   if (!ReadOK (fd, buf, 6))
     {
@@ -1382,9 +1386,12 @@ ReadImage (FILE *fd,
 	      ypos++;
 	    }
 
-	  cur_progress++;
-	  if ((cur_progress % 16) == 0)
-	    gimp_progress_update ((double) cur_progress / (double) max_progress);
+	  if (run_mode != RUN_NONINTERACTIVE)
+	    {
+	      cur_progress++;
+	      if ((cur_progress % 16) == 0)
+		gimp_progress_update ((double) cur_progress / (double) max_progress);
+	    }
 	}
       if (ypos >= height)
 	break;
@@ -1786,12 +1793,14 @@ save_image (char   *filename,
       break;
     }
 
-
-  /* init the progress meter */    
-  temp_buf = g_malloc (strlen (filename) + 11);
-  sprintf (temp_buf, "Saving %s:", filename);
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  if (run_mode != RUN_NONINTERACTIVE)
+    {
+      /* init the progress meter */    
+      temp_buf = g_malloc (strlen (filename) + 11);
+      sprintf (temp_buf, "Saving %s:", filename);
+      gimp_progress_init (temp_buf);
+      g_free (temp_buf);
+    }
   
 
   /* open the destination file for writing */
@@ -2383,9 +2392,12 @@ BumpPixel ()
    */
   if (curx == Width)
     {
-      cur_progress++;
-      if ((cur_progress % 16) == 0)
-	gimp_progress_update ((double) cur_progress / (double) max_progress);
+      if (run_mode != RUN_NONINTERACTIVE)
+	{
+	  cur_progress++;
+	  if ((cur_progress % 16) == 0)
+	    gimp_progress_update ((double) cur_progress / (double) max_progress);
+	}
 
       curx = 0;
 

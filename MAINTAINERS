@@ -115,9 +115,9 @@ commit access:  yes
 Name: Adam D. Moss
 Email: adam@gimp.org
 url: http://www.foxbox.org
-ircnick: aspirin
-expertise: convert.c, idlerender, general core and UI,  gif.c
-          animationplay.c and various other subversive plugins.
+ircnick: Aspirin
+expertise: convert.c, idlerender, general core and UI, thumbnails,
+          gif.c, animationplay.c and various other subversive plugins.
 current work:  making derisive comments about everyone else's cvs
           commits 
 commit access: yes
