@@ -1,4 +1,4 @@
-/* docindex_interface.h - Interface file for the docindex for gimp.
+/* docindexif.h - Interface file for the docindex for gimp.
  *
  * Copyright (C) 1998 Chris Lahey.
  *
@@ -13,8 +13,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef __DOCINDEX_INTERFACE_H__
-#define __DOCINDEX_INTERFACE_H__
+#ifndef __DOCINDEXIF_H__
+#define __DOCINDEXIF_H__
 
 
 #include <ctype.h>
@@ -46,4 +46,4 @@ struct bool_char_pair
   gchar *string;
 };
 
-#endif /* __DOCINDEX_INTERFACE_H__ */
+#endif /* __DOCINDEXIF_H__ */
