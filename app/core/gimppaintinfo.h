@@ -43,7 +43,6 @@ struct _GimpPaintInfo
   GType             paint_options_type;
 
   gchar            *blurb;
-  gchar            *pdb_string;
 
   GimpPaintOptions *paint_options;
 };
@@ -59,8 +58,7 @@ GType           gimp_paint_info_get_type (void) G_GNUC_CONST;
 GimpPaintInfo * gimp_paint_info_new      (Gimp        *gimp,
                                           GType        paint_type,
                                           GType        paint_options_type,
-                                          const gchar *blurb,
-                                          const gchar *pdb_string);
+                                          const gchar *blurb);
 
 
 #endif  /*  __GIMP_PAINT_INFO_H__  */

@@ -191,13 +191,13 @@ gimp_tool_info_new (Gimp                *gimp,
 {
   GimpPaintInfo *paint_info;
   GimpToolInfo  *tool_info;
-  GimpViewable  *viewable;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
   g_return_val_if_fail (menu_path != NULL, NULL);
+  g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
 
@@ -207,13 +207,9 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
 
   tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
-                            "name", identifier,
+                            "name",     identifier,
+                            "stock-id", stock_id,
                             NULL);
-
-  viewable = GIMP_VIEWABLE (tool_info);
-
-  tool_info->tool_options      = NULL;
-  tool_info->paint_info        = paint_info;
 
   tool_info->gimp              = gimp;
   tool_info->tool_type         = tool_type;
@@ -229,7 +225,20 @@ gimp_tool_info_new (Gimp                *gimp,
   tool_info->help_domain       = g_strdup (help_domain);
   tool_info->help_id           = g_strdup (help_id);
 
-  gimp_viewable_set_stock_id (viewable, stock_id);
+  tool_info->paint_info        = paint_info;
+
+  if (tool_info->tool_options_type == paint_info->paint_options_type)
+    {
+      tool_info->tool_options = g_object_ref (paint_info->paint_options);
+    }
+  else
+    {
+      tool_info->tool_options = g_object_new (tool_info->tool_options_type,
+                                              "gimp", gimp,
+                                              NULL);
+    }
+
+  g_object_set (tool_info->tool_options, "tool-info", tool_info, NULL);
 
   return tool_info;
 }
@@ -241,13 +250,16 @@ gimp_tool_info_set_standard (Gimp         *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
-  if (gimp->standard_tool_info)
-    g_object_unref (gimp->standard_tool_info);
+  if (tool_info != gimp->standard_tool_info)
+    {
+      if (gimp->standard_tool_info)
+        g_object_unref (gimp->standard_tool_info);
 
-  gimp->standard_tool_info = tool_info;
+      gimp->standard_tool_info = tool_info;
 
-  if (gimp->standard_tool_info)
-    g_object_ref (gimp->standard_tool_info);
+      if (gimp->standard_tool_info)
+        g_object_ref (gimp->standard_tool_info);
+    }
 }
 
 GimpToolInfo *

@@ -582,11 +582,6 @@ tool_manager_register_tool (GType                   tool_type,
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);
 
-  tool_info->tool_options = g_object_new (tool_info->tool_options_type,
-                                          "gimp",      gimp,
-                                          "tool-info", tool_info,
-                                          NULL);
-
   if (tool_info->context_props)
     {
       gimp_context_define_properties (GIMP_CONTEXT (tool_info->tool_options),

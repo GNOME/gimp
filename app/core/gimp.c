@@ -200,8 +200,6 @@ gimp_init (Gimp *gimp)
 
   gimp->parasites               = gimp_parasite_list_new ();
 
-  paint_init (gimp);
-
   gimp_modules_init (gimp);
 
   gimp->environ_table       = gimp_environ_table_new ();
@@ -725,6 +723,8 @@ gimp_initialize (Gimp               *gimp,
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
+
+  paint_init (gimp);
 
   /* Set the last values used to default values. */
 

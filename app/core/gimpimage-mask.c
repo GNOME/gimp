@@ -28,9 +28,13 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "pdb/procedural_db.h"
+#include "paint/gimppaintcore.h"
+#include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppaintoptions.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
@@ -619,20 +623,14 @@ gimp_image_mask_stroke (GimpImage    *gimage,
                         GimpDrawable *drawable,
                         GimpContext  *context)
 {
-  BoundSeg    *bs_in;
-  BoundSeg    *bs_out;
-  gint         num_segs_in;
-  gint         num_segs_out;
-  BoundSeg    *stroke_segs;
-  gint         num_strokes;
-  gint         seg;
-  gint         offx, offy;
-  gint         i;
-  gdouble     *stroke_points;
-  gint         cpnt;
-  Argument    *return_vals;
-  gint         nreturn_vals;
-  const gchar *pdb_string;
+  BoundSeg      *bs_in;
+  BoundSeg      *bs_out;
+  gint           num_segs_in;
+  gint           num_segs_out;
+  GimpToolInfo  *tool_info;
+  GimpPaintInfo *paint_info;
+  GimpPaintCore *core;
+  gboolean       retval;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -645,74 +643,26 @@ gimp_image_mask_stroke (GimpImage    *gimage,
       return FALSE;
     }
 
-  stroke_segs = sort_boundary (bs_in, num_segs_in, &num_strokes);
-  if (num_strokes == 0)
-    return TRUE;
-
-  pdb_string = gimp_context_get_tool (context)->paint_info->pdb_string;
-
-  /*  find the drawable offsets  */
-  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_mask_stroking = TRUE;
 
-  /*  Start an undo group  */
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                _("Stroke Selection"));
 
-  seg = 0;
-  cpnt = 0;
-  /* Largest array required (may be used in segments!) */
-  stroke_points = g_malloc (sizeof (gdouble) * 2 * (num_segs_in + 4));
+  tool_info  = gimp_context_get_tool (context);
+  paint_info = tool_info->paint_info;
 
-  /* we offset all coordinates by 0.5 to align the brush with the path */
+  core = g_object_new (paint_info->paint_type, NULL);
 
-  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].x1 - offx + 0.5);
-  stroke_points[cpnt++] = (gdouble)(stroke_segs[0].y1 - offy + 0.5);
+  retval = gimp_paint_core_stroke_boundary (core, drawable,
+                                            paint_info->paint_options,
+                                            bs_in, num_segs_in,
+                                            0, 0);
 
-  for (i = 0; i < num_strokes; i++)
-    {
-      while ((stroke_segs[seg].x1 != -1 ||
-	      stroke_segs[seg].x2 != -1 ||
-	      stroke_segs[seg].y1 != -1 ||
-	      stroke_segs[seg].y2 != -1))
-	{
-	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x2 - offx + 0.5);
-	  stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y2 - offy + 0.5);
-	  seg ++;
-	}
+  g_object_unref (core);
 
-      /* Close the stroke points up */
-      stroke_points[cpnt++] = stroke_points[0];
-      stroke_points[cpnt++] = stroke_points[1];
-
-      /* Stroke with the correct tool */
-      return_vals =
-	procedural_db_run_proc (gimage->gimp,
-				pdb_string,
-				&nreturn_vals,
-				GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (drawable)),
-				GIMP_PDB_INT32, (gint32) cpnt,
-				GIMP_PDB_FLOATARRAY, stroke_points,
-				GIMP_PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-	g_message (_("Paint operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-
-      cpnt = 0;
-      seg ++;
-      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].x1 - offx + 0.5);
-      stroke_points[cpnt++] = (gdouble)(stroke_segs[seg].y1 - offy + 0.5);
-    }
-
-  /*  cleanup  */
-  gimp_image_mask_stroking = FALSE;
-  g_free (stroke_points);
-  g_free (stroke_segs);
-
-  /*  End an undo group  */
   gimp_image_undo_group_end (gimage);
 
-  return TRUE;
+  gimp_image_mask_stroking = FALSE;
+
+  return retval;
 }

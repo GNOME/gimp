@@ -46,8 +46,8 @@ struct _GimpToolInfo
   gchar               *blurb;
   gchar               *help;
 
-  gchar               *menu_path;  
-  gchar               *menu_accel; 
+  gchar               *menu_path;
+  gchar               *menu_accel;
 
   gchar               *help_domain;
   gchar               *help_id;

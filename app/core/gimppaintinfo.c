@@ -43,21 +43,21 @@ gimp_paint_info_get_type (void)
   if (! paint_info_type)
     {
       static const GTypeInfo paint_info_info =
-      {
-        sizeof (GimpPaintInfoClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_paint_info_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpPaintInfo),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_paint_info_init,
-      };
+        {
+          sizeof (GimpPaintInfoClass),
+          (GBaseInitFunc) NULL,
+          (GBaseFinalizeFunc) NULL,
+          (GClassInitFunc) gimp_paint_info_class_init,
+          NULL,		/* class_finalize */
+          NULL,		/* class_data     */
+          sizeof (GimpPaintInfo),
+          0,              /* n_preallocs    */
+          (GInstanceInitFunc) gimp_paint_info_init,
+        };
 
       paint_info_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					       "GimpPaintInfo",
-					       &paint_info_info, 0);
+                                                "GimpPaintInfo",
+                                                &paint_info_info, 0);
     }
 
   return paint_info_type;
@@ -81,7 +81,6 @@ gimp_paint_info_init (GimpPaintInfo *paint_info)
   paint_info->gimp          = NULL;
   paint_info->paint_type    = G_TYPE_NONE;
   paint_info->blurb         = NULL;
-  paint_info->pdb_string    = NULL;
   paint_info->paint_options = NULL;
 }
 
@@ -98,10 +97,10 @@ gimp_paint_info_finalize (GObject *object)
       paint_info->blurb = NULL;
     }
 
-  if (paint_info->pdb_string)
+  if (paint_info->paint_options)
     {
-      g_free (paint_info->pdb_string);
-      paint_info->pdb_string = NULL;
+      g_object_unref (paint_info->paint_options);
+      paint_info->paint_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -111,14 +110,12 @@ GimpPaintInfo *
 gimp_paint_info_new (Gimp        *gimp,
                      GType        paint_type,
                      GType        paint_options_type,
-                     const gchar *blurb,
-                     const gchar *pdb_string)
+                     const gchar *blurb)
 {
   GimpPaintInfo *paint_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
-  g_return_val_if_fail (pdb_string != NULL, NULL);
 
   paint_info = g_object_new (GIMP_TYPE_PAINT_INFO,
                              "name", g_type_name (paint_type),
@@ -128,7 +125,10 @@ gimp_paint_info_new (Gimp        *gimp,
   paint_info->paint_type         = paint_type;
   paint_info->paint_options_type = paint_options_type;
   paint_info->blurb              = g_strdup (blurb);
-  paint_info->pdb_string         = g_strdup (pdb_string);
+
+  paint_info->paint_options      = g_object_new (paint_info->paint_options_type,
+                                                 "gimp", gimp,
+                                                 NULL);
 
   return paint_info;
 }

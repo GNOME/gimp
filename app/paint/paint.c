@@ -98,57 +98,17 @@ paint_register (Gimp        *gimp,
                 const gchar *blurb)
 {
   GimpPaintInfo *paint_info;
-  const gchar   *pdb_string;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
   g_return_if_fail (g_type_is_a (paint_options_type, GIMP_TYPE_PAINT_OPTIONS));
   g_return_if_fail (blurb != NULL);
-  
-  if (paint_type == GIMP_TYPE_PENCIL)
-    {
-      pdb_string = "gimp_pencil";
-    }
-  else if (paint_type == GIMP_TYPE_PAINTBRUSH)
-    {
-      pdb_string = "gimp_paintbrush_default";
-    }
-  else if (paint_type == GIMP_TYPE_ERASER)
-    {
-      pdb_string = "gimp_eraser_default";
-    }
-  else if (paint_type == GIMP_TYPE_AIRBRUSH)
-    {
-      pdb_string = "gimp_airbrush_default";
-    }
-  else if (paint_type == GIMP_TYPE_CLONE)
-    {
-      pdb_string = "gimp_clone_default";
-    }
-  else if (paint_type == GIMP_TYPE_CONVOLVE)
-    {
-      pdb_string = "gimp_convolve_default";
-    }
-  else if (paint_type == GIMP_TYPE_SMUDGE)
-    {
-      pdb_string = "gimp_smudge_default";
-    }
-  else if (paint_type == GIMP_TYPE_DODGE_BURN)
-    {
-      pdb_string = "gimp_dodgeburn_default";
-    }
-  else
-    {
-      pdb_string = "gimp_paintbrush_default";
-    }
 
   paint_info = gimp_paint_info_new (gimp,
                                     paint_type,
                                     paint_options_type,
-                                    blurb,
-                                    pdb_string);
+                                    blurb);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
-
   g_object_unref (paint_info);
 }

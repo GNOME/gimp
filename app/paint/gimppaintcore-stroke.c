@@ -22,6 +22,8 @@
 
 #include "paint-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpdrawable.h"
 
 #include "vectors/gimpstroke.h"
@@ -76,6 +78,105 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
     }
 
   return FALSE;
+}
+
+gboolean
+gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
+                                 GimpDrawable     *drawable,
+                                 GimpPaintOptions *paint_options,
+                                 const BoundSeg   *bound_segs,
+                                 gint              n_bound_segs,
+                                 gint              offset_x,
+                                 gint              offset_y)
+{
+  GimpImage  *gimage;
+  BoundSeg   *stroke_segs;
+  gint        n_stroke_segs;
+  gint        off_x;
+  gint        off_y;
+  GimpCoords *coords;
+  gint        n_coords;
+  gint        seg;
+  gint        i;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
+  g_return_val_if_fail (bound_segs != NULL && n_bound_segs > 0, FALSE);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  stroke_segs = sort_boundary (bound_segs, n_bound_segs, &n_stroke_segs);
+
+  if (n_stroke_segs == 0)
+    return TRUE;
+
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+  off_x -= offset_x;
+  off_y -= offset_y;
+
+  coords = g_new0 (GimpCoords, n_bound_segs + 4);
+
+  seg      = 0;
+  n_coords = 0;
+
+  /* we offset all coordinates by 0.5 to align the brush with the path */
+
+  coords[n_coords].x        = (gdouble) (stroke_segs[0].x1 - off_x + 0.5);
+  coords[n_coords].y        = (gdouble) (stroke_segs[0].y1 - off_y + 0.5);
+  coords[n_coords].pressure = 1.0;
+  coords[n_coords].xtilt    = 0.5;
+  coords[n_coords].ytilt    = 0.5;
+  coords[n_coords].wheel    = 0.5;
+
+  n_coords++;
+
+  for (i = 0; i < n_stroke_segs; i++)
+    {
+      while (stroke_segs[seg].x1 != -1 ||
+             stroke_segs[seg].x2 != -1 ||
+             stroke_segs[seg].y1 != -1 ||
+             stroke_segs[seg].y2 != -1)
+	{
+          coords[n_coords].x        = (gdouble) (stroke_segs[seg].x1 -
+                                                 off_x + 0.5);
+          coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 -
+                                                 off_y + 0.5);
+          coords[n_coords].pressure = 1.0;
+          coords[n_coords].xtilt    = 0.5;
+          coords[n_coords].ytilt    = 0.5;
+          coords[n_coords].wheel    = 0.5;
+
+          n_coords++;
+	  seg++;
+	}
+
+      /* Close the stroke points up */
+      coords[n_coords] = coords[0];
+
+      n_coords++;
+
+      gimp_paint_core_stroke (core, drawable, paint_options,
+                              coords, n_coords);
+
+      n_coords = 0;
+      seg++;
+
+      coords[n_coords].x        = (gdouble) (stroke_segs[seg].x1 - off_x + 0.5);
+      coords[n_coords].y        = (gdouble) (stroke_segs[seg].y1 - off_y + 0.5);
+      coords[n_coords].pressure = 1.0;
+      coords[n_coords].xtilt    = 0.5;
+      coords[n_coords].ytilt    = 0.5;
+      coords[n_coords].wheel    = 0.5;
+
+      n_coords++;
+    }
+
+  g_free (coords);
+  g_free (stroke_segs);
+
+  return TRUE;
 }
 
 gboolean

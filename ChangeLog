@@ -1,3 +1,49 @@
+2003-08-30  Michael Natterer  <mitch@gimp.org>
+
+	Fixed & cleaned up paint function registration to work without
+	GUI. Finishes core/GUI separation for the paint tools:
+
+	* app/core/gimppaintinfo.[ch]: removed "gchar *pdb_string" all over
+	the place since we don't stroke using the PDB any more.
+	(gimp_paint_info_new): create paint_info->paint_options here so
+	the paint system is fully initialized when there is no GUI.
+
+	* app/paint/paint.c: removed pdb_string stuff here, too.
+
+	* app/core/gimptoolinfo.[ch]: create tool_info->tool_options
+	only if tool_info->tool_options_type is not the same type
+	as paint_info->paint_options_type (if we are no paint tool).
+
+	* app/core/gimptooloptions.c: removed G_PARAM_CONSTRUCT_ONLY from
+	the "tool-info" property. Instead, changed
+	gimp_tool_options_set_property to ensure that it is only set once.
+
+	* app/core/gimp.c (gimp_initialize): moved paint_init() after
+	data_factory creation (was in gimp_init()), since GimpPaintInfo
+	now creates the GimpPaintOptions, which are GimpContexts, which
+	need gimp->*_factory to be constructed.
+
+	* app/tools/tool_manager.c: don't create tool_info->tool_options
+	here (it's not the job of the tool_manager to set up the core
+	paint system correctly, it must be already initialized before any
+	tool_manager function is called).
+
+	Made "Stroke Selection" and "Stroke Path" work the same way:
+
+	* app/paint/gimppaintcore-stroke.[ch]: added new function
+	gimp_paint_core_stroke_boundary() which strokes without using
+	the PDB.
+
+	* app/core/gimpimage-mask.c (gimp_image_mask_stroke): use it
+	instead of using the PDB. Enables all available paint options for
+	stroke operations. Fixes bug #119411.
+
+	* app/gui/vectors-commands.c (vectors_stroke_vectors)
+	* app/core/gimpimage-mask.c (gimp_image_mask_stroke): removed all
+	code which tries to figure how to stroke and simply look at the
+	active tool's tool_info->paint_info, since it is always set up
+	correctly now.
+
 2003-08-30  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: fixed stupid int vs. float

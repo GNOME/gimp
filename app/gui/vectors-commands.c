@@ -278,26 +278,17 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
   if (vectors && vectors->strokes)
     {
-      GimpToolInfo     *tool_info;
-      GimpPaintOptions *paint_options;
-      GimpPaintCore    *core;
+      GimpToolInfo  *tool_info;
+      GimpPaintInfo *paint_info;
+      GimpPaintCore *core;
 
-      tool_info = gimp_context_get_tool (gimp_get_user_context (gimage->gimp));
+      tool_info  = gimp_context_get_tool (gimp_get_user_context (gimage->gimp));
+      paint_info = tool_info->paint_info;
 
-      if (! (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options)))
-        {
-          tool_info = (GimpToolInfo *)
-            gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
-                                              "gimp-paintbrush-tool");
-        }
+      core = g_object_new (paint_info->paint_type, NULL);
 
-      paint_options = GIMP_PAINT_OPTIONS (tool_info->tool_options);
-
-      core = g_object_new (tool_info->paint_info->paint_type, NULL);
-
-      gimp_paint_core_stroke_vectors (core,
-                                      active_drawable,
-                                      paint_options,
+      gimp_paint_core_stroke_vectors (core, active_drawable,
+                                      paint_info->paint_options,
                                       vectors);
 
       g_object_unref (core);

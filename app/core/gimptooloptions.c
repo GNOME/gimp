@@ -83,7 +83,7 @@ gimp_tool_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -101,8 +101,7 @@ gimp_tool_options_class_init (GimpToolOptionsClass *klass)
                                    g_param_spec_object ("tool-info",
                                                         NULL, NULL,
                                                         GIMP_TYPE_TOOL_INFO,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_READWRITE));
 
 }
 
@@ -125,7 +124,8 @@ gimp_tool_options_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TOOL_INFO:
-      options->tool_info = g_value_get_object (value);
+      g_return_if_fail (options->tool_info == NULL);
+      options->tool_info = GIMP_TOOL_INFO (g_value_dup_object (value));
       break;
 
     default:
@@ -193,7 +193,7 @@ gimp_tool_options_build_filename (GimpToolOptions *tool_options,
       filename = g_build_filename (gimp_directory (),
                                    "tool-options",
                                    GIMP_OBJECT (tool_options->tool_info)->name,
-                                   NULL);      
+                                   NULL);
     }
 
   return filename;
