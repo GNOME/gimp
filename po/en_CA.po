@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-19 10:50-0400\n"
-"PO-Revision-Date: 2004-10-19 14:29-0400\n"
+"POT-Creation-Date: 2004-10-20 10:42-0400\n"
+"PO-Revision-Date: 2004-10-20 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -1758,7 +1758,7 @@ msgstr "Resizing..."
 msgid "Flipping..."
 msgstr "Flipping..."
 
-#: app/actions/image-commands.c:315 app/pdb/transform_tools_cmds.c:336
+#: app/actions/image-commands.c:315 app/pdb/transform_tools_cmds.c:341
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Rotating..."
@@ -1833,7 +1833,7 @@ msgid "Scale Image"
 msgstr "Scale Image"
 
 #: app/actions/image-commands.c:652 app/actions/layers-commands.c:1269
-#: app/pdb/transform_tools_cmds.c:454 app/tools/gimpscaletool.c:153
+#: app/pdb/transform_tools_cmds.c:462 app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
 
@@ -4288,7 +4288,7 @@ msgstr "Anchor floating selection"
 msgid "Remove floating selection"
 msgstr "Remove floating selection"
 
-#: app/core/core-enums.c:602 app/core/gimp-edit.c:135
+#: app/core/core-enums.c:602 app/core/gimp-edit.c:199
 msgid "Paste"
 msgstr "Paste"
 
@@ -4323,7 +4323,7 @@ msgstr "Remove parasite"
 msgid "Import paths"
 msgstr "Import paths"
 
-#: app/core/core-enums.c:610 app/pdb/drawable_cmds.c:1590
+#: app/core/core-enums.c:610 app/pdb/drawable_cmds.c:1683
 msgid "Plug-In"
 msgstr "Plug-In"
 
@@ -4698,7 +4698,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:101
+#: app/core/gimpdrawable-blend.c:236 app/tools/gimpblendtool.c:101
 msgid "Blend"
 msgstr "Blend"
 
@@ -4706,19 +4706,19 @@ msgstr "Blend"
 msgid "No patterns available for this operation."
 msgstr "No patterns available for this operation."
 
-#: app/core/gimpdrawable-bucket-fill.c:271 app/tools/gimpbucketfilltool.c:91
+#: app/core/gimpdrawable-bucket-fill.c:274 app/tools/gimpbucketfilltool.c:91
 msgid "Bucket Fill"
 msgstr "Bucket Fill"
 
-#: app/core/gimpdrawable-desaturate.c:95
+#: app/core/gimpdrawable-desaturate.c:97
 msgid "Desaturate"
 msgstr "Desaturate"
 
-#: app/core/gimpdrawable-equalize.c:82
+#: app/core/gimpdrawable-equalize.c:79
 msgid "Equalize"
 msgstr "Equalize"
 
-#: app/core/gimpdrawable-invert.c:56
+#: app/core/gimpdrawable-invert.c:58
 msgid "Invert"
 msgstr "Invert"
 
@@ -4726,7 +4726,7 @@ msgstr "Invert"
 msgid "Offset Drawable"
 msgstr "Offset Drawable"
 
-#: app/core/gimpdrawable-stroke.c:320
+#: app/core/gimpdrawable-stroke.c:304
 msgid "Render Stroke"
 msgstr "Render Stroke"
 
@@ -5357,15 +5357,15 @@ msgstr "No selection to stroke."
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Unable to cut or copy because the selected region is empty."
 
-#: app/core/gimpselection.c:821
+#: app/core/gimpselection.c:820
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Cannot float selection because the selected region is empty."
 
-#: app/core/gimpselection.c:828
+#: app/core/gimpselection.c:827
 msgid "Float Selection"
 msgstr "Float Selection"
 
-#: app/core/gimpselection.c:845
+#: app/core/gimpselection.c:844
 msgid "Floated Layer"
 msgstr "Floated Layer"
 
@@ -7459,37 +7459,37 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: app/pdb/color_cmds.c:137 app/tools/gimpbrightnesscontrasttool.c:85
+#: app/pdb/color_cmds.c:136 app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Brightness-Contrast"
 
-#: app/pdb/color_cmds.c:272 app/pdb/color_cmds.c:393
+#: app/pdb/color_cmds.c:275 app/pdb/color_cmds.c:397
 #: app/tools/gimplevelstool.c:160
 msgid "Levels"
 msgstr "Levels"
 
-#: app/pdb/color_cmds.c:473 app/tools/gimpposterizetool.c:78
+#: app/pdb/color_cmds.c:477 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterize"
 
-#: app/pdb/color_cmds.c:750 app/pdb/color_cmds.c:870
+#: app/pdb/color_cmds.c:758 app/pdb/color_cmds.c:882
 #: app/tools/gimpcurvestool.c:143
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:991 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:1006 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Colour Balance"
 
-#: app/pdb/color_cmds.c:1112 app/tools/gimpcolorizetool.c:96
+#: app/pdb/color_cmds.c:1130 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colourize"
 
-#: app/pdb/color_cmds.c:1386 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1407 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
-#: app/pdb/color_cmds.c:1488 app/tools/gimpthresholdtool.c:92
+#: app/pdb/color_cmds.c:1512 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
 msgstr "Threshold"
 
@@ -7659,15 +7659,15 @@ msgstr "Temporary Procedure"
 msgid "Free Select"
 msgstr "Free Select"
 
-#: app/pdb/transform_tools_cmds.c:193 app/tools/gimpperspectivetool.c:141
+#: app/pdb/transform_tools_cmds.c:194 app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspective..."
 
-#: app/pdb/transform_tools_cmds.c:583 app/tools/gimpsheartool.c:158
+#: app/pdb/transform_tools_cmds.c:594 app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Shearing..."
 
-#: app/pdb/transform_tools_cmds.c:714
+#: app/pdb/transform_tools_cmds.c:727
 msgid "2D Transform..."
 msgstr "2D Transform..."
 
@@ -8479,6 +8479,7 @@ msgid "Adjustment"
 msgstr "Adjustment"
 
 #: app/tools/gimpinkoptions-gui.c:70 app/tools/gimpinkoptions-gui.c:94
+#: app/tools/gimptextoptions.c:421
 msgid "Size:"
 msgstr "Size:"
 
@@ -8941,16 +8942,12 @@ msgid "Modify line spacing"
 msgstr "Modify line spacing"
 
 #: app/tools/gimptextoptions.c:414
-msgid "_Font:"
-msgstr "_Font:"
-
-#: app/tools/gimptextoptions.c:421
-msgid "_Size:"
-msgstr "_Size:"
+msgid "Font:"
+msgstr "Font:"
 
 #: app/tools/gimptextoptions.c:426
-msgid "_Hinting"
-msgstr "_Hinting"
+msgid "Hinting"
+msgstr "Hinting"
 
 #: app/tools/gimptextoptions.c:433
 msgid "Force auto-hinter"
@@ -10599,12 +10596,3 @@ msgstr "Create and edit images or photographs"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Image Editor"
-
-#~ msgid "_Undo History"
-#~ msgstr "_Undo History"
-
-#~ msgid "Brus_hes"
-#~ msgstr "Brus_hes"
-
-#~ msgid "Buffer"
-#~ msgstr "Buffer"
