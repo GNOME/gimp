@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* app/widgets/gimpsizebox.c (gimp_size_box_constructor): fixed
+	position of pixel and resolution labels.
+
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/common/sparkle.c: applied patch from Shlomi Fish that
 	fixes regressions in Sparkle plug-in (bug #132145).
 
