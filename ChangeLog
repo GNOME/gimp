@@ -590,7 +590,6 @@
 	* libgimp/gimppalette_pdb.[ch]
 	* libgimp/gimppatterns_pdb.c: regenerated.
 
->>>>>>> 1.4218
 2002-03-11  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c: use a PangoAttributeList instead of

@@ -1,3 +1,4 @@
+
             The GNU Image Manipulation Program Version 1.3
                           A Colorspace Odyssey
 
@@ -8,7 +9,19 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.5
 =================================
-- Made tool options dockable [Mitch]
+- Improved tool options and made them dockable [Mitch]
+- Added a DTD for gimp-tips.xml [Sven]
+- Cleanup of brush, gradient, pattern and palette PDB functions [Mitch]
+- Autogenerate libgimp/gimp_pdb.h [Yosh]
+- Converted the toolbox to a dock [Mitch]
+- Resurrected display filter modules [Mitch]
+- Plug-in code cleanup (colorify) [Maurits Rijk]
+- New menu icons [Jimmac, Mitch]
+- New GimpEnumMenu widget [Sven]
+- Enum cleanup [Yosh, Sven]
+
+Other Contributors:
+  Rebecca Walter, Tuomas Kuosmanen
 
 
 Overview of Changes in GIMP 1.3.4
