@@ -19,18 +19,18 @@
 #ifndef __GIMP_DRAWABLE_LEVELS_H__
 #define __GIMP_DRAWABLE_LEVELS_H__
 
-void
-gimp_drawable_levels      (GimpDrawable   *drawable,
-                           GimpContext    *context,
-                           gint32          channel,
-                           gint32          low_input,
-                           gint32          high_input,
-                           gdouble         gamma,
-                           gint32          low_output,
-                           gint32          high_output);
 
-void
-gimp_drawable_levels_auto (GimpDrawable   *drawable,
-                           GimpContext    *context);
+void   gimp_drawable_levels      (GimpDrawable *drawable,
+                                  GimpContext  *context,
+                                  gint32        channel,
+                                  gint32        low_input,
+                                  gint32        high_input,
+                                  gdouble       gamma,
+                                  gint32        low_output,
+                                  gint32        high_output);
+
+void   gimp_drawable_levels_auto (GimpDrawable *drawable,
+                                  GimpContext  *context);
+
 
 #endif  /*  __GIMP_DRAWABLE_LEVELS_H__  */

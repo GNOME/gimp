@@ -74,7 +74,7 @@ static GimpToggleActionEntry drawable_toggle_actions[] =
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LINKED },
-  
+
   { "drawable-visible", GIMP_STOCK_VISIBLE,
     N_("_Visible"), NULL, NULL,
     G_CALLBACK (drawable_visible_cmd_callback),

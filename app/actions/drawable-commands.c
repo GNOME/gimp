@@ -102,6 +102,101 @@ drawable_equalize_cmd_callback (GtkAction *action,
 }
 
 void
+drawable_invert_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
+
+  if (gimp_drawable_is_indexed (drawable))
+    {
+      g_message (_("Invert does not operate on indexed layers."));
+      return;
+    }
+
+  gimp_drawable_invert (drawable);
+  gimp_image_flush (gimage);
+}
+
+void
+drawable_offset_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  GtkWidget    *widget;
+  GtkWidget    *dialog;
+  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_widget (widget, data);
+
+  dialog = offset_dialog_new (drawable, widget);
+  gtk_widget_show (dialog);
+}
+
+void
+drawable_linked_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  gboolean      linked;
+  return_if_no_drawable (gimage, drawable, data);
+
+  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    drawable =
+      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+
+  if (linked != gimp_item_get_linked (GIMP_ITEM (drawable)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LINKED);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
+        push_undo = FALSE;
+
+      gimp_item_set_linked (GIMP_ITEM (drawable), linked, push_undo);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+drawable_visible_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  gboolean      visible;
+  return_if_no_drawable (gimage, drawable, data);
+
+  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    drawable =
+      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+
+  if (visible != gimp_item_get_visible (GIMP_ITEM (drawable)))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_VISIBILITY);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
+        push_undo = FALSE;
+
+      gimp_item_set_visible (GIMP_ITEM (drawable), visible, push_undo);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
 drawable_flip_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
@@ -150,70 +245,6 @@ drawable_flip_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_invert_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  return_if_no_drawable (gimage, drawable, data);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Invert does not operate on indexed layers."));
-      return;
-    }
-
-  gimp_drawable_invert (drawable);
-  gimp_image_flush (gimage);
-}
-
-void
-drawable_linked_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  gboolean      linked;
-  return_if_no_drawable (gimage, drawable, data);
-
-  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (GIMP_IS_LAYER_MASK (drawable))
-    drawable =
-      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
-
-  if (linked != gimp_item_get_linked (GIMP_ITEM (drawable)))
-    {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
-
-      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_LINKED);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
-        push_undo = FALSE;
-
-      gimp_item_set_linked (GIMP_ITEM (drawable), linked, push_undo);
-      gimp_image_flush (gimage);
-    }
-}
-
-void
-drawable_offset_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  GtkWidget    *widget;
-  GtkWidget    *dialog;
-  return_if_no_drawable (gimage, drawable, data);
-  return_if_no_widget (widget, data);
-
-  dialog = offset_dialog_new (drawable, widget);
-  gtk_widget_show (dialog);
-}
-
-void
 drawable_rotate_cmd_callback (GtkAction *action,
                               gint       value,
                               gpointer   data)
@@ -253,35 +284,4 @@ drawable_rotate_cmd_callback (GtkAction *action,
     }
 
   gimp_image_flush (gimage);
-}
-
-void
-drawable_visible_cmd_callback (GtkAction *action,
-                               gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  gboolean      visible;
-  return_if_no_drawable (gimage, drawable, data);
-
-  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (GIMP_IS_LAYER_MASK (drawable))
-    drawable =
-      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
-
-  if (visible != gimp_item_get_visible (GIMP_ITEM (drawable)))
-    {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
-
-      undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_VISIBILITY);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
-        push_undo = FALSE;
-
-      gimp_item_set_visible (GIMP_ITEM (drawable), visible, push_undo);
-      gimp_image_flush (gimage);
-    }
 }

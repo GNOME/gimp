@@ -1,5 +1,17 @@
 2004-11-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/drawable-actions.c: trailing whitespace.
+
+	* app/actions/drawable-commands.[ch]: partly revert alphabetical
+	ordering. Instead, group them as in drawable-actions.c and order
+	by alphabet inside the groups (different ordering in *-actions.c
+	and *-commands.c is inconvenient for the usual workflow of editing
+	both files at the same time).
+
+	* app/core/gimpdrawable-levels.h: indentation.
+
+2004-11-01  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Small/gtkrc: don't change GtkDialog::button_spacing and
 	::action_area_border because it breaks alignment with all other
 	dialog spacings or borders (which are hardcoded).
