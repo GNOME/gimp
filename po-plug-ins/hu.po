@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 11:46+0100\n"
-"PO-Revision-Date: 2004-12-05 14:24+0100\n"
+"POT-Creation-Date: 2004-12-06 11:52+0100\n"
+"PO-Revision-Date: 2004-12-06 12:02+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -431,7 +431,7 @@ msgstr "Fraktálparaméterek mentése"
 #: plug-ins/common/xwd.c:422 plug-ins/faxg3/faxg3.c:220
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:412
 #: plug-ins/gfig/gfig.c:431 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
-#: plug-ins/help/domain.c:419 plug-ins/winicon/icoload.c:126
+#: plug-ins/help/domain.c:421 plug-ins/winicon/icoload.c:126
 #: plug-ins/xjt/xjt.c:2526 plug-ins/xjt/xjt.c:2534
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1633,7 +1633,7 @@ msgid "Random seed"
 msgstr "Véletlenszerű kiindulóérték"
 
 #: plug-ins/common/CML_explorer.c:1289 plug-ins/common/fp.c:663
-#: plug-ins/common/lic.c:641
+#: plug-ins/common/lic.c:669
 msgid "_Hue"
 msgstr "Árny_alat"
 
@@ -2102,7 +2102,7 @@ msgstr "_Elmozdítás:"
 
 #: plug-ins/common/blinds.c:315
 msgid "_Number of segments:"
-msgstr "_Szakaszok száma:"
+msgstr "Sza_kaszok száma:"
 
 #: plug-ins/common/blur.c:147
 msgid "_Blur"
@@ -2204,7 +2204,7 @@ msgstr "Környe_ző:"
 
 #: plug-ins/common/c_astretch.c:78
 msgid "_Stretch Contrast"
-msgstr "_Kontraszt nyújtása"
+msgstr "K_ontraszt nyújtása"
 
 #: plug-ins/common/c_astretch.c:112
 msgid "Auto-Stretching Contrast..."
@@ -2390,7 +2390,7 @@ msgstr "Színezés - egyéni szín"
 
 #: plug-ins/common/colortoalpha.c:105
 msgid "Color to _Alpha..."
-msgstr "Színből _alfa..."
+msgstr "Színből a_lfa..."
 
 #: plug-ins/common/colortoalpha.c:183
 msgid "Removing color..."
@@ -3061,7 +3061,7 @@ msgstr "Pára_tlan mezők megtartása"
 
 #: plug-ins/common/deinterlace.c:341
 msgid "Keep _even fields"
-msgstr "Páro_s mezők megtartása"
+msgstr "Pá_ros mezők megtartása"
 
 #: plug-ins/common/depthmerge.c:192
 msgid "_Depth Merge..."
@@ -3160,7 +3160,7 @@ msgstr "Csíktalanítás"
 #: plug-ins/common/tile.c:417 plug-ins/imagemap/imap_cmd_guides.c:167
 #: plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
-msgstr "_Szélesség:"
+msgstr "S_zélesség:"
 
 #: plug-ins/common/destripe.c:480
 msgid "Create _histogram"
@@ -3482,7 +3482,7 @@ msgstr "Film színének kiválasztása"
 #: plug-ins/common/film.c:1229 plug-ins/common/film.c:1280
 #: plug-ins/common/nova.c:346
 msgid "Co_lor:"
-msgstr "_Szín:"
+msgstr "S_zín:"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1238
@@ -3640,9 +3640,9 @@ msgstr "Ki_emelések"
 msgid "Windows"
 msgstr "Ablakok"
 
-#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:642
+#: plug-ins/common/fp.c:667 plug-ins/common/lic.c:670
 msgid "_Saturation"
-msgstr "Telített_ség"
+msgstr "Telítettsé_g"
 
 #: plug-ins/common/fp.c:675
 msgid "A_dvanced"
@@ -3735,7 +3735,7 @@ msgstr "Külső rész típusa"
 
 #: plug-ins/common/fractaltrace.c:731
 msgid "_Warp"
-msgstr "_Görbítés"
+msgstr "Gör_bítés"
 
 #: plug-ins/common/fractaltrace.c:737
 msgid "_White"
@@ -4381,7 +4381,7 @@ msgstr "Illúzió"
 
 #: plug-ins/common/illusion.c:423
 msgid "_Divisions:"
-msgstr "O_sztás:"
+msgstr "Osz_tás:"
 
 #: plug-ins/common/illusion.c:433
 msgid "Mode _1"
@@ -4458,7 +4458,7 @@ msgstr "Spirál, óram_utató szerinti"
 
 #: plug-ins/common/iwarp.c:1059
 msgid "_Deform radius:"
-msgstr "Deformálási _sugár:"
+msgstr "De_formálási sugár:"
 
 #: plug-ins/common/iwarp.c:1069
 msgid "D_eform amount:"
@@ -4674,71 +4674,71 @@ msgstr "Laplace..."
 msgid "Cleanup..."
 msgstr "Tisztítás..."
 
-#: plug-ins/common/lic.c:548
+#: plug-ins/common/lic.c:571
 msgid "Van Gogh (LIC)..."
 msgstr "Van Gogh (LIC)..."
 
-#: plug-ins/common/lic.c:618
+#: plug-ins/common/lic.c:646
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: plug-ins/common/lic.c:636
+#: plug-ins/common/lic.c:664
 msgid "Effect Channel"
 msgstr "Effektuscsatorna"
 
-#: plug-ins/common/lic.c:643
+#: plug-ins/common/lic.c:671
 msgid "_Brightness"
 msgstr "_Fényerősség"
 
-#: plug-ins/common/lic.c:649
+#: plug-ins/common/lic.c:677
 msgid "Effect Operator"
 msgstr "Effektus-operátor"
 
-#: plug-ins/common/lic.c:654
+#: plug-ins/common/lic.c:682
 msgid "_Derivative"
 msgstr "_Derivált"
 
-#: plug-ins/common/lic.c:655
+#: plug-ins/common/lic.c:683
 msgid "_Gradient"
 msgstr "_Gradiens"
 
-#: plug-ins/common/lic.c:661
+#: plug-ins/common/lic.c:689
 msgid "Convolve"
 msgstr "Konvolúció"
 
-#: plug-ins/common/lic.c:666
+#: plug-ins/common/lic.c:694
 msgid "_With white noise"
 msgstr "Fehér_zajjal"
 
-#: plug-ins/common/lic.c:667
+#: plug-ins/common/lic.c:695
 msgid "W_ith source image"
 msgstr "Fo_rrásképpel"
 
-#: plug-ins/common/lic.c:686
+#: plug-ins/common/lic.c:714
 msgid "_Effect Image:"
 msgstr "Feldolgozandó _kép:"
 
-#: plug-ins/common/lic.c:697
+#: plug-ins/common/lic.c:725
 msgid "_Filter length:"
 msgstr "Szűrő_hossz:"
 
-#: plug-ins/common/lic.c:706
+#: plug-ins/common/lic.c:734
 msgid "_Noise magnitude:"
 msgstr "Za_j mértéke:"
 
-#: plug-ins/common/lic.c:715
+#: plug-ins/common/lic.c:743
 msgid "In_tegration steps:"
 msgstr "Integrá_lási lépések:"
 
-#: plug-ins/common/lic.c:724
+#: plug-ins/common/lic.c:752
 msgid "_Minimum value:"
 msgstr "M_inimális érték:"
 
-#: plug-ins/common/lic.c:733
+#: plug-ins/common/lic.c:761
 msgid "M_aximum value:"
 msgstr "Ma_ximális érték:"
 
-#: plug-ins/common/lic.c:784
+#: plug-ins/common/lic.c:812
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
@@ -5061,7 +5061,7 @@ msgstr "_Hatszögek"
 
 #: plug-ins/common/mosaic.c:594
 msgid "Oc_tagons & squares"
-msgstr "Nyolc_szögek és négyzetek"
+msgstr "Nyol_cszögek és négyzetek"
 
 #. parameter settings
 #: plug-ins/common/mosaic.c:603
@@ -5498,7 +5498,7 @@ msgstr "Pixelesítés"
 
 #: plug-ins/common/pixelize.c:337
 msgid "Pixel _Width:"
-msgstr "Képpont _szélessége:"
+msgstr "Képpont s_zélessége:"
 
 #: plug-ins/common/pixelize.c:342
 msgid "Pixel _Height:"
@@ -6080,7 +6080,7 @@ msgstr "Mé_rték:"
 
 #: plug-ins/common/retinex.c:358
 msgid "_Scale division:"
-msgstr "Mérték-fel_osztás:"
+msgstr "Mérték-fe_losztás:"
 
 #: plug-ins/common/retinex.c:373
 msgid "_Dynamic:"
@@ -6122,11 +6122,11 @@ msgstr "Fűrészfo_g"
 
 #: plug-ins/common/ripple.c:589
 msgid "S_ine"
-msgstr "_Szinusz"
+msgstr "Szin_usz"
 
 #: plug-ins/common/ripple.c:612
 msgid "_Period:"
-msgstr "_Periódus:"
+msgstr "Perió_dus:"
 
 #: plug-ins/common/ripple.c:625
 msgid "A_mplitude:"
@@ -6322,7 +6322,7 @@ msgstr "Szelektív Gauss-elmosás"
 
 #: plug-ins/common/sel_gauss.c:256
 msgid "_Blur radius:"
-msgstr "Elmosás _sugara:"
+msgstr "Elmosás s_ugara:"
 
 #: plug-ins/common/sel_gauss.c:266
 msgid "_Max. delta:"
@@ -6461,7 +6461,7 @@ msgstr "Alfa-csatornák"
 
 #: plug-ins/common/sinus.c:848
 msgid "F_irst Color:"
-msgstr "El_ső szín:"
+msgstr "E_lső szín:"
 
 #: plug-ins/common/sinus.c:863
 msgid "S_econd Color:"
@@ -6903,7 +6903,7 @@ msgstr "_Alsó-bal"
 
 #: plug-ins/common/struc.c:1293
 msgid "Bottom-_right"
-msgstr "Al_só-jobb"
+msgstr "Alsó-_jobb"
 
 #: plug-ins/common/sunras.c:217 plug-ins/common/sunras.c:237
 msgid "SUN Rasterfile image"
@@ -7063,7 +7063,7 @@ msgstr "Or_igó a bal alsó sarokban"
 
 #: plug-ins/common/threshold_alpha.c:95
 msgid "_Threshold Alpha..."
-msgstr "Alfa-_küszöb..."
+msgstr "Alfa-küszö_b..."
 
 #: plug-ins/common/threshold_alpha.c:134
 msgid "The layer preserves transparency."
@@ -7211,7 +7211,7 @@ msgstr "So_r:"
 
 #: plug-ins/common/tileit.c:513
 msgid "Col_umn:"
-msgstr "O_szlop:"
+msgstr "Oszlo_p:"
 
 #: plug-ins/common/tileit.c:565
 msgid "O_pacity:"
@@ -7398,7 +7398,7 @@ msgstr "_Csíkozás"
 
 #: plug-ins/common/video.c:47
 msgid "_Wide-striped"
-msgstr "_Széles csíkozás"
+msgstr "S_zéles csíkozás"
 
 #: plug-ins/common/video.c:48
 msgid "Lo_ng-staggered"
@@ -7805,7 +7805,7 @@ msgstr "Stílus"
 
 #: plug-ins/common/wind.c:910
 msgid "_Wind"
-msgstr "_Szél"
+msgstr "S_zél"
 
 #: plug-ins/common/wind.c:911
 msgid "_Blast"
@@ -8384,7 +8384,7 @@ msgstr "Meg_jelenítés"
 
 #: plug-ins/flame/flame.c:1051
 msgid "Co_ntrast:"
-msgstr "Ko_ntraszt:"
+msgstr "_Kontraszt:"
 
 #: plug-ins/flame/flame.c:1065
 msgid "_Gamma:"
@@ -8400,7 +8400,7 @@ msgstr "Tér_beli túlmintavételezés:"
 
 #: plug-ins/flame/flame.c:1101
 msgid "Spatial _filter radius:"
-msgstr "Térbeli _szűrősugár:"
+msgstr "Térbeli szűrős_ugár:"
 
 #: plug-ins/flame/flame.c:1120
 msgid "Color_map:"
@@ -8830,7 +8830,7 @@ msgstr "Árny_alat-elforgatás:"
 
 #: plug-ins/gflare/gflare.c:2723
 msgid "Vector _Angle:"
-msgstr "Vektor_szög:"
+msgstr "Vektors_zög:"
 
 #: plug-ins/gflare/gflare.c:2735
 msgid "Vector _Length:"
@@ -9215,7 +9215,7 @@ msgstr "GIMPresszionista"
 
 #: plug-ins/gimpressionist/gimpressionist.c:200
 msgid "A_bout"
-msgstr "Névje_gy"
+msgstr "Névjeg_y"
 
 #: plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
@@ -9463,7 +9463,7 @@ msgstr "Az ecsetvonások egyenletes elhelyezése a képen"
 
 #: plug-ins/gimpressionist/placement.c:91
 msgid "Stroke _density:"
-msgstr "_Sűrűség:"
+msgstr "Sűrűsé_g:"
 
 #: plug-ins/gimpressionist/placement.c:95
 msgid "The relative density of the brush strokes"
@@ -9677,12 +9677,12 @@ msgstr "Probléma adódott a GIMP súgófájljaival."
 msgid "Please check your installation."
 msgstr "Ellenőrizze a telepítést."
 
-#: plug-ins/help/domain.c:188
+#: plug-ins/help/domain.c:190
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Ismeretlen súgóazonosító: \"%s\""
 
-#: plug-ins/help/domain.c:445
+#: plug-ins/help/domain.c:447
 #, c-format
 msgid ""
 "Parse error in '%s':\n"

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 11:36+0100\n"
-"PO-Revision-Date: 2004-12-05 14:40+0100\n"
+"POT-Creation-Date: 2004-12-06 11:41+0100\n"
+"PO-Revision-Date: 2004-12-06 11:59+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -697,7 +697,7 @@ msgstr "_Paletta"
 #: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:219
 #: app/dialogs/preferences-dialog.c:1604
 msgid "_Gradient"
-msgstr "_Színátmenet"
+msgstr "Szí_nátmenet"
 
 #: app/actions/context-actions.c:55
 msgid "_Font"
@@ -780,7 +780,7 @@ msgstr "_Eszköztár"
 
 #: app/actions/dialogs-actions.c:65
 msgid "Tool _Options"
-msgstr "Eszköz_beállítások"
+msgstr "Eszközbeá_llítások"
 
 #: app/actions/dialogs-actions.c:70
 msgid "_Device Status"
@@ -859,13 +859,14 @@ msgstr "Dok_umentumok előzménye"
 msgid "_Templates"
 msgstr "Sabl_onok"
 
+# ha nem ékezetes lenne, ütközés lenne
 #: app/actions/dialogs-actions.c:165
 msgid "T_ools"
-msgstr "Eszkö_zök"
+msgstr "Eszk_özök"
 
 #: app/actions/dialogs-actions.c:170
 msgid "Error Co_nsole"
-msgstr "Hibako_nzol"
+msgstr "Hib_akonzol"
 
 #: app/actions/dialogs-actions.c:180
 msgid "_Preferences"
@@ -913,7 +914,7 @@ msgstr "Át_helyezés képernyőre..."
 
 #: app/actions/dockable-actions.c:76
 msgid "_Show Image Selection"
-msgstr "_Képkijelölés megjelenítése"
+msgstr "Képki_jelölés megjelenítése"
 
 #: app/actions/dockable-actions.c:82
 msgid "Auto _Follow Active Image"
@@ -941,7 +942,7 @@ msgstr "_Nagy"
 
 #: app/actions/dockable-actions.c:106
 msgid "Ex_tra Large"
-msgstr "Na_gyon nagy"
+msgstr "Nag_yon nagy"
 
 #: app/actions/dockable-actions.c:107
 msgid "_Huge"
@@ -1814,7 +1815,7 @@ msgstr "_Rajzvászon mérete..."
 
 #: app/actions/image-actions.c:80
 msgid "F_it Canvas to Layers"
-msgstr "Rajzvászon illeszté_se a rétegekre"
+msgstr "Rajzvászon illesztése a réte_gekre"
 
 #: app/actions/image-actions.c:85
 msgid "_Print Size..."
@@ -1936,7 +1937,7 @@ msgstr "_Verem"
 
 #: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:665
 msgid "_Auto"
-msgstr "Au_tomatikus"
+msgstr "A_utomatikus"
 
 #: app/actions/layers-actions.c:55
 msgid "_Mask"
@@ -2040,7 +2041,7 @@ msgstr "Lebegő réteg rögzítése"
 
 #: app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
-msgstr "Ö_sszefésülés lefelé"
+msgstr "Össze_fésülés lefelé"
 
 #: app/actions/layers-actions.c:133
 msgid "Merge _Visible Layers..."
@@ -2060,7 +2061,7 @@ msgstr "Réteg ké_p-méretűvé alakítása"
 
 #: app/actions/layers-actions.c:158
 msgid "_Scale Layer..."
-msgstr "Réteg átmérete_zése..."
+msgstr "Réteg átmér_etezése..."
 
 #: app/actions/layers-actions.c:163
 msgid "Cr_op Layer"
@@ -2092,11 +2093,11 @@ msgstr "Rétegmaszk kikapcsolása"
 
 #: app/actions/layers-actions.c:208
 msgid "Apply Layer _Mask"
-msgstr "Réteg_maszk alkalmazása"
+msgstr "Rétegmaszk alkalma_zása"
 
 #: app/actions/layers-actions.c:213
 msgid "Delete Layer Mas_k"
-msgstr "Rétegm_aszk törlése"
+msgstr "Rétegmaszk tör_lése"
 
 #: app/actions/layers-actions.c:221
 msgid "_Mask to Selection"
@@ -2344,7 +2345,7 @@ msgstr "_Elmosás"
 
 #: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
-msgstr "_Leképezés"
+msgstr "L_eképezés"
 
 #: app/actions/plug-in-actions.c:66
 msgid "_Noise"
@@ -2392,7 +2393,7 @@ msgstr "_Felhők"
 
 #: app/actions/plug-in-actions.c:77
 msgid "_Nature"
-msgstr "_Természet"
+msgstr "T_ermészet"
 
 #: app/actions/plug-in-actions.c:79
 msgid "_Web"
@@ -2922,7 +2923,7 @@ msgstr "Útvonal lesüllyesztése legalulra"
 
 #: app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
-msgstr "Útvonal körbe_rajzolása..."
+msgstr "Útvo_nal körberajzolása..."
 
 #: app/actions/vectors-actions.c:113
 msgid "Stroke path..."
@@ -3090,7 +3091,7 @@ msgstr "S_egédvonalakhoz való igazítás"
 
 #: app/actions/view-actions.c:149
 msgid "S_how Grid"
-msgstr "_Rács megjelenítése"
+msgstr "Rá_cs megjelenítése"
 
 #: app/actions/view-actions.c:155
 msgid "Sna_p to Grid"
@@ -3098,7 +3099,7 @@ msgstr "Rácshoz való _illesztés"
 
 #: app/actions/view-actions.c:161
 msgid "Show _Menubar"
-msgstr "Me_nüsor megjelenítése"
+msgstr "Menüs_or megjelenítése"
 
 #: app/actions/view-actions.c:167
 msgid "Show R_ulers"
@@ -3965,7 +3966,7 @@ msgstr "_Kijelölés"
 
 #: app/core/core-enums.c:32
 msgid "_Grayscale copy of layer"
-msgstr "A réteg _szürkeárnyalatos másolata"
+msgstr "A réteg s_zürkeárnyalatos másolata"
 
 #: app/core/core-enums.c:61 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
@@ -6194,7 +6195,7 @@ msgstr "Új importálás"
 
 #: app/dialogs/palette-import-dialog.c:319
 msgid "Palette _Name:"
-msgstr "Paletta _neve:"
+msgstr "Paletta ne_ve:"
 
 #: app/dialogs/palette-import-dialog.c:325
 msgid "N_umber of colors:"
@@ -6273,7 +6274,7 @@ msgstr "Réteg-_határvonal megjelenítése"
 
 #: app/dialogs/preferences-dialog.c:1076
 msgid "Show _guides"
-msgstr "_Segédvonalak megjelenítése"
+msgstr "Segé_dvonalak megjelenítése"
 
 #: app/dialogs/preferences-dialog.c:1079
 msgid "Show gri_d"
@@ -6285,7 +6286,7 @@ msgstr "Ra_jzvászon kitöltési módja:"
 
 #: app/dialogs/preferences-dialog.c:1090
 msgid "Custom p_adding color:"
-msgstr "Egyé_ni kitöltési szín:"
+msgstr "Egyén_i kitöltési szín:"
 
 #: app/dialogs/preferences-dialog.c:1091
 msgid "Select custom canvas padding color"
@@ -6339,7 +6340,7 @@ msgstr "Gyorsbillentyűk"
 
 #: app/dialogs/preferences-dialog.c:1359
 msgid "Show menu _mnemonics (access keys)"
-msgstr "A menübejegyzések _gyorsbillentyűinek megjelenítése"
+msgstr "A menübejegyzések gyorsb_illentyűinek megjelenítése"
 
 #: app/dialogs/preferences-dialog.c:1362
 msgid "Use _dynamic keyboard shortcuts"
@@ -6351,7 +6352,7 @@ msgstr "Gyors_billentyűk beállítása..."
 
 #: app/dialogs/preferences-dialog.c:1373
 msgid "_Save keyboard shortcuts on exit"
-msgstr "Gyorsbillentyűk me_ntése kilépéskor"
+msgstr "Gyorsbillentyűk mentése ki_lépéskor"
 
 #: app/dialogs/preferences-dialog.c:1377
 msgid "Save Keyboard Shortcuts _Now"
@@ -6397,7 +6398,7 @@ msgstr "Súgóböngésző"
 
 #: app/dialogs/preferences-dialog.c:1531
 msgid "H_elp browser to use:"
-msgstr "Használandó súgóbön_gésző:"
+msgstr "Használandó súgóböngés_ző:"
 
 #: app/dialogs/preferences-dialog.c:1536
 msgid "Web Browser"
@@ -6669,7 +6670,7 @@ msgstr "Ablakok helyzete"
 
 #: app/dialogs/preferences-dialog.c:2123
 msgid "_Save window positions on exit"
-msgstr "Ablakok helyzetének m_entése kilépéskor"
+msgstr "Ablakok helyzetének mentése ki_lépéskor"
 
 #: app/dialogs/preferences-dialog.c:2127
 msgid "Save Window Positions _Now"
@@ -6715,7 +6716,7 @@ msgstr "Bélyegképek"
 
 #: app/dialogs/preferences-dialog.c:2194
 msgid "Size of _thumbnails:"
-msgstr "Bélye_gképek mérete:"
+msgstr "Bé_lyegképek mérete:"
 
 #: app/dialogs/preferences-dialog.c:2198
 msgid "Maximum _filesize for thumbnailing:"
@@ -8678,7 +8679,7 @@ msgstr "Árnyalat és telítettség beállítása"
 
 #: app/tools/gimphuesaturationtool.c:112
 msgid "Hue-_Saturation..."
-msgstr "Árnyalat-_telítettség..."
+msgstr "Árny_alat-telítettség..."
 
 #: app/tools/gimphuesaturationtool.c:166
 msgid "Adjust hue / lightness / saturation"
@@ -9057,7 +9058,7 @@ msgstr "A Poszter nem működik indexelt rétegeken."
 
 #: app/tools/gimpposterizetool.c:223
 msgid "Posterize _levels:"
-msgstr "Poszter _szintjei:"
+msgstr "Poszter sz_intjei:"
 
 #: app/tools/gimprectselecttool.c:97
 msgid "Select rectangular regions"
@@ -9314,7 +9315,7 @@ msgstr "A kép színeinek kettőre csökkentése egy küszöb használatával"
 
 #: app/tools/gimpthresholdtool.c:94
 msgid "_Threshold..."
-msgstr "_Küszöbszint..."
+msgstr "Küszö_bszint..."
 
 #: app/tools/gimpthresholdtool.c:148
 msgid "Apply Threshold"
@@ -10158,7 +10159,7 @@ msgstr "Az összes fájl"
 #: app/widgets/gimpfiledialog.c:635
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Fájl_típus kiválasztása (%s)"
+msgstr "Fájltípus ki_választása (%s)"
 
 #: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
@@ -10255,7 +10256,7 @@ msgstr "Távolság: %0.6f"
 
 #: app/widgets/gimpgrideditor.c:219
 msgid "Line _Style:"
-msgstr "Vonal_stílus:"
+msgstr "Vonals_tílus:"
 
 #: app/widgets/gimpgrideditor.c:223
 msgid "Change grid foreground color"
