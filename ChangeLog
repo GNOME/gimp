@@ -1,3 +1,7 @@
+2000-11-18  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tga.c: Fix alleged problem with small images
+
 2000-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/rcm/rcm_pixmaps.h: removed.
