@@ -6,8 +6,10 @@ gimptool - script to perform various Gimpy functions
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run] [\-\-recon]
 [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi] [\-\-build \fIplug\-in.c\fP]
-[\-\-install \fIplug\-in.c\fP]
-[\-\-install-admin \fIplug-in.c\fP] [\-\-install\-bin \fIplug\-in\fP] [
+[\-\-build\-strip \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP]
+[\-\-install-strip \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP] 
+[\-\-install\-bin \fIplug\-in\fP]
+[\-\-install\-admin\-strip \fIplug-in.c\fP] [\-\-install\-bin\-strip \fIplug\-in\fP]
 [\-\-\install\-admin\-bin \fIplug\-in\fP] [\-\-install\-script \fIscript.scm\fP] 
 [\-\-\install\-admin\-script \fIscript.scm\fP]
 
@@ -53,8 +55,15 @@ Test mode. Print the commands but dont actually execute them. Same as \-n.
 .B  \-\-build \fIplug-in.c\fP
 Compile and link \fIplug-in.c\fP into a \fIGimp\fP plug-in.
 .TP 8
+.B  \-\-build\-strip \fIplug-in.c\fP
+Compile,link, and strip \fIplug-in.c\fP into a \fIGimp\fP plug-in.
+.TP 8
 .B  \-\-install \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the user's personal \fIGimp\fP
+plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+.TP 8
+.B  \-\-install\-strip \fIplug-in.c\fP
+Compile, link,strip,  and install \fIplug-in.c\fP into the user's personal \fIGimp\fP
 plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
 .TP 8
 .B  \-\-install\-admin \fIplug-in.c\fP
@@ -67,6 +76,14 @@ plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin \fIplug-in\fP
 Install \fIplug-in\fP into the system-wide \fIGimp\fP
+plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+.TP 8
+.B  \-\-install\-bin\-strip \fIplug-in\fP
+Install stripped \fIplug-in\fP into the user's personal \fIGimp\fP
+plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+.TP 8
+.B  \-\-install\-admin\-bin\-strip \fIplug-in\fP
+Install stripped \fIplug-in\fP into the system-wide \fIGimp\fP
 plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
 .TP 8
 .B  \-\-install\-script \fIscript.scm\fP

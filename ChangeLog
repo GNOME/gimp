@@ -1,6 +1,8 @@
-Sun Sep 27 01:49:26 PDT 1998 Manish Singh <yosh@gimp.org>
+Sun Sep 27 14:51:47 PDT 1998 Manish Singh <yosh@gimp.org>
 
-	* Made 1.0.1 release
+	* gimptool.in: sync with 1.1 gimptool
+	
+	* gimptool.1: man page update
 
 Mon Sep 21 02:11:27 PDT 1998 Manish Singh <yosh@gimp.org>
 
