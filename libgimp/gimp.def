@@ -3,12 +3,23 @@ EXPORTS
 	gimp_airbrush_default
 	gimp_attach_new_parasite
 	gimp_blend
+	gimp_brightness_contrast
 	gimp_brush_select_destroy
 	gimp_brush_select_new
 	gimp_brushes_close_popup
+	gimp_brushes_get_brush
 	gimp_brushes_get_brush_data
+	gimp_brushes_get_list
+	gimp_brushes_get_opacity
+	gimp_brushes_get_paint_mode
+	gimp_brushes_get_spacing
 	gimp_brushes_popup
+	gimp_brushes_refresh
+	gimp_brushes_set_brush
+	gimp_brushes_set_opacity
+	gimp_brushes_set_paint_mode
 	gimp_brushes_set_popup
+	gimp_brushes_set_spacing
 	gimp_bucket_fill
 	gimp_by_color_select
 	gimp_channel_combine_masks
@@ -21,7 +32,6 @@ EXPORTS
 	gimp_channel_get_tattoo
 	gimp_channel_get_visible
 	gimp_channel_new
-	gimp_channel_new
 	gimp_channel_set_color
 	gimp_channel_set_name
 	gimp_channel_set_opacity
@@ -30,18 +40,23 @@ EXPORTS
 	gimp_channel_set_visible
 	gimp_clone
 	gimp_clone_default
+	gimp_color_balance
 	gimp_color_picker
 	gimp_convert_grayscale
 	gimp_convert_indexed
 	gimp_convert_rgb
 	gimp_convolve
 	gimp_convolve_default
+	gimp_curves_explicit
+	gimp_curves_spline
 	gimp_default_display
+	gimp_desaturate
 	gimp_destroy_paramdefs
 	gimp_destroy_params
 	gimp_display_delete
 	gimp_display_new
 	gimp_displays_flush
+	gimp_displays_reconnect
 	gimp_dodgeburn
 	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
@@ -86,6 +101,7 @@ EXPORTS
 	gimp_edit_paste
 	gimp_edit_stroke
 	gimp_ellipse_select
+	gimp_equalize
 	gimp_eraser
 	gimp_eraser_default
 	gimp_extension_ack
@@ -103,7 +119,9 @@ EXPORTS
 	gimp_font_select_destroy
 	gimp_font_select_new
 	gimp_fonts_close_popup
+	gimp_fonts_get_list
 	gimp_fonts_popup
+	gimp_fonts_refresh
 	gimp_fonts_set_popup
 	gimp_free_select
 	gimp_fuzzy_select
@@ -120,14 +138,16 @@ EXPORTS
 	gimp_gradients_close_popup
 	gimp_gradients_get_gradient
 	gimp_gradients_get_gradient_data
-	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
 	gimp_gradients_popup
+	gimp_gradients_refresh
 	gimp_gradients_sample_custom
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_gradient
 	gimp_gradients_set_popup
 	gimp_help
+	gimp_histogram
+	gimp_hue_saturation
 	gimp_image_active_drawable
 	gimp_image_add_channel
 	gimp_image_add_hguide
@@ -143,6 +163,7 @@ EXPORTS
 	gimp_image_duplicate
 	gimp_image_find_next_guide
 	gimp_image_flatten
+	gimp_image_flip
 	gimp_image_floating_sel_attached_to
 	gimp_image_floating_selection
 	gimp_image_free_shadow
@@ -150,7 +171,6 @@ EXPORTS
 	gimp_image_get_active_layer
 	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channels
-	gimp_image_get_cmap
 	gimp_image_get_cmap
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
@@ -190,7 +210,6 @@ EXPORTS
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
 	gimp_image_set_cmap
-	gimp_image_set_cmap
 	gimp_image_set_component_active
 	gimp_image_set_component_visible
 	gimp_image_set_filename
@@ -210,7 +229,6 @@ EXPORTS
 	gimp_invert
 	gimp_layer_add_alpha
 	gimp_layer_copy
-	gimp_layer_copy
 	gimp_layer_create_mask
 	gimp_layer_delete
 	gimp_layer_get_apply_mask
@@ -226,7 +244,7 @@ EXPORTS
 	gimp_layer_is_floating_sel
 	gimp_layer_mask
 	gimp_layer_new
-	gimp_layer_new
+	gimp_layer_new_from_drawable
 	gimp_layer_resize
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
@@ -241,18 +259,29 @@ EXPORTS
 	gimp_layer_set_tattoo
 	gimp_layer_set_visible
 	gimp_layer_translate
+	gimp_levels
+	gimp_levels_auto
 	gimp_main
-	gimp_major_version
 	gimp_message
-	gimp_micro_version
+	gimp_message_get_handler
+	gimp_message_set_handler
 	gimp_min_colors
-	gimp_minor_version
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_get_background
 	gimp_palette_get_foreground
 	gimp_palette_set_background
+	gimp_palette_set_default_colors
 	gimp_palette_set_foreground
+	gimp_palette_swap_colors
+	gimp_palettes_close_popup
+	gimp_palettes_get_list
+	gimp_palettes_get_palette
+	gimp_palettes_get_palette_entry
+	gimp_palettes_popup
+	gimp_palettes_refresh
+	gimp_palettes_set_palette
+	gimp_palettes_set_popup
 	gimp_parasite_attach
 	gimp_parasite_detach
 	gimp_parasite_find
@@ -269,11 +298,16 @@ EXPORTS
 	gimp_path_set_points
 	gimp_path_set_tattoo
 	gimp_path_stroke_current
+	gimp_path_to_selection
 	gimp_pattern_select_destroy
 	gimp_pattern_select_new
 	gimp_patterns_close_popup
+	gimp_patterns_get_list
+	gimp_patterns_get_pattern
 	gimp_patterns_get_pattern_data
 	gimp_patterns_popup
+	gimp_patterns_refresh
+	gimp_patterns_set_pattern
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_perspective
@@ -299,17 +333,19 @@ EXPORTS
 	gimp_pixel_rgns_register2
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
-	gimp_procedural_db_get_data
+	gimp_posterize
+	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
+	gimp_procedural_db_proc_arg
 	gimp_procedural_db_proc_info
-	gimp_procedural_db_proc_info
+	gimp_procedural_db_proc_val
 	gimp_procedural_db_query
-	gimp_procedural_db_set_data
 	gimp_procedural_db_set_data
 	gimp_progress_init
 	gimp_progress_update
 	gimp_quit
+	gimp_read_expect_msg
 	gimp_rect_select
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
@@ -320,15 +356,27 @@ EXPORTS
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale
+	gimp_selection_all
+	gimp_selection_border
 	gimp_selection_bounds
 	gimp_selection_clear
+	gimp_selection_combine
+	gimp_selection_feather
 	gimp_selection_float
-	gimp_selection_float
+	gimp_selection_grow
+	gimp_selection_invert
 	gimp_selection_is_empty
+	gimp_selection_layer_alpha
 	gimp_selection_load
 	gimp_selection_none
 	gimp_selection_save
+	gimp_selection_sharpen
+	gimp_selection_shrink
+	gimp_selection_translate
+	gimp_selection_value
 	gimp_shear
+	gimp_shm_ID
+	gimp_shm_addr
 	gimp_show_tool_tips
 	gimp_smudge
 	gimp_smudge_default
@@ -338,6 +386,7 @@ EXPORTS
 	gimp_text_fontname
 	gimp_text_get_extents
 	gimp_text_get_extents_fontname
+	gimp_threshold
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size
 	gimp_tile_flush
@@ -353,7 +402,6 @@ EXPORTS
 	gimp_unit_get_abbreviation
 	gimp_unit_get_deletion_flag
 	gimp_unit_get_digits
-	gimp_unit_get_factor
 	gimp_unit_get_factor
 	gimp_unit_get_identifier
 	gimp_unit_get_number_of_built_in_units

@@ -1,5 +1,13 @@
 2003-09-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.def
+	* libgimpmath/gimpmath.def
+	* libgimpwidgets/gimpwidgets.def: used nm to regenerate these
+	files from libraries built on Linux. There were quite some symbols
+	missing.
+
+2003-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpitemtreeview.c: moved the visibility toggle
 	before the linked toggle again.
 
