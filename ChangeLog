@@ -1,3 +1,15 @@
+2002-06-19  Maurits Rijk  <maurits@linux.local>
+
+	* plug-ins/imagemap/imap_preview.c (arrow_cb): minor layout changes.
+	
+	* plug-ins/imagemap/imap_object.c (object_get_icon): 
+	* plug-ins/imagemap/imap_selection.c (selection_update): quick and
+	dirty fix for now. Should be replaced as soon as GtkCList is replaced
+	by GtkTreeView.
+
+	* plug-ins/imagemap/imap_cmd_move_sash.c (move_sash_command_new): fixes
+	#84726 (Imagemap plugin crashes regularly).
+
 2002-06-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/fractaltrace.c (dialog_show): enable mnemonics

@@ -193,9 +193,12 @@ selection_update(Selection_t *selection, gint row, Object_t *obj)
 {
    GdkBitmap *mask;
    GdkPixmap *icon = object_get_icon(obj, selection->list, &mask);
-
+#ifdef _NOT_READY_YET_
    gtk_clist_set_pixtext(GTK_CLIST(selection->list), row, 1, obj->url, 8,
 			 icon, mask);
+#else
+   gtk_clist_set_text(GTK_CLIST(selection->list), row, 1, obj->url);
+#endif
    gtk_clist_set_text(GTK_CLIST(selection->list), row, 2, obj->target);
    gtk_clist_set_text(GTK_CLIST(selection->list), row, 3, obj->comment);
 }

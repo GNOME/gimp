@@ -385,6 +385,15 @@ object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask)
 				      obj->class->get_icon_data());
    }
    *mask = obj->class->mask;
+#else
+   if (!obj->class->icon) {
+      GtkWidget *image = gtk_image_new_from_stock(
+	 obj->class->get_stock_icon_name(), GTK_ICON_SIZE_MENU);
+      gtk_image_get_pixmap(GTK_IMAGE(image), &obj->class->icon,
+			   &obj->class->mask);
+   }
+   *mask = obj->class->mask;
+
 #endif
    return obj->class->icon;
 }

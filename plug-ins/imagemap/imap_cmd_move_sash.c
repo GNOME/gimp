@@ -59,7 +59,7 @@ move_sash_command_new(GtkWidget *widget, Object_t *obj,
    Command_t *parent;
 
    command->widget = widget;
-   command->obj = obj;
+   command->obj = object_ref(obj);
    command->x = x;
    command->y = y;
    command->image_width = get_image_width();
