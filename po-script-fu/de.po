@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-01 23:20+0200\n"
-"PO-Revision-Date: 2004-07-01 23:33+0200\n"
+"POT-Creation-Date: 2004-07-04 17:23+0200\n"
+"PO-Revision-Date: 2004-07-04 17:25+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -869,7 +869,7 @@ msgstr "Fleckendichte Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Skript-Fu/Animationen/_Überblenden..."
+msgstr "<Image>/Skript-Fu/Animationen/_Einbrennen..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add glowing"
@@ -881,11 +881,11 @@ msgstr "Nach dem Glühen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "»Einbrennen« benötigt mindestens zwei Ebenen!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
+msgstr "Einbrenneffekt zwischen einer Vordergrund- undHintergrundebene."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona width"
@@ -2072,7 +2072,7 @@ msgstr "Von links nach rechts drehen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Skript-Fu/Render/_Gitter..."
+msgstr "<Image>/Skript-Fu/Render/_Spyrogimp..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2095,6 +2095,8 @@ msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
+"Zeichnet Spirografen, Epitrochoide und Lissajous Kurven.Weitere "
+"Informationen unter http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2106,11 +2108,11 @@ msgstr "Rahmen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Gradient: Wiederholung durch Sägezahnwelle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Gradient: Wiederholung durch Dreieckswelle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
@@ -2122,7 +2124,7 @@ msgstr "Erhöhung"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner teeth"
-msgstr ""
+msgstr "Innerer Zahn"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
