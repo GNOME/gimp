@@ -1,5 +1,9 @@
 1999-12-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/colormap_dialog.i.c: My last change caused a warning. Fixed now.
+
+1999-12-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c: reverted the splash back to it's previous state
 	(with decoration).
 

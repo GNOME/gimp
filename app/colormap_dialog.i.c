@@ -166,11 +166,11 @@ ipal_create (GimpSet *context)
   ipal->image = NULL;
   ipal->context = context;
   ipal->cmap_changed_handler
-    = gimp_set_add_handler(context, "colormap_changed",
-			   image_cmap_change_cb, ipal);
+    = gimp_set_add_handler (context, "colormap_changed",
+			    image_cmap_change_cb, ipal);
   ipal->rename_handler
-    = gimp_set_add_handler(context, "rename",
-			   image_rename_cb, ipal);
+    = gimp_set_add_handler (context, "rename",
+			    image_rename_cb, ipal);
 
   accel_group = gtk_accel_group_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ipal), "indexed_color_palette", "Gimp");
@@ -575,6 +575,7 @@ ipal_update_entries (GimpColormapDialog *ipal)
     {
       gtk_widget_set_sensitive (ipal->index_spinbutton, FALSE);
       gtk_widget_set_sensitive (GTK_WIDGET (ipal->color_entry), FALSE);
+      gtk_adjustment_set_value (ipal->index_adjustment, 0);
       gtk_entry_set_text (ipal->color_entry, "");
     }
   else
@@ -613,7 +614,9 @@ index_adjustment_change_cb (GtkAdjustment      *adjustment,
 			    GimpColormapDialog *ipal)
 {
   g_return_if_fail (ipal);
-  g_return_if_fail (ipal->image);
+
+  if (!ipal->image)
+    return;
 
   ipal_set_index (ipal, (gint) (adjustment->value + 0.5));
 
