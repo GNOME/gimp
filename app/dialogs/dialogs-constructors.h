@@ -53,5 +53,12 @@ GtkWidget * dialogs_gradient_grid_view_new (GimpDialogFactory *factory);
 GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory);
 GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory);
 
+GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory);
+GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory);
+
+void        dialogs_edit_brush_func        (GimpData          *data);
+void        dialogs_edit_gradient_func     (GimpData          *data);
+void        dialogs_edit_palette_func      (GimpData          *data);
+
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

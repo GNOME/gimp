@@ -1,3 +1,20 @@
+2001-04-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c: set the message handler for all app log domains, not
+	only for "Gimp".
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c: removed the "edit" callbacks.
+
+	* app/gui/dialogs-constructors.[ch]: Added the callbacks
+	here. Added layer and channel lists.
+
+	* app/gui/dialogs.c: register the new lists.
+	* app/gui/menus.c: their menu entries.
+
+	* app/widgets/gimpdock.c: set a minimal width of 280 pixels.
+
 2001-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am

@@ -362,8 +362,22 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
-
-  /* g_set_message_handler ((GPrintFunc) gimp_message_func); */
+  g_log_set_handler ("Gimp-GUI",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+  g_log_set_handler ("Gimp-PDB",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+  g_log_set_handler ("Gimp-Tools",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
+  g_log_set_handler ("Gimp-Widgets",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_func,
+		     NULL);
 
 #ifndef G_OS_WIN32
 

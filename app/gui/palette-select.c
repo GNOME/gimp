@@ -30,6 +30,7 @@
 #include "widgets/gimpdatafactoryview.h"
 
 #include "dialog_handler.h"
+#include "dialogs-constructors.h"
 #include "gimpdnd.h"
 #include "palette-editor.h"
 #include "palette-select.h"
@@ -55,7 +56,6 @@ static void   palette_select_drop_palette   (GtkWidget      *widget,
 					     gpointer        data);
 static void   palette_select_close_callback (GtkWidget      *widget,
 					     gpointer        data);
-static void   palette_select_edit_palette   (GimpData       *data);
 
 
 /*  list of active dialogs  */
@@ -141,7 +141,7 @@ palette_select_new (const gchar *title,
   /*  The Palette List  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 					  global_palette_factory,
-					  palette_select_edit_palette,
+					  dialogs_edit_palette_func,
 					  psp->context,
 					  64, /* FIXME: SM_PREVIEW_WIDTH */
 					  3, /* FIXME: STD_PALETTE_COLUMNS */
@@ -211,10 +211,4 @@ palette_select_close_callback (GtkWidget *widget,
 
   gtk_widget_destroy (psp->shell); 
   palette_select_free (psp); 
-}
-
-static void
-palette_select_edit_palette (GimpData *data)
-{
-  palette_dialog_edit_palette (data);
 }

@@ -35,9 +35,11 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimppreview.h"
 
 #include "about-dialog.h"
+#include "brush-editor.h"
 #include "brush-select.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
@@ -57,10 +59,15 @@
 
 #include "context_manager.h"
 #include "gdisplay.h"
+#include "gimpbrush.h"
+#include "gimpbrushgenerated.h"
+#include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
+#include "gimpgradient.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
 #include "gimprc.h"
 #include "module_db.h"
 #include "undo_history.h"
@@ -92,6 +99,10 @@ static GtkWidget * dialogs_dockable_new      (GtkWidget              *widget,
 					      const gchar            *name,
 					      const gchar            *short_name,
 					      GimpDockableGetTabFunc  get_tab_func);
+
+static void dialogs_drawable_view_image_changed (GimpContext          *context,
+						 GimpImage            *gimage,
+						 GimpDrawableListView *view);
 
 
 /*  public functions  */
@@ -266,7 +277,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_brush_factory,
-				     NULL,
+				     dialogs_edit_brush_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -300,7 +311,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_gradient_factory,
-				     NULL,
+				     dialogs_edit_gradient_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -317,7 +328,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 				     global_palette_factory,
-				     NULL,
+				     dialogs_edit_palette_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -367,7 +378,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_brush_factory,
-				     NULL,
+				     dialogs_edit_brush_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -401,7 +412,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_gradient_factory,
-				     NULL,
+				     dialogs_edit_gradient_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -418,7 +429,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory)
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 				     global_palette_factory,
-				     NULL,
+				     dialogs_edit_palette_func,
 				     factory->context,
 				     32,
 				     5, 3);
@@ -441,6 +452,121 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory)
   return dialogs_dockable_new (view,
 			       "Tool Grid", "Tools",
 			       NULL);
+}
+
+
+/*  image related dialogs  */
+
+GtkWidget *
+dialogs_layer_list_view_new (GimpDialogFactory *factory)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+
+  gimage = gimp_context_get_image (factory->context);
+
+  view = gimp_drawable_list_view_new
+    (gimage,
+     GIMP_TYPE_LAYER,
+     "active_layer_changed",
+     (GimpGetContainerFunc)    gimp_image_get_layers,
+     (GimpGetDrawableFunc)     gimp_image_get_active_layer,
+     (GimpSetDrawableFunc)     gimp_image_set_active_layer,
+     (GimpReorderDrawableFunc) gimp_image_position_layer,
+     (GimpAddDrawableFunc)     gimp_image_add_layer,
+     (GimpRemoveDrawableFunc)  gimp_image_remove_layer,
+     (GimpCopyDrawableFunc)    gimp_layer_copy);
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (factory->context), "image_changed",
+     GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
+     view,
+     GTK_OBJECT (view));
+
+  return dialogs_dockable_new (view,
+			       "Layer List", "Layers",
+			       NULL);
+}
+
+GtkWidget *
+dialogs_channel_list_view_new (GimpDialogFactory *factory)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+
+  gimage = gimp_context_get_image (factory->context);
+
+  view = gimp_drawable_list_view_new
+    (gimage,
+     GIMP_TYPE_CHANNEL,
+     "active_channel_changed",
+     (GimpGetContainerFunc)    gimp_image_get_channels,
+     (GimpGetDrawableFunc)     gimp_image_get_active_channel,
+     (GimpSetDrawableFunc)     gimp_image_set_active_channel,
+     (GimpReorderDrawableFunc) gimp_image_position_channel,
+     (GimpAddDrawableFunc)     gimp_image_add_channel,
+     (GimpRemoveDrawableFunc)  gimp_image_remove_channel,
+     (GimpCopyDrawableFunc)    gimp_channel_copy);
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (factory->context), "image_changed",
+     GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
+     view,
+     GTK_OBJECT (view));
+
+  return dialogs_dockable_new (view,
+			       "Channel List", "Channels",
+			       NULL);
+}
+
+
+/*  editor dialogs  */
+
+void
+dialogs_edit_brush_func (GimpData *data)
+{
+  static BrushEditGeneratedWindow *brush_editor_dialog = NULL;
+
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (data);
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      if (! brush_editor_dialog)
+	{
+	  brush_editor_dialog = brush_edit_generated_new ();
+	}
+
+      brush_edit_generated_set_brush (brush_editor_dialog, brush);
+    }
+  else
+    {
+      g_message (_("Sorry, this brush can't be edited."));
+    }
+}
+
+void
+dialogs_edit_gradient_func (GimpData *data)
+{
+  static GradientEditor *gradient_editor_dialog = NULL;
+
+  GimpGradient *gradient;
+
+  gradient = GIMP_GRADIENT (data);
+
+  if (! gradient_editor_dialog)
+    {
+      gradient_editor_dialog = gradient_editor_new ();
+    }
+
+  gradient_editor_set_gradient (gradient_editor_dialog, gradient);
+}
+
+void
+dialogs_edit_palette_func (GimpData *data)
+{
+  palette_dialog_edit_palette (data);
 }
 
 
@@ -565,7 +691,7 @@ dialogs_palette_tab_func (GimpDockable *dockable,
   return preview;
 }
 
-GtkWidget *
+static GtkWidget *
 dialogs_dockable_new (GtkWidget              *widget,
 		      const gchar            *name,
 		      const gchar            *short_name,
@@ -582,3 +708,12 @@ dialogs_dockable_new (GtkWidget              *widget,
 
   return dockable;
 }
+
+static void
+dialogs_drawable_view_image_changed (GimpContext          *context,
+				     GimpImage            *gimage,
+				     GimpDrawableListView *view)
+{
+  gimp_drawable_list_view_set_image (view, gimage);
+}
+

@@ -32,7 +32,7 @@
 #include "widgets/gimpdatafactoryview.h"
 
 #include "dialog_handler.h"
-#include "gradient-editor.h"
+#include "dialogs-constructors.h"
 #include "gradient-select.h"
 
 #include "appenv.h"
@@ -52,7 +52,6 @@ static void gradient_select_gradient_changed     (GimpContext    *context,
 						  GradientSelect *gsp);
 static void gradient_select_close_callback       (GtkWidget      *widget,
 						  gpointer        data);
-static void gradient_select_edit_gradient        (GimpData        *data);
 
 
 /*  list of active dialogs   */
@@ -60,10 +59,6 @@ GSList *gradient_active_dialogs = NULL;
 
 /*  the main gradient selection dialog  */
 GradientSelect *gradient_select_dialog = NULL;
-
-
-/*  the main gradient editor dialog  */
-static GradientEditor *gradient_editor_dialog = NULL;
 
 
 /*  public functions  */
@@ -160,7 +155,7 @@ gradient_select_new (gchar *title,
   /*  The Gradient List  */
   gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 					  global_gradient_factory,
-					  gradient_select_edit_gradient,
+					  dialogs_edit_gradient_func,
 					  gsp->context,
 					  16,
 					  10, 10);
@@ -331,19 +326,4 @@ gradient_select_close_callback (GtkWidget *widget,
       gtk_widget_destroy (gsp->shell);
       gradient_select_free (gsp);
     }
-}
-
-static void
-gradient_select_edit_gradient (GimpData *data)
-{
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (data);
-
-  if (! gradient_editor_dialog)
-    {
-      gradient_editor_dialog = gradient_editor_new ();
-    }
-
-  gradient_editor_set_gradient (gradient_editor_dialog, gradient);
 }

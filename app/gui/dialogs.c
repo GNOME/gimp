@@ -73,7 +73,11 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE },
   { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE },
   { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE },
-  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE }
+  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE },
+
+  /* these will go to image_dock_entries */
+  { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE },
+  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));

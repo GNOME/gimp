@@ -32,8 +32,8 @@
 
 #include "widgets/gimpdatafactoryview.h"
 
-#include "brush-editor.h"
 #include "brush-select.h"
+#include "dialogs-constructors.h"
 
 #include "appenv.h"
 #include "context_manager.h"
@@ -81,7 +81,6 @@ static void     spacing_scale_update                (GtkAdjustment    *adj,
 
 static void     brush_select_close_callback         (GtkWidget       *widget,
 						     gpointer         data);
-static void     brush_select_edit_brush             (GimpData        *data);
 
 
 /*  list of active dialogs  */
@@ -89,10 +88,6 @@ GSList *brush_active_dialogs = NULL;
 
 /*  the main brush selection dialog  */
 BrushSelect *brush_select_dialog = NULL;
-
-
-/*  the main brush editor dialog  */
-static BrushEditGeneratedWindow *brush_edit_generated_dialog = NULL;
 
 
 /*  public functions  */
@@ -219,7 +214,7 @@ brush_select_new (gchar   *title,
   /*  The Brush Grid  */
   bsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 					  global_brush_factory,
-					  brush_select_edit_brush,
+					  dialogs_edit_brush_func,
 					  bsp->context,
 					  MIN_CELL_SIZE,
 					  STD_BRUSH_COLUMNS,
@@ -600,27 +595,5 @@ brush_select_close_callback (GtkWidget *widget,
       brush_select_change_callbacks (bsp, TRUE);
       gtk_widget_destroy (bsp->shell); 
       brush_select_free (bsp); 
-    }
-}
-
-static void
-brush_select_edit_brush (GimpData *data)
-{
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (data);
-
-  if (GIMP_IS_BRUSH_GENERATED (brush))
-    {
-      if (! brush_edit_generated_dialog)
-	{
-	  brush_edit_generated_dialog = brush_edit_generated_new ();
-	}
-
-      brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
-    }
-  else
-    {
-      g_message (_("Sorry, this brush can't be edited."));
     }
 }

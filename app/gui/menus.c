@@ -869,6 +869,16 @@ static GimpItemFactoryEntry dialogs_entries[] =
   { { N_("/Add Tab/Tool Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:tool-grid") },
     NULL, NULL },
+
+  { { "/Add Tab/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { N_("/Add Tab/Layer List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:layer-list") },
+    NULL, NULL },
+  { { N_("/Add Tab/Channel List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:channel-list") },
+    NULL, NULL }
 };
 static guint n_dialogs_entries = (sizeof (dialogs_entries) /
 				  sizeof (dialogs_entries[0]));
