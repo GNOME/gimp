@@ -26,6 +26,19 @@
 #include <gtk/gtktreeview.h>
 
 
+enum
+{
+  GIMP_ACTION_VIEW_COLUMN_ACTION,
+  GIMP_ACTION_VIEW_COLUMN_STOCK_ID,
+  GIMP_ACTION_VIEW_COLUMN_LABEL,
+  GIMP_ACTION_VIEW_COLUMN_NAME,
+  GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+  GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
+  GIMP_ACTION_VIEW_COLUMN_MENU_ITEM,
+  GIMP_ACTION_VIEW_NUM_COLUMNS
+};
+
+
 #define GIMP_TYPE_ACTION_VIEW            (gimp_action_view_get_type ())
 #define GIMP_ACTION_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_VIEW, GimpActionView))
 #define GIMP_ACTION_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACTION_VIEW, GimpActionViewClass))
@@ -55,6 +68,7 @@ struct _GimpActionViewClass
 GType       gimp_action_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_action_view_new      (GimpUIManager *manager,
+                                       const gchar   *select_action,
                                        gboolean       show_shortcuts);
 
 

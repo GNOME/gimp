@@ -42,19 +42,6 @@
 #include "gimp-intl.h"
 
 
-enum
-{
-  COLUMN_ACTION,
-  COLUMN_STOCK_ID,
-  COLUMN_LABEL,
-  COLUMN_NAME,
-  COLUMN_ACCEL_KEY,
-  COLUMN_ACCEL_MASK,
-  COLUMN_MENU_ITEM,
-  NUM_COLUMNS
-};
-
-
 /*  local function prototypes  */
 
 static void     gimp_action_view_class_init  (GimpActionViewClass *klass);
@@ -151,6 +138,7 @@ gimp_action_view_dispose (GObject *object)
 
 GtkWidget *
 gimp_action_view_new (GimpUIManager *manager,
+                      const gchar   *select_action,
                       gboolean       show_shortcuts)
 {
   GtkTreeView       *view;
@@ -159,10 +147,11 @@ gimp_action_view_new (GimpUIManager *manager,
   GtkTreeStore      *store;
   GtkAccelGroup     *accel_group;
   GList             *list;
+  GtkTreePath       *select_path = NULL;
 
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
-  store = gtk_tree_store_new (NUM_COLUMNS,
+  store = gtk_tree_store_new (GIMP_ACTION_VIEW_NUM_COLUMNS,
                               GTK_TYPE_ACTION,        /* COLUMN_ACTION     */
                               G_TYPE_STRING,          /* COLUMN_STOCK_ID   */
                               G_TYPE_STRING,          /* COLUMN_LABEL      */
@@ -185,8 +174,8 @@ gimp_action_view_new (GimpUIManager *manager,
       gtk_tree_store_append (store, &group_iter, NULL);
 
       gtk_tree_store_set (store, &group_iter,
-                          COLUMN_STOCK_ID, group->stock_id,
-                          COLUMN_LABEL,    group->label,
+                          GIMP_ACTION_VIEW_COLUMN_STOCK_ID, group->stock_id,
+                          GIMP_ACTION_VIEW_COLUMN_LABEL,    group->label,
                           -1);
 
       actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
@@ -262,13 +251,13 @@ gimp_action_view_new (GimpUIManager *manager,
               gtk_tree_store_append (store, &action_iter, &group_iter);
 
               gtk_tree_store_set (store, &action_iter,
-                                  COLUMN_ACTION,     action,
-                                  COLUMN_STOCK_ID,   stock_id,
-                                  COLUMN_LABEL,      stripped,
-                                  COLUMN_NAME,       name,
-                                  COLUMN_ACCEL_KEY,  accel_key,
-                                  COLUMN_ACCEL_MASK, accel_mask,
-                                  COLUMN_MENU_ITEM,  menu_item,
+                                  GIMP_ACTION_VIEW_COLUMN_ACTION,     action,
+                                  GIMP_ACTION_VIEW_COLUMN_STOCK_ID,   stock_id,
+                                  GIMP_ACTION_VIEW_COLUMN_LABEL,      stripped,
+                                  GIMP_ACTION_VIEW_COLUMN_NAME,       name,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,  accel_key,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK, accel_mask,
+                                  GIMP_ACTION_VIEW_COLUMN_MENU_ITEM,  menu_item,
                                   -1);
 
               g_free (stock_id);
@@ -277,6 +266,12 @@ gimp_action_view_new (GimpUIManager *manager,
 
               if (menu_item)
                 g_object_unref (menu_item);
+
+              if (select_action && ! strcmp (select_action, name))
+                {
+                  select_path = gtk_tree_model_get_path (GTK_TREE_MODEL (store),
+                                                         &action_iter);
+                }
             }
         }
 
@@ -299,13 +294,15 @@ gimp_action_view_new (GimpUIManager *manager,
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock-id", COLUMN_STOCK_ID,
+                                       "stock-id",
+                                       GIMP_ACTION_VIEW_COLUMN_STOCK_ID,
                                        NULL);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "text", COLUMN_LABEL,
+                                       "text",
+                                       GIMP_ACTION_VIEW_COLUMN_LABEL,
                                        NULL);
 
   gtk_tree_view_append_column (view, column);
@@ -324,8 +321,10 @@ gimp_action_view_new (GimpUIManager *manager,
       GTK_CELL_RENDERER_TEXT (cell)->editable = TRUE;
       gtk_tree_view_column_pack_start (column, cell, TRUE);
       gtk_tree_view_column_set_attributes (column, cell,
-                                           "accel-key",  COLUMN_ACCEL_KEY,
-                                           "accel-mask", COLUMN_ACCEL_MASK,
+                                           "accel-key",
+                                           GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+                                           "accel-mask",
+                                           GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
                                            NULL);
 
       g_signal_connect (cell, "accel-edited",
@@ -342,10 +341,29 @@ gimp_action_view_new (GimpUIManager *manager,
       cell = gtk_cell_renderer_text_new ();
       gtk_tree_view_column_pack_start (column, cell, TRUE);
       gtk_tree_view_column_set_attributes (column, cell,
-                                           "text", COLUMN_NAME,
+                                           "text",
+                                           GIMP_ACTION_VIEW_COLUMN_NAME,
                                            NULL);
 
       gtk_tree_view_append_column (view, column);
+    }
+
+  if (select_path)
+    {
+      GtkTreeSelection *sel = gtk_tree_view_get_selection (view);
+      GtkTreePath      *expand;
+
+      expand = gtk_tree_path_copy (select_path);
+      gtk_tree_path_up (expand);
+      gtk_tree_view_expand_row (view, expand, FALSE);
+
+      gtk_tree_selection_select_path (sel, select_path);
+
+      gtk_tree_view_scroll_to_cell (view, select_path, NULL,
+                                    FALSE, 0.0, 0.0);
+
+      gtk_tree_path_free (select_path);
+      gtk_tree_path_free (expand);
     }
 
   return GTK_WIDGET (view);
@@ -392,7 +410,7 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
           GtkWidget *menu_item;
 
           gtk_tree_model_get (model, &child_iter,
-                              COLUMN_MENU_ITEM, &menu_item,
+                              GIMP_ACTION_VIEW_COLUMN_MENU_ITEM, &menu_item,
                               -1);
 
           if (menu_item)
@@ -424,8 +442,10 @@ gimp_action_view_accel_changed (GtkAccelGroup   *accel_group,
                     }
 
                   gtk_tree_store_set (GTK_TREE_STORE (model), &child_iter,
-                                      COLUMN_ACCEL_KEY,  accel_key,
-                                      COLUMN_ACCEL_MASK, accel_mask,
+                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+                                      accel_key,
+                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
+                                      accel_mask,
                                       -1);
 
                   return;
@@ -554,7 +574,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
       gchar          *accel_path;
 
       gtk_tree_model_get (model, &iter,
-                          COLUMN_ACTION, &action,
+                          GIMP_ACTION_VIEW_COLUMN_ACTION, &action,
                           -1);
 
       if (! action)
@@ -618,15 +638,18 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                       GdkModifierType child_accel_mask;
 
                       gtk_tree_model_get (model, &child_iter,
-                                          COLUMN_ACCEL_KEY,  &child_accel_key,
-                                          COLUMN_ACCEL_MASK, &child_accel_mask,
+                                          GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+                                          &child_accel_key,
+                                          GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
+                                          &child_accel_mask,
                                           -1);
 
                       if (accel_key  == child_accel_key &&
                           accel_mask == child_accel_mask)
                         {
                           gtk_tree_model_get (model, &child_iter,
-                                              COLUMN_ACTION, &conflict_action,
+                                              GIMP_ACTION_VIEW_COLUMN_ACTION,
+                                              &conflict_action,
                                               -1);
                           break;
                         }

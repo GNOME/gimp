@@ -1,3 +1,17 @@
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactionview.[ch] (gimp_action_view_new): added
+	parameter "const gchar *select_action" and preselect the passed
+	action if non-NULL. Made the column enum public to users of this
+	widget can get data from its tree store.
+
+	* app/dialogs/preferences-dialog.c (prefs_keyboard_shortcuts_dialog):
+	pass NULL because we don't want a preselected action here.
+
+	* app/widgets/gimpcontrollereditor.[ch]: added "Edit" and "Delete"
+	buttons to change the event -> action mapping. Implement a action
+	chooser dialog using GimpActionView. Fixes bug #106920.
+
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/channels-commands.c

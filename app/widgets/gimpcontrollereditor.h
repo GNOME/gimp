@@ -41,6 +41,14 @@ struct _GimpControllerEditor
   GtkVBox             parent_instance;
 
   GimpControllerInfo *info;
+
+  GtkTreeSelection   *sel;
+
+  GtkWidget          *edit_button;
+  GtkWidget          *delete_button;
+
+  GtkWidget          *edit_dialog;
+  GtkTreeSelection   *edit_sel;
 };
 
 struct _GimpControllerEditorClass

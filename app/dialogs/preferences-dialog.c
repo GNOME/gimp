@@ -523,7 +523,7 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
   gtk_widget_show (scrolled_window);
 
   view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
-                               TRUE);
+                               NULL, TRUE);
   gtk_widget_set_size_request (view, 300, 400);
   gtk_container_add (GTK_CONTAINER (scrolled_window), view);
   gtk_widget_show (view);
