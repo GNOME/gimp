@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-04-19 10:23+0200\n"
-"PO-Revision-Date: 2003-04-19 10:34+0200\n"
+"POT-Creation-Date: 2003-04-29 08:35+0200\n"
+"PO-Revision-Date: 2003-04-29 08:37+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1125,7 +1125,7 @@ msgstr "%s: felaktig färgkarta"
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:256
 #: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:623
 #: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:331
-#: plug-ins/common/jpeg.c:732 plug-ins/common/pat.c:262
+#: plug-ins/common/jpeg.c:741 plug-ins/common/pat.c:262
 #: plug-ins/common/pcx.c:297 plug-ins/common/pix.c:327
 #: plug-ins/common/png.c:480 plug-ins/common/png.c:482
 #: plug-ins/common/pnm.c:401 plug-ins/common/psd.c:1651
@@ -1164,7 +1164,7 @@ msgstr "%s: fel vid läsning av BMP-filhuvud"
 #: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:604
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:847 plug-ins/common/hrz.c:372
-#: plug-ins/common/jpeg.c:886 plug-ins/common/lic.c:718
+#: plug-ins/common/jpeg.c:895 plug-ins/common/lic.c:718
 #: plug-ins/common/pat.c:337 plug-ins/common/pcx.c:328
 #: plug-ins/common/pcx.c:334 plug-ins/common/pix.c:371
 #: plug-ins/common/png.c:607 plug-ins/common/pnm.c:489
@@ -1192,7 +1192,7 @@ msgstr "Kan inte öppna %s"
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:500
 #: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:948
 #: plug-ins/common/gih.c:1222 plug-ins/common/gtm.c:245
-#: plug-ins/common/hrz.c:469 plug-ins/common/jpeg.c:1197
+#: plug-ins/common/hrz.c:469 plug-ins/common/jpeg.c:1206
 #: plug-ins/common/pat.c:380 plug-ins/common/pcx.c:543
 #: plug-ins/common/pix.c:514 plug-ins/common/png.c:856
 #: plug-ins/common/png.c:858 plug-ins/common/pnm.c:773
@@ -1956,7 +1956,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
 #: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
 #: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:709
-#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1642
+#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1662
 #: plug-ins/common/lic.c:898 plug-ins/common/max_rgb.c:285
 #: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:337
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
@@ -4346,90 +4346,90 @@ msgstr "Varje pusselbit har raka sidor"
 msgid "Each piece has curved sides"
 msgstr "Varje pusselbit har avrundade sidor"
 
-#: plug-ins/common/jpeg.c:411
+#: plug-ins/common/jpeg.c:412
 msgid "Export Preview"
 msgstr "Förhandsgranska export"
 
-#: plug-ins/common/jpeg.c:726
+#: plug-ins/common/jpeg.c:735
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "kan ej öppna \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:879
+#: plug-ins/common/jpeg.c:888
 msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
-#: plug-ins/common/jpeg.c:1115
+#: plug-ins/common/jpeg.c:1124
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Storlek: %ld byte (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1524 plug-ins/common/jpeg.c:1632
+#: plug-ins/common/jpeg.c:1544 plug-ins/common/jpeg.c:1652
 msgid "Size: unknown"
 msgstr "Storlek: okänd"
 
-#: plug-ins/common/jpeg.c:1587
+#: plug-ins/common/jpeg.c:1607
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1610 plug-ins/print/gimp_color_window.c:232
+#: plug-ins/common/jpeg.c:1630 plug-ins/print/gimp_color_window.c:232
 msgid "Image Preview"
 msgstr "Förhandsgranska bild"
 
-#: plug-ins/common/jpeg.c:1619
-msgid "Preview (in image window)"
-msgstr "Förhandsgranska (i bildfönstret)"
+#: plug-ins/common/jpeg.c:1639
+msgid "Preview (in image window, will modify image's undo history!)"
+msgstr "Förhandsgranska (i bildfönstret; ändrar bildens ångrahistorik!)"
 
-#: plug-ins/common/jpeg.c:1652 plug-ins/xjt/xjt.c:847
+#: plug-ins/common/jpeg.c:1672 plug-ins/xjt/xjt.c:847
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:856
+#: plug-ins/common/jpeg.c:1695 plug-ins/xjt/xjt.c:856
 msgid "Smoothing:"
 msgstr "Utjämnande:"
 
-#: plug-ins/common/jpeg.c:1703
+#: plug-ins/common/jpeg.c:1723
 msgid "Restart markers"
 msgstr "Omstartsmarkörer"
 
-#: plug-ins/common/jpeg.c:1712
+#: plug-ins/common/jpeg.c:1732
 msgid "Restart frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1741 plug-ins/xjt/xjt.c:825
+#: plug-ins/common/jpeg.c:1761 plug-ins/xjt/xjt.c:825
 msgid "Optimize"
 msgstr "Optimera"
 
-#: plug-ins/common/jpeg.c:1755
+#: plug-ins/common/jpeg.c:1775
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:1774
+#: plug-ins/common/jpeg.c:1794
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Tvinga grundläggande JPEG (läsbar av alla dekodrar)"
 
-#: plug-ins/common/jpeg.c:1800
+#: plug-ins/common/jpeg.c:1820
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: plug-ins/common/jpeg.c:1809
+#: plug-ins/common/jpeg.c:1829
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: plug-ins/common/jpeg.c:1810
+#: plug-ins/common/jpeg.c:1830
 msgid "Integer"
 msgstr "Heltal"
 
-#: plug-ins/common/jpeg.c:1811
+#: plug-ins/common/jpeg.c:1831
 msgid "Floating-Point"
 msgstr "Flyttal"
 
-#: plug-ins/common/jpeg.c:1815
+#: plug-ins/common/jpeg.c:1835
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT-metod (kompromiss mellan hastighet och kvalitet):"
 
-#: plug-ins/common/jpeg.c:1823
+#: plug-ins/common/jpeg.c:1843
 msgid "Image comments"
 msgstr "Bildkommentarer"
 
@@ -4738,7 +4738,7 @@ msgstr "JPEG komprimeringskvalitet:"
 
 #: plug-ins/common/mng.c:1288
 msgid "JPEG Smoothing Factor:"
-msgstr "JPEG utjämningsfaktor:" 
+msgstr "JPEG utjämningsfaktor:"
 
 #: plug-ins/common/mng.c:1298
 msgid "Animated MNG Options"
@@ -11458,6 +11458,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "Preview (in image window)"
+#~ msgstr "Förhandsgranska (i bildfönstret)"
 
 #~ msgid "<Image>/Image/Mode/Compose..."
 #~ msgstr "<Image>/Bild/Format/Komponera..."
