@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 00:54+0100\n"
+"POT-Creation-Date: 2004-02-04 02:50+0100\n"
 "PO-Revision-Date: 2003-01-26 17:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -23,28 +23,28 @@ msgstr "Script-Fu konsollmodus tillater bare interaktiv kjøring"
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsoll"
 
-#: plug-ins/script-fu/script-fu-console.c:190
+#: plug-ins/script-fu/script-fu-console.c:191
 msgid "SIOD Output"
 msgstr "SIOD utskrift"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:263
+#: plug-ins/script-fu/script-fu-console.c:264
 msgid "Current Command"
 msgstr "Aktiv kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:282
+#: plug-ins/script-fu/script-fu-console.c:283
 msgid "Browse..."
 msgstr "Bla gjennom..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:588
 msgid "Unable to open the SIOD output pipe"
 msgstr "Kunne ikke åpne SIOD rør for utskrift"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringsmodus tillater bare ikke-interaktiv kjøring"
 
@@ -103,26 +103,26 @@ msgstr "Script-Fu gradientvalg"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu børstevalg"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1955
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Bildetyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1992
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -684,6 +684,7 @@ msgstr "Buffermengde (% høyde av tekst)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Filnavn"
 
@@ -2046,6 +2047,23 @@ msgstr ""
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Utvalg/Til bilde"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+msgstr "<Image>/Script-Fu/Utvalg/Til børste..."
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#, fuzzy
+msgid "Pattern Name"
+msgstr "Mønster"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 #, fuzzy

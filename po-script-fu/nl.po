@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 00:54+0100\n"
+"POT-Creation-Date: 2004-02-04 02:50+0100\n"
 "PO-Revision-Date: 2001-09-17 00:00+2\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -23,29 +23,29 @@ msgstr "Script-Fu-consolemodus staat alleen een interactieve aanroep toe"
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu-console.c:190
+#: plug-ins/script-fu/script-fu-console.c:191
 msgid "SIOD Output"
 msgstr "SIOD-uitvoer"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:263
+#: plug-ins/script-fu/script-fu-console.c:264
 msgid "Current Command"
 msgstr "Huidige opdracht"
 
-#: plug-ins/script-fu/script-fu-console.c:282
+#: plug-ins/script-fu/script-fu-console.c:283
 msgid "Browse..."
 msgstr "Bladeren..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Niet in staat een stream op de SIOD-uitvoerpipe te openen"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:588
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Niet in staat SIOD-uitvoerpipe te openen"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evaluatiemodus staat alleen een nietinteractieve aanroep toe"
 
@@ -105,26 +105,26 @@ msgstr "Script-Fu-verloopselectie"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penseelselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Auteur:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1955
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Afbeeldingstypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1992
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -693,6 +693,7 @@ msgstr "Bufferhoeveelheid (% hoogte van tekst)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Bestandsnaam"
 
@@ -2061,6 +2062,23 @@ msgstr ""
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Selectie/Naar afbeelding"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+msgstr "<Image>/Script-Fu/Selectie/Naar penseel..."
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#, fuzzy
+msgid "Pattern Name"
+msgstr "Patroon"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 #, fuzzy

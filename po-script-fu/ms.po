@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 00:54+0100\n"
+"POT-Creation-Date: 2004-02-04 02:50+0100\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -24,28 +24,28 @@ msgstr "mod konsol Script-Fu membolehkan panggilan interaktif sahaja"
 msgid "Script-Fu Console"
 msgstr "Konsol Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:190
+#: plug-ins/script-fu/script-fu-console.c:191
 msgid "SIOD Output"
 msgstr "Output SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:263
+#: plug-ins/script-fu/script-fu-console.c:264
 msgid "Current Command"
 msgstr "Arahan Semasa"
 
-#: plug-ins/script-fu/script-fu-console.c:282
+#: plug-ins/script-fu/script-fu-console.c:283
 msgid "Browse..."
 msgstr "Layari..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Tidak boleh buka paip output SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:588
 msgid "Unable to open the SIOD output pipe"
 msgstr "Tidak boleh buka paip output SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Mod penilai Script-Fu membolehkan panggilan bukan interaktif sahaja"
 
@@ -104,26 +104,26 @@ msgstr "Pemilihan Kecerunan Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Pemilihan Berus Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Pengarang"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Hak cipta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1955
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Tarikh"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Jenis Imej"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1992
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -673,6 +673,7 @@ msgstr "Jumlah Penimbal (% Tinggi Teks)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Nama fail"
 
@@ -1964,6 +1965,27 @@ msgstr "Nama Berus"
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Pemilihan/Ke _Imej"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#, fuzzy
+msgid ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+msgstr "<Image>/Script-Fu/Pemilihan/Ke _Berus..."
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#, fuzzy
+msgid "Pattern Name"
+msgstr "Corak"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."

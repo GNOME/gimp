@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-02 13:41+0900\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2004-02-02 13:44+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1745,7 +1745,7 @@ msgstr "Startavstånd:"
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Slumpfrö (endast för \"Från frö\"-lägen)"
 
-#: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:293
+#: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:292
 msgid "Seed:"
 msgstr "Frö:"
 
@@ -1976,7 +1976,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
 #: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:685 plug-ins/common/wind.c:892
-#: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:203
+#: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
 msgid "Parameter Settings"
 msgstr "Parameterinställningar"
@@ -7565,7 +7565,7 @@ msgstr "Vind"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:298
+#: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Typ"
 
@@ -9204,7 +9204,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Bestämmer om penseldrag skall placeras hela vägen ut till bildkanten"
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:280
+#: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:279
 msgid "Tileable"
 msgstr "Upprepningsbar"
 
@@ -10732,40 +10732,40 @@ msgid "Drawing Maze..."
 msgstr "Ritar labyrint..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: plug-ins/maze/maze_face.c:218
+#: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
 msgstr "Bredd (bildpunkter):"
 
-#: plug-ins/maze/maze_face.c:230 plug-ins/maze/maze_face.c:246
+#: plug-ins/maze/maze_face.c:229 plug-ins/maze/maze_face.c:245
 msgid "Pieces:"
 msgstr "Delar:"
 
-#: plug-ins/maze/maze_face.c:235
+#: plug-ins/maze/maze_face.c:234
 msgid "Height (Pixels):"
 msgstr "Höjd (bildpunkter):"
 
-#: plug-ins/maze/maze_face.c:258
+#: plug-ins/maze/maze_face.c:257
 msgid "Multiple (57):"
 msgstr "Multiplikator (57):"
 
-#: plug-ins/maze/maze_face.c:271
+#: plug-ins/maze/maze_face.c:270
 msgid "Offset (1):"
 msgstr "Offset (1):"
 
-#: plug-ins/maze/maze_face.c:302
+#: plug-ins/maze/maze_face.c:301
 msgid "Depth First"
 msgstr "Djupet först"
 
-#: plug-ins/maze/maze_face.c:303
+#: plug-ins/maze/maze_face.c:302
 msgid "Prim's Algorithm"
 msgstr "Prims algoritm"
 
-#: plug-ins/maze/maze_face.c:315
+#: plug-ins/maze/maze_face.c:314
 #, c-format
 msgid "Selection is %dx%d"
 msgstr "Urvalet är %d×%d"
 
-#: plug-ins/maze/maze_face.c:421
+#: plug-ins/maze/maze_face.c:420
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -10774,12 +10774,12 @@ msgstr ""
 "Upprepningsbar labyrint kommer inte fungera bra."
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:589
+#: plug-ins/maze/maze_face.c:588
 #, c-format
 msgid "Opening %s"
 msgstr "Öppnar %s"
 
-#: plug-ins/maze/maze_face.c:598
+#: plug-ins/maze/maze_face.c:597
 #, c-format
 msgid "See %s"
 msgstr "Se %s"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2002-10-28 01:03+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -138,37 +138,37 @@ msgstr "Afegeix un canal alfa"
 msgid "Confirm Save"
 msgstr "Comfirmeu que voleu desar"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Confirmeu"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Exporta un fitxer"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 #, fuzzy
 msgid "_Ignore"
 msgstr "Ignora"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 #, fuzzy
 msgid "_Export"
 msgstr "Exporta"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Heu d'exportar la imatge abans de poder-la desar pels motius següents:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "La conversió de l'exportació no modificarà la imatge original."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +177,7 @@ msgstr ""
 "Ara desareu %s com %s.\n"
 "Amb això no es desaran les capes visibles."
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -263,36 +263,36 @@ msgstr ""
 msgid "%d GB"
 msgstr "Octets"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr ""
 
@@ -396,12 +396,12 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 #, fuzzy
 msgid "Select Folder"
 msgstr "Seleccioneu un fitxer"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "Seleccioneu un fitxer"
 
@@ -470,23 +470,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr ""
 
@@ -498,15 +498,15 @@ msgstr "Més..."
 msgid "Unit Selection"
 msgstr "Selecció de la unitat"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Unitat"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -516,16 +516,20 @@ msgstr ""
 "partida del generador de números aleatoris; això us permetrà repetir una "
 "operació \"aleatòria\" determinada"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Fixa el punt de partida del generador de números aleatoris a partir de "
 "l'hora actual; això garanteix una aleatorietat raonable"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+msgid "Randomize"
+msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

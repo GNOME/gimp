@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -137,44 +137,44 @@ msgstr "Alfa Kanalı Ekle"
 msgid "Confirm Save"
 msgstr ""
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 #, fuzzy
 msgid "_Ignore"
 msgstr "Görmezden Gel"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 #, fuzzy
 msgid "_Export"
 msgstr "Dışarı Aktar"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Resminiz şu sebepler nedeniyle kaydedilmeden önce dışarı aktarılamadı:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal resimde değişiklik yapmaz."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -258,36 +258,36 @@ msgstr ""
 msgid "%d GB"
 msgstr "Bayt"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr ""
 
@@ -391,12 +391,12 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 #, fuzzy
 msgid "Select Folder"
 msgstr "Dosya Seç"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "Dosya Seç"
 
@@ -465,23 +465,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr ""
 
@@ -493,15 +493,15 @@ msgstr "Daha fazla..."
 msgid "Unit Selection"
 msgstr "Birim Seçimi"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Birim"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Etken"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -510,16 +510,20 @@ msgstr ""
 "Eğer \"Zaman\" düğmesi basılı değilse, bu değeri raslantısal sayı üreticinin "
 "tohumu olarak kullan - bu \"raslantısal\" bir işlemi tekrarlamanızı sağlar"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Raslantısal sayı üreticinin tohumu olarak şu anki zamanı kullan - bu makul "
 "bir raslantısallığı garantiler"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+msgid "Randomize"
+msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2003-12-08 10:10+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -139,35 +139,35 @@ msgstr "Alphakanal hinzufügen"
 msgid "Confirm Save"
 msgstr "Sichern bestätigen"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Datei exportieren"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 msgid "_Ignore"
 msgstr "_Ignorieren"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 msgid "_Export"
 msgstr "_Exportieren"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Das Bild sollte vor dem Abspeichern als %s exportiert werden, denn:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -176,7 +176,7 @@ msgstr ""
 "Sie sichern eine Ebenenmaske als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -259,36 +259,36 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Lade Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Fehler beim Laden von Modul '%s': %s"
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -390,11 +390,11 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Verzeichnis auswählen"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "Datei auswählen"
 
@@ -462,23 +462,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -490,15 +490,15 @@ msgstr "Mehr..."
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -506,13 +506,18 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
-msgstr "_Würfeln"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
+msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+#, fuzzy
+msgid "Randomize"
+msgstr "_Würfeln"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-22 18:20+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2004-01-22 18:20+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -261,36 +261,36 @@ msgstr "%.1f Gb"
 msgid "%d GB"
 msgstr "%d Gb"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Indlæser modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Indlæsningsfejl for modul '%s': %s"
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Springer over modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Modulfejl"
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr "Indlæst"
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Indlæsning mislykkedes"
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr "Ikke indlæst"
 
@@ -392,11 +392,11 @@ msgstr "Nuværende:"
 msgid "Old:"
 msgstr "Tidligere:"
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Vælg mappe"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "Vælg fil"
 
@@ -464,23 +464,23 @@ msgstr "_Linjemellemrum"
 msgid "_Resize"
 msgstr "Æn_dr størrelse"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr "_Skalér"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr "Beskær"
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr "_Transformér"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr "_Rotér"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr "T_rapezér"
 
@@ -500,7 +500,7 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -508,13 +508,18 @@ msgstr ""
 "Benyt denne værdi som startværdi til generatoren af tilfældige tal - dette "
 "tillader dig at gentage en given \"tilfældig\" handling"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
-msgstr "_Tilfældiggør"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
+msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+#, fuzzy
+msgid "Randomize"
+msgstr "_Tilfældiggør"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

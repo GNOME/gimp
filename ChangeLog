@@ -1,5 +1,9 @@
 2004-02-04  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.0pre3 release.
+
+2004-02-04  Sven Neumann  <sven@gimp.org>
+
 	* docs/Makefile.am (EXTRA_DIST): removed redundant entries that
 	became invalid when the change to unversioned files was made.
 

@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD 2.3.22\n"
-"POT-Creation-Date: 2004-01-23 04:12+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-04 02:50+0100\n"
 "PO-Revision-Date: 2004-01-23 14:59+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -153,8 +154,7 @@ msgstr "<Toolbox>/Rozš./Script-Fu/Script-Fu _konzola"
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Rozš./Script-Fu/Spustiť _server..."
 
-#: plug-ins/script-fu/script-fu.c:271
-#: plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Znovu prečítať všetky dostupné skripty"
 
@@ -497,7 +497,8 @@ msgstr "Delta hodnota farby"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/Šíp_ka..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/Šíp_ka..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -553,7 +554,9 @@ msgstr "Hore"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Vodorovná čiara..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Vodorovná "
+"čiara..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -565,7 +568,8 @@ msgstr "Dĺžka kusu"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Gulička..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Gulička..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -584,7 +588,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Tlačítko..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Mimozemská žiara/_Tlačítko..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -728,7 +733,8 @@ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/Šíp_ka
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Gulička..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Gulička..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -736,7 +742,8 @@ msgstr "Priemer"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Tlačítko..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Tlačítko..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
@@ -744,7 +751,9 @@ msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Nadpis.
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Vodorovná čiara..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Skosený vzor/_Vodorovná "
+"čiara..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1387,11 +1396,13 @@ msgstr "Miera tieňa (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/_Veľký nadpis..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/_Veľký nadpis..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Ma_lý nadpis..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Ma_lý nadpis..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1432,20 +1443,32 @@ msgid "Shadow Color"
 msgstr "Farba tieňa"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlačítka na t_rubici..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlačítka na "
+"t_rubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button Label..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podpodtlačítka na t_rubici..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podpodtlačítka "
+"na t_rubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/V_šeobecné nápisy na trubici..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/V_šeobecné nápisy na "
+"trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr "<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis tlačítka na _trubici..."
+msgstr ""
+"<Toolbox>/Rozš./Script-Fu/Témy pre web stránky/Gimp.org/Nápis tlačítka na "
+"_trubici..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -2054,8 +2077,12 @@ msgid "Color Method"
 msgstr "Farebná metóda"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "Kreslí Spirografy, Epitrochoidy a Lissajouské krivky. Viac informácií na http://netword.com/*spyrogimp"
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"Kreslí Spirografy, Epitrochoidy a Lissajouské krivky. Viac informácií na "
+"http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2421,4 +2448,3 @@ msgstr "X posun svetiel"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y posun svetiel"
-

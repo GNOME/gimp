@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-01 00:24+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2004-02-01 00:24+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -41,7 +41,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
-#: plug-ins/gflare/gflare.c:896
+#: plug-ins/gflare/gflare.c:898
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -62,27 +62,6 @@ msgid "About"
 msgstr "Om"
 
 #. Preview
-#. Create the Preview
-#. ==================
-#. Create the Preview
-#. Preview area, top of column
-#.
-#. * Preview window...
-#.
-#. Preview
-#. hbox created and packed into the dialog
-#. make a nice frame
-#. Preview
-#.
-#. * Preview window...
-#.
-#. Preview
-#.
-#. *	Preview
-#.
-#. Previews: frame
-#. * Misc: Preview settings *
-#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1244
@@ -90,11 +69,11 @@ msgstr "Om"
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:600
-#: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1033
+#: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
 #: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:663
-#: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2328
-#: plug-ins/gflare/gflare.c:3246 plug-ins/gimpressionist/orientmap.c:504
+#: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
+#: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
 #: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
 #: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
@@ -260,7 +239,7 @@ msgstr "Lambda"
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:900 plug-ins/common/sinus.c:880
+#: plug-ins/FractalExplorer/Dialogs.c:900 plug-ins/common/sinus.c:887
 #: plug-ins/imagemap/imap_preferences.c:515
 msgid "Co_lors"
 msgstr "Fa_rver"
@@ -327,7 +306,6 @@ msgid "Color Function"
 msgstr "Farvefunktion"
 
 #. Redmode radio frame
-#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -395,14 +373,12 @@ msgstr ""
 "lavere og omvendt"
 
 #. Greenmode radio frame
-#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Grøn"
 
 #. Bluemode radio frame
-#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -456,7 +432,7 @@ msgstr "_Fraktaler"
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1749 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1763 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
@@ -488,7 +464,6 @@ msgid "Save Fractal Parameters"
 msgstr "Gem fraktalparametre"
 
 #. Do not rely on librsvg setting GError on failure!
-#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:887
@@ -502,7 +477,7 @@ msgstr "Gem fraktalparametre"
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
 #: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:488 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:502 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -531,7 +506,7 @@ msgid "Rendering Fractal..."
 msgstr "Genererer fraktal..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3824
-#: plug-ins/gflare/gflare.c:3113
+#: plug-ins/gflare/gflare.c:3110
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr ""
@@ -723,7 +698,7 @@ msgstr "Placering"
 
 #: plug-ins/Lighting/lighting_ui.c:551 plug-ins/common/flarefx.c:740
 #: plug-ins/common/nova.c:463 plug-ins/common/papertile.c:270
-#: plug-ins/flame/flame.c:1178 plug-ins/gflare/gflare.c:2654
+#: plug-ins/flame/flame.c:1178 plug-ins/gflare/gflare.c:2651
 msgid "_X:"
 msgstr "_x:"
 
@@ -734,7 +709,7 @@ msgstr "Lyskildens x-position i xyz-rummet"
 #: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
 #: plug-ins/common/svg.c:799 plug-ins/common/xbm.c:1241
-#: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2658
+#: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_y:"
 
@@ -1225,11 +1200,6 @@ msgid "Bad colormap"
 msgstr "Ugyldig farvekortlægning"
 
 #. Set up progress display
-#. put up a progress bar
-#. max. rows allocated
-#. column, highest column ever used
-#. -1  assume fsel is not available (and not attached to any drawable)
-#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1238,7 +1208,7 @@ msgstr "Ugyldig farvekortlægning"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:493
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:507
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1276,7 +1246,7 @@ msgstr "Fejl ved læsning af BMP-filens hoved fra '%s'"
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2130 plug-ins/common/smooth_palette.c:252
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:786 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:800 plug-ins/common/tile.c:263
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
@@ -1296,8 +1266,6 @@ msgid "Cannot operate on unknown image types."
 msgstr "Kan ikke arbejde med ukendte billedtyper."
 
 #. And let's begin the progress
-#. init the progress meter
-#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1003
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1306,7 +1274,7 @@ msgstr "Kan ikke arbejde med ukendte billedtyper."
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1754
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1768
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
@@ -1384,7 +1352,7 @@ msgid "Cos_ine"
 msgstr "_Cosinus"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2053
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2067
 msgid "_None"
 msgstr "_Ingen"
 
@@ -1817,7 +1785,7 @@ msgstr "Startafstand:"
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Tilfældighedsstartværdi (kun for \"Fast startværdi\"-tilstand)"
 
-#: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:293
+#: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:292
 msgid "Seed:"
 msgstr "Startværdi:"
 
@@ -2028,37 +1996,8 @@ msgstr "Justér synlige lag"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#. parameter settings
-#.
-#. * Filter type controls...
-#.
-#. parameter settings
-#. filter routine, initial pass
-#. Parameter settings
-#. left side of the UI is done
-#. right side
-#. parameter settings
-#. preview noisify
-#. parameter settings
-#. Controls
-#.
-#. *  Parameter settings
-#. *
-#. *  First set up the basic containers, label them, etc.
-#.
-#. Parameter Settings
-#. parameter settings
-#.
-#. * Sharpness control...
-#.
-#. parameter settings
-#. Parameter settings
-#. main parameter frame
-#. Parameter settings
-#. Controls
-#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
-#: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:600
+#: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:322
 #: plug-ins/common/cubism.c:263 plug-ins/common/despeckle.c:723
 #: plug-ins/common/destripe.c:635 plug-ins/common/edge.c:663
@@ -2070,17 +2009,17 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/mosaic.c:603 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
-#: plug-ins/common/plasma.c:324 plug-ins/common/polar.c:619
-#: plug-ins/common/randomize.c:716 plug-ins/common/ripple.c:516
+#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:619
+#: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:328
-#: plug-ins/common/smooth_palette.c:417 plug-ins/common/snoise.c:504
+#: plug-ins/common/smooth_palette.c:417 plug-ins/common/snoise.c:513
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
 #: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:685 plug-ins/common/wind.c:892
-#: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:203
+#: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
 msgid "Parameter Settings"
 msgstr "Parameterindstillinger"
@@ -2114,7 +2053,7 @@ msgstr "Venstre kant"
 # skal være "centrum" fordi det både optræder et sted hvor det betyder
 # "centrum" og et sted hvor det mere betyder "midten"
 #: plug-ins/common/align_layers.c:442 plug-ins/common/align_layers.c:470
-#: plug-ins/gflare/gflare.c:2642
+#: plug-ins/gflare/gflare.c:2639
 msgid "Center"
 msgstr "Centrum"
 
@@ -2324,33 +2263,33 @@ msgstr "<Image>/Filtre/Slør/_Slør..."
 #.
 #. *  JUST DO IT!
 #.
-#: plug-ins/common/blur.c:310 plug-ins/common/unsharp.c:255
+#: plug-ins/common/blur.c:316 plug-ins/common/unsharp.c:255
 msgid "Blurring..."
 msgstr "Slører..."
 
-#: plug-ins/common/blur.c:586
+#: plug-ins/common/blur.c:590
 msgid "Blur"
 msgstr "Slør"
 
-#: plug-ins/common/blur.c:615 plug-ins/common/randomize.c:731
-#: plug-ins/common/snoise.c:520
+#: plug-ins/common/blur.c:619 plug-ins/common/randomize.c:740
+#: plug-ins/common/snoise.c:529
 msgid "_Random Seed:"
 msgstr "_Tilfældig startværdi:"
 
 # se forklaringen i næste tekst
-#: plug-ins/common/blur.c:624
+#: plug-ins/common/blur.c:628
 msgid "R_andomization %:"
 msgstr "% _tilfældige:"
 
-#: plug-ins/common/blur.c:627 plug-ins/common/randomize.c:743
+#: plug-ins/common/blur.c:631 plug-ins/common/randomize.c:752
 msgid "Percentage of pixels to be filtered"
 msgstr "Procentdel af punkterne som skal filtreres"
 
-#: plug-ins/common/blur.c:636 plug-ins/common/randomize.c:752
+#: plug-ins/common/blur.c:640 plug-ins/common/randomize.c:761
 msgid "R_epeat:"
 msgstr "G_entag:"
 
-#: plug-ins/common/blur.c:639 plug-ins/common/randomize.c:755
+#: plug-ins/common/blur.c:643 plug-ins/common/randomize.c:764
 msgid "Number of times to apply filter"
 msgstr "Antal gange filtret skal påføres"
 
@@ -2987,8 +2926,6 @@ msgid "Automatic Pre_view"
 msgstr "_Hold eksempel opdateret"
 
 #. Options area, bottom of column
-#. the vertical box and its toggle buttons
-#. Options section
 #: plug-ins/common/curve_bend.c:1297 plug-ins/common/mosaic.c:528
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
 msgid "Options"
@@ -3370,7 +3307,7 @@ msgstr "R_ekursiv"
 
 #: plug-ins/common/despeckle.c:739 plug-ins/common/nlfilt.c:382
 #: plug-ins/common/nova.c:364 plug-ins/common/unsharp.c:665
-#: plug-ins/common/whirlpinch.c:715 plug-ins/gflare/gflare.c:2689
+#: plug-ins/common/whirlpinch.c:715 plug-ins/gflare/gflare.c:2686
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "_Radius:"
@@ -3566,7 +3503,7 @@ msgstr "_Relief"
 msgid "E_levation:"
 msgstr "_Forhøjelse:"
 
-#: plug-ins/common/emboss.c:724 plug-ins/common/sinus.c:1052
+#: plug-ins/common/emboss.c:724 plug-ins/common/sinus.c:1059
 msgid "Do _Preview"
 msgstr "Vis _eksempel"
 
@@ -3839,7 +3776,7 @@ msgid "IIR Gaussian Blur"
 msgstr "IIR gaussisk-sløring"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
-#: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:982
+#: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
 #: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
 msgid "Cannot operate on indexed color images."
 msgstr "Kan ikke arbejde med indekserede farvebilleder"
@@ -3895,7 +3832,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-tekst i penselfilen \"%s\"."
 
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
-#: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2989
+#: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2986
 msgid "Unnamed"
 msgstr "Unavngiven"
 
@@ -4565,8 +4502,8 @@ msgstr "Ma_ks. dybde:"
 msgid "Thresho_ld:"
 msgstr "_Tærskel:"
 
-#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:762
-#: plug-ins/gflare/gflare.c:2799
+#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
+#: plug-ins/gflare/gflare.c:2796
 msgid "_Settings"
 msgstr "_Indstillinger"
 
@@ -5214,7 +5151,7 @@ msgid "C_ell Size:"
 msgstr "C_ellestørrelse:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1261 plug-ins/gflare/gflare.c:566
+#: plug-ins/common/newsprint.c:1261 plug-ins/gflare/gflare.c:568
 msgid "Screen"
 msgstr "Skærm"
 
@@ -5247,7 +5184,6 @@ msgid "_Factory Defaults"
 msgstr "_Fabriksindstillinger"
 
 #. anti-alias control
-#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Udglatning"
@@ -5509,23 +5445,23 @@ msgstr "Firkants_bredde:"
 msgid "Pixel _Height:"
 msgstr "Firkants_højde:"
 
-#: plug-ins/common/plasma.c:182
+#: plug-ins/common/plasma.c:184
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
 msgstr "<Image>/Filtre/Generér/Skyer/_Plasma..."
 
-#: plug-ins/common/plasma.c:261
+#: plug-ins/common/plasma.c:266
 msgid "Plasma..."
 msgstr "Genererer plasma..."
 
-#: plug-ins/common/plasma.c:301
+#: plug-ins/common/plasma.c:305
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:337
+#: plug-ins/common/plasma.c:341
 msgid "Random _Seed:"
 msgstr "Tilfældig _startværdi:"
 
-#: plug-ins/common/plasma.c:348
+#: plug-ins/common/plasma.c:352
 msgid "T_urbulence:"
 msgstr "T_urbulens:"
 
@@ -6005,7 +5941,7 @@ msgstr "<Image>/Filtre/Støj/_Sammenkobl..."
 msgid "<Image>/Filters/Noise/_Slur..."
 msgstr "<Image>/Filtre/Støj/_Sløring..."
 
-#: plug-ins/common/randomize.c:740
+#: plug-ins/common/randomize.c:749
 msgid "R_andomization (%):"
 msgstr "Tilfældig _andel (%):"
 
@@ -6209,7 +6145,6 @@ msgid "Error obtaining Screen Shot"
 msgstr "Fejl ved indhentning af skærmbillede"
 
 #. single window
-#. Action area
 #: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Indfang"
@@ -6306,122 +6241,122 @@ msgstr "Skift _lodret"
 msgid "Shift _Amount:"
 msgstr "Skifte_størrelse:"
 
-#: plug-ins/common/sinus.c:194
+#: plug-ins/common/sinus.c:196
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
 msgstr "<Image>/Filtre/Generér/Mønstre/_Sinus..."
 
-#: plug-ins/common/sinus.c:279
+#: plug-ins/common/sinus.c:287
 msgid "Sinus: rendering..."
 msgstr "Sinus: genererer..."
 
 #. Create Main window with a vbox
 #. ==============================
-#: plug-ins/common/sinus.c:642
+#: plug-ins/common/sinus.c:649
 msgid "Sinus"
 msgstr "Sinus"
 
-#: plug-ins/common/sinus.c:678
+#: plug-ins/common/sinus.c:685
 msgid "Drawing Settings"
 msgstr "Tegningsindstillinger"
 
-#: plug-ins/common/sinus.c:689
+#: plug-ins/common/sinus.c:696
 msgid "_X Scale:"
 msgstr "_x-skalering:"
 
-#: plug-ins/common/sinus.c:698
+#: plug-ins/common/sinus.c:705
 msgid "_Y Scale:"
 msgstr "_y-skalering:"
 
-#: plug-ins/common/sinus.c:707
+#: plug-ins/common/sinus.c:714
 msgid "Co_mplexity:"
 msgstr "Ko_mpleksitet:"
 
-#: plug-ins/common/sinus.c:717
+#: plug-ins/common/sinus.c:724
 msgid "Calculation Settings"
 msgstr "Beregningsindstillinger"
 
-#: plug-ins/common/sinus.c:731
+#: plug-ins/common/sinus.c:738
 msgid "R_andom Seed:"
 msgstr "_Tilfældig startværdi:"
 
-#: plug-ins/common/sinus.c:740
+#: plug-ins/common/sinus.c:747
 msgid "_Force Tiling?"
 msgstr "_Tving fliselægbarhed"
 
-#: plug-ins/common/sinus.c:753
+#: plug-ins/common/sinus.c:760
 msgid "_Ideal"
 msgstr "_Ideel"
 
-#: plug-ins/common/sinus.c:754
+#: plug-ins/common/sinus.c:761
 msgid "_Distorted"
 msgstr "_Forvrænget"
 
-#: plug-ins/common/sinus.c:773 plug-ins/common/sinus.c:790
+#: plug-ins/common/sinus.c:780 plug-ins/common/sinus.c:797
 msgid "Colors"
 msgstr "Farver"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:783
+#: plug-ins/common/sinus.c:790
 msgid "The colors are white and black."
 msgstr "Farverne er hvid og sort"
 
-#: plug-ins/common/sinus.c:794
+#: plug-ins/common/sinus.c:801
 msgid "Bl_ack & White"
 msgstr "S_ort/hvid"
 
-#: plug-ins/common/sinus.c:796
+#: plug-ins/common/sinus.c:803
 msgid "_Foreground & Background"
 msgstr "_Forgrund/baggrund"
 
-#: plug-ins/common/sinus.c:798
+#: plug-ins/common/sinus.c:805
 msgid "C_hoose here:"
 msgstr "_Vælg her:"
 
-#: plug-ins/common/sinus.c:812
+#: plug-ins/common/sinus.c:819
 msgid "First Color"
 msgstr "Første farve"
 
-#: plug-ins/common/sinus.c:822
+#: plug-ins/common/sinus.c:829
 msgid "Second Color"
 msgstr "Anden farve"
 
-#: plug-ins/common/sinus.c:835
+#: plug-ins/common/sinus.c:842
 msgid "Alpha Channels"
 msgstr "Alfakanaler"
 
-#: plug-ins/common/sinus.c:849
+#: plug-ins/common/sinus.c:856
 msgid "F_irst Color:"
 msgstr "F_ørste farve:"
 
-#: plug-ins/common/sinus.c:864
+#: plug-ins/common/sinus.c:871
 msgid "S_econd Color:"
 msgstr "_Anden farve:"
 
-#: plug-ins/common/sinus.c:889
+#: plug-ins/common/sinus.c:896
 msgid "Blend Settings"
 msgstr "Blandingsindstillinger"
 
-#: plug-ins/common/sinus.c:899
+#: plug-ins/common/sinus.c:906
 msgid "Gradient"
 msgstr "Farveovergang"
 
-#: plug-ins/common/sinus.c:903
+#: plug-ins/common/sinus.c:910
 msgid "L_inear"
 msgstr "L_ineær"
 
-#: plug-ins/common/sinus.c:904
+#: plug-ins/common/sinus.c:911
 msgid "Bili_near"
 msgstr "Bili_neær"
 
-#: plug-ins/common/sinus.c:905
+#: plug-ins/common/sinus.c:912
 msgid "Sin_usoidal"
 msgstr "Sin_usformet"
 
-#: plug-ins/common/sinus.c:917
+#: plug-ins/common/sinus.c:924
 msgid "_Exponent:"
 msgstr "_Eksponent:"
 
-#: plug-ins/common/sinus.c:927
+#: plug-ins/common/sinus.c:934
 msgid "_Blend"
 msgstr "_Blanding"
 
@@ -6441,38 +6376,38 @@ msgstr "Jævn palet"
 msgid "_Search Depth:"
 msgstr "_Søgedybde:"
 
-#: plug-ins/common/snoise.c:171
+#: plug-ins/common/snoise.c:173
 msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
 msgstr "<Image>/Filtre/Generér/Skyer/_Fast støj..."
 
-#: plug-ins/common/snoise.c:297
+#: plug-ins/common/snoise.c:305
 msgid "Solid Noise..."
 msgstr "Genererer Fast støj..."
 
 #. Dialog initialization
-#: plug-ins/common/snoise.c:495
+#: plug-ins/common/snoise.c:504
 msgid "Solid Noise"
 msgstr "Fast støj"
 
-#: plug-ins/common/snoise.c:529
+#: plug-ins/common/snoise.c:538
 msgid "_Detail:"
 msgstr "_Detaljer:"
 
 #. Turbulent
-#: plug-ins/common/snoise.c:536
+#: plug-ins/common/snoise.c:545
 msgid "T_urbulent"
 msgstr "T_urbulent"
 
 #. Tilable
-#: plug-ins/common/snoise.c:547
+#: plug-ins/common/snoise.c:556
 msgid "T_ilable"
 msgstr "F_liselægbar"
 
-#: plug-ins/common/snoise.c:559
+#: plug-ins/common/snoise.c:568
 msgid "_X Size:"
 msgstr "_x-størrelse:"
 
-#: plug-ins/common/snoise.c:569
+#: plug-ins/common/snoise.c:578
 msgid "_Y Size:"
 msgstr "_y-størrelse:"
 
@@ -7005,16 +6940,16 @@ msgstr "Alfatærskel"
 msgid "Threshold:"
 msgstr "Tærskel:"
 
-#: plug-ins/common/tiff.c:788
+#: plug-ins/common/tiff.c:802
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: plug-ins/common/tiff.c:802
+#: plug-ins/common/tiff.c:816
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:811
+#: plug-ins/common/tiff.c:825
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7026,7 +6961,7 @@ msgstr ""
 "håndtere 8 bit så billedet vil blive konverteret for dig. Noget information "
 "går tabt på grund af dette."
 
-#: plug-ins/common/tiff.c:1886
+#: plug-ins/common/tiff.c:1900
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7034,36 +6969,36 @@ msgstr ""
 "TIFF-formatet understøtter kun kommentarer\n"
 "i 7 bit ASCII-kodning. Ingen kommentar gemt."
 
-#: plug-ins/common/tiff.c:2035
+#: plug-ins/common/tiff.c:2049
 msgid "Save as TIFF"
 msgstr "Gem som TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2049
+#: plug-ins/common/tiff.c:2063
 msgid "Compression"
 msgstr "Komprimering"
 
-#: plug-ins/common/tiff.c:2054
+#: plug-ins/common/tiff.c:2068
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2055
+#: plug-ins/common/tiff.c:2069
 msgid "_Pack Bits"
 msgstr "_Pak bit"
 
-#: plug-ins/common/tiff.c:2056
+#: plug-ins/common/tiff.c:2070
 msgid "_Deflate"
 msgstr "_Udpak"
 
-#: plug-ins/common/tiff.c:2057
+#: plug-ins/common/tiff.c:2071
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2066
+#: plug-ins/common/tiff.c:2080
 msgid "Save _color values from transparent pixels"
 msgstr "Gem _farveværdier fra gennemsigtige punkter"
 
-#: plug-ins/common/tiff.c:2081 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2095 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -7712,8 +7647,7 @@ msgstr "Vind"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#. Algorithm Choice
-#: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:298
+#: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Stil"
 
@@ -8718,7 +8652,7 @@ msgstr "Isometrisk"
 msgid "Grid Type:"
 msgstr "Gittertype:"
 
-#: plug-ins/gfig/gfig.c:2571 plug-ins/gflare/gflare.c:563
+#: plug-ins/gfig/gfig.c:2571 plug-ins/gflare/gflare.c:565
 msgid "Normal"
 msgstr "Normal"
 
@@ -8939,7 +8873,6 @@ msgid "(none)"
 msgstr "(ingen)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
-#, c-format
 msgid "<NONE>"
 msgstr "<INGEN>"
 
@@ -8956,39 +8889,39 @@ msgstr "Antal punkter i spiral"
 msgid "Star Number of Points"
 msgstr "Antal punkter i stjerne"
 
-#: plug-ins/gflare/gflare.c:564
+#: plug-ins/gflare/gflare.c:566
 msgid "Addition"
 msgstr "Læg til"
 
-#: plug-ins/gflare/gflare.c:565
+#: plug-ins/gflare/gflare.c:567
 msgid "Overlay"
 msgstr "Læg over"
 
 # jvf. næste
-#: plug-ins/gflare/gflare.c:829
+#: plug-ins/gflare/gflare.c:831
 msgid "<Image>/Filters/Light Effects/_GFlare..."
 msgstr "<Image>/Filtre/Lyseffekter/_Farveovergangsblus..."
 
-#: plug-ins/gflare/gflare.c:970
+#: plug-ins/gflare/gflare.c:967
 msgid "Gradient Flare..."
 msgstr "Farveovergangsblus..."
 
-#: plug-ins/gflare/gflare.c:1273
+#: plug-ins/gflare/gflare.c:1270
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "Kunne ikke åbne farveovergangsblusfilen '%s': %s"
 
-#: plug-ins/gflare/gflare.c:1281
+#: plug-ins/gflare/gflare.c:1278
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "'%s' er ikke en gyldig farveovergangsblusfil."
 
-#: plug-ins/gflare/gflare.c:1335
+#: plug-ins/gflare/gflare.c:1332
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "ugyldigt formateret farveovergangsblusfil: %s\n"
 
-#: plug-ins/gflare/gflare.c:1460
+#: plug-ins/gflare/gflare.c:1457
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -9000,7 +8933,7 @@ msgstr ""
 "(gflare-path \"%s\")\n"
 "og opretter mappen \"%s\", så kan du gemme dine egne blus i den mappe."
 
-#: plug-ins/gflare/gflare.c:1493
+#: plug-ins/gflare/gflare.c:1490
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Kunne ikke skrive farveovergangsblusfilen '%s': %s"
@@ -9008,138 +8941,135 @@ msgstr "Kunne ikke skrive farveovergangsblusfilen '%s': %s"
 #.
 #. *	Dialog Shell
 #.
-#: plug-ins/gflare/gflare.c:2305
+#: plug-ins/gflare/gflare.c:2302
 msgid "GFlare"
 msgstr "Farveovergangsblus"
 
-#: plug-ins/gflare/gflare.c:2357
+#: plug-ins/gflare/gflare.c:2354
 msgid "A_uto Update Preview"
 msgstr "_Hold eksempel opdateret"
 
-#: plug-ins/gflare/gflare.c:2408
+#: plug-ins/gflare/gflare.c:2405
 msgid "`Default' is created."
 msgstr "'Standard' blev oprettet."
 
-#: plug-ins/gflare/gflare.c:2409
+#: plug-ins/gflare/gflare.c:2406
 msgid "Default"
 msgstr "Standard"
 
 #.
 #. *  Scales
 #.
-#.
-#. *	Scales
-#.
-#: plug-ins/gflare/gflare.c:2675 plug-ins/gflare/gflare.c:3486
-#: plug-ins/gflare/gflare.c:3593 plug-ins/gflare/gflare.c:3733
+#: plug-ins/gflare/gflare.c:2672 plug-ins/gflare/gflare.c:3483
+#: plug-ins/gflare/gflare.c:3590 plug-ins/gflare/gflare.c:3729
 msgid "Parameters"
 msgstr "Parametre"
 
-#: plug-ins/gflare/gflare.c:2702
+#: plug-ins/gflare/gflare.c:2699
 msgid "Ro_tation:"
 msgstr "_Rotering:"
 
-#: plug-ins/gflare/gflare.c:2714
+#: plug-ins/gflare/gflare.c:2711
 msgid "_Hue Rotation:"
 msgstr "Farve_tonerotering:"
 
-#: plug-ins/gflare/gflare.c:2726
+#: plug-ins/gflare/gflare.c:2723
 msgid "Vector _Angle:"
 msgstr "Vektor_vinkel:"
 
-#: plug-ins/gflare/gflare.c:2738
+#: plug-ins/gflare/gflare.c:2735
 msgid "Vector _Length:"
 msgstr "Vektor_længde:"
 
-#: plug-ins/gflare/gflare.c:2759
+#: plug-ins/gflare/gflare.c:2756
 msgid "A_daptive Supersampling"
 msgstr "A_daptiv udjævning"
 
-#: plug-ins/gflare/gflare.c:2779
+#: plug-ins/gflare/gflare.c:2776
 msgid "_Max Depth:"
 msgstr "_Maks. dybde:"
 
-#: plug-ins/gflare/gflare.c:2789
+#: plug-ins/gflare/gflare.c:2786
 msgid "_Threshold"
 msgstr "_Tærskel"
 
-#: plug-ins/gflare/gflare.c:2906
+#: plug-ins/gflare/gflare.c:2903
 msgid "S_elector"
 msgstr "V_ælger"
 
-#: plug-ins/gflare/gflare.c:2985
+#: plug-ins/gflare/gflare.c:2982
 msgid "New GFlare"
 msgstr "Nyt blus"
 
-#: plug-ins/gflare/gflare.c:2988
+#: plug-ins/gflare/gflare.c:2985
 msgid "Enter a name for the new GFlare"
 msgstr "Indtast et navn til det nye blus"
 
-#: plug-ins/gflare/gflare.c:3007
+#: plug-ins/gflare/gflare.c:3004
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Navnet '%s' er allerede i brug!"
 
-#: plug-ins/gflare/gflare.c:3057
+#: plug-ins/gflare/gflare.c:3054
 msgid "Copy GFlare"
 msgstr "Kopiér blus"
 
-#: plug-ins/gflare/gflare.c:3060
+#: plug-ins/gflare/gflare.c:3057
 msgid "Enter a name for the copied GFlare"
 msgstr "Indtast et navn til det kopierede blus"
 
-#: plug-ins/gflare/gflare.c:3081
+#: plug-ins/gflare/gflare.c:3078
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Navnet '%s' er allerede i brug!"
 
-#: plug-ins/gflare/gflare.c:3107
+#: plug-ins/gflare/gflare.c:3104
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Kan ikke slette! Der skal mindst være ét blus."
 
-#: plug-ins/gflare/gflare.c:3117
+#: plug-ins/gflare/gflare.c:3114
 msgid "Delete GFlare"
 msgstr "Slet blus"
 
-#: plug-ins/gflare/gflare.c:3174
+#: plug-ins/gflare/gflare.c:3171
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "kunne ikke finde %s i gflares_list"
 
-#: plug-ins/gflare/gflare.c:3215
+#: plug-ins/gflare/gflare.c:3212
 msgid "GFlare Editor"
 msgstr "Blusredigering"
 
-#: plug-ins/gflare/gflare.c:3219
+#: plug-ins/gflare/gflare.c:3216
 msgid "Rescan Gradients"
 msgstr "Genskan farveovergange"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3343
+#: plug-ins/gflare/gflare.c:3340
 msgid "Glow Paint Options"
 msgstr "Indstillinger for glødtegning"
 
-#: plug-ins/gflare/gflare.c:3355 plug-ins/gflare/gflare.c:3385
-#: plug-ins/gflare/gflare.c:3415
+#: plug-ins/gflare/gflare.c:3352 plug-ins/gflare/gflare.c:3382
+#: plug-ins/gflare/gflare.c:3412
 msgid "Opacity:"
 msgstr "Uigennemsighed:"
 
-#: plug-ins/gflare/gflare.c:3368 plug-ins/gflare/gflare.c:3398
-#: plug-ins/gflare/gflare.c:3428
+#: plug-ins/gflare/gflare.c:3365 plug-ins/gflare/gflare.c:3395
+#: plug-ins/gflare/gflare.c:3425
 msgid "Paint Mode:"
 msgstr "Tegnetilstand:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3373
+#: plug-ins/gflare/gflare.c:3370
 msgid "Rays Paint Options"
 msgstr "Indstillinger for stråletegning"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3403
+#: plug-ins/gflare/gflare.c:3400
 msgid "Second Flares Paint Options"
 msgstr "Indstillinger for tegning af andet blus"
 
-#: plug-ins/gflare/gflare.c:3432 plug-ins/gimpressionist/general.c:57
+#: plug-ins/gflare/gflare.c:3429 plug-ins/gimpressionist/general.c:57
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "_General"
 msgstr "_Generelt"
@@ -9147,93 +9077,93 @@ msgstr "_Generelt"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3458 plug-ins/gflare/gflare.c:3563
-#: plug-ins/gflare/gflare.c:3705
+#: plug-ins/gflare/gflare.c:3455 plug-ins/gflare/gflare.c:3560
+#: plug-ins/gflare/gflare.c:3701
 msgid "Gradients"
 msgstr "Farveovergange"
 
-#: plug-ins/gflare/gflare.c:3470 plug-ins/gflare/gflare.c:3577
-#: plug-ins/gflare/gflare.c:3717
+#: plug-ins/gflare/gflare.c:3467 plug-ins/gflare/gflare.c:3574
+#: plug-ins/gflare/gflare.c:3713
 msgid "Radial Gradient:"
 msgstr "Radial overgang:"
 
-#: plug-ins/gflare/gflare.c:3474 plug-ins/gflare/gflare.c:3581
+#: plug-ins/gflare/gflare.c:3471 plug-ins/gflare/gflare.c:3578
 msgid "Angular Gradient:"
 msgstr "Drejet overgang:"
 
-#: plug-ins/gflare/gflare.c:3478 plug-ins/gflare/gflare.c:3585
+#: plug-ins/gflare/gflare.c:3475 plug-ins/gflare/gflare.c:3582
 msgid "Angular Size Gradient:"
 msgstr "Størrelse på drejet overgang:"
 
-#: plug-ins/gflare/gflare.c:3499 plug-ins/gflare/gflare.c:3606
-#: plug-ins/gflare/gflare.c:3746
+#: plug-ins/gflare/gflare.c:3496 plug-ins/gflare/gflare.c:3603
+#: plug-ins/gflare/gflare.c:3742
 msgid "Size (%):"
 msgstr "Størrelse (%):"
 
-#: plug-ins/gflare/gflare.c:3511 plug-ins/gflare/gflare.c:3618
-#: plug-ins/gflare/gflare.c:3758
+#: plug-ins/gflare/gflare.c:3508 plug-ins/gflare/gflare.c:3615
+#: plug-ins/gflare/gflare.c:3754
 msgid "Rotation:"
 msgstr "Rotering:"
 
-#: plug-ins/gflare/gflare.c:3523 plug-ins/gflare/gflare.c:3631
-#: plug-ins/gflare/gflare.c:3771
+#: plug-ins/gflare/gflare.c:3520 plug-ins/gflare/gflare.c:3628
+#: plug-ins/gflare/gflare.c:3767
 msgid "Hue Rotation:"
 msgstr "Farvetonerotering:"
 
-#: plug-ins/gflare/gflare.c:3537
+#: plug-ins/gflare/gflare.c:3534
 msgid "G_low"
 msgstr "G_lød"
 
-#: plug-ins/gflare/gflare.c:3643
+#: plug-ins/gflare/gflare.c:3640
 msgid "# of Spikes:"
 msgstr "Antal spidser:"
 
-#: plug-ins/gflare/gflare.c:3655
+#: plug-ins/gflare/gflare.c:3652
 msgid "Spike Thickness:"
 msgstr "Spidsernes tykkelse:"
 
-#: plug-ins/gflare/gflare.c:3669
+#: plug-ins/gflare/gflare.c:3666
 msgid "_Rays"
 msgstr "_Stråler"
 
-#: plug-ins/gflare/gflare.c:3721
+#: plug-ins/gflare/gflare.c:3717
 msgid "Size Factor Gradient:"
 msgstr "Størrelsesfaktor for overgang:"
 
-#: plug-ins/gflare/gflare.c:3725
+#: plug-ins/gflare/gflare.c:3721
 msgid "Probability Gradient:"
 msgstr "Sandsynlighedsovergang:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:3788
+#: plug-ins/gflare/gflare.c:3784
 msgid "Shape of Second Flares"
 msgstr "Form på det andet blus"
 
-#: plug-ins/gflare/gflare.c:3797 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gflare/gflare.c:3793 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Cirkel"
 
-#: plug-ins/gflare/gflare.c:3814 plug-ins/imagemap/imap_menu.c:371
+#: plug-ins/gflare/gflare.c:3810 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polygon"
 
-#: plug-ins/gflare/gflare.c:3847
+#: plug-ins/gflare/gflare.c:3843
 msgid "Random Seed:"
 msgstr "Tilfældig startværdi:"
 
-#: plug-ins/gflare/gflare.c:3865
+#: plug-ins/gflare/gflare.c:3857
 msgid "_Second Flares"
 msgstr "_Andet blus"
 
-#: plug-ins/gflare/gflare.c:4465
+#: plug-ins/gflare/gflare.c:4457
 msgid "none"
 msgstr "ingen"
 
-#: plug-ins/gflare/gflare.c:4478
+#: plug-ins/gflare/gflare.c:4470
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" ikke fundet; benyttede \"%s\" i stedet."
@@ -9368,7 +9298,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Angiver om penselstrøgene skal males helt ud til billedkanterne"
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:280
+#: plug-ins/gimpressionist/general.c:150 plug-ins/maze/maze_face.c:279
 msgid "Tileable"
 msgstr "Fliselægbar"
 
@@ -10874,15 +10804,15 @@ msgstr "Redigér info for markeret område"
 msgid "Delete selected area"
 msgstr "Slet markeret område"
 
-#: plug-ins/maze/algorithms.c:285
+#: plug-ins/maze/algorithms.c:287
 msgid "Constructing maze using Prim's Algorithm..."
 msgstr "Konstruerer labyrint med Prims algoritme..."
 
-#: plug-ins/maze/algorithms.c:459
+#: plug-ins/maze/algorithms.c:463
 msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr "Konstruerer fliselægbar labyrint med Prims algoritme..."
 
-#: plug-ins/maze/maze.c:156
+#: plug-ins/maze/maze.c:157
 #, c-format
 msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
@@ -10891,54 +10821,54 @@ msgstr ""
 "Genererer en labyrint vha. af enten dybdeførst-søgningsmetoden eller Prims "
 "algoritme. Kan lave fliselægbare labyrinter også. Se %s for mere hjælp."
 
-#: plug-ins/maze/maze.c:162
+#: plug-ins/maze/maze.c:163
 msgid "Draws a maze."
 msgstr "Tegn en labyrint."
 
-#: plug-ins/maze/maze.c:167
+#: plug-ins/maze/maze.c:168
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
 msgstr "<Image>/Filtre/Generér/Mønstre/_Labyrint..."
 
-#: plug-ins/maze/maze.c:446
+#: plug-ins/maze/maze.c:454
 msgid "Drawing Maze..."
 msgstr "Tegner labyrint..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: plug-ins/maze/maze_face.c:218
+#: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
 msgstr "Bredde (punkter):"
 
-#: plug-ins/maze/maze_face.c:230 plug-ins/maze/maze_face.c:246
+#: plug-ins/maze/maze_face.c:229 plug-ins/maze/maze_face.c:245
 msgid "Pieces:"
 msgstr "Stykker:"
 
-#: plug-ins/maze/maze_face.c:235
+#: plug-ins/maze/maze_face.c:234
 msgid "Height (Pixels):"
 msgstr "Højde (punkter):"
 
 # RETMIG: rigtig?
-#: plug-ins/maze/maze_face.c:258
+#: plug-ins/maze/maze_face.c:257
 msgid "Multiple (57):"
 msgstr "Produkt (57):"
 
-#: plug-ins/maze/maze_face.c:271
+#: plug-ins/maze/maze_face.c:270
 msgid "Offset (1):"
 msgstr "Afsæt (1):"
 
-#: plug-ins/maze/maze_face.c:302
+#: plug-ins/maze/maze_face.c:301
 msgid "Depth First"
 msgstr "Dybde først"
 
-#: plug-ins/maze/maze_face.c:303
+#: plug-ins/maze/maze_face.c:302
 msgid "Prim's Algorithm"
 msgstr "Prims algoritme"
 
-#: plug-ins/maze/maze_face.c:315
+#: plug-ins/maze/maze_face.c:314
 #, c-format
 msgid "Selection is %dx%d"
 msgstr "Markering er %dx%d"
 
-#: plug-ins/maze/maze_face.c:421
+#: plug-ins/maze/maze_face.c:420
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -10947,12 +10877,12 @@ msgstr ""
 "Fliselægbar labyrint vil ikke være perfekt."
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:589
+#: plug-ins/maze/maze_face.c:588
 #, c-format
 msgid "Opening %s"
 msgstr "Åbner %s"
 
-#: plug-ins/maze/maze_face.c:598
+#: plug-ins/maze/maze_face.c:597
 #, c-format
 msgid "See %s"
 msgstr "Se %s"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -139,37 +139,37 @@ msgstr "添加 Alpha 通道"
 msgid "Confirm Save"
 msgstr "确认保存"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "确认"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "导出文件"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 #, fuzzy
 msgid "_Ignore"
 msgstr "忽略"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 #, fuzzy
 msgid "_Export"
 msgstr "导出"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "你的图像在保存之前应该先进行导出，因为："
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变你原来的图像。"
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -178,7 +178,7 @@ msgstr ""
 "你将要把 %s 保存为 %s。\n"
 "这样将不会保存可见的图层。"
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -264,36 +264,36 @@ msgstr ""
 msgid "%d GB"
 msgstr "字节"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr ""
 
@@ -400,11 +400,11 @@ msgstr ""
 msgid "Old:"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "选择文件"
 
@@ -472,23 +472,23 @@ msgstr "行距(_L)"
 msgid "_Resize"
 msgstr "重置大小(_R)"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr "缩放(_S)"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr "剪割"
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr "旋转(_R)"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr "切变(_S)"
 
@@ -500,15 +500,15 @@ msgstr "更多..."
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "单位"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -517,14 +517,18 @@ msgstr ""
 "如果“时间”按钮没有按下，将使用这个值作为随机数生成种子 - 这将允许你重复一个指"
 "定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr "以当前时间作为随机数生成器的种子 - 这保证了一定程度的随机性"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+msgid "Randomize"
+msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

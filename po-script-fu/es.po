@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-27 14:48+0100\n"
+"POT-Creation-Date: 2004-02-04 02:50+0100\n"
 "PO-Revision-Date: 2004-01-27 16:03-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -51,7 +51,8 @@ msgstr "No se puede abrir la tubería SIOD de salida"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr ""
+"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -509,7 +510,8 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -565,7 +567,8 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -577,7 +580,8 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -596,7 +600,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -742,11 +747,13 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -754,15 +761,18 @@ msgstr "Diámetro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1415,11 +1425,13 @@ msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1460,7 +1472,8 @@ msgid "Shadow Color"
 msgstr "Color de la sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiqueta de sub-botón "
 "del t_ubo del tubo..."
@@ -1474,7 +1487,8 @@ msgstr ""
 "botón del tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiquetas _generales "
 "del tubo..."
@@ -2477,4 +2491,3 @@ msgstr "Desplazamiento X del brillo"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Desplazamiento Y del brillo"
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:14+0100\n"
+"POT-Creation-Date: 2004-02-04 02:48+0100\n"
 "PO-Revision-Date: 2004-02-04 02:14+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -3801,7 +3801,6 @@ msgstr ""
 "Breite und Höhe müssen größer als Null sein."
 
 #. <Image>/File
-#. <Toolbox>/File
 #: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Datei"
@@ -3815,7 +3814,6 @@ msgid "/File/_Open..."
 msgstr "/Datei/Ö_ffnen..."
 
 #. <Image>/File/Open Recent
-#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:114 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Datei/_Zuletzt geöffnet"
@@ -6069,7 +6067,6 @@ msgid "Original Width:"
 msgstr "Ursprüngliche Breite:"
 
 #. the new size labels
-#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Neue Breite:"
@@ -6895,7 +6892,6 @@ msgid "New Path Options"
 msgstr "Einstellungen des hinzuzufügenden Pfades"
 
 #. The name entry hbox, label and entry
-#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Pfadname:"
@@ -7815,7 +7811,6 @@ msgid "Origin X:"
 msgstr "Ursprung X:"
 
 #. the pixel size labels
-#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"

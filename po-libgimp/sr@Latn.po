@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2003-12-11 19:38+0100\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -138,24 +138,24 @@ msgstr "Dodati alfa kanal"
 msgid "Confirm Save"
 msgstr "Potvrdi čuvanje"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Potvrdi"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Izvezi datoteku"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 msgid "_Ignore"
 msgstr "Z_anemari"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 msgid "_Export"
 msgstr "_Izvezi"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -164,11 +164,11 @@ msgstr ""
 "Treba prvo da izvezete vašu sliku pre nego što je sačuvate kao %s iz "
 "sledećih razloga:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Izvozno pretvaranje neće izmeniti vaš originalni snimak."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +177,7 @@ msgstr ""
 "Vi ste u toku da sačuvate masku nivoa kao %s.\n"
 "Ovo neće sačuvati vidljive nivoe."
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -261,36 +261,36 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Učitavam modul: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Greška pri učitavanju modula „%s“: %s"
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Preskačem modul: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Greška modula"
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr "Učitan"
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Neuspelo učitavanje"
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr "Nije učitano"
 
@@ -392,11 +392,11 @@ msgstr "Tekuće:"
 msgid "Old:"
 msgstr "Staro:"
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Odaberite direktorijum"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 msgid "Select File"
 msgstr "Odaberi datoteku"
 
@@ -464,23 +464,23 @@ msgstr "Razmak redova"
 msgid "_Resize"
 msgstr "_Promeni veličinu"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr "Iseci"
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr "_Transformiši"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 msgid "_Rotate"
 msgstr "_Rotiraj"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Shear"
 msgstr "_Deli"
 
@@ -492,15 +492,15 @@ msgstr "Još..."
 msgid "Unit Selection"
 msgstr "Izbor jedinice"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -508,13 +508,18 @@ msgstr ""
 "Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
 "omogućiti da ponovite datu \"slučajno\" operaciju"
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
-msgstr "_Slučajno"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
+msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
+
+#: libgimpwidgets/gimpwidgets.c:1292
+#, fuzzy
+msgid "Randomize"
+msgstr "_Slučajno"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

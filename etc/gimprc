@@ -77,25 +77,45 @@
 # 
 # (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
 
+#   This is a colon-separated list of folders to search.
+# 
+# (brush-path-writable "${gimp_dir}/brushes")
+
 # Sets the pattern search path.  This is a colon-separated list of folders to
 # search.
 # 
 # (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
+
+#   This is a colon-separated list of folders to search.
+# 
+# (pattern-path-writable "${gimp_dir}/patterns")
 
 # Sets the palette search path.  This is a colon-separated list of folders to
 # search.
 # 
 # (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
 
+#   This is a colon-separated list of folders to search.
+# 
+# (palette-path-writable "${gimp_dir}/palettes")
+
 # Sets the gradient search path.  This is a colon-separated list of folders
 # to search.
 # 
 # (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
+#   This is a colon-separated list of folders to search.
+# 
+# (gradient-path-writable "${gimp_dir}/gradients")
+
 # Where to look for fonts.  This is a colon-separated list of folders to
 # search.
 # 
 # (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
+
+#   This is a colon-separated list of folders to search.
+# 
+# (font-path-writable "${gimp_dir}/fonts")
 
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
@@ -264,6 +284,7 @@
 # %L  the number of layers (long form)
 # %m  memory used by the image
 # %n  the name of the active layer/channel
+# %P  the PDB id of the active layer/channel
 # %w  image width in pixels
 # %W  image width in real-world units
 # %h  image height in pixels
@@ -293,6 +314,7 @@
 # %L  the number of layers (long form)
 # %m  memory used by the image
 # %n  the name of the active layer/channel
+# %P  the PDB id of the active layer/channel
 # %w  image width in pixels
 # %W  image width in real-world units
 # %h  image height in pixels

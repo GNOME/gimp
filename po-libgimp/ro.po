@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
+"POT-Creation-Date: 2004-02-04 02:49+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -139,45 +139,45 @@ msgstr "/Adaugă canal de transparenţa"
 msgid "Confirm Save"
 msgstr "Confirmă dimensiunea imaginii"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 #, fuzzy
 msgid "Export File"
 msgstr "Expunere:"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 #, fuzzy
 msgid "_Ignore"
 msgstr "nimic"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 #, fuzzy
 msgid "_Export"
 msgstr "Expunere:"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -259,37 +259,37 @@ msgstr "%.1f MOcteţi"
 msgid "%d GB"
 msgstr "%d KOcteţi"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, fuzzy, c-format
 msgid "Loading module: '%s'\n"
 msgstr "încarc modulul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr "eroare la încărcare modul: %s: %s"
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, fuzzy, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "ignor modulul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Eroare în modul"
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 #, fuzzy
 msgid "Loaded"
 msgstr "Incărcat cu SUCCES"
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Incărcarea a eşuat"
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr ""
 
@@ -406,12 +406,12 @@ msgstr "Lăţimea curentă:"
 msgid "Old:"
 msgstr "Amestec:"
 
-#: libgimpwidgets/gimpfileentry.c:336
+#: libgimpwidgets/gimpfileentry.c:361
 #, fuzzy
 msgid "Select Folder"
 msgstr "Selectează"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:375
 #, fuzzy
 msgid "Select File"
 msgstr "Selectează"
@@ -487,26 +487,26 @@ msgstr "Salvare de fişiere"
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:262
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:276
+#: libgimpwidgets/gimpstock.c:279
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:282
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -520,28 +520,32 @@ msgstr ""
 msgid "Unit Selection"
 msgstr "Selecţie"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 #, fuzzy
 msgid "Unit"
 msgstr "Unitate de masură:"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 #, fuzzy
 msgid "Factor"
 msgstr "Pană"
 
-#: libgimpwidgets/gimpwidgets.c:1259
+#: libgimpwidgets/gimpwidgets.c:1271
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1263
-msgid "_Randomize"
+#: libgimpwidgets/gimpwidgets.c:1275
+msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1274
+#: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
+msgstr ""
+
+#: libgimpwidgets/gimpwidgets.c:1292
+msgid "Randomize"
 msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
