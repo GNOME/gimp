@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- added "oneliners".
+
 1.08  Fri Apr  9 03:20:54 CEST 1999
 	- added guidegrid, git-text, roundrectsel, repdup, centerguide,
           stampify, goldenmean, triangle, billboard, mirrorsplit.

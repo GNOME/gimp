@@ -10,7 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
-  * make parasiterc ascii-only !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[DONE]  * make parasiterc ascii-only !!!!
   * improve examples/example-*.pl
   * install in /usr/local (???? why? more options??)
   * install even without Gtk? NO!

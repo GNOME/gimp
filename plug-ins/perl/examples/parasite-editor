@@ -11,7 +11,7 @@ Gtk->init;
 
 $gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
 
-$VERSION=0.2;
+$VERSION=0.3;
 
 #Gimp::set_trace(TRACE_ALL);
 
@@ -19,13 +19,7 @@ my $window;	# the main window
 my $current;
 my $list_func, $find_func, $attach_func, $detach_func;
 my $clist;
-my $name, $flags, $data, $data2;
-
-sub escape {
-   join ("", map {
-      (ord($_) & 127) > 31 ? $_ : sprintf "\\x%02x",ord($_);
-   } split //, shift);
-}
+my $name, $flags, $data;
 
 sub deserialize {
    local $_ = shift;
@@ -54,21 +48,92 @@ sub deserialize {
    $@ ? $@ : $res;
 }
 
+sub is_binary {
+   $_[0] =~ y/\x00-\x09\x0b-\x1f//;
+}
+
+sub is_gserialize {
+   0;
+}
+
+sub format_flags {
+   sprintf "0x%08x",$_[0];
+}
+
+sub unformat_flags {
+   eval shift;
+}
+
+sub format_plain {
+   shift;
+}
+
+sub unformat_plain {
+   shift;
+}
+
+sub format_hex {
+   join (" ", map { sprintf "%02x",ord($_) } split //);
+}
+
+sub unformat_hex {
+   my $x = shift;
+   $x =~ y/0-9a-fA-F//cd;
+   print "X: $x\n";
+   $x=unpack("H*",$x);
+   print "Y: $x\n";
+   $x;#d#
+}
+
+sub format_gserialize {
+   format_hex;
+}
+
+sub unformat_gserialize {
+   unformat_hex;
+}
+
+sub escape($) {
+   my $x=shift;
+   is_binary($x) ? format_hex($x) : format_plain($x);
+}
+
 sub refresh_names {
+   undef $parasite;
+   $name->set_text ("");
+   $flags->set_text ("");
+   $data->set_text ("");
    $clist->clear_items(0,99999);
    my @list = &$list_func($current);
-   for my $parasite (@list) {
-      my $item = new Gtk::ListItem $parasite;
+   for my $para (@list) {
+      my $item = new Gtk::ListItem $para;
       $item->signal_connect ("select" => sub {
-         my ($par) = &$find_func($current,$parasite);
+         my ($par) = &$find_func($current,$para);
          $name->set_text ($par->[0]);
          $flags->set_text (sprintf "0x%08x", $par->[1]);
          $data->set_text (escape $par->[2]);
-         $data2->set_text (deserialize $par->[2]);
+         $parasite = $para;
       });
       $clist->add($item);
    }
+   #$clist->select_item(0);
    $clist->show_all;
+}
+
+sub new_Entry {
+   my $hbox = new Gtk::HBox 0,0;
+   my $label = new Gtk::Label $_[1];
+   my $name = $_[2];
+
+   $label->set_alignment (0, 0.5);
+   
+   $hbox->pack_start ($label, 0, 0, 0);
+   $hbox->pack_start ($name , 1, 1, 0);
+
+   $_[0]->add ($hbox);
+
+   $name->set_editable (0);
+   $name;
 }
 
 sub create_main {
@@ -79,8 +144,11 @@ sub create_main {
    
    $t = new Gtk::Tooltips;
    my $w = new Gtk::Dialog;
+
+   $ex = $w->style->font->string_width ('Mn')*0.5;
+   $eX = $w->style->font->ascent + $w->style->font->descent + 10;
+
    $window = $w;
-   $w->set_usize (500,220);
    
    $w->set_title("Parasite Editor - version $VERSION alpha");
    $w->signal_connect("destroy",sub {main_quit Gtk});
@@ -96,6 +164,10 @@ sub create_main {
    $v->add($top);
    my $bot = new Gtk::HBox (0,5);
    $v->add($bot);
+   my $cmd = new Gtk::HBox (0,5);
+   $v->add ($cmd);
+
+   $top->set_usize (-1, $eX+5);
 
    $clist = new Gtk::List;
 
@@ -105,11 +177,12 @@ sub create_main {
    $bot->add ($cs);
 
    my $parbox = new Gtk::VBox (0,5);
+   $bot->set_usize ($ex*80,$eX*4);
    $bot->add ($parbox);
-   $parbox->add ($name  = new Gtk::Entry);
-   $parbox->add ($flags = new Gtk::Entry);
-   $parbox->add ($data  = new Gtk::Entry);
-   $parbox->add ($data2 = new Gtk::Entry);
+
+   $name  = new_Entry $parbox,"Name: ",new Gtk::Entry;
+   $flags = new_Entry $parbox,"Flags: ",new Gtk::Entry;
+   $data  = new_Entry $parbox,"Data: ",new Gtk::Entry;
 
    {
       my $menu = new Gtk::Menu;
@@ -175,6 +248,19 @@ sub create_main {
 
       &$act_global;
    }
+
+   local *addcmd = sub {
+      my $label = new Gtk::Button shift;
+      $label->signal_connect(clicked => shift);
+      $cmd->add($label);
+   };
+
+   addcmd ("New", sub {Gimp->message("NYI!!")});
+   addcmd ("Edit", sub {
+      (new ParasiteEditor($find_func,$attach_func,$detach_func,$current,$parasite))->show_all
+         if $parasite ne "";
+   });
+   addcmd ("Delete", sub {$detach_func->($current,$parasite) if $parasite; refresh_names});
    
    show_all $w;
 }
@@ -198,4 +284,86 @@ register "extension_parasite_editor",
    ();
 };
 
+package ParasiteEditor;
+
+use Gtk;
+use base Gtk::Dialog;
+
+my $init;
+
+Gtk::Dialog->register_subtype(ParasiteEditor);
+
+sub GTK_CLASS_INIT { };
+
+sub format {
+   my $self=shift;
+}
+
+sub refresh {
+   my $self=shift;
+   $self->{-name}->set_text($self->{name_});
+   $self->{-flags}->set_text(::format_flags $self->{flags_});
+   $self->{-data}->delete_text(0,-1);
+   $self->{-data}->insert_text($self->format,0);
+}
+
+sub undirty {
+   my $self=shift;
+}
+
+sub GTK_OBJECT_INIT {
+   my $self = shift;
+   @{$self}{qw(find_func attach_func detach_func current parasite)}=@$init;
+   @{$self}{qw(name  flags  data )}=@{$self->{find_func}->(@{$self}{'current','parasite'})};
+   @{$self}{qw(name_ flags_ data_)}=@{$self->{find_func}->(@{$self}{'current','parasite'})};
+
+   my $table = new Gtk::Table (2,3,0);
+   $table->attach(new Gtk::Label("Name")	,0,1,0,1,{},{},0,0);
+   $table->attach(new Gtk::Label("Flags")	,0,1,1,2,{},{},0,0);
+   $table->attach(new Gtk::Label("Format")	,0,1,2,3,{},{},0,0);
+   $table->attach(new Gtk::Label("Data")	,0,1,3,4,{},{},0,0);
+
+   $self->{-name} = new Gtk::Entry;
+   $self->{-flags} = new Gtk::Entry;
+   $self->{-data} = new Gtk::Text;
+
+   my $format = new Gtk::HBox 0,5;
+   local *newformat = sub {
+   };
+
+   newformat("Text",\&::format_text,\&::unformat_text);
+   newformat("Hex",\&::format_text,\&::unformat_text);
+   newformat("GSerialize",\&::format_text,\&::unformat_text);
+
+   $table->attach($self->{-name}	,1,2,0,1,{},{},0,0);
+   $table->attach($self->{-flags}	,1,2,1,2,{},{},0,0);
+   $table->attach($format		,1,2,2,3,{},{},0,0);
+   $table->attach($self->{-data}	,1,2,3,4,{},{},0,0);
+
+   $self->vbox->add($table);
+
+   $self->refresh;
+
+   my $b = new Gtk::Button "OK";
+   $b->signal_connect(clicked => sub {
+      $self->undirty;
+      $self->{detach_func}->(@{$self}{'current','parasite'});
+      $self->{attach_func}->($self->{'current'},[@{$self}{'name_','flags_','data_'}]);
+      main::refresh_names;
+      destroy $self;
+   });
+   $self->action_area->add($b);
+   my $b = new Gtk::Button "Cancel";
+   $b->signal_connect(clicked => sub { destroy $self });
+   $self->action_area->add($b);
+}
+
+sub new {
+   $init=\@_;
+   new Gtk::Widget shift;
+}
+
+package main;
+
 exit main;
+
