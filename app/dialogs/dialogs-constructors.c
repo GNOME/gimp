@@ -831,8 +831,9 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
   view = gimp_selection_editor_new (gimage);
 
   dockable = dialogs_dockable_new (view,
-				   _("Selection Editor"), _("Selection"), NULL,
-				   NULL,
+				   _("Selection Editor"), _("Selection"),
+                                   GIMP_STOCK_TOOL_RECT_SELECT,
+				   dialogs_stock_text_tab_func,
 				   dialogs_set_selection_editor_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);

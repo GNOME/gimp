@@ -1,5 +1,10 @@
 2002-08-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/dialogs-constructors.c: a nicer tab for the selection
+	dialog.
+
+2002-08-22  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/images/stock-all-16.png
 	* themes/Default/images/stock-none-16.png
 	* themes/Default/images/stock-grow-16.png
