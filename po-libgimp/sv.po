@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-06-09 16:03+0200\n"
-"PO-Revision-Date: 2003-04-19 10:42+0200\n"
+"POT-Creation-Date: 2003-06-10 09:54+0200\n"
+"PO-Revision-Date: 2003-06-10 09:57+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgstr "Ingen"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Förhandsgranska"
 
 #: libgimp/gimpmiscui.c:529
 #, c-format
@@ -180,6 +180,10 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Ingen %s i gimprc:\n"
+"du måste lägga till en rad lik\n"
+"(%s \"%s\")\n"
+"till din %s-fil."
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
