@@ -1,3 +1,7 @@
+2003-12-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/Makefile.am (IGNORE_HFILES): removed gimpmiscui.h.
+
 2003-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

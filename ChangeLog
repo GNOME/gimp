@@ -1,3 +1,10 @@
+2003-12-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumb-error.c
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumbnail.c: some code review and addition of
+	API documentation. Not finished yet...
+
 2003-12-14  Raphaël Quinet  <quinet@gamers.org>
 
 	* libgimp/gimpui.h: Removed inclusion of libgimp/gimpmiscui.h,
@@ -20,7 +27,7 @@
 	gimp_plug_in_get_path() from here also, since I forgot to do this in
 	my previous commits (ouch! bad DindinX!).
 
-  All this partly close #125141.
+	All this partly close #125141.
 
 2003-12-13  Michael Natterer  <mitch@gimp.org>
 

@@ -29,9 +29,7 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 IGNORE_HFILES = \
 	gimpcompat.h		\
 	gimpmisc.h		\
-	gimpmiscui.h		\
 	gimpunitcache.h		\
-	gimpintl.h 		\
 	libgimp-intl.h		\
 	stdplugins-intl.h
 
