@@ -72,7 +72,8 @@ d_draw_circle (GfigObject *obj)
   draw_sqr (&center_pnt->pnt, obj == gfig_context->selected_obj);
   draw_sqr (&edge_pnt->pnt, obj == gfig_context->selected_obj);
 
-  gfig_draw_arc (center_pnt->pnt.x, center_pnt->pnt.y, radius, radius, 0, 360);
+  gfig_draw_arc (center_pnt->pnt.x, center_pnt->pnt.y,
+                 radius, radius, 0, 360);
 }
 
 static void

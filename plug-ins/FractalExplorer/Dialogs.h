@@ -9,11 +9,11 @@ void        make_color_map             (void);
 
 void        dialog_change_scale        (void);
 gchar     * get_line                   (gchar              *buf,
-					gint                s,
-					FILE               *from,
-					gint                init);
+                                        gint                s,
+                                        FILE               *from,
+                                        gint                init);
 gint        load_options               (fractalexplorerOBJ *xxx,
-					FILE               *fp);
+                                        FILE               *fp);
 void        explorer_load              (void);
 
 #endif

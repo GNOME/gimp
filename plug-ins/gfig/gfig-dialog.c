@@ -243,7 +243,6 @@ gfig_dialog (void)
   /* initial default style */
   gfig_read_gimp_style (&gfig_context->default_style, "Base");
   gfig_context->default_style.paint_type = selvals.painttype;
-  gfig_context->current_style = &gfig_context->default_style;
 
   if (parasite)
     {
@@ -386,14 +385,15 @@ gfig_dialog (void)
                     G_CALLBACK (set_foreground_callback),
                     gfig_context->fg_color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
-                               &gfig_context->current_style->foreground);
+                               &gfig_context->default_style.foreground);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->fg_color_button);
 
   /* brush selector in Stroke frame */
   gfig_context->brush_select
-    = gimp_brush_select_widget_new ("Brush", gfig_context->current_style->brush_name,
+    = gimp_brush_select_widget_new ("Brush",
+                                    gfig_context->default_style.brush_name,
                                     -1, -1, -1,
                                     gfig_brush_changed_callback,
                                     NULL);
@@ -450,14 +450,14 @@ gfig_dialog (void)
                     G_CALLBACK (set_background_callback),
                     gfig_context->bg_color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
-                               &gfig_context->current_style->background);
+                               &gfig_context->default_style.background);
   gtk_widget_show (gfig_context->bg_color_button);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
                             gfig_context->bg_color_button, NULL);
 
   /* A page for the pattern selector */
   gfig_context->pattern_select
-    = gimp_pattern_select_widget_new ("Pattern", gfig_context->current_style->pattern,
+    = gimp_pattern_select_widget_new ("Pattern", gfig_context->default_style.pattern,
                                       gfig_pattern_changed_callback,
                                       NULL);
   gtk_widget_show (gfig_context->pattern_select);
@@ -466,7 +466,7 @@ gfig_dialog (void)
 
   /* A page for the gradient selector */
   gfig_context->gradient_select
-    = gimp_gradient_select_widget_new ("Gradient", gfig_context->current_style->gradient,
+    = gimp_gradient_select_widget_new ("Gradient", gfig_context->default_style.gradient,
                                        gfig_gradient_changed_callback,
                                        NULL);
   gtk_widget_show (gfig_context->gradient_select);
@@ -575,8 +575,6 @@ gfig_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:  /* Close button */
-      gfig_style_copy (&gfig_context->default_style,
-                       gfig_context->current_style, "object");
       gfig_save_as_parasite ();
       break;
 
@@ -733,14 +731,15 @@ gfig_undo_action_callback (GtkAction *action,
       gfig_context->current_obj->obj_list = NULL;
       tmp_bezier = tmp_line = obj_creating = NULL;
       gfig_context->current_obj->obj_list = undo_table[undo_level];
-      /* FIXME: this only work when undoing the only object in the list */
-      if (gfig_context->current_obj->obj_list == NULL)
-        gfig_context->current_style = &gfig_context->default_style;
       undo_level--;
       /* Update the screen */
       gtk_widget_queue_draw (gfig_context->preview);
       /* And preview */
       gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
+      if (gfig_context->current_obj->obj_list)
+        gfig_context->selected_obj = gfig_context->current_obj->obj_list->data;
+      else
+        gfig_context->selected_obj = NULL;
     }
 
   gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
@@ -759,7 +758,7 @@ gfig_clear_action_callback (GtkWidget *widget,
   /* Free all objects */
   free_all_objs (gfig_context->current_obj->obj_list);
   gfig_context->current_obj->obj_list = NULL;
-  gfig_context->current_style = &gfig_context->default_style;
+  gfig_context->selected_obj = NULL;
   obj_creating = NULL;
   tmp_line = NULL;
   tmp_bezier = NULL;
@@ -1175,12 +1174,15 @@ select_combo_callback (GtkWidget *widget,
     case SELECT_TYPE_MENU:
       selopt.type = (SelectionType) value;
       break;
+
     case SELECT_ARCTYPE_MENU:
       selopt.as_pie = (ArcType) value;
       break;
+
     case SELECT_TYPE_MENU_FILL:
-      gfig_context->current_style->fill_type = (FillType) value;
+      gfig_context_get_current_style ()->fill_type = (FillType) value;
       break;
+
     default:
       g_return_if_reached ();
       break;
@@ -1549,7 +1551,6 @@ gfig_select_obj_by_number (gint count)
         {
           object = objs->data;
           gfig_context->selected_obj = object;
-          gfig_context->current_style = &object->style;
           gfig_style_set_context_from_style (&object->style);
           break;
         }
@@ -1807,8 +1808,11 @@ void
 paint_layer_fill (void)
 {
   GimpBucketFillMode fill_mode;
+  Style *current_style;
 
-  switch (gfig_context->current_style->fill_type)
+  current_style = gfig_context_get_current_style ();
+
+  switch (current_style->fill_type)
     {
     case FILL_NONE:
       return;
@@ -1844,7 +1848,7 @@ paint_layer_fill (void)
   gimp_edit_bucket_fill (gfig_context->drawable_id,
                          fill_mode,    /* Fill mode */
                          GIMP_NORMAL_MODE,
-                         gfig_context->current_style->fill_opacity, /* Fill opacity */
+                         current_style->fill_opacity, /* Fill opacity */
                          0.0,                 /* threshold - ignored */
                          FALSE,               /* Sample merged - ignored */
                          0.0,                 /* x - ignored */
@@ -1859,7 +1863,6 @@ gfig_paint_callback (void)
   gchar       buf[128];
   gint        count;
   gint        ccount = 0;
-  Style      *style0;
   GfigObject *object;
 
   if (!gfig_context->enable_repaint || !gfig_context->current_obj)
@@ -1872,9 +1875,6 @@ gfig_paint_callback (void)
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
 
   /* gimp_drawable_fill (gfig_context->drawable_id, GIMP_PATTERN_FILL); */
-
-  /* remember current style because it will be changed while painting */
-  style0 = gfig_context->current_style;
 
   while (objs)
     {
@@ -1895,9 +1895,6 @@ gfig_paint_callback (void)
 
       ccount++;
     }
-
-  /* set style back to its value on entry*/
-  gfig_context->current_style = style0;
 
   gimp_displays_flush ();
 

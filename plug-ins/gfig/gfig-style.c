@@ -13,6 +13,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
+#include "gfig-dobject.h"
 #include "gfig-style.h"
 
 
@@ -386,10 +387,6 @@ gfig_save_styles (GString *string)
   if (gfig_context->debug_styles)
     g_printerr ("Saving global styles.\n");
 
-  /* why? */
-  gfig_style_copy (&gfig_context->default_style,
-                   gfig_context->current_style, "object");
-
   gfig_save_style (&gfig_context->default_style, string);
 }
 
@@ -404,16 +401,17 @@ void
 set_foreground_callback (GimpColorButton *button,
                          gpointer         data)
 {
-  GimpRGB color2;
+  GimpRGB  color2;
+  Style   *current_style;
 
   if (gfig_context->debug_styles)
     g_printerr ("Setting foreground color from color selector\n");
 
-  gimp_color_button_get_color (button, &color2);
-  gimp_rgba_set (&gfig_context->default_style.foreground,
-                 color2.r, color2.g, color2.b, color2.a);
+  current_style = gfig_context_get_current_style ();
 
-  gimp_rgba_set (&gfig_context->current_style->foreground,
+  gimp_color_button_get_color (button, &color2);
+
+  gimp_rgba_set (&current_style->foreground,
                  color2.r, color2.g, color2.b, color2.a);
 
   gfig_paint_callback ();
@@ -423,12 +421,16 @@ void
 set_background_callback (GimpColorButton *button,
                          gpointer         data)
 {
-  GimpRGB color2;
+  GimpRGB  color2;
+  Style   *current_style;
+
+  if (gfig_context->debug_styles)
+    g_printerr ("Setting background color from color selector\n");
+
+  current_style = gfig_context_get_current_style ();
 
   gimp_color_button_get_color (button, &color2);
-  gimp_rgba_set (&gfig_context->default_style.background,
-                 color2.r, color2.g, color2.b, color2.a);
-  gimp_rgba_set (&gfig_context->current_style->background,
+  gimp_rgba_set (&current_style->background,
                  color2.r, color2.g, color2.b, color2.a);
 
   gfig_paint_callback ();
@@ -438,11 +440,12 @@ void
 set_paint_type_callback (GtkToggleButton *toggle,
                          gpointer         data)
 {
-  gboolean paint_type;
+  gboolean  paint_type;
+  Style    *current_style;
 
+  current_style = gfig_context_get_current_style ();
   paint_type = gtk_toggle_button_get_active (toggle);
-  gfig_context->default_style.paint_type = paint_type;
-  gfig_context->current_style->paint_type = paint_type;
+  current_style->paint_type = paint_type;
   gfig_paint_callback ();
 
   gtk_widget_set_sensitive (GTK_WIDGET (data), paint_type);
@@ -467,14 +470,16 @@ gfig_brush_changed_callback (const gchar *brush_name,
                              gboolean dialog_closing,
                              gpointer user_data)
 {
+  Style *current_style;
+
   if (!brush_name)
     g_message ("Error: setting brush name to NULL in color selector callback.");
 
-  gfig_context->current_style->brush_name = g_strdup (brush_name); /* DDX */
-  gfig_context->default_style.brush_name  = g_strdup (brush_name); /* DDX */
+  current_style = gfig_context_get_current_style ();
+  current_style->brush_name = g_strdup (brush_name); /* DDX not sure if it should be strdup'ed */
 
-  /* this will soon be unneeded */
-  gfig_context->bdesc.name = g_strdup (brush_name); /* DDX */
+  /* this will soon be unneeded. How soon? */
+  gfig_context->bdesc.name = g_strdup (brush_name); /* idem */
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
   gimp_context_set_brush (brush_name);
@@ -491,8 +496,10 @@ gfig_pattern_changed_callback (const gchar *pattern_name,
                                gboolean dialog_closing,
                                gpointer user_data)
 {
-  gfig_context->current_style->pattern = g_strdup (pattern_name);
-  gfig_context->default_style.pattern = g_strdup (pattern_name);
+  Style *current_style;
+
+  current_style = gfig_context_get_current_style ();
+  current_style->pattern = g_strdup (pattern_name); /* not sure if it should be strdup'ed */
 
   gfig_paint_callback ();
 }
@@ -504,8 +511,10 @@ gfig_gradient_changed_callback (const gchar *gradient_name,
                                 gboolean dialog_closing,
                                 gpointer user_data)
 {
-  gfig_context->current_style->gradient = g_strdup (gradient_name);
-  gfig_context->default_style.gradient = g_strdup (gradient_name);
+  Style *current_style;
+
+  current_style = gfig_context_get_current_style ();
+  current_style->gradient = g_strdup (gradient_name); /* not sure if it should be strdup'ed */
 
   gfig_paint_callback ();
 }
@@ -570,8 +579,6 @@ gfig_style_apply (Style *style)
 
   gimp_context_set_gradient (style->gradient);
 
-  gfig_context->current_style = style;
-
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
 }
@@ -632,8 +639,6 @@ gfig_style_set_context_from_style (Style *style)
   enable_repaint = gfig_context->enable_repaint;
   gfig_context->enable_repaint = FALSE;
 
-  gfig_context->current_style = style;
-
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
                                &style->foreground);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
@@ -672,8 +677,10 @@ void
 gfig_style_set_style_from_context (Style *style)
 {
   GimpRGB  color;
+  Style   *current_style;
 
   style->name = "object";
+  current_style = gfig_context_get_current_style ();
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
                                &color);
@@ -686,14 +693,14 @@ gfig_style_set_style_from_context (Style *style)
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
-  style->brush_name   = gfig_context->current_style->brush_name;
+  style->brush_name   = current_style->brush_name;
 
-  if (!style->pattern || strcmp (style->pattern, gfig_context->current_style->pattern))
+  if (!style->pattern || strcmp (style->pattern, current_style->pattern))
     {
-      style->pattern    = g_strdup (gfig_context->current_style->pattern);
+      style->pattern    = g_strdup (current_style->pattern); /* why strduping? */
     }
 
-  style->gradient     = gfig_context->current_style->gradient;
+  style->gradient     = current_style->gradient;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
                                  (gint *) &style->fill_type);
@@ -725,3 +732,13 @@ mygimp_brush_info (gint *width,
 
   g_free (name);
 }
+
+Style *
+gfig_context_get_current_style (void)
+{
+  if (gfig_context->selected_obj)
+    return &gfig_context->selected_obj->style;
+  else
+    return &gfig_context->default_style;
+}
+

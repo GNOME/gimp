@@ -123,4 +123,6 @@ void     gfig_style_set_context_from_style (Style                *style);
 
 void     gfig_style_set_style_from_context (Style                *style);
 
+Style   *gfig_context_get_current_style    (void);
+
 #endif /* __GFIG_STYLE_H__ */

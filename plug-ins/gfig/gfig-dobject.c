@@ -570,12 +570,9 @@ remove_obj_from_list (GFigObj    *obj,
       free_one_obj (del_obj);
 
       if (obj->obj_list)
-        {
-          GfigObject *new_current = obj->obj_list->data;
-          gfig_style_set_context_from_style (&new_current->style);
-        }
+        gfig_context->selected_obj = obj->obj_list->data;
       else
-        gfig_style_set_context_from_style (&gfig_context->default_style);
+        gfig_context->selected_obj = NULL;
 
       if (obj_show_single != -1)
         {
@@ -760,7 +757,6 @@ add_to_all_obj (GFigObj    *fobj,
 
   /* initialize style when we add the object */
   gfig_context->selected_obj = obj;
-  gfig_context->current_style = &obj->style;
 }
 
 /* First button press -- start drawing object */
@@ -832,7 +828,6 @@ object_start (GdkPoint *pnt,
       if (gfig_context->debug_styles)
         g_printerr ("Creating object, setting style from context\n");
       gfig_style_set_style_from_context (&obj_creating->style);
-      gfig_context->current_style = &obj_creating->style;
     }
 
 }

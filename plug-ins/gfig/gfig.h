@@ -132,7 +132,6 @@ typedef struct
   GfigObject  *selected_obj;
   GtkWidget   *preview;
   Style        default_style;
-  Style       *current_style;
   BrushDesc    bdesc;
   GtkWidget   *fg_color_button;
   GtkWidget   *bg_color_button;
