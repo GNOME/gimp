@@ -1,3 +1,7 @@
+Fri Sep 25 18:05:39 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* app/layers_dialog.c: Tied up some loose ends.
+
 Thu Sep 24 12:39:27 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* app/brush_edit.c: #include <string.h> for memset

@@ -2149,9 +2149,6 @@ layer_widget_select_update (GtkWidget *w,
 }
 
 
-/* FIXME: idlerender stuff only knows about one gimage at
-   a time... shouldn't be hard to fix... get rid of those stupid
-   globals for one.  [Adam] */
 static void idlerender_gimage_destroy_handler (GimpImage *gimage)
 {
   printf("Destroyed gimage at %p which idlerender was interested in...\n",
@@ -2168,7 +2165,7 @@ static void idlerender_gimage_destroy_handler (GimpImage *gimage)
 static int
 idlerender_callback (void* unused)
 {
-  const int CHUNK_WIDTH = 128;
+  const int CHUNK_WIDTH = 256;
   const int CHUNK_HEIGHT = 128;
   int workx, worky, workw, workh;
 
@@ -2213,25 +2210,50 @@ idlerender_callback (void* unused)
 }
 
 
-/* ADAM: Unify the desired and current (if any) bounding rectangles
+/* Force any outstanding unrendered area in the gimage to be
+   rendered before we return... this is necessary e.g. if we
+   are restarting the idlerender thread for a different gimage. */
+static void
+idlerender_force_completion (void)
+{
+  gtk_idle_remove (idlerender_idleid);
+
+  while (idle_active)
+    idlerender_callback (NULL);
+}
+
+
+/* Unify the desired and current (if any) bounding rectangles
    of areas being idle-redrawn, and restart the idle thread if needed. */
 static void
 unify_and_start_idlerender (GimpImage* gimage, int basex, int basey,
 			    int width, int height)
 {
+
+  /* If another gimage is already employing the idlerender thread,
+     force it to finish before starting with this one... */
+  if (idle_active && (idlerender_gimage != gimage) )
+    {
+      printf ("Okay, switched gimage... poke Adam if this does anything "
+	      "funny.\n");
+      fflush(stdout);
+      
+      idlerender_force_completion();
+    }
+
   idlerender_gimage = gimage;
 
   if (idle_active)
     {
       int left, right, top, bottom;
 
-      printf("(%d,%d) @ Region (%d,%d %dx%d) | (%d,%d %dx%d)\n",
+      /*printf("(%d,%d) @ Region (%d,%d %dx%d) | (%d,%d %dx%d)\n",
 	     idlerender_x, idlerender_y,
 	     idlerender_basex, idlerender_basey,
 	     idlerender_width, idlerender_height,
 
 	     basex, basey,
-	     width, height);
+	     width, height);*/
 
       top = (basey < idlerender_y) ? basey : idlerender_y;
       left = (basex < idlerender_basex) ? basex : idlerender_basex;
@@ -2245,10 +2267,10 @@ unify_and_start_idlerender (GimpImage* gimage, int basex, int basey,
       idlerender_width = right-left;
       idlerender_height = bottom-top;
 
-      printf(" --> (%d,%d) @ (%d,%d %dx%d)\n",
+      /*printf(" --> (%d,%d) @ (%d,%d %dx%d)\n",
 	     idlerender_x, idlerender_y,
 	     idlerender_basex, idlerender_basey,
-	     idlerender_width, idlerender_height);
+	     idlerender_width, idlerender_height);*/
     }
   else
     {
@@ -2365,13 +2387,14 @@ layer_widget_button_events (GtkWidget *widget,
 	{
 	  if (exclusive)
        	    {
-	      printf("Case 1, kick-ass!\n");fflush(stdout);
+	      /*printf("Case 1, kick-ass!\n");fflush(stdout);*/
 	      gimage_invalidate_preview (layer_widget->gimage);
 	      reinit_gimage_idlerender (layer_widget->gimage);
 	    }
 	  else if (old_state != GIMP_DRAWABLE(layer_widget->layer)->visible)
 	    {
-	      printf("Case 2, what incredible irony!\n");fflush(stdout);
+	      /*printf("Case 2, what incredible irony!\n");fflush(stdout);*/
+	      gimage_invalidate_preview (layer_widget->gimage);
 	      reinit_layer_idlerender (layer_widget->gimage,
 				       layer_widget->layer);
 	    }
