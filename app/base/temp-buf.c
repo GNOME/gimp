@@ -467,7 +467,8 @@ temp_buf_copy_area (TempBuf *src,
 
 void
 temp_buf_free (TempBuf *temp_buf)
-{  if (temp_buf->data)
+{  
+  if (temp_buf->data)
     g_free (temp_buf->data);
 
   if (temp_buf->swapped)

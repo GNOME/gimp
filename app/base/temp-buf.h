@@ -22,15 +22,16 @@
 
 struct _TempBuf
 {
-  gint      bytes;      /*  The necessary info  */
+  gint      bytes;      /*  the necessary info                             */
   gint      width;
   gint      height;
-  gint      x, y;       /*  origin of data source  */
+  gint      x, y;       /*  origin of data source                          */
 
   gboolean  swapped;    /*  flag indicating whether buf is cached to disk  */
-  gchar    *filename;   /*  filename of cached information  */
+  gchar    *filename;   /*  filename of cached information                 */
 
-  guchar   *data;       /*  The data buffer     */
+  guchar   *data;       /*  The data buffer. Do never access this field
+                            directly, use temp_buf_data() instead !!       */
 };
 
 

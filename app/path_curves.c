@@ -77,7 +77,7 @@ path_curve_get_points (PathSegment *segment,
 		       gdouble start,
 		       gdouble end)
 {
-   gdouble pos, x, y;
+   gdouble pos;
 
    gint index=0;
 
@@ -154,7 +154,7 @@ void
 path_curve_draw_segment (GimpDrawTool *tool,
 			 PathSegment *segment)
 {
-   gint x, y, numpts, index;
+   gint num_pts;
 
    if (segment && segment->next) {
       if (CurveTypes[segment->type].draw_segment) {
@@ -162,8 +162,8 @@ path_curve_draw_segment (GimpDrawTool *tool,
          return;
       } else {
 	 gdouble *coordinates = g_new (gdouble, 200);
-         numpts = path_curve_get_points (segment, coordinates, 100, 0, 1);
-	 gimp_draw_tool_draw_lines (tool, coordinates, 100, FALSE);
+         num_pts = path_curve_get_points (segment, coordinates, 100, 0, 1);
+	 gimp_draw_tool_draw_lines (tool, coordinates, num_pts, FALSE);
 	 g_free (coordinates);
       }
 

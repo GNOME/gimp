@@ -1,4 +1,14 @@
-2001-05-18  Michael Natterer  <mitch@gimp.org>
+2001-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: s/USE_GCC_INTEL_MMX/HAVE_ASM_MMX/
+	
+	* app/path_curves.c: fixed some warnings and changed code so it
+	does not try to draw unconfigured points.
+	
+	* app/base/temp-buf.[ch]: added a warning not to use the data field
+	from the TempBuf struct directly.
+
+2001-05-18  Michael Natterer  <mitch@gimp.org>rm 
 
 	* app/gui/menus.c: use the correct callback for opening L&C.
 

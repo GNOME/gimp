@@ -81,7 +81,7 @@ gboolean double_speed      = FALSE;
 gboolean use_mmx           = FALSE;
 
 /* TODO: this should probably go into a header file */
-#ifdef USE_GCC_INTEL_MMX
+#ifdef HAVE_ASM_MMX
 unsigned long intel_cpu_features(void);
 #endif
 
