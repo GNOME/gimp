@@ -1,5 +1,14 @@
 Revision history for Gimp-Perl extension.
 
+	- new enums.pl, some changes: SELECTION_* becomes * again.
+        - compatibility fix for 5.005_58, also fixed a bug in Gimp::Pod.
+        - removed register_magic_load_handler from Lib.xs (is in PDB).
+        - preliminary <Load> and <Save> support (arguments are automatically
+          supplied).
+        - enabled limited pixel access functions even when PDL was not found.
+        - added examples/miff (a save filter for miff images).
+
+1.0981 Wed Jul 28 00:09:50 CEST 1999
 	- improved gouge ;) In a sense, it's actually pretty code now!
 	- region functions (except data) wrongly returned transposed matrices.
           Now the order of dimensions is bpp <- width <- height.
