@@ -75,8 +75,6 @@ static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_in
                                                 GimpDeviceStatusEntry *entry);
 static void gimp_device_status_save_clicked    (GtkWidget             *button,
                                                 GimpDeviceStatus      *status);
-static void gimp_device_status_edit_clicked    (GtkWidget             *button,
-                                                GimpDeviceStatus      *status);
 static void gimp_device_status_preview_clicked (GtkWidget             *widget,
                                                 GdkModifierType        state,
                                                 const gchar           *identifier);
@@ -273,7 +271,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
 
       g_signal_connect (entry->gradient, "clicked",
                         G_CALLBACK (gimp_device_status_preview_clicked),
-                        "gimp-gradient-list|gimp-gradient-list");
+                        "gimp-gradient-list|gimp-gradient-grid");
 
       gimp_device_status_update_entry (device_info, entry);
     }
@@ -282,13 +280,6 @@ gimp_device_status_init (GimpDeviceStatus *status)
     gimp_editor_add_button (GIMP_EDITOR (status), GTK_STOCK_SAVE,
                             _("Save device status"), NULL,
                             G_CALLBACK (gimp_device_status_save_clicked),
-                            NULL,
-                            status);
-
-  status->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (status), GIMP_STOCK_EDIT,
-                            _("Configure input devices"), NULL,
-                            G_CALLBACK (gimp_device_status_edit_clicked),
                             NULL,
                             status);
 }
@@ -406,12 +397,6 @@ gimp_device_status_save_clicked (GtkWidget        *button,
                                  GimpDeviceStatus *status)
 {
   gimp_devices_save (status->gimp, TRUE);
-}
-
-static void
-gimp_device_status_edit_clicked (GtkWidget        *button,
-                                 GimpDeviceStatus *status)
-{
 }
 
 static void

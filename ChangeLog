@@ -1,3 +1,8 @@
+2004-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdevicestatus.c: removed "Configure input
+	devices" button. Fixes bug #150177.
+
 2004-09-03  Simon Budig  <simon@gimp.org>
 
 	* app/gui/info-window.c: Applied modified patch by Kevin Cozens
