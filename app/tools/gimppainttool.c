@@ -347,10 +347,18 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   draw_line = FALSE;
 
-  paint_tool->curpressure = coords->pressure;
-  paint_tool->curxtilt    = coords->xtilt;
-  paint_tool->curytilt    = coords->ytilt;
-  paint_tool->state       = state;
+  {
+    gdouble save_x, save_y;
+
+    save_x = paint_tool->cur_coords.x;
+    save_y = paint_tool->cur_coords.y;
+
+    paint_tool->cur_coords = *coords;
+    paint_tool->state      = state;
+
+    paint_tool->cur_coords.x = save_x;
+    paint_tool->cur_coords.y = save_y;
+  }
 
   if (gdisp != tool->gdisp || paint_tool->context_id < 1)
     {
@@ -363,11 +371,11 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
-      paint_tool->startx        = paint_tool->lastx        = paint_tool->curx = x;
-      paint_tool->starty        = paint_tool->lasty        = paint_tool->cury = y;
-      paint_tool->startpressure = paint_tool->lastpressure = paint_tool->curpressure;
-      paint_tool->startytilt    = paint_tool->lastytilt    = paint_tool->curytilt;
-      paint_tool->startxtilt    = paint_tool->lastxtilt    = paint_tool->curxtilt;
+      paint_tool->cur_coords.x = x;
+      paint_tool->cur_coords.y = y;
+
+      paint_tool->start_coords = paint_tool->cur_coords;
+      paint_tool->last_coords  = paint_tool->cur_coords;
     }
 
   /*  If shift is down and this is not the first paint
@@ -376,11 +384,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   else if (state & GDK_SHIFT_MASK)
     {
       draw_line = TRUE;
-      paint_tool->startx        = paint_tool->lastx;
-      paint_tool->starty        = paint_tool->lasty;
-      paint_tool->startpressure = paint_tool->lastpressure;
-      paint_tool->startxtilt    = paint_tool->lastxtilt;
-      paint_tool->startytilt    = paint_tool->lastytilt;
+
+      paint_tool->start_coords =paint_tool->last_coords;
 
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (state & GDK_CONTROL_MASK)
@@ -389,8 +394,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 	  gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
 	  gint dx, dy, i, radius, frac;
 
-	  dx = paint_tool->curx - paint_tool->lastx;
-	  dy = paint_tool->cury - paint_tool->lasty;
+	  dx = paint_tool->cur_coords.x - paint_tool->last_coords.x;
+	  dy = paint_tool->cur_coords.y - paint_tool->last_coords.y;
 
 	  if (dy)
 	    {
@@ -404,8 +409,9 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 	      dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
 	      dy = dy > 0 ? (cosinus[i] * radius)   >> 8 : - ((cosinus[i] * radius)   >> 8);
 	    }
-	  paint_tool->curx = paint_tool->lastx + dx;
-	  paint_tool->cury = paint_tool->lasty + dy;
+
+	  paint_tool->cur_coords.x = paint_tool->last_coords.x + dx;
+	  paint_tool->cur_coords.y = paint_tool->last_coords.y + dy;
 	}
     }
 
@@ -459,11 +465,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
       gimp_paint_tool_interpolate (paint_tool, drawable);
 
-      paint_tool->lastx        = paint_tool->curx;
-      paint_tool->lasty        = paint_tool->cury;
-      paint_tool->lastpressure = paint_tool->curpressure;
-      paint_tool->lastxtilt    = paint_tool->curxtilt;
-      paint_tool->lastytilt    = paint_tool->curytilt;
+      paint_tool->last_coords = paint_tool->cur_coords;
     }
   else
     {
@@ -472,8 +474,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
        * pixmap brush pipes don't, as they don't know which
        * pixmap to select.)
        */
-      if (paint_tool->lastx != paint_tool->curx
-	  || paint_tool->lasty != paint_tool->cury
+      if (paint_tool->last_coords.x != paint_tool->cur_coords.x ||
+	  paint_tool->last_coords.y != paint_tool->cur_coords.y
 #ifdef __GNUC__
 #warning FIXME: GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion
 #endif
@@ -560,43 +562,41 @@ gimp_paint_tool_motion (GimpTool        *tool,
   gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
                          &off_x, &off_y);
 
-  paint_tool->curx = coords->x - off_x;
-  paint_tool->cury = coords->y - off_y;
+  paint_tool->cur_coords = *coords;
+  paint_tool->state      = state;
+
+  paint_tool->cur_coords.x -= off_x;
+  paint_tool->cur_coords.y -= off_y;
 
   if (paint_tool->pick_state)
     {
       gimp_paint_tool_sample_color (gimp_image_active_drawable (gdisp->gimage),
-				    paint_tool->curx,
-                                    paint_tool->cury,
+				    paint_tool->cur_coords.x,
+                                    paint_tool->cur_coords.y,
 				    state);
       return;
     }
-
-  paint_tool->curpressure = coords->pressure;
-  paint_tool->curxtilt    = coords->xtilt;
-  paint_tool->curytilt    = coords->ytilt;
-  paint_tool->state       = state;
 
   gimp_paint_tool_interpolate (paint_tool,
                                gimp_image_active_drawable (gdisp->gimage));
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    gimp_paint_tool_paint (paint_tool,
-                           gimp_image_active_drawable (gdisp->gimage),
-                           PRETRACE_PAINT);
+    {
+      gimp_paint_tool_paint (paint_tool,
+                             gimp_image_active_drawable (gdisp->gimage),
+                             PRETRACE_PAINT);
+    }
 
   gimp_display_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    gimp_paint_tool_paint (paint_tool,
-                           gimp_image_active_drawable (gdisp->gimage),
-                           POSTTRACE_PAINT);
+    {
+      gimp_paint_tool_paint (paint_tool,
+                             gimp_image_active_drawable (gdisp->gimage),
+                             POSTTRACE_PAINT);
+    }
 
-  paint_tool->lastx        = paint_tool->curx;
-  paint_tool->lasty        = paint_tool->cury;
-  paint_tool->lastpressure = paint_tool->curpressure;
-  paint_tool->lastxtilt    = paint_tool->curxtilt;
-  paint_tool->lastytilt    = paint_tool->curytilt;
+  paint_tool->last_coords = paint_tool->cur_coords;
 }
 
 
@@ -661,17 +661,21 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
       /* If shift is down and this is not the first paint stroke, draw a line */
       if (gdisp == tool->gdisp && (state & GDK_SHIFT_MASK))
 	{
 	  gdouble dx, dy, d;
 
 	  /*  Get the current coordinates */
-          paint_tool->curx = coords->x;
-          paint_tool->cury = coords->y;
+          paint_tool->cur_coords.x = coords->x - off_x;
+          paint_tool->cur_coords.y = coords->y - off_y;
 
-	  dx = paint_tool->curx - paint_tool->lastx;
-	  dy = paint_tool->cury - paint_tool->lasty;
+	  dx = paint_tool->cur_coords.x - paint_tool->last_coords.x;
+	  dy = paint_tool->cur_coords.y - paint_tool->last_coords.y;
 
 	  /* Restrict to multiples of 15 degrees if ctrl is pressed */
 	  if (state & GDK_CONTROL_MASK)
@@ -696,8 +700,8 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 		  dy = idy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
 		}
 
-	      paint_tool->curx = paint_tool->lastx + dx;
-	      paint_tool->cury = paint_tool->lasty + dy;
+	      paint_tool->cur_coords.x = paint_tool->last_coords.x + dx;
+	      paint_tool->cur_coords.y = paint_tool->last_coords.y + dy;
 	    }
 
 	  /*  show distance in statusbar  */
@@ -745,10 +749,6 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
       /* Normal operation -- no modifier pressed or first stroke */
       else
 	{
-	  gint off_x, off_y;
-
-	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
 	  if (coords->x >= off_x &&
               coords->y >= off_y &&
 	      coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
@@ -789,24 +789,24 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
   /*  Draw start target  */
   gimp_draw_tool_draw_cross (draw_tool,
-                             floor (paint_tool->lastx) + 0.5,
-                             floor (paint_tool->lasty) + 0.5,
+                             floor (paint_tool->last_coords.x) + 0.5,
+                             floor (paint_tool->last_coords.y) + 0.5,
                              TARGET_SIZE,
                              TRUE);
 
   /*  Draw end target  */
   gimp_draw_tool_draw_cross (draw_tool,
-                             floor (paint_tool->curx) + 0.5,
-                             floor (paint_tool->cury) + 0.5,
+                             floor (paint_tool->cur_coords.x) + 0.5,
+                             floor (paint_tool->cur_coords.y) + 0.5,
                              TARGET_SIZE,
                              TRUE);
 
   /*  Draw the line between the start and end coords  */
   gimp_draw_tool_draw_line (draw_tool,
-                            floor (paint_tool->lastx) + 0.5,
-                            floor (paint_tool->lasty) + 0.5,
-                            floor (paint_tool->curx) + 0.5,
-                            floor (paint_tool->cury) + 0.5,
+                            floor (paint_tool->last_coords.x) + 0.5,
+                            floor (paint_tool->last_coords.y) + 0.5,
+                            floor (paint_tool->cur_coords.x) + 0.5,
+                            floor (paint_tool->cur_coords.y) + 0.5,
                             TRUE);
 }
 
@@ -867,8 +867,8 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 
   context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
 
-  paint_tool->curx = x;
-  paint_tool->cury = y;
+  paint_tool->cur_coords.x = x;
+  paint_tool->cur_coords.y = y;
 
 #ifdef __GNUC__
 #warning (FIX non-gui paint tools)
@@ -877,9 +877,13 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
   /* Set up some defaults for non-gui use */
   if (paint_tool == &non_gui_paint_tool)
     {
-      paint_tool->startpressure = paint_tool->lastpressure = paint_tool->curpressure = 0.5;
-      paint_tool->startxtilt = paint_tool->lastxtilt = paint_tool->curxtilt = 0;
-      paint_tool->startytilt = paint_tool->lastytilt = paint_tool->curytilt = 0;
+      paint_tool->cur_coords.pressure = 1.0;
+      paint_tool->cur_coords.xtilt    = 0.5;
+      paint_tool->cur_coords.ytilt    = 0.5;
+      paint_tool->cur_coords.wheel    = 0.5;
+
+      paint_tool->start_coords = paint_tool->cur_coords;
+      paint_tool->last_coords  = paint_tool->cur_coords;
     }
 #endif
 
@@ -922,8 +926,8 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 				   gimp_drawable_height (drawable), 1);
 
   /*  Get the initial undo extents  */
-  paint_tool->x1         = paint_tool->x2 = paint_tool->curx;
-  paint_tool->y1         = paint_tool->y2 = paint_tool->cury;
+  paint_tool->x1         = paint_tool->x2 = paint_tool->cur_coords.x;
+  paint_tool->y1         = paint_tool->y2 = paint_tool->cur_coords.y;
   paint_tool->distance   = 0.0;
   paint_tool->pixel_dist = 0.0;
 
@@ -935,8 +939,7 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 			     GimpDrawable  *drawable)
 {
   GimpBrush   *current_brush;
-  GimpVector2  delta;
-  gdouble      dpressure, dxtilt, dytilt;
+  GimpCoords   delta;
   /*   double spacing; */
   /*   double lastscale, curscale; */
   gdouble n;
@@ -950,30 +953,36 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
   gdouble xd, yd;
   gdouble mag;
 
-  delta.x   = paint_tool->curx        - paint_tool->lastx;
-  delta.y   = paint_tool->cury        - paint_tool->lasty;
-  dpressure = paint_tool->curpressure - paint_tool->lastpressure;
-  dxtilt    = paint_tool->curxtilt    - paint_tool->lastxtilt;
-  dytilt    = paint_tool->curytilt    - paint_tool->lastytilt;
+  delta.x        = paint_tool->cur_coords.x        - paint_tool->last_coords.x;
+  delta.y        = paint_tool->cur_coords.y        - paint_tool->last_coords.y;
+  delta.pressure = paint_tool->cur_coords.pressure - paint_tool->last_coords.pressure;
+  delta.xtilt    = paint_tool->cur_coords.xtilt    - paint_tool->last_coords.xtilt;
+  delta.ytilt    = paint_tool->cur_coords.ytilt    - paint_tool->last_coords.ytilt;
+  delta.wheel    = paint_tool->cur_coords.wheel    - paint_tool->last_coords.wheel;
 
   /* return if there has been no motion */
-  if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
+  if (! delta.x &&
+      ! delta.y &&
+      ! delta.pressure &&
+      ! delta.xtilt &&
+      ! delta.ytilt &&
+      ! delta.wheel)
     return;
 
   /* calculate the distance traveled in the coordinate space of the brush */
   mag = gimp_vector2_length (&(paint_tool->brush->x_axis));
-  xd  = gimp_vector2_inner_product (&delta,
+  xd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
 				    &(paint_tool->brush->x_axis)) / (mag*mag);
 
   mag = gimp_vector2_length (&(paint_tool->brush->y_axis));
-  yd  = gimp_vector2_inner_product (&delta,
+  yd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
 				    &(paint_tool->brush->y_axis)) / (mag*mag);
 
   dist    = 0.5 * sqrt (xd*xd + yd*yd);
   total   = dist + paint_tool->distance;
   initial = paint_tool->distance;
 
-  pixel_dist    = gimp_vector2_length (&delta);
+  pixel_dist    = gimp_vector2_length ((GimpVector2 *) &delta);
   pixel_initial = paint_tool->pixel_dist;
 
   /*  FIXME: need to adapt the spacing to the size  */
@@ -988,16 +997,24 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 
       paint_tool->distance += left;
 
-      if (paint_tool->distance <= (total+EPSILON))
+      if (paint_tool->distance <= (total + EPSILON))
 	{
 	  t = (paint_tool->distance - initial) / dist;
 
-	  paint_tool->curx        = paint_tool->lastx + delta.x * t;
-	  paint_tool->cury        = paint_tool->lasty + delta.y * t;
-	  paint_tool->pixel_dist  = pixel_initial + pixel_dist * t;
-	  paint_tool->curpressure = paint_tool->lastpressure + dpressure * t;
-	  paint_tool->curxtilt    = paint_tool->lastxtilt + dxtilt * t;
-	  paint_tool->curytilt    = paint_tool->lastytilt + dytilt * t;
+	  paint_tool->cur_coords.x        = (paint_tool->last_coords.x +
+                                             delta.x * t);
+	  paint_tool->cur_coords.y        = (paint_tool->last_coords.y +
+                                             delta.y * t);
+	  paint_tool->cur_coords.pressure = (paint_tool->last_coords.pressure +
+                                             delta.pressure * t);
+	  paint_tool->cur_coords.xtilt    = (paint_tool->last_coords.xtilt +
+                                             delta.xtilt * t);
+	  paint_tool->cur_coords.ytilt    = (paint_tool->last_coords.ytilt +
+                                             delta.ytilt * t);
+	  paint_tool->cur_coords.wheel    = (paint_tool->last_coords.wheel +
+                                             delta.ytilt * t);
+
+	  paint_tool->pixel_dist = pixel_initial + pixel_dist * t;
 
 	  /*  save the current brush  */
 	  current_brush = paint_tool->brush;
@@ -1019,13 +1036,21 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 	}
     }
 
-  paint_tool->distance    = total;
-  paint_tool->pixel_dist  = pixel_initial + pixel_dist;
-  paint_tool->curx        = paint_tool->lastx + delta.x;
-  paint_tool->cury        = paint_tool->lasty + delta.y;
-  paint_tool->curpressure = paint_tool->lastpressure + dpressure;
-  paint_tool->curxtilt    = paint_tool->lastxtilt + dxtilt;
-  paint_tool->curytilt    = paint_tool->lastytilt + dytilt;
+  paint_tool->cur_coords.x        = (paint_tool->last_coords.x +
+                                     delta.x);
+  paint_tool->cur_coords.y        = (paint_tool->last_coords.y +
+                                     delta.y);
+  paint_tool->cur_coords.pressure = (paint_tool->last_coords.pressure +
+                                     delta.pressure);
+  paint_tool->cur_coords.xtilt    = (paint_tool->last_coords.xtilt +
+                                     delta.xtilt);
+  paint_tool->cur_coords.ytilt    = (paint_tool->last_coords.ytilt +
+                                     delta.ytilt);
+  paint_tool->cur_coords.wheel    = (paint_tool->last_coords.wheel +
+                                     delta.wheel);
+
+  paint_tool->distance   = total;
+  paint_tool->pixel_dist = pixel_initial + pixel_dist;
 }
 
 void
@@ -1051,11 +1076,7 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
   pu = g_new0 (PaintUndo, 1);
   pu->tool_ID      = GIMP_TOOL (paint_tool)->ID;
   pu->tool_type    = G_TYPE_FROM_CLASS (G_OBJECT_GET_CLASS (paint_tool));
-  pu->lastx        = paint_tool->startx;
-  pu->lasty        = paint_tool->starty;
-  pu->lastpressure = paint_tool->startpressure;
-  pu->lastxtilt    = paint_tool->startxtilt;
-  pu->lastytilt    = paint_tool->startytilt;
+  pu->last_coords  = paint_tool->start_coords;
 
   /*  Push a paint undo  */
   undo_push_paint (gimage, pu);
@@ -1144,8 +1165,8 @@ gimp_paint_tool_get_paint_area (GimpPaintTool *paint_tool,
 				   &bwidth, &bheight);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (gint) floor (paint_tool->curx) - (bwidth  >> 1);
-  y = (gint) floor (paint_tool->cury) - (bheight >> 1);
+  x = (gint) floor (paint_tool->cur_coords.x) - (bwidth  >> 1);
+  y = (gint) floor (paint_tool->cur_coords.y) - (bheight >> 1);
 
   dwidth  = gimp_drawable_width  (drawable);
   dheight = gimp_drawable_height (drawable);
@@ -1640,15 +1661,17 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
     {
     case SOFT:
       mask = gimp_paint_tool_subsample_mask (mask,
-					     paint_tool->curx, paint_tool->cury);
+					     paint_tool->cur_coords.x,
+                                             paint_tool->cur_coords.y);
       break;
     case HARD:
       mask = gimp_paint_tool_solidify_mask (mask);
       break;
     case PRESSURE:
       mask = gimp_paint_tool_pressurize_mask (mask,
-					      paint_tool->curx, paint_tool->cury,
-					      paint_tool->curpressure);
+					      paint_tool->cur_coords.x,
+                                              paint_tool->cur_coords.y,
+					      paint_tool->cur_coords.pressure);
       break;
     default:
       break;
@@ -1874,8 +1897,8 @@ brush_to_canvas_tiles (GimpPaintTool *paint_tool,
 		     canvas_buf->x, canvas_buf->y,
 		     canvas_buf->width, canvas_buf->height, TRUE);
 
-  x = (gint) floor (paint_tool->curx) - (brush_mask->width  >> 1);
-  y = (gint) floor (paint_tool->cury) - (brush_mask->height >> 1);
+  x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1903,8 +1926,8 @@ brush_to_canvas_buf (GimpPaintTool *paint_tool,
   gint        xoff;
   gint        yoff;
 
-  x = (gint) floor (paint_tool->curx) - (brush_mask->width  >> 1);
-  y = (gint) floor (paint_tool->cury) - (brush_mask->height >> 1);
+  x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1947,8 +1970,8 @@ paint_to_canvas_tiles (GimpPaintTool *paint_tool,
 		     canvas_buf->x, canvas_buf->y,
 		     canvas_buf->width, canvas_buf->height, TRUE);
 
-  x = (gint) floor (paint_tool->curx) - (brush_mask->width  >> 1);
-  y = (gint) floor (paint_tool->cury) - (brush_mask->height >> 1);
+  x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1992,8 +2015,8 @@ paint_to_canvas_buf (GimpPaintTool *paint_tool,
   gint xoff;
   gint yoff;
 
-  x = (gint) floor (paint_tool->curx) - (brush_mask->width  >> 1);
-  y = (gint) floor (paint_tool->cury) - (brush_mask->height >> 1);
+  x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -2146,8 +2169,8 @@ gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *paint_tool,
    * gimp_paint_tool_get_paint_area.  Ugly to have to do this here, too.
    */
 
-  ulx = (gint) floor (paint_tool->curx) - (pixmap_mask->width  >> 1);
-  uly = (gint) floor (paint_tool->cury) - (pixmap_mask->height >> 1);
+  ulx = (gint) floor (paint_tool->cur_coords.x) - (pixmap_mask->width  >> 1);
+  uly = (gint) floor (paint_tool->cur_coords.y) - (pixmap_mask->height >> 1);
 
   offsetx = area->x - ulx;
   offsety = area->y - uly;

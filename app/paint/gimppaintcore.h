@@ -65,23 +65,9 @@ struct _GimpPaintTool
 {
   GimpDrawTool    parent_instance;
 
-  gdouble         startx;        /*  starting x coord           */
-  gdouble         starty;        /*  starting y coord           */
-  gdouble         startpressure; /*  starting pressure          */
-  gdouble         startxtilt;    /*  starting xtilt             */
-  gdouble         startytilt;    /*  starting ytilt             */
-
-  gdouble         curx;          /*  current x coord            */
-  gdouble         cury;          /*  current y coord            */
-  gdouble         curpressure;   /*  current pressure           */
-  gdouble         curxtilt;      /*  current xtilt              */
-  gdouble         curytilt;      /*  current ytilt              */
-
-  gdouble         lastx;         /*  last x coord               */
-  gdouble         lasty;         /*  last y coord               */
-  gdouble         lastpressure;  /*  last pressure              */
-  gdouble         lastxtilt;     /*  last xtilt                 */
-  gdouble         lastytilt;     /*  last ytilt                 */
+  GimpCoords      start_coords;  /*  starting coords            */
+  GimpCoords      cur_coords;    /*  current coords             */
+  GimpCoords      last_coords;   /*  last coords                */
 
   gint            state;         /*  state of buttons and keys  */
 
@@ -116,14 +102,10 @@ typedef struct _PaintUndo PaintUndo;
 
 struct _PaintUndo
 {
-  gint     tool_ID;
-  GType    tool_type;
+  gint        tool_ID;
+  GType       tool_type;
 
-  gdouble  lastx;
-  gdouble  lasty;
-  gdouble  lastpressure;
-  gdouble  lastxtilt;
-  gdouble  lastytilt;
+  GimpCoords  last_coords;
 };
 
 

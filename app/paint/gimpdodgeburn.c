@@ -377,7 +377,7 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
     return;
 
   if (pressure_options->size)
-    scale = paint_tool->curpressure;
+    scale = paint_tool->cur_coords.pressure;
   else
     scale = 1.0;
 
@@ -442,7 +442,7 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
     255 * gimp_context_get_opacity (gimp_get_current_context (gimage->gimp));
 
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_tool->curpressure;
+    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
 
   /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
   gimp_paint_tool_replace_canvas (paint_tool, drawable, 
@@ -582,20 +582,20 @@ gimp_dodgeburn_tool_non_gui (GimpDrawable     *drawable,
 			             non_gui_lut,
 			             drawable);
 
-      paint_tool->startx = paint_tool->lastx = stroke_array[0];
-      paint_tool->starty = paint_tool->lasty = stroke_array[1];
+      paint_tool->start_coords.x = paint_tool->last_coords.x = stroke_array[0];
+      paint_tool->start_coords.y = paint_tool->last_coords.y = stroke_array[1];
 
       gimp_dodgeburn_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  paint_tool->curx = stroke_array[i * 2 + 0];
-	  paint_tool->cury = stroke_array[i * 2 + 1];
+	  paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
+	  paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
 
 	  gimp_paint_tool_interpolate (paint_tool, drawable);
 
-	  paint_tool->lastx = paint_tool->curx;
-	  paint_tool->lasty = paint_tool->cury;
+	  paint_tool->last_coords.x = paint_tool->cur_coords.x;
+	  paint_tool->last_coords.y = paint_tool->cur_coords.y;
 	}
 
       gimp_paint_tool_finish (paint_tool, drawable);

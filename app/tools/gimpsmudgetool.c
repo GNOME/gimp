@@ -234,8 +234,8 @@ gimp_smudge_tool_nonclipped_painthit_coords (GimpPaintTool *paint_tool,
 					     gint          *h)
 {
   /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x = (gint) paint_tool->curx - paint_tool->brush->mask->width/2 - 1;
-  *y = (gint) paint_tool->cury - paint_tool->brush->mask->height/2 - 1;
+  *x = (gint) paint_tool->cur_coords.x - paint_tool->brush->mask->width/2 - 1;
+  *y = (gint) paint_tool->cur_coords.y - paint_tool->brush->mask->height/2 - 1;
   *w = paint_tool->brush->mask->width + 2;
   *h = paint_tool->brush->mask->height + 2;
 }
@@ -282,8 +282,10 @@ gimp_smudge_tool_start (GimpPaintTool *paint_tool,
 
   if (was_clipped)
     do_fill = gimp_drawable_get_color_at (drawable,
-                 CLAMP ((gint) paint_tool->curx, 0, gimp_drawable_width (drawable) - 1),
-                 CLAMP ((gint) paint_tool->cury, 0, gimp_drawable_height (drawable) - 1));
+                 CLAMP ((gint) paint_tool->cur_coords.x,
+                        0, gimp_drawable_width (drawable) - 1),
+                 CLAMP ((gint) paint_tool->cur_coords.y,
+                        0, gimp_drawable_height (drawable) - 1));
 
   gimp_smudge_tool_allocate_accum_buffer (w, h, 
 					  gimp_drawable_bytes (drawable), 
@@ -380,7 +382,7 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
-    rate = MIN (smudge_rate / 100.0 * paint_tool->curpressure * 2.0, 1.0);
+    rate = MIN (smudge_rate / 100.0 * paint_tool->cur_coords.pressure * 2.0, 1.0);
   else
     rate = smudge_rate / 100.0;
 
@@ -433,7 +435,7 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 
   opacity = 255 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_tool->curpressure;
+    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
 
   /*Replace the newly made paint area to the gimage*/ 
   gimp_paint_tool_replace_canvas (paint_tool, drawable, 
@@ -483,22 +485,22 @@ gimp_smudge_tool_non_gui (GimpDrawable *drawable,
 
       non_gui_rate = rate;
 
-      paint_tool->curx = paint_tool->startx = 
-	paint_tool->lastx = stroke_array[0];
-      paint_tool->cury = paint_tool->starty = 
-	paint_tool->lasty = stroke_array[1];
+      paint_tool->cur_coords.x = paint_tool->start_coords.x = 
+	paint_tool->last_coords.x = stroke_array[0];
+      paint_tool->cur_coords.y = paint_tool->start_coords.y = 
+	paint_tool->last_coords.y = stroke_array[1];
 
       gimp_smudge_tool_paint (paint_tool, drawable, 0); 
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  paint_tool->curx = stroke_array[i * 2 + 0];
-	  paint_tool->cury = stroke_array[i * 2 + 1];
+	  paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
+	  paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
 
 	  gimp_paint_tool_interpolate (paint_tool, drawable);
 
-	  paint_tool->lastx = paint_tool->curx;
-	  paint_tool->lasty = paint_tool->cury;
+	  paint_tool->last_coords.x = paint_tool->cur_coords.x;
+	  paint_tool->last_coords.y = paint_tool->cur_coords.y;
 	}
 
       gimp_paint_tool_finish (paint_tool, drawable);

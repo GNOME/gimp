@@ -1411,7 +1411,7 @@ undo_pop_paint (GimpImage *gimage,
   GimpTool      *active_tool;
   GimpPaintTool *pt;
   PaintUndo     *pu;
-  gdouble        tmp;
+  GimpCoords     tmp_coords;
 
   active_tool = tool_manager_get_active (gimage->gimp);
 
@@ -1427,25 +1427,9 @@ undo_pop_paint (GimpImage *gimage,
     return TRUE;
 
   /*  swap the paint core information  */
-  tmp = pt->lastx;
-  pt->lastx = pu->lastx;
-  pu->lastx = tmp;
-
-  tmp = pt->lasty;
-  pt->lasty = pu->lasty;
-  pu->lasty = tmp;
-
-  tmp = pt->lastpressure;
-  pt->lastpressure = pu->lastpressure;
-  pu->lastpressure = tmp;
-
-  tmp = pt->lastxtilt;
-  pt->lastxtilt = pu->lastxtilt;
-  pu->lastxtilt = tmp;
-
-  tmp = pt->lastytilt;
-  pt->lastytilt = pu->lastytilt;
-  pu->lastytilt = tmp;
+  tmp_coords = pt->last_coords;
+  pt->last_coords = pu->last_coords;
+  pu->last_coords = tmp_coords;
 
   return TRUE;
 }

@@ -299,10 +299,10 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
       break;
 
     case MOTION_PAINT:
-      x1 = paint_tool->curx;
-      y1 = paint_tool->cury;
-      x2 = paint_tool->lastx;
-      y2 = paint_tool->lasty;
+      x1 = paint_tool->cur_coords.x;
+      y1 = paint_tool->cur_coords.y;
+      x2 = paint_tool->last_coords.x;
+      y2 = paint_tool->last_coords.y;
 
       /*  If the control key is down, move the src target and return */
       if (paint_tool->state & GDK_CONTROL_MASK)
@@ -344,8 +344,8 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	{
 	  the_src_gdisp = gdisp;
 	  clone_set_src_drawable(drawable);
-	  src_x = paint_tool->curx;
-	  src_y = paint_tool->cury;
+	  src_x = paint_tool->cur_coords.x;
+	  src_y = paint_tool->cur_coords.y;
 	  first = TRUE;
 	}
       else if (clone_options->aligned == ALIGN_NO)
@@ -508,7 +508,7 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
   context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
-    scale = paint_tool->curpressure;
+    scale = paint_tool->cur_coords.pressure;
   else
     scale = 1.0;
 
@@ -626,7 +626,7 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
 
   opacity = 255.0 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
-    opacity = opacity * 2.0 * paint_tool->curpressure;
+    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_tool_paste_canvas (paint_tool, drawable, 
@@ -774,20 +774,20 @@ gimp_clone_tool_non_gui (GimpDrawable *drawable,
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
-      non_gui_offset_x = (int) (src_x - non_gui_paint_core.startx);
-      non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
+      non_gui_offset_x = (int) (src_x - non_gui_paint_core.start_coords.x);
+      non_gui_offset_y = (int) (src_y - non_gui_paint_core.start_coords.y);
 
       clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core.cur_coords.x = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cur_coords.y = stroke_array[i * 2 + 1];
 
 	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core.last_coords.x = non_gui_paint_core.cur_coords.x;
+	  non_gui_paint_core.last_coords.y = non_gui_paint_core.cur_coords.y;
 	}
 
       /* Finish the painting */

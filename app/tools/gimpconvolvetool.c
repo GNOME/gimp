@@ -342,7 +342,7 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
     return;
 
   if (pressure_options->size)
-    scale = paint_tool->curpressure;
+    scale = paint_tool->cur_coords.pressure;
   else
     scale = 1.0;
 
@@ -366,19 +366,19 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
   destPR.data      = temp_buf_data (area);
 
   if (pressure_options->rate)
-    rate = rate * 2.0 * paint_tool->curpressure;
+    rate = rate * 2.0 * paint_tool->cur_coords.pressure;
 
   calculate_matrix (type, rate); 
     
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
 
-  if ((marginx = (gint) paint_tool->curx - paint_tool->brush->mask->width / 2 - 1) != area->x)
+  if ((marginx = (gint) paint_tool->cur_coords.x - paint_tool->brush->mask->width / 2 - 1) != area->x)
     area_hclip = CONVOLVE_NCLIP;
   else if ((marginx = area->width - paint_tool->brush->mask->width - 2) != 0)
     area_hclip = CONVOLVE_PCLIP;
 
-  if ((marginy = (gint) paint_tool->cury - paint_tool->brush->mask->height / 2 - 1) != area->y)
+  if ((marginy = (gint) paint_tool->cur_coords.y - paint_tool->brush->mask->height / 2 - 1) != area->y)
     area_vclip = CONVOLVE_NCLIP;
   else if ((marginy = area->height - paint_tool->brush->mask->height - 2) != 0)
     area_vclip = CONVOLVE_PCLIP;
@@ -453,8 +453,10 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
 
       fillcolor = gimp_drawable_get_color_at
 	(drawable,
-	 CLAMP ((gint) paint_tool->curx, 0, gimp_drawable_width (drawable) - 1),
-	 CLAMP ((gint) paint_tool->cury, 0, gimp_drawable_height (drawable) - 1));
+	 CLAMP ((gint) paint_tool->cur_coords.x,
+                0, gimp_drawable_width (drawable) - 1),
+	 CLAMP ((gint) paint_tool->cur_coords.y,
+                0, gimp_drawable_height (drawable) - 1));
 
       marginx *= (marginx < 0) ? -1 : 0;
       marginy *= (marginy < 0) ? -1 : 0;
@@ -657,13 +659,13 @@ convolve_non_gui (GimpDrawable *drawable,
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core.cur_coords.x = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cur_coords.y = stroke_array[i * 2 + 1];
 
 	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core.last_coords.x = non_gui_paint_core.cur_coords.x;
+	  non_gui_paint_core.last_coords.y = non_gui_paint_core.cur_coords.y;
 	}
 
       paint_core_finish (&non_gui_paint_core, drawable, -1);

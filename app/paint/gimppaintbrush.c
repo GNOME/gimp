@@ -273,7 +273,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
   context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
-    scale = paint_tool->curpressure;
+    scale = paint_tool->cur_coords.pressure;
   else
     scale = 1.0;
 
@@ -307,7 +307,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 
 	  if (pressure_options->color)
 	    gimp_gradient_get_color_at (gradient,
-					paint_tool->curpressure,
+					paint_tool->cur_coords.pressure,
                                         &color);
 	  else
 	    gimp_paint_tool_get_color_from_gradient (paint_tool,
@@ -351,7 +351,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
       opacity = (gdouble) temp_blend;
 
       if (pressure_options->opacity)
-	opacity = opacity * 2.0 * paint_tool->curpressure;
+	opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
 
       gimp_paint_tool_paste_canvas (paint_tool, drawable,
 				    MIN (opacity, 255),
@@ -389,20 +389,20 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 			     stroke_array[0],
 			     stroke_array[1]))
     {
-      paint_tool->startx = paint_tool->lastx = stroke_array[0];
-      paint_tool->starty = paint_tool->lasty = stroke_array[1];
+      paint_tool->start_coords.x = paint_tool->last_coords.x = stroke_array[0];
+      paint_tool->start_coords.y = paint_tool->last_coords.y = stroke_array[1];
 
       gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  paint_tool->curx = stroke_array[i * 2 + 0];
-	  paint_tool->cury = stroke_array[i * 2 + 1];
+	  paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
+	  paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
 
 	  gimp_paint_tool_interpolate (paint_tool, drawable);
 
-	  paint_tool->lastx = paint_tool->curx;
-	  paint_tool->lasty = paint_tool->cury;
+	  paint_tool->last_coords.x = paint_tool->cur_coords.x;
+	  paint_tool->last_coords.y = paint_tool->cur_coords.y;
 	}
 
       gimp_paint_tool_finish (paint_tool, drawable);
@@ -441,20 +441,20 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
       non_gui_gradient_options.gradient_type   = LOOP_TRIANGLE;
       non_gui_incremental                      = method;
 
-      paint_tool->startx = paint_tool->lastx = stroke_array[0];
-      paint_tool->starty = paint_tool->lasty = stroke_array[1];
+      paint_tool->start_coords.x = paint_tool->last_coords.x = stroke_array[0];
+      paint_tool->start_coords.y = paint_tool->last_coords.y = stroke_array[1];
 
       gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
        {
-         paint_tool->curx = stroke_array[i * 2 + 0];
-         paint_tool->cury = stroke_array[i * 2 + 1];
+         paint_tool->cur_coords.x = stroke_array[i * 2 + 0];
+         paint_tool->cur_coords.y = stroke_array[i * 2 + 1];
 
          gimp_paint_tool_interpolate (paint_tool, drawable);
 
-	 paint_tool->lastx = paint_tool->curx;
-         paint_tool->lasty = paint_tool->cury;
+	 paint_tool->last_coords.x = paint_tool->cur_coords.x;
+         paint_tool->last_coords.y = paint_tool->cur_coords.y;
        }
 
       gimp_paint_tool_finish (paint_tool, drawable);
