@@ -1,5 +1,10 @@
 2003-11-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am (libgimpwidgets_1_3_la_LIBADD): added
+	libgimpbase since libgimpwidgets now depends on it.
+
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpobject.[ch]: exposed gimp_object_name_free() and
 	added documentation.
 

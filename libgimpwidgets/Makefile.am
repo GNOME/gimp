@@ -159,7 +159,11 @@ libgimpwidgets_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_1_3_la_LIBADD = $(libgimpcolor) $(GTK_LIBS) $(libm)
+libgimpwidgets_1_3_la_LIBADD = \
+	$(libgimpbase)	\
+	$(libgimpcolor) \
+	$(GTK_LIBS) 	\
+	$(libm)
 
 libgimpwidgets_1_3_la_DEPENDENCIES = $(gimpwidgets_def)
 
