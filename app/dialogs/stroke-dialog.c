@@ -112,6 +112,8 @@ stroke_dialog_new (GimpItem    *item,
 
                                      NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (stroke_dialog_response),
                     dialog);
@@ -119,8 +121,6 @@ stroke_dialog_new (GimpItem    *item,
   g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
   g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-desc", desc,
                           (GDestroyNotify) g_object_unref);
-
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

@@ -46,11 +46,10 @@
 
 typedef struct
 {
+  GtkWidget              *dialog;
+
   GimpImage              *gimage;
   GimpProgress           *progress;
-
-  GtkWidget              *shell;
-
   GimpContext            *context;
   GimpContainer          *container;
   GimpPalette            *custom_palette;
@@ -117,7 +116,7 @@ convert_dialog_new (GimpImage    *gimage,
   dialog->num_colors   = saved_num_colors;
   dialog->palette_type = saved_palette_type;
 
-  dialog->shell =
+  dialog->dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("Indexed Color Conversion"),
                               "gimp-image-convert-indexed",
@@ -132,29 +131,30 @@ convert_dialog_new (GimpImage    *gimage,
 
                               NULL);
 
-  g_signal_connect (dialog->shell, "response",
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog->dialog),
+                     (GWeakNotify) g_free, dialog);
+
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (convert_dialog_response),
                     dialog);
-
-  g_object_weak_ref (G_OBJECT (dialog->shell),
-                     (GWeakNotify) g_free,
-                     dialog);
 
   palette_box = convert_dialog_palette_box (dialog);
 
   if (dialog->context)
-    g_object_weak_ref (G_OBJECT (dialog->shell),
+    g_object_weak_ref (G_OBJECT (dialog->dialog),
                        (GWeakNotify) g_object_unref,
                        dialog->context);
 
   if (dialog->container)
-    g_object_weak_ref (G_OBJECT (dialog->shell),
+    g_object_weak_ref (G_OBJECT (dialog->dialog),
                        (GWeakNotify) g_object_unref,
                        dialog->container);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->shell)->vbox),
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->dialog)->vbox),
 		     main_vbox);
   gtk_widget_show (main_vbox);
 
@@ -255,7 +255,7 @@ convert_dialog_new (GimpImage    *gimage,
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &dialog->alpha_dither);
 
-  return dialog->shell;
+  return dialog->dialog;
 }
 
 
@@ -298,7 +298,7 @@ convert_dialog_response (GtkWidget     *widget,
       saved_palette      = dialog->custom_palette;
     }
 
-  gtk_widget_destroy (dialog->shell);
+  gtk_widget_destroy (dialog->dialog);
 }
 
 static GtkWidget *

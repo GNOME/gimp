@@ -69,6 +69,8 @@ image_merge_layers_dialog_new (GimpImage     *image,
 
                               NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_free, dialog);
 

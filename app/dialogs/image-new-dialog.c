@@ -103,17 +103,16 @@ image_new_dialog_new (Gimp *gimp)
 
                                     NULL);
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (image_new_response),
-                    dialog);
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_set_data_full (G_OBJECT (dialog->dialog),
                           "gimp-image-new-dialog", dialog,
                           (GDestroyNotify) g_free);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+  g_signal_connect (dialog->dialog, "response",
+                    G_CALLBACK (image_new_response),
+                    dialog);
 
-  /*  vbox holding the rest of the dialog  */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox),
