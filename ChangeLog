@@ -1,5 +1,9 @@
 2004-11-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/xpm.c: just some minor code cleanup.
+
+2004-11-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.c
 	* plug-ins/gfig/gfig-style.c: combined two "Stroke" labels into a
 	single one.

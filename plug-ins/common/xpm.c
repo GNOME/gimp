@@ -425,8 +425,7 @@ parse_colors (XpmImage  *xpm_image)
       else if (xpm_color->m_color)
         colorspec = xpm_color->m_color;
 
-      /* parse if it's not transparent.  the assumption is that
-         g_new will memset the buffer to zeros */
+      /* parse if it's not transparent */
       if (strcmp (colorspec, "None") != 0)
         {
 #ifndef XPM_NO_X
@@ -618,12 +617,9 @@ save_image (const gchar *filename,
   height   = drawable->height;
 
   /* allocate buffer making the assumption that ibuff is 32 bit aligned... */
-  if ((ibuff = g_new (guint, width * height)) == NULL)
-    goto cleanup;
+  ibuff = g_new (guint, width * height);
 
-  if ((hash = g_hash_table_new ((GHashFunc) rgbhash,
-                                (GCompareFunc) compare)) == NULL)
-    goto cleanup;
+  hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
   /* put up a progress bar */
   {
@@ -656,13 +652,13 @@ save_image (const gchar *filename,
       data = buffer;
 
       /* process each pixel row */
-      for (j=0; j<scanlines; j++)
+      for (j = 0; j < scanlines; j++)
         {
           /* go to the start of this row in each image */
           guint *idata = ibuff + (i+j) * width;
 
           /* do each pixel in the row */
-          for (k=0; k<width; k++)
+          for (k = 0; k < width; k++)
             {
               rgbkey *key = g_new (rgbkey, 1);
               guchar  a;
@@ -762,7 +758,6 @@ save_image (const gchar *filename,
   rc = (XpmWriteFileFromXpmImage ((char *) filename,
                                   image, NULL) == XpmSuccess);
 
- cleanup:
   /* clean up resources */
   gimp_drawable_detach (drawable);
 
