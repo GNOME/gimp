@@ -1,5 +1,13 @@
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/bz2.c: make it behave more like the gzip plug-in
+	and attempt to load and save files even if there's no sensible
+	extension.
+
+	* plug-ins/common/gz.c: minor string change for consistency.
+
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig.c: applied an old patch from Carl Adams that
 	was updated for 1.3 by Tino Schwarze. The patch fixes the isometric
 	grid so that its mathematical properties can be exploited (#34825).

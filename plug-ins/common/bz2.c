@@ -68,8 +68,8 @@ static GimpPDBStatusType save_image  (const gchar   *filename,
 				      gint32         drawable_ID,
 				      gint32         run_mode);
 
-static gboolean   valid_file     (const gchar       *filename);
-static gchar    * find_extension (const gchar       *filename);
+static gboolean      valid_file     (const gchar    *filename);
+static const gchar * find_extension (const gchar    *filename);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -216,7 +216,7 @@ spawn_bz (gchar *filename,
 {
   FILE *f;
   gint tfd;
-  
+
   if (!(f = fopen (filename,"wb")))
     {
       g_message ("fopen() failed: %s", g_strerror (errno));
@@ -243,7 +243,7 @@ spawn_bz (gchar *filename,
       g_message ("spawn() failed: %s", g_strerror (errno));
       return -1;
     }
-  return 0;  
+  return 0;
 }
 #endif
 
@@ -253,27 +253,26 @@ save_image (const gchar *filename,
 	    gint32       drawable_ID,
 	    gint32       run_mode)
 {
-  FILE  *f;
-  gchar *ext;
-  gchar *tmpname;
-  gint   pid;
-  gint   wpid;
-  gint   process_status;
+  FILE        *f;
+  const gchar *ext;
+  gchar       *tmpname;
+  gint         pid;
+  gint         wpid;
+  gint         process_status;
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("Can't open bzip2ed file without a "
-		   "sensible extension"));
-      return GIMP_PDB_CALLING_ERROR;
+      g_message (_("No sensible extension, saving as compressed XCF."));
+      ext = ".xcf";
     }
 
   /* get a temp name with the right extension and save into it. */
   tmpname = gimp_temp_name (ext + 1);
-  
+
   if (! (gimp_file_save (run_mode,
 			 image_ID,
 			 drawable_ID,
-			 tmpname, 
+			 tmpname,
 			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
@@ -340,18 +339,18 @@ load_image (const gchar       *filename,
 	    gint32             run_mode,
 	    GimpPDBStatusType *status /* return value */)
 {
-  gint32  image_ID;
-  gchar  *ext;
-  gchar  *tmpname;
-  gint    pid;
-  gint    wpid;
-  gint    process_status;
+  gint32       image_ID;
+  const gchar *ext;
+  gchar       *tmpname;
+  gint         pid;
+  gint         wpid;
+  gint         process_status;
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("Can't open bzip2ed file without a sensible extension"));
-      *status = GIMP_PDB_CALLING_ERROR;
-      return -1;
+      g_message (_("No sensible extension, "
+                   "attempting to load with file magic."));
+      ext = ".foo";
     }
 
   /* find a temp name */
@@ -388,7 +387,7 @@ load_image (const gchar       *filename,
     }
   else  /* parent process */
 #else /* __EMX__ */
-  if (spawn_bz (tmpname, filename,"-cfd", &pid) == -1) 
+  if (spawn_bz (tmpname, filename,"-cfd", &pid) == -1)
     {
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
@@ -412,7 +411,7 @@ load_image (const gchar       *filename,
   /* now that we un-bzip2ed it, load the temp file */
 
   image_ID = gimp_file_load (run_mode, tmpname, tmpname);
-  
+
   unlink (tmpname);
   g_free (tmpname);
 
@@ -441,7 +440,7 @@ valid_file (const gchar* filename)
     return FALSE;
 }
 
-static gchar *
+static const gchar *
 find_extension (const gchar* filename)
 {
   gchar *filename_copy;

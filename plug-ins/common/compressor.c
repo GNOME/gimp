@@ -318,7 +318,7 @@ save_image (const gchar *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("No sensible extension, saving as gzip'd xcf"));
+      g_message (_("No sensible extension, saving as compressed XCF."));
       ext = ".xcf";
     }
 
@@ -444,7 +444,7 @@ load_image (const gchar       *filename,
   if (NULL == (ext = find_extension (filename)))
     {
       g_message (_("No sensible extension, "
-                   "attempting to load with file magic"));
+                   "attempting to load with file magic."));
       ext = ".foo";
     }
 
