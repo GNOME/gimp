@@ -1,3 +1,11 @@
+2004-07-28  Shlomi Fish <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/brush.c: removed a redundant parameter
+	from one of the internal functions.
+	* plug-ins/gimpressionist/utils.c: Made sure that resources that
+	are selected by the presets will position their list views 
+	accordingly.
+	
 2004-07-28  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: if the check for libtoolize fails, try glibtoolize.

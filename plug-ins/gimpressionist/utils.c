@@ -208,7 +208,17 @@ reselect (GtkWidget *view,
 
       gtk_tree_model_get (model, &iter, 0, &name, -1);
       if (!strcmp(name, fname)) {
+        GtkTreePath *tree_path;
         gtk_tree_selection_select_iter (selection, &iter);
+        tree_path = gtk_tree_model_get_path (model,
+                                             &iter);
+        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view),
+                                      tree_path,
+                                      NULL,
+                                      TRUE,
+                                      0.5,
+                                      0.5);
+        gtk_tree_path_free (tree_path);
         quit = TRUE;
       }
       g_free (name);

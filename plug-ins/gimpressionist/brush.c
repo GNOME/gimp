@@ -346,7 +346,7 @@ update_brush_preview (const gchar *fn)
 static gboolean brush_dont_update = FALSE;
 
 static void
-brush_select (GtkTreeSelection *selection, gpointer data)
+brush_select (GtkTreeSelection *selection)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
@@ -413,7 +413,7 @@ brush_select_file (GtkTreeSelection *selection, gpointer data)
 {
   brush_from_file = 1;
   preset_save_button_set_sensitive (TRUE);
-  brush_select (selection, NULL);
+  brush_select (selection);
 }
 
 static void
@@ -548,7 +548,7 @@ create_brushpage(GtkNotebook *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brushrelief);
 
-  brush_select (selection, NULL);
+  brush_select (selection);
   readdirintolist ("Brushes", view, pcvals.selectedbrush);
 
   /* 
