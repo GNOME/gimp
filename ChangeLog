@@ -1,3 +1,8 @@
+Sun Jun 28 19:32:06 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile_swap.c: Added a mutex on the swapfile to avoid a
+	potential race condition.
+
 Mon Jun 29 03:14:14 EEST 1998  Lauri Alanko  <nether@gimp.org>
 
 

@@ -142,6 +142,10 @@ tile_swap_add (char     *filename,
   SwapFile *swap_file;
   DefSwapFile *def_swap_file;
 
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&swapfile_mutex);
+#endif
+
   if (initialize)
     tile_swap_init ();
 
@@ -167,6 +171,9 @@ tile_swap_add (char     *filename,
 
   g_hash_table_insert (swap_files, &swap_file->swap_num, swap_file);
 
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&swapfile_mutex);
+#endif
   return swap_file->swap_num;
 }
 
@@ -175,12 +182,16 @@ tile_swap_remove (int swap_num)
 {
   SwapFile *swap_file;
 
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&swapfile_mutex);
+#endif
+
   if (initialize)
     tile_swap_init ();
 
   swap_file = g_hash_table_lookup (swap_files, &swap_num);
   if (!swap_file)
-    return;
+    goto out;
 
   g_hash_table_remove (swap_files, &swap_num);
 
@@ -188,6 +199,10 @@ tile_swap_remove (int swap_num)
     close (swap_file->fd);
 
   g_free (swap_file);
+out:
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&swapfile_mutex);
+#endif
 }
 
 void
@@ -223,6 +238,7 @@ tile_swap_compress (int swap_num)
 static void
 tile_swap_init ()
 {
+
   if (initialize)
     {
       initialize = FALSE;
