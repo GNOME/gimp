@@ -107,26 +107,28 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
 static void
 gimp_container_list_view_init (GimpContainerListView *list_view)
 {
-  GtkWidget *scrolled_win;
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win), 
+  list_view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (list_view->scrolled_win), 
                                   GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (list_view), scrolled_win, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (list_view), list_view->scrolled_win,
+		      TRUE, TRUE, 0);
 
   list_view->gtk_list = gtk_list_new ();
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         list_view->gtk_list);
+  gtk_scrolled_window_add_with_viewport
+    (GTK_SCROLLED_WINDOW (list_view->scrolled_win),
+     list_view->gtk_list);
 
   gtk_list_set_selection_mode (GTK_LIST (list_view->gtk_list),
                                GTK_SELECTION_BROWSE);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (list_view->gtk_list),
-     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
+					  (list_view->scrolled_win)));
 
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW
+			  (list_view->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
   gtk_signal_connect_while_alive
@@ -136,7 +138,7 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
      GTK_OBJECT (list_view));
 
   gtk_widget_show (list_view->gtk_list);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_show (list_view->scrolled_win);
 }
 
 static void
@@ -160,6 +162,7 @@ gimp_container_list_view_new (GimpContainer *container,
 {
   GimpContainerListView *list_view;
   GimpContainerView     *view;
+  gint                   window_border;
 
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
@@ -176,9 +179,14 @@ gimp_container_list_view_new (GimpContainer *container,
   view->preview_width  = preview_width;
   view->preview_height = preview_height;
 
+  window_border =
+    GTK_SCROLLED_WINDOW (list_view->scrolled_win)->vscrollbar->requisition.width +
+    GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (list_view->scrolled_win)->klass)->scrollbar_spacing +
+    list_view->scrolled_win->style->klass->xthickness * 4;
+
   gtk_widget_set_usize (list_view->gtk_list->parent,
-			preview_width  * min_items_x,
-			preview_height * min_items_y);
+			(preview_width  + 2) * min_items_x + window_border,
+			(preview_height + 2) * min_items_y + window_border);
 
   gimp_container_view_set_container (view, container);
 
@@ -286,11 +294,33 @@ gimp_container_list_view_select_item (GimpContainerView *view,
 
   if (list_item)
     {
+      GtkAdjustment *adj;
+      gint           item_height;
+      gint           index;
+
+      adj = gtk_scrolled_window_get_vadjustment
+	(GTK_SCROLLED_WINDOW (list_view->scrolled_win));
+
+      item_height = list_item->allocation.height;
+
+      index = gimp_container_get_child_index (view->container,
+					      GIMP_OBJECT (viewable));
+
       gtk_signal_handler_block_by_func (GTK_OBJECT (list_view->gtk_list),
 					gimp_container_list_view_item_selected,
 					list_view);
 
       gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
+
+      if (index * item_height < adj->value)
+	{
+	  gtk_adjustment_set_value (adj, index * item_height);
+	}
+      else if ((index + 1) * item_height > adj->value + adj->page_size)
+	{
+	  gtk_adjustment_set_value (adj,
+				    (index + 1) * item_height - adj->page_size);
+	}
 
       gtk_signal_handler_unblock_by_func (GTK_OBJECT (list_view->gtk_list),
 					  gimp_container_list_view_item_selected,

@@ -113,37 +113,39 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 static void
 gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 {
-  GtkWidget *scrolled_win;
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win), 
+  grid_view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
                                   GTK_POLICY_NEVER,
 				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (grid_view), scrolled_win, TRUE, TRUE, 0);
-
-  /*grid_view->wrap_box = gtk_hwrap_box_new (FALSE);*/
+  gtk_box_pack_start (GTK_BOX (grid_view), grid_view->scrolled_win,
+		      TRUE, TRUE, 0);
 
   grid_view->wrap_box = gimp_constrained_hwrap_box_new (FALSE);
 
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box),
 				 1.0 / 256.0);
 
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         grid_view->wrap_box);
+  gtk_scrolled_window_add_with_viewport
+    (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
+     grid_view->wrap_box);
 
   gtk_widget_set_style
     (grid_view->wrap_box->parent,
      GIMP_CONTAINER_GRID_VIEW_CLASS (GTK_OBJECT (grid_view)->klass)->white_style);
 
   gtk_container_set_focus_vadjustment
-    (GTK_CONTAINER (grid_view->wrap_box),
-    gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+    (GTK_CONTAINER (grid_view->wrap_box->parent),
+    gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
+					 (grid_view->scrolled_win)));
 
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW
+			  (grid_view->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
+  GTK_WIDGET_SET_FLAGS (grid_view->wrap_box->parent, GTK_CAN_FOCUS);
+
   gtk_widget_show (grid_view->wrap_box);
-  gtk_widget_show (scrolled_win);
+  gtk_widget_show (grid_view->scrolled_win);
 }
 
 static void
@@ -167,6 +169,7 @@ gimp_container_grid_view_new (GimpContainer *container,
 {
   GimpContainerGridView *grid_view;
   GimpContainerView     *view;
+  gint                   window_border;
 
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
@@ -183,9 +186,14 @@ gimp_container_grid_view_new (GimpContainer *container,
   view->preview_width  = preview_width;
   view->preview_height = preview_height;
 
-  gtk_widget_set_usize (grid_view->wrap_box->parent,
-			(preview_width  + 2) * min_items_x,
-			(preview_height + 2) * min_items_y);
+  window_border =
+    GTK_SCROLLED_WINDOW (grid_view->scrolled_win)->vscrollbar->requisition.width +
+    GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (grid_view->scrolled_win)->klass)->scrollbar_spacing +
+    grid_view->scrolled_win->style->klass->xthickness * 4;
+
+  gtk_widget_set_usize (grid_view->scrolled_win,
+			(preview_width  + 2) * min_items_x + window_border,
+			(preview_height + 2) * min_items_y + window_border);
 
   gimp_container_view_set_container (view, container);
 
@@ -343,6 +351,31 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 
   if (preview)
     {
+      GtkAdjustment *adj;
+      gint           item_height;
+      gint           index;
+      gint           row;
+
+      adj = gtk_scrolled_window_get_vadjustment
+	(GTK_SCROLLED_WINDOW (grid_view->scrolled_win));
+
+      item_height = GTK_WIDGET (preview)->allocation.height;
+
+      index = gimp_container_get_child_index (view->container,
+                                              GIMP_OBJECT (viewable));
+
+      row = index / GIMP_CONSTRAINED_HWRAP_BOX (grid_view->wrap_box)->columns;
+
+      if (row * item_height < adj->value)
+        {
+          gtk_adjustment_set_value (adj, row * item_height);
+        }
+      else if ((row + 1) * item_height > adj->value + adj->page_size)
+        {
+          gtk_adjustment_set_value (adj,
+                                    (row + 1) * item_height - adj->page_size);
+        }
+
       preview->border_color[0] = 0;
       preview->border_color[1] = 0;
       preview->border_color[2] = 0;

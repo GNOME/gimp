@@ -1379,7 +1379,7 @@ container_view_new (gboolean       list,
 					   context,
 					   preview_width,
 					   preview_height,
-					   4, 4);
+					   5, 5);
     }
   else
     {
@@ -1387,7 +1387,7 @@ container_view_new (gboolean       list,
 					   context,
 					   preview_width,
 					   preview_height,
-					   4, 4);
+					   5, 5);
     }
 
   if (! multi)
@@ -1404,7 +1404,9 @@ container_view_new (gboolean       list,
 				NULL);
 
       gtk_widget_hide (GTK_DIALOG (dialog)->action_area);
+      /*
       gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 1)));
+      */
     }
   else
     {

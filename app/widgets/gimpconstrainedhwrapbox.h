@@ -46,6 +46,9 @@ typedef struct _GimpConstrainedHWrapBoxClass GimpConstrainedHWrapBoxClass;
 struct _GimpConstrainedHWrapBox
 {
   GtkHWrapBox  parent_instance;
+
+  gint         rows;
+  gint         columns;
 };
 
 struct _GimpConstrainedHWrapBoxClass

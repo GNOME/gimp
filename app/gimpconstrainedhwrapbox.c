@@ -77,6 +77,8 @@ gimp_constrained_hwrap_box_class_init (GimpConstrainedHWrapBoxClass *class)
 static void
 gimp_constrained_hwrap_box_init (GimpConstrainedHWrapBox *hwbox)
 {
+  hwbox->rows    = 1;
+  hwbox->columns = 1;
 }
 
 GtkWidget*
@@ -137,7 +139,15 @@ gimp_constrained_hwrap_box_size_request (GtkWidget      *widget,
 	rows++;
 
       requisition->height = (child_height + wbox->vspacing) * rows;
+
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->columns = columns;
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->rows    = rows;
     }
   else if (GTK_WIDGET_CLASS (parent_class)->size_request)
-    GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+    {
+      GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->columns = 1;
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->rows    = 1;
+    }
 }

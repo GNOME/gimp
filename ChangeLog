@@ -1,3 +1,15 @@
+2001-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.c: changed the test dialogs a bit.
+
+	* app/gimpconstrainedhwrapbox.[ch]: should be called
+	GimpHackedWrapBoxForContainerView now ;-)
+
+	* app/gimpcontainergridview.[ch]
+	* app/gimpcontainerlistview.[ch]: fixed the minimal size setting
+	by getting the magic values from the relevan gtk widgets.
+	Scroll to the active item if it not visible.
+
 2001-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimppreview.[ch]: added an (unused) "context" argument

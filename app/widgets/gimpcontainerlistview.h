@@ -36,6 +36,7 @@ struct _GimpContainerListView
 {
   GimpContainerView  parent_instance;
 
+  GtkWidget         *scrolled_win;
   GtkWidget         *gtk_list;
 };
 
