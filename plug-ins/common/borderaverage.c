@@ -39,9 +39,7 @@ static void      run    (gchar      *name,
 			 GimpParam **return_vals);
 
 static void      borderaverage (GimpDrawable *drawable,
-				guchar       *res_r,
-				guchar       *res_g,
-				guchar       *res_b);
+				GimpRGB      *result);
 
 static gint      borderaverage_dialog (void);
 
@@ -81,19 +79,18 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "thickness", "Border size to take in count" },
-    { GIMP_PDB_INT32, "bucket_exponent", "Bits for bucket size (default=4: 16 Levels)" },
+    { GIMP_PDB_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",           "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable" },
+    { GIMP_PDB_INT32,    "thickness",       "Border size to take in count" },
+    { GIMP_PDB_INT32,    "bucket_exponent", "Bits for bucket size (default=4: 16 Levels)" },
   };
   static GimpParamDef return_vals[] = 
   {
-    { GIMP_PDB_INT32, "num_channels", "Number of color channels returned (always 3)" },
-    { GIMP_PDB_INT8ARRAY, "color_vals", "The average color of the specified border"},
+    { GIMP_PDB_COLOR,     "borderaverage",   "The average color of the specified border" },
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+  static gint nargs        = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   INIT_I18N();
 
@@ -111,25 +108,22 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[3];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint8		*result_color;
+  static GimpParam   values[3];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRGB            result_color;
 
   INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 	
-  /* get the return memory */
-  result_color = (gint8 *) g_new(gint8, 3);
-
   /*	Get the specified drawable	*/
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -169,14 +163,11 @@ run (gchar   *name,
       if (gimp_drawable_is_rgb (drawable->id))
 	{
 	  gimp_progress_init ( _("Border Average..."));
-	  borderaverage (drawable,
-			 &result_color[0], &result_color[1], &result_color[2]);
+	  borderaverage (drawable, &result_color);
 
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
-	      gimp_palette_set_foreground (result_color[0],
-					   result_color[1],
-					   result_color[2]);
+	      gimp_palette_set_foreground_rgb (&result_color);
 	    }
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
@@ -197,37 +188,32 @@ run (gchar   *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 	
-  values[1].type = GIMP_PDB_INT32;
-  values[1].data.d_int32 = 3;
-	
-  values[2].type = GIMP_PDB_INT8ARRAY;
-  values[2].data.d_int8array = result_color;
+  values[1].type = GIMP_PDB_COLOR;
+  gimp_rgb_get_uchar (&result_color,
+		      &values[0].data.d_color.red,
+		      &values[1].data.d_color.green,
+		      &values[2].data.d_color.blue);
 
   gimp_drawable_detach (drawable);
 }
 
 static void
 borderaverage (GimpDrawable *drawable, 
-	       guchar    *res_r, 
-	       guchar    *res_g, 
-	       guchar    *res_b) 
+	       GimpRGB      *result) 
 {
-  gint         width;
-  gint         height;
-  gint         x1, x2, y1, y2;
-  gint         bytes;
-  gint         max;
+  gint    width;
+  gint    height;
+  gint    x1, x2, y1, y2;
+  gint    bytes;
+  gint    max;
+  guchar  r, g, b;
+  guchar *buffer;
+  gint    bucket_num, bucket_expo, bucket_rexpo;
+  gint   *cube;
+  gint    row, col;
+  gint    i, j, k; /* index variables */
  
-  guchar       r, g, b;
-
-  guchar      *buffer;
-  gint         bucket_num, bucket_expo, bucket_rexpo;
-
-  gint        *cube;
-
-  gint         row, col, i,j,k; /* index variables */
- 
-  GimpPixelRgn    myPR;
+  GimpPixelRgn  myPR;
 
   /* allocate and clear the cube before */
   bucket_expo = borderaverage_bucket_exponent;
@@ -323,9 +309,7 @@ borderaverage (GimpDrawable *drawable,
     }
 
   /* return the color */
-  *res_r = r;
-  *res_g = g;
-  *res_b = b;
+  gimp_rgb_set_uchar (result, r, g, b);
 
   g_free (buffer);
   g_free (cube);

@@ -584,8 +584,12 @@ color_callback (GtkWidget *widget,
 
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
 	
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button), &color);
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button), &color);
+      if (widget == vcolor_button)
+	gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button), 
+				     &color);
+      else if (widget == hcolor_button)
+	gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button), 
+				     &color);
     }
 }
 
@@ -902,7 +906,7 @@ dialog (gint32        image_ID,
 
   /*  put a chain_button under the color_buttons  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (gimp_rgb_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) > 0.0001)
+  if (gimp_rgba_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) < 0.0001)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 2, 3);
   gtk_widget_show (chain_button);

@@ -93,10 +93,10 @@ typedef struct
 
 typedef struct
 {
-  gint       col, row;
-  gint       img_width, img_height, img_bpp, img_has_alpha;
-  gint       tile_width, tile_height;
-  guchar     bg_color[4];
+  gint          col, row;
+  gint          img_width, img_height, img_bpp, img_has_alpha;
+  gint          tile_width, tile_height;
+  guchar        bg_color[4];
   GimpDrawable *drawable;
   GimpTile     *tile;
 } pixel_fetcher_t;
@@ -834,7 +834,8 @@ whirl_pinch_dialog (void)
 
   /* Preview */
   wpint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (wpint.preview), preview_width, preview_height);
+  gtk_preview_size (GTK_PREVIEW (wpint.preview), 
+		    preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), wpint.preview);
   gtk_widget_show (wpint.preview);
 
@@ -922,11 +923,14 @@ dialog_update_preview (void)
     case 2:
       outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
       outside[3] = 0;
+      break;
 
     case 3:
       gimp_rgb_get_uchar (&background,
 			  &outside[0], &outside[1], &outside[2]);
       outside[3] = 255;
+      break;
+
     case 4:
       gimp_rgb_get_uchar (&background,
 			  &outside[0], &outside[1], &outside[2]);

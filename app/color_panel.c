@@ -89,8 +89,8 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
   parent_class = gtk_type_class (gimp_color_button_get_type ());
 
   object_class->destroy             = gimp_color_panel_destroy;
-  color_button_class->color_changed = gimp_color_panel_color_changed;
   button_class->clicked             = gimp_color_panel_clicked;
+  color_button_class->color_changed = gimp_color_panel_color_changed;
 }
 
 static void

@@ -1078,11 +1078,14 @@ dialog_update_preview (void)
     case 2:
       outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
       outside[3] = 0;
+      break;
 
     case 3:
       gimp_rgb_get_uchar (&background,
 			  &outside[0], &outside[1], &outside[2]);
       outside[3] = 255;
+      break;
+
     case 4:
       gimp_rgb_get_uchar (&background,
 			  &outside[0], &outside[1], &outside[2]);

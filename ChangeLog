@@ -1,5 +1,14 @@
 2001-01-15  Sven Neumann  <sven@gimp.org>
 
+	* app/color_panel.c
+	* libgimp/gimpcolorbutton.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/whirlpinch.c: cleaned up after myself
+
+2001-01-15  Sven Neumann  <sven@gimp.org>
+
 	* app/color_panel.[ch]: rewritten as proper widget derived from 
 	GimpColorButton
 
