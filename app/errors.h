@@ -19,6 +19,10 @@
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 
+#ifndef GIMP_APP_GLUE_COMPILATION
+#error You must not #include "errors.h" from an app/ subdir
+#endif
+
 
 void  gimp_message_log_func (const gchar    *log_domain,
 			     GLogLevelFlags  flags,

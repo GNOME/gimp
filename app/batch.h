@@ -19,6 +19,10 @@
 #ifndef __BATCH_H__
 #define __BATCH_H__
 
+#ifndef GIMP_APP_GLUE_COMPILATION
+#error You must not #include "batch.h" from an app/ subdir
+#endif
+
 
 void   batch_init (Gimp   *gimp,
                    gchar **batch_cmds);

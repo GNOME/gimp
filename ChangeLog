@@ -1,3 +1,19 @@
+2002-12-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: added -DGIMP_APP_GLUE_COMPILATION to
+	AM_CPPFLAGS.
+
+	* app/appenv.h
+	* app/batch.h
+	* app/errors.h: #error if it is not defined to keep these files
+	from being included from anywhere else.
+
+	* app/app_procs.h: added just a #warning because some places still
+	need "the_gimp" and app_exit().
+
+	* app/libgimp_glue.h: #ifdef the #error the same way as the other
+	headers do.
+
 2002-12-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay-foreach.[ch]: renamed

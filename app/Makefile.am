@@ -84,8 +84,9 @@ endif
 gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp\"	\
-	@GIMP_THREAD_FLAGS@ 	\
+	-DG_LOG_DOMAIN=\"Gimp\"		\
+	-DGIMP_APP_GLUE_COMPILATION	\
+	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@
 
 INCLUDES = \

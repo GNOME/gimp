@@ -19,9 +19,8 @@
 #ifndef __LIBGIMP_GLUE_H__
 #define __LIBGIMP_GLUE_H__
 
-
-#if !defined (__LIBGIMP_GLUE_C__)
-#error "You must not include app/libgimp_glue.h."
+#ifndef __LIBGIMP_GLUE_C__
+#error You must not #include "libgimp_glue.h"
 #endif
 
 

@@ -19,6 +19,9 @@
 #ifndef __APP_PROCS_H__
 #define __APP_PROCS_H__
 
+#ifndef GIMP_APP_GLUE_COMPILATION
+#warning FIXME: Dont #include "app_procs.h"
+#endif
 
 /*
  *  this is a temp hack

@@ -19,6 +19,10 @@
 #ifndef __APPENV_H__
 #define __APPENV_H__
 
+#ifndef GIMP_APP_GLUE_COMPILATION
+#error You must not #include "appenv.h" from an app/ subdir
+#endif
+
 
 /*  command line options  */
 extern gboolean             no_interface;
