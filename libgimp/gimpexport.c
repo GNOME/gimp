@@ -140,7 +140,7 @@ export_apply_masks (gint32  image_ID,
 
   for (i = 0; i < n_layers; i++)
     {
-      if (gimp_layer_mask (layers[i]) != -1)
+      if (gimp_layer_get_mask (layers[i]) != -1)
         gimp_image_remove_layer_mask (image_ID, layers[i], GIMP_MASK_APPLY);
     }
 
@@ -716,7 +716,7 @@ gimp_export_image (gint32                 *image_ID,
     {
       for (i = 0; i < n_layers; i++)
         {
-          if (gimp_layer_mask (layers[i]) != -1)
+          if (gimp_layer_get_mask (layers[i]) != -1)
             has_layer_masks = TRUE;
         }
     }

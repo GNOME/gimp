@@ -1,3 +1,21 @@
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb: renamed gimp_layer_mask() to
+	gimp_layer_get_mask().
+
+	* libgimp/gimplayer.h: removed gimp_layer_get_mask_id #define.
+
+	* libgimp/gimpcompat.h: added old stuff.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimpexport.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
 2003-12-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: updated.

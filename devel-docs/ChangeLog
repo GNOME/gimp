@@ -1,3 +1,8 @@
+2003-12-04  Michael Natterer  <mitch@gimp>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimplayer.sgml: follow gimp_layer_get_mask() change.
+
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

@@ -370,12 +370,12 @@ p_pdb_procedure_available (const gchar *proc_name)
 				    &l_proc_type,
 				    &l_nparams, &l_nreturn_vals,
 				    &l_params, &l_return_vals))
-  {
-     /* procedure found in PDB */
-     return l_nparams;
-  }
+    {
+      /* procedure found in PDB */
+      return l_nparams;
+    }
 
-  printf("Warning: Procedure %s not found.\n", proc_name);
+  g_printerr ("Warning: Procedure %s not found.\n", proc_name);
   return -1;
 }
 
@@ -385,77 +385,79 @@ p_gimp_rotate (gint32  image_id,
 	       gint32  interpolation,
 	       gdouble angle_deg)
 {
-   static char     *l_rotate_proc = "gimp_rotate";
-   GimpParam          *return_vals;
-   int              nreturn_vals;
-   gdouble          l_angle_rad;
-   int              l_nparams;
-   int              l_rc;
+  static gchar *l_rotate_proc = "gimp_rotate";
+  GimpParam    *return_vals;
+  gint          nreturn_vals;
+  gdouble       l_angle_rad;
+  gint          l_nparams;
+  gint          l_rc;
 
 #ifdef ROTATE_OPTIMIZE
-   static char     *l_rotate_proc2 = "plug_in_rotate";
-   gint32 l_angle_step;
+  static gchar *l_rotate_proc2 = "plug_in_rotate";
+  gint32        l_angle_step;
 
-   if     (angle_deg == 90.0)  { l_angle_step = 1; }
-   else if(angle_deg == 180.0) { l_angle_step = 2; }
-   else if(angle_deg == 270.0) { l_angle_step = 3; }
-   else                        { l_angle_step = 0; }
+  if     (angle_deg == 90.0)  { l_angle_step = 1; }
+  else if(angle_deg == 180.0) { l_angle_step = 2; }
+  else if(angle_deg == 270.0) { l_angle_step = 3; }
+  else                        { l_angle_step = 0; }
 
-   if(l_angle_step != 0)
-   {
-      l_nparams = p_pdb_procedure_available(l_rotate_proc2);
+  if (l_angle_step != 0)
+    {
+      l_nparams = p_pdb_procedure_available (l_rotate_proc2);
       if (l_nparams == 5)
-      {
-        /* use faster rotate plugin on multiples of 90 degrees */
-        return_vals = gimp_run_procedure (l_rotate_proc2,
-                                          &nreturn_vals,
-			                  GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
-			                  GIMP_PDB_IMAGE, image_id,
-                                          GIMP_PDB_DRAWABLE, drawable_id,
-			                  GIMP_PDB_INT32, l_angle_step,
-			                  GIMP_PDB_INT32, FALSE,         /* dont rotate the whole image */
-                                          GIMP_PDB_END);
-        if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
         {
-          return 0;
+          /* use faster rotate plugin on multiples of 90 degrees */
+          return_vals = gimp_run_procedure (l_rotate_proc2,
+                                            &nreturn_vals,
+                                            GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
+                                            GIMP_PDB_IMAGE, image_id,
+                                            GIMP_PDB_DRAWABLE, drawable_id,
+                                            GIMP_PDB_INT32, l_angle_step,
+                                            GIMP_PDB_INT32, FALSE,         /* dont rotate the whole image */
+                                            GIMP_PDB_END);
+
+          if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+            {
+              return 0;
+            }
         }
-
-      }
-
-   }
+    }
 #endif
 
-   l_rc = -1;
-   l_angle_rad = (angle_deg * G_PI) / 180.0;
+  l_rc = -1;
+  l_angle_rad = (angle_deg * G_PI) / 180.0;
 
-   l_nparams = p_pdb_procedure_available(l_rotate_proc);
-   if (l_nparams >= 0)
-   {
-         /* use the new Interface (Gimp 1.1 style)
-          * (1.1 knows the image_id where the drawable belongs to)
-          */
-        return_vals = gimp_run_procedure (l_rotate_proc,
-                                          &nreturn_vals,
-                                          GIMP_PDB_DRAWABLE, drawable_id,
-			                  GIMP_PDB_INT32, interpolation,
-			                  GIMP_PDB_FLOAT, l_angle_rad,
-                                          GIMP_PDB_END);
-     if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-     {
-        l_rc = 0;
-     }
-     else
-     {
-       printf("Error: %s call failed %d\n", l_rotate_proc, (int)return_vals[0].data.d_status);
-     }
+  l_nparams = p_pdb_procedure_available (l_rotate_proc);
+  if (l_nparams >= 0)
+    {
+      /* use the new Interface (Gimp 1.1 style)
+       * (1.1 knows the image_id where the drawable belongs to)
+       */
+      return_vals = gimp_run_procedure (l_rotate_proc,
+                                        &nreturn_vals,
+                                        GIMP_PDB_DRAWABLE, drawable_id,
+                                        GIMP_PDB_INT32, interpolation,
+                                        GIMP_PDB_FLOAT, l_angle_rad,
+                                        GIMP_PDB_END);
 
-     gimp_destroy_params (return_vals, nreturn_vals);
-   }
-   else
-   {
-      printf("Error: Procedure %s not found.\n",l_rotate_proc);
-   }
-   return l_rc;
+      if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+        {
+          l_rc = 0;
+        }
+      else
+        {
+          g_printerr ("Error: %s call failed %d\n",
+                      l_rotate_proc, return_vals[0].data.d_status);
+        }
+
+      gimp_destroy_params (return_vals, nreturn_vals);
+    }
+  else
+    {
+      g_printerr ("Error: Procedure %s not found.\n", l_rotate_proc);
+    }
+
+  return l_rc;
 }
 
 /* ============================================================================
@@ -594,10 +596,10 @@ run (const gchar      *name,
   BenderDialog *cd;
 
   GimpDrawable *l_active_drawable = NULL;
-  gint32    l_image_id = -1;
-  gint32    l_layer_id = -1;
-  gint32    l_layer_mask_id = -1;
-  gint32    l_bent_layer_id = -1;
+  gint32        l_image_id        = -1;
+  gint32        l_layer_id        = -1;
+  gint32        l_layer_mask_id   = -1;
+  gint32        l_bent_layer_id   = -1;
 
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;
@@ -613,71 +615,76 @@ run (const gchar      *name,
 
   cd = NULL;
 
-  l_env = g_getenv("BEND_DEBUG");
+  l_env = g_getenv ("BEND_DEBUG");
   if (l_env != NULL)
-  {
-    if((*l_env != 'n') && (*l_env != 'N')) gb_debug = 1;
-  }
+    {
+      if((*l_env != 'n') && (*l_env != 'N')) gb_debug = 1;
+    }
 
-  if(gb_debug) fprintf(stderr, "\n\nDEBUG: run %s\n", name);
+  if (gb_debug) g_printerr ("\n\nDEBUG: run %s\n", name);
 
-  /* initialize the return of the status */
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = GIMP_PDB_LAYER;
+
+  values[1].type         = GIMP_PDB_LAYER;
   values[1].data.d_int32 = -1;
+
   *nreturn_vals = 2;
-  *return_vals = values;
+  *return_vals  = values;
 
   if (strcmp (name, PLUG_IN_ITER_NAME) == 0)
-  {
-     gint32  len_struct;
-     gint32  total_steps;
-     gdouble current_step;
-     BenderValues   bval;                  /* current values while iterating */
-     BenderValues   bval_from, bval_to;    /* start and end values */
+    {
+      gint32       len_struct;
+      gint32       total_steps;
+      gdouble      current_step;
+      BenderValues bval;                  /* current values while iterating */
+      BenderValues bval_from, bval_to;    /* start and end values */
 
-        /* Iterator procedure for animated calls is usually called from
-         * "plug_in_gap_layers_run_animfilter"
-         * (always run noninteractive)
-         */
-        if ((run_mode == GIMP_RUN_NONINTERACTIVE) && (nparams == 4))
+      /* Iterator procedure for animated calls is usually called from
+       * "plug_in_gap_layers_run_animfilter"
+       * (always run noninteractive)
+       */
+      if ((run_mode == GIMP_RUN_NONINTERACTIVE) && (nparams == 4))
         {
           total_steps  =  param[1].data.d_int32;
           current_step =  param[2].data.d_float;
           len_struct   =  param[3].data.d_int32;
 
-          if(len_struct == sizeof(bval))
-          {
-            /* get _FROM and _TO data,
-             * This data was stored by plug_in_gap_layers_run_animfilter
-             */
+          if (len_struct == sizeof (bval))
+            {
+              /* get _FROM and _TO data,
+               * This data was stored by plug_in_gap_layers_run_animfilter
+               */
+              gimp_get_data (PLUG_IN_DATA_ITER_FROM, &bval_from);
+              gimp_get_data (PLUG_IN_DATA_ITER_TO,   &bval_to);
+              bval = bval_from;
 
+              p_delta_gdouble (&bval.rotation, bval_from.rotation,
+                               bval_to.rotation, total_steps, current_step);
+              /* note: iteration of curve and points arrays would not give useful results.
+               *       (there might be different number of points in the from/to bender values )
+               *       the iteration is done later, (see p_bender_calculate_iter_curve)
+               *       when the curve is calculated.
+               */
 
-               gimp_get_data(PLUG_IN_DATA_ITER_FROM, &bval_from);
-               gimp_get_data(PLUG_IN_DATA_ITER_TO,   &bval_to);
-	       bval = bval_from;
+              bval.total_steps = total_steps;
+              bval.current_step = current_step;
 
-               p_delta_gdouble(&bval.rotation, bval_from.rotation, bval_to.rotation, total_steps, current_step);
-               /* note: iteration of curve and points arrays would not give useful results.
-                *       (there might be different number of points in the from/to bender values )
-                *       the iteration is done later, (see p_bender_calculate_iter_curve)
-                *       when the curve is calculated.
-                */
-
-               bval.total_steps = total_steps;
-               bval.current_step = current_step;
-
-
-               gimp_set_data(PLUG_IN_NAME, &bval, sizeof(bval));
-          }
-          else status = GIMP_PDB_CALLING_ERROR;
+              gimp_set_data (PLUG_IN_NAME, &bval, sizeof (bval));
+            }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
         }
-        else status = GIMP_PDB_CALLING_ERROR;
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
 
-        values[0].data.d_status = status;
-        return;
-  }
+      values[0].data.d_status = status;
+      return;
+    }
 
   /* get image and drawable */
   l_image_id = param[1].data.d_int32;
@@ -685,118 +692,130 @@ run (const gchar      *name,
 
   gimp_undo_push_group_start (l_image_id);
 
-  if (!gimp_drawable_is_layer(l_layer_id))
-  {
-     gimp_message(_("CurveBend operates on layers only (but was called on channel or mask)"));
-     status = GIMP_PDB_EXECUTION_ERROR;
-  }
+  if (! gimp_drawable_is_layer (l_layer_id))
+    {
+      g_message (_("CurveBend operates on layers only (but was called on channel or mask)"));
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+
   /* check for layermask */
-  l_layer_mask_id = gimp_layer_get_mask_id(l_layer_id);
-  if(l_layer_mask_id >= 0)
-  {
-     /* apply the layermask
-      *   some transitions (especially rotate) cant operate proper on
-      *   layers with masks !
-      */
-      gimp_image_remove_layer_mask(l_image_id, l_layer_id, 0 /* 0==APPLY */ );
-  }
+  l_layer_mask_id = gimp_layer_get_mask (l_layer_id);
+  if (l_layer_mask_id >= 0)
+    {
+      /* apply the layermask
+       *   some transitions (especially rotate) cant operate proper on
+       *   layers with masks !
+       */
+      gimp_image_remove_layer_mask (l_image_id, l_layer_id, 0 /* 0==APPLY */ );
+    }
 
   /* if there is a selection, make it the floating selection layer */
-  l_active_drawable = gimp_drawable_get (p_if_selection_float_it(l_image_id, l_layer_id));
+  l_active_drawable = gimp_drawable_get (p_if_selection_float_it (l_image_id,
+                                                                  l_layer_id));
 
   /* how are we running today? */
-  if(status == GIMP_PDB_SUCCESS)
-  {
-    /* how are we running today? */
-    switch (run_mode)
-     {
-      case GIMP_RUN_INTERACTIVE:
-        /* Possibly retrieve data from a previous run */
-        /* gimp_get_data (PLUG_IN_NAME, &g_bndvals); */
-
-        /* Get information from the dialog */
-        cd = do_dialog(l_active_drawable);
-        cd->show_progress = TRUE;
-        break;
-
-      case GIMP_RUN_NONINTERACTIVE:
-        /* check to see if invoked with the correct number of parameters */
-        if (nparams >= 20)
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      /* how are we running today? */
+      switch (run_mode)
         {
-           cd = g_new (BenderDialog, 1);
-           cd->run = TRUE;
-           cd->show_progress = FALSE;
-           cd->drawable = l_active_drawable;
+        case GIMP_RUN_INTERACTIVE:
+          /* Possibly retrieve data from a previous run */
+          /* gimp_get_data (PLUG_IN_NAME, &g_bndvals); */
 
-           cd->rotation      = (gdouble) param[3].data.d_float;
-           cd->smoothing     = (gint) param[4].data.d_int32;
-           cd->antialias     = (gint) param[5].data.d_int32;
-           cd->work_on_copy  = (gint) param[6].data.d_int32;
-           cd->curve_type    = (int)  param[7].data.d_int32;
+          /* Get information from the dialog */
+          cd = do_dialog (l_active_drawable);
+          cd->show_progress = TRUE;
+          break;
 
-           p_copy_points(cd, OUTLINE_UPPER, 0, (int)param[8].data.d_int32,  param[9].data.d_floatarray);
-           p_copy_points(cd, OUTLINE_UPPER, 1, (int)param[10].data.d_int32,  param[11].data.d_floatarray);
-           p_copy_points(cd, OUTLINE_LOWER, 0, (int)param[12].data.d_int32,  param[13].data.d_floatarray);
-           p_copy_points(cd, OUTLINE_LOWER, 1, (int)param[14].data.d_int32,  param[15].data.d_floatarray);
+        case GIMP_RUN_NONINTERACTIVE:
+          /* check to see if invoked with the correct number of parameters */
+          if (nparams >= 20)
+            {
+              cd = g_new (BenderDialog, 1);
+              cd->run = TRUE;
+              cd->show_progress = FALSE;
+              cd->drawable = l_active_drawable;
 
-           p_copy_yval(cd, OUTLINE_UPPER, (int)param[16].data.d_int32, param[17].data.d_int8array);
-           p_copy_yval(cd, OUTLINE_UPPER, (int)param[18].data.d_int32, param[19].data.d_int8array);
+              cd->rotation      = (gdouble) param[3].data.d_float;
+              cd->smoothing     = (gint) param[4].data.d_int32;
+              cd->antialias     = (gint) param[5].data.d_int32;
+              cd->work_on_copy  = (gint) param[6].data.d_int32;
+              cd->curve_type    = (gint) param[7].data.d_int32;
 
+              p_copy_points (cd, OUTLINE_UPPER, 0,
+                             param[8].data.d_int32,
+                             param[9].data.d_floatarray);
+              p_copy_points (cd, OUTLINE_UPPER, 1,
+                             param[10].data.d_int32,
+                             param[11].data.d_floatarray);
+              p_copy_points (cd, OUTLINE_LOWER, 0,
+                             param[12].data.d_int32,
+                             param[13].data.d_floatarray);
+              p_copy_points (cd, OUTLINE_LOWER, 1,
+                             param[14].data.d_int32,
+                             param[15].data.d_floatarray);
+
+              p_copy_yval (cd, OUTLINE_UPPER,
+                           param[16].data.d_int32,
+                           param[17].data.d_int8array);
+              p_copy_yval (cd, OUTLINE_UPPER,
+                           param[18].data.d_int32,
+                           param[19].data.d_int8array);
+            }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          cd = g_new (BenderDialog, 1);
+          cd->run = TRUE;
+          cd->show_progress = TRUE;
+          cd->drawable = l_active_drawable;
+          p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
+          break;
+
+        default:
+          break;
         }
-        else
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-
-        break;
-
-      case GIMP_RUN_WITH_LAST_VALS:
-        cd = g_new (BenderDialog, 1);
-        cd->run = TRUE;
-        cd->show_progress = TRUE;
-        cd->drawable = l_active_drawable;
-        p_retrieve_values(cd);  /* Possibly retrieve data from a previous run */
-        break;
-
-      default:
-        break;
     }
-  }
 
-  if (!cd)
-  {
-    status = GIMP_PDB_EXECUTION_ERROR;
-  }
+  if (! cd)
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
 
   if (status == GIMP_PDB_SUCCESS)
-  {
-    /* Run the main function */
-
-     if (cd->run)
-     {
-        l_bent_layer_id = p_main_bend(cd, cd->drawable, cd->work_on_copy);
-
-	/* Store variable states for next run */
-	if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
-            p_store_values(cd);
-	}
-    }
-    else
     {
-      status = GIMP_PDB_EXECUTION_ERROR;  /* dialog ended with cancel button */
+      /* Run the main function */
+
+      if (cd->run)
+        {
+          l_bent_layer_id = p_main_bend (cd, cd->drawable, cd->work_on_copy);
+
+          /* Store variable states for next run */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            {
+              p_store_values (cd);
+            }
+        }
+      else
+        {
+          status = GIMP_PDB_CANCEL;
+        }
+
+      gimp_undo_push_group_end (l_image_id);
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+    }
+  else
+    {
+      gimp_undo_push_group_end (l_image_id);
     }
 
-    gimp_undo_push_group_end (l_image_id);
-
-    if (run_mode != GIMP_RUN_NONINTERACTIVE)
-      gimp_displays_flush ();
-
-  }
-  else
-  {
-    gimp_undo_push_group_end (l_image_id);
-  }
   values[0].data.d_status = status;
   values[1].data.d_int32 = l_bent_layer_id;   /* return the id of handled layer */
 }
@@ -3266,7 +3285,7 @@ p_main_bend (BenderDialog *cd,
                       l_interpolation, (gdouble)(360.0 - cd->rotation));
 
        /* TODO: here we should crop dst_drawable to cut off full transparent borderpixels */
-       
+
    }
 
    /* set offsets of the resulting new layer

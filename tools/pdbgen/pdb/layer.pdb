@@ -450,7 +450,7 @@ HELP
     }
 }
 
-sub layer_mask {
+sub layer_get_mask {
     $blurb = "Get the specified layer's mask if it exists.";
 
     $help = <<'HELP';
@@ -594,7 +594,8 @@ CODE2
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_resize_to_image_size
-		   layer_translate layer_add_alpha layer_set_offsets layer_mask
+		   layer_translate layer_add_alpha layer_set_offsets
+                   layer_get_mask
 		   layer_is_floating_sel layer_new_from_drawable);
 %exports = (app => [@procs], lib => [@procs]);
 

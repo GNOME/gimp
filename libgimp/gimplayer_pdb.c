@@ -386,7 +386,7 @@ gimp_layer_set_offsets (gint32 layer_ID,
 }
 
 /**
- * gimp_layer_mask:
+ * gimp_layer_get_mask:
  * @layer_ID: The layer.
  *
  * Get the specified layer's mask if it exists.
@@ -397,13 +397,13 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * Returns: The layer mask.
  */
 gint32
-gimp_layer_mask (gint32 layer_ID)
+gimp_layer_get_mask (gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 mask_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_layer_mask",
+  return_vals = gimp_run_procedure ("gimp_layer_get_mask",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);

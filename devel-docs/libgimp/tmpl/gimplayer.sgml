@@ -114,7 +114,7 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_mask ##### -->
+<!-- ##### FUNCTION gimp_layer_get_mask ##### -->
 <para>
 
 </para>
@@ -244,14 +244,6 @@ Operations on single layers.
 
 @layer_ID: 
 @mode: 
-@Returns: 
-
-
-<!-- ##### MACRO gimp_layer_get_mask_id ##### -->
-<para>
-
-</para>
-
 @Returns: 
 
 

@@ -606,7 +606,7 @@ lay_get_is_floating_sel(PyGimpLayer *self, void *closure)
 static PyObject *
 lay_get_mask(PyGimpLayer *self, void *closure)
 {
-    gint32 id = gimp_layer_mask(self->ID);
+    gint32 id = gimp_layer_get_mask(self->ID);
     if (id == -1) {
 	Py_INCREF(Py_None);
 	return Py_None;

@@ -64,6 +64,9 @@ G_BEGIN_DECLS
 #define gimp_layer_get_tattoo                   gimp_drawable_get_tattoo
 #define gimp_layer_set_tattoo                   gimp_drawable_set_tattoo
 
+#define gimp_layer_mask                         gimp_layer_get_mask
+#define gimp_layer_get_mask_id                  gimp_layer_get_mask
+
 #define gimp_drawable_image                     gimp_drawable_get_image
 #define gimp_drawable_image_id                  gimp_drawable_get_image
 #define gimp_drawable_name                      gimp_drawable_get_name

@@ -393,7 +393,7 @@ gimp_layer_resize_to_image_size
 gimp_layer_translate
 gimp_layer_add_alpha
 gimp_layer_set_offsets
-gimp_layer_mask
+gimp_layer_get_mask
 gimp_layer_new_from_drawable
 gimp_layer_get_preserve_trans
 gimp_layer_set_preserve_trans
@@ -407,7 +407,6 @@ gimp_layer_get_opacity
 gimp_layer_set_opacity
 gimp_layer_get_mode
 gimp_layer_set_mode
-gimp_layer_get_mask_id
 gimp_layer_is_floating_sel
 gimp_layer_is_floating_selection
 gimp_layer_get_preserve_transparency

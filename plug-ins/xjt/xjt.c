@@ -1772,7 +1772,7 @@ save_xjt_image (const gchar *filename,
       }
 
       /* check and save layer_mask channel */
-       l_channel_id = gimp_layer_get_mask_id(l_layer_id);
+       l_channel_id = gimp_layer_get_mask (l_layer_id);
        if(l_channel_id >= 0)
        {
           l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);

@@ -49,7 +49,7 @@ static ProcRecord layer_resize_to_image_size_proc;
 static ProcRecord layer_translate_proc;
 static ProcRecord layer_add_alpha_proc;
 static ProcRecord layer_set_offsets_proc;
-static ProcRecord layer_mask_proc;
+static ProcRecord layer_get_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
 static ProcRecord layer_new_from_drawable_proc;
 static ProcRecord layer_get_preserve_trans_proc;
@@ -77,7 +77,7 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_translate_proc);
   procedural_db_register (gimp, &layer_add_alpha_proc);
   procedural_db_register (gimp, &layer_set_offsets_proc);
-  procedural_db_register (gimp, &layer_mask_proc);
+  procedural_db_register (gimp, &layer_get_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
   procedural_db_register (gimp, &layer_new_from_drawable_proc);
   procedural_db_register (gimp, &layer_get_preserve_trans_proc);
@@ -813,8 +813,8 @@ static ProcRecord layer_set_offsets_proc =
 };
 
 static Argument *
-layer_mask_invoker (Gimp     *gimp,
-                    Argument *args)
+layer_get_mask_invoker (Gimp     *gimp,
+                        Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -824,7 +824,7 @@ layer_mask_invoker (Gimp     *gimp,
   if (! GIMP_IS_LAYER (layer))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&layer_mask_proc, success);
+  return_args = procedural_db_return_args (&layer_get_mask_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = layer->mask ? gimp_item_get_ID (GIMP_ITEM (layer->mask)) : -1;
@@ -832,7 +832,7 @@ layer_mask_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg layer_mask_inargs[] =
+static ProcArg layer_get_mask_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
@@ -841,7 +841,7 @@ static ProcArg layer_mask_inargs[] =
   }
 };
 
-static ProcArg layer_mask_outargs[] =
+static ProcArg layer_get_mask_outargs[] =
 {
   {
     GIMP_PDB_CHANNEL,
@@ -850,9 +850,9 @@ static ProcArg layer_mask_outargs[] =
   }
 };
 
-static ProcRecord layer_mask_proc =
+static ProcRecord layer_get_mask_proc =
 {
-  "gimp_layer_mask",
+  "gimp_layer_get_mask",
   "Get the specified layer's mask if it exists.",
   "This procedure returns the specified layer's mask, or -1 if none exists.",
   "Spencer Kimball & Peter Mattis",
@@ -860,10 +860,10 @@ static ProcRecord layer_mask_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  layer_mask_inargs,
+  layer_get_mask_inargs,
   1,
-  layer_mask_outargs,
-  { { layer_mask_invoker } }
+  layer_get_mask_outargs,
+  { { layer_get_mask_invoker } }
 };
 
 static Argument *
