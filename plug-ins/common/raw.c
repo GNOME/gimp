@@ -228,7 +228,7 @@ run (const gchar      *name,
         {
           gimp_get_data ("file_raw_load", runtime);
 
-          preview_fd = g_open (param[1].data.d_string, O_RDONLY);
+          preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
 
           if (preview_fd < 0)
             {
@@ -431,7 +431,7 @@ raw_load_palette (RawGimpData *data,
 
   if (palette_file)
     {
-      fd = g_open (palette_file, O_RDONLY);
+      fd = g_open (palette_file, O_RDONLY, 0);
 
       if (! fd)
         return FALSE;
@@ -827,7 +827,7 @@ preview_update (GimpPreviewArea *preview)
               {
                 gint fd;
 
-                fd = g_open (palfile, O_RDONLY);
+                fd = g_open (palfile, O_RDONLY, 0);
                 lseek (fd, runtime->palette_offset, SEEK_SET);
                 read (fd, preview_cmap,
                       (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);

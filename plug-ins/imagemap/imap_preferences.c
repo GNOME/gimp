@@ -23,14 +23,13 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include "libgimp/gimp.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpui.h"
 
 #include "imap_command.h"
 #include "imap_file.h"
@@ -166,9 +165,9 @@ preferences_load(PreferencesData_t *data)
    char buf[256];
    gchar *filename;
 
-   filename = g_build_filename (gimp_directory (), "imagemaprc", NULL);
+   filename = gimp_personal_rc_file ("imagemaprc");
 
-   in = fopen(filename, "r");
+   in = g_fopen(filename, "r");
    g_free(filename);
    if (in) {
       while (fgets(buf, sizeof(buf), in)) {
@@ -189,9 +188,9 @@ preferences_save(PreferencesData_t *data)
    gchar *filename;
    ColorSelData_t *colors = &data->colors;
 
-   filename = g_build_filename (gimp_directory (), "imagemaprc", NULL);
+   filename = gimp_personal_rc_file ("imagemaprc");
 
-   out = fopen(filename, "w");
+   out = g_fopen(filename, "w");
    if (out) {
       fprintf(out, "# Imagemap plug-in resource file\n\n");
       if (data->default_map_type == NCSA)

@@ -427,7 +427,7 @@ load_image (const gchar *filename)
   int ctr;
 
   /* open the file */
-  fd = g_open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
   if (fd == -1)
     {

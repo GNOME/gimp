@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib/gstdio.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -1712,7 +1714,7 @@ p_print_ppm (const gchar *ppm_name)
   if (ppm_name == NULL)
     return;
 
-  fp = fopen (ppm_name, "w");
+  fp = g_fopen (ppm_name, "w");
   if(fp)
     {
       fprintf(fp, "P3\n# CREATOR: Gimp sample coloros\n256 256\n255\n");
@@ -1838,7 +1840,7 @@ p_get_filevalues (void)
 */
   g_values.tol_col_err = 5.5;
 
-  l_fp = fopen("sample_colorize.values", "r");
+  l_fp = g_fopen("sample_colorize.values", "r");
   if (l_fp != NULL)
     {
       fgets(&l_buf[0], 999, l_fp);
@@ -2636,7 +2638,7 @@ p_sample_analyze (t_GDRW *sample_gdrw)
    if(g_show_progress) gimp_progress_init (_("Sample Analyze..."));
 
    prot_fp = NULL;
-   if(g_Sdebug) prot_fp = fopen("sample_colors.dump", "w");
+   if(g_Sdebug) prot_fp = g_fopen ("sample_colors.dump", "w");
    p_print_values(prot_fp);
 
    /* ------------------------------------------------

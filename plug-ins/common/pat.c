@@ -15,6 +15,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
@@ -291,7 +295,7 @@ load_image (const gchar *filename)
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
-  fd = g_open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
   if (fd == -1)
     {

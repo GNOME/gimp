@@ -615,7 +615,7 @@ load_data (gchar *name)
   FILE   *f;
   guint8  buf[288];
 
-  f = fopen (name, "rb");
+  f = g_fopen (name, "rb");
   if (f == NULL)
     {
       return FALSE;
@@ -650,7 +650,7 @@ save_data (gchar *name)
   FILE   *f;
   guint8  buf[288];
 
-  f = fopen (name, "wb");
+  f = g_fopen (name, "wb");
   if (f == NULL)
     {
       return FALSE;

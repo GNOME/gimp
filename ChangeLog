@@ -1,3 +1,19 @@
+2005-03-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/CEL.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/raw.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/print/print.c: added missing parameter to g_open() calls,
+	ported some functions I missed earlier.
+
 2005-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage.c

@@ -212,7 +212,7 @@ load_image (const gchar *filename)
 
   init_byte_tab( 0, byte_tab );
 
-  fd = g_open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
   if (fd < 0)
     {

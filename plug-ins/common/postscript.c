@@ -1377,7 +1377,7 @@ get_bbox (const gchar *filename,
   FILE *ifp;
   int retval = -1;
 
-  ifp = fopen (filename, "rb");
+  ifp = g_fopen (filename, "rb");
   if (ifp == NULL)
     return -1;
 

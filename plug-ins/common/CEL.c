@@ -258,7 +258,7 @@ need_palette (const gchar *file)
   FILE   *fp;
   guchar  header[32];
 
-  fp = fopen (file, "rb");
+  fp = g_fopen (file, "rb");
   if (!fp)
     return FALSE;
 
@@ -457,7 +457,7 @@ load_image (const gchar *file,
         }
       else
         {
-          fp = fopen (palette_file, "r");
+          fp = g_fopen (palette_file, "r");
         }
 
       if (fp != NULL)

@@ -34,6 +34,8 @@
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -477,7 +479,7 @@ run (const gchar      *name,
 	}
       }
       else
-	prn = fopen (stp_get_output_to(vars), "wb");
+	prn = g_fopen (stp_get_output_to(vars), "wb");
 
       if (prn != NULL)
 	{
@@ -776,7 +778,7 @@ printrc_load (void)
 
   filename = gimp_personal_rc_file ("printrc");
 
-  if ((fp = fopen(filename, "r")) != NULL)
+  if ((fp = g_fopen(filename, "r")) != NULL)
   {
    /*
     * File exists - read the contents and update the printer list...
@@ -1018,7 +1020,7 @@ printrc_save (void)
 
   filename = gimp_personal_rc_file ("printrc");
 
-  if ((fp = fopen(filename, "w")) != NULL)
+  if ((fp = g_fopen(filename, "w")) != NULL)
   {
    /*
     * Write the contents of the printer list...
