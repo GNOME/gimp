@@ -60,7 +60,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.3.2 - 9 May 2000"
+#define PLUG_IN_VERSION  "1.3.3 - 30 June 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -72,8 +72,12 @@
 typedef struct
 {
   gint	interlaced;
-  gint	noextras;
   gint	compression_level;
+  gint  bkgd;
+  gint  gama;
+  gint  offs;
+  gint  phys;
+  gint  time;
 } PngSaveVals;
 
 
@@ -118,12 +122,11 @@ GPlugInInfo PLUG_IN_INFO =
 PngSaveVals pngvals = 
 {
   FALSE,
-  FALSE,
-  6
+  6,
+  TRUE, TRUE, TRUE, TRUE, TRUE
 };
 
 static gboolean runme = FALSE;
-
 
 /*
  * 'main()' - Main entry - just call gimp_main()...
@@ -160,8 +163,12 @@ query (void)
     { PARAM_STRING,	"filename",	"The name of the file to save the image in" },
     { PARAM_STRING,	"raw_filename",	"The name of the file to save the image in" },
     { PARAM_INT32,	"interlace",	"Use Adam7 interlacing?" },
-    { PARAM_INT32,	"noextras",	"Skip ancillary chunks?" },
-    { PARAM_INT32,	"compression",	"Deflate Compression factor (0--9)" }
+    { PARAM_INT32,	"compression",	"Deflate Compression factor (0--9)" },
+    { PARAM_INT32,	"bkgd",		"Write bKGD chunk?" },
+    { PARAM_INT32,	"gama",		"Write gAMA chunk?" },
+    { PARAM_INT32,	"offs",		"Write oFFs chunk?" },
+    { PARAM_INT32,	"phys",		"Write tIME chunk?" },
+    { PARAM_INT32,	"time",		"Write pHYs chunk?" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -295,8 +302,12 @@ run (gchar   *name,
           else
 	    {
 	      pngvals.interlaced        = param[5].data.d_int32;
-	      pngvals.noextras          = param[6].data.d_int32;
-	      pngvals.compression_level = param[7].data.d_int32;
+	      pngvals.compression_level = param[6].data.d_int32;
+	      pngvals.bkgd              = param[7].data.d_int32;
+	      pngvals.gama              = param[8].data.d_int32;
+	      pngvals.phys              = param[9].data.d_int32;
+	      pngvals.offs              = param[10].data.d_int32;
+	      pngvals.time              = param[11].data.d_int32;
 
 	      if (pngvals.compression_level < 0 ||
 		  pngvals.compression_level > 9)
@@ -529,6 +540,14 @@ load_image (gchar *filename)	/* I - File to load */
     gimp_quit();
   };
 
+ /*
+  * Create the "background" layer to hold the image...
+  */
+
+  layer = gimp_layer_new(image, _("Background"), info->width, info->height,
+                         layer_type, 100, NORMAL_MODE);
+  gimp_image_add_layer(image, layer, 0);
+
   /*
    * Find out everything we can about the image resolution
    * This is only practical with the new 1.0 APIs, I'm afraid
@@ -536,6 +555,14 @@ load_image (gchar *filename)	/* I - File to load */
    */
 
 #if PNG_LIBPNG_VER > 99
+  if (png_get_valid(pp, info, PNG_INFO_gAMA)) {
+    /* I sure would like to handle this, but there's no mechanism to
+       do so in Gimp :( */
+  }
+  if (png_get_valid(pp, info, PNG_INFO_oFFs)) {
+    gimp_layer_set_offsets (layer, png_get_x_offset_pixels(pp, info),
+                                   png_get_y_offset_pixels(pp, info));
+  }
   if (png_get_valid(pp, info, PNG_INFO_pHYs)) {
     gimp_image_set_resolution(image,
          ((double) png_get_x_pixels_per_meter(pp, info)) * 0.0254,
@@ -568,14 +595,6 @@ load_image (gchar *filename)	/* I - File to load */
 #endif /* PNG_LIBPNG_VER > 99 */
 
   }
-
- /*
-  * Create the "background" layer to hold the image...
-  */
-
-  layer = gimp_layer_new(image, _("Background"), info->width, info->height,
-                         layer_type, 100, NORMAL_MODE);
-  gimp_image_add_layer(image, layer, 0);
 
  /*
   * Get the drawable and set the pixel region for our load...
@@ -835,28 +854,35 @@ save_image (gchar  *filename,	        /* I - File to save to */
      possible file size she can turn them all off */
 
 #if PNG_LIBPNG_VER > 99
-  if (!pngvals.noextras) {
+  if (pngvals.bkgd) {
+    gimp_palette_get_background(&red, &green, &blue);
+      
+    background.index = 0;
+    background.red = red;
+    background.green = green;
+    background.blue = blue;
+    background.gray = (red + green + blue) / 3;
+    png_set_bKGD(pp, info, &background);
+  }
 
+  if (pngvals.gama) {
     gamma = gimp_gamma();
     png_set_gAMA(pp, info, 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA));
+  }
 
-    if (type == RGBA_IMAGE || type == GRAYA_IMAGE
-                           || type == INDEXEDA_IMAGE) {
-      gimp_palette_get_background(&red, &green, &blue);
-      
-      background.index = 0;
-      background.red = red;
-      background.green = green;
-      background.blue = blue;
-      background.gray = (red + green + blue) / 3;
-      png_set_bKGD(pp, info, &background);
-    }
-
+  if (pngvals.offs) {
     gimp_drawable_offsets(drawable_ID, &offx, &offy);
     if (offx != 0 || offy != 0) {
       png_set_oFFs(pp, info, offx, offy, PNG_OFFSET_PIXEL);
     }
+  }
 
+  if (pngvals.phys) {
+    gimp_image_get_resolution (orig_image_ID, &xres, &yres);
+    png_set_pHYs(pp, info, xres * 39.37, yres * 39.37, PNG_RESOLUTION_METER);
+  }
+
+  if (pngvals.time) {
     cutime= time(NULL); /* time right NOW */
     gmt = gmtime(&cutime);
 
@@ -867,10 +893,8 @@ save_image (gchar  *filename,	        /* I - File to save to */
     mod_time.minute = gmt->tm_min;
     mod_time.second = gmt->tm_sec;
     png_set_tIME(pp, info, &mod_time);
-
-    gimp_image_get_resolution (orig_image_ID, &xres, &yres);
-    png_set_pHYs(pp, info, xres * 39.37, yres * 39.37, PNG_RESOLUTION_METER);
   }
+
 #endif /* PNG_LIBPNG_VER > 99 */
 
   png_write_info (pp, info);
@@ -1035,7 +1059,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
+  table = gtk_table_new (2, 7, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -1051,13 +1075,49 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.interlaced);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Skip Ancillary Chunks"));
+  toggle = gtk_check_button_new_with_label (_("Save background color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &pngvals.noextras);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.noextras);
+		      &pngvals.bkgd);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Save gamma"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.gama);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Save layer offset"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.offs);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Save resolution"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.phys);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label (_("Save creation time"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
+		    GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &pngvals.time);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
   gtk_widget_show (toggle);
 
   scale_data = gtk_adjustment_new (pngvals.compression_level,
@@ -1067,7 +1127,7 @@ save_dialog (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
 			     _("Compression Level:"), 1.0, 1.0,
 			     scale, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
