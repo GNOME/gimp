@@ -1479,7 +1479,7 @@ paintbrush_invoker (Argument *args)
     success = FALSE;
 
   fade_out = args[1].value.pdb_float;
-  if (fade_out <= 0.0)
+  if (fade_out < 0.0)
     success = FALSE;
 
   num_strokes = args[2].value.pdb_int;
@@ -1515,7 +1515,7 @@ static ProcArg paintbrush_inargs[] =
   {
     PDB_FLOAT,
     "fade_out",
-    "Fade out parameter: 0 < fade_out"
+    "Fade out parameter: 0 <= fade_out"
   },
   {
     PDB_INT32,

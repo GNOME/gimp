@@ -467,11 +467,11 @@ paintbrush_non_gui (GimpDrawable *drawable,
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
+      non_gui_fade_out = fade_out;
       non_gui_gradient_length = gradient_length;
       non_gui_gradient_type = LOOP_TRIANGLE;
-
       non_gui_incremental = method;
-      
+
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
 

@@ -49,6 +49,8 @@ typedef enum
   PDB_STATUS,
   PDB_END
 } PDBArgType;
+/* NOTE: If you change the PDBArgType enum above, you _must_ change
+ * the type_str array in procedural_db.c to match. */
 
 
 /*  Error types  */
@@ -201,6 +203,9 @@ gint pdb_image_to_id(GimpImage* gimage);
 GimpImage* pdb_id_to_image(gint id);
 void pdb_remove_image(GimpImage* image);
 
+/* "type" should really be a PDBArgType, but we can cope with
+ *  out-of-range values. */
+const char *pdb_type_name (gint type);
 
 
 #endif  /*  __PROCEDURAL_DB_H__  */

@@ -343,7 +343,7 @@ bucket_fill_button_release (Tool           *tool,
 					    PDB_FLOAT, (gdouble) bucket_tool->target_y,
 					    PDB_END);
 
-      if (return_vals[0].value.pdb_int == PDB_SUCCESS)
+      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
 	g_message (_("Bucket Fill operation failed."));

@@ -1,3 +1,28 @@
+Tue Apr 20 23:38:26 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/bezier_select.c: add the new args to gimp-paintbrush PDB
+	    calls.
+
+	* app/blend.c
+	* app/bucket_fill.c
+	* app/invert.c: check return from procedural_db_run_proc() rather
+	    than dereferencing NULL.
+
+	* app/paintbrush.c: plumb the non-gui fade_out option into the
+	    functions that actually do the work, rather than using
+	    an uninitialised value.
+
+	* app/procedural_db.c: better error messages on PDB typecheck fail
+	    in procedural_db_run_proc.  Also now valid to
+	    procedural_db_destroy_args() on a NULL pointer.
+	* app/procedural_db.h: pdb_type_name() function added, plus
+	    comment urging people to keep the enum and strings in step.
+
+	* tools/pdbgen/README: added paragraph on how to run pdbgen.pl
+
+	* tools/pdbgen/pdb/tools.pdb: fade_out parameter is valid to be 0
+	* app/tools_cmds.c: new version of generated file
+
 Tue Apr 20 21:18:10 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/blend.c: moved the "Adaptive supersampling" option into

@@ -712,7 +712,7 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'fade_out', type => '0 < float',
+	{ name => 'fade_out', type => '0 <= float',
 	  desc => 'Fade out parameter: %%desc%%' },
 	&stroke_arg,
 	{ name => 'method', type => 'enum PaintApplicationMode',

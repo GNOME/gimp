@@ -61,7 +61,7 @@ struct _PDBData
 /*  Local functions  */
 static Argument * procedural_db_dump (Argument *);
 static void       procedural_db_print_entry (gpointer, gpointer, gpointer);
-static void       output_string (char *);
+static void       output_string (const char *);
 static Argument * procedural_db_proc_info (Argument *);
 static Argument * procedural_db_proc_arg (Argument *);
 static Argument * procedural_db_proc_val (Argument *);
@@ -80,7 +80,7 @@ static GHashTable *procedural_ht = NULL;
 static FILE *procedural_db_out = NULL;
 static GList *data_list = NULL;
 
-static char *type_str[] =
+static const char * const type_str[] =
 {
   "PDB_INT32",
   "PDB_INT16",
@@ -704,7 +704,10 @@ procedural_db_run_proc (gchar *name,
     {
       if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
 	{
-	  g_message (_("Incorrect arguments passed to procedural_db_run_proc"));
+	  g_message (_("Incorrect arguments passed to procedural_db_run_proc:\nArgument %d to '%s' should be a %s, but got passed a %s"),
+		     i+1, proc->name,
+		     pdb_type_name (proc->args[i].arg_type),
+		     pdb_type_name (params[i].arg_type));
 	  g_free (params);
 	  return NULL;
 	}
@@ -796,6 +799,8 @@ procedural_db_destroy_args (Argument *args,
   int i, j;
   int prev_val = 0;
   char **strs;
+
+  if (!args) return;
 
   for (i = 0; i < nargs; i++)
     {
@@ -933,7 +938,7 @@ procedural_db_print_entry (gpointer key,
 }
 
 static void
-output_string (char *string)
+output_string (const char *string)
 {
   fprintf (procedural_db_out, "\"");
   while (*string)
@@ -1312,5 +1317,21 @@ GimpImage* pdb_id_to_image(gint id){
 	return g_hash_table_lookup(image_hash, &id);
 }
 
-	
-	 
+const char *
+pdb_type_name (gint type)
+{
+    char *buf;
+
+    if (type >= 0 && type <= PDB_END)
+    {
+	return type_str[type];
+    }
+    else
+    {
+	buf = g_malloc (48);
+	g_snprintf (buf, 48, "(PDB type %d unknown)", type);
+	return buf;
+	/* Yeah, we leak the memory.  But then you shouldn't try and
+         * get the name of a PDB type that doesn't exist, should you. */
+    }
+}

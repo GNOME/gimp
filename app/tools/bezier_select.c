@@ -2348,9 +2348,11 @@ bezier_stroke (BezierSelect *bezier_sel,
 					    PDB_FLOAT, (gdouble) 0,
 					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
 					    PDB_FLOATARRAY, rpnts->stroke_points,
+					    PDB_INT32, 0 /* continuous */,
+					    PDB_FLOAT, (gdouble) 0 /*no grad*/,
 					    PDB_END);
 
-      if (return_vals[0].value.pdb_int == PDB_SUCCESS)
+      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
 	{
 	  if (redraw)
 	    {
