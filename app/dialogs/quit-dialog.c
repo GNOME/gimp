@@ -73,8 +73,7 @@ quit_dialog_new (Gimp *gimp)
 
   dialog = gimp_dialog_new (_("Quit The GIMP"), "gimp-quit",
                             NULL, 0,
-                            gimp_standard_help_func,
-                            GIMP_HELP_FILE_QUIT_CONFIRM,
+                            gimp_standard_help_func, NULL,
 
                             GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
                             _("_Discard Changes"), GTK_RESPONSE_OK,

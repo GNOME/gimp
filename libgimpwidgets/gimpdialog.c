@@ -56,9 +56,11 @@ static void       gimp_dialog_get_property (GObject         *object,
 static gboolean   gimp_dialog_delete_event (GtkWidget       *widget,
                                             GdkEventAny     *event);
 static void       gimp_dialog_close        (GtkDialog       *dialog);
+static void       gimp_dialog_help         (GObject         *dialog);
 
 
-static GtkDialogClass *parent_class = NULL;
+static GtkDialogClass *parent_class     = NULL;
+static gboolean        show_help_button = TRUE;
 
 
 GType
@@ -145,6 +147,23 @@ gimp_dialog_constructor (GType                  type,
   if (help_func)
     gimp_help_connect (GTK_WIDGET (object), help_func, help_id, object);
 
+  if (show_help_button && help_func && help_id)
+    {
+      GtkDialog *dialog = GTK_DIALOG (object);
+      GtkWidget *button = gtk_button_new_from_stock (GTK_STOCK_HELP);
+
+      gtk_box_pack_end (GTK_BOX (dialog->action_area), button, FALSE, TRUE, 0);
+      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (dialog->action_area),
+                                          button, TRUE);
+      gtk_widget_show (button);
+
+      g_signal_connect_object (button, "clicked",
+                               G_CALLBACK (gimp_dialog_help),
+                               dialog, G_CONNECT_SWAPPED);
+
+      g_object_set_data (object, "gimp-dialog-help-button", button);
+    }
+
   return object;
 }
 
@@ -225,6 +244,15 @@ gimp_dialog_close (GtkDialog *dialog)
       gtk_main_do_event (event);
       gdk_event_free (event);
     }
+}
+
+static void
+gimp_dialog_help (GObject *dialog)
+{
+  GimpHelpFunc  help_func = g_object_get_data (dialog, "gimp-dialog-help-func");
+
+  if (help_func)
+    help_func (g_object_get_data (dialog, "gimp-dialog-help-id"), dialog);
 }
 
 
@@ -367,12 +395,21 @@ gimp_dialog_add_buttons_valist (GimpDialog *dialog,
     {
       response_id = va_arg (args, gint);
 
-      gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
+      /*  suppress a help button if we added one already  */
+      if ((response_id != GTK_RESPONSE_HELP) ||
+          (! g_object_get_data (G_OBJECT (dialog), "gimp-dialog-help-button")))
+        {
+          gtk_dialog_add_button (GTK_DIALOG (dialog), button_text, response_id);
+        }
 
       if (response_id == GTK_RESPONSE_OK)
-        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+        {
+          gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK);
+        }
     }
 }
+
 
 typedef struct
 {
@@ -484,4 +521,18 @@ gimp_dialog_run (GimpDialog *dialog)
   g_object_unref (dialog);
 
   return ri.response_id;
+}
+
+/**
+ * gimp_dialogs_show_help_button:
+ * @show: whether a help button should be added when creating a GimpDialog
+ *
+ * This function is for internal use only.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_dialogs_show_help_button (gboolean  show)
+{
+  show_help_button = show ? TRUE : FALSE;
 }

@@ -35,6 +35,7 @@ gimp_gamma
 gimp_install_cmap
 gimp_min_colors
 gimp_show_tool_tips
+gimp_show_help_button
 gimp_check_size
 gimp_check_type
 gimp_default_display
@@ -159,6 +160,7 @@ gimp_invert
 gimp_curves_spline
 gimp_curves_explicit
 gimp_color_balance
+gimp_colorize
 gimp_histogram
 gimp_hue_saturation
 gimp_threshold

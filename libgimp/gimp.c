@@ -176,6 +176,7 @@ static guchar        *_shm_addr          = NULL;
 static gdouble        _gamma_val         = 1.0;
 static gboolean       _install_cmap      = FALSE;
 static gboolean       _show_tool_tips    = TRUE;
+static gboolean       _show_help_button  = TRUE;
 static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
 static gint           _min_colors        = 144;
@@ -185,14 +186,14 @@ static gchar         *_display_name      = NULL;
 static gint           _monitor_number    = 0;
 static const gchar   *progname           = NULL;
 
-static guint8       write_buffer[WRITE_BUFFER_SIZE];
-static guint        write_buffer_index = 0;
+static guint8         write_buffer[WRITE_BUFFER_SIZE];
+static guint          write_buffer_index = 0;
 
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 
-static GHashTable *temp_proc_ht = NULL;
+static GHashTable    *temp_proc_ht       = NULL;
 
-static guint gimp_debug_flags = 0;
+static guint          gimp_debug_flags   = 0;
 
 static const GDebugKey gimp_debug_keys[] =
 {
@@ -1114,6 +1115,22 @@ gimp_show_tool_tips (void)
 }
 
 /**
+ * gimp_show_help_button:
+ *
+ * Returns whether or not GimpDialog should automatically add a help
+ * button if help_func and help_id are given.
+ *
+ * Return value: the show_help_button boolean
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_show_help_button (void)
+{
+  return _show_help_button;
+}
+
+/**
  * gimp_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
@@ -1634,18 +1651,19 @@ gimp_config (GPConfig *config)
       gimp_quit ();
     }
 
-  _tile_width     = config->tile_width;
-  _tile_height    = config->tile_height;
-  _shm_ID         = config->shm_ID;
-  _check_size     = config->check_size;
-  _check_type     = config->check_type;
-  _install_cmap   = config->install_cmap;
-  _show_tool_tips = config->show_tool_tips;
-  _min_colors     = config->min_colors;
-  _gdisp_ID       = config->gdisp_ID;
-  _wm_class       = g_strdup (config->wm_class);
-  _display_name   = g_strdup (config->display_name);
-  _monitor_number = config->monitor_number;
+  _tile_width       = config->tile_width;
+  _tile_height      = config->tile_height;
+  _shm_ID           = config->shm_ID;
+  _check_size       = config->check_size;
+  _check_type       = config->check_type;
+  _install_cmap     = config->install_cmap;
+  _show_tool_tips   = config->show_tool_tips;
+  _show_help_button = config->show_help_button;
+  _min_colors       = config->min_colors;
+  _gdisp_ID         = config->gdisp_ID;
+  _wm_class         = g_strdup (config->wm_class);
+  _display_name     = g_strdup (config->display_name);
+  _monitor_number   = config->monitor_number;
 
   if (config->app_name)
     g_set_application_name (config->app_name);

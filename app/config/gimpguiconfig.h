@@ -61,6 +61,7 @@ struct _GimpGuiConfig
   gchar               *theme_path;
   gchar               *theme;
   gboolean             use_help;
+  gboolean             show_help_button;
   gchar               *help_locales;
   GimpHelpBrowserType  help_browser;
   gchar               *web_browser;

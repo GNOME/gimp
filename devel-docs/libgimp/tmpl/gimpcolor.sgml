@@ -126,6 +126,18 @@ Functions for manipulating color, including curves and histograms.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_colorize ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@hue: 
+@saturation: 
+@lightness: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_histogram ##### -->
 <para>
 

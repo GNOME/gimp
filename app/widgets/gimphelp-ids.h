@@ -26,7 +26,6 @@
 #define GIMP_HELP_MAIN                            "gimp-main"
 
 #define GIMP_HELP_FILE_NEW                        "gimp-file-new"
-#define GIMP_HELP_FILE_NEW_CONFIRM                "gimp-file-new-confirm"
 #define GIMP_HELP_FILE_OPEN                       "gimp-file-open"
 #define GIMP_HELP_FILE_OPEN_AS_LAYER              "gimp-file-open-as-layer"
 #define GIMP_HELP_FILE_OPEN_LOCATION              "gimp-file-open-location"
@@ -37,12 +36,9 @@
 #define GIMP_HELP_FILE_SAVE_A_COPY                "gimp-file-save-a-copy"
 #define GIMP_HELP_FILE_SAVE_AS_TEMPLATE           "gimp-file-save-as-template"
 #define GIMP_HELP_FILE_SAVE_BY_EXTENSION          "gimp-file-save-by-extension"
-#define GIMP_HELP_FILE_SAVE_OVERWRITE             "gimp-file-save-overwrite"
 #define GIMP_HELP_FILE_REVERT                     "gimp-file-revert"
 #define GIMP_HELP_FILE_CLOSE                      "gimp-file-close"
-#define GIMP_HELP_FILE_CLOSE_CONFIRM              "gimp-file-close-confirm"
 #define GIMP_HELP_FILE_QUIT                       "gimp-file-quit"
-#define GIMP_HELP_FILE_QUIT_CONFIRM               "gimp-file-quit-confirm"
 
 #define GIMP_HELP_EDIT_UNDO                       "gimp-edit-undo"
 #define GIMP_HELP_EDIT_REDO                       "gimp-edit-redo"

@@ -33,7 +33,7 @@ The communication protocol between GIMP and it's plug-ins.
 @shm_ID: 
 @check_size: 
 @check_type: 
-@gimp_reserved_3: 
+@show_help_button: 
 @gimp_reserved_4: 
 @gimp_reserved_5: 
 @gimp_reserved_6: 

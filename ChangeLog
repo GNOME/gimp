@@ -1,5 +1,32 @@
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added gimprc option "show-help-button".
+
+	* app/dialogs/preferences-dialog.c: added a GUI for it.
+
+	* app/dialogs/file-save-dialog.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/quit-dialog.c
+	* app/display/gimpdisplayshell-close.c
+	* app/widgets/gimphelp-ids.h: don't set help-ids on confirmation
+	dialogs.
+
+	* libgimpbase/gimpprotocol.[ch]
+	* libgimp/gimp.[ch]: added boolean "show_help_button" to the
+	config message.
+
+	* app/plug-in/plug-in-run.c: pass the new preference to the plug-in.
+
+	* libgimpwidgets/gimpdialog.[ch]: added new function that allows to
+	set whether new dialogs should get a help button added.
+
+	* app/gui/gui.c
+	* libgimp/gimpui.c: call gimp_dialogs_show_help_button() according
+	to the gimprc settings.
+
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_about): set 
 	the help_func again (but not the help_id).
 

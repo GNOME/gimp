@@ -384,6 +384,7 @@ gimp_dialog_new
 gimp_dialog_new_valist
 gimp_dialog_add_buttons_valist
 gimp_dialog_run
+gimp_dialogs_show_help_button
 <SUBSECTION Standard>
 GIMP_TYPE_DIALOG
 GIMP_DIALOG

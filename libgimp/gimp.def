@@ -461,6 +461,7 @@ EXPORTS
 	gimp_shear
 	gimp_shm_ID
 	gimp_shm_addr
+	gimp_show_help_button
 	gimp_show_tool_tips
 	gimp_smudge
 	gimp_smudge_default

@@ -114,6 +114,8 @@ gimp_ui_init (const gchar *prog_name,
   if (! gimp_show_tool_tips ())
     gimp_help_disable_tooltips ();
 
+  gimp_dialogs_show_help_button (gimp_show_help_button ());
+
   initialized = TRUE;
 }
 

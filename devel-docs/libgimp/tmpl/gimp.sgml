@@ -327,6 +327,14 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_show_help_button ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_check_size ##### -->
 <para>
 

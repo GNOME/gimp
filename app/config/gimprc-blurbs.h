@@ -270,6 +270,11 @@ N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 N_("When enabled, all paint tools will show a preview of the current " \
    "brush's outline.")
 
+#define SHOW_HELP_BUTTON_BLURB \
+N_("When enabled, dialogs will show a help button that gives access to " \
+   "the related help page.  Without this button, the help page can still " \
+   "be reached by pressing F1.")
+
 #define SHOW_PAINT_TOOL_CURSOR_BLURB \
 N_("When enabled, the cursor will be shown over the image while " \
     "using a paint tool.")

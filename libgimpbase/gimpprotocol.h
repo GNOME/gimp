@@ -68,7 +68,7 @@ struct _GPConfig
   gint32   shm_ID;
   gint8    check_size;
   gint8    check_type;
-  gint8    gimp_reserved_3;
+  gint8    show_help_button;
   gint8    gimp_reserved_4;
   gint8    gimp_reserved_5;
   gint8    gimp_reserved_6;
@@ -86,9 +86,9 @@ struct _GPConfig
 
 struct _GPTileReq
 {
-  gint32  drawable_ID;
-  guint32 tile_num;
-  guint32 shadow;
+  gint32   drawable_ID;
+  guint32  tile_num;
+  guint32  shadow;
 };
 
 struct _GPTileData

@@ -80,6 +80,9 @@ void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
 
 gint        gimp_dialog_run                (GimpDialog     *dialog);
 
+/*  for internal use only!  */
+void        gimp_dialogs_show_help_button  (gboolean        show);
+
 
 G_END_DECLS
 

@@ -92,6 +92,7 @@ EXPORTS
 	gimp_dialog_new
 	gimp_dialog_new_valist
 	gimp_dialog_run
+	gimp_dialogs_show_help_button
 	gimp_double_adjustment_update
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type

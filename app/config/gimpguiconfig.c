@@ -83,6 +83,7 @@ enum
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
+  PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
   PROP_WEB_BROWSER,
@@ -228,6 +229,10 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "use-help", USE_HELP_BLURB,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_HELP_BUTTON,
+                                    "show-help-button", SHOW_HELP_BUTTON_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_HELP_LOCALES,
                                    "help-locales", HELP_LOCALES_BLURB,
                                    "",
@@ -349,6 +354,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_HELP_BUTTON:
+      gui_config->show_help_button = g_value_get_boolean (value);
+      break;
     case PROP_HELP_LOCALES:
       g_free (gui_config->help_locales);
       gui_config->help_locales = g_value_dup_string (value);
@@ -448,6 +456,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);
+      break;
+    case PROP_SHOW_HELP_BUTTON:
+      g_value_set_boolean (value, gui_config->show_help_button);
       break;
     case PROP_HELP_LOCALES:
       g_value_set_string (value, gui_config->help_locales);

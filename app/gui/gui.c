@@ -99,6 +99,9 @@ static gboolean   gui_exit_after_callback       (Gimp               *gimp,
 static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  Gimp               *gimp);
+static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
+                                                 GParamSpec         *pspec,
+                                                 Gimp               *gimp);
 static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
@@ -362,6 +365,16 @@ gui_restore_callback (Gimp               *gimp,
                     G_CALLBACK (gui_show_tooltips_notify),
                     gimp);
 
+  gimp_dialogs_show_help_button (gui_config->use_help &&
+                                 gui_config->show_help_button);
+
+  g_signal_connect (gui_config, "notify::use-help",
+                    G_CALLBACK (gui_show_help_button_notify),
+                    gimp);
+  g_signal_connect (gui_config, "notify::show-help-button",
+                    G_CALLBACK (gui_show_help_button_notify),
+                    gimp);
+
   g_signal_connect (gimp_get_user_context (gimp), "display_changed",
 		    G_CALLBACK (gui_display_changed),
 		    gimp);
@@ -484,6 +497,10 @@ gui_exit_after_callback (Gimp     *gimp,
     g_print ("EXIT: gui_exit_after_callback\n");
 
   g_signal_handlers_disconnect_by_func (gimp->config,
+                                        gui_show_help_button_notify,
+                                        gimp);
+
+  g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_tooltips_notify,
                                         gimp);
 
@@ -519,6 +536,15 @@ gui_show_tooltips_notify (GimpGuiConfig *gui_config,
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();
+}
+
+static void
+gui_show_help_button_notify (GimpGuiConfig *gui_config,
+                             GParamSpec    *param_spec,
+                             Gimp          *gimp)
+{
+  gimp_dialogs_show_help_button (gui_config->use_help &&
+                                 gui_config->show_help_button);
 }
 
 static void
