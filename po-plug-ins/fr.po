@@ -9356,3 +9356,182 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Logfile: "
 msgstr ""
+
+#: libgimp/gimpexport.c:264
+msgid "Cancel"
+msgstr "Annuler"
+
+#: libgimp/gimpfileselection.c:356
+#: libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Fermer"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixels"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "pouce"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "pouces"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimètre"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimètres"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "point"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "points"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "picas"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "pourcent"
+
+#: libgimp/gimpexport.c:257
+msgid "Ignore"
+msgstr "Ignorer"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Sélection"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Sélection du fichier"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "avertissement: pas de répertoire personnel."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Suite..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr "chaîne unit-menu-format terminée par une séquence-%%"
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr "unit-menu-format contient la séquence de format inconnu '%%%c'"
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Sélection des unités"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Unité "
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Facteur"
+
+#: libgimp/gimpexport.c:89
+msgid "can't handle layers"
+msgstr "je ne peux gérer les calques"
+
+#: libgimp/gimpexport.c:90 libgimp/gimpexport.c:99
+msgid "Merge visible layers"
+msgstr "Fusionner les calques visibles"
+
+#: libgimp/gimpexport.c:98
+msgid "can only handle layers as animation frames"
+msgstr "je ne peux gérer les calques en tant qu'images d'une animation"
+
+#: libgimp/gimpexport.c:99
+#, fuzzy
+msgid "Save as animation"
+msgstr "Informations de Cisaillement"
+
+#: libgimp/gimpexport.c:107
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Gomme (met la couleur de fond ou rend transparent)"
+
+#: libgimp/gimpexport.c:108
+msgid "Flatten Image"
+msgstr "Aplatir l'image"
+
+#: libgimp/gimpexport.c:116
+msgid "can only handle RGB images"
+msgstr "Je ne gère que les images RVB."
+
+#: libgimp/gimpexport.c:117 libgimp/gimpexport.c:144 libgimp/gimpexport.c:153
+msgid "Convert to RGB"
+msgstr "Convertir en RVB"
+
+#: libgimp/gimpexport.c:125
+msgid "can only handle grayscale images"
+msgstr "Je ne gère que les images en niveaux de gris."
+
+#: libgimp/gimpexport.c:126 libgimp/gimpexport.c:144 libgimp/gimpexport.c:163
+msgid "Convert to grayscale"
+msgstr "Convertir en niveaux de gris."
+
+#: libgimp/gimpexport.c:134
+msgid "can only handle indexed images"
+msgstr "je ne gère que les images indexées"
+
+#: libgimp/gimpexport.c:135 libgimp/gimpexport.c:153 libgimp/gimpexport.c:162
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Convertir en couleurs indexées en utilisant\n"
+"les réglages par défaut (faites-le à la main\n"
+"pour régler le résultat)."
+
+#: libgimp/gimpexport.c:143
+msgid "can only handle RGB or grayscale images"
+msgstr "je ne gère que les images RVB ou en niveaux de gris"
+
+#: libgimp/gimpexport.c:152
+msgid "can only handle RGB or indexed images"
+msgstr "je ne gère que les images RVB ou indexées"
+
+#: libgimp/gimpexport.c:161
+msgid "can only handle grayscale or indexed images"
+msgstr "je ne gère que les images en tons de gris ou indexées"
+
+#: libgimp/gimpexport.c:233
+msgid "Export File"
+msgstr "Exporter fichier"
+
+#: libgimp/gimpexport.c:249
+msgid "Export"
+msgstr "Exporter"
+
+#: libgimp/gimpexport.c:274
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr "Votre image devrait être exportée avant d'être enregistrée pour les raison suivantes:"
+
+#: libgimp/gimpexport.c:332
+msgid "The export conversion won't modify your original image."
+msgstr "La conversion de sortie ne modifiera pas votre image originale."

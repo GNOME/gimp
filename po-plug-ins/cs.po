@@ -6955,3 +6955,196 @@ msgstr ""
 #: plug-ins/struc/struc.c:283
 msgid "Bottom-right"
 msgstr ""
+
+#: libgimp/gimpexport.c:306
+msgid "Cancel"
+msgstr "Zru¹it"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Zavøít"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixely"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "palec"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "palce"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "milimetry"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "body"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "piku"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "piky"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procent"
+
+#: libgimp/gimpexport.c:299
+msgid "Ignore"
+msgstr "Ignorovat"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Výbìr"
+
+#: libgimp/gimpcolorbutton.c:102
+msgid "/Use Foreground Color"
+msgstr "/Pou¾ít barvu popøedí"
+
+#: libgimp/gimpcolorbutton.c:103
+msgid "/Use Background Color"
+msgstr "/Pou¾ít barvu pozadí"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "varování: chybí domovský adresáø."
+
+#: libgimp/gimpexport.c:122
+msgid "can't handle layers"
+msgstr "nelze zpracovat vrstvy"
+
+#: libgimp/gimpexport.c:123 libgimp/gimpexport.c:132
+msgid "Merge visible layers"
+msgstr "Slouèit viditelné vrstvy"
+
+#: libgimp/gimpexport.c:131
+msgid "can only handle layers as animation frames"
+msgstr "lze zpracovat vrstvy pouze jako políèka animace"
+
+#: libgimp/gimpexport.c:132
+msgid "Save as animation"
+msgstr "Zapsat jako animaci"
+
+#: libgimp/gimpexport.c:140
+msgid "can't handle transparency"
+msgstr "nelze zpracovat prùhlednost"
+
+#: libgimp/gimpexport.c:141
+msgid "Flatten Image"
+msgstr "Slouèit obraz"
+
+#: libgimp/gimpexport.c:149
+msgid "can only handle RGB images"
+msgstr "lze zpracovat pouze RGB obrázky"
+
+#: libgimp/gimpexport.c:150 libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+msgid "Convert to RGB"
+msgstr "Pøevod do RGB"
+
+#: libgimp/gimpexport.c:158
+msgid "can only handle grayscale images"
+msgstr "lze zpracovat pouze obrázky v ¹edích"
+
+#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:177 libgimp/gimpexport.c:196
+msgid "Convert to grayscale"
+msgstr "Pøevod do odstínù ¹edi"
+
+#: libgimp/gimpexport.c:167
+msgid "can only handle indexed images"
+msgstr "lze zpracovat pouze indexované obrázky"
+
+#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konvertuje do indexovaného dle implicitního nastavení.\n"
+"(Chcete-li doladit výsledek, udìlejzte to ruènì.)"
+
+#: libgimp/gimpexport.c:176
+msgid "can only handle RGB or grayscale images"
+msgstr "lze zpracovat pouze RGB obrázky nebo obrázky v ¹edích"
+
+#: libgimp/gimpexport.c:185
+msgid "can only handle RGB or indexed images"
+msgstr "lze zpracovat pouze RGB nebo indexované obrázky"
+
+#: libgimp/gimpexport.c:194
+msgid "can only handle grayscale or indexed images"
+msgstr "lze zpracovat pouze obrázky v ¹edích nebo indexované obrázky"
+
+#: libgimp/gimpexport.c:204
+msgid "needs an alpha channel"
+msgstr "vy¾aduje alfa kanál"
+
+#: libgimp/gimpexport.c:205
+msgid "Add alpha channel"
+msgstr "Pøidat alfa kanál"
+
+#: libgimp/gimpexport.c:275
+msgid "Export File"
+msgstr "Exportovat soubor"
+
+#: libgimp/gimpexport.c:291
+msgid "Export"
+msgstr "Export"
+
+#: libgimp/gimpexport.c:316
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Pøed tím, ne¾ mù¾e být obrázek zapsán, mìl by být exportován z následujících "
+"dùvodù:"
+
+#: libgimp/gimpexport.c:374
+msgid "The export conversion won't modify your original image."
+msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Výbìr souboru"
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Více..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr "øetìzec unit-menu-format konèí sekvencí %%"
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr "unit-menu-format obsahuje neznámou formátovací sekvenci '%%%c'"
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Výbìr jednotek"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Jednotka "
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Èinitel"

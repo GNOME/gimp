@@ -121,10 +121,3 @@ app/transform_tool.c
 app/undo_history.c
 app/undo.c
 app/xcf.c
-libgimp/gimpcolorbutton.c
-libgimp/gimpenv.c
-libgimp/gimpexport.c
-libgimp/gimpfileselection.c
-libgimp/gimpunit.c
-libgimp/gimpunitmenu.c
-

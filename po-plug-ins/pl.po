@@ -2,17 +2,16 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "POT-Creation-Date: 1999-11-01 08:54-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 1999-11-06 19:21+0200\n"
+"Last-Translator: Artur Polaczyñski <psi2494@orca.mila.edu.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=ISO8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
@@ -28,7 +27,7 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:194
 msgid "<Image>/Filters/Colors/Alien Map"
-msgstr ""
+msgstr "<Image>/Filtry/Kolory/Alien Map"
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
@@ -40,21 +39,21 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:710
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "Zmienia intensywno¶æ czerwonego"
 
 #: plug-ins/AlienMap/AlienMap.c:718
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "Zmienia intensywno¶æ zielonego"
 
 #: plug-ins/AlienMap/AlienMap.c:726
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "Zmienia intensywno¶æ niebieskiego"
 
 #. Redmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:729 plug-ins/common/compose.c:125
 #: plug-ins/common/compose.c:127
 msgid "Red:"
-msgstr ""
+msgstr "Czerwony:"
 
 #: plug-ins/AlienMap/AlienMap.c:736 plug-ins/AlienMap/AlienMap.c:779
 #: plug-ins/AlienMap/AlienMap.c:821
@@ -67,8 +66,9 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:747 plug-ins/AlienMap/AlienMap.c:789
 #: plug-ins/AlienMap/AlienMap.c:831
+#, fuzzy
 msgid "Cosine"
-msgstr ""
+msgstr "Kolor"
 
 #: plug-ins/AlienMap/AlienMap.c:755
 msgid "Use cosine-function for red component"
@@ -88,7 +88,7 @@ msgstr ""
 #: plug-ins/AlienMap/AlienMap.c:772 plug-ins/common/compose.c:125
 #: plug-ins/common/compose.c:127
 msgid "Green:"
-msgstr ""
+msgstr "Zielony:"
 
 #: plug-ins/AlienMap/AlienMap.c:787
 msgid "Use sine-function for green component"
@@ -107,7 +107,7 @@ msgstr ""
 #: plug-ins/AlienMap/AlienMap.c:814 plug-ins/common/compose.c:125
 #: plug-ins/common/compose.c:127
 msgid "Blue:"
-msgstr ""
+msgstr "Niebieski:"
 
 #: plug-ins/AlienMap/AlienMap.c:829
 msgid "Use sine-function for blue component"
@@ -151,11 +151,11 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
 #: plug-ins/struc/struc.c:239
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: plug-ins/AlienMap/AlienMap.c:869 plug-ins/AlienMap2/AlienMap2.c:792
 msgid "Accept settings and apply filter on image"
-msgstr ""
+msgstr "Zaakcepyj ustawienia filtru na obrazku"
 
 #. cancel button
 #: plug-ins/AlienMap/AlienMap.c:871 plug-ins/AlienMap2/AlienMap2.c:794
@@ -185,11 +185,11 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
 #: plug-ins/struc/struc.c:248
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: plug-ins/AlienMap/AlienMap.c:878 plug-ins/AlienMap2/AlienMap2.c:801
 msgid "Reject any changes and close plug-in"
-msgstr ""
+msgstr "Anuluje zmany i zamyka wtyczkê"
 
 #: plug-ins/AlienMap/AlienMap.c:880 plug-ins/AlienMap2/AlienMap2.c:803
 #: plug-ins/gimpressionist/gimpressionist.c:506
@@ -198,7 +198,7 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:888 plug-ins/AlienMap2/AlienMap2.c:811
 msgid "Show information about this plug-in and the author"
-msgstr ""
+msgstr "Pokazujê informacjê o wtyczce i jej autorze"
 
 #: plug-ins/AlienMap/AlienMap.c:1151
 msgid "About Alien Map"
@@ -232,7 +232,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
 msgid "<Image>/Filters/Colors/Alien Map 2"
-msgstr ""
+msgstr "<Image>/Filtry/Kolory/Alien Map 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
@@ -364,7 +364,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
-msgstr ""
+msgstr "¦wiat³o punktowe"
 
 #: plug-ins/Lighting/lighting_ui.c:35
 msgid "Directional light"
@@ -376,7 +376,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:37
 msgid "No light"
-msgstr ""
+msgstr "Bez ¶wiat³a"
 
 #: plug-ins/Lighting/lighting_ui.c:43
 msgid "From image"
@@ -756,12 +756,12 @@ msgstr ""
 
 #: plug-ins/bmp/bmpwrite.c:413
 msgid "Save as BMP"
-msgstr ""
+msgstr "Zapisz jako BMP"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:438
 msgid "Save Options"
-msgstr ""
+msgstr "Zapisz Ustawienia"
 
 #: plug-ins/bmp/bmpwrite.c:446
 msgid "RLE encoded"
@@ -781,7 +781,7 @@ msgstr ""
 
 #: plug-ins/borderaverage/borderaverage.c:342
 msgid "Number of colors"
-msgstr ""
+msgstr "Liczba Kolorów"
 
 #: plug-ins/borderaverage/borderaverage.c:345
 msgid "Bucket Size:"
@@ -789,7 +789,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "Keep image's values"
-msgstr "Keep image's values"
+msgstr ""
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "Keep the first value"
@@ -797,7 +797,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Fill with parameter k"
-msgstr ""
+msgstr "Wype³nij z parametrem k"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "k{x(1-x)}^p"
@@ -905,7 +905,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:291
 msgid "Use reverse value"
-msgstr ""
+msgstr "U¿yj zameinionej warto¶ci"
 
 #: plug-ins/common/CML_explorer.c:293
 msgid "With random power (0,10)"
@@ -937,17 +937,17 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:310
 msgid "All black"
-msgstr ""
+msgstr "Wszystkie czarne"
 
 #. 0
 #: plug-ins/common/CML_explorer.c:311
 msgid "All gray"
-msgstr ""
+msgstr "Wszystkie szare"
 
 #. 1
 #: plug-ins/common/CML_explorer.c:312
 msgid "All white"
-msgstr ""
+msgstr "Wszystkie bia³e"
 
 #. 2
 #: plug-ins/common/CML_explorer.c:313
@@ -1028,7 +1028,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_edit_area_info.c:286
 #: plug-ins/imagemap/imap_grid.c:231
 msgid "Preview"
-msgstr ""
+msgstr "Podgl±d"
 
 #: plug-ins/common/CML_explorer.c:1383
 msgid "New seed"
@@ -1044,11 +1044,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1407
 msgid "Load"
-msgstr ""
+msgstr "Wczytaj"
 
 #: plug-ins/common/CML_explorer.c:1410 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: plug-ins/common/CML_explorer.c:1427
 msgid "Hue settings"
@@ -1290,7 +1290,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-console.c:205
 #: plug-ins/script-fu/script-fu-scripts.c:1916
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:690 plug-ins/common/animationplay.c:693
@@ -1303,15 +1303,15 @@ msgstr ""
 
 #: plug-ins/common/animationplay.c:729
 msgid "Rewind"
-msgstr ""
+msgstr "Przewiñ"
 
 #: plug-ins/common/animationplay.c:735
 msgid "Step"
-msgstr ""
+msgstr "Krok"
 
 #: plug-ins/common/animationplay.c:793
 msgid "Frame %v of %u"
-msgstr ""
+msgstr "Klatka %v z %u"
 
 #: plug-ins/common/animationplay.c:971
 #, c-format
@@ -1409,7 +1409,7 @@ msgstr ""
 
 #: plug-ins/common/autocrop.c:67
 msgid "<Image>/Image/Transforms/Autocrop"
-msgstr ""
+msgstr "<Image>/Obrazek/Przekszta³cenia/Auto Przytnij"
 
 #: plug-ins/common/autocrop.c:105
 msgid "Cropping..."
@@ -1433,7 +1433,7 @@ msgstr ""
 
 #: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto-Stretch HSV"
-msgstr ""
+msgstr "<Image>/Obrazek/Kolory/Auto-Stretch HSV"
 
 #: plug-ins/common/autostretch_hsv.c:119
 msgid "Auto-Stretching HSV..."
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: plug-ins/common/c_astretch.c:83
 msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
-msgstr ""
+msgstr "<Image>/Obrazek/Kolory/Auto-Stretch Contrast"
 
 #: plug-ins/common/c_astretch.c:115
 msgid "Auto-Stretching Contrast..."
@@ -1696,7 +1696,7 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:255 plug-ins/gimpressionist/color.c:51
 #: plug-ins/print/print.c:887
 msgid "Color"
-msgstr ""
+msgstr "Kolor"
 
 #: plug-ins/common/colorify.c:344
 msgid "Custom Color: "
@@ -1724,7 +1724,7 @@ msgstr ""
 
 #: plug-ins/common/color_enhance.c:89
 msgid "<Image>/Image/Colors/Color Enhance"
-msgstr ""
+msgstr "<Image>/Obrazek/Kolory/Color Enhance"
 
 #: plug-ins/common/color_enhance.c:121
 msgid "Color Enhance..."
@@ -1788,7 +1788,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Yellow:"
-msgstr ""
+msgstr "¯u³ty:"
 
 #: plug-ins/common/compose.c:132
 msgid "cmy-compose"
@@ -1800,7 +1800,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:133
 msgid "Black:"
-msgstr ""
+msgstr "Czarny:"
 
 #: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
@@ -1816,7 +1816,7 @@ msgstr ""
 
 #: plug-ins/common/compose.c:234
 msgid "<Image>/Image/Channels/Compose"
-msgstr ""
+msgstr "<Image>/Obrazek/Kana³y/Compose"
 
 #: plug-ins/common/compose.c:241
 msgid "Compose an image from multiple drawables of gray images"
@@ -1876,23 +1876,23 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:76
 msgid "Grey"
-msgstr ""
+msgstr "Szary"
 
 #: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:130
 msgid "Red"
-msgstr ""
+msgstr "Czerwony"
 
 #: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:131
 msgid "Green"
-msgstr ""
+msgstr "Zielony"
 
 #: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:132
 msgid "Blue"
-msgstr ""
+msgstr "Niebieski"
 
 #: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:148
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: plug-ins/common/convmatrix.c:80
 msgid "Extend"
@@ -1992,15 +1992,15 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
 msgid "red"
-msgstr ""
+msgstr "czerwony"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:131
 msgid "green"
-msgstr ""
+msgstr "zielony"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "blue"
-msgstr ""
+msgstr "niebieski"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:135
 msgid "hue"
@@ -2052,7 +2052,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:144
 msgid "black"
-msgstr ""
+msgstr "czarny"
 
 #: plug-ins/common/decompose.c:145
 msgid "Cyan_K"
@@ -2068,7 +2068,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:148
 msgid "alpha"
-msgstr ""
+msgstr "alfa"
 
 #: plug-ins/common/decompose.c:216
 msgid "Decompose an image into different types of channels"
@@ -2082,7 +2082,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:222
 msgid "<Image>/Image/Channels/Decompose"
-msgstr ""
+msgstr "<Image>/Obrazek/Kana³y/Decompose"
 
 #: plug-ins/common/decompose.c:303
 msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
@@ -2210,7 +2210,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:396
 msgid "saves files in Compuserve GIF file format"
-msgstr ""
+msgstr "zapisuje plik w formacie Compuserve GIF"
 
 #: plug-ins/common/gif.c:691
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
@@ -2246,29 +2246,29 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1274
 msgid "Save as GIF"
-msgstr ""
+msgstr "Zapisz jako GIF"
 
 #. regular gif parameter settings
 #: plug-ins/common/gif.c:1308
 msgid "GIF Options"
-msgstr ""
+msgstr "Opce GIF"
 
 #: plug-ins/common/gif.c:1316 plug-ins/common/png.c:953
 msgid "Interlace"
-msgstr ""
+msgstr "Przeplot"
 
 #: plug-ins/common/gif.c:1328
 msgid "GIF Comment: "
-msgstr ""
+msgstr "Komentarz: "
 
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1389
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "Opcje animacji GIF"
 
 #: plug-ins/common/gif.c:1397
 msgid "Loop forever"
-msgstr ""
+msgstr "Zapêtl"
 
 #: plug-ins/common/gif.c:1410
 msgid "Delay between frames where unspecified: "
@@ -2319,11 +2319,11 @@ msgstr ""
 
 #: plug-ins/common/gifload.c:300
 msgid "GIF: not a GIF file\n"
-msgstr ""
+msgstr "GIF: to nie jest GIF\n"
 
 #: plug-ins/common/gifload.c:309
 msgid "GIF: bad version number, not '87a' or '89a'\n"
-msgstr ""
+msgstr "GIF: z³a wersja pliku, nie '87a' lub '89a'\n"
 
 #: plug-ins/common/gifload.c:315
 msgid "GIF: failed to read screen descriptor\n"
@@ -2482,7 +2482,7 @@ msgstr ""
 #. attach color selectors
 #: plug-ins/common/grid.c:625
 msgid "Color: "
-msgstr ""
+msgstr "Kolor: "
 
 #: plug-ins/common/grid.c:627
 msgid "Horizontal Color"
@@ -2501,8 +2501,9 @@ msgid "Compose several images to a roll film"
 msgstr ""
 
 #: plug-ins/common/film.c:249
+#, fuzzy
 msgid "<Image>/Filters/Combine/Film"
-msgstr ""
+msgstr "<Image>/Filtry/Combine/Film"
 
 #: plug-ins/common/film.c:336
 msgid "Composing Images..."
@@ -2519,7 +2520,7 @@ msgstr ""
 
 #: plug-ins/common/film.c:1060 plug-ins/gimpressionist/color.c:79
 msgid "Color:"
-msgstr ""
+msgstr "Kolor:"
 
 #: plug-ins/common/film.c:1166
 msgid "Available images:"
@@ -2534,14 +2535,15 @@ msgid "add -->"
 msgstr ""
 
 #: plug-ins/common/film.c:1194
+#, fuzzy
 msgid "remove"
-msgstr ""
+msgstr "Podgl±d"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1228 plug-ins/common/film.c:1244
 #: plug-ins/common/film.c:1283
 msgid "Film"
-msgstr ""
+msgstr "Film"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1293
@@ -2585,8 +2587,9 @@ msgid "Films color Color Picker"
 msgstr ""
 
 #: plug-ins/common/film.c:1427
+#, fuzzy
 msgid "Numbers color Color Picker"
-msgstr ""
+msgstr "Liczba Kolorów"
 
 #: plug-ins/common/mail.c:212
 msgid "pipe files to uuencode then mail them"
@@ -2598,7 +2601,7 @@ msgstr ""
 
 #: plug-ins/common/mail.c:217
 msgid "<Image>/File/Mail image"
-msgstr ""
+msgstr "<Image>/Plik/Wy¶lij obrazek"
 
 #: plug-ins/common/mail.c:489
 msgid "Send to mail"
@@ -2753,7 +2756,7 @@ msgstr ""
 #.
 #: plug-ins/common/ps.c:2097 plug-ins/print/print.c:852
 msgid "Resolution:"
-msgstr ""
+msgstr "Rozdzielczo¶æ:"
 
 #: plug-ins/common/ps.c:2097 plug-ins/common/ps.c:2354
 #: plug-ins/imagemap/imap_rectangle.c:386
@@ -2899,7 +2902,7 @@ msgstr ""
 
 #: plug-ins/common/rotate.c:170
 msgid "<Image>/Image/Transforms/Rotate"
-msgstr ""
+msgstr "<Image>/Obrazek/Przekszta³cenia/Obróæ"
 
 #: plug-ins/common/rotate.c:527
 msgid "You can not rotate the whole image if there's a selection."
@@ -2934,11 +2937,12 @@ msgstr ""
 
 #: plug-ins/common/rotators.c:50
 msgid "<Image>/Image/Transforms/Image"
-msgstr ""
+msgstr "<Image>/Obrazek/Przekszta³æ/Obraz"
 
 #: plug-ins/common/rotators.c:51
+#, fuzzy
 msgid "<Image>/Image/Transforms/Layer"
-msgstr ""
+msgstr "<Image>/Obrazek/Opcje Kana³ów/Compose"
 
 #: plug-ins/common/rotators.c:70
 msgid "Rotates the given layer 90 degrees clockwise."
@@ -3032,11 +3036,11 @@ msgstr ""
 
 #: plug-ins/common/warp.c:614
 msgid "Black"
-msgstr ""
+msgstr "Czarny"
 
 #: plug-ins/common/warp.c:623
 msgid "FG Color"
-msgstr ""
+msgstr "Kolor FG"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -3096,7 +3100,7 @@ msgstr ""
 #. --------------------------------------------------------
 #: plug-ins/common/warp.c:807
 msgid "Angle"
-msgstr ""
+msgstr "K±t"
 
 #: plug-ins/common/warp.c:828
 msgid "Fixed-direction-vector map selection menu"
@@ -3305,8 +3309,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/zealouscrop.c:69
+#, fuzzy
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr ""
+msgstr "<Image>/Obrazek/Opcje Kana³ów/Compose"
 
 #: plug-ins/common/zealouscrop.c:105
 msgid "ZealousCropping(tm)..."
@@ -3339,11 +3344,11 @@ msgstr ""
 #. parameter settings
 #: plug-ins/gap/gap_arr_dialog.c:973
 msgid "Enter Values"
-msgstr ""
+msgstr "Wpisz Warto¶æ"
 
 #: plug-ins/gap/gap_arr_dialog.c:990 plug-ins/gap/gap_arr_dialog.c:1050
 msgid "Value: "
-msgstr ""
+msgstr "Warto¶æ: "
 
 #: plug-ins/gap/gap_arr_dialog.c:1026
 msgid "WGT_ACT_BUTTON not implemented yet, widget type ignored\n"
@@ -3394,8 +3399,9 @@ msgstr ""
 
 #. show the description
 #: plug-ins/gap/gap_dbbrowser_utils.c:342
+#, fuzzy
 msgid "Blurb :"
-msgstr ""
+msgstr "Niebieski:"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In :"
@@ -4108,7 +4114,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:246
 msgid "Screen"
-msgstr ""
+msgstr "Ekran"
 
 #: plug-ins/gap/gap_mov_dialog.c:247 plug-ins/gimpressionist/paper.c:155
 msgid "Overlay"
@@ -4781,7 +4787,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:329
 msgid "Number ofColors"
-msgstr ""
+msgstr "Liczba Kolorów"
 
 #: plug-ins/gap/gap_range_ops.c:330
 msgid ""
@@ -4790,8 +4796,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:337
+#, fuzzy
 msgid "Dither Options"
-msgstr ""
+msgstr "Zapisz Ustawienia"
 
 #: plug-ins/gap/gap_range_ops.c:344
 msgid "Enable transparency"
@@ -5291,8 +5298,9 @@ msgid "Performs various artistic operations on an image"
 msgstr ""
 
 #: plug-ins/gimpressionist/gimp.c:105
+#, fuzzy
 msgid "<Image>/Filters/Artistic/GIMPressionist"
-msgstr ""
+msgstr "<Image>/Filtry/Artyystyczne/GIMPressionist"
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -5917,7 +5925,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
-msgstr ""
+msgstr "Czy¶æ"
 
 #: plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
@@ -6073,7 +6081,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:200 plug-ins/print/print.c:2150
 msgid "File"
-msgstr ""
+msgstr "Plik"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:206
 msgid "WAIS"
@@ -6171,8 +6179,9 @@ msgid "Lines"
 msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:182
+#, fuzzy
 msgid "Crosses"
-msgstr ""
+msgstr "Kolor"
 
 #: plug-ins/imagemap/imap_grid.c:189
 msgid "Grid Granularity"
@@ -6250,12 +6259,13 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:337
 msgid "Comment"
-msgstr ""
+msgstr "Komentarz"
 
 #. Create selection
 #: plug-ins/imagemap/imap_selection.c:358
+#, fuzzy
 msgid "Selection"
-msgstr ""
+msgstr "Rozdzielczo¶æ:"
 
 #: plug-ins/imagemap/imap_settings.c:67
 msgid "Settings for this Mapfile"
@@ -6271,11 +6281,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:86
 msgid "Title:"
-msgstr ""
+msgstr "Tytu³:"
 
 #: plug-ins/imagemap/imap_settings.c:88
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: plug-ins/imagemap/imap_settings.c:90
 msgid "Default URL:"
@@ -6302,8 +6312,9 @@ msgid "Undo"
 msgstr ""
 
 #: plug-ins/imagemap/imap_toolbar.c:124
+#, fuzzy
 msgid "Redo"
-msgstr ""
+msgstr "Czerwony"
 
 #: plug-ins/imagemap/imap_toolbar.c:143
 msgid "Zoom in"
@@ -6640,7 +6651,7 @@ msgstr ""
 
 #: plug-ins/print/print.c:339
 msgid "<Image>/File/Print"
-msgstr ""
+msgstr "<Image>/Plik/Drukuj"
 
 #: plug-ins/print/print.c:695
 msgid "Auto"
@@ -6711,7 +6722,7 @@ msgstr ""
 #.
 #: plug-ins/print/print.c:956
 msgid "Brightness:"
-msgstr ""
+msgstr "Jasno¶æ:"
 
 #.
 #. * Printer option menu...
@@ -6722,18 +6733,18 @@ msgstr ""
 
 #: plug-ins/print/print.c:1017 plug-ins/print/print.c:1050
 msgid "Setup"
-msgstr ""
+msgstr "Ustawienia"
 
 #: plug-ins/print/print.c:1037
 msgid "Print"
-msgstr ""
+msgstr "Drukuj"
 
 #.
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/print.c:1072
 msgid "Driver:"
-msgstr ""
+msgstr "Sterownik:"
 
 #.
 #. * PPD file...
@@ -6758,7 +6769,7 @@ msgstr ""
 #.
 #: plug-ins/print/print.c:1155
 msgid "Print To File?"
-msgstr ""
+msgstr "Drukuj do pliku?"
 
 #.
 #. * PPD file selection dialog...
@@ -6773,7 +6784,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:193
 msgid "Script-Fu Console"
-msgstr ""
+msgstr "Konsola Script-Fu"
 
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:213
@@ -6842,15 +6853,15 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:1869
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: plug-ins/script-fu/script-fu-scripts.c:1879
 msgid "Copyright: "
-msgstr ""
+msgstr "Copyright: "
 
 #: plug-ins/script-fu/script-fu-scripts.c:1889
 msgid "Date: "
-msgstr ""
+msgstr "Data: "
 
 #: plug-ins/script-fu/script-fu-scripts.c:1901
 msgid "Image types: "
@@ -6887,8 +6898,9 @@ msgid "Converts a selection to a path"
 msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:158
+#, fuzzy
 msgid "<Image>/Select/To Path"
-msgstr ""
+msgstr "<Image>/Zaznacz/To Path"
 
 #: plug-ins/sel2path/sel2path.c:203
 msgid "No selection to convert"
@@ -6954,4 +6966,201 @@ msgstr ""
 
 #: plug-ins/struc/struc.c:283
 msgid "Bottom-right"
+msgstr ""
+
+#~ msgid "Green:    "
+#~ msgstr "Zielony:    "
+
+#~ msgid "Colors  :"
+#~ msgstr "Kolor  :"
+
+#, fuzzy
+#~ msgid "<Image>/Image/Transforms/Guillotine"
+#~ msgstr "<Image>/Obrazek/Opcje Kana³ów/Compose"
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Zamknij"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "piksel"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "piksele"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "cal"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "cale"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "milimetry"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "punkt"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "punkty"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procent"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Ignoruj"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Zaznacz"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Wybór pliku"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "ostrze¿enie: brak katalogu domowego."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Wiêcej..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Wybór jednostki"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Jednostka"
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Wspó³czynnik"
+
+#: libgimp/gimpexport.c:121
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Skaluj warstwê"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+msgid "Merge visible layers"
+msgstr "Po³±cz widoczne warstwy"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:131
+msgid "Save as animation"
+msgstr "Zapisz jako animacje"
+
+#: libgimp/gimpexport.c:139
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
+
+#: libgimp/gimpexport.c:140
+msgid "Flatten Image"
+msgstr "Sp³aszcz obraz"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Kontrast"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+msgid "Convert to grayscale"
+msgstr ""
+
+#: libgimp/gimpexport.c:166
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:184
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:193
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
+
+#: libgimp/gimpexport.c:203
+msgid "needs an alpha channel"
+msgstr "potrzebuje kana³ alfa"
+
+#: libgimp/gimpexport.c:204
+msgid "Add alpha channel"
+msgstr "Dodaj kana³ Alpha"
+
+#: libgimp/gimpexport.c:274
+msgid "Export File"
+msgstr "Eksportuj plik"
+
+#: libgimp/gimpexport.c:290
+msgid "Export"
+msgstr "Eksportuj"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
 msgstr ""

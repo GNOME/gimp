@@ -7047,3 +7047,63 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "Muokkaus ulosvientiä varten ei vaikuta alkuperäiseen kuvaan."
 
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Peru"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Sulje"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr ""
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr ""
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "tuuma"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "tuumaa"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimetri"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimetrejä"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "piste"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "pistettä"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "picaa"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "%"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Ohita"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Valitse"

@@ -6955,3 +6955,204 @@ msgstr ""
 #: plug-ins/struc/struc.c:283
 msgid "Bottom-right"
 msgstr ""
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Sluit"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr ""
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr ""
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr ""
+
+#: libgimp/gimpunit.c:47
+#, fuzzy
+msgid "inches"
+msgstr "Apperaat Status"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr ""
+
+#: libgimp/gimpunit.c:48
+#, fuzzy
+msgid "millimeters"
+msgstr "<Beeld>/Filters"
+
+#: libgimp/gimpunit.c:51
+#, fuzzy
+msgid "point"
+msgstr "Splits"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+#, fuzzy
+msgid "pica"
+msgstr "Repliceer"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+#, fuzzy
+msgid "percent"
+msgstr "Perspectief"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Negeren"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+#, fuzzy
+msgid "Select"
+msgstr "Selectie"
+
+#: libgimp/gimpfileselection.c:352
+#, fuzzy
+msgid "Select File"
+msgstr "Selectie"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "waarschuwing: geen home map"
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:453
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Selectie"
+
+#: libgimp/gimpunitmenu.c:479
+#, fuzzy
+msgid "Unit "
+msgstr "Ongetiteld"
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr ""
+
+#: libgimp/gimpexport.c:121
+msgid "can't handle layers"
+msgstr ""
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Merge visible layers"
+msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Save as animation"
+msgstr "Bewaaropties"
+
+#: libgimp/gimpexport.c:139
+msgid "can't handle transparency"
+msgstr ""
+
+#: libgimp/gimpexport.c:140
+#, fuzzy
+msgid "Flatten Image"
+msgstr "<Beeld>/Lagen/Verhoog Laag"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+msgid "Convert to RGB"
+msgstr ""
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+#, fuzzy
+msgid "Convert to grayscale"
+msgstr "grijswaarden"
+
+#: libgimp/gimpexport.c:166
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Meng: Ongeldig voor geindexeerde beelden."
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:184
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Meng: Ongeldig voor geindexeerde beelden."
+
+#: libgimp/gimpexport.c:193
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Meng: Ongeldig voor geindexeerde beelden."
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+
+#: libgimp/gimpexport.c:204
+#, fuzzy
+msgid "Add alpha channel"
+msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+
+#: libgimp/gimpexport.c:274
+#, fuzzy
+msgid "Export File"
+msgstr "Importeer Palet"
+
+#: libgimp/gimpexport.c:290
+#, fuzzy
+msgid "Export"
+msgstr "Bron"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr ""

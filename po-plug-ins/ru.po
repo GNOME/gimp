@@ -6955,3 +6955,199 @@ msgstr ""
 #: plug-ins/struc/struc.c:283
 msgid "Bottom-right"
 msgstr ""
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Отмена"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Закрыть"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "пиксел"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "пикселей"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "дюйм"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "дюймы"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "миллиметр"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "миллиметры"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "пункт"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "пункты"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "пика"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "пики"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "процент"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Игнорировать"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Выделить"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Выбор файла"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "внимание: нет домашнего каталога."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Еще..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+"unit-menu-format содержит неизвестную последовательность формата '%%%c'"
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Выбор единиц"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Единица "
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Фактор"
+
+#: libgimp/gimpexport.c:121
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Масштабировать слой"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Merge visible layers"
+msgstr "/Объединить видимые слои"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Save as animation"
+msgstr "Информация об искривлении"
+
+#: libgimp/gimpexport.c:139
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Очистка до фона или прозрачности"
+
+#: libgimp/gimpexport.c:140
+#, fuzzy
+msgid "Flatten Image"
+msgstr "/Свести изображение"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Преобразование"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+#, fuzzy
+msgid "Convert to grayscale"
+msgstr "градации серого"
+
+#: libgimp/gimpexport.c:166
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Бленда: не годится для индексированных изображений."
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:184
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Бленда: не годится для индексированных изображений."
+
+#: libgimp/gimpexport.c:193
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Бленда: не годится для индексированных изображений."
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "Альфа-канал слоя"
+
+#: libgimp/gimpexport.c:204
+#, fuzzy
+msgid "Add alpha channel"
+msgstr "/Добавить альфа-канал"
+
+#: libgimp/gimpexport.c:274
+#, fuzzy
+msgid "Export File"
+msgstr "/Экспортировать контур"
+
+#: libgimp/gimpexport.c:290
+#, fuzzy
+msgid "Export"
+msgstr "Источник:"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr ""

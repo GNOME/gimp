@@ -131,3 +131,9 @@ plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
+libgimp/gimpcolorbutton.c
+libgimp/gimpenv.c
+libgimp/gimpexport.c
+libgimp/gimpfileselection.c
+libgimp/gimpunit.c
+libgimp/gimpunitmenu.c

@@ -1,12 +1,13 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 1999-11-01 08:54-0800\n"
-"PO-Revision-Date: 1999-09-19 15:18+0200\n"
+"PO-Revision-Date: 1999-11-06 19:22+0200\n"
 "Last-Translator: GNOME PL Team\n"
 "Language-Team: Polish <gnomepl@pandora.info.bielsko.pl>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=ISO8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:188
@@ -114,7 +115,7 @@ msgstr ""
 
 #: app/bezier_select.c:468
 msgid "Bezier path already closed."
-msgstr "Krzywa Beziera zosta³a ju¿ zamkniêta"
+msgstr "Krzywa Beziera zosta³a ju¿ zamkniêta."
 
 #: app/bezier_select.c:489
 msgid "Corrupt curve"
@@ -122,7 +123,7 @@ msgstr "Uszkodzona krzywa"
 
 #: app/bezier_select.c:2854
 msgid "Curve not closed!"
-msgstr ""
+msgstr "Krzywa nie zamkniêta!"
 
 #: app/bezier_select.c:3147 app/gimage_mask.c:604
 msgid "Paintbrush operation failed."
@@ -210,7 +211,7 @@ msgstr "Zlewanie:"
 
 #: app/blend.c:362
 msgid "Repeat:"
-msgstr ""
+msgstr "Powtórz:"
 
 #: app/blend.c:381
 msgid "Adaptive supersampling"
@@ -288,7 +289,7 @@ msgstr "Podgl±d"
 
 #: app/brush_edit.c:209
 msgid "Brush Editor"
-msgstr "Edytor pêdzli"
+msgstr "Edytor Pêdzli"
 
 #. The close button
 #: app/brush_edit.c:215 app/brush_select.c:276 app/by_color_select.c:578
@@ -315,7 +316,7 @@ msgstr "Twardo¶æ:"
 
 #: app/brush_edit.c:299
 msgid "Aspect Ratio:"
-msgstr "Wspó³czynnik proporcji:"
+msgstr "Wspó³czynnik Proporcji:"
 
 #: app/brush_edit.c:311 app/measure.c:266 app/rotate_tool.c:89
 msgid "Angle:"
@@ -324,7 +325,7 @@ msgstr "K±t:"
 #. The shell
 #: app/brush_select.c:267
 msgid "Brush Selection"
-msgstr "Wybór pêdzla"
+msgstr "Wybór Pêdzla"
 
 #: app/brush_select.c:274 app/gradient.c:894 app/module_db.c:305
 #: app/palette.c:2000 app/pattern_select.c:166
@@ -381,15 +382,15 @@ msgstr ""
 
 #: app/brush_select.c:1799
 msgid "Wilber says: \"I don't know how to delete that brush.\""
-msgstr ""
+msgstr "Wilber mówi: \"Nie potrafiê skasowac tego pêdzla.\""
 
 #: app/bucket_fill.c:107
 msgid "FG Color Fill"
-msgstr "Wype³nienie kolorem"
+msgstr "Wype³nienie kolorem FG"
 
 #: app/bucket_fill.c:108
 msgid "BG Color Fill"
-msgstr "Wype³nianie t³em"
+msgstr "Wype³nianie t³em BG"
 
 #: app/bucket_fill.c:109
 msgid "Pattern Fill"
@@ -432,7 +433,7 @@ msgstr "Przetnij"
 #. The shell and main vbox
 #: app/by_color_select.c:571
 msgid "By Color Selection"
-msgstr ""
+msgstr "Selekcja Kolorem"
 
 #: app/by_color_select.c:576 app/curves.c:556 app/file_new_dialog.c:376
 #: app/tools.c:1012 app/transform_core.c:395
@@ -590,7 +591,7 @@ msgstr "Niebieski"
 
 #: app/channels_dialog.c:1392
 msgid "Gray"
-msgstr ""
+msgstr "Szary"
 
 #: app/channels_dialog.c:1396
 msgid "Indexed"
@@ -834,16 +835,15 @@ msgstr "Ogólne opcje palety"
 #: app/convert.c:525
 #, fuzzy
 msgid "Generate optimal palette:"
-msgstr "Optymaln± paleta: "
+msgstr "Optymalna paleta:"
 
 #: app/convert.c:567
-#, fuzzy
 msgid "# of colors:"
-msgstr "Liczba kolorów: "
+msgstr "Liczba kolorów:"
 
 #: app/convert.c:585
 msgid "Use custom palette"
-msgstr "Dowolna paleta"
+msgstr "Paleta u¿ytkownika"
 
 #: app/convert.c:619
 msgid "Use WWW-optimised palette"
@@ -886,9 +886,8 @@ msgid "Remove unused colours from final palette"
 msgstr ""
 
 #: app/convert.c:775
-#, fuzzy
 msgid "[ Warning ]"
-msgstr " [ Ostrze¿enie ] "
+msgstr "[ Ostrze¿enie ]"
 
 #: app/convert.c:785
 msgid ""
@@ -1157,7 +1156,6 @@ msgid "Save error log to file..."
 msgstr "Zapis dziennika b³êdów do pliku..."
 
 #: app/errorconsole.c:269
-#, fuzzy
 msgid "GIMP Error Console"
 msgstr "Konsola b³êdów GIMP-a"
 
@@ -1245,9 +1243,8 @@ msgid ""
 msgstr ""
 
 #: app/fileops.c:418
-#, fuzzy
 msgid "No selection."
-msgstr "Powiêksz zaznaczenie"
+msgstr "Bez zaznaczenia."
 
 #: app/fileops.c:465 app/fileops.c:495
 msgid "Save Image"
@@ -1270,9 +1267,8 @@ msgid "(this thumbnail may be out of date)"
 msgstr ""
 
 #: app/fileops.c:1252
-#, fuzzy
 msgid "(no information)"
-msgstr "Informacje o monitorze"
+msgstr "(brak informacji)"
 
 #: app/fileops.c:1260
 msgid "(thumbnail saving is disabled)"
@@ -1502,7 +1498,6 @@ msgid "/Image/Colors"
 msgstr "/Obraz/Kolory"
 
 #: app/gdisplay.c:1681
-#, fuzzy
 msgid "/Image/Channels"
 msgstr "/Obraz/Kana³y"
 
@@ -1577,7 +1572,7 @@ msgstr "/Obraz/Alfa/Dodaj kana³ Alfa"
 #: app/gdisplay.c:1707 app/menus.c:306
 #, fuzzy
 msgid "/Image/Transforms/Offset"
-msgstr "/Obraz/Przekszta³cenia"
+msgstr "/Obraz/Przekszta³cenia/"
 
 #: app/gdisplay.c:1710
 msgid "/Layers/Stack"
@@ -1641,7 +1636,7 @@ msgstr "/Script-Fu"
 
 #: app/gdisplay_color_ui.c:106
 msgid "Configure"
-msgstr "Konynuuj"
+msgstr "Konfiguruj"
 
 #: app/gdisplay_color_ui.c:109
 msgid "Color Display Filters"
@@ -1703,7 +1698,7 @@ msgstr "B³±d w pliku z pêdzlami GIMP-a...rezygnacja."
 
 #: app/gimpbrush.c:265 app/patterns.c:205
 msgid "Unnamed"
-msgstr "NezNazwy"
+msgstr "BezNazwy"
 
 #: app/gimpbrush.c:283
 msgid "GIMP brush file appears to be truncated."
@@ -1949,7 +1944,7 @@ msgstr "Wklej"
 
 #: app/global_edit.c:697
 msgid "Paste Into"
-msgstr "/Edycja/Wklej do"
+msgstr "Wklej do"
 
 #: app/global_edit.c:698
 msgid "Paste As New"
@@ -2008,14 +2003,14 @@ msgid "Default"
 msgstr "Domy¶lny"
 
 #: app/gradient.c:782
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_get_color_at(): Unknown gradient type %d"
-msgstr "grad_get_color_at(): Nieznany typ gradientu %d"
+msgstr "gradient_get_color_at(): Nieznany typ gradientu %d"
 
 #: app/gradient.c:839
-#, fuzzy, c-format
+#, c-format
 msgid "gradient_get_color_at(): Unknown coloring mode %d"
-msgstr "grad_get_color_at(): Nieznany tryb koloru %d"
+msgstr "gradient_get_color_at(): Nieznany tryb koloru %d"
 
 #: app/gradient.c:886
 msgid "Gradient Editor"
@@ -2466,7 +2461,7 @@ msgstr "Odcieñ i nasycenie"
 
 #: app/hue_saturation.c:452
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr ""
+msgstr "Ustawienia odcieni / jasno¶ci / nasycenia"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:462 app/layers_dialog.c:238 app/paint_funcs.c:93
@@ -2597,12 +2592,12 @@ msgstr ""
 #: app/info_window.c:222
 #, fuzzy
 msgid "B:"
-msgstr "B"
+msgstr "B:"
 
 #: app/info_window.c:227
 #, fuzzy
 msgid "G:"
-msgstr "G"
+msgstr "G:"
 
 #: app/info_window.c:232
 #, fuzzy
@@ -2822,9 +2817,8 @@ msgid ""
 msgstr ""
 
 #: app/install.c:168
-#, fuzzy
 msgid "generated_brushes\n"
-msgstr "Utworzone pêdzle"
+msgstr "utworzone_pêdzle\n"
 
 #: app/install.c:169
 msgid ""
@@ -3064,7 +3058,7 @@ msgstr "Kolor"
 
 #: app/internal_procs.c:82
 msgid "Convert"
-msgstr "Kontrast"
+msgstr ""
 
 #: app/internal_procs.c:85
 msgid "Drawable procedures"
@@ -3482,7 +3476,7 @@ msgstr "Poziomy"
 
 #: app/levels.c:360
 msgid "Auto Levels"
-msgstr ""
+msgstr "Aut. Poziomy"
 
 #: app/levels.c:377
 msgid "Modify Levels for Channel: "
@@ -3494,7 +3488,7 @@ msgstr ""
 
 #: app/levels.c:481
 msgid "Output Levels: "
-msgstr "Sk³adowe barwy: "
+msgstr ""
 
 #: app/levels.c:552 app/module_db.c:804
 msgid "Load"
@@ -3664,7 +3658,7 @@ msgstr "otrzymano nieznany sygna³"
 
 #: app/measure.c:117
 msgid "Measure Options"
-msgstr ""
+msgstr "Opcje pomiarów"
 
 #: app/measure.c:126
 msgid "Use Info Window"
@@ -3672,7 +3666,7 @@ msgstr ""
 
 #: app/measure.c:263
 msgid "Measure Tool"
-msgstr ""
+msgstr "Narzêdzie pomiarów"
 
 #: app/measure.c:265
 msgid "Distance:"
@@ -3680,7 +3674,7 @@ msgstr "Odleg³o¶æ:"
 
 #: app/measure.c:430 app/measure.c:435 app/measure.c:443 app/measure.c:468
 msgid "degrees"
-msgstr ""
+msgstr "stopnie"
 
 #: app/menus.c:65
 msgid "/File/MRU00 "
@@ -3716,9 +3710,8 @@ msgid "/File/About..."
 msgstr "/Plik/Informacje o..."
 
 #: app/menus.c:85
-#, fuzzy
 msgid "/File/Help..."
-msgstr "/Plik/Informacje o..."
+msgstr "/Plik/Pomoc..."
 
 #: app/menus.c:87 app/menus.c:156
 msgid "/File/Preferences..."
@@ -3729,9 +3722,8 @@ msgid "/File/Tip of the day"
 msgstr "/Plik/Porada dnia"
 
 #: app/menus.c:92
-#, fuzzy
 msgid "/File/Dialogs/tearoff1"
-msgstr "/Okna dialogowe/tearoff1"
+msgstr "/Plik/Okna dialogowe/tearoff1"
 
 #: app/menus.c:94
 msgid "/File/Dialogs/Brushes..."
@@ -3746,12 +3738,10 @@ msgid "/File/Dialogs/Palette..."
 msgstr "/Plik/Okna dialogowe/Palety..."
 
 #: app/menus.c:100
-#, fuzzy
 msgid "/File/Dialogs/Indexed Palette..."
-msgstr "/Okna dialogowe/Paleta indeksowana..."
+msgstr "/Plik/Okna dialogowe/Paleta indeksowana..."
 
 #: app/menus.c:102
-#, fuzzy
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Plik/Okna dialogowe/Gradienty..."
 
@@ -3908,14 +3898,12 @@ msgid "/View/Zoom/1:16"
 msgstr "/Widok/Powiêkszenie/1:16"
 
 #: app/menus.c:258
-#, fuzzy
 msgid "/View/Info Window..."
 msgstr "/Widok/Informacje o oknie..."
 
 #: app/menus.c:260
-#, fuzzy
 msgid "/View/Nav. Window..."
-msgstr "/Widok/Informacje o oknie..."
+msgstr "/Widok/Nawigacja oknem..."
 
 #: app/menus.c:263 app/menus.c:275
 msgid "/View/---"
@@ -3942,7 +3930,6 @@ msgid "/Image/Colors/---"
 msgstr "/Obraz/Kolory/---"
 
 #: app/menus.c:296
-#, fuzzy
 msgid "/Image/Channels/tearoff1"
 msgstr "/Obraz/Kana³y/tearoff1"
 
@@ -3951,9 +3938,8 @@ msgid "/Image/Alpha/tearoff1"
 msgstr "/Obraz/Alfa/tearoff1"
 
 #: app/menus.c:304
-#, fuzzy
 msgid "/Image/Transforms/tearoff1"
-msgstr "/Obraz/Kolory/tearoff1"
+msgstr "/Obraz/Przekszta³cenia/tearoff1"
 
 #: app/menus.c:309 app/menus.c:317 app/menus.c:325
 msgid "/Image/---"
@@ -3968,9 +3954,8 @@ msgid "/Image/Scale"
 msgstr "/Obraz/Skaluj"
 
 #: app/menus.c:323
-#, fuzzy
 msgid "/Image/Duplicate"
-msgstr "/Image/Kana³y/Zduplikuj"
+msgstr "/Obraz/Zduplikuj"
 
 #: app/menus.c:328
 msgid "/Layers/tearoff1"
@@ -4002,7 +3987,7 @@ msgstr "/Narzêdzia/Domy¶lne kolory"
 
 #: app/menus.c:369
 msgid "/Tools/Swap Colors"
-msgstr ""
+msgstr "/Narzêdzia/Zamieñ Kolory"
 
 #: app/menus.c:371
 msgid "/Tools/---"
@@ -4050,7 +4035,6 @@ msgid "/Dialogs/Indexed Palette..."
 msgstr "/Okna dialogowe/Paleta indeksowana..."
 
 #: app/menus.c:398
-#, fuzzy
 msgid "/Dialogs/Gradients..."
 msgstr "/Okna dialogowe/Gradienty..."
 
@@ -4071,14 +4055,12 @@ msgid "/Dialogs/Device Status..."
 msgstr "/Okna dialogowe/Stan urz±dzenia..."
 
 #: app/menus.c:408
-#, fuzzy
 msgid "/Dialogs/Document Index..."
-msgstr "/Plik/Okna dialogowe/Indeks dokumentów..."
+msgstr "/Okna dialogowe/Indeks dokumentów..."
 
 #: app/menus.c:410
-#, fuzzy
 msgid "/Dialogs/Error Console..."
-msgstr "/Plik/Okna dialogowe/Konsola b³êdów..."
+msgstr "/Okna dialogowe/Konsola b³êdów..."
 
 #: app/menus.c:412
 msgid "/Dialogs/Display Filters..."
@@ -4105,9 +4087,8 @@ msgid "/Path to Selection"
 msgstr "/Zaznaczenie ze ¶cie¿ki"
 
 #: app/menus.c:531 app/paths_dialog.c:249
-#, fuzzy
 msgid "/Selection to Path"
-msgstr "¦cie¿ka z zaznaczenia"
+msgstr "/¦cie¿ka z zaznaczenia"
 
 #: app/menus.c:533 app/paths_dialog.c:252
 msgid "/Stroke Path"
@@ -4131,7 +4112,7 @@ msgstr "/Importuj ¶cie¿kê"
 
 #: app/menus.c:545 app/paths_dialog.c:262
 msgid "/Export Path"
-msgstr "/eksportuj ¶cie¿kê"
+msgstr "/Eksportuj ¶cie¿kê"
 
 #: app/menus.c:870
 #, c-format
@@ -4209,11 +4190,11 @@ msgstr "Autor: "
 
 #: app/module_db.c:828
 msgid "Version: "
-msgstr "Wersja"
+msgstr "Wersja: "
 
 #: app/module_db.c:829
 msgid "Copyright: "
-msgstr ""
+msgstr "Copyright: "
 
 #: app/module_db.c:830
 msgid "Date: "
@@ -4288,7 +4269,7 @@ msgstr ""
 #. the gradient type
 #: app/paintbrush.c:318
 msgid "Type:"
-msgstr "Typ: "
+msgstr "Typ:"
 
 #: app/palette.c:419
 #, c-format
@@ -4592,7 +4573,7 @@ msgstr "Izochelia"
 
 #: app/posterize.c:218
 msgid "Posterize Levels: "
-msgstr ""
+msgstr "Poziomy Izochelii: "
 
 #: app/preferences_dialog.c:213
 msgid "Error: Levels of undo must be zero or greater."
@@ -4933,7 +4914,7 @@ msgstr ""
 #: app/preferences_dialog.c:1875
 #, fuzzy
 msgid "File Saving"
-msgstr "/Plik/Zapisz"
+msgstr "Zapis Pliku"
 
 #: app/preferences_dialog.c:1898 app/preferences_dialog.c:1908
 msgid "Always"
@@ -5374,7 +5355,7 @@ msgstr ""
 
 #: app/tips_dialog.c:58
 msgid "gimp_tips.txt"
-msgstr ""
+msgstr "gimp_tips.pl.txt"
 
 #: app/tips_dialog.c:70
 msgid "GIMP Tip of the day"
@@ -5460,7 +5441,6 @@ msgid "Paintbrush Options"
 msgstr "Opcje Pêdzla"
 
 #: app/tool_options.c:546
-#, fuzzy
 msgid "Eraser Options"
 msgstr "Opcje Gumki"
 
@@ -5840,14 +5820,12 @@ msgid "Select regions by color"
 msgstr "Zaznaczanie obszarów przy u¿yciu krzywych Beziera"
 
 #: app/tools.c:619
-#, fuzzy
 msgid "Adjust color balance"
-msgstr "Balans kolorów"
+msgstr "Ustaw balans kolorów"
 
 #: app/tools.c:636
-#, fuzzy
 msgid "Adjust brightness and contrast"
-msgstr "Jasno¶æ i kontrast"
+msgstr "Ustaw jasno¶æ i kontrast"
 
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
@@ -5965,7 +5943,7 @@ msgstr ""
 #: app/undo_history.c:770
 #, fuzzy
 msgid "Redo"
-msgstr "Czerwony"
+msgstr "Przywruæ"
 
 #: app/xcf.c:364
 #, c-format
@@ -6076,18 +6054,16 @@ msgid "can't handle layers"
 msgstr "Skaluj warstwê"
 
 #: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
-#, fuzzy
 msgid "Merge visible layers"
-msgstr "/Po³±cz widoczne warstwy"
+msgstr "Po³±cz widoczne warstwy"
 
 #: libgimp/gimpexport.c:130
 msgid "can only handle layers as animation frames"
 msgstr ""
 
 #: libgimp/gimpexport.c:131
-#, fuzzy
 msgid "Save as animation"
-msgstr "Opcje zapisu"
+msgstr "Zapisz jako animacje"
 
 #: libgimp/gimpexport.c:139
 #, fuzzy
@@ -6095,9 +6071,8 @@ msgid "can't handle transparency"
 msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
 
 #: libgimp/gimpexport.c:140
-#, fuzzy
 msgid "Flatten Image"
-msgstr "/Sp³aszcz obraz"
+msgstr "Sp³aszcz obraz"
 
 #: libgimp/gimpexport.c:148
 msgid "can only handle RGB images"
@@ -6142,24 +6117,20 @@ msgid "can only handle grayscale or indexed images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "Kana³ Alfa warstwy"
+msgstr "potrzebuje kana³ alfa"
 
 #: libgimp/gimpexport.c:204
-#, fuzzy
 msgid "Add alpha channel"
-msgstr "/Dodaj kana³ Alpha"
+msgstr "Dodaj kana³ Alpha"
 
 #: libgimp/gimpexport.c:274
-#, fuzzy
 msgid "Export File"
-msgstr "/eksportuj ¶cie¿kê"
+msgstr "Eksportuj plik"
 
 #: libgimp/gimpexport.c:290
-#, fuzzy
 msgid "Export"
-msgstr "/eksportuj ¶cie¿kê"
+msgstr "Eksportuj"
 
 #: libgimp/gimpexport.c:315
 msgid ""

@@ -6955,3 +6955,190 @@ msgstr ""
 #: plug-ins/struc/struc.c:283
 msgid "Bottom-right"
 msgstr ""
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Zru¹i»"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Zatvori»"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixlov"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixlov"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "palcov"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "palcov"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "milimeter"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "milimetre"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "body"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "percent"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Ignorova»"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "/Selekcia"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Výber súboru"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "warovanie: chýba domáci adresár."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Viac..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Výber jednotiek"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Jednotka:"
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Faktor"
+
+#: libgimp/gimpexport.c:121
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Veµkos» vrstvy"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+msgid "Merge visible layers"
+msgstr "Zlúèi» viditeµné vrstvy"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr "vrstvy mô¾u by» len políèkami animácie"
+
+#: libgimp/gimpexport.c:131
+msgid "Save as animation"
+msgstr "Ulo¾i» ako animáciu"
+
+#: libgimp/gimpexport.c:139
+msgid "can't handle transparency"
+msgstr "transparentnos» nie je podporovaná"
+
+#: libgimp/gimpexport.c:140
+msgid "Flatten Image"
+msgstr "Do jednej vrstvy"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr "funguje len pre RGB obrázky"
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+msgid "Convert to RGB"
+msgstr "Konverzia do RGB"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr "funguje len pre obrázky v odtieòoch ¹edej"
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+msgid "Convert to grayscale"
+msgstr "Konverzia do odtieòov ¹edej"
+
+#: libgimp/gimpexport.c:166
+msgid "can only handle indexed images"
+msgstr "funguje len pre indexované obrázky"
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Skonvertova» na indexované pou¾itím ¹tandardných nastavení\n"
+"(Pou¾ite manuálne nastavenie pre vylep¹enie výsledku)"
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr "funguje len pre RGB/¹edé obrázky"
+
+#: libgimp/gimpexport.c:184
+msgid "can only handle RGB or indexed images"
+msgstr "funguje len pre RGB/indexované obrázky"
+
+#: libgimp/gimpexport.c:193
+msgid "can only handle grayscale or indexed images"
+msgstr "funguje len pre indexované/¹edé obrázky"
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "Alfa kanál vrstvy"
+
+#: libgimp/gimpexport.c:204
+#, fuzzy
+msgid "Add alpha channel"
+msgstr "/Prida» alfa kanál"
+
+#: libgimp/gimpexport.c:274
+msgid "Export File"
+msgstr "Exportova» súbor"
+
+#: libgimp/gimpexport.c:290
+msgid "Export"
+msgstr "Export"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovnýchdôvodov:"
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."

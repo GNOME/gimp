@@ -7112,3 +7112,198 @@ msgstr ""
 #, fuzzy
 #~ msgid "Gradient"
 #~ msgstr "Grøn"
+
+#: libgimp/gimpexport.c:305
+msgid "Cancel"
+msgstr "Annullér"
+
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Luk"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "pixler"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "tomme"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "tommer"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "millimeter"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "millimetre"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "punkt"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "punkter"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr ""
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "procent"
+
+#: libgimp/gimpexport.c:298
+msgid "Ignore"
+msgstr "Ignorer"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "Vælg"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "Vælg fil"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "advarsel: ingen hjemmemappe"
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "Mere..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "Udvalg for enhed"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "Enhed"
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "Faktor"
+
+#: libgimp/gimpexport.c:121
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Skaler lag"
+
+#: libgimp/gimpexport.c:122 libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Merge visible layers"
+msgstr "/Flet synlige lag sammen"
+
+#: libgimp/gimpexport.c:130
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:131
+#, fuzzy
+msgid "Save as animation"
+msgstr "Alternativer for gemning"
+
+#: libgimp/gimpexport.c:139
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Sort (Helt gennemsigtig)"
+
+#: libgimp/gimpexport.c:140
+#, fuzzy
+msgid "Flatten Image"
+msgstr "/Flad billedet ud"
+
+#: libgimp/gimpexport.c:148
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:149 libgimp/gimpexport.c:176 libgimp/gimpexport.c:185
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Konverter"
+
+#: libgimp/gimpexport.c:157
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:176 libgimp/gimpexport.c:195
+#, fuzzy
+msgid "Convert to grayscale"
+msgstr "gråtone"
+
+#: libgimp/gimpexport.c:166
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Blanding: Ugyldig for indekserede billeder."
+
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:185 libgimp/gimpexport.c:194
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:175
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:184
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Blanding: Ugyldig for indekserede billeder."
+
+#: libgimp/gimpexport.c:193
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Blanding: Ugyldig for indekserede billeder."
+
+#: libgimp/gimpexport.c:203
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "Lagets alfakanal"
+
+#: libgimp/gimpexport.c:204
+#, fuzzy
+msgid "Add alpha channel"
+msgstr "/Tilføj alfakanal"
+
+#: libgimp/gimpexport.c:274
+#, fuzzy
+msgid "Export File"
+msgstr "/Eksporter sti"
+
+#: libgimp/gimpexport.c:290
+#, fuzzy
+msgid "Export"
+msgstr "Kilde:"
+
+#: libgimp/gimpexport.c:315
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#: libgimp/gimpexport.c:373
+msgid "The export conversion won't modify your original image."
+msgstr ""

@@ -1,0 +1,158 @@
+# To jest lista tipsów GIMPa. Zawsze kiedy startuje GIMP 
+# jeden tips jest pobierany z tej listy. Wy¶wietlany jest on 
+# w okienku dialogowym "Porada dnia" ("Tip of the day").
+#
+#                 tips - porada dnia - Tip of the day 
+#
+# - Linie zaczynaj±ce siê '#' s± komentarzami.
+# - Puste linie separuj± kolejne tipsy od siebie (nie s± ignorowane). 
+#   Wielokrotne puste linie s± ³±czone w jedna. Je¶li chcesz mieæ pust±
+#   linie w tipsie, wpisz tam spacje lub TAB. 
+# - Tekst pojawiaj±cy siê w oknie jest wy¶wietlany tak jak tutaj.
+#   Powstrzymaj siê wiêc od bardzo d³ugich linii. 8-)
+#   Mamy za to kontrolê nad wygl±dem tipsa (mniej wiêcej).
+# - Tipsy nie powinny byæ d³ugie, powiedzmy max 3-4 linie.
+#
+# Tipsy powsta³y dziêki: Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann i wielu ludzi z listy dyskusyjnej GIMPa.
+#
+# T³umaczy³: Artur Polaczyñski <psi2494@orca.mila.edu.pl> ( <- wszystkie uwagi tutaj)
+#            Kris              <psi0873@orca.mila.edu.pl>
+# --------------------------------------------------------------------
+
+# Pierwszy tips powinien byæ powitaniem, poniewa¿ to pierwsza rzecz 
+# jak± zobaczy nowy u¿ytkownik.
+#
+
+        	Witam w GIMPie !
+      
+Klikaj±c prawym klawiszem myszy wykonasz prawie 
+wszystkie operacje na obrazku. I nie przejmuj siê, 
+wiêkszo¶æ pomy³ek mo¿esz cofn±æ (Ctrl-Z). 
+
+# Tipsy dla pocz±tkuj±cych
+#
+
+Warstwy w GIMPie pomagaj± zorganizowaæ twój obrazek.
+Pomy¶l o nich jako o slajdach i filtrach,
+przez które widzisz ca³o¶æ kompozycji.
+
+Mo¿esz wykonaæ wiele operacji na warstwach klikaj±c 
+prawym klawiszem myszy na nazwê warstwy w oknie 
+"Warstwy i Kana³y" (dialogi->Warstwy i Kana³y).
+
+Kiedy próbujesz zapisaæ pliki GIF, XPM, lub inne z 
+kolorem indeksowym, musisz przekonwertowaæ obrazek 
+do indeksowego u¿ywaj±c menu Obraz/indeksowy. 
+
+Je¶li chcesz widzieæ wiêcej ustawieñ dla danego 
+narzêdzia kliknij na jego przycisku dwukrotnie.
+
+Mo¿esz zmieniæ nazwê warstwy klikaj±c dwukrotnie 
+na jej nazwie w oknie "Warstwy i Kana³y".
+
+Warstwa "t³o" (Background) jest specjalna, nie mo¿e
+mieæ maski, dopóki nie bêdzie mia³a kana³u alfa. Kliknij 
+prawym klawiszem myszy w oknie "Warstwy i Kana³y" na tej 
+warstwie i wybierz "Dodaj kana³ alfa"(Add Alpcha Channel).
+
+U¿ywaj±c narzêdzi malowania (pêdzle, pióro, aerograf), 
+klikniêcie z shiftem spowoduje namalowanie prostej linii od 
+ostatniego namalowanego punktu do obecnej pozycji kursora.
+
+Wiêkszo¶æ wtyczek (plug-ins) pracuje na jednej, aktywnej warstwie.
+Je¶li zale¿y Ci, ¿eby plugin móg³ pracowaæ na ca³ym obrazku -
+po³±cz wszystkie warstwy (Warstwy -> Sp³aszcz Obrazek).
+
+Wiêkszo¶æ formatów graficznych nie mo¿e zapisaæ warstw, 
+wtedy zapisywana jest jedna, aktywna warstwa. U¿yj formatu
+(GIMPa) XCF do zapisania warstw, kana³ów, linii i zaznaczeñ.
+
+Nie wszystkie efekty mog± byæ wykorzystane do wszystkich rodzajów
+obrazków. S± zaznaczone szarym kolorem napisu w menu. Wtedy potrzebujesz
+zmieniæ obraz do RGB, dodaæ kana³ alfa lub sp³aszczyæ go.
+
+# Tipsy dla ¶rednio zaawansowanych
+#
+
+Okno wyboru pliku potrafi koñczyæ nazwy je¶li naci¶niesz TAB,
+tak jak w shell-u. Napisz czê¶æ, naci¶nij TAB, i jest ca³a nazwa.
+
+Mo¿esz przypisaæ w³asne skróty klawiszowe do pozycji w menu: 
+wywo³aj menu, zaznacz pozycjê, naci¶nij skrót i gotowe, mo¿emy
+z niego korzystaæ. Ustawienia s± zapisywane przy wyj¶ciu z GIMPa.
+
+Wszystkie stare operacje na kana³ach zosta³y zast±pione bardziej
+wydajnymi warstwami i operacjami na nich. Przyzwyczajenie do 
+nich mo¿e zaj±æ trochê czasu ale ³atwiej siê z nimi pracuje.
+
+Mo¿esz u¿yæ ¶rodkowego klawisza myszy do poruszania 
+siê po obrazku, je¶li jest wiêkszy od okienka.
+
+Kliknij i poci±gnij na linijce by po³o¿yæ prowadnicê na obrazku.
+Wszystkie selekcje mysz± bêd± siê do nich "przykleja³y". Aby je 
+zlikwidowaæ przeci±gnij je z powrotem narzêdziem przesuwania.
+
+GIMP obs³ugujê kompresjê "gzip" w locie. Przy zapisaniu pracy 
+dodaj ".gz" (lub ".bz2" je¶li masz bzip2) do nazwy pliku
+a zostanie on skompresowany. Oczywi¶cie dzia³a to w obie strony.
+
+Wci¶nij i przytrzymaj Shift przed zaznaczaniem obszaru a 
+doda siê on do ju¿ zaznaczonego, Ctrl odejmuje analogicznie.
+
+Shift i Ctrl w czasie zaznaczania spowoduje odpowiednio:
+wykonanie idealnego kwadratu lub ko³a, 
+wycentrowanie zaznaczenia do pocz±tku zaznaczenia.
+
+# Tipsy dla zaawansowanych
+#
+
+#You can adjust the selection range for fuzzy select 
+#by clicking and dragging left and right.
+
+Klikniêcie z Shift-em na ikonkê oka w oknie 
+"Warstwy i Kana³y" chowa wszystkie warstwy poza t± jedn±.
+
+Klikniêcie z Ctrl na podgl±dzie maski w oknie Warstwy i Kana³y
+w³±cza\wy³±cza efekt maski.
+
+Klikniêcie z Alt na podgl±dzie maski w oknie Warstwy i Kana³y
+w³±cza/wy³±cza wy¶wietlanie maski w oknie obrazka.
+
+Mo¿esz siê prze³±czaæ miêdzy warstwami u¿ywaj±c Alt-Tab
+(je¶li pozwoli ci na to X Menad¿er okien).
+
+Wype³nianie z Shift-em powoduje u¿ycie koloru 
+t³a (background) zamiast aktywnego (foreground).
+
+Ctrl z narzêdziem przekszta³æ w trybie
+obrotu, wymusza obracanie co 15 stopni.
+
+Mo¿esz ustawiæ zaznaczenie a nastêpnie 
+przesun±æ u¿ywaj±c Alt-u.
+
+Je¶li Twoje fonty wygl±daj± "pixelowato", to nie s± skalowane
+wiêkszo¶æ X serwerów obs³uguje fonty "Type 1 Postrscript".
+Pobierz je i zainstaluj.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+# czy to przypadkiem jest nie aktualne !!!
+
+Kiedy instalujesz now± wersje, 
+skasuj swój katalog ~/.gimp .
+
+"Edycja -> Stroke" pomaga narysowaæ prostok±ty lub 
+owale po krawêdzi zaznaczenia, aktualnym pêdzlem.
+Ale bardziej skomplikowane figury uzyskasz 
+u¿ywaj±c : "Filtry -> Render(uj) -> Gfig".
+
+Aby narysowaæ idealne ko³o, trzymaj Shift podczas zaznaczania elipsy.
+Aby umie¶ciæ je precyzyjnie, przeci±gnij prowadnice stycznie do ko³a,
+które chcesz zaznaczyæ, umie¶æ kursor w miejscu ich przeciêcia.
+Rezultat to ko³o którego krawêdzie stykaj± siê z prowadnicami.
+ 
+# (end of tips)
+

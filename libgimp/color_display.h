@@ -23,33 +23,35 @@
 
 #include <libgimp/parasiteF.h>
 
-typedef void       (*GimpColorDisplayInit)      (void);
-typedef gpointer   (*GimpColorDisplayNew)       (int       type);
-typedef void       (*GimpColorDisplayConvert)   (gpointer  cd_ID,
-						 guchar    *buf,
-						 int        width,
-						 int        height,
-						 int        bpp,
-						 int        bpl);
-typedef void       (*GimpColorDisplayDestroy)   (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayFinalize)  (void);
-typedef void       (*GimpColorDisplayLoadState) (gpointer   cd_ID,
-						 Parasite  *state);
-typedef Parasite * (*GimpColorDisplaySaveState) (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayConfigure) (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayInit)            (void);
+typedef gpointer   (*GimpColorDisplayNew)             (int       type);
+typedef void       (*GimpColorDisplayConvert)         (gpointer  cd_ID,
+						       guchar    *buf,
+						       int        width,
+						       int        height,
+						       int        bpp,
+						       int        bpl);
+typedef void       (*GimpColorDisplayDestroy)         (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayFinalize)        (void);
+typedef void       (*GimpColorDisplayLoadState)       (gpointer   cd_ID,
+						       Parasite  *state);
+typedef Parasite * (*GimpColorDisplaySaveState)       (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayConfigure)       (gpointer   cd_ID);
+typedef void       (*GimpColorDisplayConfigureCancel) (gpointer cd_ID);
 
 typedef struct _GimpColorDisplayMethods GimpColorDisplayMethods;
 
 struct _GimpColorDisplayMethods
 {
-  GimpColorDisplayInit      init;
-  GimpColorDisplayNew       new;
-  GimpColorDisplayConvert   convert;
-  GimpColorDisplayDestroy   destroy;
-  GimpColorDisplayFinalize  finalize;
-  GimpColorDisplayLoadState load;
-  GimpColorDisplaySaveState save;
-  GimpColorDisplayConfigure configure;
+  GimpColorDisplayInit            init;
+  GimpColorDisplayNew             new;
+  GimpColorDisplayConvert         convert;
+  GimpColorDisplayDestroy         destroy;
+  GimpColorDisplayFinalize        finalize;
+  GimpColorDisplayLoadState       load;
+  GimpColorDisplaySaveState       save;
+  GimpColorDisplayConfigure       configure;
+  GimpColorDisplayConfigureCancel cancel;
 };
 
 gboolean gimp_color_display_register   (const char              *name,

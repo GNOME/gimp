@@ -3283,3 +3283,89 @@ msgstr "ZealousCrop(tm): やる事がありません.\n"
 
 #~ msgid "loads files of the jpeg file format"
 #~ msgstr "jpeg ファイル形式の画像を読み込む"
+
+#: libgimp/gimpfileselection.c:356
+#: libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "閉じる"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "ピクセル"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "ピクセル"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "インチ"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "インチ"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "ミリメートル"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "ミリメートル"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "ポイント"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "ポイント"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "パイカ"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "パイカ"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "パーセント:"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "選択"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "ファイル選択"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "警告: ホームディレクトリがありません"
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "詳細..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr "unit-menu-format 文字列が %%-シーケンスで終っている"
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr "unit-menu-format に不明なシーケンス '%%%c' がある"
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "単位選択"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "単位 "
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "倍率"

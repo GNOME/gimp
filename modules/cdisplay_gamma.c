@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1999 Manish Singh
+ * Copyright (C) 1999 Manish Singh <yosh@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,7 @@ static gint       gamma_configure_delete_callback (GtkWidget    *widget,
 						   GdkEvent     *event,
 						   gpointer      data);
 static void       gamma_configure                 (gpointer      cd_ID);
+static void       gamma_configure_cancel          (gpointer      cd_ID);
 
 static GimpColorDisplayMethods methods = {
   NULL,
@@ -68,7 +69,8 @@ static GimpColorDisplayMethods methods = {
   NULL,
   gamma_load,
   gamma_save,
-  gamma_configure
+  gamma_configure,
+  gamma_configure_cancel
 };
 
 static GimpModuleInfo info = {
@@ -312,4 +314,13 @@ gamma_configure (gpointer cd_ID)
     }
 
   gtk_widget_show (context->shell);
+}
+
+static void
+gamma_configure_cancel (gpointer cd_ID)
+{
+  GammaContext *context = (GammaContext *) cd_ID;
+ 
+  if (context->shell)
+    gtk_widget_hide (context->shell);
 }

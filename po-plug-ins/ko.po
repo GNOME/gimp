@@ -6544,3 +6544,181 @@ msgstr "서버 로그파일:"
 
 #~ msgid "MAX (x-d, -), (x < 0.5)"
 #~ msgstr "최대 (x-d, -), (x < 0.5)"
+
+#: libgimp/gimpexport.c:264
+msgid "Cancel"
+msgstr "취소"
+
+#: libgimp/gimpfileselection.c:356
+#: libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "닫기"
+
+#: libgimp/gimpunit.c:44
+msgid "pixel"
+msgstr "픽셀"
+
+#: libgimp/gimpunit.c:44
+msgid "pixels"
+msgstr "픽셀"
+
+#: libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "인치"
+
+#: libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "인치"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr "밀리미터"
+
+#: libgimp/gimpunit.c:48
+msgid "millimeters"
+msgstr "밀리미터"
+
+#: libgimp/gimpunit.c:51
+msgid "point"
+msgstr "포인트"
+
+#: libgimp/gimpunit.c:51
+msgid "points"
+msgstr "포인트"
+
+#: libgimp/gimpunit.c:52
+msgid "pica"
+msgstr "파이카"
+
+#: libgimp/gimpunit.c:52
+msgid "picas"
+msgstr "파이카"
+
+#: libgimp/gimpunit.c:59
+msgid "percent"
+msgstr "퍼센트"
+
+#: libgimp/gimpexport.c:257
+msgid "Ignore"
+msgstr "무시"
+
+#: libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+msgid "Select"
+msgstr "선택"
+
+#: libgimp/gimpfileselection.c:352
+msgid "Select File"
+msgstr "파일 선택"
+
+#: libgimp/gimpenv.c:86
+msgid "warning: no home directory."
+msgstr "경고: 홈 디렉토리가 아닙니다."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr "좀 더..."
+
+#: libgimp/gimpunitmenu.c:333
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr "unit-menu-format 스트링이 %%-sequence으로 끝났습니다"
+
+#: libgimp/gimpunitmenu.c:366
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr "unit-menu-format 은 알수 없는 형식 시퀸스 '%%%c'를 포함합니다."
+
+#: libgimp/gimpunitmenu.c:453
+msgid "Unit Selection"
+msgstr "단위 셀렉션"
+
+#: libgimp/gimpunitmenu.c:479
+msgid "Unit "
+msgstr "단위 "
+
+#: libgimp/gimpunitmenu.c:481
+msgid "Factor"
+msgstr "프랙탈"
+
+#: libgimp/gimpexport.c:89
+msgid "can't handle layers"
+msgstr "계층을 조절할수 없습니다."
+
+#: libgimp/gimpexport.c:90 libgimp/gimpexport.c:99
+msgid "Merge visible layers"
+msgstr "보이는 계층 머지"
+
+#: libgimp/gimpexport.c:98
+msgid "can only handle layers as animation frames"
+msgstr "에니메이션 프래임인 계층만 조절할수 있습니다."
+
+#: libgimp/gimpexport.c:99
+msgid "Save as animation"
+msgstr "에니메이션으로 저장"
+
+#: libgimp/gimpexport.c:107
+msgid "can't handle transparency"
+msgstr "투명하게를 조절할 수 없습니다."
+
+#: libgimp/gimpexport.c:108
+msgid "Flatten Image"
+msgstr "플래튼 이미지"
+
+#: libgimp/gimpexport.c:116
+msgid "can only handle RGB images"
+msgstr "오직 RGB 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:117 libgimp/gimpexport.c:144 libgimp/gimpexport.c:153
+msgid "Convert to RGB"
+msgstr "RGB로 바꾸기"
+
+#: libgimp/gimpexport.c:125
+msgid "can only handle grayscale images"
+msgstr "오직 그레이스케일 이미지만 조절 할수 있습니다"
+
+#: libgimp/gimpexport.c:126 libgimp/gimpexport.c:144 libgimp/gimpexport.c:163
+msgid "Convert to grayscale"
+msgstr "그레이스케일로 바꾸기"
+
+#: libgimp/gimpexport.c:134
+msgid "can only handle indexed images"
+msgstr "인덱스된 이미지들만 조절할 수 있습니다."
+
+#: libgimp/gimpexport.c:135 libgimp/gimpexport.c:153 libgimp/gimpexport.c:162
+msgid ""
+"Convert to indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"인덱스된 기본 새팅으로 바꾸기\n"
+"(그것의 결과를 직접 조정하세요.)"
+
+#: libgimp/gimpexport.c:143
+msgid "can only handle RGB or grayscale images"
+msgstr "RGB 혹은 그레이스케일 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:152
+msgid "can only handle RGB or indexed images"
+msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:161
+msgid "can only handle grayscale or indexed images"
+msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
+
+#: libgimp/gimpexport.c:233
+msgid "Export File"
+msgstr "경로 전하기(export)"
+
+#: libgimp/gimpexport.c:249
+msgid "Export"
+msgstr "전하기(export)"
+
+#: libgimp/gimpexport.c:274
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"양식에 따라 그것을 저장하기 전에 당신의 이미지는 전해져야만(export) "
+"합니다 : "
+
+#: libgimp/gimpexport.c:332
+msgid "The export conversion won't modify your original image."
+msgstr "전하기(export) 전환은 당신의 원래 이미지를 바꾸기 않을 것입니다."
