@@ -1,15 +1,15 @@
 # Lithuanian translation of GIMP.
-# Copyright (C) 2004 Free Software Foundation, Inc.
-# Žygimantas Beručka <uid0@akl.lt>, 2004.
-# 
+# Copyright (C) 2004-2005 Free Software Foundation, Inc.
+# Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
+# Giedrius Naudžiūnas <gimp@projektas.lt>, 2004-2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:37+0100\n"
-"PO-Revision-Date: 2004-05-23 11:55+0300\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
+"PO-Revision-Date: 2005-01-18 21:03+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,9 +33,8 @@ msgid "Current Command"
 msgstr "Esama komanda"
 
 #: plug-ins/script-fu/script-fu-console.c:267
-#, fuzzy
 msgid "_Browse..."
-msgstr "Naršyti..."
+msgstr "_Naršyti..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -67,7 +66,6 @@ msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
-#. some languages want an extra space here
 #: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
@@ -157,7 +155,8 @@ msgstr "Serverio žurnalo byla:"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsolė"
 
-#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:129
+#: plug-ins/script-fu/script-fu.c:158
 #: plug-ins/script-fu/script-fu.c:290
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr ""
@@ -215,9 +214,8 @@ msgid "No matches"
 msgstr ""
 
 #: plug-ins/dbbrowser/gimpprocview.c:133
-#, fuzzy
 msgid "Parameters"
-msgstr "Diametras"
+msgstr "Parametrai"
 
 #: plug-ins/dbbrowser/gimpprocview.c:146
 msgid "Return Values"
@@ -233,11 +231,11 @@ msgstr ""
 
 #: plug-ins/dbbrowser/gimpprocview.c:320
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "GIMP priedai"
 
 #: plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Extension"
-msgstr ""
+msgstr "GIMP priedas"
 
 #: plug-ins/dbbrowser/gimpprocview.c:322
 msgid "Temporary Procedure"
@@ -388,9 +386,8 @@ msgstr "Šriftas"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
-#, fuzzy
 msgid "Font size (pixels)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Šrifto dydis (taškeliais)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid "Outline blur radius"
@@ -405,7 +402,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
-msgstr ""
+msgstr "Raštas"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
@@ -508,7 +505,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
 msgid "Background color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
@@ -646,7 +643,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
-msgstr ""
+msgstr "Dydis"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
@@ -690,7 +687,7 @@ msgstr "Naršyti..."
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 msgid "B_utton..."
-msgstr ""
+msgstr "Mygtukas..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
@@ -714,7 +711,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:9
 msgid "Text color"
-msgstr ""
+msgstr "Teksto spalva"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Alien _Glow..."
@@ -894,7 +891,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 msgid "Background Color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Bo_vination..."
@@ -963,9 +960,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
-#, fuzzy
 msgid "Image size"
-msgstr "Paveikslėlių tipai:"
+msgstr "Paveikslėlio dydis"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:3
@@ -1031,7 +1027,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
-msgstr ""
+msgstr "Krentantis šešėlis"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
@@ -1039,7 +1035,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
-msgstr ""
+msgstr "Invertuoti"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
@@ -1087,9 +1083,8 @@ msgid "Highlight balance"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
-#, fuzzy
 msgid "C_hrome..."
-msgstr "Naršyti..."
+msgstr "Chromas..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1158,7 +1153,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/clothify.scm.h:5
 #: plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
-msgstr ""
+msgstr "Gylis"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:6
@@ -1177,11 +1172,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
-msgstr ""
+msgstr "Dėmės"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "_Kavos dėmė..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Comic Boo_k..."
@@ -1202,9 +1197,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Efekto dydis (taškeliais)"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background image"
@@ -1212,7 +1206,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
-msgstr ""
+msgstr "Kristalas..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
@@ -1271,7 +1265,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
-msgstr ""
+msgstr "Spalva"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1445,13 +1439,12 @@ msgid "_Text"
 msgstr "_Tekstas"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
-#, fuzzy
 msgid "_Frosty..."
-msgstr "Naršyti..."
+msgstr "_Šaltas..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
-msgstr ""
+msgstr "Pridėti šešėlį"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
@@ -1476,9 +1469,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "Autocrop"
-msgstr "Autorius:"
+msgstr "Automatinis apkarpymas"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Dark color"
@@ -1512,7 +1504,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Shadow color"
-msgstr ""
+msgstr "Šešėlio spalva"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 msgid "_Big Header..."
@@ -1573,7 +1565,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
-msgstr ""
+msgstr "Šešėlis"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Text gradient reverse"
@@ -1592,9 +1584,8 @@ msgid "Use pattern overlay"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels * 3)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Efekto dydis (taškeliais * 3)"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1651,7 +1642,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontaliai"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 msgid "New Guide (by _Percent)..."
@@ -1665,7 +1656,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #: plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikaliai"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
@@ -1801,7 +1792,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr ""
+msgstr "_Lava..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -1836,9 +1827,8 @@ msgid "Feathering"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#, fuzzy
 msgid "Name"
-msgstr "Vardas:"
+msgstr "Pavadinimas"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Re_ctangular, Feathered..."
@@ -1862,13 +1852,12 @@ msgid "Create shadow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 5)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Efekto dydis (taškeliais * 5)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr ""
+msgstr "Neonas..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 #, fuzzy
@@ -1899,11 +1888,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
-msgstr ""
+msgstr "_Sena fotografija..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
-msgstr ""
+msgstr "Kampas"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Cubic"
@@ -1991,7 +1980,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
-msgstr ""
+msgstr "_Apvalus mygtukas..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -2011,7 +2000,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Juoda"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behaviour"
@@ -2056,16 +2045,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush name"
-msgstr ""
+msgstr "Teptuko pavadinimas"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "File name"
-msgstr ""
+msgstr "Bylos pavadinimas"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-#, fuzzy
 msgid "To _Brush..."
-msgstr "Naršyti..."
+msgstr "Į teptuką..."
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
@@ -2081,7 +2069,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
-msgstr ""
+msgstr "Į raštą..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
@@ -2159,7 +2147,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr ""
+msgstr "Teptukas"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
@@ -2170,9 +2158,7 @@ msgid "Color method"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid ""
-"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
+msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
@@ -2217,7 +2203,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
-msgstr ""
+msgstr "Pieštukas"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
@@ -2262,7 +2248,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr ""
+msgstr "Įrankis"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
@@ -2270,7 +2256,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
-msgstr ""
+msgstr "Tipas"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
@@ -2290,9 +2276,8 @@ msgid "Starb_urst..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid "Effect size (pixels * 4)"
-msgstr "Šrifto dydis (pikseliais)"
+msgstr "Efekto dydis (taškeliais * 4)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 #, fuzzy
@@ -2353,7 +2338,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:9
 msgid "Text Circle..."
-msgstr ""
+msgstr "Tekstas ratu..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
@@ -2381,7 +2366,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text pattern"
-msgstr ""
+msgstr "Teksto raštas"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
@@ -2389,15 +2374,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
-msgstr ""
+msgstr "Sulieti horizontaliai"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur type"
-msgstr ""
+msgstr "Suliejimo tipas"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur vertically"
-msgstr ""
+msgstr "Sulieti vertikaliai"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "IIR"
@@ -2417,7 +2402,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
-msgstr ""
+msgstr "Priekinio plano spalva"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
@@ -2425,11 +2410,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask opacity"
-msgstr ""
+msgstr "Kaukės nepermatomumas"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask size"
-msgstr ""
+msgstr "Kaukės dydis"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
 msgid "_Unsharp Mask..."
@@ -2449,7 +2434,7 @@ msgstr "Bangos ilgis"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "_Bangos..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2486,19 +2471,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online"
-msgstr ""
+msgstr "<Toolbox>/Pagalba/The GIMP internete"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Plug-in _Registry"
-msgstr ""
+msgstr "Priedų registracija"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "_Developer Web Site"
-msgstr ""
+msgstr "_Kūrėjų tinklalapis"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "_Main Web Site"
-msgstr ""
+msgstr "_Oficialus tinklalapis"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2514,11 +2499,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
-msgstr ""
+msgstr "Krentančio šešėlio spalva"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
-msgstr ""
+msgstr "Krentančio šešėlio nepermatomumas"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
@@ -2536,15 +2521,3 @@ msgstr ""
 msgid "_Xach-Effect..."
 msgstr ""
 
-#, fuzzy
-#~ msgid "_About"
-#~ msgstr "Apie"
-
-#~ msgid "DB Browser"
-#~ msgstr "DB naršyklė"
-
-#~ msgid "Help:"
-#~ msgstr "Pagalba:"
-
-#~ msgid "Font Size (pixels)"
-#~ msgstr "Šrifto dydis (pikseliais)"

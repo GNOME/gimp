@@ -1,17 +1,17 @@
 # Lithuanian translation of GIMP (libgimp).
-# Copyright (C) 2001-2004 Free Software Foundation, Inc.
+# Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001.
-# Žygimantas Beručka <uid0@akl.lt>, 2004.
+# Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
-# 
+# Giedrius Naud#i#nas <gimp@projektas.lt>, 2004-2005.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
-"PO-Revision-Date: 2004-05-23 11:28+0300\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2004-12-28 15:41+0100\n"
+"PO-Revision-Date: 2005-01-18 21:01+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,16 +21,20 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Teptuko pasirinkimas"
 
-#: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:158
+#: libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
+#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s negali suprasti sluoksnių"
 
-#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
+#: libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:225
+#: libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Sujungti matomus sluoksnius"
 
@@ -39,16 +43,20 @@ msgstr "Sujungti matomus sluoksnius"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
 
-#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s gali suprasti sluoksnius tik kaip animacijos kadrus"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:234
+#: libgimp/gimpexport.c:243
 msgid "Save as Animation"
 msgstr "Išsaugoti kaip animaciją"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:261
 msgid "Flatten Image"
 msgstr "Suploti paveikslėlį"
 
@@ -71,7 +79,9 @@ msgstr "Pritaikyti sluoksnio kaukę"
 msgid "%s can only handle RGB images"
 msgstr "%s gali suprasti tik RGB paveikslėlius"
 
-#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
+#: libgimp/gimpexport.c:279
+#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Konvertuoti į RGB"
 
@@ -80,7 +90,9 @@ msgstr "Konvertuoti į RGB"
 msgid "%s can only handle grayscale images"
 msgstr "%s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
 
-#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
+#: libgimp/gimpexport.c:288
+#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Konvertuoti į pilkumo atspalvius (grayscale)"
 
@@ -89,7 +101,9 @@ msgstr "Konvertuoti į pilkumo atspalvius (grayscale)"
 msgid "%s can only handle indexed images"
 msgstr "%s gali suprasti tik indeksuotus paveikslėlius"
 
-#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
+#: libgimp/gimpexport.c:297
+#: libgimp/gimpexport.c:326
+#: libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -113,8 +127,7 @@ msgstr ""
 #: libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr ""
-"%s gali suprasti tik RGB ar pilkumo atspalvių (grayscale) paveikslėlius"
+msgstr "%s gali suprasti tik RGB ar pilkumo atspalvių (grayscale) paveikslėlius"
 
 #: libgimp/gimpexport.c:325
 #, c-format
@@ -158,12 +171,8 @@ msgstr "_Eksportuoti"
 #. the headline
 #: libgimp/gimpexport.c:482
 #, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
-msgstr ""
-"Paveikslėlį reikia eksportuoti prieš išsaugojimą %s formatu dėl šių "
-"priežasčių:"
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgstr "Paveikslėlį reikia eksportuoti prieš išsaugojimą %s formatu dėl šių priežasčių:"
 
 #. the footline
 #: libgimp/gimpexport.c:553
@@ -192,12 +201,12 @@ msgstr "Šriftų pasirinkimas"
 msgid "Gradient Selection"
 msgstr "Perėjimų pasirinkimas"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
+#: libgimp/gimpmenu.c:406
+#: libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Tuščias)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
 msgstr "Raštų pasirinkimas"
 
@@ -211,15 +220,15 @@ msgstr "procentų"
 
 #: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "Mažas"
 
 #: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "Vidutinis"
 
 #: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "Didelis"
 
 #: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
@@ -235,37 +244,36 @@ msgstr ""
 
 #: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "Tik baltas"
 
 #: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "Tik pilkas"
 
 #: libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "Juoda"
+msgstr "Tik juoda"
 
 #: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB spalva"
 
-#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-#, fuzzy
+#: libgimpbase/gimpbaseenums.c:92
+#: libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
-msgstr "Konvertuoti į pilkumo atspalvius (grayscale)"
+msgstr "Pilkumo atspalviai"
 
 #: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "Indeksuota spalva"
 
 #: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
@@ -273,7 +281,7 @@ msgstr ""
 
 #: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "Indeksuotas"
 
 #: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
@@ -329,7 +337,8 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
+#: libgimpbase/gimputils.c:169
+#: libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
@@ -338,8 +347,10 @@ msgstr "(nekorektiška UTF-8 eilutė)"
 msgid "Loading module: '%s'\n"
 msgstr "Įkeliamas modulis: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
-#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
+#: libgimpmodule/gimpmodule.c:193
+#: libgimpmodule/gimpmodule.c:212
+#: libgimpmodule/gimpmodule.c:326
+#: libgimpmodule/gimpmodule.c:354
 #: libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
@@ -366,7 +377,8 @@ msgstr "Įkėlimas nepavyko"
 msgid "Not loaded"
 msgstr "Neįkelta"
 
-#: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
+#: libgimpthumb/gimpthumb-utils.c:227
+#: libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
@@ -377,50 +389,52 @@ msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 
 #: libgimpwidgets/gimpcolorbutton.c:99
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "/_Priekinio plano spalvą"
+msgstr "_Priekinio plano spalva"
 
 #: libgimpwidgets/gimpcolorbutton.c:103
-#, fuzzy
 msgid "_Background Color"
-msgstr "/_Fono spalva"
+msgstr "_Fono spalva"
 
 #: libgimpwidgets/gimpcolorbutton.c:107
-#, fuzzy
 msgid "Blac_k"
-msgstr "/_Juoda"
+msgstr "Juoda"
 
 #: libgimpwidgets/gimpcolorbutton.c:111
-#, fuzzy
 msgid "_White"
-msgstr "/_Balta"
+msgstr "_Balta"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:155
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:156
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:157
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:158
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:159
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:343
+#: libgimpwidgets/gimpcolorscales.c:160
+#: libgimpwidgets/gimpcolorselect.c:343
 msgid "_B"
 msgstr "_B"
 
@@ -428,39 +442,46 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:347
+#: libgimpwidgets/gimpcolorscales.c:165
+#: libgimpwidgets/gimpcolorselect.c:347
 msgid "Hue"
 msgstr "Atspalvis"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:348
-#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
+#: libgimpwidgets/gimpcolorscales.c:166
+#: libgimpwidgets/gimpcolorselect.c:348
+#: modules/cdisplay_proof.c:49
+#: modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Sodrumas"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:349
+#: libgimpwidgets/gimpcolorscales.c:167
+#: libgimpwidgets/gimpcolorselect.c:349
 msgid "Value"
 msgstr "Reikšmė"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:168
+#: libgimpwidgets/gimpcolorselect.c:350
 msgid "Red"
 msgstr "Raudona"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:351
+#: libgimpwidgets/gimpcolorscales.c:169
+#: libgimpwidgets/gimpcolorselect.c:351
 msgid "Green"
 msgstr "Žalia"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:352
+#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorselect.c:352
 msgid "Blue"
 msgstr "Mėlyna"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:171
+#: libgimpwidgets/gimpcolorselect.c:353
 msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Šešioliktainis spalvos kodas, naudojamas HTML"
+msgstr "Šešioliktainis spalvos kodas, naudojamas HTML ir CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
@@ -483,17 +504,14 @@ msgid "Select File"
 msgstr "Pasirinkite bylą"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "Kilobaitų"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
 msgstr "Megabaitų"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "Gigabaitų"
 
@@ -506,9 +524,7 @@ msgid "Folder"
 msgstr "Aplankas"
 
 #: libgimpwidgets/gimppickbutton.c:138
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
@@ -522,7 +538,7 @@ msgstr ""
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "_Peržiūra"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -530,7 +546,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "Centras"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -560,7 +576,8 @@ msgstr "_Atstatyti"
 msgid "Visible"
 msgstr "Matomas"
 
-#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:154
+#: libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
@@ -576,13 +593,14 @@ msgstr "Tarpai tarp e_ilučių"
 msgid "_Resize"
 msgstr "_Keisti dydį"
 
-#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
+#: libgimpwidgets/gimpstock.c:188
+#: libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "_Ištempti"
 
 #: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
-msgstr ""
+msgstr "Apkarpyti"
 
 #: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
@@ -614,38 +632,33 @@ msgstr "Koeficientas"
 
 #: libgimpwidgets/gimpwidgets.c:1001
 #, fuzzy
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
-msgstr ""
-"Jei mygtukas \"Laikas\" nėra paspaustas, atsitiktinių skaičių generatoriaus "
-"inicializavimui naudokite šią reikšmę - tai leis jums pakartoti nurodytą "
-"\"atsitiktinę\" operaciją"
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Jei mygtukas \"Laikas\" nėra paspaustas, atsitiktinių skaičių generatoriaus inicializavimui naudokite šią reikšmę - tai leis jums pakartoti nurodytą \"atsitiktinę\" operaciją"
 
 #: libgimpwidgets/gimpwidgets.c:1005
 msgid "_New Seed"
 msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1018
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Atsitiktinių skaičių generatorių inicializuoti pagal dabartinį laiką - tai "
-"garantuos jums patikimą atsitiktinumą"
+msgstr "Atsitiktinių skaičių generatorių inicializuoti pagal dabartinį laiką - tai garantuos jums patikimą atsitiktinumą"
 
 #: libgimpwidgets/gimpwidgets.c:1022
 msgid "_Randomize"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
+#: modules/cdisplay_colorblind.c:57
+#: modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
+#: modules/cdisplay_colorblind.c:59
+#: modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
+#: modules/cdisplay_colorblind.c:61
+#: modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
@@ -685,15 +698,18 @@ msgstr "Kontrastas"
 msgid "Contrast C_ycles:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
+#: modules/cdisplay_proof.c:45
+#: modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr ""
 
-#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
+#: modules/cdisplay_proof.c:47
+#: modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
+#: modules/cdisplay_proof.c:51
+#: modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr ""
 
@@ -789,5 +805,3 @@ msgstr "Vandeniniai dažai"
 msgid "Pressure"
 msgstr "Spaudimas"
 
-#~ msgid "He_x Triplet:"
-#~ msgstr "Šešioli_ktainis trejetas:"
