@@ -51,7 +51,7 @@ msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
 msgid "The GIMP"
-msgstr "Gimp"
+msgstr "O GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:290
@@ -64,7 +64,7 @@ msgstr "trazido até si por"
 
 #: app/app_procs.c:378
 msgid "GIMP Startup"
-msgstr "Arranque do Gimp"
+msgstr "Arranque do GIMP"
 
 #: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
@@ -74,7 +74,7 @@ msgstr "analisando \"%s\"\n"
 #. initialize the xcf file format routines
 #: app/app_procs.c:569
 msgid "Looking for data files"
-msgstr "Procurando por arquivos de dados"
+msgstr "A procurar ficheiros de dados"
 
 #: app/app_procs.c:569
 msgid "Parasites"
@@ -121,9 +121,9 @@ msgid ""
 "\n"
 "Quit the GIMP?"
 msgstr ""
-"Alguns arquivos não foram guardados.\n"
+"Alguns ficheiros não foram guardados.\n"
 "\n"
-"Sair do Gimp?"
+"Sair do GIMP?"
 
 #: app/app_procs.c:780
 msgid "Quit"
@@ -1055,7 +1055,7 @@ msgstr "Carregar/Gravar curvas"
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
-msgstr "Não é possível abrir o arquivo %s"
+msgstr "Não é possível abrir o ficheiro %s"
 
 #: app/desaturate.c:43
 msgid "Desaturate operates only on RGB color drawables."
@@ -1150,7 +1150,7 @@ msgstr "Não permite apagar"
 #: app/errorconsole.c:173
 #, c-format
 msgid "Error opening file %s: %s"
-msgstr "Erro ao abrir arquivo %s: %s"
+msgstr "Erro ao abrir ficheiro %s: %s"
 
 #: app/errorconsole.c:190
 msgid "Can't save, nothing selected!"
@@ -1158,11 +1158,11 @@ msgstr "Não pode gravar, nada foi selecionado!"
 
 #: app/errorconsole.c:194
 msgid "Save error log to file..."
-msgstr "Gravar registro de erro em arquivo..."
+msgstr "Gravar registro de erro em ficheiro..."
 
 #: app/errorconsole.c:276
 msgid "GIMP Error Console"
-msgstr "Erro na Consola do Gimp"
+msgstr "Erro na Consola do GIMP"
 
 #: app/errorconsole.c:282
 msgid "Clear"
@@ -1170,11 +1170,11 @@ msgstr "Limpar"
 
 #: app/errorconsole.c:305
 msgid "Write all errors to file..."
-msgstr "Gravar todos os erros em arquivo..."
+msgstr "Gravar todos os erros em ficheiro..."
 
 #: app/errorconsole.c:312
 msgid "Write selection to file..."
-msgstr "Gravar seleção em arquivo..."
+msgstr "Gravar seleção em ficheiro..."
 
 #: app/file_new_dialog.c:195
 #, no-c-format
@@ -1242,19 +1242,19 @@ msgstr "Carregar imagem"
 #. format-chooser frame
 #: app/fileops.c:330
 msgid "Determine File Type"
-msgstr "Determinar tipo de arquivo:"
+msgstr "Determinar tipo de ficheiro:"
 
 #: app/fileops.c:403
 msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
-"gerar\n"
-"pré-visualização"
+"Gerar\n"
+"Pré-visualização"
 
 #: app/fileops.c:422
 msgid "No Selection."
-msgstr "Sem seleção."
+msgstr "Sem Seleção."
 
 #: app/fileops.c:470 app/fileops.c:1757
 #, c-format
@@ -1275,15 +1275,15 @@ msgstr "Gravar opções"
 
 #: app/fileops.c:553
 msgid "Determine File Type:"
-msgstr "Determinar tipo de arquivo:"
+msgstr "Determinar Tipo de Ficheiro:"
 
 #: app/fileops.c:616
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"Não se pode reverter.\n"
-"Não há arquivo associado com esta imagem."
+"Falha ao reverter.\n"
+"Não há ficheiro associado com esta imagem."
 
 #: app/fileops.c:627
 #, c-format
@@ -1328,7 +1328,7 @@ msgid ""
 "%s is not a regular file."
 msgstr ""
 "%s falhou.\n"
-"%s não é um arquivo regular."
+"%s não é um ficheiro normal."
 
 #: app/fileops.c:780
 #, c-format
@@ -1350,7 +1350,7 @@ msgid ""
 "%s: Unknown file type."
 msgstr ""
 "Gravação falhada.\n"
-"%s: Tipo de arquivo desconhecido."
+"%s: Tipo de ficheiro desconhecido."
 
 #: app/fileops.c:1169
 #, c-format
@@ -1359,7 +1359,7 @@ msgid ""
 "%s is not a regular file."
 msgstr ""
 "Gravação falhada.\n"
-"%s é um arquivo irregular"
+"%s é um ficheiro irregular."
 
 #: app/fileops.c:1188
 #, c-format
@@ -1384,7 +1384,7 @@ msgstr "(O salvamento de imagem de referência foi desactivado)"
 
 #: app/fileops.c:1450
 msgid "(Could not write thumbnail file)"
-msgstr "(Não foi possível gravar arquivo da imagem de referência)"
+msgstr "(Não foi possível gravar ficheiro da imagem de referência)"
 
 #: app/fileops.c:1454
 msgid "(Thumbnail file not written)"
@@ -1392,7 +1392,7 @@ msgstr "(A imagem de referência não foi gravada)"
 
 #: app/fileops.c:1472
 msgid "No preview available"
-msgstr "Pré-visualização não disponível"
+msgstr "Pré-visualização indisponível"
 
 #: app/fileops.c:1572
 msgid "(could not make preview)"
@@ -1538,7 +1538,7 @@ msgstr "Versão desconhecida de formato do pincel #%d em \"%s\"."
 #: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Erro no arquivo de pincéis do Gimp \"%s\"."
+msgstr "Erro no ficheiro de pincéis do GIMP \"%s\"."
 
 #: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
@@ -1547,12 +1547,12 @@ msgstr "Sem nome"
 #: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "O arquivo de pincéis Gimp parece estar truncado: \"%s\"."
+msgstr "O ficheiro de pincéis GIMP parece estar truncado: \"%s\"."
 
 #: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "O arquivo de pincéis Gimp parece estar corrompido: \"%s\"."
+msgstr "O ficheiro de pincéis GIMP parece estar corrompido: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1613,7 +1613,7 @@ msgstr "Camada de tipo %d não é suportada"
 
 #: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
-msgstr "Não foi possível encontrar o Navegador de ajuda Gimp"
+msgstr "Não foi possível encontrar o Navegador de Ajuda GIMP"
 
 #: app/gimphelp.c:193
 msgid ""
@@ -1621,8 +1621,8 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
-"Não foi possível encontrar o procedimento Gimp Help\n"
-"Browser, provavelmente este não foi compilado\n"
+"Não foi possível encontrar o procedimento Navegador de\n"
+"Ajuda GIMP, provavelmente este não foi compilado\n"
 "porque o GtkXmHTML não está instalado."
 
 #: app/gimphelp.c:196
@@ -1776,7 +1776,7 @@ msgstr ""
 
 #: app/gimpui.c:122
 msgid "GIMP Message"
-msgstr "Mensagem do Gimp"
+msgstr "Mensagem do GIMP"
 
 #. pseudo unit
 #: app/gimpunit.c:63
@@ -1978,7 +1978,7 @@ msgstr ""
 #: app/gradient.c:2102
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
-msgstr "Fator de ampliação: %d:1    Mostrando [%0.6f, %0.6f]"
+msgstr "Factor de ampliação: %d:1    Mostrando [%0.6f, %0.6f]"
 
 #: app/gradient.c:2358
 #, c-format
@@ -2527,7 +2527,7 @@ msgstr "Procedimentos de edição"
 
 #: app/internal_procs.c:95
 msgid "File Operations"
-msgstr "Operações de arquivo"
+msgstr "Operações de Ficheiro"
 
 #: app/internal_procs.c:98
 msgid "Floating selections"
@@ -2535,7 +2535,7 @@ msgstr "Selecção de objetos flutuantes"
 
 #: app/internal_procs.c:101
 msgid "Gimprc procedures"
-msgstr "Procedimentos do arquivo Gimprc"
+msgstr "Procedimentos Gimprc"
 
 #: app/internal_procs.c:107
 msgid "Gradient UI"
@@ -2876,7 +2876,7 @@ msgstr ""
 
 #: app/main.c:305
 msgid "GIMP version"
-msgstr "Versão do Gimp"
+msgstr "Versão do GIMP"
 
 #: app/main.c:309
 #, c-format
@@ -2914,11 +2914,11 @@ msgstr ""
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -i --no-interface        Executa sem interface de usuário.\n"
+msgstr "  -i --no-interface        Executa sem interface de utilizador.\n"
 
 #: app/main.c:315
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g, --gimprc <gimprc>     Usa um arquivo gimprc alternativo.\n"
+msgstr "  -g, --gimprc <gimprc>     Usa um ficheiro gimprc alternativo.\n"
 
 #: app/main.c:316
 msgid "  -h, --help               Output this help.\n"
@@ -2952,7 +2952,7 @@ msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 Não usa memória compartilhada entre o Gimp e seus "
+"  --no-shm                 Não usa memória compartilhada entre o GIMP e seus "
 "plugins.\n"
 
 #: app/main.c:323
@@ -2974,7 +2974,7 @@ msgstr ""
 
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Usa um arquivo gimprc alternativo.\n"
+msgstr "  --system-gimprc <gimprc> Usa um ficheiro gimprc alternativo.\n"
 
 #: app/main.c:328
 msgid ""
@@ -3751,7 +3751,7 @@ msgstr "/Editar atributos de caminho..."
 #: app/menus.c:1314
 #, c-format
 msgid "Error opening file: %s\n"
-msgstr "Erro na abertura do arquivo: %s\n"
+msgstr "Erro na abertura do ficheiro: %s\n"
 
 #: app/module_db.c:66
 msgid "Module error"
@@ -3910,7 +3910,7 @@ msgstr ""
 "Carregando paleta %s:\n"
 "Paleta inválida:\n"
 "falta cabeçalho mágico\n"
-"Este arquivo precisa de ser convertido do DOS?"
+"Este ficheiro precisa de ser convertido do DOS?"
 
 #: app/palette.c:413
 #, c-format
@@ -4132,7 +4132,7 @@ msgstr "Falha ao ler caminho de %s"
 #: app/paths_dialog.c:1945
 #, c-format
 msgid "No points specified in path file %s"
-msgstr "Nenhum ponto foi especificado no arquivo de caminho %s"
+msgstr "Nenhum ponto foi especificado no ficheiro de caminho %s"
 
 #: app/paths_dialog.c:1956
 #, c-format
@@ -4173,12 +4173,12 @@ msgstr "Versão desconhecida de formato do pincel #%d em \"%s\"."
 #: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Erro no arquivo padrão do GIMP \"%s\""
+msgstr "Erro no ficheiro padrão do GIMP \"%s\""
 
 #: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "O arquivo padrão do GIMP \"%s\" parece estar truncado."
+msgstr "O ficheiro padrão do GIMP \"%s\" parece estar truncado."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4236,8 +4236,8 @@ msgstr ""
 "Plug-In com problemas: \"%s\"\n"
 "(%s)\n"
 "\n"
-"O Plug-In abortado pode ter baralhado o estado interno do Gimp.\n"
-"Você pode querer salvar suas imagens e reiniciar o Gimp\n"
+"O Plug-In abortado pode ter baralhado o estado interno do GIMP.\n"
+"Você pode querer salvar suas imagens e reiniciar o GIMP\n"
 "por segurança."
 
 #: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
@@ -4307,18 +4307,18 @@ msgid ""
 "be applied."
 msgstr ""
 "Pelo menos uma das alterações executadas terá\n"
-"efeito somente após a reinicialização do Gimp.\n"
+"efeito somente após a reinicialização do GIMP.\n"
 "\n"
 "Você pode escolher 'Salvar' agora para tornar\n"
 "suas alterações permanentes, dessa forma pode-se\n"
-"reiniciar o Gimp ou pressionar 'Fechar'e as\n"
+"reiniciar o GIMP ou pressionar 'Fechar'e as\n"
 "partes críticas de suas alterações não serão\n"
 "aplicadas."
 
 #: app/preferences_dialog.c:492
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr ""
-"Você precisa reinicializar o Gimp para que estas mudanças sejam efectivadas."
+"Você precisa reinicializar o GIMP para que estas mudanças sejam efectivadas."
 
 #: app/preferences_dialog.c:1044
 #, c-format
@@ -4660,7 +4660,7 @@ msgstr "Tipo de interpolação:"
 
 #: app/preferences_dialog.c:2263
 msgid "File Saving"
-msgstr "Gravação de arquivo"
+msgstr "Gravação de Ficheiro"
 
 #: app/preferences_dialog.c:2280 app/preferences_dialog.c:2293
 msgid "Always"
@@ -4672,7 +4672,7 @@ msgstr "Nunca"
 
 #: app/preferences_dialog.c:2285
 msgid "Try to Write a Thumbnail File:"
-msgstr "Tentar gravar um arquivo de referência"
+msgstr "Tentar Gravar um Ficheiro de Referência:"
 
 #: app/preferences_dialog.c:2292
 msgid "Only when Modified"
@@ -4852,15 +4852,15 @@ msgstr ""
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
-msgstr "Procedimento interno do Gimp"
+msgstr "Procedimento interno do GIMP"
 
 #: app/procedural_db_cmds.c:65
 msgid "GIMP Plug-In"
-msgstr "Plugin do Gimp"
+msgstr "Plugin do GIMP"
 
 #: app/procedural_db_cmds.c:66
 msgid "GIMP Extension"
-msgstr "Extensão do Gimp"
+msgstr "Extensão do GIMP"
 
 #: app/procedural_db_cmds.c:67
 msgid "Temporary Procedure"
@@ -5089,11 +5089,11 @@ msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
-msgstr "Dica Gimp do dia"
+msgstr "Dica GIMP do Dia"
 
 #: app/tips_dialog.c:148
 msgid "Show tip next time GIMP starts"
-msgstr "Mostrar dica na próxima inicialização do Gimp"
+msgstr "Mostrar dica na próxima inicialização do GIMP"
 
 #: app/tips_dialog.c:178
 msgid "Previous Tip"
@@ -5110,29 +5110,29 @@ msgid ""
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"O arquivo de dicas do Gimp não foi localizado!\n"
-"Deveria existir um arquivo chamado  gimp_tips.txt no\n"
-"diretório de dados do Gimp. Por favor verifique a instalação."
+"O ficheiro de dicas do GIMP não foi localizado!\n"
+"Deveria existir um ficheiro chamado  gimp_tips.txt no\n"
+"directório de dados do GIMP. Verifique a sua instalação."
 
 #: app/tool_options.c:126
 msgid "This tool has no options."
-msgstr "Esta ferramenta não tem opções disponíveis."
+msgstr "Esta ferramenta não tem opções."
 
 #: app/tool_options.c:150
 msgid "Rectangular Selection"
-msgstr "Selecção rectangular"
+msgstr "Selecção Rectangular"
 
 #: app/tool_options.c:152
 msgid "Elliptical Selection"
-msgstr "Selecção elíptica"
+msgstr "Selecção Elíptica"
 
 #: app/tool_options.c:154
 msgid "Free-Hand Selection"
-msgstr "Selecção à mão livre"
+msgstr "Selecção à Mão Livre"
 
 #: app/tool_options.c:156
 msgid "Fuzzy Selection"
-msgstr "Varinha mágica"
+msgstr "Varinha Mágica"
 
 #: app/tool_options.c:158
 msgid "Bezier Selection"
@@ -5140,11 +5140,11 @@ msgstr "Selecção Bezier"
 
 #: app/tool_options.c:160 app/tools.c:293
 msgid "Intelligent Scissors"
-msgstr "Tesoura inteligente"
+msgstr "Tesoura Inteligente"
 
 #: app/tool_options.c:162
 msgid "By-Color Selection"
-msgstr "Selecção por cores"
+msgstr "Selecção por Cores"
 
 #: app/tool_options.c:195
 msgid "Feather"
@@ -5152,7 +5152,7 @@ msgstr "Difusão"
 
 #: app/tool_options.c:316
 msgid "Fixed Size / Aspect Ratio"
-msgstr "Tamanho fixo / proporção de aspecto"
+msgstr "Tamanho Fixo / Proporção de Aspecto"
 
 #: app/tool_options.c:382
 msgid "Unit:"
@@ -5837,7 +5837,7 @@ msgstr "Refazer"
 
 #: app/user_install.c:106
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "O Gimp não está adequadamente instalado para o usuário actual\n"
+msgstr "O GIMP não está adequadamente instalado para o utilizador actual\n"
 
 #: app/user_install.c:107
 msgid ""
@@ -5851,7 +5851,7 @@ msgstr ""
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"Para executar instalação de usuário execute o Gimp sem o sinalizador '--"
+"Para executar instalação de utilizador execute o GIMP sem o sinalizador '--"
 "nointerface' \n"
 
 #: app/user_install.c:167
@@ -5863,7 +5863,7 @@ msgid ""
 "here."
 msgstr ""
 "O gimprc é usado para armazenar preferências que\n"
-"afectam o comportamento padrão do Gimp. Os caminhos\n"
+"afectam o comportamento padrão do GIMP. Os caminhos\n"
 "para busca por pincéis, paletas, gradientes, texturas,\n"
 "plugins e módulos também podem ser configurados aqui."
 
@@ -5872,7 +5872,7 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
-"O Gimp usa um arquivo gtkrc adicional, por isso pode-se\n"
+"O GIMP usa um ficheiro gtkrc adicional, por isso pode-se\n"
 "configurá-lo para que se pareça diferente das outras\n"
 "apps. GTK"
 
@@ -5886,11 +5886,11 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 "Os plugins e suas extensões são programas externos executados\n"
-"pelo Gimp que podem prover funcionalidades adicionais.\n"
+"pelo GIMP que podem prover funcionalidades adicionais.\n"
 "Estes programas são pesquisados em tempo de execução\n"
 "e as informações sobre suas funcionalidades e modos\n"
-"são guardadas neste arquivo. Este arquivo deve ser lido\n"
-"somente pelo Gimp e não deve ser editado."
+"são guardadas neste ficheiro. Este ficheiro deve ser lido\n"
+"somente pelo GIMP e não deve ser editado."
 
 #: app/user_install.c:192
 msgid ""
@@ -5901,11 +5901,11 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
-"Os atalhos de teclado podem ser redefinidos dinamicamente no Gimp.\n"
+"Os atalhos de teclado podem ser redefinidos dinamicamente no GIMP.\n"
 "O menurc é um depósito de sua configuração, por isso este pode\n"
 "ser lembrado para a próxima sessão. Caso queira, você pode editar\n"
-"este arquivo, mas é muito mais fácil definir as teclas dentro do\n"
-"Gimp. A eliminação deste arquivo irá recuperar os atalhos de\n"
+"este ficheiro, mas é muito mais fácil definir as teclas dentro do\n"
+"GIMP. A eliminação deste ficheiro irá recuperar os atalhos de\n"
 "teclado padrões."
 
 #: app/user_install.c:202
@@ -5915,8 +5915,8 @@ msgid ""
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 "O sessionrc é usado para armazenar as janelas de diálogo abertas\n"
-"na última vez que o Gimp foi finalizado. Você pode configurar o \n"
-"Gimp para abrir estes diálogos novamente na posição salva."
+"na última vez que o GIMP foi finalizado. Você pode configurar o \n"
+"GIMP para abrir estes diálogos novamente na posição salva."
 
 #: app/user_install.c:209
 msgid ""
@@ -5926,11 +5926,11 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"O unitrc é usado para armazenar as unidades de base de dados de usuário.\n"
+"O unitrc é usado para armazenar as unidades de base de dados de utilizador.\n"
 "Podem ser definidas unidades adicionais a serem utilizadas\n"
 "da mesma forma que são utilizadas medidas como polegadas,\n"
-"milímetros, pontos e paicas. Este arquivo é sobrescrito toda \n"
-"vez que o Gimp é finalizado."
+"milímetros, pontos e paicas. Este ficheiro é sobrescrito toda \n"
+"vez que o GIMP é finalizado."
 
 #: app/user_install.c:218
 msgid ""
@@ -5941,7 +5941,7 @@ msgid ""
 "brushes."
 msgstr ""
 "Este é um subdirectório utilizado para armazenar\n"
-"as definições de pincéis criados pelos usuários. O arquivo\n"
+"as definições de pincéis criados pelos utilizadores. O ficheiro\n"
 "padrão gimprc verifica este subdirectório em conjunto com\n"
 "os pincéis padrão do sistema, ao pesquisar por pincéis."
 
@@ -5953,9 +5953,9 @@ msgid ""
 "for generated brushes."
 msgstr ""
 "Este é um subdirectório usado para armazenar os pincéis\n"
-"que foram criados com o editor de pincéis. O arquivo padrão\n"
-"gimprc verifica a existência deste subdiretório ao pesquisar\n"
-"por pincéis gerados pelo usuário."
+"que foram criados com o editor de pincéis. O ficheiro padrão\n"
+"gimprc verifica a existência deste subdirectório ao pesquisar\n"
+"por pincéis gerados pelo utilizador."
 
 #: app/user_install.c:235
 msgid ""
@@ -5966,7 +5966,7 @@ msgid ""
 "for gradients."
 msgstr ""
 "Este é o subdirectório utilizado para armazenar\n"
-"os gradientes definidos pelo usuário. O arquivo gimprc\n"
+"os gradientes definidos pelo utilizador. O ficheiro gimprc\n"
 "padrão verifica a existência deste subdirectório além\n"
 "dos gradientes padrões pré-instalados com o sistema."
 
@@ -5982,10 +5982,10 @@ msgid ""
 "sessions."
 msgstr ""
 "Este é o subdirectório que pode ser usado para armazenar\n"
-"as paletas criadas pelo usuário. O arquivo padrão gimprc\n"
+"as paletas criadas pelo utilizador. O ficheiro padrão gimprc\n"
 "verifica a sua existência somente neste directório ao \n"
 "pesquisar por paletas. Durante a instalação as paletas do\n"
-"sistema serão copiadas para este diretório, permitindo que\n"
+"sistema serão copiadas para este directório, permitindo que\n"
 "as modificações realizadas durante alguma sessão sejam\n"
 "guardadas para uso futuro."
 
@@ -5998,7 +5998,7 @@ msgid ""
 "patterns."
 msgstr ""
 "Este é um subdirectório que pode ser usado para armazenar\n"
-"os padrões definidos pelo usuário. O arquivo padrão gimprc \n"
+"os padrões definidos pelo utilizador. O ficheiro padrão gimprc \n"
 "verifica a sua existência além da instalação de padrões do \n"
 "gimp de todo o sistema ao buscar por padrões."
 
@@ -6012,8 +6012,8 @@ msgid ""
 msgstr ""
 "Este é um subdirectório que pode ser usado para armazenar\n"
 "plugins temporários ou não suportados pelo sistema que foram criados\n"
-"pelo usuário. O arquivo padrão gimprc verifica a sua existência\n"
-"além dos directórios plugins Gimp ao pesquisar pelos plugins disponíveis."
+"pelo utilizador. O ficheiro padrão gimprc verifica a sua existência\n"
+"além dos directórios plugins GIMP ao pesquisar pelos plugins disponíveis."
 
 #: app/user_install.c:274
 msgid ""
@@ -6025,8 +6025,8 @@ msgid ""
 msgstr ""
 "Este subdirectório pode ser usado para armazenar módulos DLL\n"
 "temporários ou não suportados pelo sistema que foram criados\n"
-"pelo usuário. O arquivo padrão gimprc verifica a sua existência\n"
-"além do directório módulo Gimp system-wide ao pesquisar por módulos\n"
+"pelo utilizador. O ficheiro padrão gimprc verifica a sua existência\n"
+"além do directório módulo GIMP system-wide ao pesquisar por módulos\n"
 "para carregar ao inicializar."
 
 #: app/user_install.c:283
@@ -6036,8 +6036,8 @@ msgid ""
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
-"Este subdirectório é usado pelo Gimp para armazenar\n"
-"scripts criados e instalados  usuário. O arquivo padrão\n"
+"Este subdirectório é usado pelo GIMP para armazenar\n"
+"scripts criados e instalados utilizador. O ficheiro padrão\n"
 "gimprc verifica este subdirectório de scripts gimp de \n"
 "todo o sistema ao pesquisar por scripts."
 
@@ -6049,11 +6049,11 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
-"Este subdirectório é usado pelo Gimp para armazenar \n"
-"temporariamente buffers usados na ação desfazer para reduzir\n"
-"o uso de memória. Caso o Gimp seja finalizado de forma incondicional,\n"
-"arquivos podem permanecer indevidamente neste directório com o \n"
-"formato: gimp<x>.<x>, os quais podem ser eliminados pelo usuário\n"
+"Este subdirectório é utilizado pelo GIMP para armazenar \n"
+"temporariamente buffers usados na acção desfazer para reduzir\n"
+"o uso de memória. Caso o GIMP seja finalizado de forma abrupta,\n"
+"ficheiros podem permanecer indevidamente neste directório com o \n"
+"formato: gimp<x>.<x>, os quais podem ser eliminados pelo utilizador\n"
 "sem qualquer dano ao sistema."
 
 #: app/user_install.c:300
@@ -6061,7 +6061,7 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
-"Este subdirectório é usado para armazenar arquivos de parâmetros\n"
+"Este subdirectório é usado para armazenar ficheiros de parâmetros\n"
 "para a ferramenta Curvas."
 
 #: app/user_install.c:306
@@ -6069,7 +6069,7 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
-"Este subdirectório é usado para armazenar arquivos de parâmetros\n"
+"Este subdirectório é usado para armazenar ficheiros de parâmetros\n"
 "para a ferramenta Níveis"
 
 #: app/user_install.c:312
@@ -6081,9 +6081,9 @@ msgid ""
 "installation when searching for fractals."
 msgstr ""
 "Este é um subdirectório que pode ser usado para armazenar\n"
-"os fractais definidos pelo usuário e usados pelo plugin\n"
-"FractalExplorer. O arquivo padrão gimprc verifica este \n"
-"subdirectório além da instalação do Gimp FractalExplorer\n"
+"os fractais definidos pelo utilizador e usados pelo plugin\n"
+"FractalExplorer. O ficheiro padrão gimprc verifica este \n"
+"subdirectório além da instalação do GIMP FractalExplorer\n"
 "ao pesquisar por fractais."
 
 #: app/user_install.c:321
@@ -6095,8 +6095,8 @@ msgid ""
 "when searching for gfig figures."
 msgstr ""
 "Este é um subdirectório que pode ser usado para armazenar\n"
-"figuras definidas pelo usuário que podem ser usadas\n"
-"pelo plugin gfig. O arquivo padrão gimprc verifica este directório\n"
+"figuras definidas pelo utilizador que podem ser usadas\n"
+"pelo plugin gfig. O ficheiro padrão gimprc verifica este directório\n"
 "além da instalação para o systemwide gimp gfig ao pesquisar por\n"
 "figuras gfig."
 
@@ -6110,7 +6110,7 @@ msgid ""
 msgstr ""
 "Este é um subdirectório que pode ser usado para armazenar\n"
 "os componentes  gflares usados pelo plugin gflare.\n"
-"O arquivo padrão gimprc verifica este subdirectório além da\n"
+"O ficheiro padrão gimprc verifica este subdirectório além da\n"
 "istalação para o systemwide gimp gflares ao pesquisar por\n"
 "gflrares."
 
@@ -6123,10 +6123,10 @@ msgid ""
 "installation when searching for data."
 msgstr ""
 "Este é o subdirectório que pode ser usado para armazenar\n"
-"os componentes  gflares usados pelo plugin gflare.\n"
-"O arquivo padrão gimprc verifica este subdirectório além da\n"
-"istalação para o systemwide gimp gflares ao pesquisar por\n"
-"gflrares."
+"dados definidos pelo utilizador para serem utilizados pelo\n"
+"plugin Gimpressionist. O ficheiro padrão gimprc verifica\n"
+"este subdirectório além da istalação para o systemwide\n"
+"GIMP Gimpressionist ao procurar dados."
 
 #: app/user_install.c:412
 msgid ""
@@ -6134,11 +6134,11 @@ msgid ""
 "GIMP directory is being created..."
 msgstr ""
 "Espere até que seu directório\n"
-"pessoal do Gimp seja criado..."
+"pessoal do GIMP seja criado..."
 
 #: app/user_install.c:590
 msgid "GIMP User Installation"
-msgstr "Instalação do Gimp"
+msgstr "Instalação Utilizador do GIMP"
 
 #: app/user_install.c:595
 msgid "Continue"
@@ -6155,11 +6155,11 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Bem-vindo à\n"
-"Instalação do Gimp"
+"Instalação Utilizador do GIMP"
 
 #: app/user_install.c:735
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Clique em \"Continuar\" para entrar na instalação de usuário do Gimp."
+msgstr "Clique em \"Continuar\" para entrar na instalação de utilizador do GIMP."
 
 #: app/user_install.c:739
 msgid ""
@@ -6209,11 +6209,11 @@ msgstr ""
 
 #: app/user_install.c:784
 msgid "Personal GIMP Directory"
-msgstr "Directório pessoal do Gimp"
+msgstr "Directório Pessoal do GIMP"
 
 #: app/user_install.c:785
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr "Clique em \"Continuar\" para criar seu directório Gimp pessoal."
+msgstr "Clique em \"Continuar\" para criar seu directório GIMP pessoal."
 
 #: app/user_install.c:804
 #, c-format
@@ -6221,7 +6221,7 @@ msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
 msgstr ""
-"Para uma instalação adequada do Gimp, um subdirectório chamado\n"
+"Para uma instalação adequada do GIMP, um subdirectório chamado\n"
 "%s precisa ser criado."
 
 #: app/user_install.c:810
@@ -6230,17 +6230,17 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Este subdirectório conterá vários arquivos importantes.\n"
-"Clique em um dos arquivos ou subdirectórios na árvore\n"
+"Este subdirectório conterá vários ficheiros importantes.\n"
+"Clique em um dos ficheiros ou subdirectórios na árvore\n"
 "para obter maiores informações sobre o item seleccionado."
 
 #: app/user_install.c:897
 msgid "User Installation Log"
-msgstr "Registo de instalação do usuário"
+msgstr "Registo de Instalação do Utilizador"
 
 #: app/user_install.c:903
 msgid "GIMP Performance Tuning"
-msgstr "Ajuste do desempenho Gimp"
+msgstr "Ajuste do Desempenho GIMP"
 
 #: app/user_install.c:904
 msgid "Click \"Continue\" to accept the settings above."
@@ -6249,7 +6249,7 @@ msgstr "Clique em \"Continuar\" para aceitar as configurações acima."
 #: app/user_install.c:907
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
-"Para que haja um desempenho ótimo do Gimp, algumas configurações podem ter "
+"Para que haja um desempenho ótimo do GIMP, algumas configurações podem ter "
 "que ser feitas."
 
 #: app/user_install.c:916
@@ -6258,14 +6258,14 @@ msgstr "Resolução do monitor"
 
 #: app/user_install.c:917
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Clique em \"Continuar\" para iniciar o Gimp."
+msgstr "Clique em \"Continuar\" para iniciar o GIMP."
 
 #: app/user_install.c:920
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
-"Para exibir imagens no seu tamanho natural, o Gimp precisa de conhecer a "
+"Para exibir imagens no seu tamanho natural, o GIMP precisa de conhecer a "
 "resolução do seu monitor."
 
 #: app/user_install.c:929
@@ -6337,7 +6337,7 @@ msgstr ""
 
 #: app/user_install.c:1180
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Clique em \"Continuar\" para completar a instalação do Gimp."
+msgstr "Clique em \"Continuar\" para completar a instalação do GIMP."
 
 #: app/user_install.c:1185 app/user_install.c:1306
 msgid "Installation failed.  Contact system administrator."
@@ -6378,7 +6378,7 @@ msgid ""
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"O Gimp usa uma quantidade limitada de memória para armazenamento de dados, "
+"O GIMP usa uma quantidade limitada de memória para armazenamento de dados, "
 "o\n"
 "chamado \"Tile Cache\". Você deve ajustar este tamanho para que se adapte à\n"
 "memória. Considere a quantidade de memória usada por outros processos em\n"
@@ -6392,8 +6392,8 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 "Toda imagem e dados desfeitos que não se ajustam no Tile Cache serão\n"
-"gravados num arquivo swap. Este arquivo deve estar localizado num\n"
-"sistema de arquivo local com espaço livre suficiente (centenas de MB).\n"
+"gravados num ficheiro swap. Este ficheiro deve estar localizado num\n"
+"sistema de ficheiro local com espaço livre suficiente (centenas de MB).\n"
 "Num sistema UNIX, você pode querer usar o directório temp \n"
 "(\"/tmp\" ou \"/var/tmp\")."
 
@@ -6406,7 +6406,7 @@ msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"O Gimp pode obter esta informação do seu servidor X.\n"
+"O GIMP pode obter esta informação do seu servidor X.\n"
 "Entretanto, a maioria dos servidores X não retornam valores úteis."
 
 #: app/user_install.c:1410
@@ -6434,7 +6434,7 @@ msgstr ""
 #: app/xcf.c:384
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Erro XCF: encontrada versão de arquivo XCF %d não suportada"
+msgstr "Erro XCF: encontrada versão de ficheiro XCF %d não suportada"
 
 #: app/xcf.c:1817
 msgid ""
@@ -6442,7 +6442,7 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"Aviso XCF: versão 0 no formato de arquivo XCF\n"
+"Aviso XCF: versão 0 no formato de ficheiro XCF\n"
 "não guardou corretamente mapas de cores indexadas.\n"
 "Substituindo mapa de tons de cinza."
 
