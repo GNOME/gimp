@@ -246,7 +246,7 @@ xcf_load_image (Gimp    *gimp,
 
   return gimage;
 
- hard_error:  
+ hard_error:
   g_message ("XCF: This file is corrupt!  I could not even\n"
 	     "salvage any partial image data from it.");
 
@@ -273,33 +273,33 @@ xcf_load_image_props (XcfInfo   *info,
 	  return TRUE;
 
 	case PROP_COLORMAP:
-	  if (info->file_version == 0) 
+	  if (info->file_version == 0)
 	    {
 	      gint i;
 
 	      g_message (_("XCF warning: version 0 of XCF file format\n"
 			   "did not save indexed colormaps correctly.\n"
 			   "Substituting grayscale map."));
-	      info->cp += 
+	      info->cp +=
                 xcf_read_int32 (info->fp, (guint32 *) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols * 3);
 	      if (!xcf_seek_pos (info, info->cp + gimage->num_cols, NULL))
 	        return FALSE;
 
-	      for (i = 0; i<gimage->num_cols; i++) 
+	      for (i = 0; i<gimage->num_cols; i++)
 		{
 		  gimage->cmap[i*3+0] = i;
 		  gimage->cmap[i*3+1] = i;
 		  gimage->cmap[i*3+2] = i;
 		}
 	    }
-	  else 
+	  else
 	    {
-	      info->cp += 
+	      info->cp +=
                 xcf_read_int32 (info->fp, (guint32 *) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols * 3);
-	      info->cp += 
-                xcf_read_int8 (info->fp, 
+	      info->cp +=
+                xcf_read_int8 (info->fp,
                                (guint8 *) gimage->cmap, gimage->num_cols * 3);
 	    }
 	  break;
@@ -366,7 +366,7 @@ xcf_load_image_props (XcfInfo   *info,
 	case PROP_RESOLUTION:
 	  {
 	    gfloat xres, yres;
-	    
+
 	    info->cp += xcf_read_float (info->fp, &xres, 1);
 	    info->cp += xcf_read_float (info->fp, &yres, 1);
 	    if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
@@ -406,9 +406,9 @@ xcf_load_image_props (XcfInfo   *info,
 	case PROP_UNIT:
 	  {
 	    guint32 unit;
-	    
+
 	    info->cp += xcf_read_int32 (info->fp, &unit, 1);
-	    
+
 	    if ((unit <= GIMP_UNIT_PIXEL) ||
 		(unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp)))
 	      {
@@ -416,7 +416,7 @@ xcf_load_image_props (XcfInfo   *info,
                            "falling back to inches");
 		unit = GIMP_UNIT_INCH;
 	      }
-	    
+
 	    gimage->unit = unit;
 	  }
 	  break;
@@ -459,7 +459,7 @@ xcf_load_image_props (XcfInfo   *info,
 		    break;
 		  }
 	      }
-	    
+
 	    /* no match */
 	    if (unit == num_units)
 	      unit = _gimp_unit_new (gimage->gimp,
@@ -479,7 +479,7 @@ xcf_load_image_props (XcfInfo   *info,
 	 break;
 
 	default:
-	  g_message ("unexpected/unknown image property: %d (skipping)", 
+	  g_message ("unexpected/unknown image property: %d (skipping)",
                      prop_type);
 
 	  {
@@ -525,8 +525,8 @@ xcf_load_layer_props (XcfInfo   *info,
 	  break;
 	case PROP_FLOATING_SELECTION:
 	  info->floating_sel = layer;
-	  info->cp += 
-            xcf_read_int32 (info->fp, 
+	  info->cp +=
+            xcf_read_int32 (info->fp,
                             (guint32 *) &info->floating_sel_offset, 1);
 	  break;
 	case PROP_OPACITY:
@@ -558,7 +558,7 @@ xcf_load_layer_props (XcfInfo   *info,
           }
 	  break;
 	case PROP_PRESERVE_TRANSPARENCY:
-	  info->cp += 
+	  info->cp +=
             xcf_read_int32 (info->fp, (guint32 *) &layer->preserve_trans, 1);
 	  break;
 	case PROP_APPLY_MASK:
@@ -571,11 +571,11 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) show_mask, 1);
 	  break;
 	case PROP_OFFSETS:
-	  info->cp += 
-            xcf_read_int32 (info->fp, 
+	  info->cp +=
+            xcf_read_int32 (info->fp,
                             (guint32 *) &GIMP_ITEM (layer)->offset_x, 1);
-	  info->cp += 
-            xcf_read_int32 (info->fp, 
+	  info->cp +=
+            xcf_read_int32 (info->fp,
                             (guint32 *) &GIMP_ITEM (layer)->offset_y, 1);
 	  break;
 	case PROP_MODE:
@@ -602,7 +602,7 @@ xcf_load_layer_props (XcfInfo   *info,
            }
 	 break;
 	default:
-	  g_message ("unexpected/unknown layer property: %d (skipping)", 
+	  g_message ("unexpected/unknown layer property: %d (skipping)",
                      prop_type);
 
 	  {
@@ -676,7 +676,7 @@ xcf_load_channel_props (XcfInfo     *info,
           }
 	  break;
 	case PROP_SHOW_MASKED:
-	  info->cp += 
+	  info->cp +=
             xcf_read_int32 (info->fp, (guint32 *) &channel->show_masked, 1);
 	  break;
 	case PROP_COLOR:
@@ -686,11 +686,11 @@ xcf_load_channel_props (XcfInfo     *info,
 	    info->cp += xcf_read_int8 (info->fp, (guint8 *) col, 3);
 
 	    gimp_rgb_set_uchar (&channel->color, col[0], col[1], col[2]);
-				
+
 	  }
 	  break;
 	case PROP_TATTOO:
-	  info->cp += 
+	  info->cp +=
             xcf_read_int32 (info->fp, &GIMP_ITEM (channel)->tattoo, 1);
 	  break;
 	 case PROP_PARASITES:
@@ -709,7 +709,7 @@ xcf_load_channel_props (XcfInfo     *info,
            }
            break;
 	default:
-	  g_message ("unexpected/unknown channel property: %d (skipping)", 
+	  g_message ("unexpected/unknown channel property: %d (skipping)",
                      prop_type);
 
 	  {
@@ -772,7 +772,7 @@ xcf_load_layer (XcfInfo   *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
-  layer = gimp_layer_new (gimage, width, height, 
+  layer = gimp_layer_new (gimage, width, height,
                           type, name, 255, GIMP_NORMAL_MODE);
   g_free (name);
   if (! layer)
@@ -809,11 +809,11 @@ xcf_load_layer (XcfInfo   *info,
     {
       gboolean active   = (info->active_layer == layer);
       gboolean floating = (info->floating_sel == layer);
-      
+
       layer = gimp_text_layer_from_layer (layer, text);
-      
+
       if (active)
-        info->active_layer = layer;  
+        info->active_layer = layer;
       if (floating)
         info->floating_sel = layer;
     }
@@ -905,7 +905,7 @@ xcf_load_channel (XcfInfo   *info,
   /* read in the hierarchy */
   if (!xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
-    
+
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
     goto error;
 
@@ -1019,7 +1019,7 @@ xcf_load_hierarchy (XcfInfo     *info,
 
   /* discard offsets for layers below first, if any.
    */
-  do 
+  do
     {
       info->cp += xcf_read_int32 (info->fp, &junk, 1);
     }
@@ -1029,15 +1029,15 @@ xcf_load_hierarchy (XcfInfo     *info,
    *  next level offset is stored.
    */
   saved_pos = info->cp;
-  
+
   /* seek to the level offset */
   if (!xcf_seek_pos (info, offset, NULL))
     return FALSE;
-  
+
   /* read in the level */
   if (!xcf_load_level (info, tiles))
     return FALSE;
-      
+
   /* restore the saved position so we'll be ready to
    *  read the next offset.
    */
@@ -1100,11 +1100,11 @@ xcf_load_level (XcfInfo     *info,
       /* read in the offset of the next tile so we can calculate the amount
 	 of data needed for this tile*/
       info->cp += xcf_read_int32 (info->fp, &offset2, 1);
-      
+
       /* if the offset is 0 then we need to read in the maximum possible
 	 allowing for negative compression */
       if (offset2 == 0)
-	offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4 * 1.5; 
+	offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4 * 1.5;
                                         /* 1.5 is probably more
 					   than we need to allow */
 
@@ -1136,24 +1136,24 @@ xcf_load_level (XcfInfo     *info,
 	  break;
 	}
 
-      if (fail) 
+      if (fail)
 	{
 	  tile_release (tile, TRUE);
 	  return FALSE;
 	}
-	    
+
       /* To potentially save memory, we compare the
        *  newly-fetched tile against the last one, and
        *  if they're the same we copy-on-write mirror one against
        *  the other.
        */
-      if (previous != NULL) 
+      if (previous != NULL)
 	{
 	  tile_lock (previous);
 	  if (tile_ewidth (tile) == tile_ewidth (previous) &&
 	      tile_eheight (tile) == tile_eheight (previous) &&
 	      tile_bpp (tile) == tile_bpp (previous) &&
-	      memcmp (tile_data_pointer (tile, 0, 0), 
+	      memcmp (tile_data_pointer (tile, 0, 0),
 		      tile_data_pointer (previous, 0, 0),
 		      tile_size (tile)) == 0)
 	    tile_manager_map (tiles, i, previous);
@@ -1190,8 +1190,8 @@ xcf_load_tile (XcfInfo *info,
   if (!info->swap_num)
     {
       info->ref_count = g_new (int, 1);
-      info->swap_num = tile_swap_add (info->filename, 
-				      xcf_swap_func, 
+      info->swap_num = tile_swap_add (info->filename,
+				      xcf_swap_func,
 				      info->ref_count);
     }
 
@@ -1201,7 +1201,7 @@ xcf_load_tile (XcfInfo *info,
 
 #else
 
-  info->cp += xcf_read_int8 (info->fp, tile_data_pointer(tile, 0, 0), 
+  info->cp += xcf_read_int8 (info->fp, tile_data_pointer(tile, 0, 0),
 			     tile_size (tile));
 
 #endif
@@ -1223,10 +1223,10 @@ xcf_load_tile_rle (XcfInfo *info,
   gint i, j;
   gint nmemb_read_successfully;
   guchar *xcfdata, *xcfodata, *xcfdatalimit;
-  
+
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
- 
+
   xcfdata = xcfodata = g_malloc (data_length);
 
   /* we have to use fread instead of xcf_read_* because we may be
@@ -1236,7 +1236,7 @@ xcf_load_tile_rle (XcfInfo *info,
   info->cp += nmemb_read_successfully;
 
   xcfdatalimit = &xcfodata[nmemb_read_successfully - 1];
-  
+
   for (i = 0; i < bpp; i++)
     {
       data = (guchar *) tile_data_pointer (tile, 0, 0) + i;
@@ -1358,8 +1358,6 @@ xcf_load_old_paths (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
   info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
 
-  g_print ("num_paths: %d  selected_row: %d\n", num_paths, last_selected_row);
-
   while (num_paths-- > 0)
     xcf_load_old_path (info, gimage);
 
@@ -1416,8 +1414,6 @@ xcf_load_old_path (XcfInfo   *info,
       return FALSE;
     }
 
-  g_print ("num_points: %d  closed: %d\n", num_points, closed);
-
   points = g_new0 (GimpVectorsCompatPoint, num_points);
 
   for (i = 0; i < num_points; i++)
@@ -1438,12 +1434,10 @@ xcf_load_old_path (XcfInfo   *info,
         {
           gfloat x;
           gfloat y;
- 
+
           info->cp += xcf_read_int32 (info->fp, &points[i].type, 1);
           info->cp += xcf_read_float (info->fp, &x,              1);
           info->cp += xcf_read_float (info->fp, &y,              1);
-
-          g_print ("path point type: %d   (at %f, %f)\n", points[i].type, x, y);
 
           points[i].x = x;
           points[i].y = y;

@@ -93,6 +93,9 @@ gimp_text_vectors_new (GimpImage *image,
 			       &context);
 
       g_object_unref (layout);
+
+      if (context.stroke)
+        gimp_stroke_close (context.stroke);
     }
 
   return vectors;
@@ -124,6 +127,9 @@ moveto (FT_Vector *to,
 #endif
 
   gimp_text_vector_coords (context, to, &start);
+
+  if (context->stroke)
+    gimp_stroke_close (context->stroke);
 
   context->stroke = gimp_bezier_stroke_new_moveto (&start);
 
@@ -162,7 +168,6 @@ conicto (FT_Vector *ftcontrol,
   RenderContext *context = (RenderContext *) data;
   GimpCoords     control;
   GimpCoords     end;
-  GList         *l;
 
 #if TEXT_DEBUG
   g_printerr ("conicto %f, %f\n", to->x / 64.0, to->y / 64.0);
