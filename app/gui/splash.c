@@ -80,6 +80,39 @@ splash_create (void)
 
   if (! pixbuf)
     {
+      gchar *dirname = gimp_personal_rc_file ("splashes");
+      GDir  *dir     = g_dir_open (dirname, 0, NULL);
+
+      if (dir)
+        {
+          const gchar *entry;
+          GList       *splashes = NULL;
+
+          while ((entry = g_dir_read_name (dir)))
+            splashes = g_list_prepend (splashes, g_strdup (entry));
+
+          g_dir_close (dir);
+
+          if (splashes)
+            {
+              gint32 i = g_random_int_range (0, g_list_length (splashes) - 1);
+
+              filename = g_build_filename (dirname,
+                                           g_list_nth_data (splashes, i),
+                                           NULL);
+              pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+              g_free (filename);
+
+              g_list_foreach (splashes, (GFunc) g_free, NULL);
+              g_list_free (splashes);
+            }
+        }
+
+      g_free (dirname);
+    }
+
+  if (! pixbuf)
+    {
       filename = g_build_filename (gimp_data_directory (),
                                    "images", "gimp-splash.png",
                                    NULL);
