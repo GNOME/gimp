@@ -657,6 +657,9 @@ gimp_image_destroy (GtkObject *object)
   gimp_image_free_channels (gimage);
   channel_delete (gimage->selection_mask);
 
+  if (gimage->comp_preview)
+    temp_buf_free (gimage->comp_preview);
+
   if (gimage->parasites)
     gtk_object_unref (GTK_OBJECT (gimage->parasites));
 }

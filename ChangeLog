@@ -1,3 +1,14 @@
+Thu Oct 28 23:22:34 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/gimpimage.c
+
+	Fixed memory leak with image is deleted.
+
+	* plug-ins/common/jpeg.c
+
+	Fixed the way the plugin added layers. Preview stuff does not now
+	get corrupted.
+
 1999-10-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/Makefile.am

@@ -888,8 +888,6 @@ load_image (char         *filename,
 				 layer_type, 100, NORMAL_MODE);
     }
 
-  gimp_image_add_layer (image_ID, layer_ID, 0);
-
   drawable_global = drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
 
@@ -1022,6 +1020,7 @@ load_image (char         *filename,
 
   /* Tell the GIMP to display the image.
    */
+  gimp_image_add_layer (image_ID, layer_ID, 0);
   gimp_drawable_flush (drawable);
 
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
@@ -1473,6 +1472,7 @@ make_preview ()
       gimp_displays_flush ();
       gdk_flush();
     }
+
 }
 
 static void
