@@ -1,3 +1,11 @@
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* libgimpbase/gimputils.c (gimp_enum_value_get_desc)
+	(gimp_enum_value_get_help): don't crash if gimp_enum_get_desc()
+	returns NULL.
+
 2005-01-20  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
