@@ -1,3 +1,8 @@
+Sun Oct 18 16:26:51 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/paleete.c: ooops, commited a work in progress
+	(ie,  broken...) palette.c. Reverted.
+
 Sun Oct 18 21:20:25 BST 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/clone.c: don't bail if we don't have a source drawable if
