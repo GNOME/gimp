@@ -40,39 +40,27 @@ struct _GimpGuiConfig
   GimpDisplayConfig    parent_instance;
 
   gint                 last_opened_size;
-
   GimpCheckSize        transparency_size;
   GimpCheckType        transparency_type;
-
   gboolean             perfect_mouse;
   gint                 default_threshold;
-
   GimpPreviewSize      nav_preview_size;
   gboolean             nav_window_per_display;
   gboolean             info_window_per_display;
   gboolean             global_paint_options;
   gboolean             trust_dirty_flag;
-
   gboolean             save_device_status;
   gboolean             save_session_info;
   gboolean             restore_session;
-
   gboolean             show_tips;
-
   gboolean             show_tool_tips;
   gboolean             tearoff_menus;
-
+  gboolean             show_indicators;
   guint                max_new_image_size;
-
   gchar               *theme_path;
   gchar               *theme;
-
-  /* the fields below have not yet been implemented as properties */
-
-  gboolean             show_indicators;
-
   gboolean             use_help;
-  gint                 help_browser;
+  gint                 help_browser;  /* FIXME: not yet a property */
 };
 
 struct _GimpGuiConfigClass

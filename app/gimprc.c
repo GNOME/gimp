@@ -231,7 +231,7 @@ GimpRc gimprc =
   /* nav_window_per_display    */  FALSE,
   /* info_window_follows_mouse */  TRUE,
   /* help_browser              */  HELP_BROWSER_GIMP,
-  /* cursor_mode               */  CURSOR_MODE_TOOL_ICON,
+  /* cursor_mode               */  GIMP_CURSOR_MODE_TOOL_ICON,
   /* disable_tearoff_menus     */  FALSE,
   /* theme_path                */  NULL,
   /* theme                     */  NULL
@@ -2683,11 +2683,11 @@ parse_cursor_mode (gpointer val1p,
   token = get_next_token ();
 
   if (strcmp (token_sym, "tool-icon") == 0)
-    *((CursorMode *) val1p) = CURSOR_MODE_TOOL_ICON;
+    *((GimpCursorMode *) val1p) = GIMP_CURSOR_MODE_TOOL_ICON;
   else if (strcmp (token_sym, "tool-crosshair") == 0)
-    *((CursorMode *) val1p) = CURSOR_MODE_TOOL_CROSSHAIR;
+    *((GimpCursorMode *) val1p) = GIMP_CURSOR_MODE_TOOL_CROSSHAIR;
   else if (strcmp (token_sym, "crosshair") == 0)
-    *((CursorMode *) val1p) = CURSOR_MODE_CROSSHAIR;
+    *((GimpCursorMode *) val1p) = GIMP_CURSOR_MODE_CROSSHAIR;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -3027,13 +3027,13 @@ static inline gchar *
 cursor_mode_to_str (gpointer val1p,
 		    gpointer val2p)
 {
-  CursorMode mode;
+  GimpCursorMode mode;
 
-  mode = *((CursorMode *) val1p);
+  mode = *((GimpCursorMode *) val1p);
 
-  if (mode == CURSOR_MODE_TOOL_ICON)
+  if (mode == GIMP_CURSOR_MODE_TOOL_ICON)
     return g_strdup ("tool-icon");
-  else if (mode == CURSOR_MODE_TOOL_CROSSHAIR)
+  else if (mode == GIMP_CURSOR_MODE_TOOL_CROSSHAIR)
     return g_strdup ("tool-crosshair");
   else
     return g_strdup ("crosshair");

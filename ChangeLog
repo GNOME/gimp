@@ -1,5 +1,23 @@
 2001-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/display/Makefile.am
+	* app/display/display-enums.h: new file with GimpCursorMode enum.
+
+	* app/display/display-types.h: removed CursorMode enum here, include
+	display-enums.h.
+
+	* app/gimprc.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/preferences-dialog.c: changed accordingly.
+
+	* app/config/Makefile.am
+	* app/config/gimpbaseconfig.[ch]
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimpdisplayconfig.[ch]
+	* app/config/gimpguiconfig.[ch]: implemented the remaining properties.
+
+2001-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am
 	* app/config/gimpconfig-utils.[ch]: new files with utility functions.
 

@@ -16,19 +16,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DISPLAY_TYPES_H__
-#define __DISPLAY_TYPES_H__
+#ifndef __DISPLAY_ENUMS_H__
+#define __DISPLAY_ENUMS_H__
 
 
-#include "widgets/widgets-types.h"
+#define GIMP_TYPE_CURSOR_MODE (gimp_cursor_mode_get_type ())
 
-#include "display/display-enums.h"
+GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CURSOR_MODE_TOOL_ICON,
+  GIMP_CURSOR_MODE_TOOL_CROSSHAIR,
+  GIMP_CURSOR_MODE_CROSSHAIR
+} GimpCursorMode;
 
 
-typedef struct _GimpDisplay       GimpDisplay;
-typedef struct _GimpDisplayShell  GimpDisplayShell;
-
-typedef struct _Selection         Selection;
-
-
-#endif /* __DISPLAY_TYPES_H__ */
+#endif /* __DISPLAY_ENUMS_H__ */

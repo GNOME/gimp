@@ -1397,14 +1397,14 @@ gimp_display_shell_real_install_tool_cursor (GimpDisplayShell   *shell,
     {
       switch (gimprc.cursor_mode)
 	{
-	case CURSOR_MODE_TOOL_ICON:
+	case GIMP_CURSOR_MODE_TOOL_ICON:
 	  break;
 
-	case CURSOR_MODE_TOOL_CROSSHAIR:
+	case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
 	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
 	  break;
 
-	case CURSOR_MODE_CROSSHAIR:
+	case GIMP_CURSOR_MODE_CROSSHAIR:
 	  cursor_type = GIMP_CROSSHAIR_CURSOR;
 	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
 	  modifier    = GIMP_CURSOR_MODIFIER_NONE;

@@ -22,6 +22,8 @@
 #ifndef __GIMP_DISPLAY_CONFIG_H__
 #define __GIMP_DISPLAY_CONFIG_H__
 
+#include "display/display-enums.h"
+
 #include "gimpcoreconfig.h"
 
 
@@ -41,21 +43,15 @@ struct _GimpDisplayConfig
 
   gint                 marching_ants_speed;
   gboolean             colormap_cycling;
-
   gboolean             resize_windows_on_zoom;
   gboolean             resize_windows_on_resize;
-
   gboolean             default_dot_for_dot;
-
-  gint                 cursor_mode;
+  GimpCursorMode       cursor_mode;
   gboolean             cursor_updating;
-
   gchar               *image_title_format;
   gboolean             show_rulers;
   gboolean             show_statusbar;
-
   gboolean             confirm_on_close;
-
   gdouble              monitor_xres;
   gdouble              monitor_yres;
   gboolean             monitor_res_from_gdk;

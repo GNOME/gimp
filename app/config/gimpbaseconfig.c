@@ -25,8 +25,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "base/base-enums.h"
-
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"

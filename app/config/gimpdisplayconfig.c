@@ -25,9 +25,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "base/base-enums.h"
-#include "core/core-enums.h"
-
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
@@ -119,9 +116,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
                                     TRUE);
-
-  /* FIXME: insert cursor_mode and cursor_updating here */
-
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
+                                 "cursor-mode",
+                                 GIMP_TYPE_CURSOR_MODE, GIMP_CURSOR_MODE_TOOL_ICON);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
+                                    "cursor-updating",
+                                    TRUE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
                                    "%f-%p.%i (%t)");
@@ -171,6 +171,12 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       display_config->default_dot_for_dot = g_value_get_boolean (value);
+      break;
+    case PROP_CURSOR_MODE:
+      display_config->cursor_mode = g_value_get_enum (value);
+      break;
+    case PROP_CURSOR_UPDATING:
+      display_config->cursor_updating = g_value_get_boolean (value);
       break;
     case PROP_IMAGE_TITLE_FORMAT:
       g_free (display_config->image_title_format);
@@ -227,6 +233,12 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       g_value_set_boolean (value, display_config->default_dot_for_dot);
+      break;
+    case PROP_CURSOR_MODE:
+      g_value_set_enum (value, display_config->cursor_mode);
+      break;
+    case PROP_CURSOR_UPDATING:
+      g_value_set_boolean (value, display_config->cursor_updating);
       break;
     case PROP_IMAGE_TITLE_FORMAT:
       g_value_set_string (value, display_config->image_title_format);

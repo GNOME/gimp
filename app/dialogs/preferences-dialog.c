@@ -2325,11 +2325,11 @@ preferences_dialog_create (Gimp *gimp)
 			   GINT_TO_POINTER (gimprc.cursor_mode),
 
 			   _("Tool Icon"),
-			   GINT_TO_POINTER (CURSOR_MODE_TOOL_ICON),      NULL,
+			   GINT_TO_POINTER (GIMP_CURSOR_MODE_TOOL_ICON),      NULL,
 			   _("Tool Icon with Crosshair"),
-			   GINT_TO_POINTER (CURSOR_MODE_TOOL_CROSSHAIR), NULL,
+			   GINT_TO_POINTER (GIMP_CURSOR_MODE_TOOL_CROSSHAIR), NULL,
 			   _("Crosshair only"),
-			   GINT_TO_POINTER (CURSOR_MODE_CROSSHAIR),      NULL,
+			   GINT_TO_POINTER (GIMP_CURSOR_MODE_CROSSHAIR),      NULL,
 
 			   NULL);
 

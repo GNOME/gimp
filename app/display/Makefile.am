@@ -1,8 +1,22 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Display\"		\
+	@GIMP_THREAD_FLAGS@ 			\
+	@GIMP_MP_FLAGS@				\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/app			\
+	$(GTK_CFLAGS)				\
+	-I$(includedir)				\
+@STRIP_END@
+
 noinst_LIBRARIES = libappdisplay.a
 
-libappdisplay_a_SOURCES = @STRIP_BEGIN@ 	\
+libappdisplay_a_sources = @STRIP_BEGIN@ 	\
+	display-enums.h				\
 	display-types.h				\
 	gimpdisplay.c				\
 	gimpdisplay.h				\
@@ -33,15 +47,26 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-selection.h		\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DG_LOG_DOMAIN=\"Gimp-Display\"		\
-	@GIMP_THREAD_FLAGS@ 			\
-	@GIMP_MP_FLAGS@				\
-@STRIP_END@
+libappdisplay_a_built_sources = display-enums.c
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)				\
-	-I$(top_srcdir)/app			\
-	$(GTK_CFLAGS)				\
-	-I$(includedir)				\
-@STRIP_END@
+libappdisplay_a_SOURCES = \
+	$(libappdisplay_a_built_sources)	\
+	$(libappdisplay_a_sources)
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-dec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/display-enums.c: $(srcdir)/display-enums.h
+	$(GLIB_MKENUMS) \
+		--fhead "#include <glib-object.h>\n#include \"display-enums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{\n" \
+		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/display-enums.h > xgen-dec \
+	&& cp xgen-dec $(@F) \
+	&& rm -f xgen-dec
