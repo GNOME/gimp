@@ -19,86 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* alt: Added previews and some other buttons to gradient dialog. 
- *
- * hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping 
- *                                   preview widgetsize constant.
- * hof: Hofer Wolfgang, 1997.10.17   Added "Load From FG color"
- */
-
-/* Release date: 1997/06/02
- *
- * - Added the following procedural_db calls:
- *     gimp_gradients_get_list
- *     gimp_gradients_get_active
- *     gimp_gradients_set_active
- *     gimp_gradients_sample_uniform
- *     gimp_gradients_sample_custom
- *   Many thanks to Eiichi and Marcelo for their suggestions!
- */
-
-/* Release date: 1997/05/07
- *
- * - Added accelerator keys for the popup functions.  This allows for
- * very fast operation of the editor.
- *
- * - Added Replicate Selection function.
- *
- * - Re-arranged the pop-up menu a bit; it was getting too big.  I am
- * still not entirely happy with it.
- *
- * - Added grad_dump_gradient(); it is useful for debugging.
- */
-
-/* Release date: 1997/04/30
- *
- * - All `dangerous' dialogs now de-sensitize the main editor window.
- * This fixes a lot of potential bugs when the dialogs are active.
- *
- * - Fixed two bugs due to uninitialized variables, one in
- * prev_events() (thanks to Marcelo for pointing it out) and another
- * in cpopup_render_color_box() (me), and removed all warnings due to
- * those.
- *
- * - Removed the printf()'s in the pop-up menu (they were only used
- * for debugging).
- */
-
-/* Release date: 1997/04/22
- *
- * - Added GtkRadioMenuItems to the blending and coloring pop-up
- * menus.  You no longer have to remember the dang type for each
- * segment.
- *
- * - Added midpoint capabilities to sinuosidal and spherical sigments.
- * Many thanks to Marcelo for the patches!
- *
- * - Added a *real* Cancel function to the color pickers.  I don't
- * know why nobody killed me for not having done it before.
- */
-
-/* Release date: 1997/04/21
- *
- * - Re-wrote the old pop-up menu code, which was *horrible*.  The
- * memory leaks *should* go away once I write
- * grad_free_gradient_editor().  I'll do it once I'm finished adding
- * crap to gradient_editor_t.
- *
- * - Added "fetch from" color buttons.  Yeah, we all missed them.  You
- * should shed happiness tears when you see it.
- *
- * - Added an eyedropper function to the preview widget.  You can now
- * click on the preview widget and the foreground color will be set to
- * the gradient's color under the cursor.  This is still missing the
- * eyedropper cursor shape.
- *
- * - You can now invoke the pop-up menu from the preview widget.  Even
- * my hand gets unsteady at times.
- *
- * - Cool functions: Flip selection, Blend colors.  Can't live without
- * them.
- */
-
 /* Special thanks to:
  *
  * Luis Albarran (luis4@mindspring.com) - Nice UI suggestions
@@ -120,13 +40,6 @@
  *
  * - Add all of Marcelo's neat suggestions:
  *   - Hue rotate, saturation, brightness, contrast.
- *
- * - Add Save Dirty Gradients function.
- *
- * - Provide a way of renaming a gradient (instead of having to do
- *   copy/delete).
- *
- * - Fix the flicker in the hint bar.
  *
  * - Better handling of bogus gradient files and inconsistent
  *   segments.  Do not loop indefinitely in seg_get_segment_at() if
@@ -330,8 +243,6 @@ static void  gradient_editor_drop_gradient (GtkWidget  *widget,
 
 static GtkWidget *ed_create_button (gchar         *label,
 				    gchar         *help_data,
-				    gdouble        xalign,
-				    gdouble        yalign,
 				    GtkSignalFunc  signal_func,
 				    gpointer       data);
 
@@ -370,7 +281,6 @@ static void  ed_do_save_pov_callback        (GtkWidget *, gpointer);
 static void  ed_cancel_save_pov_callback    (GtkWidget *, gpointer);
 static gint  ed_delete_save_pov_callback    (GtkWidget *, GdkEvent *, gpointer);
 
-static void  ed_save_grads_callback         (GtkWidget *, gpointer);
 static void  ed_refresh_grads_callback      (GtkWidget *, gpointer);
 static void  ed_close_callback              (GtkWidget *, gpointer);
 
@@ -887,8 +797,6 @@ gradient_editor_create (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Save"), ed_save_grads_callback,
-		     NULL, NULL, FALSE, FALSE,
 		     _("Refresh"), ed_refresh_grads_callback,
 		     NULL, NULL, FALSE, FALSE,
 		     _("Close"), ed_close_callback,
@@ -970,7 +878,6 @@ gradient_editor_create (void)
   /* Buttons for gradient functions */
   button = ed_create_button (_("New Gradient"),
 			     "dialogs/gradient_editor/new_gradient.html",
-			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_new_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -979,7 +886,6 @@ gradient_editor_create (void)
 
   button = ed_create_button (_("Copy Gradient"),
 			     "dialogs/gradient_editor/copy_gradient.html",
-			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_copy_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -988,7 +894,6 @@ gradient_editor_create (void)
 
   button = ed_create_button (_("Delete Gradient"),
 			     "dialogs/gradient_editor/delete_gradient.html",
-			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_delete_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -997,7 +902,6 @@ gradient_editor_create (void)
 
   button = ed_create_button (_("Rename Gradient"),
 			     "dialogs/gradient_editor/rename_gradient.html",
-			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_rename_gradient_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1006,7 +910,6 @@ gradient_editor_create (void)
 
   button = ed_create_button (_("Save as POV-Ray"),
 			     "dialogs/gradient_editor/save_as_pov_ray.html",
-			     0.5, 0.5,
 			     GTK_SIGNAL_FUNC (ed_save_pov_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1023,7 +926,7 @@ gradient_editor_create (void)
   gtk_widget_show (hbox);
 
   /*  Zoom all button */
-  button = ed_create_button (_("Zoom all"), NULL, 0.5, 0.5,
+  button = ed_create_button (_("Zoom all"), NULL,
 			     GTK_SIGNAL_FUNC (ed_zoom_all_callback),
 			     g_editor);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1084,7 +987,7 @@ gradient_editor_create (void)
   gtk_range_set_update_policy (GTK_RANGE (g_editor->scrollbar),
 			       GTK_UPDATE_CONTINUOUS);
   gtk_box_pack_start (GTK_BOX (hbox), g_editor->scrollbar, TRUE, TRUE, 0);
-  gtk_widget_show (g_editor->scrollbar);
+  gtk_widget_hide (g_editor->scrollbar);
 
   /* Instant update toggle */
   g_editor->instant_update = TRUE;
@@ -1364,21 +1267,13 @@ ed_update_editor (int flags)
 static GtkWidget *
 ed_create_button (gchar         *label,
 		  gchar         *help_data,
-		  gdouble        xalign,
-		  gdouble        yalign,
 		  GtkSignalFunc  signal_func,
 		  gpointer       data)
 {
   GtkWidget *button;
-  GtkWidget *text;
 
-  button = gtk_button_new ();
-  text   = gtk_label_new (label);
-
-  gtk_misc_set_alignment (GTK_MISC (text), xalign, yalign);
-  gtk_misc_set_padding (GTK_MISC (text), 4, 0);
-  gtk_container_add (GTK_CONTAINER (button), text);
-  gtk_widget_show (text);
+  button = gtk_button_new_with_label (label);
+  gtk_widget_show (button); 
 
   if (signal_func != NULL)
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -2087,13 +1982,6 @@ ed_delete_save_pov_callback (GtkWidget *widget,
 /***** The main dialog action area button callbacks *****/
 
 static void
-ed_save_grads_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  grad_save_all (FALSE);
-}
-
-static void
 ed_refresh_grads_callback (GtkWidget *widget,
 			   gpointer   data)
 {
@@ -2170,6 +2058,8 @@ ed_zoom_all_callback (GtkWidget *widget,
 
   g_editor->zoom_factor = 1;
 
+  gtk_widget_hide (g_editor->scrollbar);
+
   adjustment->value     	   = 0.0;
   adjustment->page_size 	   = 1.0;
   adjustment->step_increment = 1.0 * GRAD_SCROLLBAR_STEP_SIZE;
@@ -2195,6 +2085,11 @@ ed_zoom_out_callback (GtkWidget *widget,
   old_page_size = adjustment->page_size;
 
   g_editor->zoom_factor--;
+
+  if (g_editor->zoom_factor==1)
+    gtk_widget_hide (g_editor->scrollbar);
+  else
+    gtk_widget_show (g_editor->scrollbar);
 
   page_size = 1.0 / g_editor->zoom_factor;
   value     = old_value - (page_size - old_page_size) / 2.0;
@@ -2235,6 +2130,7 @@ ed_zoom_in_callback (GtkWidget *widget,
   adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
 
   gtk_signal_emit_by_name (g_editor->scroll_data, "changed");
+  gtk_widget_show (g_editor->scrollbar);
 }
 
 static void

@@ -1,3 +1,14 @@
+Thu Dec 30 02:34:49 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* app/gradient.c: Applied patch by Daniel Egger:
+
+        - Simplified the layout of the gradient editor without any visible
+          changes
+        - Removed save button, because changes are saved in "realtime"
+        - Hide the scrollbar when not usable -> prevent user from confusion and
+          avoid flickering of the scrollbar
+        - Removed out-of-date comments and bugsdescriptions
+
 Wed Dec 29 21:28:13 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimpcompat.h: Add gimp_drawable_find_parasite, reported
