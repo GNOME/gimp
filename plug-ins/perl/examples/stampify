@@ -25,7 +25,7 @@ register	"stampify",
 		$nw = int(gimp_image_width($img) + 2 * $marg + $diameter);
 		$nh = int(gimp_image_height($img) + 2 * $marg + $diameter);
 		my $img2 = gimp_image_new($nw, $nh, RGB);
-		my $layer1 = gimp_layer_new($img2, $nw, $nh, RGBA, "Layer 1", 100, NORMAL_MODE);
+		my $layer1 = gimp_layer_new($img2, $nw, $nh, RGBA_IMAGE, "Layer 1", 100, NORMAL_MODE);
 		gimp_image_add_layer($img2, $layer1, 0);
 		gimp_image_set_active_layer($img2, $layer1);
 		gimp_palette_set_background($paper);

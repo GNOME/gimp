@@ -85,8 +85,8 @@ sub stringify {
 }
 
 open XPM,"<$xpm\0" or die "$xpm: $!\n";
-<XPM>=~/^\/\*\s+XPM\s+\*\/$/ or die "$xpm: not a valid xpm file\n";
-<XPM>=~/^static\s+char\s+\*\s+(\S+?)(?:_xpm)?\[\]\s+=\s+{$/ or die "$xpm: not a valid xpm file\n";
+<XPM>=~/^\/\*\s+XPM\s+\*\/$/ or die "$xpm: not a valid xpm file (1)\n";
+<XPM>=~/^static\s+char\s+\*\s*(\S+?)(?:_xpm)?\[\]\s+=\s+{$/ or die "$xpm: not a valid xpm file (2)\n";
 $xpm_name=$1;
 
 print STDERR "found xpm $xpm_name\n" if $verbose;
@@ -94,6 +94,7 @@ print STDERR "found xpm $xpm_name\n" if $verbose;
 while(<XPM>) {
    y/\t/ /;
    s/'/\\\'/g;
+   next if /^\s*\/\*/;
    last unless /\"([^"]*)\"/;
    push(@xpm,"'$1'");
 }

@@ -26,7 +26,7 @@ register "webify",
 
    $img = $img->channel_ops_duplicate if $new;
 
-   eval { $img->undo_group_start };
+   eval { $img->undo_push_group_start };
 
    $drawable = $img->flatten;
 
@@ -36,9 +36,9 @@ register "webify",
       $drawable->edit_cut if $img->selection_bounds;
    }
    Plugin->autocrop($drawable) if $autocrop;
-   $img->convert_indexed (1, $colours) if $colours;
+   $img->convert_indexed (2, 0, $colours, 0, 0, '') if $colours;
 
-   eval { $img->undo_group_end };
+   eval { $img->undo_push_group_end };
 
    $new ? ($img->clean_all, $img) : ();
 };

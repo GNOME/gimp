@@ -1141,7 +1141,7 @@ sub script_fu_crystal_logo {
       gimp_selection_none ($img);
       plug_in_gauss_rle ($img, $disp_map, $blur, 1, 1);
       gimp_levels ($disp_map, 0, 0, 255, 1.0, 96, 255);
-      if (gimp_drawable_color ($bg_layer) == 1) {
+      if (gimp_drawable_is_rgb ($bg_layer) == 1) {
          gimp_convert_rgb ($img);
       }
       copy_layer_crystal ($img, $bg_layer, $tile_img, $tile_layer);
