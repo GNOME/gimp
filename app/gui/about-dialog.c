@@ -129,7 +129,7 @@ about_dialog_create (void)
       gtk_window_set_type_hint (GTK_WINDOW (about_dialog),
 				GDK_WINDOW_TYPE_HINT_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (about_dialog), _("About the GIMP"));
+      gtk_window_set_title (GTK_WINDOW (about_dialog), _("About The GIMP"));
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
 
@@ -246,7 +246,7 @@ about_dialog_create (void)
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
 
-      label = gtk_label_new (_("Please visit http://www.gimp.org/ for more info"));
+      label = gtk_label_new (_("Visit http://www.gimp.org/ for more information"));
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 

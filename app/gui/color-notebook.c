@@ -209,12 +209,19 @@ color_notebook_new (const gchar           *title,
 
   static gchar *toggle_titles[] = 
   { 
+    /* Hue */
     N_("H"),
+    /* Saturation */
     N_("S"),
+    /* Value */
     N_("V"),
+    /* Red */
     N_("R"),
+    /* Green */
     N_("G"),
+    /* Blue */
     N_("B"),
+    /* Alpha */
     N_("A")
   };
   static gchar *slider_tips[7] = 
@@ -919,7 +926,7 @@ gimp_color_selector_unregister (GimpColorSelectorID          id,
       info = info->next;
     }
 
-  g_warning ("unknown color selector id %p", id);
+  g_warning ("%s: unknown color selector ID %p", G_STRLOC, id);
   return FALSE;
 }
 
@@ -951,7 +958,7 @@ color_notebook_selector_death (ColorSelectorInfo *info)
       here = here->next;
     }
 
-  g_warning ("color selector %p not found, can't happen!", info);
+  g_warning ("%s: color selector %p not found.", G_STRLOC, info);
 }
 
 static void

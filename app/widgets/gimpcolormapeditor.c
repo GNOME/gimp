@@ -260,7 +260,7 @@ gimp_colormap_dialog_new (GimpImage *gimage)
     gimp_spin_button_new ((GtkObject **) &ipal->index_adjustment,
 			  0, 0, 0, 1, 10, 10, 1.0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Index:"), 1.0, 0.5,
+			     _("Color Index:"), 1.0, 0.5,
 			     ipal->index_spinbutton, 1, TRUE);
 
   g_signal_connect (G_OBJECT (ipal->index_adjustment), "value_changed",

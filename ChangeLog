@@ -1,3 +1,10 @@
+2001-11-24  Rebecca Walter  <rjp@mail.tele.dk>
+
+	* app/gui/about-dialog.c
+	* app/gui/brush-select.c
+	* app/gui/color-notebook.c
+	* app/gui/colormap-dialog.c: miscellaneous proofreading.
+
 2001-11-23  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c: don't draw resize_grip in status bar

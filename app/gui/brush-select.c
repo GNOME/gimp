@@ -391,7 +391,8 @@ brush_select_change_callbacks (BrushSelect *bsp,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-	g_message ("failed to run brush callback function");
+	g_message (_("Unable to run brush callback.\n"
+		   "The corresponding plug-in may have crashed."));
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
