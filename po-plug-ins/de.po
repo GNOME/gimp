@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-05 18:28+0100\n"
-"PO-Revision-Date: 2004-03-05 18:34+0100\n"
+"POT-Creation-Date: 2004-03-10 12:38+0100\n"
+"PO-Revision-Date: 2004-03-10 12:21+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -437,7 +437,7 @@ msgstr "_Fraktale"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -478,14 +478,13 @@ msgstr "Fraktalparameter speichern"
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
-#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
-#: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
+#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
+#: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
 #: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/helpbrowser/domain.c:256 plug-ins/xjt/xjt.c:2535
-#: plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Konnte Datei '%s' nicht zum Schreiben öffnen: %s"
@@ -707,7 +706,7 @@ msgstr "X-Koordinate der Lichtquelle im XYZ-Raum"
 
 #: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
-#: plug-ins/common/svg.c:799 plug-ins/common/xbm.c:1241
+#: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y:"
@@ -2915,7 +2914,9 @@ msgstr "<Image>/Filter/Verzerren/_Kurve..."
 
 #: plug-ins/common/curve_bend.c:709
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske verwendet)."
+msgstr ""
+"Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske "
+"verwendet)."
 
 #: plug-ins/common/curve_bend.c:734
 msgid "Cannot operate on empty selections."
@@ -4193,7 +4194,7 @@ msgid "Intersection"
 msgstr "Schnittpunkte"
 
 #. Width and Height
-#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:697
+#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
 #: plug-ins/print/gimp_main_window.c:1008
 #: plug-ins/print/gimp_main_window.c:1224
 msgid "Width:"
@@ -5788,7 +5789,7 @@ msgid "Rendering"
 msgstr "Rendere"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:818
+#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1103
 msgid "Resolution:"
 msgstr "Auflösung:"
@@ -6821,67 +6822,67 @@ msgstr "Als SunRas speichern"
 msgid "RunLength Encoded"
 msgstr "RL kodiert"
 
-#: plug-ins/common/svg.c:243 plug-ins/common/svg.c:626
+#: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 msgid "Unknown reason"
 msgstr ""
 
-#: plug-ins/common/svg.c:247
+#: plug-ins/common/svg.c:249
 msgid "Rendering SVG..."
 msgstr "Rendere SVG..."
 
-#: plug-ins/common/svg.c:257
+#: plug-ins/common/svg.c:259
 msgid "Rendered SVG"
 msgstr ""
 
-#: plug-ins/common/svg.c:422
+#: plug-ins/common/svg.c:424
 msgid ""
 "SVG file does not\n"
 "specify a size!"
 msgstr ""
 
-#: plug-ins/common/svg.c:428
+#: plug-ins/common/svg.c:430
 #, c-format
 msgid "%d x %d"
 msgstr ""
 
-#: plug-ins/common/svg.c:632
+#: plug-ins/common/svg.c:634
 msgid "Open SVG"
 msgstr "SVG Öffnen"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/svg.c:644
+#: plug-ins/common/svg.c:646
 msgid "Render Scalable Vector Graphics"
 msgstr ""
 
-#: plug-ins/common/svg.c:703 plug-ins/print/gimp_main_window.c:1025
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
 msgid "Height:"
 msgstr "Höhe:"
 
-#: plug-ins/common/svg.c:777
+#: plug-ins/common/svg.c:779
 msgid "Ratio _X:"
 msgstr "Rotation _X:"
 
-#: plug-ins/common/svg.c:813
+#: plug-ins/common/svg.c:815
 msgid "Constrain aspect ratio"
 msgstr "Seitenverhältnis beschränken"
 
-#: plug-ins/common/svg.c:824
+#: plug-ins/common/svg.c:826
 #, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
 #. Path Import
-#: plug-ins/common/svg.c:844
+#: plug-ins/common/svg.c:846
 msgid "Import _Paths"
 msgstr ""
 
-#: plug-ins/common/svg.c:850
+#: plug-ins/common/svg.c:852
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 
-#: plug-ins/common/svg.c:863
+#: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
 msgstr ""
 
@@ -7398,7 +7399,7 @@ msgstr "Haupteinstellungen"
 msgid "Step Size:"
 msgstr "Schrittweite:"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1290
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1293
 msgid "Iterations:"
 msgstr "Iterationen:"
 
@@ -9344,7 +9345,7 @@ msgid "How much to blur the drop shadow"
 msgstr "Wie sehr der \"Drop-Shadow\" aufgeweicht werden soll"
 
 #: plug-ins/gimpressionist/general.c:210
-msgid "Deviation treshold:"
+msgid "Deviation threshold:"
 msgstr "Abweichungs-Schwellwert:"
 
 #: plug-ins/gimpressionist/general.c:214
@@ -9848,6 +9849,41 @@ msgstr ""
 "Voronoi-Modus: Nur der smvektor, der einem Punkt am nächsten ist, hat "
 "Einfluss"
 
+#: plug-ins/help/domain.c:112
+#, c-format
+msgid ""
+"Failed to open help files:\n"
+"%s"
+msgstr ""
+"Fehler beim Öffnen der Hilfe-Dateien:\n"
+"%s"
+
+#: plug-ins/help/domain.c:114
+#, c-format
+msgid ""
+"Parse error in help domain:\n"
+"%s\n"
+"\n"
+"(Added entires before error anyway)"
+msgstr ""
+
+#: plug-ins/help/domain.c:129
+#, c-format
+msgid "Help ID '%s' unknown"
+msgstr ""
+
+#: plug-ins/help/domain.c:251
+msgid "The GIMP help files are not installed."
+msgstr ""
+
+#: plug-ins/help/domain.c:253
+msgid "The requested help files are not installed."
+msgstr ""
+
+#: plug-ins/help/domain.c:260
+msgid "Please check your installation."
+msgstr ""
+
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "GIMP Hilfe Browser"
@@ -9876,41 +9912,6 @@ msgstr ""
 "gefunden werden. Entweder heißt das, dass die Hilfe noch nicht geschrieben "
 "wurde, oder ihre Installation ist nicht korrekt. Bitte überprüfen Sie das "
 "sorgfältig, bevor Sie einen Bug-Report schicken."
-
-#: plug-ins/helpbrowser/domain.c:113
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Fehler beim Öffnen der Hilfe-Dateien:\n"
-"%s"
-
-#: plug-ins/helpbrowser/domain.c:115
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(Added entires before error anyway)"
-msgstr ""
-
-#: plug-ins/helpbrowser/domain.c:130
-#, c-format
-msgid "Help ID '%s' unknown"
-msgstr ""
-
-#: plug-ins/helpbrowser/domain.c:252
-msgid "The GIMP help files are not installed."
-msgstr ""
-
-#: plug-ins/helpbrowser/domain.c:254
-msgid "The requested help files are not installed."
-msgstr ""
-
-#: plug-ins/helpbrowser/domain.c:261
-msgid "Please check your installation."
-msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -10014,52 +10015,88 @@ msgstr "Farbtransformation"
 msgid "Relative Probability:"
 msgstr "Rel. Wahrscheinlichkeit:"
 
-#: plug-ins/ifscompose/ifscompose.c:1255
+#: plug-ins/ifscompose/ifscompose.c:1191
+msgid "/Move"
+msgstr "/Bewegen"
+
+#: plug-ins/ifscompose/ifscompose.c:1193
+msgid "/Rotate\\/Scale"
+msgstr "/Rotieren\\/Skalieren"
+
+#: plug-ins/ifscompose/ifscompose.c:1195
+msgid "/Stretch"
+msgstr "/Strecken"
+
+#: plug-ins/ifscompose/ifscompose.c:1198
+msgid "/New"
+msgstr "/Neu"
+
+#: plug-ins/ifscompose/ifscompose.c:1200
+msgid "/Delete"
+msgstr "/Löschen"
+
+#: plug-ins/ifscompose/ifscompose.c:1202
+msgid "/Undo"
+msgstr "/Rückgängig"
+
+#: plug-ins/ifscompose/ifscompose.c:1204
+msgid "/Redo"
+msgstr "/Wiederholen"
+
+#: plug-ins/ifscompose/ifscompose.c:1206
+msgid "/Select All"
+msgstr "/Alles auswählen"
+
+#: plug-ins/ifscompose/ifscompose.c:1208
+msgid "/Recompute Center"
+msgstr "/Mitte neu berechnen"
+
+#: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
 msgstr "IfsCompose Einstellungen"
 
-#: plug-ins/ifscompose/ifscompose.c:1277
+#: plug-ins/ifscompose/ifscompose.c:1280
 msgid "Max. Memory:"
 msgstr "Max. Speicher:"
 
-#: plug-ins/ifscompose/ifscompose.c:1304
+#: plug-ins/ifscompose/ifscompose.c:1307
 msgid "Subdivide:"
 msgstr "Unterteilung:"
 
-#: plug-ins/ifscompose/ifscompose.c:1317
+#: plug-ins/ifscompose/ifscompose.c:1320
 msgid "Spot Radius:"
 msgstr "Punkt Radius:"
 
-#: plug-ins/ifscompose/ifscompose.c:1390
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Berechne IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1409
+#: plug-ins/ifscompose/ifscompose.c:1412
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopiere IFS ins Bild (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1548
+#: plug-ins/ifscompose/ifscompose.c:1551
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2675 plug-ins/ifscompose/ifscompose.c:2687
+#: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
 msgid "Open failed"
 msgstr "Öffnen fehlgeschlagen"
 
-#: plug-ins/ifscompose/ifscompose.c:2682
+#: plug-ins/ifscompose/ifscompose.c:2685
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2718
+#: plug-ins/ifscompose/ifscompose.c:2721
 msgid "Save as IFS file"
 msgstr "Als IFS Datei sichern"
 
-#: plug-ins/ifscompose/ifscompose.c:2743
+#: plug-ins/ifscompose/ifscompose.c:2746
 msgid "Open IFS file"
 msgstr "IFS Datei öffnen"
 

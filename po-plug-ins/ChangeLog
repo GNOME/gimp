@@ -1,3 +1,7 @@
+2004-03-10  Sven Neumann  <sven@gimp.org>
+
+	* de.po: minor updates.
+
 2004-03-09  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: plug-ins/helpbrowser/domain.c -> plug-ins/help/domain.c
@@ -28,7 +32,7 @@
 
 2003-02-25  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2004-02-23  Adam Weinberger  <adamw@FreeBSD.org>
 

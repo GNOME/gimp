@@ -1188,38 +1188,39 @@ static void
 design_op_menu_create (GtkWidget *window)
 {
   static GtkItemFactoryEntry menu_items[] = {
-    { "/Move",             "M",          design_op_update_callback,
+    { N_("/Move"),             "M",          design_op_update_callback,
       OP_TRANSLATE, "<RadioItem>", NULL },
-    { "/Rotate\\/Scale",   "R",          design_op_update_callback,
+    { N_("/Rotate\\/Scale"),   "R",          design_op_update_callback,
       OP_ROTATE,    "/Move",       NULL },
-    { "/Stretch",          "S",          design_op_update_callback,
+    { N_("/Stretch"),          "S",          design_op_update_callback,
       OP_STRETCH,   "/Move",       NULL },
     { "/sep1", NULL, NULL, 0, "<Separator>", NULL },
-    { "/New",              "<control>N", ifs_compose_new_callback,
+    { N_("/New"),              "<control>N", ifs_compose_new_callback,
       0,            "<StockItem>", GTK_STOCK_NEW },
-    { "/Delete",           "<control>D", ifs_compose_delete_callback,
+    { N_("/Delete"),           "<control>D", ifs_compose_delete_callback,
       0,            "<StockItem>", GTK_STOCK_DELETE },
-    { "/Undo",             "<control>Z", undo,
+    { N_("/Undo"),             "<control>Z", undo,
       0,            "<StockItem>", GTK_STOCK_UNDO },
-    { "/Redo",             "<control>R", redo,
+    { N_("/Redo"),             "<control>R", redo,
       0,            "<StockItem>", GTK_STOCK_REDO },
-    { "/Select All",       "<control>A", design_area_select_all_callback,
+    { N_("/Select All"),       "<control>A", design_area_select_all_callback,
       0,            NULL,          NULL },
-    { "/Recompute Center", "<control>C",    recompute_center_cb,
+    { N_("/Recompute Center"), "<control>C", recompute_center_cb,
       0,            NULL,          NULL },
   };
 
-  GtkAccelGroup *accel_group;
+  GtkAccelGroup  *accel_group;
   GtkItemFactory *item_factory;
 
   accel_group = gtk_accel_group_new ();
   gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
 
-  item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<main>",
-                                       accel_group);
+  item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<main>", accel_group);
+  gtk_item_factory_set_translate_func (item_factory,
+                                       (GtkTranslateFunc) gettext, NULL, NULL);
   gtk_item_factory_create_items (item_factory,
-                                 sizeof(menu_items)/sizeof(GtkItemFactoryEntry),
-                                 menu_items, NULL);
+                                 G_N_ELEMENTS (menu_items), menu_items, NULL);
+
   ifsDesign->op_menu = gtk_item_factory_get_widget (item_factory, "<main>");
   g_object_ref (ifsDesign->op_menu);
   gtk_object_sink (GTK_OBJECT (ifsDesign->op_menu));
@@ -1227,8 +1228,10 @@ design_op_menu_create (GtkWidget *window)
 
   ifsD->undo_menu_item = gtk_item_factory_get_widget (item_factory, "/Undo");
   gtk_widget_set_sensitive (ifsD->undo_menu_item, FALSE);
+
   ifsD->redo_menu_item = gtk_item_factory_get_widget (item_factory, "/Redo");
   gtk_widget_set_sensitive (ifsD->redo_menu_item, FALSE);
+
   ifsD->delete_menu_item = gtk_item_factory_get_widget (item_factory, "/Delete");
 }
 

@@ -1,3 +1,8 @@
+2004-03-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/ifscompose/ifscompose.c: added missing localization for
+	popup menu (bug #136706).
+
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-save-dialog.c (file_save_dialog_save_image): added
