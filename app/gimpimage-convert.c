@@ -25,6 +25,9 @@
    */
 
 /*
+ * 2000/01/30 - Use palette_selector instead of option_menu for custom
+ *  palette. Use libgimp callback functions.  [Sven]
+ * 
  * 99/09/01 - Created a low-bleed FS-dither option.  [Adam]
  *
  * 99/08/29 - Deterministic colour dithering to arbitrary palettes.
@@ -375,7 +378,6 @@ typedef struct
 typedef struct
 {
   GtkWidget*     shell;
-  GtkWidget*     custom_frame;
   GtkWidget*     custom_palette_button;
   GimpImage*     gimage;
   PaletteSelect* palette_select;
@@ -396,11 +398,6 @@ typedef struct
 
 static void indexed_ok_callback        (GtkWidget *, gpointer);
 static void indexed_cancel_callback    (GtkWidget *, gpointer);
-static void indexed_num_cols_update    (GtkWidget *, gpointer);
-static void indexed_radio_update       (GtkWidget *, gpointer);
-static void frame_sensitivity_update   (GtkWidget *, gpointer);
-static void indexed_alphadither_update (GtkWidget *, gpointer);
-static void indexed_remdups_update     (GtkWidget *, gpointer);
 
 static void indexed_custom_palette_button_callback  (GtkWidget *widget, gpointer data);
 static void indexed_palette_select_destroy_callback (GtkWidget *widget, gpointer data);
@@ -473,13 +470,13 @@ convert_to_indexed (GimpImage *gimage)
   GtkObject *adjustment;
   GtkWidget *spinbutton;
   GtkWidget *frame;
+  GtkWidget *custom_frame = NULL;
   GtkWidget *toggle;
   GSList *group = NULL;
 
   dialog = g_new (IndexedDialog, 1);
   dialog->gimage = gimage;
 
-  dialog->custom_frame          = NULL;
   dialog->custom_palette_button = NULL;
   dialog->palette_select        = NULL;
 
@@ -529,11 +526,11 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (NULL, _("Generate optimal palette:"));
+  toggle = gtk_radio_button_new_with_label (NULL, _("Generate Optimal Palette:"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->makepal_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->makepal_flag);
@@ -557,47 +554,67 @@ convert_to_indexed (GimpImage *gimage)
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_cols,
 				     2, 256, 1, 5, 0, 1, 0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (indexed_num_cols_update),
-		      dialog);
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &(dialog->num_cols));
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  label = gtk_label_new (_("# of colors:"));
+  label = gtk_label_new (_("# of Colors:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  gtk_widget_set_sensitive (GTK_WIDGET (spinbutton), dialog->num_cols);
+  gtk_widget_set_sensitive (GTK_WIDGET (label), dialog->num_cols);
+  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
+  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", label);
+
   gtk_widget_show (hbox);
 
-  if (TRUE /* gimage->base_type == RGB */ )
+  /* 'custom' palette from dialog */
+  dialog->custom_palette_button = build_palette_button ();
+  if (dialog->custom_palette_button)
     {
-      GtkWidget *button;
+      /* create the custom_frame here, it'll be added later */
+      custom_frame = gtk_frame_new (_("Custom Palette Options"));
+      gtk_container_set_border_width (GTK_CONTAINER (custom_frame), 2);
+      
+      /*  The remove-duplicates toggle  */
+      hbox = gtk_hbox_new (FALSE, 1);
+      gtk_container_add (GTK_CONTAINER (custom_frame), hbox);
+      toggle = gtk_check_button_new_with_label (_("Remove Unused Colors from Final Palette"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->remdups);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			  &(dialog->remdups));
+      gtk_widget_show (toggle);
+      gtk_widget_show (hbox);      
 
-      dialog->custom_palette_button = button = build_palette_button ();
-      if (button)
-	{
-          /* 'custom' palette from dialog */
-          hbox = gtk_hbox_new (FALSE, 4);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-          toggle = gtk_radio_button_new_with_label (group, _("Use custom palette"));
-          group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-          gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-          gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			      GTK_SIGNAL_FUNC (indexed_radio_update),
-			      &(dialog->custompal_flag));
-          gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			      GTK_SIGNAL_FUNC (frame_sensitivity_update),
-			      dialog);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-					dialog->custompal_flag);
-          gtk_widget_show (toggle);
+      /* 'custom' palette from dialog */
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      toggle = gtk_radio_button_new_with_label (group, _("Use Custom Palette:"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			  &(dialog->custompal_flag));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    dialog->custompal_flag);
+      gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", custom_frame);
+      gtk_widget_show (toggle);
+      
+      gtk_signal_connect (GTK_OBJECT (dialog->custom_palette_button), "clicked",
+			  GTK_SIGNAL_FUNC (indexed_custom_palette_button_callback), 
+			  dialog);
+      gtk_box_pack_end (GTK_BOX (hbox), dialog->custom_palette_button, TRUE, TRUE, 0);
+      gtk_widget_show (dialog->custom_palette_button);
+      gtk_widget_show (hbox);
 
-	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      GTK_SIGNAL_FUNC (indexed_custom_palette_button_callback), 
-			      dialog);
-          gtk_box_pack_end (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-	  gtk_widget_show (button);
-          gtk_widget_show (hbox);
-	}
+      gtk_widget_set_sensitive (GTK_WIDGET (custom_frame), dialog->custompal_flag);
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->custom_palette_button), dialog->custompal_flag);
+      gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", custom_frame);
+      gtk_object_set_data (GTK_OBJECT (custom_frame), "set_sensitive", dialog->custom_palette_button);
     }
 
   if (!UserHasWebPal)
@@ -610,11 +627,11 @@ convert_to_indexed (GimpImage *gimage)
       hbox = gtk_hbox_new (FALSE, 0);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       toggle =
-	gtk_radio_button_new_with_label (group, _("Use WWW-optimised palette"));
+	gtk_radio_button_new_with_label (group, _("Use WWW-Optimized Palette"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (indexed_radio_update),
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &(dialog->webpal_flag));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    dialog->webpal_flag);
@@ -626,11 +643,11 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   toggle =
-    gtk_radio_button_new_with_label (group, _("Use black/white (1-bit) palette"));
+    gtk_radio_button_new_with_label (group, _("Use Black/White (1-Bit) Palette"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->monopal_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->monopal_flag);
@@ -650,11 +667,11 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       
-  toggle = gtk_radio_button_new_with_label (NULL, _("No colour dithering"));
+  toggle = gtk_radio_button_new_with_label (NULL, _("No Color Dithering"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->nodither_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->nodither_flag);
@@ -664,11 +681,11 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Positioned colour dithering"));
+  toggle = gtk_radio_button_new_with_label (group, _("Positioned Color Dithering"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->fixeddither_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fixeddither_flag);
@@ -678,11 +695,11 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering (reduced colour bleeding)"));
+  toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->fslowbleeddither_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fslowbleeddither_flag);
@@ -691,11 +708,11 @@ convert_to_indexed (GimpImage *gimage)
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg colour dithering (normal)"));
+  toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Normal)"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_radio_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &(dialog->fsdither_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fsdither_flag);
@@ -705,55 +722,23 @@ convert_to_indexed (GimpImage *gimage)
   /*  The alpha-dither toggle  */
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  toggle = gtk_check_button_new_with_label (_("Enable dithering of transparency"));
+  toggle = gtk_check_button_new_with_label (_("Enable Dithering of Transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->alphadither);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_alphadither_update),
-		      dialog);
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &(dialog->alphadither));
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
-
-  frame = gtk_frame_new (_("Custom Palette Options"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show(vbox);
-
-  /*
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  toggle = gtk_check_button_new_with_label (_("Use a maximum of N colours from\nthe selected custom palette"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dialog->alphadither);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_alphadither_update),
-		      dialog);
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
-  */
-
-  /*  The remove-duplicates toggle  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  toggle = gtk_check_button_new_with_label (_("Remove unused colours from final palette"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->remdups);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (indexed_remdups_update),
-		      dialog);
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
-
-  dialog->custom_frame = frame;
-  gtk_widget_set_sensitive (dialog->custom_frame, dialog->custompal_flag);
-  gtk_widget_show (frame);
-
+  
+  /* now add the custom_frame */
+  if (custom_frame)
+    {
+      gtk_box_pack_start (GTK_BOX (main_vbox), custom_frame, FALSE, FALSE, 0);
+      gtk_widget_show (custom_frame);
+    }
+  
   /* if the image isn't non-alpha/layered, set the default number of
      colours to one less than max, to leave room for a transparent index
      for transparent/animated GIFs */
@@ -936,7 +921,8 @@ indexed_palette_select_destroy_callback (GtkWidget *widget,
 {
   IndexedDialog *dialog = (IndexedDialog *)data;
 
-  dialog->palette_select = NULL;
+  if (dialog)
+    dialog->palette_select = NULL;
 }
 
 static gint
@@ -991,66 +977,6 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
     }
 }
 
-
-static void
-indexed_num_cols_update (GtkWidget *widget,
-			 gpointer   data)
-{
-  ((IndexedDialog *) data)->num_cols = GTK_ADJUSTMENT (widget)->value;
-}
-
-static void
-indexed_radio_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-frame_sensitivity_update (GtkWidget *widget,
-			  gpointer   data)
-{
-  IndexedDialog *dialog;
-
-  dialog = (IndexedDialog *) data;
-  if (dialog && dialog->custom_frame)
-    gtk_widget_set_sensitive (dialog->custom_frame, dialog->custompal_flag);
-}
-
-static void
-indexed_alphadither_update (GtkWidget *widget,
-			    gpointer   data)
-{
-  IndexedDialog *dialog;
-
-  dialog = (IndexedDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    dialog->alphadither = TRUE;
-  else
-    dialog->alphadither = FALSE;
-}
-
-static void
-indexed_remdups_update (GtkWidget *widget,
-			gpointer   data)
-{
-  IndexedDialog *dialog;
-
-  dialog = (IndexedDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    dialog->remdups = TRUE;
-  else
-    dialog->remdups = FALSE;
-}
 
 
 /**********************************************************/

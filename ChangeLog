@@ -1,3 +1,15 @@
+Sun Jan 30 21:54:42 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.c
+	* app/gradient_select.c: create the dialog at mouse position if not
+	the main dialog (which is session-managed)
+
+	* app/convert.c: small UI changes
+
+	* app/gradient.c: don't include session.h
+
+	* app/session.c: the gradient_select dialog is not the gradient_editor
+
 2000-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c: the "blue" variable should
@@ -36,7 +48,7 @@ Sat Jan 29 15:40:01 CET 2000  Sven Neumann <sven@gimp.org>
 	* app/convert.c
 	* app/palette_select.c
 	* app/palette_select.h: In indexed_conversion dialog, use a 
-	pattern_selector instead op an option_menu. Adam, I hope you like 
+	pattern_selector instead of an option_menu. Adam, I hope you like 
 	this...
 
 Sat Jan 29 12:06:51 CET 2000  Sven Neumann <sven@gimp.org>

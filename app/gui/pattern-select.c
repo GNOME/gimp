@@ -163,7 +163,7 @@ pattern_select_new (gchar *title,
 				 "pattern_selection",
 				 gimp_standard_help_func,
 				 "dialogs/pattern_selection.html",
-				 GTK_WIN_POS_NONE,
+				 title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
 				 FALSE, TRUE, FALSE,
 
 				 _("Refresh"), pattern_select_refresh_callback,

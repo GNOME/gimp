@@ -71,7 +71,6 @@
 #include "gradientP.h"
 #include "gradient_header.h"
 #include "gradient_select.h"
-#include "session.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
