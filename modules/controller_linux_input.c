@@ -106,10 +106,11 @@ typedef struct _ControllerLinuxInputClass ControllerLinuxInputClass;
 
 struct _ControllerLinuxInput
 {
-  GimpController       parent_instance;
+  GimpController  parent_instance;
 
-  gchar               *device;
-  GIOChannel          *io;
+  gchar          *device;
+  GIOChannel     *io;
+  guint           io_id;
 };
 
 struct _ControllerLinuxInputClass
@@ -213,7 +214,8 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
   object_class->set_property       = linux_input_set_property;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
-                                   g_param_spec_string ("device", NULL, NULL,
+                                   g_param_spec_string ("device",
+                                                        _("Device:"), NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
@@ -330,6 +332,9 @@ linux_input_set_device (ControllerLinuxInput *controller,
 {
   if (controller->io)
     {
+      g_source_remove (controller->io_id);
+      controller->io_id = 0;
+
       g_io_channel_unref (controller->io);
       controller->io = NULL;
     }
@@ -339,56 +344,52 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
   controller->device = g_strdup (device);
 
-  if (device)
+  if (controller->device && strlen (controller->device))
     {
       gint fd;
 
       fd = open (controller->device, O_RDONLY);
+
       if (fd >= 0)
         {
-          gchar  name[256];
+          gchar name[256];
 
           name[0] = '\0';
           if (ioctl (fd, EVIOCGNAME (sizeof (name)), name) == 0 &&
               strlen (name) > 0                                 &&
               g_utf8_validate (name, -1, NULL))
             {
-              g_object_set (controller,
-                            "name", name,
-                            NULL);
+              g_object_set (controller, "name", name, NULL);
             }
           else
             {
-              g_object_set (controller,
-                            "name", _("Unknown device"),
-                            NULL);
+              gchar *name = g_strdup_printf (_("Reading from %s"),
+                                             controller->device);
+              g_object_set (controller, "name", name, NULL);
+              g_free (name);
             }
 
           controller->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (controller->io, TRUE);
           g_io_channel_set_encoding (controller->io, NULL, NULL);
 
-          g_io_add_watch (controller->io,
-                          G_IO_IN,
-                          linux_input_read_event,
-                          controller);
+          controller->io_id = g_io_add_watch (controller->io,
+                                              G_IO_IN,
+                                              linux_input_read_event,
+                                              controller);
           return TRUE;
         }
       else
         {
           gchar *name = g_strdup_printf (_("Device not available: %s"),
                                          g_strerror (errno));
-          g_object_set (controller,
-                        "name", name,
-                        NULL);
+          g_object_set (controller, "name", name, NULL);
           g_free (name);
         }
     }
   else
     {
-      g_object_set (controller,
-                    "name", _("No device configured"),
-                    NULL);
+      g_object_set (controller, "name", _("No device configured"), NULL);
     }
 
   return FALSE;

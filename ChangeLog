@@ -1,3 +1,10 @@
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: remember the source ID returned by
+	g_io_add_watch() and remove it when changing the device, so the
+	file descritor gets actually closed. Minor cleanups.
+
 2004-06-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollerwheel.[ch]: renamed function

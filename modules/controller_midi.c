@@ -23,9 +23,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include <gtk/gtk.h>
 
@@ -67,6 +68,7 @@ struct _ControllerMidi
 
   gchar          *device;
   GIOChannel     *io;
+  guint           io_id;
 
   /* midi status */
   gboolean        swallow;
@@ -188,7 +190,8 @@ midi_class_init (ControllerMidiClass *klass)
   object_class->set_property       = midi_set_property;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
-                                   g_param_spec_string ("device", NULL, NULL,
+                                   g_param_spec_string ("device",
+                                                        _("Device:"), NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
@@ -334,6 +337,9 @@ midi_set_device (ControllerMidi *midi,
 
   if (midi->io)
     {
+      g_source_remove (midi->io_id);
+      midi->io_id = 0;
+
       g_io_channel_unref (midi->io);
       midi->io = NULL;
     }
@@ -343,7 +349,7 @@ midi_set_device (ControllerMidi *midi,
 
   midi->device = g_strdup (device);
 
-  if (device)
+  if (midi->device && strlen (midi->device))
     {
       gint fd;
 
@@ -355,16 +361,18 @@ midi_set_device (ControllerMidi *midi,
 
       if (fd >= 0)
         {
-          g_object_set (midi, "name", device, NULL);
+          gchar *name = g_strdup_printf (_("Reading from %s"), midi->device);
+          g_object_set (midi, "name", name, NULL);
+          g_free (name);
 
           midi->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (midi->io, TRUE);
           g_io_channel_set_encoding (midi->io, NULL, NULL);
 
-          g_io_add_watch (midi->io,
-                          G_IO_IN,
-                          midi_read_event,
-                          midi);
+          midi->io_id = g_io_add_watch (midi->io,
+                                        G_IO_IN,
+                                        midi_read_event,
+                                        midi);
           return TRUE;
         }
       else
@@ -544,7 +552,8 @@ midi_read_event (GIOChannel   *io,
 
               if (midi->command == 0x9)
                 {
-                  D (g_print ("MIDI: note on (%02x vel %02x)\n",
+                  D (g_print ("MIDI (ch %02d): note on (%02x vel %02x)\n",
+                              midi->channel,
                               midi->key, midi->velocity));
 
                   midi_event (midi, midi->key,
@@ -552,16 +561,16 @@ midi_read_event (GIOChannel   *io,
                 }
               else if (midi->command == 0x8)
                 {
-                  D (g_print ("MIDI: note off (%02x vel %02x)\n",
-                              midi->key, midi->velocity));
+                  D (g_print ("MIDI (ch %02d): note off (%02x vel %02x)\n",
+                              midi->channel, midi->key, midi->velocity));
 
                   midi_event (midi, midi->key + 128,
                               (gdouble) midi->velocity / 127.0);
                 }
               else
                 {
-                  D (g_print ("MIDI: polyphonic aftertouch (%02x pressure %02x)\n",
-                              midi->key, midi->velocity));
+                  D (g_print ("MIDI (ch %02d): polyphonic aftertouch (%02x pressure %02x)\n",
+                              midi->channel, midi->key, midi->velocity));
                 }
 
               midi->key      = -1;
@@ -579,8 +588,8 @@ midi_read_event (GIOChannel   *io,
               if (midi->velocity == -1)
                 midi->velocity = buf[pos++];
 
-              D (g_print ("MIDI: controller %d (value %d)\n",
-                          midi->key, midi->velocity));
+              D (g_print ("MIDI (ch %02d): controller %d (value %d)\n",
+                          midi->channel, midi->key, midi->velocity));
 
               midi_event (midi, midi->key + 128 + 128,
                           (gdouble) midi->velocity / 127.0);
@@ -592,7 +601,8 @@ midi_read_event (GIOChannel   *io,
             case 0xc:  /* program change */
               midi->key = buf[pos++];
 
-              D (g_print ("MIDI: program change (%d)\n", midi->key));
+              D (g_print ("MIDI (ch %02d): program change (%d)\n",
+                          midi->channel, midi->key));
 
               midi->key = -1;
               break;
@@ -600,7 +610,8 @@ midi_read_event (GIOChannel   *io,
             case 0xd:  /* channel key pressure */
               midi->velocity = buf[pos++];
 
-              D (g_print ("MIDI: channel aftertouch (%d)\n", midi->velocity));
+              D (g_print ("MIDI (ch %02d): channel aftertouch (%d)\n",
+                          midi->channel, midi->velocity));
 
               midi->velocity = -1;
               break;
@@ -617,7 +628,8 @@ midi_read_event (GIOChannel   *io,
 
               midi->velocity = midi->lsb | (midi->msb << 7);
 
-              D (g_print ("MIDI: pitch (%d)\n", midi->velocity));
+              D (g_print ("MIDI (ch %02d): pitch (%d)\n",
+                          midi->channel, midi->velocity));
 
               midi->msb      = -1;
               midi->lsb      = -1;
