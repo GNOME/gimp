@@ -1,3 +1,11 @@
+2003-05-19  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: remove glibconfig.h inline check, it hasn't worked
+	for a long time.
+
+	* tools/authorsgen/contributors: added George J. Carrette, author of
+	SIOD.
+
 2003-05-19  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-flip-horizontal-16.png:
