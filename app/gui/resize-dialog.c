@@ -163,9 +163,9 @@ resize_widget_new (GimpImage    *gimage,
 
   /*  dialog box  */
   {
-    const gchar *wmclass = NULL;
+    const gchar *wmclass      = NULL;
     const gchar *window_title = NULL;
-    gchar *help_page = NULL;
+    gchar *help_page          = NULL;
 
     switch (type)
       {
@@ -173,16 +173,16 @@ resize_widget_new (GimpImage    *gimage,
 	switch (target)
 	  {
 	  case ResizeLayer:
-	    wmclass = "scale_layer";
+	    wmclass      = "scale_layer";
 	    window_title = _("Scale Layer");
-	    help_page = "layers/dialogs/scale_layer.html";
-	    frame = gtk_frame_new (_("Size"));
+	    help_page    = "layers/dialogs/scale_layer.html";
+	    frame        = gtk_frame_new (_("Size"));
 	    break;
 	  case ResizeImage:
-	    wmclass = "scale_image";
+	    wmclass      = "scale_image";
 	    window_title = _("Scale Image");
-	    help_page = "dialogs/scale_image.html";
-	    frame = gtk_frame_new (_("Pixel Dimensions"));
+	    help_page    = "dialogs/scale_image.html";
+	    frame        = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
 	  }
 	break;
@@ -191,14 +191,14 @@ resize_widget_new (GimpImage    *gimage,
 	switch (target)
 	  {
 	  case ResizeLayer:
-	    wmclass = "resize_layer";
+	    wmclass      = "resize_layer";
 	    window_title = _("Set Layer Boundary Size");
-	    help_page = "layers/dialogs/layer_boundary_size.html";
+	    help_page    = "layers/dialogs/layer_boundary_size.html";
 	    break;
 	  case ResizeImage:
-	    wmclass = "resize_image";
+	    wmclass      = "resize_image";
 	    window_title = _("Set Canvas Size");
-	    help_page = "dialogs/set_canvas_size.html";
+	    help_page    = "dialogs/set_canvas_size.html";
 	    break;
 	  }
 	frame = gtk_frame_new (_("Size"));
@@ -384,7 +384,8 @@ resize_widget_new (GimpImage    *gimage,
 			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
 			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
 			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj), 1, 4);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj),
+                                    0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
@@ -399,7 +400,8 @@ resize_widget_new (GimpImage    *gimage,
 			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
 			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
 			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj), 1, 4);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj),
+                                    0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);

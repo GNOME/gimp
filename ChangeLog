@@ -1,3 +1,8 @@
+2002-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/resize-dialog.c: merged fix for #63741 from stable
+	branch, minor cleanup.
+
 2002-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c
