@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-05-22 11:33-0700\n"
-"PO-Revision-Date: 2000-05-02 09:28+00:00\n"
+"POT-Creation-Date: 2000-05-29 14:12+0000\n"
+"PO-Revision-Date: 2000-05-29 14:39+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -645,14 +645,12 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
 msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Gimp"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Расш./Web-браузер/Руководство GIMP"
+msgstr "<Toolbox>/Расш./Web-браузер/GIMP-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Gimp"
+msgstr "<Toolbox>/Расш./Web-браузер/Grokking the Gimp"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
@@ -776,7 +774,7 @@ msgstr "Основной радиус (точек)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "Поведение"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -826,9 +824,8 @@ msgid "Blur Radius"
 msgstr "Радиус размывания"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-#, fuzzy
 msgid "Blur Type"
-msgstr "Размывание по X"
+msgstr "Тип размывания"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
@@ -1006,7 +1003,7 @@ msgstr "Уровень деталей"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
-msgstr ""
+msgstr "Детали в середине"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1313,9 +1310,8 @@ msgid "Highlight Color"
 msgstr "Цвет бликов"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
 msgid "Highlight Opacity"
-msgstr "Баланс бликов"
+msgstr "Непрозрачность бликов"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
@@ -1327,7 +1323,7 @@ msgstr "Смещение бликов по Y"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr ""
+msgstr "Скорость попаданий"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
@@ -1335,7 +1331,7 @@ msgstr "Скорость тона"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1448,7 +1444,7 @@ msgstr "Макс. радиус размывания"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "Элементы мозаичного типа"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1630,7 +1626,7 @@ msgstr "Размер четверти"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"
@@ -1815,7 +1811,7 @@ msgstr "Распространение"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Squares"
-msgstr ""
+msgstr "Квадраты"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
@@ -2031,16 +2027,3 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
-
-#~ msgid "Granularity (0 - 15)"
-#~ msgstr "Зернистость (0-15)"
-
-#~ msgid ""
-#~ "Mosaic Tile Type\n"
-#~ "Squares 0, Hex 1, Oct 2"
-#~ msgstr ""
-#~ "Тип мозаики: квадраты 0,\n"
-#~ "шестиугольники 1, восьмиуголькики 2"
-
-#~ msgid "Blur Type: TRUE=RLE, FALSE=IIR"
-#~ msgstr "Тип размывания: TRUE=RLE, FALSE=IIR"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.21\n"
-"POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-05-23 18:09+00:00\n"
+"POT-Creation-Date: 2000-05-29 13:30+0000\n"
+"PO-Revision-Date: 2000-05-29 13:43+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -736,15 +736,15 @@ msgstr "Н/Д"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -1564,6 +1564,8 @@ msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
 msgstr ""
+"Внимание: не удалось загрузить кисть-картинку\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:215
 #, c-format
@@ -1571,20 +1573,24 @@ msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
 msgstr ""
+"Внимание: не удалось загрузить картинки перехода\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:309
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Кисть-переход должна содержать хотя бы одну кисть."
 
 #: app/gimpbrushpipe.c:404
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Не удалось загрузить одну из\n"
+"кистей в кисти-переходе."
 
 #: app/gimpbrushpipe.c:466
 msgid "Failed to load pixmap brush."
-msgstr ""
+msgstr "Не удалось загрузить кисть-картинку."
 
 #: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
@@ -4196,6 +4202,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Рухнуло дополнение: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Умершее дополнение может испортить внутреннее состояние GIMP.\n"
+"Возможно вам стоит сохранить ваши изображения и перезапустить\n"
+"GIMP чтобы обезопасить себя."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -6341,7 +6353,7 @@ msgstr "Переключатель цвета GTK как подключаемый переключатель цветов."
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr ""
+msgstr "Выбор цвета в стиле художника как подключаемый модуль"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
 msgid "Triangle"
@@ -6349,11 +6361,11 @@ msgstr "Треугольный цикл"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
+msgstr "Выбор цвета в стиле акварели как подключаемый модуль"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
-msgstr ""
+msgstr "Акварель"
 
 #: modules/colorsel_water.c:640
 msgid "Color History"
