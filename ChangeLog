@@ -1,3 +1,35 @@
+Sat Sep 26 20:46:18 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* app/channel.c app/channel_ops.c app/drawable.c
+	app/floating_sel.c app/gdisplay.c app/gdisplay.h
+	app/gimpimage.c app/layers_dialog.c app/undo.c:
+
+	Moved the idlerender stuff into gdisplay.c.  Implemented
+	idlerender when doing floating_sel->layer, and undoing/redoing
+	layer deletion.
+
+	idlerender would be useful in many other places for improving
+	interactivity, if it weren't for the following problems:
+
+		* By definition, idlerender doesn't wait for a
+		gdisplays_update() call	before starting work - it just
+		runs in idle time, which due to CPU contention with
+		plugins may not	be genuinely available idle time when
+		things are 'noninteractive'.
+
+		* Most GIMP functions don't know whether they're
+		being run interactively or not.  idlerender only
+		makes sense for interactive work.  This is why
+		it is currently only applied to those functions which
+		would normally only be activated manually.
+
+		* Mixing idlerender and drawable_update() /
+		gdisplays_update_area() calls can lead to a region
+		being rerendered twice.		
+
+	Hence, some slogwork is needed before idlerender can be
+	applied in the more general case.
+
 Sat Sep 26 00:54:14 EDT 1998   Adrian Likins <adrian@gimp.org>
 
 	*gimptool.1: minor update to add info about -strip 

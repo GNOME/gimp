@@ -141,4 +141,11 @@ void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
 
 
+/* Idle rerendering of altered areas. */
+void       reinit_layer_idlerender         (GimpImage *, Layer *);
+void       reinit_drawable_idlerender      (GimpImage *, GimpDrawable *);
+void       reinit_gimage_idlerender        (GimpImage *);
+
+
 #endif /*  __GDISPLAY_H__  */
+

@@ -60,6 +60,7 @@ drawable_fill (GimpDrawable *drawable, int fill_type){
 	  break;
 	}
 	gimp_drawable_fill(drawable,r,g,b,a);
+	
 	drawable_update (drawable, 0, 0,
 			 gimp_drawable_width (drawable),
 			 gimp_drawable_height (drawable));

@@ -20,6 +20,7 @@
 
 #include "drawable.h"
 #include "floating_sel.h"
+#include "gdisplay.h"
 #include "general.h"
 #include "gimage_mask.h"
 #include "paint_funcs.h"
@@ -2032,8 +2033,12 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
   GIMP_DRAWABLE(merge_layer)->visible = TRUE;
 
   gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[RESTRUCTURE]);
-  
+
+  printf(" gimp_image_merge_layers ");fflush(stdout);
+
   drawable_update (GIMP_DRAWABLE(merge_layer), 0, 0, drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
+
+  /*reinit_layer_idlerender (gimage, merge_layer);*/
 
   return merge_layer;
 }
@@ -2099,6 +2104,7 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
   gimp_image_set_active_layer (gimage, float_layer);
 
   /*  update the new layer's area  */
+  printf(" gimp_image_add_layer ");fflush(stdout);
   drawable_update (GIMP_DRAWABLE(float_layer), 0, 0, drawable_width (GIMP_DRAWABLE(float_layer)), drawable_height (GIMP_DRAWABLE(float_layer)));
 
   /*  invalidate the composite preview  */

@@ -24,6 +24,7 @@
 #include "layer.h"
 #include "errors.h"
 #include "floating_sel.h"
+#include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "interface.h"
@@ -210,8 +211,13 @@ floating_sel_to_layer (Layer *layer)
       msw@gimp.org
   */
 
+  printf(" floating_sel_to_layer ");fflush(stdout);
+  /*
   drawable_update (GIMP_DRAWABLE(layer), 0, 0,
 		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  */
+  /* This may be undesirable when invoked non-interactively... we'll see. */
+  reinit_layer_idlerender (gimage, layer);
 }
 
 void
