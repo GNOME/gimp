@@ -1,3 +1,9 @@
+Wed Mar 18 00:06:50 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* gradient.c: fixed a problem in the gradient editor 
+        when gimp is started with the no-data option and no
+        gradients are load.	   
+
 Tue Mar 17 01:38:18 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* updated gif, animationplay, animoptimize, and bmp plugins

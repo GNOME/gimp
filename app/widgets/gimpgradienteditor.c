@@ -1311,6 +1311,9 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
 	char *name;
 
+	if (curr_gradient == NULL) 
+               return;
+
 	name = g_malloc((strlen(curr_gradient->name) + 6) * sizeof(char));
 
 	sprintf(name, "%s copy", curr_gradient->name);
@@ -1530,6 +1533,8 @@ static void
 ed_save_pov_callback(GtkWidget *widget, gpointer client_data)
 {
 	GtkWidget *window;
+
+	if (curr_gradient == NULL) return;
 
 	window = gtk_file_selection_new("Save as POV-Ray");
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
@@ -1767,6 +1772,10 @@ prev_events(GtkWidget *widget, GdkEvent *event)
 	gint            x, y;
 	GdkEventButton *bevent;
 
+	/* ignore events when no gradient is present */
+	if (curr_gradient == NULL) 
+	        return FALSE;
+
 	switch (event->type) {
 		case GDK_EXPOSE:
 			prev_update(0);
@@ -1894,8 +1903,10 @@ prev_update(int recalculate)
 	guint16        width, height;
 	guint16        pwidth, pheight;
 
-	/* We only update if we can draw to the widget */
+	/* We only update if we can draw to the widget and a gradient is present */
 
+	if (curr_gradient == NULL) 
+	        return;
 	if (!GTK_WIDGET_DRAWABLE(g_editor->preview))
 		return;
 
@@ -2617,8 +2628,10 @@ control_update(int recalculate)
 	gint 	       pwidth, pheight;
 	GtkAdjustment *adjustment;
 
-	/* We only update if we can redraw */
+	/* We only update if we can redraw and a gradient is present */
 
+	if (curr_gradient == NULL) 
+	        return;	
 	if (!GTK_WIDGET_DRAWABLE(g_editor->control))
 		return;
 
