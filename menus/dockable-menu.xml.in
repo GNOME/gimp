@@ -30,8 +30,8 @@
     <menuitem action="dockable-view-type-list" />
     <menuitem action="dockable-view-type-grid" />
     <separator />
-    <menuitem action="dockable-show-image-menu" />
-    <menuitem action="dockable-auto-follow-active" />
-    <menuitem action="dockable-move-to-screen" />
+    <menuitem action="dock-show-image-menu" />
+    <menuitem action="dock-auto-follow-active" />
+    <menuitem action="dock-move-to-screen" />
   </popup>
 </ui>

@@ -39,15 +39,6 @@
 #include "dockable-commands.h"
 
 
-/*  local function prototypes  */
-
-static void   dockable_change_screen_confirm_callback (GtkWidget *dialog,
-                                                       gint       value,
-                                                       gpointer   data);
-static void   dockable_change_screen_destroy_callback (GtkWidget *dialog,
-                                                       GtkWidget *dock);
-
-
 /*  public functions  */
 
 void
@@ -274,102 +265,4 @@ dockable_tab_style_cmd_callback (GtkAction *action,
                                   GTK_WIDGET (dockable),
                                   tab_widget);
     }
-}
-
-void
-dockable_toggle_image_menu_cmd_callback (GtkAction *action,
-                                         gpointer   data)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  gboolean      active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
-    gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
-                                         active);
-}
-
-void
-dockable_toggle_auto_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  gboolean      active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
-    gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
-                                            active);
-}
-
-void
-dockable_change_screen_cmd_callback (GtkAction *action,
-                                     gpointer   data)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GtkWidget    *dock;
-  GdkScreen    *screen;
-  GdkDisplay   *display;
-  gint          cur_screen;
-  gint          num_screens;
-  GtkWidget    *dialog;
-
-  dock = GTK_WIDGET (dockbook->dock);
-
-  dialog = g_object_get_data (G_OBJECT (dock), "gimp-change-screen-dialog");
-
-  if (dialog)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-      return;
-    }
-
-  screen  = gtk_widget_get_screen (dock);
-  display = gtk_widget_get_display (dock);
-
-  cur_screen  = gdk_screen_get_number (screen);
-  num_screens = gdk_display_get_n_screens (display);
-
-  dialog = gimp_query_int_box ("Move Dock to Screen",
-                               dock,
-                               NULL, NULL,
-                               "Enter destination screen",
-                               cur_screen, 0, num_screens - 1,
-                               G_OBJECT (dock), "destroy",
-                               dockable_change_screen_confirm_callback,
-                               dock);
-
-  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", dialog);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (dockable_change_screen_destroy_callback),
-                    dock);
-
-  gtk_widget_show (dialog);
-}
-
-
-/*  private functions  */
-
-static void
-dockable_change_screen_confirm_callback (GtkWidget *dialog,
-                                         gint       value,
-                                         gpointer   data)
-{
-  GdkScreen *screen;
-
-  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
-                                   value);
-
-  if (screen)
-    gtk_window_set_screen (GTK_WINDOW (data), screen);
-}
-
-static void
-dockable_change_screen_destroy_callback (GtkWidget *dialog,
-                                         GtkWidget *dock)
-{
-  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", NULL);
 }

@@ -1,3 +1,19 @@
+2005-01-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.[ch]: removed dock-related
+	actions (show-image-menu, auto-follow-active and move-to-screen).
+
+	* app/actions/dock-actions.c
+	* app/actions/dock-commands.[ch]: and added them here.
+
+	* app/menus/menus.c: add the "dock" action group to the
+	"<Dockable>" UI Manager.
+
+	* app/widgets/gimphelp-ids.h: reordered to match the new grouping.
+
+	* menus/dockable-menu.xml.in: changed accordingly.
+
 2005-01-26  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/composite/gimp-composite-generic.c: minor doc fix for

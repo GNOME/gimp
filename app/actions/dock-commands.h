@@ -20,8 +20,15 @@
 #define __DOCK_COMMANDS_H__
 
 
-void   dock_close_cmd_callback (GtkAction *action,
-                                gpointer   data);
+void   dock_close_cmd_callback             (GtkAction *action,
+                                            gpointer   data);
+void   dock_change_screen_cmd_callback     (GtkAction *action,
+                                            gpointer   data);
+
+void   dock_toggle_image_menu_cmd_callback (GtkAction *action,
+                                            gpointer   data);
+void   dock_toggle_auto_cmd_callback       (GtkAction *action,
+                                            gpointer   data);
 
 
 #endif /* __DOCK_COMMANDS_H__ */

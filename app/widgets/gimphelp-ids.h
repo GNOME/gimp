@@ -409,6 +409,9 @@
 #define GIMP_HELP_DOCK_CLOSE                      "gimp-dock-close"
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
 #define GIMP_HELP_DOCK_AUTO_BUTTON                "gimp-dock-auto-button"
+#define GIMP_HELP_DOCK_CHANGE_SCREEN              "gimp-dock-change-screen"
+#define GIMP_HELP_DOCK_SEPARATOR                  "gimp-dock-separator"
+
 #define GIMP_HELP_DOCK_TAB_ADD                    "gimp-dock-tab-add"
 #define GIMP_HELP_DOCK_TAB_CLOSE                  "gimp-dock-tab-close"
 #define GIMP_HELP_DOCK_TAB_DETACH                 "gimp-dock-tab-detach"
@@ -416,8 +419,6 @@
 #define GIMP_HELP_DOCK_TAB_STYLE                  "gimp-dock-tab-style"
 #define GIMP_HELP_DOCK_VIEW_AS_LIST               "gimp-dock-view-as-list"
 #define GIMP_HELP_DOCK_VIEW_AS_GRID               "gimp-dock-view-as-grid"
-#define GIMP_HELP_DOCK_CHANGE_SCREEN              "gimp-dock-change-screen"
-#define GIMP_HELP_DOCK_SEPARATOR                  "gimp-dock-separator"
 
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"
 #define GIMP_HELP_COLOR_DIALOG                    "gimp-color-dialog"

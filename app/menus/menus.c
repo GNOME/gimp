@@ -152,6 +152,7 @@ menus_init (Gimp              *gimp,
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Dockable>",
                                       "dockable",
+                                      "dock",
                                       NULL,
                                       "/dockable-popup",
                                       "dockable-menu.xml", NULL,
