@@ -1,5 +1,9 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpimage.h: one more s/cmap/colormap/.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/transform_tools.pdb: deprecated all functions.
 
 	* app/pdb/transform_tools_cmds.c
