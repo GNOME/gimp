@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-05-16 14:46+0400\n"
+"POT-Creation-Date: 2004-06-15 13:17+0200\n"
+"PO-Revision-Date: 2004-06-24 00:12+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить канал (сохраненное выделение) как %s.\n"
+"Вы собираетесь сохранить канал (сохранённое выделение) как %s.\n"
 "Видимые слои не будут сохранены."
 
 #: libgimp/gimpfontmenu.c:89
@@ -312,7 +312,7 @@ msgstr "/Цвет фона"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
-msgstr "/Черный"
+msgstr "/Чёрный"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
@@ -369,7 +369,7 @@ msgstr "Красный"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr "Зеленый"
+msgstr "Зелёный"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
@@ -416,9 +416,8 @@ msgid "GigaBytes"
 msgstr "Гигабайты"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Треугольник"
+msgstr "Перезаписываемый"
 
 #: libgimpwidgets/gimppatheditor.c:252
 msgid "Folder"
@@ -496,7 +495,7 @@ msgstr "Наклонить"
 
 #: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
-msgstr "Еще..."
+msgstr "Дополнительно..."
 
 #: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
