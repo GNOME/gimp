@@ -1,6 +1,20 @@
 2003-07-20  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/script-fu/scripts/rendermap.scm: applied patch from
+	* configure.in: changed the gettext domain prefix to gimp20.
+
+	* m4macros/Makefile.am
+	* m4macros/gimp-1.4.m4: removed this file ...
+	* m4macros/gimp-2.0.m4: ... and readded it with a new name.
+	Changed the macro to AM_PATH_GIMP_2_0().
+
+	* configure.in: added --without-aa option as a way to work around
+	broken aalib installations.
+
+	* INSTALL: document --without-aa and --without-mng.
+
+2003-07-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/rendermap.scm: applied a patch from
 	Alastair M. Robinson that fixes the name of the default gradient
 	(bug #117851).
 

@@ -1,11 +1,11 @@
-# Configure paths for GIMP-1.4
+# Configure paths for GIMP-2.0
 # Manish Singh    98-6-11
 # Shamelessly stolen from Owen Taylor
 
-dnl AM_PATH_GIMP_1_4([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
+dnl AM_PATH_GIMP_2_0([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
-AC_DEFUN(AM_PATH_GIMP_1_4,
+AC_DEFUN(AM_PATH_GIMP_2_0,
 [dnl 
 dnl Get the cflags and libraries from the gimptool-1.3 script
 dnl

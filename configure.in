@@ -274,7 +274,7 @@ AC_CHECK_FUNCS(difftime putenv mmap)
 # Internationalisation
 ######################
 
-GETTEXT_PACKAGE=gimp14
+GETTEXT_PACKAGE=gimp20
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
@@ -841,7 +841,9 @@ fi
 # Check for libaa
 #################
 
-if test -z "$LIBAA"; then
+
+AC_ARG_WITH(aa,  [  --without-aa           do not build the AA plug-in])
+if x$with_aa != xno test -z "$LIBAA"; then
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
       AA='aa'; LIBAA='-laa',

@@ -4,11 +4,13 @@
 
 
 GIMP 1.3 is the development branch of The GIMP. Here's where the
-development takes place on the road to the next stable release.
+development takes place on the road to the next stable release
+GIMP version 2.0.
 
 
 Overview of Changes in GIMP 1.3.17
 ==================================
+- Changed all(?) references to GIMP-1.4 to GIMP-2.0 [Sven]
 - Allow to transform paths using the transform tools [Mitch]
 - Added a simple CMYK color selector [Sven]
 - Added naive RGB <-> CMYK conversion routines [Sven]
@@ -27,7 +29,7 @@ Overview of Changes in GIMP 1.3.17
 - Lots of bug fixes
 
 Other contributors:
-  Eric Pierce, Joao S. O. Bueno
+  Eric Pierce, Joao S. O. Bueno, Alastair M. Robinson
 
 
 Overview of Changes in GIMP 1.3.16

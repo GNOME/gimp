@@ -78,7 +78,7 @@ recognizes. These are:
      the gimp uses to search for its configuration files from ~/.gimp-1.3 
      (the directory .gimp-1.3 in the users home directory) to DIR.
 
-  --without-libtiff, without-libjpeg, --without-libpng.  configure
+  --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
      better fix the underlying problem and install these libraries with
      their header files. If you absolutely want to compile GIMP without
@@ -89,6 +89,12 @@ recognizes. These are:
      it to keep EXIF data in your JPEG files intact.  If this is
      causing any trouble at compile-time, you can build --without-exif.
      Get libexif from http://www.sourceforge.net/projects/libexif.
+
+  --without-mng, --without-aa.  The MNG plug-in needs libmng and
+     configure checks for its presense. If for some reason you don't
+     want to build the MNG plug-in even though the library is installed,
+     use --without-mng to disable it expliticely. The same switch exists
+     for aalib, use --without-aa if you run into problems.
 
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
