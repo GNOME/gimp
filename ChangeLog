@@ -1,3 +1,14 @@
+2004-07-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.c: 
+	* app/display/gimpcanvas.c:
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-transform.c: corrected API
+	documentation, removed trailing whitespace.
+
+	Please do always build the documentation if you add or change any
+	gtk-doc comments.
+
 2004-07-15  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpcanvas.c:

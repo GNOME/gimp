@@ -1245,10 +1245,10 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
  * @shell: a display shell
  *
  * This function increments the pause count or the display shell.
- * If it was zero coming in, then the function pauses the active tool, 
- * so that operations on the display can take place without corrupting 
- * anything that the tool has drawn.  It "undraws" the current tool 
- * drawing, and must be followed by gimp_display_shell_resume() after 
+ * If it was zero coming in, then the function pauses the active tool,
+ * so that operations on the display can take place without corrupting
+ * anything that the tool has drawn.  It "undraws" the current tool
+ * drawing, and must be followed by gimp_display_shell_resume() after
  * the operation in question is completed.
  **/
 void
