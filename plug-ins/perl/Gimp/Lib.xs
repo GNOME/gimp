@@ -1722,8 +1722,24 @@ gimp_color_cube()
 	}
 	
 
-gchar *
+char *
+gimp_directory()
+
+char *
+gimp_data_directory()
+
+char *
 gimp_gtkrc()
+
+SV *
+gimp_personal_rc_file(basename)
+	char *	basename
+	CODE:
+        basename = gimp_personal_rc_file (basename);
+        RETVAL = sv_2mortal (newSVpv (basename, 0));
+        g_free (basename);
+        OUTPUT:
+        RETVAL
 
 guint
 gimp_tile_width()

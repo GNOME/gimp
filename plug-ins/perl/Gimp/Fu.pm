@@ -246,6 +246,9 @@ sub interact($$$$@) {
    for(;;) {
      my $t = new Gtk::Tooltips;
      my $w = new Gtk::Dialog;
+     my $accel = new Gtk::AccelGroup;
+
+     $accel->attach($w);
 
      set_title $w $Gimp::function;
      
@@ -466,18 +469,82 @@ sub interact($$$$@) {
            $f->cancel_button->signal_connect (clicked => sub { $f->hide });
            
         } elsif($type == PF_TEXT) {
-           $a = new Gtk::HBox 0,5;
+           $a = new Gtk::Frame;
+           my $h = new Gtk::VBox 0,5;
+           $a->add($h);
            my $e = new Gtk::Text;
-           $a->add ($e);
-           $e->set_editable (1);
+           my %e;
+           %e = $$extra if ref $extra eq "HASH";
 
-           push @setvals, sub { 
+           my $sv = sub { 
+              my $t = shift,
               $e->delete_text(0,-1);
-              $e->insert_text($_[0],0);
+              $e->insert_text($t,0);
            };
-           push @getvals, sub {
+           my $gv = sub {
               $e->get_chars(0,-1);
            };
+
+           $h->add ($e);
+           $e->set_editable (1);
+
+           my $buttons = new Gtk::HBox 1,5;
+           $h->add($buttons);
+
+           my $load = new Gtk::Button "Load"; $buttons->add($load);
+           my $save = new Gtk::Button "Save"; $buttons->add($save);
+           my $edit = new Gtk::Button "Edit"; $buttons->add($edit);
+
+           $edit->signal_connect(clicked => sub {
+              my $editor = $ENV{EDITOR} || "vi";
+              my $tmp = Gimp->temp_name("txt");
+              open TMP,">$tmp" or die "FATAL: unable to create $tmp: $!\n"; print TMP &$gv; close TMP;
+              system ('xterm','-T',"$editor: $name",'-e',$editor,$tmp);
+              if (open TMP,"<$tmp") {
+                 local $/; &$sv(scalar<TMP>); close TMP;
+              } else {
+                 Gimp->message("unable to read temporary file $tmp: $!");
+              }
+           });
+
+           my $filename = ($e{prefix} || eval { Gimp->directory } || ".") . "/";
+           
+           my $f = new Gtk::FileSelection "FilexSelector for $name";
+           $f->set_filename($filename);
+           $f->cancel_button->signal_connect (clicked => sub { $f->hide });
+           my $lf =sub {
+              $f->hide;
+              my $fn = $f->get_filename;
+              if(open TMP,"<$fn") {
+                 local $/; &$sv(scalar<TMP>);
+                 close TMP;
+              } else {
+                 Gimp->message("unable to read '$fn': $!");
+              }
+           };
+           my $sf =sub {
+              $f->hide;
+              my $fn = $f->get_filename;
+              if(open TMP,">$fn") {
+                 print TMP &$gv;
+                 close TMP;
+              } else {
+                 Gimp->message("unable to create '$fn': $!");
+              }
+           };
+           $load->signal_connect (clicked => sub {
+              $f->set_title("Load $name");
+              $f->ok_button->signal_connect (clicked => $lf);
+              $f->show_all;
+           });
+           $save->signal_connect (clicked => sub {
+              $f->set_title("Save $name");
+              $f->ok_button->signal_connect (clicked => $sf);
+              $f->show_all;
+           });
+
+           push @setvals,$sv;
+           push @getvals,$gv;
 
         } else {
            $label="Unsupported argumenttype $type";
@@ -531,11 +598,13 @@ sub interact($$$$@) {
      $w->action_area->pack_start($button,1,1,0);
      can_default $button 1;
      grab_default $button;
+     add $accel 0xFF0D, [], [], $button, "clicked";
      
      $button = new Gtk::Button "Cancel";
      signal_connect $button "clicked", sub {hide $w; main_quit Gtk};
      $w->action_area->pack_start($button,1,1,0);
      can_default $button 1;
+     add $accel 0xFF1B, [], [], $button, "clicked";
      
      $res=0;
      

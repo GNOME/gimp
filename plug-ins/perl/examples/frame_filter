@@ -25,6 +25,7 @@ register	"layer_apply",
 
                 my @layers = $image->get_layers;
                 $n = @layers;
+                $n or die "at least one layer is required\n";
 
                 my $func = eval "sub{\n#line 0 \"expression\"\n$function\n}";
                 die "syntax error in expression '$function': $@\n" if $@;
@@ -35,8 +36,8 @@ register	"layer_apply",
                 for my $index (0..$n-1) {
                    $i = $index;
                    $I = $n-$i-1;
-                   $p = $i/$#layers;
-                   $P = $I/$#layers;
+                   $p = @layers > 1 ? $i/$#layers : 0;
+                   $P = 1-$p;
                    $d = $layers[$i];
 
                    eval { &$func };
@@ -102,7 +103,7 @@ animation onto the corresponding frame in the current animation and using
 DARKEN_MODE to combine the frames. You might want to use other modes or
 maybe C<$f->set_opacity(50)> for your animation.
 
- $d2=$d2->image;
+ $i2=$d2->image;
  $l2=($i2->get_layers)[$i];
 
  $i2->selection_all;
