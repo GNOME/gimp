@@ -18,10 +18,6 @@
 
 #include "config.h"
 
-#ifdef USE_PTHREADS
-#include <pthread.h>
-#endif
-
 #include <glib-object.h>
 
 #include "base-types.h"
@@ -43,7 +39,7 @@
 static gboolean  tile_cache_zorch_next     (void);
 static void      tile_cache_flush_internal (Tile     *tile);
 
-#ifdef USE_PTHREADS
+#ifdef ENABLE_THREADED_TILE_SWAPPER
 static gpointer  tile_idle_thread          (gpointer  data);
 #else
 static gboolean  tile_idle_preswap         (gpointer  data);
@@ -65,15 +61,16 @@ static gulong   cur_cache_dirty = 0;
 static TileList clean_list      = { NULL, NULL };
 static TileList dirty_list      = { NULL, NULL };
 
-#ifdef USE_PTHREADS
-static pthread_t       preswap_thread;
-static pthread_mutex_t dirty_mutex  = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t  dirty_signal = PTHREAD_COND_INITIALIZER;
-static pthread_mutex_t tile_mutex   = PTHREAD_MUTEX_INITIALIZER;
-#define CACHE_LOCK   pthread_mutex_lock (&tile_mutex)
-#define CACHE_UNLOCK pthread_mutex_unlock (&tile_mutex)
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+static GThread        *preswap_thread = NULL;
+static GMutex         *dirty_mutex    = NULL;
+static GCond          *dirty_signal   = NULL;
+static GStaticMutex    tile_mutex     = G_STATIC_MUTEX_INIT;
+
+#define CACHE_LOCK   g_static_mutex_lock (&tile_mutex)
+#define CACHE_UNLOCK g_static_mutex_unlock (&tile_mutex)
 #else
-static guint           idle_swapper = 0;
+static guint           idle_swapper   = 0;
 #define CACHE_LOCK   /* nothing */
 #define CACHE_UNLOCK /* nothing */
 #endif
@@ -91,8 +88,11 @@ tile_cache_init (gulong tile_cache_size)
 
       max_cache_size = tile_cache_size;
 
-#ifdef USE_PTHREADS
-      pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+      dirty_mutex  = g_mutex_new ();
+      dirty_signal = g_cond_new ();
+
+      preswap_thread = g_thread_create (&tile_idle_thread, NULL, FALSE, NULL);
 #else
       idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
 				    tile_idle_preswap,
@@ -193,10 +193,10 @@ tile_cache_insert (Tile *tile)
     {
       cur_cache_dirty += tile_size_inline (tile);
 
-#ifdef USE_PTHREADS
-      pthread_mutex_lock (&dirty_mutex);
-      pthread_cond_signal (&dirty_signal);
-      pthread_mutex_unlock (&dirty_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+      g_mutex_lock (dirty_mutex);
+      g_cond_signal (dirty_signal);
+      g_mutex_unlock (dirty_mutex);
 #endif
     }
 
@@ -302,7 +302,7 @@ tile_cache_zorch_next (void)
 }
 
 
-#if USE_PTHREADS
+#ifdef ENABLE_THREADED_TILE_SWAPPER
 
 static gpointer
 tile_idle_thread (gpointer data)
@@ -324,9 +324,9 @@ tile_idle_thread (gpointer data)
 
 	  count = 0;
 
-	  pthread_mutex_lock (&dirty_mutex);
-	  pthread_cond_wait (&dirty_signal, &dirty_mutex);
-	  pthread_mutex_unlock (&dirty_mutex);
+	  g_mutex_lock (dirty_mutex);
+	  g_cond_wait (dirty_signal, dirty_mutex);
+	  g_mutex_unlock (dirty_mutex);
 
 	  CACHE_LOCK;
 	}
@@ -385,7 +385,7 @@ tile_idle_thread (gpointer data)
     }
 }
 
-#else  /* !USE_PTHREADS */
+#else  /* !ENABLE_THREADED_TILE_SWAPPER */
 
 static gboolean
 tile_idle_preswap (gpointer data)
@@ -422,4 +422,4 @@ tile_idle_preswap (gpointer data)
   return TRUE;
 }
 
-#endif  /* !USE_PTHREADS */
+#endif  /* !ENABLE_THREADED_TILE_SWAPPER */

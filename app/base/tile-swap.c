@@ -19,15 +19,11 @@
 #include "config.h"
 
 #include <errno.h>
-#include <sys/types.h>
 #include <fcntl.h>
+#include <sys/types.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#endif
-
-#ifdef USE_PTHREADS
-#include <pthread.h>
 #endif
 
 #include <glib-object.h>
@@ -124,7 +120,7 @@ static void    tile_swap_resize           (DefSwapFile *def_swap_file,
 static Gap   * tile_swap_gap_new          (off_t        start,
 					   off_t        end);
 static void    tile_swap_gap_destroy      (Gap         *gap);
-#ifdef USE_PTHREADS
+#ifdef ENABLE_THREADED_TILE_SWAPPER
 static gpointer tile_swap_in_thread       (gpointer);
 #endif
 
@@ -135,13 +131,13 @@ static GList         * open_swap_files  = NULL;
 static gint            nopen_swap_files = 0;
 static gint            next_swap_num    = 1;
 static off_t           swap_file_grow   = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
-#ifdef USE_PTHREADS
-static pthread_mutex_t swapfile_mutex         = PTHREAD_MUTEX_INITIALIZER;
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+static GStaticMutex    swapfile_mutex         = G_STATIC_MUTEX_INIT;
 
 /* async_swapin_mutex protects only the list, not the tiles therein */
-static pthread_t       swapin_thread;
-static pthread_mutex_t async_swapin_mutex     = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t  async_swapin_signal    = PTHREAD_COND_INITIALIZER;
+static GThread       * swapin_thread          = NULL;
+static GMutex        * async_swapin_mutex     = NULL;
+static GCond         * async_swapin_signal    = NULL;
 static GSList        * async_swapin_tiles     = NULL;
 static GSList        * async_swapin_tiles_end = NULL;
 #endif
@@ -235,8 +231,11 @@ tile_swap_init (const gchar *path)
 
   g_free (swappath);
 
-#ifdef NOTDEF /* USE_PTHREADS */
-  pthread_create (&swapin_thread, NULL, &tile_swap_in_thread, NULL);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  async_swapin_signal = g_cond_new ();
+  async_swapin_mutex  = g_mutex_new ();
+
+  swapin_thread = g_thread_create (tile_swap_in_thread, NULL, FALSE, NULL);
 #endif
 }
 
@@ -254,8 +253,6 @@ tile_swap_exit (void)
 
   if (swap_files)
     g_hash_table_foreach (swap_files, tile_swap_exit1, NULL);
-
-  initialized = FALSE;
 }
 
 gint
@@ -266,8 +263,8 @@ tile_swap_add (gchar    *filename,
   SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
 
-#ifdef USE_PTHREADS
-  pthread_mutex_lock(&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_lock (&swapfile_mutex);
 #endif
 
   g_return_val_if_fail (initialized, -1);
@@ -294,8 +291,8 @@ tile_swap_add (gchar    *filename,
 
   g_hash_table_insert (swap_files, &swap_file->swap_num, swap_file);
 
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_unlock (&swapfile_mutex);
 #endif
   return swap_file->swap_num;
 }
@@ -305,8 +302,8 @@ tile_swap_remove (gint swap_num)
 {
   SwapFile *swap_file;
 
-#ifdef USE_PTHREADS
-  pthread_mutex_lock (&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_lock (&swapfile_mutex);
 #endif
 
   g_return_if_fail (initialized);
@@ -322,8 +319,8 @@ tile_swap_remove (gint swap_num)
 
   g_free (swap_file);
 out:
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_unlock (&swapfile_mutex);
 #endif
   return;
 }
@@ -414,8 +411,8 @@ tile_swap_command (Tile *tile,
 		   gint  command)
 {
   SwapFile *swap_file;
-#ifdef USE_PTHREADS
-  pthread_mutex_lock(&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_lock (&swapfile_mutex);
 #endif
 
   g_return_if_fail (initialized);
@@ -440,8 +437,8 @@ tile_swap_command (Tile *tile,
 				   tile, command, swap_file->user_data));
 
 out:
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&swapfile_mutex);
+#ifdef ENABLE_THREADED_TILE_SWAPPER
+  g_static_mutex_unlock (&swapfile_mutex);
 #endif
 
   return;
@@ -531,7 +528,7 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 		            gint         fd,
 		            Tile        *tile)
 {
-#ifdef NOTDEF /* USE_PTHREADS */
+#ifdef ENABLE_THREADED_TILE_SWAPPER
   AsyncSwapArgs *args;
 
   args = g_new(AsyncSwapArgs, 1);
@@ -540,14 +537,14 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
   args->tile = tile;
 
   /* add this tile to the list of tiles for the async swapin task */
-  pthread_mutex_lock (&async_swapin_mutex);
+  g_mutex_lock (async_swapin_mutex);
   g_slist_append (async_swapin_tiles_end, args);
 
   if (!async_swapin_tiles)
     async_swapin_tiles = async_swapin_tiles_end;
 
-  pthread_cond_signal (&async_swapin_signal);
-  pthread_mutex_unlock (&async_swapin_mutex);
+  g_cond_broadcast (async_swapin_signal);
+  g_mutex_unlock (async_swapin_mutex);
 
 #else
   /* ignore; it's only a hint anyway */
@@ -883,7 +880,7 @@ tile_swap_gap_destroy (Gap *gap)
 }
 
 
-#ifdef NOTDEF /* USE_PTHREADS */
+#ifdef ENABLE_THREADED_TILE_SWAPPER
 /* go through the list of tiles that are likely to be used soon and
  * try to swap them in.  If any tile is not in a state to be swapped
  * in, ignore it, and the error will get dealt with when the tile
@@ -958,12 +955,11 @@ tile_swap_in_thread (gpointer data)
 
   while (TRUE)
     {
-      pthread_mutex_lock (&async_swapin_mutex);
+      g_mutex_lock (async_swapin_mutex);
 
       if (!async_swapin_tiles)
-        {
-          pthread_cond_wait (&async_swapin_signal, &async_swapin_mutex);
-        }
+        g_cond_wait (async_swapin_signal, async_swapin_mutex);
+
       args = async_swapin_tiles->data;
 
       free_item = async_swapin_tiles;
@@ -973,7 +969,7 @@ tile_swap_in_thread (gpointer data)
       if (!async_swapin_tiles)
         async_swapin_tiles_end = NULL;
 
-      pthread_mutex_unlock (&async_swapin_mutex);
+      g_mutex_unlock (async_swapin_mutex);
 
       tile_swap_in_attempt(args->def_swap_file, args->fd, args->tile);
 

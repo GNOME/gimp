@@ -1,5 +1,14 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* app/base/tile-cache.c
+	* app/base/tile-private.h
+	* app/base/tile-swap.c
+	* app/base/tile.c: in an attempt to safe this code from bit-rot,
+	ported the experimental threaded tile-swapper to gthread.
+
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.c: port this code to gthread as well.
 
 2005-02-13  Jay Cox  <jaycox@gimp.org>
