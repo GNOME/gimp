@@ -24,18 +24,25 @@
 
 #include "base-config.h"
 
+#ifdef  __GNUC__
+#define INIT_MEMBER(m,v) .m = v
+#else
+/* declaration order required ! */
+#define INIT_MEMBER(m,v) v
+#endif
 
 static GimpBaseConfig  static_base_config =
 {
-  .temp_path          = NULL,
-  .swap_path          = NULL,
+  INIT_MEMBER(temp_path          , NULL),
+  INIT_MEMBER(swap_path          , NULL),
 
-  .tile_cache_size    = 33554432,
-  .stingy_memory_use  = FALSE,
-  .interpolation_type = LINEAR_INTERPOLATION,
-  .num_processors     = 1
+  INIT_MEMBER(tile_cache_size    , 33554432),
+  INIT_MEMBER(stingy_memory_use  , FALSE),
+  INIT_MEMBER(interpolation_type , LINEAR_INTERPOLATION),
+  INIT_MEMBER(num_processors     , 1)
 };
 
+#undef INIT_MEMBER
 
 GimpBaseConfig *base_config = &static_base_config;
 gboolean        use_mmx     = FALSE;

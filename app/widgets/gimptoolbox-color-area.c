@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <string.h> /* memcpy */
 
 #ifdef HAVE_STRING_H
 #include <string.h>

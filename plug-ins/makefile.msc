@@ -436,12 +436,14 @@ OBJECTS = \
 	interp_slib.obj \
 	interp_sliba.obj \
 	interp_trace.obj \
+	siod-wrapper.obj \
 	script-fu.obj \
 	script-fu-console.obj \
 	script-fu-constants.obj \
 	script-fu-scripts.obj \
-	regexrepl.obj \
+	script-fu-text-console.obj \
 	..\dbbrowser\dbbrowser_utils.obj
+EXTRALIBS = ..\..\regexrepl\regexrepl.lib
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
@@ -539,6 +541,7 @@ OBJECTS = \
 OBJECTS = \
 	tw_func.obj \
 	tw_util.obj \
+	tw_dump.obj \
 	twain.obj
 EXTRALIBS = user32.lib
 !ENDIF

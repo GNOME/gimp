@@ -1,3 +1,38 @@
+2001-07-22  Hans Breuer  <hans@breuer.org>
+
+	* app/*/makefile.msc : 
+	* plug-ins/makefile.msc	: 
+	* libgimp/gimp.def :
+	* libgimpwidgets/gimpwidgets.def : updated
+
+	* makefile.msc :
+	* app/xcf/makefile.msc :
+	* regexrepl/makefile.msc : new files
+	
+	* app/base/base-config.c : a work-around for a gccism with
+	structure initialization
+
+	* app/core/gimp.c :
+	* app/core/gimpimage-new.c :
+	* app/gui/color-area.c
+	* app/widgets/gimpdialogfactory.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf-write.c
+	* plug-ins/common/plasma.c :
+	* plug-ins/flame/libifs.c : added <string.h> for strlen(), strcpy(),
+	memcpy(), memcmp() and friends 	
+
+	* plug-ins/imagemap/imap_rectangle.c :
+	* plug-ins/ifscompose/ifscompose_storage.c : added <stdlib.h> for abs()
+
+	* plug-ins/common/spheredesigner.c : reflect renaming of drawable.id
+	drawable.drawable_id 
+
+	* plug-ins/script-fu/siod-wrapper.c : <string.h> and conditional use
+	of script_fu_server_quit () cause there is not yet script-fu server
+	on win32.
+
 2001-07-22  Stanislav Brabec  <utx@penguin.cz>
 
 	* plugins/common/despeckle.c: Reflect my fix from 2001-03-01

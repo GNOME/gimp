@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h> /* strcmp */
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"

@@ -20,6 +20,7 @@
 
 #include <ctype.h>
 #include <stdlib.h>
+#include <string.h> /* strcmp */
 
 #include "libgimp/gimp.h"
 

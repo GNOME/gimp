@@ -22,6 +22,9 @@
  */
 
 #include "config.h"
+
+#include <stdlib.h> /* abs */
+
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"

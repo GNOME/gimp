@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <string.h> /* strlen */
 
 #include <glib.h>
 

@@ -2744,16 +2744,16 @@ void realrender(GimpDrawable *drawable)
   r.v1.z = -10.0;
   r.v2.z = 0.0;
 
-  alpha = gimp_drawable_has_alpha(drawable->id);
+  alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   gimp_pixel_rgn_init(&pr, drawable, 0, 0,
-		      gimp_drawable_width(drawable->id),
-		      gimp_drawable_height(drawable->id), FALSE, FALSE);
+		      gimp_drawable_width(drawable->drawable_id),
+		      gimp_drawable_height(drawable->drawable_id), FALSE, FALSE);
   gimp_pixel_rgn_init(&dpr, drawable, 0, 0,
-		      gimp_drawable_width(drawable->id),
-		      gimp_drawable_height(drawable->id), TRUE, TRUE);
-  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  bpp = gimp_drawable_bpp(drawable->id);
+		      gimp_drawable_width(drawable->drawable_id),
+		      gimp_drawable_height(drawable->drawable_id), TRUE, TRUE);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  bpp = gimp_drawable_bpp(drawable->drawable_id);
   buffer = g_malloc((x2 - x1) * 4);
   ibuffer = g_malloc((x2 - x1) * 4);
 
@@ -2789,8 +2789,8 @@ void realrender(GimpDrawable *drawable)
   g_free(buffer);
   g_free(ibuffer);
   gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->id, TRUE);
-  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static void

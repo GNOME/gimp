@@ -60,6 +60,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>  /* For random seeding */
+#include <string.h> /* memcpy */
 
 #include <gtk/gtk.h>
 

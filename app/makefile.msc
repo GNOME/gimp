@@ -11,7 +11,7 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base core pdb tools widgets gui
+SUBDIRS = paint-funcs base core pdb xcf tools widgets gui
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -29,6 +29,8 @@ PKG_LINK = \
 	widgets/appwidgets.lib \
 	core/appcore.lib \
 	base/appbase.lib \
+	xcf/xcf.lib \
+	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
@@ -56,7 +58,6 @@ mmx_sources = \
 OBJECTS = \
 	colormaps.obj \
 	devices.obj \
-	dialog_handler.obj \
 	docindex.obj \
 	errorconsole.obj \
 	gimpprogress.obj \
@@ -67,47 +68,33 @@ OBJECTS = \
 	disp_callbacks.obj \
 	gdisplay.obj \
 	gdisplay_ops.obj \
-#	gdisplay_color.obj \
 	gximage.obj \
 	image_render.obj \
 	interface.obj \
 	scale.obj \
 	scroll.obj \
 	selection.obj \
-	global_edit.obj \
 	image_map.obj \
 	module_db.obj \
-	resize.obj \
 	user_install.obj \
-	datafiles.obj \
 	floating_sel.obj \
-	parasitelist.obj \
-	scan_convert.obj \
-	app_procs.obj \
-	batch.obj \
-	color_transfer.obj \
-	context_manager.obj \
-	drawable.obj \
-	errors.obj \
+	general.obj \
+	gimprc.obj \
 	file-open.obj \
 	file-save.obj \
 	file-utils.obj \
-	general.obj \
-	gimage.obj \
-	gimphelp.obj \
-	gimpparasite.obj \
-	gimprc.obj \
-	gimpunit.obj \
-	image_new.obj \
-	libgimp_glue.obj \
-	main.obj \
+	plug_in.obj \
 	path.obj \
 	path_curves.obj \
 	path_bezier.obj \
-	plug_in.obj \
 	undo.obj \
-	xcf.obj \
-	regexrepl.obj \
+	app_procs.obj \
+	main.obj \
+	batch.obj \
+	errors.obj \
+	gimphelp.obj \
+	libgimp_glue.obj \
+
 
 regexrepl.obj : regexrepl.c regexrepl.h
 	$(CC) $(CFLAGS) -GD -c -DREGEX_MALLOC -DHAVE_STRING_H $(PKG_CFLAGS) regexrepl.c

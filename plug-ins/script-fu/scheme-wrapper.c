@@ -1,5 +1,7 @@
 #include "config.h"
 
+#include <string.h> /* memcpy, strcpy, strlen */
+
 #include "siod.h"
 #include "siod-wrapper.h"
 #include <glib.h>
@@ -939,7 +941,11 @@ script_fu_register_call (LISP a)
 static LISP
 script_fu_quit_call (LISP a)
 {
+#ifdef G_OS_WIN32
+  g_warning ("script_fu_server not available.");
+#else
   script_fu_server_quit ();
+#endif
 
   return NIL;
 }

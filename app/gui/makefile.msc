@@ -9,10 +9,19 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
+
+PKG_LINK = \
+	$(GLIB_LIBS) $(GTK_LIBS) $(INTL_LIBS) \
+	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
+	..\base\appbase-$(PKG_VER).lib \
+	..\core\appcore-$(PKG_VER).lib \
+	..\widgets\appwidgets-$(PKG_VER).lib \
+
 OBJECTS = \
 	about-dialog.obj \
 	brush-editor.obj \
 	brush-select.obj \
+	brushes-commands.obj \
 	channels-commands.obj \
 	color-area.obj \
 	color-notebook.obj \
@@ -20,16 +29,21 @@ OBJECTS = \
 	colormap-dialog.obj \
 	commands.obj \
 	convert-dialog.obj \
+	data-commands.obj \
 	dialogs.obj \
 	dialogs-commands.obj \
 	dialogs-constructors.obj \
+	edit-commands.obj \
+	file-commands.obj \
 	file-dialog-utils.obj \
 	file-new-dialog.obj \
 	file-open-dialog.obj \
 	file-save-dialog.obj \
 	gradient-editor.obj \
 	gradient-select.obj \
+	gradients-commands.obj \
 	gui.obj \
+	image-commands.obj \
 	indicator-area.obj \
 	info-dialog.obj \
 	info-window.obj \
@@ -40,16 +54,22 @@ OBJECTS = \
 	palette-editor.obj \
 	palette-import-dialog.obj \
 	palette-select.obj \
+	palettes-commands.obj \
 	paths-dialog.obj \
 	pattern-select.obj \
+	patterns-commands.obj \
 	preferences-dialog.obj \
+	resize-dialog.obj \
 	resolution-calibrate-dialog.obj \
+	select-commands.obj \
 	session.obj \
 	splash.obj \
 	test-commands.obj \
 	tips-dialog.obj \
 	tool-options-dialog.obj \
 	toolbox.obj \
+	tools-commands.obj \
+	view-commands.obj \
 
 INCLUDES = \
 	-I$(top_srcdir) \
@@ -59,7 +79,8 @@ INCLUDES = \
 
 all : \
 	$(PRJ_TOP)\config.h \
-	$(PACKAGE).lib
+	$(PACKAGE).lib \
+	$(PACKAGE)-$(PKG_VER).dll
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

@@ -18,14 +18,18 @@ PKG_LINK = \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib
 
 OBJECTS = \
+	gimp.obj \
 	gimpbrush.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
+	gimpbuffer.obj \
 	gimpchannel.obj \
 	gimpcontainer.obj \
 	gimpcontext.obj \
+	gimpcoreconfig.obj \
 	gimpdata.obj \
 	gimpdatafactory.obj \
+	gimpdatafiles.obj \
 	gimpdatalist.obj \
 	gimpdrawable.obj \
 	gimpdrawable-desaturate.obj \
@@ -34,26 +38,34 @@ OBJECTS = \
 	gimpdrawable-invert.obj \
 	gimpdrawable-offset.obj \
 	gimpdrawable-preview.obj \
+	gimpedit.obj \
 	gimpgradient.obj \
 	gimpimage.obj \
-	gimpimage-convert.obj \
 	gimpimage-colorhash.obj \
+	gimpimage-convert.obj \
+	gimpimage-crop.obj \
 	gimpimage-duplicate.obj \
 	gimpimage-mask.obj \
+	gimpimage-new.obj \
 	gimpimage-undo.obj \
 	gimplayer.obj \
 	gimplayermask.obj \
 	gimplist.obj \
 	gimpmarshal.obj \
 	gimpobject.obj \
-	gimppattern.obj \
 	gimppalette.obj \
 	gimppalette-import.obj \
+	gimpparasite.obj \
+	gimpparasitelist.obj \
+	gimppattern.obj \
 	gimppreviewcache.obj \
+	gimpscanconvert.obj \
 	gimptoolinfo.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
+	gimpunit.obj \
 	gimpviewable.obj \
+
 
 OTHER_FILES = \
 	\

@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <string.h> /* strcmp, memcmp */
 
 #include <gtk/gtk.h>
 
