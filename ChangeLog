@@ -1,3 +1,7 @@
+2000-05-12  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: mention that gtk+ version 1.2.7 or higher is mandatory
+
 2000-05-12  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Don't bother checking for CODEC
