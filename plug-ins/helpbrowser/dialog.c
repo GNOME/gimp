@@ -350,6 +350,8 @@ browser_dialog_load (const gchar *ref,
     queue_add (queue, new_ref);
 
   update_toolbar ();
+
+  gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (html)));
 }
 
 
