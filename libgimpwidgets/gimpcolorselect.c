@@ -251,11 +251,8 @@ gimp_color_select_get_type (void)
 static void
 gimp_color_select_class_init (GimpColorSelectClass *klass)
 {
-  GObjectClass           *object_class;
-  GimpColorSelectorClass *selector_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
+  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -395,9 +392,7 @@ gimp_color_select_init (GimpColorSelect *select)
 static void
 gimp_color_select_finalize (GObject *object)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (object);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (object);
 
   if (select->gc)
     {
@@ -412,9 +407,7 @@ static void
 gimp_color_select_togg_visible (GimpColorSelector *selector,
                                 gboolean           visible)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (selector);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
   if (visible)
     gtk_widget_show (select->toggle_box);
@@ -426,9 +419,7 @@ static void
 gimp_color_select_togg_sensitive (GimpColorSelector *selector,
                                   gboolean           sensitive)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (selector);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
   gtk_widget_set_sensitive (select->toggle_box, sensitive);
 }
@@ -438,9 +429,7 @@ gimp_color_select_set_color (GimpColorSelector *selector,
                              const GimpRGB     *rgb,
                              const GimpHSV     *hsv)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (selector);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
   gimp_color_select_update (select,
                             UPDATE_POS | UPDATE_XY_COLOR | UPDATE_Z_COLOR);
@@ -450,9 +439,7 @@ static void
 gimp_color_select_set_channel (GimpColorSelector        *selector,
                                GimpColorSelectorChannel  channel)
 {
-  GimpColorSelect *select;
-
-  select = GIMP_COLOR_SELECT (selector);
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
   switch ((ColorSelectFillType) channel)
     {
@@ -500,10 +487,8 @@ gimp_color_select_channel_toggled (GtkWidget       *widget,
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      GimpColorSelector        *selector;
+      GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (select);
       GimpColorSelectorChannel  channel;
-
-      selector = GIMP_COLOR_SELECTOR (select);
 
       channel = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                     "channel"));

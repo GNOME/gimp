@@ -271,11 +271,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
 GtkWidget *
 gimp_color_selection_new (void)
 {
-  GimpColorSelection *selection;
-
-  selection = g_object_new (GIMP_TYPE_COLOR_SELECTION, NULL);
-
-  return GTK_WIDGET (selection);
+  return g_object_new (GIMP_TYPE_COLOR_SELECTION, NULL);
 }
 
 /**
@@ -443,10 +439,8 @@ gimp_color_selection_switch_page (GtkWidget          *widget,
                                   guint               page_num,
                                   GimpColorSelection *selection)
 {
-  GimpColorNotebook *notebook;
+  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
   gboolean           sensitive;
-
-  notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
 
   sensitive =
     (GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->set_channel != NULL);

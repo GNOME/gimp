@@ -83,13 +83,10 @@ gimp_color_scale_get_type (void)
 static void
 gimp_color_scale_class_init (GimpColorScaleClass *klass)
 {
-  GtkObjectClass  *object_class;
-  GtkWidgetClass  *widget_class;
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class  = GTK_OBJECT_CLASS (klass);
-  widget_class  = GTK_WIDGET_CLASS (klass);
 
   object_class->destroy = gimp_color_scale_destroy;
 
@@ -119,9 +116,7 @@ gimp_color_scale_init (GimpColorScale *scale)
 static void
 gimp_color_scale_destroy (GtkObject *object)
 {
-  GimpColorScale *scale;
-
-  scale = GIMP_COLOR_SCALE (object);
+  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
 
   if (scale->buf)
     {
@@ -139,14 +134,11 @@ static void
 gimp_color_scale_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpColorScale *scale;
-  GtkRange       *range;
+  GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
+  GtkRange       *range = GTK_RANGE (widget);
   gint            focus = 0;
   gint            scale_width;
   gint            scale_height;
-
-  scale = GIMP_COLOR_SCALE (widget);
-  range = GTK_RANGE (widget);
 
   if (GTK_WIDGET_CAN_FOCUS (widget))
     {
@@ -199,7 +191,7 @@ static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
-  GimpColorScale *scale;
+  GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
   GtkRange       *range;
   GdkRectangle    expose_area;	/* Relative to widget->allocation */
   GdkRectangle    area;
@@ -207,8 +199,6 @@ gimp_color_scale_expose (GtkWidget      *widget,
   gint            slider_size;
   gint            x, y;
   gint            w, h;
-
-  scale = GIMP_COLOR_SCALE (widget);
 
   if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
@@ -462,7 +452,7 @@ should_invert (GtkRange *range)
 static void
 gimp_color_scale_render (GimpColorScale *scale)
 {
-  GtkRange *range;
+  GtkRange *range = GTK_RANGE (scale);
   GimpRGB   rgb;
   GimpHSV   hsv;
   guint     x, y;
@@ -508,7 +498,6 @@ gimp_color_scale_render (GimpColorScale *scale)
       break;
     }
 
-  range = GTK_RANGE (scale);
   invert = should_invert (range);
 
   switch (range->orientation)
@@ -568,7 +557,7 @@ gimp_color_scale_render (GimpColorScale *scale)
 static void
 gimp_color_scale_render_alpha (GimpColorScale *scale)
 {
-  GtkRange *range;
+  GtkRange *range = GTK_RANGE (scale);
   GimpRGB   rgb;
   gboolean  invert;
   gdouble   a;
@@ -576,7 +565,6 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
   guchar   *buf;
   guchar   *d, *l;
 
-  range = GTK_RANGE (scale);
   invert = should_invert (range);
 
   buf = scale->buf;

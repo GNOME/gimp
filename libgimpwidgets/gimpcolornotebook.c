@@ -112,13 +112,9 @@ gimp_color_notebook_get_type (void)
 static void
 gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 {
-  GObjectClass           *object_class;
-  GtkWidgetClass         *widget_class;
-  GimpColorSelectorClass *selector_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  widget_class   = GTK_WIDGET_CLASS (klass);
-  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
+  GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
+  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

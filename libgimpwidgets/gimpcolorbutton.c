@@ -137,13 +137,9 @@ gimp_color_button_get_type (void)
 static void
 gimp_color_button_class_init (GimpColorButtonClass *klass)
 {
-  GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
-  GtkButtonClass *button_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
-  button_class = GTK_BUTTON_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -196,9 +192,7 @@ gimp_color_button_init (GimpColorButton *button)
 static void
 gimp_color_button_destroy (GtkObject *object)
 {
-  GimpColorButton *button;
-
-  button = GIMP_COLOR_BUTTON (object);
+  GimpColorButton *button = GIMP_COLOR_BUTTON (object);
 
   if (button->title)
     {
@@ -225,11 +219,9 @@ static gboolean
 gimp_color_button_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpColorButton *button;
+  GimpColorButton *button = GIMP_COLOR_BUTTON (widget);
   gint             x;
   gint             y;
-
-  button = GIMP_COLOR_BUTTON (widget);
 
   if (bevent->button == 3)
     {

@@ -69,8 +69,6 @@ struct _GimpColorScalesClass
 static void   gimp_color_scales_class_init (GimpColorScalesClass  *klass);
 static void   gimp_color_scales_init       (GimpColorScales       *scales);
 
-static void   gimp_color_scales_finalize       (GObject           *object);
-
 static void   gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
                                                 gboolean           sensitive);
 static void   gimp_color_scales_togg_visible   (GimpColorSelector *selector,
@@ -129,15 +127,9 @@ gimp_color_scales_get_type (void)
 static void
 gimp_color_scales_class_init (GimpColorScalesClass *klass)
 {
-  GObjectClass           *object_class;
-  GimpColorSelectorClass *selector_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize         = gimp_color_scales_finalize;
 
   selector_class->name                  = _("Scales");
   selector_class->help_id               = "gimp-colorselector-scales";
@@ -152,7 +144,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 static void
 gimp_color_scales_init (GimpColorScales *scales)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GtkWidget         *table;
   GtkWidget         *hbox;
   GtkWidget         *label;
@@ -182,8 +174,6 @@ gimp_color_scales_init (GimpColorScales *scales)
   static gdouble slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
   static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
   static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
-
-  selector = GIMP_COLOR_SELECTOR (scales);
 
   /*  don't needs the toggles for our own operation  */
   selector->toggles_visible = FALSE;
@@ -272,23 +262,11 @@ gimp_color_scales_init (GimpColorScales *scales)
 }
 
 static void
-gimp_color_scales_finalize (GObject *object)
-{
-  GimpColorScales *scales;
-
-  scales = GIMP_COLOR_SCALES (object);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
 gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
                                   gboolean           sensitive)
 {
-  GimpColorScales *scales;
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
   gint             i;
-
-  scales = GIMP_COLOR_SCALES (selector);
 
   for (i = 0; i < 6; i++)
     gtk_widget_set_sensitive (scales->toggles[i], sensitive);
@@ -298,10 +276,8 @@ static void
 gimp_color_scales_togg_visible (GimpColorSelector *selector,
                                 gboolean           visible)
 {
-  GimpColorScales *scales;
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
   gint             i;
-
-  scales = GIMP_COLOR_SCALES (selector);
 
   for (i = 0; i < 6; i++)
     {
@@ -316,12 +292,10 @@ static void
 gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
                                   gboolean           show_alpha)
 {
-  GimpColorScales *scales;
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
   GtkWidget       *label;
   GtkWidget       *scale;
   GtkWidget       *spin;
-
-  scales = GIMP_COLOR_SCALES (selector);
 
   label = GIMP_SCALE_ENTRY_LABEL (scales->slider_data[6]);
   scale = GIMP_SCALE_ENTRY_SCALE (scales->slider_data[6]);
@@ -346,9 +320,7 @@ gimp_color_scales_set_color (GimpColorSelector *selector,
                              const GimpRGB     *rgb,
                              const GimpHSV     *hsv)
 {
-  GimpColorScales *scales;
-
-  scales = GIMP_COLOR_SCALES (selector);
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
 
   gimp_color_scales_update_scales (scales, -1);
 }
@@ -357,9 +329,7 @@ static void
 gimp_color_scales_set_channel (GimpColorSelector        *selector,
                                GimpColorSelectorChannel  channel)
 {
-  GimpColorScales *scales;
-
-  scales = GIMP_COLOR_SCALES (selector);
+  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
 
   if (channel >= 0 && channel <= 7)
     {
@@ -380,12 +350,10 @@ static void
 gimp_color_scales_update_scales (GimpColorScales *scales,
                                  gint             skip)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   gint               values[7];
   gchar              buffer[8];
   gint               i;
-
-  selector = GIMP_COLOR_SELECTOR (scales);
 
   values[GIMP_COLOR_SELECTOR_HUE]        = ROUND (selector->hsv.h * 360.0);
   values[GIMP_COLOR_SELECTOR_SATURATION] = ROUND (selector->hsv.s * 100.0);
@@ -427,9 +395,7 @@ static void
 gimp_color_scales_toggle_update (GtkWidget       *widget,
                                  GimpColorScales *scales)
 {
-  GimpColorSelector *selector;
-
-  selector = GIMP_COLOR_SELECTOR (scales);
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
@@ -450,10 +416,8 @@ static void
 gimp_color_scales_scale_update (GtkAdjustment   *adjustment,
                                 GimpColorScales *scales)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   gint               i;
-
-  selector = GIMP_COLOR_SELECTOR (scales);
 
   for (i = 0; i < 7; i++)
     if (scales->slider_data[i] == GTK_OBJECT (adjustment))
@@ -510,13 +474,11 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
                               GdkEvent        *event,
                               GimpColorScales *scales)
 {
-  GimpColorSelector *selector;
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   const gchar       *hex_color;
   gchar              buffer[8];
   guint              hex_rgb;
   guchar             r, g, b;
-
-  selector = GIMP_COLOR_SELECTOR (scales);
 
   switch (event->type)
     {

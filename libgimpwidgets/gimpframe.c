@@ -90,13 +90,10 @@ gimp_frame_get_type (void)
 static void
 gimp_frame_class_init (GimpFrameClass *klass)
 {
-  GtkWidgetClass *widget_class;
-  GtkFrameClass  *frame_class;
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkFrameClass  *frame_class  = GTK_FRAME_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  widget_class = GTK_WIDGET_CLASS (klass);
-  frame_class  = GTK_FRAME_CLASS (klass);
 
   widget_class->size_request  = gimp_frame_size_request;
   widget_class->size_allocate = gimp_frame_size_allocate;

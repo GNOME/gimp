@@ -1,3 +1,15 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpcolornotebook.c
+	* libgimpwidgets/gimpcolorscale.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimpcolorselection.c
+	* libgimpwidgets/gimpframe.c
+	* libgimpwidgets/gimppickbutton.c
+	* libgimpwidgets/gimpunitmenu.c: some code review and cosmetics.
+
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/*.[ch]: normalized some of brush.c's 

@@ -102,11 +102,8 @@ gimp_pick_button_get_type (void)
 static void
 gimp_pick_button_class_init (GimpPickButtonClass* klass)
 {
-  GtkObjectClass *object_class;
-  GtkButtonClass *button_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
-  button_class = GTK_BUTTON_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

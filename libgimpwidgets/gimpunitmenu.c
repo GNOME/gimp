@@ -98,9 +98,7 @@ gimp_unit_menu_get_type (void)
 static void
 gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -712,10 +710,9 @@ static void
 gimp_unit_menu_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GimpUnitMenu *menu;
+  GimpUnitMenu *menu = data;
   GimpUnit      new_unit;
 
-  menu = data;
   new_unit = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp_unit_menu"));
 
