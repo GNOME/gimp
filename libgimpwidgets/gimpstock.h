@@ -125,7 +125,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_PERSPECTIVE         "gimp-tool-perspective"
 #define GIMP_STOCK_TOOL_POSTERIZE           "gimp-tool-posterize"
 #define GIMP_STOCK_TOOL_RECT_SELECT         "gimp-tool-rect-select"
-#define GIMP_STOCK_TOOL_NEW_RECT_SELECT     "gimp-tool-new-rect-select"
 #define GIMP_STOCK_TOOL_ROTATE              "gimp-tool-rotate"
 #define GIMP_STOCK_TOOL_SCALE               "gimp-tool-scale"
 #define GIMP_STOCK_TOOL_SHEAR               "gimp-tool-shear"

@@ -1,3 +1,13 @@
+2005-01-31  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/stock-tool-new-rect-select-16.png
+	* themes/Default/images/tools/stock-tool-new-rect-select-22.png
+	* libgimpwidgets/gimpstock.[ch]: removed the new icon again;
+	there's no point in adding a stock icon temporarily.
+
+	* app/tools/gimpnewrectselecttool.c: changed accordingly.
+
 2005-01-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpnewrectselecttool.[ch]: new rectangle select tool
@@ -8,8 +18,8 @@
 	* app/tools/gimpselectionoptions.[ch]: set its options
 	
 	* themes/Default/images/tools/stock-tool-new-rect-select-16.png
-	* themes/Default/images/tools/stock-tool-new-rect-select-22.png: toolbox
-	icon
+	* themes/Default/images/tools/stock-tool-new-rect-select-22.png:
+	toolbox icon
 	
 	* libgimpwidgets/gimpstock.[ch]
 	* themes/Default/images/Makefile.am: add the toolbox icon

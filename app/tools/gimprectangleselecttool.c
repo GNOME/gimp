@@ -170,7 +170,7 @@ gimp_new_rect_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Select a Rectangular part of an image"),
                 N_("_New Rect Select"), "<shift>C",
                 NULL, GIMP_HELP_TOOL_RECT_SELECT,
-                GIMP_STOCK_TOOL_NEW_RECT_SELECT,
+                GIMP_STOCK_TOOL_RECT_SELECT,
                 data);
 }
 
@@ -284,8 +284,8 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *gdisp)
 {
-  GimpNewRectSelectTool *rect_select  = GIMP_NEW_RECT_SELECT_TOOL (tool);
-  GimpDrawTool          *draw_tool    = GIMP_DRAW_TOOL (tool);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  GimpDrawTool          *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpSelectionOptions  *options;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
@@ -319,7 +319,7 @@ gimp_new_rect_select_tool_button_release (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *gdisp)
 {
-  GimpNewRectSelectTool  *rect_select    = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
   GimpSelectionOptions  *options;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
@@ -351,7 +351,7 @@ gimp_new_rect_select_tool_motion (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  GimpNewRectSelectTool    *rect_select    = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
   gint             x1, y1, x2, y2;
   gint             curx, cury;
   gint             inc_x, inc_y;
@@ -478,10 +478,10 @@ gimp_new_rect_select_tool_key_press (GimpTool    *tool,
                                      GdkEventKey *kevent,
                                      GimpDisplay *gdisp)
 {
-  GimpNewRectSelectTool    *rect_select    = GIMP_NEW_RECT_SELECT_TOOL (tool);
-  gint                      inc_x, inc_y;
-  gint                      min_x, min_y;
-  gint                      max_x, max_y;
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  gint                   inc_x, inc_y;
+  gint                   min_x, min_y;
+  gint                   max_x, max_y;
 
   if (gdisp != tool->gdisp)
     return FALSE;
@@ -556,8 +556,8 @@ gimp_new_rect_select_tool_oper_update (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *gdisp)
 {
-  GimpNewRectSelectTool *rect_select  = GIMP_NEW_RECT_SELECT_TOOL (tool);
-  GimpDrawTool          *draw_tool    = GIMP_DRAW_TOOL (tool);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  GimpDrawTool          *draw_tool   = GIMP_DRAW_TOOL (tool);
 
   if (tool->gdisp != gdisp)
     return;
@@ -647,10 +647,10 @@ gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
                                          GdkModifierType  state,
                                          GimpDisplay     *gdisp)
 {
-  GimpNewRectSelectTool       *rect_select  = GIMP_NEW_RECT_SELECT_TOOL (tool);
-  GimpSelectionOptions        *options;
-  GimpCursorType               cursor       = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier           modifier     = GIMP_CURSOR_MODIFIER_NONE;
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (tool);
+  GimpSelectionOptions  *options;
+  GimpCursorType         cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier     modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
@@ -683,10 +683,10 @@ gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_new_rect_select_tool_draw (GimpDrawTool *draw)
 {
-  GimpNewRectSelectTool     *rect_select  = GIMP_NEW_RECT_SELECT_TOOL (draw);
-  GimpTool                  *tool         = GIMP_TOOL (draw);
-  GimpDisplayShell          *shell        = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-  GimpCanvas                *canvas       = GIMP_CANVAS (shell->canvas);
+  GimpNewRectSelectTool *rect_select = GIMP_NEW_RECT_SELECT_TOOL (draw);
+  GimpTool              *tool        = GIMP_TOOL (draw);
+  GimpDisplayShell      *shell       = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GimpCanvas            *canvas      = GIMP_CANVAS (shell->canvas);
 
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rect_select->dx1, rect_select->dy1,
@@ -731,8 +731,8 @@ static void
 rect_select_recalc (GimpNewRectSelectTool *rect_select,
                     gboolean      recalc_highlight)
 {
-  GimpTool         *tool    = GIMP_TOOL (rect_select);
-  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  GimpTool         *tool  = GIMP_TOOL (rect_select);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   if (! tool->gdisp)
     return;
@@ -771,7 +771,7 @@ rect_select_recalc (GimpNewRectSelectTool *rect_select,
     {
       if (rect_select->change_aspect_ratio)
         rect_select->aspect_ratio = ((gdouble) (rect_select->x2 - rect_select->x1) /
-                              (gdouble) (rect_select->y2 - rect_select->y1));
+                                     (gdouble) (rect_select->y2 - rect_select->y1));
     }
   else
     {
@@ -983,7 +983,7 @@ rect_select_response (GtkWidget             *widget,
                       gint                   response_id,
                       GimpNewRectSelectTool *rect_select)
 {
-  GimpTool        *tool    = GIMP_TOOL (rect_select);
+  GimpTool *tool = GIMP_TOOL (rect_select);
 
   switch (response_id)
     {
