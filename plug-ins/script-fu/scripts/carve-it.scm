@@ -82,6 +82,7 @@
     (gimp-edit-clear inset-layer)
     (gimp-edit-clear layer1)
     (gimp-selection-none img)
+    (gimp-image-add-layer img layer1 0)
     (copy-layer-carve-it img layer1 bg-image bg-layer)
 
     (gimp-edit-clear inset-layer)
@@ -89,7 +90,6 @@
     (gimp-edit-copy mask-drawable)
     (gimp-image-add-channel img mask 0)
 
-    (gimp-image-add-layer img layer1 0)
     (plug-in-tile 1 img layer1 width height FALSE)
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)

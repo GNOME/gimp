@@ -118,9 +118,9 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
+    (gimp-image-add-layer img layer1 0)
     (copy-layer-crystal img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
-    (gimp-image-add-layer img layer1 0)
     (gimp-layer-scale layer1 width height FALSE)
     (plug-in-gauss-iir 1 img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
@@ -147,9 +147,9 @@
 
    
 
+    (gimp-image-add-layer img bg-layer 2)
     (copy-layer-crystal img bg-layer tile-img tile-layer)
     (gimp-image-delete tile-img)
-    (gimp-image-add-layer img bg-layer 2)
     (set! layer2 (car (gimp-layer-copy bg-layer TRUE)))
     (gimp-image-add-layer img layer2 1)
 

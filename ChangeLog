@@ -1,3 +1,13 @@
+2004-03-13  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/script-fu/scripts/carve-it.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm: Fixed to avoid
+	pasting to a layer that was not added to any image. This was causing
+	the scripts to abort, because gimp-edit-paste is now failing in that
+	case.
+
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpblendoptions.c: override the "gradient_repeat"

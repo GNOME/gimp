@@ -124,9 +124,9 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
+    (gimp-image-add-layer img layer1 0)
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
-    (gimp-image-add-layer img layer1 0)
     (gimp-layer-scale layer1 width height FALSE)
     (plug-in-gauss-iir 1 img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
