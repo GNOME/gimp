@@ -47,8 +47,18 @@
 #define EPSILON            0.0001
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c)+ 0x100, \
-                            ((((t) >> 16) + (t)) >> 16))
+
+/* This version of INT_MULT3 is very fast, but suffers from some
+   slight roundoff errors.  It returns the correct result 99.987%
+   percent of the time */
+#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c)+ 0x7F5B, \
+                            ((((t) >> 7) + (t)) >> 16))
+/*
+  This version of INT_MULT3 always gives the correct result, but runs at
+  approximatly one third the speed. */
+/*  #define INT_MULT3(a,b,c,t) (((a) * (b) * (c)+ 32512) / 65025.0)
+*/
+
 #define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a)-(b), alpha, tmp) + (b))
 
 typedef enum

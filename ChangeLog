@@ -1,3 +1,7 @@
+1999-03-11  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_funcs.c: made the INT_MULT3 macro be more accurate.
+
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
         This is mostly unit stuff and code cleanup
