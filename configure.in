@@ -818,8 +818,8 @@ AC_SUBST(GIMP_THREAD_FLAGS)
 AC_SUBST(GIMP_THREAD_LIBS)
 
 
-AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors (default=no)])
-if test "x$enable_mp" = "xyes"; then
+AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors (default=yes)])
+if test "x$enable_mp" != "xno"; then
   AC_CHECK_LIB(pthread, pthread_attr_init, 
     [AC_DEFINE(ENABLE_MP, 1,
 	       [Define to 1 to enable support for multiple processors.])

@@ -111,16 +111,17 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "${gimp_dir}",
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
-                                    "stingy-memory-use", STINGY_MEMORY_USE_BLURB,
+                                    "stingy-memory-use",
+                                    STINGY_MEMORY_USE_BLURB,
                                     FALSE,
                                     GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
-                                 1, 30, 1,
+                                 1, 16, 2,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,
-                                    0, GIMP_MAX_MEMSIZE, 1 << 27, /* 128MB */
+                                    0, GIMP_MAX_MEMSIZE, 1 << 28, /* 256MB */
                                     GIMP_CONFIG_PARAM_CONFIRM);
 }
 
