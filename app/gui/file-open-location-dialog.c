@@ -32,6 +32,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "file-open-location-dialog.h"
@@ -39,9 +40,14 @@
 #include "gimp-intl.h"
 
 
-static void  file_open_location_response (GtkWidget *dialog,
-                                          gint       response_id,
-                                          Gimp      *gimp);
+static void      file_open_location_response   (GtkWidget          *dialog,
+                                                gint                response_id,
+                                                Gimp               *gimp);
+
+static gboolean  file_open_location_completion (GtkEntryCompletion *completion,
+                                                const gchar        *key,
+                                                GtkTreeIter        *iter,
+                                                gpointer            data);
 
 
 /*  public functions  */
@@ -50,10 +56,11 @@ void
 file_open_location_dialog_show (Gimp      *gimp,
                                 GtkWidget *parent)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *entry;
+  GtkWidget          *dialog;
+  GtkWidget          *vbox;
+  GtkWidget          *label;
+  GtkWidget          *entry;
+  GtkEntryCompletion *completion;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
@@ -84,7 +91,15 @@ file_open_location_dialog_show (Gimp      *gimp,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  entry = gtk_entry_new ();
+  entry = gimp_container_entry_new (gimp->documents, NULL,
+                                    GIMP_PREVIEW_SIZE_SMALL, 1);
+
+  completion = gtk_entry_get_completion (GTK_ENTRY (entry));
+  gtk_entry_completion_set_match_func (completion,
+                                       file_open_location_completion,
+                                       NULL, NULL);
+
+  gtk_widget_set_size_request (entry, 300, -1);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
@@ -113,10 +128,21 @@ file_open_location_response (GtkWidget *dialog,
         {
           GimpImage         *image;
           gchar             *uri;
+          gchar             *filename;
           GError            *error = NULL;
           GimpPDBStatusType  status;
 
-          uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
+          filename = g_filename_from_uri (text, NULL, NULL);
+
+          if (filename)
+            {
+              uri = g_filename_to_uri (filename, NULL, NULL);
+              g_free (filename);
+            }
+          else
+            {
+              uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
+            }
 
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
@@ -139,4 +165,40 @@ file_open_location_response (GtkWidget *dialog,
     }
 
   gtk_widget_destroy (dialog);
+}
+
+static gboolean
+file_open_location_completion (GtkEntryCompletion *completion,
+                               const gchar        *key,
+                               GtkTreeIter        *iter,
+                               gpointer            data)
+{
+  GtkTreeModel *model = gtk_entry_completion_get_model (completion);
+  gchar        *name;
+  gchar        *normalized;
+  gchar        *case_normalized;
+  gboolean      match;
+
+  gtk_tree_model_get (model, iter,
+                      1, &name,
+                      -1);
+
+  normalized = g_utf8_normalize (name, -1, G_NORMALIZE_ALL);
+  case_normalized = g_utf8_casefold (normalized, -1);
+
+  match = (strncmp (key, case_normalized, strlen (key)) == 0);
+
+  if (! match)
+    {
+      const gchar *colon = strchr (case_normalized, ':');
+
+      if (colon && strlen (colon) > 2 && colon[1] == '/' && colon[2] == '/')
+        match = (strncmp (key, colon + 3, strlen (key)) == 0);
+    }
+
+  g_free (normalized);
+  g_free (case_normalized);
+  g_free (name);
+
+  return match;
 }

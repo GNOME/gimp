@@ -41,14 +41,6 @@
   gtk_entry_completion_get_model (gtk_entry_get_completion (GTK_ENTRY (entry)))
 
 
-enum
-{
-  COLUMN_RENDERER,
-  COLUMN_NAME,
-  NUM_COLUMNS
-};
-
-
 static void     gimp_container_entry_class_init   (GimpContainerEntryClass *klass);
 static void     gimp_container_entry_init         (GimpContainerEntry  *view);
 
@@ -151,31 +143,33 @@ gimp_container_entry_class_init (GimpContainerEntryClass *klass)
 static void
 gimp_container_entry_init (GimpContainerEntry *entry)
 {
-  GtkEntryCompletion *comp;
+  GtkEntryCompletion *completion;
   GtkListStore       *store;
   GtkCellRenderer    *cell;
 
-  comp = gtk_entry_completion_new ();
+  completion = gtk_entry_completion_new ();
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_NUM_COLUMNS,
                               GIMP_TYPE_PREVIEW_RENDERER,
                               G_TYPE_STRING);
 
-  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (store));
+  gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  gtk_entry_set_completion (GTK_ENTRY (entry), comp);
-  g_object_unref (comp);
+  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
+  g_object_unref (completion);
 
   /*  FIXME: This can be done better with GTK+ 2.6.  */
 
   cell = gimp_cell_renderer_viewable_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (comp), cell, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (comp), cell,
-                                  "renderer", COLUMN_RENDERER,
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (completion), cell, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (completion), cell,
+                                  "renderer",
+                                  GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
                                   NULL);
 
-  gtk_entry_completion_set_text_column (comp, COLUMN_NAME);
+  gtk_entry_completion_set_text_column (completion,
+                                        GIMP_CONTAINER_ENTRY_COLUMN_NAME);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_container_entry_changed),
@@ -239,13 +233,10 @@ gimp_container_entry_set (GimpContainerEntry *entry,
   GimpContainerView   *view  = GIMP_CONTAINER_VIEW (entry);
   GtkTreeModel        *model = gimp_container_entry_get_model (entry);
   GimpPreviewRenderer *renderer;
-  gchar               *name;
   gint                 preview_size;
   gint                 border_width;
 
   preview_size = gimp_container_view_get_preview_size (view, &border_width);
-
-  name = gimp_viewable_get_description (viewable, NULL);
 
   renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
                                         preview_size, border_width,
@@ -258,12 +249,13 @@ gimp_container_entry_set (GimpContainerEntry *entry,
                     view);
 
   gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                      COLUMN_RENDERER, renderer,
-                      COLUMN_NAME,     name,
+                      GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
+                      renderer,
+                      GIMP_CONTAINER_ENTRY_COLUMN_NAME,
+                      gimp_object_get_name (GIMP_OBJECT (viewable)),
                       -1);
 
   g_object_unref (renderer);
-  g_free (name);
 }
 
 /*  GimpContainerView methods  */
@@ -355,15 +347,10 @@ gimp_container_entry_rename_item (GimpContainerView *view,
   GtkTreeIter  *iter  = insert_data;
 
   if (iter)
-    {
-      gchar *name = gimp_viewable_get_description (viewable, NULL);
-
-      gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                          COLUMN_NAME, name,
-                          -1);
-
-      g_free (name);
-    }
+    gtk_list_store_set (GTK_LIST_STORE (model), iter,
+                        GIMP_CONTAINER_ENTRY_COLUMN_NAME,
+                        gimp_object_get_name (GIMP_OBJECT (viewable)),
+                        -1);
 }
 
 static gboolean
@@ -417,7 +404,7 @@ gimp_container_entry_set_preview_size (GimpContainerView *view)
       GimpPreviewRenderer *renderer;
 
       gtk_tree_model_get (model, &iter,
-                          COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
                           -1);
 
       gimp_preview_renderer_set_size (renderer, preview_size, border_width);

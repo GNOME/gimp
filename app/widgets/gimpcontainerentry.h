@@ -26,6 +26,14 @@
 #include <gtk/gtkentry.h>
 
 
+enum
+{
+  GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
+  GIMP_CONTAINER_ENTRY_COLUMN_NAME,
+  GIMP_CONTAINER_ENTRY_NUM_COLUMNS
+};
+
+
 #define GIMP_TYPE_CONTAINER_ENTRY            (gimp_container_entry_get_type ())
 #define GIMP_CONTAINER_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_ENTRY, GimpContainerEntry))
 #define GIMP_CONTAINER_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_ENTRY, GimpContainerEntryClass))
