@@ -134,7 +134,7 @@ gap_db_browser_dialog(char *title_txt,
 		      searchhbox, FALSE, TRUE, 0);
   gtk_widget_show(searchhbox);
 
-  label = gtk_label_new( _("Search :"));
+  label = gtk_label_new( _("Search:"));
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      label, TRUE, TRUE, 0);
@@ -172,7 +172,7 @@ gap_db_browser_dialog(char *title_txt,
     gtk_widget_show (button);
   }
 
-  dbbrowser->name_button = gtk_button_new_with_label ( _("Search by name"));
+  dbbrowser->name_button = gtk_button_new_with_label ( _("Search by Name"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->name_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->name_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -180,7 +180,7 @@ gap_db_browser_dialog(char *title_txt,
 		    dbbrowser->name_button , TRUE, TRUE, 0);
   gtk_widget_show(dbbrowser->name_button);
 
-  dbbrowser->blurb_button = gtk_button_new_with_label ( _("Search by blurb"));
+  dbbrowser->blurb_button = gtk_button_new_with_label ( _("Search by Blurb"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->blurb_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->blurb_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -322,7 +322,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the name */
 
-  label = gtk_label_new( _("Name :"));
+  label = gtk_label_new( _("Name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 6);
@@ -339,7 +339,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the description */
 
-  label = gtk_label_new( _("Blurb :"));
+  label = gtk_label_new( _("Blurb:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 0);
@@ -361,7 +361,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* in parameters */
   if (dbbrowser->selected_nparams) 
     {
-      label = gtk_label_new( _("In :"));
+      label = gtk_label_new( _("In:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 	   0, 1, row, row+(dbbrowser->selected_nparams), 
@@ -407,7 +407,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* out parameters */
   if (dbbrowser->selected_nreturn_vals)
     {
-      label = gtk_label_new( _("Out :"));
+      label = gtk_label_new( _("Out:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+(dbbrowser->selected_nreturn_vals), 
@@ -456,7 +456,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* show the help */
   if ((dbbrowser->selected_proc_help) && (strlen(dbbrowser->selected_proc_help) > 1))
     {
-      label = gtk_label_new( _("Help :"));
+      label = gtk_label_new( _("Help:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+1, 
@@ -494,7 +494,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the author & the copyright */
 
-  label = gtk_label_new( _("Author :"));
+  label = gtk_label_new( _("Author:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -509,7 +509,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
   
-  label = gtk_label_new( _("Date :"));
+  label = gtk_label_new( _("Date:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -524,7 +524,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
 
-  label = gtk_label_new( _("Copyright :"));
+  label = gtk_label_new( _("Copyright:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 

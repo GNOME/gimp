@@ -1,8 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -16,7 +11,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "La modalità console Script-Fu permette solamente invocazioni interattive"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
@@ -44,28 +39,27 @@ msgstr "Naviga..."
 
 #: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
-msgstr ""
+msgstr "Impossibile aprire un pipe SIOD di uscita"
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
+msgstr "Impossibile aprire un flusso sul pipe SIOD di uscita"
 
 #: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
+msgstr "La modalità di valutazione Script-Fu permette invocazioni non interattive"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1207
 #: plug-ins/script-fu/script-fu-scripts.c:1209
-#, fuzzy
 msgid "/Script-Fu/"
-msgstr "Console Script-Fu"
+msgstr "/Script-Fu/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #: plug-ins/script-fu/script-fu-scripts.c:1211
-#, fuzzy, c-format
+#, c-format
 msgid "Script-Fu: %s"
-msgstr "Console Script-Fu"
+msgstr "Script-Fu: %s"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1236
@@ -73,13 +67,12 @@ msgid "Script Arguments"
 msgstr "Argomenti dello Script"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1300
-#, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-fu Selezione File"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script Toggle"
-msgstr ""
+msgstr "Selettore Script"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1368
 msgid "Script-Fu File Selection"
@@ -99,7 +92,7 @@ msgstr "Script-fu Selezione Pennello"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1440
 msgid "Reset to Defaults"
-msgstr ""
+msgstr "Valori Base"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
@@ -118,33 +111,31 @@ msgstr "Cancella"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1594
 msgid "NOT SET"
-msgstr ""
+msgstr "NON CONFIGURATO"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1665
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
+"Il carattere che avete scelto è invalido.\n"
+"Si prega di controllare le vostre configurazioni.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1932
-#, fuzzy
 msgid "Author:"
 msgstr "Autore :"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1938
-#, fuzzy
 msgid "Copyright:"
-msgstr "Copyright :"
+msgstr "Copyright:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1944
-#, fuzzy
 msgid "Date:"
-msgstr "Data :"
+msgstr "Data:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1952
-#, fuzzy
 msgid "Image Types:"
-msgstr "Tipi di Immagini: "
+msgstr "Tipi di Immagini:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2101
 msgid "Script-Fu Font Selection"
@@ -165,19 +156,17 @@ msgid "Server Logfile: "
 msgstr "Log Server: "
 
 #: plug-ins/script-fu/script-fu.c:165
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "Console Script-Fu"
+msgstr "<Toolbox>/Xtns/Script-Fu/Console..."
 
 #: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Ricarica script disponibili"
 
 #: plug-ins/script-fu/script-fu.c:1012
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "Console Script-Fu"
+msgstr "<Toolbox>/Xtns/Script-Fu/Aggiorna"

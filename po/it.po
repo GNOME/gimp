@@ -872,7 +872,6 @@ msgid "Crop & Resize"
 msgstr "Taglierina"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Solo Livello Corrente"
 
@@ -1438,25 +1437,31 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Formato pennello #%d in \"%s\" sconosciuto\n"
 
 #: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
-msgstr "Impossibile aprire pennello pixmap."
+msgstr ""
+"Attenzione: Non è possibile caricare il pennello\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
-msgstr "Impossibile aprire pennello pixmap."
+msgstr ""
+"Attenzione: Non è possibile caricare il pennello pixmap\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:215
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
-msgstr "Impossibile aprire pennello pixmap."
+msgstr ""
+"Attenzione: Non è possibile caricare il pixmap pipe\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:308
 msgid "Brush pipes should have at least one brush."
@@ -1653,7 +1658,6 @@ msgid "Message repeated once"
 msgstr "Messaggio ripetuto una volta"
 
 #: app/gimpui.c:110
-#, fuzzy
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -1661,7 +1665,7 @@ msgid ""
 msgstr ""
 "ATTENZIONE:\n"
 "Troppe finestre di dialogo aperte.\n"
-"I messaggi sono rediretti sullo stderr.\n"
+"I messaggi sono rediretti sullo stderr."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -2332,9 +2336,9 @@ msgstr "%d x &d pixel"
 
 #. image resolution
 #: app/info_window.c:520
-#, fuzzy, c-format
+#, c-format
 msgid "%g x %g dpi"
-msgstr "%d x &d pixel"
+msgstr "%g x %g dpi"
 
 #: app/info_window.c:532
 msgid "RGB Color"
@@ -2717,7 +2721,7 @@ msgstr "Ignora"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/install.c:295 app/install.c:453
 msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #. this is a font, provide only one single font definition
 #: app/install.c:298
@@ -2727,7 +2731,7 @@ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/install.c:301
 msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
 
 #: app/install.c:423
 msgid "Installation Log"
@@ -3105,9 +3109,8 @@ msgid "Clipped to bottom layer"
 msgstr "Ridimensiona al livello base"
 
 #: app/lc_dialog.c:99
-#, fuzzy
 msgid "Layers, Channels & Paths"
-msgstr "Livelli e Canali"
+msgstr "Livelli, Canali e Tracciati"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3164,14 +3167,12 @@ msgid "Allow Window Resizing"
 msgstr "Concedi Ridimensionamento della Finestra"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Zoom"
+msgstr "Zoom Avanti"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Zoom"
+msgstr "Zoom Indietro"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3293,9 +3294,8 @@ msgstr "°"
 
 #. <Toolbox>/File
 #: app/menus.c:82
-#, fuzzy
 msgid "/_File"
-msgstr "/File"
+msgstr "/_File"
 
 #: app/menus.c:84 app/menus.c:191
 msgid "/File/New..."
@@ -3318,9 +3318,8 @@ msgid "/File/Dialogs"
 msgstr "/File/Finestre"
 
 #: app/menus.c:107
-#, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/File/Finestre/Livelli e Canali..."
+msgstr "/File/Finestre/Livelli, Canali e Tracciati..."
 
 #: app/menus.c:109
 msgid "/File/Dialogs/Tool Options..."
@@ -3372,9 +3371,8 @@ msgstr "/File/Esci"
 
 #. <Toolbox>/Xtns
 #: app/menus.c:153
-#, fuzzy
 msgid "/_Xtns"
-msgstr "/Xtns"
+msgstr "/_Xtns"
 
 #: app/menus.c:155
 msgid "/Xtns/Module Browser..."
@@ -3382,9 +3380,8 @@ msgstr "/Xtns/Gestione Moduli..."
 
 #. <Toolbox>/Help
 #: app/menus.c:163
-#, fuzzy
 msgid "/_Help"
-msgstr "/Aiuto"
+msgstr "/_Aiuto"
 
 #: app/menus.c:165
 msgid "/Help/Help..."
@@ -3594,7 +3591,7 @@ msgstr "/Visualizza/Punto per Punto"
 
 #: app/menus.c:325
 msgid "/View/Info Window..."
-msgstr "/Visualizza/Navigatore..."
+msgstr "/Visualizza/Finestra Informazioni..."
 
 #: app/menus.c:327
 msgid "/View/Nav. Window..."
@@ -3716,9 +3713,8 @@ msgid "/Layers"
 msgstr "/Livelli"
 
 #: app/menus.c:433
-#, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Livelli/Livelli e Canali..."
+msgstr "/Livelli/Livelli, Canali e Tracciati..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:438
@@ -3817,9 +3813,8 @@ msgid "/Dialogs"
 msgstr "/Finestre"
 
 #: app/menus.c:512
-#, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Finestre/Livelli e Canali..."
+msgstr "/Finestre/Livelli, Canali e Tracciati..."
 
 #: app/menus.c:514
 msgid "/Dialogs/Tool Options..."
@@ -4021,14 +4016,12 @@ msgid "/Add Layer Mask..."
 msgstr "/Aggiungi Livello Maschera..."
 
 #: app/menus.c:693
-#, fuzzy
 msgid "/Apply Layer Mask"
-msgstr "/Applica Livello Maschera..."
+msgstr "/Applica Livello Maschera"
 
 #: app/menus.c:695
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Elimina Livello"
+msgstr "/Elimina Livello Maschera"
 
 #: app/menus.c:697
 msgid "/Mask to Selection"
@@ -4599,9 +4592,9 @@ msgid "Extensions"
 msgstr "Estensioni"
 
 #: app/plug_in.c:775
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "impossibile trovare plug-in: \"%s\""
+msgstr "Impossibile trovare plug-in: \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -4836,7 +4829,7 @@ msgstr "Caratteristiche Finestre di Dialogo"
 
 #: app/preferences_dialog.c:1858
 msgid "Navigation Window per Display"
-msgstr "Navigatore per Finestra"
+msgstr "Finestra Navigatore per Display"
 
 #: app/preferences_dialog.c:1867
 msgid "Info Window Follows Mouse"
@@ -5282,10 +5275,13 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"La dimensione immagine scelta\n"
+"ridurrà alcuni livelli.\n"
+"E' questo quello che desiderate?"
 
 #: app/resize.c:1338
 msgid "Layer Too Small"
-msgstr ""
+msgstr "Livello Troppo Piccolo"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5345,9 +5341,9 @@ msgid "Use Dynamic Text"
 msgstr "Utilizza GDynText"
 
 #: app/text_tool.c:603
-#, fuzzy, c-format
+#, c-format
 msgid "Font '%s' not found."
-msgstr "Carattere '%s' non trovato.%s"
+msgstr "Carattere '%s' non trovato."
 
 #: app/text_tool.c:622
 #, c-format
@@ -6651,7 +6647,7 @@ msgstr "Storico Colore"
 #~ msgstr "/Ridimensiona all'Immagine"
 
 #~ msgid "No image: Window Navigation"
-#~ msgstr "Nessuna immagine: Navigatore"
+#~ msgstr "Nessuna immagine: Finestra Navigatore"
 
 #~ msgid ""
 #~ "# GIMP sessionrc\n"

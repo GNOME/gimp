@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
-"PO-Revision-Date: 2000-02-27 12:48+0100\n"
+"Project-Id-Version: GIMP 1.1.18\n"
+"POT-Creation-Date: 2000-03-06 10:03+0100\n"
+"PO-Revision-Date: 2000-03-06 10:08+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -330,7 +330,7 @@ msgid "Close"
 msgstr "Schließen"
 
 #. the feather radius scale
-#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:200
+#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:199
 msgid "Radius:"
 msgstr "Radius:"
 
@@ -360,11 +360,11 @@ msgstr "Auffrischen"
 msgid "No Brushes available"
 msgstr "Keine Pinsel verfügbar"
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:504
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:528
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -398,7 +398,7 @@ msgstr "Dieser Pinsel kann nicht bearbeitet werden."
 msgid "Sorry, this brush can't be deleted."
 msgstr "Dieser Pinsel kann nicht gelöscht werden."
 
-#: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:274
+#: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:273
 msgid "Sample Merged"
 msgstr "Vereinigung abtasten"
 
@@ -876,7 +876,6 @@ msgid "Crop & Resize"
 msgstr "Zuschneiden und Größe verändern"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Nur die aktive Ebene"
 
@@ -918,13 +917,13 @@ msgstr "Ursprung X:"
 
 #. the pixel size labels
 #: app/crop.c:1076 app/file_new_dialog.c:389 app/file_new_dialog.c:407
-#: app/tool_options.c:334
+#: app/tool_options.c:333
 msgid "Width:"
 msgstr "Breite:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
 #: app/layers_dialog.c:3363 app/resize.c:240 app/resize.c:265 app/resize.c:510
-#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:350
+#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:349
 msgid "Height:"
 msgstr "Höhe:"
 
@@ -1684,7 +1683,7 @@ msgstr "GIMP Meldung"
 msgid "pixel"
 msgstr "Pixel"
 
-#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
+#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:511
 msgid "pixels"
 msgstr "Pixel"
 
@@ -3196,14 +3195,12 @@ msgid "Allow Window Resizing"
 msgstr "Anpassen der Fenster"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Hinein- und herauszoomen"
+msgstr "Hineinzoomen"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Hinein- und herauszoomen"
+msgstr "Herauszoomen"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -4044,14 +4041,12 @@ msgid "/Add Layer Mask..."
 msgstr "/Ebenenmaske hinzufügen..."
 
 #: app/menus.c:693
-#, fuzzy
 msgid "/Apply Layer Mask"
 msgstr "/Ebenenmaske anwenden..."
 
 #: app/menus.c:695
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Ebene löschen"
+msgstr "/Ebenenmaske löschen"
 
 #: app/menus.c:697
 msgid "/Mask to Selection"
@@ -4249,7 +4244,7 @@ msgstr "Status: "
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
-#: app/move.c:456
+#: app/move.c:458
 msgid "Move Tool"
 msgstr "Verschieben"
 
@@ -4263,7 +4258,7 @@ msgstr "Navigation: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigation: Kein Bild"
 
-#: app/paint_core.c:717
+#: app/paint_core.c:735
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
@@ -5363,7 +5358,7 @@ msgstr "Scherung..."
 msgid "Text Tool"
 msgstr "Textwerkzeug"
 
-#: app/text_tool.c:162 app/tool_options.c:233
+#: app/text_tool.c:162 app/tool_options.c:232
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -5442,101 +5437,101 @@ msgstr ""
 "gimp_tips.de.txt existieren.\n"
 "Überprüfen Sie Ihre Installation."
 
-#: app/tool_options.c:122
+#: app/tool_options.c:121
 msgid "This tool has no options."
 msgstr ""
 "Dieses Werkzeug hat\n"
 "keine Einstellungen"
 
-#: app/tool_options.c:146
+#: app/tool_options.c:145
 msgid "Rectangular Selection"
 msgstr "Rechteckige Auswahl"
 
-#: app/tool_options.c:148
+#: app/tool_options.c:147
 msgid "Elliptical Selection"
 msgstr "Elliptische Auswahl"
 
-#: app/tool_options.c:150
+#: app/tool_options.c:149
 msgid "Free-Hand Selection"
 msgstr "Freihand Auswahl"
 
-#: app/tool_options.c:152
+#: app/tool_options.c:151
 msgid "Fuzzy Selection"
 msgstr "Unscharfe Auswahl"
 
-#: app/tool_options.c:154
+#: app/tool_options.c:153
 msgid "Bezier Selection"
 msgstr "Bezierauswahl"
 
-#: app/tool_options.c:156 app/tools.c:178
+#: app/tool_options.c:155 app/tools.c:178
 msgid "Intelligent Scissors"
 msgstr "Intelligente Schere"
 
-#: app/tool_options.c:158
+#: app/tool_options.c:157
 msgid "By-Color Selection"
 msgstr "Auswahl nach Farbe"
 
-#: app/tool_options.c:189
+#: app/tool_options.c:188
 msgid "Feather"
 msgstr "Ausblenden"
 
-#: app/tool_options.c:297
+#: app/tool_options.c:296
 msgid "Fixed Size / Aspect Ratio"
 msgstr "Feste Größe / Seitenverhältnis"
 
-#: app/tool_options.c:363
+#: app/tool_options.c:362
 msgid "Unit:"
 msgstr "Einheit:"
 
-#: app/tool_options.c:448 app/tools.c:376
+#: app/tool_options.c:447 app/tools.c:376
 msgid "Bucket Fill"
 msgstr "Füllen"
 
-#: app/tool_options.c:450
+#: app/tool_options.c:449
 msgid "Blend Tool"
 msgstr "Farbverlauf"
 
-#: app/tool_options.c:452 app/tools.c:412
+#: app/tool_options.c:451 app/tools.c:412
 msgid "Pencil"
 msgstr "Stift"
 
-#: app/tool_options.c:454 app/tools.c:430
+#: app/tool_options.c:453 app/tools.c:430
 msgid "Paintbrush"
 msgstr "Pinsel"
 
-#: app/tool_options.c:456 app/tools.c:448
+#: app/tool_options.c:455 app/tools.c:448
 msgid "Eraser"
 msgstr "Radierer"
 
-#: app/tool_options.c:458 app/tools.c:466
+#: app/tool_options.c:457 app/tools.c:466
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: app/tool_options.c:460
+#: app/tool_options.c:459
 msgid "Clone Tool"
 msgstr "Klonen"
 
-#: app/tool_options.c:462
+#: app/tool_options.c:461
 msgid "Convolver"
 msgstr "Verknüpfen"
 
-#: app/tool_options.c:464
+#: app/tool_options.c:463
 msgid "Ink Tool"
 msgstr "Tinte"
 
-#: app/tool_options.c:466 app/tools.c:538 app/tools.c:544
+#: app/tool_options.c:465 app/tools.c:538 app/tools.c:544
 msgid "Dodge or Burn"
 msgstr "Abwedeln oder Nachbelichten"
 
-#: app/tool_options.c:468
+#: app/tool_options.c:467
 msgid "Smudge Tool"
 msgstr "Verschmieren"
 
-#: app/tool_options.c:583
+#: app/tool_options.c:582
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: app/tool_options.c:689
+#: app/tool_options.c:688
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
 
@@ -5637,9 +5632,8 @@ msgid "Magnify"
 msgstr "Vergrößern"
 
 #: app/tools.c:215
-#, fuzzy
 msgid "/Tools/Magnify"
-msgstr "Vergrößern"
+msgstr "/Tools/Vergrößern"
 
 #: app/tools.c:220
 msgid "Zoom in & out"

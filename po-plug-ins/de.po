@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
-"PO-Revision-Date: 2000-02-27 18:14+0100\n"
+"Project-Id-Version: GIMP 1.1.18\n"
+"POT-Creation-Date: 2000-03-06 10:31+0100\n"
+"PO-Revision-Date: 2000-03-06 10:40+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Über"
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1134
+#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1144
 #: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
 #: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
 #: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
@@ -175,7 +175,7 @@ msgstr "OK"
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:884 plug-ins/common/xbm.c:1136
+#: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
 #: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
@@ -1095,7 +1095,7 @@ msgstr "X-Koordinate der Lichtquelle im XYZ-Raum"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
+#: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1572
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
@@ -1449,7 +1449,7 @@ msgstr ""
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:665 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3238
@@ -1498,7 +1498,7 @@ msgstr "%s: fehlerhafte Palette\n"
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
-#: plug-ins/common/xbm.c:801 plug-ins/faxg3/faxg3.c:443
+#: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
@@ -1524,7 +1524,7 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:949
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
@@ -2752,7 +2752,7 @@ msgid "Prefixed Name:"
 msgstr "Name mit Prefix:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1186
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1196
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -4905,46 +4905,43 @@ msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "<Toolbox>/Xtns/Plugin Details..."
 
 #: plug-ins/common/plugindetails.c:213
-#, fuzzy
 msgid "Details <<"
-msgstr " Details <<< "
+msgstr "Details <<"
 
 #: plug-ins/common/plugindetails.c:224 plug-ins/common/plugindetails.c:1109
-#, fuzzy
 msgid "Details >>"
-msgstr " Details >>> "
+msgstr "Details >>"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:312
-#, fuzzy, c-format
-msgid " Number of Plugin Interfaces: %d"
-msgstr "Anzahl der Plugin Interfaces: %d"
+#, c-format
+msgid "Number of Plugin Interfaces: %d"
+msgstr "Anzahl der Plugin-Interfaces: %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:330
-#, fuzzy
 msgid "Menu Path:"
-msgstr "MenuPfad"
+msgstr "MenuPfad:"
 
 #. show the name
 #: plug-ins/common/plugindetails.c:351
 #: plug-ins/dbbrowser/dbbrowser_utils.c:342
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name:"
-msgstr "Name :"
+msgstr "Name:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:373
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
-msgstr "Beschreibung: "
+msgstr "Beschreibung:"
 
 #: plug-ins/common/plugindetails.c:395
 #: plug-ins/dbbrowser/dbbrowser_utils.c:477
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:459
 msgid "Help:"
-msgstr "Hilfe :"
+msgstr "Hilfe:"
 
 #. show the type
 #: plug-ins/common/plugindetails.c:439 plug-ins/common/spheredesigner.c:2361
@@ -4953,13 +4950,13 @@ msgid "Type:"
 msgstr "Typ:"
 
 #: plug-ins/common/plugindetails.c:995
-#, fuzzy
 msgid "Plugin Descriptions"
 msgstr "Plugin Beschreibungen"
 
 #: plug-ins/common/plugindetails.c:1000
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #: plug-ins/dbbrowser/dbbrowser_utils.c:170
+#: plug-ins/gap/gap_dbbrowser_utils.c:175
 msgid "Search by Name"
 msgstr "Nach Name suchen"
 
@@ -4981,7 +4978,6 @@ msgid "Image Types"
 msgstr "Bildtypen:"
 
 #: plug-ins/common/plugindetails.c:1057
-#, fuzzy
 msgid "List View"
 msgstr "Listenansicht"
 
@@ -4991,15 +4987,14 @@ msgid "Menu Path/Name"
 msgstr "Menupfad/Name"
 
 #: plug-ins/common/plugindetails.c:1076
-#, fuzzy
 msgid "Tree View"
 msgstr "Baumansicht"
 
 #: plug-ins/common/plugindetails.c:1098
 #: plug-ins/dbbrowser/dbbrowser_utils.c:224
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
-msgstr "Suchen :"
+msgstr "Suchen:"
 
 #: plug-ins/common/png.c:395
 #, c-format
@@ -6206,59 +6201,52 @@ msgid "Tiler..."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:71
-#, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/DB Browser..."
+msgstr "<Toolbox>/Xtns/Einheiten-Editor..."
 
 #: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
-#, fuzzy
 msgid "New Unit"
-msgstr "Einheit"
+msgstr "Neue Einheit"
 
 #: plug-ins/common/uniteditor.c:193
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: plug-ins/common/uniteditor.c:205
-#, fuzzy
 msgid "Factor:"
-msgstr "Exponenten-Faktor (P):"
+msgstr "Faktor:"
 
 #: plug-ins/common/uniteditor.c:216
-#, fuzzy
 msgid "Digits:"
-msgstr "Divisor:"
+msgstr "Stellen:"
 
 #: plug-ins/common/uniteditor.c:229
 msgid "Symbol:"
-msgstr ""
+msgstr "Symbol:"
 
 #: plug-ins/common/uniteditor.c:242
-#, fuzzy
 msgid "Abbreviation:"
-msgstr "Breitengrad (Elevation):"
+msgstr "Abkürzung:"
 
 #: plug-ins/common/uniteditor.c:255
-#, fuzzy
 msgid "Singular:"
-msgstr "Spiegel:"
+msgstr "Singular:"
 
 #: plug-ins/common/uniteditor.c:268
 msgid "Plural:"
-msgstr ""
+msgstr "Plural:"
 
 #: plug-ins/common/uniteditor.c:305
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "Einheitenfaktor darf nicht 0 sein."
 
 #: plug-ins/common/uniteditor.c:315
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "Alle Textfelder müssen Werte enthalten."
 
 #: plug-ins/common/uniteditor.c:524
-#, fuzzy
 msgid "Unit Editor"
-msgstr "Grössen-Map Editor"
+msgstr "Einheiten-Editor"
 
 #: plug-ins/common/uniteditor.c:529 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
@@ -6305,49 +6293,44 @@ msgid "The unit's plural form."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:575
-#, fuzzy
 msgid "Saved"
-msgstr "Sichern"
+msgstr "Gesichert"
 
 #: plug-ins/common/uniteditor.c:576
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:577
-#, fuzzy
 msgid "Factor"
-msgstr "Sektor"
+msgstr "Faktor"
 
 #: plug-ins/common/uniteditor.c:578
-#, fuzzy
 msgid "Digits"
-msgstr "Glanzlichter"
+msgstr "Stellen"
 
 #: plug-ins/common/uniteditor.c:579
 msgid "Symbol"
-msgstr ""
+msgstr "Symbol"
 
 #: plug-ins/common/uniteditor.c:580
 msgid "Abbr."
-msgstr ""
+msgstr "Abk."
 
 #: plug-ins/common/uniteditor.c:581
-#, fuzzy
 msgid "Singular"
-msgstr "Sinus"
+msgstr "Singular"
 
 #: plug-ins/common/uniteditor.c:582
 msgid "Plural"
-msgstr ""
+msgstr "Plural"
 
 #: plug-ins/common/uniteditor.c:636
 msgid "Create a new unit from scratch."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:638
-#, fuzzy
 msgid "Duplicate Unit"
-msgstr "Frames duplizieren"
+msgstr "Einheit duplizieren"
 
 #: plug-ins/common/uniteditor.c:645
 msgid "Create a new unit with the currently seleted unit as template."
@@ -6358,19 +6341,16 @@ msgid "Don't Save Unit"
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:655
-#, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "Löscht das ausgewählte Fraktal"
+msgstr ""
 
 #: plug-ins/common/uniteditor.c:660
-#, fuzzy
 msgid "Save Unit"
-msgstr "Speichere Punkte"
+msgstr "Einheit sichern"
 
 #: plug-ins/common/uniteditor.c:667
-#, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "Löscht das ausgewählte Fraktal"
+msgstr "Sichere die ausgewählte Einheit, bevor Gimp beendet wird."
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -6866,33 +6846,33 @@ msgstr ""
 msgid "Created with The GIMP"
 msgstr ""
 
-#: plug-ins/common/xbm.c:661
+#: plug-ins/common/xbm.c:671
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: kann \"%s\" nicht öffnen\n"
 
-#: plug-ins/common/xbm.c:744
+#: plug-ins/common/xbm.c:754
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: Kann Header nicht lesen (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:750
+#: plug-ins/common/xbm.c:760
 msgid "XBM: no image width specified\n"
 msgstr "XBM: Keine Bild-Breite angegeben\n"
 
-#: plug-ins/common/xbm.c:756
+#: plug-ins/common/xbm.c:766
 msgid "XBM: no image height specified\n"
 msgstr "XBM: Keine Bild-Höhe angegeben\n"
 
-#: plug-ins/common/xbm.c:762
+#: plug-ins/common/xbm.c:772
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: Kein Bild-Datentyp angegeben.\n"
 
-#: plug-ins/common/xbm.c:879
+#: plug-ins/common/xbm.c:889
 msgid "XBM Warning"
 msgstr "XBM Warnung"
 
-#: plug-ins/common/xbm.c:900
+#: plug-ins/common/xbm.c:910
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6906,38 +6886,37 @@ msgstr ""
 "Schwarz-Weiss (1bit) indiziertes\n"
 "Bild und versuchen Sie es nochmal."
 
-#: plug-ins/common/xbm.c:971
+#: plug-ins/common/xbm.c:981
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: Kann \"%s\" nicht erstellen\n"
 
-#: plug-ins/common/xbm.c:1129
+#: plug-ins/common/xbm.c:1139
 msgid "Save as XBM"
 msgstr "Als XBM speichern"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1146
+#: plug-ins/common/xbm.c:1156
 msgid "XBM Options"
 msgstr "XBM Einstellungen"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1157
+#: plug-ins/common/xbm.c:1167
 msgid "X10 Format Bitmap"
 msgstr "X10-Format Bitmap"
 
-#: plug-ins/common/xbm.c:1175
+#: plug-ins/common/xbm.c:1185
 msgid "Identifier Prefix:"
 msgstr "Variable ohne Erweiterung:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1193
+#: plug-ins/common/xbm.c:1203
 msgid "Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1217
-#, fuzzy
+#: plug-ins/common/xbm.c:1227
 msgid "Hot Spot X:"
-msgstr "Rotation X:"
+msgstr "Hot Spot X:"
 
 #: plug-ins/common/xpm.c:794
 msgid "Save as XPM"
@@ -7016,43 +6995,41 @@ msgstr "<Toolbox>/Xtns/DB Browser..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:146
 #: plug-ins/dbbrowser/dbbrowser_utils.c:165
-#, fuzzy
 msgid "DB Browser (init...)"
-msgstr "DB Browser (Init)"
+msgstr "DB Browser (Initialisierung...)"
 
-# TODO
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by Blurb"
-msgstr "Nach Blurb suchen"
+msgstr "Suchen nach Beschreibung"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:380
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In:"
-msgstr "Eingabe :"
+msgstr "Eingabe:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:427
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out:"
-msgstr "Ausgabe :"
+msgstr "Ausgabe:"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:497 plug-ins/imagemap/imap_settings.c:89
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:530
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:512
 msgid "Date:"
-msgstr "Datum :"
+msgstr "Datum:"
 
 # Urheberrecht?
 #: plug-ins/dbbrowser/dbbrowser_utils.c:545
-#, fuzzy
+#: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright:"
-msgstr "Copyright :"
+msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:640
 msgid "DB Browser (by name - please wait)"
@@ -7408,58 +7385,9 @@ msgstr "GAP-Animation Filtern"
 msgid "Animated Filter apply (init)"
 msgstr "Animation Filtern (init)"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:137
-msgid "Search :"
-msgstr "Suchen :"
-
 #: plug-ins/gap/gap_dbbrowser_utils.c:166
 msgid "Gen Code by name"
 msgstr "Code nach Namen generieren"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:175
-msgid "Search by name"
-msgstr "Nach Name suchen"
-
-# TODO
-#: plug-ins/gap/gap_dbbrowser_utils.c:183
-msgid "Search by blurb"
-msgstr "Nach Blurb suchen"
-
-#. show the name
-#: plug-ins/gap/gap_dbbrowser_utils.c:325
-msgid "Name :"
-msgstr "Name :"
-
-#. show the description
-#: plug-ins/gap/gap_dbbrowser_utils.c:342
-msgid "Blurb :"
-msgstr "Beschreibung: "
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:364
-msgid "In :"
-msgstr "Eingabe :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:410
-msgid "Out :"
-msgstr "Ausgabe :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:459
-msgid "Help :"
-msgstr "Hilfe :"
-
-#. show the author & the copyright
-#: plug-ins/gap/gap_dbbrowser_utils.c:497
-msgid "Author :"
-msgstr "Author :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:512
-msgid "Date :"
-msgstr "Datum :"
-
-# Urheberrecht?
-#: plug-ins/gap/gap_dbbrowser_utils.c:527
-msgid "Copyright :"
-msgstr "Copyright :"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:666
 msgid "Animated Filter apply (by name - please wait)"
@@ -7940,9 +7868,9 @@ msgstr "Speichere"
 #: plug-ins/gap/gap_lib.c:1677 plug-ins/gap/gap_lib.c:1684
 #: plug-ins/gap/gap_lib.c:1691 plug-ins/gap/gap_lib.c:1774
 #: plug-ins/gap/gap_lib.c:1796
-#, fuzzy, c-format
+#, c-format
 msgid "Error: could not rename frame %ld to %ld\n"
-msgstr "Fehler: konnte \"%s\" nicht öffnen."
+msgstr "Fehler: Konnte Frame %ld nicht in %ld umbenennen.\n"
 
 #: plug-ins/gap/gap_lib.c:1586
 msgid "Duplicating frames .."
@@ -8719,9 +8647,8 @@ msgstr ""
 # TODO context ?
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:1735
-#, fuzzy
 msgid "Show Path"
-msgstr "Bewegungs Pfad"
+msgstr "Zeige Pfad"
 
 #: plug-ins/gap/gap_mov_dialog.c:1741
 msgid ""
@@ -12492,9 +12419,8 @@ msgid "Print"
 msgstr "Drucken"
 
 #: plug-ins/print/print.c:841
-#, fuzzy
 msgid "Center Image"
-msgstr "Ganzes Bild"
+msgstr "Bild zentrieren"
 
 #: plug-ins/print/print.c:889
 msgid "Printer Settings"
@@ -13008,6 +12934,40 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
+
+#~ msgid "Search :"
+#~ msgstr "Suchen :"
+
+#~ msgid "Search by name"
+#~ msgstr "Suchen nach Name"
+
+#~ msgid "Search by blurb"
+#~ msgstr "Suchen nach Beschreibung"
+
+#~ msgid "Name :"
+#~ msgstr "Name :"
+
+#~ msgid "Blurb :"
+#~ msgstr "Beschreibung: "
+
+#~ msgid "In :"
+#~ msgstr "Eingabe :"
+
+#~ msgid "Out :"
+#~ msgstr "Ausgabe :"
+
+#~ msgid "Help :"
+#~ msgstr "Hilfe :"
+
+#~ msgid "Author :"
+#~ msgstr "Author :"
+
+#~ msgid "Date :"
+#~ msgstr "Datum :"
+
+# Urheberrecht?
+#~ msgid "Copyright :"
+#~ msgstr "Copyright :"
 
 #~ msgid "Menu path :"
 #~ msgstr "Menupfad :"

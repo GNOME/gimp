@@ -309,7 +309,7 @@ procedure_general_select_callback (PDesc *pdesc,
 
   /* Number of plugins */
 
-  str = g_strdup_printf (_(" Number of Plugin Interfaces: %d"),
+  str = g_strdup_printf (_("Number of Plugin Interfaces: %d"),
 			 pdesc->num_plugins);
   label = gtk_label_new (str);
   g_free (str);

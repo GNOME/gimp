@@ -1,3 +1,8 @@
+Mon Mar  6 10:39:09 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/plugindetails.c
+	* plug-ins/gap/gap_dbbrowser_utils.c: use the same strings
+
 Sun Mar  5 13:18:47 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* gimp.m4: need GPlugInInfo struct for the link test too
