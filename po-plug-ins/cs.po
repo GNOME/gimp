@@ -1,13 +1,13 @@
-# Czech translation of GIMP plugins 1.1.30.
+# Czech translation of GIMP plugins 1.2.0.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
+# Stanislav Brabec <utx@penguin.cz>, 1999-2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.30\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2000-12-18 21:35+01:00\n"
-"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Project-Id-Version: gimp-std-plugins 1.2.0\n"
+"POT-Creation-Date: 2000-12-28 11:03+0100\n"
+"PO-Revision-Date: 2000-12-30 02:20+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -97,7 +97,7 @@ msgstr "O programu"
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:803
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
-#: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
+#: plug-ins/mosaic/mosaic.c:535 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:829 plug-ins/rcm/rcm_dialog.c:731
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
@@ -181,7 +181,7 @@ msgstr "OK"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:811
 #: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
-#: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
+#: plug-ins/mosaic/mosaic.c:537 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:270 plug-ins/print/gimp_main_window.c:831
 #: plug-ins/rcm/rcm_dialog.c:733 plug-ins/sel2path/sel2path.c:342
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
@@ -2178,7 +2178,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/vpropagate.c:977 plug-ins/common/waves.c:399
 #: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1048
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
-#: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
+#: plug-ins/mosaic/mosaic.c:656 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
 
@@ -2890,7 +2890,7 @@ msgstr "Kubismus"
 msgid "Use Background Color"
 msgstr "Pou¾ít barvu pozadí"
 
-#: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:654
+#: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:667
 msgid "Tile Size:"
 msgstr "Velikost dla¾dice:"
 
@@ -2982,7 +2982,7 @@ msgstr "Plynulost"
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
 #: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3148
-#: plug-ins/mosaic/mosaic.c:585
+#: plug-ins/mosaic/mosaic.c:589
 msgid "Antialiasing"
 msgstr "Vyhlazování"
 
@@ -3414,7 +3414,7 @@ msgstr "Zámìna barev"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "Náhled: Klepnutí uvnitø nabere \"Z barvy\""
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
@@ -3674,17 +3674,16 @@ msgstr "Gaussovo rozostøení RLE"
 #: plug-ins/common/gbr.c:347
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr ""
+msgstr "Chyba v souboru GIMP vzorku \"%s\"."
 
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
-#, fuzzy
 msgid "Unnamed"
-msgstr "Kanál beze jména"
+msgstr "Beze jména"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
-msgstr ""
+msgstr "GIMP vzorky jsou buï v ©EDÍCH nebo v RGBA\n"
 
 #: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
 #, c-format
@@ -3856,20 +3855,19 @@ msgstr "Vrstva %s nemá alfa kanál, vynechána"
 
 #: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Chyba v souboru GIMP kolony stop."
 
 #: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "Soubor GIMP stopy je zøejmì po¹kozený."
 
 #: plug-ins/common/gih.c:689
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr ""
+msgstr "Nelze naèíst jednu ze stop v kolonì, nedokonèeno."
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Zapsat jako stopu"
+msgstr "Zapsat jako kolonu stop"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -3951,7 +3949,7 @@ msgstr "Sklenìná dla¾dice"
 msgid "Tile Width:"
 msgstr "©íøka dla¾dice:"
 
-#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
+#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:676
 msgid "Tile Height:"
 msgstr "Vý¹ka dla¾dice:"
 
@@ -4373,7 +4371,7 @@ msgstr "Zapíná a vypíná tipy"
 
 #: plug-ins/common/jpeg.c:413
 msgid "Export Preview"
-msgstr "Exportovat náhled"
+msgstr "Náhled exportu"
 
 #: plug-ins/common/jpeg.c:733
 #, c-format
@@ -12533,70 +12531,74 @@ msgstr "Otvírá se %s"
 msgid "See %s"
 msgstr "Viz %s"
 
-#: plug-ins/mosaic/mosaic.c:325
+#: plug-ins/mosaic/mosaic.c:328
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Mozaika..."
 
 #. progress bar for gradient finding
-#: plug-ins/mosaic/mosaic.c:447
+#: plug-ins/mosaic/mosaic.c:451
 msgid "Finding Edges..."
 msgstr "Hledají se hrany..."
 
 #. Progress bar for rendering tiles
-#: plug-ins/mosaic/mosaic.c:497
+#: plug-ins/mosaic/mosaic.c:501
 msgid "Rendering Tiles..."
 msgstr "Poèítají se dla¾dice..."
 
-#: plug-ins/mosaic/mosaic.c:526
+#: plug-ins/mosaic/mosaic.c:530
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: plug-ins/mosaic/mosaic.c:593
+#: plug-ins/mosaic/mosaic.c:597
 msgid "Color Averaging"
 msgstr "Prùmìrování barvy"
 
-#: plug-ins/mosaic/mosaic.c:602
+#: plug-ins/mosaic/mosaic.c:606
+msgid "Allow Tile splitting"
+msgstr "Povolit rozdìlìní dla¾dic"
+
+#: plug-ins/mosaic/mosaic.c:615
 msgid "Pitted Surfaces"
 msgstr "Nerovný povrch"
 
-#: plug-ins/mosaic/mosaic.c:611
+#: plug-ins/mosaic/mosaic.c:624
 msgid "FG/BG Lighting"
 msgstr "Osvìtlení popøedí/pozadí"
 
 #. tiling primitive
-#: plug-ins/mosaic/mosaic.c:625
+#: plug-ins/mosaic/mosaic.c:638
 msgid "Tiling Primitives"
 msgstr "Základní dla¾dice"
 
-#: plug-ins/mosaic/mosaic.c:629
+#: plug-ins/mosaic/mosaic.c:642
 msgid "Squares"
 msgstr "Ètverce"
 
-#: plug-ins/mosaic/mosaic.c:631
+#: plug-ins/mosaic/mosaic.c:644
 msgid "Hexagons"
 msgstr "©estiúhelníky"
 
-#: plug-ins/mosaic/mosaic.c:633
+#: plug-ins/mosaic/mosaic.c:646
 msgid "Octagons & Squares"
 msgstr "Osmiúhelníky a ètverce"
 
-#: plug-ins/mosaic/mosaic.c:672
+#: plug-ins/mosaic/mosaic.c:685
 msgid "Tile Spacing:"
 msgstr "Rozestup dla¾dic:"
 
-#: plug-ins/mosaic/mosaic.c:681
+#: plug-ins/mosaic/mosaic.c:694
 msgid "Tile Neatness:"
 msgstr "Úpravnost dla¾dic:"
 
-#: plug-ins/mosaic/mosaic.c:691
+#: plug-ins/mosaic/mosaic.c:704
 msgid "Light Direction:"
 msgstr "Smìr svìtla:"
 
-#: plug-ins/mosaic/mosaic.c:700
+#: plug-ins/mosaic/mosaic.c:713
 msgid "Color Variation:"
 msgstr "Barevná variace:"
 
-#: plug-ins/mosaic/mosaic.c:2469
+#: plug-ins/mosaic/mosaic.c:2482
 msgid "Unable to add additional point.\n"
 msgstr "Nepodaøilo se pøidat dal¹í bod.\n"
 
@@ -13144,109 +13146,3 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
-
-#~ msgid "Checker"
-#~ msgstr "Kontrola"
-
-#~ msgid "Marble"
-#~ msgstr "Mramor"
-
-#~ msgid "Lizard"
-#~ msgstr "Je¹tìrka"
-
-#~ msgid "Phong"
-#~ msgstr "Phongùv"
-
-#~ msgid "Noise"
-#~ msgstr "©um"
-
-#~ msgid "Wood"
-#~ msgstr "Døevo"
-
-#~ msgid "Spiral"
-#~ msgstr "Spirála"
-
-#~ msgid "Spots"
-#~ msgstr "Skvrny"
-
-#~ msgid "Texture"
-#~ msgstr "Textura"
-
-#~ msgid "(unknown!?)"
-#~ msgstr "(neznámý!?)"
-
-#~ msgid "Open file"
-#~ msgstr "Otevøít soubor"
-
-#~ msgid "Save file"
-#~ msgstr "Zapsat soubor"
-
-#~ msgid "Sphere Designer"
-#~ msgstr "Tvorba koulí"
-
-#~ msgid "Textures"
-#~ msgstr "Textury"
-
-#~ msgid "Dup"
-#~ msgstr "Duplikovat"
-
-#~ msgid "Del"
-#~ msgstr "Smazat"
-
-#~ msgid "Texture Properties"
-#~ msgstr "Vlastnosti textur"
-
-#~ msgid "Texture:"
-#~ msgstr "Textura:"
-
-#~ msgid "Colors:"
-#~ msgstr "Barvy:"
-
-#~ msgid "Scale Y:"
-#~ msgstr "Zvìt¹ení Y:"
-
-#~ msgid "Scale Z:"
-#~ msgstr "Zvìt¹ení Z:"
-
-#~ msgid "Rotate X:"
-#~ msgstr "Rotace X:"
-
-#~ msgid "Rotate Y:"
-#~ msgstr "Rotace Y:"
-
-#~ msgid "Rotate Z:"
-#~ msgstr "Rotace Z:"
-
-#~ msgid "Pos X:"
-#~ msgstr "Poloha X:"
-
-#~ msgid "Pos Y:"
-#~ msgstr "Poloha Y:"
-
-#~ msgid "Pos Z:"
-#~ msgstr "Poloha Z:"
-
-#~ msgid "Bump"
-#~ msgstr "Vyvý¹ení"
-
-#~ msgid "Exp:"
-#~ msgstr "Export:"
-
-#~ msgid ""
-#~ "by Vidar Madsen\n"
-#~ "September 1999"
-#~ msgstr ""
-#~ "napsal Vidar Madsen\n"
-#~ "Záøí 1999"
-
-#~ msgid "Rendering..."
-#~ msgstr "Výpoèty..."
-
-#~ msgid "<Image>/Filters/Render/Sphere Designer..."
-#~ msgstr "<Image>/Filtry/Vyobrazení/Tvorba koulí..."
-
-#~ msgid "Save as Pixmap Brush"
-#~ msgstr "Zapsat jako pixelovì mapovanou stopu"
-
-#~ msgid "Save as Pixmap Brush Pipe"
-#~ msgstr "Zapsat jako pixelovì mapovanou kolonu stop"

@@ -1,13 +1,13 @@
-# Czech translation of GIMP perl 1.1.25.
+# Czech translation of GIMP perl 1.2.0.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
+# Stanislav Brabec <utx@penguin.cz>, 1999-2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl 1.1.25\n"
-"POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
-"PO-Revision-Date: 2000-09-11 11:14+02:00\n"
-"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Project-Id-Version: gimp-perl 1.2.0\n"
+"POT-Creation-Date: Thu Dec 28 11:09:11 2000\n"
+"PO-Revision-Date: 2000-12-28 12:01+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: examples/PDB:0
 msgid " (press Tab to complete)"
-msgstr "(k dokonèení stisknìte Tab)"
+msgstr " (k dokonèení stisknìte Tab)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"

@@ -1,13 +1,13 @@
-# Czech translation of GIMP 1.1.30.
+# Czech translation of GIMP 1.2.0.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
+# Stanislav Brabec <utx@penguin.cz>, 1998-2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.30\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
-"PO-Revision-Date: 2000-12-18 13:52+01:00\n"
-"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Project-Id-Version: GIMP 1.2.0\n"
+"POT-Creation-Date: 2000-12-28 11:02+0100\n"
+"PO-Revision-Date: 2000-12-28 12:45+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -118,15 +118,14 @@ msgstr "Konec"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
+#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
+#: app/layers_dialog.c:4093 app/levels.c:350 app/palette.c:1824
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -279,13 +278,11 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3551
+#: app/layers_dialog.c:3735 app/layers_dialog.c:3830 app/layers_dialog.c:4091
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "OK"
 
@@ -447,7 +444,6 @@ msgid "Replace"
 msgstr "Pøepsat"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Pøidat"
 
@@ -510,11 +506,11 @@ msgid "Wrap Around"
 msgstr "Oøíznout kolem"
 
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
-#: app/layers_dialog.c:3657
+#: app/layers_dialog.c:3655
 msgid "Background"
 msgstr "Pozadí"
 
-#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3659
+#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3657
 msgid "Transparent"
 msgstr "Prùhledný"
 
@@ -825,7 +821,7 @@ msgstr "Vybrat obvod"
 msgid "Border Selection by:"
 msgstr "Vybrat obvod:"
 
-#: app/commands.c:1335
+#: app/commands.c:1327
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
@@ -973,7 +969,7 @@ msgid "Width:"
 msgstr "©íøka:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3597 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/layers_dialog.c:3595 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Vý¹ka:"
@@ -1469,34 +1465,6 @@ msgstr "indexovaný - prázdný"
 msgid "indexed"
 msgstr "indexovaný"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Odstranit"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Vý¹"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Ní¾"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Konfigurovat"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Barevné zobrazovací filtry"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Dostupné filtry"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Aktivní filtry"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1543,28 +1511,28 @@ msgid "No selection to stroke!"
 msgstr "Pro tah není výbìr!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
+msgstr "Neznámá verze è. %d formátu stopy v \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Chyba v souboru GIMP vzorku \"%s\""
+msgstr "Chyba v souboru GIMP vzorku \"%s\"."
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Beze jména"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Soubor GIMP stopy je zøejmì useknutý."
+msgstr "Soubor GIMP stopy je zøejmì useknutý: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Soubor GIMP stopy je zøejmì useknutý."
+msgstr "Soubor GIMP stopy je zøejmì po¹kozený: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1576,27 +1544,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Varování: Nepodaøilo se naèíst stopu\n"
+"Varování: Nepodaøilo se naèíst kolonu stop\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Kolony stop by mìly mít alespoò jednu stopu."
+msgstr ""
+"Kolony stop by mìly mít alespoò jednu stopu:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Nepodaøilo se naèíst jednu ze stop v obrázkové kolonì."
+msgstr ""
+"Nepodaøilo se naèíst jednu ze stop v kolonì stop\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -1637,31 +1609,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Nahradit programem Netscape"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2345
 msgid "Layer cannot be raised any further"
 msgstr "Vrstva nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:2352
+#: app/gimpimage.c:2373
 msgid "Layer cannot be lowered any further"
 msgstr "Vrstva nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:2378
+#: app/gimpimage.c:2399
 msgid "Layer is already on top"
 msgstr "Vrstva je ji¾ navrch"
 
-#: app/gimpimage.c:2384
+#: app/gimpimage.c:2405
 msgid "Can't raise Layer without alpha"
 msgstr "Nelze dát vý¹ vrstvu bez alfa"
 
-#: app/gimpimage.c:2412
+#: app/gimpimage.c:2433
 msgid "Layer is already on bottom"
 msgstr "Vrstva je ji¾ vespod"
 
-#: app/gimpimage.c:2467
+#: app/gimpimage.c:2488
 msgid "BG has no alpha, layer was placed above"
 msgstr "Pozadí nemá alfa, vrstva byla umístìna nad nìj"
 
-#: app/gimpimage.c:2539
+#: app/gimpimage.c:2562
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1669,11 +1641,11 @@ msgstr ""
 "Není dostatek viditelných vrstev.\n"
 "Ke slouèení jsou nutné alespoò dvì."
 
-#: app/gimpimage.c:2623
+#: app/gimpimage.c:2646
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ke slouèení dolù není dostatek viditelných vrstev."
 
-#: app/gimpimage.c:3073
+#: app/gimpimage.c:3100
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1681,7 +1653,7 @@ msgstr ""
 "Nelze pøidat masku vrstvy, pokud\n"
 "vrstva ji¾ masku má."
 
-#: app/gimpimage.c:3079
+#: app/gimpimage.c:3106
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1689,7 +1661,7 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "indexovaného obrázku."
 
-#: app/gimpimage.c:3085
+#: app/gimpimage.c:3112
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1697,19 +1669,19 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "bez alfa kanálu."
 
-#: app/gimpimage.c:3094
+#: app/gimpimage.c:3121
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nelze pøidat masku jiných rozmìrù ne¾ je vrstva."
 
-#: app/gimpimage.c:3202
+#: app/gimpimage.c:3229
 msgid "Channel cannot be raised any further"
 msgstr "Kanál nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:3253
+#: app/gimpimage.c:3280
 msgid "Channel cannot be lowered any further"
 msgstr "Kanál nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:935 app/palette.c:1071
+#: app/gimpimage.c:3501 app/palette.c:358 app/palette.c:935 app/palette.c:1071
 #: app/palette.c:2013 app/palette.c:2735 app/palette.c:2867
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -2298,11 +2270,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Odstíny ¹edi"
 
-#: app/image_new.c:75 app/layers_dialog.c:3656
+#: app/image_new.c:75 app/layers_dialog.c:3654
 msgid "Foreground"
 msgstr "Popøedí"
 
-#: app/image_new.c:85 app/layers_dialog.c:3658
+#: app/image_new.c:85 app/layers_dialog.c:3656
 msgid "White"
 msgstr "Bílá"
 
@@ -2639,7 +2611,7 @@ msgstr "%s maska"
 msgid "Layer Select"
 msgstr "Vrstva výbìru"
 
-#: app/layers_dialog.c:270 app/layers_dialog.c:3587
+#: app/layers_dialog.c:270 app/layers_dialog.c:3585
 msgid "New Layer"
 msgstr "Nová vrstva"
 
@@ -2719,62 +2691,62 @@ msgstr "Zachovat prùhlednost"
 msgid "Keep Transparency"
 msgstr "Zachovat prùhlednost"
 
-#: app/layers_dialog.c:1949
+#: app/layers_dialog.c:1947
 msgid "Empty Layer Copy"
 msgstr "Kopie prázdné vrstvy"
 
-#: app/layers_dialog.c:2213 app/layers_dialog.c:3396 app/layers_dialog.c:3766
+#: app/layers_dialog.c:2211 app/layers_dialog.c:3394 app/layers_dialog.c:3764
 msgid "Floating Selection"
 msgstr "Plovoucí výbìr"
 
-#: app/layers_dialog.c:3547
+#: app/layers_dialog.c:3545
 msgid "New Layer Options"
 msgstr "Volby nové vrstvy"
 
 #. The name label and entry
-#: app/layers_dialog.c:3576
+#: app/layers_dialog.c:3574
 msgid "Layer Name:"
 msgstr "Jméno vrstvy:"
 
 #. The size labels
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3589
 msgid "Layer Width:"
 msgstr "©íøka vrstvy:"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3650
 msgid "Layer Fill Type"
 msgstr "Typ vyplòování vrstvy"
 
-#: app/layers_dialog.c:3731
+#: app/layers_dialog.c:3729
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
-#: app/layers_dialog.c:3758
+#: app/layers_dialog.c:3756
 msgid "Layer name:"
 msgstr "Jméno vrstvy:"
 
-#: app/layers_dialog.c:3826
+#: app/layers_dialog.c:3824
 msgid "Add Mask Options"
 msgstr "Volby pøidání masky"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3844
+#: app/layers_dialog.c:3842
 msgid "Initialize Layer Mask to:"
 msgstr "Výchozí stav masky vrstvy:"
 
-#: app/layers_dialog.c:3849
+#: app/layers_dialog.c:3847
 msgid "White (Full Opacity)"
 msgstr "Bílá (úplné krytí)"
 
-#: app/layers_dialog.c:3851
+#: app/layers_dialog.c:3849
 msgid "Black (Full Transparency)"
 msgstr "Èerná (úplná prùhlednost)"
 
-#: app/layers_dialog.c:3853
+#: app/layers_dialog.c:3851
 msgid "Layer's Alpha Channel"
 msgstr "Alfa kanál vrstvy"
 
-#: app/layers_dialog.c:3915 app/layers_dialog.c:4001
+#: app/layers_dialog.c:3913 app/layers_dialog.c:3999
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2782,27 +2754,27 @@ msgstr ""
 "Neplatný ¹íøka nebo vý¹ka.\n"
 "Obì musí být kladné."
 
-#: app/layers_dialog.c:4087
+#: app/layers_dialog.c:4085
 msgid "Layer Merge Options"
 msgstr "Volby slouèení vrstvy"
 
-#: app/layers_dialog.c:4112
+#: app/layers_dialog.c:4110
 msgid "Final, Merged Layer should be:"
 msgstr "Koneèná, slouèená vrstva:"
 
-#: app/layers_dialog.c:4113
+#: app/layers_dialog.c:4111
 msgid "Final, Anchored Layer should be:"
 msgstr "Koneèná, pohlcená vrstva:"
 
-#: app/layers_dialog.c:4118
+#: app/layers_dialog.c:4116
 msgid "Expanded as necessary"
 msgstr "Zvìt¹it dle potøeby"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4118
 msgid "Clipped to image"
 msgstr "Oøíznout dle obrázku"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4120
 msgid "Clipped to bottom layer"
 msgstr "Oøíznout dle spodní vrstvy"
 
@@ -4166,19 +4138,19 @@ msgid "No Patterns available"
 msgstr "®ádné vzorky nejsou k dispozici"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Neznámý formát stopy verze #%d v \"%s\"\n"
+msgstr "Neznámá verze è. %d formátu vzorku v \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Chyba v souboru GIMP vzorku \"%s\""
+msgstr "Chyba v souboru GIMP vzorku \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Soubor GIMP vzorku \"%s\" je zøejmì useknutý."
+msgstr "Soubor GIMP vzorku je zøejmì useknutý: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4510,7 +4482,7 @@ msgstr "Netscape"
 
 #: app/preferences_dialog.c:1958
 msgid "Help Browser to Use:"
-msgstr "Pou¾itý prohlí¾eèe nápovìdy:"
+msgstr "Pou¾itý prohlí¾eè nápovìdy:"
 
 #: app/preferences_dialog.c:1963 app/preferences_dialog.c:1965
 msgid "Image Windows"
@@ -6370,30 +6342,6 @@ msgstr ""
 "nezapisoval korektnì indexovanou barevnou mapu.\n"
 "Bude nahrazena barevnou mapou s odstíny ¹edi."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Zobrazovací filtr barevné gama"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gama"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gama:"
-
-#: modules/cdisplay_highcontrast.c:96
-msgid "High Contrast color display filter"
-msgstr "Zobrazovací filtr vysoce kontrastních barev"
-
-#: modules/cdisplay_highcontrast.c:318
-msgid "High Contrast"
-msgstr "Vysoký kontrast"
-
-#: modules/cdisplay_highcontrast.c:337
-msgid "Contrast Cycles:"
-msgstr "Cykly kontrastu:"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK panel barevného výbìru v modulárním provedení"
@@ -6417,29 +6365,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Chyba v souboru GIMP stopy... ru¹í se."
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Varování: Nepodaøilo se naèíst pixelovì mapovanou stopu\n"
-#~ "\"%s\""
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Varování: Nepodaøilo se naèíst pixelovì mapovanou kolonu\n"
-#~ "\"%s\""
-
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Nepodaøilo se naèíst pixelovì mapovanou stopu."
-
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Neznámá verze #%d vzorku GIMP v \"%s\"\n"
-
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Chyba pøi otvírání vzorku \"%s\""
