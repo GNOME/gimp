@@ -22,12 +22,17 @@
 #include "tile_manager.h"
 #include "temp_buf.h"
 
+#include "tag.h"
+
+
 #define GIMP_DRAWABLE(obj)         GTK_CHECK_CAST (obj, gimp_drawable_get_type (), GimpDrawable)
 #define GIMP_DRAWABLE_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_drawable_get_type(), GimpDrawableClass)
 #define GIMP_IS_DRAWABLE(obj)      GTK_CHECK_TYPE (obj, gimp_drawable_get_type())
 
 typedef struct _GimpDrawable      GimpDrawable;
 typedef struct _GimpDrawableClass GimpDrawableClass;
+
+Tag drawable_tag (GimpDrawable *);
 
 guint gimp_drawable_get_type (void);
 

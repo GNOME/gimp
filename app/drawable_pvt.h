@@ -32,6 +32,8 @@ struct _GimpDrawable
   int width, height;			/* size of drawable */
   int offset_x, offset_y;		/* offset of layer in image */
 
+  Tag tag;
+  
   int bytes;				/* bytes per pixel */
   int dirty;				/* dirty bit */
   int ID;				/* provides a unique ID */

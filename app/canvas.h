@@ -26,12 +26,12 @@ typedef struct _Canvas Canvas;
 typedef enum _Tiling Tiling;
 enum _Tiling
 {
-  Tiling_NONE   = 0,
-  Tiling_NEVER  = 1,
-  Tiling_NO     = 2,
-  Tiling_MAYBE  = 3,
-  Tiling_YES    = 4,
-  Tiling_ALWAYS = 5
+  TILING_NONE   = 0,
+  TILING_NEVER  = 1,
+  TILING_NO     = 2,
+  TILING_MAYBE  = 3,
+  TILING_YES    = 4,
+  TILING_ALWAYS = 5
 };
 
 
@@ -62,17 +62,14 @@ int            canvas_portion_height (Canvas *, int x, int y);
 
 
 
-/* make me go away */
-Canvas *       canvas_realloc        (Canvas *, Tag, int w, int h, Tiling);
-
 
 /* temporary conversions */
 struct _temp_buf;
 struct _TileManager;
-Canvas *              canvas_from_tb (struct _temp_buf *);
+Canvas *               canvas_from_tb (struct _temp_buf *);
+Canvas *               canvas_from_tm (struct _TileManager *);
 struct _temp_buf *     canvas_to_tb   (Canvas *);
-Canvas *              canvas_from_tm (struct _TileManager *);
-struct _TileManager * canvas_to_tm   (Canvas *);
+struct _TileManager *  canvas_to_tm   (Canvas *);
 
 
 #endif /* __CANVAS_H__ */

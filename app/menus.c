@@ -339,7 +339,7 @@ menus_add_path (char *path,
 		char *accelerator)
 {
   if (!entry_ht)
-    entry_ht = g_hash_table_new (g_string_hash, g_string_equal);
+    entry_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   g_hash_table_insert (entry_ht, path, accelerator);
 }
@@ -462,7 +462,7 @@ menus_install_accel (GtkWidget *widget,
       g_free (t1);
     }
   else
-    entry_ht = g_hash_table_new (g_string_hash, g_string_equal);
+    entry_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   g_hash_table_insert (entry_ht, path, g_strdup (accel));
 

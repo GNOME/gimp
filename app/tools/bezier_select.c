@@ -1079,8 +1079,9 @@ bezier_convert (BezierSelect *bezier_sel,
     }
 
   /* create a new mask */
-  bezier_sel->mask = channel_new_mask (gdisp->gimage->ID, gdisp->gimage->width,
-				       gdisp->gimage->height);
+  bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage->ID, 
+						    gdisp->gimage->width,
+						    gdisp->gimage->height));
 
   /* allocate room for the scanlines */
   bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);

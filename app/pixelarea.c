@@ -18,7 +18,6 @@
 
 #include <stdarg.h>
 
-#include "linked.h"
 #include "canvas.h"
 #include "paint.h"
 #include "pixelrow.h"
@@ -30,11 +29,11 @@ typedef struct _PixelAreaGroup PixelAreaGroup;
 
 struct _PixelAreaGroup
 {
-  link_ptr pixelareas;
-  int region_width;
-  int region_height;
-  int portion_width;
-  int portion_height;
+  GList * pixelareas;
+  int     region_width;
+  int     region_height;
+  int     portion_width;
+  int     portion_height;
 };
 
 static PixelAreaGroup * pixelareagroup_new            (void);
@@ -281,7 +280,7 @@ pixelarea_process  (
                     )
 {
   PixelAreaGroup *pag = (PixelAreaGroup *) x;
-  link_ptr list = pag->pixelareas;
+  GList * list = pag->pixelareas;
 
   /* unref all the current pieces, then move to the right, moving down
      if we hit the edge of the overall region */
@@ -298,7 +297,7 @@ pixelarea_process  (
 	      pa->y += pag->portion_height;
 	    }
 	}
-      list = next_item (list);
+      list = g_list_next (list);
     }
 
   return (void *) pixelareagroup_configure (pag);
@@ -311,7 +310,7 @@ pixelarea_process_stop  (
                          )
 {
   PixelAreaGroup *pag = (PixelAreaGroup *) x;
-  link_ptr list = pag->pixelareas;
+  GList * list = pag->pixelareas;
 
   while (list)
     {
@@ -320,7 +319,7 @@ pixelarea_process_stop  (
 	{
           pixelarea_unref (pa);
 	}
-      list = next_item (list);
+      list = g_list_next (list);
     }
 
   pixelareagroup_delete (pag);
@@ -380,13 +379,13 @@ pixelareagroup_delete (
 {
   if (pag->pixelareas)
     {
-      link_ptr list = pag->pixelareas;
+      GList * list = pag->pixelareas;
       while (list)
         {
           g_free (list->data);
-          list = next_item (list);
+          list = g_list_next (list);
         }
-      free_list (pag->pixelareas);
+      g_list_free (pag->pixelareas);
     }
   g_free (pag);
 }
@@ -398,7 +397,7 @@ pixelareagroup_addarea (
                         PixelArea *pa
                         )
 {
-  pag->pixelareas = add_to_list (pag->pixelareas, pa);
+  pag->pixelareas = g_list_append (pag->pixelareas, pa);
   if (pa != NULL)
     {
       pag->region_width  = MIN (pag->region_width, pa->w);
@@ -412,7 +411,7 @@ pixelareagroup_configure (
                           PixelAreaGroup * pag
                           )
 {
-  link_ptr list;
+  GList * list;
 
   /*  Determine the next portion width and height */
   if ((pixelareagroup_portion_width (pag) == 0) ||
@@ -433,7 +432,7 @@ pixelareagroup_configure (
           pa->w = pag->portion_width;
           pa->h = pag->portion_height;
 	}
-      list = next_item (list);
+      list = g_list_next (list);
     }
 
   return pag;
@@ -446,7 +445,7 @@ pixelareagroup_portion_height (
                                PixelAreaGroup * pag
                                )
 {
-  link_ptr list = pag->pixelareas;
+  GList * list = pag->pixelareas;
   int min_height = G_MAXINT;
   int height;
 
@@ -466,7 +465,7 @@ pixelareagroup_portion_height (
 	  if (height < min_height)
 	    min_height = height;
 	}
-      list = next_item (list);
+      list = g_list_next (list);
     }
 
   pag->portion_height = min_height;
@@ -479,7 +478,7 @@ pixelareagroup_portion_width (
                               PixelAreaGroup * pag
                               )
 {
-  link_ptr list = pag->pixelareas;
+  GList * list = pag->pixelareas;
   int min_width = G_MAXINT;
   int width;
 
@@ -499,7 +498,7 @@ pixelareagroup_portion_width (
 	  if (width < min_width)
 	    min_width = width;
 	}
-      list = next_item (list);
+      list = g_list_next (list);
     }
 
   pag->portion_width = min_width;

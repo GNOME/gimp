@@ -3958,6 +3958,7 @@ combine_regions_replace (PixelRegion   *src1,
 }
 
 
+#if 0
 /*********************************
  *   color conversion routines   *
  *********************************/
@@ -4231,6 +4232,7 @@ hls_to_rgb (int *h,
       *s = hls_value (m1, m2, hue - 85);
     }
 }
+#endif
 
 
 /************************************/

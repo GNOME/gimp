@@ -64,7 +64,7 @@ typedef void * (* PaintFunc16)   (PaintCore16 *, struct _GimpDrawable *, int);
 struct _PaintCore16
 {
   /* core select object */
-  struct _DrawCore * core;
+  struct _draw_core * core;
 
   /* various coords */
   double   startx, starty;

@@ -30,6 +30,10 @@ typedef void (*TileValidateProc) (TileManager *tm,
 				  int          level);
 
 
+int tm_bytes (TileManager *);
+int tm_width (TileManager *);
+int tm_height (TileManager *);
+
 /* Creates a new tile manager with the specified
  *  width for the toplevel. The toplevel sizes is
  *  used to compute the number of levels and there

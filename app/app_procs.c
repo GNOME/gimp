@@ -55,11 +55,25 @@
 #include "xcf.h"
 #include <gtk/gtk.h>
 
+#define LOGO_WIDTH_MIN 350
+#define LOGO_HEIGHT_MIN 110 
+#define NAME "The GIMP"
+#define AUTHORS "brought to you by Spencer Kimball and Peter Mattis" 
+ 
+#define SHOW_NEVER 0
+#define SHOW_LATER 1
+#define SHOW_NOW 2
+ 
 /*  Function prototype for affirmation dialog when exiting application  */
 static void      really_quit_dialog (void);
 static Argument* quit_invoker       (Argument *args);
 static void make_initialization_status_window(void);
 static void destroy_initialization_status_window(void);
+static int splash_logo_load (GtkWidget *window);
+static int splash_logo_load_size (GtkWidget *window);
+static void splash_logo_draw (GtkWidget *widget);
+static void splash_text_draw (GtkWidget *widget);
+static void splash_logo_expose (GtkWidget *widget);
 
 
 static gint is_app_exit_finish_done = FALSE;
@@ -107,6 +121,164 @@ gimp_init (int    gimp_argc,
   batch_init ();
 }
 
+
+static GtkWidget *logo_area = NULL;
+static GdkPixmap *logo_pixmap = NULL;
+static int logo_width = 0;
+static int logo_height = 0;
+static int logo_area_width = 0;
+static int logo_area_height = 0;
+static int show_logo = SHOW_NEVER;
+
+static int
+splash_logo_load_size (GtkWidget *window)
+{
+  char buf[1024];
+  FILE *fp;
+
+  if (logo_pixmap)
+    return TRUE;
+
+  sprintf (buf, "%s/gimp_splash.ppm", DATADIR);
+
+  fp = fopen (buf, "r");
+  if (!fp)
+    return 0;
+
+  fgets (buf, 1024, fp);
+  if (strcmp (buf, "P6\n") != 0)
+    {
+      fclose (fp);
+      return 0;
+    }
+
+  fgets (buf, 1024, fp);
+  fgets (buf, 1024, fp);
+  sscanf (buf, "%d %d", &logo_width, &logo_height);
+
+  fclose (fp);
+  return TRUE;
+}
+
+static int
+splash_logo_load (GtkWidget *window)
+{
+  GtkWidget *preview;
+  char buf[1024];
+  unsigned char *pixelrow;
+  FILE *fp;
+  int count;
+  int i;
+
+  if (logo_pixmap)
+    return TRUE;
+
+  sprintf (buf, "%s/gimp_splash.ppm", DATADIR);
+
+  fp = fopen (buf, "r");
+  if (!fp)
+    return 0;
+
+  fgets (buf, 1024, fp);
+  if (strcmp (buf, "P6\n") != 0)
+    {
+      fclose (fp);
+      return 0;
+    }
+
+  fgets (buf, 1024, fp);
+  fgets (buf, 1024, fp);
+  sscanf (buf, "%d %d", &logo_width, &logo_height);
+
+  fgets (buf, 1024, fp);
+  if (strcmp (buf, "255\n") != 0)
+    {
+      fclose (fp);
+      return 0;
+    }
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
+  pixelrow = g_new (guchar, logo_width * 3);
+
+  for (i = 0; i < logo_height; i++)
+    {
+      count = fread (pixelrow, sizeof (unsigned char), logo_width * 3, fp);
+      if (count != (logo_width * 3))
+	{
+	  gtk_widget_destroy (preview);
+	  g_free (pixelrow);
+	  fclose (fp);
+	  return 0;
+	}
+      gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
+    }
+
+  gtk_widget_realize (window);
+  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height, -1);
+  gtk_preview_put (GTK_PREVIEW (preview),
+		   logo_pixmap, window->style->black_gc,
+		   0, 0, 0, 0, logo_width, logo_height);
+
+  gtk_widget_unref (preview);
+  g_free (pixelrow);
+
+  fclose (fp);
+  return TRUE;
+}
+
+static void
+splash_text_draw (GtkWidget *widget)
+{
+  GdkFont *font = NULL;
+
+  font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-140-*-*-*-*-*-*");
+  gdk_draw_string (widget->window,
+		   font,
+		   widget->style->black_gc,
+		   ((logo_area_width - gdk_string_width (font, NAME)) / 2), 
+		   (0.3 * logo_area_height),
+		   NAME);
+
+  font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
+  gdk_draw_string (widget->window,
+		   font,
+		   widget->style->black_gc,
+		   ((logo_area_width - gdk_string_width (font, VERSION)) / 2), 
+		   (0.5 * logo_area_height),
+		   VERSION);
+  gdk_draw_string (widget->window,
+		   font,
+		   widget->style->black_gc,
+		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
+		   (0.7 * logo_area_height),
+		   AUTHORS);
+}
+
+static void
+splash_logo_draw (GtkWidget *widget)
+{
+  gdk_draw_pixmap (widget->window,
+		   widget->style->black_gc,
+		   logo_pixmap, 
+		   0, 0,
+		   ((logo_area_width - logo_width) / 2), ((logo_area_height - logo_height) / 2),
+		   logo_width, logo_height);
+}
+
+static void
+splash_logo_expose (GtkWidget *widget)
+{
+  switch (show_logo) {
+     case SHOW_NEVER: 
+     case SHOW_LATER:
+       splash_text_draw (widget);
+       break;
+     case SHOW_NOW:
+       splash_logo_draw (widget);
+  }
+}
+
 static GtkWidget *win_initstatus = NULL;
 static GtkWidget *label1 = NULL;
 static GtkWidget *label2 = NULL;
@@ -119,12 +291,14 @@ destroy_initialization_status_window(void)
   if(win_initstatus)
     {
       gtk_widget_destroy(win_initstatus);
-      win_initstatus = label1 = label2 = pbar = NULL;
+      win_initstatus = label1 = label2 = pbar = logo_area = NULL;
+      logo_pixmap = NULL;
       gtk_idle_remove(idle_tag);
     }
 }
 
-static void my_idle_proc(void)
+static void 
+my_idle_proc(void)
 {
   /* Do nothing. This is needed to stop the GIMP
      from blocking in gtk_main_iteration() */
@@ -133,7 +307,7 @@ static void my_idle_proc(void)
 static void
 make_initialization_status_window(void)
 {
-  if(no_interface == FALSE)
+  if (no_interface == FALSE && no_splash == FALSE)
     {
       GtkWidget *vbox;
 
@@ -142,9 +316,22 @@ make_initialization_status_window(void)
       gtk_window_set_title(GTK_WINDOW(win_initstatus),
 			   "GIMP Startup");
 
-      vbox = gtk_vbox_new(TRUE, 5);
+      if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus)) 
+	{
+	  show_logo = SHOW_LATER;
+	}
+
+      vbox = gtk_vbox_new(FALSE, 4);
       gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
       
+      logo_area = gtk_drawing_area_new ();
+      gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
+			  (GtkSignalFunc) splash_logo_expose, NULL);
+      logo_area_width = ( logo_width > LOGO_WIDTH_MIN ) ? logo_width : LOGO_WIDTH_MIN;
+      logo_area_height = ( logo_height > LOGO_HEIGHT_MIN ) ? logo_height : LOGO_HEIGHT_MIN;
+      gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_area_width, logo_area_height);
+      gtk_box_pack_start_defaults(GTK_BOX(vbox), logo_area);
+
       label1 = gtk_label_new("");
       gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
       label2 = gtk_label_new("");
@@ -154,6 +341,7 @@ make_initialization_status_window(void)
       gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
       
       gtk_widget_show(vbox);
+      gtk_widget_show (logo_area);
       gtk_widget_show(label1);
       gtk_widget_show(label2);
       gtk_widget_show(pbar);
@@ -172,8 +360,7 @@ app_init_update_status(char *label1val,
 		       char *label2val,
 		       float pct_progress)
 {
-  if(no_interface == FALSE
-     && win_initstatus)
+  if(no_interface == FALSE && no_splash == FALSE && win_initstatus)
     {
       GdkRectangle area = {0, 0, -1, -1};
       if(label1val
@@ -209,7 +396,10 @@ app_init ()
   char *path;
 
   make_initialization_status_window();
-
+  if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
+    splash_text_draw (logo_area);
+  }
+    
   /*
    *  Initialize the procedural database
    *    We need to do this first because any of the init
@@ -234,11 +424,22 @@ app_init ()
     }
 
   RESET_BAR();
+  parse_gimprc ();         /*  parse the local GIMP configuration file  */
+
+  /* Now we are ready to draw the splash-screen-image to the start-up window */
+  if (no_interface == FALSE)
+    {
+      get_standard_colormaps ();
+      if (no_splash_image == FALSE && show_logo && splash_logo_load (win_initstatus)) {
+	show_logo = SHOW_NOW;
+	splash_logo_draw (logo_area);
+      }
+    }
+
+  RESET_BAR();
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
-  RESET_BAR();
-  parse_gimprc ();         /*  parse the local GIMP configuration file  */
   if (no_data == FALSE)
     {
       RESET_BAR();
@@ -268,7 +469,6 @@ app_init ()
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
-      get_standard_colormaps ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);

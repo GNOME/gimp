@@ -38,7 +38,9 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "temp_buf.h"
 
+#define    SQR(x) ((x) * (x))
 
 
 /*  global variables--for use in the various paint tools  */
@@ -69,7 +71,30 @@ static void      paint_16_to_canvas_buf        (PaintCore16 *, Canvas *, Paint *
 static void      set_16_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_16_canvas_tiles           (int, int, int, int);
 
+void 
+painthit_apply  (
+                 GImage * gimage,
+                 GimpDrawable * drawable,
+                 PixelArea * src2PR,
+                 int undo,
+                 Paint * opacity,
+                 int mode,
+                 Canvas * src1_tiles,
+                 int x,
+                 int y
+                 );
 
+void 
+painthit_replace  (
+                   GImage * gimage,
+                   GimpDrawable * drawable,
+                   PixelArea * src2PR,
+                   int undo,
+                   Paint * opacity,
+                   PixelArea * maskPR,
+                   int x,
+                   int y
+                   );
 
 /*  undo blocks variables  */
 static Canvas *  undo_tiles = NULL;
@@ -159,12 +184,11 @@ paint_core_16_init  (
     }
 
   paint_core->spacing =
-    (double) MAX (get_brush_height (brush), get_brush_width (brush)) *
+    (double) MAX (brush->mask->height, brush->mask->width) *
     ((double) get_brush_spacing () / 100.0);
   if (paint_core->spacing < 1.0)
     paint_core->spacing = 1.0;
-  paint_core->brush_mask = get_brush_canvas (brush);
-
+  paint_core->brush_mask = canvas_from_tb (brush->mask);
 
   /*  Allocate the undo structure  */
   if (undo_tiles)
@@ -173,7 +197,7 @@ paint_core_16_init  (
   undo_tiles = canvas_new (drawable_tag (drawable),
                            drawable_width (drawable),
                            drawable_height (drawable),
-                           Tiling_NO);
+                           TILING_YES);
 
 
   /*  Allocate the canvas blocks structure  */
@@ -183,7 +207,7 @@ paint_core_16_init  (
   canvas_tiles = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                              drawable_width (drawable),
                              drawable_height (drawable),
-                             Tiling_NO);
+                             TILING_YES);
 
   /*  Get the initial undo extents  */
   paint_core->x1 = paint_core->x2 = paint_core->curx;
@@ -274,10 +298,12 @@ paint_core_16_finish  (
   undo_push_paint (gimage, pu);
 
   /*  push an undo  */
-  /* FIXME undo_tiles */
-  drawable_apply_image (drawable, paint_core->x1, paint_core->y1,
-			paint_core->x2, paint_core->y2, undo_tiles, TRUE);
-  undo_tiles = NULL;
+  {
+    TileManager * tm = canvas_to_tm (undo_tiles);
+    drawable_apply_image (drawable, paint_core->x1, paint_core->y1,
+                          paint_core->x2, paint_core->y2, tm, TRUE);
+    undo_tiles = NULL;
+  }
 
   /*  push the group end  */
   undo_push_group_end (gimage);
@@ -286,6 +312,8 @@ paint_core_16_finish  (
    *  it is not done during the actual painting.
    */
   drawable_invalidate_preview (drawable);
+
+  canvas_delete (paint_core->brush_mask);
 }
 
 
@@ -396,10 +424,21 @@ paint_core_16_get_paint_area  (
   
   /*  configure the canvas buffer  */
   tag = tag_set_alpha (drawable_tag (drawable), ALPHA_YES);
-  canvas_buf = canvas_realloc (canvas_buf, tag,
-                               (x2 - x1), (y2 - y1),
-                               Tiling_NEVER);
-
+  if ((canvas_buf) &&
+      (tag_equal (canvas_tag (canvas_buf), tag)) &&
+      (canvas_width (canvas_buf) == (x2 - x1)) &&
+      (canvas_height (canvas_buf) == (y2 - y1)) &&
+      (canvas_tiling (canvas_buf) == TILING_NEVER))
+    {
+      canvas_buf = canvas_buf;
+    }
+  else
+    {
+      if (canvas_buf)
+        canvas_delete (canvas_buf);
+      canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
+    }
+  
   return canvas_buf;
 }
 
@@ -428,9 +467,20 @@ paint_core_16_get_orig_image  (
 
   /*  configure the canvas buffer  */
   tag = tag_set_alpha (drawable_tag (drawable), ALPHA_YES);
-  canvas_buf = canvas_realloc (canvas_buf, tag,
-                               (x2 - x1), (y2 - y1),
-                               Tiling_NEVER);
+  if ((canvas_buf) &&
+      (tag_equal (canvas_tag (canvas_buf), tag)) &&
+      (canvas_width (canvas_buf) == (x2 - x1)) &&
+      (canvas_height (canvas_buf) == (y2 - y1)) &&
+      (canvas_tiling (canvas_buf) == tiling))
+    {
+      canvas_buf = canvas_buf;
+    }
+  else
+    {
+      if (canvas_buf)
+        canvas_delete (canvas_buf);
+      canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
+    }
 
   orig_buf = temp_buf_resize (orig_buf, drawable_bytes (drawable),
 			      x1, y1, (x2 - x1), (y2 - y1));
@@ -503,7 +553,7 @@ paint_core_16_button_press  (
 {
   PaintCore16 * paint_core;
   GDisplay * gdisp;
-  int drawable;
+  GimpDrawable * drawable;
   int draw_line = 0;
   double x, y;
 
@@ -655,10 +705,11 @@ paint_core_16_cursor_update  (
   
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
     {
-#if 0
-      if (x >= layer->offset_x && y >= layer->offset_y &&
-          x < (layer->offset_x + layer->width) &&
-          y < (layer->offset_y + layer->height))
+      int off_x, off_y;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      if (x >= off_x && y >= off_y &&
+          x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+          y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
         {
           /*  One more test--is there a selected region?
            *  if so, is cursor inside?
@@ -668,7 +719,6 @@ paint_core_16_cursor_update  (
           else if (gimage_mask_value (gdisp->gimage, x, y))
             ctype = GDK_PENCIL;
         }
-#endif
     }
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
@@ -683,7 +733,7 @@ paint_core_16_control  (
 {
   PaintCore16 * paint_core;
   GDisplay *gdisp;
-  int drawable;
+  GimpDrawable * drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore16 *) tool->private;
@@ -828,17 +878,15 @@ paint_core_16_subsample_mask  (
                                                canvas_tiling (mask));
   dest = kernel_brushes[index2][index1];
 
-  /* FIXME */
-#if 0
-  m = mask_buf_data (mask);
-  for (i = 0; i < mask->height; i++)
+  for (i = 0; i < canvas_height (mask); i++)
     {
-      for (j = 0; j < mask->width; j++)
+      for (j = 0; j < canvas_width (mask); j++)
 	{
+          m = canvas_data (mask, j, i);
 	  k = kernel;
 	  for (r = 0; r < KERNEL_HEIGHT; r++)
 	    {
-	      d = mask_buf_data (dest) + (i+r) * dest->width + j;
+	      d = canvas_data (dest, j, i+r);
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
@@ -846,10 +894,9 @@ paint_core_16_subsample_mask  (
 		  *d++ = (new_val > 255) ? 255 : new_val;
 		}
 	    }
-	  m++;
 	}
     }
-#endif
+
   return dest;
 }
 
@@ -862,7 +909,6 @@ paint_core_16_solidify_mask  (
   static Canvas * solid_brush = NULL;
   static Canvas * last_brush  = NULL;
   
-#if 0
   int i, j;
   unsigned char * data, * src;
 
@@ -872,26 +918,24 @@ paint_core_16_solidify_mask  (
   last_brush = brush_mask;
   if (solid_brush)
     canvas_delete (solid_brush);
-  solid_brush = canvas_new (canvas_tag (mask),
-                            canvas_width (mask) + 2,
-                            canvas_height (mask) + 2,
-                            canvas_tiling (mask));
+  solid_brush = canvas_new (canvas_tag (brush_mask),
+                            canvas_width (brush_mask) + 2,
+                            canvas_height (brush_mask) + 2,
+                            canvas_tiling (brush_mask));
 
-  /* FIXME */
   /*  get the data and advance one line into it  */
-  data = mask_buf_data (solid_brush) + solid_brush->width;
-  src = mask_buf_data (brush_mask);
+  data = canvas_data (solid_brush, 0, 1);
+  src = canvas_data (brush_mask, 0, 0);
 
-  for (i = 0; i < brush_mask->height; i++)
+  for (i = 0; i < canvas_height (brush_mask); i++)
     {
       data++;
-      for (j = 0; j < brush_mask->width; j++)
+      for (j = 0; j < canvas_width (brush_mask); j++)
 	{
 	  *data++ = (*src++) ? OPAQUE : TRANSPARENT;
 	}
       data++;
     }
-#endif
   return solid_brush;
 }
 
@@ -1090,7 +1134,16 @@ paint_16_to_canvas_tiles  (
                   canvas_width (canvas_buf), canvas_height (canvas_buf),
                   FALSE);
 
-  apply_mask_to_area (&srcPR, &maskPR, OPAQUE);
+  {
+    static Paint * p;
+    static gfloat  d[3] = {1.0, 1.0, 1.0};
+    if (p == NULL)
+      {
+        p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO), NULL);
+        paint_load (p, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), (void *) &d);
+      }
+    apply_mask_to_area (&srcPR, &maskPR, p);
+  }
 }
 
 
@@ -1118,7 +1171,6 @@ paint_16_to_canvas_buf  (
 }
 
 
-/* FIXME: the whole routine */
 static void 
 set_16_undo_tiles  (
                     GimpDrawable *drawable,
@@ -1128,6 +1180,12 @@ set_16_undo_tiles  (
                     int h
                     )
 {
+  PixelArea src, dest;
+  Canvas *c = canvas_from_tm (drawable_data (drawable));
+  pixelarea_init (&src, c, x, y, w, h, FALSE);
+  pixelarea_init (&dest, undo_tiles, x, y, w, h, TRUE);
+  /*  createdup_area (&src, &dest); */
+  canvas_delete (c);
 #if 0
   int i, j;
   Tile *src_tile;
@@ -1154,7 +1212,6 @@ set_16_undo_tiles  (
 }
 
 
-/* FIXME: the whole routine */
 static void 
 set_16_canvas_tiles  (
                       int x,
@@ -1163,24 +1220,9 @@ set_16_canvas_tiles  (
                       int h
                       )
 {
-#if 0
-  int i, j;
-  Tile *tile;
-
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    {
-      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0);
-	  if (tile->valid == FALSE)
-	    {
-	      tile_ref (tile);
-	      memset (tile->data, 0, (tile->ewidth * tile->eheight * tile->bpp));
-	      tile_unref (tile, TRUE);
-	    }
-	}
-    }
-#endif
+  PixelArea a;
+  pixelarea_init (&a, canvas_tiles, x, y, w, h, TRUE);
+  /*   create_area (&a); */
 }
 
 
@@ -1190,7 +1232,7 @@ painthit_apply  (
                  GimpDrawable * drawable,
                  PixelArea * src2PR,
                  int undo,
-                 int opacity,
+                 Paint * opacity,
                  int mode,
                  Canvas * src1_tiles,
                  int x,
@@ -1284,7 +1326,7 @@ painthit_replace  (
                    GimpDrawable * drawable,
                    PixelArea * src2PR,
                    int undo,
-                   int opacity,
+                   Paint * opacity,
                    PixelArea * maskPR,
                    int x,
                    int y

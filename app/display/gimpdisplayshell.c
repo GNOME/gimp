@@ -317,9 +317,10 @@ create_color_area (GtkWidget *parent)
 
   col_area = color_area_create (54, 42, default_pixmap, swap_pixmap);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
-  gtk_tooltips_set_tips (tool_tips, col_area, "Foreground & background colors.  The small black "
-			 "and white squares reset colors.  The small arrows swap colors.  Double "
-			 "click to change colors.");
+  gtk_tooltips_set_tip (tool_tips, col_area, "Foreground & background colors.  The small black "
+			"and white squares reset colors.  The small arrows swap colors.  Double "
+			"click to change colors.",
+			NULL);
   gtk_widget_show (col_area);
   gtk_widget_show (alignment);
   gtk_widget_show (frame);
@@ -373,7 +374,7 @@ create_tools (GtkWidget *parent)
 			  (GtkSignalFunc) tools_button_press,
 			  tool_data[i].callback_data);
 
-      gtk_tooltips_set_tips (tool_tips, button, tool_data[i].tool_desc);
+      gtk_tooltips_set_tip (tool_tips, button, tool_data[i].tool_desc, NULL);
 
       gtk_widget_show (pixmap);
       gtk_widget_show (alignment);
@@ -624,6 +625,7 @@ create_display_shell (int   gdisp_id,
 
   /*  The toplevel shell */
   gdisp->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_ref  (gdisp->shell);
   gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);

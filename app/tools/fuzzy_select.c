@@ -463,7 +463,7 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 
   if (fuzzy_mask)
     channel_delete (fuzzy_mask);
-  fuzzy_mask = new;
+  fuzzy_mask = channel_ref (new);
 
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
@@ -716,7 +716,7 @@ fuzzy_select_invoker (Argument *args)
       sample_merged = (int_value) ? TRUE : FALSE;
     }
 
-  /*  call the ellipse_select procedure  */
+  /*  call the fuzzy_select procedure  */
   if (success)
     {
       Channel *new;

@@ -47,6 +47,13 @@ static gint drawable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
 
+Tag
+drawable_tag (
+              GimpDrawable *d
+              )
+{
+  return d->tag;
+}
 
 guint
 gimp_drawable_get_type ()

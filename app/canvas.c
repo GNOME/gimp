@@ -47,23 +47,23 @@ canvas_new (
 
   c->tiling = tiling;
 
-  if (tiling == Tiling_MAYBE)
+  if (tiling == TILING_MAYBE)
     {
-      if ((w * h * tag_bytes (tag)) > (1024 * 1024 * 4))
-        tiling = Tiling_NO;
+      if ((w * h * tag_bytes (tag)) < (1024 * 1024 * 4))
+        tiling = TILING_NO;
       else
-        tiling = Tiling_YES;
+        tiling = TILING_YES;
     }
   
   switch (tiling)
     {
-    case Tiling_NO:
-    case Tiling_NEVER:
+    case TILING_NO:
+    case TILING_NEVER:
       c->tile_data = NULL;
       c->flat_data = flatbuf_new (tag, w, h);
       break;
-    case Tiling_YES:
-    case Tiling_ALWAYS:
+    case TILING_YES:
+    case TILING_ALWAYS:
       c->flat_data = NULL;
       c->tile_data = tilebuf_new (tag, w, h);
       break;
@@ -358,7 +358,7 @@ canvas_from_tb (
   c = canvas_new (tag_by_bytes (tb->bytes),
                   tb->width,
                   tb->height,
-                  Tiling_NEVER);
+                  TILING_NEVER);
 
   flatbuf_from_tb (c->flat_data, tb);
 
@@ -390,17 +390,12 @@ canvas_from_tm (
                 )
 {
   Canvas *c;
-#if 0  
-  c = canvas_new (tag_by_bytes (tm->levels[0].bpp),
-                  tm->levels[0].width,
-                  tm->levels[0].height,
-                  Tiling_ALWAYS);
-#else
-  c = canvas_new (tag_by_bytes (4),
-                  256,
-                  256,
-                  Tiling_ALWAYS);
-#endif
+
+  c = canvas_new (tag_by_bytes (tm_bytes (tm)),
+                  tm_width (tm),
+                  tm_height (tm),
+                  TILING_ALWAYS);
+
   tilebuf_from_tm (c->tile_data, tm);
 
   return c;

@@ -19,7 +19,6 @@
 #include <string.h>
 
 #include "flatbuf.h"
-#include "temp_buf.h" /* temporary */
 
 
 struct _FlatBuf
@@ -293,12 +292,30 @@ flatbuf_portion_height  (
 
 
 
+
+
+
+
+
+
+
+#include "temp_buf.h" /* temporary */
+
 void
 flatbuf_to_tb (
                FlatBuf * fb,
                TempBuf * tb
                )
 {
+  tb->bytes     = tag_bytes (fb->tag);
+  tb->width     = fb->width;
+  tb->height    = fb->height;
+  tb->x         = 0;
+  tb->y         = 0;
+  tb->swapped   = FALSE;
+  tb->filename  = NULL;
+  tb->data      = g_malloc (tb->bytes * tb->width * tb->height);
+  memcpy (tb->data, fb->data, tb->bytes * tb->width * tb->height);
 }
 
 
@@ -308,4 +325,12 @@ flatbuf_from_tb (
                  TempBuf * tb
                  )
 {
+  fb->tag       = tag_by_bytes (tb->bytes);
+  fb->width     = tb->width;
+  fb->height    = tb->height;
+  fb->refcount  = 1;
+  fb->swapped   = FALSE;
+  fb->filename  = NULL;
+  fb->data      = g_malloc (tb->bytes * tb->width * tb->height);
+  memcpy (fb->data, tb->data, tb->bytes * tb->width * tb->height);
 }
