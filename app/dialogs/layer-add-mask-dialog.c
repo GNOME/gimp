@@ -75,6 +75,11 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   g_object_weak_ref (G_OBJECT (dialog->dialog),
 		     (GWeakNotify) g_free, dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->dialog)->vbox), vbox);

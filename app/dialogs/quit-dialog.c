@@ -109,6 +109,11 @@ quit_dialog_new (Gimp *gimp)
                            G_CALLBACK (quit_dialog_container_changed),
                            box, 0);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   preview_size = gimp->config->layer_preview_size;
   rows         = CLAMP (gimp_container_num_children (images), 3, 6);
 

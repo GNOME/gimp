@@ -108,6 +108,12 @@ make_default_dialog (const gchar *title)
    data->ok = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
                                      GTK_STOCK_OK, GTK_RESPONSE_OK);
 
+   gtk_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
+                                              GTK_RESPONSE_OK,
+					      GTK_RESPONSE_APPLY,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
    g_signal_connect (data->dialog, "response",
                      G_CALLBACK (dialog_response),
                      data);

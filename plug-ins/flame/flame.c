@@ -643,6 +643,11 @@ edit_callback (GtkWidget *widget,
 
                                   NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (edit_dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
       g_signal_connect (edit_dlg, "response",
                         G_CALLBACK (edit_response),
                         edit_dlg);
@@ -936,6 +941,11 @@ dialog (void)
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

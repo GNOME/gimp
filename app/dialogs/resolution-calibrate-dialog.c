@@ -75,6 +75,11 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
 			    NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   screen = gtk_widget_get_screen (dialog);
 
   ruler_width  = gdk_screen_get_width (screen);

@@ -792,6 +792,14 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
                             NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+					      RESPONSE_OPEN,
+					      RESPONSE_SAVE,
+					      RESPONSE_RESET,
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
   g_signal_connect (dialog, "response",

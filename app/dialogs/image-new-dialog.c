@@ -112,6 +112,12 @@ image_new_dialog_new (Gimp *gimp)
                     G_CALLBACK (image_new_response),
                     dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox),

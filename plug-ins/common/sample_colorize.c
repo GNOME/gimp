@@ -1318,6 +1318,13 @@ p_smp_dialog (void)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+					      RESPONSE_GET_COLORS,
+					      RESPONSE_RESET,
+                                              GTK_RESPONSE_APPLY,
+                                              GTK_RESPONSE_CLOSE,
+                                              -1);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (p_smp_response_callback),
                     dialog);

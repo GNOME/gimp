@@ -1376,6 +1376,11 @@ main_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (appwin)->vbox), main_hbox,

@@ -873,6 +873,11 @@ gih_save_dialog (gint32 image_ID)
 
 			 NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   /* The main table */
   table = gtk_table_new (8, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);

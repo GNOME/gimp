@@ -115,6 +115,11 @@ channel_options_dialog_new (GimpImage     *gimage,
 		     (GWeakNotify) g_free,
 		     options);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->dialog)->vbox), hbox);

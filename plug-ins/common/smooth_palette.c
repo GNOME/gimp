@@ -418,6 +418,11 @@ dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);

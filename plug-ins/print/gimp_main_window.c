@@ -372,6 +372,14 @@ create_top_level_structure(void)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (print_dialog),
+					      RESPONSE_ABOUT,
+					      RESPONSE_SAVE,
+					      RESPONSE_PRINTSAVE,
+					      GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_free (plug_in_name);
 
   g_signal_connect (print_dialog, "response",

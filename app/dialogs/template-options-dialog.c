@@ -91,6 +91,11 @@ template_options_dialog_new (Gimp         *gimp,
 
                               NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_weak_ref (G_OBJECT (options->dialog),
                      (GWeakNotify) g_free, options);
 

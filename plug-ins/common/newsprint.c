@@ -1205,6 +1205,11 @@ newsprint_dialog (GimpDrawable *drawable)
 
                             NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   paned = gtk_hpaned_new ();
   gtk_container_set_border_width (GTK_CONTAINER (paned), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), paned);

@@ -390,6 +390,12 @@ create_sizemap_dialog (void)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
+                                              GTK_RESPONSE_OK,
+					      RESPONSE_APPLY,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_signal_connect (smwindow, "response",
                     G_CALLBACK (smresponse),
                     NULL);

@@ -119,6 +119,12 @@ print_size_dialog_new (GimpImage              *image,
                     G_CALLBACK (print_size_dialog_response),
                     private);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   private->image     = image;
   private->callback  = callback;
   private->user_data = user_data;

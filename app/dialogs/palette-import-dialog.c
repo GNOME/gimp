@@ -182,6 +182,11 @@ palette_import_dialog_new (Gimp *gimp)
 
                               NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (import_dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect (import_dialog->dialog, "response",
                     G_CALLBACK (palette_import_response),
                     import_dialog);

@@ -91,6 +91,12 @@ grid_dialog_new (GimpImage *gimage,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GRID_RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (grid_dialog_response),
                     dialog);

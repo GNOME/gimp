@@ -117,6 +117,11 @@ offset_dialog_new (GimpDrawable *drawable,
 
                               NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),

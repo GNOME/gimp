@@ -637,6 +637,11 @@ DepthMerge_dialog (DepthMerge *dm)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dm->interface->dialog),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dm->interface->dialog)->vbox),

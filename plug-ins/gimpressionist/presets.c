@@ -627,6 +627,11 @@ create_save_preset (void)
 
                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_signal_connect (window, "response",
                     G_CALLBACK (save_preset_response),
                     NULL);

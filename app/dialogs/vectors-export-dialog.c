@@ -58,6 +58,11 @@ vectors_export_dialog_new (GimpImage *image,
 
                                  NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_window_set_screen (GTK_WINDOW (dialog->dialog),
                          gtk_widget_get_screen (parent));
 

@@ -2500,6 +2500,12 @@ makewindow (void)
 
                             NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                              RESPONSE_RESET,
+					      GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_signal_connect (window, "response",
                     G_CALLBACK (sphere_response),
                     NULL);

@@ -177,6 +177,11 @@ image_scale_confirm_dialog (ImageScaleDialog *dialog)
                     G_CALLBACK (image_scale_confirm_response),
                     dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (widget),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   return widget;
 }
 

@@ -155,6 +155,11 @@ ico_specs_dialog_new (gint num_layers)
                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
                              NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   /* We store an array that holds each icon's requested bit depth
      with the dialog. It's queried when the dialog is closed so the
      save routine knows what colormaps etc to generate in the saved

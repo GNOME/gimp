@@ -1599,6 +1599,13 @@ save_dialog (gint32    image_ID,
 
                          NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+					      RESPONSE_LOAD_DEFAULTS,
+                                              RESPONSE_SAVE_DEFAULTS,
+					      GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_signal_connect (dlg, "response",
                     G_CALLBACK (save_dialog_response),
                     &pg);

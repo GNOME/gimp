@@ -74,6 +74,11 @@ image_merge_layers_dialog_new (GimpImage     *image,
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_free, dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   frame = gimp_int_radio_group_new (TRUE, _("Final, Merged Layer should be:"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &dialog->merge_type, dialog->merge_type,

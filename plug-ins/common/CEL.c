@@ -693,6 +693,11 @@ palette_dialog (const gchar *title)
 
                                         NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), palette_file);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);

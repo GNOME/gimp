@@ -1245,6 +1245,11 @@ bender_new_dialog (GimpDrawable *drawable)
 
                                NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   g_signal_connect (cd->shell, "response",
                     G_CALLBACK (bender_response),
                     cd);

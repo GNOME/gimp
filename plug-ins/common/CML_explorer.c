@@ -1192,6 +1192,11 @@ CML_explorer_dialog (void)
 
                          NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   CML_preview_defer = TRUE;
 
   hbox = gtk_hbox_new (FALSE, 12);

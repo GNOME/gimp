@@ -1154,6 +1154,11 @@ save_dialog (gint32 drawable_ID)
 
                          NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                              GTK_RESPONSE_OK,
+                                              GTK_RESPONSE_CANCEL,
+                                              -1);
+
   /* parameter settings */
   frame = gimp_frame_new (_("XBM Options"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);

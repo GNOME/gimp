@@ -1200,6 +1200,11 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_response),
                     dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

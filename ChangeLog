@@ -1,5 +1,11 @@
 2005-02-08  Sven Neumann  <sven@gimp.org>
 
+	Applied a patch from Patrice Tremblay that makes (almost) all
+	dialogs obey the "gtk-alternative-button-order" setting
+	(bug #166678). Changes too many files to list them all...
+
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: add the gtk+ options to the GOptionContext.
 
 2005-02-08  Sven Neumann  <sven@gimp.org>
