@@ -18,12 +18,7 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
-
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -33,42 +28,34 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "vectors/gimpvectors.h"
-
 #include "gimp.h"
 #include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpgrid.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimpimage-duplicate.h"
+#include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 
-#include "gimp-intl.h"
+#include "vectors/gimpvectors.h"
 
 
 GimpImage *
 gimp_image_duplicate (GimpImage *gimage)
 {
-  PixelRegion       srcPR, destPR;
-  GimpImage        *new_gimage;
-  GimpLayer        *new_layer;
-  GimpLayer        *floating_layer;
-  GimpChannel      *new_channel;
-  GimpVectors      *new_vectors;
-  GList            *list;
-  GimpLayer        *active_layer              = NULL;
-  GimpChannel      *active_channel            = NULL;
-  GimpVectors      *active_vectors            = NULL;
-  GimpDrawable     *new_floating_sel_drawable = NULL;
-  GimpDrawable     *floating_sel_drawable     = NULL;
-  GimpParasiteList *parasites;
-  gint              count;
+  GimpImage    *new_gimage;
+  GimpLayer    *floating_layer;
+  GList        *list;
+  GimpLayer    *active_layer              = NULL;
+  GimpChannel  *active_channel            = NULL;
+  GimpVectors  *active_vectors            = NULL;
+  GimpDrawable *new_floating_sel_drawable = NULL;
+  GimpDrawable *floating_sel_drawable     = NULL;
+  gint          count;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   gimp_set_busy_until_idle (gimage->gimp);
@@ -80,10 +67,17 @@ gimp_image_duplicate (GimpImage *gimage)
 				  FALSE);
   gimp_image_undo_disable (new_gimage);
 
+  /*  Copy the colormap if necessary  */
+  if (new_gimage->base_type == GIMP_INDEXED)
+    gimp_image_set_colormap (new_gimage,
+                             gimp_image_get_colormap (gimage),
+                             gimp_image_get_colormap_size (gimage),
+                             FALSE);
+
   /*  Copy resolution and unit information  */
   new_gimage->xresolution = gimage->xresolution;
   new_gimage->yresolution = gimage->yresolution;
-  new_gimage->unit = gimage->unit;
+  new_gimage->unit        = gimage->unit;
 
   /*  Copy floating layer  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -101,22 +95,23 @@ gimp_image_duplicate (GimpImage *gimage)
        list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
+      GimpLayer *new_layer;
 
-      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
-                                                   G_TYPE_FROM_INSTANCE (layer),
-                                                   FALSE));
-
-      gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
+      new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
+                                                 new_gimage,
+                                                 G_TYPE_FROM_INSTANCE (layer),
+                                                 FALSE));
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
 			    gimp_object_get_name (GIMP_OBJECT (layer)));
 
       /*  Make sure that if the layer has a layer mask,
-          it's name isn't screwed up  */
+       *  its name isn't screwed up
+       */
       if (new_layer->mask)
         gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
-                              gimp_object_get_name (GIMP_OBJECT(layer->mask)));
+                              gimp_object_get_name (GIMP_OBJECT (layer->mask)));
 
       if (gimp_image_get_active_layer (gimage) == layer)
 	active_layer = new_layer;
@@ -137,13 +132,13 @@ gimp_image_duplicate (GimpImage *gimage)
        list = g_list_next (list))
     {
       GimpChannel *channel = list->data;
+      GimpChannel *new_channel;
 
       new_channel =
-        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                           G_TYPE_FROM_INSTANCE (channel),
-                                           FALSE));
-
-      gimp_item_set_image (GIMP_ITEM (new_channel), new_gimage);
+        GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (channel),
+                                         new_gimage,
+                                         G_TYPE_FROM_INSTANCE (channel),
+                                         FALSE));
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),
@@ -164,13 +159,13 @@ gimp_image_duplicate (GimpImage *gimage)
        list = g_list_next (list))
     {
       GimpVectors *vectors = list->data;
+      GimpVectors *new_vectors;
 
       new_vectors =
-        GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                           G_TYPE_FROM_INSTANCE (vectors),
-                                           FALSE));
-
-      gimp_item_set_image (GIMP_ITEM (new_vectors), new_gimage);
+        GIMP_VECTORS (gimp_item_convert (GIMP_ITEM (vectors),
+                                         new_gimage,
+                                         G_TYPE_FROM_INSTANCE (vectors),
+                                         FALSE));
 
       /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_vectors),
@@ -183,15 +178,24 @@ gimp_image_duplicate (GimpImage *gimage)
     }
 
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR,
-		     gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)),
-		     0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR,
-		     gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask)),
-		     0, 0, gimage->width, gimage->height, TRUE);
-  copy_region (&srcPR, &destPR);
-  new_gimage->selection_mask->bounds_known = FALSE;
-  new_gimage->selection_mask->boundary_known = FALSE;
+  {
+    TileManager *src_tiles;
+    TileManager *dest_tiles;
+    PixelRegion  srcPR, destPR;
+
+    src_tiles  = gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask));
+    dest_tiles = gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask));
+
+    pixel_region_init (&srcPR, src_tiles,
+                       0, 0, gimage->width, gimage->height, FALSE);
+    pixel_region_init (&destPR, dest_tiles,
+                       0, 0, gimage->width, gimage->height, TRUE);
+
+    copy_region (&srcPR, &destPR);
+
+    new_gimage->selection_mask->bounds_known   = FALSE;
+    new_gimage->selection_mask->boundary_known = FALSE;
+  }
 
   /*  Set active layer, active channel, active vectors  */
   if (active_layer)
@@ -206,17 +210,11 @@ gimp_image_duplicate (GimpImage *gimage)
   if (floating_layer)
     floating_sel_attach (floating_layer, new_floating_sel_drawable);
 
-  /*  Copy the colormap if necessary  */
-  if (new_gimage->base_type == GIMP_INDEXED)
-    memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
-
-  new_gimage->num_cols = gimage->num_cols;
-
   /*  Copy state of all color channels  */
   for (count = 0; count < MAX_CHANNELS; count++)
     {
       new_gimage->visible[count] = gimage->visible[count];
-      new_gimage->active[count] = gimage->active[count];
+      new_gimage->active[count]  = gimage->active[count];
     }
 
   /*  Copy any guides  */
@@ -239,20 +237,19 @@ gimp_image_duplicate (GimpImage *gimage)
 	}
     }
 
-  /* Copy the grid */
+  /*  Copy the grid  */
   if (gimage->grid)
-    new_gimage->grid = gimp_config_duplicate (GIMP_CONFIG (gimage->grid));
+    gimp_image_set_grid (new_gimage, gimage->grid, FALSE);
 
-  /* Copy the qmask info */
+  /*  Copy the qmask info  */
   new_gimage->qmask_state = gimage->qmask_state;
   new_gimage->qmask_color = gimage->qmask_color;
 
-  /* Copy parasites */
-  parasites = gimage->parasites;
-  if (parasites)
+  /*  Copy parasites  */
+  if (gimage->parasites)
     {
       g_object_unref (new_gimage->parasites);
-      new_gimage->parasites = gimp_parasite_list_copy (parasites);
+      new_gimage->parasites = gimp_parasite_list_copy (gimage->parasites);
     }
 
   gimp_image_undo_enable (new_gimage);

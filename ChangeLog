@@ -1,5 +1,13 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-duplicate.c: Removed unused #includes. Copy
+	the colormap using the provided API. Use gimp_item_convert()
+	instead of gimp_item_duplicate() and gimp_item_set_image() to
+	create layers, channels and vectors for the new image. Don't leak
+	the new image's grid. Cleanup.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	Fixed memory management of layers and channels which were created
 	using the PDB:
 
