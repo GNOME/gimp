@@ -70,10 +70,25 @@ pygimp_PYTHON = \
 pygimp_DATA = pygimp-logo.png
 
 pyenvdir = $(gimpplugindir)/environ
+pyinterpdir = $(gimpplugindir)/interpreters
 
-install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(pyenvdir)
-	echo ": PYTHONPATH=$(pygimpdir)" > $(DESTDIR)$(pyenvdir)/pygimp.env
+pyenvfile = $(pyenvdir)/pygimp.env
+pyinterpfile = $(pyinterpdir)/pygimp.interp
+
+install-env-file:
+	$(mkinstalldirs) '$(DESTDIR)$(pyenvdir)'
+	echo ": PYTHONPATH=$(pygimpdir)" > '$(DESTDIR)$(pyenvfile)'
+
+install-interp-file:
+	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
+	echo 'python=$(PYTHON)' > '$(DESTDIR)$(pyinterpfile)'
+	echo '/usr/bin/python=$(PYTHON)' >> '$(DESTDIR)$(pyinterpfile)'
+	echo ':Python:E::py::python:' >> '$(DESTDIR)$(pyinterpfile)'
+
+install-data-local: install-env-file install-interp-file
+
+uninstall-local:
+	rm -f '$(DESTDIR)$(pyenvfile)' '$(DESTDIR)$(pyinterpfile)'
 
 snap:
 	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`
