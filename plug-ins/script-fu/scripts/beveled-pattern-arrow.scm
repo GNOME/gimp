@@ -20,61 +20,65 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-(define (map proc seq)
-  (if (null? seq)
-      '()
-      (cons (proc (car seq))
-	    (map proc (cdr seq)))))
-
-(define (for-each proc seq)
-  (if (not (null? seq))
-      (begin
-	(proc (car seq))
-	(for-each proc (cdr seq)))))
-
-(define (make-point x y)
-  (cons x y))
-
-(define (point-x p)
-  (car p))
-
-(define (point-y p)
-  (cdr p))
-
-(define (point-list->double-array point-list)
-  (let* ((how-many (length point-list))
-	 (a (cons-array (* 2 how-many) 'double))
-	 (count 0))
-    (for-each (lambda (p)
-		(aset a (* count 2) (point-x p))
-		(aset a (+ 1 (* count 2)) (point-y p))
-		(set! count (+ count 1)))
-	      point-list)
-    a))
-
-(define (rotate-points points size orientation)
-  (map (lambda (p)
-	 (let ((px (point-x p))
-	       (py (point-y p)))
-	   (cond ((= orientation 0) (make-point px py))           ; right
-		 ((= orientation 1) (make-point (- size px) py))  ; left
-		 ((= orientation 2) (make-point py (- size px)))  ; up
-		 ((= orientation 3) (make-point py px)))))        ; down
-       points))
-
-(define (make-arrow size offset)
-  (list (make-point offset offset)
-	(make-point (- size offset) (/ size 2))
-	(make-point offset (- size offset))))
-
 (define (script-fu-beveled-pattern-arrow size orientation pattern)
+
+  ; define some local helper functions
+  (define (map proc seq)
+    (if (null? seq)
+        '()
+        (cons (proc (car seq))
+              (map proc (cdr seq)))))
+
+  (define (for-each proc seq)
+    (if (not (null? seq))
+        (begin
+          (proc (car seq))
+          (for-each proc (cdr seq)))))
+
+  (define (make-point x y)
+    (cons x y))
+
+  (define (point-x p)
+    (car p))
+
+  (define (point-y p)
+    (cdr p))
+
+  (define (point-list->double-array point-list)
+    (let* ((how-many (length point-list))
+           (a (cons-array (* 2 how-many) 'double))
+           (count 0))
+      (for-each (lambda (p)
+                  (aset a (* count 2) (point-x p))
+                  (aset a (+ 1 (* count 2)) (point-y p))
+                  (set! count (+ count 1)))
+                point-list)
+      a))
+
+  (define (rotate-points points size orientation)
+    (map (lambda (p)
+           (let ((px (point-x p))
+                 (py (point-y p)))
+             (cond ((= orientation 0) (make-point px py))           ; right
+                   ((= orientation 1) (make-point (- size px) py))  ; left
+                   ((= orientation 2) (make-point py (- size px)))  ; up
+                   ((= orientation 3) (make-point py px)))))        ; down
+         points))
+
+  (define (make-arrow size offset)
+    (list (make-point offset offset)
+          (make-point (- size offset) (/ size 2))
+          (make-point offset (- size offset))))
+
+  ; the main function
+
   (let* ((old-bg-color (car (gimp-palette-get-background)))
-	 (img (car (gimp-image-new size size RGB)))
-	 (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
-	 (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
-	 (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
-	 (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
+         (img (car (gimp-image-new size size RGB)))
+         (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
+         (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+         (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
+         (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
+         (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
@@ -134,15 +138,15 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-		    "Beveled pattern arrow"
-		    "Federico Mena Quintero"
-		    "Federico Mena Quintero"
-		    "July 1997"
-		    ""
-		    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
-		    SF-OPTION     _"Orientation" '(_"Right"
-						    _"Left"
-						    _"Up"
-						    _"Down")
-		    SF-PATTERN    _"Pattern"     "Wood")
+                    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
+                    "Beveled pattern arrow"
+                    "Federico Mena Quintero"
+                    "Federico Mena Quintero"
+                    "July 1997"
+                    ""
+                    SF-ADJUSTMENT _"Size"     '(32 5 150 1 10 0 1)
+                    SF-OPTION     _"Orientation" '(_"Right"
+                                                   _"Left"
+                                                   _"Up"
+                                                   _"Down")
+                    SF-PATTERN    _"Pattern"     "Wood")

@@ -24,51 +24,68 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (make-point x y)
-  (cons x y))
-
-(define (point-x p)
-  (car p))
-
-(define (point-y p)
-  (cdr p))
-
-(define (point-list->double-array point-list)
-  (define (convert points array pos)
-    (if (not (null? points))
-        (begin
-          (aset array (* 2 pos) (point-x (car points)))
-          (aset array (+ 1 (* 2 pos)) (point-y (car points)))
-          (convert (cdr points) array (+ pos 1)))))
-
-  (let* ((how-many (length point-list))
-         (a (cons-array (* 2 how-many) 'double)))
-    (convert point-list a 0)
-    a))
-
-(define (make-arrow size
-                    offset)
-  (list (make-point offset offset)
-        (make-point (- size offset) (/ size 2))
-        (make-point offset (- size offset))))
-
-
-(define (rotate-points points size orientation)
-  (map (lambda (p)
-         (let ((px (point-x p))
-               (py (point-y p)))
-           (cond ((= orientation 0) (make-point px py))           ; right
-                 ((= orientation 1) (make-point (- size px) py))  ; left
-                 ((= orientation 2) (make-point py (- size px)))  ; up
-                 ((= orientation 3) (make-point py px)))))        ; down
-       points))
-
-
 (define (script-fu-alien-glow-right-arrow size
                                           orientation
                                           glow-color
                                           bg-color
                                           flatten)
+
+  ; some local helper functions, better to not define globally,
+  ; since otherwise the definitions could be clobbered by other scripts.
+  (define (map proc seq)
+    (if (null? seq)
+        '()
+        (cons (proc (car seq))
+              (map proc (cdr seq)))))
+
+  (define (for-each proc seq)
+    (if (not (null? seq))
+        (begin
+          (proc (car seq))
+          (for-each proc (cdr seq)))))
+
+  (define (make-point x y)
+    (cons x y))
+
+  (define (point-x p)
+    (car p))
+
+  (define (point-y p)
+    (cdr p))
+
+  (define (point-list->double-array point-list)
+    (define (convert points array pos)
+      (if (not (null? points))
+          (begin
+            (aset array (* 2 pos) (point-x (car points)))
+            (aset array (+ 1 (* 2 pos)) (point-y (car points)))
+            (convert (cdr points) array (+ pos 1)))))
+
+    (let* ((how-many (length point-list))
+           (a (cons-array (* 2 how-many) 'double)))
+      (convert point-list a 0)
+      a))
+
+  (define (make-arrow size
+                      offset)
+    (list (make-point offset offset)
+          (make-point (- size offset) (/ size 2))
+          (make-point offset (- size offset))))
+
+
+  (define (rotate-points points size orientation)
+    (map (lambda (p)
+           (let ((px (point-x p))
+                 (py (point-y p)))
+             (cond ((= orientation 0) (make-point px py))           ; right
+                   ((= orientation 1) (make-point (- size px) py))  ; left
+                   ((= orientation 2) (make-point py (- size px)))  ; up
+                   ((= orientation 3) (make-point py px)))))        ; down
+         points))
+
+
+  ; the main function
+
   (let* ((img (car (gimp-image-new size size RGB)))
          (grow-amount (/ size 12))
          (blur-radius (/ size 3))

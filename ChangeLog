@@ -1,3 +1,11 @@
+2004-03-23  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/scripts/alien-glow-arrow.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm: Make
+	helper functions local to the scripts. The better fix for
+	bug #136868. Should also be done for a lot of other scripts,
+	but is too likely to introduce new bugs to do this now.
+
 2004-03-23  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
