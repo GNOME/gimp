@@ -202,12 +202,8 @@ gimp_size_box_constructor (GType                  type,
   GObject            *object;
   GimpSizeBox        *box;
   GtkWidget          *entry;
-  GtkWidget          *table;
   GtkWidget          *hbox;
-  GtkWidget          *chain;
   GtkWidget          *label;
-  GtkObject          *adjustment;
-  GList              *focus_chain = NULL;
   GimpSizeBoxPrivate *priv;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);

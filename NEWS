@@ -9,7 +9,7 @@ to GIMP version 2.4.
 Bugs fixed in GIMP 2.2.1
 ========================
 
-- added python logo to EXTRA_DIST so it shows up in the tarball (bug #)
+- added python logo to EXTRA_DIST so it shows up in the tarball (bug #161716)
 - fixed mempory corruption in FracalExplorer plug-in (bug #161729)
 - fixed crash in gradient editor (bug #161411)
 - fixed crash in unsharp mask plug-in preview code (bug #157910)
@@ -18,6 +18,10 @@ Bugs fixed in GIMP 2.2.1
 - removed broken asc2img Script-Fu
 - fixed channel drag-n-drop (bug #161877)
 - fixed misbehaviour of entries in Scale and Resize dialogs (bug #161756)
-- speed up preview in Motion Blur plug-in
+- speed up preview in several plug-ins
 - fixed bug in Despeckle plug-in that caused it to run very slowly
   (bug #162129)
+- fixed a crash in the error dialog (bug #162147)
+- fixed parameter value range in Weave script (bug #162182)
+- fixed crash in brush preview (bug #162232)
+- minor improvements to the API docs

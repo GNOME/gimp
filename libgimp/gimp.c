@@ -484,8 +484,8 @@ gimp_quit (void)
  * @author:        the procedure's author(s).
  * @copyright:     the procedure's copyright.
  * @date:          the date the procedure was added.
- * @menu_path:     the procedure's menu path, or #NULL if the procedure has
- *                 no menu entry.
+ * @menu_label:    the label to use for the procedure's menu entry,
+ *                 or #NULL if the procedure has no menu entry.
  * @image_types:   the drawable types the procedure can handle.
  * @type:          the type of the procedure.
  * @n_params:      the number of parameters the procedure takes.
@@ -506,11 +506,13 @@ gimp_quit (void)
  * optional but then you shouldn't write procedures without proper
  * documentation, should you.
  *
- * @menu_path can be #NULL, or a string in the form
- * "&lt;Domain&gt;/Path/To/My/Menu"
- * (e.g. "&lt;Image&gt;/Filters/Render/Useless") if you want your
- * procedure to be available via a menu.  Allowed prefixes are
- * &lt;Toolbox&gt;, &lt;Image&gt;, &lt;Load&gt; and &lt;Save&gt;
+ * @menu_label defines the label that should be used for the
+ * procedure's menu entry (use #NULL if the procedure shouldn't have a
+ * menu entry).  The position where to register in the menu hierarchy
+ * is choosen using gimp_plugin_menu_register().  This function also
+ * still accepts the old (pre-2.2) way of registering a menu entry and
+ * takes a string in the form "&lt;Domain&gt;/Path/To/My/Menu"
+ * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
  *
  * @type must be one of #GIMP_PLUGIN or #GIMP_EXTENSION. Note that
  * temporary procedures must be installed using
@@ -538,7 +540,7 @@ gimp_install_procedure (const gchar        *name,
 			const gchar        *author,
 			const gchar        *copyright,
 			const gchar        *date,
-			const gchar        *menu_path,
+			const gchar        *menu_label,
 			const gchar        *image_types,
 			GimpPDBProcType     type,
 			gint                n_params,
@@ -561,7 +563,7 @@ gimp_install_procedure (const gchar        *name,
   proc_install.author       = (gchar *) author;
   proc_install.copyright    = (gchar *) copyright;
   proc_install.date         = (gchar *) date;
-  proc_install.menu_path    = (gchar *) menu_path;
+  proc_install.menu_path    = (gchar *) menu_label;
   proc_install.image_types  = (gchar *) image_types;
   proc_install.type         = type;
   proc_install.nparams      = n_params;
@@ -582,7 +584,7 @@ gimp_install_procedure (const gchar        *name,
  * @author:        the procedure's author(s).
  * @copyright:     the procedure's copyright.
  * @date:          the date the procedure was added.
- * @menu_path:     the procedure's menu path, or #NULL if the procedure has
+ * @menu_label:    the procedure's menu label, or #NULL if the procedure has
  *                 no menu entry.
  * @image_types:   the drawable types the procedure can handle.
  * @type:          the type of the procedure.
@@ -619,7 +621,7 @@ gimp_install_temp_proc (const gchar        *name,
 			const gchar        *author,
 			const gchar        *copyright,
 			const gchar        *date,
-			const gchar        *menu_path,
+			const gchar        *menu_label,
 			const gchar        *image_types,
 			GimpPDBProcType     type,
 			gint                n_params,
@@ -639,7 +641,7 @@ gimp_install_temp_proc (const gchar        *name,
   gimp_install_procedure (name,
 			  blurb, help,
 			  author, copyright, date,
-			  menu_path,
+			  menu_label,
 			  image_types,
 			  type,
 			  n_params, n_return_vals,

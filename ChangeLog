@@ -1,5 +1,14 @@
 2004-12-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.[ch] (gimp_install_procedure, gimp_install_temp_proc):
+	renamed menu_path parameter to menu_label and added a pointer to
+	gimp_plugin_menu_register()
+
+	* app/widgets/gimpsizebox.c (gimp_size_box_constructor): removed
+	unused variables.
+
+2004-12-28  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	reverted Bill's change since it is obviously not the right fix.
 	Allocate the array larger to avoid the crash. We need to
