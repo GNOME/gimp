@@ -119,7 +119,7 @@ GETTEXT_PACKAGE=gimp14
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
 
-ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sv tr uk zh_CN zh_TW"
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT

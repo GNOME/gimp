@@ -1,3 +1,7 @@
+2002-03-22  Duarte Loreto <happyguy_pt@hotmail.com>
+
+        * configure.in: Added Portuguese (pt) to ALL_LINGUAS
+
 2002-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c: gimp_dock_add_book() optimized to about
