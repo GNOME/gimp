@@ -53,6 +53,7 @@ app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
+app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationview.c
 app/display/gimpprogress.c
 app/display/gimpstatusbar.c

@@ -1,3 +1,7 @@
+2003-01-06  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation.
+
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added libgimpwidgets/gimpmemsizeentry.c.

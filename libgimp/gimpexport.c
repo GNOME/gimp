@@ -167,7 +167,7 @@ static ExportAction export_action_merge =
 {
   export_merge,
   NULL,
-  N_("can't handle layers"),
+  N_("%s can't handle layers"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -176,7 +176,7 @@ static ExportAction export_action_merge_single =
 {
   export_merge,
   NULL,
-  N_("can't handle layer offsets, size or opacity"),
+  N_("%s can't handle layer offsets, size or opacity"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -185,7 +185,7 @@ static ExportAction export_action_animate_or_merge =
 {
   export_merge,
   NULL,
-  N_("can only handle layers as animation frames"),
+  N_("%s can only handle layers as animation frames"),
   { N_("Merge Visible Layers"), N_("Save as Animation")},
   0
 };
@@ -194,7 +194,7 @@ static ExportAction export_action_animate_or_flatten =
 {
   export_flatten,
   NULL,
-  N_("can only handle layers as animation frames"),
+  N_("%s can only handle layers as animation frames"),
   { N_("Flatten Image"), N_("Save as Animation") },
   0
 };
@@ -203,7 +203,7 @@ static ExportAction export_action_merge_flat =
 {
   export_flatten,
   NULL,
-  N_("can't handle layers"),
+  N_("%s can't handle layers"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -212,7 +212,7 @@ static ExportAction export_action_flatten =
 {
   export_flatten,
   NULL,
-  N_("can't handle transparency"),
+  N_("%s can't handle transparency"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -221,7 +221,7 @@ static ExportAction export_action_convert_rgb =
 {
   export_convert_rgb,
   NULL,
-  N_("can only handle RGB images"),
+  N_("%s can only handle RGB images"),
   { N_("Convert to RGB"), NULL },
   0
 };
@@ -230,7 +230,7 @@ static ExportAction export_action_convert_grayscale =
 {
   export_convert_grayscale,
   NULL,
-  N_("can only handle grayscale images"),
+  N_("%s can only handle grayscale images"),
   { N_("Convert to Grayscale"), NULL },
   0
 };
@@ -239,7 +239,7 @@ static ExportAction export_action_convert_indexed =
 {
   export_convert_indexed,
   NULL,
-  N_("can only handle indexed images"),
+  N_("%s can only handle indexed images"),
   { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"), NULL },
   0
@@ -249,7 +249,7 @@ static ExportAction export_action_convert_rgb_or_grayscale =
 {
   export_convert_rgb,
   export_convert_grayscale,
-  N_("can only handle RGB or grayscale images"),
+  N_("%s can only handle RGB or grayscale images"),
   { N_("Convert to RGB"), N_("Convert to Grayscale")},
   0
 };
@@ -258,7 +258,7 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   export_convert_rgb,
   export_convert_indexed,
-  N_("can only handle RGB or indexed images"),
+  N_("%s can only handle RGB or indexed images"),
   { N_("Convert to RGB"), N_("Convert to Indexed using default settings\n"
 			     "(Do it manually to tune the result)")},
   0
@@ -268,7 +268,7 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 {
   export_convert_indexed,
   export_convert_grayscale,
-  N_("can only handle grayscale or indexed images"),
+  N_("%s can only handle grayscale or indexed images"),
   { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"), 
     N_("Convert to Grayscale") },
@@ -279,7 +279,7 @@ static ExportAction export_action_add_alpha =
 {
   export_add_alpha,
   NULL,
-  N_("needs an alpha channel"),
+  N_("%s needs an alpha channel"),
   { N_("Add Alpha Channel"), NULL},
   0
 };
@@ -336,7 +336,7 @@ export_toggle_callback (GtkWidget *widget,
 }
 
 static gint
-confirm_save_dialog (const gchar *saving_what,
+confirm_save_dialog (const gchar *message,
 		     const gchar *format_name)
 {
   GtkWidget    *vbox;
@@ -344,7 +344,8 @@ confirm_save_dialog (const gchar *saving_what,
   gchar        *text;
 
   dialog_return = GIMP_EXPORT_CANCEL;
-  g_return_val_if_fail (saving_what != NULL && format_name != NULL, dialog_return);
+  g_return_val_if_fail (message != NULL, dialog_return);
+  g_return_val_if_fail (format_name != NULL, dialog_return);
 
   /*
    *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -373,11 +374,10 @@ confirm_save_dialog (const gchar *saving_what,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_widget_show (vbox);
 
-  text = g_strdup_printf (_("You are about to save %s as %s.\n"
-			    "This will not save the visible layers."),
-			  saving_what, format_name);
+  text = g_strdup_printf (message, format_name);
   label = gtk_label_new (text);
   g_free (text);
+
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -464,8 +464,7 @@ export_dialog (GSList      *actions,
       action = (ExportAction *) (list->data);
 
       label = gtk_label_new (NULL);
-      text = g_strdup_printf ("<b>%s %s</b>",
-                              format_name, gettext (action->reason));
+      text = g_strdup_printf (gettext (action->reason), format_name);
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
       
@@ -592,10 +591,15 @@ gimp_export_image (gint32                 *image_ID,
       && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
       if (gimp_drawable_is_layer_mask (*drawable_ID))
-	dialog_return = confirm_save_dialog (_("a layer mask"),	format_name);
+	dialog_return =
+          confirm_save_dialog (_("You are about to save a layer mask as %s.\n"
+                                 "This will not save the visible layers."),
+                               format_name);
       else if (gimp_drawable_is_channel (*drawable_ID))
-	dialog_return = confirm_save_dialog (_("a channel (saved selection)"),
-					     format_name);
+	dialog_return =
+          confirm_save_dialog (_("You are about to save a channel (saved selection) as %s.\n"
+                                 "This will not save the visible layers."),
+                               format_name);
       else
 	; /* this should not happen */
 

@@ -580,13 +580,13 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
 
   /*  Instructions  */
-  label = gtk_label_new (_("Select the number of times"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  if (editor->control_sel_l == editor->control_sel_r)
+    label = gtk_label_new (_("Select the number of times\n"
+                             "to replicate the selected segment."));
+  else
+    label = gtk_label_new (_("Select the number of times\n"
+                             "to replicate the selection."));
 
-  label = gtk_label_new ((editor->control_sel_l == editor->control_sel_r) ?
-			 _("to replicate the selected segment") :
-			 _("to replicate the selection"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -696,14 +696,13 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
 
   /*  Instructions  */
-  label = gtk_label_new (_("Please select the number of uniform parts"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  if (editor->control_sel_l == editor->control_sel_r)
+    label = gtk_label_new (_("Select the number of uniform parts\n"
+                             "in which to split the selected segment."));
+  else
+    label = gtk_label_new (_("Select the number of uniform parts\n"
+                             "in which to split the segments in the selection."));
 
-  label =
-    gtk_label_new ((editor->control_sel_l == editor->control_sel_r) ?
-		   _("in which to split the selected segment") :
-		   _("in which to split the segments in the selection"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
