@@ -1,10 +1,17 @@
 2002-03-20  Sven Neumann  <sven@gimp.org>
 
-	* app/core/core-enums.[ch]: registered GimpConvertDitherType.
+	* app/core/core-enums.[ch]: registered GimpConvertDitherType and
+	skip GIMP_NODESTRUCT_DITHER since the comment said it should never
+	be used.
 	
 	* app/gui/convert-dialog.c: simplified a lot by using enums.
 
 	* app/tools/paint_options.c: include gimpenummenu.h.
+
+	* app/pdb/convert_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
 
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 

@@ -68,7 +68,6 @@ init_generated_constants (void)
   setvar (cintern ("FS-DITHER"), flocons (1), NIL);
   setvar (cintern ("FSLOWBLEED-DITHER"), flocons (2), NIL);
   setvar (cintern ("FIXED-DITHER"), flocons (3), NIL);
-  setvar (cintern ("NODESTRUCT-DITHER"), flocons (4), NIL);
 
   setvar (cintern ("MAKE-PALETTE"), flocons (0), NIL);
   setvar (cintern ("REUSE-PALETTE"), flocons (1), NIL);

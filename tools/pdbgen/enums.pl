@@ -193,6 +193,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_CHANNEL => '4',
 		       GIMP_ALPHA_CHANNEL => '5' }
 	},
+    GimpConvertDitherType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
+			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER) ],
+	  mapping => { GIMP_NO_DITHER => '0',
+		       GIMP_FS_DITHER => '1',
+		       GIMP_FSLOWBLEED_DITHER => '2',
+		       GIMP_FIXED_DITHER => '3' }
+	},
     GimpGradientType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -259,18 +269,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_WEB_PALETTE => '2',
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
-	},
-    GimpConvertDitherType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
-			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER
-			  GIMP_NODESTRUCT_DITHER) ],
-	  mapping => { GIMP_NO_DITHER => '0',
-		       GIMP_FS_DITHER => '1',
-		       GIMP_FSLOWBLEED_DITHER => '2',
-		       GIMP_FIXED_DITHER => '3',
-		       GIMP_NODESTRUCT_DITHER => '4' }
 	},
     GimpFillType =>
 	{ contig => 1,

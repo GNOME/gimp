@@ -152,7 +152,7 @@ convert_indexed_invoker (Gimp     *gimp,
     success = FALSE;
 
   dither_type = args[1].value.pdb_int;
-  if (dither_type < GIMP_NO_DITHER || dither_type > GIMP_NODESTRUCT_DITHER)
+  if (dither_type < GIMP_NO_DITHER || dither_type > GIMP_FIXED_DITHER)
     success = FALSE;
 
   palette_type = args[2].value.pdb_int;
