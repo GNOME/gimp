@@ -1,5 +1,12 @@
 2004-01-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste): 
+	call gimp_drawable_invalidate_boundary() because the drawable's
+	size may have changed. Fixes bug #132077. Removed call to
+	floating_sel_invalidate() which is now redundant.
+
+2004-01-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/info-dialog.[ch]: renamed info_dialog_popdown() to
 	info_dialog_hide() and info_dialog_popup() to info_dialog_present().
 	Added info_dialog_show() which just shows the dialog without

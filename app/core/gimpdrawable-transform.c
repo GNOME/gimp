@@ -1071,8 +1071,6 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
       /*  End the group undo  */
       gimp_image_undo_group_end (gimage);
-
-      return TRUE;
     }
   else
     {
@@ -1082,6 +1080,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
         channel = GIMP_CHANNEL (drawable);
       else
         return FALSE;
+
+      gimp_drawable_invalidate_boundary (drawable);
 
       if (layer && (tile_manager_bpp (tiles) == 2 ||
                     tile_manager_bpp (tiles) == 4))
@@ -1128,15 +1128,9 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                             0, 0,
                             gimp_item_width  (GIMP_ITEM (drawable)),
                             gimp_item_height (GIMP_ITEM (drawable)));
-
-      /*  if we were operating on the floating selection, then it's boundary
-       *  and previews need invalidating
-       */
-      if (drawable == (GimpDrawable *) floating_layer)
-        floating_sel_invalidate (floating_layer);
-
-      return TRUE;
     }
+
+  return TRUE;
 }
 
 #define BILINEAR(jk, j1k, jk1, j1k1, dx, dy) \
