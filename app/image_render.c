@@ -61,6 +61,7 @@ guchar *temp_buf = NULL;
 
 static guint   check_mod;
 static guint   check_shift;
+static guint   tile_shift;
 static guchar  check_combos[6][2] =
 {
   { 204, 255 },
@@ -82,6 +83,9 @@ render_setup (int check_type,
   /*  based on the tile size, determine the tile shift amount
    *  (assume here that tile_height and tile_width are equal)
    */
+  tile_shift = 0;
+  while ((1 << tile_shift) < TILE_WIDTH)
+    tile_shift++;
 
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (!tile_buf)
@@ -556,19 +560,24 @@ render_image_rgb (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  int y, x;
-  gboolean initial;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
   float error;
-  const int ye = info->y + info->h;
-  const int xe = info->x + info->w;
-  const float step = 1.0 / info->scaley;
+  float step;
 
   y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  step = 1.0 / info->scaley;
 
   error = y * step;
   error -= (int)error - step;
 
   initial = TRUE;
+  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -621,17 +630,20 @@ render_image_rgb_a (RenderInfo *info)
   gulong r, g, b;
   guint a;
   int dark_light;
-  gboolean byte_order;
-  int y, x;
+  int byte_order;
+  int y, ye;
+  int x, xe;
   int initial;
   float error;
-  const int ye = info->y + info->h;
-  const int xe = info->x + info->w;
-  const float step = 1.0 / info->scaley;
+  float step;
 
   alpha = info->alpha;
 
   y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  step = 1.0 / info->scaley;
 
   error = y * step;
   error -= ((int)error) - step;
@@ -828,14 +840,16 @@ render_image_tile_fault (RenderInfo *info)
 	  x += step;
 	  data += step * bpp;
 
-	  if ((x >> TILE_SHIFT) != tilex)
+	  if ((x >> tile_shift) != tilex)
 	    {
 	      tile_release (tile, FALSE);
 	      tilex += 1;
 
 	      tile = tile_manager_get_tile (info->src_tiles, srctilex=x,
 					    srctiley=info->src_y, TRUE, FALSE);
-	      
+	      if (!tile)
+		return tile_buf;
+
 	      data = tile_data_pointer (tile, 
 			    x % TILE_WIDTH,
 			    info->src_y % TILE_HEIGHT);

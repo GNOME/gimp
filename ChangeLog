@@ -1,6 +1,12 @@
 2000-10-24  Daniel Egger <egger@suse.de>
 
 	* app/image_render.c:
+	* app/tile.h: Revert last patch because it broke 
+	the renderer for some people.
+
+2000-10-24  Daniel Egger <egger@suse.de>
+
+	* app/image_render.c:
 	* app/tile.h: Removed the JIT calculation of the tile_shift
 	value and replaced it by a constant called TILE_SHIFT in tile.h.
 	This gives the compiler a better chance to optimize the code.
