@@ -1,3 +1,7 @@
+2003-03-17  Sven Neumann  <sven@gimp.org>
+
+	* data/images/gimp_splash.png: new splash thanks to Jimmac.
+
 2003-03-17  Michael Natterer  <mitch@gimp.org>
 
 	Made drawable/layer properties (visibility, opacity etc.)
