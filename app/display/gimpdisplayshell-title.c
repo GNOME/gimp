@@ -37,6 +37,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-unit.h"
+#include "core/gimpitem.h"
 
 #include "file/file-utils.h"
 
@@ -147,34 +148,11 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  const gchar      *format)
 {
   GimpImage *gimage;
-  gchar     *image_type_str = NULL;
-  gboolean   empty;
-  gint       i;
-  gchar      unit_format[8];
+  gint       i = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimage = shell->gdisp->gimage;
-
-  empty = gimp_image_is_empty (gimage);
-
-  switch (gimp_image_base_type (gimage))
-    {
-    case GIMP_RGB:
-      image_type_str = empty ? _("RGB-empty") : _("RGB");
-      break;
-    case GIMP_GRAY:
-      image_type_str = empty ? _("grayscale-empty") : _("grayscale");
-      break;
-    case GIMP_INDEXED:
-      image_type_str = empty ? _("indexed-empty") : _("indexed");
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-  i = 0;
 
   while (i < title_len && *format)
     {
@@ -194,9 +172,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 	    case 'f': /* pruned filename */
 	      {
-		gchar *basename;
+                const gchar *uri = gimp_image_get_uri (gimage);
+		gchar       *basename;
 
-		basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
+		basename = file_utils_uri_to_utf8_basename (uri);
 
 		i += print (title, title_len, i, "%s", basename);
 
@@ -207,8 +186,9 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 'F': /* full filename */
 	      {
 		gchar *filename;
+                const gchar *uri = gimp_image_get_uri (gimage);
 
-		filename = file_utils_uri_to_utf8_filename (gimp_image_get_uri (gimage));
+		filename = file_utils_uri_to_utf8_filename (uri);
 
                 i += print (title, title_len, i, "%s", filename);
 
@@ -225,7 +205,28 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 't': /* type */
-	      i += print (title, title_len, i, "%s", image_type_str);
+              {
+                const gchar *image_type_str = NULL;
+                gboolean     empty          = gimp_image_is_empty (gimage);
+
+                switch (gimp_image_base_type (gimage))
+                  {
+                  case GIMP_RGB:
+                    image_type_str = empty ? _("RGB-empty") : _("RGB");
+                    break;
+                  case GIMP_GRAY:
+                    image_type_str = empty ? _("grayscale-empty") : _("grayscale");
+                    break;
+                  case GIMP_INDEXED:
+                    image_type_str = empty ? _("indexed-empty") : _("indexed");
+                    break;
+                  default:
+                    g_assert_not_reached ();
+                    break;
+                  }
+
+                i += print (title, title_len, i, "%s", image_type_str);
+              }
 	      break;
 
 	    case 's': /* user source zoom factor */
@@ -305,17 +306,33 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
+            case 'P': /* active drawable PDB id */
+              {
+                GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+
+                if (drawable)
+                  i += print (title, title_len, i, "%d",
+                              gimp_item_get_ID (GIMP_ITEM (drawable)));
+                else
+                  i += print (title, title_len, i, "%s", _("(none)"));
+              }
+              break;
+
 	    case 'w': /* width in pixels */
 	      i += print (title, title_len, i, "%d", gimage->width);
 	      break;
 
 	    case 'W': /* width in real-world units */
-              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_image_unit_get_digits (gimage) + 1);
-              i += print (title, title_len, i, unit_format,
-                          (gimage->width *
-                           gimp_image_unit_get_factor (gimage) /
-                           gimage->xresolution));
+              {
+                gchar unit_format[8];
+
+                g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                            gimp_image_unit_get_digits (gimage) + 1);
+                i += print (title, title_len, i, unit_format,
+                            (gimage->width *
+                             gimp_image_unit_get_factor (gimage) /
+                             gimage->xresolution));
+              }
               break;
 
 	    case 'h': /* height in pixels */
@@ -323,12 +340,16 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 'H': /* height in real-world units */
-              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_image_unit_get_digits (gimage) + 1);
-              i += print (title, title_len, i, unit_format,
-                          (gimage->height *
-                           gimp_image_unit_get_factor (gimage) /
-                           gimage->yresolution));
+              {
+                gchar unit_format[8];
+
+                g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                            gimp_image_unit_get_digits (gimage) + 1);
+                i += print (title, title_len, i, unit_format,
+                            (gimage->height *
+                             gimp_image_unit_get_factor (gimage) /
+                             gimage->yresolution));
+              }
               break;
 
 	    case 'u': /* unit symbol */

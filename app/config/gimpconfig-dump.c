@@ -305,6 +305,7 @@ static const gchar * display_format_description =
 "%L  the number of layers (long form)\n"
 "%m  memory used by the image\n"
 "%n  the name of the active layer/channel\n"
+"%P  the PDB id of the active layer/channel\n"
 "%w  image width in pixels\n"
 "%W  image width in real-world units\n"
 "%h  image height in pixels\n"
