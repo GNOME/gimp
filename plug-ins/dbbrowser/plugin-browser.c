@@ -100,10 +100,12 @@ static GtkWidget * gimp_plugin_desc           (void);
 static gboolean    find_existing_mpath        (GtkTreeModel     *model,
                                                gchar            *mpath,
                                                GtkTreeIter      *return_iter);
-static gboolean    list_store_select_callback (GtkTreeSelection *selection,
+static void        list_store_select_callback (GtkTreeSelection *selection,
                                                PDesc            *pdesc);
-static gboolean    tree_store_select_callback (GtkTreeSelection *selection,
+static void        tree_store_select_callback (GtkTreeSelection *selection,
                                                PDesc            *pdesc);
+static void        procedure_general_select_callback (PDesc *pdesc,
+                                                      PInfo *pinfo);
 
 
 static gchar *proc_type_str[] =
@@ -255,7 +257,7 @@ format_menu_path (gchar *s)
   return newstr;
 }
 
-static gint
+static void
 procedure_general_select_callback (PDesc *pdesc,
                                    PInfo *pinfo)
 {
@@ -278,11 +280,11 @@ procedure_general_select_callback (PDesc *pdesc,
   gint             table_row = 0;
   gchar           *str;
 
-  g_return_val_if_fail (pdesc != NULL, FALSE);
-  g_return_val_if_fail (pinfo != NULL, FALSE);
+  g_return_if_fail (pdesc != NULL);
+  g_return_if_fail (pinfo != NULL);
 
   if (pdesc->descr_scroll == NULL)
-    return FALSE;
+    return;
 
   selected_proc_blurb     = NULL;
   selected_proc_help      = NULL;
@@ -487,11 +489,9 @@ procedure_general_select_callback (PDesc *pdesc,
     g_free (selected_params);
   if (selected_return_vals)
     g_free (selected_return_vals);
-
-  return FALSE;
 }
 
-static gboolean
+static void
 list_store_select_callback (GtkTreeSelection *selection,
                             PDesc            *pdesc)
 {
@@ -500,7 +500,7 @@ list_store_select_callback (GtkTreeSelection *selection,
   GtkTreeModel *model;
   gchar        *mpath = NULL;
 
-  g_return_val_if_fail (pdesc != NULL, FALSE);
+  g_return_if_fail (pdesc != NULL);
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -511,7 +511,7 @@ list_store_select_callback (GtkTreeSelection *selection,
     }
 
   if (!pinfo || !mpath)
-    return FALSE;
+    return;
 
   model = gtk_tree_view_get_model (pdesc->tree_view);
   if (find_existing_mpath (model, mpath, &iter))
@@ -538,10 +538,10 @@ list_store_select_callback (GtkTreeSelection *selection,
       g_warning ("Failed to find node in tree");
     }
   g_free (mpath);
-  return procedure_general_select_callback (pdesc, pinfo);
+  procedure_general_select_callback (pdesc, pinfo);
 }
 
-static gboolean
+static void
 tree_store_select_callback (GtkTreeSelection *selection,
                             PDesc            *pdesc)
 {
@@ -551,7 +551,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
   gchar        *mpath = NULL;
   gboolean      valid, found;
 
-  g_return_val_if_fail (pdesc != NULL, FALSE);
+  g_return_if_fail (pdesc != NULL);
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -562,7 +562,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
     }
 
   if (!pinfo || !mpath)
-    return FALSE;
+    return;
 
   /* Get the first iter in the list */
   model = gtk_tree_view_get_model (pdesc->list_view);
@@ -610,7 +610,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
       g_warning ("Failed to find node in list");
     }
 
-  return procedure_general_select_callback (pdesc, pinfo);
+  procedure_general_select_callback (pdesc, pinfo);
 }
 
 static void
@@ -748,11 +748,11 @@ insert_into_tree_view (PDesc *pdesc,
                        gchar *types_str,
                        PInfo *pinfo)
 {
-  gchar       *labels[3];
-  gchar       *str_ptr;
-  gchar       *tmp_ptr;
-  gchar       *leaf_ptr;
-  GtkTreeIter  parent, iter;
+  gchar        *labels[3];
+  gchar        *str_ptr;
+  gchar        *tmp_ptr;
+  gchar        *leaf_ptr;
+  GtkTreeIter   parent, iter;
   GtkTreeView  *tree_view;
   GtkTreeStore *tree_store;
 

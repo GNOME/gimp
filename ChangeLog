@@ -1,3 +1,9 @@
+2004-01-14  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/plugindetails.c: callbacks attached to the "changed"
+	signal for of GtkTreeSelection should return void.
+	Small cosmetics fixes also.
+
 2004-01-14  Tor Lillqvist  <tml@iki.fi>
 
 	* app/file/file-utils.[ch]: Add new function
