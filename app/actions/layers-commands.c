@@ -380,9 +380,9 @@ void
 layers_mask_edit_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpImage         *gimage;
-  GimpLayer         *layer;
-  GimpLayerMask     *mask;
+  GimpImage     *gimage;
+  GimpLayer     *layer;
+  GimpLayerMask *mask;
   return_if_no_layer (gimage, layer, data);
 
   mask = gimp_layer_get_mask (layer);
@@ -401,10 +401,9 @@ void
 layers_mask_show_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpImage         *gimage;
-  GimpLayer         *layer;
-  GimpLayerMask     *mask;
-
+  GimpImage     *gimage;
+  GimpLayer     *layer;
+  GimpLayerMask *mask;
   return_if_no_layer (gimage, layer, data);
 
   mask = gimp_layer_get_mask (layer);
@@ -424,10 +423,9 @@ void
 layers_mask_disable_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpImage         *gimage;
-  GimpLayer         *layer;
-  GimpLayerMask     *mask;
-
+  GimpImage     *gimage;
+  GimpLayer     *layer;
+  GimpLayerMask *mask;
   return_if_no_layer (gimage, layer, data);
 
   mask = gimp_layer_get_mask (layer);
