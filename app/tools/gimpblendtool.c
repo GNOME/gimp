@@ -42,6 +42,7 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
+#include "libgimp/gimpcolorspace.h"
 
 
 /*  target size  */
@@ -188,9 +189,6 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 					     double sx, double sy, double ex, double ey,
 					     progress_func_t progress_callback,
 					     void *progress_data);
-
-static void   calc_rgb_to_hsv                            (double *r, double *g, double *b);
-static void   calc_hsv_to_rgb                            (double *h, double *s, double *v);
 
 
 /*  functions  */
@@ -1316,7 +1314,7 @@ gradient_render_pixel (double   x,
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
       if (rbd->blend_mode == FG_BG_HSV_MODE)
-	calc_hsv_to_rgb (&color->r, &color->g, &color->b);
+	hsv_to_rgb_double (&color->r, &color->g, &color->b);
     }
 }
 
@@ -1411,8 +1409,8 @@ gradient_fill_region (GImage          *gimage,
     case FG_BG_HSV_MODE:
       /* Convert to HSV */
 
-      calc_rgb_to_hsv(&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
-      calc_rgb_to_hsv(&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
+      rgb_to_hsv_double(&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
+      rgb_to_hsv_double(&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
 
       break;
 
@@ -1567,150 +1565,6 @@ gradient_fill_region (GImage          *gimage,
 	}
     }
 }
-
-static void
-calc_rgb_to_hsv (double *r, 
-		 double *g, 
-		 double *b)
-{
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
-
-  red   = *r;
-  green = *g;
-  blue  = *b;
-
-  h = 0.0; /* Shut up -Wall */
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0.0)
-    s = (max - min) / max;
-  else
-    s = 0.0;
-
-  if (s == 0.0)
-    h = 0.0;
-  else
-    {
-      delta = max - min;
-
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h /= 6.0;
-
-      if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-static void
-calc_hsv_to_rgb (double *h, 
-		 double *s, 
-		 double *v)
-{
-  double hue, saturation, value;
-  double f, p, q, t;
-
-  if (*s == 0.0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v; /* heh */
-    }
-  else
-    {
-      hue        = *h * 6.0;
-      saturation = *s;
-      value      = *v;
-
-      if (hue == 6.0)
-	hue = 0.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - saturation * f);
-      t = value * (1.0 - saturation * (1.0 - f));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  *h = value;
-	  *s = t;
-	  *v = p;
-	  break;
-
-	case 1:
-	  *h = q;
-	  *s = value;
-	  *v = p;
-	  break;
-
-	case 2:
-	  *h = p;
-	  *s = value;
-	  *v = t;
-	  break;
-
-	case 3:
-	  *h = p;
-	  *s = q;
-	  *v = value;
-	  break;
-
-	case 4:
-	  *h = t;
-	  *s = p;
-	  *v = value;
-	  break;
-
-	case 5:
-	  *h = value;
-	  *s = p;
-	  *v = q;
-	  break;
-	}
-    }
-}
-
 
 /****************************/
 /*  Global blend functions  */

@@ -30,7 +30,7 @@ libgimpi_a_SOURCES = \
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpcolorbutton.c	\
-	gimpcolorbutton.h	\
+	gimpcolorspace.c	\
 	gimpfileselection.c	\
 	gimpfileselection.h	\
 	gimpmatrix.c		\
@@ -67,6 +67,8 @@ endif
 libgimp_la_SOURCES = \
 	gimp.c			\
 	gimpchannel.c		\
+	gimpcolorbutton.h	\
+	gimpcolorspace.c	\
 	gimpdisplay.c		\
 	gimpdrawable.c		\
 	gimpenv.c		\
@@ -115,6 +117,7 @@ gimpinclude_HEADERS = \
 	gimp.h			\
 	gimpchainbutton.h	\
 	gimpcolorbutton.h	\
+	gimpcolorspace.h	\
         gimpcompat.h		\
 	gimpenums.h		\
 	gimpenv.h		\

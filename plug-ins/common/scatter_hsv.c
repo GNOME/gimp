@@ -22,6 +22,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,8 +57,6 @@ static int randomize_value (int	now,
 			    int max,
 			    int mod_p,
 			    int	rand_max);
-void hsv_to_rgb (int *h, int *s, int *v);
-void rgb_to_hsv (int *r, int *g, int *b);
 
 static gint	DIALOG ();
 static void	ERROR_DIALOG (gint gtk_was_not_initialized, guchar *message);
@@ -371,140 +370,6 @@ void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b)
       *r = h;
       *g = s;
       *b = v;
-    }
-}
-
-void
-rgb_to_hsv (int *r,
-	    int *g,
-	    int *b)
-{
-  int red, green, blue;
-  float h, s, v;
-  int min, max;
-  int delta;
-
-  h = 0.0;
-  red = *r;
-  green = *g;
-  blue = *b;
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0)
-    s = ((max - min) * 255) / (float) max;
-  else
-    s = 0;
-
-  if (s == 0)
-    h = 0;
-  else
-    {
-      delta = max - min;
-      if (red == max)
-	h = (green - blue) / (float) delta;
-      else if (green == max)
-	h = 2 + (blue - red) / (float) delta;
-      else if (blue == max)
-	h = 4 + (red - green) / (float) delta;
-      h *= 42.5;
-
-      if (h < 0)
-	h += 255;
-      if (h > 255)
-	h -= 255;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-void
-hsv_to_rgb (int *h,
-	    int *s,
-	    int *v)
-{
-  float hue, saturation, value;
-  float f, p, q, t;
-
-  if (*s == 0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v;
-    }
-  else
-    {
-      hue = *h * 6.0 / 255.0;
-      if (hue == 6.0)
-	hue = 0.0;
-      saturation = *s / 255.0;
-      value = *v / 255.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - (saturation * f));
-      t = value * (1.0 - (saturation * (1.0 - f)));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  *h = value * 255;
-	  *s = t * 255;
-	  *v = p * 255;
-	  break;
-	case 1:
-	  *h = q * 255;
-	  *s = value * 255;
-	  *v = p * 255;
-	  break;
-	case 2:
-	  *h = p * 255;
-	  *s = value * 255;
-	  *v = t * 255;
-	  break;
-	case 3:
-	  *h = p * 255;
-	  *s = q * 255;
-	  *v = value * 255;
-	  break;
-	case 4:
-	  *h = t * 255;
-	  *s = p * 255;
-	  *v = value * 255;
-	  break;
-	case 5:
-	  *h = value * 255;
-	  *s = p * 255;
-	  *v = q * 255;
-	  break;
-	}
     }
 }
 

@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 
 
 /* Declare local functions.
@@ -47,9 +48,6 @@ static void      vinvert_render_row (const guchar *src_row,
 				     guchar *dest_row,
 				     gint row_width,
 				     const gint bytes);
-
-void  fp_rgb_to_hsv            (float *, float *, float *);
-void  fp_hsv_to_rgb            (float *, float *, float *);
 
 
 static GRunModeType run_mode;
@@ -90,141 +88,6 @@ query ()
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
-
-
-
-void
-fp_rgb_to_hsv (float *r,
-            float *g,
-            float *b)
-{
-  int red, green, blue;
-  float h=0, s, v;
-  int min, max;
-  int delta;
-
-  red = *r;
-  green = *g;
-  blue = *b;
-
-  if (red > green)
-    {
-      if (red > blue)
-        max = red;
-      else
-        max = blue;
-
-      if (green < blue)
-        min = green;
-      else
-        min = blue;
-    }
-  else
-    {
-      if (green > blue)
-        max = green;
-      else
-        max = blue;
-
-      if (red < blue)
-        min = red;
-      else
-        min = blue;
-    }
-
-  v = max;
-
-  if (max != 0)
-    s = ((max - min) * 255) / (float) max;
-  else
-    s = 0;
-
-  if (s == 0)
-    h = 0;
-  else
-    {
-      delta = max - min;
-      if (red == max)
-        h = (green - blue) / (float) delta;
-      else if (green == max)
-        h = 2 + (blue - red) / (float) delta;
-      else if (blue == max)
-        h = 4 + (red - green) / (float) delta;
-      h *= 42.5;
-
-      if (h < 0)
-        h += 255;
-      if (h > 255)
-        h -= 255;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-
-void
-fp_hsv_to_rgb (float *h,
-            float *s,
-            float *v)
-{
-  float hue, saturation, value;
-  float f, p, q, t;
-
-  if (((int)*s) == 0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v;
-    }
-  else
-    {
-      hue = *h * 6.0 / 255.0;
-      saturation = *s / 255.0;
-      value = *v / 255.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - (saturation * f));
-      t = value * (1.0 - (saturation * (1.0 - f)));
-
-      switch ((int) hue)
-        {
-        case 0:
-          *h = value * 255.0;
-          *s = t * 255.0;
-          *v = p * 255.0;
-          break;
-        case 1:
-          *h = q * 255.0;
-          *s = value * 255.0;
-          *v = p * 255.0;
-          break;
-        case 2:
-          *h = p * 255.0;
-          *s = value * 255.0;
-          *v = t * 255.0;
-          break;
-        case 3:
-          *h = p * 255.0;
-          *s = q * 255.0;
-          *v = value * 255.0;
-          break;
-        case 4:
-          *h = t * 255.0;
-          *s = p * 255.0;
-          *v = value * 255.0;
-          break;
-        case 5:
-          *h = value * 255.0;
-          *s = p * 255.0;
-          *v = q * 255.0;
-          break;
-        }
-    }
-}
-
 
 static void
 run (char    *name,
@@ -316,19 +179,19 @@ vinvert_render_row (const guchar *src_data,
 {
   while (col--)
     {
-      float v1, v2, v3;
+      int v1, v2, v3;
 
-      v1 = (float)src_data[col*bytes   ];
-      v2 = (float)src_data[col*bytes +1];
-      v3 = (float)src_data[col*bytes +2];
+      v1 = src_data[col*bytes   ];
+      v2 = src_data[col*bytes +1];
+      v3 = src_data[col*bytes +2];
 
-      fp_rgb_to_hsv(&v1, &v2, &v3);
-      v3 = 255.0-v3;
-      fp_hsv_to_rgb(&v1, &v2, &v3);
+      rgb_to_hsv(&v1, &v2, &v3);
+      v3 = 255-v3;
+      hsv_to_rgb(&v1, &v2, &v3);
 
-      dest_data[col*bytes   ] = (int)v1;
-      dest_data[col*bytes +1] = (int)v2;
-      dest_data[col*bytes +2] = (int)v3;
+      dest_data[col*bytes   ] = v1;
+      dest_data[col*bytes +1] = v2;
+      dest_data[col*bytes +2] = v3;
 
       if (bytes>3)
 	{

@@ -553,14 +553,6 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
 #define ANTI_ERASE_INDEXED                27
 #define NO_COMBINATION                    28
 
-
-/*  Color conversion routines  */
-void  rgb_to_hsv            (int *, int *, int *);
-void  hsv_to_rgb            (int *, int *, int *);
-void  rgb_to_hls            (int *, int *, int *);
-int   rgb_to_l              (int, int, int);
-void  hls_to_rgb            (int *, int *, int *);
-
 /* Opacities */
 #define TRANSPARENT_OPACITY        0
 #define OPAQUE_OPACITY             255

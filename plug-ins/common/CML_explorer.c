@@ -84,6 +84,7 @@
 
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpcolorspace.h"
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -396,8 +397,6 @@ static void	CML_compute_next_step (gint size,
 static gdouble CML_next_value (gdouble *vec, gint pos, gint size,
 			       gdouble c1, gdouble c2,
 			       CML_PARAM *param, gdouble aux);
-static void	rgb_to_hsv (int *r, int *g, int *b);
-static void	hsv_to_rgb (int *h, int *s, int *v);
 static gdouble	logistic_function (CML_PARAM *param, gdouble x, gdouble power);
 static gint	DIALOG ();
 static GtkWidget *CML_dialog_sub_panel_new (GtkWidget *parent,
@@ -1165,139 +1164,6 @@ logistic_function (CML_PARAM *param, gdouble x, gdouble power)
       break;
     }
   return result;
-}
-
-static void
-rgb_to_hsv (int *r,
-	    int *g,
-	    int *b)
-{
-  int red, green, blue;
-  float h = 0 , s, v;
-  int min, max;
-  int delta;
-
-  red = *r;
-  green = *g;
-  blue = *b;
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0)
-    s = ((max - min) * 255) / (float) max;
-  else
-    s = 0;
-
-  if (s == 0)
-    h = 0;
-  else
-    {
-      delta = max - min;
-      if (red == max)
-	h = (green - blue) / (float) delta;
-      else if (green == max)
-	h = 2 + (blue - red) / (float) delta;
-      else if (blue == max)
-	h = 4 + (red - green) / (float) delta;
-      h *= 42.5;
-
-      if (h < 0)
-	h += 255;
-      if (h > 255)
-	h -= 255;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-static void
-hsv_to_rgb (int *h,
-	    int *s,
-	    int *v)
-{
-  float hue, saturation, value;
-  float f, p, q, t;
-
-  if (*s == 0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v;
-    }
-  else
-    {
-      hue = *h * 6.0 / 255.0;
-      if (hue == 6.0)
-	hue = 0.0;
-      saturation = *s / 255.0;
-      value = *v / 255.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - (saturation * f));
-      t = value * (1.0 - (saturation * (1.0 - f)));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  *h = value * 255;
-	  *s = t * 255;
-	  *v = p * 255;
-	  break;
-	case 1:
-	  *h = q * 255;
-	  *s = value * 255;
-	  *v = p * 255;
-	  break;
-	case 2:
-	  *h = p * 255;
-	  *s = value * 255;
-	  *v = t * 255;
-	  break;
-	case 3:
-	  *h = p * 255;
-	  *s = q * 255;
-	  *v = value * 255;
-	  break;
-	case 4:
-	  *h = t * 255;
-	  *s = p * 255;
-	  *v = value * 255;
-	  break;
-	case 5:
-	  *h = value * 255;
-	  *s = p * 255;
-	  *v = q * 255;
-	  break;
-	}
-    }
 }
 
 /* dialog stuff */

@@ -29,9 +29,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 
 #define SCALE_WIDTH 175
 #define MAX_CHANNELS 4
@@ -112,18 +114,6 @@ static GTile*    rpnt                  (GDrawable * drawable,
 					gint       bytes,
 					gdouble    inten,
 					guchar color[MAX_CHANNELS]);
-static void      rgb_to_hsl            (gdouble    r,
-					gdouble    g,
-					gdouble    b,
-					gdouble *  h,
-					gdouble *  s,
-					gdouble *  l);
-static void      hsl_to_rgb            (gdouble    h,
-					gdouble    sl,
-					gdouble    l,
-					gdouble *  r,
-					gdouble *  g,
-					gdouble *  b);
 static void      sparkle_close_callback(GtkWidget *widget,
 					gpointer   data);
 static void      sparkle_ok_callback   (GtkWidget *widget,
@@ -746,8 +736,8 @@ compute_lum_threshold (GDrawable *drawable,
   gint x1, y1, x2, y2;
 
   /*  zero out the luminosity values array  */
-  for (i = 0; i < 256; i++)
-    values[i] = 0;
+
+  memset(values,0,sizeof(gint)*256);
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   gray = gimp_drawable_is_gray (drawable->id);
@@ -907,118 +897,7 @@ sparkle (GDrawable *drawable,
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static void
-fspike (GPixelRgn *dest_rgn,
-	gint       gray,
-	gint       x1,
-	gint       y1,
-	gint       x2,
-	gint       y2,
-	gdouble    xr,
-	gdouble    yr,
-	gint       tile_width,
-	gint       tile_height,
-	gdouble    inten,
-	gdouble    length,
-	gdouble    angle)
-{
-  gdouble xrt, yrt, dx, dy;
-  gdouble rpos;
-  gdouble in;
-  gdouble theta, efac;
-  gdouble sfac;
-  gdouble r, g, b;
-  gdouble h, s, l;
-  GTile *tile = NULL;
-  gint row, col;
-  gint i;
-  gint bytes;
-  gint x, y;
-  gint ok;
-  guchar pixel[MAX_CHANNELS];
-  guchar color[MAX_CHANNELS];
-
-  theta = angle;
-  efac = 2.0;    /* exponent on intensity falloff with radius */
-  bytes = dest_rgn->bpp;
-  row = -1;
-  col = -1;
-
-  /* draw the major spikes */
-  for (i = 0; i < svals.spike_pts; i++)
-    {
-      x = (int) (xr + 0.5);
-      y = (int) (yr + 0.5);
-
-      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
-
-      if (svals.colortype == FOREGROUND)
-	gimp_palette_get_foreground (&color[0], &color[1], &color[2]);
-      else if (svals.colortype == BACKGROUND)
-	gimp_palette_get_background (&color[0], &color[1], &color[2]);
-      else 
-	{
-	       color[0] = pixel[0];
-	       color[1] = pixel[1];
-	       color[2] = pixel[2];
-	}
-      if (svals.invers != FALSE)
-	{
-	       color[0] = 255 - color[0];
-	       color[1] = 255 - color[1];
-	       color[2] = 255 - color[2];
-        }
-      if (svals.random_hue != 0.0 || svals.random_saturation != 0.0)
-        {
- 	       r = color[0] / 255.0;
- 	       g = color[1] / 255.0;
- 	       b = color[2] / 255.0;             
-               rgb_to_hsl(r, g, b, &h, &s, &l);  
-               h = h + svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5);
-               if (h >= 1.0) h -= 1.0;
-               else if (h < 0) h += 1.0;
-               s = s + svals.random_saturation * (2 * (gdouble) rand() / (gdouble) RAND_MAX - 1.0);
-               if (s > 1.0) s = 1.0;
-               hsl_to_rgb(h, s, l, &r, &g, &b);
-               color[0] = r * 255.0;
-               color[1] = g * 255.0;
-               color[2] = b * 255.0;
-	}
-
-      dx = 0.2 * cos (theta * G_PI / 180.0);
-      dy = 0.2 * sin (theta * G_PI / 180.0);
-      xrt = xr;
-      yrt = yr;
-      rpos = 0.2;
-
-      do
-	{
-	  sfac = exp (-pow (rpos / length, efac));
-	  sfac = sfac * inten;
-	  ok = FALSE;
-
-        in = 0.2 * sfac;
-        if (in > 0.01)
-            ok = TRUE;
-
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
-
-	  xrt += dx;
-	  yrt += dy;
-	  rpos += 0.2;
-	} while (ok);
-
-      theta += 360.0 / svals.spike_pts;
-    }
-
-  if (tile)
-    gimp_tile_unref (tile, TRUE);
-}
-
-static GTile *
+static inline GTile *
 rpnt (GDrawable *drawable,
       GTile     *tile,
       gint       x1,
@@ -1090,7 +969,6 @@ rpnt (GDrawable *drawable,
           new += val * color[b];
 
           if (new > 255) new = 255;
-	  else new = new;
 
 	  if (svals.invers != FALSE)
 	      pixel[b] = 255 - new;
@@ -1102,106 +980,123 @@ rpnt (GDrawable *drawable,
   return tile;
 }
 
-
-/*
- * RGB-HSL transforms.
- * Ken Fishkin, Pixar Inc., January 1989.
- */
-
-/*
- * given r,g,b on [0 ... 1],
- * return (h,s,l) on [0 ... 1]
- */
-
 static void
-rgb_to_hsl (gdouble  r,
-	    gdouble  g,
-	    gdouble  b,
-	    gdouble *h,
-	    gdouble *s,
-	    gdouble *l)
+fspike (GPixelRgn *dest_rgn,
+	gint       gray,
+	gint       x1,
+	gint       y1,
+	gint       x2,
+	gint       y2,
+	gdouble    xr,
+	gdouble    yr,
+	gint       tile_width,
+	gint       tile_height,
+	gdouble    inten,
+	gdouble    length,
+	gdouble    angle)
 {
-  gdouble v;
-  gdouble m;
-  gdouble vm;
-  gdouble r2, g2, b2;
+  const gdouble efac = 2.0;
+  gdouble xrt, yrt, dx, dy;
+  gdouble rpos;
+  gdouble in;
+  gdouble theta;
+  gdouble sfac;
+  gint r, g, b;
+  GTile *tile = NULL;
+  gint row, col;
+  gint i;
+  gint bytes;
+  gint x, y;
+  gint ok;
+  guchar pixel[MAX_CHANNELS];
+  guchar color[MAX_CHANNELS];
 
-  v = MAX(r,g);
-  v = MAX(v,b);
-  m = MIN(r,g);
-  m = MIN(m,b);
+  theta = angle;
+  bytes = dest_rgn->bpp;
+  row = -1;
+  col = -1;
 
-  if ((*l = (m + v) / 2.0) <= 0.0)
-    return;
-  if ((*s = vm = v - m) > 0.0)
+  /* draw the major spikes */
+  for (i = 0; i < svals.spike_pts; i++)
     {
-      *s /= (*l <= 0.5) ? (v + m ) :
-	(2.0 - v - m) ;
-    }
-  else
-    return;
+      x = (int) (xr + 0.5);
+      y = (int) (yr + 0.5);
 
-  r2 = (v - r) / vm;
-  g2 = (v - g) / vm;
-  b2 = (v - b) / vm;
+      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
 
-  if (r == v)
-    *h = (g == m ? 5.0 + b2 : 1.0 - g2);
-  else if (g == v)
-    *h = (b == m ? 1.0 + r2 : 3.0 - b2);
-  else
-    *h = (r == m ? 3.0 + g2 : 5.0 - r2);
-
-  *h /= 6;
-}
-
-/*
- * given h,s,l on [0..1],
- * return r,g,b on [0..1]
- */
-
-static void
-hsl_to_rgb (gdouble  h,
-	    gdouble  sl,
-	    gdouble  l,
-	    gdouble *r,
-	    gdouble *g,
-	    gdouble *b)
-{
-  gdouble v;
-
-  v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
-  if (v <= 0)
-    {
-      *r = *g = *b = 0.0;
-    }
-  else
-    {
-      gdouble m;
-      gdouble sv;
-      gint sextant;
-      gdouble fract, vsf, mid1, mid2;
-
-      m = l + l - v;
-      sv = (v - m ) / v;
-      h *= 6.0;
-      sextant = h;
-      fract = h - sextant;
-      vsf = v * sv * fract;
-      mid1 = m + vsf;
-      mid2 = v - vsf;
-      switch (sextant)
+      switch (svals.colortype)
+      {
+	case FOREGROUND:
+	gimp_palette_get_foreground (&color[0], &color[1], &color[2]);
+	break;
+	
+	case BACKGROUND:
+	gimp_palette_get_background (&color[0], &color[1], &color[2]);
+	break;
+	
+	default:
+	color[0] = pixel[0];
+	color[1] = pixel[1];
+	color[2] = pixel[2];
+	break;	
+      }
+      
+      if (svals.invers)
 	{
-	case 0: *r = v; *g = mid1; *b = m; break;
-	case 1: *r = mid2; *g = v; *b = m; break;
-	case 2: *r = m; *g = v; *b = mid1; break;
-	case 3: *r = m; *g = mid2; *b = v; break;
-	case 4: *r = mid1; *g = m; *b = v; break;
-	case 5: *r = v; *g = m; *b = mid2; break;
+	       color[0] = 255 - color[0];
+	       color[1] = 255 - color[1];
+	       color[2] = 255 - color[2];
+        }
+      if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
+        {
+ 	       r = color[0];
+ 	       g = color[1];
+ 	       b = color[2];             
+               rgb_to_hls(&r, &g, &b);  
+               r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
+               if (r >= 255.0)
+		 r -= 255.0;
+               else if (r < 0) 
+                 r += 255.0;
+               b+= (svals.random_saturation * (2 * (gdouble) rand() / (gdouble) RAND_MAX - 1.0))*255;
+               if (b > 1.0) b = 1.0;
+               hls_to_rgb(&r, &g, &b);
+               color[0] = r;
+               color[1] = g;
+               color[2] = b;
 	}
-    }
-}
 
+      dx = 0.2 * cos (theta * G_PI / 180.0);
+      dy = 0.2 * sin (theta * G_PI / 180.0);
+      xrt = xr;
+      yrt = yr;
+      rpos = 0.2;
+
+      do
+	{
+	  sfac = inten * exp (-pow (rpos / length, efac));
+	  ok = FALSE;
+
+        in = 0.2 * sfac;
+        if (in > 0.01)
+            ok = TRUE;
+
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
+
+	  xrt += dx;
+	  yrt += dy;
+	  rpos += 0.2;
+	} while (ok);
+
+      theta += 360.0 / svals.spike_pts;
+    }
+
+  if (tile)
+    gimp_tile_unref (tile, TRUE);
+}
 
 /*  Sparkle interface functions  */
 

@@ -36,6 +36,7 @@
 
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpcolorspace.h"
 
 /* Declare local functions.
  */
@@ -48,9 +49,6 @@ static void      run    (char      *name,
 
 static void      autostretch_hsv (GDrawable * drawable);
 static void      indexed_autostretch_hsv (gint32 image_ID);
-
-static void calc_rgb_to_hsv(guchar *rgb, double *h, double *s, double *v);
-static void calc_hsv_to_rgb(guchar *rgb, double h, double s, double v);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -165,7 +163,7 @@ indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
   for (i=0;i<ncols;i++)
     {
       double h, s, v;
-      calc_rgb_to_hsv(&cmap[i*3], &h, &s, &v);
+      rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
       if (s > shi) shi = s;
       if (s < slo) slo = s;
       if (v > vhi) vhi = v;
@@ -175,12 +173,12 @@ indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
   for (i=0;i<ncols;i++)
     {
       double h, s, v;
-      calc_rgb_to_hsv(&cmap[i*3], &h, &s, &v);
+      rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
       if (shi!=slo)
 	s = (s-slo) / (shi-slo);
       if (vhi!=vlo)
 	v = (v-vlo) / (vhi-vlo);
-      calc_hsv_to_rgb(&cmap[i*3], h, s, v);
+      hsv_to_rgb4(&cmap[i*3], h, s, v);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
@@ -223,7 +221,7 @@ autostretch_hsv (GDrawable *drawable)
 	      if (!has_alpha || (has_alpha && s[alpha])) 
 		{
 		  double h, z, v;
-		  calc_rgb_to_hsv(s, &h, &z, &v);
+		  rgb_to_hsv4(s, &h, &z, &v);
 		  if (z > shi) shi = z;
 		  if (z < slo) slo = z;
 		  if (v > vhi) vhi = v;
@@ -259,12 +257,12 @@ autostretch_hsv (GDrawable *drawable)
 	  for (x = 0; x < src_rgn.w; x++)
 	    {
 	      double h, z, v;
-	      calc_rgb_to_hsv(s, &h, &z, &v);
+	      rgb_to_hsv4(s, &h, &z, &v);
 	      if (shi!=slo)
 		z = (z-slo) / (shi-slo);
 	      if (vhi!=vlo)
 		v = (v-vlo) / (vhi-vlo);
-	      calc_hsv_to_rgb(d, h, z, v);
+	      hsv_to_rgb4(d, h, z, v);
 
 	      if (has_alpha)
 		d[alpha] = s[alpha];
@@ -289,154 +287,3 @@ autostretch_hsv (GDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
-
-static void
-calc_rgb_to_hsv (guchar *rgb, 
-		 double *hue, 
-		 double *sat, 
-		 double *val)
-{
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
-
-  red   = rgb[0] / 255.0;
-  green = rgb[1] / 255.0;
-  blue  = rgb[2] / 255.0;
-
-  h = 0.0; /* Shut up -Wall */
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0.0)
-    s = (max - min) / max;
-  else
-    s = 0.0;
-
-  if (s == 0.0)
-    h = 0.0;
-  else
-    {
-      delta = max - min;
-
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h /= 6.0;
-
-      if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
-    }
-
-  *hue = h;
-  *sat = s;
-  *val = v;
-}
-
-static void
-calc_hsv_to_rgb (guchar *rgb, 
-		 double  h, 
-		 double  s, 
-		 double  v)
-{
-  double hue, saturation, value;
-  double f, p, q, t;
-
-  if (s == 0.0)
-    {
-      h = v;
-      s = v;
-      v = v; /* heh */
-    }
-  else
-    {
-      hue        = h * 6.0;
-      saturation = s;
-      value      = v;
-
-      if (hue == 6.0)
-	hue = 0.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - saturation * f);
-      t = value * (1.0 - saturation * (1.0 - f));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  h = value;
-	  s = t;
-	  v = p;
-	  break;
-
-	case 1:
-	  h = q;
-	  s = value;
-	  v = p;
-	  break;
-
-	case 2:
-	  h = p;
-	  s = value;
-	  v = t;
-	  break;
-
-	case 3:
-	  h = p;
-	  s = q;
-	  v = value;
-	  break;
-
-	case 4:
-	  h = t;
-	  s = p;
-	  v = value;
-	  break;
-
-	case 5:
-	  h = value;
-	  s = p;
-	  v = q;
-	  break;
-	}
-    }
-
-  rgb[0] = h*255;
-  rgb[1] = s*255;
-  rgb[2] = v*255;
-  
-}
-

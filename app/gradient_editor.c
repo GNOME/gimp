@@ -76,6 +76,7 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
+#include "libgimp/gimpcolorspace.h"
 
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
@@ -504,9 +505,6 @@ static double calc_sine_factor              (double middle, double pos);
 static double calc_sphere_increasing_factor (double middle, double pos);
 static double calc_sphere_decreasing_factor (double middle, double pos);
 
-static void   calc_rgb_to_hsv               (double *r, double *g, double *b);
-static void   calc_hsv_to_rgb               (double *h, double *s, double *v);
-
 /* Files and paths functions */
 
 static gchar *build_user_filename (char *name, char *path_str);
@@ -710,8 +708,8 @@ gradient_get_color_at (gradient_t *gradient,
       s1 = seg->g1;
       v1 = seg->b1;
 
-      calc_rgb_to_hsv(&h0, &s0, &v0);
-      calc_rgb_to_hsv(&h1, &s1, &v1);
+      rgb_to_hsv_double(&h0, &s0, &v0);
+      rgb_to_hsv_double(&h1, &s1, &v1);
 
       s0 = s0 + (s1 - s0) * factor;
       v0 = v0 + (v1 - v0) * factor;
@@ -751,7 +749,7 @@ gradient_get_color_at (gradient_t *gradient,
       *g = s0;
       *b = v0;
 
-      calc_hsv_to_rgb (r, g, b);
+      hsv_to_rgb_double (r, g, b);
     }
 }
 
@@ -2291,7 +2289,7 @@ prev_set_hint (gint x)
   s = g;
   v = b;
 
-  calc_rgb_to_hsv (&h, &s, &v);
+  rgb_to_hsv_double (&h, &s, &v);
 
   g_snprintf (str, sizeof (str), _("Position: %0.6f    "
 				   "RGB (%0.3f, %0.3f, %0.3f)    "
@@ -6197,152 +6195,6 @@ calc_sphere_decreasing_factor (double middle,
   return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
 }
 
-/*****/
-
-static void
-calc_rgb_to_hsv (double *r,
-		 double *g,
-		 double *b)
-{
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
-
-  red   = *r;
-  green = *g;
-  blue  = *b;
-
-  h = 0.0; /* Shut up -Wall */
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0.0)
-    s = (max - min) / max;
-  else
-    s = 0.0;
-
-  if (s == 0.0)
-    {
-      h = 0.0;
-    }
-  else
-    {
-      delta = max - min;
-
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h /= 6.0;
-
-      if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-static void
-calc_hsv_to_rgb (double *h,
-		 double *s,
-		 double *v)
-{
-  double hue, saturation, value;
-  double f, p, q, t;
-
-  if (*s == 0.0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v; /* heh */
-    }
-  else
-    {
-      hue        = *h * 6.0;
-      saturation = *s;
-      value      = *v;
-
-      if (hue == 6.0)
-	hue = 0.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - saturation * f);
-      t = value * (1.0 - saturation * (1.0 - f));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  *h = value;
-	  *s = t;
-	  *v = p;
-	  break;
-
-	case 1:
-	  *h = q;
-	  *s = value;
-	  *v = p;
-	  break;
-
-	case 2:
-	  *h = p;
-	  *s = value;
-	  *v = t;
-	  break;
-
-	case 3:
-	  *h = p;
-	  *s = q;
-	  *v = value;
-	  break;
-
-	case 4:
-	  *h = t;
-	  *s = p;
-	  *v = value;
-	  break;
-
-	case 5:
-	  *h = value;
-	  *s = p;
-	  *v = q;
-	  break;
-	}
-    }
-}
 
 /***** Files and paths functions *****/
 
