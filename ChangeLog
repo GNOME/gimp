@@ -21,8 +21,9 @@
 	* app/gui/gradients-commands.c
 	* app/gui/menus.c
 	* app/gui/pattern-select.c: GObject porting. 
-	Replaced all gtk_object_[unref|ref] calls by their g_object_ 
-	counterparts, expect refs that are used with gtk_object_sink().
+	Replaced all remainaing gtk_object_[unref|ref] calls by their 
+	g_object_ counterparts, except refs that are used with 
+	gtk_object_sink().
 
 2001-07-27  Sven Neumann  <sven@gimp.org>
 
