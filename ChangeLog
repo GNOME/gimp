@@ -1,3 +1,10 @@
+2001-10-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/sel_gauss.c: fixed wrong checks for number of
+	parameters when called non-interactively (bug #62433). Thanks to 
+	iccii@hotmail.com for spotting this and providing a patch.
+
 Mon Oct 15 10:52:22 PDT 2001 Manish Singh <yosh@gimp.org>
 
 	* configure.in: bumped version to 1.2.3, correct library ages (back
