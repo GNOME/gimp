@@ -409,14 +409,14 @@ if test "x$enable_mmx" = xyes; then
   save_ac_ext="$ac_ext"
   ac_ext=S
 
-  AC_MSG_CHECKING(whether the binutils support MMX)
+  AC_MSG_CHECKING(whether we can compile MMX code)
 
   echo "       movq 0, %mm0" > conftest.S
   if AC_TRY_EVAL(ac_compile); then
     AC_DEFINE(USE_MMX, 1, [Define to 1 if MMX assembly is available.])
     AC_MSG_RESULT(yes)
 
-    AC_MSG_CHECKING(whether the binutils support SSE)
+    AC_MSG_CHECKING(whether we can compile SSE code)
 
     echo "       movntps %xmm0, 0" > conftest.S
     if AC_TRY_EVAL(ac_compile); then
@@ -455,7 +455,7 @@ AM_CONDITIONAL(HAVE_ASM_MMX, test x$enable_mmx = xyes)
 ###################################
 # Checks for shared memory handling
 ###################################
-                                                                                
+
 dnl MacOS X has broken SysV shm
 case "$host_os" in
   darwin* | rhapsody* | machten*)
