@@ -36,8 +36,6 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "gui/clipboard.h"
-
 #include "actions.h"
 #include "edit-actions.h"
 #include "edit-commands.h"
@@ -47,8 +45,6 @@
 
 /*  local function prototypes  */
 
-static void   edit_actions_buffer_changed     (Gimp            *gimp,
-                                               GimpActionGroup *group);
 static void   edit_actions_foreground_changed (GimpContext     *context,
                                                const GimpRGB   *color,
                                                GimpActionGroup *group);
@@ -164,11 +160,6 @@ edit_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (edit_fill_actions),
                                       G_CALLBACK (edit_fill_cmd_callback));
 
-  g_signal_connect_object (group->gimp, "buffer_changed",
-                           G_CALLBACK (edit_actions_buffer_changed),
-                           group, 0);
-  edit_actions_buffer_changed (group->gimp, group);
-
   g_signal_connect_object (context, "foreground_changed",
                            G_CALLBACK (edit_actions_foreground_changed),
                            group, 0);
@@ -193,14 +184,11 @@ void
 edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpImage    *gimage;
+  GimpImage    *gimage       = action_data_get_image (data);
   GimpDrawable *drawable     = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
   gboolean      undo_enabled = FALSE;
-  gboolean      clipboard    = FALSE;
-
-  gimage = action_data_get_image (data);
 
   if (gimage)
     {
@@ -226,8 +214,6 @@ edit_actions_update (GimpActionGroup *group,
               g_strdup_printf (_("_Redo %s"),
                                gimp_object_get_name (GIMP_OBJECT (redo)));
         }
-
-      clipboard = clipboard_is_available (gimage->gimp);
     }
 
 
@@ -248,12 +234,12 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("edit-cut",          drawable);
   SET_SENSITIVE ("edit-copy",         drawable);
-  SET_SENSITIVE ("edit-paste",        clipboard);
-  SET_SENSITIVE ("edit-paste-into",   clipboard);
+  SET_SENSITIVE ("edit-paste",        gimage);
+  SET_SENSITIVE ("edit-paste-into",   gimage);
 
   SET_SENSITIVE ("edit-named-cut",    drawable);
   SET_SENSITIVE ("edit-named-copy",   drawable);
-  SET_SENSITIVE ("edit-named-paste",  drawable);
+  SET_SENSITIVE ("edit-named-paste",  gimage);
 
   SET_SENSITIVE ("edit-clear",        drawable);
   SET_SENSITIVE ("edit-fill-fg",      drawable);
@@ -266,17 +252,6 @@ edit_actions_update (GimpActionGroup *group,
 
 
 /*  private functions  */
-
-static void
-edit_actions_buffer_changed (Gimp            *gimp,
-                             GimpActionGroup *group)
-{
-  gboolean  paste = clipboard_is_available (gimp);
-
-  gimp_action_group_set_action_sensitive (group, "edit-paste",        paste);
-  gimp_action_group_set_action_sensitive (group, "edit-paste-into",   paste);
-  gimp_action_group_set_action_sensitive (group, "edit-paste-as-new", paste);
-}
 
 static void
 edit_actions_foreground_changed (GimpContext     *context,

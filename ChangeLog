@@ -1,5 +1,11 @@
 2004-07-02  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/edit-actions.c: don't let the Paste menu items
+	sensitivity depend on the availability of clipboard data because
+	we aren't notified when the GDK clipboard changes.
+
+2004-07-02  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/clipboard.[ch]: new files implementing a clipboard for
 	image data based on GDK_SELECTION_CLIPBOARD (bug #133247).
