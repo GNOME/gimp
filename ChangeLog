@@ -1,3 +1,7 @@
+Sat Jan 22 21:38:08 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpdnd.c: corrected off-by-one error in color dnd
+
 Sat Jan 22 18:50:18 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/global_edit.c: in edit_clear and edit_fill return TRUE if the

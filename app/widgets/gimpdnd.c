@@ -686,9 +686,9 @@ gimp_dnd_get_color_data (GtkWidget     *widget,
 
   vals = g_new (guint16, 4);
 
-  vals[0] = r * 0xff;
-  vals[1] = g * 0xff;
-  vals[2] = b * 0xff;
+  vals[0] = r * 0x100;
+  vals[1] = g * 0x100;
+  vals[2] = b * 0x100;
   vals[3] = 0xffff;
 
   *format = 16;
@@ -716,9 +716,9 @@ gimp_dnd_set_color_data (GtkWidget     *widget,
 
   color_vals = (guint16 *) vals;
 
-  r = color_vals[0] / 0xff;
-  g = color_vals[1] / 0xff;
-  b = color_vals[2] / 0xff;
+  r = color_vals[0] / 0x100;
+  g = color_vals[1] / 0x100;
+  b = color_vals[2] / 0x100;
 
   (* (GimpDndDropColorFunc) set_color_func) (widget, r, g, b,
 					     set_color_data);
