@@ -189,7 +189,7 @@
 		    SF-COLOR      _"Background color"         '(255 255 255)
 		    SF-TOGGLE     _"Use pattern for text instead of gradient" FALSE
 		    SF-PATTERN    _"Pattern (text)"           "Electric Blue"
-		    SF-TOGGLE     _"Use tattern for outline instead of gradient" FALSE
+		    SF-TOGGLE     _"Use pattern for outline instead of gradient" FALSE
 		    SF-PATTERN    _"Pattern (outline)"        "Electric Blue"
 		    SF-TOGGLE     _"Use pattern overlay"      FALSE
 		    SF-PATTERN    _"Pattern (overlay)"        "Parque #1"
