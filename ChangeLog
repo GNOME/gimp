@@ -15,7 +15,8 @@
  
 	* app/tools/gimpcurvestool.c
 	* app/tools/gimplevelstool.c
-	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimphistogrameditor.c: use the new function to hide
+	channels that are not available.
 
 2004-04-18  Henrik Brix Andersen  <brix@gimp.org>
 
