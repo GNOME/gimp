@@ -5,6 +5,7 @@ app/app_procs.c
 app/main.c
 
 app/base/base-enums.c
+app/base/tile-swap.c
 
 app/config/gimpconfig-deserialize.c
 app/config/gimpconfig-path.c

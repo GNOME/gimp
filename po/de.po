@@ -6,10 +6,10 @@
 # Christian Neumair <chris@gnome-de.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.27\n"
+"Project-Id-Version: GIMP 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-04-11 13:20+0200\n"
+"POT-Creation-Date: 2004-05-03 12:22+0200\n"
+"PO-Revision-Date: 2004-05-03 12:24+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -287,6 +287,14 @@ msgstr "Mitten"
 #: app/base/base-enums.c:159
 msgid "Highlights"
 msgstr "Glanzlichter"
+
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -1266,9 +1274,8 @@ msgid "Anchor Floating Selection"
 msgstr "Schwebende Auswahl verankern"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Schwebende Auswahl"
+msgstr "Schwebende Auswahl entfernen"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -1367,9 +1374,8 @@ msgid "Set Preserve Trans"
 msgstr "Transparenz beibehalten setzen"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Nur wenn geändert"
+msgstr "Text verändert"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -2388,7 +2394,7 @@ msgstr "Vertikale Auflösung des Bildes"
 msgid "pixel"
 msgstr "Pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "Pixel"
@@ -6273,7 +6279,7 @@ msgstr "/Vorlage _bearbeiten..."
 msgid "/_Delete Template"
 msgstr "/Vorlage _löschen"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "»%s« wird geschrieben\n"
@@ -7360,12 +7366,12 @@ msgstr "Neue Plugins werden abgefragt"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Plugin »%s« wird abgefragt\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Plugins werden initialisiert"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Plugin »%s« wird initialisiert\n"
@@ -8055,7 +8061,7 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Farbton-Sättigung funktioniert nur bei RGB Ebenen."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+msgid "M_aster"
 msgstr "A_lle"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8111,7 +8117,7 @@ msgstr "Justierung"
 msgid "Size:"
 msgstr "Größe:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Winkel:"
@@ -8266,11 +8272,11 @@ msgid "Add Guides"
 msgstr "Hilfslinie hinzufügen"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Abstände und Winkel messen"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Abstand:"
 
@@ -10058,57 +10064,3 @@ msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Bilder und Photos erstellen und bearbeiten"
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr "  -S, --no-splash-image    Kein Bild im Startfenster anzeigen.\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "Bildänderung"
-
-#~ msgid "Layer Mod"
-#~ msgstr "Ebenenänderung"
-
-#~ msgid "Channel Mod"
-#~ msgstr "Kanaländerung"
-
-#~ msgid "Paste Transform"
-#~ msgstr "Transformation einfügen"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "Leere Ebenen-Kopie"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "Leere Vektor-Kopie"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "Buchstabenabstand verändern"
-
-#~ msgid "Could not open"
-#~ msgstr "Datei konnte nicht geöffnet werden"
-
-#~ msgid "Modify Curves for Channel:"
-#~ msgstr "Kurven für Kanal ändern:"
-
-#~ msgid "Modify Levels for Channel:"
-#~ msgstr "Verändere Werte für Kanal:"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Ansicht/Zoom/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Ansicht/Zoom/1:8"
-
-#, fuzzy
-#~ msgid "Other (%.2f%%) ..."
-#~ msgstr "Anders (%d:%d) ..."
-
-#, fuzzy
-#~ msgid "_Zoom (%.2f%%)"
-#~ msgstr "_Zoom (%d:%d)"
-
-#~ msgid "Cannot create folder: %s"
-#~ msgstr "Ordner konnte nicht angelegt werden: %s"
-
-#~ msgid "The GIMP (unstable)"
-#~ msgstr "GIMP (instabil)"
