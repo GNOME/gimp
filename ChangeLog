@@ -1,3 +1,16 @@
+Fri Mar 24 01:53:07 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: more sanity checking for the gtkxmhtml test. Also
+	changed datadir to include the gimp version too. So right now
+	only the development headers conflict between versions in the same
+	prefix.
+
+	* gimptool.in
+	* gimptool.1: added and documented configure variable query options
+	(bindir, sbindir, sysconfdir, etc.)
+
+	* tips/Makefile.am: add gimp_tips.uk.txt
+
 Wed Mar 22 18:35:25 CST 2000  Seth Burgess <sjburges@gimp.org>
 	
 	* app/gdisplay_ops.c: Applied Thomas Koester's patch for

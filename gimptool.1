@@ -5,6 +5,9 @@ gimptool - script to perform various Gimpy functions
 .B gimptool
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run] [\-\-recon]
+[\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir] [\-\-sysconfdir]
+[\-\-sharedstatedir] [\-\-localstatedir] [-\-libdir] [\-\-infodir] [\-\-mandir]
+[\-\-includedir] [\-\-gimpplugindir] [\-\-gimpdatadir]
 [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi] [\-\-build \fIplug\-in.c\fP]
 [\-\-build\-strip \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP]
 [\-\-install-strip \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP] 
@@ -53,6 +56,45 @@ Test mode. Print the commands but dont actually execute them. Same as \-n.
 .TP 8
 .B \-\-recon
 Test mode. Print the commands but dont actually execute them. Same as \-n.
+.TP 8
+.B \-\-bindir
+Outputs the bindir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-sbindir
+Outputs the sbindir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-libexecdir
+Outputs the libexecdir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-datadir
+Outputs the datadir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-sysconfdir
+Outputs the sysconfdir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-sharedstatedir
+Outputs the sharedstatedir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-localstatedir
+Outputs the localstatedir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-libdir
+Outputs the libdir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-infodir
+Outputs the infodir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-mandir
+Outputs the mandir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-includedir
+Outputs the includedir used to install the \fIGimp\fP.
+.TP 8
+.B \-\-gimpdatadir
+Outputs the actual directory where the \fIGimp\fP data files were installed.
+.TP 8
+.B \-\-gimpplugindir
+Outputs the actual directory where the \fIGimp\fP plugins were installed.
 .TP 8
 .B  \-\-build \fIplug-in.c\fP
 Compile and link \fIplug-in.c\fP into a \fIGimp\fP plug-in.

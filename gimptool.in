@@ -3,8 +3,21 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 exec_prefix_set=no
-plug_in_dir=@gimpplugindir@
-data_dir=@gimpdatadir@
+
+bindir=@bindir@
+sbindir=@sbindir@
+libexecdir=@libexecdir@
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+mandir=@mandir@
+includedir=@includedir@
+
+gimpplugindir=@gimpplugindir@
+gimpdatadir=@gimpdatadir@
 
 usage()
 {
@@ -28,6 +41,11 @@ Developer options:
   --exec-prefix=PREFIX    use PREFIX instead of the installation exec prefix
                           that GIMP was built when computing the output for
                           --cflags and --libs
+
+Installation directory options:
+  --prefix --exec-prefix --bindir --sbindir --libexecdir --datadir --sysconfdir
+  --sharedstatedir --localstatedir --libdir --infodir --mandir --includedir
+  --gimpplugindir --gimpdatadir
 
 The --cflags and --libs options can be appended with -noui to get appropriate
 settings for plug-ins which do not use GTK+.
@@ -146,6 +164,13 @@ while test $# -gt 0; do
       ;;
     --exec-prefix)
       echo $exec_prefix
+      ;;
+    --*dir)
+      dirname=\$`echo $1 | sed -e 's,^--,,'`
+      dirname=`eval echo $dirname`
+      test -z "$dirname" && exit 1
+      echo $dirname
+      exit 0
       ;;
     --cflags | --cflags-noui | --cflags-nogimpui)
       case $1 in
