@@ -1,3 +1,8 @@
+2004-03-27  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/help/Makefile.am (AM_LDFLAGS): Use -mwindows on Windows
+	to avoid a console window popping up.
+
 2004-03-26  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: don't generate code with tabs.
