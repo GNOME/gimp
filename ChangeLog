@@ -1,3 +1,19 @@
+2001-11-14  Manish Singh  <yosh@gimp.org>
+
+	* RELEASE-TO-CVS.patch: gtk_item_factory_parse_rc->gtk_accel_map_load,
+	gtk_item_factory_dump_rc->gtk_accel_map_save
+
+	* configure.in: fixes for newer autoconf, AC_INIT with etc/gimprc.in
+	now
+
+	* app/core/gimpcontainer.c: g_type_instance_is_a is private (and
+	got renamed recently), use G_TYPE_CHECK_INSTANCE_TYPE instead
+
+	* app/gui/gradient-editor.c: use gtk_accel_label_set_accel_widget
+	instead of gtk_accel_label_set_accel_object
+
+	* app/gui/module-browser.c: replaced CList with a TreeView
+
 2001-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* data/misc/Makefile.am

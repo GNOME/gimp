@@ -1,0 +1,25 @@
+Index: menus.c
+===================================================================
+RCS file: /cvs/gnome/gimp/app/gui/menus.c,v
+retrieving revision 1.242
+diff -u -r1.242 menus.c
+--- menus.c	2001/11/13 16:56:58	1.242
++++ menus.c	2001/11/14 22:33:49
+@@ -1813,7 +1813,7 @@
+   }
+ 
+   filename = gimp_personal_rc_file ("menurc");
+-  gtk_item_factory_parse_rc (filename);
++  gtk_accel_map_load (filename);
+   g_free (filename);
+ 
+   g_signal_connect (G_OBJECT (gimp->documents), "add",
+@@ -1841,7 +1841,7 @@
+                                         gimp);
+ 
+   filename = gimp_personal_rc_file ("menurc");
+-  gtk_item_factory_dump_rc (filename, NULL, TRUE);
++  gtk_accel_map_save (filename);
+   g_free (filename);
+ 
+   if (toolbox_factory)

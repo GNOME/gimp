@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(gimprc.in)
+AC_INIT(etc/gimprc.in)
 
 #
 # Making releases:
@@ -824,6 +824,11 @@ AC_SUBST(GIMP_MODULES)
 
 dnl Output the Makefiles
 
+dnl plug-ins/perl/config.pl
+dnl plug-ins/gap/Makefile
+dnl plug-ins/gdyntext/Makefile
+dnl plug-ins/helpbrowser/Makefile
+dnl plug-ins/perl/po/Makefile.in
 AC_OUTPUT([
 gimptool-1.4
 gimp.spec
@@ -861,7 +866,6 @@ app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
 plug-ins/makefile.mingw
-dnl plug-ins/perl/config.pl
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
@@ -879,8 +883,6 @@ plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
 plug-ins/fp/Makefile
-dnl plug-ins/gap/Makefile
-dnl plug-ins/gdyntext/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gflare/Makefile
@@ -890,7 +892,6 @@ plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
-dnl plug-ins/helpbrowser/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/maze/Makefile
@@ -937,7 +938,6 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-dnl plug-ins/perl/po/Makefile.in
 ],[
    chmod +x gimptool-1.4
 

@@ -39,6 +39,12 @@
 
 #define NUM_INFO_LINES 7
 
+enum {
+  PATH_COLUMN,
+  INFO_COLUMN,
+  NUM_COLUMNS
+};
+
 typedef struct
 {
   GtkWidget         *table;
@@ -46,7 +52,7 @@ typedef struct
   GtkWidget         *button_label;
   GimpModuleInfoObj *last_update;
   GtkWidget         *button;
-  GtkWidget         *list;
+  GtkListStore      *list;
   GtkWidget         *load_inhibit_check;
 
   GQuark             modules_handler_id;
@@ -62,8 +68,8 @@ static void   browser_destroy_callback      (GtkWidget         *widget,
                                              gpointer           data);
 static void   browser_load_inhibit_callback (GtkWidget         *widget,
                                              gpointer           data);
-static void   browser_select_callback       (GtkWidget         *widget,
-                                             GtkWidget         *child);
+static void   browser_select_callback       (GtkTreeSelection  *sel,
+                                             gpointer           data);
 static void   browser_load_unload_callback  (GtkWidget         *widget,
                                              gpointer           data);
 static void   browser_refresh_callback      (GtkWidget         *widget,
@@ -87,12 +93,15 @@ static void   browser_info_init             (BrowserState      *st,
 GtkWidget *
 module_browser_new (Gimp *gimp)
 {
-  GtkWidget    *shell;
-  GtkWidget    *hbox;
-  GtkWidget    *vbox;
-  GtkWidget    *listbox;
-  GtkWidget    *button;
-  BrowserState *st;
+  GtkWidget        *shell;
+  GtkWidget        *hbox;
+  GtkWidget        *vbox;
+  GtkWidget        *listbox;
+  GtkWidget        *button;
+  GtkWidget        *tv;
+  BrowserState     *st;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -124,14 +133,22 @@ module_browser_new (Gimp *gimp)
 
   st->gimp = gimp;
 
-  st->list = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (st->list), GTK_SELECTION_BROWSE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
-					 st->list);
+  st->list = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
+  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (st->list));
+  g_object_unref (st->list);
 
   gimp_container_foreach (gimp->modules, make_list_item, st);
 
-  gtk_widget_show (st->list);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
+					       -1, NULL,
+					       gtk_cell_renderer_text_new (),
+					       "text", PATH_COLUMN,
+					       NULL);
+
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+
+  gtk_container_add (GTK_CONTAINER (listbox), tv);
+  gtk_widget_show (tv);
 
   st->table = gtk_table_new (5, NUM_INFO_LINES + 1, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (st->table), 4);  
@@ -152,7 +169,7 @@ module_browser_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   st->button = gtk_button_new_with_label ("");
-  st->button_label = GTK_BIN (st->button)->child;
+  st->button_label = gtk_bin_get_child (GTK_BIN (st->button));
   gtk_box_pack_start (GTK_BOX (hbox), st->button, TRUE, TRUE, 0);
   gtk_widget_show (st->button);
   g_signal_connect (G_OBJECT (st->button), "clicked",
@@ -162,10 +179,12 @@ module_browser_new (Gimp *gimp)
   browser_info_init (st, st->table);
   browser_info_update (st->last_update, st);
 
-  g_object_set_data (G_OBJECT (st->list), "state", st);
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
+  g_signal_connect (G_OBJECT (sel), "changed",
+                    G_CALLBACK (browser_select_callback), st);
 
-  g_signal_connect (G_OBJECT (st->list), "select_child",
-                    G_CALLBACK (browser_select_callback), NULL);
+  if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (st->list), &iter))
+    gtk_tree_selection_select_iter (sel, &iter);
 
   /* hook the GimpContainer signals so we can refresh the display
    * appropriately.
@@ -235,14 +254,15 @@ browser_load_inhibit_callback (GtkWidget *widget,
 }
 
 static void
-browser_select_callback (GtkWidget *widget, 
-			 GtkWidget *child)
+browser_select_callback (GtkTreeSelection *sel, 
+			 gpointer          data)
 {
+  BrowserState      *st = data;
   GimpModuleInfoObj *info;
-  BrowserState *st;
-
-  info = g_object_get_data (G_OBJECT (child), "module_info");
-  st = g_object_get_data (G_OBJECT (widget), "state");
+  GtkTreeIter        iter;
+  
+  gtk_tree_selection_get_selected (sel, NULL, &iter);
+  gtk_tree_model_get (GTK_TREE_MODEL (st->list), &iter, INFO_COLUMN, &info, -1);
 
   if (st->last_update == info)
     return;
@@ -281,17 +301,16 @@ make_list_item (gpointer data,
 {
   GimpModuleInfoObj *info = data;
   BrowserState      *st   = user_data;
-  GtkWidget         *list_item;
+  GtkTreeIter        iter;
 
   if (!st->last_update)
     st->last_update = info;
 
-  list_item = gtk_list_item_new_with_label (info->fullpath);
-
-  gtk_widget_show (list_item);
-  g_object_set_data (G_OBJECT (list_item), "module_info", info);
-
-  gtk_container_add (GTK_CONTAINER (st->list), list_item);
+  gtk_list_store_append (st->list, &iter);
+  gtk_list_store_set (st->list, &iter,
+		      PATH_COLUMN, info->fullpath,
+		      INFO_COLUMN, info,
+		      -1);
 }
 
 static void
@@ -307,33 +326,29 @@ browser_info_remove (GimpContainer     *container,
 		     GimpModuleInfoObj *mod, 
 		     BrowserState      *st)
 {
-  GList             *dlist;
-  GList             *free_list;
-  GtkWidget         *list_item;
+  GtkTreeIter        iter;
   GimpModuleInfoObj *info;
 
-  dlist = gtk_container_get_children (GTK_CONTAINER (st->list));
-  free_list = dlist;
+  /* FIXME: Use gtk_list_store_foreach_remove when it becomes available */
 
-  while (dlist)
+  if (! gtk_tree_model_get_iter_root (GTK_TREE_MODEL (st->list), &iter))
+    return;
+
+  do
     {
-      list_item = dlist->data;
-
-      info = g_object_get_data (G_OBJECT (list_item), "module_info");
-      g_return_if_fail (info != NULL);
+      gtk_tree_model_get (GTK_TREE_MODEL (st->list), &iter,
+			  INFO_COLUMN, &info,
+			  -1);
 
       if (info == mod)
 	{
-	  gtk_container_remove (GTK_CONTAINER (st->list), list_item);
-	  g_list_free (free_list);
+	  gtk_list_store_remove (st->list, &iter);
 	  return;
 	}
-
-      dlist = dlist->next;
     }
+  while (gtk_tree_model_iter_next (GTK_TREE_MODEL (st->list), &iter));
 
   g_warning ("tried to remove module that wasn't in brower's list");
-  g_list_free (free_list);
 }
 
 static void
@@ -374,7 +389,7 @@ browser_info_update (GimpModuleInfoObj *mod,
       text[2] = mod->info->version;
       text[3] = mod->info->copyright;
       text[4] = mod->info->date;
-      text[5] = mod->on_disk? _("on disk") : _("only in memory");
+      text[5] = mod->on_disk ? _("on disk") : _("only in memory");
     }
   else
     {
@@ -383,7 +398,7 @@ browser_info_update (GimpModuleInfoObj *mod,
       text[2] = "--";
       text[3] = "--";
       text[4] = "--";
-      text[5] = mod->on_disk? _("on disk") : _("nowhere (click 'refresh')");
+      text[5] = mod->on_disk ? _("on disk") : _("nowhere (click 'refresh')");
     }
 
   if (mod->state == GIMP_MODULE_STATE_ERROR && mod->last_module_error)
@@ -427,7 +442,7 @@ browser_info_update (GimpModuleInfoObj *mod,
     case GIMP_MODULE_STATE_LOADED_OK:
       gtk_label_set_text (GTK_LABEL(st->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (st->button),
-				mod->unload? TRUE : FALSE);
+				mod->unload ? TRUE : FALSE);
       break;    
     }
 }

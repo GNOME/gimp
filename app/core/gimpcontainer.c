@@ -359,8 +359,9 @@ gimp_container_add (GimpContainer *container,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (g_type_instance_is_a ((GTypeInstance *) object,
-					      container->children_type), FALSE);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
+						    container->children_type),
+			FALSE);
 
   if (gimp_container_have (container, object))
     {
@@ -412,8 +413,9 @@ gimp_container_remove (GimpContainer *container,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (g_type_instance_is_a ((GTypeInstance *) object,
-					      container->children_type), FALSE);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
+						    container->children_type),
+			FALSE);
 
   if (! gimp_container_have (container, object))
     {
@@ -466,8 +468,9 @@ gimp_container_insert (GimpContainer *container,
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (g_type_instance_is_a ((GTypeInstance *) object,
-					      container->children_type), FALSE);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
+						    container->children_type),
+			FALSE);
 
   g_return_val_if_fail (index >= -1 &&
 			index <= container->num_children, FALSE);
@@ -494,8 +497,9 @@ gimp_container_reorder (GimpContainer *container,
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (g_type_instance_is_a ((GTypeInstance *) object,
-					      container->children_type), FALSE);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
+						    container->children_type),
+			FALSE);
 
   g_return_val_if_fail (new_index >= -1 &&
 			new_index < container->num_children, FALSE);
@@ -598,8 +602,9 @@ gimp_container_get_child_index (const GimpContainer *container,
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), -1);
   g_return_val_if_fail (object != NULL, -1);
-  g_return_val_if_fail (g_type_instance_is_a ((GTypeInstance *) object,
-					      container->children_type), -1);
+  g_return_val_if_fail (G_TYPE_CHECK_INSTANCE_TYPE (object,
+						    container->children_type),
+			-1);
 
   return GIMP_CONTAINER_GET_CLASS (container)->get_child_index (container,
 								object);

@@ -2643,8 +2643,8 @@ cpopup_create_menu_item_with_label (gchar      *str,
   accel_label = gtk_accel_label_new (str);
   gtk_misc_set_alignment (GTK_MISC (accel_label), 0.0, 0.5);
   gtk_container_add (GTK_CONTAINER (menuitem), accel_label);
-  gtk_accel_label_set_accel_object (GTK_ACCEL_LABEL (accel_label), 
-                                    G_OBJECT (menuitem));
+  gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (accel_label), 
+                                    GTK_WIDGET (menuitem));
   gtk_widget_show (accel_label);
 
   if (label)
