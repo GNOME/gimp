@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-14 13:07+0100\n"
-"PO-Revision-Date: 2003-09-14 13:10+0000\n"
+"POT-Creation-Date: 2003-09-16 19:21+0100\n"
+"PO-Revision-Date: 2003-09-16 19:25+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -272,8 +272,9 @@ msgstr "Tons Claros"
 
 #: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
 #: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
-#: app/config/gimpscanner.c:462 app/core/gimpmodules.c:134
-#: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
+#: app/config/gimpscanner.c:462 app/core/gimp-modules.c:134
+#: app/core/gimp-units.c:157 app/gui/session.c:176
+#: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "erro fatal de parseamento"
 
@@ -303,7 +304,7 @@ msgstr "ao parsear token %s: %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "valor para o token %s não é uma expressão UTF-8 válida"
 
-#: app/config/gimpconfig-path.c:126
+#: app/config/gimpconfig-path.c:128
 #, c-format
 msgid "can not expand ${%s}"
 msgstr "incapaz de expandir ${%s}"
@@ -777,8 +778,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Quando activo, primir F1 abrirá o navegador de ajuda."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
-#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:74
-#: app/vectors/gimpvectors-import.c:149
+#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:75
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Falha ao abrir o ficheiro: '%s': %s"
@@ -1101,7 +1101,7 @@ msgid "Guide"
 msgstr "Guia"
 
 #: app/core/core-enums.c:502 app/core/core-enums.c:532
-#: app/core/gimpchannel.c:1497 app/core/gimpselection.c:593
+#: app/core/gimpchannel.c:1498 app/core/gimpselection.c:593
 msgid "Selection Mask"
 msgstr "Máscara de Selecção"
 
@@ -1149,16 +1149,16 @@ msgstr "Selecção Flutuante"
 msgid "Anchor Floating Selection"
 msgstr "Ancorar Selecção Flutuante"
 
-#: app/core/core-enums.c:513 app/core/gimpedit.c:197
+#: app/core/core-enums.c:513 app/core/gimp-edit.c:197
 #: app/widgets/gimpbufferview.c:143
 msgid "Paste"
 msgstr "Colar"
 
-#: app/core/core-enums.c:514 app/core/gimpedit.c:60
+#: app/core/core-enums.c:514 app/core/gimp-edit.c:60
 msgid "Cut"
 msgstr "Cortar"
 
-#: app/core/core-enums.c:515 app/core/gimpedit.c:117
+#: app/core/core-enums.c:515 app/core/gimp-edit.c:117
 msgid "Copy"
 msgstr "Copiar"
 
@@ -1185,7 +1185,7 @@ msgstr "Anexar Informações Anexas"
 msgid "Remove Parasite"
 msgstr "Remover Informações Anexas"
 
-#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:186
+#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:175
 msgid "Import Paths"
 msgstr "Importar Caminhos"
 
@@ -1319,6 +1319,30 @@ msgstr "FS Relax"
 msgid "EEK: can't undo"
 msgstr "EEK: impossível desfazer"
 
+#: app/core/gimp-edit.c:188 app/core/gimp-edit.c:266
+msgid "Pasted Layer"
+msgstr "Camada colada"
+
+#: app/core/gimp-edit.c:314
+msgid "Clear"
+msgstr "Limpar"
+
+#: app/core/gimp-edit.c:352
+msgid "Fill with FG Color"
+msgstr "Preencher com Cor de 1º Plano"
+
+#: app/core/gimp-edit.c:357 app/core/gimp-edit.c:382
+msgid "Fill with BG Color"
+msgstr "Preencher com Cor de Fundo"
+
+#: app/core/gimp-edit.c:364
+msgid "Fill with White"
+msgstr "Preencher com Branco"
+
+#: app/core/gimp-edit.c:373
+msgid "Fill with Transparency"
+msgstr "Preencher com Transparente"
+
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Frente para Fundo (HSV no sentido anti-horário)"
@@ -1328,65 +1352,65 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr "Frente para Fundo (matiz HSV no sentido horário)"
 
 #. register all internal procedures
-#: app/core/gimp.c:769
+#: app/core/gimp.c:768
 msgid "Procedural Database"
 msgstr "Base de Dados Processual"
 
-#: app/core/gimp.c:772
+#: app/core/gimp.c:771
 msgid "Plug-In Environment"
 msgstr "Ambiente Plug-In"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Looking for data files"
 msgstr "A procurar ficheiros de dados"
 
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Parasites"
 msgstr "Informações Anexas"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:792 app/gui/dialogs-constructors.c:346
+#: app/core/gimp.c:791 app/gui/dialogs-constructors.c:346
 #: app/gui/dialogs-constructors.c:570 app/gui/preferences-dialog.c:1932
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Pincéis"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:796 app/gui/dialogs-constructors.c:368
+#: app/core/gimp.c:795 app/gui/dialogs-constructors.c:368
 #: app/gui/dialogs-constructors.c:592 app/gui/preferences-dialog.c:1936
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Texturas"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:800 app/gui/dialogs-constructors.c:412
+#: app/core/gimp.c:799 app/gui/dialogs-constructors.c:412
 #: app/gui/dialogs-constructors.c:636 app/gui/preferences-dialog.c:1940
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Paletas"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:804 app/gui/dialogs-constructors.c:390
+#: app/core/gimp.c:803 app/gui/dialogs-constructors.c:390
 #: app/gui/dialogs-constructors.c:614 app/gui/preferences-dialog.c:1944
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Gradientes"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:808 app/gui/dialogs-constructors.c:432
+#: app/core/gimp.c:807 app/gui/dialogs-constructors.c:432
 #: app/gui/dialogs-constructors.c:656 app/gui/preferences-dialog.c:1858
 #: app/gui/preferences-dialog.c:1948 app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Fontes"
 
 #. initialize the document history
-#: app/core/gimp.c:812
+#: app/core/gimp.c:811
 msgid "Documents"
 msgstr "Documentos"
 
 #. initialize the template list
-#: app/core/gimp.c:816 app/gui/dialogs-constructors.c:523
+#: app/core/gimp.c:815 app/gui/dialogs-constructors.c:523
 msgid "Templates"
 msgstr "Modelos"
 
@@ -1429,7 +1453,7 @@ msgstr "Expressão UTF-8 inválida no ficheiro de pincel '%s'."
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:317
+#: app/tools/gimpvectortool.c:312
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -1478,7 +1502,7 @@ msgstr "Canal"
 msgid "Rename Channel"
 msgstr "Renomear Canal"
 
-#: app/core/gimpchannel.c:233
+#: app/core/gimpchannel.c:233 app/tools/gimpeditselectiontool.c:1122
 msgid "Move Channel"
 msgstr "Mover Canal"
 
@@ -1514,39 +1538,39 @@ msgstr "Crescer Canal"
 msgid "Shrink Channel"
 msgstr "Encolher Canal"
 
-#: app/core/gimpchannel.c:448
+#: app/core/gimpchannel.c:449
 msgid "Scale Channel"
 msgstr "Escalar Canal"
 
-#: app/core/gimpchannel.c:477
+#: app/core/gimpchannel.c:478
 msgid "Resize Channel"
 msgstr "Redimensionar Canal"
 
-#: app/core/gimpchannel.c:506
+#: app/core/gimpchannel.c:507
 msgid "Flip Channel"
 msgstr "Virar Canal"
 
-#: app/core/gimpchannel.c:533
+#: app/core/gimpchannel.c:534
 msgid "Rotate Channel"
 msgstr "Rodar Canal"
 
-#: app/core/gimpchannel.c:563 app/core/gimpdrawable-transform.c:1105
+#: app/core/gimpchannel.c:564 app/core/gimpdrawable-transform.c:1105
 msgid "Transform Channel"
 msgstr "Canal Transformação"
 
-#: app/core/gimpchannel.c:602
+#: app/core/gimpchannel.c:603
 msgid "Cannot stroke empty channel."
 msgstr "Incapaz de pincelar canal vazio."
 
-#: app/core/gimpchannel.c:607
+#: app/core/gimpchannel.c:608
 msgid "Stroke Channel"
 msgstr "Pincelar Canal"
 
-#: app/core/gimpchannel.c:1376
+#: app/core/gimpchannel.c:1377
 msgid "Set Channel Color"
 msgstr "Definir Cor de Canal"
 
-#: app/core/gimpchannel.c:1425
+#: app/core/gimpchannel.c:1426
 msgid "Set Channel Opacity"
 msgstr "Definir Opacidade Canal"
 
@@ -1644,30 +1668,6 @@ msgstr "Colar Transformação"
 #: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:683
 msgid "Transform Layer"
 msgstr "Camada Transformação"
-
-#: app/core/gimpedit.c:188 app/core/gimpedit.c:266
-msgid "Pasted Layer"
-msgstr "Camada colada"
-
-#: app/core/gimpedit.c:314
-msgid "Clear"
-msgstr "Limpar"
-
-#: app/core/gimpedit.c:352
-msgid "Fill with FG Color"
-msgstr "Preencher com Cor de 1º Plano"
-
-#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
-msgid "Fill with BG Color"
-msgstr "Preencher com Cor de Fundo"
-
-#: app/core/gimpedit.c:364
-msgid "Fill with White"
-msgstr "Preencher com Branco"
-
-#: app/core/gimpedit.c:373
-msgid "Fill with Transparency"
-msgstr "Preencher com Transparente"
 
 #: app/core/gimpenvirontable.c:285
 #, c-format
@@ -1829,7 +1829,7 @@ msgid "Can't undo %s"
 msgstr "Impossível desfazer %s"
 
 #: app/core/gimpimage.c:1069 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:590
+#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Sem título"
@@ -1935,19 +1935,19 @@ msgstr "Adicionar Caminho"
 msgid "Remove Path"
 msgstr "Remover Caminho"
 
-#: app/core/gimpimage.c:3233
+#: app/core/gimpimage.c:3231
 msgid "Path cannot be raised higher."
 msgstr "Caminho não pode ser mais elevado."
 
-#: app/core/gimpimage.c:3238 app/widgets/gimpvectorstreeview.c:134
+#: app/core/gimpimage.c:3236 app/widgets/gimpvectorstreeview.c:134
 msgid "Raise Path"
 msgstr "Elevar Caminho"
 
-#: app/core/gimpimage.c:3254
+#: app/core/gimpimage.c:3252
 msgid "Path cannot be lowered more."
 msgstr "Caminho não pode ser mais descido"
 
-#: app/core/gimpimage.c:3259 app/widgets/gimpvectorstreeview.c:138
+#: app/core/gimpimage.c:3257 app/widgets/gimpvectorstreeview.c:138
 msgid "Lower Path"
 msgstr "Baixar Caminho"
 
@@ -2044,8 +2044,8 @@ msgid "Rename Layer"
 msgstr "Renomear Camada"
 
 #: app/core/gimplayer.c:510 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
-#: app/tools/gimpeditselectiontool.c:245
-#: app/tools/gimpeditselectiontool.c:1015
+#: app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1124
 msgid "Move Layer"
 msgstr "Mover Camada"
 
@@ -2208,8 +2208,8 @@ msgid "Fatal parsing error: Pattern file '%s' appears truncated."
 msgstr ""
 "Erro fatal de parseamento: Ficheiro de padrão '%s' parece estar truncado."
 
-#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:243
-#: app/tools/gimpeditselectiontool.c:1011
+#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
+#: app/tools/gimpeditselectiontool.c:1031
 msgid "Move Selection"
 msgstr "Mover Selecção"
 
@@ -2902,7 +2902,7 @@ msgid "Channel List"
 msgstr "Lista Canais"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:127
+#: app/tools/gimpvectortool.c:128
 msgid "Paths"
 msgstr "Caminhos"
 
@@ -3213,7 +3213,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Gravar _Selecção em Ficheiro..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
-#: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
+#: app/widgets/gimpdocumentview.c:453 app/widgets/gimpdnd.c:1005
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -6058,41 +6058,41 @@ msgstr "/_Editar Modelo..."
 msgid "/_Delete Template..."
 msgstr "/_Remover Modelo..."
 
-#: app/gui/tips-dialog.c:91
-msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
-msgstr "<b>O ficheiro de dicas GIMP não pode ser correctamente parseado!</b>"
+#: app/gui/tips-dialog.c:94
+msgid "<b>Your GIMP tips file appears to be missing!</b>"
+msgstr "<b>Parece que o seu ficheiro de dicas GIMP está em falta!</b>"
 
-#: app/gui/tips-dialog.c:112
+#: app/gui/tips-dialog.c:96
+#, c-format
+msgid "There should be a file called '%s'. Please check your installation."
+msgstr "Deveria existir um ficheiro chamado '%s'. Verifique a sua instalação."
+
+#: app/gui/tips-dialog.c:102
+msgid "<b>The GIMP tips file could not be parsed!</b>"
+msgstr "<b>O ficheiro de dicas GIMP não pode ser parseado!</b>"
+
+#: app/gui/tips-dialog.c:133
 msgid "GIMP Tip of the Day"
 msgstr "Dica do Dia GIMP"
 
-#: app/gui/tips-dialog.c:176
+#: app/gui/tips-dialog.c:197
 msgid "Show tip next time GIMP starts"
 msgstr "Mostrar dica na próxima inicialização do GIMP"
 
-#: app/gui/tips-dialog.c:200
+#: app/gui/tips-dialog.c:221
 msgid "_Previous Tip"
 msgstr "Dica _Anterior"
 
-#: app/gui/tips-dialog.c:210
+#: app/gui/tips-dialog.c:231
 msgid "_Next Tip"
 msgstr "Dica _Seguinte"
-
-#: app/gui/tips-parser.c:166
-#, c-format
-msgid ""
-"Your GIMP tips file appears to be missing! There should be a file called '%"
-"s'. Please check your installation."
-msgstr ""
-"O ficheiro de dicas do GIMP parece estar em falta! Deveria existir um "
-"ficheiro chamado '%s'. Verifique a sua instalação."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
 #. according to the name of the po file used for gimp-tips.xml.
 #. E.g. for the german translation, that would be "tips-locale:de".
 #.
-#: app/gui/tips-parser.c:181
+#: app/gui/tips-parser.c:165
 msgid "tips-locale:C"
 msgstr "tips-locale:pt"
 
@@ -7089,7 +7089,7 @@ msgstr "Procedimentos de Ferramentas Transformação"
 msgid "Units"
 msgstr "Unidades"
 
-#: app/pdb/procedural_db.c:177
+#: app/pdb/procedural_db.c:174
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7098,7 +7098,7 @@ msgstr ""
 "Erro de chamada PDB:\n"
 "procedimento '%s' não encontrado"
 
-#: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
+#: app/pdb/procedural_db.c:212 app/pdb/procedural_db.c:311
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7630,7 +7630,7 @@ msgstr "Tipo Envolvência %s"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:191 app/tools/gimpmagnifyoptions.c:230
-#: app/tools/gimpmoveoptions.c:180
+#: app/tools/gimpmoveoptions.c:192
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Alternar Ferramenta %s"
@@ -7757,12 +7757,17 @@ msgstr "Modo"
 msgid "Exposure:"
 msgstr "Exposição:"
 
-#: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1013
+#: app/tools/gimpeditselectiontool.c:249
+#: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:345
+msgid "Move Path"
+msgstr "Mover Caminho"
+
+#: app/tools/gimpeditselectiontool.c:253
+#: app/tools/gimpeditselectiontool.c:1115
 msgid "Move Floating Layer"
 msgstr "Mover Camada Flutuante"
 
-#: app/tools/gimpeditselectiontool.c:376 app/tools/gimpeditselectiontool.c:656
+#: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
 msgid "Move: "
 msgstr "Mover: "
 
@@ -7788,7 +7793,8 @@ msgstr "/Ferramentas/Ferramentas Pintura/_Borracha"
 msgid "Anti Erase  %s"
 msgstr "Anti Apagar %s"
 
-#: app/tools/gimpflipoptions.c:175 app/tools/gimptransformoptions.c:295
+#: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:186
+#: app/tools/gimptransformoptions.c:295
 msgid "Affect:"
 msgstr "Afectar:"
 
@@ -8117,27 +8123,13 @@ msgstr "Distância:"
 msgid "degrees"
 msgstr "graus"
 
-#: app/tools/gimpmoveoptions.c:184
-msgid "Move Current Layer"
-msgstr "Mover Camada Actual"
-
-#: app/tools/gimpmoveoptions.c:185
-msgid "Pick a Layer to Move"
-msgstr "Seleccione Camada a Mover"
-
-#. move mask
-#: app/tools/gimpmoveoptions.c:192
-#, c-format
-msgid "Move Mode  %s"
-msgstr "Modo Movimento %s"
-
 #: app/tools/gimpmoveoptions.c:196
-msgid "Move Selection Outline"
-msgstr "Mover Selecção de Margens"
+msgid "Move Current Layer / Path"
+msgstr "Mover Camada / Caminho Actual"
 
 #: app/tools/gimpmoveoptions.c:197
-msgid "Move Pixels"
-msgstr "Mover Pixels"
+msgid "Pick a Layer / Path to Move"
+msgstr "Seleccione Camada / Caminho a Mover"
 
 #: app/tools/gimpmovetool.c:105
 msgid "Move"
@@ -8558,11 +8550,11 @@ msgstr "Modo Edição"
 msgid "Polygonal"
 msgstr "Poligonal"
 
-#: app/tools/gimpvectortool.c:128
+#: app/tools/gimpvectortool.c:129
 msgid "Create and edit paths"
 msgstr "Criar e editar caminhos"
 
-#: app/tools/gimpvectortool.c:129
+#: app/tools/gimpvectortool.c:130
 msgid "/Tools/_Paths"
 msgstr "/Ferramentas/Ca_minhos"
 
@@ -8578,10 +8570,6 @@ msgstr "Caminho"
 msgid "Rename Path"
 msgstr "Renomear Caminho"
 
-#: app/vectors/gimpvectors.c:345
-msgid "Move Path"
-msgstr "Mover Caminho"
-
 #: app/vectors/gimpvectors.c:374
 msgid "Scale Path"
 msgstr "Escalar Caminho"
@@ -8594,23 +8582,23 @@ msgstr "Redimensionar Caminho"
 msgid "Flip Path"
 msgstr "Virar Caminho"
 
-#: app/vectors/gimpvectors.c:487
+#: app/vectors/gimpvectors.c:486
 msgid "Rotate Path"
 msgstr "Rodar Caminho"
 
-#: app/vectors/gimpvectors.c:518
+#: app/vectors/gimpvectors.c:517
 msgid "Transform Path"
 msgstr "Transformar Caminho"
 
-#: app/vectors/gimpvectors.c:549
+#: app/vectors/gimpvectors.c:548
 msgid "Cannot stroke empty path."
 msgstr "Incapaz de aclarar caminho vazio."
 
-#: app/vectors/gimpvectors-import.c:188 app/vectors/gimpvectors-import.c:198
+#: app/vectors/gimpvectors-import.c:186
 msgid "Imported Path"
 msgstr "Caminho Importado"
 
-#: app/vectors/gimpvectors-import.c:211
+#: app/vectors/gimpvectors-import.c:208
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "Nenhum caminho encontrado em '%s'"
@@ -8820,7 +8808,7 @@ msgstr "Fundo: %d, %d, %d"
 msgid "You can drop dockable dialogs here."
 msgstr "Pode largar diálogos anexáveis aqui."
 
-#: app/widgets/gimpdocumentview.c:166
+#: app/widgets/gimpdocumentview.c:165
 #, c-format
 msgid ""
 "Open the selected entry\n"
@@ -8831,11 +8819,11 @@ msgstr ""
 "%s  Activa janela se já estiver aberta\n"
 "%s  Abre diálogo de imagem"
 
-#: app/widgets/gimpdocumentview.c:184
+#: app/widgets/gimpdocumentview.c:183
 msgid "Remove selected entry"
 msgstr "Remover a entrada seleccionada"
 
-#: app/widgets/gimpdocumentview.c:190
+#: app/widgets/gimpdocumentview.c:189
 #, c-format
 msgid ""
 "Recreate preview\n"
@@ -9064,7 +9052,7 @@ msgstr ""
 "%s\n"
 "%s  Para Fundo"
 
-#: app/widgets/gimpitemtreeview.c:1192
+#: app/widgets/gimpitemtreeview.c:1196
 msgid "Set Item Exclusive Visible"
 msgstr "Definir Item Exclusivamente Visível"
 
@@ -9454,6 +9442,15 @@ msgstr "Criar e editar imagens ou fotografias"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "O GIMP (instável)"
+
+#~ msgid "Move Mode  %s"
+#~ msgstr "Modo Movimento %s"
+
+#~ msgid "Move Selection Outline"
+#~ msgstr "Mover Selecção de Margens"
+
+#~ msgid "Move Pixels"
+#~ msgstr "Mover Pixels"
 
 #~ msgid "Selection from Channel"
 #~ msgstr "Selecção de Canal"
