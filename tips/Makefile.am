@@ -35,17 +35,13 @@ $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot: $(POTFILES)
 CLEANFILES = $(GETTEXT_PACKAGE)-tips.po
 
 dist-hook:
-	xmllint=`which xmllint`
-	if test -n "$xmllint" && test -x "$xmllint"; then
-		$xmllint --noout --valid gimp-tips.xml \
-		|| echo "*************************"; \
-		   echo "* gimp-tips.xml INVALID *"; \
-		   echo "*************************"; \
-		   exit 1;
-	else
-		echo "Couldn't find xmllint, cannot validate gimp-tips.xml.";
-		echo "Proceed with fingers crossed...";
-	fi
+	( xmllint=`which xmllint`; \
+	  if test x$$xmllint != x && test -x $$xmllint; then \
+	    $$xmllint --noout --valid gimp-tips.xml || \
+	      ( echo "* gimp-tips.xml INVALID *"; exit 1; ) \
+	  else \
+	    echo "Can't find xmllint to validate gimp-tips.xml; proceed with fingers crossed..."; \
+	  fi )
 
 oldtips = \
 	gimp_tips.cs.txt	\
