@@ -1,3 +1,9 @@
+2005-02-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c: reverted the last change
+	since it changes the script API. Such a change must not be done in
+	the stable branch.
+
 2005-02-16  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c: Added constants MIN-IMAGE-SIZE,
