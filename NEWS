@@ -36,7 +36,7 @@ Overview of Changes in GIMP 2.1.2
   application that behaves like 'gimp --no-interface' and doesn't link
   to GTK+ at all.
 
-- Lots of bug fizes and other goodies. Check the ChangeLog for details.
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
 
 
 Contributors:
@@ -82,7 +82,7 @@ Overview of Changes in GIMP 2.1.1
 
 - Applied HIG capitalization style to all(?) dialogs.
 
-- Lots of bug fizes and other goodies. Check the ChangeLog for details.
+- Lots of bug fixes and other goodies. Check the ChangeLog for details.
 
 
 Contributors:
