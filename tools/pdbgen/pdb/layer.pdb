@@ -354,9 +354,6 @@ HELP
 	code => <<'CODE'
 {
   success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
-
-  if (success)
-    g_object_unref (mask);
 }
 CODE
     );

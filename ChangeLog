@@ -1,3 +1,13 @@
+2003-12-16  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb (image_add_layer_mask)
+	* tools/pdbgen/pdb/layer.pdb (layer_add_mask): don't unref the
+	mask after adding it because the layer now takes ownership using
+	g_object_ref()/gimp_item_sink().
+
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c: regenerated.
+
 2003-12-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c: added API documentation.
