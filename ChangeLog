@@ -1,3 +1,8 @@
+Mon Jul  6 12:07:37 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: check for > 256 colors palettes when indexing,
+	since the code doesn't handle it (from Yasuhiro SHIRASAKI)
+
 Sat Jul  4 22:58:23 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/autostretch_hsv/autostretch_hsv.c: corrected progress
