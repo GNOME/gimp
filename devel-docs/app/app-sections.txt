@@ -1278,6 +1278,7 @@ gimp_progress_set_text
 gimp_progress_set_value
 gimp_progress_get_value
 gimp_progress_cancel
+gimp_progress_is_active
 gimp_progress_update_and_flush
 <SUBSECTION Standard>
 GimpProgressInterface
@@ -1781,21 +1782,21 @@ gimp_display_shell_untransform_viewport
 </SECTION>
 
 <SECTION>
-<FILE>gimpnavigationview</FILE>
-<TITLE>GimpNavigationView</TITLE>
-GimpNavigationView
-gimp_navigation_view_new
-gimp_navigation_view_set_shell
-gimp_navigation_view_popup
+<FILE>gimpnavigationeditor</FILE>
+<TITLE>GimpNavigationEditor</TITLE>
+GimpNavigationEditor
+gimp_navigation_editor_new
+gimp_navigation_editor_set_shell
+gimp_navigation_editor_popup
 <SUBSECTION Standard>
-GimpNavigationViewClass
-GIMP_NAVIGATION_VIEW
-GIMP_IS_NAVIGATION_VIEW
-GIMP_TYPE_NAVIGATION_VIEW
-gimp_navigation_view_get_type
-GIMP_NAVIGATION_VIEW_CLASS
-GIMP_IS_NAVIGATION_VIEW_CLASS
-GIMP_NAVIGATION_VIEW_GET_CLASS
+GimpNavigationEditorClass
+GIMP_NAVIGATION_EDITOR
+GIMP_IS_NAVIGATION_EDITOR
+GIMP_TYPE_NAVIGATION_EDITOR
+gimp_navigation_editor_get_type
+GIMP_NAVIGATION_EDITOR_CLASS
+GIMP_IS_NAVIGATION_EDITOR_CLASS
+GIMP_NAVIGATION_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -1996,7 +1997,6 @@ gimp_paint_core_start
 gimp_paint_core_finish
 gimp_paint_core_cancel
 gimp_paint_core_cleanup
-gimp_paint_core_constrain
 gimp_paint_core_interpolate
 gimp_paint_core_get_paint_area
 gimp_paint_core_get_orig_image
@@ -3408,6 +3408,7 @@ gimp_bezier_stroke_lineto
 gimp_bezier_stroke_conicto
 gimp_bezier_stroke_cubicto
 gimp_bezier_stroke_arcto
+gimp_bezier_stroke_new_ellipse
 <SUBSECTION Standard>
 GimpBezierStrokeClass
 GIMP_BEZIER_STROKE
@@ -4430,6 +4431,23 @@ GIMP_ERROR_CONSOLE_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimperrordialog</FILE>
+<TITLE>GimpErrorDialog</TITLE>
+GimpErrorDialog
+gimp_error_dialog_new
+gimp_error_dialog_add
+<SUBSECTION Standard>
+GimpErrorDialogClass
+GIMP_ERROR_DIALOG
+GIMP_IS_ERROR_DIALOG
+GIMP_TYPE_ERROR_DIALOG
+gimp_error_dialog_get_type
+GIMP_ERROR_DIALOG_CLASS
+GIMP_IS_ERROR_DIALOG_CLASS
+GIMP_ERROR_DIALOG_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpfontview</FILE>
 <TITLE>GimpFontView</TITLE>
 GimpFontView
@@ -4742,6 +4760,26 @@ GIMP_MENU_FACTORY_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpmessagebox</FILE>
+<TITLE>GimpMessageBox</TITLE>
+GimpMessageBox
+gimp_message_box_new
+gimp_message_box_set_primary_text
+gimp_message_box_set_text
+gimp_message_box_set_markup
+gimp_message_box_repeat
+<SUBSECTION Standard>
+GimpMessageBoxClass
+GIMP_MESSAGE_BOX
+GIMP_IS_MESSAGE_BOX
+GIMP_TYPE_MESSAGE_BOX
+gimp_message_box_get_type
+GIMP_MESSAGE_BOX_CLASS
+GIMP_IS_MESSAGE_BOX_CLASS
+GIMP_MESSAGE_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpuimanager</FILE>
 GimpUIManagerUIEntry
 <TITLE>GimpUIManager</TITLE>
@@ -4923,24 +4961,24 @@ GIMP_PATTERN_SELECT_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimppreview</FILE>
-<TITLE>GimpPreview</TITLE>
-GimpPreview
-gimp_preview_new
-gimp_preview_new_full
-gimp_preview_new_by_types
-gimp_preview_new_full_by_types
-gimp_preview_set_viewable
-gimp_preview_set_expand
+<FILE>gimpview</FILE>
+<TITLE>GimpView</TITLE>
+GimpView
+gimp_view_new
+gimp_view_new_full
+gimp_view_new_by_types
+gimp_view_new_full_by_types
+gimp_view_set_viewable
+gimp_view_set_expand
 <SUBSECTION Standard>
-GimpPreviewClass
-GIMP_PREVIEW
-GIMP_IS_PREVIEW
-GIMP_TYPE_PREVIEW
-gimp_preview_get_type
-GIMP_PREVIEW_CLASS
-GIMP_IS_PREVIEW_CLASS
-GIMP_PREVIEW_GET_CLASS
+GimpViewClass
+GIMP_VIEW
+GIMP_IS_VIEW
+GIMP_TYPE_VIEW
+gimp_view_get_type
+GIMP_VIEW_CLASS
+GIMP_IS_VIEW_CLASS
+GIMP_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6719,8 +6757,9 @@ convert_dialog_new
 dialogs_file_new_new
 dialogs_preferences_get
 dialogs_module_browser_get
-dialogs_tips_get
 dialogs_about_get
+dialogs_error_get
+dialogs_tips_get
 dialogs_toolbox_get
 dialogs_dock_new
 dialogs_tool_options_get
@@ -7318,6 +7357,11 @@ GimpToolRegisterFunc
 </SECTION>
 
 <SECTION>
+<FILE>tools-utils</FILE>
+gimp_tool_motion_constrain
+</SECTION>
+
+<SECTION>
 <FILE>gimp-tools</FILE>
 <TITLE>Gimp-tools</TITLE>
 gimp_tools_init
@@ -7500,7 +7544,6 @@ gimp_paint_mode_menu_set_history
 
 <SECTION>
 <FILE>gimpwidgets-utils</FILE>
-gimp_message_box
 gimp_menu_position
 gimp_button_menu_position
 gimp_table_attach_stock
@@ -8069,6 +8112,9 @@ layers_resize_cmd_callback
 layers_resize_to_image_cmd_callback
 layers_scale_cmd_callback
 layers_crop_cmd_callback
+layers_mask_edit_cmd_callback
+layers_mask_show_cmd_callback
+layers_mask_disable_cmd_callback
 layers_mask_add_cmd_callback
 layers_mask_apply_cmd_callback
 layers_mask_to_selection_cmd_callback
