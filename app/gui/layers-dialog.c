@@ -143,6 +143,7 @@ static void layers_dialog_remove_layer (Layer *);
 static void layers_dialog_add_layer_mask (Layer *);
 static void layers_dialog_remove_layer_mask (Layer *);
 static void paint_mode_menu_callback (GtkWidget *, gpointer);
+static gint paint_mode_menu_get_position (gint);
 static void image_menu_callback (GtkWidget *, gpointer);
 static void opacity_scale_update (GtkAdjustment *, gpointer);
 static void preserve_trans_update (GtkWidget *, gpointer);
@@ -1404,6 +1405,25 @@ layers_dialog_remove_layer_mask (Layer * layer)
   gtk_widget_draw (layer_widget->layer_preview, NULL);
 }
 
+static gint
+paint_mode_menu_get_position (gint mode)
+{
+  /* FIXME this is an ugly hack that should stay around only until 
+   * the layers dialog is rewritten 
+   */
+  int i = 0;
+
+  while (option_items [i].label != NULL)
+    {
+      if (mode == (gint) (option_items[i].user_data))
+	return i;
+      else 
+	i++;
+    }
+  
+  g_message ("Unknown layer mode");
+  return 0;
+}
 
 static void
 paint_mode_menu_callback (GtkWidget *w,
@@ -2812,7 +2832,6 @@ layer_widget_exclusive_visible (LayerWidget *layer_widget)
     }
 }
 
-
 static void
 layer_widget_layer_flush (GtkWidget *widget,
 			  gpointer   client_data)
@@ -2863,7 +2882,7 @@ layer_widget_layer_flush (GtkWidget *widget,
       layersD->opacity_data->value = (gfloat) layer_widget->layer->opacity / 2.55;
       gtk_signal_emit_by_name (GTK_OBJECT (layersD->opacity_data), "value_changed");
       gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
-				   layer_widget->layer->mode);
+				   paint_mode_menu_get_position (layer_widget->layer->mode));
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
 				   (layer_widget->layer->preserve_trans) ?
 				   GTK_STATE_ACTIVE : GTK_STATE_NORMAL);

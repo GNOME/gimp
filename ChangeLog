@@ -1,3 +1,9 @@
+Tue Sep  1 01:15:06 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/layers_dialog.c (paint_mode_menu_get_position): added this
+	function to translate layer modes to correct menu positions, this
+	is ugly but important until someone rewrites the layers_dialog. 
+
 Mon Aug 31 23:32:40 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/gimpimage.c (gimp_image_remove_layer_mask): add back a call to
