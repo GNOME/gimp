@@ -34,7 +34,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 #define SCALE_WIDTH  125
 #define HISTSIZE     256
 
@@ -95,19 +94,19 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_oilify",
-			  "Modify the specified drawable to resemble an oil "
-			  "painting",
-			  "This function performs the well-known oil-paint "
-			  "effect on the specified drawable.  The size of the "
-			  "input mask is specified by 'mask_size'.",
-			  "Torsten Martinsen",
-			  "Torsten Martinsen",
-			  "1996",
-			  N_("Oili_fy..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Modify the specified drawable to resemble an oil "
+                          "painting",
+                          "This function performs the well-known oil-paint "
+                          "effect on the specified drawable.  The size of the "
+                          "input mask is specified by 'mask_size'.",
+                          "Torsten Martinsen",
+                          "Torsten Martinsen",
+                          "1996",
+                          N_("Oili_fy..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_oilify",
                              N_("<Image>/Filters/Artistic"));
@@ -149,19 +148,19 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
         {
           ovals.mask_size = (gdouble) param[3].data.d_int32;
           ovals.mode = (gint) param[4].data.d_int32;
 
-	  if ((ovals.mask_size < 1.0) ||
-	      ((ovals.mode != MODE_INTEN) &&
-	       (ovals.mode != MODE_RGB)))
-	    status = GIMP_PDB_CALLING_ERROR;
-	}
+          if ((ovals.mask_size < 1.0) ||
+              ((ovals.mode != MODE_INTEN) &&
+               (ovals.mode != MODE_RGB)))
+            status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -216,35 +215,38 @@ run (const gchar      *name,
 static void
 oilify_rgb (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  gint bytes;
-  gint width, height;
-  guchar *src_row, *src;
-  guchar *dest_row, *dest;
-  gint x, y, c, b, xx, yy, n;
-  gint x1, y1, x2, y2;
-  gint x3, y3, x4, y4;
-  gint Val[4];
-  gint Cnt[4];
-  gint Hist[4][HISTSIZE];
-  gpointer pr1, pr2;
-  gint progress, max_progress;
-  gint *tmp1, *tmp2;
-  guchar *guc_tmp1;
+  GimpPixelRgn  src_rgn, dest_rgn;
+  gint          bytes;
+  gint          width, height;
+  guchar       *src_row, *src;
+  guchar       *dest_row, *dest;
+  gint          x, y, c, b, xx, yy, n;
+  gint          x1, y1, x2, y2;
+  gint          x3, y3, x4, y4;
+  gint          Cnt[4];
+  gint          Hist[4][HISTSIZE];
+  gpointer      pr1;
+  gint          progress, max_progress;
+  guchar       *src_buf;
 
   /*  get the selection bounds  */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
+  width  = x2 - x1;
+  height = y2 - y1;
 
-  width = drawable->width;
-  height = drawable->height;
+  progress = 0;
+  max_progress = width * height;
+
   bytes = drawable->bpp;
 
   n = (int) ovals.mask_size / 2;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+                       x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+                       x1, y1, width, height, FALSE, FALSE);
+  src_buf = g_new (guchar, width * height * bytes);
+  gimp_pixel_rgn_get_rect (&src_rgn, src_buf, x1, y1, width, height);
 
   for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
        pr1 != NULL;
@@ -253,67 +255,49 @@ oilify_rgb (GimpDrawable *drawable)
       dest_row = dest_rgn.data;
 
       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	{
-	  dest = dest_row;
+        {
+          dest = dest_row;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-	      memset(Cnt, 0, sizeof(Cnt));
-	      memset(Val, 0, sizeof(Val));
-	      memset(Hist, 0, sizeof(Hist));
+          for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+            {
+              x3 = CLAMP ((x - n), x1, x2);
+              y3 = CLAMP ((y - n), y1, y2);
+              x4 = CLAMP ((x + n + 1), x1, x2);
+              y4 = CLAMP ((y + n + 1), y1, y2);
 
-	      x3 = CLAMP ((x - n), x1, x2);
-	      y3 = CLAMP ((y - n), y1, y2);
-	      x4 = CLAMP ((x + n + 1), x1, x2);
-	      y4 = CLAMP ((y + n + 1), y1, y2);
+              memset(Cnt, 0, sizeof(Cnt));
+              memset(Hist, 0, sizeof(Hist));
 
-	      gimp_pixel_rgn_init (&src_rgn, drawable,
-				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
+              src_row = src_buf + ((y3 - y1) * width + (x3 - x1)) * bytes;
+              for (yy = y3 ; yy < y4 ; yy++)
+                {
+                  src = src_row;
+                  for (xx = x3 ; xx < x4 ; xx++)
+                    {
+                      for (b = 0; b < bytes; b++)
+                        {
+                          if ((c = ++Hist[b][src[b]]) > Cnt[b])
+                            {
+                              dest[b] = src[b];
+                              Cnt[b] = c;
+                            }
+                        }
+                      src += bytes;
+                    }
+                  src_row += width * bytes;
+                }
 
-	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
-		   pr2 != NULL;
-		   pr2 = gimp_pixel_rgns_process (pr2))
-		{
-		  src_row = src_rgn.data;
+                dest += bytes;
+            }
 
-		  for (yy = 0; yy < src_rgn.h; yy++)
-		    {
-		      src = src_row;
-
-		      for (xx = 0; xx < src_rgn.w; xx++)
-			{
-			  for (b = 0,
-				 tmp1 = Val,
-				 tmp2 = Cnt,
-				 guc_tmp1 = src;
-			       b < bytes;
-			       b++, tmp1++, tmp2++, guc_tmp1++)
-			    {
-			      if ((c = ++Hist[b][*guc_tmp1]) > *tmp2)
-				{
-				  *tmp1 = *guc_tmp1;
-				  *tmp2 = c;
-				}
-			    }
-
-			  src += src_rgn.bpp;
-			}
-
-		      src_row += src_rgn.rowstride;
-		    }
-		}
-
-	      for (b = 0, tmp1 = Val; b < bytes; b++)
-		*dest++ = *tmp1++;
-	    }
-
-	  dest_row += dest_rgn.rowstride;
-	}
+          dest_row += dest_rgn.rowstride;
+        }
 
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
 
+  g_free (src_buf);
   /*  update the oil-painted region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -328,35 +312,32 @@ oilify_rgb (GimpDrawable *drawable)
 static void
 oilify_intensity (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  gint bytes;
-  gint width, height;
-  guchar *src_row, *src;
-  guchar *dest_row, *dest;
-  gint x, y, c, b, xx, yy, n;
-  gint x1, y1, x2, y2;
-  gint x3, y3, x4, y4;
-  gint Val[4];
-  gint Cnt;
-  gint Hist[HISTSIZE];
-  gpointer pr1, pr2;
-  gint progress, max_progress;
-  gint *tmp1;
-  guchar *guc_tmp1;
+  GimpPixelRgn  src_rgn, dest_rgn;
+  gint          bytes;
+  gint          width, height;
+  guchar       *src_row, *src, *selected_src = NULL;
+  guchar       *dest_row, *dest;
+  gint          x, y, c, xx, yy, n;
+  gint          x1, y1, x2, y2;
+  gint          x3, y3, x4, y4;
+  gint          Cnt;
+  gint          Hist[HISTSIZE];
+  gpointer      pr1, pr2;
+  gint          progress, max_progress;
 
   /*  get the selection bounds  */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  width = drawable->width;
-  height = drawable->height;
+  width  = x2 - x1;
+  height = y2 - y1;
   bytes = drawable->bpp;
+
+  progress = 0;
+  max_progress = width * height;
 
   n = (int) ovals.mask_size / 2;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+                       x1, y1, width, height, TRUE, TRUE);
 
   for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
        pr1 != NULL;
@@ -365,63 +346,56 @@ oilify_intensity (GimpDrawable *drawable)
       dest_row = dest_rgn.data;
 
       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	{
-	  dest = dest_row;
+        {
+          dest = dest_row;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-	      Cnt = 0;
-	      memset(Val, 0, sizeof(Val));
-	      memset(Hist, 0, sizeof(Hist));
+          for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+            {
+              Cnt = 0;
+              memset(Hist, 0, sizeof(Hist));
 
-	      x3 = CLAMP ((x - n), x1, x2);
-	      y3 = CLAMP ((y - n), y1, y2);
-	      x4 = CLAMP ((x + n + 1), x1, x2);
-	      y4 = CLAMP ((y + n + 1), y1, y2);
+              x3 = CLAMP ((x - n), x1, x2);
+              y3 = CLAMP ((y - n), y1, y2);
+              x4 = CLAMP ((x + n + 1), x1, x2);
+              y4 = CLAMP ((y + n + 1), y1, y2);
 
-	      gimp_pixel_rgn_init (&src_rgn, drawable,
-				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
+              gimp_pixel_rgn_init (&src_rgn, drawable,
+                                   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
 
-	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
-		   pr2 != NULL;
-		   pr2 = gimp_pixel_rgns_process (pr2))
-		{
-		  src_row = src_rgn.data;
+              for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
+                   pr2 != NULL;
+                   pr2 = gimp_pixel_rgns_process (pr2))
+                {
+                  src_row = src_rgn.data;
 
-		  for (yy = 0; yy < src_rgn.h; yy++)
-		    {
-		      src = src_row;
+                  for (yy = 0; yy < src_rgn.h; yy++)
+                    {
+                      src = src_row;
 
-		      for (xx = 0; xx < src_rgn.w; xx++)
-			{
-			  if ((c = ++Hist[INTENSITY(src)]) > Cnt)
-			    {
-			      Cnt = c;
-			      for (b = 0,
-				     tmp1 = Val,
-				     guc_tmp1 = src;
-				   b < bytes;
-				   b++, tmp1++, guc_tmp1++)
-				*tmp1 = *guc_tmp1;
-			    }
+                      for (xx = 0; xx < src_rgn.w; xx++)
+                        {
+                          if ((c = ++Hist[INTENSITY(src)]) > Cnt)
+                            {
+                              Cnt = c;
+                              selected_src = src;
+                            }
 
-			  src += src_rgn.bpp;
-			}
+                          src += src_rgn.bpp;
+                        }
 
-		      src_row += src_rgn.rowstride;
-		    }
-		}
+                      src_row += src_rgn.rowstride;
+                    }
+                }
+              memcpy (dest, selected_src, bytes);
+              dest += bytes;
+            }
 
-	      for (b = 0, tmp1 = Val; b < bytes; b++)
-		*dest++ = *tmp1++;
-	    }
-
-	  dest_row += dest_rgn.rowstride;
-	}
+          dest_row += dest_rgn.rowstride;
+        }
 
       progress += dest_rgn.w * dest_rgn.h;
       if ((progress % 5) == 0)
-	gimp_progress_update ((double) progress / (double) max_progress);
+        gimp_progress_update ((double) progress / (double) max_progress);
     }
 
   /*  update the oil-painted region  */
@@ -443,12 +417,12 @@ oilify_dialog (void)
 
   dlg = gimp_dialog_new (_("Oilify"), "oilify",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-oilify",
+                         gimp_standard_help_func, "plug-in-oilify",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -458,10 +432,10 @@ oilify_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Mask size:"), SCALE_WIDTH, 0,
-			      ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Mask size:"), SCALE_WIDTH, 0,
+                              ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.mask_size);
