@@ -4181,26 +4181,31 @@ scale_region (PixelRegion *srcPR,
       guchar *d = dest;
       for (x = 0; x < width; x++)
       {
-	inv_alpha = 255.0 / p[alpha];
-	for (b = 0; b < alpha; b++)
+	if (p[alpha] > 0.001)
 	{
-	  result = RINT(inv_alpha * p[b]);
-	  if (result < 0)
-	    d[b] = 0;
-	  else if (result > 255)
-	    d[b] = 255;
+	  inv_alpha = 255.0 / p[alpha];
+	  for (b = 0; b < alpha; b++)
+	  {
+	    result = RINT(inv_alpha * p[b]);
+	    if (result < 0)
+	      d[b] = 0;
+	    else if (result > 255)
+	      d[b] = 255;
+	    else
+	      d[b] = result;
+	  }
+	  result = RINT(p[alpha]);
+	  if (result > 255)
+	    d[alpha] = 255;
 	  else
-	    d[b] = result;
+	    d[alpha] = result;
 	}
-	result = RINT(p[alpha]);
-	if (result < 0)
-	  d[alpha] = 0;
-	else if (result > 255)
-	  d[alpha] = 255;
-	else
-	  d[alpha] = result;
+	else /* alpha <= 0 */
+	  for (b = 0; b <= alpha; b++)
+	    d[b] = 0;
 	d += bytes;
 	p += bytes;
+
       }
     }
     else

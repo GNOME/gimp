@@ -1,3 +1,8 @@
+2000-03-18  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_funcs.c:  Make sure we don't divide by zero in
+ 	scale_region.  Fixes bugs #4783 and #6907.
+
 2000-03-17  Birger Langkjer <birger.langkjer@image.dk>
 
 	* plug-ins/MapObject/mapobject_ui.c:565: fixed typo/spelling
