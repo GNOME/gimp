@@ -1,3 +1,8 @@
+Tue Dec 28 15:32:19 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gz.c
+	* plug-ins/gap/gap_decode_mpeg_main.c: fixed typos
+
 Tue Dec 28 15:05:06 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimprc.c

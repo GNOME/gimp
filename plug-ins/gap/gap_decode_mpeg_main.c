@@ -331,7 +331,7 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
        argv[0].label_txt = filename;
     
        return(p_array_std_dialog ( _("GAP Question"),
-                                   _("file alreay exists:"),
+                                   _("file already exists:"),
 				   1, argv,
 				   3, l_argv, -1));
     }

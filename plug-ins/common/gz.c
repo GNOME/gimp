@@ -170,7 +170,7 @@ query ()
 
   gimp_install_procedure ("file_gz_save",
                           _("saves files compressed with gzip"),
-                          _("You need to have gzip installed"),
+                          _("You need to have gzip installed."),
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
