@@ -164,10 +164,12 @@ app/gui/tips-parser.c
 app/gui/user-install-dialog.c
 
 app/paint/gimpairbrush.c
+app/paint/gimpbrushcore.c
 app/paint/gimpclone.c
 app/paint/gimpconvolve.c
 app/paint/gimpdodgeburn.c
 app/paint/gimperaser.c
+app/paint/gimpink.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore.c
 app/paint/gimppencil.c
@@ -229,7 +231,7 @@ app/tools/gimpfuzzyselecttool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
 app/tools/gimpimagemaptool.c
-app/tools/gimpinkoptions.c
+app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c
 app/tools/gimpiscissorstool.c
 app/tools/gimplevelstool.c
