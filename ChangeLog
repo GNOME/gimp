@@ -1,3 +1,8 @@
+Fri Jun 18 18:25:24 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/paint_funcs.c: Fixed a problem with hidden/unaffected
+	colour channels.
+
 Fri Jun 18 10:55:46 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimpage.pdb

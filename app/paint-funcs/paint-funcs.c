@@ -5368,6 +5368,7 @@ combine_regions (PixelRegion   *src1,
 		 int            type)
 {
   int has_alpha1, has_alpha2;
+  int i;
   struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */
@@ -5403,15 +5404,43 @@ combine_regions (PixelRegion   *src1,
   st.has_alpha2 = has_alpha2;
 
   /* cheap and easy when the row of src2 is completely opaque/transparent
-     and the wind is otherwise blowing in the right direction. */
+     and the wind is otherwise blowing in the right direction.
+  */
+
+  /* First check - we can't do an opacity quickskip if the drawable
+     has a mask, or non-full opacity, or the layer mode dictates
+     that we might gain transparency.
+  */
   st.opacity_quickskip_possible = ((!mask) && (opacity==255) &&
 				   (!layer_modes[mode].decrease_opacity) &&
 				   (layer_modes[mode].affect_alpha &&
 				    has_alpha1 &&
 				    affect[src1->bytes-1]) );
+
+  /* Second check - if any single colour channel can't be affected,
+     we can't use the opacity quickskip.
+  */
+  if (st.opacity_quickskip_possible)
+    {
+      for (i=0; i<src1->bytes-1; i++)
+	{
+	  if (!affect[i])
+	    {
+	      st.opacity_quickskip_possible = FALSE;
+	      break;
+	    }
+	}
+    }
+
+  /* transparency quickskip is only possible if the layer mode
+     dictates that we cannot possibly gain opacity, or the 'overall'
+     opacity of the layer is set to zero anyway.
+   */
   st.transparency_quickskip_possible = ((!layer_modes[mode].increase_opacity)
 					|| (opacity==0));
-  
+
+  /* Start the actual processing.
+   */
   pixel_regions_process_parallel ((p_func)combine_sub_region, &st, 4,
 				    src1, src2, dest, mask);
 }
