@@ -959,18 +959,15 @@ gimp_paint_core_paste_canvas (GimpPaintCore            *core,
 			      gdouble                   brush_scale,
 			      GimpPaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask;
+  MaskBuf *brush_mask = gimp_paint_core_get_brush_mask (core,
+                                                        brush_hardness,
+                                                        brush_scale);
 
-  /*  get the brush mask  */
-  brush_mask = gimp_paint_core_get_brush_mask (core,
-					       brush_hardness,
-                                               brush_scale);
-
-  /*  paste the canvas buf  */
-  gimp_paint_core_paste (core, brush_mask, drawable,
-			 brush_opacity,
-                         image_opacity, paint_mode,
-                         mode);
+  if (brush_mask)
+    gimp_paint_core_paste (core, brush_mask, drawable,
+                           brush_opacity,
+                           image_opacity, paint_mode,
+                           mode);
 }
 
 /* Similar to gimp_paint_core_paste_canvas, but replaces the alpha channel
@@ -986,17 +983,14 @@ gimp_paint_core_replace_canvas (GimpPaintCore            *core,
 				gdouble                   brush_scale,
 				GimpPaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask;
+  MaskBuf *brush_mask = gimp_paint_core_get_brush_mask (core,
+                                                        brush_hardness,
+                                                        brush_scale);
 
-  /*  get the brush mask  */
-  brush_mask = gimp_paint_core_get_brush_mask (core,
-                                               brush_hardness,
-                                               brush_scale);
-
-  /*  paste the canvas buf  */
-  gimp_paint_core_replace (core, brush_mask, drawable,
-			   brush_opacity,
-                           image_opacity, mode);
+  if (brush_mask)
+    gimp_paint_core_replace (core, brush_mask, drawable,
+                             brush_opacity,
+                             image_opacity, mode);
 }
 
 
@@ -1366,6 +1360,9 @@ gimp_paint_core_get_brush_mask (GimpPaintCore            *core,
     mask = gimp_paint_core_scale_mask (core, core->brush->mask, scale);
   else
     mask = core->brush->mask;
+
+  if (!mask)
+    return NULL;
 
   switch (brush_hardness)
     {
@@ -1791,6 +1788,9 @@ gimp_paint_core_color_area_with_pixmap (GimpPaintCore            *core,
   pixmap_mask = gimp_paint_core_scale_pixmap (core,
                                               core->brush->pixmap,
                                               scale);
+
+  if (!pixmap_mask)
+    return;
 
   if (mode == GIMP_BRUSH_SOFT)
     brush_mask = gimp_paint_core_scale_mask (core,

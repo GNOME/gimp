@@ -1,3 +1,9 @@
+2002-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c: check for NULL masks returned from
+	the brush scaler. Should fix crashes with buggy input devices.
+	Fix suggested by Jim Meyer <jim@dsdd.org> (#91067).
+
 2002-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c: use GTK_STOCK_REMOVE for "<Dialogs>/Remove Tab".
