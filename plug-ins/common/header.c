@@ -70,7 +70,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_header_save",
-                          _("saves files as C unsigned character array"),
+                          "saves files as C unsigned character array",
                           "FIXME: write help",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",

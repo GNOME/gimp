@@ -455,8 +455,8 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("file_xjt_load",
-                          _("loads files of the jpeg-tar file format"),
-			  _("loads files of the jpeg-tar file format"),
+                          "loads files of the jpeg-tar file format",
+			  "loads files of the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
                           "2000-Jan-30",
@@ -467,8 +467,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_xjt_save",
-                          _("saves files in the jpeg-tar file format"),
-			  _("saves files in the jpeg-tar file format"),
+                          "saves files in the jpeg-tar file format",
+			  "saves files in the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
                           "2000-Jan-30",

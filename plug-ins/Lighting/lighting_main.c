@@ -169,8 +169,8 @@ static void query(void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_lighting",
-			  _("Apply various lighting effects to an image"),
-			  _("No help yet"),
+			  "Apply various lighting effects to an image",
+			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.2.0, March 15 1998",

@@ -329,8 +329,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_jpeg_load",
-                          _("loads files in the JPEG file format"),
-                          _("loads files in the JPEG file format"),
+                          "loads files in the JPEG file format",
+                          "loads files in the JPEG file format",
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1999",
@@ -341,8 +341,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_jpeg_save",
-                          _("saves files in the JPEG file format"),
-                          _("saves files in the lossy, widely supported JPEG format"),
+                          "saves files in the JPEG file format",
+                          "saves files in the lossy, widely supported JPEG format",
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1999",

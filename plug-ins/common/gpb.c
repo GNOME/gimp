@@ -138,8 +138,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_gpb_save",
-                          _("saves images in GIMP pixmap brush format"), 
-                          _("This plug-in saves a layer of an image in the GIMP pixmap brush format. The image must have an alpha channel."),
+                          "saves images in GIMP pixmap brush format", 
+                          "This plug-in saves a layer of an image in the GIMP pixmap brush format. The image must have an alpha channel.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
@@ -154,8 +154,8 @@ query (void)
 			      "");
 
   gimp_install_procedure ("file_gih_save",
-                          _("saves images in GIMP pixmap brush pipe format"), 
-                          _("This plug-in saves an image in the GIMP pixmap brush pipe format. The image must have an alpha channel. The image can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes."),
+                          "saves images in GIMP pixmap brush pipe format", 
+                          "This plug-in saves an image in the GIMP pixmap brush pipe format. The image must have an alpha channel. The image can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",

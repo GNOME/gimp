@@ -110,8 +110,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_oilify",
-			  _("Modify the specified drawable to resemble an oil painting"),
-			  _("This function performs the well-known oil-paint effect on the specified drawable.  The size of the input mask is specified by 'mask_size'."),
+			  "Modify the specified drawable to resemble an oil painting",
+			  "This function performs the well-known oil-paint effect on the specified drawable.  The size of the input mask is specified by 'mask_size'.",
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",

@@ -164,7 +164,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_plasma",
-			  _("Create a plasma cloud like image to the specified drawable"),
+			  "Create a plasma cloud like image to the specified drawable",
 			  "More help",
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",

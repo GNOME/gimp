@@ -73,8 +73,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_guillotine",
-			  _("Slice up the image into subimages, cutting along the image's Guides.  Fooey to you and your broccoli, Pokey."),
-			  _("This function takes an image and blah blah.  Hooray!"),
+			  "Slice up the image into subimages, cutting along the image's Guides.  Fooey to you and your broccoli, Pokey.",
+			  "This function takes an image and blah blah.  Hooray!",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "1998",

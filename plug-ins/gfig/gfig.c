@@ -635,8 +635,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_gfig",
-			  _("Create Geometrical shapes with the Gimp"),
-			  _("More here later"),
+			  "Create Geometrical shapes with the Gimp",
+			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",

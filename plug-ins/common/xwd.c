@@ -233,8 +233,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_xwd_load",
-                          _("load file of the XWD file format"),
-                          _("load file of the XWD file format"),
+                          "load file of the XWD file format",
+                          "load file of the XWD file format",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -245,9 +245,9 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_xwd_save",
-                          _("saves files in the XWD file format"),
-                          _("XWD saving handles all image types except \
-those with alpha channels."),
+                          "saves files in the XWD file format",
+                          "XWD saving handles all image types except \
+those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",

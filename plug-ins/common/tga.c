@@ -229,7 +229,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_tga_load",
-                          _("Loads files of Targa file format"),
+                          "Loads files of Targa file format",
                           "FIXME: write help for tga_load",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -241,7 +241,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_tga_save",
-                          _("saves files in the Targa file format"),
+                          "saves files in the Targa file format",
                           "FIXME: write help for tga_save",
 			  "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",

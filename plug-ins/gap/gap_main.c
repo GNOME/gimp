@@ -335,7 +335,7 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_gap_next",
-			 _("This plugin exchanges current image with (next nubered) image from disk."),
+			 "This plugin exchanges current image with (next nubered) image from disk.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -347,7 +347,7 @@ query ()
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_prev",
-			 _("This plugin exchanges current image with (previous nubered) image from disk."),
+			 "This plugin exchanges current image with (previous nubered) image from disk.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -359,7 +359,7 @@ query ()
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_first",
-			 _("This plugin exchanges current image with (lowest nubered) image from disk."),
+			 "This plugin exchanges current image with (lowest nubered) image from disk.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -371,7 +371,7 @@ query ()
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_last",
-			 _("This plugin exchanges current image with (highest nubered) image from disk."),
+			 "This plugin exchanges current image with (highest nubered) image from disk.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -383,7 +383,7 @@ query ()
 			 args_std, return_vals);
 
   gimp_install_procedure("plug_in_gap_goto",
-			 _("This plugin exchanges current image with requested image (nr) from disk."),
+			 "This plugin exchanges current image with requested image (nr) from disk.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -395,7 +395,7 @@ query ()
 			 args_goto, return_vals);
 
   gimp_install_procedure("plug_in_gap_del",
-			 _("This plugin deletes the given number of frames from disk including the current frame."),
+			 "This plugin deletes the given number of frames from disk including the current frame.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -407,7 +407,7 @@ query ()
 			 args_del, return_vals);
 
   gimp_install_procedure("plug_in_gap_dup",
-			 _("This plugin duplicates the current frames on disk n-times."),
+			 "This plugin duplicates the current frames on disk n-times.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -419,7 +419,7 @@ query ()
 			 args_dup, return_vals);
 
   gimp_install_procedure("plug_in_gap_exchg",
-			 _("This plugin exchanges content of the current with destination frame."),
+			 "This plugin exchanges content of the current with destination frame.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -431,7 +431,7 @@ query ()
 			 args_exchg, return_vals);
 
   gimp_install_procedure("plug_in_gap_move",
-			 _("This plugin copies layer(s) from one sourceimage to multiple frames on disk, varying position, size and opacity."),
+			 "This plugin copies layer(s) from one sourceimage to multiple frames on disk, varying position, size and opacity.",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -443,7 +443,7 @@ query ()
 			 args_mov, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_to_multilayer",
-			 _("This plugin creates a new image from the given range of frame-images. Each frame is converted to one layer in the new image, according to flatten_mode. (the frames on disk are not changed)."),
+			 "This plugin creates a new image from the given range of frame-images. Each frame is converted to one layer in the new image, according to flatten_mode. (the frames on disk are not changed).",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -455,7 +455,7 @@ query ()
 			 args_f2multi, return_f2multi);
 
   gimp_install_procedure("plug_in_gap_range_flatten",
-			 _("This plugin flattens the given range of frame-images (on disk)"),
+			 "This plugin flattens the given range of frame-images (on disk)",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -467,7 +467,7 @@ query ()
 			 args_rflatt, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_layer_del",
-			 _("This plugin deletes one layer in the given range of frame-images (on disk). exception: the last remaining layer of a frame is not deleted"),
+			 "This plugin deletes one layer in the given range of frame-images (on disk). exception: the last remaining layer of a frame is not deleted",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -479,7 +479,7 @@ query ()
 			 args_rlayerdel, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_convert",
-			 _("This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension"),
+			 "This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension",
 			 "WARNING this procedure is obsolete, please use plug_in_gap_range_convert2",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -491,7 +491,7 @@ query ()
 			 args_rconv, return_vals);
 
   gimp_install_procedure("plug_in_gap_range_convert2",
-			 _("This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension"),
+			 "This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -503,7 +503,7 @@ query ()
 			 args_rconv2, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_resize",
-			 _("This plugin resizes all anim_frames (images on disk) to the given new_width/new_height"),
+			 "This plugin resizes all anim_frames (images on disk) to the given new_width/new_height",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -515,7 +515,7 @@ query ()
 			 args_resize, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_crop",
-			 _("This plugin crops all anim_frames (images on disk) to the given new_width/new_height"),
+			 "This plugin crops all anim_frames (images on disk) to the given new_width/new_height",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -527,7 +527,7 @@ query ()
 			 args_resize, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_scale",
-			 _("This plugin scales all anim_frames (images on disk) to the given new_width/new_height"),
+			 "This plugin scales all anim_frames (images on disk) to the given new_width/new_height",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -539,7 +539,7 @@ query ()
 			 args_scale, return_vals);
 
   gimp_install_procedure("plug_in_gap_split",
-			 _("This plugin splits the current image to anim frames (images on disk). Each layer is saved as one frame"),
+			 "This plugin splits the current image to anim frames (images on disk). Each layer is saved as one frame",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -552,7 +552,7 @@ query ()
 
 
   gimp_install_procedure("plug_in_gap_shift",
-			 _("This plugin exchanges frame numbers in the given range. (discfile frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)"),
+			 "This plugin exchanges frame numbers in the given range. (discfile frame_0001.xcf is renamed to frame_0002.xcf, 2->3, 3->4 ... n->1)",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -564,7 +564,7 @@ query ()
 			 args_shift, return_vals);
 
   gimp_install_procedure("plug_in_gap_modify",
-			 _("This plugin performs a modifying action on each selected layer in each selected framerange"),
+			 "This plugin performs a modifying action on each selected layer in each selected framerange",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",

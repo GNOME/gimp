@@ -104,7 +104,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_pat_load",
-                          _("loads files of the .pat file format"),
+                          "loads files of the .pat file format",
                           "FIXME: write help",
                           "Tim Newsome",
                           "Tim Newsome",
@@ -116,7 +116,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pat_save",
-                          _("saves files in the .pat file format"),
+                          "saves files in the .pat file format",
                           "Yeah!",
                           "Tim Newsome",
                           "Tim Newsome",

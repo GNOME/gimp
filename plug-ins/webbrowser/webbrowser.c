@@ -116,8 +116,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("extension_web_browser",
-			  _("open URL in Netscape"),
-			  _("You need to have Netscape installed"),
+			  "open URL in Netscape",
+			  "You need to have Netscape installed",
 			  "Misha Dynin <misha@xcf.berkeley.edu>",
 			  "Misha Dynin, Jamie Zawinski, Spencer Kimball & Peter Mattis",
 			  "1997",

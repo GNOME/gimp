@@ -83,8 +83,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_deinterlace",
-			  _("Deinterlace"),
-			  _("Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this."),
+			  "Deinterlace",
+			  "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
 			  "Andrew Kieschnick",
 			  "Andrew Kieschnick",
 			  "1997",

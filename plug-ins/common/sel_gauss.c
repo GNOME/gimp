@@ -114,8 +114,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_sel_gauss",
-			  _("Applies a selective gaussian blur to the specified drawable."),
-			  _("This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow."),
+			  "Applies a selective gaussian blur to the specified drawable.",
+			  "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
 			  "Thom van Os",
 			  "Thom van Os",
 			  "1999",

@@ -129,8 +129,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_exchange",
-			  _("Color Exchange"),
-			  _("Exchange one color with another, optionally setting a threshold to convert from one shade to another"),
+			  "Color Exchange",
+			  "Exchange one color with another, optionally setting a threshold to convert from one shade to another",
 			  "robert@experimental.net",
 			  "robert@experimental.net",
 			  "June 17th, 1997",

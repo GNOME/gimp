@@ -182,8 +182,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_diffraction",
-			  _("Generate diffraction patterns"),
-			  _("Help?  What help?  Real men do not need help :-)"),  /* FIXME */
+			  "Generate diffraction patterns",
+			  "Help?  What help?  Real men do not need help :-)",  /* FIXME */
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero & David Bleecker",
 			  "April 1997, 0.5",

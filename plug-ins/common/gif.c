@@ -388,7 +388,7 @@ query (void)
 
   INIT_I18N();
   gimp_install_procedure ("file_gif_save",
-                          _("saves files in Compuserve GIF file format"),
+                          "saves files in Compuserve GIF file format",
                           "FIXME: write help for gif_save",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",

@@ -77,9 +77,9 @@ query (void)
 
   INIT_I18N();
 
-  gimp_install_procedure ("plug_in_Color_Enhance",
-			  _("Automatically stretch the saturation of the specified drawable to cover all possible ranges."),
-			  _("This simple plug-in does an automatic saturation stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue."),
+  gimp_install_procedure ("plug_in_color_enhance",
+			  "Automatically stretch the saturation of the specified drawable to cover all possible ranges.",
+			  "This simple plug-in does an automatic saturation stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
 			  "Martin Weber",
 		 	  "Martin Weber", 
 		  	  "1997", 	 	 

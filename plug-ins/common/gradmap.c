@@ -102,8 +102,8 @@ query()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_gradmap",
-                          _("Map the contents of the specified drawable with active gradient"),
-                          _(" This plug-in maps the contents of the specified drawable with active gradient. It calculates luminosity of each pixel and replaces the pixel by the sample of active gradient at the position proportional to that luminosity. Complete black pixel becomes the leftmost color of the gradient, and complete white becomes the rightmost. Works on both Grayscale and RGB image with/without alpha channel."),
+                          "Map the contents of the specified drawable with active gradient",
+                          " This plug-in maps the contents of the specified drawable with active gradient. It calculates luminosity of each pixel and replaces the pixel by the sample of active gradient at the position proportional to that luminosity. Complete black pixel becomes the leftmost color of the gradient, and complete white becomes the rightmost. Works on both Grayscale and RGB image with/without alpha channel.",
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",

@@ -163,8 +163,8 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("file_png_load",
-			  _("Loads files in PNG file format"),
-			  _("This plug-in loads Portable Network Graphics (PNG) files."),
+			  "Loads files in PNG file format",
+			  "This plug-in loads Portable Network Graphics (PNG) files.",
 			  "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
 			  "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
 			  PLUG_IN_VERSION,

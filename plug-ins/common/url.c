@@ -70,8 +70,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_url_load",
-                          _("loads files given a URL"),
-                          _("You need to have GNU Wget installed."),
+                          "loads files given a URL",
+                          "You need to have GNU Wget installed.",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1997",

@@ -346,14 +346,14 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_ifs_compose",
-			  _("Create an Iterated Function System Fractal"),
-   _("Interactively create an Iterated Function System fractal."
+			  "Create an Iterated Function System Fractal",
+   "Interactively create an Iterated Function System fractal."
      "Use the window on the upper left to adjust the component"
      "transformations of the fractal. The operation that is performed"
      "is selected by the buttons underneath the window, or from a"
      "menu popped up by the right mouse button. The fractal will be"
      "rendered with a transparent background if the current image has"
-     "a transparent background."),
+     "a transparent background.",
 			  "Owen Taylor",
 			  "Owen Taylor",
 			  "1997",

@@ -153,7 +153,7 @@ query ()
 
   help = g_strdup_printf (_("Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See %s for more help."), MAZE_URL);
   gimp_install_procedure ("plug_in_maze",
-			  _("Draws a maze."),
+			  "Draws a maze.",
 			  help,
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",

@@ -129,8 +129,8 @@ void query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_grid",
-			  _("Draws a grid."),
-			  _("no help available"),
+			  "Draws a grid.",
+			  "no help available",
 			  "Tim Newsome",
 			  "Tim Newsome, Sven Neumann, Tom Rathborne",
 			  "1997, 1999",

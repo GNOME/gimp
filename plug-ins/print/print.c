@@ -379,8 +379,8 @@ query(void)
 
   gimp_install_procedure(
       "file_print",
-      _("This plug-in prints images from The GIMP."),
-      _("Prints images to PostScript, PCL, or ESC/P2 printers."),
+      "This plug-in prints images from The GIMP.",
+      "Prints images to PostScript, PCL, or ESC/P2 printers.",
       "Michael Sweet <mike@easysw.com> and Robert Krawitz <rlk@alum.mit.edu>",
       "Copyright 1997-1999 by Michael Sweet and Robert Krawitz",
       PLUG_IN_VERSION,

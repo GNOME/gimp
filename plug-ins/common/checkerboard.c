@@ -97,7 +97,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_checkerboard",
-			  _("Adds a checkerboard pattern to an image"),
+			  "Adds a checkerboard pattern to an image",
 			  "More here later",
 			  "Brent Burton & the Edward Blevins",
 			  "Brent Burton & the Edward Blevins",

@@ -196,7 +196,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_tiff_load",
-                          _("loads files of the tiff file format"),
+                          "loads files of the tiff file format",
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -208,7 +208,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_tiff_save",
-                          _("saves files in the tiff file format"),
+                          "saves files in the tiff file format",
                           "FIXME: write help for tiff_save",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",

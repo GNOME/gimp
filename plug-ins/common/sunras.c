@@ -217,8 +217,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_sunras_load",
-                          _("load file of the SunRaster file format"),
-                          _("load file of the SunRaster file format"),
+                          "load file of the SunRaster file format",
+                          "load file of the SunRaster file format",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -229,9 +229,9 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_sunras_save",
-                          _("save file in the SunRaster file format"),
-                          _("SUNRAS saving handles all image types except \
-those with alpha channels."),
+                          "save file in the SunRaster file format",
+                          "SUNRAS saving handles all image types except "
+			  "those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",

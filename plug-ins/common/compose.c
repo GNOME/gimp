@@ -223,9 +223,9 @@ query ()
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_compose",
-			  _("Compose an image from multiple gray images"),
-			  _("This function creates a new image from\
- multiple gray images"),
+			  "Compose an image from multiple gray images",
+			  "This function creates a new image from "
+			  "multiple gray images",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
@@ -236,9 +236,9 @@ query ()
 			  args, return_vals);
 
   gimp_install_procedure ("plug_in_drawable_compose",
-			  _("Compose an image from multiple drawables of gray images"),
-			  _("This function creates a new image from\
- multiple drawables of gray images"),
+			  "Compose an image from multiple drawables of gray images",
+			  "This function creates a new image from "
+			  "multiple drawables of gray images",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1998",

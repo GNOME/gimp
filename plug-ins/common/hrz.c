@@ -151,8 +151,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_hrz_load",
-                          _("loads files of the hrz file format"),
-                          _("FIXME: write help for hrz_load"),
+                          "loads files of the hrz file format",
+                          "FIXME: write help for hrz_load",
                           "Albert Cahalan",
                           "Albert Cahalan",
                           "1997",
@@ -163,8 +163,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_hrz_save",
-                          _("saves files in the hrz file format"),
-                          _("HRZ saving handles all image types except those with alpha channels."),
+                          "saves files in the hrz file format",
+                          "HRZ saving handles all image types except those with alpha channels.",
                           "Albert Cahalan",
                           "Albert Cahalan",
                           "1997",

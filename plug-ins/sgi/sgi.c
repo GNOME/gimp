@@ -123,8 +123,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_sgi_load",
-			  _("Loads files in SGI image file format"),
-			  _("This plug-in loads SGI image files."),
+			  "Loads files in SGI image file format",
+			  "This plug-in loads SGI image files.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
@@ -137,8 +137,8 @@ query (void)
 			  load_return_vals);
 
   gimp_install_procedure ("file_sgi_save",
-			  _("Saves files in SGI image file format"),
-			  _("This plug-in saves SGI image files."),
+			  "Saves files in SGI image file format",
+			  "This plug-in saves SGI image files.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,

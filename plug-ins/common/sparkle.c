@@ -184,7 +184,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_sparkle",
-             _("Simulates pixel bloom and diffraction effects"),
+             "Simulates pixel bloom and diffraction effects",
 			  "No help yet",
                     "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball",
 			  "John Beale",

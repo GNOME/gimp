@@ -141,8 +141,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_colorify",
-			  _("Similar to the \"Color\" mode for layers."),
-			  _("Makes an average of the RGB channels and uses it to set the color"),
+			  "Similar to the \"Color\" mode for layers.",
+			  "Makes an average of the RGB channels and uses it to set the color",
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
 			  "0.0.1",

@@ -8,6 +8,7 @@
 #include <gtk/gtk.h>
 #include <gck/gck.h>
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "arcball.h"
 #include "mapobject_ui.h"

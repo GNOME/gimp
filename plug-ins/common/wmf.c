@@ -1030,7 +1030,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_wmf_load",
-                          _("loads files of the Windows(tm) metafile file format"),
+                          "loads files of the Windows(tm) metafile file format",
                           "FIXME: write help for file_wmf_load",
                           "Tor Lillqvist <tml@iki.fi>",
                           "Tor Lillqvist",
@@ -1042,8 +1042,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_wmf_load_setargs",
-			  _("set additional parameters for the procedure file_wmf_load"),
-			  _("set additional parameters for the procedure file_wmf_load"),
+			  "set additional parameters for the procedure file_wmf_load",
+			  "set additional parameters for the procedure file_wmf_load",
 			  "Tor Lillqvist <tml@iki.fi>",
                           "Tor Lillqvist",
                           "1998",

@@ -162,8 +162,8 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("file_xbm_load",
-                          _("Load a file in X10 or X11 bitmap (XBM) file format"),
-                          _("Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images."),
+                          "Load a file in X10 or X11 bitmap (XBM) file format",
+                          "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
                           "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",

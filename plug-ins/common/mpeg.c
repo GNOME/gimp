@@ -122,7 +122,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_mpeg_load",
-                          _("Loads MPEG movies"),
+                          "Loads MPEG movies",
                           "FIXME: write help for mpeg_load",
                           "Adam D. Moss",
                           "Adam D. Moss",

@@ -126,8 +126,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_gbr_load",
-                          _("loads files of the .gbr file format"),
-                          _("FIXME: write help"),
+                          "loads files of the .gbr file format",
+                          "FIXME: write help",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -138,8 +138,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gbr_save",
-                          _("saves files in the .gbr file format"),
-                          _("Yeah!"),
+                          "saves files in the .gbr file format",
+                          "Yeah!",
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",

@@ -98,7 +98,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_borderaverage",
-			  _("Borderaverage"),
+			  "Borderaverage",
 			  "",
 			  "Philipp Klaus",
 			  "Internet Access AG",

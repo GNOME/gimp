@@ -79,8 +79,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_laplace",
-			  _("Edge Detection with Laplace Operation"),
-			  _("This plugin creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best."),
+			  "Edge Detection with Laplace Operation",
+			  "This plugin creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best.",
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",

@@ -150,8 +150,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_ripple",
-			  _("Ripple the contents of the specified drawable"),
-			  _("Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form"),
+			  "Ripple the contents of the specified drawable",
+			  "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form",
 			  "Brian Degenhardt <bdegenha@ucsd.edu>",
 			  "Brian Degenhardt",
 			  "1997",

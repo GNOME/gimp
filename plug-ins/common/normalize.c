@@ -75,8 +75,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_normalize",
-			  _("Normalize the contrast of the specified drawable to cover all possible ranges."),
-			  _("This plugin performs almost the same operation as the 'contrast autostretch' plugin, except that it won't allow the color channels to normalize independently.  This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black."),
+			  "Normalize the contrast of the specified drawable to cover all possible ranges.",
+			  "This plugin performs almost the same operation as the 'contrast autostretch' plugin, except that it won't allow the color channels to normalize independently.  This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black.",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",

@@ -123,8 +123,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_tile",
-			  _("Create a new image which is a tiled version of the input drawable"),
-			  _("This function creates a new image with a single layer sized to the specified 'new_width' and 'new_height' parameters.  The specified drawable is tiled into this layer.  The new layer will have the same type as the specified drawable and the new image will have a corresponding base type"),
+			  "Create a new image which is a tiled version of the input drawable",
+			  "This function creates a new image with a single layer sized to the specified 'new_width' and 'new_height' parameters.  The specified drawable is tiled into this layer.  The new layer will have the same type as the specified drawable and the new image will have a corresponding base type",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996-1997",

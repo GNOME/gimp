@@ -213,9 +213,9 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_decompose",
-			  _("Decompose an image into different types of channels"),
-			  _("This function creates new gray images with\
- different channel information in each of them"),
+			  "Decompose an image into different types of channels",
+			  "This function creates new gray images with "
+			  "different channel information in each of them",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",

@@ -158,8 +158,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_pixelize",
-			  _("Pixelize the contents of the specified drawable"),
-			  _("Pixelize the contents of the specified drawable with speficied pixelizing width."),
+			  "Pixelize the contents of the specified drawable",
+			  "Pixelize the contents of the specified drawable with speficied pixelizing width.",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott",
 			  "1995",

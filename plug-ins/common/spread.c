@@ -124,8 +124,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_spread",
-			  _("Spread the contents of the specified drawable"),
-			  _("Spreads the pixels of the specified drawable.  Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts "),
+			  "Spread the contents of the specified drawable",
+			  "Spreads the pixels of the specified drawable.  Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts ",
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Federico Mena Quintero and Brian Degenhardt",
 			  "1997",

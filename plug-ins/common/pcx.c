@@ -92,7 +92,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_pcx_load",
-                          _("Loads files in Zsoft PCX file format"),
+                          "Loads files in Zsoft PCX file format",
                           "FIXME: write help for pcx_load",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -104,7 +104,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pcx_save",
-                          _("Saves files in ZSoft PCX file format"),
+                          "Saves files in ZSoft PCX file format",
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",

@@ -135,8 +135,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_sobel",
-			  _("Edge Detection with Sobel Operation"),
-			  _("This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolut value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled."),
+			  "Edge Detection with Sobel Operation",
+			  "This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolut value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.",
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",

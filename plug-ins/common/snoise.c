@@ -187,8 +187,8 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure ("plug_in_solid_noise",
-			  _("Creates a grayscale noise texture"),
-			  _("Generates 2D textures using Perlin's classic solid noise function."),
+			  "Creates a grayscale noise texture",
+			  "Generates 2D textures using Perlin's classic solid noise function.",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",

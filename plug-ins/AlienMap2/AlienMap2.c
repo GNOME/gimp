@@ -197,11 +197,11 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_alienmap2",
-        		  _("AlienMap2 Color Transformation Plug-In"),
-        		  _("No help yet. Just try it and you'll see!"),
+        		  "AlienMap2 Color Transformation Plug-In",
+        		  "No help yet. Just try it and you'll see!",
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber)",
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber",
-        		  _("24th April 1998"),
+        		  "24th April 1998",
         		  N_("<Image>/Filters/Colors/Map/Alien Map 2..."),
         		  "RGB*",
         		  PROC_PLUG_IN,

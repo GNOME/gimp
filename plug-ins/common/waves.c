@@ -153,7 +153,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_waves",
-			  _("Distort the image with waves"),
+			  "Distort the image with waves",
 			  "none yet",
 			  "Eric L. Hernes, Stephen Norris",
 			  "Stephen Norris",

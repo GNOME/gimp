@@ -115,11 +115,11 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_colortoalpha",
-			  _("Convert the color in an image to alpha"),
-			  _("This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly."),
+			  "Convert the color in an image to alpha",
+			  "This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly.",
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
-			  _("7th Aug 1999"),
+			  "7th Aug 1999",
 			  N_("<Image>/Filters/Colors/Color to Alpha..."),
 			  "RGBA",
 			  PROC_PLUG_IN,

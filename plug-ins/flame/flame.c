@@ -125,8 +125,8 @@ query (void)
 
   INIT_I18N();
   gimp_install_procedure("plug_in_flame",
-			 _("Creates cosmic recursive fractal flames"),
-			 _("Creates cosmic recursive fractal flames"),
+			 "Creates cosmic recursive fractal flames",
+			 "Creates cosmic recursive fractal flames",
 			 "Scott Draves",
 			 "Scott Draves",
 			 "1997",

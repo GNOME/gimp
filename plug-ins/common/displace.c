@@ -171,8 +171,8 @@ query ()
 
   INIT_I18N();
   gimp_install_procedure ("plug_in_displace",
-			  _("Displace the contents of the specified drawable"),
-			  _("Displaces the contents of the specified drawable by the amounts specified by 'amount_x' and 'amount_y' multiplied by the intensity of corresponding pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must be of type GRAY_IMAGE for this operation to succeed."),
+			  "Displace the contents of the specified drawable",
+			  "Displaces the contents of the specified drawable by the amounts specified by 'amount_x' and 'amount_y' multiplied by the intensity of corresponding pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must be of type GRAY_IMAGE for this operation to succeed.",
 			  "Stephen Robert Norris & (ported to 1.0 by) Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",

@@ -146,8 +146,8 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure ("plug_in_gauss_iir",
-			  _("Applies a gaussian blur to the specified drawable."),
-			  _("Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results."),
+			  "Applies a gaussian blur to the specified drawable.",
+			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
@@ -158,8 +158,8 @@ query (void)
 			  args, return_vals);
 
   gimp_install_procedure ("plug_in_gauss_iir2",
-			  _("Applies a gaussian blur to the specified drawable."),
-			  _("Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  This radius can be specified indepently on for the horizontal and the vertical direction. The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radii less than 1.0 would generate spurious results. Therefore they are interpreted as 0.0, which means that the computation for this orientation is skipped."),
+			  "Applies a gaussian blur to the specified drawable.",
+			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  This radius can be specified indepently on for the horizontal and the vertical direction. The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radii less than 1.0 would generate spurious results. Therefore they are interpreted as 0.0, which means that the computation for this orientation is skipped.",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "1995-2000",

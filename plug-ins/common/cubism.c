@@ -162,8 +162,8 @@ query (void)
 
   INIT_I18N();
   gimp_install_procedure ("plug_in_cubism",
-			  _("Convert the input drawable into a collection of rotated squares"),
-			  _("Help not yet written for this plug-in"),
+			  "Convert the input drawable into a collection of rotated squares",
+			  "Help not yet written for this plug-in",
 			  "Spencer Kimball & Tracy Scott",
 			  "Spencer Kimball & Tracy Scott",
 			  "1996",

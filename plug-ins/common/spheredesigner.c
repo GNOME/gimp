@@ -2833,8 +2833,8 @@ static void query (void)
   static int nreturn_vals = 0;
   INIT_I18N();
   gimp_install_procedure ("plug_in_spheredesigner",
-                          _("Renders textures spheres"),
-                          _("This plugin can be used to create textured and/or bumpmapped spheres, and uses a small lightweight raytracer to perform the task with good quality"),
+                          "Renders textures spheres",
+                          "This plugin can be used to create textured and/or bumpmapped spheres, and uses a small lightweight raytracer to perform the task with good quality",
 			  "Vidar Madsen",
                           "Vidar Madsen",
                           "1999",

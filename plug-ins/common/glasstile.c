@@ -108,8 +108,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_glasstile",
-			  _("Divide the image into square glassblocks"),
-			  _("More here later"),
+			  "Divide the image into square glassblocks",
+			  "More here later",
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",

@@ -1123,9 +1123,9 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
-                          _("Browse the GIMP help pages"),
-                          _("A small and simple HTML browser optimzed for "
-			    "browsing the GIMP help pages."),
+                          "Browse the GIMP help pages",
+                          "A small and simple HTML browser optimzed for "
+			    "browsing the GIMP help pages.",
                           "Sven Neumann <sven@gimp.org>, "
 			  "Michael Natterer <mitschel@cs.tu-berlin.de>",
 			  "Sven Neumann & Michael Natterer",

@@ -145,7 +145,7 @@ static void gdt_query(void)
   static int ngdt_rets = sizeof(gdt_rets) / sizeof(gdt_rets[0]);
   
   gimp_install_procedure("plug_in_dynamic_text",
-			 _("GIMP Dynamic Text"),
+			 "GIMP Dynamic Text",
 			 "",
 			 "Marco Lamberto <lm@geocities.com>",
 			 "Marco Lamberto",

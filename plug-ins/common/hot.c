@@ -225,8 +225,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_hot",
-			  _("Look for hot NTSC or PAL pixels "),
-			  _("hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken."),
+			  "Look for hot NTSC or PAL pixels ",
+			  "hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken.",
 			  "Eric L. Hernes, Alan Wm Paeth",
 			  "Eric L. Hernes",
 			  "1997",

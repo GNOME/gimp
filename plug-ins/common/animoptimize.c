@@ -149,8 +149,8 @@ static void query()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_animationoptimize",
-			 _("This plugin applies various optimizations to"
-			 " a GIMP layer-based animation."),
+			 "This plugin applies various optimizations to"
+			 " a GIMP layer-based animation.",
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
@@ -162,11 +162,11 @@ static void query()
 			 args, return_args);
 
   gimp_install_procedure("plug_in_animationunoptimize",
-			 _("This plugin 'simplifies' a GIMP layer-based"
+			 "This plugin 'simplifies' a GIMP layer-based"
 			 " animation that has been AnimationOptimized.  This"
 			 " makes the animation much easier to work with if,"
 			 " for example, the optimized version is all you"
-			 " have."),
+			 " have.",
 			 "",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",

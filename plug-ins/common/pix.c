@@ -139,8 +139,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_pix_load",
-			  _("loads files of the PIX file format"),
-			  _("loads files of the PIX file format"),
+			  "loads files of the PIX file format",
+			  "loads files of the PIX file format",
 			  "Michael Taylor",
 			  "Michael Taylor",
 			  "1997",
@@ -151,8 +151,8 @@ query (void)
 			  load_args, load_return_vals);
 
   gimp_install_procedure ("file_pix_save",
-                          _("save file in the Alias|Wavefront pix/matte file format"),
-                          _("save file in the Alias|Wavefront pix/matte file format"),
+                          "save file in the Alias|Wavefront pix/matte file format",
+                          "save file in the Alias|Wavefront pix/matte file format",
                           "Michael Taylor",
                           "Michael Taylor",
                           "1997",

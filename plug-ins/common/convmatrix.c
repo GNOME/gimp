@@ -186,7 +186,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_convmatrix",
-			  _("A generic 5x5 convolution matrix"),
+			  "A generic 5x5 convolution matrix",
 			  "",
 			  "Lauri Alanko",
 			  "Lauri Alanko",

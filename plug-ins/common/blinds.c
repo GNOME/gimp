@@ -175,8 +175,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_blinds",
-			  _("Adds a blinds effect to the image. Rather like putting the image on a set of window blinds and the closing or opening the blinds"),
-			  _("More here later"),
+			  "Adds a blinds effect to the image. Rather like putting the image on a set of window blinds and the closing or opening the blinds",
+			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",

@@ -735,10 +735,10 @@ plugin_query()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_gflare",
-			  _("Produce lense flare effect using custom gradients"),
+			  "Produce lense flare effect using custom gradients",
 			  help_string,
-			  _("Eiichi Takamori"),
-			  _("Eiichi Takamori, and a lot of GIMP people"),
+			  "Eiichi Takamori",
+			  "Eiichi Takamori, and a lot of GIMP people",
 			  "1997",
 			  N_("<Image>/Filters/Light Effects/GFlare..."),
 			  "RGB*, GRAY*",

@@ -162,8 +162,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_emboss",
-			  _("Emboss filter"),
-			  _("Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source."),
+			  "Emboss filter",
+			  "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
 			  "Eric L. Hernes, John Schlag",
 			  "Eric L. Hernes",
 			  "1997",

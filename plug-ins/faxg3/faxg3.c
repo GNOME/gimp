@@ -88,8 +88,8 @@ void query ()
   INIT_I18N();
 
   gimp_install_procedure ("file_faxg3_load",
-                          _("loads g3 fax files"),
-			  _("This plug-in loads Fax G3 Image files."),
+                          "loads g3 fax files",
+			  "This plug-in loads Fax G3 Image files.",
                           "Jochen Friedrich",
                           "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
                           VERSION,

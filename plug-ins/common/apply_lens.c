@@ -129,8 +129,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_applylens",
-			  _("Apply a lens effect"),
-			  _("This plug-in uses Snell's law to draw an ellipsoid lens over the image"),
+			  "Apply a lens effect",
+			  "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
 			  "Morten Eriksen",
 			  "Morten Eriksen",
 			  "1997",

@@ -186,7 +186,7 @@ static void query(void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 1.2.0, July 16 1998",
-			  "<Image>/Filters/Map/Map Object...",
+			  N_("<Image>/Filters/Map/Map Object..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

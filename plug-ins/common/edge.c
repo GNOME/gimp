@@ -160,7 +160,7 @@ query ()
 
   INIT_I18N();
   gimp_install_procedure ("plug_in_edge",
-			  _("Perform edge detection on the contents of the specified drawable"),
+			  "Perform edge detection on the contents of the specified drawable",
 			  help_string,
 			  "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
 			  "Peter Mattis",

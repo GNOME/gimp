@@ -92,8 +92,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_details",
-                          _("Displays plugin details"),
-                          _("Helps browse the plugin menus system. You can search for plugin names, sort by name or menu location and you can view a tree representation of the plugin menus. Can also be of help to find where new plugins have installed themselves in the menuing system"),
+                          "Displays plugin details",
+                          "Helps browse the plugin menus system. You can search for plugin names, sort by name or menu location and you can view a tree representation of the plugin menus. Can also be of help to find where new plugins have installed themselves in the menuing system",
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",

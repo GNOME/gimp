@@ -140,7 +140,7 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("extension_script_fu",
-			  _("A scheme interpreter for scripting GIMP operations"),
+			  "A scheme interpreter for scripting GIMP operations",
 			  "More help here later",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
@@ -152,8 +152,8 @@ query (void)
 
 #ifndef G_OS_WIN32
   gimp_install_procedure ("extension_script_fu_console",
-			  _("Provides a console mode for script-fu development"),
-			  _("Provides an interface which allows interactive scheme development."),
+			  "Provides a console mode for script-fu development",
+			  "Provides an interface which allows interactive scheme development.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
@@ -164,8 +164,8 @@ query (void)
 			  console_args, NULL);
 
   gimp_install_procedure ("extension_script_fu_server",
-			  _("Provides a server for remote script-fu operation"),
-			  _("Provides a server for remote script-fu operation"),
+			  "Provides a server for remote script-fu operation",
+			  "Provides a server for remote script-fu operation",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
@@ -177,8 +177,8 @@ query (void)
 #endif
 
   gimp_install_procedure ("extension_script_fu_eval",
-			  _("Evaluate scheme code"),
-			  _("Evaluate the code under the scheme interpeter (primarily for batch mode)"),
+			  "Evaluate scheme code",
+			  "Evaluate the code under the scheme interpeter (primarily for batch mode)",
 			  "Manish Singh",
 			  "Manish Singh",
 			  "1998",

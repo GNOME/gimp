@@ -176,7 +176,7 @@ query (void)
 
   /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
-			  _("An unsharp mask filter"),
+			  "An unsharp mask filter",
 			  "",
 			  "Winston Chang <wchang3@students.wisc.edu>",
 			  "Winston Chang",

@@ -140,10 +140,10 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_color_adjust",
-                          _("Adjust current foreground/background color in the\
- drawable to black/white"),
-                          _("The current foreground color is mapped to black, \
-the current background color is mapped to white."),
+                          "Adjust current foreground/background color in the\
+ drawable to black/white",
+                          "The current foreground color is mapped to black, \
+the current background color is mapped to white.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
@@ -154,10 +154,10 @@ the current background color is mapped to white."),
                           adjust_args, NULL);
 
   gimp_install_procedure ("plug_in_color_map",
-                          _("Map two source colors to two destination colors. \
-Other colors are mapped by interpolation."),
-                          _("Map two source colors to two destination colors. \
-Other colors are mapped by interpolation."),
+                          "Map two source colors to two destination colors. \
+Other colors are mapped by interpolation.",
+                          "Map two source colors to two destination colors. \
+Other colors are mapped by interpolation.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,

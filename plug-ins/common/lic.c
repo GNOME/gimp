@@ -1190,7 +1190,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_lic",
-			  _("Creates a Van Gogh effect (Line Integral Convolution)"),
+			  "Creates a Van Gogh effect (Line Integral Convolution)",
 			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",

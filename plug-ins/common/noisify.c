@@ -113,7 +113,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_noisify",
-			  _("Adds random noise to a drawable's channels"),
+			  "Adds random noise to a drawable's channels",
 			  "More here later",
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",

@@ -59,7 +59,7 @@ static void query()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_autocrop",
-			 _("Automagically crops a picture."),
+			 "Automagically crops a picture.",
 			 "",
 			 "Tim Newsome",
 			 "Tim Newsome",

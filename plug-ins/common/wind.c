@@ -157,8 +157,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_wind",
-			  _("Renders a wind effect."),
-			  _("Renders a wind effect."),
+			  "Renders a wind effect.",
+			  "Renders a wind effect.",
 			  "Nigel Wetten",
 			  "Nigel Wetten",
 			  "1998",

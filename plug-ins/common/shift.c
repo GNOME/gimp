@@ -126,8 +126,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_shift",
-			  _("Shift the contents of the specified drawable"),
-			  _("Shifts the pixels of the specified drawable. Each row will be displaced a random value of pixels."),
+			  "Shift the contents of the specified drawable",
+			  "Shifts the pixels of the specified drawable. Each row will be displaced a random value of pixels.",
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Brian Degenhardt",
 			  "1997",

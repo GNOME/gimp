@@ -75,8 +75,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_c_astretch",
-			  _("Automatically stretch the contrast of the specified drawable to cover all possible ranges."),
-			  _("This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :)"),
+			  "Automatically stretch the contrast of the specified drawable to cover all possible ranges.",
+			  "This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :)",
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero",
 			  "1996",

@@ -395,8 +395,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_ps_load",
-                          _("load file of PostScript/PDF file format"),
-                          _("load file of PostScript/PDF file format"),
+                          "load file of PostScript/PDF file format",
+                          "load file of PostScript/PDF file format",
                           "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
@@ -419,8 +419,8 @@ query (void)
                           set_load_args, NULL);
 
   gimp_install_procedure ("file_ps_save",
-                          _("save file in PostScript file format"),
-                          _("PostScript saving handles all image types except those with alpha channels."),
+                          "save file in PostScript file format",
+                          "PostScript saving handles all image types except those with alpha channels.",
                           "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
                           dversio,

@@ -227,7 +227,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_small_tiles",
-			  _("Tiles image into smaller versions of the orginal"),
+			  "Tiles image into smaller versions of the orginal",
 			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",

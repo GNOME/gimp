@@ -268,7 +268,7 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_animationplay",
-			  _("This plugin allows you to preview a GIMP layer-based animation."),
+			  "This plugin allows you to preview a GIMP layer-based animation.",
 			  "",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",

@@ -119,8 +119,8 @@ query_2()
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_sel2path_advanced",
-			  _("Converts a selection to a path (with advanced user menu)"),
-			  _("Converts a selection to a path (with advanced user menu)"),
+			  "Converts a selection to a path (with advanced user menu)",
+			  "Converts a selection to a path (with advanced user menu)",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1999",
@@ -147,8 +147,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_sel2path",
-			  _("Converts a selection to a path"),
-			  _("Converts a selection to a path"),
+			  "Converts a selection to a path",
+			  "Converts a selection to a path",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1999",

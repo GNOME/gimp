@@ -392,8 +392,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("file_psd_load",
-                          _("loads files of the Photoshop(tm) PSD file format"),
-                          _("This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides."),
+                          "loads files of the Photoshop(tm) PSD file format",
+                          "This filter loads files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
                           "Adam D. Moss & Torsten Martinsen",
                           "Adam D. Moss & Torsten Martinsen",
                           "1996-1998",

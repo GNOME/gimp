@@ -57,8 +57,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_make_seamless",
-			  _("Seamless tile creation"),
-			  _("This plugin creates a seamless tileable from the input image"),
+			  "Seamless tile creation",
+			  "This plugin creates a seamless tileable from the input image",
 			  "Tim Rowley",
 			  "Tim Rowley",
 			  "1997",

@@ -97,7 +97,7 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_gap_layers_run_animfilter",
-			 _("This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to RUN_WITH_LAST_VALS"),
+			 "This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to RUN_WITH_LAST_VALS",
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",

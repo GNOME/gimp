@@ -1830,8 +1830,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_video",
-			  _("Apply low-dotpitch RGB simulation to the specified drawable"),
-			  _("This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable."),
+			  "Apply low-dotpitch RGB simulation to the specified drawable",
+			  "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "2nd March 1997",

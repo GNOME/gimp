@@ -134,7 +134,7 @@ static void query()
    INIT_I18N();
 
    gimp_install_procedure("plug_in_imagemap",
-			  _("Creates a clickable imagemap."),
+			  "Creates a clickable imagemap.",
 			  "",
 			  "Maurits Rijk",
 			  "Maurits Rijk",

@@ -140,7 +140,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_gif_load",
-                          _("loads files of Compuserve GIF file format"),
+                          "loads files of Compuserve GIF file format",
                           "FIXME: write help for gif_load",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",

@@ -316,8 +316,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_mosaic",
-			  _("Convert the input drawable into a collection of tiles"),
-			  _("Help not yet written for this plug-in"),
+			  "Convert the input drawable into a collection of tiles",
+			  "Help not yet written for this plug-in",
 			  "Spencer Kimball",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996",

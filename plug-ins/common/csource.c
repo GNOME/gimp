@@ -106,7 +106,7 @@ query (void)
   INIT_I18N();
   
   gimp_install_procedure ("file_csource_save",
-                          _("Dump image data in RGB(A) format for C source"),
+                          "Dump image data in RGB(A) format for C source",
                           "FIXME: write help",
                           "Tim Janik",
                           "Tim Janik",

@@ -168,8 +168,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_fits_load",
-                          _("load file of the FITS file format"),
-                          _("load file of the FITS file format (Flexible Image Transport System)"),
+                          "load file of the FITS file format",
+                          "load file of the FITS file format (Flexible Image Transport System)",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",
@@ -180,8 +180,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_fits_save",
-                          _("save file in the FITS file format"),
-                          _("FITS saving handles all image types except those with alpha channels."),
+                          "save file in the FITS file format",
+                          "FITS saving handles all image types except those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",

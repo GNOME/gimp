@@ -158,8 +158,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_GTM_save",
-                          _("GIMP Table Magic"),
-                          _("Allows you to draw an HTML table in GIMP. See help for more info."),
+                          "GIMP Table Magic",
+                          "Allows you to draw an HTML table in GIMP. See help for more info.",
                           "Daniel Dunbar",
                           "Daniel Dunbar",
                           "1998",

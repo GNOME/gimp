@@ -132,8 +132,8 @@ static void query()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_the_egg",
-			 _("A big hello from the GIMP team!"),
-			 _("FIXME: write help"),
+			 "A big hello from the GIMP team!",
+			 "FIXME: write help",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",

@@ -121,8 +121,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_apply_canvas",
-			  _("Adds a canvas texture map to the picture"),
-			  _("This function applies a canvas texture map to the drawable."),
+			  "Adds a canvas texture map to the picture",
+			  "This function applies a canvas texture map to the drawable.",
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",

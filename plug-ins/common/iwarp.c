@@ -234,8 +234,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_iwarp",
-			  _("Interactive warping of the specified drawable"),
-			  _("Interactive warping of the specified drawable"),
+			  "Interactive warping of the specified drawable",
+			  "Interactive warping of the specified drawable",
 			  "Norbert Schmitz",
 			  "Norbert Schmitz",
 			  "1997",

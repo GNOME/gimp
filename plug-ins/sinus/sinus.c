@@ -192,7 +192,7 @@ query (void)
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_sinus",
-			  _("Generates a texture with sinus functions"),
+			  "Generates a texture with sinus functions",
 			  "FIX ME: sinus help",
 			  "Xavier Bouchoux",
 			  "Xavier Bouchoux",

@@ -100,8 +100,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_clipboard_copy",
-                          _("copy image to clipboard"),
-                          _("Copies the active drawable to the clipboard."),
+                          "copy image to clipboard",
+                          "Copies the active drawable to the clipboard.",
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
@@ -112,8 +112,8 @@ query ()
                           copy_args, NULL);
 
   gimp_install_procedure ("plug_in_clipboard_paste",
-                          _("paste image from clipboard"),
-                          _("Paste image from clipboard into active image."),
+                          "paste image from clipboard",
+                          "Paste image from clipboard into active image.",
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
@@ -124,8 +124,8 @@ query ()
                           copy_args, NULL);
 
   gimp_install_procedure ("extension_clipboard_paste",
-                          _("Get image from clipboard"),
-                          _("Get an image from the Windows clipboard, creating a new image"),
+                          "Get image from clipboard",
+                          "Get an image from the Windows clipboard, creating a new image",
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",

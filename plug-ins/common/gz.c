@@ -160,8 +160,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_gz_load",
-                          _("loads files compressed with gzip"),
-                          _("You need to have gzip installed."),
+                          "loads files compressed with gzip",
+                          "You need to have gzip installed.",
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
@@ -172,8 +172,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gz_save",
-                          _("saves files compressed with gzip"),
-                          _("You need to have gzip installed."),
+                          "saves files compressed with gzip",
+                          "You need to have gzip installed.",
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",

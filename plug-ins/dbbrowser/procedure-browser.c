@@ -80,7 +80,7 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("extension_db_browser",
-                          _("List available procedures in the PDB"),
+                          "List available procedures in the PDB",
                           "",
                           "Thomas Noel",
                           "Thomas Noel",

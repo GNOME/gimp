@@ -114,8 +114,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_engrave",
-			  _("Engrave the contents of the specified drawable"),
-			  _("Creates a black-and-white 'engraved' version of an image as seen in old illustrations"),
+			  "Engrave the contents of the specified drawable",
+			  "Creates a black-and-white 'engraved' version of an image as seen in old illustrations",
 			  "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			  "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			  "1995,1996,1997",

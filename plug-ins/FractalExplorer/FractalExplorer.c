@@ -212,7 +212,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_fractalexplorer",
-			  _("Chaos Fractal Explorer Plug-In"),
+			  "Chaos Fractal Explorer Plug-In",
 			  "No help yet.",
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",

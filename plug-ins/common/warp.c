@@ -269,8 +269,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_warp",
-			  _("Twist or smear an image. (only first six arguments are required)"),
-			  _("Smears an image along vector paths calculated as the gradient of a separate control matrix. The effect can look like brushstrokes of acrylic or watercolor paint, in some cases."),
+			  "Twist or smear an image. (only first six arguments are required)",
+			  "Smears an image along vector paths calculated as the gradient of a separate control matrix. The effect can look like brushstrokes of acrylic or watercolor paint, in some cases.",
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",

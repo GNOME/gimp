@@ -239,7 +239,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_pnm_load",
-                          _("loads files of the pnm file format"),
+                          "loads files of the pnm file format",
                           "FIXME: write help for pnm_load",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -251,8 +251,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pnm_save",
-                          _("saves files in the pnm file format"),
-                          _("PNM saving handles all image types except those with alpha channels."),
+                          "saves files in the pnm file format",
+                          "PNM saving handles all image types except those with alpha channels.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",

@@ -172,11 +172,11 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_alienmap",
-        		  _("AlienMap Color Transformation Plug-In"),
-        		  _("No help yet. Just try it and you'll see!"),
+        		  "AlienMap Color Transformation Plug-In",
+        		  "No help yet. Just try it and you'll see!",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
-        		  _("1th May 1997"),
+        		  "1th May 1997",
         		  N_("<Image>/Filters/Colors/Map/Alien Map..."),
         		  "RGB*",
         		  PROC_PLUG_IN,

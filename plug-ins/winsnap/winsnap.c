@@ -57,8 +57,8 @@
  */
 #define PLUG_IN_NAME        "extension_winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
-#define PLUG_IN_DESCRIPTION _("Capture a Win32 window or desktop image")
-#define PLUG_IN_HELP        _("This plug-in will capture an image of a Win32 window or desktop")
+#define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
+#define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"

@@ -215,8 +215,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_mail_image",
-			  _("pipe files to uuencode then mail them"),
-			  _("You need to have uuencode and mail installed"),
+			  "pipe files to uuencode then mail them",
+			  "You need to have uuencode and mail installed",
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, Spencer Kimball and Peter Mattis",
 			  "1995-1997",

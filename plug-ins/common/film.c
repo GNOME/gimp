@@ -219,8 +219,8 @@ query ()
   INIT_I18N ();
 
   gimp_install_procedure ("plug_in_film",
-			  _("Compose several images to a roll film"),
-			  _("Compose several images to a roll film"),
+			  "Compose several images to a roll film",
+			  "Compose several images to a roll film",
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",

@@ -61,7 +61,7 @@ static void query()
   INIT_I18N();
 
   gimp_install_procedure("plug_in_zealouscrop",
-			 _("Automagically crops unused space from the edges and middle of a picture."),
+			 "Automagically crops unused space from the edges and middle of a picture.",
 			 "",
 			 "Adam D. Moss",
 			 "Adam D. Moss",

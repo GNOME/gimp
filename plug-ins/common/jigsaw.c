@@ -328,8 +328,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_jigsaw",
-			  _("Renders a jigsaw puzzle look"),
-			  _("Jigsaw puzzle look"),
+			  "Renders a jigsaw puzzle look",
+			  "Jigsaw puzzle look",
 			  "Nigel Wetten",
 			  "Nigel Wetten",
 			  "1998",

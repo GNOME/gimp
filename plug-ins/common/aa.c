@@ -87,8 +87,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_aa_save",
-			  _("Saves files in various text formats"),
-			  _("Saves files in various text formats"),
+			  "Saves files in various text formats",
+			  "Saves files in various text formats",
 			  "Tim Newsome <nuisance@cmu.edu>",
 			  "Tim Newsome <nuisance@cmu.edu>",
 			  "1997",

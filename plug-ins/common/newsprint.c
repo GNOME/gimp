@@ -555,8 +555,8 @@ query(void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_newsprint",
-			  _("Re-sample the image to give a newspaper-like effect"),
-			  _("Halftone the image, trading off resolution to represent colors or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987."),
+			  "Re-sample the image to give a newspaper-like effect",
+			  "Halftone the image, trading off resolution to represent colors or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987.",
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",

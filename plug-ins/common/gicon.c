@@ -123,8 +123,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_gicon_load",
-                          _("loads files of the .ico file format"),
-                          _("FIXME: write help"),
+                          "loads files of the .ico file format",
+                          "FIXME: write help",
 			  "Spencer Kimball",
 			  "Spencer Kimball",
                           "1997",
@@ -135,8 +135,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gicon_save",
-                          _("saves files in the .ico file format"),
-                          _("FIXME: write help"),
+                          "saves files in the .ico file format",
+                          "FIXME: write help",
 			  "Spencer Kimball",
 			  "Spencer Kimball",
                           "1997",

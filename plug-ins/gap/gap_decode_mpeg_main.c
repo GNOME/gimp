@@ -169,8 +169,8 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_gap_decode_mpeg",
-                          _("Split MPEG1 movies into animframes and load 1st frame"),
-                          _("Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored"),
+                          "Split MPEG1 movies into animframes and load 1st frame",
+                          "Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored",
                           "Wolfgang Hofer (hof@hotbot.com)",
                           "Wolfgang Hofer",
                           "2000/01/01",
@@ -181,8 +181,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("extension_gap_decode_mpeg",
-                          _("Split MPEG1 movies into animframes and load 1st frame"),
-                          _("Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored"),
+                          "Split MPEG1 movies into animframes and load 1st frame",
+                          "Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored",
                           "Wolfgang Hofer (hof@hotbot.com)",
                           "Wolfgang Hofer",
                           "2000/01/01",

@@ -106,8 +106,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_cel_load",
-			  _("Loads files in KISS CEL file format"),
-			  _("This plug-in loads individual KISS cell files."),
+			  "Loads files in KISS CEL file format",
+			  "This plug-in loads individual KISS cell files.",
 			  "Nick Lamb",
 			  "Nick Lamb <njl195@zepler.org.uk>",
 			  "May 1998",
@@ -118,8 +118,8 @@ query (void)
 			  load_args, load_return_vals);
 
   gimp_install_procedure ("file_cel_save",
-			  _("Saves files in KISS CEL file format"),
-			  _("This plug-in saves individual KISS cell files."),
+			  "Saves files in KISS CEL file format",
+			  "This plug-in saves individual KISS cell files.",
 			  "Nick Lamb",
 			  "Nick Lamb <njl195@zepler.org.uk>",
 			  "May 1998",

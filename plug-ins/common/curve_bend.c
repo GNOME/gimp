@@ -45,7 +45,7 @@
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
-#define PLUG_IN_DESCRIBTION "Bends a layer using 2 spline-curves"
+#define PLUG_IN_DESCRIPTION "Bends a layer using 2 spline-curves"
 
 #define PLUG_IN_ITER_NAME       "plug_in_curve_bend_Iterator"
 #define PLUG_IN_DATA_ITER_FROM  "plug_in_curve_bend_ITER_FROM"
@@ -638,7 +638,7 @@ static void query (void)
 
   /* the actual installation of the bend plugin */
   gimp_install_procedure (PLUG_IN_NAME,
-                          PLUG_IN_DESCRIBTION,
+                          PLUG_IN_DESCRIPTION,
                           "This plug-in does bend the active layer "
 			  "If there is a current selection it is copied to floating selection "
 			  "and the curve_bend distortion is done on the floating selection. "

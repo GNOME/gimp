@@ -88,8 +88,8 @@ query ()
   
   INIT_I18N();
   gimp_install_procedure ("plug_in_filter_pack",
-			  _("Allows the user to change H, S, or C with many previews"),
-			  _("No help available"),
+			  "Allows the user to change H, S, or C with many previews",
+			  "No help available",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",

@@ -198,8 +198,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_flarefx",
-			  _("Add lens flare effects"),
-			  _("More here later"),
+			  "Add lens flare effects",
+			  "More here later",
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1998",

@@ -204,11 +204,11 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_nova",
-                          _("Produce Supernova effect to the specified drawable"),
-                          _("This plug-in produces an effect like a supernova burst. The "
+                          "Produce Supernova effect to the specified drawable",
+                          "This plug-in produces an effect like a supernova burst. The "
 			    "amount of the light effect is approximately in proportion to 1/r, "
 			    "where r is the distance from the center of the star. It works with "
-			    "RGB*, GRAY* image."),
+			    "RGB*, GRAY* image.",
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "1997",

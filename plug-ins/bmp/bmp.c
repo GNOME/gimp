@@ -119,8 +119,8 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_bmp_load",
-                          _("Loads files of Windows BMP file format"),
-                          _("Loads files of Windows BMP file format"),
+                          "Loads files of Windows BMP file format",
+                          "Loads files of Windows BMP file format",
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",
@@ -131,8 +131,8 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_bmp_save",
-                          _("Saves files in Windows BMP file format"),
-                          _("Saves files in Windows BMP file format"),
+                          "Saves files in Windows BMP file format",
+                          "Saves files in Windows BMP file format",
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",

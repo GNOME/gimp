@@ -154,7 +154,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("file_xpm_load",
-                          _("loads files of the xpm file format"),
+                          "loads files of the xpm file format",
                           "FIXME: write help for xpm_load",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
                           "Spencer Kimball & Peter Mattis",
@@ -166,7 +166,7 @@ query (void)
                           load_args, load_return_vals);
   
   gimp_install_procedure ("file_xpm_save",
-                          _("saves files in the xpm file format (if you're on a 16 bit display...)"),
+                          "saves files in the xpm file format (if you're on a 16 bit display...)",
                           "FIXME: write help for xpm",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
                           "Spencer Kimball & Peter Mattis",

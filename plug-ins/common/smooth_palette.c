@@ -78,7 +78,7 @@ query (void)
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_smooth_palette",
-			  _("derive smooth palette from image"),
+			  "derive smooth palette from image",
 			  "help!",
 			  "Scott Draves",
 			  "Scott Draves",
