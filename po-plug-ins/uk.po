@@ -1259,16 +1259,16 @@ msgstr "Низ:"
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:386
 msgid "Left:"
-msgstr ""
+msgstr "Л╕ва сторона:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:408
 msgid "Right:"
-msgstr ""
+msgstr "Права сторона:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
-msgstr ""
+msgstr "В╕добразити зображення на гранях куба"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
 msgid "Scale X:"
@@ -2013,7 +2013,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1742
 msgid "Use Cyclic Range"
-msgstr ""
+msgstr "Використовувати цикл╕чний д╕апазон"
 
 #: plug-ins/common/CML_explorer.c:1752
 msgid "Mod. Rate:"
@@ -3760,12 +3760,16 @@ msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
 msgstr ""
+"GIF: Неможливе подальше зменшення кольор╕в.\n"
+"Збереження як непрозорого.\n"
 
 #: plug-ins/common/gif.c:935
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
+"GIF: Вибачте, неможливо зберегти RGB-зображення как GIF - спершу "
+"перетвор╕ть його в ╕ндексоване чи с╕ре.\n"
 
 #: plug-ins/common/gif.c:953
 #, c-format
@@ -3786,6 +3790,13 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
+"Зображення, яке ви намага╓тесь зберегти як GIF\n"
+"м╕стить шари, що виходять за д╕йсн╕ меж╕\n"
+"зображення. Боюсь, що це недопустимо в GIF.\n"
+"\n"
+"\n"
+"Ви можете вибрати: чи обр╕зати вс╕ шари по меж╕\n"
+"зображення чи в╕дм╕нити це збереження."
 
 #: plug-ins/common/gif.c:1213
 msgid "Save as GIF"
@@ -5861,15 +5872,15 @@ msgstr "<Image>/Ф╕льтри/Кольори/Гладка пал╕тра..."
 
 #: plug-ins/common/smooth_palette.c:173
 msgid "Deriving smooth palette..."
-msgstr ""
+msgstr "Д╕ставання гладко╖ пал╕три"
 
 #: plug-ins/common/smooth_palette.c:398
 msgid "Smooth Palette"
-msgstr ""
+msgstr "Гладка пал╕тра"
 
 #: plug-ins/common/smooth_palette.c:448
 msgid "Search Time:"
-msgstr ""
+msgstr "Час пошуку:"
 
 #: plug-ins/common/snoise.c:187
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
@@ -7433,12 +7444,12 @@ msgstr "Додатков╕ параметри набору ф╕льтр╕в"
 
 #: plug-ins/fp/fp_gtk.c:1044
 msgid "Smoothness of Aliasing"
-msgstr ""
+msgstr "Згладжування нер╕вностей"
 
 #. ****************** MISC OPTIONS **************************
 #: plug-ins/fp/fp_gtk.c:1131
 msgid "Miscellaneous Options"
-msgstr ""
+msgstr "Р╕зн╕ параметри"
 
 #: plug-ins/fp/fp_gtk.c:1142
 msgid "Preview as You Drag"
@@ -7481,7 +7492,7 @@ msgstr "Застосувати ан╕мац╕йний ф╕льтр (╕н╕ц╕ал╕зац╕я)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:165
 msgid "Gen Code by name"
-msgstr ""
+msgstr "Створення коду за назвою"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:665
 msgid "Animated Filter apply (by name - please wait)"
@@ -9852,11 +9863,11 @@ msgstr "Вир╕вняний праворуч текст"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:393
 msgid "Toggle text font preview"
-msgstr ""
+msgstr "Перемикнути переляд шрифту"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:405
 msgid "Toggle CharMap window"
-msgstr ""
+msgstr "Перемикнути в╕кно мапи символ╕в"
 
 #. Layer Alignment
 #: plug-ins/gdyntext/gdyntext_ui.c:419
@@ -9864,10 +9875,12 @@ msgid ""
 "Layer\n"
 "Alignment"
 msgstr ""
+"Вир╕внювання\n"
+"шару"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:427
 msgid "Set layer alignment"
-msgstr ""
+msgstr "Встановити вир╕внювання шару"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:457
 msgid ""
@@ -9912,6 +9925,7 @@ msgstr "Динам╕чний текст: Завантажити текст"
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
 msgstr ""
+"Увага, файл \"%s\" б╕льший максимально дозволено╖ довжини тексту (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
 #, c-format
