@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-12-15 15:31+0100\n"
+"POT-Creation-Date: 1999-12-16 11:07-0800\n"
 "PO-Revision-Date: 1999-11-22 15:10+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -6353,4 +6353,3 @@ msgstr ""
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
-
