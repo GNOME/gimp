@@ -1,3 +1,9 @@
+2003-10-24  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-histogram-linear-16.png
+	* themes/Default/images/stock-histogram-logarithmic-16.png:
+	  touched up a tiny little bit
+
 2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gfig/gfig_*.[ch]: removed
