@@ -185,7 +185,7 @@ GtkWidget* create_about_dialog(void)
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox1), GTK_BUTTONBOX_END);
   gtk_widget_show(hbbox1);
 
-  button = gtk_button_new_with_label(_("Ok"));
+  button = gtk_button_new_with_label(_("OK"));
   gtk_widget_show(button);
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_box_pack_end(GTK_BOX(hbbox1), button, FALSE, TRUE, 0);
@@ -500,7 +500,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 	gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbbox2), 4);
   gtk_widget_show(hbbox2);
 
-  button_ok = gtk_button_new_with_label(_("Ok"));
+  button_ok = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button_ok, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button_ok), "button_press_event",
 		GTK_SIGNAL_FUNC(on_main_window_ok_press_event), data);
