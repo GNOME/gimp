@@ -180,7 +180,7 @@ make_guides_dialog()
    g_signal_connect(G_OBJECT(data->top), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 2, 0, _("_Horz. Spacing"));
+   label = create_label_in_table(table, 2, 0, _("_Horz. Spacing:"));
    data->horz_spacing = create_spin_button_in_table(table, label, 2, 1, 0, 0, 
 						    100);
    g_signal_connect(G_OBJECT(data->horz_spacing), "changed",
@@ -198,7 +198,7 @@ make_guides_dialog()
    g_signal_connect(G_OBJECT(data->vert_spacing), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 3, 2, _("No. _Down"));
+   label = create_label_in_table(table, 3, 2, _("No. _Down:"));
    data->no_down = create_spin_button_in_table(table, label, 3, 3, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->no_down), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);

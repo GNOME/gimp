@@ -337,10 +337,9 @@ static gdouble           logistic_function     (CML_PARAM *param,
 
 
 static gint	   CML_explorer_dialog           (void);
-static GtkWidget * CML_dialog_channel_panel_new  (gchar     *name,
-						  CML_PARAM *param,
+static GtkWidget * CML_dialog_channel_panel_new  (CML_PARAM *param,
 						  gint       channel_id);
-static GtkWidget * CML_dialog_advanced_panel_new (gchar     *name);
+static GtkWidget * CML_dialog_advanced_panel_new (void);
 
 static void     CML_explorer_toggle_entry_init   (WidgetEntry *widget_entry,
 						  GtkWidget   *widget,
@@ -386,14 +385,14 @@ static void    CML_preview_update_callback (GtkWidget   *widget,
 					    gpointer     data);
 static void    CML_load_from_file_callback (GtkWidget   *widget,
 					    gpointer     data);
-static gint    CML_load_parameter_file     (const gchar *filename,
-					    gint         interactive_mode);
+static gboolean CML_load_parameter_file     (const gchar *filename,
+					     gboolean     interactive_mode);
 static void    CML_execute_load_from_file  (GtkWidget   *widget,
 					    gpointer     data);
 static gint    parse_line_to_gint          (FILE        *file,
-					    gint        *flag);
+					    gboolean    *flag);
 static gdouble parse_line_to_gdouble       (FILE        *file,
-					    gint        *flag);
+					    gboolean    *flag);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -530,12 +529,9 @@ run (gchar      *name,
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
 
-  if (mem_chank0)
-    g_free (mem_chank0);
-  if (mem_chank1)
-    g_free (mem_chank1);
-  if (mem_chank2)
-    g_free (mem_chank2);
+  g_free (mem_chank0);
+  g_free (mem_chank1);
+  g_free (mem_chank2);
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -595,8 +591,7 @@ CML_main_function (gint preview_p)
   /* configure reusable memories */
   if (mem_chank0_size < 9 * cell_num * sizeof (gdouble))
     {
-      if (mem_chank0)
-	g_free (mem_chank0);
+      g_free (mem_chank0);
       mem_chank0_size = 9 * cell_num * sizeof (gdouble);
       mem_chank0 = (gdouble *) g_malloc (mem_chank0_size);
     }
@@ -612,8 +607,7 @@ CML_main_function (gint preview_p)
 
   if (mem_chank1_size < src_bpl * keep_height)
     {
-      if (mem_chank1)
-	g_free (mem_chank1);
+      g_free (mem_chank1);
       mem_chank1_size = src_bpl * keep_height;
       mem_chank1 = (guchar *) g_malloc (mem_chank1_size);
     }
@@ -621,8 +615,7 @@ CML_main_function (gint preview_p)
 
   if (mem_chank2_size < dest_bpl * keep_height)
     {
-      if (mem_chank2)
-	g_free (mem_chank2);
+      g_free (mem_chank2);
       mem_chank2_size = dest_bpl * keep_height;
       mem_chank2 = (guchar *) g_malloc (mem_chank2_size);
     }
@@ -1188,8 +1181,6 @@ CML_explorer_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  memset (&widget_pointers, (gint) 0, sizeof (widget_pointers));
-
   CML_preview_defer = TRUE;
 
   gimp_help_init ();
@@ -1231,7 +1222,7 @@ CML_explorer_dialog (void)
                     G_CALLBACK (CML_save_to_file_callback),
                     &VALS);
 
-  button = gtk_button_new_with_label (_("Load"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1285,51 +1276,42 @@ CML_explorer_dialog (void)
     gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show (notebook);
 
-    page = CML_dialog_channel_panel_new (_("Hue Settings"), 
-					 &VALS.hue, 0);
+    page = CML_dialog_channel_panel_new (&VALS.hue, 0);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new (_("Hue")));
+			      gtk_label_new_with_mnemonic (_("_Hue")));
 
-    page = CML_dialog_channel_panel_new (_("Saturation Settings"),
-					 &VALS.sat, 1);
+    page = CML_dialog_channel_panel_new (&VALS.sat, 1);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new (_("Saturation")));
+			      gtk_label_new_with_mnemonic (_("Sat_uration")));
 
-    page = CML_dialog_channel_panel_new (_("Value (Gray Image) Settings"),
-					 &VALS.val, 2);
+    page = CML_dialog_channel_panel_new (&VALS.val, 2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new (_("Value")));
+			      gtk_label_new_with_mnemonic (_("_Value")));
 
-    page = CML_dialog_advanced_panel_new (_("Advanced Settings"));
+    page = CML_dialog_advanced_panel_new ();
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new (_("Advanced")));
+			      gtk_label_new_with_mnemonic (_("_Advanced")));
 
     {
       GtkWidget *table;
-      GtkWidget *frame;
       GtkWidget *optionmenu;
-      GtkWidget *subframe;
+      GtkWidget *frame;
       GtkWidget *vbox;
       GtkObject *adj;
 
-      frame = gtk_frame_new (_("Other Parameter Settings"));
-      gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-      gtk_widget_show (frame);
-
       vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      subframe = gtk_frame_new (_("Channel Independed Parameters"));
-      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
-      gtk_widget_show (subframe);
+      frame = gtk_frame_new (_("Channel Independed Parameters"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       table = gtk_table_new (3, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
       optionmenu =
@@ -1391,16 +1373,16 @@ CML_explorer_dialog (void)
       CML_explorer_int_entry_init (&widget_pointers[3][2],
 				   adj, &VALS.start_offset);
 
-      subframe =
+      frame =
 	gtk_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
-      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
-      gtk_widget_show (subframe);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       table = gtk_table_new (2, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1435,34 +1417,28 @@ CML_explorer_dialog (void)
 				 "is different from preview), and (2) all "
 				 "mutation rates equal to zero."), NULL);
 
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-				gtk_label_new (_("Others")));
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+				gtk_label_new_with_mnemonic (_("O_thers")));
     }
     {
       GtkWidget	*table;
       GtkWidget *frame;
-      GtkWidget *subframe;
       GtkWidget *optionmenu;
       GtkWidget *vbox;
 
-      frame = gtk_frame_new (_("Misc Operations"));
-      gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-      gtk_widget_show (frame);
-
       vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      subframe = gtk_frame_new (_("Copy Settings"));
-      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
-      gtk_widget_show (subframe);
+      frame = gtk_frame_new (_("Copy Settings"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       table = gtk_table_new (3, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
       optionmenu = gimp_option_menu_new2 (FALSE, 
@@ -1507,15 +1483,15 @@ CML_explorer_dialog (void)
                         G_CALLBACK (CML_copy_parameters_callback),
                         &VALS);
 
-      subframe = gtk_frame_new (_("Selective Load Settings"));
-      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
-      gtk_widget_show (subframe);
+      frame = gtk_frame_new (_("Selective Load Settings"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       table = gtk_table_new (2, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
       gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
       optionmenu = gimp_option_menu_new2 (FALSE, 
@@ -1556,8 +1532,8 @@ CML_explorer_dialog (void)
 				 _("Destination Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
-				gtk_label_new (_("Misc Ops.")));
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+				gtk_label_new_with_mnemonic (_("_Misc Ops.")));
     }
   }
 
@@ -1580,11 +1556,9 @@ CML_explorer_dialog (void)
 }
 
 static GtkWidget *
-CML_dialog_channel_panel_new (gchar     *name,
-			      CML_PARAM *param,
+CML_dialog_channel_panel_new (CML_PARAM *param,
 			      gint       channel_id)
 {
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *optionmenu;
   GtkWidget *toggle;
@@ -1593,15 +1567,10 @@ CML_dialog_channel_panel_new (gchar     *name,
   gpointer  *chank;
   gint       index = 0;
 
-  frame = gtk_frame_new (name);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (13, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   optionmenu =
@@ -1847,16 +1816,12 @@ CML_dialog_channel_panel_new (gchar     *name,
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (function_graph_new),
                     chank);
-
-  index++;
-
-  return frame;
+  return table;
 }
 
 static GtkWidget *
-CML_dialog_advanced_panel_new (gchar *name)
+CML_dialog_advanced_panel_new (void)
 {
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *subframe;
   GtkWidget *table;
@@ -1867,13 +1832,8 @@ CML_dialog_advanced_panel_new (gchar *name)
   gint       channel_id;
   CML_PARAM *param;
 
-  frame = gtk_frame_new (name);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
-  gtk_widget_show (frame);
-
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   for (channel_id = 0; channel_id < 3; channel_id++)
@@ -1922,7 +1882,7 @@ CML_dialog_advanced_panel_new (gchar *name)
 								  widget_offset],
 				      adj, &param->mutation_dist);
     }
-  return frame;
+  return vbox;
 }
 
 void
@@ -2116,7 +2076,7 @@ CML_preview_update_callback (GtkWidget *widget,
   CML_preview_defer = TRUE;
 
   if (seed_widget.widget && seed_widget.updater)
-    (seed_widget.updater) (&seed_widget);
+    seed_widget.updater (&seed_widget);
 
   CML_preview_defer = FALSE;
 }
@@ -2386,11 +2346,11 @@ CML_execute_load_from_file (GtkWidget *widget,
 
 static gint
 CML_load_parameter_file (const gchar *filename,
-			 gint         interactive_mode)
+			 gboolean     interactive_mode)
 {
   FILE      *file;
   gint       channel_id;
-  gint       flag = TRUE;
+  gboolean   flag = TRUE;
   CML_PARAM  ch[3];
   gint       initial_value = 0;
   gint       scale = 1;
@@ -2523,11 +2483,10 @@ CML_load_parameter_file (const gchar *filename,
 
 static gint
 parse_line_to_gint (FILE *file,
-		    gint *flag)
+		    gboolean *flag)
 {
   gchar  line[CML_LINE_SIZE];
   gchar *str;
-  gint   value;
 
   if (! *flag)
     return 0;
@@ -2545,18 +2504,16 @@ parse_line_to_gint (FILE *file,
       }
     else
       str++;
-  value = (gint) atoi (str + 1);
 
-  return value;
+  return (gint) atoi (str + 1);
 }
 
 static gdouble
 parse_line_to_gdouble (FILE *file,
-		       gint *flag)
+		       gboolean *flag)
 {
   gchar    line[CML_LINE_SIZE];
   gchar   *str;
-  gdouble  value;
 
   if (! *flag)
     return 0;
@@ -2574,9 +2531,8 @@ parse_line_to_gdouble (FILE *file,
       }
     else
       str++;
-  value = (gdouble) atof (str + 1);
 
-  return value;
+  return (gdouble) atof (str + 1);
 }
 
 

@@ -1,3 +1,11 @@
+2002-09-04  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_cmd_guides.c (make_guides_dialog): fixed 
+	minor typo.
+
+	* plug-ins/common/CML_explorer.c: minor code clean-up, removed
+	cluttering frames (#92476)
+
 2002-09-04  Dave Neary  <bolsh@gimp.org>
         * app/core/gimpdrawable-bucket-fill.c: Small patch to
         modify the behaviour of the bucket fill tool if there
