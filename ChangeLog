@@ -37,6 +37,9 @@
 	* plug-ins/Makefile.am: Remove already commented out obsolete
 	makefile.mingw cruft.
 
+	* plug-ins/common/Makefile.am: Build winclipboard and winprint
+	only on Win32. Don't build bz2, mail, screenshot or url on Win32.
+
 2002-02-08  Manish Singh  <yosh@gimp.org>
 
         * app/paint-funcs/paint-funcs.c: 64-bit cleaniless cleanups.

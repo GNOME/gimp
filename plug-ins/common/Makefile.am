@@ -3,7 +3,17 @@
 if OS_WIN32
 mwindows = -mwindows
 endif
- 
+
+if OS_WIN32
+WINCLIPBOARD = winclipboard
+WINPRINT = winprint
+else
+BZ2 = bz2
+MAIL = mail
+SCREENSHOT = screenshot
+URL = url
+endif
+
 LDFLAGS = @LDFLAGS@ $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -39,7 +49,7 @@ libexec_PROGRAMS = \
 	blur \
 	borderaverage \
 	bumpmap \
-	bz2 \
+	$(BZ2) \
 	c_astretch \
 	checkerboard \
 	color_enhance \
@@ -89,7 +99,7 @@ libexec_PROGRAMS = \
 	$(JPEG) \
 	laplace \
 	lic \
-	mail \
+	$(MAIL) \
 	mapcolor \
 	max_rgb \
 	mblur \
@@ -118,7 +128,7 @@ libexec_PROGRAMS = \
 	rotate \
 	sample_colorize \
 	scatter_hsv \
-	screenshot \
+	$(SCREENSHOT) \
 	sel_gauss \
 	semiflatten \
 	sharpen \
@@ -139,14 +149,16 @@ libexec_PROGRAMS = \
 	tiler \
 	uniteditor \
 	unsharp \
-	url \
+	$(URL) \
 	video \
 	vinvert \
 	vpropagate \
 	warp \
 	waves \
 	whirlpinch \
+	$(WINCLIPBOARD) \
 	wind \
+	$(WINPRINT) \
 	wmf \
 	xbm \
 	$(XPM) \
@@ -1258,10 +1270,28 @@ whirlpinch_LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
+winclipboard_SOURCES = \
+	winclipboard.c
+
+winclipboard_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
 wind_SOURCES = \
 	wind.c
 
 wind_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+winprint_SOURCES = \
+	winprint.c
+
+winprint_LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
