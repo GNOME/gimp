@@ -1,3 +1,12 @@
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactionview.c: rephrased the text for the dialog
+	that appears if a new shortcut collides with an existing one.
+
+	* libgimpcolor/gimprgb.[ch]: added new function gimp_rgb_parse_name()
+	which accepts RGB colors in hexadezimal notation or as SVG color
+	keywords.
+
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_resume):

@@ -552,9 +552,9 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                     g_strdup_printf ("Shortcut \"%s\" is already taken by "
                                      "\"%s\" from the \"%s\" group.\n"
                                      "\n"
-                                     "Click \"Delete Old Shortcut\" to "
-                                     "assign the shortcut anyway, "
-                                     "deleting %s's shortcut.",
+                                     "Choose \"Reassign Shortcut\" to "
+                                     "reassign the shortcut, thereby removing "
+                                     "the shortcut from %s.",
                                      accel_string,
                                      stripped,
                                      conflict_group->label,
@@ -573,7 +573,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                             NULL,
                                             GIMP_STOCK_WARNING,
                                             message,
-                                            _("Delete Old Shortcut"),
+                                            _("_Resassign Shortcut"),
                                             GTK_STOCK_CANCEL,
                                             G_OBJECT (view), "destroy",
                                             gimp_action_view_accel_confirm,
