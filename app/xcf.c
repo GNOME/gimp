@@ -38,7 +38,8 @@
 #include <libgimp/parasiteP.h>
 #include <libgimp/parasite.h>
 #include "parasitelist.h"
-#include "pathsP.h"
+#include "path.h"
+#include "pathP.h"
 #include <libgimp/gimpunit.h>
 #include <libgimp/gimplimits.h>
 
@@ -728,7 +729,7 @@ v1read_bz_point(XcfInfo *info)
   info->cp += xcf_read_int32(info->fp, (guint32*)&x,1);
   info->cp += xcf_read_int32(info->fp, (guint32*)&y,1);
 
-  ptr = path_point_new (type,(gdouble)x,(gdouble)y);
+  ptr = path_point_new (type, (gdouble)x, (gdouble)y);
 
   return (ptr);
 }
@@ -745,7 +746,7 @@ read_bz_point(XcfInfo *info)
   info->cp += xcf_read_float(info->fp, &x,1);
   info->cp += xcf_read_float(info->fp, &y,1);
  
-  ptr = path_point_new(type,(gdouble)x,(gdouble)y);
+  ptr = path_point_new (type, (gdouble)x, (gdouble)y);
 
   return (ptr);
 }

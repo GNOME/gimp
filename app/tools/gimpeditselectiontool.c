@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdarg.h>
 #include "gdk/gdkkeysyms.h"
@@ -28,9 +30,8 @@
 #include "gdisplay.h"
 #include "undo.h"
 #include "gimprc.h"
-#include "paths_dialogP.h"
+#include "path_transform.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
@@ -259,7 +260,7 @@ edit_selection_button_release (Tool           *tool,
     }
   else
     {
-      paths_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
+      path_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
     }
     
   undo_push_group_end (gdisp->gimage);

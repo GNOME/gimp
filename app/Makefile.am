@@ -329,11 +329,13 @@ gimp_SOURCES = \
 	parasitelistF.h		\
 	parasitelistP.h		\
 	path.c			\
+	path.h			\
+	pathP.h			\
+	path_transform.h	\
 	paths_cmds.c		\
 	paths_dialog.c		\
 	paths_dialog.h		\
 	paths_dialogP.h		\
-	pathsP.h		\
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\

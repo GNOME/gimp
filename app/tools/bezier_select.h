@@ -18,7 +18,10 @@
 #ifndef __BEZIER_SELECT_H__
 #define __BEZIER_SELECT_H__
 
-#include "tools.h"
+#include "toolsF.h"
+
+typedef struct _bezier_point  BezierPoint;
+typedef struct _bezier_select BezierSelect;
 
 /*  bezier select functions  */
 

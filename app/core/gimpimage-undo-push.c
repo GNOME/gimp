@@ -34,6 +34,7 @@
 #include "paint_core.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
+#include "path_transform.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "undo.h"
@@ -1069,8 +1070,8 @@ typedef struct _layer_display_undo LayerDisplaceUndo;
 
 struct _layer_display_undo 
 {
-  int    info[3];
-  void * path_undo;
+  int       info[3];
+  PathUndo *path_undo;
 };
 
 int
@@ -1082,15 +1083,15 @@ undo_push_layer_displace (GImage    *gimage,
 
   if ((new = undo_push (gimage, 12, LAYER_DISPLACE_UNDO, TRUE)))
     {
-      new->data          = (void *) g_malloc (sizeof(LayerDisplaceUndo));
+      new->data          = (void *) g_malloc (sizeof (LayerDisplaceUndo));
       new->pop_func      = undo_pop_layer_displace;
       new->free_func     = undo_free_layer_displace;
 
       ldu = (LayerDisplaceUndo *) new->data;
-      ldu->info[0] = drawable_ID(GIMP_DRAWABLE(layer));
-      ldu->info[1] = GIMP_DRAWABLE(layer)->offset_x;
-      ldu->info[2] = GIMP_DRAWABLE(layer)->offset_y;
-      ldu->path_undo = paths_transform_start_undo(gimage);
+      ldu->info[0] = drawable_ID (GIMP_DRAWABLE (layer));
+      ldu->info[1] = GIMP_DRAWABLE (layer)->offset_x;
+      ldu->info[2] = GIMP_DRAWABLE (layer)->offset_y;
+      ldu->path_undo = path_transform_start_undo (gimage);
 
       return TRUE;
     }
@@ -1142,8 +1143,8 @@ undo_pop_layer_displace (GImage     *gimage,
       ldu->info[2] = old_offsets[1];
 
       /* Now undo paths bits */
-      if(ldu->path_undo)
-	paths_transform_do_undo(gimage,ldu->path_undo);
+      if (ldu->path_undo)
+	path_transform_do_undo (gimage, ldu->path_undo);
 
       return TRUE;
     }
@@ -1162,8 +1163,8 @@ undo_free_layer_displace (UndoState  state,
   ldu = (LayerDisplaceUndo *) info_ptr;
 
   /* Free mem held for paths undo stuff */
-  if(ldu->path_undo)
-    paths_transform_free_undo(ldu->path_undo);  
+  if (ldu->path_undo)
+    path_transform_free_undo (ldu->path_undo);  
 
   g_free (info_ptr);
 }
@@ -1216,7 +1217,7 @@ undo_pop_transform (GImage    *gimage,
   tc = (TransformCore *) active_tool->private;
   tu = (TransformUndo *) tu_ptr;
 
-  paths_transform_do_undo(gimage,tu->path_undo);
+  path_transform_do_undo (gimage,tu->path_undo);
 
   /*  only pop if the active tool is the tool that pushed this undo  */
   if (tu->tool_ID != active_tool->ID)
@@ -1257,7 +1258,7 @@ undo_free_transform (UndoState   state,
   tu = (TransformUndo *) tu_ptr;
   if (tu->original)
     tile_manager_destroy (tu->original);
-  paths_transform_free_undo(tu->path_undo);
+  path_transform_free_undo (tu->path_undo);
   g_free (tu);
 }
 

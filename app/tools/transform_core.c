@@ -30,6 +30,7 @@
 #include "gimpui.h"
 #include "info_dialog.h"
 #include "interface.h"
+#include "path_transform.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "temp_buf.h"
@@ -60,8 +61,6 @@ static gdouble   cubic                      (gdouble, gint, gint, gint, gint);
 static void      transform_core_setup_grid  (Tool *);
 static void      transform_core_grid_recalc (TransformCore *);
 
-/* Hmmm... Should be in a headerfile but which? */
-void             paths_draw_current         (GDisplay *, DrawCore *, GimpMatrix3);
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * (jk + dx * (j1k - jk)) + \
@@ -461,8 +460,8 @@ transform_core_button_release (Tool           *tool,
       else
 	{
 	  /*  Only update the paths preview */
-	  paths_transform_current_path (gdisp->gimage,
-					transform_core->transform, TRUE);
+	  path_transform_current_path (gdisp->gimage,
+				       transform_core->transform, TRUE);
 	}
     }
   else
@@ -481,8 +480,8 @@ transform_core_button_release (Tool           *tool,
       draw_core_resume (transform_core->core, tool);
 
       /* Update the paths preview */
-      paths_transform_current_path (gdisp->gimage,
-				    transform_core->transform, TRUE);
+      path_transform_current_path (gdisp->gimage,
+				   transform_core->transform, TRUE);
     }
 
   /*  if this tool is non-interactive, make it inactive after use  */
@@ -498,7 +497,7 @@ transform_core_doit (Tool     *tool,
   TransformCore *transform_core;
   TileManager   *new_tiles;
   TransformUndo *tu;
-  void          *pundo;
+  PathUndo      *pundo;
   gboolean       new_layer;
   gint           i, x, y;
 
@@ -532,7 +531,7 @@ transform_core_doit (Tool     *tool,
 						 tool->drawable,
 						 &new_layer);
 
-  pundo = paths_transform_start_undo (gdisp->gimage);
+  pundo = path_transform_start_undo (gdisp->gimage);
 
   /*  Send the request for the transformation to the tool...
    */
@@ -828,7 +827,7 @@ transform_core_draw (Tool *tool)
 	  gimp_matrix3_duplicate (transform_core->transform, tmp_matrix);
 	}
 
-      paths_draw_current (gdisp, transform_core->core, tmp_matrix);
+      path_transform_draw_current (gdisp, transform_core->core, tmp_matrix);
     }
 }
 
@@ -1211,7 +1210,7 @@ transform_core_do (GImage          *gimage,
       gimp_matrix3_invert (matrix, m);
     }
 
-  paths_transform_current_path (gimage, matrix, FALSE);
+  path_transform_current_path (gimage, matrix, FALSE);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;

@@ -37,8 +37,6 @@
 
 enum { EXTEND_EDIT, EXTEND_ADD, EXTEND_REMOVE, EXTEND_NEW };
 
-typedef struct _bezier_point BezierPoint;
-
 struct _bezier_point
 {
   int type;                   /* type of point (anchor/control/move) */
@@ -51,8 +49,6 @@ struct _bezier_point
 			       * 1 = selected 
 			       */ 
 };
-
-typedef struct _bezier_select BezierSelect;
 
 struct _bezier_select
 {

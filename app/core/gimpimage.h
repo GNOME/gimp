@@ -30,7 +30,7 @@
 #include "plug_in.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#include "pathsP.h"
+#include "path.h"
 
 
 #define GIMP_TYPE_IMAGE    gimp_image_get_type()

@@ -1,3 +1,29 @@
+Wed Feb 16 14:46:14 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/pathsP.h: removed
+	* app/path.h
+	* app/pathP.h
+	* app/path_transform.h: new header files. Only files that absolutely
+	need to access the Path structures internally need to include pathP.h.
+	All other functionality is described in the other header files.
+
+	* app/Makefile.am
+	* app/bezier_select.h
+	* app/bezier_selectP.h
+	* app/edit_selection.c
+	* app/flip_tool.c
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpimageP.h
+	* app/path.c
+	* app/paths_cmds.c
+	* app/paths_dialog.c
+	* app/transform_core.c
+	* app/undo.c
+	* app/xcf.c
+	* tools/pdbgen/pdb/paths.pdb: Changed according to the changes
+	described above.
+
 2000-02-16  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp1_1_splash.ppm: New splash, valentine is over.

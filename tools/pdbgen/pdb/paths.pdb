@@ -216,7 +216,7 @@ HELP
     );
     $inargs[0]->{desc} = 'The ID of the image to list set the paths in';
 
-    %invoke = ( code => 'success = paths_set_path (gimage, pname);' );
+    %invoke = ( code => 'success = path_set_path (gimage, pname);' );
 }
 
 sub path_set_points {
@@ -273,8 +273,8 @@ HELP
   else if ((numpoints / 3) % 3 != 2)
     success = FALSE;
 
-  if (success && !paths_set_path_points (gimage, pname, ptype, pclosed,
-					 numpoints, pnts))
+  if (success && !path_set_path_points (gimage, pname, ptype, pclosed,
+					numpoints, pnts))
     success = FALSE;
 }
 CODE
@@ -532,7 +532,7 @@ HELP
     );
     $inargs[0]->{desc} = 'The ID of the image to list delete the paths from';
 
-    %invoke = ( code => 'success = paths_delete_path (gimage, pname);' );
+    %invoke = ( code => 'success = path_delete_path (gimage, pname);' );
 }
 
 sub path_get_locked {
@@ -763,7 +763,7 @@ CODE
 }
 
 
-@headers = qw(<string.h> "gimage.h" "pathsP.h");
+@headers = qw(<string.h> "gimage.h" "path.h" "pathP.h");
 
 @procs = qw(path_list path_get_points path_get_current path_set_current
 	    path_set_points path_stroke_current path_get_point_at_dist

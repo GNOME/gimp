@@ -26,7 +26,7 @@
 #include "channel.h"
 #include "layer.h"
 #include "parasitelistF.h"
-#include "pathsP.h"
+#include "path.h"
 #include "undo_types.h"
 
 

@@ -27,7 +27,7 @@
 #include "gimage_mask.h"
 #include "gimpui.h"
 #include "temp_buf.h"
-#include "paths_dialogP.h"
+#include "path_transform.h"
 
 #include "undo.h"
 #include "gimage.h"
@@ -282,9 +282,9 @@ flip_tool_flip (GimpImage               *gimage,
        * function.
        */
       if (type == ORIENTATION_HORIZONTAL)
-	paths_transform_flip_horz (gimage);
+	path_transform_flip_horz (gimage);
       else
-	paths_transform_flip_vert (gimage);
+	path_transform_flip_vert (gimage);
     }
 
   return new;

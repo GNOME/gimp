@@ -24,13 +24,12 @@
 
 #include "bezier_selectP.h"
 #include "gimpimage.h"
-#include "pathsP.h"
+#include "path.h"
+#include "pathP.h"
 #include "paths_dialog.h"
 
 #include "libgimp/gimpmath.h"
 
-
-static BezierSelect *path_to_beziersel (Path *bzp);
 
 static gchar * unique_name (GimpImage *, gchar *);
 
@@ -104,9 +103,9 @@ path_free (Path *path)
 
 
 PathPoint* 
-path_point_new (gint    type,
-		gdouble x, 
-		gdouble y)
+path_point_new (guint    type,
+		gdouble  x, 
+		gdouble  y)
 {
   PathPoint* pathpoint = g_new0 (PathPoint,1);
 
@@ -130,7 +129,7 @@ path_stroke (GimpImage *gimage,
   BezierSelect * bezier_sel;
   GDisplay  * gdisp;
 
-  gdisp = gdisplays_check_valid (pl->gdisp,gimage);
+  gdisp = gdisplays_check_valid (pl->gdisp, gimage);
   bezier_sel = path_to_beziersel (bzp);
   bezier_stroke (bezier_sel, gdisp, SUBDIVIDE, !bzp->closed);
   bezier_select_free (bezier_sel);
@@ -225,7 +224,7 @@ path_list_free (PathList* iml)
   g_free (iml);
 }
 
-static BezierSelect *
+BezierSelect *
 path_to_beziersel (Path *bzp)
 {
   BezierSelect *bezier_sel;
@@ -233,9 +232,7 @@ path_to_beziersel (Path *bzp)
   GSList       *list;
 
   if (!bzp)
-    {
-      g_warning ("path_to_beziersel:: NULL bzp");
-    }
+    g_warning ("path_to_beziersel: NULL bzp");
 
   list = bzp->path_details;
   bezier_sel = g_new0 (BezierSelect, 1);

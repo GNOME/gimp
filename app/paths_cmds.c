@@ -23,7 +23,8 @@
 #include <string.h>
 
 #include "gimage.h"
-#include "pathsP.h"
+#include "path.h"
+#include "pathP.h"
 
 static ProcRecord path_list_proc;
 static ProcRecord path_get_points_proc;
@@ -362,7 +363,7 @@ path_set_current_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = paths_set_path (gimage, pname);
+    success = path_set_path (gimage, pname);
 
   return procedural_db_return_args (&path_set_current_proc, success);
 }
@@ -431,8 +432,8 @@ path_set_points_invoker (Argument *args)
       else if ((numpoints / 3) % 3 != 2)
 	success = FALSE;
     
-      if (success && !paths_set_path_points (gimage, pname, ptype, pclosed,
-					     numpoints, pnts))
+      if (success && !path_set_path_points (gimage, pname, ptype, pclosed,
+					    numpoints, pnts))
 	success = FALSE;
     }
 
@@ -826,7 +827,7 @@ path_delete_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = paths_delete_path (gimage, pname);
+    success = path_delete_path (gimage, pname);
 
   return procedural_db_return_args (&path_delete_proc, success);
 }

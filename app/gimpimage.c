@@ -30,7 +30,7 @@
 #include "undo.h"
 #include "gimpsignal.h"
 #include "gimpparasite.h"
-#include "pathsP.h"
+#include "path.h"
 #include "gimprc.h"
 
 #include "config.h"
