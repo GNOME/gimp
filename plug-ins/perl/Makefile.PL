@@ -205,7 +205,7 @@ install-plugins ::
 	\$(CHMOD) 755 * ; \\
 	\$(MY_FIXIN) * ; \\
 	for plugin in * ; do \\
-	   $GT \"\$\$plugin\" \$(DESTDIR)$GT2 ; \\
+	   $GT \"\$\$plugin\" $GT2 ; \\
 	done
 	\$(RM_RF) inst-temp
 
@@ -228,9 +228,9 @@ install-po:
       for (<po/*.po>) {
          my($po)=m!/(.*)\.po$!; #/# for brainy vim
          print " $po";
-         $postamble .= "	\$(MKPATH) \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES\n";
-         $postamble .= "	-\$(MSGFMT) -o \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
-         $postamble .= "	-\$(CHMOD) 644 \$(DESTDIR)\$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+         $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
+         $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
+         $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
       }
    } else {
       print " skipped";
@@ -325,7 +325,7 @@ WriteMakefile(
     		    'Gimp/Module.pm'	=> '$(INST_LIBDIR)/Gimp/Module.pm',
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
-    'LDFROM'	=> expand("\$(OBJECT) $INTLLIBS"),
+    'LDFROM'	=> expand("\$(OBJECT) $LIBS $INTLLIBS"),
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],

@@ -42,6 +42,7 @@ $^W=0;
    INC1			=> '',
    DEFINE1		=> '',
 
+   LIBS			=> q[@LIBS@],
    INTLLIBS		=> q[@INTLLIBS@],
    MSGFMT		=> q[@MSGFMT@],
 );
