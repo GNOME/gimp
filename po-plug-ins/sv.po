@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-21 14:45+0200\n"
+"POT-Creation-Date: 2003-08-31 13:53+0200\n"
+"PO-Revision-Date: 2003-08-31 13:56+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:297
 #: plug-ins/FractalExplorer/Dialogs.c:1405 plug-ins/gfig/gfig.c:3216
@@ -1183,7 +1183,7 @@ msgstr "Felaktig färgkarta"
 #: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:432
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
-#: plug-ins/xjt/xjt.c:3355
+#: plug-ins/xjt/xjt.c:3339
 #, c-format
 msgid "Opening '%s'..."
 msgstr "Öppnar \"%s\"..."
@@ -1217,13 +1217,14 @@ msgstr ""
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2005
-#: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
-#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
-#: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
-#: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:873
-#: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
-#: plug-ins/gfig/gfig.c:2664 plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367
-#: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
+#: plug-ins/common/screenshot.c:346 plug-ins/common/smooth_palette.c:253
+#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:925
+#: plug-ins/common/tiff.c:675 plug-ins/common/tile.c:278
+#: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2141
+#: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:462
+#: plug-ins/fits/fits.c:517 plug-ins/gfig/gfig.c:2664
+#: plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367 plug-ins/twain/twain.c:744
+#: plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr "Bakgrund"
 
@@ -1242,7 +1243,7 @@ msgstr "Kan inte arbeta med okända bildtyper eller alfabilder"
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1524 plug-ins/common/xbm.c:1007
 #: plug-ins/common/xpm.c:615 plug-ins/common/xwd.c:534
-#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1725
+#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1717
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Sparar \"%s\" ..."
@@ -2001,7 +2002,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/waves.c:359 plug-ins/common/whirlpinch.c:695
 #: plug-ins/common/wind.c:912 plug-ins/common/xpm.c:784
 #: plug-ins/maze/maze_face.c:205 plug-ins/mosaic/mosaic.c:672
-#: plug-ins/xjt/xjt.c:878
+#: plug-ins/xjt/xjt.c:874
 msgid "Parameter Settings"
 msgstr "Parameterinställningar"
 
@@ -2832,7 +2833,6 @@ msgid "Cubistic Transformation"
 msgstr "Kubistisk transformation"
 
 #: plug-ins/common/curve_bend.c:562
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filter/Störningar/_Böj efter kurva..."
 
@@ -2884,13 +2884,11 @@ msgstr "Alternativ"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1287
-#, fuzzy
 msgid "Rotat_e:"
 msgstr "R_otera:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1305
-#, fuzzy
 msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
@@ -2911,34 +2909,28 @@ msgid "Modify Curves"
 msgstr "Ändra kurvor"
 
 #: plug-ins/common/curve_bend.c:1364
-#, fuzzy
 msgid "Curve for Border"
-msgstr "Kurva för _ram:"
+msgstr "Kurva för ram:"
 
 #: plug-ins/common/curve_bend.c:1369
-#, fuzzy
 msgid "_Upper"
-msgstr "Övre"
+msgstr "_Övre"
 
 #: plug-ins/common/curve_bend.c:1372
-#, fuzzy
 msgid "_Lower"
-msgstr "Lägre"
+msgstr "_Lägre"
 
 #: plug-ins/common/curve_bend.c:1383
-#, fuzzy
 msgid "Curve Type"
-msgstr "kurv_typ:"
+msgstr "kurvtyp:"
 
 #: plug-ins/common/curve_bend.c:1388
-#, fuzzy
 msgid "Smoot_h"
-msgstr "Jämn"
+msgstr "_Jämn"
 
 #: plug-ins/common/curve_bend.c:1391
-#, fuzzy
 msgid "_Free"
-msgstr "Ledigt"
+msgstr "_Ledigt"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1407
@@ -4551,11 +4543,11 @@ msgstr "Förhandsgranska bild"
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr "Förhandsgranska (i bildfönstret; ändrar bildens ångrahistorik!)"
 
-#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:911
+#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:907
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1757 plug-ins/xjt/xjt.c:920
+#: plug-ins/common/jpeg.c:1757 plug-ins/xjt/xjt.c:916
 msgid "Smoothing:"
 msgstr "Utjämnande:"
 
@@ -4567,7 +4559,7 @@ msgstr "Omstartsmarkörer"
 msgid "Restart frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1823 plug-ins/xjt/xjt.c:889
+#: plug-ins/common/jpeg.c:1823 plug-ins/xjt/xjt.c:885
 msgid "Optimize"
 msgstr "Optimera"
 
@@ -5959,37 +5951,49 @@ msgstr "_Mättnad:"
 msgid "_Value:"
 msgstr "_Värde:"
 
-#: plug-ins/common/screenshot.c:135
+#: plug-ins/common/screenshot.c:139
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Arkiv/Inhämta/_Skärmdump..."
 
+#: plug-ins/common/screenshot.c:270
+msgid "Screen Shot: Error grabbing the pointer"
+msgstr "Skärmdump: Fel vid fångande av pekare"
+
+#: plug-ins/common/screenshot.c:361
+msgid "Loading Screen Shot..."
+msgstr "Läser skärmdump..."
+
+#: plug-ins/common/screenshot.c:436
+msgid "Screen Shot: Specified window not found"
+msgstr "Skärmdump: Angett fönster kan inte hittas"
+
+#: plug-ins/common/screenshot.c:468
+msgid "Screen Shot: Error obtaining screenshot"
+msgstr "Skärmdump: Fel vid fångande av skärmdump"
+
 #. main dialog
-#: plug-ins/common/screenshot.c:383
+#: plug-ins/common/screenshot.c:510
 msgid "Screen Shot"
 msgstr "Skärmdump"
 
 #. single window
-#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:533 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Fånga"
 
-#: plug-ins/common/screenshot.c:415
+#: plug-ins/common/screenshot.c:542
 msgid "_Single Window"
 msgstr "_Ensamt fönster"
 
-#: plug-ins/common/screenshot.c:432
-msgid "With _Decorations"
-msgstr "Med _dekorationer"
-
-#: plug-ins/common/screenshot.c:452
+#: plug-ins/common/screenshot.c:557
 msgid "_Whole Screen"
 msgstr "_Hela skärmen"
 
-#: plug-ins/common/screenshot.c:471
+#: plug-ins/common/screenshot.c:576
 msgid "_after"
 msgstr "_efter"
 
-#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:589 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "sekunders fördröjning"
 
@@ -9566,49 +9570,6 @@ msgstr ""
 "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt "
 "har någon påverkan"
 
-#: plug-ins/helpbrowser/helpbrowser.c:329 plug-ins/imagemap/imap_main.c:585
-#: plug-ins/imagemap/imap_settings.c:167
-msgid "<Untitled>"
-msgstr "<Namnlös>"
-
-#: plug-ins/helpbrowser/helpbrowser.c:500
-msgid "Document Not Found"
-msgstr "Dokumentet kunde inte hittas"
-
-#: plug-ins/helpbrowser/helpbrowser.c:502
-#, fuzzy
-msgid "Could not locate help document"
-msgstr "Kunde inte hitta hjälpdokumentationen"
-
-#: plug-ins/helpbrowser/helpbrowser.c:504
-msgid ""
-"The requested document could not be found in your GIMP help path as shown "
-"above. This means that the topic has not yet been written or your "
-"installation is not complete. Ensure that your installation is complete "
-"before reporting this error as a bug."
-msgstr ""
-"Det begärda dokumentet kunde inte hittas i din sökväg för GIMP-hjälp. Det "
-"betyder antingen att dokumentet ännu inte är skrivet eller att din "
-"installation inte är komplett. Kontrollera att din installation är komplett "
-"innan du rapporterar detta som ett fel."
-
-#: plug-ins/helpbrowser/helpbrowser.c:634
-msgid "GIMP Help Browser"
-msgstr "GIMP hjälpläsare"
-
-#: plug-ins/helpbrowser/helpbrowser.c:893
-#, c-format
-msgid ""
-"GIMP Help Browser Error.\n"
-"\n"
-"Couldn't find GIMP_HELP_ROOT html directory.\n"
-"(%s)"
-msgstr ""
-"Fel i GIMP hjälpläsare.\n"
-"\n"
-"Kunde inte hitta GIMP_HELP_ROOT html-katalog.\n"
-"(%s)"
-
 #: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
 msgstr "<Image>/Filter/Rendera/Natur/_IfsKomponera..."
@@ -10161,6 +10122,10 @@ msgstr "_Förhandsgranska"
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
 msgstr "<Image>/Filter/Webb/_Bildkarta..."
+
+#: plug-ins/imagemap/imap_main.c:585 plug-ins/imagemap/imap_settings.c:167
+msgid "<Untitled>"
+msgstr "<Namnlös>"
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
@@ -11528,82 +11493,117 @@ msgstr "<Toolbox>/Arkiv/Inhämta/Skärmdump..."
 msgid "No data captured"
 msgstr "Inga data fångade"
 
-#: plug-ins/xjt/xjt.c:730
+#: plug-ins/xjt/xjt.c:727
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT-fil innehåller okänt lagerläge %d"
 
-#: plug-ins/xjt/xjt.c:767
+#: plug-ins/xjt/xjt.c:764
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varning: lagerläge %d, som inte stöds, sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:783
+#: plug-ins/xjt/xjt.c:780
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT-fil innehåller okänd slingtyp %d"
 
-#: plug-ins/xjt/xjt.c:799
+#: plug-ins/xjt/xjt.c:796
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varning: slingväg %d, som inte stöds, sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:819
+#: plug-ins/xjt/xjt.c:815
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT-fil innehåller okänd enhetstyp %d"
 
-#: plug-ins/xjt/xjt.c:840
+#: plug-ins/xjt/xjt.c:836
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Varning: ej stödd enhetstyp %d sparad till XJT"
 
-#: plug-ins/xjt/xjt.c:861
+#: plug-ins/xjt/xjt.c:857
 msgid "Save as XJT"
 msgstr "Spara som XJT"
 
-#: plug-ins/xjt/xjt.c:899
+#: plug-ins/xjt/xjt.c:895
 msgid "Clear Transparent"
 msgstr "Rensa transparent"
 
-#: plug-ins/xjt/xjt.c:1304
+#: plug-ins/xjt/xjt.c:1299
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Kan ej öppna (skriva): %s"
 
-#: plug-ins/xjt/xjt.c:1716
+#: plug-ins/xjt/xjt.c:1708
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: kan inte arbeta med indexerade färgbilder"
 
-#: plug-ins/xjt/xjt.c:1720
+#: plug-ins/xjt/xjt.c:1712
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: Kan inte arbeta med okända bildtyper"
 
-#: plug-ins/xjt/xjt.c:1735 plug-ins/xjt/xjt.c:3365
+#: plug-ins/xjt/xjt.c:1727 plug-ins/xjt/xjt.c:3349
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Kan inte skapa arbetskatalog: %s"
 
-#: plug-ins/xjt/xjt.c:1744
+#: plug-ins/xjt/xjt.c:1736
 #, c-format
 msgid "Can't open: %s"
 msgstr "Kan ej öppna: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2569 plug-ins/xjt/xjt.c:2576
+#: plug-ins/xjt/xjt.c:2557 plug-ins/xjt/xjt.c:2564
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Kan ej öppna (läsa): %s"
 
-#: plug-ins/xjt/xjt.c:3228
+#: plug-ins/xjt/xjt.c:3218
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
 msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 
-#: plug-ins/xjt/xjt.c:3233
+#: plug-ins/xjt/xjt.c:3223
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "With _Decorations"
+#~ msgstr "Med _dekorationer"
+
+#~ msgid "Document Not Found"
+#~ msgstr "Dokumentet kunde inte hittas"
+
+#, fuzzy
+#~ msgid "Could not locate help document"
+#~ msgstr "Kunde inte hitta hjälpdokumentationen"
+
+#~ msgid ""
+#~ "The requested document could not be found in your GIMP help path as shown "
+#~ "above. This means that the topic has not yet been written or your "
+#~ "installation is not complete. Ensure that your installation is complete "
+#~ "before reporting this error as a bug."
+#~ msgstr ""
+#~ "Det begärda dokumentet kunde inte hittas i din sökväg för GIMP-hjälp. Det "
+#~ "betyder antingen att dokumentet ännu inte är skrivet eller att din "
+#~ "installation inte är komplett. Kontrollera att din installation är "
+#~ "komplett innan du rapporterar detta som ett fel."
+
+#~ msgid "GIMP Help Browser"
+#~ msgstr "GIMP hjälpläsare"
+
+#~ msgid ""
+#~ "GIMP Help Browser Error.\n"
+#~ "\n"
+#~ "Couldn't find GIMP_HELP_ROOT html directory.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Fel i GIMP hjälpläsare.\n"
+#~ "\n"
+#~ "Kunde inte hitta GIMP_HELP_ROOT html-katalog.\n"
+#~ "(%s)"
 
 #~ msgid "<Image>/Select/To _Path"
 #~ msgstr "<Image>/Välj/_Till slinga"

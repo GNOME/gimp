@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-08-23 11:45+0200\n"
+"POT-Creation-Date: 2003-08-31 13:46+0200\n"
+"PO-Revision-Date: 2003-08-31 13:50+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: app/app_procs.c:193
 msgid ""
@@ -1098,19 +1098,19 @@ msgstr "Länkat objekt"
 msgid "Drawable Visibility"
 msgstr "Ritytesynlighet"
 
-#: app/core/core-enums.c:507 app/core/gimplayer.c:428 app/core/gimplayer.c:430
+#: app/core/core-enums.c:507 app/core/gimplayer.c:528 app/core/gimplayer.c:530
 #: app/gui/layers-commands.c:1008 app/gui/resize-dialog.c:194
 #: app/pdb/layer_cmds.c:405
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
 #: app/core/core-enums.c:508 app/core/gimpimage-crop.c:118
-#: app/core/gimplayer.c:466 app/core/gimplayer.c:468
+#: app/core/gimplayer.c:566 app/core/gimplayer.c:568
 #: app/gui/layers-commands.c:1102 app/pdb/layer_cmds.c:500
 msgid "Resize Layer"
 msgstr "Ändra storlek på lager"
 
-#: app/core/core-enums.c:509 app/core/gimplayer.c:1079
+#: app/core/core-enums.c:509 app/core/gimplayer.c:1088
 msgid "Apply Layer Mask"
 msgstr "Applicera lagermask"
 
@@ -1118,7 +1118,7 @@ msgstr "Applicera lagermask"
 msgid "Floating Selection to Layer"
 msgstr "Flytande markering till lager"
 
-#: app/core/core-enums.c:511 app/core/gimpimage-mask.c:384
+#: app/core/core-enums.c:511 app/core/gimpimage-mask.c:393
 msgid "Float Selection"
 msgstr "Flytande markering"
 
@@ -1154,7 +1154,7 @@ msgstr "Transformera"
 msgid "Paint"
 msgstr "Måla"
 
-#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:791
+#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:832
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
@@ -1201,11 +1201,11 @@ msgstr "Sätt objektlänkning"
 
 #: app/core/core-enums.c:536 app/gui/layers-commands.c:612
 #: app/gui/layers-commands.c:644 app/gui/layers-commands.c:676
-#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:198
+#: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:197
 msgid "New Layer"
 msgstr "Nytt lager"
 
-#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:204
+#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:203
 msgid "Delete Layer"
 msgstr "Ta bort lager"
 
@@ -1213,7 +1213,7 @@ msgstr "Ta bort lager"
 msgid "Layer Mod"
 msgstr "Lagermod"
 
-#: app/core/core-enums.c:539 app/core/gimplayer.c:876
+#: app/core/core-enums.c:539 app/core/gimplayer.c:885
 #: app/gui/layers-commands.c:926
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
@@ -1399,7 +1399,7 @@ msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
 #: app/core/gimpbrush.c:609 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
-#: app/core/gimpitem.c:385 app/core/gimppalette.c:441
+#: app/core/gimpitem.c:411 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
 #: app/tools/gimpvectortool.c:367
 msgid "Unnamed"
@@ -1533,11 +1533,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:385 app/core/gimpdatafactory.c:388
-#: app/core/gimpitem.c:268 app/core/gimpitem.c:271
+#: app/core/gimpitem.c:273 app/core/gimpitem.c:276
 msgid "copy"
 msgstr "kopia"
 
-#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:280
+#: app/core/gimpdatafactory.c:397 app/core/gimpitem.c:285
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
@@ -1609,7 +1609,7 @@ msgstr "Transformation"
 msgid "Paste Transform"
 msgstr "Klistra in transformation"
 
-#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:560
+#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:660
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
@@ -1722,24 +1722,24 @@ msgid "Ellipse Select"
 msgstr "Ellipsmarkering"
 
 #. no undo
-#: app/core/gimpimage-mask-select.c:339
+#: app/core/gimpimage-mask-select.c:342
 msgid "Alpha to Selection"
 msgstr "Alfakanal till markering"
 
-#: app/core/gimpimage-mask-select.c:376
+#: app/core/gimpimage-mask-select.c:379
 #, c-format
 msgid "%s Channel to Selection"
 msgstr "%s Kanal till markering"
 
-#: app/core/gimpimage-mask-select.c:426 app/tools/gimpfuzzyselecttool.c:100
+#: app/core/gimpimage-mask-select.c:429 app/tools/gimpfuzzyselecttool.c:100
 msgid "Fuzzy Select"
 msgstr "Luddig markering"
 
-#: app/core/gimpimage-mask-select.c:477
+#: app/core/gimpimage-mask-select.c:480
 msgid "Select by Color"
 msgstr "Markera via färg"
 
-#: app/core/gimpimage-mask.c:226
+#: app/core/gimpimage-mask.c:235
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -1747,7 +1747,7 @@ msgstr ""
 "Kunde inte kopiera eller klippa ut\n"
 "eftersom den markerade regionen är tom."
 
-#: app/core/gimpimage-mask.c:377
+#: app/core/gimpimage-mask.c:386
 msgid ""
 "Cannot float selection because the\n"
 "selected region is empty."
@@ -1755,62 +1755,58 @@ msgstr ""
 "Kan inte göra markeringen flytande\n"
 "eftersom den markerade regionen är tom."
 
-#: app/core/gimpimage-mask.c:400 app/gui/layers-commands.c:851
+#: app/core/gimpimage-mask.c:409 app/gui/layers-commands.c:851
 msgid "Floating Selection"
 msgstr "Flytande markering"
 
-#: app/core/gimpimage-mask.c:446 app/gui/select-commands.c:149
+#: app/core/gimpimage-mask.c:455 app/gui/select-commands.c:149
 msgid "Feather Selection"
 msgstr "Fjädra markering"
 
-#: app/core/gimpimage-mask.c:461
+#: app/core/gimpimage-mask.c:470
 msgid "Sharpen Selection"
 msgstr "Gör markering skarpare"
 
-#: app/core/gimpimage-mask.c:475 app/widgets/gimpselectioneditor.c:177
+#: app/core/gimpimage-mask.c:484 app/widgets/gimpselectioneditor.c:177
 msgid "Select None"
 msgstr "Markera inget"
 
-#: app/core/gimpimage-mask.c:489 app/widgets/gimpselectioneditor.c:169
+#: app/core/gimpimage-mask.c:498 app/widgets/gimpselectioneditor.c:169
 msgid "Select All"
 msgstr "Markera allt"
 
-#: app/core/gimpimage-mask.c:501 app/widgets/gimpselectioneditor.c:185
+#: app/core/gimpimage-mask.c:510 app/widgets/gimpselectioneditor.c:185
 msgid "Invert Selection"
 msgstr "Omvänd markering"
 
-#: app/core/gimpimage-mask.c:515 app/gui/select-commands.c:239
+#: app/core/gimpimage-mask.c:524 app/gui/select-commands.c:239
 msgid "Border Selection"
 msgstr "Kantmarkering"
 
-#: app/core/gimpimage-mask.c:532 app/gui/select-commands.c:217
+#: app/core/gimpimage-mask.c:541 app/gui/select-commands.c:217
 msgid "Grow Selection"
 msgstr "Öka markering"
 
-#: app/core/gimpimage-mask.c:550 app/gui/select-commands.c:184
+#: app/core/gimpimage-mask.c:559 app/gui/select-commands.c:184
 msgid "Shrink Selection"
 msgstr "Krymp markering"
 
-#: app/core/gimpimage-mask.c:570 app/tools/gimpeditselectiontool.c:242
+#: app/core/gimpimage-mask.c:579 app/tools/gimpeditselectiontool.c:242
 #: app/tools/gimpeditselectiontool.c:992
 msgid "Move Selection"
 msgstr "Flytta markering"
 
-#: app/core/gimpimage-mask.c:587
+#: app/core/gimpimage-mask.c:596
 msgid "Selection from Channel"
 msgstr "Markering från kanal"
 
-#: app/core/gimpimage-mask.c:644
+#: app/core/gimpimage-mask.c:647
 msgid "No selection to stroke."
 msgstr "Ingen markering att stryka."
 
-#: app/core/gimpimage-mask.c:660 app/widgets/gimpselectioneditor.c:217
+#: app/core/gimpimage-mask.c:654 app/widgets/gimpselectioneditor.c:217
 msgid "Stroke Selection"
 msgstr "Stryk markering"
-
-#: app/core/gimpimage-mask.c:699
-msgid "Paint operation failed."
-msgstr "Målningsåtgärden misslyckades."
 
 #: app/core/gimpimage-merge.c:87
 msgid "Merge Visible Layers"
@@ -1885,7 +1881,7 @@ msgstr "Ta bort lager"
 msgid "Layer cannot be raised higher."
 msgstr "Lagret kan inte höjas mer."
 
-#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:206
+#: app/core/gimpimage.c:2682 app/widgets/gimplayertreeview.c:205
 msgid "Raise Layer"
 msgstr "Höj lager"
 
@@ -1893,7 +1889,7 @@ msgstr "Höj lager"
 msgid "Layer cannot be lowered more."
 msgstr "Lagret kan inte sänkas mer."
 
-#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:210
+#: app/core/gimpimage.c:2707 app/widgets/gimplayertreeview.c:209
 msgid "Lower Layer"
 msgstr "Sänk lager"
 
@@ -1905,7 +1901,7 @@ msgstr "Lagret är redan överst."
 msgid "Cannot raise a layer without alpha."
 msgstr "Kan inte höja lager utan alfakanal."
 
-#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:208
+#: app/core/gimpimage.c:2735 app/widgets/gimplayertreeview.c:207
 msgid "Raise Layer to Top"
 msgstr "Höj lager till toppen"
 
@@ -1913,7 +1909,7 @@ msgstr "Höj lager till toppen"
 msgid "Layer is already on the bottom."
 msgstr "Lagret är redan nederst."
 
-#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:212
+#: app/core/gimpimage.c:2760 app/widgets/gimplayertreeview.c:211
 msgid "Lower Layer to Bottom"
 msgstr "Sänk lager till botten"
 
@@ -1962,7 +1958,7 @@ msgstr "Ta bort slinga"
 msgid "Path cannot be raised higher."
 msgstr "Slingan kan inte höjas mer."
 
-#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:132
+#: app/core/gimpimage.c:3140 app/widgets/gimpvectorstreeview.c:131
 msgid "Raise Path"
 msgstr "Höj slinga"
 
@@ -1970,7 +1966,7 @@ msgstr "Höj slinga"
 msgid "Path cannot be lowered more."
 msgstr "Slingan kan inte sänkas mer."
 
-#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:136
+#: app/core/gimpimage.c:3161 app/widgets/gimpvectorstreeview.c:135
 msgid "Lower Path"
 msgstr "Sänk slinga"
 
@@ -2032,11 +2028,11 @@ msgstr "Misslyckades med att öppna miniatyrbildsfilen \"%s\": %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Misslyckades med att skapa miniatyrbildsmappen \"%s\"."
 
-#: app/core/gimpitem.c:801
+#: app/core/gimpitem.c:842
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: app/core/gimpitem.c:840 app/core/gimpitem.c:847
+#: app/core/gimpitem.c:881 app/core/gimpitem.c:888
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
@@ -2058,55 +2054,56 @@ msgstr ""
 "markeringen då den tillhör en lagermask\n"
 "eller kanal."
 
-#: app/core/gimplayer.c:218 app/pdb/internal_procs.c:131
+#: app/core/gimplayer.c:222 app/pdb/internal_procs.c:131
 msgid "Layer"
 msgstr "Lager"
 
-#: app/core/gimplayer.c:219
+#: app/core/gimplayer.c:223
 msgid "Rename Layer"
 msgstr "Byt namn på lager"
 
-#: app/core/gimplayer.c:387 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
+#: app/core/gimplayer.c:487 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
 #: app/tools/gimpeditselectiontool.c:244 app/tools/gimpeditselectiontool.c:996
 msgid "Move Layer"
 msgstr "Flytta lager"
 
-#: app/core/gimplayer.c:498 app/gui/drawable-commands.c:157
+#: app/core/gimplayer.c:598 app/gui/drawable-commands.c:157
 msgid "Flip Layer"
 msgstr "Vänd lager"
 
-#: app/core/gimplayer.c:527 app/gui/drawable-commands.c:191
+#: app/core/gimplayer.c:627 app/gui/drawable-commands.c:191
 msgid "Rotate Layer"
 msgstr "Rotera lager"
 
-#: app/core/gimplayer.c:836
+#: app/core/gimplayer.c:845
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Kan inte lägga till lagermask till ett lager som inte tillhör en bild."
 
-#: app/core/gimplayer.c:843
+#: app/core/gimplayer.c:852
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan inte lägga till lagermask eftersom lagret redan har en."
 
-#: app/core/gimplayer.c:850
+#: app/core/gimplayer.c:859
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan inte lägga till lagermask till ett lager utan alfakanal."
 
-#: app/core/gimplayer.c:860
+#: app/core/gimplayer.c:869
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan inte lägga till lagermask som har andra dimensioner än det specifierade "
 "lagret."
 
-#: app/core/gimplayer.c:903
+#: app/core/gimplayer.c:912
 #, c-format
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: app/core/gimplayer.c:1176
+#. Push the layer on the undo stack
+#: app/core/gimplayer.c:1188
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: app/core/gimplayer.c:1208
+#: app/core/gimplayer.c:1218
 msgid "Layer to Image Size"
 msgstr "Lagerstorlek som bilden"
 
@@ -2232,7 +2229,7 @@ msgid "pixel"
 msgstr "bildpunkt"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:580
-#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:642
+#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:662
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -2349,11 +2346,11 @@ msgstr ""
 "%s har ändrats.\n"
 "Stäng ändå?"
 
-#: app/display/gimpdisplayshell-dnd.c:65
+#: app/display/gimpdisplayshell-dnd.c:77
 msgid "Drop New Layer"
 msgstr "Släpp nytt lager"
 
-#: app/display/gimpdisplayshell-dnd.c:100
+#: app/display/gimpdisplayshell-dnd.c:120
 msgid "Drop New Path"
 msgstr "Släpp ny slinga"
 
@@ -2512,12 +2509,12 @@ msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Besök http://www.gimp.org/ för mer information"
 
 #: app/gui/brush-select.c:183 app/tools/gimppaintoptions-gui.c:117
-#: app/widgets/gimplayertreeview.c:286
+#: app/widgets/gimplayertreeview.c:285
 msgid "Opacity:"
 msgstr "Opacitet:"
 
 #: app/gui/brush-select.c:200 app/tools/gimppaintoptions-gui.c:122
-#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:279
+#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:278
 msgid "Mode:"
 msgstr "Läge:"
 
@@ -2872,7 +2869,7 @@ msgid "Channel List"
 msgstr "Kanallista"
 
 #: app/gui/dialogs-constructors.c:832 app/pdb/internal_procs.c:158
-#: app/tools/gimpvectortool.c:127
+#: app/tools/gimpvectortool.c:136
 msgid "Paths"
 msgstr "Slingor"
 
@@ -3236,9 +3233,8 @@ msgstr ""
 "%s"
 
 #: app/gui/file-dialog-utils.c:122
-#, fuzzy
 msgid "Determine File _Type:"
-msgstr "Bestäm filtyp:"
+msgstr "Bestäm fil_typ:"
 
 #: app/gui/file-new-dialog.c:97 app/gui/preferences-dialog.c:1013
 #: app/gui/preferences-dialog.c:1016
@@ -3987,9 +3983,8 @@ msgid "/Select/Save to _Channel"
 msgstr "/Markera/S_para till kanal"
 
 #: app/gui/image-menu.c:323
-#, fuzzy
 msgid "/Select/To _Path"
-msgstr "/_Markering till slinga"
+msgstr "/Markera/_Till slinga"
 
 #. <Image>/View
 #: app/gui/image-menu.c:331
@@ -4880,7 +4875,7 @@ msgstr "Lagrets fyllnadstyp"
 msgid "Layer Attributes"
 msgstr "Lagerattribut"
 
-#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:202
+#: app/gui/layers-commands.c:820 app/widgets/gimplayertreeview.c:201
 msgid "Edit Layer Attributes"
 msgstr "Modifiera lagerattribut"
 
@@ -6678,29 +6673,29 @@ msgstr "Kalibrera"
 msgid "There is no active Layer or Channel to stroke to"
 msgstr "Det finns inget aktivt lager eller kanal att stryka till"
 
-#: app/gui/vectors-commands.c:443
+#: app/gui/vectors-commands.c:434
 msgid "Empty Vectors Copy"
 msgstr "Tom vektorkopia"
 
-#: app/gui/vectors-commands.c:457 app/gui/vectors-commands.c:503
-#: app/widgets/gimpvectorstreeview.c:124
+#: app/gui/vectors-commands.c:448 app/gui/vectors-commands.c:494
+#: app/widgets/gimpvectorstreeview.c:123
 msgid "New Path"
 msgstr "Ny slinga"
 
-#: app/gui/vectors-commands.c:459
+#: app/gui/vectors-commands.c:450
 msgid "New Path Options"
 msgstr "Alternativ för ny slinga"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:492 app/gui/vectors-commands.c:607
+#: app/gui/vectors-commands.c:483 app/gui/vectors-commands.c:598
 msgid "Path name:"
 msgstr "Slingnamn:"
 
-#: app/gui/vectors-commands.c:572
+#: app/gui/vectors-commands.c:563
 msgid "Path Attributes"
 msgstr "Slingattribut"
 
-#: app/gui/vectors-commands.c:574 app/widgets/gimpvectorstreeview.c:128
+#: app/gui/vectors-commands.c:565 app/widgets/gimpvectorstreeview.c:127
 msgid "Edit Path Attributes"
 msgstr "Modifiera slingattribut"
 
@@ -6760,27 +6755,27 @@ msgstr "/_Slingverktyg"
 msgid "/_Edit Path Attributes..."
 msgstr "/_Redigera slingattribut"
 
-#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:62
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:56
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:99
+#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:102
 msgid "Clone"
 msgstr "Klona"
 
-#: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:91
+#: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:90
 msgid "Convolve"
 msgstr "Konvolvera"
 
-#: app/paint/gimpdodgeburn.c:86 app/tools/gimpdodgeburntool.c:71
+#: app/paint/gimpdodgeburn.c:86 app/tools/gimpdodgeburntool.c:70
 msgid "Dodge/Burn"
 msgstr "Blek/Bränna"
 
-#: app/paint/gimperaser.c:64 app/tools/gimperasertool.c:71
+#: app/paint/gimperaser.c:64 app/tools/gimperasertool.c:70
 msgid "Eraser"
 msgstr "Suddare"
 
-#: app/paint/gimppaintbrush.c:64 app/tools/gimppaintbrushtool.c:58
+#: app/paint/gimppaintbrush.c:64 app/tools/gimppaintbrushtool.c:53
 msgid "Paintbrush"
 msgstr "Pensel"
 
@@ -6788,11 +6783,11 @@ msgstr "Pensel"
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:57
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:52
 msgid "Pencil"
 msgstr "Penna"
 
-#: app/paint/gimpsmudge.c:75 app/tools/gimpsmudgetool.c:62
+#: app/paint/gimpsmudge.c:75 app/tools/gimpsmudgetool.c:56
 msgid "Smudge"
 msgstr "Smeta"
 
@@ -7053,42 +7048,42 @@ msgstr ""
 "Du bör nog spara dina bilder och starta om GIMP för att vara på den\n"
 "säkra sidan."
 
-#: app/plug-in/plug-ins.c:139
+#: app/plug-in/plug-ins.c:140
 msgid "Resource configuration"
 msgstr "Resurskonfiguration"
 
 #. Query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:145
+#: app/plug-in/plug-ins.c:146
 msgid "Querying new Plug-ins"
 msgstr "Undersöker nya insticksmoduler"
 
-#: app/plug-in/plug-ins.c:163
+#: app/plug-in/plug-ins.c:164
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "undersöker insticksmodul: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:218
+#: app/plug-in/plug-ins.c:219
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "skriver \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:275
+#: app/plug-in/plug-ins.c:283
 msgid "Initializing Plug-ins"
 msgstr "Initierar insticksmoduler"
 
-#: app/plug-in/plug-ins.c:290
+#: app/plug-in/plug-ins.c:298
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr "Initierar insticksmodul: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:319
+#: app/plug-in/plug-ins.c:327
 msgid "Starting Extensions"
 msgstr "Startar tillägg"
 
-#: app/plug-in/plug-ins.c:328
+#: app/plug-in/plug-ins.c:336
 #, c-format
 msgid "Starting extension: \"%s\"\n"
 msgstr "Startar tillägg: \"%s\"\n"
@@ -7202,32 +7197,36 @@ msgstr "Utöka strykning/flytta noder"
 msgid "Insert/Delete Nodes"
 msgstr "Lägg in/ta bort noder"
 
-#: app/tools/tools-enums.c:92
+#: app/tools/tools-enums.c:75
+msgid "Move Stroke/Path"
+msgstr "Stryk slinga/väg"
+
+#: app/tools/tools-enums.c:93
 msgid "Don't Show Grid"
 msgstr "Visa inte rutnät"
 
-#: app/tools/tools-enums.c:93
+#: app/tools/tools-enums.c:94
 msgid "Number of Grid Lines"
 msgstr "Antal rutnätslinjer"
 
-#: app/tools/tools-enums.c:94
+#: app/tools/tools-enums.c:95
 msgid "Grid Line Spacing"
 msgstr "Mellanrum mellan rutnätslinjer"
 
-#: app/tools/gimpairbrushtool.c:63
+#: app/tools/gimpairbrushtool.c:57
 msgid "Airbrush with variable pressure"
 msgstr "Airbrush med variabelt tryck"
 
-#: app/tools/gimpairbrushtool.c:64
+#: app/tools/gimpairbrushtool.c:58
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Verktyg/Målarverktyg/_Airbrush"
 
-#: app/tools/gimpairbrushtool.c:144 app/tools/gimpconvolvetool.c:243
-#: app/tools/gimpsmudgetool.c:145
+#: app/tools/gimpairbrushtool.c:127 app/tools/gimpconvolvetool.c:239
+#: app/tools/gimpsmudgetool.c:128
 msgid "Rate:"
 msgstr "Flöde:"
 
-#: app/tools/gimpairbrushtool.c:150
+#: app/tools/gimpairbrushtool.c:133
 msgid "Pressure:"
 msgstr "Tryck:"
 
@@ -7357,19 +7356,19 @@ msgstr "Markera regioner via färg"
 msgid "/Tools/Selection Tools/_By Color Select"
 msgstr "/Verktyg/Markeringsverktyg/Markera via _färg"
 
-#: app/tools/gimpclonetool.c:100
+#: app/tools/gimpclonetool.c:103
 msgid "Paint using Patterns or Image Regions"
 msgstr "Måla genom att använda mönster eller bildregioner"
 
-#: app/tools/gimpclonetool.c:101
+#: app/tools/gimpclonetool.c:104
 msgid "/Tools/Paint Tools/_Clone"
 msgstr "/Verktyg/Målarverktyg/_Klona"
 
-#: app/tools/gimpclonetool.c:370
+#: app/tools/gimpclonetool.c:359
 msgid "Source"
 msgstr "Källa"
 
-#: app/tools/gimpclonetool.c:376
+#: app/tools/gimpclonetool.c:365
 msgid "Alignment"
 msgstr "Uppställning"
 
@@ -7510,16 +7509,16 @@ msgstr "Alfa:"
 msgid "Hex Triplet:"
 msgstr "Hex-triplett:"
 
-#: app/tools/gimpconvolvetool.c:92
+#: app/tools/gimpconvolvetool.c:91
 msgid "Blur or Sharpen"
 msgstr "Gör suddigare eller skarpare"
 
-#: app/tools/gimpconvolvetool.c:93
+#: app/tools/gimpconvolvetool.c:92
 msgid "/Tools/Paint Tools/Con_volve"
 msgstr "/Verktyg/Målarverktyg/_Konvolvera"
 
 #. the type radio box
-#: app/tools/gimpconvolvetool.c:225
+#: app/tools/gimpconvolvetool.c:221
 #, c-format
 msgid "Convolve Type  %s"
 msgstr "Konvolveringstyp %s"
@@ -7631,25 +7630,25 @@ msgstr "Läs in kurvor"
 msgid "Save Curves"
 msgstr "Spara kurvor"
 
-#: app/tools/gimpdodgeburntool.c:72
+#: app/tools/gimpdodgeburntool.c:71
 msgid "Dodge or Burn strokes"
 msgstr "Blek eller bränn streck"
 
-#: app/tools/gimpdodgeburntool.c:73
+#: app/tools/gimpdodgeburntool.c:72
 msgid "/Tools/Paint Tools/Dod_geBurn"
 msgstr "/Verktyg/Målarverktyg/_BlekBränn"
 
 #. the type (dodge or burn)
-#: app/tools/gimpdodgeburntool.c:203
+#: app/tools/gimpdodgeburntool.c:198
 #, c-format
 msgid "Type  %s"
 msgstr "Typ %s"
 
-#: app/tools/gimpdodgeburntool.c:214
+#: app/tools/gimpdodgeburntool.c:209
 msgid "Mode"
 msgstr "Läge"
 
-#: app/tools/gimpdodgeburntool.c:226
+#: app/tools/gimpdodgeburntool.c:221
 msgid "Exposure:"
 msgstr "Exponering:"
 
@@ -7669,16 +7668,16 @@ msgstr "Markera elliptisk region"
 msgid "/Tools/Selection Tools/_Ellipse Select"
 msgstr "/Verktyg/Markeringsverktyg/_Ellipsmarkera"
 
-#: app/tools/gimperasertool.c:72
+#: app/tools/gimperasertool.c:71
 msgid "Erase to background or transparency"
 msgstr "Sudda mot bakgrunden eller transparent"
 
-#: app/tools/gimperasertool.c:73
+#: app/tools/gimperasertool.c:72
 msgid "/Tools/Paint Tools/_Eraser"
 msgstr "/Verktyg/Målarverktyg/_Suddare"
 
 #. the anti_erase toggle
-#: app/tools/gimperasertool.c:192
+#: app/tools/gimperasertool.c:189
 #, c-format
 msgid "Anti Erase  %s"
 msgstr "Antisudda %s"
@@ -8046,11 +8045,11 @@ msgstr "Flytta lager och markeringar"
 msgid "/Tools/Transform Tools/_Move"
 msgstr "/Verktyg/Transformeringsverktyg/_Flytta"
 
-#: app/tools/gimppaintbrushtool.c:59
+#: app/tools/gimppaintbrushtool.c:54
 msgid "Paint fuzzy brush strokes"
 msgstr "Måla med luddiga penseldrag"
 
-#: app/tools/gimppaintbrushtool.c:60
+#: app/tools/gimppaintbrushtool.c:55
 msgid "/Tools/Paint Tools/_Paintbrush"
 msgstr "/Verktyg/Målarverktyg/_Pensel"
 
@@ -8114,11 +8113,11 @@ msgstr "Längd:"
 msgid "Use Color from Gradient"
 msgstr "Använd färg från färgskala"
 
-#: app/tools/gimppenciltool.c:58
+#: app/tools/gimppenciltool.c:53
 msgid "Paint hard edged pixels"
 msgstr "Måla bildpunkter med hårda kanter"
 
-#: app/tools/gimppenciltool.c:59
+#: app/tools/gimppenciltool.c:54
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Verktyg/Målarverktyg/_Penna"
 
@@ -8294,11 +8293,11 @@ msgstr "Lutar..."
 msgid "Shear Magnitude X:"
 msgstr "X-lutningsmagnitud:"
 
-#: app/tools/gimpsmudgetool.c:63
+#: app/tools/gimpsmudgetool.c:57
 msgid "Smudge image"
 msgstr "Smeta bilden"
 
-#: app/tools/gimpsmudgetool.c:64
+#: app/tools/gimpsmudgetool.c:58
 msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/Verktyg/Målarverktyg/_Smeta"
 
@@ -8307,12 +8306,12 @@ msgid "Open the font selection dialog"
 msgstr "Öppna typsnittsvalsdialogen"
 
 #: app/tools/gimptextoptions.c:271
-msgid "Font:"
-msgstr "Typsnitt:"
-
-#: app/tools/gimptextoptions.c:276
 msgid "_Font:"
 msgstr "_Typsnitt:"
+
+#: app/tools/gimptextoptions.c:276
+msgid "Font:"
+msgstr "Typsnitt:"
 
 #: app/tools/gimptextoptions.c:283
 msgid "_Size:"
@@ -8429,11 +8428,11 @@ msgstr ""
 msgid "Keep Width  %s"
 msgstr "Behåll bredd %s"
 
-#: app/tools/gimptransformtool.c:243
+#: app/tools/gimptransformtool.c:246
 msgid "Transforming..."
 msgstr "Transformerar..."
 
-#: app/tools/gimptransformtool.c:295
+#: app/tools/gimptransformtool.c:342
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -8441,11 +8440,11 @@ msgstr ""
 "Transformationer fungerar inte på\n"
 "lager som innehåller lagermasker."
 
-#: app/tools/gimpvectortool.c:128
+#: app/tools/gimpvectortool.c:137
 msgid "Create and edit paths"
 msgstr "Skapa och redigera slingor"
 
-#: app/tools/gimpvectortool.c:129
+#: app/tools/gimpvectortool.c:138
 msgid "/Tools/_Paths"
 msgstr "/Verktyg/_Slinga"
 
@@ -8453,35 +8452,35 @@ msgstr "/Verktyg/_Slinga"
 msgid "This tool has no options."
 msgstr "Det här verktyget har inga alternativ."
 
-#: app/vectors/gimpvectors.c:201
+#: app/vectors/gimpvectors.c:206
 msgid "Path"
 msgstr "Slinga"
 
-#: app/vectors/gimpvectors.c:202
+#: app/vectors/gimpvectors.c:207
 msgid "Rename Path"
 msgstr "Byt namn på slinga"
 
-#: app/vectors/gimpvectors.c:303
+#: app/vectors/gimpvectors.c:333
 msgid "Move Path"
 msgstr "Flytta slinga"
 
-#: app/vectors/gimpvectors.c:332
+#: app/vectors/gimpvectors.c:362
 msgid "Scale Path"
 msgstr "Skala slinga"
 
-#: app/vectors/gimpvectors.c:367
+#: app/vectors/gimpvectors.c:397
 msgid "Resize Path"
 msgstr "Ändra storlek på slinga"
 
-#: app/vectors/gimpvectors.c:397
+#: app/vectors/gimpvectors.c:427
 msgid "Flip Path"
 msgstr "Vänd sling"
 
-#: app/vectors/gimpvectors.c:443
+#: app/vectors/gimpvectors.c:473
 msgid "Rotate Path"
 msgstr "Rotera slinga"
 
-#: app/vectors/gimpvectors.c:474
+#: app/vectors/gimpvectors.c:504
 msgid "Transform Path"
 msgstr "Transformera slinga"
 
@@ -8873,11 +8872,11 @@ msgstr "Handtagsposition: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Distans: %0.6f"
 
-#: app/widgets/gimphelp.c:205
+#: app/widgets/gimphelp.c:209
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
-#: app/widgets/gimphelp.c:207
+#: app/widgets/gimphelp.c:211
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -8887,9 +8886,17 @@ msgstr ""
 "Den var förmodligen inte kompilerad eftersom\n"
 "du inte har GtkXmHTML installerat."
 
-#: app/widgets/gimphelp.c:210
+#: app/widgets/gimphelp.c:214 app/widgets/gimphelp.c:256
 msgid "Use Netscape instead"
 msgstr "Använd Netscape istället"
+
+#: app/widgets/gimphelp.c:253
+msgid "Could not start GIMP Help Browser"
+msgstr "Kunde inte starta GIMP-hjälpläsaren"
+
+#: app/widgets/gimphelp.c:255
+msgid "Could not start the GIMP Help Browser."
+msgstr "Kunde inte starta GIMP-hjälpläsaren"
 
 #: app/widgets/gimpimagedock.c:176
 msgid "Auto"
@@ -8912,7 +8919,7 @@ msgstr "Ta bort denna bild"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:266
+#: app/widgets/gimpitemtreeview.c:265
 #, c-format
 msgid ""
 "%s\n"
@@ -8921,7 +8928,7 @@ msgstr ""
 "%s\n"
 "%s  Till toppen"
 
-#: app/widgets/gimpitemtreeview.c:280
+#: app/widgets/gimpitemtreeview.c:279
 #, c-format
 msgid ""
 "%s\n"
@@ -8930,23 +8937,23 @@ msgstr ""
 "%s\n"
 "%s  Till botten"
 
-#: app/widgets/gimplayertreeview.c:200
+#: app/widgets/gimplayertreeview.c:199
 msgid "Duplicate Layer"
 msgstr "Duplicera lager"
 
-#: app/widgets/gimplayertreeview.c:214
+#: app/widgets/gimplayertreeview.c:213
 msgid "Reorder Layer"
 msgstr "Ändra ordning på lager"
 
-#: app/widgets/gimplayertreeview.c:267
+#: app/widgets/gimplayertreeview.c:266
 msgid "Keep Trans."
 msgstr "Behåll transp."
 
-#: app/widgets/gimplayertreeview.c:276
+#: app/widgets/gimplayertreeview.c:275
 msgid "Keep Transparency"
 msgstr "Behåll transparens"
 
-#: app/widgets/gimplayertreeview.c:299
+#: app/widgets/gimplayertreeview.c:298
 msgid "Anchor Floating Layer"
 msgstr "Ankra flytande lager"
 
@@ -8987,7 +8994,7 @@ msgstr "Detta textinmatningsfält är begränsat till %d tecken."
 msgid "Save Selection to Channel"
 msgstr "Spara markering till kanal"
 
-#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:171
+#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:170
 #, c-format
 msgid ""
 "Selection to Path\n"
@@ -9112,27 +9119,27 @@ msgstr "Gör om"
 msgid "[ Base Image ]"
 msgstr "[ Grundbild ]"
 
-#: app/widgets/gimpvectorstreeview.c:126
+#: app/widgets/gimpvectorstreeview.c:125
 msgid "Duplicate Path"
 msgstr "Duplicera slinga"
 
-#: app/widgets/gimpvectorstreeview.c:130
+#: app/widgets/gimpvectorstreeview.c:129
 msgid "Delete Path"
 msgstr "Ta bort slinga"
 
-#: app/widgets/gimpvectorstreeview.c:134
+#: app/widgets/gimpvectorstreeview.c:133
 msgid "Raise Path to Top"
 msgstr "Höj slingan till toppen"
 
-#: app/widgets/gimpvectorstreeview.c:138
+#: app/widgets/gimpvectorstreeview.c:137
 msgid "Lower Path to Bottom"
 msgstr "Sänk slingan till botten"
 
-#: app/widgets/gimpvectorstreeview.c:140
+#: app/widgets/gimpvectorstreeview.c:139
 msgid "Reorder Path"
 msgstr "Ändra ordning på slinga"
 
-#: app/widgets/gimpvectorstreeview.c:151
+#: app/widgets/gimpvectorstreeview.c:150
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -9145,7 +9152,7 @@ msgstr ""
 "%s  Ta bort\n"
 "%s%s%s  Snitt"
 
-#: app/widgets/gimpvectorstreeview.c:187
+#: app/widgets/gimpvectorstreeview.c:186
 msgid "Stroke Path"
 msgstr "Stryk slinga"
 
@@ -9316,6 +9323,9 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#~ msgid "Paint operation failed."
+#~ msgstr "Målningsåtgärden misslyckades."
 
 #~ msgid "Channel from Alpha"
 #~ msgstr "Kanal från alfa"
