@@ -1,3 +1,7 @@
+2003-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/app.interfaces: removed, it's a generated file.
+
 2003-08-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimphelp.sgml

@@ -3,6 +3,7 @@ Makefile.in
 deprecated
 app.args
 app.hierarchy
+app.interfaces
 app.signals
 app-decl.txt
 app-decl-list.txt
