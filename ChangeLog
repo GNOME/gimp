@@ -1,5 +1,17 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for gthread-2.0 unless the --disable-mp
+	option is given.
+
+	* app/app_procs.c (app_libs_init): call g_thread_init().
+
+	* app/base/pixel-processor.c: ported to GThread.
+
+	* app/Makefile.am
+	* app/*/Makefile.am: use @GTHREAD_CFLAGS@.
+
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpprogress.c (gimp_progress_install): fixed typos in
 	comment.
 

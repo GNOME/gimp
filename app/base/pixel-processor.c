@@ -22,7 +22,6 @@
 
 #ifdef ENABLE_MP
 #include <string.h>
-#include <pthread.h>
 #endif
 
 #include <glib-object.h>
@@ -69,8 +68,8 @@ struct _PixelProcessor
   PixelRegionIterator *PRI;
 
 #ifdef ENABLE_MP
-  pthread_mutex_t      mutex;
-  gint                 nthreads;
+  GMutex              *mutex;
+  gint                 num_threads;
 #endif
 
   gint                 num_regions;
@@ -79,25 +78,25 @@ struct _PixelProcessor
 
 
 #ifdef ENABLE_MP
-static void *
+static void
 do_parallel_regions (PixelProcessor *processor)
 {
   PixelRegion tr[4];
   gint        n_tiles = 0;
   gint        i;
 
-  pthread_mutex_lock (&processor->mutex);
+  g_mutex_lock (processor->mutex);
 
-  if (processor->nthreads != 0 && processor->PRI)
+  if (processor->num_threads != 0 && processor->PRI)
     processor->PRI = pixel_regions_process (processor->PRI);
 
   if (processor->PRI == NULL)
     {
-      pthread_mutex_unlock (&processor->mutex);
-      return NULL;
+      g_mutex_unlock (processor->mutex);
+      return;
     }
 
-  processor->nthreads++;
+  processor->num_threads++;
 
   do
     {
@@ -109,7 +108,7 @@ do_parallel_regions (PixelProcessor *processor)
 	      tile_lock (tr[i].curtile);
 	  }
 
-      pthread_mutex_unlock (&processor->mutex);
+      g_mutex_unlock (processor->mutex);
       n_tiles++;
 
       switch(processor->num_regions)
@@ -146,7 +145,7 @@ do_parallel_regions (PixelProcessor *processor)
           break;
     }
 
-    pthread_mutex_lock (&processor->mutex);
+    g_mutex_lock (processor->mutex);
 
     for (i = 0; i < processor->num_regions; i++)
       if (processor->regions[i])
@@ -159,19 +158,17 @@ do_parallel_regions (PixelProcessor *processor)
   while (processor->PRI &&
 	 (processor->PRI = pixel_regions_process (processor->PRI)));
 
-  processor->nthreads--;
+  processor->num_threads--;
 
-  pthread_mutex_unlock (&processor->mutex);
-
-  return NULL;
+  g_mutex_unlock (processor->mutex);
 }
 #endif
 
 /*  do_parallel_regions_single is just like do_parallel_regions
  *   except that all the mutex and tile locks have been removed
  *
- * If we are processing with only a single thread we don't need to do the
- * mutex locks etc. and aditional tile locks even if we were
+ * If we are processing with only a single thread we don't need to do
+ * the mutex locks etc. and aditional tile locks even if we were
  * configured --with-mp
  */
 
@@ -220,7 +217,7 @@ do_parallel_regions_single (PixelProcessor *processor)
   return NULL;
 }
 
-#define MAX_THREADS 30
+#define MAX_THREADS 16
 
 static void
 pixel_regions_do_parallel (PixelProcessor *processor)
@@ -235,29 +232,29 @@ pixel_regions_do_parallel (PixelProcessor *processor)
 
   if (nthreads > 1)
     {
-      gint           i;
-      pthread_t      threads[MAX_THREADS];
-      pthread_attr_t pthread_attr;
-
-      pthread_attr_init (&pthread_attr);
+      GThread *threads[MAX_THREADS];
+      gint     i;
 
       for (i = 0; i < nthreads; i++)
         {
-	  pthread_create (&threads[i], &pthread_attr,
-			  (void *(*)(void *)) do_parallel_regions,
-			  processor);
-	}
+          GError *error = NULL;
+
+          threads[i] = g_thread_create ((GThreadFunc) do_parallel_regions,
+                                        processor,
+                                        TRUE, &error);
+          if (! threads[i])
+            {
+              g_warning ("cannot create thread: %s\n", error->message);
+              g_clear_error (&error);
+            }
+        }
 
       for (i = 0; i < nthreads; i++)
 	{
-	  gint ret = pthread_join (threads[i], NULL);
-
-	  if (ret)
-            g_printerr ("pixel_regions_do_parallel: "
-                        "pthread_join returned: %d\n", ret);
+          g_thread_join (threads[i]);
 	}
 
-      if (processor->nthreads != 0)
+      if (processor->num_threads != 0)
 	g_printerr ("pixel_regions_do_prarallel: we lost a thread\n");
     }
   else
@@ -322,14 +319,14 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
   processor.num_regions = num_regions;
 
 #ifdef ENABLE_MP
-  pthread_mutex_init (&processor.mutex, NULL);
-  processor.nthreads = 0;
+  processor.mutex       = g_mutex_new ();
+  processor.num_threads = 0;
 #endif
 
   pixel_regions_do_parallel (&processor);
 
 #ifdef ENABLE_MP
-  pthread_mutex_destroy (&processor.mutex);
+  g_mutex_free (processor.mutex);
 #endif
 }
 

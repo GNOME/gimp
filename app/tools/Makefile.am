@@ -152,8 +152,7 @@ libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+	@GTHREAD_CFLAGS@
 
 INCLUDES = \
 	-I$(top_srcdir)		\

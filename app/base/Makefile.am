@@ -55,8 +55,7 @@ libappbase_a_SOURCES = \
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+	@GTHREAD_CFLAGS@
 
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\

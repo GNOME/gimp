@@ -1,5 +1,17 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
+	@GTHREAD_CFLAGS@
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappgui.a
 
 libappgui_a_SOURCES = \
@@ -18,16 +30,3 @@ libappgui_a_SOURCES = \
 	themes.h
 
 EXTRA_DIST = makefile.msc
-
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
-
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)

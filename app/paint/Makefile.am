@@ -2,8 +2,7 @@
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+	@GTHREAD_CFLAGS@
 
 INCLUDES = \
 	-I$(top_builddir)	\

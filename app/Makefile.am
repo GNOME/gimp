@@ -8,6 +8,7 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+
 SUBDIRS = \
 	paint-funcs	\
 	composite	\
@@ -78,13 +79,12 @@ endif
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	-DGIMP_APP_GLUE_COMPILATION	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+	@GTHREAD_CFLAGS@
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
-	$(PANGOFT2_CFLAGS) \
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
 gimp_2_3_LDFLAGS = $(mwindows)
@@ -122,8 +122,7 @@ gimp_2_3_LDADD = \
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
-	$(GIMP_THREAD_LIBS)		\
-	$(GIMP_MP_LIBS)			\
+	$(GTHREAD_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)
@@ -167,8 +166,7 @@ gimp_console_2_3_LDADD = \
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
-	$(GIMP_THREAD_LIBS)		\
-	$(GIMP_MP_LIBS)			\
+	$(GTHREAD_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)

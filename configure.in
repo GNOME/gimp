@@ -814,26 +814,14 @@ dnl       GIMP_THREAD_LIBS="-lpthreads"
 dnl       GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
 dnl fi
 
-AC_SUBST(GIMP_THREAD_FLAGS)
-AC_SUBST(GIMP_THREAD_LIBS)
 
-
-AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors (default=yes)])
+AC_ARG_ENABLE(mp, [  --disable-mp            disable support for multiple processors])
 if test "x$enable_mp" != "xno"; then
-  AC_CHECK_LIB(pthread, pthread_attr_init, 
+  PKG_CHECK_MODULES(GTHREAD, gthread-2.0,
     [AC_DEFINE(ENABLE_MP, 1,
-	       [Define to 1 to enable support for multiple processors.])
-    GIMP_MP_LIBS="-lpthread"
-    GIMP_MP_FLAGS="-D_REENTRANT"],
-    # AIX has libpthreads, cause they're special. Special friends (TM)
-    AC_CHECK_LIB(pthreads, pthread_attr_init,
-      [AC_DEFINE(ENABLE_MP)
-      GIMP_MP_LIBS="-lpthreads"
-      GIMP_MP_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+	       [Define to 1 to enable support for multiple processors.])]
+  )
 fi
-
-AC_SUBST(GIMP_MP_FLAGS)
-AC_SUBST(GIMP_MP_LIBS)
 
 
 ################################
