@@ -55,6 +55,8 @@ struct _HueSaturationDialog
 
   HueRange       hue_partition;
   gboolean       preview;
+
+  glong          conn_id;
 };
 
 Tool * tools_new_hue_saturation          (void);

@@ -1,3 +1,19 @@
+2002-12-20  Garry R. Osgood <grosgood@rcn.com>
+
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/color_balance.h
+	* app/curves.c
+	* app/curves.h
+	* app/hue_saturation.c
+	* app/hue_saturation.h
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c
+	* app/threshold.h : fixed connect/disconnect asymmetry bug introduced
+	in my 2002-12-2002 check-in (Thanks, Mitch for pointing it out).
+	See report for bug #82671 at bugzilla.gnome.org for details.
+	
 2002-12-19  Nathan Summers  <rock@gimp.org>
 
 	* app/xcf.c (xcf_save_invoker): check the return value of fclose as

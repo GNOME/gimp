@@ -240,9 +240,10 @@ color_balance_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (color_balance_cancel_callback),
-		      color_balance_dialog);
+  color_balance_dialog->conn_id = 
+    gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (color_balance_cancel_callback),
+			color_balance_dialog);
 }
 
 /**************************/
@@ -622,6 +623,12 @@ color_balance_cancel_callback (GtkWidget *widget,
 
       gdisplays_flush ();
       cbd->image_map = NULL;
+    }
+
+  if (cbd->conn_id != 0)
+    {
+      gtk_signal_disconnect (GTK_OBJECT (gimp_drawable_gimage (cbd->drawable)), cbd->conn_id);
+      cbd->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

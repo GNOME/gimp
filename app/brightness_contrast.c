@@ -65,8 +65,9 @@ struct _BrightnessContrastDialog
   gdouble        contrast;
 
   gboolean       preview;
-
   GimpLut       *lut;
+
+  glong          conn_id;
 };
 
 
@@ -194,9 +195,10 @@ brightness_contrast_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (brightness_contrast_cancel_callback),
-		      brightness_contrast_dialog);
+  brightness_contrast_dialog->conn_id = 
+    gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (brightness_contrast_cancel_callback),
+			brightness_contrast_dialog);
 }
 
 /********************************/
@@ -431,6 +433,12 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 
       bcd->image_map = NULL;
       gdisplays_flush ();
+    }
+
+  if (bcd->conn_id != 0)
+    {
+      gtk_signal_disconnect (GTK_OBJECT (gimp_drawable_gimage (bcd->drawable)), bcd->conn_id);
+      bcd->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

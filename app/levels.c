@@ -116,6 +116,8 @@ struct _LevelsDialog
   guchar          input[5][256]; /* this is used only by the gui */
 
   GimpLut        *lut;
+
+  glong           conn_id;
 };
 
 /*  the levels tool options  */
@@ -294,9 +296,12 @@ levels_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (levels_cancel_callback),
-		      levels_dialog);
+  levels_dialog->conn_id =
+    gtk_signal_connect (
+			GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (levels_cancel_callback),
+			levels_dialog
+		       );
 
 }
 
@@ -312,12 +317,13 @@ levels_free (void)
 	  active_tool->preserve = FALSE;
 
 	  levels_dialog->image_map = NULL;
-	  gtk_signal_disconnect_by_func (
-					 GTK_OBJECT (gimp_drawable_gimage (levels_dialog->drawable)),
-					 levels_cancel_callback,
-					 levels_dialog 
-					);
 
+	  if(levels_dialog->conn_id != 0)
+	    gtk_signal_disconnect (
+				   GTK_OBJECT (gimp_drawable_gimage (levels_dialog->drawable)),
+				   levels_dialog->conn_id 
+				  );
+	  
 	}
       gtk_widget_destroy (levels_dialog->shell);
     }
@@ -1052,6 +1058,15 @@ levels_cancel_callback (GtkWidget *widget,
 
       gdisplays_flush ();
       ld->image_map = NULL;
+    }
+
+  if (ld->conn_id != 0)
+    {
+      gtk_signal_disconnect (
+			     GTK_OBJECT (gimp_drawable_gimage (ld->drawable)), 
+			     ld->conn_id
+			    );
+      ld->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

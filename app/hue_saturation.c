@@ -315,9 +315,10 @@ hue_saturation_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (hue_saturation_cancel_callback),
-		      hue_saturation_dialog);
+  hue_saturation_dialog->conn_id =
+    gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (hue_saturation_cancel_callback),
+			hue_saturation_dialog);
 }
 
 void
@@ -332,11 +333,12 @@ hue_saturation_free (void)
 	  active_tool->preserve = FALSE;
 
 	  hue_saturation_dialog->image_map = NULL;
-	  gtk_signal_disconnect_by_func (
-					 GTK_OBJECT (gimp_drawable_gimage (hue_saturation_dialog->drawable)),
-					 hue_saturation_cancel_callback,
-					 hue_saturation_dialog 
-					);
+
+	  if(hue_saturation_dialog->conn_id != 0)
+	    gtk_signal_disconnect (
+				   GTK_OBJECT (gimp_drawable_gimage (hue_saturation_dialog->drawable)),
+				   hue_saturation_dialog->conn_id
+				  );
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
     }
@@ -727,6 +729,12 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 
       gdisplays_flush ();
       hsd->image_map = NULL;
+    }
+
+  if (hsd->conn_id != 0)
+    {
+      gtk_signal_disconnect (GTK_OBJECT (gimp_drawable_gimage (hsd->drawable)), hsd->conn_id);
+      hsd->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

@@ -59,6 +59,8 @@ struct _PosterizeDialog
   gboolean       preview;
 
   GimpLut       *lut;
+
+  glong          conn_id;
 };
 
 /*  the posterize tool options  */
@@ -179,9 +181,12 @@ posterize_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (posterize_cancel_callback),
-		      posterize_dialog);
+  posterize_dialog->conn_id = 
+    gtk_signal_connect (
+			GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (posterize_cancel_callback),
+			posterize_dialog
+		       );
 }
 
 /**********************/
@@ -346,6 +351,15 @@ posterize_cancel_callback (GtkWidget *widget,
 
       pd->image_map = NULL;
       gdisplays_flush ();
+    }
+
+  if (pd->conn_id != 0)
+    {
+      gtk_signal_disconnect (
+			     GTK_OBJECT (gimp_drawable_gimage (pd->drawable)), 
+			     pd->conn_id
+			    );
+      pd->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

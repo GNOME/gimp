@@ -44,6 +44,8 @@ struct _ThresholdDialog
   gint             high_threshold;
 
   gboolean         preview;
+
+  glong            conn_id;
 };
 
 Tool * tools_new_threshold  (void);

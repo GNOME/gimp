@@ -61,6 +61,8 @@ struct _CurvesDialog
   gint          cursor_ind_ascent;
 
   GimpLut      *lut;
+
+  glong         conn_id;
 };
 
 Tool * tools_new_curves       (void);

@@ -502,10 +502,10 @@ curves_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (curves_cancel_callback),
-		      curves_dialog);
-
+  curves_dialog->conn_id =
+    gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+			GTK_SIGNAL_FUNC (curves_cancel_callback),
+			curves_dialog);
 }
 
 void
@@ -521,11 +521,11 @@ curves_free (void)
 
 	  curves_dialog->image_map = NULL;
 
-	  gtk_signal_disconnect_by_func (
-					 GTK_OBJECT (gimp_drawable_gimage (curves_dialog->drawable)),
-					 curves_cancel_callback,
-					 curves_dialog 
-					);
+	  if(curves_dialog->conn_id != 0)
+	    gtk_signal_disconnect (
+				   GTK_OBJECT (gimp_drawable_gimage (curves_dialog->drawable)),
+				   curves_dialog->conn_id 
+				  );
 	}
 
       if (curves_dialog->pixmap)
@@ -1310,6 +1310,12 @@ curves_cancel_callback (GtkWidget *widget,
 
       gdisplays_flush ();
       cd->image_map = NULL;
+    }
+
+  if (cd->conn_id != 0)
+    {
+      gtk_signal_disconnect (GTK_OBJECT (gimp_drawable_gimage (cd->drawable)), cd->conn_id);
+      cd->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

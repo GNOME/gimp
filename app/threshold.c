@@ -250,9 +250,12 @@ threshold_initialize (GDisplay *gdisp)
 
   /* Merge-related undo release signal */
 
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
-		      GTK_SIGNAL_FUNC (threshold_cancel_callback),
-		      threshold_dialog);
+   threshold_dialog->conn_id =
+     gtk_signal_connect (
+			 GTK_OBJECT (gdisp->gimage), "layer_merge",
+			 GTK_SIGNAL_FUNC (threshold_cancel_callback),
+			 threshold_dialog
+			);
 
 }
 
@@ -474,6 +477,15 @@ threshold_cancel_callback (GtkWidget *widget,
 
       td->image_map = NULL;
       gdisplays_flush ();
+    }
+
+  if (td->conn_id != 0)
+    {
+      gtk_signal_disconnect (
+			     GTK_OBJECT (gimp_drawable_gimage (td->drawable)), 
+			     td->conn_id
+			    );
+      td->conn_id = 0;
     }
 
   active_tool->gdisp_ptr = NULL;

@@ -54,6 +54,8 @@ struct _ColorBalanceDialog
   gboolean       preserve_luminosity;
   gboolean       preview;
   TransferMode   application_mode;
+
+  glong          conn_id;
 };
 
 Tool * tools_new_color_balance            (void);
