@@ -1,5 +1,10 @@
 2004-08-29  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/gimp-composite-x86.h
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c: Fixed a bunch of
+	warnings due to bad type casting.
+
 	* app/composite/gimp-composite-mmx.c
 	* app/composite/gimp-composite-sse.c
 	* app/composite/gimp-composite-x86.h

@@ -91,9 +91,9 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("  movdqu    %0,%%xmm0\n"
@@ -123,9 +123,9 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -182,9 +182,9 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   for (; n_pixels >= 4; n_pixels -= 4)
@@ -201,9 +201,9 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -238,9 +238,9 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("  movq   %0,%%mm0\n"
@@ -272,9 +272,9 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -465,9 +465,9 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("  movq       %0,%%mm0\n"
@@ -515,9 +515,9 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -585,9 +585,9 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask_64) : "%mm0");
@@ -612,9 +612,9 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
@@ -662,9 +662,9 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint64 *d;
   uint64 *a;
   uint64 *b;
-  uint128 *D = (uint64 *) _op->D;
-  uint128 *A = (uint64 *) _op->A;
-  uint128 *B = (uint64 *) _op->B;
+  uint128 *D = (uint128 *) _op->D;
+  uint128 *A = (uint128 *) _op->A;
+  uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
   asm volatile ("  movq    %0,%%mm0\n"
@@ -694,9 +694,9 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
       D++;
     }
 
-  a = A;
-  b = B;
-  d = D;
+  a = (uint64 *) A;
+  b = (uint64 *) B;
+  d = (uint64 *) D;
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {

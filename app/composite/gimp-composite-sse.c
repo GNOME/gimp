@@ -1310,7 +1310,6 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 void
 gimp_composite_swap_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
-  uint64 *d = (uint64 *) _op->D;
   uint64 *a = (uint64 *) _op->A;
   uint64 *b = (uint64 *) _op->B;
   gulong n_pixels = _op->n_pixels;
