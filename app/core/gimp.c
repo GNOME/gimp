@@ -122,19 +122,19 @@ gimp_get_type (void)
       static const GTypeInfo object_info =
       {
         sizeof (GimpClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (Gimp),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_class_init,
+        NULL,                /* class_finalize */
+        NULL,                /* class_data     */
+        sizeof (Gimp),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_init,
       };
 
       object_type = g_type_register_static (GIMP_TYPE_OBJECT,
-					    "Gimp",
-					    &object_info, 0);
+                                            "Gimp",
+                                            &object_info, 0);
     }
 
   return object_type;
@@ -572,41 +572,41 @@ gimp_real_initialize (Gimp               *gimp,
   gimp->brush_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_BRUSH,
-			   "brush-path", "brush-path-writable",
-			   brush_loader_entries,
-			   G_N_ELEMENTS (brush_loader_entries),
-			   gimp_brush_new,
-			   gimp_brush_get_standard);
+                           "brush-path", "brush-path-writable",
+                           brush_loader_entries,
+                           G_N_ELEMENTS (brush_loader_entries),
+                           gimp_brush_new,
+                           gimp_brush_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
 
   gimp->pattern_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_PATTERN,
-			   "pattern-path", "pattern-path-writable",
-			   pattern_loader_entries,
-			   G_N_ELEMENTS (pattern_loader_entries),
-			   NULL,
-			   gimp_pattern_get_standard);
+                           "pattern-path", "pattern-path-writable",
+                           pattern_loader_entries,
+                           G_N_ELEMENTS (pattern_loader_entries),
+                           NULL,
+                           gimp_pattern_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
 
   gimp->gradient_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_GRADIENT,
-			   "gradient-path", "gradient-path-writable",
-			   gradient_loader_entries,
-			   G_N_ELEMENTS (gradient_loader_entries),
-			   gimp_gradient_new,
-			   gimp_gradient_get_standard);
+                           "gradient-path", "gradient-path-writable",
+                           gradient_loader_entries,
+                           G_N_ELEMENTS (gradient_loader_entries),
+                           gimp_gradient_new,
+                           gimp_gradient_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
 
   gimp->palette_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_PALETTE,
-			   "palette-path", "palette-path-writable",
-			   palette_loader_entries,
-			   G_N_ELEMENTS (palette_loader_entries),
-			   gimp_palette_new,
-			   gimp_palette_get_standard);
+                           "palette-path", "palette-path-writable",
+                           palette_loader_entries,
+                           G_N_ELEMENTS (palette_loader_entries),
+                           gimp_palette_new,
+                           gimp_palette_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
 
   gimp_paint_init (gimp);
@@ -947,10 +947,10 @@ gimp_set_last_plug_in (Gimp          *gimp,
 
 GimpImage *
 gimp_create_image (Gimp              *gimp,
-		   gint               width,
-		   gint               height,
-		   GimpImageBaseType  type,
-		   gboolean           attach_comment)
+                   gint               width,
+                   gint               height,
+                   GimpImageBaseType  type,
+                   gboolean           attach_comment)
 {
   GimpImage *gimage;
 
@@ -980,7 +980,7 @@ gimp_create_image (Gimp              *gimp,
 
 void
 gimp_set_default_context (Gimp        *gimp,
-			  GimpContext *context)
+                          GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
@@ -1004,7 +1004,7 @@ gimp_get_default_context (Gimp *gimp)
 
 void
 gimp_set_user_context (Gimp        *gimp,
-		       GimpContext *context)
+                       GimpContext *context)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));

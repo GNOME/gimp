@@ -95,18 +95,18 @@ gimp_imagefile_get_type (void)
       static const GTypeInfo imagefile_info =
       {
         sizeof (GimpImagefileClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_imagefile_class_init,
-	NULL,           /* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpImagefile),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_imagefile_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_imagefile_class_init,
+        NULL,           /* class_finalize */
+        NULL,                /* class_data     */
+        sizeof (GimpImagefile),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_imagefile_init,
       };
 
       imagefile_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					       "GimpImagefile",
+                                               "GimpImagefile",
                                                &imagefile_info, 0);
     }
 
@@ -116,25 +116,21 @@ gimp_imagefile_get_type (void)
 static void
 gimp_imagefile_class_init (GimpImagefileClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   gchar             *creator;
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-
   gimp_imagefile_signals[INFO_CHANGED] =
     g_signal_new ("info_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpImagefileClass, info_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImagefileClass, info_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize              = gimp_imagefile_finalize;
 
