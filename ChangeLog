@@ -1,3 +1,8 @@
+2003-02-13  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/gflare/gflare.c: make it build again (oops from previous
+	commit)
+ 
 2003-02-10  Tor Lillqvist  <tml@iki.fi>
 
 	* app/docindex.c

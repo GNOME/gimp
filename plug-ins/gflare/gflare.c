@@ -2026,6 +2026,7 @@ calc_place_sflare ()
   else
     SRAND_FUNC (gflare->sflare_seed);
 #else
+  if (gflare->sflare_seed_time)
     srand (time (NULL));
   else
     srand (gflare->sflare_seed);
