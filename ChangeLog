@@ -1,5 +1,21 @@
 2003-06-22  Dave Neary  <bolsh@gimp.org>
 
+	* configure.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/jpeg.c: Add support for the keeping of EXIF
+	information in jpeg files. This is step 1 in the overall plan to
+	an all-singing, all-dancing metadata editor. Next step is to do
+	the same thing for TIFFs, then to do both properly as a number of
+	parasites rather than one big one, and then to allow a generic
+	metadata editor, as well as (possibly) adding a nice way to
+	manipulate exif data in the jpeg plug-in while saving.
+
+	This is a modified patch of one posted to the devel list by Lutz 
+	Muller in February 2002, and subsequently added to bug #56443. 
+	Sorry it took so long Lutz.
+
+2003-06-22  Dave Neary  <bolsh@gimp.org>
+
 	* app/config/gimpbaseconfig.c: Increased default tile
 	cache to 64 MB.
 

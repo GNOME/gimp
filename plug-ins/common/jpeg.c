@@ -128,6 +128,17 @@
  * a GtkTextView/GtkTextBuffer couple;
  */
 
+/*
+ * 22-JUN-03 - add support for keeping EXIF information
+ * - Dave Neary <bolsh@gimp.org>
+ *
+ * This is little more than a modified version fo a patch from the 
+ * libexif owner (Lutz Muller) which attaches exif information to
+ * a GimpImage, and if there is infoprmation available at save 
+ * time, writes it out. No modification of the exif data is 
+ * currently possible.
+ */
+
 #include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
 
 #include <glib.h>     /* We want glib.h first because of some
@@ -146,6 +157,10 @@
 #endif
 #include <jpeglib.h>
 #include <jerror.h>
+
+#ifdef HAVE_EXIF
+#include <libexif/exif-data.h>
+#endif /* HAVE_EXIF */
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -281,6 +296,9 @@ static gchar     *image_comment         = NULL;
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
 
+#ifdef HAVE_EXIF
+static ExifData  *exif_data             = NULL;
+#endif /* HAVE_EXIF */
 
 MAIN ()
 
@@ -425,6 +443,11 @@ run (gchar      *name,
 	  break;
 	}
       
+#ifdef HAVE_EXIF
+      exif_data_unref (exif_data);
+      exif_data = NULL;
+#endif /* HAVE_EXIF */
+
       g_free (image_comment);
       image_comment = NULL;
     
@@ -434,6 +457,15 @@ run (gchar      *name,
 	  image_comment = g_strdup (parasite->data);
 	  gimp_parasite_free (parasite);
 	}
+
+#ifdef HAVE_EXIF
+      parasite = gimp_image_parasite_find (orig_image_ID, "jpeg-exif-data");
+      if (parasite)
+        {
+          exif_data = exif_data_new_from_data (parasite->data, parasite->size);
+          gimp_parasite_free (parasite);
+        }
+#endif /* HAVE_EXIF */
 
       jsvals.quality     = DEFAULT_QUALITY;
       jsvals.smoothing   = DEFAULT_SMOOTHING;
@@ -723,6 +755,13 @@ load_image (gchar       *filename,
   gint     i, start, end;
 
   GimpParasite * volatile comment_parasite = NULL;
+
+#ifdef HAVE_EXIF
+  GimpParasite *exif_parasite = NULL;
+  ExifData     *exif_data = NULL;
+  guchar       *exif_buf = NULL;
+  guint         exif_buf_len = 0;
+#endif
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -1060,6 +1099,22 @@ load_image (gchar       *filename,
 
           comment_parasite = NULL;
 	}
+
+#ifdef HAVE_EXIF
+      exif_data = exif_data_new_from_file (filename);
+      if (exif_data)
+        {
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+          exif_data_unref (exif_data);
+          exif_parasite = gimp_parasite_new ("jpeg-exif-data", 
+                                             GIMP_PARASITE_PERSISTENT,
+                                             exif_buf_len, exif_buf);
+          g_free (exif_buf);
+          gimp_image_parasite_attach (image_ID, exif_parasite);
+          gimp_parasite_free (exif_parasite);
+        }
+#endif
+
     }
 
   return image_ID;
@@ -1189,6 +1244,11 @@ save_image (gchar    *filename,
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
+
+#ifdef HAVE_EXIF
+  guchar   *exif_buf;
+  guint     exif_buf_len;
+#endif
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1392,6 +1452,15 @@ save_image (gchar    *filename,
    * Pass TRUE unless you are very sure of what you're doing.
    */
   jpeg_start_compress (&cinfo, TRUE);
+
+#ifdef HAVE_EXIF
+  if (exif_data)
+    {
+      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+      jpeg_write_marker (&cinfo, 0xe1, exif_buf, exif_buf_len);
+      g_free (exif_buf);
+    }
+#endif
 
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)

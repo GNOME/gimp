@@ -908,6 +908,8 @@ jigsaw_LDADD = \
 jpeg_SOURCES = \
 	jpeg.c
 
+jpeg_CFLAGS = $(EXIF_CFLAGS)
+
 jpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -916,7 +918,8 @@ jpeg_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(LIBJPEG)							\
 	$(GTK_LIBS)							\
-	$(INTLLIBS)
+	$(INTLLIBS)                                                     \
+        $(EXIF_LIBS)
 
 laplace_SOURCES = \
 	laplace.c
