@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
@@ -21,7 +21,7 @@ msgstr "Utvalg for enhet"
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s kan ikke håndtere lag"
+msgstr "%s kan ikke hÃ¥ndtere lag"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
@@ -31,12 +31,12 @@ msgstr "Flett sammen synlige lag"
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr ""
-"%s kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
+"%s kan ikke hÃ¥ndtere avstand, stÃ¸rrelse eller ugjennomsiktighet for lag"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "%s kan kun håndtere lag som animasjonsbilder"
+msgstr "%s kan kun hÃ¥ndtere lag som animasjonsbilder"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -49,12 +49,12 @@ msgstr "Flat ut bilde"
 #: libgimp/gimpexport.c:228
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s kan ikke håndtere gjennomsiktighet"
+msgstr "%s kan ikke hÃ¥ndtere gjennomsiktighet"
 
 #: libgimp/gimpexport.c:237
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s kan kun håndtere RGB-bilder"
+msgstr "%s kan kun hÃ¥ndtere RGB-bilder"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
@@ -63,16 +63,16 @@ msgstr "Konverter til RGB"
 #: libgimp/gimpexport.c:246
 #, c-format
 msgid "%s can only handle grayscale images"
-msgstr "%s kan kun håndtere bilder i gråtoner"
+msgstr "%s kan kun hÃ¥ndtere bilder i grÃ¥toner"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
-msgstr "Konverter til gråtoner"
+msgstr "Konverter til grÃ¥toner"
 
 #: libgimp/gimpexport.c:255
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "%s kan kun håndtere indekserte bilder"
+msgstr "%s kan kun hÃ¥ndtere indekserte bilder"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
@@ -80,28 +80,28 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Konverter til indeksert og bruk standard\n"
-"innstillinger (Gjør det manuelt for å\n"
+"innstillinger (GjÃ¸r det manuelt for Ã¥\n"
 "finjustere resultatet)"
 
 #: libgimp/gimpexport.c:265
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "%s kan kun håndtere RGB eller gråskala bilder"
+msgstr "%s kan kun hÃ¥ndtere RGB eller grÃ¥skala bilder"
 
 #: libgimp/gimpexport.c:274
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s kan kun håndtere RGB eller indekserte bilder"
+msgstr "%s kan kun hÃ¥ndtere RGB eller indekserte bilder"
 
 #: libgimp/gimpexport.c:284
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s kan kun håndtere gråtone eller indekserte bilder"
+msgstr "%s kan kun hÃ¥ndtere grÃ¥tone eller indekserte bilder"
 
 #: libgimp/gimpexport.c:295
 #, c-format
 msgid "%s needs an alpha channel"
-msgstr "%s må ha en alfakanal"
+msgstr "%s mÃ¥ ha en alfakanal"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
@@ -141,7 +141,7 @@ msgstr "Eksporter"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Du bør eksportere bildet ditt før det kan lagres av følgende gunner:"
+msgstr "Du bÃ¸r eksportere bildet ditt fÃ¸r det kan lagres av fÃ¸lgende gunner:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
@@ -154,7 +154,7 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Du er i ferd med å lagre en lagmaske som %s.\n"
+"Du er i ferd med Ã¥ lagre en lagmaske som %s.\n"
 "Dette vil ikke lagre synlige lag."
 
 #: libgimp/gimpexport.c:615
@@ -163,7 +163,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Du er i ferd med å lagre en kanal (lagret utvalg) som %s.\n"
+"Du er i ferd med Ã¥ lagre en kanal (lagret utvalg) som %s.\n"
 "Dette vil ikke lagre synlige lag."
 
 #: libgimp/gimpfontmenu.c:80
@@ -236,7 +236,7 @@ msgstr ""
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Laster modul: «%s»\n"
+msgstr "Laster modul: Â«%sÂ»\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
 #: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
@@ -246,13 +246,13 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
-"Feil under lasting av modul «%s»:\n"
+"Feil under lasting av modul Â«%sÂ»:\n"
 "%s"
 
 #: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr "Hopper over modul «%s»\n"
+msgstr "Hopper over modul Â«%sÂ»\n"
 
 #: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
@@ -320,7 +320,7 @@ msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
-msgstr "Glød"
+msgstr "GlÃ¸d"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
@@ -332,15 +332,15 @@ msgstr "Verdi"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr "Rød"
+msgstr "RÃ¸d"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr "Grønn"
+msgstr "GrÃ¸nn"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr "Blå"
+msgstr "BlÃ¥"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
@@ -379,8 +379,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
-"for å velge denne fargen."
+"Klikk pÃ¥ drÃ¥petelleren og klikk sÃ¥ pÃ¥ en farge hvor som helst pÃ¥ skjermen "
+"for Ã¥ velge denne fargen."
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
@@ -424,7 +424,7 @@ msgstr "Mellomrom mellom l_injer"
 
 #: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
-msgstr "End_re størrelse"
+msgstr "End_re stÃ¸rrelse"
 
 #: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
@@ -432,7 +432,7 @@ msgstr "_Skaler"
 
 #: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
-msgstr "Beskjær"
+msgstr "BeskjÃ¦r"
 
 #: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"
@@ -468,11 +468,11 @@ msgid ""
 "a given \"random\" operation"
 msgstr ""
 "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
-"lar deg gjenta en gitt «tilfeldig» operasjon"
+"lar deg gjenta en gitt Â«tilfeldigÂ» operasjon"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
-msgstr "Gjø_r tilfeldig"
+msgstr "GjÃ¸_r tilfeldig"
 
 #: libgimpwidgets/gimpwidgets.c:958
 msgid "Seed random number generator with a generated random number"
@@ -497,15 +497,15 @@ msgstr "Ingen (vanlig syn)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protanopi (usensitiv for rød)"
+msgstr "Protanopi (usensitiv for rÃ¸d)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranopi (usensitiv for grønn)"
+msgstr "Deuteranopi (usensitiv for grÃ¸nn)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanopi (usensitiv for blå)"
+msgstr "Tritanopi (usensitiv for blÃ¥)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
@@ -521,7 +521,7 @@ msgstr "Gamme:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr "Visningsfilter for farger med høy kontrast"
+msgstr "Visningsfilter for farger med hÃ¸y kontrast"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"

@@ -11,7 +11,7 @@ msgstr ""
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
@@ -72,14 +72,14 @@ msgstr "Converteren naar grijswaarden"
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "ondersteunt enkel geïndexeerde afbeeldingen"
+msgstr "ondersteunt enkel geÃ¯ndexeerde afbeeldingen"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converteer naar Geïndexeerd met standaard instellingen\n"
+"Converteer naar GeÃ¯ndexeerd met standaard instellingen\n"
 "(Doe het met de hand om het resultaat fijn te regelen)"
 
 #: libgimp/gimpexport.c:265
@@ -90,12 +90,12 @@ msgstr "ondersteunt enkel RGB en Grijswaarden"
 #: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "ondersteunt enkel RGB en Geïndexeerd"
+msgstr "ondersteunt enkel RGB en GeÃ¯ndexeerd"
 
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "ondersteunt enkel Grijswaarden en Geïndexeerd"
+msgstr "ondersteunt enkel Grijswaarden en GeÃ¯ndexeerd"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
@@ -141,7 +141,7 @@ msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
-"Uw afbeelding moet geëxporteerd worden, voordat zij bewaard kan worden, om "
+"Uw afbeelding moet geÃ«xporteerd worden, voordat zij bewaard kan worden, om "
 "de volgende redenen:"
 
 #. the footline

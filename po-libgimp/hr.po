@@ -1,16 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
-# ®eljan Rikalo <zeljko@linuxfreak.com>, 2000.
+# Å½eljan Rikalo <zeljko@linuxfreak.com>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2000-11-03:33+0100\n"
-"Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
+"Last-Translator: Å½eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
@@ -21,7 +21,7 @@ msgstr "Odabir Mjere"
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
-msgstr "ne mogu obrağivati slojeve"
+msgstr "ne mogu obraÄ‘ivati slojeve"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
@@ -30,12 +30,12 @@ msgstr "Stopi Vidljive Slojeve"
 #: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "ne mogu obrağivati slojeve"
+msgstr "ne mogu obraÄ‘ivati slojeve"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "Slojeve mogu obrağivati samo kao okvire animacije"
+msgstr "Slojeve mogu obraÄ‘ivati samo kao okvire animacije"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -48,7 +48,7 @@ msgstr "Ravna slika"
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
-msgstr "ne mogu obrağivati prozirnost"
+msgstr "ne mogu obraÄ‘ivati prozirnost"
 
 #: libgimp/gimpexport.c:237
 #, fuzzy, c-format
@@ -71,15 +71,15 @@ msgstr "Konverzija u Skalu Sive"
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "mogu obrağivati samo indeksiranie slike"
+msgstr "mogu obraÄ‘ivati samo indeksiranie slike"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertiraj u Indeksirano koristeæi standardne\n"
-"postavke.(Najbolje je ruèno pode¹avanje)"
+"Konvertiraj u Indeksirano koristeÄ‡i standardne\n"
+"postavke.(Najbolje je ruÄno podeÅ¡avanje)"
 
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
@@ -94,7 +94,7 @@ msgstr "mogu raditi samo s RGB i indeksiranim slikama"
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "mogu obrağivati samo Sive ili Indeksirane Slike"
+msgstr "mogu obraÄ‘ivati samo Sive ili Indeksirane Slike"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
@@ -139,12 +139,12 @@ msgstr "Izvezi"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Va¹a slika mora biti izve¾ena prije spremanja iz sljedeæihrazloga:"
+msgstr "VaÅ¡a slika mora biti izveÅ¾ena prije spremanja iz sljedeÄ‡ihrazloga:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "Izvozna konverzija neæe modificirati originalnu sliku."
+msgstr "Izvozna konverzija neÄ‡e modificirati originalnu sliku."
 
 #: libgimp/gimpexport.c:610
 #, c-format
@@ -444,7 +444,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
-msgstr "Vi¹e..."
+msgstr "ViÅ¡e..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
@@ -464,8 +464,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za sluèajnibroj."
-"Stvoreni generator dozvoljava ponavljanje ove \"sluèajne\" operacije"
+"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za sluÄajnibroj."
+"Stvoreni generator dozvoljava ponavljanje ove \"sluÄajne\" operacije"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -475,8 +475,8 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Napravi generator sluèajnih brojeva iz trenutnog vremena(sat) - ovo jamèi "
-"sigurnu sluèajnost"
+"Napravi generator sluÄajnih brojeva iz trenutnog vremena(sat) - ovo jamÄi "
+"sigurnu sluÄajnost"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -573,10 +573,10 @@ msgstr ""
 #~ msgstr "milimetara"
 
 #~ msgid "point"
-#~ msgstr "toèka"
+#~ msgstr "toÄka"
 
 #~ msgid "points"
-#~ msgstr "toèaka"
+#~ msgstr "toÄaka"
 
 #~ msgid "picas"
 #~ msgstr "pica"

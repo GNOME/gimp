@@ -6,16 +6,16 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 1.2.3\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2002-10-28 01:03+0200\n"
-"Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
+"Last-Translator: SoftcatalÃ  <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
 #, fuzzy
 msgid "Brush Selection"
-msgstr "Selecció de la unitat"
+msgstr "SelecciÃ³ de la unitat"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
@@ -35,11 +35,11 @@ msgstr ""
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "només es poden manejar les capes com a marcs d'animació"
+msgstr "nomÃ©s es poden manejar les capes com a marcs d'animaciÃ³"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
-msgstr "Anomena i desa com a animació"
+msgstr "Anomena i desa com a animaciÃ³"
 
 #: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
@@ -48,12 +48,12 @@ msgstr "Aplana la imatge"
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
-msgstr "no es poden manejar les transparències"
+msgstr "no es poden manejar les transparÃ¨ncies"
 
 #: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
-msgstr "només es poden manejar les imatges RGB"
+msgstr "nomÃ©s es poden manejar les imatges RGB"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
@@ -62,7 +62,7 @@ msgstr "Converteix a RGB"
 #: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
-msgstr "només es poden manejar les imatges d'escala de grisos"
+msgstr "nomÃ©s es poden manejar les imatges d'escala de grisos"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
@@ -71,30 +71,30 @@ msgstr "Converteix a escala de grisos"
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "només es poden manejar les imatges indexades"
+msgstr "nomÃ©s es poden manejar les imatges indexades"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converteix a indexades amb els paràmetres per defecte\n"
+"Converteix a indexades amb els parÃ metres per defecte\n"
 "(Feu-ho de forma manual per ajustar el resultat)"
 
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "només es poden manejar les imatges RGB o d'escala de grisos"
+msgstr "nomÃ©s es poden manejar les imatges RGB o d'escala de grisos"
 
 #: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "només es poden manejar les imatges RGB o les indexades"
+msgstr "nomÃ©s es poden manejar les imatges RGB o les indexades"
 
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "només es poden manejar les imatges d'escala de grisos o les indexades"
+msgstr "nomÃ©s es poden manejar les imatges d'escala de grisos o les indexades"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
@@ -139,12 +139,12 @@ msgstr "Exporta"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Heu d'exportar la imatge abans de poder-la desar pels motius següents:"
+msgstr "Heu d'exportar la imatge abans de poder-la desar pels motius segÃ¼ents:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "La conversió de l'exportació no modificarà la imatge original."
+msgstr "La conversiÃ³ de l'exportaciÃ³ no modificarÃ  la imatge original."
 
 #: libgimp/gimpexport.c:610
 #, fuzzy, c-format
@@ -153,7 +153,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Ara desareu %s com %s.\n"
-"Amb això no es desaran les capes visibles."
+"Amb aixÃ² no es desaran les capes visibles."
 
 #: libgimp/gimpexport.c:615
 #, fuzzy, c-format
@@ -162,17 +162,17 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Ara desareu %s com %s.\n"
-"Amb això no es desaran les capes visibles."
+"Amb aixÃ² no es desaran les capes visibles."
 
 #: libgimp/gimpfontmenu.c:80
 #, fuzzy
 msgid "Font Selection"
-msgstr "Selecció de la unitat"
+msgstr "SelecciÃ³ de la unitat"
 
 #: libgimp/gimpgradientmenu.c:172
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "Selecció de la unitat"
+msgstr "SelecciÃ³ de la unitat"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -195,7 +195,7 @@ msgstr ""
 #: libgimp/gimppatternmenu.c:321
 #, fuzzy
 msgid "Pattern Selection"
-msgstr "Selecció de la unitat"
+msgstr "SelecciÃ³ de la unitat"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -448,11 +448,11 @@ msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
-msgstr "Més..."
+msgstr "MÃ©s..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
-msgstr "Selecció de la unitat"
+msgstr "SelecciÃ³ de la unitat"
 
 #: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
@@ -468,9 +468,9 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Si el botó \"Hora\" no està premut, utilitzeu aquest valor com a punt de "
-"partida del generador de números aleatoris; això us permetrà repetir una "
-"operació \"aleatòria\" determinada"
+"Si el botÃ³ \"Hora\" no estÃ  premut, utilitzeu aquest valor com a punt de "
+"partida del generador de nÃºmeros aleatoris; aixÃ² us permetrÃ  repetir una "
+"operaciÃ³ \"aleatÃ²ria\" determinada"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -480,8 +480,8 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Fixa el punt de partida del generador de números aleatoris a partir de "
-"l'hora actual; això garanteix una aleatorietat raonable"
+"Fixa el punt de partida del generador de nÃºmeros aleatoris a partir de "
+"l'hora actual; aixÃ² garanteix una aleatorietat raonable"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -556,13 +556,13 @@ msgid "Pressure"
 msgstr ""
 
 #~ msgid "Cancel"
-#~ msgstr "Cancel·la"
+#~ msgstr "CancelÂ·la"
 
 #~ msgid "a layer mask"
-#~ msgstr "una màscara de capa"
+#~ msgstr "una mÃ scara de capa"
 
 #~ msgid "a channel (saved selection)"
-#~ msgstr "un canal (selecció desada)"
+#~ msgstr "un canal (selecciÃ³ desada)"
 
 #, fuzzy
 #~ msgid "_Time"
@@ -572,19 +572,19 @@ msgstr ""
 #~ msgstr "D'acord"
 
 #~ msgid "pixel"
-#~ msgstr "píxel"
+#~ msgstr "pÃ­xel"
 
 #~ msgid "pixels"
-#~ msgstr "píxels"
+#~ msgstr "pÃ­xels"
 
 #~ msgid "inches"
 #~ msgstr "polzades"
 
 #~ msgid "millimeter"
-#~ msgstr "mil·límetre"
+#~ msgstr "milÂ·lÃ­metre"
 
 #~ msgid "millimeters"
-#~ msgstr "mil·límetres"
+#~ msgstr "milÂ·lÃ­metres"
 
 #~ msgid "point"
 #~ msgstr "punt"

@@ -9,101 +9,101 @@ msgstr ""
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=koi8-r\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
 #, fuzzy
 msgid "Brush Selection"
-msgstr "Выбор единиц"
+msgstr "п▓я▀п╠п╬я─ п╣п╢п╦п╫п╦я├"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
-msgstr "невозможно обработать слои"
+msgstr "п╫п╣п╡п╬п╥п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я│п╩п╬п╦"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
-msgstr "Объединить видимые слои"
+msgstr "п·п╠я┼п╣п╢п╦п╫п╦я┌я▄ п╡п╦п╢п╦п╪я▀п╣ я│п╩п╬п╦"
 
 #: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "невозможно обработать смещение, размер или непрозрачность слоя"
+msgstr "п╫п╣п╡п╬п╥п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я│п╪п╣я┴п╣п╫п╦п╣, я─п╟п╥п╪п╣я─ п╦п╩п╦ п╫п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ я│п╩п╬я▐"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "можно обработать слои только как анимированные кадры"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я│п╩п╬п╦ я┌п╬п╩я▄п╨п╬ п╨п╟п╨ п╟п╫п╦п╪п╦я─п╬п╡п╟п╫п╫я▀п╣ п╨п╟п╢я─я▀"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
-msgstr "Сохранить как анимацию"
+msgstr "п║п╬я┘я─п╟п╫п╦я┌я▄ п╨п╟п╨ п╟п╫п╦п╪п╟я├п╦я▌"
 
 #: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
-msgstr "Свести изображение"
+msgstr "п║п╡п╣я│я┌п╦ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
-msgstr "невозможно обработать прозрачность"
+msgstr "п╫п╣п╡п╬п╥п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄"
 
 #: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
-msgstr "можно обработать только RGB-изображения"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ RGB-п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
-msgstr "Преобразовать в RGB"
+msgstr "п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟я┌я▄ п╡ RGB"
 
 #: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
-msgstr "можно обработать только изображения в оттенках серого"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╡ п╬я┌я┌п╣п╫п╨п╟я┘ я│п╣я─п╬пЁп╬"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
-msgstr "Преобразовать в оттенки серого"
+msgstr "п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟я┌я▄ п╡ п╬я┌я┌п╣п╫п╨п╦ я│п╣я─п╬пЁп╬"
 
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "можно обработать только индексированные изображения"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ п╦п╫п╢п╣п╨я│п╦я─п╬п╡п╟п╫п╫я▀п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Преобразовать в индексированное используя настройки по умолчанию\n"
-"(Результат можно подстроить вручную)"
+"п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟я┌я▄ п╡ п╦п╫п╢п╣п╨я│п╦я─п╬п╡п╟п╫п╫п╬п╣ п╦я│п©п╬п╩я▄п╥я┐я▐ п╫п╟я│я┌я─п╬п╧п╨п╦ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌\n"
+"(п═п╣п╥я┐п╩я▄я┌п╟я┌ п╪п╬п╤п╫п╬ п©п╬п╢я│я┌я─п╬п╦я┌я▄ п╡я─я┐я┤п╫я┐я▌)"
 
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "можно обработать только изображения в оттенках серого или RGB"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╡ п╬я┌я┌п╣п╫п╨п╟я┘ я│п╣я─п╬пЁп╬ п╦п╩п╦ RGB"
 
 #: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "можно обработать только RGB или индексированные изображения"
+msgstr "п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ RGB п╦п╩п╦ п╦п╫п╢п╣п╨я│п╦я─п╬п╡п╟п╫п╫я▀п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr ""
-"можно обработать только изображения в оттенках серого или индексированные"
+"п╪п╬п╤п╫п╬ п╬п╠я─п╟п╠п╬я┌п╟я┌я▄ я┌п╬п╩я▄п╨п╬ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╡ п╬я┌я┌п╣п╫п╨п╟я┘ я│п╣я─п╬пЁп╬ п╦п╩п╦ п╦п╫п╢п╣п╨я│п╦я─п╬п╡п╟п╫п╫я▀п╣"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
 msgid "%s needs an alpha channel"
-msgstr "требуется альфа канал"
+msgstr "я┌я─п╣п╠я┐п╣я┌я│я▐ п╟п╩я▄я└п╟ п╨п╟п╫п╟п╩"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
-msgstr "Добавить альфа-канал"
+msgstr "п■п╬п╠п╟п╡п╦я┌я▄ п╟п╩я▄я└п╟-п╨п╟п╫п╟п╩"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -112,11 +112,11 @@ msgstr "Добавить альфа-канал"
 #. the dialog
 #: libgimp/gimpexport.c:370
 msgid "Confirm Save"
-msgstr "Подтвердить сохранение"
+msgstr "п÷п╬п╢я┌п╡п╣я─п╢п╦я┌я▄ я│п╬я┘я─п╟п╫п╣п╫п╦п╣"
 
 #: libgimp/gimpexport.c:378
 msgid "Confirm"
-msgstr "Подтвердить"
+msgstr "п÷п╬п╢я┌п╡п╣я─п╢п╦я┌я▄"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -125,28 +125,28 @@ msgstr "Подтвердить"
 #. the dialog
 #: libgimp/gimpexport.c:431
 msgid "Export File"
-msgstr "Экспортировать файл"
+msgstr "п╜п╨я│п©п╬я─я┌п╦я─п╬п╡п╟я┌я▄ я└п╟п╧п╩"
 
 #: libgimp/gimpexport.c:436
 msgid "Ignore"
-msgstr "Игнорировать"
+msgstr "п≤пЁп╫п╬я─п╦я─п╬п╡п╟я┌я▄"
 
 #: libgimp/gimpexport.c:442
 msgid "Export"
-msgstr "Экспорт"
+msgstr "п╜п╨я│п©п╬я─я┌"
 
 #: libgimp/gimpexport.c:468
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
-"Ваше изображение должно быть экспортированно до того как оно может быть "
-"сохранено по следующим причинам:"
+"п▓п╟я┬п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄ я█п╨я│п©п╬я─я┌п╦я─п╬п╡п╟п╫п╫п╬ п╢п╬ я┌п╬пЁп╬ п╨п╟п╨ п╬п╫п╬ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ "
+"я│п╬я┘я─п╟п╫п╣п╫п╬ п©п╬ я│п╩п╣п╢я┐я▌я┴п╦п╪ п©я─п╦я┤п╦п╫п╟п╪:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "Экспортное преобразование не изменит ваше исходное изображение."
+msgstr "п╜п╨я│п©п╬я─я┌п╫п╬п╣ п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦п╣ п╫п╣ п╦п╥п╪п╣п╫п╦я┌ п╡п╟я┬п╣ п╦я│я┘п╬п╢п╫п╬п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣."
 
 #: libgimp/gimpexport.c:610
 #, fuzzy, c-format
@@ -154,8 +154,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить %s как %s.\n"
-"Видимые слои не будут сохранены."
+"п▓я▀ я│п╬п╠п╦я─п╟п╣я┌п╣я│я▄ я│п╬я┘я─п╟п╫п╦я┌я▄ %s п╨п╟п╨ %s.\n"
+"п▓п╦п╢п╦п╪я▀п╣ я│п╩п╬п╦ п╫п╣ п╠я┐п╢я┐я┌ я│п╬я┘я─п╟п╫п╣п╫я▀."
 
 #: libgimp/gimpexport.c:615
 #, fuzzy, c-format
@@ -163,18 +163,18 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Вы собираетесь сохранить %s как %s.\n"
-"Видимые слои не будут сохранены."
+"п▓я▀ я│п╬п╠п╦я─п╟п╣я┌п╣я│я▄ я│п╬я┘я─п╟п╫п╦я┌я▄ %s п╨п╟п╨ %s.\n"
+"п▓п╦п╢п╦п╪я▀п╣ я│п╩п╬п╦ п╫п╣ п╠я┐п╢я┐я┌ я│п╬я┘я─п╟п╫п╣п╫я▀."
 
 #: libgimp/gimpfontmenu.c:80
 #, fuzzy
 msgid "Font Selection"
-msgstr "Выбор единиц"
+msgstr "п▓я▀п╠п╬я─ п╣п╢п╦п╫п╦я├"
 
 #: libgimp/gimpgradientmenu.c:172
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "Выбор единиц"
+msgstr "п▓я▀п╠п╬я─ п╣п╢п╦п╫п╦я├"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -197,16 +197,16 @@ msgstr ""
 #: libgimp/gimppatternmenu.c:321
 #, fuzzy
 msgid "Pattern Selection"
-msgstr "Выбор единиц"
+msgstr "п▓я▀п╠п╬я─ п╣п╢п╦п╫п╦я├"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "процент"
+msgstr "п©я─п╬я├п╣п╫я┌"
 
 #: libgimpbase/gimputils.c:118
 #, fuzzy, c-format
 msgid "%d Bytes"
-msgstr "Байты"
+msgstr "п▒п╟п╧я┌я▀"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
@@ -270,24 +270,24 @@ msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
-msgstr "/Цвет переднего плана"
+msgstr "/п╕п╡п╣я┌ п©п╣я─п╣п╢п╫п╣пЁп╬ п©п╩п╟п╫п╟"
 
 #: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Background Color"
-msgstr "/Цвет фона"
+msgstr "/п╕п╡п╣я┌ я└п╬п╫п╟"
 
 #: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
-msgstr "/Чёрный"
+msgstr "/п╖я▒я─п╫я▀п╧"
 
 #: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
-msgstr "/Белый"
+msgstr "/п▒п╣п╩я▀п╧"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 #, fuzzy
 msgid "Scales"
-msgstr "Масштабировать"
+msgstr "п°п╟я│я┬я┌п╟п╠п╦я─п╬п╡п╟я┌я▄"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
@@ -355,24 +355,24 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
-msgstr "Выбрать каталог"
+msgstr "п▓я▀п╠я─п╟я┌я▄ п╨п╟я┌п╟п╩п╬пЁ"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Выбрать файл"
+msgstr "п▓я▀п╠я─п╟я┌я▄ я└п╟п╧п╩"
 
 #: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
-msgstr "Килобайты"
+msgstr "п п╦п╩п╬п╠п╟п╧я┌я▀"
 
 #: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
-msgstr "Мегабайты"
+msgstr "п°п╣пЁп╟п╠п╟п╧я┌я▀"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
 #, fuzzy
 msgid "GigaBytes"
-msgstr "Мегабайты"
+msgstr "п°п╣пЁп╟п╠п╟п╧я┌я▀"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -382,37 +382,37 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
-msgstr "Прицепить"
+msgstr "п÷я─п╦я├п╣п©п╦я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:102
 #, fuzzy
 msgid "_Duplicate"
-msgstr "Сделать копию"
+msgstr "п║п╢п╣п╩п╟я┌я▄ п╨п╬п©п╦я▌"
 
 #: libgimpwidgets/gimpstock.c:103
 #, fuzzy
 msgid "_Edit"
-msgstr "Исправить"
+msgstr "п≤я│п©я─п╟п╡п╦я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
-msgstr "Связанные"
+msgstr "п║п╡я▐п╥п╟п╫п╫я▀п╣"
 
 #: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
-msgstr "Вставить как новое"
+msgstr "п▓я│я┌п╟п╡п╦я┌я▄ п╨п╟п╨ п╫п╬п╡п╬п╣"
 
 #: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
-msgstr "Вставить в"
+msgstr "п▓я│я┌п╟п╡п╦я┌я▄ п╡"
 
 #: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
-msgstr "Сбросить"
+msgstr "п║п╠я─п╬я│п╦я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
-msgstr "Видимый"
+msgstr "п▓п╦п╢п╦п╪я▀п╧"
 
 #: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
@@ -425,12 +425,12 @@ msgstr ""
 #: libgimpwidgets/gimpstock.c:172
 #, fuzzy
 msgid "_Resize"
-msgstr "Сбросить"
+msgstr "п║п╠я─п╬я│п╦я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 #, fuzzy
 msgid "_Scale"
-msgstr "Масштабировать"
+msgstr "п°п╟я│я┬я┌п╟п╠п╦я─п╬п╡п╟я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
@@ -439,33 +439,33 @@ msgstr ""
 #: libgimpwidgets/gimpstock.c:252
 #, fuzzy
 msgid "_Transform"
-msgstr "Преобразовать"
+msgstr "п÷я─п╣п╬п╠я─п╟п╥п╬п╡п╟я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:255
 #, fuzzy
 msgid "_Rotate"
-msgstr "Повернуть"
+msgstr "п÷п╬п╡п╣я─п╫я┐я┌я▄"
 
 #: libgimpwidgets/gimpstock.c:257
 #, fuzzy
 msgid "_Shear"
-msgstr "Наклонить"
+msgstr "п²п╟п╨п╩п╬п╫п╦я┌я▄"
 
 #: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
-msgstr "Дополнительно..."
+msgstr "п■п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
-msgstr "Выбор единиц"
+msgstr "п▓я▀п╠п╬я─ п╣п╢п╦п╫п╦я├"
 
 #: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
-msgstr "Единица"
+msgstr "п∙п╢п╦п╫п╦я├п╟"
 
 #: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
-msgstr "Множитель"
+msgstr "п°п╫п╬п╤п╦я┌п╣п╩я▄"
 
 #: libgimpwidgets/gimpwidgets.c:943
 #, fuzzy
@@ -473,9 +473,9 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Если кнопка \"Время\" не нажата, это значение используется для инициализации "
-"генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
-"действие "
+"п∙я│п╩п╦ п╨п╫п╬п©п╨п╟ \"п▓я─п╣п╪я▐\" п╫п╣ п╫п╟п╤п╟я┌п╟, я█я┌п╬ п╥п╫п╟я┤п╣п╫п╦п╣ п╦я│п©п╬п╩я▄п╥я┐п╣я┌я│я▐ п╢п╩я▐ п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦п╦ "
+"пЁп╣п╫п╣я─п╟я┌п╬я─п╟ я│п╩я┐я┤п╟п╧п╫я▀я┘ я┤п╦я│п╣п╩, я┤я┌п╬ п©п╬п╥п╡п╬п╩я▐п╣я┌ п╡п╟п╪ п©п╬п╡я┌п╬я─п╦я┌я▄ п╢п╟п╫п╫п╬п╣ \"я│п╩я┐я┤п╟п╧п╫п╬п╣\" "
+"п╢п╣п╧я│я┌п╡п╦п╣ "
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -485,8 +485,8 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Инициализировать генератор случайных чисел текущим времене - это гарантирует "
-"надежную \"случайность\""
+"п≤п╫п╦я├п╦п╟п╩п╦п╥п╦я─п╬п╡п╟я┌я▄ пЁп╣п╫п╣я─п╟я┌п╬я─ я│п╩я┐я┤п╟п╧п╫я▀я┘ я┤п╦я│п╣п╩ я┌п╣п╨я┐я┴п╦п╪ п╡я─п╣п╪п╣п╫п╣ - я█я┌п╬ пЁп╟я─п╟п╫я┌п╦я─я┐п╣я┌ "
+"п╫п╟п╢п╣п╤п╫я┐я▌ \"я│п╩я┐я┤п╟п╧п╫п╬я│я┌я▄\""
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -561,17 +561,17 @@ msgid "Pressure"
 msgstr ""
 
 #~ msgid "Cancel"
-#~ msgstr "Отмена"
+#~ msgstr "п·я┌п╪п╣п╫п╟"
 
 #~ msgid "a layer mask"
-#~ msgstr "маска слоя"
+#~ msgstr "п╪п╟я│п╨п╟ я│п╩п╬я▐"
 
 #~ msgid "a channel (saved selection)"
-#~ msgstr "канал (сохранённое выделение)"
+#~ msgstr "п╨п╟п╫п╟п╩ (я│п╬я┘я─п╟п╫я▒п╫п╫п╬п╣ п╡я▀п╢п╣п╩п╣п╫п╦п╣)"
 
 #, fuzzy
 #~ msgid "_Time"
-#~ msgstr "Время"
+#~ msgstr "п▓я─п╣п╪я▐"
 
 #~ msgid "Paste"
-#~ msgstr "Вставить"
+#~ msgstr "п▓я│я┌п╟п╡п╦я┌я▄"

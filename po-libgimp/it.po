@@ -6,7 +6,7 @@ msgstr ""
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: dom feb  6 16:47:39 CET 2000\n"
 "From: Daniele Medri <madrid@linux.it>\n"
@@ -17,12 +17,12 @@ msgstr ""
 #: libgimp/gimpbrushmenu.c:321
 #, fuzzy
 msgid "Brush Selection"
-msgstr "Selezione delle unit‡"
+msgstr "Selezione delle unit√†"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
-msgstr "non Ë possibile agire sui livelli"
+msgstr "non √® possibile agire sui livelli"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
@@ -31,12 +31,12 @@ msgstr "Incolla livelli visibili"
 #: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "non Ë possibile agire sui livelli"
+msgstr "non √® possibile agire sui livelli"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "Ë possibile gestire i livelli come frame dell'animazione"
+msgstr "√® possibile gestire i livelli come frame dell'animazione"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -49,12 +49,12 @@ msgstr "Immagine appiattita"
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
-msgstr "non Ë possibile gestire la trasparenza"
+msgstr "non √® possibile gestire la trasparenza"
 
 #: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
-msgstr "Ë possibile gestire solo immagini RGB"
+msgstr "√® possibile gestire solo immagini RGB"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
@@ -63,7 +63,7 @@ msgstr "Conversione a RGB"
 #: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
-msgstr "Ë possibile gestire immagini in scala di grigio"
+msgstr "√® possibile gestire immagini in scala di grigio"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
@@ -72,7 +72,7 @@ msgstr "Converti a scala di grigio"
 #: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "Ë possibile gestire solo immagini in scala di colore"
+msgstr "√® possibile gestire solo immagini in scala di colore"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
@@ -86,22 +86,22 @@ msgstr ""
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "Ë possibile gestire solo Immagini RGB o in scala di grigio"
+msgstr "√® possibile gestire solo Immagini RGB o in scala di grigio"
 
 #: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "Ë possibile gestire solo immagini RGB o in scala di colore"
+msgstr "√® possibile gestire solo immagini RGB o in scala di colore"
 
 #: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "Ë possibile gestire solo immagini in scala di colore o scala di grigio"
+msgstr "√® possibile gestire solo immagini in scala di colore o scala di grigio"
 
 #: libgimp/gimpexport.c:295
 #, fuzzy, c-format
 msgid "%s needs an alpha channel"
-msgstr "Ë necessario un canale alpha"
+msgstr "√® necessario un canale alpha"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
@@ -148,7 +148,7 @@ msgstr ""
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "L'esportazione non modificher‡ l'immagine originale."
+msgstr "L'esportazione non modificher√† l'immagine originale."
 
 #: libgimp/gimpexport.c:610
 #, c-format
@@ -167,12 +167,12 @@ msgstr ""
 #: libgimp/gimpfontmenu.c:80
 #, fuzzy
 msgid "Font Selection"
-msgstr "Selezione delle unit‡"
+msgstr "Selezione delle unit√†"
 
 #: libgimp/gimpgradientmenu.c:172
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "Selezione delle unit‡"
+msgstr "Selezione delle unit√†"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -195,7 +195,7 @@ msgstr ""
 #: libgimp/gimppatternmenu.c:321
 #, fuzzy
 msgid "Pattern Selection"
-msgstr "Selezione delle unit‡"
+msgstr "Selezione delle unit√†"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -452,11 +452,11 @@ msgstr "Altri..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
-msgstr "Selezione delle unit‡"
+msgstr "Selezione delle unit√†"
 
 #: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
-msgstr "Unit‡"
+msgstr "Unit√†"
 
 #: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
@@ -468,9 +468,9 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Se non Ë selezionato il pulsante del \"Tempo\", utilizza questo valoreper la "
-"generazione del seme di casualit‡ - questo vi permette di ripetereuna data "
-"operazione in modalit‡ \"casuale\"."
+"Se non √® selezionato il pulsante del \"Tempo\", utilizza questo valoreper la "
+"generazione del seme di casualit√† - questo vi permette di ripetereuna data "
+"operazione in modalit√† \"casuale\"."
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -480,8 +480,8 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Generazione del seme di casualit‡ dall'ora corrente - questo garantisceuna "
-"casualit‡ ragionevole"
+"Generazione del seme di casualit√† dall'ora corrente - questo garantisceuna "
+"casualit√† ragionevole"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

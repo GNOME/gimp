@@ -1,22 +1,22 @@
-# Traducción ó Galego do gimp-libgimp.pot
-# Copyright (C) 2000 Francisco Xosé Vázquez Grandal.
-# Francisco Xosé Vázquez Grandal <grandal@mundivia.es>, 2000.
+# TraducciÃ³n Ã³ Galego do gimp-libgimp.pot
+# Copyright (C) 2000 Francisco XosÃ© VÃ¡zquez Grandal.
+# Francisco XosÃ© VÃ¡zquez Grandal <grandal@mundivia.es>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp cvs\n"
 "POT-Creation-Date: 2003-06-26 22:14+0200\n"
 "PO-Revision-Date: 2000-07-07 16:33+0200\n"
-"Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
+"Last-Translator: Francisco XosÃ© VÃ¡zquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
 #, fuzzy
 msgid "Brush Selection"
-msgstr "Selección de unidades"
+msgstr "SelecciÃ³n de unidades"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
@@ -35,11 +35,11 @@ msgstr "imposible manexar capas"
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "so se poden manexar as capas coma fotogramas dunha animación"
+msgstr "so se poden manexar as capas coma fotogramas dunha animaciÃ³n"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
-msgstr "Gardar coma animación"
+msgstr "Gardar coma animaciÃ³n"
 
 #: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
@@ -78,8 +78,8 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converter a indexado usando a configuración por defecto\n"
-"(Fagao á man para axusta-lo resultado)"
+"Converter a indexado usando a configuraciÃ³n por defecto\n"
+"(Fagao Ã¡ man para axusta-lo resultado)"
 
 #: libgimp/gimpexport.c:265
 #, fuzzy, c-format
@@ -140,12 +140,12 @@ msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
-"A sua imaxe debería ser exportada antes de gardala polas seguintes razóns:"
+"A sua imaxe deberÃ­a ser exportada antes de gardala polas seguintes razÃ³ns:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
-msgstr "A conversión de exportación non debera modifica-la sua imaxe orixinal"
+msgstr "A conversiÃ³n de exportaciÃ³n non debera modifica-la sua imaxe orixinal"
 
 #: libgimp/gimpexport.c:610
 #, c-format
@@ -164,12 +164,12 @@ msgstr ""
 #: libgimp/gimpfontmenu.c:80
 #, fuzzy
 msgid "Font Selection"
-msgstr "Selección de unidades"
+msgstr "SelecciÃ³n de unidades"
 
 #: libgimp/gimpgradientmenu.c:172
 #, fuzzy
 msgid "Gradient Selection"
-msgstr "Selección de unidades"
+msgstr "SelecciÃ³n de unidades"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -192,7 +192,7 @@ msgstr ""
 #: libgimp/gimppatternmenu.c:321
 #, fuzzy
 msgid "Pattern Selection"
-msgstr "Selección de unidades"
+msgstr "SelecciÃ³n de unidades"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -445,11 +445,11 @@ msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
-msgstr "Máis..."
+msgstr "MÃ¡is..."
 
 #: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
-msgstr "Selección de unidades"
+msgstr "SelecciÃ³n de unidades"
 
 #: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
@@ -465,8 +465,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Se o botón \"Tempo\" non está presionado, use este valor para semente do "
-"xerador de números aleatorios - esto permítelle repetir unha operación "
+"Se o botÃ³n \"Tempo\" non estÃ¡ presionado, use este valor para semente do "
+"xerador de nÃºmeros aleatorios - esto permÃ­telle repetir unha operaciÃ³n "
 "\"aleatoria\" dada"
 
 #: libgimpwidgets/gimpwidgets.c:947
@@ -477,7 +477,7 @@ msgstr ""
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Semente do xerador de números aleatorios da hora actual - esto garante unha "
+"Semente do xerador de nÃºmeros aleatorios da hora actual - esto garante unha "
 "aleatoriedade razonable"
 
 #: modules/cdisplay_colorblind.c:122
@@ -569,10 +569,10 @@ msgstr ""
 #~ msgstr "polgadas"
 
 #~ msgid "millimeter"
-#~ msgstr "milímetro"
+#~ msgstr "milÃ­metro"
 
 #~ msgid "millimeters"
-#~ msgstr "milímetros"
+#~ msgstr "milÃ­metros"
 
 #~ msgid "point"
 #~ msgstr "punto"
