@@ -604,4 +604,33 @@ HEADER
 	close CFILE;
 	&write_file($cfile);
     }
+
+    if (! $ENV{PDBGEN_GROUPS}) {
+        my $gimp_pdb = "$destdir/gimp_pdb.h$FILE_EXT";
+	open PFILE, "> $gimp_pdb" or die "Can't open $gimp_pdb: $!\n";
+        print PFILE $lgpl_top;
+        print PFILE " * gimp_pdb.h\n";
+        print PFILE $lgpl_bottom;
+	my $guard = "__GIMP_PDB_H__";
+	print PFILE <<HEADER;
+#ifndef $guard
+#define $guard
+
+HEADER
+	my @groups;
+	foreach $group (keys %out) {
+	    my $hname = "gimp${group}pdb.h";
+	    $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
+	    push @groups, $hname;
+	}
+	foreach $group (sort @groups) {
+	    print PFILE "#include <libgimp/$group>\n";
+	}
+	print PFILE <<HEADER;
+
+#endif /* $guard */
+HEADER
+	close PFILE;
+	&write_file($gimp_pdb);
+    }
 }

@@ -841,7 +841,7 @@ GPL
 
     if (! $ENV{PDBGEN_GROUPS}) {
 	my $internal = "$destdir/internal_procs.h$FILE_EXT";
-	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
+	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
 	my $guard = "__INTERNAL_PROCS_H__";
 	print IFILE <<HEADER;
@@ -857,7 +857,7 @@ HEADER
 	&write_file($internal);
 
 	$internal = "$destdir/internal_procs.c$FILE_EXT";
-	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
+	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
 	print IFILE qq@#include <glib-object.h>\n\n@;
