@@ -215,8 +215,6 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 
   hue_saturation_init (hs_tool->hue_saturation);
 
-  hs_tool->hue_partition = GIMP_ALL_HUES;
-
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   hue_saturation_update (hs_tool, ALL);

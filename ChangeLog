@@ -1,3 +1,12 @@
+2003-10-04  Dave Neary  <bolsh@gimp.org>
+
+	* app/tools/gimphuesaturationtool.c 
+	(gimp_hue_saturation_tool_initialize): Removed explicit 
+	initialisation to GIMP_ALL_HUES, this is set by default the 
+	first time the tool is opened, and shouldn't be set successive 
+	times. Fix suggested by edg1@freegates.be in Bugzilla. Fixes 
+	bug #123731.
+
 2003-10-02  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c (app_exit_after_callback): enabled the call to
