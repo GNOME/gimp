@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-09-22 11:39-0700\n"
-"PO-Revision-Date: 2000-09-09 10:34+01:00\n"
+"PO-Revision-Date: 2000-09-27 10:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -831,12 +831,10 @@ msgid "Create a new image when applying filter"
 msgstr "Opret et nyt billede ved brug af filter"
 
 #: plug-ins/Lighting/lighting_ui.c:455
-#, fuzzy
 msgid "High Quality Preview"
-msgstr "Realtidsvisning"
+msgstr "Højkvalitets smugkig"
 
 #: plug-ins/Lighting/lighting_ui.c:465
-#, fuzzy
 msgid "Enable/disable high quality preview"
 msgstr "Slå højkvalitets forhåndsvisning til/fra"
 
@@ -850,7 +848,6 @@ msgid "Enable Antialiasing"
 msgstr "Slå antialiasing til"
 
 #: plug-ins/Lighting/lighting_ui.c:488
-#, fuzzy
 msgid "Enable/disable jagged edges removal(antialiasing)"
 msgstr "Slå fjernelse af takkede kanter (antialiasing) til/fra"
 
@@ -879,24 +876,20 @@ msgid "Light Settings"
 msgstr "Lyssætning"
 
 #: plug-ins/Lighting/lighting_ui.c:574
-#, fuzzy
 msgid "Directional"
 msgstr "Retning"
 
 #: plug-ins/Lighting/lighting_ui.c:576
-#, fuzzy
 msgid "Point"
-msgstr "Mal"
+msgstr "Punkt"
 
 #: plug-ins/Lighting/lighting_ui.c:578
-#, fuzzy
 msgid "Spot"
-msgstr "Prikker"
+msgstr "Prik"
 
 #: plug-ins/Lighting/lighting_ui.c:583
-#, fuzzy
 msgid "Light Type:"
-msgstr "Type lyskilde:"
+msgstr "lyskilde-type:"
 
 #: plug-ins/Lighting/lighting_ui.c:586 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
@@ -907,7 +900,6 @@ msgid "Select Lightsource Color"
 msgstr "Vælg lyskildens farve"
 
 #: plug-ins/Lighting/lighting_ui.c:592
-#, fuzzy
 msgid "Light Color:"
 msgstr "Lyskilde-farve:"
 
@@ -1035,7 +1027,6 @@ msgid "Bumpmap Settings"
 msgstr "Indstillinger for \"bumpmap\""
 
 #: plug-ins/Lighting/lighting_ui.c:907
-#, fuzzy
 msgid "Enable Bump Mapping"
 msgstr "Brug \"bump mapping\""
 
@@ -1073,39 +1064,34 @@ msgid "Maximum Height:"
 msgstr "Maksimumshøjde:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
-#, fuzzy
 msgid "Maximum height for bumps"
-msgstr "Maksimumshøjde:"
+msgstr "Maksimumshøjde for bump"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
 msgstr "Minimumshøjde:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
-#, fuzzy
 msgid "Minimum height for bumps"
-msgstr "Minimumshøjde:"
+msgstr "Minimumshøjde for bump"
 
 #: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
 msgstr "Autostræk til at passe i værdiområdet"
 
 #: plug-ins/Lighting/lighting_ui.c:988
-#, fuzzy
 msgid "Fit into value range"
-msgstr "Farveområde for mål"
+msgstr "Pas ind i værdiområde"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
 msgstr "Miljøindstillinger:"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
-#, fuzzy
 msgid "Enable Environment Mapping"
 msgstr "Brug \"environment mapping\""
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Slå \"environment mapping\" (reflektion) fra/til"
 
@@ -1114,9 +1100,8 @@ msgid "Environment Image:"
 msgstr "Miljøbillede:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
-#, fuzzy
 msgid "Environment image to use"
-msgstr "Miljøbillede:"
+msgstr "Miljøbillede der skal bruges"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
@@ -1139,9 +1124,8 @@ msgid "Bump Map"
 msgstr "\"Bump map\""
 
 #: plug-ins/Lighting/lighting_ui.c:1088
-#, fuzzy
 msgid "Environment Map"
-msgstr "Brug \"environment mapping\""
+msgstr "\"environment mapping\""
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
@@ -4018,7 +4002,7 @@ msgstr ""
 "\n"
 "Du forsøger netop at oprette en kæmpe\n"
 "HTML-fil om højst sandsynligt\n"
-"vil få din browser til at gå ned."
+"vil få din weblæser til at gå ned."
 
 #. HTML Page Options
 #: plug-ins/common/gtm.c:421
@@ -10506,9 +10490,8 @@ msgid "Fade out:"
 msgstr "Falmer:"
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Farveforløb"
+msgstr "Farveforløb:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
