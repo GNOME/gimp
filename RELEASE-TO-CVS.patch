@@ -1,11 +1,11 @@
 Index: app/gui/menus.c
 ===================================================================
 RCS file: /cvs/gnome/gimp/app/gui/menus.c,v
-retrieving revision 1.242
-diff -u -p -r1.242 menus.c
---- app/gui/menus.c	2001/11/13 16:56:58	1.242
-+++ app/gui/menus.c	2001/11/15 10:26:45
-@@ -1813,7 +1813,7 @@ menus_init (Gimp *gimp)
+retrieving revision 1.243
+diff -u -p -r1.243 menus.c
+--- app/gui/menus.c	2001/11/16 15:08:53	1.243
++++ app/gui/menus.c	2001/11/20 23:02:52
+@@ -1820,7 +1820,7 @@ menus_init (Gimp *gimp)
    }
  
    filename = gimp_personal_rc_file ("menurc");
@@ -14,7 +14,7 @@ diff -u -p -r1.242 menus.c
    g_free (filename);
  
    g_signal_connect (G_OBJECT (gimp->documents), "add",
-@@ -1841,7 +1841,7 @@ menus_exit (Gimp *gimp)
+@@ -1848,7 +1848,7 @@ menus_exit (Gimp *gimp)
                                          gimp);
  
    filename = gimp_personal_rc_file ("menurc");
@@ -26,12 +26,12 @@ diff -u -p -r1.242 menus.c
 Index: app/tools/gimptexttool.c
 ===================================================================
 RCS file: /cvs/gnome/gimp/app/tools/gimptexttool.c,v
-retrieving revision 1.132
-diff -u -p -r1.132 gimptexttool.c
---- app/tools/gimptexttool.c	2001/11/08 19:13:52	1.132
-+++ app/tools/gimptexttool.c	2001/11/19 10:55:24
-@@ -56,6 +56,8 @@
- #include "undo_types.h"
+retrieving revision 1.133
+diff -u -p -r1.133 gimptexttool.c
+--- app/tools/gimptexttool.c	2001/11/20 23:00:47	1.133
++++ app/tools/gimptexttool.c	2001/11/20 23:02:56
+@@ -54,6 +54,8 @@
+ #include "floating_sel.h"
  #include "undo.h"
  
 +#include "gimprc.h"
@@ -39,7 +39,7 @@ diff -u -p -r1.132 gimptexttool.c
  #include "libgimp/gimpintl.h"
  
  
-@@ -193,7 +195,8 @@ gimp_text_tool_init (GimpTextTool *text_
+@@ -197,7 +199,8 @@ gimp_text_tool_init (GimpTextTool *text_
  
    tool = GIMP_TOOL (text_tool);
   
@@ -47,9 +47,9 @@ diff -u -p -r1.132 gimptexttool.c
 +  text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
 +                                                    gimprc.monitor_yres);
  
-   /*  The tool options  */
-   if (! text_tool_options)
-@@ -493,6 +496,8 @@ text_render (GimpImage    *gimage,
+   tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
+   tool->scroll_lock = TRUE;  /* Disallow scrolling */
+@@ -389,6 +392,8 @@ text_render (GimpImage    *gimage,
    PangoRectangle        logical;
    GimpImageType         layer_type;
    GimpLayer            *layer = NULL;
@@ -58,7 +58,7 @@ diff -u -p -r1.132 gimptexttool.c
  
    g_return_val_if_fail (fontname != NULL, FALSE);
    g_return_val_if_fail (text != NULL, FALSE);
-@@ -511,7 +516,9 @@ text_render (GimpImage    *gimage,
+@@ -407,7 +412,9 @@ text_render (GimpImage    *gimage,
    if (!font_desc)
      return NULL;
    
@@ -69,7 +69,7 @@ diff -u -p -r1.132 gimptexttool.c
    layout = pango_layout_new (context);
    pango_layout_set_font_description (layout, font_desc);
    pango_font_description_free (font_desc);
-@@ -644,8 +651,10 @@ text_get_extents (const gchar *fontname,
+@@ -540,8 +547,10 @@ text_get_extents (const gchar *fontname,
    font_desc = pango_font_description_from_string (fontname);
    if (!font_desc)
      return FALSE;
