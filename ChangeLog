@@ -1,3 +1,11 @@
+2002-03-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-contiguous-region.c: some cleanup, removed 
+	unused parameters and code.
+	
+	* app/widgets/gimptoolinfopreview.c: fixed stupid bug I introduced
+	yesterday.
+
 2002-03-03  Michael Natterer  <mitch@gimp.org>
 
 	Use gdouble in a [0.0..1.0] range for opacity values in the whole

@@ -114,7 +114,6 @@ gimp_tool_info_preview_render (GimpPreview *preview)
   GtkWidget    *widget;
   GimpToolInfo *tool_info;
   TempBuf      *temp_buf;
-  TempBuf      *render_buf;
   gint          width;
   gint          height;
   gint          tool_info_width;
@@ -130,11 +129,9 @@ gimp_tool_info_preview_render (GimpPreview *preview)
   width  = preview->width;
   height = preview->height;
 
-  if (width  == tool_info_width &&
-      height == tool_info_height)
+  if (width == tool_info_width  &&  height == tool_info_height)
     {
-      temp_buf = gimp_viewable_get_preview (preview->viewable,
-					    width, height);
+      temp_buf = gimp_viewable_get_preview (preview->viewable, width, height);
     }
   else
     {
@@ -146,20 +143,22 @@ gimp_tool_info_preview_render (GimpPreview *preview)
   switch (temp_buf->bytes)
     {
     case 3:
-      render_buf = temp_buf;
+      gimp_preview_render_and_flush (preview, temp_buf, -1);
       break;
 
     case 4:
       {
-        gint    x, y;
-        guchar *src;
-        guchar *dest;
-        guchar  color[3];
-        
-        color[0] = widget->style->bg[widget->state].red   >> 8;
-        color[1] = widget->style->bg[widget->state].green >> 8;
-        color[2] = widget->style->bg[widget->state].blue  >> 8;
-        
+        TempBuf *render_buf;
+        gint     x, y;
+        guchar  *src;
+        guchar  *dest;
+        guchar   color[3] = 
+        {
+          widget->style->bg[widget->state].red   >> 8,
+          widget->style->bg[widget->state].green >> 8,
+          widget->style->bg[widget->state].blue  >> 8
+        };
+    
         render_buf = temp_buf_new (width, height, 3, 0, 0, color);
         
         src  = temp_buf_data (temp_buf);
@@ -192,20 +191,17 @@ gimp_tool_info_preview_render (GimpPreview *preview)
                 dest += 3;
               }
           }
+        
+        gimp_preview_render_and_flush (preview, render_buf, -1);
       }
       break;
 
     default:
-      render_buf = 0;
       g_assert_not_reached ();
       break;
     }
 
-  gimp_preview_render_and_flush (preview, render_buf, -1);
-    
-  temp_buf_free (render_buf);
-
-  if (new_buf && temp_buf->bytes != 3)
+  if (new_buf)
     temp_buf_free (temp_buf);
 }
 
