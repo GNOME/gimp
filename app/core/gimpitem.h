@@ -83,7 +83,9 @@ struct _GimpItemClass
                               gint                    new_height,
                               gint                    new_offset_x,
                               gint                    new_offset_y,
-                              GimpInterpolationType   interpolation_type);
+                              GimpInterpolationType   interpolation_type,
+                              GimpProgressFunc        progress_callback,
+                              gpointer                progress_data);
   void       (* resize)      (GimpItem               *item,
                               gint                    new_width,
                               gint                    new_height,
@@ -161,16 +163,22 @@ void            gimp_item_scale            (GimpItem       *item,
                                             gint            new_height,
                                             gint            new_offset_x,
                                             gint            new_offset_y,
-                                            GimpInterpolationType  interpolation);
+                                            GimpInterpolationType  interpolation,
+                                            GimpProgressFunc       progress_callback,
+                                            gpointer               progress_data);
 gboolean        gimp_item_scale_by_factors (GimpItem       *item,
                                             gdouble         w_factor,
                                             gdouble         h_factor,
-                                            GimpInterpolationType interpolation);
+                                            GimpInterpolationType interpolation,
+                                            GimpProgressFunc      progress_callback,
+                                            gpointer              progress_data);
 void            gimp_item_scale_by_origin  (GimpItem       *item,
                                             gint            new_width,
                                             gint            new_height,
                                             GimpInterpolationType interpolation,
-                                            gboolean        local_origin);
+                                            GimpProgressFunc      progress_callback,
+                                            gpointer              progress_data,
+                                            gboolean              local_origin);
 void            gimp_item_resize           (GimpItem       *item,
                                             gint            new_width,
                                             gint            new_height,

@@ -97,7 +97,9 @@ gimp_image_scale (GimpImage             *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
+      gimp_item_scale (item,
+                       new_width, new_height, 0, 0,
+                       interpolation_type, NULL, NULL);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -110,7 +112,9 @@ gimp_image_scale (GimpImage             *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
+      gimp_item_scale (item,
+                       new_width, new_height, 0, 0,
+                       interpolation_type, NULL, NULL);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -118,8 +122,8 @@ gimp_image_scale (GimpImage             *gimage,
 
   /*  Don't forget the selection mask!  */
   gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                   new_width, new_height,
-                   0, 0, interpolation_type);
+                   new_width, new_height, 0, 0,
+                   interpolation_type, NULL, NULL);
 
   if (progress_func)
     (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -131,8 +135,9 @@ gimp_image_scale (GimpImage             *gimage,
     {
       item = (GimpItem *) list->data;
 
-      if (! gimp_item_scale_by_factors (item, img_scale_w, img_scale_h,
-                                        interpolation_type))
+      if (! gimp_item_scale_by_factors (item,
+                                        img_scale_w, img_scale_h,
+                                        interpolation_type, NULL, NULL))
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented

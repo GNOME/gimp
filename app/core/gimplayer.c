@@ -91,7 +91,9 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_height,
                                                  gint                new_offset_x,
                                                  gint                new_offset_y,
-                                                 GimpInterpolationType  interp_type);
+                                                 GimpInterpolationType  interp_type,
+                                                 GimpProgressFunc       progress_callback,
+                                                 gpointer               progress_data);
 static void       gimp_layer_resize             (GimpItem           *item,
                                                  gint                new_width,
                                                  gint                new_height,
@@ -592,7 +594,9 @@ gimp_layer_scale (GimpItem              *item,
                   gint                   new_height,
                   gint                   new_offset_x,
                   gint                   new_offset_y,
-                  GimpInterpolationType  interpolation_type)
+                  GimpInterpolationType  interpolation_type,
+                  GimpProgressFunc       progress_callback,
+                  gpointer               progress_data)
 {
   GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
@@ -607,7 +611,8 @@ gimp_layer_scale (GimpItem              *item,
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interpolation_type);
+                                         interpolation_type,
+                                         progress_callback, progress_data);
 
   /*  If there is a layer mask, make sure it gets scaled also  */
   if (layer->mask)
@@ -615,7 +620,7 @@ gimp_layer_scale (GimpItem              *item,
       gimp_item_scale (GIMP_ITEM (layer->mask),
                        new_width, new_height,
                        new_offset_x, new_offset_y,
-                       interpolation_type);
+                       interpolation_type, NULL, NULL);
 
       gimp_image_undo_group_end (gimage);
     }

@@ -87,7 +87,9 @@ static void       gimp_item_real_scale     (GimpItem      *item,
                                             gint           new_height,
                                             gint           new_offset_x,
                                             gint           new_offset_y,
-                                            GimpInterpolationType  interpolation);
+                                            GimpInterpolationType  interpolation,
+                                            GimpProgressFunc       progress_callback,
+                                            gpointer               progress_data);
 static void       gimp_item_real_resize    (GimpItem      *item,
                                             gint           new_width,
                                             gint           new_height,
@@ -362,7 +364,9 @@ gimp_item_real_scale (GimpItem              *item,
                       gint                   new_height,
                       gint                   new_offset_x,
                       gint                   new_offset_y,
-                      GimpInterpolationType  interpolation)
+                      GimpInterpolationType  interpolation,
+                      GimpProgressFunc       progress_callback,
+                      gpointer               progress_data)
 {
   item->width     = new_width;
   item->height    = new_height;
@@ -591,7 +595,9 @@ gimp_item_scale (GimpItem              *item,
                  gint                   new_height,
                  gint                   new_offset_x,
                  gint                   new_offset_y,
-                 GimpInterpolationType  interpolation)
+                 GimpInterpolationType  interpolation,
+                 GimpProgressFunc       progress_callback,
+                 gpointer               progress_data)
 {
   GimpItemClass *item_class;
 
@@ -603,7 +609,7 @@ gimp_item_scale (GimpItem              *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
-                     interpolation);
+                     interpolation, progress_callback, progress_data);
 }
 
 /**
@@ -612,6 +618,8 @@ gimp_item_scale (GimpItem              *item,
  * @w_factor: scale factor to apply to width and horizontal offset
  * @h_factor: scale factor to apply to height and vertical offset
  * @interpolation:
+ * @progress_callback:
+ * @progress_data:
  *
  * Scales item dimensions and offsets by uniform width and
  * height factors.
@@ -639,7 +647,9 @@ gboolean
 gimp_item_scale_by_factors (GimpItem              *item,
                             gdouble                w_factor,
                             gdouble                h_factor,
-                            GimpInterpolationType  interpolation)
+                            GimpInterpolationType  interpolation,
+                            GimpProgressFunc       progress_callback,
+                            gpointer               progress_data)
 {
   gint new_width, new_height;
   gint new_offset_x, new_offset_y;
@@ -662,7 +672,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
       gimp_item_scale (item,
                        new_width, new_height,
                        new_offset_x, new_offset_y,
-                       interpolation);
+                       interpolation, progress_callback, progress_data);
       return TRUE;
     }
 
@@ -675,6 +685,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * @new_width:    The width that item will acquire
  * @new_height:   The height that the item will acquire
  * @interpolation:
+ * @progress_callback:
+ * @progress_data:
  * @local_origin: sets fixed point of the scaling transform. See below.
  *
  * Sets item dimensions to new_width and
@@ -701,6 +713,8 @@ gimp_item_scale_by_origin (GimpItem              *item,
                            gint                   new_width,
                            gint                   new_height,
                            GimpInterpolationType  interpolation,
+                           GimpProgressFunc       progress_callback,
+                           gpointer               progress_data,
                            gboolean               local_origin)
 {
   gint new_offset_x, new_offset_y;
@@ -732,7 +746,7 @@ gimp_item_scale_by_origin (GimpItem              *item,
   gimp_item_scale (item,
                    new_width, new_height,
                    new_offset_x, new_offset_y,
-                   interpolation);
+                   interpolation, progress_callback, progress_data);
 }
 
 void

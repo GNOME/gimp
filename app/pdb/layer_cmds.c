@@ -455,7 +455,7 @@ layer_scale_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, local_origin);
+	  gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, local_origin);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);

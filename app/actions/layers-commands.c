@@ -51,6 +51,7 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpprogress.h"
 
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
@@ -64,14 +65,15 @@
 
 /*  local function prototypes  */
 
-static void   layers_add_mask_query       (GimpLayer *layer,
-                                           GtkWidget *parent);
-static void   layers_scale_layer_query    (GimpImage *gimage,
-					   GimpLayer *layer,
-                                           GtkWidget *parent);
-static void   layers_resize_layer_query   (GimpImage *gimage,
-					   GimpLayer *layer,
-                                           GtkWidget *parent);
+static void   layers_add_mask_query       (GimpLayer   *layer,
+                                           GtkWidget   *parent);
+static void   layers_scale_layer_query    (GimpDisplay *gdisp,
+                                           GimpImage   *gimage,
+					   GimpLayer   *layer,
+                                           GtkWidget   *parent);
+static void   layers_resize_layer_query   (GimpImage   *gimage,
+					   GimpLayer   *layer,
+                                           GtkWidget   *parent);
 
 
 #define return_if_no_image(gimage,data) \
@@ -349,7 +351,8 @@ layers_scale_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_scale_layer_query (gimage, active_layer, widget);
+  layers_scale_layer_query (GIMP_IS_DISPLAY (data) ? data : NULL,
+                            gimage, active_layer, widget);
 }
 
 void
@@ -1099,8 +1102,9 @@ typedef struct _ScaleLayerOptions ScaleLayerOptions;
 
 struct _ScaleLayerOptions
 {
-  GimpLayer *layer;
-  Resize    *resize;
+  Resize      *resize;
+  GimpDisplay *gdisp;
+  GimpLayer   *layer;
 };
 
 static void
@@ -1123,6 +1127,12 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       if (gimage)
 	{
+          GimpProgress *progress;
+
+          progress = gimp_progress_start (options->gdisp,
+                                          _("Scaling..."),
+                                          TRUE, NULL, NULL);
+
 	  if (gimp_layer_is_floating_sel (layer))
             {
               gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
@@ -1135,6 +1145,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
                                      options->resize->width,
                                      options->resize->height,
                                      options->resize->interpolation,
+                                     gimp_progress_update_and_flush, progress,
                                      TRUE);
 
 	  if (gimp_layer_is_floating_sel (layer))
@@ -1143,6 +1154,8 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
               gimp_image_undo_group_end (gimage);
             }
+
+          gimp_progress_end (progress);
 
           gimp_image_flush (gimage);
 	}
@@ -1156,14 +1169,16 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 }
 
 static void
-layers_scale_layer_query (GimpImage *gimage,
-                          GimpLayer *layer,
-                          GtkWidget *parent)
+layers_scale_layer_query (GimpDisplay *gdisp,
+                          GimpImage   *gimage,
+                          GimpLayer   *layer,
+                          GtkWidget   *parent)
 {
   ScaleLayerOptions *options;
 
   options = g_new0 (ScaleLayerOptions, 1);
 
+  options->gdisp = gdisp;
   options->layer = layer;
 
   options->resize =
@@ -1177,6 +1192,12 @@ layers_scale_layer_query (GimpImage *gimage,
 		       TRUE,
 		       G_CALLBACK (scale_layer_query_ok_callback),
                        options);
+
+  /*  FIXME: this doesn't catch all possibilities of the layer being deleted */
+  g_signal_connect_object (layer, "removed",
+                           G_CALLBACK (gtk_widget_destroy),
+                           options->resize->resize_shell,
+                           G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,
@@ -1271,6 +1292,12 @@ layers_resize_layer_query (GimpImage *gimage,
 		       TRUE,
 		       G_CALLBACK (resize_layer_query_ok_callback),
                        options);
+
+  /*  FIXME: this doesn't catch all possibilities of the layer being deleted */
+  g_signal_connect_object (layer, "removed",
+                           G_CALLBACK (gtk_widget_destroy),
+                           options->resize->resize_shell,
+                           G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,

@@ -75,7 +75,9 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_height,
                                                     gint               new_offset_x,
                                                     gint               new_offset_y,
-                                                    GimpInterpolationType interp_type);
+                                                    GimpInterpolationType interp_type,
+                                                    GimpProgressFunc    progress_callback,
+                                                    gpointer            progress_data);
 static void       gimp_drawable_resize             (GimpItem          *item,
                                                     gint               new_width,
                                                     gint               new_height,
@@ -324,7 +326,9 @@ gimp_drawable_scale (GimpItem              *item,
                      gint                   new_height,
                      gint                   new_offset_x,
                      gint                   new_offset_y,
-                     GimpInterpolationType  interpolation_type)
+                     GimpInterpolationType  interpolation_type,
+                     GimpProgressFunc       progress_callback,
+                     gpointer               progress_data)
 {
   GimpDrawable *drawable;
   PixelRegion   srcPR, destPR;
@@ -357,14 +361,16 @@ gimp_drawable_scale (GimpItem              *item,
    */
   scale_region (&srcPR, &destPR,
                 gimp_drawable_is_indexed (drawable) ?
-                GIMP_INTERPOLATION_NONE : interpolation_type);
+                GIMP_INTERPOLATION_NONE : interpolation_type,
+                progress_callback, progress_data);
 
   tile_manager_unref (drawable->tiles);
   drawable->tiles = new_tiles;
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interpolation_type);
+                                         interpolation_type,
+                                         progress_callback, progress_data);
 
   /*  Update the new position  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);

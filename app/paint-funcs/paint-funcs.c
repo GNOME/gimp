@@ -3042,7 +3042,9 @@ get_scaled_row (gdouble              **src,
 void
 scale_region (PixelRegion           *srcPR,
               PixelRegion           *destPR,
-              GimpInterpolationType  interpolation_type)
+              GimpInterpolationType  interpolation,
+              GimpProgressFunc       progress_callback,
+              gpointer               progress_data)
 {
   gdouble *src[4];
   guchar  *src_tmp;
@@ -3057,7 +3059,7 @@ scale_region (PixelRegion           *srcPR,
   gint     new_y;
   gint     x, y;
 
-  if (interpolation_type == GIMP_INTERPOLATION_NONE)
+  if (interpolation == GIMP_INTERPOLATION_NONE)
     {
       scale_region_no_resample (srcPR, destPR);
       return;
@@ -3095,6 +3097,9 @@ scale_region (PixelRegion           *srcPR,
 
   for (y = 0; y < height; y++)
     {
+      if (progress_callback && !(y & 0xf))
+        (* progress_callback) (0, height, y, progress_data);
+
       if (height < orig_height)
         {
           gint          max;
@@ -3104,7 +3109,7 @@ scale_region (PixelRegion           *srcPR,
           if (y == 0) /* load the first row if this is the first time through */
             get_scaled_row (&src[0], 0, width, srcPR, row,
                             src_tmp,
-                            interpolation_type);
+                            interpolation);
           new_y = (int) (y * y_rat);
           frac = 1.0 - (y * y_rat - new_y);
           for (x = 0; x < width * bytes; x++)
@@ -3114,7 +3119,7 @@ scale_region (PixelRegion           *srcPR,
 
           get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                           src_tmp,
-                          interpolation_type);
+                          interpolation);
 
           while (max > 0)
             {
@@ -3122,7 +3127,7 @@ scale_region (PixelRegion           *srcPR,
                 accum[x] += src[3][x];
               get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                               src_tmp,
-                              interpolation_type);
+                              interpolation);
               max--;
             }
           frac = (y + 1) * y_rat - ((int) ((y + 1) * y_rat));
@@ -3142,11 +3147,11 @@ scale_region (PixelRegion           *srcPR,
                  and put them into src[] */
               get_scaled_row (&src[0], old_y + 2, width, srcPR, row,
                               src_tmp,
-                              interpolation_type);
+                              interpolation);
               old_y++;
             }
 
-          switch (interpolation_type)
+          switch (interpolation)
             {
             case GIMP_INTERPOLATION_CUBIC:
               {
@@ -3184,7 +3189,7 @@ scale_region (PixelRegion           *srcPR,
         {
           get_scaled_row (&src[0], y, width, srcPR, row,
                           src_tmp,
-                          interpolation_type);
+                          interpolation);
           memcpy (accum, src[3], sizeof (gdouble) * width * bytes);
         }
 

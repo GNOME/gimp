@@ -77,7 +77,9 @@ static void       gimp_channel_scale         (GimpItem         *item,
                                               gint              new_height,
                                               gint              new_offset_x,
                                               gint              new_offset_y,
-                                              GimpInterpolationType interp_type);
+                                              GimpInterpolationType interp_type,
+                                              GimpProgressFunc      progress_callback,
+                                              gpointer              progress_data);
 static void       gimp_channel_resize        (GimpItem         *item,
                                               gint              new_width,
                                               gint              new_height,
@@ -471,7 +473,9 @@ gimp_channel_scale (GimpItem              *item,
                     gint                   new_height,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
-                    GimpInterpolationType  interpolation_type)
+                    GimpInterpolationType  interpolation_type,
+                    GimpProgressFunc       progress_callback,
+                    gpointer               progress_data)
 {
   GimpChannel *channel = GIMP_CHANNEL (item);
 
@@ -487,7 +491,8 @@ gimp_channel_scale (GimpItem              *item,
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interpolation_type);
+                                         interpolation_type,
+                                         progress_callback, progress_data);
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;

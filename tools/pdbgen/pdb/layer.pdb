@@ -100,7 +100,7 @@ HELP
 
     if ($op eq 'scale') {
         &layer_change_invoke("LAYER_\U$op\E", 'Scale Layer',
-			     "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, $args);");
+			     "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, NULL, $args);");
     } else {
         &layer_change_invoke("LAYER_\U$op\E", 'Resize Layer',
 			     "gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, $args);");

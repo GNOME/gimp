@@ -54,7 +54,9 @@ static void       gimp_selection_scale         (GimpItem        *item,
                                                 gint             new_height,
                                                 gint             new_offset_x,
                                                 gint             new_offset_y,
-                                                GimpInterpolationType interp_type);
+                                                GimpInterpolationType interp_type,
+                                                GimpProgressFunc      progress_callback,
+                                                gpointer              progress_data);
 static void       gimp_selection_resize        (GimpItem        *item,
                                                 gint             new_width,
                                                 gint             new_height,
@@ -236,11 +238,14 @@ gimp_selection_scale (GimpItem              *item,
                       gint                   new_height,
                       gint                   new_offset_x,
                       gint                   new_offset_y,
-                      GimpInterpolationType  interp_type)
+                      GimpInterpolationType  interp_type,
+                      GimpProgressFunc       progress_callback,
+                      gpointer               progress_data)
 {
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interp_type);
+                                         interp_type,
+                                         progress_callback, progress_data);
 
   item->offset_x = 0;
   item->offset_y = 0;

@@ -32,13 +32,13 @@ void  color_pixels          (guchar *dest, const guchar *color,
 
 void  blend_pixels          (const guchar *src1,
 			     const guchar *src2,
-			     guchar *dest, 
-			     guchar blend, guint w, 
+			     guchar *dest,
+			     guchar blend, guint w,
 			     guint bytes);
 
 void  shade_pixels          (const guchar *src, guchar *dest,
 			     const guchar *color,
-			     guchar rblend, guint w, 
+			     guchar rblend, guint w,
 			     guint bytes, guint has_alpha);
 
 void  extract_alpha_pixels  (const guchar *src,
@@ -49,8 +49,10 @@ void  extract_alpha_pixels  (const guchar *src,
 void  swap_pixels           (guchar *src, guchar *dest,
 			     guint length);
 
-void  scale_pixels          (const guchar *src, guchar *dest,
-			     guint length, int scale);
+void  scale_pixels          (const guchar *src,
+                             guchar       *dest,
+			     guint         length,
+                             gint          scale);
 
 void  add_alpha_pixels      (const guchar *src, guchar *dest,
 			     guint length, guint bytes);
@@ -193,7 +195,7 @@ void  combine_inten_and_inten_a_pixels    (const guchar *src1,
 					   const guchar *src2,
 					   guchar *dest,
 					   const guchar *mask,
-					   guint opacity, 
+					   guint opacity,
 					   const gboolean *affect,
 					   guint length, guint bytes);
 
@@ -314,8 +316,11 @@ void  gaussian_blur_region                (PixelRegion *, double, double);
 
 void  border_region                       (PixelRegion *, gint16, gint16);
 
-void  scale_region                        (PixelRegion *, PixelRegion *,
-                                           GimpInterpolationType);
+void  scale_region                        (PixelRegion           *srcPR,
+                                           PixelRegion           *destPR,
+                                           GimpInterpolationType  interpolation,
+                                           GimpProgressFunc       progress_callback,
+                                           gpointer               progress_data);
 
 void  subsample_region                    (PixelRegion *, PixelRegion *,
 					   int);
@@ -325,7 +330,7 @@ float shapeburst_region                   (PixelRegion *, PixelRegion *);
 void  thin_region                         (PixelRegion *, gint16 xradius,
                                            gint16 yradius, int edge_lock);
 
-void  fatten_region                       (PixelRegion *, 
+void  fatten_region                       (PixelRegion *,
                                            gint16 xradius, gint16 yradius);
 
 void  swap_region                         (PixelRegion *, PixelRegion *);
@@ -347,7 +352,7 @@ void  copy_component                      (PixelRegion *src,
 
 void  initial_region                      (PixelRegion *, PixelRegion *,
 					   PixelRegion *, guchar *,
-					   int, GimpLayerModeEffects, int *, 
+					   int, GimpLayerModeEffects, int *,
 					   CombinationMode);
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
