@@ -305,6 +305,9 @@ gimp_dispose (GObject *object)
 {
   Gimp *gimp = GIMP (object);
 
+  if (gimp->be_verbose)
+    g_print ("EXIT: gimp_dispose\n");
+
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
 

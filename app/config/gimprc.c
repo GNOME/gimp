@@ -406,15 +406,11 @@ gimp_rc_new (const gchar *system_gimprc,
              const gchar *user_gimprc,
              gboolean     verbose)
 {
-  GimpRc *rc;
-
-  rc = g_object_new (GIMP_TYPE_RC,
-                     "system-gimprc", system_gimprc,
-                     "user-gimprc",   user_gimprc,
-                     NULL);
-
-  rc->verbose = verbose ? TRUE : FALSE;
-  g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
+  GimpRc *rc = g_object_new (GIMP_TYPE_RC,
+                             "verbose",       verbose,
+                             "system-gimprc", system_gimprc,
+                             "user-gimprc",   user_gimprc,
+                             NULL);
 
   gimp_rc_load (rc);
 

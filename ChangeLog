@@ -1,6 +1,9 @@
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
-	* app/core/gimp.c (gimp_finalize): print a message if being verbose.
+	* app/config/gimprc.c (gimp_rc_new): simplified.
+
+	* app/core/gimp.c (gimp_dispose) (gimp_finalize): print messages
+	if being verbose.
 
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
