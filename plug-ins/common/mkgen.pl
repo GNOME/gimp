@@ -1,6 +1,16 @@
 #!/usr/bin/perl -w
 
-open MK, "> Makefile.am";
+use lib '../../tools/pdbgen';
+
+require 'util.pl';
+
+*write_file = \&Gimp::CodeGen::util::write_file;
+*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+
+$outmk = "Makefile.am$FILE_EXT";
+$outignore = ".cvsignore$FILE_EXT";
+open MK, "> $outmk";
+open IGNORE, "> $outignore";
 
 require 'plugin-defs.pl';
 
@@ -59,6 +69,13 @@ install-\%: \%
 	else :; fi
 EOT
 
+print IGNORE <<EOT;
+Makefile
+Makefile.in
+.deps
+.libs
+EOT
+
 foreach (sort keys %plugins) {
     my $libgimp = "";
 
@@ -92,6 +109,12 @@ ${_}_LDADD = \\
 	\$(\U$plugins{$_}->{libdep}\E_LIBS)				\\
 	\$(INTLLIBS)
 EOT
+
+    print IGNORE "$_\n";
 }
 
 close MK;
+close IGNORE;
+
+&write_file($outmk);
+&write_file($outignore);

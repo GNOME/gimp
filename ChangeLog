@@ -1,3 +1,7 @@
+Fri Sep  3 23:17:44 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/mkgen.pl: autogen .cvsignore too
+
 Sat Sep  4 05:39:39 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c: dnd for colors, more dnd to follow soon ...

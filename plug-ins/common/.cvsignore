@@ -13,11 +13,11 @@ autocrop
 autostretch_hsv
 blinds
 blur
-borderaverage
 bumpmap
 bz2
 c_astretch
 checkerboard
+color_enhance
 colorify
 compose
 convmatrix
@@ -41,12 +41,12 @@ fractaltrace
 gauss_iir
 gauss_rle
 gbr
-gpb
 gee
 gicon
 gif
 gifload
 glasstile
+gpb
 gqbist
 gradmap
 grid
@@ -114,6 +114,7 @@ url
 video
 vinvert
 vpropagate
+warp
 waves
 whirlpinch
 wind
