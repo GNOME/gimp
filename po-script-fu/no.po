@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2002-06-10 09:36+0200\n"
-"PO-Revision-Date: 2002-06-10 10:23+0200\n"
+"POT-Creation-Date: 2002-07-02 15:58+0200\n"
+"PO-Revision-Date: 2002-07-02 16:11+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,17 +104,17 @@ msgstr ""
 "Minst en skrifttype du har valgt er ugyldig.\n"
 "Vennligst sjekk dine instillinger.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 #: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 #: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Kopirettighet:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Dato:"
@@ -138,15 +138,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tjeneralternativer"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "Tjenerport:"
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "Loggfil på tjener:"
 
@@ -168,58 +168,58 @@ msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
-msgid "DB Browser (init...)"
-msgstr "DB-leser (init...)"
+msgid "DB Browser"
+msgstr "DB-leser"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-msgid "Search by Name"
-msgstr "Søk etter navn"
+msgid "Search by _Name"
+msgstr "Søk etter _navn"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-msgid "Search by Blurb"
-msgstr "Søk etter blurb"
+msgid "Search by _Blurb"
+msgstr "Søk etter _blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
-msgid "Search:"
-msgstr "Søk:"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+msgid "_Search:"
+msgstr "_Søk:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 msgid "In:"
 msgstr "Inn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Hjelp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
-msgstr "DB-leser (etter navn - vennligst vent)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
+msgstr "Søker etter navn - vennligst vent"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
-msgstr "DB-leser (etter blurb - vennligst vent)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
-msgstr "DB-leser (vennligst vent)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
+msgstr "Søker etter blurb - vennligst vent"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-msgid "DB Browser"
-msgstr "DB-leser"
+msgid "Searching - please wait"
+msgstr "Søker - vennligst vent"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr "Ingen treff"
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -1401,13 +1401,16 @@ msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetiketter..."
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetikett under knapp..."
+msgstr ""
+"<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetikett under knapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetiketter under-under knapp..."
+msgstr ""
+"<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetiketter under-under "
+"knapp..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
@@ -2265,6 +2268,12 @@ msgstr "<Toolbox>/Utvd/Nettleser/Tilleggsregister"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Utvd/Nettleser/Bruker OBS"
+
+#~ msgid "DB Browser (init...)"
+#~ msgstr "DB-leser (init...)"
+
+#~ msgid "DB Browser (please wait)"
+#~ msgstr "DB-leser (vennligst vent)"
 
 #~ msgid "Reset to Defaults"
 #~ msgstr "Sett til standardverdier"
