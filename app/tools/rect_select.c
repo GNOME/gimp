@@ -518,29 +518,38 @@ rect_select_motion (Tool           *tool,
     if (mevent->state & GDK_SHIFT_MASK) {
       ratio = (double)(rect_sel->fixed_height /
 		       (double)rect_sel->fixed_width);
-	  th = (int)((x - ox) * ratio);
-	  tw = (int)((y - oy) / ratio);
+      tw = x - ox;
+      th = y - oy;
 
-	  /*******************************************************
-	   I'm currently not satisfied with the way that this algorithm
-	   decides which measurement (mouse position) to snap the selection
-	   box to.  If you have a better idea either tell me
-	   (email: chap@cc.gatech.edu) or patch this sucker and send it.
-	  *******************************************************/
-	  if (abs(tw - (x - oy)) < abs(th - (y - oy))) {
-		w = tw;
-		h = (int)(w * ratio);
-	  } else {
-		h = th;
-		w = (int)(h / ratio);
-	  }
+      /* 
+       * This is probably a poorly-optimized way to do it, but it gives
+       * nicer, more predictable results than the original agorithm
+       * FIXME: center-originating selections (Ctrl-drag) are broken now.
+       * -xach 
+       */
 
- 	} else {
-	  w = rect_sel->fixed_width;
-	  h = rect_sel->fixed_height;
-	  ox = x;
-	  oy = y;
-	}
+      if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
+        {
+          w = tw;
+          h = (int)(tw * ratio);
+          /* h should have the sign of th */
+          if ((th < 0 && h > 0) || (th > 0 && h < 0))
+            h = -h;
+        } 
+      else 
+        {
+          h = th;
+          w = (int)(th / ratio);
+          /* w should have the sign of tw */
+          if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
+            w = -w;
+        }
+    } else {
+      w = rect_sel->fixed_width;
+      h = rect_sel->fixed_height;
+      ox = x;
+      oy = y;
+    }
   } else {
     w = (x - ox);
     h = (y - oy);

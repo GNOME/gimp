@@ -1,3 +1,8 @@
+Sat Dec 19 19:19:22 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/rect_select.c: applied the patch from Xach. Corrects the
+	behaviour of ratio-constrained selections. 
+
 Sat Dec 19 15:13:47 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/session.c: use new gtk_window_set_default_size() to
