@@ -83,7 +83,6 @@ typedef struct {
 
 typedef struct {
   GtkWidget *decor_button;
-  GtkWidget *delay_box;
   GtkWidget *delay_spinner;
   GtkWidget *single_button;
   GtkWidget *root_button;
@@ -394,14 +393,14 @@ shoot_dialog (void)
   /*  Single Window */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_border_width (GTK_CONTAINER (frame), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   shootint.single_button = gtk_radio_button_new ( radio_group );
   radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (shootint.single_button) );  
@@ -419,7 +418,7 @@ shoot_dialog (void)
   gtk_widget_show (hbox);
 
   /* with decorations */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   shootint.decor_button = gtk_check_button_new_with_label ("Include decorations");
   gtk_signal_connect (GTK_OBJECT (shootint.decor_button), "toggled",
@@ -435,12 +434,12 @@ shoot_dialog (void)
   /* Root Window */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_border_width (GTK_CONTAINER (frame), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
 		      frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -454,7 +453,7 @@ shoot_dialog (void)
 		       &radio_pressed[1]);
   gtk_widget_show (shootint.root_button);
 
-  label = gtk_label_new ( "Grab the whole screen" );
+  label = gtk_label_new ("Grab the whole screen");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -464,39 +463,29 @@ shoot_dialog (void)
   gtk_widget_show (frame);
 
   /* with delay */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      frame, TRUE, TRUE, 0);
-
-  shootint.delay_box = gtk_hbox_new (FALSE, 4);
-
-  gtk_container_add (GTK_CONTAINER (frame), shootint.delay_box);
-
-  label = gtk_label_new ( "after " );
-  gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
+		      hbox, TRUE, TRUE, 2);
+  label = gtk_label_new ("after");
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
   gtk_widget_show (label);
  
   adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
   shootint.delay_spinner = gtk_spin_button_new (adj, 0, 0);
-  gtk_box_pack_start (GTK_BOX(shootint.delay_box), shootint.delay_spinner, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX(hbox), shootint.delay_spinner, FALSE, TRUE, 0);
   gtk_widget_show(shootint.delay_spinner);
 
-  label = gtk_label_new ( " seconds delay" );
-  gtk_box_pack_start (GTK_BOX (shootint.delay_box), label, TRUE, TRUE, 0);
+  label = gtk_label_new ("seconds delay");
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
   gtk_widget_show (label);
 
-  gtk_widget_show (frame);
-
-  gtk_widget_show (shootint.delay_box);
+  gtk_widget_show (hbox);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.decor_button), 
 			       decorations);
   gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.root_button), 
 			       radio_pressed[1]);
-  gtk_widget_set_sensitive (shootint.delay_box, TRUE);
 
   gtk_widget_show (dialog);
 
@@ -524,7 +513,8 @@ shoot_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   shootint.run = TRUE;
-  shootvals.delay = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(shootint.delay_spinner));
+  shootvals.delay = 
+    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (shootint.delay_spinner));
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
