@@ -322,6 +322,13 @@ glasstile (GimpDrawable *drawable,
   gint    row, col, i, iwidth;
   gint    x1, y1, x2, y2;
 
+  /* Translations of variable names from Maswan
+   * rutbredd = grid width
+   * ruthojd = grid height
+   * ymitt = y middle
+   * xmitt = x middle
+   */
+  
   gint rutbredd, xpixel1, xpixel2;
   gint ruthojd , ypixel2;
   gint xhalv, xoffs, xmitt, xplus;
@@ -349,11 +356,20 @@ glasstile (GimpDrawable *drawable,
   cur_row = g_new (guchar, width * bytes);
   dest    = g_new (guchar, width * bytes);
 
-  /*  initialize the pixel regions  */
+  /* initialize the pixel regions, set grid height/width */
   if (preview_mode) 
     {
       rutbredd = gtvals.xblock * preview->scale_x;
       ruthojd  = gtvals.yblock * preview->scale_y;
+
+      /* Algorithm depends on grid height/width being at least 2 
+       * or you'll get extremely bad previews (1/2 size). 
+       *
+       * Preview isn't really terribly useful for larger images.
+       * Might be more useful as full-size window scroll-around type.  
+       */
+      rutbredd = MAX(rutbredd, 2);
+      ruthojd = MAX(ruthojd, 2);
     }
   else
     {
@@ -382,9 +398,10 @@ glasstile (GimpDrawable *drawable,
   for (row = y1; row < y2; row++)
     {
       d = dest;
+      
       ypixel2 = ymitt + yoffs * 2;
-
       ypixel2 = CLAMP (ypixel2, 0, y2 - 1);
+
       if (preview_mode)
 	{
 	  memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride, 
@@ -396,8 +413,9 @@ glasstile (GimpDrawable *drawable,
 	}
       yoffs++;
 
+      /* if current offset = half, do a displacement next time around */
       if (yoffs == yhalv) 
-	{
+	{ 
 	  ymitt += ruthojd;
 	  yoffs = - (yhalv + yplus);
 	}

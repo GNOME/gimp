@@ -1,3 +1,8 @@
+2003-10-12  Seth Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/glasstile.c: make a minimum grid size of 2 for
+	preview.  Fixes bug #72053.
+
 2003-10-10  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_init): Set the default
