@@ -1753,7 +1753,6 @@ calculate_edge_map (GImage *gimage,
   double prev, next;
   GimpDrawable *drawable;
   void *pr;
-  FILE *dump;
 
   drawable = gimage_active_drawable (gimage);
 
@@ -2398,7 +2397,7 @@ make_curve_d (int    *curve,
 /*   Functions for Catmull-Rom area conversion */
 /***********************************************/
 
-static GSList ** CR_scanlines;
+static GSList ** CR_scanlines = NULL;
 static int start_convert;
 static int width, height;
 static int lastx;
@@ -2514,6 +2513,7 @@ CR_convert (Iscissors *iscissors,
 	}
 
       g_slist_free (CR_scanlines[i]);
+      CR_scanlines[i] = NULL;
     }
 
   if (antialias)
