@@ -1,5 +1,27 @@
 2001-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/devices.[ch]
+	* app/gui/about-dialog.[ch]
+	* app/gui/preferences-dialog.[ch]
+	* app/gui/tips-dialog.[ch]: return a GtkWidget from the constructor.
+
+	* app/gui/dialogs.c
+	* app/gui/dialogs-constructors.[ch]: register them with the dialog
+	factory.
+
+	* app/gui/commands.[ch]
+	* app/gui/menus.c: removed their old callbacks.
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-editor.[ch]: no need to show or raise the shell
+	(that's done by the dialog factory now).
+
+	* app/widgets/gimpdialogfactory.c: actually do what the
+	"singleton" and "session_managed" flags say.
+
+2001-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am: commented the sections of the file list.
 	* app/gui/Makefile.am: cleanup.
 

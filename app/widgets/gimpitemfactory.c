@@ -102,7 +102,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
 {
   /*  <Toolbox>/File  */
 
-  /* the underscore installs an accelerator using the character that follows */
   { { N_("/_File"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/File/New..."), "<control>N", file_new_cmd_callback, 0 },
@@ -119,7 +118,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Preferences..."), NULL, dialogs_preferences_cmd_callback, 0 },
+  { { N_("/File/Preferences..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:preferences-dialog") },
     "file/dialogs/preferences/preferences.html", NULL },
 
   /*  <Toolbox>/File/Dialogs  */
@@ -141,12 +140,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/gradient_selection.html", NULL },
   { { N_("/File/Dialogs/Palette..."), "<control>P", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:palette-dialog") },
     "file/dialogs/palette_selection.html", NULL },
-  { { N_("/File/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Indexed Palette..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:indexed-palette-dialog") },
     "file/dialogs/indexed_palette.html", NULL },
 
   { { "/File/Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Input Devices..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:input-devices-dialog") },
     "file/dialogs/input_devices.html", NULL },
   { { N_("/File/Dialogs/Device Status..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:device-status-dialog") },
     "file/dialogs/device_status.html", NULL },
@@ -158,7 +157,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Dialogs/Error Console..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:error-console-dialog") },
     "file/dialogs/error_console.html", NULL },
 #ifdef DISPLAY_FILTERS
-  { { N_("/File/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Display Filters..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:display-filters-dialog") },
     "file/dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
 
@@ -227,10 +226,9 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/Xtns  */
 
-  /* the underscore installs an accelerator using the character that follows */
   { { N_("/_Xtns"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  { { N_("/Xtns/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
+  { { N_("/Xtns/Module Browser..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:module-browser-dialog") },
     "dialogs/module_browser.html", NULL },
 
   { { "/Xtns/---", NULL, NULL, 0, "<Separator>" },
@@ -238,16 +236,15 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/Help  */
 
-  /* the underscore installs an accelerator using the character that follows */
   { { N_("/_Help"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/Help/Help..."), "F1", help_help_cmd_callback, 0 },
     "help/dialogs/help.html", NULL },
   { { N_("/Help/Context Help..."), "<shift>F1", help_context_help_cmd_callback, 0 },
     "help/context_help.html", NULL },
-  { { N_("/Help/Tip of the Day..."), NULL, help_tips_cmd_callback, 0 },
+  { { N_("/Help/Tip of the Day..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:tips-dialog") },
     "help/dialogs/tip_of_the_day.html", NULL },
-  { { N_("/Help/About..."), NULL, help_about_cmd_callback, 0 },
+  { { N_("/Help/About..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:about-dialog") },
     "help/dialogs/about.html", NULL },
 #ifdef ENABLE_DEBUG_ENTRY
   { { N_("/Help/Dump Items (Debug)"), NULL, menus_debug_cmd_callback, 0 },
@@ -534,7 +531,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/Tools  */
 
-  { { N_("/Tools/Toolbox"), NULL, tools_toolbox_raise_cmd_callback, 0 },
+  { { N_("/Tools/Toolbox"), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:toolbox") },
     "toolbox/toolbox.html", NULL },
   { { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
     "toolbox/toolbox.html#default_colors", NULL },
@@ -563,12 +560,12 @@ static GimpItemFactoryEntry image_entries[] =
     "dialogs/gradient_selection.html", NULL },
   { { N_("/Dialogs/Palette..."), "<control>P", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:palette-dialog") },
     "dialogs/palette_selection.html", NULL },
-  { { N_("/Dialogs/Indexed Palette..."), NULL, dialogs_indexed_palette_cmd_callback, 0 },
+  { { N_("/Dialogs/Indexed Palette..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:indexed-palette-dialog") },
     "dialogs/indexed_palette.html", NULL },
 
   { { "/Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
+  { { N_("/Dialogs/Input Devices..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:input-devices-dialog") },
     "dialogs/input_devices.html", NULL },
   { { N_("/Dialogs/Device Status..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:device-status-dialog") },
     "dialogs/device_status.html", NULL },
@@ -580,10 +577,10 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Dialogs/Error Console..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:error-console-dialog") },
     "dialogs/error_console.html", NULL },
 #ifdef DISPLAY_FILTERS
-  { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
+  { { N_("/Dialogs/Display Filters..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:display-filters-dialogs") },
     "dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
-  { { N_("/Dialogs/Undo History..."), NULL, dialogs_undo_history_cmd_callback, 0},
+  { { N_("/Dialogs/Undo History..."), NULL, dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:undo-history-dialog") },
     "dialogs/undo_history.html", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },

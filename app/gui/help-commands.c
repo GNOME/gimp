@@ -33,22 +33,16 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
-#include "about-dialog.h"
-#include "color-area.h"
-#include "colormap-dialog.h"
 #include "errorconsole.h"
 #include "info-dialog.h"
 #include "info-window.h"
 #include "layer-select.h"
-#include "preferences-dialog.h"
-#include "tips-dialog.h"
 
 #include "app_procs.h"
 #include "commands.h"
 #include "context_manager.h"
 #include "convert.h"
 #include "desaturate.h"
-#include "devices.h"
 #include "channel_ops.h"
 #include "equalize.h"
 #include "file-open.h"
@@ -70,18 +64,11 @@
 #include "invert.h"
 #include "lc_dialog.h"
 #include "layers_dialogP.h"
-#include "module_db.h"
 #include "plug_in.h"
 #include "resize.h"
 #include "scale.h"
 #include "selection.h"
-#include "toolbox.h"
 #include "undo.h"
-#include "undo_history.h"
-
-#ifdef DISPLAY_FILTERS
-#include "gdisplay_color_ui.h"
-#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
@@ -1096,13 +1083,6 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
 /*****  Tools  *****/
 
 void
-tools_toolbox_raise_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  toolbox_raise ();
-}
-
-void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
@@ -1192,118 +1172,6 @@ filters_repeat_cmd_callback (GtkWidget *widget,
   plug_in_repeat (callback_action);
 }
 
-/*****  Dialogs  ******/
-
-void
-dialogs_preferences_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  preferences_dialog_create ();
-}
-
-static void
-dialogs_indexed_palette_select_callback (GimpColormapDialog *dialog,
-					 gpointer            data)
-{
-  GimpImage *image;
-  GimpRGB    color;
-  gint       index;
-
-  image = gimp_colormap_dialog_image (dialog);
-  index = gimp_colormap_dialog_col_index (dialog);
-
-  gimp_rgba_set_uchar (&color,
-		       image->cmap[index * 3],
-		       image->cmap[index * 3 + 1],
-		       image->cmap[index * 3 + 2],
-		       255);
-
-  if (active_color == FOREGROUND)
-    gimp_context_set_foreground (gimp_context_get_user (), &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_set_background (gimp_context_get_user (), &color);
-}
-
-void
-dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
-				      gpointer   client_data)
-{
-  static GimpColormapDialog *cmap_dlg;
-
-  if (!cmap_dlg)
-    {
-      cmap_dlg = gimp_colormap_dialog_create (image_context);
-
-      gtk_signal_connect
-	(GTK_OBJECT (cmap_dlg), "selected",
-	 GTK_SIGNAL_FUNC (dialogs_indexed_palette_select_callback),
-	 NULL);
-    }
-
-  if (! GTK_WIDGET_VISIBLE (cmap_dlg))
-    gtk_widget_show (GTK_WIDGET (cmap_dlg));
-  else
-    gdk_window_raise (GTK_WIDGET (cmap_dlg)->window);
-}
-
-void
-dialogs_input_devices_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data)
-{
-  input_dialog_create ();
-}
-
-#ifdef DISPLAY_FILTERS
-void
-dialogs_display_filters_cmd_callback (GtkWidget *widget,
-				      gpointer   client_data)
-{
-  GDisplay *gdisp;
-
-  gdisp = gdisplay_active ();
-  if (!gdisp)
-    gdisp = color_area_gdisp;
-
-  if (!gdisp->cd_ui)
-    gdisplay_color_ui_new (gdisp);
-
-  if (!GTK_WIDGET_VISIBLE (gdisp->cd_ui))
-    gtk_widget_show (gdisp->cd_ui);
-  else
-    gdk_window_raise (gdisp->cd_ui->window);
-}
-#endif /* DISPLAY_FILTERS */
-
-void
-dialogs_undo_history_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  GDisplay  *gdisp;
-  GimpImage *gimage;
-  return_if_no_display (gdisp);
-
-  gimage = gdisp->gimage;
-
-  if (!gimage->undo_history)
-    gimage->undo_history = undo_history_new (gimage);
-
-  if (!GTK_WIDGET_VISIBLE (gimage->undo_history))
-    gtk_widget_show (gimage->undo_history);
-  else
-    gdk_window_raise (gimage->undo_history->window);
-}
-
-void
-dialogs_module_browser_cmd_callback (GtkWidget *widget,
-				     gpointer   client_data)
-{
-  GtkWidget *module_browser;
-
-  module_browser = module_db_browser_new ();
-  gtk_widget_show (module_browser);
-}
-
-
 /*****  Help  *****/
 
 void
@@ -1318,20 +1186,6 @@ help_context_help_cmd_callback (GtkWidget *widget,
 				gpointer   client_data)
 {
   gimp_context_help ();
-}
-
-void
-help_tips_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
-{
-  tips_dialog_create ();
-}
-
-void
-help_about_cmd_callback (GtkWidget *widget,
-			 gpointer   client_data)
-{
-  about_dialog_create ();
 }
 
 

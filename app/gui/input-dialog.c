@@ -209,73 +209,66 @@ device_info_get_by_name (gchar *name)
 
 /*  the gtk input dialog  */
 
-void
+GtkWidget *
 input_dialog_create (void)
 {
   static GtkWidget *inputd = NULL;
   GtkWidget        *hbbox;
 
-  if (!inputd)
-    {
-      inputd = gtk_input_dialog_new ();
+  if (inputd)
+    return inputd;
 
-      /* register this one only */
-      dialog_register (inputd);
+  inputd = gtk_input_dialog_new ();
 
-      gtk_container_set_border_width
-	(GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
-      gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (inputd)->action_area),
-			       FALSE);
+  /* register this one only */
+  dialog_register (inputd);
 
-      hbbox = gtk_hbutton_box_new ();
-      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_container_set_border_width
+    (GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (inputd)->action_area),
+			   FALSE);
 
-      gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->save_button, hbbox);
-      GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->save_button,
-			    GTK_CAN_DEFAULT);
-      gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->close_button, hbbox);
-      GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->close_button,
-			    GTK_CAN_DEFAULT);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
 
-      gtk_box_pack_end (GTK_BOX (GTK_DIALOG (inputd)->action_area), hbbox,
-			FALSE, FALSE, 0);
-      gtk_widget_grab_default (GTK_INPUT_DIALOG (inputd)->close_button);
-      gtk_widget_show(hbbox);
+  gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->save_button, hbbox);
+  GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->save_button,
+			GTK_CAN_DEFAULT);
+  gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->close_button, hbbox);
+  GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->close_button,
+			GTK_CAN_DEFAULT);
 
-      gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
-			  "clicked",
-			  GTK_SIGNAL_FUNC (devices_write_rc),
-			  NULL);
-      gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
-			  "clicked",
-			  GTK_SIGNAL_FUNC (devices_close_callback),
-			  inputd);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (inputd)->action_area), hbbox,
+		    FALSE, FALSE, 0);
+  gtk_widget_grab_default (GTK_INPUT_DIALOG (inputd)->close_button);
+  gtk_widget_show(hbbox);
 
-      gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &inputd);
+  gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
+		      "clicked",
+		      GTK_SIGNAL_FUNC (devices_write_rc),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
+		      "clicked",
+		      GTK_SIGNAL_FUNC (devices_close_callback),
+		      inputd);
 
-      gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
-			  GTK_SIGNAL_FUNC (input_dialog_able_callback),
-			  NULL);
-      gtk_signal_connect (GTK_OBJECT (inputd), "disable_device",
-			  GTK_SIGNAL_FUNC (input_dialog_able_callback),
-			  NULL);
+  gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		      &inputd);
 
-      /*  Connect the "F1" help key  */
-      gimp_help_connect_help_accel (inputd,
-				    gimp_standard_help_func,
-				    "dialogs/input_devices.html");
+  gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
+		      GTK_SIGNAL_FUNC (input_dialog_able_callback),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (inputd), "disable_device",
+		      GTK_SIGNAL_FUNC (input_dialog_able_callback),
+		      NULL);
 
-      gtk_widget_show (inputd);
-    }
-  else
-    {
-      if (!GTK_WIDGET_MAPPED (inputd))
-	gtk_widget_show (inputd);
-      else
-	gdk_window_raise (inputd->window);
-    }
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (inputd,
+				gimp_standard_help_func,
+				"dialogs/input_devices.html");
+
+  return inputd;
 }
 
 static void
@@ -747,14 +740,7 @@ device_status_create (void)
   gint        i;
 
   if (deviceD)
-    {
-      if (! GTK_WIDGET_MAPPED (deviceD->shell))
-	gtk_widget_show (deviceD->shell);
-      else
-	gdk_window_raise (deviceD->shell->window);
-
-      return deviceD->shell;
-    }
+    return deviceD->shell;
 
   deviceD = g_new (DeviceInfoDialog, 1);
 
@@ -954,8 +940,6 @@ device_status_create (void)
   gtk_signal_connect (GTK_OBJECT (deviceD->shell), "destroy",
 		      GTK_SIGNAL_FUNC (device_status_destroy_callback),
 		      NULL);
-
-  gtk_widget_show (deviceD->shell);
 
   return deviceD->shell;
 }

@@ -82,13 +82,6 @@ pattern_dialog_create (void)
     {
       pattern_select_dialog = pattern_select_new (NULL, NULL);
     }
-  else
-    {
-      if (!GTK_WIDGET_VISIBLE (pattern_select_dialog->shell))
-	gtk_widget_show (pattern_select_dialog->shell);
-      else
-	gdk_window_raise (pattern_select_dialog->shell->window);
-    }
 
   return pattern_select_dialog->shell;
 }

@@ -30,6 +30,14 @@ GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory);
 GtkWidget * dialogs_palette_get            (GimpDialogFactory *factory);
 GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory);
 GtkWidget * dialogs_document_index_get     (GimpDialogFactory *factory);
+GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory);
+GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory);
+GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory);
+GtkWidget * dialogs_indexed_palette_get    (GimpDialogFactory *factory);
+GtkWidget * dialogs_undo_history_get       (GimpDialogFactory *factory);
+GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory);
+GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory);
+GtkWidget * dialogs_about_get              (GimpDialogFactory *factory);
 
 GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory);
 GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory);

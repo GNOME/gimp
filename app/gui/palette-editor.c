@@ -181,15 +181,6 @@ palette_dialog_create (void)
       top_level_palette = palette_dialog_new (FALSE);
 
       dialog_register (top_level_palette->shell);
-
-      gtk_widget_show (top_level_palette->shell);
-    }
-  else
-    {
-      if (! GTK_WIDGET_VISIBLE (top_level_palette->shell))
-	gtk_widget_show (top_level_palette->shell);
-      else
-	gdk_window_raise (top_level_palette->shell->window);
     }
 
   return top_level_palette->shell;

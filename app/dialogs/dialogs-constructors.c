@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -36,7 +37,10 @@
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimppreview.h"
 
+#include "about-dialog.h"
 #include "brush-select.h"
+#include "color-area.h"
+#include "colormap-dialog.h"
 #include "devices.h"
 #include "dialogs-constructors.h"
 #include "docindex.h"
@@ -45,38 +49,49 @@
 #include "gradient-editor.h"
 #include "gradient-select.h"
 #include "lc_dialog.h"
-
 #include "palette-editor.h"
 #include "pattern-select.h"
+#include "preferences-dialog.h"
+#include "tips-dialog.h"
 #include "toolbox.h"
 
 #include "context_manager.h"
+#include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpimage.h"
 #include "gimprc.h"
+#include "module_db.h"
+#include "undo_history.h"
+
+#ifdef DISPLAY_FILTERS
+#include "gdisplay_color_ui.h"
+#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
 
-static GtkWidget * dialogs_brush_tab_func    (GimpDockable *dockable,
-					      GimpDockbook *dockbook,
-					      gint          size);
-static GtkWidget * dialogs_pattern_tab_func  (GimpDockable *dockable,
-					      GimpDockbook *dockbook,
-					      gint          size);
-static GtkWidget * dialogs_gradient_tab_func (GimpDockable *dockable,
-					      GimpDockbook *dockbook,
-					      gint          size);
-static GtkWidget * dialogs_palette_tab_func  (GimpDockable *dockable,
-					      GimpDockbook *dockbook,
-					      gint          size);
+static void dialogs_indexed_palette_selected (GimpColormapDialog     *dialog,
+					      GimpContext            *context);
 
-static GtkWidget * dialogs_dockable_new (GtkWidget              *widget,
-					 const gchar            *name,
-					 const gchar            *short_name,
-					 GimpDockableGetTabFunc  get_tab_func);
+static GtkWidget * dialogs_brush_tab_func    (GimpDockable           *dockable,
+					      GimpDockbook           *dockbook,
+					      gint                    size);
+static GtkWidget * dialogs_pattern_tab_func  (GimpDockable           *dockable,
+					      GimpDockbook           *dockbook,
+					      gint                    size);
+static GtkWidget * dialogs_gradient_tab_func (GimpDockable           *dockable,
+					      GimpDockbook           *dockbook,
+					      gint                    size);
+static GtkWidget * dialogs_palette_tab_func  (GimpDockable           *dockable,
+					      GimpDockbook           *dockbook,
+					      gint                    size);
+
+static GtkWidget * dialogs_dockable_new      (GtkWidget              *widget,
+					      const gchar            *name,
+					      const gchar            *short_name,
+					      GimpDockableGetTabFunc  get_tab_func);
 
 
 /*  public functions  */
@@ -143,6 +158,89 @@ GtkWidget *
 dialogs_document_index_get (GimpDialogFactory *factory)
 {
   return document_index_create ();
+}
+
+GtkWidget *
+dialogs_preferences_get (GimpDialogFactory *factory)
+{
+  return preferences_dialog_create ();
+}
+
+GtkWidget *
+dialogs_input_devices_get (GimpDialogFactory *factory)
+{
+  return input_dialog_create ();
+}
+
+GtkWidget *
+dialogs_module_browser_get (GimpDialogFactory *factory)
+{
+  return module_db_browser_new ();
+}
+
+GtkWidget *
+dialogs_indexed_palette_get (GimpDialogFactory *factory)
+{
+  GimpColormapDialog *cmap_dlg;
+
+  cmap_dlg = gimp_colormap_dialog_create (image_context);
+
+  gtk_signal_connect (GTK_OBJECT (cmap_dlg), "selected",
+		      GTK_SIGNAL_FUNC (dialogs_indexed_palette_selected),
+		      factory->context);
+
+  return GTK_WIDGET (cmap_dlg);
+}
+
+GtkWidget *
+dialogs_undo_history_get (GimpDialogFactory *factory)
+{
+  GDisplay  *gdisp;
+  GimpImage *gimage;
+
+  gdisp = gimp_context_get_display (factory->context);
+
+  if (! gdisp)
+    return NULL;
+
+  gimage = gdisp->gimage;
+
+  if (! gimage->undo_history)
+    gimage->undo_history = undo_history_new (gimage);
+
+  return gimage->undo_history;
+}
+
+GtkWidget *
+dialogs_display_filters_get (GimpDialogFactory *factory)
+{
+#ifdef DISPLAY_FILTERS
+  GDisplay *gdisp;
+
+  gdisp = gimp_context_get_display (factory->context);
+
+  if (! gdisp)
+    gdisp = color_area_gdisp;
+
+  if (! gdisp->cd_ui)
+    gdisplay_color_ui_new (gdisp);
+
+  return gdisp->cd_ui;
+#else
+  return NULL;
+#endif /* DISPLAY_FILTERS */
+}
+
+GtkWidget *
+dialogs_tips_get (GimpDialogFactory *factory)
+{
+  return tips_dialog_create ();
+}
+
+GtkWidget *
+dialogs_about_get (GimpDialogFactory *factory)
+{
+  return about_dialog_create ();
 }
 
 
@@ -347,6 +445,29 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory)
 
 
 /*  private functions  */
+
+static void
+dialogs_indexed_palette_selected (GimpColormapDialog *dialog,
+				  GimpContext        *context)
+{
+  GimpImage *gimage;
+  GimpRGB    color;
+  gint       index;
+
+  gimage = gimp_colormap_dialog_image (dialog);
+  index  = gimp_colormap_dialog_col_index (dialog);
+
+  gimp_rgba_set_uchar (&color,
+		       gimage->cmap[index * 3],
+		       gimage->cmap[index * 3 + 1],
+		       gimage->cmap[index * 3 + 2],
+		       255);
+
+  if (active_color == FOREGROUND)
+    gimp_context_set_foreground (context, &color);
+  else if (active_color == BACKGROUND)
+    gimp_context_set_background (context, &color);
+}
 
 static GtkWidget *
 dialogs_brush_tab_func (GimpDockable *dockable,

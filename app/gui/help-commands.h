@@ -104,7 +104,6 @@ void layers_add_alpha_channel_cmd_callback (GtkWidget *, gpointer);
 void layers_alpha_select_cmd_callback      (GtkWidget *, gpointer);
 void layers_resize_to_image_cmd_callback   (GtkWidget *, gpointer);
 
-void tools_toolbox_raise_cmd_callback      (GtkWidget *, gpointer);
 void tools_default_colors_cmd_callback     (GtkWidget *, gpointer);
 void tools_swap_colors_cmd_callback        (GtkWidget *, gpointer);
 void tools_swap_contexts_cmd_callback      (GtkWidget *, gpointer);
@@ -116,20 +115,8 @@ void filters_repeat_cmd_callback           (GtkWidget *widget,
 					    gpointer   callback_data,
 					    guint      callback_action);
 
-void dialogs_preferences_cmd_callback      (GtkWidget *, gpointer);
-void dialogs_indexed_palette_cmd_callback  (GtkWidget *, gpointer);
-void dialogs_input_devices_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_undo_history_cmd_callback     (GtkWidget *, gpointer);
-void dialogs_module_browser_cmd_callback   (GtkWidget *, gpointer);
-
-#ifdef DISPLAY_FILTERS
-void dialogs_display_filters_cmd_callback  (GtkWidget *, gpointer);
-#endif /* DISPLAY_FILTERS */
-
 void help_help_cmd_callback                (GtkWidget *, gpointer);
 void help_context_help_cmd_callback        (GtkWidget *, gpointer);
-void help_tips_cmd_callback                (GtkWidget *, gpointer);
-void help_about_cmd_callback               (GtkWidget *, gpointer);
 
 
 #endif /* __COMMANDS_H__ */

@@ -104,13 +104,6 @@ brush_dialog_create (void)
     {
       brush_select_dialog = brush_select_new (NULL, NULL, 0.0, 0, 0);
     }
-  else
-    {
-      if (!GTK_WIDGET_VISIBLE (brush_select_dialog->shell))
-	gtk_widget_show (brush_select_dialog->shell);
-      else
-	gdk_window_raise (brush_select_dialog->shell->window);
-    }
 
   return brush_select_dialog->shell;
 }

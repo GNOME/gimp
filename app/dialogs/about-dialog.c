@@ -114,7 +114,7 @@ static gchar *hadja_text[] =
 #endif
 };
 
-void
+GtkWidget *
 about_dialog_create (void)
 {
   GtkWidget *vbox;
@@ -127,7 +127,7 @@ about_dialog_create (void)
   gint       i;
   gchar     *label_text;
 
-  if (!about_dialog)
+  if (! about_dialog)
     {
       about_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
@@ -167,7 +167,7 @@ about_dialog_create (void)
 	{
 	  gtk_widget_destroy (about_dialog);
 	  about_dialog = NULL;
-	  return;
+	  return NULL;
 	}
 
       vbox = gtk_vbox_new (FALSE, 1);
@@ -264,18 +264,18 @@ about_dialog_create (void)
 				 &scroll_area->style->white);
     }
 
-  if (!GTK_WIDGET_VISIBLE (about_dialog))
+  if (! GTK_WIDGET_VISIBLE (about_dialog))
     {
       gtk_widget_show (about_dialog);
 
-      do_animation = TRUE;
-      do_scrolling = FALSE;
-      scroll_state = 0;
-      frame = 0;
-      offset = 0;
+      do_animation    = TRUE;
+      do_scrolling    = FALSE;
+      scroll_state    = 0;
+      frame           = 0;
+      offset          = 0;
       cur_scroll_text = 0;
 
-      if (!double_speed && hadja_state != 7)
+      if (! double_speed && hadja_state != 7)
 	{
 	  for (i = 0; i < nscroll_texts; i++) 
 	    {
@@ -303,6 +303,8 @@ about_dialog_create (void)
     {
       gdk_window_raise (about_dialog->window);
     }
+
+  return about_dialog;
 }
 
 static gboolean
@@ -521,10 +523,10 @@ about_dialog_key (GtkWidget      *widget,
 						    scroll_text[i]);
 	}
       
-      scroll_state = 0;
+      scroll_state     = 0;
       cur_scroll_index = 0;
-      cur_scroll_text = 0;
-      offset = 0;
+      cur_scroll_text  = 0;
+      offset           = 0;
     }
   
   return FALSE;
@@ -537,9 +539,9 @@ about_dialog_tool_drop (GtkWidget    *widget,
 {
   GdkPixmap *pixmap = NULL;
   GdkBitmap *mask   = NULL;
-  gint width  = 0;
-  gint height = 0;
-  gint i;
+  gint       width  = 0;
+  gint       height = 0;
+  gint       i;
   
   if (do_animation)
     return;
@@ -549,7 +551,7 @@ about_dialog_tool_drop (GtkWidget    *widget,
 
   timer = gtk_timeout_add (75, about_dialog_timer, NULL);
 
-  frame = 0;
+  frame        = 0;
   do_animation = TRUE;
   do_scrolling = FALSE;
 
@@ -560,11 +562,10 @@ about_dialog_tool_drop (GtkWidget    *widget,
 		      logo_area->allocation.width,
 		      logo_area->allocation.height);
 
-  pixmap =
-    gdk_pixmap_create_from_xpm_d (widget->window,
-                                  &mask,
-                                  NULL,
-                                  wilber2_xpm);
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
+					 &mask,
+					 NULL,
+					 wilber2_xpm);
 
   gdk_window_get_size (pixmap, &width, &height);
 
@@ -602,10 +603,10 @@ about_dialog_tool_drop (GtkWidget    *widget,
 						scroll_text[i]);
     }
 
-  scroll_state = 0;
+  scroll_state     = 0;
   cur_scroll_index = 0;
-  cur_scroll_text = 0;
-  offset = 0;
+  cur_scroll_text  = 0;
+  offset           = 0;
 
   double_speed = TRUE;
 }
@@ -640,7 +641,7 @@ about_dialog_timer (gpointer data)
 	    {
 	      do_animation = FALSE;
 	      do_scrolling = TRUE;
-	      frame = 0;
+	      frame        = 0;
 
 	      timer = gtk_timeout_add (75, about_dialog_timer, NULL);
 
@@ -651,7 +652,7 @@ about_dialog_timer (gpointer data)
 
   if (do_scrolling)
     {
-      if (!scroll_pixmap)
+      if (! scroll_pixmap)
 	scroll_pixmap = gdk_pixmap_new (scroll_area->window,
 					scroll_area->allocation.width,
 					scroll_area->allocation.height,
@@ -678,7 +679,7 @@ about_dialog_timer (gpointer data)
 	  cur_scroll_index += 1;
 	  if (cur_scroll_index == nscroll_texts)
 	    cur_scroll_index = 0;
-	  
+
 	  cur_scroll_text = shuffle_array[cur_scroll_index];
 
 	  offset = 0;

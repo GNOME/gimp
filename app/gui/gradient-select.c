@@ -75,13 +75,6 @@ gradient_dialog_create (void)
     {
       gradient_select_dialog = gradient_select_new (NULL, NULL);
     }
-  else
-    {
-      if (!GTK_WIDGET_VISIBLE (gradient_select_dialog->shell))
-	gtk_widget_show (gradient_select_dialog->shell);
-      else
-	gdk_window_raise (gradient_select_dialog->shell->window);
-    }
 
   return gradient_select_dialog->shell;
 }

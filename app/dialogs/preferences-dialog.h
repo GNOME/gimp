@@ -20,7 +20,7 @@
 #define __PREFERENCES_DIALOG_H__
 
 
-void   preferences_dialog_create (void);
+GtkWidget * preferences_dialog_create (void);
 
 
 #endif /* __PREFERENCES_DIALOG_H__ */

@@ -1345,7 +1345,7 @@ prefs_help_func (const gchar *help_data)
 /************************************************************************
  *  create the preferences dialog
  */
-void
+GtkWidget *
 preferences_dialog_create (void)
 {
   GtkWidget    *ctree;
@@ -1381,10 +1381,7 @@ preferences_dialog_create (void)
   gchar *pixels_per_unit;
 
   if (prefs_dlg)
-    {
-      gdk_window_raise (GTK_WIDGET (prefs_dlg)->window);
-      return;
-    }
+    return prefs_dlg;
 
   if (edit_temp_path == NULL)
     {
@@ -2612,5 +2609,5 @@ preferences_dialog_create (void)
   gtk_widget_show (ctree);
   gtk_widget_show (notebook);
 
-  gtk_widget_show (prefs_dlg);
+  return prefs_dlg;
 }

@@ -303,7 +303,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 			       "gimp-dialog-factory-entry",
 			       entry);
 
-	  if (entry->session_managed && GTK_WIDGET_TOPLEVEL (dialog))
+	  if (GTK_WIDGET_TOPLEVEL (dialog))
 	    {
 	      gimp_dialog_factory_add_toplevel (factory, dialog);
 	    }
@@ -365,10 +365,27 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 
 	  if (info->toplevel_entry == entry)
 	    {
+	      if (entry->singleton)
+		{
+		  if (info->widget)
+		    {
+		      g_warning ("%s(): singleton dialog \"%s\"created twice",
+				 G_GNUC_FUNCTION, entry->identifier);
+		      return;
+		    }
+		}
+	      else if (info->widget)
+		{
+		  continue;
+		}
+
 	      info->widget = toplevel;
 
-	      gimp_dialog_factory_set_window_geometry (info->widget,
-						       info, FALSE);
+	      if (entry->session_managed)
+		{
+		  gimp_dialog_factory_set_window_geometry (info->widget,
+							   info, FALSE);
+		}
 
 	      break;
 	    }
@@ -476,6 +493,12 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
       GimpSessionInfo *info;
 
       info = (GimpSessionInfo *) list->data;
+
+      /*  we keep session info entries for all dialogs created by the
+       *  factory but don't save them if they don't want to be managed
+       */
+      if (info->toplevel_entry && ! info->toplevel_entry->session_managed)
+	continue;
 
       if (info->widget)
 	gimp_dialog_factory_get_window_info (info->widget, info);

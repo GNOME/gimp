@@ -40,13 +40,13 @@ void   devices_init         (void);
 void   devices_restore      (void);
 
 /*  Create device info dialog  */
-void   input_dialog_create  (void);
+GtkWidget * input_dialog_create  (void);
 
 /*  Create the device status dialog  */
 GtkWidget * device_status_create (void);
 
 /*  Returns TRUE, and makes necessary global changes
- *  event is not for current_device
+ *  if event is not for current_device
  */
 gint   devices_check_change (GdkEvent     *event);
 
