@@ -343,8 +343,8 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   ((GimpToolOptions *) options)->reset_func = bucket_options_reset;
 
-  options->sample_merged    = options->sample_merged_d    = FALSE;
   options->fill_transparent = options->fill_transparent_d = TRUE;
+  options->sample_merged    = options->sample_merged_d    = FALSE;
   options->threshold        = gimprc.default_threshold;
   options->fill_mode        = options->fill_mode_d        = FG_BUCKET_FILL;
 
@@ -380,16 +380,21 @@ bucket_options_new (GimpToolInfo *tool_info)
   /*  the sample merged toggle  */
   options->sample_merged_w =
     gtk_check_button_new_with_label (_("Sample Merged"));
-  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
                       FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
+  gimp_help_set_help_data (options->sample_merged_w,
+			   _("Base filled area on all visible layers"), NULL);
+
+  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->sample_merged);
+
   /*  the threshold scale  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Threshold:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
@@ -402,12 +407,13 @@ bucket_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_widget_show (scale);
+
+  gimp_help_set_help_data (scale, _("Maximum color difference"), NULL);
+
   g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
-  gtk_widget_show (scale);
-
-  gtk_widget_show (hbox);
 
   /*  fill type  */
   frame = gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
@@ -445,6 +451,9 @@ bucket_options_reset (GimpToolOptions *tool_options)
   options = (BucketOptions *) tool_options;
 
   paint_options_reset (tool_options);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_transparent_w),
+				options->fill_transparent_d);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);

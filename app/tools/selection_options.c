@@ -503,8 +503,10 @@ selection_options_reset (GimpToolOptions *tool_options)
 				options->feather_radius_d);
     }
 
-  if (options->sample_merged_w)
+  if (options->select_transparent_w)
     {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->select_transparent_w),
+				    options->select_transparent_d);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
@@ -540,13 +542,13 @@ selection_options_reset (GimpToolOptions *tool_options)
 	 ((options->fixed_unit_d == GIMP_UNIT_PERCENT) ? 2 :
 	  (MIN (6, MAX (3, gimp_unit_get_digits (options->fixed_unit_d))))));
 
-      spinbutton =
-	g_object_get_data (G_OBJECT (options->fixed_unit_w), "set_digits");
+      spinbutton = g_object_get_data (G_OBJECT (options->fixed_unit_w),
+				      "set_digits");
       while (spinbutton)
 	{
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
-	  spinbutton =
-	    g_object_get_data (G_OBJECT (spinbutton), "set_digits");
+
+	  spinbutton = g_object_get_data (G_OBJECT (spinbutton), "set_digits");
 	}
     }
 

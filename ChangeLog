@@ -1,5 +1,11 @@
 2002-02-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/selection_options.c: added missing tooltips, enabled
+	"reset" for the new select/fill transparent toggles.
+
+2002-02-11  Michael Natterer  <mitch@gimp.org>
+
 	* etc/gimprc.in
 	* etc/gimprc.win32: document the new %m image-title-format expansion.
 
