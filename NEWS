@@ -6,6 +6,21 @@ here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
 
+Bugs fixed in GIMP 2.0.3
+========================
+- several build fixes (#144632, #144780)
+- documentation fixes (#144267)
+- avoid use of uninitialized values in GimpColorArea widget (#144786)
+- fixed Levels tool on grayscale images with alpha channel (#141930)
+- fixed Save/Load functionality in channel-mixer plug-in (#145380)
+- fixed brokeness in GimpContext that caused tool options and device
+  settings to be saved incorrectly
+- fixed bug in Colorize tool
+- fixed undo stack corruption that occured with some undo settings (#145379)
+- fixed long-standing bug that caused the tablet pointer to change
+  inadvertently (#115774)
+
+
 Bugs fixed in GIMP 2.0.2
 ========================
 
