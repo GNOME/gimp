@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
-"POT-Creation-Date: 2003-12-18 23:29+0100\n"
-"PO-Revision-Date: 2003-12-19 13:09+0100\n"
+"POT-Creation-Date: 2003-12-20 16:17+0100\n"
+"PO-Revision-Date: 2003-12-20 23:39+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,10 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Nessun %s in gimprc:\n"
+"Serve aggiungere una voce tipo\n"
+"(%s \"%s\")\n"
+"al tuo file %s."
 
 #: plug-ins/FractalExplorer/Dialogs.c:549
 #: plug-ins/FractalExplorer/Dialogs.c:1633 plug-ins/common/AlienMap.c:1149
@@ -3219,11 +3223,11 @@ msgstr "<Image>/Filtri/Miglioramenti/Des_peckle..."
 #.
 #: plug-ins/common/despeckle.c:405
 msgid "Despeckling..."
-msgstr ""
+msgstr "Smacchiatura..."
 
 #: plug-ins/common/despeckle.c:615
 msgid "Despeckle"
-msgstr ""
+msgstr "Smacchiatura"
 
 #.
 #. * Filter type controls...
@@ -3360,7 +3364,7 @@ msgstr "Sui bordi:"
 #: plug-ins/common/displace.c:388 plug-ins/common/edge.c:702
 #: plug-ins/common/ripple.c:492 plug-ins/common/waves.c:321
 msgid "_Smear"
-msgstr ""
+msgstr "_Macchia"
 
 #: plug-ins/common/displace.c:402 plug-ins/common/edge.c:712
 #: plug-ins/common/fractaltrace.c:787 plug-ins/common/newsprint.c:412
@@ -3969,7 +3973,7 @@ msgstr "Frame %d (%d%s)"
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr ""
+msgstr "GIF: il tipo composito GIF %d non documentato non è gestibile. L'animazione non può essere eseguita o salvata perfettamente."
 
 #: plug-ins/common/gih.c:302
 #, c-format
@@ -5495,7 +5499,7 @@ msgstr "Modello di colore sconosciuto nel file PNG '%s'."
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr ""
+msgstr "Il file PNG specifica uno spostamento che ha causato il posizionamento del livello fuori dell'immagine."
 
 #: plug-ins/common/png.c:970
 #, c-format
@@ -5619,7 +5623,7 @@ msgstr "_Angolo spostamento:"
 
 #: plug-ins/common/polar.c:655
 msgid "_Map Backwards"
-msgstr ""
+msgstr "_Mappa indietro"
 
 #: plug-ins/common/polar.c:661
 msgid ""
@@ -5649,7 +5653,7 @@ msgstr "A _polare"
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
-msgstr ""
+msgstr "Se deselezionata l'immagine verrà mappata circolarmente su di un rettangolo. Se selezionata l'immagine verrà mappata su un cerchio."
 
 #: plug-ins/common/ps.c:868
 #, c-format
@@ -5686,7 +5690,7 @@ msgstr "Pagine:"
 
 #: plug-ins/common/ps.c:2695
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "Prova a inscatolare"
 
 #. Colouring
 #: plug-ins/common/ps.c:2708
@@ -5700,7 +5704,7 @@ msgstr "Bianco/Nero"
 #. * Gray *
 #: plug-ins/common/ps.c:2713 plug-ins/rcm/rcm_dialog.c:417
 msgid "Gray"
-msgstr "Grigi"
+msgstr "Grigio"
 
 #: plug-ins/common/ps.c:2715 plug-ins/fits/fits.c:999
 msgid "Automatic"
@@ -5747,7 +5751,7 @@ msgstr "_Mantieni le dimensioni"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
+msgstr "Sw selezionata l'immagine risultante sarà scalata per aggiustarsi alla dimensione data senza cambiare il rapporto tra le dimensioni."
 
 #. Unit
 #: plug-ins/common/ps.c:2877
@@ -5785,7 +5789,7 @@ msgstr "_Dimensioni anteprima:"
 
 #: plug-ins/common/psd.c:468
 msgid "Invalid UTF-8 string in PSD file"
-msgstr ""
+msgstr "Stringa UTF-8 non valida nel file PSD"
 
 #: plug-ins/common/psp.c:404
 msgid "Save as PSP"
@@ -5846,7 +5850,7 @@ msgstr "Onde"
 
 #: plug-ins/common/ripple.c:460
 msgid "_Retain Tilability"
-msgstr ""
+msgstr "_Mantieni affiancabilità"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:487
@@ -6328,11 +6332,11 @@ msgstr "<Image>/Filtri/Effetti luce/_Sparkle..."
 
 #: plug-ins/common/sparkle.c:287
 msgid "Sparkling..."
-msgstr ""
+msgstr "Scintillio..."
 
 #: plug-ins/common/sparkle.c:340
 msgid "Sparkle"
-msgstr ""
+msgstr "Scintilla"
 
 #: plug-ins/common/sparkle.c:368
 msgid "Luminosity _Threshold:"
@@ -6344,11 +6348,11 @@ msgstr "Aggiusta la soglia luminosità"
 
 #: plug-ins/common/sparkle.c:378
 msgid "F_lare Intensity:"
-msgstr "Intensità f_lare:"
+msgstr "Intensità _fiamma:"
 
 #: plug-ins/common/sparkle.c:381
 msgid "Adjust the Flare Intensity"
-msgstr ""
+msgstr "Imposta l'intensità fiamma"
 
 #: plug-ins/common/sparkle.c:388
 msgid "_Spike Length:"
@@ -6489,7 +6493,7 @@ msgstr "Macchie"
 
 #: plug-ins/common/spheredesigner.c:1742 plug-ins/common/spheredesigner.c:2859
 msgid "Texture"
-msgstr "Texture"
+msgstr "Trama"
 
 #: plug-ins/common/spheredesigner.c:1744
 msgid "Bumpmap"
@@ -6517,15 +6521,15 @@ msgstr "Aggiorna"
 
 #: plug-ins/common/spheredesigner.c:2554
 msgid "Textures"
-msgstr "Texture"
+msgstr "Trame"
 
 #: plug-ins/common/spheredesigner.c:2604
 msgid "Texture Properties"
-msgstr "Proprietà texture"
+msgstr "Proprietà della trama"
 
 #: plug-ins/common/spheredesigner.c:2622
 msgid "Texture:"
-msgstr "Texture:"
+msgstr "Trama:"
 
 #: plug-ins/common/spheredesigner.c:2628
 msgid "Colors:"
@@ -6587,7 +6591,7 @@ msgstr "Ammontare:"
 
 #: plug-ins/common/spheredesigner.c:2908
 msgid "Exp:"
-msgstr ""
+msgstr "Esponente:"
 
 #: plug-ins/common/spheredesigner.c:3066
 msgid "Rendering Sphere..."
@@ -6814,7 +6818,7 @@ msgstr "Il livello preserva la trasparenza."
 
 #: plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "Non è stata selezionata una tela RGBA/GRAYA."
 
 #: plug-ins/common/threshold_alpha.c:199
 msgid "Threshold Alpha: Coloring Transparency..."
@@ -6844,12 +6848,16 @@ msgid ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
+"Attenzione:\n"
+"l'immagine che state caricando ha 16 bit per canale. GIMP può gestire sono 8 bit, perciò convertirà l'immagine per voi. A causa della conversione alcune informazioni andranno perse."
 
 #: plug-ins/common/tiff.c:1683
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
+"Il formato TIFF supporta solo commenti nella\n"
+"codifica ASCII a 7bit. Nessun commento salvato."
 
 #: plug-ins/common/tiff.c:1813
 msgid "Save as TIFF"
@@ -7298,7 +7306,7 @@ msgstr "Wrap"
 
 #: plug-ins/common/warp.c:487
 msgid "Smear"
-msgstr ""
+msgstr "Macchia"
 
 #: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:987
 #: plug-ins/flame/flame.c:1096 plug-ins/gfig/gfig.c:2573
@@ -7361,7 +7369,7 @@ msgstr "Angolo:"
 
 #: plug-ins/common/warp.c:677
 msgid "Fixed-direction-vector map selection menu"
-msgstr ""
+msgstr "Menu di selezione mappa vettori a direzione fissa"
 
 #.
 #. if (display_diff_map) {
@@ -7420,6 +7428,8 @@ msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
+"Navigatore web non specificato.\n"
+"Indicare un navigatore web utilizzando la finestra delle preferenze."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7427,6 +7437,8 @@ msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
 msgstr ""
+"Impossibile analizzare il comando del navigatore web:\n"
+"%s"
 
 #: plug-ins/common/webbrowser.c:174
 #, c-format
@@ -7551,7 +7563,7 @@ msgstr "_Entrambi"
 
 #: plug-ins/common/wind.c:992
 msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr ""
+msgstr "Valori più elevati restringono l'effetto ad aree inferiori dell'immagine"
 
 #: plug-ins/common/wind.c:1007 plug-ins/gimpressionist/orientmap.c:600
 msgid "_Strength:"
@@ -7572,7 +7584,7 @@ msgstr "<Image>/File/Impostazione pagina"
 #: plug-ins/common/winprint.c:300
 #, c-format
 msgid "PrintDlg failed: %d"
-msgstr ""
+msgstr "PrintDlg è fallita: %d"
 
 #: plug-ins/common/winprint.c:336
 msgid "Printer doesn't support bitmaps"
@@ -7588,18 +7600,18 @@ msgstr "Stampa..."
 
 #: plug-ins/common/winprint.c:419
 msgid "CreateDIBSection failed"
-msgstr ""
+msgstr "CreateDIBSection è fallita"
 
 #: plug-ins/common/winprint.c:453
 msgid "SetStretchBltMode failed (warning only)"
-msgstr ""
+msgstr "SetStretchBltMode è fallita (è solo un'avviso)"
 
 #: plug-ins/common/winprint.c:516
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
-msgstr ""
+msgstr "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) è fallita, errore = %d, y = %d"
 
 #: plug-ins/common/winprint.c:545
 msgid "EndPage failed"
@@ -7608,7 +7620,7 @@ msgstr "Fallito fine pagina"
 #: plug-ins/common/winprint.c:592
 #, c-format
 msgid "PageSetupDlg failed: %d"
-msgstr ""
+msgstr "PageSetupDlg è fallita: %d\""
 
 #: plug-ins/common/wmf.c:202
 msgid "Load Windows Metafile"
@@ -7631,7 +7643,7 @@ msgstr "Impossibile aprire '%s' in lettura."
 
 #: plug-ins/common/wmf.c:415
 msgid "Rendered WMF"
-msgstr ""
+msgstr "WMF renderizzato"
 
 #: plug-ins/common/xbm.c:240
 msgid "Created with The GIMP"
@@ -8296,7 +8308,7 @@ msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr ""
+msgstr "Usare il pennello/la matita o l'aerografo per disegnare sull'immagine. Motivi disegna i motivi selezionati. È applicabile a cerchi/ellissi solo se è impostata l'approssimazione a cerchi/ellissi."
 
 #: plug-ins/gfig/gfig.c:2038 plug-ins/rcm/rcm_dialog.c:129
 msgid "Original"
@@ -8312,7 +8324,7 @@ msgstr "Multiplo"
 
 #: plug-ins/gfig/gfig.c:2045
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr ""
+msgstr "Disegna tutti gli oggetti su un livello (originale o nuovo) o un oggetto per livello"
 
 #: plug-ins/gfig/gfig.c:2050
 msgid "Draw on:"
@@ -8332,7 +8344,7 @@ msgstr "Selezione+riempimento"
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr ""
+msgstr "Tipo di disegno. Sia un pennello o una selezione. Vedere la pagina pennelli o la pagina selezione per le opzioni"
 
 #: plug-ins/gfig/gfig.c:2068
 msgid "Using:"
@@ -8356,11 +8368,11 @@ msgstr "Copia"
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr ""
+msgstr "Tipo sfondo livello. La copia provoca la copia del livello precedente prima dell'esecuzione del disegno"
 
 #: plug-ins/gfig/gfig.c:2088
 msgid "With BG of:"
-msgstr ""
+msgstr "Con SF di:"
 
 #: plug-ins/gfig/gfig.c:2091
 msgid "Reverse Line"
@@ -8386,7 +8398,7 @@ msgstr "Approssima cerchi/ellissi"
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr ""
+msgstr "Approssima cerchi ed ellissi usando linee. Permette l'uso di pennelli sfumati con questi tipi di oggetti."
 
 #: plug-ins/gfig/gfig.c:2193
 msgid "Gfig Brush Selection"
@@ -8394,7 +8406,7 @@ msgstr "Selezione pennello Gfig"
 
 #: plug-ins/gfig/gfig.c:2231
 msgid "Fade out:"
-msgstr ""
+msgstr "Sfumatura alla fine:"
 
 #: plug-ins/gfig/gfig.c:2254
 msgid "Gradient:"
@@ -8486,7 +8498,7 @@ msgstr "Rettangolo"
 
 #: plug-ins/gfig/gfig.c:2559
 msgid "Isometric"
-msgstr ""
+msgstr "Isometrico"
 
 #: plug-ins/gfig/gfig.c:2563
 msgid "Grid Type:"
@@ -8651,7 +8663,7 @@ msgstr "Cancella disegno Gfig"
 
 #: plug-ins/gfig/gfig.c:3882
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Modifica di oggetto in sola lettura - non sarà possibile salvarlo"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:3981
@@ -8767,6 +8779,9 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
+"GFlare '%s' non è salvato. Se si aggiunge una nuova voce in '%s', come:\n"
+"(gflare-path \"%s\")\n"
+"e si crea una cartella '%s', allora sarà possibile salvare le proprie GFlare nella cartella."
 
 #: plug-ins/gflare/gflare.c:1487
 #, c-format
@@ -8866,7 +8881,7 @@ msgstr "Elimina GFlare"
 #: plug-ins/gflare/gflare.c:3172
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr "non è stato trovato %s nella lista GFlare"
+msgstr "non è stato trovato %s in gflare_list"
 
 #: plug-ins/gflare/gflare.c:3213
 msgid "GFlare Editor"
@@ -9112,7 +9127,7 @@ msgstr "Dalla carta"
 
 #: plug-ins/gimpressionist/general.c:89
 msgid "Copy the texture of the selected paper as a background"
-msgstr "Copia il motivo della carta selezionata come sfonfo"
+msgstr "Copia la trama della carta selezionata come sfondo"
 
 #: plug-ins/gimpressionist/general.c:105
 msgid "Solid colored background"
@@ -9262,7 +9277,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:134
 msgid "Selects a random direction of each stroke"
-msgstr ""
+msgstr "Seleziona una direzione casuale per ogni tratto"
 
 #: plug-ins/gimpressionist/orientation.c:138
 #: plug-ins/gimpressionist/size.c:127
@@ -9271,7 +9286,7 @@ msgstr "Radiale"
 
 #: plug-ins/gimpressionist/orientation.c:144
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
+msgstr "Sia la direzione dal centro a determinare la direzione del tratto"
 
 #: plug-ins/gimpressionist/orientation.c:152
 #: plug-ins/gimpressionist/size.c:138
@@ -9295,7 +9310,7 @@ msgstr "Adattivo"
 
 #: plug-ins/gimpressionist/orientation.c:179
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
+msgstr "È stata selezionata la direzione che combacia meglio con l'immagine originale"
 
 #: plug-ins/gimpressionist/orientation.c:187
 #: plug-ins/gimpressionist/size.c:166
@@ -9304,11 +9319,11 @@ msgstr "Manuale"
 
 #: plug-ins/gimpressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
-msgstr ""
+msgstr "Specifica manualmente l'orientazione del tratto"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "Apri l'editor della mappa di orientamento"
 
 #: plug-ins/gimpressionist/orientmap.c:446
 msgid "Orientation Map Editor"
@@ -9316,7 +9331,7 @@ msgstr "Orientazione editor mappa"
 
 #: plug-ins/gimpressionist/orientmap.c:468
 msgid "Vectors"
-msgstr ""
+msgstr "Vettori"
 
 #: plug-ins/gimpressionist/orientmap.c:480
 msgid ""
@@ -9327,7 +9342,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
-msgstr ""
+msgstr "Imposta la luminosità dell'anteprima"
 
 #: plug-ins/gimpressionist/orientmap.c:523
 msgid "Select previous vector"
@@ -9361,26 +9376,26 @@ msgstr "_Normale"
 
 #: plug-ins/gimpressionist/orientmap.c:557
 msgid "Vorte_x"
-msgstr ""
+msgstr "Vortice_1"
 
 #: plug-ins/gimpressionist/orientmap.c:558
 msgid "Vortex_2"
-msgstr ""
+msgstr "Vortice_2"
 
 #: plug-ins/gimpressionist/orientmap.c:559
 msgid "Vortex_3"
-msgstr ""
+msgstr "Vortice_3"
 
 #: plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:539
 msgid "_Voronoi"
-msgstr ""
+msgstr "_Voronoi"
 
 #: plug-ins/gimpressionist/orientmap.c:570
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "La modalità Voronoi fa in modo che solo il vettore più vicino ad un dato punto sia influente"
 
 #: plug-ins/gimpressionist/orientmap.c:579
 msgid "A_ngle:"
@@ -9388,7 +9403,7 @@ msgstr "A_ngolo:"
 
 #: plug-ins/gimpressionist/orientmap.c:583
 msgid "Change the angle of the selected vector"
-msgstr ""
+msgstr "Cambia l'angolo del vettore selezionato"
 
 #: plug-ins/gimpressionist/orientmap.c:589
 msgid "Ang_le offset:"
@@ -9396,11 +9411,11 @@ msgstr "Spostamento ango_lo:"
 
 #: plug-ins/gimpressionist/orientmap.c:593
 msgid "Offset all vectors with a given angle"
-msgstr ""
+msgstr "Sposta tutti i vettori con un dato angolo"
 
 #: plug-ins/gimpressionist/orientmap.c:604
 msgid "Change the strength of the selected vector"
-msgstr ""
+msgstr "Cambia la forza del vettore selezionato"
 
 #: plug-ins/gimpressionist/orientmap.c:610
 msgid "S_trength exp.:"
@@ -9409,7 +9424,7 @@ msgstr "Esponente forza:"
 #: plug-ins/gimpressionist/orientmap.c:614
 #: plug-ins/gimpressionist/sizemap.c:534
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "Cambia l'esponente della forza"
 
 #: plug-ins/gimpressionist/paper.c:90
 msgid "P_aper"
@@ -9425,7 +9440,7 @@ msgstr "_Inverti"
 
 #: plug-ins/gimpressionist/paper.c:124
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "Inverte la trama della carta"
 
 #: plug-ins/gimpressionist/paper.c:127
 msgid "O_verlay"
@@ -9437,7 +9452,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:150
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
+msgstr "Specifica la scala della trama (in percentuale del file originale)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9698,8 +9713,9 @@ msgid "Simple"
 msgstr "Semplice"
 
 #: plug-ins/ifscompose/ifscompose.c:679
+#, fuzzy
 msgid "IfsCompose: Target"
-msgstr ""
+msgstr "IfsCompose: obbiettivo"
 
 #: plug-ins/ifscompose/ifscompose.c:685
 msgid "Scale Hue by:"
@@ -9711,8 +9727,9 @@ msgstr "Scala valore di:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:717
+#, fuzzy
 msgid "Full"
-msgstr ""
+msgstr "Tutto"
 
 #: plug-ins/ifscompose/ifscompose.c:724
 #, fuzzy
@@ -9963,7 +9980,6 @@ msgid "_Top Start at:"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:185
-#, fuzzy
 msgid "_Horz. Spacing:"
 msgstr "Spaziatura _oriz.:"
 
@@ -10023,35 +10039,29 @@ msgid "Move Up"
 msgstr "Sposta in alto"
 
 #: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:130
-#, fuzzy
 msgid "Paste"
-msgstr "Pattern:"
+msgstr "Incolla"
 
 #: plug-ins/imagemap/imap_cmd_select_all.c:51
-#, fuzzy
 msgid "Select All"
-msgstr "Seleziona"
+msgstr "Seleziona tutto"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:51
-#, fuzzy
 msgid "Select Next"
-msgstr "Seleziona"
+msgstr "Seleziona il prossimo"
 
 #: plug-ins/imagemap/imap_cmd_select_prev.c:51
-#, fuzzy
 msgid "Select Previous"
-msgstr "Vettore direzione"
+msgstr "Seleziona il precedente"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:64
-#, fuzzy
 msgid "Select Region"
-msgstr "Seleziona Pattern:"
+msgstr "Seleziona una regione"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:158
-#, fuzzy
 msgid "Send To Back"
-msgstr "Invia per e-mail"
+msgstr "Spedisci a nero"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:53
 msgid "Unselect"
@@ -10134,14 +10144,13 @@ msgid "_JavaScript"
 msgstr "_Javascript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:450
-#, fuzzy
 msgid "Area Settings"
-msgstr "Configurazioni"
+msgstr "Impostazioni area"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:494
-#, fuzzy, c-format
+#, c-format
 msgid "Area #%d Settings"
-msgstr "Configurazioni Avanzate"
+msgstr "Impostazioni area #%d"
 
 #: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
@@ -10166,14 +10175,12 @@ msgid "Save Imagemap"
 msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:201
-#, fuzzy
 msgid "Grid Settings"
-msgstr "Configurazioni"
+msgstr "Impostazioni griglia"
 
 #: plug-ins/imagemap/imap_grid.c:205
-#, fuzzy
 msgid "_Snap-To Grid Enabled"
-msgstr "Punti a Griglia"
+msgstr "Abilita griglia _magnetica"
 
 #: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
@@ -10181,387 +10188,335 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
-msgstr ""
+msgstr "_Nascosto"
 
 #: plug-ins/imagemap/imap_grid.c:226
-#, fuzzy
 msgid "_Lines"
-msgstr "Lineare"
+msgstr "_Linee"
 
 #: plug-ins/imagemap/imap_grid.c:235
-#, fuzzy
 msgid "C_rosses"
-msgstr "Chiudi"
+msgstr "In_croci"
 
 #: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
-msgstr ""
+msgstr "Granularità griglia"
 
 #: plug-ins/imagemap/imap_grid.c:251
-#, fuzzy
 msgid "_Width"
-msgstr "Larghezza:"
+msgstr "_Larghezza"
 
 #: plug-ins/imagemap/imap_grid.c:257
-#, fuzzy
 msgid "_Height"
-msgstr "Altezza:"
+msgstr "_Altezza"
 
 #: plug-ins/imagemap/imap_grid.c:271
-#, fuzzy
 msgid "Grid Offset"
-msgstr "Sposta"
+msgstr "Spostamento griglia"
 
 #: plug-ins/imagemap/imap_grid.c:279
 msgid "pixels from l_eft"
-msgstr ""
+msgstr "punti da _sinistra"
 
 #: plug-ins/imagemap/imap_grid.c:284
-#, fuzzy
 msgid "pixels from _top"
-msgstr "Mappa dall'alto"
+msgstr "punti dall'al_to"
 
 #: plug-ins/imagemap/imap_main.c:128
-#, fuzzy
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Image>/Filters/Map/Bump Map"
+msgstr "<Image>/Filtri/Web/Mappa _immagini..."
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
-msgstr ""
+msgstr "Alcuni dati sono cambiati!"
 
 #: plug-ins/imagemap/imap_main.c:739
 msgid "Do you really want to discard your changes?"
-msgstr ""
+msgstr "Se sicuro di voler abbandonare i cambiamenti?"
 
 #: plug-ins/imagemap/imap_main.c:947
 #, c-format
 msgid "File \"%s\" saved."
-msgstr ""
+msgstr "File \"%s\" salvato."
 
 #: plug-ins/imagemap/imap_main.c:951
 msgid "Couldn't save file:"
-msgstr ""
+msgstr "Impossibile salvare il file:"
 
 #: plug-ins/imagemap/imap_main.c:977
-#, fuzzy
 msgid "Image size has changed."
-msgstr "Dimensione Immagine"
+msgstr "La dimensione immagine è cambiata"
 
 #: plug-ins/imagemap/imap_main.c:978
-#, fuzzy
 msgid "Resize area's?"
-msgstr "Ridimensiona"
+msgstr "Ridimensionamento area?"
 
 #: plug-ins/imagemap/imap_main.c:1006
 msgid "Couldn't read file:"
-msgstr ""
+msgstr "Impossibile leggere il file:"
 
 #: plug-ins/imagemap/imap_main.c:1053
 #, c-format
 msgid "URL: %s"
-msgstr ""
+msgstr "URL: %s"
 
 #: plug-ins/imagemap/imap_menu.c:180
-#, fuzzy
 msgid "_File"
-msgstr "File"
+msgstr "_File"
 
 #: plug-ins/imagemap/imap_menu.c:186
-#, fuzzy
 msgid "Open Recent"
-msgstr "Apri file"
+msgstr "Apri recente"
 
 #: plug-ins/imagemap/imap_menu.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Seme casuale"
+msgstr "_Ripristina %s"
 
 #: plug-ins/imagemap/imap_menu.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "Rosso"
+msgstr "Ri_esegui %s"
 
 #: plug-ins/imagemap/imap_menu.c:252
-#, fuzzy
 msgid "_Edit"
-msgstr "Esci"
+msgstr "_Modifica"
 
 #: plug-ins/imagemap/imap_menu.c:273
-#, fuzzy
 msgid "Deselect _All"
-msgstr "Seleziona"
+msgstr "Deseleziona _tutto"
 
 #: plug-ins/imagemap/imap_menu.c:278
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "Modifica informazioni area"
 
 #: plug-ins/imagemap/imap_menu.c:293
-#, fuzzy
 msgid "_View"
-msgstr "Video"
+msgstr "_Visualizza"
 
 #: plug-ins/imagemap/imap_menu.c:297
-#, fuzzy
 msgid "Area List"
-msgstr "Configurazioni"
+msgstr "Elenco aree"
 
 #: plug-ins/imagemap/imap_menu.c:301
-#, fuzzy
 msgid "Source..."
-msgstr "Altri..."
+msgstr "Sorgente..."
 
 #: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1431
-#, fuzzy
 msgid "Grayscale"
-msgstr "Scala Gradiente"
+msgstr "Scala di grigi"
 
 #: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
-msgstr ""
+msgstr "Esegui uno zoom a"
 
 #: plug-ins/imagemap/imap_menu.c:357
-#, fuzzy
 msgid "_Mapping"
-msgstr "Assenza di memoria per il mapping dei colori"
+msgstr "_Mappatura"
 
 #: plug-ins/imagemap/imap_menu.c:360 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
-msgstr ""
+msgstr "Freccia"
 
 #: plug-ins/imagemap/imap_menu.c:363
-#, fuzzy
 msgid "Select Contiguous Region"
-msgstr "Seleziona Pattern:"
+msgstr "Seleziona area contigua"
 
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
-msgstr ""
+msgstr "_Strumenti"
 
 #: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
-#, fuzzy
 msgid "Grid Settings..."
-msgstr "Configurazioni"
+msgstr "Impostazioni griglia..."
 
 #: plug-ins/imagemap/imap_menu.c:386
-#, fuzzy
 msgid "Use GIMP Guides..."
-msgstr "Ghigliottina..."
+msgstr "Usa guide GIMP..."
 
 #: plug-ins/imagemap/imap_menu.c:388
-#, fuzzy
 msgid "Create Guides..."
-msgstr "Crea nuova immagine"
+msgstr "Crea guide..."
 
 #: plug-ins/imagemap/imap_menu.c:395
-#, fuzzy
 msgid "_Help"
-msgstr "Aiuto"
+msgstr "_Aiuto"
 
 #: plug-ins/imagemap/imap_menu.c:396
-#, fuzzy
 msgid "About ImageMap..."
-msgstr "Informazioni"
+msgstr "Informazioni su MappaImmagine"
 
 #: plug-ins/imagemap/imap_polygon.c:71
-#, fuzzy
 msgid "_Polygon"
-msgstr "Poligono"
+msgstr "_Poligono"
 
 #: plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
-msgstr ""
+msgstr "x (punti)"
 
 #: plug-ins/imagemap/imap_polygon.c:483
 msgid "y (pixels)"
-msgstr ""
+msgstr "y (punti)"
 
 #: plug-ins/imagemap/imap_polygon.c:522
-#, fuzzy
 msgid "_Insert"
-msgstr "Interi"
+msgstr "_Inserisci"
 
 #: plug-ins/imagemap/imap_polygon.c:528
 msgid "A_ppend"
-msgstr ""
+msgstr "Aggiungi in _fondo"
 
 #: plug-ins/imagemap/imap_polygon.c:534
-#, fuzzy
 msgid "_Remove"
-msgstr "Rimuovi"
+msgstr "_Rimuovi"
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
-msgstr ""
+msgstr "Strumenti"
 
 #: plug-ins/imagemap/imap_popup.c:146
 msgid "Zoom"
 msgstr "Zoom"
 
 #: plug-ins/imagemap/imap_popup.c:156
-#, fuzzy
 msgid "Guides..."
-msgstr "Ghigliottina..."
+msgstr "Guide..."
 
 #: plug-ins/imagemap/imap_preferences.c:212
 msgid "Couldn't save resource file:"
-msgstr ""
+msgstr "Impossibile salvare ul file risorse:"
 
 #: plug-ins/imagemap/imap_preferences.c:357
-#, fuzzy
 msgid "Select Color"
-msgstr "Seleziona"
+msgstr "Seleziona colore"
 
 #: plug-ins/imagemap/imap_preferences.c:446
-#, fuzzy
 msgid "Default Map Type"
-msgstr "Tipo Media:"
+msgstr "Tipo media predefinito"
 
 #: plug-ins/imagemap/imap_preferences.c:465
-#, fuzzy
 msgid "_Prompt for area info"
-msgstr "Compensazione toni scuri"
+msgstr "_Segnalazione per informazioni area"
 
 #: plug-ins/imagemap/imap_preferences.c:467
-#, fuzzy
 msgid "_Require default URL"
-msgstr "Valori Base"
+msgstr "_Richiedi valore predefinito URL"
 
 #: plug-ins/imagemap/imap_preferences.c:469
 msgid "Show area _handles"
-msgstr ""
+msgstr "Mostra _maniglie area"
 
 #: plug-ins/imagemap/imap_preferences.c:471
 msgid "_Keep NCSA circles true"
-msgstr ""
+msgstr "_Mantieni cerchio NCSA vero"
 
 #: plug-ins/imagemap/imap_preferences.c:473
 msgid "Show area URL _tip"
-msgstr ""
+msgstr "Mostra suggerimen_to URL area"
 
 #: plug-ins/imagemap/imap_preferences.c:476
 msgid "_Use double-sized grab handles"
-msgstr ""
+msgstr "_Usa maniglie per afferrare l'area di dimensioni doppie"
 
 #: plug-ins/imagemap/imap_preferences.c:483
-#, fuzzy
 msgid "_Menu"
-msgstr "Muovi Tracciato"
+msgstr "_Menu"
 
 #: plug-ins/imagemap/imap_preferences.c:487
 msgid "Number of _Undo levels (1 - 99):"
-msgstr ""
+msgstr "Numero di livelli di ripristino (1 - 99):"
 
 #: plug-ins/imagemap/imap_preferences.c:492
-#, fuzzy
 msgid "Number of M_RU entries (1 - 16):"
-msgstr "Numero di Frame:"
+msgstr "Numero di voci M_RU (1 -16):"
 
 #: plug-ins/imagemap/imap_preferences.c:517
-#, fuzzy
 msgid "Normal:"
-msgstr "Normale"
+msgstr "Normale:"
 
 #: plug-ins/imagemap/imap_preferences.c:523
-#, fuzzy
 msgid "Selected:"
-msgstr "Seleziona"
+msgstr "Selezionato:"
 
 #: plug-ins/imagemap/imap_preferences.c:533
-#, fuzzy
 msgid "Co_ntiguous Region"
-msgstr "Gradiente continuo"
+msgstr "Regione conti_nua"
 
 #: plug-ins/imagemap/imap_preferences.c:539
-#, fuzzy
 msgid "_Automatically convert"
-msgstr "Taglia automaticamente una figura."
+msgstr "Converte _automaticamente"
 
 #: plug-ins/imagemap/imap_preferences.c:560
-#, fuzzy
 msgid "General Preferences"
-msgstr "Differenza"
+msgstr "Preferenze generali"
 
 #: plug-ins/imagemap/imap_rectangle.c:69
-#, fuzzy
 msgid "_Rectangle"
-msgstr "Rotazione"
+msgstr "_Rettangolo"
 
 #: plug-ins/imagemap/imap_rectangle.c:390
 msgid "Upper left _x:"
-msgstr ""
+msgstr "In alto a sinistra _x:"
 
 #: plug-ins/imagemap/imap_rectangle.c:397
 msgid "Upper left _y:"
-msgstr ""
+msgstr "In alto a sinistra _y:"
 
 #: plug-ins/imagemap/imap_selection.c:174 plug-ins/imagemap/imap_tools.c:167
-#, fuzzy
 msgid "Edit"
-msgstr "Esci"
+msgstr "Modifica"
 
 #: plug-ins/imagemap/imap_selection.c:343
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:343
-#, fuzzy
 msgid "Target"
-msgstr "magenta"
+msgstr "Obbiettivo"
 
 #: plug-ins/imagemap/imap_selection.c:343
-#, fuzzy
 msgid "Comment"
-msgstr "Commento GIF: "
+msgstr "Commento"
 
 #: plug-ins/imagemap/imap_settings.c:88
 msgid "Settings for this Mapfile"
-msgstr ""
+msgstr "Impostazioni per questo file mappa"
 
 #: plug-ins/imagemap/imap_settings.c:95
-#, fuzzy
 msgid "Image name:"
-msgstr "Nome base:"
+msgstr "Nome immagine:"
 
 #: plug-ins/imagemap/imap_settings.c:96
-#, fuzzy
 msgid "Select Image File"
-msgstr "Seleziona Campo dei Frame"
+msgstr "Seleziona file immagine"
 
 #: plug-ins/imagemap/imap_settings.c:100
-#, fuzzy
 msgid "_Title:"
-msgstr "File"
+msgstr "_Titolo:"
 
 #: plug-ins/imagemap/imap_settings.c:102
-#, fuzzy
 msgid "Aut_hor:"
-msgstr "Autore:"
+msgstr "Au_tore:"
 
 #: plug-ins/imagemap/imap_settings.c:104
-#, fuzzy
 msgid "Default _URL:"
-msgstr "Valori Base"
+msgstr "_URL predefinito:"
 
 #: plug-ins/imagemap/imap_settings.c:106
-#, fuzzy
 msgid "_Description:"
-msgstr "Descrizione:"
+msgstr "_Descrizione:"
 
 #: plug-ins/imagemap/imap_settings.c:126
-#, fuzzy
 msgid "Map file format"
-msgstr "Formato video"
+msgstr "Formato file mappa"
 
 #: plug-ins/imagemap/imap_source.c:62
-#, fuzzy
 msgid "View Source"
-msgstr "Sorgente Media:"
+msgstr "Visualizza sorgente"
 
 #: plug-ins/imagemap/imap_stock.c:45
-#, fuzzy
 msgid "Edit Map Info..."
-msgstr "Mappa Gradiente..."
+msgstr "Modifica informazioni mappa..."
 
 #: plug-ins/imagemap/imap_toolbar.c:103
 msgid "Open"
@@ -10572,76 +10527,68 @@ msgid "Save"
 msgstr "Salva"
 
 #: plug-ins/imagemap/imap_toolbar.c:108
-#, fuzzy
 msgid "Preferences"
-msgstr "Differenza"
+msgstr "Preferenze"
 
 #: plug-ins/imagemap/imap_toolbar.c:113
-#, fuzzy
 msgid "Undo"
-msgstr "Seme casuale"
+msgstr "Ripristina"
 
 #: plug-ins/imagemap/imap_toolbar.c:117
-#, fuzzy
 msgid "Redo"
-msgstr "Rosso"
+msgstr "Riesegui"
 
 #: plug-ins/imagemap/imap_toolbar.c:138
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoom dentro"
 
 #: plug-ins/imagemap/imap_toolbar.c:143
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoom fuori"
 
 #: plug-ins/imagemap/imap_toolbar.c:148
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Modifica informazioni mappa"
 
 #: plug-ins/imagemap/imap_tools.c:145
-#, fuzzy
 msgid "Select existing area"
-msgstr "Seleziona"
+msgstr "Seleziona area esistente"
 
 #: plug-ins/imagemap/imap_tools.c:149
-#, fuzzy
 msgid "Fuzzy Select"
-msgstr "Seleziona"
+msgstr "Selezione 'strana'"
 
 #: plug-ins/imagemap/imap_tools.c:150
-#, fuzzy
 msgid "Select contiguous regions"
-msgstr "Seleziona Pattern:"
+msgstr "Seleziona regioni contigue"
 
 #: plug-ins/imagemap/imap_tools.c:155
-#, fuzzy
 msgid "Define Rectangle area"
-msgstr "Rotazione"
+msgstr "Definisci area rettangolare"
 
 #: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Definisci area circolare/ovale"
 
 #: plug-ins/imagemap/imap_tools.c:163
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Definisci area poligonale"
 
 #: plug-ins/imagemap/imap_tools.c:168
 msgid "Edit selected area info"
-msgstr ""
+msgstr "Modifica informazioni area selezionata"
 
 #: plug-ins/imagemap/imap_tools.c:173
-#, fuzzy
 msgid "Delete selected area"
-msgstr "Utilizza tutti i livelli non selezionati"
+msgstr "Cancella area selezionata"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Costruzione labirinto usando l'algoritmo di Prim..."
 
 #: plug-ins/maze/algorithms.c:459
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Costruzione labirinto affiancabile usando l'algoritmo di Prim..."
 
 #: plug-ins/maze/maze.c:156
 #, c-format
@@ -10651,141 +10598,129 @@ msgid ""
 msgstr ""
 
 #: plug-ins/maze/maze.c:162
-#, fuzzy
 msgid "Draws a maze."
-msgstr "Nome :"
+msgstr "Disegna un labirinto."
 
 #: plug-ins/maze/maze.c:167
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Maze..."
-msgstr "<Image>/Filters/Render/Scacchiera"
+msgstr "<Image>/Filtri/Render/Motivi/_Labirinto..."
 
 #: plug-ins/maze/maze.c:446
 msgid "Drawing Maze..."
-msgstr ""
+msgstr "Disegno labirinto..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:218
-#, fuzzy
 msgid "Width (Pixels):"
-msgstr "Altezza:"
+msgstr "Altezza (punti):"
 
 #: plug-ins/maze/maze_face.c:230 plug-ins/maze/maze_face.c:246
-#, fuzzy
 msgid "Pieces:"
-msgstr "Pagine:"
+msgstr "Pezzi:"
 
 #: plug-ins/maze/maze_face.c:235
-#, fuzzy
 msgid "Height (Pixels):"
-msgstr "Altezza:"
+msgstr "Altezza (punti):"
 
 #: plug-ins/maze/maze_face.c:258
-#, fuzzy
 msgid "Multiple (57):"
-msgstr "Multiplo"
+msgstr "Multipli (57):"
 
 #: plug-ins/maze/maze_face.c:271
-#, fuzzy
 msgid "Offset (1):"
-msgstr "Sposta"
+msgstr "Spostamento (1):"
 
 #: plug-ins/maze/maze_face.c:302
-#, fuzzy
 msgid "Depth First"
-msgstr "Incollamento Definizione"
+msgstr "Prima profondità"
 
 #: plug-ins/maze/maze_face.c:303
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Algoritmo di Prim"
 
 #: plug-ins/maze/maze_face.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "Selection is %dx%d"
-msgstr "Seleziona"
+msgstr "La selezione è %dx%d"
 
 #: plug-ins/maze/maze_face.c:421
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"L'ampiezza della selezione non è pari.\n"
+"Il labirinto sovrapponibile non sarà perfetto."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:589
-#, fuzzy, c-format
+#, c-format
 msgid "Opening %s"
-msgstr "Salvamento di %s:"
+msgstr "Apertura di %s"
 
 #: plug-ins/maze/maze_face.c:598
-#, fuzzy, c-format
+#, c-format
 msgid "See %s"
-msgstr "Seme"
+msgstr "Vedi %s"
 
 #: plug-ins/pagecurl/pagecurl.c:213
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
-msgstr "<Image>/Filters/Map/Bump Map"
+msgstr "<Image>/Filtri/Distorsione/_Pagine arricciate..."
 
 #: plug-ins/pagecurl/pagecurl.c:490
-#, fuzzy
 msgid "Pagecurl Effect"
-msgstr "Effetti Lente"
+msgstr "Efetto pagina arricciata"
 
 #: plug-ins/pagecurl/pagecurl.c:504
-#, fuzzy
 msgid "Curl Location"
-msgstr "Saturazione"
+msgstr "Posizione del ricciolo"
 
 #: plug-ins/pagecurl/pagecurl.c:529
 msgid "Upper Left"
-msgstr ""
+msgstr "Alto a sinistra"
 
 #: plug-ins/pagecurl/pagecurl.c:530
-#, fuzzy
 msgid "Upper Right"
-msgstr "Nessuna Luce"
+msgstr "Alto a destra"
 
 #: plug-ins/pagecurl/pagecurl.c:531
 msgid "Lower Left"
-msgstr ""
+msgstr "Basso a sinistra"
 
 #: plug-ins/pagecurl/pagecurl.c:532
-#, fuzzy
 msgid "Lower Right"
-msgstr "Nessuna Luce"
+msgstr "Basso a destra"
 
 #: plug-ins/pagecurl/pagecurl.c:562
-#, fuzzy
 msgid "Curl Orientation"
-msgstr "Orientazione:"
+msgstr "Orientazione ricciolo"
 
 #: plug-ins/pagecurl/pagecurl.c:600
 msgid "Shade under Curl"
-msgstr ""
+msgstr "Ombra sotto il ricciolo"
 
 #: plug-ins/pagecurl/pagecurl.c:611
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
+"Usa gradiente corrente\n"
+"invece del colore PP/SF"
 
 #: plug-ins/pagecurl/pagecurl.c:624
-#, fuzzy
 msgid "Curl Opacity"
-msgstr "Opacita' [%d]: "
+msgstr "Opacità ricciolo"
 
 #: plug-ins/pagecurl/pagecurl.c:755
-#, fuzzy
 msgid "Curl Layer"
-msgstr "Opacita' [%d]: "
+msgstr "Livello ricciolo"
 
 #: plug-ins/pagecurl/pagecurl.c:997
 msgid "Page Curl..."
-msgstr ""
+msgstr "Pagine arricciate..."
 
 #: plug-ins/print/gimp_color_window.c:211
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "Imposta colore di stampa"
 
 #: plug-ins/print/gimp_color_window.c:263
 msgid "Brightness:"
@@ -10802,32 +10737,32 @@ msgid "Contrast:"
 msgstr "Contrasto:"
 
 #: plug-ins/print/gimp_color_window.c:291
-#, fuzzy
 msgid "Set the contrast of the print"
-msgstr "Specifica il rapporto dimensione del pennello"
+msgstr "Imposta il contrasto della stampa"
 
 #: plug-ins/print/gimp_color_window.c:310
 msgid "Adjust the cyan balance of the print"
-msgstr ""
+msgstr "Imposta il bilanciamento del ciano della stampa"
 
 #: plug-ins/print/gimp_color_window.c:329
 msgid "Adjust the magenta balance of the print"
-msgstr ""
+msgstr "Imposta il bilanciamento del magenta della stampa"
 
 #: plug-ins/print/gimp_color_window.c:348
 msgid "Adjust the yellow balance of the print"
-msgstr ""
+msgstr "Imposta il bilanciamento del giallo della stampa"
 
 #: plug-ins/print/gimp_color_window.c:367
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
+"Imposta la saturazione (bilanciamento del colore) della stampa\n"
+"Usa la saturazione zero per produrre un risultato in scala di grigi usando gli inchiostri del nero e dei colori"
 
 #: plug-ins/print/gimp_color_window.c:380
-#, fuzzy
 msgid "Density:"
-msgstr "Descrizione:"
+msgstr "Densità:"
 
 #: plug-ins/print/gimp_color_window.c:388
 msgid ""
@@ -10844,9 +10779,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/print/gimp_color_window.c:426
-#, fuzzy
 msgid "Dither Algorithm:"
-msgstr "Logaritmica"
+msgstr "Algoritmo di riempimento"
 
 #: plug-ins/print/gimp_color_window.c:434
 msgid ""
@@ -10857,28 +10791,35 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
+"Scegliere l'algoritmo di riempimento da usare.\n"
+"Ibrido adattivo normalmente produce i migliori risultati di qualità.\n"
+"Ordinato è il più veloce e produce una buona qualità nelle foto.\n"
+"Veloce e molto veloce sono considerevolmente più veloci e lavorano bene per il testo e le linee.\n"
+"Floid-Steinberg ibrido produce generalmente il risultato peggiore."
 
 #.
 #. * Create the main dialog
 #.
 #: plug-ins/print/gimp_main_window.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "%s -- Print v%s"
-msgstr "Stampa v%s"
+msgstr "%s -- Stampa v%s"
 
 #: plug-ins/print/gimp_main_window.c:369
-#, fuzzy
 msgid ""
 "Save\n"
 "Settings"
-msgstr "Configurazioni"
+msgstr ""
+"Salva\n"
+"le impostazioni"
 
 #: plug-ins/print/gimp_main_window.c:370
-#, fuzzy
 msgid ""
 "Print and\n"
 "Save Settings"
-msgstr "Configurazioni"
+msgstr ""
+"Stampa e\n"
+"salva le impostazioni"
 
 #: plug-ins/print/gimp_main_window.c:437
 msgid ""
@@ -10900,16 +10841,15 @@ msgstr "Ritratto"
 
 #: plug-ins/print/gimp_main_window.c:486
 msgid "Landscape"
-msgstr "Panoramica"
+msgstr "Orizzontale"
 
 #: plug-ins/print/gimp_main_window.c:488
 msgid "Upside down"
-msgstr ""
+msgstr "Rovesciata"
 
 #: plug-ins/print/gimp_main_window.c:490
-#, fuzzy
 msgid "Seascape"
-msgstr "Panoramica"
+msgstr "Panoramica al contrario"
 
 #: plug-ins/print/gimp_main_window.c:494
 msgid ""
@@ -10930,9 +10870,8 @@ msgid "Distance from the left of the paper to the right of the image"
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:553
-#, fuzzy
 msgid "Right Border:"
-msgstr "Bordo:"
+msgstr "Bordo destro:"
 
 #: plug-ins/print/gimp_main_window.c:557
 msgid "Distance from the right of the paper to the image"
@@ -10943,62 +10882,55 @@ msgid "Distance from the top of the paper to the bottom of the image"
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:581
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Bordo Inferiore"
+msgstr "Bordo inferiore:"
 
 #: plug-ins/print/gimp_main_window.c:585
 msgid "Distance from the bottom of the paper to the image"
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:602
-#, fuzzy
 msgid "Center:"
-msgstr "Centro"
+msgstr "Centro:"
 
 #: plug-ins/print/gimp_main_window.c:606
-#, fuzzy
 msgid "Vertically"
-msgstr "Verticale"
+msgstr "Verticalmente"
 
 #: plug-ins/print/gimp_main_window.c:611
 msgid "Center the image vertically on the paper"
-msgstr ""
+msgstr "Centra l'immagine verticalmente sulla carta"
 
 #: plug-ins/print/gimp_main_window.c:617
 msgid "Both"
 msgstr "Entrambi"
 
 #: plug-ins/print/gimp_main_window.c:622
-#, fuzzy
 msgid "Center the image on the paper"
-msgstr "Convertite l'immagine a RGB!"
+msgstr "Centra l'immagine sulla carta"
 
 #: plug-ins/print/gimp_main_window.c:629
-#, fuzzy
 msgid "Horizontally"
-msgstr "Orizzontale"
+msgstr "Orizzontalmente"
 
 #: plug-ins/print/gimp_main_window.c:634
 msgid "Center the image horizontally on the paper"
-msgstr ""
+msgstr "Centra l'immagine orizzontalmente sulla carta"
 
 #: plug-ins/print/gimp_main_window.c:650
-#, fuzzy
 msgid "Setup Printer"
-msgstr "Stampante:"
+msgstr "Imposta stampante"
 
 #.
 #. * Printer driver option menu.
 #.
 #: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Modalità disegno:"
+msgstr "Modello stampante:"
 
 #: plug-ins/print/gimp_main_window.c:692
 msgid "Select your printer model"
-msgstr ""
+msgstr "Seleziona il tuo modello di stampante"
 
 #.
 #. * PPD file.
@@ -11009,7 +10941,7 @@ msgstr "File PPD:"
 
 #: plug-ins/print/gimp_main_window.c:747
 msgid "Enter the correct PPD filename for your printer"
-msgstr ""
+msgstr "Immetti il nome del file PPD per la tua stampante"
 
 #: plug-ins/print/gimp_main_window.c:750
 msgid "Browse"
@@ -11017,7 +10949,7 @@ msgstr "Naviga"
 
 #: plug-ins/print/gimp_main_window.c:756
 msgid "Choose the correct PPD filename for your printer"
-msgstr ""
+msgstr "Scegli il nome del file PPD per la tua stampante"
 
 #.
 #. * Print command.
@@ -11048,14 +10980,12 @@ msgid "PPD File?"
 msgstr "File PPD?"
 
 #: plug-ins/print/gimp_main_window.c:819
-#, fuzzy
 msgid "Define New Printer"
-msgstr "Elimina punti"
+msgstr "Imposta una nuova stampante"
 
 #: plug-ins/print/gimp_main_window.c:842 plug-ins/print/gimp_main_window.c:937
-#, fuzzy
 msgid "Printer Name:"
-msgstr "Stampante:"
+msgstr "Nome stampante:"
 
 #: plug-ins/print/gimp_main_window.c:846
 msgid "Enter the name you wish to give this logical printer"
@@ -11094,15 +11024,14 @@ msgid ""
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:920
-#, fuzzy
 msgid "Printer Settings"
-msgstr "Configurazione parametri"
+msgstr "Configurazione stampante"
 
 #: plug-ins/print/gimp_main_window.c:933
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
-msgstr ""
+msgstr "Seleziona il nome della stampante (non il tipo o il modello della stampante) sulla quale vuoi stampare"
 
 #.
 #. * Setup printer button
@@ -11116,86 +11045,82 @@ msgstr "Disinterlaccia..."
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
-msgstr ""
+msgstr "Scegli il modello della stampante, il file PPD ed il comando usato per stampare"
 
 #.
 #. * New printer button
 #.
 #: plug-ins/print/gimp_main_window.c:970
-#, fuzzy
 msgid "New Printer..."
-msgstr "Disinterlaccia..."
+msgstr "Nuova stampante..."
 
 #: plug-ins/print/gimp_main_window.c:972
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
-msgstr ""
+msgstr "Definisci una nuova stampante logica. Può servire per dare un nome ad una serie di impostazioni che si vuole ricordare per un uso futuro."
 
 #: plug-ins/print/gimp_main_window.c:993
 msgid "Size of paper that you wish to print to"
-msgstr ""
+msgstr "Dimensione della carta su cui si vuole stampare"
 
 #: plug-ins/print/gimp_main_window.c:996
 msgid "Media Size:"
 msgstr "Dimensione:"
 
 #: plug-ins/print/gimp_main_window.c:1005
-#, fuzzy
 msgid "Dimensions:"
-msgstr "Vettore direzione"
+msgstr "Dimensioni:"
 
 #: plug-ins/print/gimp_main_window.c:1019
 msgid "Width of the paper that you wish to print to"
-msgstr ""
+msgstr "Larghezza della carta su cui si vuole stampare"
 
 #: plug-ins/print/gimp_main_window.c:1036
 msgid "Height of the paper that you wish to print to"
-msgstr ""
+msgstr "Altezza della carta su cui si vuole stampare"
 
 #: plug-ins/print/gimp_main_window.c:1052
 msgid "Type of media you're printing to"
-msgstr ""
+msgstr "Tipo di supporto su cui si sta stampando"
 
 #: plug-ins/print/gimp_main_window.c:1055
 msgid "Media Type:"
-msgstr "Tipo Media:"
+msgstr "Tipo di supporto:"
 
 #: plug-ins/print/gimp_main_window.c:1068
 msgid "Source (input slot) of media you're printing to"
-msgstr ""
+msgstr "Sorgente (cassetto di ingresso) di supporti da cui si sta stampando"
 
 #: plug-ins/print/gimp_main_window.c:1071
 msgid "Media Source:"
-msgstr "Sorgente Media:"
+msgstr "Sorgente supporto:"
 
 #: plug-ins/print/gimp_main_window.c:1084
 msgid "Type of ink in the printer"
-msgstr ""
+msgstr "Tipo di inchiostro della stampante"
 
 #: plug-ins/print/gimp_main_window.c:1087
-#, fuzzy
 msgid "Ink Type:"
-msgstr "Tipo Media:"
+msgstr "Tipo di inchiostro:"
 
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution and quality of the print"
-msgstr ""
+msgstr "Risoluzione e qualità della stampa"
 
 #: plug-ins/print/gimp_main_window.c:1139
 msgid "Scaling:"
 msgstr "Scalatura:"
 
 #: plug-ins/print/gimp_main_window.c:1145
-#, fuzzy
 msgid "Set the scale (size) of the image"
-msgstr "Utilizza il Colore dell'immagine"
+msgstr "Imposta la scala (grandezza) dell'immagine"
 
 #: plug-ins/print/gimp_main_window.c:1178
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr ""
+msgstr "Imposta se la scala deve essere misurata come percentuale della dimensione della carta o come numero di punti per pollice"
 
 #: plug-ins/print/gimp_main_window.c:1183
 msgid "Percent"
@@ -11203,7 +11128,7 @@ msgstr "Percentuale"
 
 #: plug-ins/print/gimp_main_window.c:1190
 msgid "Scale the print to the size of the page"
-msgstr ""
+msgstr "Imposta la scala alla grandezza della pagina"
 
 #: plug-ins/print/gimp_main_window.c:1196
 msgid "PPI"
@@ -11211,25 +11136,23 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1202
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "Scala la stampa al numero di punti per pollice"
 
 #: plug-ins/print/gimp_main_window.c:1228
-#, fuzzy
 msgid "Set the width of the print"
-msgstr "Disegna il Grafico delle Configurazioni"
+msgstr "Imposta la larghezza della stampa"
 
 #: plug-ins/print/gimp_main_window.c:1241
 msgid "Set the height of the print"
-msgstr ""
+msgstr "Imposta l'altezza della stampa"
 
 #: plug-ins/print/gimp_main_window.c:1261
-#, fuzzy
 msgid "Units:"
-msgstr "Unità"
+msgstr "Unità:"
 
 #: plug-ins/print/gimp_main_window.c:1266
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "Seleziona l'unità di base per la misura della stampa"
 
 #: plug-ins/print/gimp_main_window.c:1269
 msgid "Inch"
@@ -11237,25 +11160,26 @@ msgstr "Pollici"
 
 #: plug-ins/print/gimp_main_window.c:1276
 msgid "Set the base unit of measurement to inches"
-msgstr ""
+msgstr "Imposta l'unità di base della stampa in pollici"
 
 #: plug-ins/print/gimp_main_window.c:1282
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:1288
 msgid "Set the base unit of measurement to centimetres"
-msgstr ""
+msgstr "Imposta l'unità di base per la stampa in centimetri"
 
 #.
 #. * The "image size" button
 #.
 #: plug-ins/print/gimp_main_window.c:1298
-#, fuzzy
 msgid ""
 "Use Original\n"
 "Image Size"
-msgstr "Dimensione Immagine"
+msgstr ""
+"Usa la dimensione\n"
+"immagine originale"
 
 #: plug-ins/print/gimp_main_window.c:1304
 msgid "Set the print size to the size of the image"
