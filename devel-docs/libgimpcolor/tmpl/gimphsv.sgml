@@ -30,9 +30,9 @@ GimpHSV
 </para>
 
 @hsv: 
-@h: 
-@s: 
-@v: 
+@hue: 
+@saturation: 
+@value: 
 
 
 <!-- ##### FUNCTION gimp_hsv_clamp ##### -->
@@ -49,9 +49,9 @@ GimpHSV
 </para>
 
 @hsva: 
-@h: 
-@s: 
-@v: 
-@a: 
+@hue: 
+@saturation: 
+@value: 
+@alpha: 
 
 

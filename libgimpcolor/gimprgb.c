@@ -1,14 +1,14 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -203,7 +203,7 @@ gimp_rgb_composite (GimpRGB              *color1,
 
   g_return_if_fail (color1 != NULL);
   g_return_if_fail (color2 != NULL);
-  
+
   switch (mode)
     {
     case GIMP_RGB_COMPOSITE_NONE:
@@ -224,7 +224,7 @@ gimp_rgb_composite (GimpRGB              *color1,
 	  color1->a = factor + color2->a;
 	}
       break;
-      
+
     case GIMP_RGB_COMPOSITE_BEHIND:
       /*  put color2 below color1  */
       if (color1->a < 1.0)
@@ -325,7 +325,7 @@ gimp_rgba_multiply (GimpRGB *rgba,
 }
 
 gdouble
-gimp_rgba_distance (const GimpRGB *rgba1, 
+gimp_rgba_distance (const GimpRGB *rgba1,
 		    const GimpRGB *rgba2)
 {
   g_return_val_if_fail (rgba1 != NULL, 0.0);

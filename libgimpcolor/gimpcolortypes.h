@@ -1,14 +1,14 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -29,9 +29,10 @@ G_BEGIN_DECLS
  *  but GimpRGB appears in too many header files...
  */
 
-typedef struct _GimpRGB GimpRGB;
-typedef struct _GimpHSV GimpHSV;
-typedef struct _GimpHSL GimpHSL;
+typedef struct _GimpRGB  GimpRGB;
+typedef struct _GimpHSV  GimpHSV;
+typedef struct _GimpHSL  GimpHSL;
+typedef struct _GimpCMYK GimpCMYK;
 
 struct _GimpRGB
 {
@@ -46,6 +47,11 @@ struct _GimpHSV
 struct _GimpHSL
 {
   gdouble h, s, l, a;
+};
+
+struct _GimpCMYK
+{
+  gdouble c, m, y, k, a;
 };
 
 

@@ -39,9 +39,9 @@ GimpRGB
 </para>
 
 @rgb: 
-@r: 
-@g: 
-@b: 
+@red: 
+@green: 
+@blue: 
 
 
 <!-- ##### FUNCTION gimp_rgb_set_alpha ##### -->
@@ -50,7 +50,7 @@ GimpRGB
 </para>
 
 @rgb: 
-@a: 
+@alpha: 
 
 
 <!-- ##### FUNCTION gimp_rgb_set_uchar ##### -->
@@ -59,9 +59,9 @@ GimpRGB
 </para>
 
 @rgb: 
-@r: 
-@g: 
-@b: 
+@red: 
+@green: 
+@blue: 
 
 
 <!-- ##### FUNCTION gimp_rgb_get_uchar ##### -->
@@ -70,9 +70,9 @@ GimpRGB
 </para>
 
 @rgb: 
-@r: 
-@g: 
-@b: 
+@red: 
+@green: 
+@blue: 
 
 
 <!-- ##### FUNCTION gimp_rgb_add ##### -->
@@ -181,10 +181,10 @@ GimpRGB
 </para>
 
 @rgba: 
-@r: 
-@g: 
-@b: 
-@a: 
+@red: 
+@green: 
+@blue: 
+@alpha: 
 
 
 <!-- ##### FUNCTION gimp_rgba_set_uchar ##### -->
@@ -193,10 +193,10 @@ GimpRGB
 </para>
 
 @rgba: 
-@r: 
-@g: 
-@b: 
-@a: 
+@red: 
+@green: 
+@blue: 
+@alpha: 
 
 
 <!-- ##### FUNCTION gimp_rgba_get_uchar ##### -->
@@ -205,10 +205,10 @@ GimpRGB
 </para>
 
 @rgba: 
-@r: 
-@g: 
-@b: 
-@a: 
+@red: 
+@green: 
+@blue: 
+@alpha: 
 
 
 <!-- ##### FUNCTION gimp_rgba_add ##### -->

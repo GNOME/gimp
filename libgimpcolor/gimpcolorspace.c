@@ -1,14 +1,14 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -160,6 +160,7 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
   rgb->a = hsv->a;
 }
 
+
 void
 gimp_rgb_to_hsl (const GimpRGB *rgb,
                  GimpHSL       *hsl)
@@ -270,6 +271,73 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
   rgb->a = hsl->a;
 }
 
+
+void
+gimp_rgb_to_cmyk (const GimpRGB  *rgb,
+                  GimpCMYK       *cmyk)
+{
+  gdouble c, m, y, k;
+
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (cmyk != NULL);
+
+  c = 1.0 - rgb->r;
+  m = 1.0 - rgb->g;
+  y = 1.0 - rgb->b;
+
+  k = 1.0;
+  if (c < k)  k = c;
+  if (m < k)  k = m;
+  if (y < k)  k = y;
+
+  if (k < 1.0)
+    {
+      cmyk->c = (c - k) / (1.0 - k);
+      cmyk->m = (m - k) / (1.0 - k);
+      cmyk->y = (y - k) / (1.0 - k);
+    }
+  else
+    {
+      cmyk->c = 0.0;
+      cmyk->m = 0.0;
+      cmyk->y = 0.0;
+    }
+
+  cmyk->k = k;
+  cmyk->a = rgb->a;
+}
+
+void
+gimp_cmyk_to_rgb (const GimpCMYK *cmyk,
+                  GimpRGB        *rgb)
+{
+  gdouble c, m, y, k;
+
+  g_return_if_fail (cmyk != NULL);
+  g_return_if_fail (rgb != NULL);
+
+  k = cmyk->k;
+
+  if (k < 1.0)
+    {
+      c = cmyk->c * (1.0 - k) + k;
+      m = cmyk->m * (1.0 - k) + k;
+      y = cmyk->y * (1.0 - k) + k;
+    }
+  else
+    {
+      c = 1.0;
+      m = 1.0;
+      y = 1.0;
+    }
+
+  rgb->r = 1.0 - c;
+  rgb->g = 1.0 - m;
+  rgb->b = 1.0 - y;
+  rgb->a = cmyk->a;
+}
+
+
 #define GIMP_RETURN_RGB(x, y, z) { rgb->r = x; rgb->g = y; rgb->b = z; return; }
 
 /*****************************************************************************
@@ -305,7 +373,7 @@ gimp_rgb_to_hwb (const GimpRGB *rgb,
     {
       f = (R == w) ? G - B : ((G == w) ? B - R : R - G);
       i = (R == w) ? 3.0 : ((G == w) ? 5.0 : 1.0);
-    
+
       *hue = (360.0 / 6.0) * (i - f / (v - w));
       *whiteness = w;
       *blackness = b;
@@ -322,7 +390,7 @@ gimp_hwb_to_rgb (gdouble  hue,
    * blackness are given on [0, 1].
    * RGB are each returned on [0, 1].
    */
-  
+
   gdouble h = hue, w = whiteness, b = blackness, v, n, f;
   gint    i;
 
@@ -344,7 +412,7 @@ gimp_hwb_to_rgb (gdouble  hue,
 	f = 1.0 - f;  /* if i is odd */
 
       n = w + f * (v - w);     /* linear interpolation between w and v */
-    
+
       switch (i)
         {
           case 6:
@@ -636,9 +704,58 @@ gimp_hls_to_rgb_int (gint *hue,
 }
 
 void
-gimp_rgb_to_hsv4 (guchar  *rgb, 
-		  gdouble *hue, 
-		  gdouble *saturation, 
+gimp_rgb_to_cmyk_int (gint *red,
+                      gint *green,
+                      gint *blue,
+                      gint *black)
+{
+  gint c, m, y, k;
+
+  c = 255 - *red;
+  m = 255 - *green;
+  y = 255 - *blue;
+
+  k = 255;
+  if (c < k)  k = c;
+  if (m < k)  k = m;
+  if (y < k)  k = y;
+
+  *red   = ((c - k) << 8) / (256 - k);
+  *green = ((m - k) << 8) / (256 - k);
+  *blue  = ((y - k) << 8) / (256 - k);
+  *black = k;
+}
+
+void
+gimp_cmyk_to_rgb_int (gint *cyan,
+                      gint *magenta,
+                      gint *yellow,
+                      gint *black)
+{
+  gint c, m, y, k;
+
+  c = *cyan;
+  m = *magenta;
+  y = *yellow;
+  k = *black;
+
+  if (k)
+    {
+      c = ((c * (256 - k)) >> 8) + k;
+      m = ((m * (256 - k)) >> 8) + k;
+      y = ((y * (256 - k)) >> 8) + k;
+    }
+
+  *cyan    = 255 - c;
+  *magenta = 255 - m;
+  *yellow  = 255 - y;
+}
+
+
+void
+gimp_rgb_to_hsv4 (guchar  *rgb,
+		  gdouble *hue,
+		  gdouble *saturation,
 		  gdouble *value)
 {
   gdouble red, green, blue;
@@ -700,7 +817,7 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
 }
 
 void
-gimp_hsv_to_rgb4 (guchar  *rgb, 
+gimp_hsv_to_rgb4 (guchar  *rgb,
 		  gdouble  hue,
 		  gdouble  saturation,
 		  gdouble  value)

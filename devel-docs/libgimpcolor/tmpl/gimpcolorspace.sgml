@@ -43,10 +43,15 @@ different color spaces.
 
 @rgb: 
 @hsl: 
-<!-- # Unused Parameters # -->
-@hue: 
-@saturation: 
-@lightness: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_cmyk ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@cmyk: 
 
 
 <!-- ##### FUNCTION gimp_hsv_to_rgb ##### -->
@@ -65,10 +70,15 @@ different color spaces.
 
 @hsl: 
 @rgb: 
-<!-- # Unused Parameters # -->
-@hue: 
-@saturation: 
-@lightness: 
+
+
+<!-- ##### FUNCTION gimp_cmyk_to_rgb ##### -->
+<para>
+
+</para>
+
+@cmyk: 
+@rgb: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hwb ##### -->
@@ -121,6 +131,28 @@ different color spaces.
 @red: 
 @green: 
 @blue: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_cmyk_int ##### -->
+<para>
+
+</para>
+
+@red: 
+@green: 
+@blue: 
+@black: 
+
+
+<!-- ##### FUNCTION gimp_cmyk_to_rgb_int ##### -->
+<para>
+
+</para>
+
+@cyan: 
+@magenta: 
+@yellow: 
+@black: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_l_int ##### -->

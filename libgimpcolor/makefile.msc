@@ -39,6 +39,7 @@ install : all
 OBJECTS = \
 	gimpadaptivesupersample.obj \
 	gimpbilinear.obj \
+	gimpcmyk.obj \
 	gimpcolorspace.obj \
 	gimphsv.obj \
 	gimprgb.obj

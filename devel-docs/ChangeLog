@@ -1,3 +1,12 @@
+2003-07-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimpcmyk.sgml
+	* libgimpcolor/tmpl/gimpcolorspace.sgml
+	* libgimpcolor/tmpl/gimphsv.sgml
+	* libgimpcolor/tmpl/gimprgb.sgml: updated for new CMYK functions.
+
 2003-07-10  Michael Natterer  <mitch@gimp.org>
 
 	* includes.txt: s:libgimp/gimpintl.h:gimp-intl.h:

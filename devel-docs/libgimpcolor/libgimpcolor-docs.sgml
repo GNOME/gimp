@@ -3,6 +3,7 @@
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY GimpRGB SYSTEM "xml/gimprgb.xml">
 <!ENTITY GimpHSV SYSTEM "xml/gimphsv.xml">
+<!ENTITY GimpCMYK SYSTEM "xml/gimpcmyk.xml">
 <!ENTITY GimpColorSpace SYSTEM "xml/gimpcolorspace.xml">
 <!ENTITY GimpAdaptiveSupersample SYSTEM "xml/gimpadaptivesupersample.xml">
 <!ENTITY GimpBilinear SYSTEM "xml/gimpbilinear.xml">
@@ -19,6 +20,7 @@
     <title>GIMP Color Library</title>
     &GimpRGB;
     &GimpHSV;
+    &GimpCMYK;
     &GimpColorSpace;
     &GimpAdaptiveSupersample;
     &GimpBilinear;

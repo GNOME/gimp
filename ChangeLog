@@ -1,3 +1,19 @@
+2003-07-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/makefile.msc
+	* libgimpcolor/gimpcmyk.[ch]: new files that define a GimpCMYK
+	structure similar to GimpRGB.
+
+	* libgimpcolor/gimpcolortypes.h: added the GimpCMYK typedef.
+
+	* libgimpcolor/gimpcolorspace.[ch]: added conversions between RGB
+	and CMYK. This implementation is the naive approach without any
+	color calibration whatsoever.
+
+	* libgimpcolor/gimphsv.[ch]
+	* libgimpcolor/gimprgb.[ch]: purely cosmetic changes.
+
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
 	Argh...
