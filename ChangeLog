@@ -1,5 +1,10 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: started to work on migration of
+	user settings (bug #156636). Not at all functional yet.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c: allow for mnemonics in radio
 	groups created with gimp_radio_group_new().
 

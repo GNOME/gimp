@@ -62,6 +62,7 @@
 enum
 {
   GPL_PAGE,
+  MIGRATION_PAGE,
   TREE_PAGE,
   LOG_PAGE,
   TUNING_PAGE,
@@ -105,6 +106,10 @@ static GtkRcStyle *page_style      = NULL;
 static GdkColor    black_color;
 static GdkColor    white_color;
 static GdkColor    title_color;
+
+static gchar      *oldgimp         = NULL;
+static gboolean    migrate         = TRUE;
+
 
 typedef enum
 {
@@ -344,6 +349,15 @@ user_install_response (GtkWidget *widget,
   switch (notebook_index)
     {
     case GPL_PAGE:
+      if (oldgimp)
+        notebook_index += 1;
+      else
+        notebook_index += 2;
+
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), notebook_index);
+      break;
+
+    case MIGRATION_PAGE:
       user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
       break;
 
@@ -391,7 +405,7 @@ user_install_response (GtkWidget *widget,
       gtk_widget_destroy (user_install_dialog);
 
       gtk_main_quit ();
-      return;
+      break;
 
     default:
       g_assert_not_reached ();
@@ -553,7 +567,21 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   GtkWidget *eek_box;
   GdkPixbuf *wilber;
   gchar     *filename;
+  gchar     *version;
   gint       i;
+
+  oldgimp = g_strdup (gimp_directory ());
+
+  /*  FIXME  */
+  version = strstr (oldgimp, "2.2");
+  if (version)
+    version[2] = '0';
+
+  if (! version || ! g_file_test (oldgimp, G_FILE_TEST_IS_DIR))
+    {
+      g_free (oldgimp);
+      oldgimp = NULL;
+    }
 
   gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
 
@@ -711,13 +739,13 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   gtk_widget_show (vbox);
 
-  /*  Page 1  */
+  /*  GPL_PAGE  */
   page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
                                             _("Welcome to\n"
                                               "The GIMP User Installation"),
                                             _("Click \"Continue\" to enter "
                                               "the GIMP user installation."),
-                                            16);
+                                            12);
 
   add_label (GTK_BOX (page),
              _("<b>The GIMP - GNU Image Manipulation Program</b>\n"
@@ -747,7 +775,30 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
        "Foundation, Inc., 59 Temple Place - Suite 330, Boston, "
        "MA 02111-1307, USA."));
 
-  /*  Page 2  */
+  /*  MIGRATION_PAGE  */
+  {
+    GtkWidget *box;
+
+    page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
+                                              _("Migrate User Settings"),
+                                              _("Click \"Continue\" to proceed "
+                                                "with the user installation."),
+                                              12);
+
+    box = gimp_int_radio_group_new (TRUE,
+                                    _("It seems you have a GIMP 2.0 installation."),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &migrate, migrate,
+
+                                    _("_Migrate user settings"),        TRUE,  NULL,
+                                    _("Do a _fresh user installation"), FALSE, NULL,
+                                    NULL);
+
+    gtk_box_pack_start (GTK_BOX (page), box, FALSE, FALSE, 0);
+    gtk_widget_show (box);
+  }
+
+  /*  TREE_PAGE  */
   {
     GtkWidget         *hbox;
     GtkWidget         *vbox;
@@ -772,7 +823,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                                 "your personal GIMP folder."),
                                               0);
 
-    hbox = gtk_hbox_new (FALSE, 16);
+    hbox = gtk_hbox_new (FALSE, 12);
     gtk_box_pack_start (GTK_BOX (page), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
@@ -808,7 +859,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
     gtk_container_add (GTK_CONTAINER (scr), tv);
     gtk_widget_show (tv);
 
-    vbox = gtk_vbox_new (FALSE, 8);
+    vbox = gtk_vbox_new (FALSE, 6);
     gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
     gtk_widget_show (vbox);
 
@@ -869,7 +920,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                             DESC_COLUMN, i + 1,
                             -1);
 
-        page2 = gtk_vbox_new (FALSE, 8);
+        page2 = gtk_vbox_new (FALSE, 6);
 
         foo = g_strdup_printf ("<b>%s</b>", tree_items[i].name);
         label = gtk_label_new (NULL);
@@ -904,7 +955,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
     g_object_unref (folder_pixbuf);
   }
 
-  /*  Page 3  */
+  /*  LOG_PAGE  */
   page = log_page =
     user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
                                        _("User Installation Log"),
@@ -912,7 +963,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                                          "GIMP folder is being created..."),
                                        0);
 
-  /*  Page 4  */
+  /*  TUNING_PAGE  */
   page = tuning_page =
     user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
                                        _("GIMP Performance Tuning"),
@@ -1106,7 +1157,7 @@ user_install_tuning (GimpRc *gimprc)
   GtkWidget *entry;
 
   /*  tile cache size  */
-  vbox = gtk_vbox_new (FALSE, 8);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (tuning_page), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -1116,7 +1167,7 @@ user_install_tuning (GimpRc *gimprc)
                "to fit into memory.  Consider the amount of memory used by "
                "other running processes."));
 
-  hbox = gtk_hbox_new (FALSE, 8);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
