@@ -79,6 +79,7 @@ static void       gimp_proc_run      (GPProcRun *proc_run);
 static void       gimp_temp_proc_run (GPProcRun *proc_run);
 static void       gimp_message_func  (char *str);
 static void       gimp_process_message(WireMessage *msg);
+static void       gimp_close         (void);
 
 
 GIOChannel *_readchannel = NULL;
@@ -176,7 +177,7 @@ gimp_main (int   argc,
     {
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
-      gimp_quit ();
+      gimp_close ();
       return 0;
     }
 
@@ -195,8 +196,8 @@ gimp_main (int   argc,
   return 0;
 }
 
-void
-gimp_quit ()
+static void
+gimp_close ()
 {
   if (PLUG_IN_INFO.quit_proc)
     (* PLUG_IN_INFO.quit_proc) ();
@@ -211,6 +212,12 @@ gimp_quit ()
 #endif
 
   gp_quit_write (_writechannel);
+}
+
+void
+gimp_quit ()
+{
+  gimp_close ();
   exit (0);
 }
 
@@ -1173,13 +1180,16 @@ gimp_loop ()
   while (1)
     {
       if (!wire_read_msg (_readchannel, &msg))
-	gimp_quit ();
+        {
+	  gimp_close ();
+          return;
+        }
 
       switch (msg.type)
 	{
 	case GP_QUIT:
-	  gimp_quit ();
-	  break;
+	  gimp_close ();
+	  return;
 	case GP_CONFIG:
 	  gimp_config (msg.data);
 	  break;
@@ -1190,8 +1200,8 @@ gimp_loop ()
 	  break;
 	case GP_PROC_RUN:
 	  gimp_proc_run (msg.data);
-	  gimp_quit ();
-	  break;
+	  gimp_close ();
+          return;
 	case GP_PROC_RETURN:
 	  g_warning ("unexpected proc return message received (should not happen)\n");
 	  break;

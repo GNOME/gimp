@@ -1,3 +1,9 @@
+Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * libgimp/gimp.c: split gimp_quit into two functions, gimp_quit
+        and gimp_close. Let gimp_main return to the calling function in
+        the common cases (i.e. not in the error case).
+
 1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/preferences_dialog.c: correct resolution size_entry
