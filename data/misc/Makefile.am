@@ -17,7 +17,7 @@ EXTRA_DIST = \
 gen_sources = desktop-foo
 CLEANFILES = $(gen_sources)
 
-gimp.desktop: gimp.desktop.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po)
+gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
 	sed -e 's|.[{]prefix[}]|${prefix}|' $< > desktop-foo \
 	&& $(INTLTOOL_MERGE) $(top_srcdir)/po desktop-foo $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cachemake \
 	&& rm -r desktop-foo

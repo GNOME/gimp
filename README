@@ -46,17 +46,18 @@ discussion.  There is more info at
 
 	https://lists.xcf.berkeley.edu/mailman/listinfo/<listname>
 
-substituting <listname> for "gimp-announce", "gimp-user", "gimp-win-user", 
-or "gimp-developer" (without the quotes, of course) depending on the list 
-you want to subscribe to.  Links to the mailing list archives can be found 
-at the same addresses as given above.
+substituting <listname> for "gimp-announce", "gimp-user",
+"gimp-win-user", or "gimp-developer" (without the quotes, of course)
+depending on the list you want to subscribe to.  Links to the mailing
+list archives can be found at the same addresses as given above.
 
-Gimp-announce is a low-traffic list with announcements about new releases 
-of GIMP and plug-ins. Gimp-user is a mailing list dedicated to user problems, 
-hints and tips, discussion of cool effects, etc.  Gimp-developer is 
-oriented to GIMP core and plug-in developers.  Most people will only want 
-to be subscribed to gimp-user. If you want to help develop The GIMP, the
-gimp-developer mailing list is a good starting point.
+Gimp-announce is a low-traffic list with announcements about new
+releases of GIMP and plug-ins. Gimp-user is a mailing list dedicated
+to user problems, hints and tips, discussion of cool effects, etc.
+Gimp-developer is oriented to GIMP core and plug-in developers.  Most
+people will only want to be subscribed to gimp-user. If you want to
+help develop The GIMP, the gimp-developer mailing list is a good
+starting point.
 
 There are two mailing lists dedicated to the Win32 port, "gimpwin-users" 
 and "gimpwin-dev". Especially the latter also carries traffic about the 
@@ -67,11 +68,14 @@ or
 	gimpwin-dev-subscribe@egroups.com
 
 respectively. You can also use the web interface at
-http://www.egroups.com/group/gimpwin-users/ and
-http://www.egroups.com/group/gimpwin-dev/ . Note that as these mailing
-lists are hosted on egroups.com, the messages from the list contain
-relatively unintrusive and easily ignored advertisements at the
-end. But if you are absolutely allergic to ads, don't subscribe.
+
+        http://www.egroups.com/group/gimpwin-users/ and
+        http://www.egroups.com/group/gimpwin-dev/ 
+
+Note that as these mailing lists are hosted on egroups.com, the
+messages from the list contain relatively unintrusive and easily
+ignored advertisements at the end. But if you are absolutely allergic
+to ads, don't subscribe.
 
 
 3. IRC
@@ -83,27 +87,29 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 
 	irc.gimp.org:6667
 
+
 4. Customizing
 ==============
 
 The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc file or by using "themes" (ready-made 
+by editing the ~/.gtkrc file or by using "themes" (ready-made
 customizations). For downloadable themes and further details, see
-http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.3/gtkrc so you 
-can have settings that only apply to The GIMP.
+http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.3/gtkrc so
+you can have settings that only apply to The GIMP.
 
-Included is a set of keybindings similar to those in Adobe Photoshop (tm).
-You can find them in the ps-menurc file.  To use them, copy this file to
-~/.gimp-1.3/menurc. You can also manually change the keybindings to any of
-your choice by editing ~/.gimp-1.3/menurc.
+Included is a set of keybindings similar to those in Adobe Photoshop.
+You can find them in the ps-menurc file.  To use them, copy this file
+to ~/.gimp-1.3/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-1.3/menurc.
+
 
 5. Bugs
 =======
 
 Since this is a developers version, we are at the moment not really
-interested in receiving bug-reports. If you find a bug, contact the person
-who is working on this particular part of the program (check the ChangeLog)
-or try to fix it yourself.
+interested in receiving bug-reports. If you find a bug, contact the
+person who is working on this particular part of the program (check
+the ChangeLog) or try to fix it yourself.
 
 
 Have fun,
@@ -114,11 +120,3 @@ Have fun,
   Manish Singh
   Sven Neumann
   Michael Natterer	
-
-
-
-
-
-
-
-

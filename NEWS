@@ -25,7 +25,10 @@ Overview of Changes in GIMP 1.3.4
 - First draft of a new vectors tool [Simon, Mitch]
 - Undo cleanups [Mitch]
 - Changed tips file format to XML [Sven]
+- Added desktop file for GNOME-2 [Sven]
 - Added GimpItem class to generalize core code even further [Mitch]
+- Improved preferences dialog [Mitch, Sven]
+- New tool icons [Jimmac]
 - Bugfixes
 - More stuff not mentioned here (see the ChangeLog)
 

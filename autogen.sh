@@ -91,10 +91,10 @@ fi
 
 echo "Testing intltoolize... "
 VER=`intltoolize --version | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
-if expr $VER \>= 0.15 >/dev/null; then
+if expr $VER \>= 0.17 >/dev/null; then
         echo "looks OK."
 else
-        echo "too old! (Need 0.15, have $VER)"
+        echo "too old! (Need 0.17, have $VER)"
         DIE=1
 fi
 echo

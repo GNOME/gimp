@@ -2,9 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(etc/gimprc.in)
 
 
-GLIB_REQUIRED_VERSION=1.3.14
+GLIB_REQUIRED_VERSION=1.3.15
 GTK_REQUIRED_VERSION=$GLIB_REQUIRED_VERSION
-PANGOFT2_REQUIRED_VERSION=0.24
+PANGOFT2_REQUIRED_VERSION=0.26
 GTKDOC_REQUIRED_VERSION=0.6
 
 #
@@ -190,13 +190,6 @@ AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
     CFLAGS=$gimp_save_CFLAGS
     AC_MSG_WARN([Could not determine POSIX flag. (-posix didn't work.)])))
 
-gimp_save_CPPFLAGS="$CPPFLAGS"
-gimp_save_LDFLAGS="$LDFLAGS"
-gimp_save_LIBS="$LIBS"
-
-CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
-LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
-LIBS="$LIBS $GTK_LIBS"
 
 dnl Test for MMX stuff
 have_asm_mmx=false
@@ -246,125 +239,6 @@ AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 dnl build of gimp-remote is disabled for now
 dnl GIMP_REMOTE="gimp-remote-1.3"
 
-dnl Check if building for GTK+-X11
-gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
-if test "$gdk_target" = x11; then
-  dnl Test for Xmu
-    if test -z "$LIBXMU"; then
-      AC_CHECK_LIB(Xmu, XmuClientWindow,
-        [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	  WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
-	  [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
-	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
-	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	      WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
-	      [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
-	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
-    fi
-  else
-     AC_MSG_WARN([ 
-*** Not building for GTK+-X11 (GDK backend is $gdk_target).
-*** Webbrowser plug-in will not be built.])
-  fi
-
-dnl Test for libaa
-  if test -z "$LIBAA"; then
-    AC_CHECK_LIB(aa, aa_printf,
-      [AC_CHECK_HEADER(aalib.h,
-	AA='aa'; LIBAA='-laa',
-	[AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)])],
-      [AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***)])
-  fi
-
-dnl Test for libtiff
-  if test -z "$LIBTIFF"; then
-    AC_CHECK_LIB(tiff, TIFFReadScanline,
-      [AC_CHECK_HEADER(tiffio.h,
-	TIFF='tiff'; LIBTIFF='-ltiff',
-	[AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
-      [AC_CHECK_LIB(tiff, TIFFWriteScanline,
-	[AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff'; LIBTIFF='-ltiff -ljpeg -lz',
-	  [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
-	[AC_CHECK_LIB(tiff34, TIFFFlushData,
-	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF='tiff'; LIBTIFF='-ltiff34 -ljpeg -lz',
-	    [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
-        [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***)], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
-  fi
-
-dnl Test for libjpeg
-  if test -z "$LIBJPEG"; then
-    AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
-      jpeg_ok=yes,
-      [jpeg_ok=no
-      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***)
-      AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library not found) ***)])
-    if test "$jpeg_ok" = yes; then
-      AC_MSG_CHECKING([for jpeglib.h])
-      AC_TRY_CPP(
-[#include <stdio.h>
-#undef HAVE_STDDEF_H
-#undef HAVE_STDLIB_H
-#undef PACKAGE
-#undef VERSION
-#include <jpeglib.h>],
-	jpeg_ok=yes,
-	jpeg_ok=no)
-      AC_MSG_RESULT($jpeg_ok)
-      if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; XJT='xjt'; LIBJPEG='-ljpeg'
-	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
-	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
-	  AC_MSG_WARN(JPEG library does not support progressive saving.))
-      else
-	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
-        AC_MSG_WARN(*** XJT plug-in will not be built (JPEG header file not found) ***)
-      fi
-    fi
-  fi
-
-dnl Test for libz
-  if test -z "$LIBZ"; then
-    AC_CHECK_LIB(z, gzsetparams,
-      [AC_CHECK_HEADER(zlib.h,
-	PSP='psp'; LIBZ='-lz',
-	[AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)])],
-      [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
-  fi
-
-dnl Test for libpng
-  if test -z "$LIBPNG" && test -n "$LIBZ"; then
-    AC_CHECK_LIB(png, png_read_info,
-      [AC_CHECK_HEADER(png.h,
-	png_ok=yes,
-	png_ok=no)],
-      [AC_MSG_WARN(*** PNG plug-in will not be built (PNG library not found) ***)], -lz -lm)
-    if test "$png_ok" = yes; then
-      AC_MSG_CHECKING([for png_structp in png.h])
-      AC_TRY_COMPILE([#include <png.h>],
-        [png_structp pp; png_infop info; png_colorp cmap; png_create_read_struct;],
-        png_ok=yes,
-        png_ok=no)
-      AC_MSG_RESULT($png_ok)
-      if test "$png_ok" = yes; then
-        PNG='png'; LIBPNG="-lpng $LIBZ"
-      else
-        AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
-      fi
-    else
-      AC_MSG_WARN(*** PNG plug-in will not be built (PNG header file not found) ***)
-    fi
-  fi
-
-dnl Test for libmpeg
-  if test -z "$LIBMPEG"; then
-    AC_CHECK_LIB(mpeg, GetMPEGFrame,
-      [AC_CHECK_HEADER(mpeg.h,
-	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
-	[AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)])],
-      [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***)])
-  fi
 
 dnl Check for shared memory
 AC_CHECK_HEADER(sys/ipc.h, [AC_DEFINE(HAVE_IPC_H)], no_sys_ipc=yes)
@@ -496,6 +370,194 @@ if test "$have_glib_inline" = "no"; then
   AC_C_INLINE
 fi  
 
+dnl Threads
+dnl AC_ARG_ENABLE(threads, [  --enable-threads    support POSIX threading [default=no]])
+dnl if test "x$enable_threads" = "xyes"; then
+dnl   AC_CHECK_LIB(pthread, pthread_attr_init, 
+dnl     [AC_DEFINE(USE_PTHREADS)
+dnl     GIMP_THREAD_LIBS="-lpthread"
+dnl     GIMP_THREAD_FLAGS="-D_REENTRANT"],
+dnl     # AIX has libpthreads, cause they're special. Special friends (TM)
+dnl     AC_CHECK_LIB(pthreads, pthread_attr_init,
+dnl       [AC_DEFINE(USE_PTHREADS)
+dnl       GIMP_THREAD_LIBS="-lpthreads"
+dnl       GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+dnl fi
+
+dnl Multi-Processor Support
+AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors [default=no]])
+if test "x$enable_mp" = "xyes"; then
+  AC_CHECK_LIB(pthread, pthread_attr_init, 
+    [AC_DEFINE(ENABLE_MP)
+    GIMP_MP_LIBS="-lpthread"
+    GIMP_MP_FLAGS="-D_REENTRANT"],
+    # AIX has libpthreads, cause they're special. Special friends (TM)
+    AC_CHECK_LIB(pthreads, pthread_attr_init,
+      [AC_DEFINE(ENABLE_MP)
+      GIMP_MP_LIBS="-lpthreads"
+      GIMP_MP_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+fi
+
+
+dnl Check if building for GTK+-X11
+gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
+if test "$gdk_target" = x11; then
+  dnl Test for Xmu
+    if test -z "$LIBXMU"; then
+      AC_CHECK_LIB(Xmu, XmuClientWindow,
+        [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	  WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
+	  [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
+	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
+	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	      WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
+	      [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
+	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
+    fi
+  else
+     AC_MSG_WARN([ 
+*** Not building for GTK+-X11 (GDK backend is $gdk_target).
+*** Webbrowser plug-in will not be built.])
+  fi
+
+dnl Test for libtiff
+AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
+  if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
+    AC_CHECK_LIB(tiff, TIFFReadScanline,
+      [AC_CHECK_HEADER(tiffio.h,
+	TIFF='tiff'; LIBTIFF='-ltiff',
+	[AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
+      [AC_CHECK_LIB(tiff, TIFFWriteScanline,
+	[AC_CHECK_HEADER(tiffio.h,
+          TIFF='tiff'; LIBTIFF='-ltiff -ljpeg -lz',
+	  [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
+	[AC_CHECK_LIB(tiff34, TIFFFlushData,
+	  [AC_CHECK_HEADER(tiffio.h,
+            TIFF='tiff'; LIBTIFF='-ltiff34 -ljpeg -lz',
+	    [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
+        [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***)], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
+  fi
+
+  if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
+     AC_MSG_ERROR([
+*** Checks for TIFF libary failed. You can build without it by passing 
+*** --without-libtiff to configure but you won't be able to use TIFFs then.])
+  fi
+
+
+dnl Test for libjpeg
+AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
+  if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+    AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
+      jpeg_ok=yes,
+      [jpeg_ok=no
+      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***)
+      AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library not found) ***)])
+    if test "$jpeg_ok" = yes; then
+      AC_MSG_CHECKING([for jpeglib.h])
+      AC_TRY_CPP([
+#include <stdio.h>
+#undef HAVE_STDDEF_H
+#undef HAVE_STDLIB_H
+#undef PACKAGE
+#undef VERSION
+#include <jpeglib.h>],
+	jpeg_ok=yes,
+	jpeg_ok=no)
+      AC_MSG_RESULT($jpeg_ok)
+      if test "$jpeg_ok" = yes; then
+	JPEG='jpeg'; XJT='xjt'; LIBJPEG='-ljpeg'
+	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
+	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
+	  AC_MSG_WARN(JPEG library does not support progressive saving.))
+      else
+	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
+        AC_MSG_WARN(*** XJT plug-in will not be built (JPEG header file not found) ***)
+      fi
+    fi
+  fi
+
+  if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
+     AC_MSG_ERROR([
+*** Checks for JPEG library failed. You can build without it by passing 
+*** --without-libjpeg to configure but you won't be able to use JPEGs then.])
+  fi
+
+
+dnl Test for libz
+  if test -z "$LIBZ"; then
+    AC_CHECK_LIB(z, gzsetparams,
+      [AC_CHECK_HEADER(zlib.h,
+	PSP='psp'; LIBZ='-lz',
+	[AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)])],
+      [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
+  fi
+
+dnl Test for libpng
+AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
+  if test x$with_libpng != xno && test -z "$LIBPNG" && test -n "$LIBZ"; then
+    AC_CHECK_LIB(png, png_read_info,
+      [AC_CHECK_HEADER(png.h,
+	png_ok=yes,
+	png_ok=no)],
+      [AC_MSG_WARN(*** PNG plug-in will not be built (PNG library not found) ***)], -lz -lm)
+    if test "$png_ok" = yes; then
+      AC_MSG_CHECKING([for png_structp in png.h])
+      AC_TRY_COMPILE([#include <png.h>],
+        [png_structp pp; png_infop info; png_colorp cmap; png_create_read_struct;],
+        png_ok=yes,
+        png_ok=no)
+      AC_MSG_RESULT($png_ok)
+      if test "$png_ok" = yes; then
+        PNG='png'; LIBPNG="-lpng $LIBZ"
+      else
+        AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
+      fi
+    else
+      AC_MSG_WARN(*** PNG plug-in will not be built (PNG header file not found) ***)
+    fi
+  fi
+
+  if test x$with_libpng != xno && test -z "$LIBPNG"; then
+     AC_MSG_ERROR([
+*** Checks for PNG library failed. You can build without it by passing 
+*** --without-libpng to configure but you won't be able to use PNGs then.])
+  fi
+
+
+dnl Test for libaa
+  if test -z "$LIBAA"; then
+    AC_CHECK_LIB(aa, aa_printf,
+      [AC_CHECK_HEADER(aalib.h,
+	AA='aa'; LIBAA='-laa',
+	[AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)])],
+      [AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***)])
+  fi
+
+
+dnl Test for libmpeg
+  if test -z "$LIBMPEG"; then
+    AC_CHECK_LIB(mpeg, GetMPEGFrame,
+      [AC_CHECK_HEADER(mpeg.h,
+	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
+	[AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)])],
+      [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***)])
+  fi
+
+
+dnl Test for libXpm
+  gimp_save_LDFLAGS="$LDFLAGS"
+  LDFLAGS="$LDFLAGS $X_LIBS"
+  if test -z "$LIBXPM"; then
+    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
+      [AC_CHECK_HEADER(X11/xpm.h,
+	XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS -lX11 -lXpm",
+	[AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
+      [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS -lX11)
+  fi
+  LDFLAGS="$gimp_save_LDFLAGS"
+
+
 dnl This is for the help browser
 dnl AC_PATH_PROG(GNOME_CONFIG,gnome-config,no)
 dnl if test "$GNOME_CONFIG" = "no"; then
@@ -537,50 +599,6 @@ dnl     HELPBROWSER=
 dnl   fi
 dnl fi
 
-CPPFLAGS="$gimp_save_CPPFLAGS"
-LDFLAGS="$gimp_save_LDFLAGS"
-LIBS="$gimp_save_LIBS"
-
-dnl Test for libXpm
-  gimp_save_LDFLAGS="$LDFLAGS"
-  LDFLAGS="$LDFLAGS $X_LIBS"
-  if test -z "$LIBXPM"; then
-    AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
-      [AC_CHECK_HEADER(X11/xpm.h,
-	XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS -lX11 -lXpm",
-	[AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
-      [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS -lX11)
-  fi
-  LDFLAGS="$gimp_save_LDFLAGS"
-
-
-dnl Threads
-dnl AC_ARG_ENABLE(threads, [  --enable-threads    support POSIX threading [default=no]])
-dnl if test "x$enable_threads" = "xyes"; then
-dnl   AC_CHECK_LIB(pthread, pthread_attr_init, 
-dnl     [AC_DEFINE(USE_PTHREADS)
-dnl     GIMP_THREAD_LIBS="-lpthread"
-dnl     GIMP_THREAD_FLAGS="-D_REENTRANT"],
-dnl     # AIX has libpthreads, cause they're special. Special friends (TM)
-dnl     AC_CHECK_LIB(pthreads, pthread_attr_init,
-dnl       [AC_DEFINE(USE_PTHREADS)
-dnl       GIMP_THREAD_LIBS="-lpthreads"
-dnl       GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
-dnl fi
-
-dnl Multi-Processor Support
-AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors [default=no]])
-if test "x$enable_mp" = "xyes"; then
-  AC_CHECK_LIB(pthread, pthread_attr_init, 
-    [AC_DEFINE(ENABLE_MP)
-    GIMP_MP_LIBS="-lpthread"
-    GIMP_MP_FLAGS="-D_REENTRANT"],
-    # AIX has libpthreads, cause they're special. Special friends (TM)
-    AC_CHECK_LIB(pthreads, pthread_attr_init,
-      [AC_DEFINE(ENABLE_MP)
-      GIMP_MP_LIBS="-lpthreads"
-      GIMP_MP_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
-fi
 
 gimpdatadir=$datadir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION

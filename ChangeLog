@@ -1,5 +1,20 @@
 2002-03-02  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: require intltool-0.17.
+	
+	* configure.in: require latest glib, pango and gtk+. Bail out if
+	libtiff, libjpeg or libpng is not found.  You now need to explicitly
+	disable TIFF, JPEG and PNG support.
+
+	* HACKING
+	* INSTALL
+	* NEWS
+	* README: udpated.
+
+	* data/misc/Makefile.am: fixed dependencies.
+
+2002-03-02  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptoolinfo.c
 	* app/widgets/gimptoolinfopreview.c: allow RGB previews and do proper
 	blending for RGBA. This is wasted effort since we will change the

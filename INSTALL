@@ -45,27 +45,34 @@ options can be listed using the command `./configure --help'. There
 are five commands special options the GIMP `configure' script
 recognizes. These are:
 
-  1. --enable-shared and --disable-shared. This option affects whether
+  --enable-shared and --disable-shared. This option affects whether
      shared libraries will be built or not. Shared libraries provide
      for much smaller executables. The default is to enable shared
      libraries. Disabling shared libraries is almost never a good idea.
 
-  2. --enable-debug and --disable-debug. This option causes the build
+  --enable-debug and --disable-debug. This option causes the build
      process to compile with debugging enabled. If debugging is
      disabled, the GIMP will instead be compiled with optimizations turned
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
-  3. --enable-ansi and --disable-ansi. This option causes stricter
+  --enable-ansi and --disable-ansi. This option causes stricter
      ANSI C checking to be performed when compiling with GCC. The
      default is for strict checking to be disabled. NOTE: This option
      is intended primarily as a convenience for developers.
 
-  4. --enable-gimpdir=DIR. This option changes the default directory
+  --enable-gimpdir=DIR. This option changes the default directory
      the gimp uses to search for its configuration files from ~/.gimp-1.3 
      (the directory .gimp-1.3 in the users home directory) to DIR.
-  
-  5. --enable-perl and --disable-perl. The perl extension does not build
+
+  --without-libtiff, without-libjpeg, --without-libpng. configure
+     will bail out if libtiff, libjpeg or libpng can not be found. You
+     better fix the underlying problem and install these libraries with
+     their header files. If you absolutely want to compile GIMP without
+     support for TIFF, JPEG or PNG you need to explicitely disable
+     them using the options given above.
+ 
+  --enable-perl and --disable-perl. The perl extension does not build
      on all systems. If you experience problems use --disable-perl
      and gimp will not even try to built it. The perl extension does
      not usually respect the normal configure prefix but uses perl's
@@ -76,25 +83,18 @@ recognizes. These are:
      get many errors on startup. See README.perl for even finer grained
      control about installation paths (and distribution making).
 
-  6. --enable-nls and --disable-nls. This option changes whether to build
-     GIMP with or without localisation support. This option is enabled by
-     default. If you'd like to enjoy GIMP in your native language, assuming 
-     the necessary catalogs are available, then leave this option on. If
-     you'd like to have an English GIMP in every case then turn this option
-     off; this will also decrease the binary size by a few bits.
-  
-  7. --enable-threads and --enable-mp. This options control whether to build
+  --enable-threads and --enable-mp. This options control whether to build
      GIMP with or without support for multiple processors. This options are
      off by default. If you do have multiply processors and run GIMP with
      an OS supporting them you will like to enable this features to use
      all of your horsepower. Enabling it on singleprocessor systems won't
      harm but cause a bit processing overhead.
 
-  8. --with-sendmail=[PATH]. This option is used to tell GIMP where to find
+  --with-sendmail=[PATH]. This option is used to tell GIMP where to find
      the sendmail command. Normally this options don't have to be used
      because configure tries to find it in the usual places.
 
-  9. --with-gnome-desktop=[PATH]. This option specifies where to install
+  --with-gnome-desktop=[PATH]. This option specifies where to install
      a link to the gimp.desktop file for GNOME-2.0. The default value 
      ${prefix}/share/applications should be fine if GNOME-2.0 is installed
      in the same prefix. No link is created if the specified directory
