@@ -25,11 +25,6 @@
 
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -177,11 +172,11 @@ make_selection_toolbar(Selection_t *data)
 					     "MoveDown", _("Move Down"),
 					     selection_command,
 					     &data->cmd_move_down);
-  gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+  toolbar_add_space(toolbar);
   data->edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
 				       "Edit", _("Edit"), selection_command,
 				       &data->cmd_edit);
-  gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+  toolbar_add_space(toolbar);
   data->remove = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE, "Delete",
 					 _("Delete"), selection_command,
 					 &data->cmd_delete);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #ifndef _IMAP_MISC_H
 #define _IMAP_MISC_H
 
+void toolbar_add_space (GtkWidget *toolbar);
 GtkWidget *make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 
 				   const char *identifier, 
 				   const char *tooltip, 

@@ -23,27 +23,45 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_main.h"
 #include "imap_misc.h"
+
+static GtkWidget*
+make_toolbar_icon (GtkWidget *toolbar, GtkToolItem *item,
+		   const char *identifier, const char *tooltip,
+		   void (*callback)(GtkWidget*, gpointer), gpointer udata)
+{
+  static GtkTooltips *tips;
+  if (!tips)
+    {
+      tips = gtk_tooltips_new ();
+    }
+  gtk_tool_item_set_tooltip (item, tips, tooltip, identifier);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_widget_show (GTK_WIDGET (item));
+  return GTK_WIDGET (item);
+}
+
+void
+toolbar_add_space (GtkWidget *toolbar)
+{
+  GtkToolItem *item = gtk_separator_tool_item_new ();
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_widget_show (GTK_WIDGET (item));
+}
 
 GtkWidget*
 make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id,
 			const char *identifier, const char *tooltip,
 			void (*callback)(GtkWidget*, gpointer), gpointer udata)
 {
-   GtkWidget *iconw;
-
-   iconw = gtk_image_new_from_stock(stock_id, GTK_ICON_SIZE_SMALL_TOOLBAR);
-   return gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-				  identifier, tooltip, NULL, iconw,
-				  GTK_SIGNAL_FUNC(callback), udata);
+   GtkToolItem *item = gtk_tool_button_new_from_stock (stock_id);
+   g_signal_connect (item, "clicked", G_CALLBACK (callback), udata);
+   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
+			     callback, udata);
 }
 
 GtkWidget*
@@ -53,12 +71,12 @@ make_toolbar_radio_icon(GtkWidget *toolbar, const gchar *stock_id,
 			 void (*callback)(GtkWidget*, gpointer),
 			 gpointer udata)
 {
-   GtkWidget *iconw = gtk_image_new_from_stock(stock_id,
-					       GTK_ICON_SIZE_SMALL_TOOLBAR);
-   return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
-				     GTK_TOOLBAR_CHILD_RADIOBUTTON, prev,
-				     identifier, tooltip, NULL, iconw,
-				     GTK_SIGNAL_FUNC(callback), udata);
+   GtkToolItem *item = 
+     gtk_radio_tool_button_new_with_stock_from_widget 
+     (GTK_RADIO_TOOL_BUTTON (prev), stock_id);
+   g_signal_connect (item, "toggled", G_CALLBACK (callback), udata);
+   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
+			     callback, udata);
 }
 
 GtkWidget*
@@ -67,12 +85,10 @@ make_toolbar_toggle_icon(GtkWidget *toolbar, const gchar *stock_id,
 			 void (*callback)(GtkWidget*, gpointer),
 			 gpointer udata)
 {
-   GtkWidget *iconw = gtk_image_new_from_stock(stock_id,
-					       GTK_ICON_SIZE_SMALL_TOOLBAR);
-   return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
-				     GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
-				     identifier, tooltip, NULL, iconw,
-				     GTK_SIGNAL_FUNC(callback), udata);
+   GtkToolItem *item = gtk_toggle_tool_button_new_from_stock (stock_id);
+   g_signal_connect (item, "toggled", G_CALLBACK (callback), udata);
+   return make_toolbar_icon (toolbar, item, identifier, tooltip, 
+			     callback, udata);
 }
 
 static Alert_t*

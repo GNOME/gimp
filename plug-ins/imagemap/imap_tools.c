@@ -23,11 +23,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
@@ -81,6 +76,7 @@ arrow_clicked(GtkWidget *widget, gpointer data)
    }
 }
 
+#ifdef _NOT_READY_YET_
 static void
 fuzzy_select_clicked(GtkWidget *widget, gpointer data)
 {
@@ -88,12 +84,11 @@ fuzzy_select_clicked(GtkWidget *widget, gpointer data)
       _callback_lock = FALSE;
    } else {
       set_fuzzy_select_func();
-/*
       menu_select_fuzzy_select();
       popup_select_fuzzy_select();
-*/
    }
 }
+#endif
 
 static void
 rectangle_clicked(GtkWidget *widget, gpointer data)
@@ -169,12 +164,12 @@ make_tools(GtkWidget *window)
 					    _tools.circle, _("Polygon"),
 					    _("Define Polygon area"),
 					    polygon_clicked, NULL);
-   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+   toolbar_add_space(toolbar);
    _tools.edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
                                    _("Edit"),
 				   _("Edit selected area info"), tools_command,
 				   &_tools.cmd_edit);
-   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+   toolbar_add_space(toolbar);
    _tools.delete = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE,
                                      _("Delete"),
 				     _("Delete selected area"), tools_command,
@@ -192,7 +187,7 @@ static void
 tools_select(GtkWidget *widget)
 {
    _callback_lock = TRUE;
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
+   gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (widget), TRUE);
    gtk_widget_grab_focus(widget);
 }
 
