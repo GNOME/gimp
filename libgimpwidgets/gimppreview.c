@@ -60,10 +60,15 @@ static void     gimp_preview_set_property       (GObject          *object,
                                                  GParamSpec       *pspec);
 
 static void     gimp_preview_draw               (GimpPreview      *preview);
-static void     gimp_preview_area_realize       (GtkWidget        *widget);
+
+static void     gimp_preview_area_realize       (GtkWidget        *widget,
+                                                 GimpPreview      *preview);
+static void     gimp_preview_area_unrealize     (GtkWidget        *widget,
+                                                 GimpPreview      *preview);
 static void     gimp_preview_area_size_allocate (GtkWidget        *widget,
                                                  GtkAllocation    *allocation,
                                                  GimpPreview      *preview);
+
 static void     gimp_preview_h_scroll           (GtkAdjustment    *hadj,
                                                  GimpPreview      *preview);
 static void     gimp_preview_v_scroll           (GtkAdjustment    *vadj,
@@ -151,10 +156,11 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
+  GtkTable  *table = GTK_TABLE (preview);
   GtkWidget *frame;
 
-  gtk_table_resize (GTK_TABLE (preview), 3, 2);
-  gtk_table_set_homogeneous (GTK_TABLE (preview), FALSE);
+  gtk_table_resize (table, 3, 2);
+  gtk_table_set_homogeneous (table, FALSE);
 
   preview->xoff       = 0;
   preview->yoff       = 0;
@@ -177,7 +183,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (preview->hadj));
   gtk_range_set_update_policy (GTK_RANGE (preview->hscr),
                                GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (preview), preview->hscr, 0,1, 1,2,
+  gtk_table_attach (table, preview->hscr, 0,1, 1,2,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
   preview->vadj = gtk_adjustment_new (0, 0, preview->height - 1, 1.0,
@@ -190,15 +196,13 @@ gimp_preview_init (GimpPreview *preview)
   preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (preview->vadj));
   gtk_range_set_update_policy (GTK_RANGE (preview->vscr),
                                GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach (GTK_TABLE (preview), preview->vscr, 1,2, 0,1,
+  gtk_table_attach (table, preview->vscr, 1,2, 0,1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   /* the area itself */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (preview), frame,
-                    0,1, 0,1,
-                    GTK_FILL, GTK_FILL, 0,0);
+  gtk_table_attach (table, frame, 0,1, 0,1, GTK_FILL, GTK_FILL, 0,0);
   gtk_widget_show (frame);
 
   preview->area = gimp_preview_area_new ();
@@ -217,7 +221,10 @@ gimp_preview_init (GimpPreview *preview)
 
   g_signal_connect (preview->area, "realize",
                     G_CALLBACK (gimp_preview_area_realize),
-                    NULL);
+                    preview);
+  g_signal_connect (preview->area, "unrealize",
+                    G_CALLBACK (gimp_preview_area_unrealize),
+                    preview);
 
   g_signal_connect (preview->area, "size_allocate",
                     G_CALLBACK (gimp_preview_area_size_allocate),
@@ -229,7 +236,7 @@ gimp_preview_init (GimpPreview *preview)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
                                 preview->update_preview);
   gtk_table_set_row_spacing (GTK_TABLE (preview), 1, 6);
-  gtk_table_attach (GTK_TABLE (preview), preview->toggle_update,
+  gtk_table_attach (table, preview->toggle_update,
                     0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect_after (preview->toggle_update, "toggled",
                           G_CALLBACK (gimp_preview_toggle_callback),
@@ -312,14 +319,35 @@ gimp_preview_draw (GimpPreview *preview)
 }
 
 static void
-gimp_preview_area_realize (GtkWidget *widget)
+gimp_preview_area_realize (GtkWidget   *widget,
+                           GimpPreview *preview)
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
-  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_FLEUR);
 
-  gdk_window_set_cursor (widget->window, cursor);
+  g_return_if_fail (preview->cursor == NULL);
 
-  gdk_cursor_unref (cursor);
+  preview->cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
+
+  if (preview->xmax - preview->xmin > preview->width  ||
+      preview->ymax - preview->ymin > preview->height)
+    {
+      gdk_window_set_cursor (widget->window, preview->cursor);
+    }
+  else
+    {
+      gdk_window_set_cursor (widget->window, NULL);
+    }
+}
+
+static void
+gimp_preview_area_unrealize (GtkWidget   *widget,
+                             GimpPreview *preview)
+{
+  if (preview->cursor)
+    {
+      gdk_cursor_unref (preview->cursor);
+      preview->cursor = NULL;
+    }
 }
 
 static void
@@ -327,20 +355,28 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation,
                                  GimpPreview   *preview)
 {
-  gint  width  = preview->xmax - preview->xmin;
-  gint  height = preview->ymax - preview->ymin;
+  GdkCursor *cursor = NULL;
+  gint       width  = preview->xmax - preview->xmin;
+  gint       height = preview->ymax - preview->ymin;
 
   preview->width  = allocation->width;
   preview->height = allocation->height;
 
   if (width > preview->width)
     {
+      GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+
+      adj->lower          = 0;
+      adj->upper          = width;
+      adj->page_size      = preview->width;
+      adj->step_increment = 1.0;
+      adj->page_increment = adj->page_size / 2;
+
+      gtk_adjustment_changed (adj);
+
       gtk_widget_show (preview->hscr);
 
-      gtk_range_set_increments (GTK_RANGE (preview->hscr),
-                                1.0, MIN (preview->width, width));
-      gtk_range_set_range (GTK_RANGE (preview->hscr),
-                           0, width - preview->width - 1);
+      cursor = preview->cursor;
     }
   else
     {
@@ -349,17 +385,27 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
 
   if (height > preview->height)
     {
+      GtkAdjustment *adj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
+
+      adj->lower          = 0;
+      adj->upper          = height;
+      adj->page_size      = preview->height;
+      adj->step_increment = 1.0;
+      adj->page_increment = adj->page_size / 2;
+
+      gtk_adjustment_changed (adj);
+
       gtk_widget_show (preview->vscr);
 
-      gtk_range_set_increments (GTK_RANGE (preview->vscr),
-                                1.0, MIN (preview->height, height));
-      gtk_range_set_range (GTK_RANGE (preview->vscr),
-                           0, height - preview->height - 1);
+      cursor = preview->cursor;
     }
   else
     {
       gtk_widget_hide (preview->vscr);
     }
+
+  if (GTK_WIDGET_REALIZED (widget))
+    gdk_window_set_cursor (widget->window, cursor);
 
   gimp_preview_draw (preview);
   gimp_preview_invalidate (preview);
@@ -446,6 +492,7 @@ gimp_preview_area_event (GtkWidget   *area,
               gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
 
               gimp_preview_draw (preview);
+              gimp_preview_invalidate (preview);
             }
         }
       break;

@@ -32,7 +32,8 @@
 #include "gimpdrawablepreview.h"
 
 
-#define DEFAULT_SIZE  128
+#define DEFAULT_SIZE      150
+#define SELECTION_BORDER  10
 
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
@@ -88,7 +89,7 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("size",
                                                              NULL, NULL,
-                                                             0, 1024,
+                                                             1, 1024,
                                                              DEFAULT_SIZE,
                                                              G_PARAM_READABLE));
 }
@@ -154,12 +155,19 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
                                     GimpDrawable        *drawable)
 {
   GimpPreview *preview = GIMP_PREVIEW (drawable_preview);
+  gint         width   = gimp_drawable_width (drawable->drawable_id);
+  gint         height  = gimp_drawable_height (drawable->drawable_id);
+  gint         x1, x2;
+  gint         y1, y2;
 
   drawable_preview->drawable = drawable;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &preview->xmin, &preview->ymin,
-                             &preview->xmax, &preview->ymax);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  preview->xmin = MAX (x1 - SELECTION_BORDER, 0);
+  preview->ymin = MAX (y1 - SELECTION_BORDER, 0);
+  preview->xmax = MIN (x2 + SELECTION_BORDER, width);
+  preview->ymax = MIN (y2 + SELECTION_BORDER, height);
 }
 
 /**
