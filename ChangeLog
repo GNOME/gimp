@@ -1,5 +1,41 @@
 2001-08-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/interface.c
+	* app/gui/about-dialog.c
+	* app/gui/brush-editor.c
+	* app/gui/brush-select.c
+	* app/gui/color-notebook.c
+	* app/gui/color-select.c
+	* app/gui/convert-dialog.c
+	* app/gui/file-commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-dialog-utils.h
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradients-commands.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/layer-select.c
+	* app/gui/menus.c
+	* app/gui/paths-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/splash.c
+	* app/gui/test-commands.c
+	* app/gui/tips-dialog.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/paint_options.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c: got rid of all
+	gtk_object_[get|set]_data() and almost all gtk_signal_foo()
+	function calls.
+
+2001-08-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gdisplay.h: an evil temp_hack which lets GimpContext manage
 	the active display without including "gdisplay.h". Will go away as
 	soon as context properties are registered dynamically.

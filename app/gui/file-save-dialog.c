@@ -239,25 +239,28 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 static void
 file_save_dialog_create (void)
 {
+  GtkFileSelection *file_sel;
+
   filesave = gtk_file_selection_new (_("Save Image"));
   gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
   gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
-  gtk_container_set_border_width 
-    (GTK_CONTAINER (GTK_FILE_SELECTION (filesave)->button_area), 2);
+  file_sel = GTK_FILE_SELECTION (filesave);
 
-  gtk_signal_connect_object
-    (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button), "clicked",
-     GTK_SIGNAL_FUNC (file_dialog_hide),
-     GTK_OBJECT (filesave));
-  gtk_signal_connect (GTK_OBJECT (filesave), "delete_event",
-		      GTK_SIGNAL_FUNC (file_dialog_hide),
-		      NULL);
-  gtk_signal_connect
-    (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked",
-     GTK_SIGNAL_FUNC (file_save_ok_callback),
-     filesave);
+  gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (file_sel->button_area), 2);
+
+  g_signal_connect_swapped (G_OBJECT (file_sel->cancel_button), "clicked",
+			    G_CALLBACK (file_dialog_hide),
+			    filesave);
+  g_signal_connect (G_OBJECT (filesave), "delete_event",
+		    G_CALLBACK (file_dialog_hide),
+		    NULL);
+
+  g_signal_connect (G_OBJECT (file_sel->ok_button), "clicked",
+		    G_CALLBACK (file_save_ok_callback),
+		    filesave);
+
   gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
 
   /*  Connect the "F1" help key  */
@@ -310,7 +313,7 @@ file_save_type_callback (GtkWidget *widget,
 {
   PlugInProcDef *proc = (PlugInProcDef *) data;
 
-  file_dialog_update_name (proc, filesave);
+  file_dialog_update_name (proc, GTK_FILE_SELECTION (filesave));
 
   save_file_proc = proc;
 }

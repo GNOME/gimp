@@ -171,15 +171,14 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (brushes_callback),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+		    G_CALLBACK (brushes_callback),
+		    view);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "brush_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
@@ -189,15 +188,14 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (patterns_callback),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+		    G_CALLBACK (patterns_callback),
+		    view);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "pattern_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
@@ -207,15 +205,14 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (gradients_callback),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+		    G_CALLBACK (gradients_callback),
+		    view);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "gradient_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_palette (context)),
@@ -225,17 +222,16 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (palettes_callback),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+		    G_CALLBACK (palettes_callback),
+		    view);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "palette_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "palette_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
-  /*
+#if 0
   preview =
     gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_image (context)),
 			   32, 32, 1,
@@ -244,16 +240,15 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-		      GTK_SIGNAL_FUNC (images_callback),
-		      view);
+  g_signal_connect (G_OBJECT (preview), "clicked",
+		    G_CALLBACK (images_callback),
+		    view);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "pattern_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
-  */
+  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
+#endif
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);
@@ -264,9 +259,9 @@ container_multi_view_new (gboolean       list,
 		      FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (container_view_scale_callback),
-		      view);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (container_view_scale_callback),
+		    view);
 
   gtk_widget_show (dialog);
 }

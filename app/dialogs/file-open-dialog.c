@@ -206,25 +206,28 @@ file_open_with_proc_and_display (const gchar   *filename,
 static void
 file_open_dialog_create (void)
 {
+  GtkFileSelection *file_sel;
+
   fileload = gtk_file_selection_new (_("Load Image"));
   gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
 
-  gtk_container_set_border_width (GTK_CONTAINER (fileload), 2);
-  gtk_container_set_border_width 
-    (GTK_CONTAINER (GTK_FILE_SELECTION (fileload)->button_area), 2);
+  file_sel = GTK_FILE_SELECTION (fileload);
 
-  gtk_signal_connect_object
-    (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button), "clicked",
-     GTK_SIGNAL_FUNC (file_dialog_hide),
-     GTK_OBJECT (fileload));
-  gtk_signal_connect (GTK_OBJECT (fileload), "delete_event",
-		      GTK_SIGNAL_FUNC (file_dialog_hide),
-		      NULL);
-  gtk_signal_connect
-    (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked",
-     GTK_SIGNAL_FUNC (file_open_ok_callback),
-     fileload);
+  gtk_container_set_border_width (GTK_CONTAINER (fileload), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (file_sel->button_area), 2);
+
+  g_signal_connect_swapped (G_OBJECT (file_sel->cancel_button), "clicked",
+			    G_CALLBACK (file_dialog_hide),
+			    fileload);
+  g_signal_connect (G_OBJECT (fileload), "delete_event",
+		    G_CALLBACK (file_dialog_hide),
+		    NULL);
+
+  g_signal_connect (G_OBJECT (file_sel->ok_button), "clicked",
+		    G_CALLBACK (file_open_ok_callback),
+		    fileload);
+
   gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
 
   gtk_clist_set_selection_mode
@@ -232,10 +235,9 @@ file_open_dialog_create (void)
      GTK_SELECTION_EXTENDED);
 
   /* Catch file-clist clicks so we can update the preview thumbnail */
-  gtk_signal_connect
-    (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->file_list), "select_row",
-     GTK_SIGNAL_FUNC (file_open_clistrow_callback),
-     fileload);
+  g_signal_connect (G_OBJECT (file_sel->file_list), "select_row",
+		    G_CALLBACK (file_open_clistrow_callback),
+		    fileload);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect (fileload,
@@ -289,12 +291,13 @@ file_open_dialog_create (void)
     gtk_widget_show (hbox);
 
     open_options_genbutton = gtk_button_new ();
-    gtk_signal_connect (GTK_OBJECT (open_options_genbutton), "clicked",
-			GTK_SIGNAL_FUNC (file_open_genbutton_callback),
-			fileload);
     gtk_box_pack_start (GTK_BOX (hbox), open_options_genbutton,
 			TRUE, FALSE, 0);
     gtk_widget_show (open_options_genbutton);	
+
+    g_signal_connect (G_OBJECT (open_options_genbutton), "clicked",
+		      G_CALLBACK (file_open_genbutton_callback),
+		      fileload);
 
     open_options_fixed = gtk_fixed_new ();
     gtk_widget_set_usize (open_options_fixed, 80, 60);
@@ -360,7 +363,7 @@ file_open_type_callback (GtkWidget *widget,
 {
   PlugInProcDef *proc = (PlugInProcDef *) data;
 
-  file_dialog_update_name (proc, fileload);
+  file_dialog_update_name (proc, GTK_FILE_SELECTION (fileload));
 
   load_file_proc = proc;
 }

@@ -334,8 +334,8 @@ color_notebook_new (const gchar           *title,
 			       show_alpha,
 			       color_notebook_update_callback, csel,
 			       &csel->selector_data);
-	  gtk_object_set_data (GTK_OBJECT (csel->frame), "gimp_color_notebook",
-			       csel);
+	  g_object_set_data (G_OBJECT (csel->frame), "gimp_color_notebook",
+			     csel);
 
 	  if (cnp->notebook)
 	    {

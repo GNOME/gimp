@@ -206,7 +206,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 
   filename = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
-  query_box = gtk_object_get_data (GTK_OBJECT (gdisp->gimage), REVERT_DATA_KEY);
+  query_box = g_object_get_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY);
 
   if (! filename)
     {
@@ -241,8 +241,8 @@ file_revert_cmd_callback (GtkWidget *widget,
 
       g_free (text);
 
-      gtk_object_set_data (GTK_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
-			   query_box);
+      g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
+			 query_box);
 
       gtk_widget_show (query_box);
     }
@@ -277,7 +277,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 
   old_gimage = (GimpImage *) data;
 
-  gtk_object_set_data (GTK_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
+  g_object_set_data (G_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
 
   if (revert)
     {

@@ -47,7 +47,7 @@ resolution_calibrate_ok (GtkWidget *button,
   GtkWidget *chain_button;
   gdouble x, y;
 
-  resolution_entry = gtk_object_get_user_data (GTK_OBJECT (data));
+  resolution_entry = g_object_get_data (G_OBJECT (data), "user_data");
 
   x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
   y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
@@ -55,7 +55,7 @@ resolution_calibrate_ok (GtkWidget *button,
   calibrate_xres = (gdouble)ruler_width  * calibrate_xres / x;
   calibrate_yres = (gdouble)ruler_height * calibrate_yres / y;
   
-  chain_button = gtk_object_get_data (GTK_OBJECT (resolution_entry), "chain_button");
+  chain_button = g_object_get_data (G_OBJECT (resolution_entry), "chain_button");
   if (chain_button && 
       ABS (x -y) > GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
@@ -120,7 +120,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   g_signal_connect (G_OBJECT (dialog), "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
-  gtk_object_set_user_data (GTK_OBJECT (dialog), resolution_entry);
+  g_object_set_data (G_OBJECT (dialog), "user_data", resolution_entry);
   g_signal_connect_object (G_OBJECT (resolution_entry), "destroy",
                            G_CALLBACK (gtk_widget_destroy),
                            G_OBJECT (dialog), G_CONNECT_SWAPPED);

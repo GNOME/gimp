@@ -89,8 +89,8 @@ static gchar * info_window_title (GDisplay *gdisp);
 
 
 static void
-info_window_image_rename_callback (GimpImage *gimage,
-				   gpointer   data)
+info_window_image_renamed_callback (GimpImage *gimage,
+				    gpointer   data)
 {
   InfoDialog  *id;
   gchar       *title;
@@ -123,7 +123,7 @@ info_window_page_switch (GtkWidget       *widget,
   InfoDialog  *info_win;
   InfoWinData *iwd;
 
-  info_win = (InfoDialog *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  info_win = (InfoDialog *) g_object_get_data (G_OBJECT (widget), "user_data");
   iwd = (InfoWinData *) info_win->user_data;
 
   /* Only deal with the second page */
@@ -296,11 +296,12 @@ info_window_create_extended (InfoDialog *info_win)
   /* Set back to first page */
   gtk_notebook_set_current_page (GTK_NOTEBOOK (info_win->info_notebook), 0);
 
-  gtk_object_set_user_data (GTK_OBJECT (info_win->info_notebook),
-			    (gpointer)info_win);
+  g_object_set_data (G_OBJECT (info_win->info_notebook), "user_data",
+		     info_win);
 
-  gtk_signal_connect (GTK_OBJECT (info_win->info_notebook), "switch_page",
-		      GTK_SIGNAL_FUNC (info_window_page_switch), NULL);
+  g_signal_connect (G_OBJECT (info_win->info_notebook), "switch_page",
+		    G_CALLBACK (info_window_page_switch),
+		    NULL);
 }
 
 /*  displays information:
@@ -364,9 +365,9 @@ info_window_create (GDisplay *gdisp)
   info_window_create_extended (info_win);
 
   /*  keep track of image name changes  */
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "name_changed",
-		      GTK_SIGNAL_FUNC (info_window_image_rename_callback),
-		      info_win);
+  g_signal_connect (G_OBJECT (gdisp->gimage), "name_changed",
+		    G_CALLBACK (info_window_image_renamed_callback),
+		    info_win);
 
   return info_win;
 }
@@ -579,7 +580,9 @@ info_window_free (InfoDialog *info_win)
 
   iwd = (InfoWinData *) info_win->user_data;
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (iwd->gdisp->gimage), info_win);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (iwd->gdisp->gimage),
+					info_window_image_renamed_callback,
+					info_win);
 
   g_free (iwd);
   info_dialog_free (info_win);

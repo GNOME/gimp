@@ -248,7 +248,7 @@ file_new_resolution_callback (GtkWidget *widget,
   gdouble new_xres;
   gdouble new_yres;
 
-  info = (NewImageInfo*) data;
+  info = (NewImageInfo *) data;
 
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -602,7 +602,8 @@ file_new_dialog_create (GimpImage *gimage)
       button = gtk_radio_button_new_with_label (group, name_info->name);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) name_info->type);
+      g_object_set_data (G_OBJECT (button), "user_data",
+			 (gpointer) name_info->type);
       gtk_widget_show (button);
 
       g_signal_connect (G_OBJECT (button), "toggled",
@@ -642,7 +643,8 @@ file_new_dialog_create (GimpImage *gimage)
 	gtk_radio_button_new_with_label (group, name_info->name);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) name_info->type);
+      g_object_set_data (G_OBJECT (button), "user_data",
+			 (gpointer) name_info->type);
       gtk_widget_show (button);
 
       g_signal_connect (G_OBJECT (button), "toggled",

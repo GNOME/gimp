@@ -20,13 +20,13 @@
 #define __FILE_DIALOG_UTILS_H__
 
 
-void   file_dialog_show         (GtkWidget     *filesel);
-void   file_dialog_hide         (GtkWidget     *filesel);
+void       file_dialog_show         (GtkWidget        *filesel);
+gboolean   file_dialog_hide         (GtkWidget        *filesel);
 
-void   file_dialog_update_name  (PlugInProcDef *proc,
-				 GtkWidget     *filesel);
-void   file_dialog_update_menus (GSList        *procs,
-				 gint           image_type);
+void       file_dialog_update_name  (PlugInProcDef    *proc,
+				     GtkFileSelection *filesel);
+void       file_dialog_update_menus (GSList           *procs,
+				     gint              image_type);
 
 
 #endif /* __FILE_DIALOG_UTILS_H__ */

@@ -103,9 +103,9 @@ splash_create (void)
 
   logo_area = gtk_drawing_area_new ();
 
-  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-		      GTK_SIGNAL_FUNC (splash_logo_expose),
-		      NULL);
+  g_signal_connect (G_OBJECT (logo_area), "expose_event",
+		    G_CALLBACK (splash_logo_expose),
+		    NULL);
 
   logo_area_width  = MAX (logo_width, LOGO_WIDTH_MIN);
   logo_area_height = MAX (logo_height, LOGO_HEIGHT_MIN);

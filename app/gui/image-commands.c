@@ -209,10 +209,9 @@ image_resize_cmd_callback (GtkWidget *widget,
 					    NULL,
 					    image_resize);
 
-  gtk_signal_connect_object (GTK_OBJECT (image_resize->resize->resize_shell),
-			     "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) image_resize);
+  g_object_weak_ref (G_OBJECT (image_resize->resize->resize_shell),
+		     (GWeakNotify) g_free,
+		     image_resize);
 
   gtk_widget_show (image_resize->resize->resize_shell);
 }
@@ -246,10 +245,9 @@ image_scale_cmd_callback (GtkWidget *widget,
 					   NULL,
 					   image_scale);
 
-  gtk_signal_connect_object (GTK_OBJECT (image_scale->resize->resize_shell),
-			     "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) image_scale);
+  g_object_weak_ref (G_OBJECT (image_scale->resize->resize_shell),
+		     (GWeakNotify) g_free,
+		     image_scale);
 
   gtk_widget_show (image_scale->resize->resize_shell);
 }

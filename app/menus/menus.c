@@ -2335,8 +2335,6 @@ menus_item_key_press (GtkWidget   *widget,
 	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
 	   strcmp (help_page, "help/context_help.html") == 0))
 	{
-	  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), 
-					"key_press_event");
 	  return TRUE;
 	}
       else
@@ -2345,9 +2343,7 @@ menus_item_key_press (GtkWidget   *widget,
 	}
     }
 
-  /*  ...finally, if F1 was pressed over any menu, show it's help page...
-   */
-  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
+  /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
 
   factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
                                               "factory_path");
@@ -2400,7 +2396,7 @@ menus_item_realize (GtkWidget *widget,
                                "menus_key_press_connected"))
 	{
 	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
-                            GTK_SIGNAL_FUNC (menus_item_key_press),
+                            G_CALLBACK (menus_item_key_press),
                             data);
 
 	  g_object_set_data (G_OBJECT (widget->parent),
@@ -2454,9 +2450,9 @@ menus_create_item (GtkItemFactory       *item_factory,
 
   if (menu_item)
     {
-      gtk_signal_connect_after (GTK_OBJECT (menu_item), "realize",
-				GTK_SIGNAL_FUNC (menus_item_realize),
-				(gpointer) item_factory);
+      g_signal_connect_after (G_OBJECT (menu_item), "realize",
+			      G_CALLBACK (menus_item_realize),
+			      item_factory);
 
       g_object_set_data (G_OBJECT (menu_item), "help_page",
 			 (gpointer) entry->help_page);

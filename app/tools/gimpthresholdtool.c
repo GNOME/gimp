@@ -380,12 +380,11 @@ threshold_dialog_new (void)
   spinbutton = gtk_spin_button_new (td->low_threshold_data, 1.0, 0);
   gtk_widget_set_usize (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
   g_signal_connect (G_OBJECT (td->low_threshold_data), "value_changed",
-                    GTK_SIGNAL_FUNC (threshold_low_threshold_adjustment_update),
+                    G_CALLBACK (threshold_low_threshold_adjustment_update),
                     td);
-
-  gtk_widget_show (spinbutton);
 
   /* high threshold spinbutton  */
   data = gtk_adjustment_new (td->high_threshold, 0.0, 255.0, 1.0, 10.0, 0.0);
@@ -394,51 +393,46 @@ threshold_dialog_new (void)
   spinbutton = gtk_spin_button_new (td->high_threshold_data, 1.0, 0);
   gtk_widget_set_usize (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
   g_signal_connect (G_OBJECT (td->high_threshold_data), "value_changed",
-                    GTK_SIGNAL_FUNC (threshold_high_threshold_adjustment_update),
+                    G_CALLBACK (threshold_high_threshold_adjustment_update),
                     td);
-
-  gtk_widget_show (spinbutton);
 
   gtk_widget_show (hbox);
 
   /*  The threshold histogram  */
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+  gtk_widget_show (frame);
 
   td->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
-
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (td->histogram));
+  gtk_widget_show (GTK_WIDGET (td->histogram));
 
   g_signal_connect (G_OBJECT (td->histogram), "range_changed",
-                    GTK_SIGNAL_FUNC (threshold_histogram_range),
+                    G_CALLBACK (threshold_histogram_range),
                     td);
-
-  gtk_widget_show (GTK_WIDGET(td->histogram));
-
-  gtk_widget_show (frame);
-  gtk_widget_show (hbox);
 
   /*  Horizontal box for preview  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), td->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
-                    GTK_SIGNAL_FUNC (threshold_preview_update),
+                    G_CALLBACK (threshold_preview_update),
                     td);
-
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (td->shell);

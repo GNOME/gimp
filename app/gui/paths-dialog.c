@@ -317,7 +317,7 @@ paths_dialog_create (void)
 
   paths_dialog->paths_list = paths_list = gtk_clist_new (2);
   gtk_signal_connect (GTK_OBJECT (vbox), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		      G_CALLBACK (gtk_widget_destroyed),
 		      &paths_dialog);
 
   gtk_clist_set_selection_mode (GTK_CLIST (paths_list), GTK_SELECTION_BROWSE);
@@ -336,18 +336,18 @@ paths_dialog_create (void)
 
   paths_dialog->selsigid =
     gtk_signal_connect (GTK_OBJECT (paths_list), "select_row",
-			GTK_SIGNAL_FUNC (paths_select_row),
+			G_CALLBACK (paths_select_row),
 			NULL);
 
   gtk_signal_connect (GTK_OBJECT (paths_list), "unselect_row",
-		      GTK_SIGNAL_FUNC (paths_unselect_row),
+		      G_CALLBACK (paths_unselect_row),
 		      NULL);
       
   gtk_widget_show (scrolled_win);
   gtk_widget_show (paths_list);
 
   gtk_signal_connect (GTK_OBJECT (paths_dialog->vbox), "realize",
-		      GTK_SIGNAL_FUNC (paths_dialog_realized),
+		      G_CALLBACK (paths_dialog_realized),
 		      NULL);
 
   gtk_widget_show (vbox);
@@ -1129,8 +1129,8 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
   /* If now empty free everything up */
   if (!plp->bz_paths || g_slist_length (plp->bz_paths) == 0)
     {
-      gtk_signal_disconnect (GTK_OBJECT (plp->gimage),
-			     plp->sig_id);
+      g_signal_handler_disconnect (G_OBJECT (plp->gimage),
+				   plp->sig_id);
 
       gimp_image_set_paths (plp->gimage, NULL);
       path_list_free (plp);
@@ -2010,14 +2010,14 @@ make_file_dlg (gpointer data)
 
   gtk_signal_connect
     (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button), "clicked",
-     GTK_SIGNAL_FUNC (file_cancel_callback),
+     G_CALLBACK (file_cancel_callback),
      data);
   gtk_signal_connect
     (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button), "clicked",
-     GTK_SIGNAL_FUNC (file_ok_callback),
+     G_CALLBACK (file_ok_callback),
      data);
   gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (gtk_widget_hide),
+		      G_CALLBACK (gtk_widget_hide),
 		      NULL);
 
   /*  Connect the "F1" help key  */
@@ -2668,7 +2668,7 @@ path_delete_path (GimpImage *gimage,
   /* If now empty free everything up */
   if (!plp->bz_paths || g_slist_length (plp->bz_paths) == 0)
     {
-      gtk_signal_disconnect (GTK_OBJECT (plp->gimage), plp->sig_id);
+      g_signal_handler_disconnect (G_OBJECT (plp->gimage), plp->sig_id);
       gimp_image_set_paths (plp->gimage, NULL);
       path_list_free (plp);
     }

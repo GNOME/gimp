@@ -113,12 +113,13 @@ layer_select_init (GimpImage *gimage,
 			    _("Layer Select"));
       gtk_window_set_position (GTK_WINDOW (layer_select->shell), 
 			       GTK_WIN_POS_MOUSE);
-      gtk_signal_connect (GTK_OBJECT (layer_select->shell), "event",
-			  (GtkSignalFunc) layer_select_events,
-			  layer_select);
       gtk_widget_set_events (layer_select->shell, (GDK_KEY_PRESS_MASK |
 						   GDK_KEY_RELEASE_MASK |
 						   GDK_BUTTON_PRESS_MASK));
+
+      g_signal_connect (G_OBJECT (layer_select->shell), "event",
+			G_CALLBACK (layer_select_events),
+			layer_select);
 
       frame1 = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_OUT);

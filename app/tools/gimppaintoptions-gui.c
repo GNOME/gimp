@@ -784,15 +784,19 @@ paint_options_paint_mode_update (GtkWidget *widget,
   PaintOptions     *options;
 
   paint_mode = 
-    (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+    (LayerModeEffects) g_object_get_data (G_OBJECT (widget), "user_data");
 
   options = (PaintOptions *) data;
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (options->context),
-				    options->paint_mode_w);
+  g_signal_handlers_block_by_func (G_OBJECT (options->context),
+				   paint_options_paint_mode_changed,
+				   options->paint_mode_w);
+
   gimp_context_set_paint_mode (GIMP_CONTEXT (options->context), paint_mode);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (options->context),
-				      options->paint_mode_w);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (options->context),
+				     paint_options_paint_mode_changed,
+				     options->paint_mode_w);
 }
 
 static void

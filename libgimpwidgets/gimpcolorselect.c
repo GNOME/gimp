@@ -260,14 +260,15 @@ color_select_widget_new (ColorSelect   *csp,
   gtk_preview_set_dither (GTK_PREVIEW (csp->xy_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (csp->xy_color), XY_DEF_WIDTH, XY_DEF_HEIGHT);
   gtk_widget_set_events (csp->xy_color, COLOR_AREA_MASK);
-  gtk_signal_connect_after (GTK_OBJECT (csp->xy_color), "expose_event",
-			    GTK_SIGNAL_FUNC (color_select_xy_expose),
-			    csp);
-  gtk_signal_connect (GTK_OBJECT (csp->xy_color), "event",
-		      GTK_SIGNAL_FUNC (color_select_xy_events),
-		      csp);
   gtk_container_add (GTK_CONTAINER (xy_frame), csp->xy_color);
   gtk_widget_show (csp->xy_color);
+
+  g_signal_connect_after (G_OBJECT (csp->xy_color), "expose_event",
+			  G_CALLBACK (color_select_xy_expose),
+			  csp);
+  g_signal_connect (G_OBJECT (csp->xy_color), "event",
+		    G_CALLBACK (color_select_xy_events),
+		    csp);
 
   /*  dnd stuff  */
   gtk_drag_dest_set (csp->xy_color,
@@ -288,14 +289,15 @@ color_select_widget_new (ColorSelect   *csp,
   gtk_preview_set_dither (GTK_PREVIEW (csp->z_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (csp->z_color), Z_DEF_WIDTH, Z_DEF_HEIGHT);
   gtk_widget_set_events (csp->z_color, COLOR_AREA_MASK);
-  gtk_signal_connect_after (GTK_OBJECT (csp->z_color), "expose_event",
-			    GTK_SIGNAL_FUNC (color_select_z_expose),
-			    csp);
-  gtk_signal_connect (GTK_OBJECT (csp->z_color), "event",
-		      GTK_SIGNAL_FUNC (color_select_z_events),
-		      csp);
   gtk_container_add (GTK_CONTAINER (z_frame), csp->z_color);
   gtk_widget_show (csp->z_color);
+
+  g_signal_connect_after (G_OBJECT (csp->z_color), "expose_event",
+			  G_CALLBACK (color_select_z_expose),
+			  csp);
+  g_signal_connect (G_OBJECT (csp->z_color), "event",
+		    G_CALLBACK (color_select_z_events),
+		    csp);
 
   return main_vbox;
 }

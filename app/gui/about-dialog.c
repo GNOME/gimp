@@ -141,18 +141,18 @@ about_dialog_create (void)
       gimp_help_connect (about_dialog, gimp_standard_help_func,
 			 "dialogs/about.html");
 
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
-			  GTK_SIGNAL_FUNC (about_dialog_destroy),
-			  NULL);
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "unmap_event",
-			  GTK_SIGNAL_FUNC (about_dialog_unmap),
-			  NULL);
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "button_press_event",
-			  GTK_SIGNAL_FUNC (about_dialog_button),
-			  NULL);
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "key_press_event",
-			  GTK_SIGNAL_FUNC (about_dialog_key),
-			  NULL);
+      g_signal_connect (G_OBJECT (about_dialog), "destroy",
+			G_CALLBACK (about_dialog_destroy),
+			NULL);
+      g_signal_connect (G_OBJECT (about_dialog), "unmap_event",
+			G_CALLBACK (about_dialog_unmap),
+			NULL);
+      g_signal_connect (G_OBJECT (about_dialog), "button_press_event",
+			G_CALLBACK (about_dialog_button),
+			NULL);
+      g_signal_connect (G_OBJECT (about_dialog), "key_press_event",
+			G_CALLBACK (about_dialog_key),
+			NULL);
       
       /*  dnd stuff  */
       gimp_gtk_drag_dest_set_by_type (about_dialog,
@@ -185,14 +185,15 @@ about_dialog_create (void)
       gtk_widget_show (aboutframe);
 
       logo_area = gtk_drawing_area_new ();
-      gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
-			  GTK_SIGNAL_FUNC (about_dialog_logo_expose),
-			  NULL);
       gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area),
 			     logo_width, logo_height);
       gtk_widget_set_events (logo_area, GDK_EXPOSURE_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
       gtk_widget_show (logo_area);
+
+      g_signal_connect (G_OBJECT (logo_area), "expose_event",
+			G_CALLBACK (about_dialog_logo_expose),
+			NULL);
 
       gtk_widget_realize (logo_area);
       gdk_window_set_background (logo_area->window, &logo_area->style->black);

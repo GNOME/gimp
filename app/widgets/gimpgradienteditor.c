@@ -529,9 +529,9 @@ gradient_editor_new (Gimp *gimp)
 
   gradient_editor->context = gimp_create_context (gimp, NULL, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (gradient_editor->context), "gradient_changed",
-                      GTK_SIGNAL_FUNC (gradient_editor_gradient_changed),
-                      gradient_editor);
+  g_signal_connect (G_OBJECT (gradient_editor->context), "gradient_changed",
+		    G_CALLBACK (gradient_editor_gradient_changed),
+		    gradient_editor);
 
   /* Shell and main vbox */
   gradient_editor->shell =
@@ -561,12 +561,12 @@ gradient_editor_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), gradient_editor->name, FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->name);
 
-  gtk_signal_connect (GTK_OBJECT (gradient_editor->name), "activate",
-		      GTK_SIGNAL_FUNC (gradient_editor_name_activate),
-		      gradient_editor);
-  gtk_signal_connect (GTK_OBJECT (gradient_editor->name), "focus_out_event",
-		      GTK_SIGNAL_FUNC (gradient_editor_name_focus_out),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (gradient_editor->name), "activate",
+		    G_CALLBACK (gradient_editor_name_activate),
+		    gradient_editor);
+  g_signal_connect (G_OBJECT (gradient_editor->name), "focus_out_event",
+		    G_CALLBACK (gradient_editor_name_focus_out),
+		    gradient_editor);
 
   /* Frame for gradient preview and gradient control */
   frame = gtk_frame_new (NULL);
@@ -595,9 +595,10 @@ gradient_editor_new (Gimp *gimp)
   gtk_preview_set_expand (GTK_PREVIEW (gradient_editor->preview), TRUE);
 
   gtk_widget_set_events (gradient_editor->preview, GRAD_PREVIEW_EVENT_MASK);
-  gtk_signal_connect (GTK_OBJECT (gradient_editor->preview), "event",
-		      GTK_SIGNAL_FUNC (preview_events),
-		      gradient_editor);
+
+  g_signal_connect (G_OBJECT (gradient_editor->preview), "event",
+		    G_CALLBACK (preview_events),
+		    gradient_editor);
 
   gimp_gtk_drag_dest_set_by_type (gradient_editor->preview,
                                   GTK_DEST_DEFAULT_ALL,
@@ -661,12 +662,13 @@ gradient_editor_new (Gimp *gimp)
   gtk_drawing_area_size (GTK_DRAWING_AREA (gradient_editor->control),
 			 GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
   gtk_widget_set_events (gradient_editor->control, GRAD_CONTROL_EVENT_MASK);
-  gtk_signal_connect (GTK_OBJECT (gradient_editor->control), "event",
-		      GTK_SIGNAL_FUNC (control_events),
-		      gradient_editor);
   gtk_box_pack_start (GTK_BOX (vbox2), gradient_editor->control,
 		      FALSE, FALSE, 0);
   gtk_widget_show (gradient_editor->control);
+
+  g_signal_connect (G_OBJECT (gradient_editor->control), "event",
+		    G_CALLBACK (control_events),
+		    gradient_editor);
 
   /*  Scrollbar  */
   gradient_editor->zoom_factor = 1;
@@ -677,12 +679,12 @@ gradient_editor_new (Gimp *gimp)
 			1.0 * GRAD_SCROLLBAR_PAGE_SIZE,
 			1.0);
 
-  gtk_signal_connect (gradient_editor->scroll_data, "value_changed",
-		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
-		      gradient_editor);
-  gtk_signal_connect (gradient_editor->scroll_data, "changed",
-		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (gradient_editor->scroll_data), "value_changed",
+		    G_CALLBACK (ed_scrollbar_update),
+		    gradient_editor);
+  g_signal_connect (G_OBJECT (gradient_editor->scroll_data), "changed",
+		    G_CALLBACK (ed_scrollbar_update),
+		    gradient_editor);
 
   gradient_editor->scrollbar =
     gtk_hscrollbar_new (GTK_ADJUSTMENT (gradient_editor->scroll_data));
@@ -707,9 +709,9 @@ gradient_editor_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (ed_zoom_out_callback),
+		    gradient_editor);
 
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -720,9 +722,9 @@ gradient_editor_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (ed_zoom_in_callback),
+		    gradient_editor);
 
   /*  Zoom all button */
   button = gtk_button_new_with_label (_("Zoom all"));
@@ -732,9 +734,9 @@ gradient_editor_new (Gimp *gimp)
 
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (ed_zoom_all_callback),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (ed_zoom_all_callback),
+		    gradient_editor);
 
   /* Instant update toggle */
   gradient_editor->instant_update = TRUE;
@@ -744,9 +746,9 @@ gradient_editor_new (Gimp *gimp)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (ed_instant_update_update),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (ed_instant_update_update),
+		    gradient_editor);
 
   /* Hint bar */
   hbox = GTK_DIALOG (gradient_editor->shell)->action_area;
@@ -2383,11 +2385,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
   menuitem = cpopup_create_color_item (&gradient_editor->left_color_preview,
 				       &label);
   gtk_label_set_text (GTK_LABEL (label), _("Left endpoint's color"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      (GtkSignalFunc) cpopup_set_left_color_callback,
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_set_left_color_callback),
+		      gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'L', 0,
@@ -2400,7 +2403,7 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 			     gradient_editor->left_load_labels,
 			     _("Left neighbor's right endpoint"),
 			     _("Right endpoint"),
-			     GTK_SIGNAL_FUNC (cpopup_load_left_callback),
+			     G_CALLBACK (cpopup_load_left_callback),
 			     'L', GDK_CONTROL_MASK,
 			     'L', GDK_MOD1_MASK,
 			     'F', GDK_CONTROL_MASK);
@@ -2414,7 +2417,7 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
     cpopup_create_save_menu (gradient_editor,
 			     gradient_editor->left_save_color_boxes,
 			     gradient_editor->left_save_labels,
-			     GTK_SIGNAL_FUNC (cpopup_save_left_callback));
+			     G_CALLBACK (cpopup_save_left_callback));
   gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
 			     gradient_editor->control_left_save_popup);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -2428,11 +2431,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
   menuitem = cpopup_create_color_item (&gradient_editor->right_color_preview,
 				       &label);
   gtk_label_set_text (GTK_LABEL (label), _("Right endpoint's color"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      (GtkSignalFunc) cpopup_set_right_color_callback,
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_set_right_color_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'R', 0,
@@ -2445,7 +2449,7 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 			     gradient_editor->right_load_labels,
 			     _("Right neighbor's left endpoint"),
 			     _("Left endpoint"),
-			     GTK_SIGNAL_FUNC (cpopup_load_right_callback),
+			     G_CALLBACK (cpopup_load_right_callback),
 			     'R', GDK_CONTROL_MASK,
 			     'R', GDK_MOD1_MASK,
 			     'F', GDK_MOD1_MASK);
@@ -2459,7 +2463,7 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
     cpopup_create_save_menu (gradient_editor,
 			     gradient_editor->right_save_color_boxes,
 			     gradient_editor->right_save_labels,
-			     GTK_SIGNAL_FUNC (cpopup_save_right_callback));
+			     G_CALLBACK (cpopup_save_right_callback));
   gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
 			     gradient_editor->control_right_save_popup);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -2494,11 +2498,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 
   /* Split at midpoint */
   menuitem = cpopup_create_menu_item_with_label ("", &gradient_editor->control_split_m_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_split_midpoint_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_split_midpoint_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator(menuitem, "activate",
 			     accel_group,
 			     'S', 0,
@@ -2506,11 +2511,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 
   /* Split uniformly */
   menuitem = cpopup_create_menu_item_with_label ("", &gradient_editor->control_split_u_label);
-  gtk_signal_connect (GTK_OBJECT(menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_split_uniform_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_split_uniform_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'U', 0,
@@ -2518,12 +2524,13 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 
   /* Delete */
   menuitem = cpopup_create_menu_item_with_label ("", &gradient_editor->control_delete_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_delete_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
   gradient_editor->control_delete_menu_item = menuitem;
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_delete_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'D', 0,
@@ -2531,11 +2538,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 
   /* Recenter */
   menuitem = cpopup_create_menu_item_with_label ("", &gradient_editor->control_recenter_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_recenter_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_recenter_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'C', 0,
@@ -2543,11 +2551,12 @@ cpopup_create_main_menu (GradientEditor *gradient_editor)
 
   /* Redistribute */
   menuitem = cpopup_create_menu_item_with_label ("", &gradient_editor->control_redistribute_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_redistribute_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_redistribute_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'C', GDK_CONTROL_MASK,
@@ -2973,7 +2982,7 @@ cpopup_create_load_menu (GradientEditor  *gradient_editor,
 			 GtkWidget      **labels,
 			 gchar           *label1,
 			 gchar           *label2,
-			 GtkSignalFunc    callback,
+			 GCallback        callback,
 			 gchar accel_key_0, guint8 accel_mods_0,
 			 gchar accel_key_1, guint8 accel_mods_1,
 			 gchar accel_key_2, guint8 accel_mods_2)
@@ -3000,13 +3009,14 @@ cpopup_create_load_menu (GradientEditor  *gradient_editor,
 	}
 
       menuitem = cpopup_create_color_item (&color_boxes[i], &labels[i]);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem),
-				GINT_TO_POINTER (i));
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  callback,
-			  gradient_editor);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
+
+      g_object_set_data (G_OBJECT (menuitem), "user_data",
+			 GINT_TO_POINTER (i));
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+			callback,
+			gradient_editor);
 
       switch (i)
 	{
@@ -3048,7 +3058,7 @@ static GtkWidget *
 cpopup_create_save_menu (GradientEditor  *gradient_editor,
 			 GtkWidget      **color_boxes,
 			 GtkWidget      **labels,
-			 GtkSignalFunc    callback)
+			 GCallback        callback)
 {
   GtkWidget *menu;
   GtkWidget *menuitem;
@@ -3059,13 +3069,13 @@ cpopup_create_save_menu (GradientEditor  *gradient_editor,
   for (i = 0; i < GRAD_NUM_COLORS; i++)
     {
       menuitem = cpopup_create_color_item (&color_boxes[i], &labels[i]);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem),
-				GINT_TO_POINTER (i));
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  callback,
-			  gradient_editor);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
+
+      g_object_set_data (G_OBJECT (menuitem), "user_data", GINT_TO_POINTER (i));
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+			  callback,
+			  gradient_editor);
     }
 
   return menu;
@@ -3113,7 +3123,7 @@ cpopup_load_left_callback (GtkWidget      *widget,
   GimpRGB              fg;
   gint                 i;
 
-  i = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   switch (i)
     {
@@ -3163,7 +3173,7 @@ cpopup_save_left_callback (GtkWidget      *widget,
 {
   gint i;
 
-  i = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   gradient_editor->saved_colors[i] = gradient_editor->control_sel_l->left_color;
 }
@@ -3177,7 +3187,7 @@ cpopup_load_right_callback (GtkWidget      *widget,
   GimpRGB              fg;
   gint                 i;
 
-  i = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   gradient = gimp_context_get_gradient (gradient_editor->context);
 
@@ -3229,7 +3239,7 @@ cpopup_save_right_callback (GtkWidget      *widget,
 {
   gint i;
 
-  i = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   gradient_editor->saved_colors[i] = gradient_editor->control_sel_r->right_color;
 }
@@ -3486,16 +3496,15 @@ cpopup_create_blending_menu (GradientEditor *gradient_editor)
 
       group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
 
-      gtk_object_set_user_data (GTK_OBJECT (menuitem),
-				GINT_TO_POINTER (i));
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (cpopup_blending_callback),
-			  gradient_editor);
-
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
 
       gradient_editor->control_blending_items[i] = menuitem;
+
+      g_object_set_data (G_OBJECT (menuitem), "user_data", GINT_TO_POINTER (i));
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+			G_CALLBACK (cpopup_blending_callback),
+			gradient_editor);
     }
 
   /* "Varies" is always disabled */
@@ -3518,7 +3527,7 @@ cpopup_blending_callback (GtkWidget      *widget,
     return; /* Do nothing if the menu item is being deactivated */
 
   type = (GimpGradientSegmentType)
-    GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   seg = gradient_editor->control_sel_l;
 
@@ -3569,16 +3578,15 @@ cpopup_create_coloring_menu (GradientEditor *gradient_editor)
 
       group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
 
-      gtk_object_set_user_data (GTK_OBJECT (menuitem),
-				GINT_TO_POINTER (i));
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  GTK_SIGNAL_FUNC (cpopup_coloring_callback),
-			  gradient_editor);
-
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
 
       gradient_editor->control_coloring_items[i] = menuitem;
+
+      g_object_set_data (G_OBJECT (menuitem), "user_data", GINT_TO_POINTER (i));
+      g_signal_connect (G_OBJECT (menuitem), "activate",
+			G_CALLBACK (cpopup_coloring_callback),
+			gradient_editor);
     }
 
   /* "Varies" is always disabled */
@@ -3601,7 +3609,7 @@ cpopup_coloring_callback (GtkWidget      *widget,
     return; /* Do nothing if the menu item is being deactivated */
 
   color = (GimpGradientSegmentColor)
-    GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   seg = gradient_editor->control_sel_l;
 
@@ -3761,9 +3769,9 @@ cpopup_split_uniform_callback (GtkWidget      *widget,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
   gtk_widget_show (scale);
 
-  gtk_signal_connect (scale_data, "value_changed",
-		      GTK_SIGNAL_FUNC (cpopup_split_uniform_scale_update),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+		    G_CALLBACK (cpopup_split_uniform_scale_update),
+		    gradient_editor);
 
   /*  Show!  */
   gtk_widget_show (dialog);
@@ -4084,11 +4092,12 @@ cpopup_create_sel_ops_menu (GradientEditor *gradient_editor)
   /* Flip */
   menuitem =
     cpopup_create_menu_item_with_label ("", &gradient_editor->control_flip_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_flip_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_flip_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'F', 0,
@@ -4097,11 +4106,12 @@ cpopup_create_sel_ops_menu (GradientEditor *gradient_editor)
   /* Replicate */
   menuitem =
     cpopup_create_menu_item_with_label ("", &gradient_editor->control_replicate_label);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_replicate_callback),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_replicate_callback),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'M', 0,
@@ -4113,28 +4123,30 @@ cpopup_create_sel_ops_menu (GradientEditor *gradient_editor)
   gtk_widget_show (menuitem);
 
   menuitem = gtk_menu_item_new_with_label (_("Blend endpoints' colors"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_blend_colors),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
   gradient_editor->control_blend_colors_menu_item = menuitem;
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_blend_colors),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'B', 0,
 			      GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
   menuitem = gtk_menu_item_new_with_label (_("Blend endpoints' opacity"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (cpopup_blend_opacity),
-		      gradient_editor);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);
+  gradient_editor->control_blend_opacity_menu_item = menuitem;
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (cpopup_blend_opacity),
+		    gradient_editor);
   gtk_widget_add_accelerator (menuitem, "activate",
 			      accel_group,
 			      'B', GDK_CONTROL_MASK,
 			      GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
-  gradient_editor->control_blend_opacity_menu_item = menuitem;
 
   return menu;
 }
@@ -4319,9 +4331,9 @@ cpopup_replicate_callback (GtkWidget      *widget,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 4);
   gtk_widget_show (scale);
 
-  gtk_signal_connect (scale_data, "value_changed",
-		      GTK_SIGNAL_FUNC (cpopup_replicate_scale_update),
-		      gradient_editor);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+		    G_CALLBACK (cpopup_replicate_scale_update),
+		    gradient_editor);
 
   /*  Show!  */
   gtk_widget_show (dialog);

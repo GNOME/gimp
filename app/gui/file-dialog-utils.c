@@ -46,7 +46,7 @@ file_dialog_show (GtkWidget *filesel)
   gtk_widget_show (filesel);
 }
 
-void
+gboolean
 file_dialog_hide (GtkWidget *filesel)
 {
   gimp_dialog_hide (filesel);
@@ -60,11 +60,14 @@ file_dialog_hide (GtkWidget *filesel)
       menus_set_sensitive ("<Image>/File/Save as...", TRUE);
       menus_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
     }
+
+  /*  return FALSE because we are used as "delete_event" handler  */
+  return FALSE;
 }
 
 void
-file_dialog_update_name (PlugInProcDef *proc,
-			 GtkWidget     *filesel)
+file_dialog_update_name (PlugInProcDef    *proc,
+			 GtkFileSelection *filesel)
 {
   if (proc->extensions_list)
     {
@@ -72,7 +75,7 @@ file_dialog_update_name (PlugInProcDef *proc,
       gchar       *last_dot;
       GString     *s;
 
-      text = gtk_entry_get_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry));
+      text = gtk_entry_get_text (GTK_ENTRY (filesel->selection_entry));
       last_dot = strrchr (text, '.');
 
       if (last_dot == text || !text[0])
@@ -86,7 +89,7 @@ file_dialog_update_name (PlugInProcDef *proc,
       g_string_append (s, ".");
       g_string_append (s, (gchar *) proc->extensions_list->data);
 
-      gtk_entry_set_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry), s->str);
+      gtk_entry_set_text (GTK_ENTRY (filesel->selection_entry), s->str);
 
       g_string_free (s, TRUE);
     }

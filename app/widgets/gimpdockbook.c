@@ -294,7 +294,11 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
 	if ((GtkWidget *) widget_list->data == (GtkWidget *) dockable)
 	  {
-	    gtk_signal_disconnect_by_data (GTK_OBJECT (menu_item), page);
+	    /*  EEK: disconnect GtkNotebook's own handler  */
+	    g_signal_handlers_disconnect_matched (G_OBJECT (menu_item),
+						  G_SIGNAL_MATCH_DATA,
+						  0, 0,
+						  NULL, NULL, page);
 
 	    g_signal_connect (G_OBJECT (menu_item), "activate",
 			      G_CALLBACK (gimp_dockbook_menu_switch_page),

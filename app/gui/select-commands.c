@@ -174,8 +174,8 @@ select_shrink_cmd_callback (GtkWidget *widget,
   /* eeek */
   gtk_box_pack_start (GTK_BOX (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (shrink_dialog)->vbox)), 0)), edge_lock,
 		      FALSE, FALSE, 0);
-  gtk_object_set_data (GTK_OBJECT (shrink_dialog), "edge_lock_toggle",
-		       edge_lock);
+  g_object_set_data (G_OBJECT (shrink_dialog), "edge_lock_toggle",
+		     edge_lock);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),
 				! selection_shrink_edge_lock);
   gtk_widget_show (edge_lock);
@@ -359,8 +359,8 @@ gimage_mask_shrink_callback (GtkWidget *widget,
   radius_x = radius_y = selection_shrink_pixels;
 
   selection_shrink_edge_lock =
-    ! GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (widget),
-					      "edge_lock_toggle"))->active;
+    ! GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT (widget),
+					    "edge_lock_toggle"))->active;
 
   if (unit != GIMP_UNIT_PIXEL)
     {

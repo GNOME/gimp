@@ -166,7 +166,6 @@ create_display_shell (GDisplay *gdisp,
   gtk_window_set_title (GTK_WINDOW (gdisp->shell), title);
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
-  gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
   gtk_widget_set_events (gdisp->shell, (GDK_POINTER_MOTION_MASK      |
 					GDK_POINTER_MOTION_HINT_MASK |
 					GDK_BUTTON_PRESS_MASK        |
@@ -369,7 +368,6 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_set_events (gdisp->canvas, CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (gdisp->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (gdisp->canvas, GTK_CAN_FOCUS);
-  gtk_object_set_user_data (GTK_OBJECT (gdisp->canvas), (gpointer) gdisp);
 
   /*  set the active display before doing any other canvas event processing  */
   g_signal_connect (G_OBJECT (gdisp->canvas), "event",

@@ -97,13 +97,13 @@ tips_dialog_create (void)
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_policy (GTK_WINDOW (tips_dialog), FALSE, TRUE, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroy),
+  g_signal_connect (G_OBJECT (tips_dialog), "delete_event",
+		      G_CALLBACK (gtk_widget_destroy),
 		      NULL);
 
-  gtk_signal_connect (GTK_OBJECT (tips_dialog), "destroy",
-		      GTK_SIGNAL_FUNC (tips_dialog_destroy),
-		      NULL);
+  g_signal_connect (G_OBJECT (tips_dialog), "destroy",
+		    G_CALLBACK (tips_dialog_destroy),
+		    NULL);
 
   /* destroy the tips window if the mainlevel gtk_main() function is left */
   gtk_quit_add_destroy (1, GTK_OBJECT (tips_dialog));
@@ -143,11 +143,12 @@ tips_dialog_create (void)
 
   button = gtk_check_button_new_with_label (_("Show tip next time GIMP starts"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), gimprc.show_tips);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (tips_toggle_update),
-		      &gimprc.show_tips);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (tips_toggle_update),
+		    &gimprc.show_tips);
 
   old_show_tips = gimprc.show_tips;
 
@@ -158,11 +159,12 @@ tips_dialog_create (void)
   button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_window_set_default (GTK_WINDOW (tips_dialog), button);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (tips_dialog));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
+
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+			    G_CALLBACK (gtk_widget_destroy),
+			    tips_dialog);
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
@@ -172,19 +174,21 @@ tips_dialog_create (void)
 
   button = gtk_button_new_with_label (_("Previous Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (tips_show_previous),
-		      NULL);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (tips_show_previous),
+		    NULL);
+
   button = gtk_button_new_with_label (_("Next Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (tips_show_next),
-		      NULL);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (tips_show_next),
+		    NULL);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect (tips_dialog,

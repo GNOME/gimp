@@ -128,6 +128,7 @@ brush_editor_new (Gimp *gimp)
   brush_editor->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (brush_editor->frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), brush_editor->frame, TRUE, TRUE, 0);
+  gtk_widget_show (brush_editor->frame);
 
   brush_editor->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (brush_editor->preview), 125, 100);
@@ -135,14 +136,12 @@ brush_editor_new (Gimp *gimp)
   /*  Enable auto-resizing of the preview but ensure a minimal size  */
   gtk_widget_set_usize (brush_editor->preview, 125, 100);
   gtk_preview_set_expand (GTK_PREVIEW (brush_editor->preview), TRUE);
-
-  gtk_signal_connect_after (GTK_OBJECT (brush_editor->frame), "size_allocate",
-			    G_CALLBACK (brush_editor_preview_resize),
-			    brush_editor);
   gtk_container_add (GTK_CONTAINER (brush_editor->frame), brush_editor->preview);
-
   gtk_widget_show (brush_editor->preview);
-  gtk_widget_show (brush_editor->frame);
+
+  g_signal_connect_after (G_OBJECT (brush_editor->frame), "size_allocate",
+			  G_CALLBACK (brush_editor_preview_resize),
+			  brush_editor);
 
   /* table for sliders/labels */
   brush_editor->scale_label = gtk_label_new ("-1:1");

@@ -181,9 +181,9 @@ convert_to_indexed (GimpImage *gimage)
     gtk_radio_button_new_with_label (NULL, _("Generate Optimal Palette:"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->makepal_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &(dialog->makepal_flag));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->makepal_flag);
   gtk_widget_show (toggle);
@@ -199,11 +199,12 @@ convert_to_indexed (GimpImage *gimage)
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_cols,
 				     2, 256, 1, 5, 0, 1, 0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &(dialog->num_cols));
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &dialog->num_cols);
 
   label = gtk_label_new (_("# of Colors:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -211,8 +212,8 @@ convert_to_indexed (GimpImage *gimage)
 
   gtk_widget_set_sensitive (GTK_WIDGET (spinbutton), dialog->num_cols);
   gtk_widget_set_sensitive (GTK_WIDGET (label), dialog->num_cols);
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", spinbutton);
-  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", label);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
+  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", label);
 
   gtk_widget_show (hbox);
 
@@ -230,11 +231,12 @@ convert_to_indexed (GimpImage *gimage)
       toggle = gtk_check_button_new_with_label (_("Remove Unused Colors from Final Palette"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->remdups);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &(dialog->remdups));
       gtk_widget_show (toggle);
       gtk_widget_show (hbox);      
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+			G_CALLBACK (gimp_toggle_button_update),
+			&dialog->remdups);
 
       /* 'custom' palette from dialog */
       hbox = gtk_hbox_new (FALSE, 4);
@@ -242,17 +244,17 @@ convert_to_indexed (GimpImage *gimage)
       toggle = gtk_radio_button_new_with_label (group, _("Use Custom Palette:"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &(dialog->custompal_flag));
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+			G_CALLBACK (gimp_toggle_button_update),
+			&dialog->custompal_flag);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    dialog->custompal_flag);
-      gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", custom_frame);
+      g_object_set_data (G_OBJECT (toggle), "set_sensitive", custom_frame);
       gtk_widget_show (toggle);
-      
-      gtk_signal_connect (GTK_OBJECT (dialog->custom_palette_button), "clicked",
-			  GTK_SIGNAL_FUNC (indexed_custom_palette_button_callback), 
-			  dialog);
+
+      g_signal_connect (G_OBJECT (dialog->custom_palette_button), "clicked",
+			G_CALLBACK (indexed_custom_palette_button_callback), 
+			dialog);
       gtk_box_pack_end (GTK_BOX (hbox), dialog->custom_palette_button, TRUE, TRUE, 0);
       gtk_widget_show (dialog->custom_palette_button);
       gtk_widget_show (hbox);
@@ -261,9 +263,9 @@ convert_to_indexed (GimpImage *gimage)
 				dialog->custompal_flag);
       gtk_widget_set_sensitive (GTK_WIDGET (dialog->custom_palette_button),
 				dialog->custompal_flag);
-      gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", custom_frame);
-      gtk_object_set_data (GTK_OBJECT (custom_frame), "set_sensitive",
-			   dialog->custom_palette_button);
+      g_object_set_data (G_OBJECT (toggle), "set_sensitive", custom_frame);
+      g_object_set_data (G_OBJECT (custom_frame), "set_sensitive",
+			 dialog->custom_palette_button);
     }
 
   if (! UserHasWebPal)
@@ -279,9 +281,9 @@ convert_to_indexed (GimpImage *gimage)
 	gtk_radio_button_new_with_label (group, _("Use WWW-Optimized Palette"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &(dialog->webpal_flag));
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+			G_CALLBACK (gimp_toggle_button_update),
+			&dialog->webpal_flag);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    dialog->webpal_flag);
       gtk_widget_show (toggle);
@@ -295,9 +297,9 @@ convert_to_indexed (GimpImage *gimage)
     gtk_radio_button_new_with_label (group, _("Use Black/White (1-Bit) Palette"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->monopal_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->monopal_flag);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->monopal_flag);
   gtk_widget_show (toggle);
@@ -319,9 +321,9 @@ convert_to_indexed (GimpImage *gimage)
   toggle = gtk_radio_button_new_with_label (NULL, _("No Color Dithering"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->nodither_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->nodither_flag);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->nodither_flag);
   gtk_widget_show (toggle);
@@ -333,9 +335,9 @@ convert_to_indexed (GimpImage *gimage)
   toggle = gtk_radio_button_new_with_label (group, _("Positioned Color Dithering"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->fixeddither_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->fixeddither_flag);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fixeddither_flag);
   gtk_widget_show (toggle);
@@ -347,9 +349,9 @@ convert_to_indexed (GimpImage *gimage)
   toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->fslowbleeddither_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->fslowbleeddither_flag);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fslowbleeddither_flag);
   gtk_widget_show (toggle);
@@ -360,9 +362,9 @@ convert_to_indexed (GimpImage *gimage)
   toggle = gtk_radio_button_new_with_label (group, _("Floyd-Steinberg Color Dithering (Normal)"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->fsdither_flag));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->fsdither_flag);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->fsdither_flag);
   gtk_widget_show (toggle);
@@ -375,9 +377,9 @@ convert_to_indexed (GimpImage *gimage)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->alphadither);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(dialog->alphadither));
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &dialog->alphadither);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
   
@@ -623,13 +625,13 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
 	palette_select_new (_("Select Custom Palette"), 
 			    GIMP_OBJECT (theCustomPalette)->name);
 
-      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->shell), "destroy", 
-			  GTK_SIGNAL_FUNC (indexed_palette_select_destroy_callback), 
-			  dialog);
-      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->context),
-			  "palette_changed",
-			  GTK_SIGNAL_FUNC (indexed_palette_select_palette),
-			  dialog);
+      g_signal_connect (G_OBJECT (dialog->palette_select->shell), "destroy", 
+			G_CALLBACK (indexed_palette_select_destroy_callback), 
+			dialog);
+      g_signal_connect (G_OBJECT (dialog->palette_select->context),
+			"palette_changed",
+			G_CALLBACK (indexed_palette_select_palette),
+			dialog);
     } 
   else
     {

@@ -182,7 +182,7 @@ gimp_dock_separator_new (GimpDock *dock)
                      dialog_target_table, n_dialog_targets,
                      GDK_ACTION_MOVE);
   g_signal_connect (G_OBJECT (event_box), "drag_drop",
-		    GTK_SIGNAL_FUNC (gimp_dock_separator_drag_drop),
+		    G_CALLBACK (gimp_dock_separator_drag_drop),
 		    dock);
 
   g_signal_connect (G_OBJECT (event_box), "button_press_event",

@@ -130,7 +130,7 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
                     gradient);
 
   g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
-                            GTK_SIGNAL_FUNC (gtk_widget_destroy),
+                            G_CALLBACK (gtk_widget_destroy),
                             filesel);
 
   g_signal_connect_swapped (G_OBJECT (filesel), "delete_event",
