@@ -107,7 +107,7 @@ query ()
                           "Hans Breuer",
                           "1999",
                           N_("Copy to Clipboard"),
-                          "INDEXED*, RGB*",
+                          "INDEXED*, RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
@@ -119,7 +119,7 @@ query ()
                           "Hans Breuer",
                           "1999",
                           N_("Paste from Clipboard"),
-                          "INDEXED*, RGB*",
+                          "INDEXED*, RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
@@ -219,7 +219,7 @@ CB_CopyImage (gboolean interactive,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   /* allocate room for DIB */
-  if (GIMP_INDEXED_IMAGE == drawable_type)
+  if (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type)
     {
       nSizeLine = ((drawable->width-1)/4+1)*4;
       nSizeDIB = sizeof(RGBQUAD) * 256 /* always full color map size */
@@ -253,13 +253,15 @@ CB_CopyImage (gboolean interactive,
 	  pInfo->biWidth  = drawable->width;
 	  pInfo->biHeight = drawable->height;
 	  pInfo->biPlanes = 1;
-	  pInfo->biBitCount = (GIMP_INDEXED_IMAGE == drawable_type ? 8 : 24);
+	  pInfo->biBitCount = 
+	    (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type ? 8 : 24);
 	  pInfo->biCompression = BI_RGB; /* none */
 	  pInfo->biSizeImage = 0; /* not calculated/needed */
 	  pInfo->biXPelsPerMeter =
 	    pInfo->biYPelsPerMeter = 0;
 	  /* color map size */
-	  pInfo->biClrUsed = (GIMP_INDEXED_IMAGE == drawable_type ? 256 : 0);
+	  pInfo->biClrUsed = 
+	    (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type ? 256 : 0);
 	  pInfo->biClrImportant = 0; /* all */
 
 	  GlobalUnlock (hDIB);
@@ -270,7 +272,7 @@ CB_CopyImage (gboolean interactive,
     }
 
   /* fill color map */
-  if (bRet && (GIMP_INDEXED_IMAGE == drawable_type))
+  if (bRet && (GIMP_INDEXED_IMAGE == drawable_type  || GIMP_GRAY_IMAGE == drawable_type))
     {
       char *pBmp;
 
@@ -280,12 +282,13 @@ CB_CopyImage (gboolean interactive,
 	{
 	  RGBQUAD *pPal;
 	  int nColors;
-	  unsigned char *cmap;
+	  unsigned char *cmap = NULL;
 	  pPal = (RGBQUAD*)(pBmp + sizeof(BITMAPINFOHEADER));
 	  nSizePal = sizeof(RGBQUAD) * 256;
 
 	  /* get the gimp colormap */
-	  cmap = gimp_image_get_cmap (image_ID, &nColors);
+	  if (GIMP_GRAY_IMAGE != drawable_type)
+	    cmap = gimp_image_get_cmap (image_ID, &nColors);
 
 	  if (cmap)
 	    {
@@ -301,13 +304,27 @@ CB_CopyImage (gboolean interactive,
 	      g_free(cmap);
 	      bRet = TRUE;
 	    } /* (cmap) */
+	  else if (GIMP_GRAY_IMAGE == drawable_type)
+	    {
+	      /* fill with identity palette */
+	      int i;
+	      for (i = 0; (i < 256) && (i < nColors); i++)
+		{
+		  pPal[i].rgbReserved = 0; /* is this alpha? */
+		  pPal[i].rgbRed      = i;
+		  pPal[i].rgbGreen    = i;
+		  pPal[i].rgbBlue     = i;
+		}
+
+	      bRet = TRUE;
+	    }
 	  else
 	    g_message ("Can't get color map");
 	  GlobalUnlock (hDIB);
 	} /* (pBmp) */
       else
 	g_message ("Failed to lock DIB Palette");
-    } /* indexed */
+    } /* indexed or grayscale */
 
   /* following the slow part ... */
   if (interactive)
@@ -333,7 +350,7 @@ CB_CopyImage (gboolean interactive,
 
 	  pLine = g_new (guchar, drawable->width * drawable->bpp);
 
-	  if (GIMP_INDEXED_IMAGE == drawable_type)
+	  if (GIMP_INDEXED_IMAGE == drawable_type || GIMP_GRAY_IMAGE == drawable_type)
 	    {
 	      int x, y;
 	      for (y = 0; y < drawable->height; y++)

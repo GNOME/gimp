@@ -108,6 +108,44 @@ indexed_to_bgr(guchar *indexed,
 }
 
 static void
+gray_to_bgr(guchar *indexed,
+               guchar *bgrout,
+               int     width,
+               int     bpp,
+               guchar *cmap,
+	       int     ncolours)
+{
+  if (bpp == 1)
+    {
+      /* No alpha in image. */
+
+      while (width > 0)
+	{
+	  bgrout[2] =
+	  bgrout[1] =
+	  bgrout[0] = *indexed; /* identity */
+	  bgrout += 3;
+	  indexed ++;
+	  width --;
+	}
+    }
+  else
+    {
+      /* Indexed alpha image. */
+
+      while (width > 0)
+	{
+	  bgrout[2] =
+	  bgrout[1] =
+	  bgrout[0] = indexed[0] * indexed[1] / 255 + 255 - indexed[1];
+	  bgrout += 3;
+	  indexed += bpp;
+	  width --;
+	}
+    }
+}
+
+static void
 rgb_to_bgr(guchar *rgbin,
            guchar *bgrout,
            int     width,
@@ -223,7 +261,7 @@ run (const gchar      *name,
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpParam          *values;
   GimpPixelRgn	      rgn;
-  guchar       *cmap;		/* Colourmap (indexed images only) */
+  guchar       *cmap = NULL;		/* Colourmap (indexed images only) */
   DEVMODE      *dmp;
   int		ncolours;
   int		width, height;
@@ -357,11 +395,10 @@ run (const gchar      *name,
 	  
 	  if (gimp_image_base_type(param[1].data.d_image) == GIMP_INDEXED)
 	    cmap = gimp_image_get_cmap(param[1].data.d_image, &ncolours);
+	  else if (gimp_image_base_type(param[1].data.d_image) == GIMP_GRAY)
+	    ncolours = 256;
 	  else
-	    {
-	      cmap = NULL;
-	      ncolours = 0;
-	    }
+	    ncolours = 0;
 	  
 	  /* Start print job. */
 	  docInfo.cbSize = sizeof (DOCINFO);
@@ -432,6 +469,8 @@ run (const gchar      *name,
 
 	  if (cmap != NULL)
 	    pixel_transfer = indexed_to_bgr;
+	  else if (ncolours > 0)
+	    pixel_transfer = gray_to_bgr;
 	  else
 	    pixel_transfer = rgb_to_bgr;
 
