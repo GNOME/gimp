@@ -1,3 +1,7 @@
+2003-11-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpquerybox.sgml: updated.
+
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/libgimpcolor-sections.txt: 
