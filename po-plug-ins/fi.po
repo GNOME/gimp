@@ -716,13 +716,14 @@ msgid "New Fractal"
 msgstr "Uusi fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
 "(fractalexplorer-path \"%s\")\n"
 "to your %s file."
-msgstr "gimprc-tiedostosta puuttuu fractalexplorer-path."
+msgstr ""
+"gimprc-tiedostosta puuttuu fractalexplorer-path."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1170
 msgid ""
@@ -813,14 +814,12 @@ msgid "Create a new image when applying filter"
 msgstr "Luo uusi kuva käyttäessäsi filtteriä"
 
 #: plug-ins/Lighting/lighting_ui.c:455
-#, fuzzy
 msgid "High Quality Preview"
-msgstr "Tosiaikainen esikatselu"
+msgstr "Hyvälaatuinen esikatselu"
 
 #: plug-ins/Lighting/lighting_ui.c:465
-#, fuzzy
 msgid "Enable/disable high quality preview"
-msgstr "Päälle/pois tarkka esikatselu"
+msgstr "Kytke hyvälaatuinen esikatselu päälle/pois"
 
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:469 plug-ins/MapObject/mapobject_ui.c:615
@@ -832,9 +831,8 @@ msgid "Enable Antialiasing"
 msgstr "Käytä antialiasointia"
 
 #: plug-ins/Lighting/lighting_ui.c:488
-#, fuzzy
 msgid "Enable/disable jagged edges removal(antialiasing)"
-msgstr "Päälle/pois sahalaitaiset reunojen poisto (antialiasointi)"
+msgstr "Kytke sahalaitaisten reunojen poisto (antialiasointi) päälle/pois"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
@@ -858,24 +856,21 @@ msgstr "Lopeta kun pikselien erotus on pienempi kuin tämä arvo"
 
 #: plug-ins/Lighting/lighting_ui.c:557 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
-msgstr "Valo asetukset"
+msgstr "Valoasetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:574
-#, fuzzy
 msgid "Directional"
-msgstr "suunnattu valolähde"
+msgstr "suunnattu"
 
 #: plug-ins/Lighting/lighting_ui.c:576
-#, fuzzy
 msgid "Point"
-msgstr "pistemäinen valolähde"
+msgstr "pistemäinen"
 
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
-msgstr ""
+msgstr "kohdennettu"
 
 #: plug-ins/Lighting/lighting_ui.c:583
-#, fuzzy
 msgid "Light Type:"
 msgstr "Valonlähteen tyyppi:"
 
@@ -888,9 +883,8 @@ msgid "Select Lightsource Color"
 msgstr "Valitse valolähteen väri"
 
 #: plug-ins/Lighting/lighting_ui.c:592
-#, fuzzy
 msgid "Light Color:"
-msgstr "Valolahteen väri:"
+msgstr "Valolähteen väri:"
 
 #: plug-ins/Lighting/lighting_ui.c:596 plug-ins/MapObject/mapobject_ui.c:728
 msgid "Set light source color"
@@ -1016,7 +1010,6 @@ msgid "Bumpmap Settings"
 msgstr "Bumpmap asetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:907
-#, fuzzy
 msgid "Enable Bump Mapping"
 msgstr "Käytä kuhmukuvausta"
 
@@ -1047,29 +1040,27 @@ msgstr "pallomainen"
 
 #: plug-ins/Lighting/lighting_ui.c:949
 msgid "Curve:"
-msgstr "Kurvi:"
+msgstr "Käyrä:"
 
 #: plug-ins/Lighting/lighting_ui.c:955
 msgid "Maximum Height:"
-msgstr "Maksimi korkeus:"
+msgstr "Maksimikorkeus:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
-#, fuzzy
 msgid "Maximum height for bumps"
-msgstr "Maksimi korkeus:"
+msgstr "Kuhmujen maksimikorkeus"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
-msgstr "Minimi korkeus:"
+msgstr "Minimikorkeus:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
-#, fuzzy
 msgid "Minimum height for bumps"
-msgstr "Minimi korkeus:"
+msgstr "Kuhmujen minimikorkeus:"
 
 #: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
-msgstr "Automaattisesti skaallaa sopimaan arvo alueelle"
+msgstr "Skaalaa automaattisesti arvoalueelle"
 
 #: plug-ins/Lighting/lighting_ui.c:988
 msgid "Fit into value range"
@@ -1077,26 +1068,23 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
-msgstr "Ympäristön asetukset"
+msgstr "Ympäristöasetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
-#, fuzzy
 msgid "Enable Environment Mapping"
 msgstr "Käytä ympäristökuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Päälle/pois ympäristönkuvaus (heijastus)"
+msgstr "Kytke ympäristönkuvaus (heijastus) päälle/pois"
 
 #: plug-ins/Lighting/lighting_ui.c:1045
 msgid "Environment Image:"
 msgstr "Ympäristökuva:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
-#, fuzzy
 msgid "Environment image to use"
-msgstr "Ympäristökuva:"
+msgstr "Käytettävä ympäristökuva:"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
@@ -1119,22 +1107,21 @@ msgid "Bump Map"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1088
-#, fuzzy
 msgid "Environment Map"
-msgstr "Käytä ympäristökuvausta"
+msgstr "Ympäristökuvaus"
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
-msgstr "Valo efektit"
+msgstr "Valoefektit"
 
 #: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:709
 #: plug-ins/gap/gap_mov_dialog.c:496
 msgid "Update Preview"
-msgstr "Virkistä esikatselua"
+msgstr "Virkistä esikatselu"
 
 #: plug-ins/Lighting/lighting_ui.c:1205 plug-ins/MapObject/mapobject_ui.c:1442
 msgid "Recompute preview image"
-msgstr "Laske esikatselu kuva"
+msgstr "Laske esikatselukuva"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
@@ -4310,22 +4297,21 @@ msgid "Size: unknown"
 msgstr ""
 
 #: plug-ins/common/jpeg.c:1590
-#, fuzzy
 msgid "Save as JPEG"
-msgstr "Talletetaan BMP:nä"
+msgstr "Talletetaan JPEG:nä"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1613
 msgid "Image Preview"
-msgstr ""
+msgstr "Esikatselu"
 
 #: plug-ins/common/jpeg.c:1622
 msgid "Preview (in image window)"
-msgstr ""
+msgstr "Esikatselu (kuva-ikkunassa)"
 
 #: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
-msgstr ""
+msgstr "Laatu:"
 
 #: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
@@ -5074,14 +5060,12 @@ msgid "Save layer offset"
 msgstr ""
 
 #: plug-ins/common/png.c:1105
-#, fuzzy
 msgid "Save resolution"
-msgstr "Talletus asetukset"
+msgstr "Talleta resoluutio"
 
 #: plug-ins/common/png.c:1114
-#, fuzzy
 msgid "Save creation time"
-msgstr "Talletus asetukset"
+msgstr "Talleta aikaleima"
 
 #: plug-ins/common/png.c:1131
 msgid "Compression Level:"
@@ -8795,9 +8779,8 @@ msgid "Clear Point"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
-#, fuzzy
 msgid "Reset the current Controlpoint to default Values"
-msgstr "Palauta parametrit oletusarvoisiksi"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2412
 msgid "Clear All Points"
@@ -9911,9 +9894,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!\n"
-msgstr "Ei voi avata: %s"
+msgstr "Tiedoston \"%s\" avaus epäonnistui\n"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:119
 #, c-format
@@ -9936,13 +9919,13 @@ msgid "<Image>/Filters/Render/Gfig..."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:818
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
 "You need to add an entry like\n"
 "(gfig-path \"%s\")\n"
 "to your %s file."
-msgstr "gimprc-tiedostosta puuttuu gflare-path."
+msgstr "gimprc-tiedostosta puuttuu gfig-path."
 
 #: plug-ins/gfig/gfig.c:835
 msgid "gfig-path misconfigured - the following directories were not found"
@@ -10184,9 +10167,8 @@ msgid "Fade out:"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Vihreä:"
+msgstr ""
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
@@ -10487,7 +10469,7 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:992
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gflare-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -12379,30 +12361,28 @@ msgid "cm"
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Valolahteen väri:"
+msgstr "Oikea raja:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Ala:"
+msgstr "Alaraja:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
-msgstr ""
+msgstr "pysty"
 
 #: plug-ins/print/gimp_main_window.c:458
 msgid "Landscape"
-msgstr ""
+msgstr "vaaka"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "ylösalasin"
 
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Seascape"
-msgstr ""
+msgstr "ylösalasin vaakasuuntaan"
 
 #.
 #. *  Printer settings frame...
@@ -12454,31 +12434,28 @@ msgstr ""
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:656
-#, fuzzy
 msgid "Image Settings"
-msgstr "Sävy asetukset"
+msgstr "Kuva-asetukset"
 
 #: plug-ins/print/gimp_main_window.c:676
-#, fuzzy
 msgid "Line Art"
-msgstr "lineaarinen"
+msgstr "Viivapiirros"
 
 #: plug-ins/print/gimp_main_window.c:687
-#, fuzzy
 msgid "Solid Colors"
-msgstr "Värit"
+msgstr "Yhtenäiset värit"
 
 #: plug-ins/print/gimp_main_window.c:698
 msgid "Photograph"
-msgstr ""
+msgstr "Valokuva"
 
 #: plug-ins/print/gimp_main_window.c:709
 msgid "Monochrome"
-msgstr ""
+msgstr "Yksivärinen"
 
 #: plug-ins/print/gimp_main_window.c:724
 msgid "Adjust Color"
-msgstr ""
+msgstr "Säädä värejä"
 
 #.
 #. * Output type toggles...
@@ -12489,29 +12466,29 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:755
 msgid "B&W"
-msgstr ""
+msgstr "Mustavalkoinen"
 
 #: plug-ins/print/gimp_main_window.c:789
 msgid "Printer:"
-msgstr ""
+msgstr "Kirjoitin:"
 
 #: plug-ins/print/gimp_main_window.c:798 plug-ins/print/gimp_main_window.c:811
 msgid "Setup"
-msgstr ""
+msgstr "Asetukset"
 
 #.
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:840
 msgid "Printer Model:"
-msgstr ""
+msgstr "Kirjoittimen malli:"
 
 #.
 #. * PPD file...
 #.
 #: plug-ins/print/gimp_main_window.c:876
 msgid "PPD File:"
-msgstr ""
+msgstr "PPD-tiedosto:"
 
 #: plug-ins/print/gimp_main_window.c:891
 msgid "Browse"
@@ -12522,35 +12499,33 @@ msgstr ""
 #.
 #: plug-ins/print/gimp_main_window.c:903
 msgid "Command:"
-msgstr ""
+msgstr "Komento:"
 
 #.
 #. * Output file selection dialog...
 #.
 #: plug-ins/print/gimp_main_window.c:918
 msgid "Print To File?"
-msgstr ""
+msgstr "Tulosta tiedostoon?"
 
 #.
 #. * PPD file selection dialog...
 #.
 #: plug-ins/print/gimp_main_window.c:932
 msgid "PPD File?"
-msgstr ""
+msgstr "PPD-tiedosto?"
 
 #: plug-ins/print/print.c:223 plug-ins/print/print.c:232
 msgid "<Image>/File/Print..."
 msgstr ""
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Suotimet/Värit/Kuvaus/Alien Map..."
+msgstr ""
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Suotimet/Värit/Kuvaus/Alien Map..."
+msgstr ""
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
