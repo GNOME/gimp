@@ -340,18 +340,18 @@ query ()
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_ifs_compose",
-			  "Create an Iterated Function System Fractal",
-   "Interactively create an Iterated Function System fractal."
-   "Use the window on the upper left to adjust the component"
-   "transformations of the fractal. The operation that is performed"
-   "is selected by the buttons underneath the window, or from a"
-   "menu popped up by the right mouse button. The fractal will be"
-   "rendered with a transparent background if the current image has"
-   "a transparent background.",
+			  _("Create an Iterated Function System Fractal"),
+   _("Interactively create an Iterated Function System fractal."
+     "Use the window on the upper left to adjust the component"
+     "transformations of the fractal. The operation that is performed"
+     "is selected by the buttons underneath the window, or from a"
+     "menu popped up by the right mouse button. The fractal will be"
+     "rendered with a transparent background if the current image has"
+     "a transparent background."),
 			  "Owen Taylor",
 			  "Owen Taylor",
 			  "1997",
-			  "<Image>/Filters/Render/IfsCompose",
+			  _("<Image>/Filters/Render/IfsCompose"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

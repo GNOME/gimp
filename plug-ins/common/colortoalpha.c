@@ -21,6 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "gtk/gtk.h"
@@ -95,22 +96,22 @@ query ()
 {
   static GParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",    "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_COLOR, "color", "Color to remove"},
+    { PARAM_COLOR,    "color",    "Color to remove"},
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_colortoalpha",
-			  "Convert the color in an image to alpha",
-			  "This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly.",
+			  _("Convert the color in an image to alpha"),
+			  _("This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly."),
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
-			  "7th Aug 1999",
-			  "<Image>/Filters/Colors/Color To Alpha",
+			  _("7th Aug 1999"),
+			  _("<Image>/Filters/Colors/Color To Alpha"),
 			  "RGBA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -165,12 +165,12 @@ static void query ()
   static gint nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_sinus",
-			  "Generates a texture with sinus functions",
+			  _("Generates a texture with sinus functions"),
 			  "FIX ME: sinus help",
 			  "Xavier Bouchoux",
 			  "Xavier Bouchoux",
 			  "1997",
-			  "<Image>/Filters/Render/Sinus",
+			  _("<Image>/Filters/Render/Sinus"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

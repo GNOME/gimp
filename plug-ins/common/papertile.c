@@ -20,6 +20,7 @@
 
  *============================================================================*/
 
+#include "config.h"
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
@@ -31,8 +32,6 @@
 /*============================================================================*/
 
 #define PLUGIN_PROCEDURE_NAME     "plug_in_papertile"
-#define PLUGIN_TITLE              "Paper Tile"
-#define PLUGIN_PATH               "<Image>/Filters/Map/Paper Tile"
 
 
 /*============================================================================*/
@@ -935,13 +934,12 @@ plugin_query ( void )
 
   gimp_install_procedure
     ( PLUGIN_PROCEDURE_NAME,
-      "cuts an image into paper tiles, and slides each paper tile.",
-      "This plug-in cuts an image into paper tiles "
-      "and slides each paper tile.",
+      _("Cuts an image into paper tiles, and slides each paper tile."),
+      _("This plug-in cuts an image into paper tiles and slides each paper tile."),
       "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
       "Copyright (c)1997-1999 Hirotsuna Mizuno",
-      "September 31, 1999",
-      PLUGIN_PATH,
+      _("September 31, 1999"),
+      _("<Image>/Filters/Map/Paper Tile"),
       "RGB*",
       PROC_PLUG_IN,
       numof_args,

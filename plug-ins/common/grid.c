@@ -27,6 +27,7 @@
  * For more info see libgimp/gimpsizeentry.h
  */
 
+#include "config.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "gtk/gtk.h"
@@ -119,12 +120,12 @@ void query (void)
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_grid",
-			  "Draws a grid.",
-			  "",
+			  _("Draws a grid."),
+			  _("no help available"),
 			  "Tim Newsome",
 			  "Tim Newsome, Sven Neumann, Tom Rathborne",
 			  "1997, 1999",
-			  "<Image>/Filters/Render/Grid",
+			  _("<Image>/Filters/Render/Grid"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

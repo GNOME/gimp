@@ -27,6 +27,7 @@
 static char dversio[] =                          "v1.00  26-Oct-98";
 static char ident[] = "@(#) GIMP mapcolor plug-in v1.00  26-Oct-98";
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -131,28 +132,28 @@ query (void)
   static int nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
   gimp_install_procedure ("plug_in_color_adjust",
-                          "Adjust current foreground/background color in the\
- drawable to black/white",
-                          "The current foreground color is mapped to black, \
-the current background color is mapped to white.",
+                          _("Adjust current foreground/background color in the\
+ drawable to black/white"),
+                          _("The current foreground color is mapped to black, \
+the current background color is mapped to white."),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          "<Image>/Filters/Colors/Adjust Fgrd.-Bkgrd.",
+                          _("<Image>/Filters/Colors/Adjust Fgrd.-Bkgrd."),
                           "RGB*",
                           PROC_PLUG_IN,
                           nadjust_args, 0,
                           adjust_args, NULL);
 
   gimp_install_procedure ("plug_in_color_map",
-                          "Map two source colors to two destination colors. \
-Other colors are mapped by interpolation.",
-                          "Map two source colors to two destination colors. \
-Other colors are mapped by interpolation.",
+                          _("Map two source colors to two destination colors. \
+Other colors are mapped by interpolation."),
+                          _("Map two source colors to two destination colors. \
+Other colors are mapped by interpolation."),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          "<Image>/Filters/Colors/Color Mapping",
+                          _("<Image>/Filters/Colors/Color Mapping"),
                           "RGB*",
                           PROC_PLUG_IN,
                           nmap_args, 0,

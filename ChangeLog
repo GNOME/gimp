@@ -1,3 +1,16 @@
+Sat Nov 20 02:46:12 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* common/colortoalpha.c
+	* common/film.c
+	* common/grid.c
+	* common/mapcolor.c
+	* common/nova.c
+	* common/papertile.c
+	* common/rotate.c
+	* ifscompose/ifscompose.c
+	* sinus/sinus.c: internationalization fixes 
+	(hopefully got it right now)
+ 
 Sat Nov 20 01:59:10 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpcolorbutton.c: include config.h to enable NLS
@@ -19,6 +32,7 @@ Sat Nov 20 00:27:26 GMT 1999 Andy Thomas <alt@gimp.org>
 	between this behaviour and the "original" way of having
 	one nav dialog per display.
 
+>>>>>>> 1.1829
 Sat Nov 20 01:27:12 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* convolve.c

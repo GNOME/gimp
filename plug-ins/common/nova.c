@@ -233,19 +233,17 @@ query ()
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
-  gchar *help_string =
-    " This plug-in produces an effect like a supernova burst. The"
-    " amount of the light effect is approximately in proportion to 1/r,"
-    " where r is the distance from the center of the star. It works with"
-    " RGB*, GRAY* image.";
 
   gimp_install_procedure ("plug_in_nova",
-                          "Produce Supernova effect to the specified drawable",
-                          help_string,
+                          _("Produce Supernova effect to the specified drawable"),
+                          _("This plug-in produces an effect like a supernova burst. The "
+			    "amount of the light effect is approximately in proportion to 1/r, "
+			    "where r is the distance from the center of the star. It works with "
+			    "RGB*, GRAY* image."),
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "1997",
-                          "<Image>/Filters/Light Effects/SuperNova",
+                          _("<Image>/Filters/Light Effects/SuperNova"),
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
                           nargs, nreturn_vals,
