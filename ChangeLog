@@ -1,5 +1,12 @@
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpairbrushtool.c (gimp_airbrush_tool_register)
+	* app/tools/gimppenciltool.c (gimp_pencil_tool_register):
+	add GIMP_CONTEXT_GRADIENT_MASK to the tools' context_props because
+	these tools use the current gradient. Fixes bug #153584.
+
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* app/dialogs/color-dialog.[ch]: removed...
 
