@@ -54,7 +54,7 @@ spiral_button_press (GtkWidget      *widget,
 {
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
-    num_sides_dialog (_("Spiral Number of Points"),
+    num_sides_dialog (_("Spiral Number of Turns"),
 		      &spiral_num_turns, &spiral_toggle, 1, 20);
   return FALSE;
 }

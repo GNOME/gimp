@@ -75,7 +75,7 @@ create_orientationpage (GtkNotebook *notebook)
 			  150, -1, pcvals.orientfirst, 
 			  0.0, 360.0, 1.0, 10.0, 0, 
 			  TRUE, 0, 0,
-			  _("The angle of the first brush to create"),
+			  _("The starting angle of the first brush to create"),
 			  NULL);
   g_signal_connect (orientfirstadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -87,7 +87,7 @@ create_orientationpage (GtkNotebook *notebook)
 			  150, -1, pcvals.orientlast, 
 			  0.0, 360.0, 1.0, 10.0, 0, 
 			  TRUE, 0, 0,
-			  _("The angle of the first brush to create"),
+			  _("The angle span of the first brush to create"),
 			  NULL);
   g_signal_connect (orientlastadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),

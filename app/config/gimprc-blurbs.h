@@ -190,14 +190,14 @@ N_("Generally only a concern for 8-bit displays, this sets the minimum " \
 "windowing system."
 
 #define MONITOR_XRESOLUTION_BLURB \
-"Sets the monitor's horizontal resolution, in dots per inch.  If set to " \
-"0, forces the X server to be queried for both horizontal and vertical " \
-"resolution information."
+N_("Sets the monitor's horizontal resolution, in dots per inch.  If set to " \
+   "0, forces the X server to be queried for both horizontal and vertical " \
+   "resolution information.")
 
 #define MONITOR_YRESOLUTION_BLURB \
-"Sets the monitor's vertical resolution, in dots per inch.  If set to " \
-"0, forces the X server to be queried for both horizontal and vertical " \
-"resolution information."
+N_("Sets the monitor's vertical resolution, in dots per inch.  If set to " \
+   "0, forces the X server to be queried for both horizontal and vertical " \
+   "resolution information.")
 
 #define NAVIGATION_PREVIEW_SIZE_BLURB \
 N_("Sets the size of the navigation preview available in the lower right " \

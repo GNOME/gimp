@@ -777,7 +777,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
   if (shell->dot_for_dot)
     {
       g_snprintf (buf, sizeof (buf), "%.1f %s, %.2f \302\260",
-                  pixel_distance, "pixels", pixel_angle);
+                  pixel_distance, _("pixels"), pixel_angle);
     }
   else
     {

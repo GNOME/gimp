@@ -1,3 +1,9 @@
+2004-05-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	* POTFILES.in: added plug-ins/MapObject/mapobject_apply.c and
+	plug-ins/maze/maze.h. Fixes part of bug #142996, merged from HEAD
+	branch
+
 2004-05-20  Andras Timar  <timar@gnome.hu>
 
 	* hu.po: Updated Hungarian translation.

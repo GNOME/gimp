@@ -14,6 +14,9 @@
 #include "mapobject_image.h"
 #include "mapobject_shade.h"
 
+#include "libgimp/stdplugins-intl.h"
+
+
 /*************/
 /* Main loop */
 /*************/
@@ -267,16 +270,16 @@ compute_image (void)
   switch (mapvals.maptype)
     {
       case MAP_PLANE:
-        gimp_progress_init ("Map to Plane...");
+        gimp_progress_init (_("Map to Plane..."));
         break;
       case MAP_SPHERE:
-        gimp_progress_init ("Map to Sphere...");
+        gimp_progress_init (_("Map to Sphere..."));
         break;
       case MAP_BOX:
-        gimp_progress_init ("Map to Box...");
+        gimp_progress_init (_("Map to Box..."));
         break;
       case MAP_CYLINDER:
-        gimp_progress_init ("Map to Cylinder...");
+        gimp_progress_init (_("Map to Cylinder..."));
         break;
     }
 
