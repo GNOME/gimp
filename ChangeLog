@@ -1,6 +1,11 @@
+Sat Jun 13 16:52:34 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	*app/file_new_dialog.c: removed unsightly warnings,
+	replace a * with a / so it will work
+	
 Sat Jun 13 15:46:55 EDT 1998 Adrian Likins <adrian@gimp.org>
 
-	*/app/file_new_dialog.c: more file new tweaks,
+	*app/file_new_dialog.c: more file new tweaks,
 	now uses spinbuttons. I'm still not sure this change is
 	for the better, let me know.
 
