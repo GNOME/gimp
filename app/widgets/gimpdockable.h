@@ -61,6 +61,7 @@ struct _GimpDockable
   GimpContext  *context;
 
   PangoLayout  *title_layout;
+  GdkWindow    *title_window;
   GtkWidget    *menu_button;
   GtkWidget    *close_button;
 

@@ -1,3 +1,10 @@
+2003-10-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockbook.[ch]
+	* app/widgets/gimpdockable.[ch]: hide the GimpDockbook tabs when
+	it holds only a single dockable. Made the title area a drag source
+	and let the whole GimpDockable accept drops of dockables.
+
 2003-10-05  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint-funcs/paint-funcs.c (shrink_line): Use gint instead

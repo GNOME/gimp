@@ -69,6 +69,8 @@ void        gimp_dockbook_remove         (GimpDockbook     *dockbook,
 
 GtkWidget * gimp_dockbook_get_tab_widget (GimpDockbook     *dockbook,
                                           GimpDockable     *dockable);
+gboolean    gimp_dockbook_drop_dockable  (GimpDockbook     *dockbook,
+                                          GtkWidget        *drag_source);
 
 
 #endif /* __GIMP_DOCKBOOK_H__ */
