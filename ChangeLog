@@ -1,5 +1,9 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.def: added new symbols.
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/brushes-menu.c
 	* app/gui/channels-menu.c
 	* app/gui/colormap-editor-menu.c
