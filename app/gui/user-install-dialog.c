@@ -83,10 +83,10 @@ static void     user_install_cancel_callback   (GtkWidget *widget,
 						gpointer   data);
 
 static gboolean user_install_run               (void);
-static void     user_install_tuning            (void);
-static void     user_install_tuning_done       (void);
-static void     user_install_resolution        (Gimp      *gimp);
-static void     user_install_resolution_done   (Gimp      *gimp);
+static void     user_install_tuning            (Gimp       *gimp);
+static void     user_install_tuning_done       (Gimp       *gimp);
+static void     user_install_resolution        (Gimp       *gimp);
+static void     user_install_resolution_done   (Gimp       *gimp);
 
 
 /*  private stuff  */
@@ -355,13 +355,15 @@ user_install_continue_callback (GtkWidget *widget,
 #endif
       gimp_unitrc_load (gimp);
       gimp->config = GIMP_CORE_CONFIG (gimp_rc_new ());
+      /* FIXME: add back support for alternate_system_gimprc
+                and alternate_gimprc */
       gimp_rc_load (GIMP_RC (gimp->config));
-      /* FIXME: add back support for alternate_system_gimprc and alternate_gimprc */
-      user_install_tuning ();
+
+      user_install_tuning (gimp);
       break;
 
     case 3:
-      user_install_tuning_done ();
+      user_install_tuning_done (gimp);
       user_install_resolution (gimp);
       break;
 
@@ -1118,12 +1120,13 @@ static GtkWidget *xserver_toggle    = NULL;
 static GtkWidget *resolution_entry  = NULL;
 
 static void
-user_install_tuning (void)
+user_install_tuning (Gimp *gimp)
 {
-  GtkWidget *hbox;
-  GtkWidget *sep;
-  GtkWidget *label;
-  GtkWidget *memsize;
+  GimpBaseConfig *config = GIMP_BASE_CONFIG (gimp->config);
+  GtkWidget      *hbox;
+  GtkWidget      *sep;
+  GtkWidget      *label;
+  GtkWidget      *memsize;
 
   /*  tile cache size  */
   add_label (GTK_BOX (tuning_page),
@@ -1135,7 +1138,7 @@ user_install_tuning (void)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  tile_cache_adj = gtk_adjustment_new (base_config->tile_cache_size, 
+  tile_cache_adj = gtk_adjustment_new (config->tile_cache_size, 
 				       0, G_MAXULONG, 1.0, 1.0, 0.0);
   memsize = gimp_memsize_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
   gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
@@ -1162,7 +1165,7 @@ user_install_tuning (void)
   gtk_widget_show (hbox);
   
   swap_path_filesel = gimp_file_selection_new (_("Select Swap Dir"),
-					       base_config->swap_path,
+					       config->swap_path,
 					       TRUE, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), swap_path_filesel, FALSE, FALSE, 0);
   gtk_widget_show (swap_path_filesel);
@@ -1174,8 +1177,21 @@ user_install_tuning (void)
 }
 
 static void
-user_install_tuning_done (void)
+user_install_tuning_done (Gimp *gimp)
 {
+  gulong    tile_cache_size;
+  gchar    *swap_path;
+
+  tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
+  swap_path = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
+
+  g_object_set (G_OBJECT (gimp->config),
+		"tile-cache-size", tile_cache_size,
+		"swap-path",       swap_path,
+		NULL);
+  
+  g_free (swap_path);
+
 }
 
 static void
@@ -1317,20 +1333,8 @@ user_install_resolution (Gimp *gimp)
 static void
 user_install_resolution_done (Gimp *gimp)
 {
-  gulong    tile_cache_size;
-  gchar    *swap_path;
   gdouble   xres, yres;
   gboolean  res_from_gdk;
-
-  tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
-  swap_path       = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
-
-  g_object_set (G_OBJECT (gimp->config),
-		"tile-cache-size", tile_cache_size,
-		"swap-path",       swap_path,
-		NULL);
-  
-  g_free (swap_path);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xserver_toggle)))
     {

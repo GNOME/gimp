@@ -1,3 +1,8 @@
+2002-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/user_install.c: don't access the global base_config
+	which is not initialized at this point.
+
 2002-11-20  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/maze/maze.[ch]
