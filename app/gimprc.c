@@ -113,7 +113,7 @@ int       info_x = 165, info_y = 0;
 int       color_select_x = 140, color_select_y = 120;
 int       tool_options_x = 0, tool_options_y = 345;
 int       confirm_on_close = TRUE;
-int       save_window_positions_on_exit = TRUE;
+int       save_window_positions_on_exit = FALSE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
