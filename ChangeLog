@@ -2,7 +2,7 @@
 
 	* modules/controller_linux_input.c
 	* modules/controller_midi.c: don't g_free(error) but
-	g_free_error(&error) the GError.
+	g_clear_error(&error) the GError.
 
 2004-10-27  Sven Neumann  <sven@gimp.org>
 

@@ -429,7 +429,7 @@ linux_input_read_event (GIOChannel   *io,
           g_object_set (input, "name", name, NULL);
           g_free (name);
 
-          g_free_error (&error);
+          g_clear_error (&error);
         }
       else
         {

@@ -475,7 +475,7 @@ midi_read_event (GIOChannel   *io,
           g_object_set (midi, "name", name, NULL);
           g_free (name);
 
-          g_free_error (&error);
+          g_clear_error (&error);
         }
       else
         {
