@@ -1,5 +1,9 @@
 2003-06-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/select-to-brush.scm: fixed description.
+
+2003-06-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpfontmenu.c
 	* libgimp/gimpgradientmenu.c
 	* libgimp/gimpmenu.h: minor cleanups.
