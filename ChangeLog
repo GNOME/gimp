@@ -1,3 +1,8 @@
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c (SVG_DEFAULT_RESOLUTION): set to 90dpi as
+	a workaround for bug #143300.
+
 2004-09-20  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_cmd_guides.c 
@@ -5,7 +10,7 @@
 	* plug-ins/imagemap/imap_menu.c
 	* plug-ins/imagemap/imap_preferences.c 
 	* plug-ins/imagemap/imap_tools.c: disabled functionality that doesn't
-	fully work yet. #136713 now becomes an enhancement request.
+	fully work yet. Bug #136713 now becomes an enhancement request.
 
 2004-09-20  Sven Neumann  <sven@gimp.org>
 
