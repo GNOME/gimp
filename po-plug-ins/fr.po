@@ -6194,7 +6194,7 @@ msgstr "Plus Noir (Plus petite Valeur)"
 
 #: plug-ins/common/vpropagate.c:164
 msgid "Middle Value to Peaks"
-msgstr ""
+msgstr "Valeur médiane vers pics"
 
 #: plug-ins/common/vpropagate.c:167
 msgid "Foreground to Peaks"
@@ -7748,100 +7748,101 @@ msgstr "<Image>/Vidéo/Effacer trames"
 
 #: plug-ins/gap/gap_main.c:415
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr ""
+msgstr "<Image>/Vidéo/Dupliquer trames..."
 
 #: plug-ins/gap/gap_main.c:427
 msgid "<Image>/Video/Exchange Frame..."
-msgstr ""
+msgstr "<Image>/Vidéo/Échanger trames..."
 
+# ok ?
 #: plug-ins/gap/gap_main.c:439
 msgid "<Image>/Video/Move Path..."
-msgstr ""
+msgstr "<Image>/Vidéo/Déplacer selon un chemin..."
 
 #: plug-ins/gap/gap_main.c:451
 msgid "<Image>/Video/Frames to Image..."
-msgstr ""
+msgstr "<Image>/Vidéo/Trames vers image..."
 
 #: plug-ins/gap/gap_main.c:463
 msgid "<Image>/Video/Frames Flatten..."
-msgstr ""
+msgstr "<Image>/Vidéo/Aplatir trames..."
 
 #: plug-ins/gap/gap_main.c:475
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr ""
+msgstr "<Image>/Vidéo/Effacer calques dans trames"
 
 #: plug-ins/gap/gap_main.c:499
 msgid "<Image>/Video/Frames Convert..."
-msgstr ""
+msgstr "<Image>/Vidéo/Convertir trames..."
 
 #: plug-ins/gap/gap_main.c:511
 msgid "<Image>/Video/Frames Resize..."
-msgstr ""
+msgstr "<Image>/Vidéo/Redimensionner trames..."
 
 #: plug-ins/gap/gap_main.c:523
 msgid "<Image>/Video/Frames Crop..."
-msgstr ""
+msgstr "<Image>/Vidéo/Rogner trames..."
 
 #: plug-ins/gap/gap_main.c:535
 msgid "<Image>/Video/Frames Scale..."
-msgstr ""
+msgstr "<Image>/Vidéo/Mettre trammes à l'échelle"
 
 #: plug-ins/gap/gap_main.c:547
 msgid "<Image>/Video/Split Img to Frames..."
-msgstr ""
+msgstr "<Image>/Vidéo/Calques -> trames"
 
 #: plug-ins/gap/gap_main.c:560
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr ""
+msgstr "<Image>/Vidéo/Décaler séquence de trames..."
 
 #: plug-ins/gap/gap_main.c:572
 msgid "<Image>/Video/Frames Modify..."
-msgstr ""
+msgstr "<Image>/Vidéo/Modifier trames..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:556
 msgid "Pattern is equal to LayerName"
-msgstr ""
+msgstr "Critère = nom du calque"
 
 #: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:557
 msgid "Pattern is Start of LayerName"
-msgstr ""
+msgstr "Critère = début du nom du calque"
 
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:558
 msgid "Pattern is End of Layername"
-msgstr ""
+msgstr "Critère = fin du nom du calque"
 
 #: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:559
 msgid "Pattern is a Part of LayerName"
-msgstr ""
+msgstr "Critère = partie du nom du calque"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:560
 msgid "Pattern is LayerstackNumber List"
-msgstr ""
+msgstr "Critère = n° du calque dans la pile (haut = 0)"
 
 #: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:561
 msgid "Pattern is REVERSE-stack List"
-msgstr ""
+msgstr "Critère = n° du calque dans la pile (bas = 0)"
 
 #: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:562
 msgid "All Visible (ignore Pattern)"
-msgstr ""
+msgstr "Ignorer le critère de recherche"
 
 #: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:564
 msgid "select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "Sélectionne tous les calques dont le nom est égal au critère."
 
 #: plug-ins/gap/gap_mod_layer.c:91 plug-ins/gap/gap_range_ops.c:565
 msgid "select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "Sélectionne tous les calques dont le nom débute par le motif."
 
 #: plug-ins/gap/gap_mod_layer.c:92 plug-ins/gap/gap_range_ops.c:566
 msgid "select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "Sélectionne tous les calques dont les noms se terminent par le motif."
 
 #: plug-ins/gap/gap_mod_layer.c:93 plug-ins/gap/gap_range_ops.c:567
 msgid "select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "Sélectionne tous les calques dont le nom contient le critère."
 
 #: plug-ins/gap/gap_mod_layer.c:94 plug-ins/gap/gap_range_ops.c:568
 msgid ""
@@ -7849,6 +7850,9 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
+"Sélectionne les calques selon leur hauteur dans la pile.\n"
+"P.ex: 0, 4-5, 8.\n"
+"0 est le calque du dessus 1 le calque immédiatement en dessous etc..."
 
 #: plug-ins/gap/gap_mod_layer.c:95 plug-ins/gap/gap_range_ops.c:569
 msgid ""
@@ -7856,47 +7860,51 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
+"Sélectionne les calques selon leur hauteur dans la pile.\n"
+"P.ex: 0, 4-5, 8.\n"
+"0 est le calque de fond, 1 le calque immédiatement au dessus etc..."
 
 #: plug-ins/gap/gap_mod_layer.c:96 plug-ins/gap/gap_range_ops.c:570
 msgid "select all visible Layers"
-msgstr "Fusionner les calques visibles"
+msgstr "Sélectionne tous les calques visibles."
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:100
 msgid "set Layer(s) visible"
-msgstr ""
+msgstr "rendre le(s) calque(s) visible(s)."
 
 #: plug-ins/gap/gap_mod_layer.c:101
 msgid "set Layer(s) invisible"
-msgstr ""
+msgstr "rendre le(s) calque(s) invisible(s)"
 
+# what is a linked layer?
 #: plug-ins/gap/gap_mod_layer.c:102
 msgid "set Layer(s) linked"
-msgstr ""
+msgstr "rendre le(s) calque(s) lié(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:103
 msgid "set Layer(s) unlinked"
-msgstr ""
+msgstr "rendre le(s) calque(s) lié(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "raise Layer(s)"
-msgstr ""
+msgstr "élever les calques"
 
 #: plug-ins/gap/gap_mod_layer.c:105
 msgid "lower Layer(s)"
-msgstr ""
+msgstr "abaisser les calques"
 
 #: plug-ins/gap/gap_mod_layer.c:106
 msgid "merge Layer(s) expand as necessary"
-msgstr ""
+msgstr "fusionner les calques, étendre si nécessaire"
 
 #: plug-ins/gap/gap_mod_layer.c:107
 msgid "merge Layer(s) clipped to image"
-msgstr ""
+msgstr "fusionner les calques, rogner selon l'image"
 
 #: plug-ins/gap/gap_mod_layer.c:108
 msgid "merge Layer(s) clipped to bg-layer"
-msgstr ""
+msgstr "fusionner les calques, rogner selon le fond"
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "apply filter on Layer(s)"
@@ -7926,32 +7934,32 @@ msgstr ""
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:425
 msgid "From Frame:"
-msgstr ""
+msgstr "Depuis la trame :"
 
 #: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:593
 #: plug-ins/gap/gap_mpege.c:260 plug-ins/gap/gap_range_ops.c:426
 #: plug-ins/gap/gap_range_ops.c:585
 msgid "first handled frame"
-msgstr ""
+msgstr "Borne inférieure de l'intervalle de numésros des trames concernées."
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:433
 msgid "To   Frame:"
-msgstr ""
+msgstr "À la trame :"
 
 #: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:597
 #: plug-ins/gap/gap_mpege.c:268 plug-ins/gap/gap_range_ops.c:434
 #: plug-ins/gap/gap_range_ops.c:593
 msgid "last handled frame"
-msgstr "je ne peux gérer les calques"
+msgstr "Borne supérieure de l'intervalle de numésros des trames concernées."
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:632
 msgid "Select Layer(s):"
-msgstr ""
+msgstr "Mode de sélection :"
 
 #: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:641
 msgid "Select Pattern:"
-msgstr "Sélection du fichier"
+msgstr "Critère de sélection :"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:643
@@ -7960,35 +7968,39 @@ msgid ""
 "or layerstack position numbers\n"
 "0,3-5"
 msgstr ""
+"Selon le mode de sélection:\n"
+"* chaîne de caractère à trouver dans le nom des\n"
+"  calques à sélectionner\n"
+"* numéros de position dans la pile de calques (ex: 0,3-5)"
 
 #: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:649
 msgid "Case sensitive"
-msgstr ""
+msgstr "Différencer maj. / minuscules"
 
 #: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:650
 msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr ""
+msgstr "Les lettres minuscules et MAJUSCULES sont considérées comme différentes pour les comparaisons de noms."
 
 #: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:655
 msgid "Invert Selection"
-msgstr ""
+msgstr "Inverser sélection"
 
 #: plug-ins/gap/gap_mod_layer.c:196
 msgid "Perform actions on all unselected Layers"
-msgstr ""
+msgstr "Effectuer les actions sur les calques non sélectionnés"
 
 #: plug-ins/gap/gap_mod_layer.c:201
 msgid "Function :"
-msgstr ""
+msgstr "Fonction :"
 
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:205
 msgid "Function to be performed on all selected layers"
-msgstr ""
+msgstr "Actions à effectuer sur chacun des calques sélectionnés"
 
 #: plug-ins/gap/gap_mod_layer.c:211
 msgid "New Layername:"
-msgstr ""
+msgstr "Nouveau nom de calque :"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:213
@@ -7997,10 +8009,13 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
+"Nouveau nom pour chacun des calques concernés;\n"
+"« [####] » est remplacé par le numéro de la trame.\n"
+"N'est utilisé que par la fonction « renommer »."
 
 #: plug-ins/gap/gap_mod_layer.c:218
 msgid "Frames Modify"
-msgstr ""
+msgstr "Modifier trames"
 
 #: plug-ins/gap/gap_mod_layer.c:282
 #, c-format
@@ -8023,7 +8038,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s) .."
-msgstr ""
+msgstr "Modifier trames & calques..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
 msgid "No selected Layer in start frame\n"
@@ -8032,15 +8047,15 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:249 plug-ins/gflare/gflare.c:587
 #: plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: plug-ins/gap/gap_mov_dialog.c:250
 msgid "Dissolve"
-msgstr ""
+msgstr "Dissoudre"
 
 #: plug-ins/gap/gap_mov_dialog.c:251
 msgid "Multiply"
-msgstr ""
+msgstr "Multiplier"
 
 #: plug-ins/gap/gap_mov_dialog.c:253 plug-ins/gflare/gflare.c:589
 #: plug-ins/gimpressionist/paper.c:152
@@ -8049,67 +8064,67 @@ msgstr "Superposition"
 
 #: plug-ins/gap/gap_mov_dialog.c:254
 msgid "Difference"
-msgstr ""
+msgstr "Différence"
 
 #: plug-ins/gap/gap_mov_dialog.c:255 plug-ins/gflare/gflare.c:588
 msgid "Addition"
-msgstr ""
+msgstr "Addition"
 
 #: plug-ins/gap/gap_mov_dialog.c:256
 msgid "Subtract"
-msgstr ""
+msgstr "Soustraction"
 
 #: plug-ins/gap/gap_mov_dialog.c:257
 msgid "Darken Only"
-msgstr ""
+msgstr "Assombrir seulement"
 
 #: plug-ins/gap/gap_mov_dialog.c:258
 msgid "Lighten Only"
-msgstr ""
+msgstr "Éclaircir seulement"
 
 #: plug-ins/gap/gap_mov_dialog.c:269
 msgid "Left  Top"
-msgstr ""
+msgstr "Haut / Gauche"
 
 #: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Left  Bottom"
-msgstr ""
+msgstr "Bas / Gauche"
 
 #: plug-ins/gap/gap_mov_dialog.c:271
 msgid "Right Top"
-msgstr ""
+msgstr "Haut / Droite"
 
 #: plug-ins/gap/gap_mov_dialog.c:272
 msgid "Right Bottom"
-msgstr ""
+msgstr "Bas / Droite"
 
 #: plug-ins/gap/gap_mov_dialog.c:281
 msgid "Loop"
-msgstr ""
+msgstr "Boucler"
 
 #: plug-ins/gap/gap_mov_dialog.c:282
 msgid "Loop Reverse"
-msgstr ""
+msgstr "Boucler à l'envers"
 
 #: plug-ins/gap/gap_mov_dialog.c:283
 msgid "Once"
-msgstr ""
+msgstr "Une seule fois"
 
 #: plug-ins/gap/gap_mov_dialog.c:284
 msgid "OnceReverse"
-msgstr ""
+msgstr "Une seule fois à l'envers"
 
 #: plug-ins/gap/gap_mov_dialog.c:285
 msgid "PingPong"
-msgstr ""
+msgstr "Aller / retour"
 
 #: plug-ins/gap/gap_mov_dialog.c:446
 msgid "Move Path"
-msgstr ""
+msgstr "Chemin de déplacement"
 
 #: plug-ins/gap/gap_mov_dialog.c:478
 msgid "UpdPreview"
-msgstr ""
+msgstr "M.à j. aperçu"
 
 #: plug-ins/gap/gap_mov_dialog.c:485
 msgid ""
