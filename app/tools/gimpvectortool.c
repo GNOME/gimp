@@ -278,6 +278,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           vectors = gimp_vectors_new (gdisp->gimage, _("Unnamed"));
 
           gimp_image_add_vectors (gdisp->gimage, vectors, -1);
+          gimp_image_flush (gdisp->gimage);
 
           vector_tool->vectors = g_object_ref (vectors);
 

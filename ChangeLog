@@ -1,5 +1,11 @@
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpvectortool.c (gimp_vector_tool_button_press): call
+	gimp_image_update() after calling gimp_image_add_vectors() so the
+	menus get updated correctly. Fixes bug #119412.
+
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c (image_menu_entries): applied a patch from
 	Alan Horkan <horkana@tcd.ie> which adds an "Undo History..." menu
 	entry below the "Undo" and "Redo" ones. Fixes bug #119662.
