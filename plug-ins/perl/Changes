@@ -1,7 +1,9 @@
 Revision history for Gimp-Perl extension.
 
+1.21  Fri Nov 30 23:54:20 CET 2001
+	- callback return values were broken(!).
         - fixed typo in examples/xachvision
-        - this version will only compile with 1.1. versions of the
+        - this version will only compile with 1.2 versions of the
           Gimp. If you need to compile gimp-perl with gimp-1.0 please use
           version 1.201 from CPAN.
         - first round of mega-api-change.

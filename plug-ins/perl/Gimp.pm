@@ -10,7 +10,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
 use subs qw(init end lock unlock canonicalize_color);
 
 BEGIN {
-   $VERSION = 1.201;
+   $VERSION = 1.21;
    eval {
       require XSLoader;
       XSLoader::load Gimp $VERSION;
@@ -405,7 +405,9 @@ sub callback {
          );
       }
       die_msg __"required callback 'run' not found\n" unless @cb;
-      for (@cb) { &$_ }
+      my @res;
+      for (@cb) { @res = &$_ }
+      return @res;
    } elsif ($type eq "-net") {
       local $in_net = 1;
       _initialized_callback;
@@ -590,7 +592,7 @@ sub new($$$$$$$$) {
    init Gimp::PixelRgn(@_);
 }
 
-package Gimp::GimpParasite;
+package Gimp::Parasite;
 
 sub is_type($$)		{ $_[0]->[0] eq $_[1] }
 sub is_persistent($)	{ $_[0]->[1] & &Gimp::PARASITE_PERSISTENT }
