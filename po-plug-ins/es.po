@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-07-22 15:23-0300\n"
-"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
+"POT-Creation-Date: 2003-07-29 04:00+0200\n"
+"PO-Revision-Date: 2003-07-29 09:40+0200\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.0\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:295
 #: plug-ins/FractalExplorer/Dialogs.c:1401 plug-ins/gfig/gfig.c:3216
@@ -38,8 +38,8 @@ msgstr "Acerca de"
 #: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
 #: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:403
 #: plug-ins/common/waves.c:454 plug-ins/common/whirlpinch.c:673
-#: plug-ins/flame/flame.c:947 plug-ins/gflare/gflare.c:2319
-#: plug-ins/gflare/gflare.c:3246 plug-ins/gimpressionist/orientmap.c:501
+#: plug-ins/flame/flame.c:940 plug-ins/gflare/gflare.c:2312
+#: plug-ins/gflare/gflare.c:3239 plug-ins/gimpressionist/orientmap.c:501
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
@@ -78,9 +78,9 @@ msgstr "Rehacer el último acercamiento"
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:439 plug-ins/gflare/gflare.c:2670
-#: plug-ins/gflare/gflare.c:3479 plug-ins/gflare/gflare.c:3586
-#: plug-ins/gflare/gflare.c:3725
+#: plug-ins/FractalExplorer/Dialogs.c:439 plug-ins/gflare/gflare.c:2663
+#: plug-ins/gflare/gflare.c:3472 plug-ins/gflare/gflare.c:3579
+#: plug-ins/gflare/gflare.c:3718
 msgid "Parameters"
 msgstr "Parámetros"
 
@@ -400,7 +400,7 @@ msgstr "Fractales"
 #: plug-ins/common/psd_save.c:1527 plug-ins/common/sunras.c:520
 #: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1002
 #: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
-#: plug-ins/flame/flame.c:460 plug-ins/gfli/gfli.c:712
+#: plug-ins/flame/flame.c:453 plug-ins/gfli/gfli.c:712
 #, c-format
 msgid ""
 "Can't open '%s' for writing:\n"
@@ -489,16 +489,16 @@ msgstr ""
 "«%s» está dañado.\n"
 "La línea %d en la sección «Option» es incorrecta"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:213
+#: plug-ins/FractalExplorer/FractalExplorer.c:203
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filtros/Renderizado/Patrón/Explorador de fractales..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:353
+#: plug-ins/FractalExplorer/FractalExplorer.c:343
 msgid "Rendering Fractal..."
 msgstr "Renderizando fractal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:4799
-#: plug-ins/gflare/gflare.c:3108
+#: plug-ins/FractalExplorer/FractalExplorer.c:721 plug-ins/gfig/gfig.c:4799
+#: plug-ins/gflare/gflare.c:3101
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -507,28 +507,28 @@ msgstr ""
 "¿Está seguro de que quiere borrar\n"
 "«%s» de la lista y del disco?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:735
+#: plug-ins/FractalExplorer/FractalExplorer.c:725
 msgid "Delete Fractal"
 msgstr "Borrar fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:821
+#: plug-ins/FractalExplorer/FractalExplorer.c:811
 msgid "Edit fractal name"
 msgstr "Editar nombre de fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:832
+#: plug-ins/FractalExplorer/FractalExplorer.c:822
 msgid "Fractal name:"
 msgstr "Nombre de fractal:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:873
+#: plug-ins/FractalExplorer/FractalExplorer.c:863
 msgid "New Fractal"
 msgstr "Nuevo fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1179
+#: plug-ins/FractalExplorer/FractalExplorer.c:1169
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "El archivo «%s» no es un archivo de explorador de fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1187
+#: plug-ins/FractalExplorer/FractalExplorer.c:1177
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -537,27 +537,27 @@ msgstr ""
 "El archivo «%s» está dañado.\n"
 "La línea %d en la sección «Option» es incorrecta"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1239
+#: plug-ins/FractalExplorer/FractalExplorer.c:1229
 msgid "My first fractal"
 msgstr "Mi primer fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1255
+#: plug-ins/FractalExplorer/FractalExplorer.c:1245
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Elija un fractal haciendo doble pulsación en él"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1292
+#: plug-ins/FractalExplorer/FractalExplorer.c:1282
 msgid "Select folder and rescan collection"
 msgstr "Selecciona una carpeta y refresca la colección"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1304
+#: plug-ins/FractalExplorer/FractalExplorer.c:1294
 msgid "Delete currently selected fractal"
 msgstr "Borrar el fractal seleccionado actualmente"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1352
+#: plug-ins/FractalExplorer/FractalExplorer.c:1342
 msgid "Rescan for Fractals"
 msgstr "Volver a buscar fractales"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1369
+#: plug-ins/FractalExplorer/FractalExplorer.c:1359
 msgid "Add FractalExplorer Path"
 msgstr "Añadir camino de explorador de fractal"
 
@@ -647,8 +647,7 @@ msgstr "U_mbral:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
-"Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
+msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -690,7 +689,7 @@ msgstr "Posición"
 
 #: plug-ins/Lighting/lighting_ui.c:569 plug-ins/common/flarefx.c:769
 #: plug-ins/common/nova.c:482 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1205 plug-ins/gflare/gflare.c:2649
+#: plug-ins/flame/flame.c:1198 plug-ins/gflare/gflare.c:2642
 msgid "_X:"
 msgstr "_X:"
 
@@ -700,8 +699,8 @@ msgstr "Posición X de la fuente de luz en el espacio XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:586 plug-ins/common/flarefx.c:790
 #: plug-ins/common/nova.c:503 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1254 plug-ins/flame/flame.c:1219
-#: plug-ins/gflare/gflare.c:2653
+#: plug-ins/common/xbm.c:1254 plug-ins/flame/flame.c:1212
+#: plug-ins/gflare/gflare.c:2646
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -820,7 +819,7 @@ msgstr "Activar/desactivar mapeo de relieve (profundidad de imagen)"
 msgid "Bumpm_ap Image:"
 msgstr "Im_agen del relieve:"
 
-#: plug-ins/Lighting/lighting_ui.c:941 plug-ins/flame/flame.c:726
+#: plug-ins/Lighting/lighting_ui.c:941 plug-ins/flame/flame.c:719
 msgid "Linear"
 msgstr "Lineal"
 
@@ -828,11 +827,11 @@ msgstr "Lineal"
 msgid "Logarithmic"
 msgstr "Logarítmico"
 
-#: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:727
+#: plug-ins/Lighting/lighting_ui.c:943 plug-ins/flame/flame.c:720
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:728
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:721
 msgid "Spherical"
 msgstr "Esférico"
 
@@ -1188,7 +1187,7 @@ msgstr "Mapa de colores malo"
 #: plug-ins/common/ps.c:881 plug-ins/common/psd.c:1664
 #: plug-ins/common/sunras.c:444 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
-#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:432
+#: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:432
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
 #: plug-ins/xjt/xjt.c:3355
 #, c-format
@@ -1230,7 +1229,7 @@ msgstr ""
 #: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:873
 #: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
 #: plug-ins/gfig/gfig.c:2664 plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367
-#: plug-ins/twain/twain.c:746 plug-ins/winsnap/winsnap.c:1238
+#: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr "Fondo"
 
@@ -1248,7 +1247,7 @@ msgstr "No se puede operar en tipos de imagen desconocidos o con imágenes alfa"
 #: plug-ins/common/ps.c:1000 plug-ins/common/psd_save.c:1532
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1007
-#: plug-ins/common/xpm.c:595 plug-ins/common/xwd.c:534
+#: plug-ins/common/xpm.c:615 plug-ins/common/xwd.c:534
 #: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1725
 #, c-format
 msgid "Saving '%s'..."
@@ -1338,8 +1337,7 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1244
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1263
 msgid "Use sine-function for green component."
@@ -1350,8 +1348,7 @@ msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
 #: plug-ins/common/AlienMap.c:1267
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
@@ -1365,10 +1362,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
 #: plug-ins/common/AlienMap.c:1290
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1356
 msgid "About AlienMap"
@@ -2012,7 +2007,7 @@ msgstr "Alinear capas visibles"
 #: plug-ins/common/threshold_alpha.c:248 plug-ins/common/unsharp.c:662
 #: plug-ins/common/video.c:2169 plug-ins/common/vpropagate.c:1085
 #: plug-ins/common/waves.c:359 plug-ins/common/whirlpinch.c:695
-#: plug-ins/common/wind.c:912 plug-ins/common/xpm.c:764
+#: plug-ins/common/wind.c:912 plug-ins/common/xpm.c:784
 #: plug-ins/maze/maze_face.c:205 plug-ins/mosaic/mosaic.c:672
 #: plug-ins/xjt/xjt.c:878
 msgid "Parameter Settings"
@@ -2044,7 +2039,7 @@ msgid "Left Edge"
 msgstr "Borde izquierdo"
 
 #: plug-ins/common/align_layers.c:465 plug-ins/common/align_layers.c:498
-#: plug-ins/gflare/gflare.c:2637
+#: plug-ins/gflare/gflare.c:2630
 msgid "Center"
 msgstr "Centro"
 
@@ -2385,8 +2380,7 @@ msgstr "A_mbiental:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 msgid "Can't open bzip2ed file without a sensible extension"
-msgstr ""
-"No se puede abrir un archivo comprimido con bzip2 sin una extensión clara"
+msgstr "No se puede abrir un archivo comprimido con bzip2 sin una extensión clara"
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -2439,7 +2433,7 @@ msgid "Colorify"
 msgstr "Colorear"
 
 #: plug-ins/common/colorify.c:276 plug-ins/common/colortoalpha.c:336
-#: plug-ins/common/ps.c:2725 plug-ins/common/xpm.c:433
+#: plug-ins/common/ps.c:2725 plug-ins/common/xpm.c:453
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:106
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
@@ -3184,7 +3178,7 @@ msgstr "R_ecursivo"
 
 #: plug-ins/common/despeckle.c:753 plug-ins/common/nlfilt.c:397
 #: plug-ins/common/nova.c:376 plug-ins/common/unsharp.c:676
-#: plug-ins/common/whirlpinch.c:725 plug-ins/gflare/gflare.c:2684
+#: plug-ins/common/whirlpinch.c:725 plug-ins/gflare/gflare.c:2677
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "_Radio:"
@@ -3245,7 +3239,7 @@ msgstr "Co_ntornos"
 msgid "_Sharp edges"
 msgstr "Borde_s remarcados"
 
-#: plug-ins/common/diffraction.c:715 plug-ins/flame/flame.c:1022
+#: plug-ins/common/diffraction.c:715 plug-ins/flame/flame.c:1015
 msgid "_Brightness:"
 msgstr "_Brillo:"
 
@@ -3724,7 +3718,7 @@ msgstr "<Image>/Filtros/Juguetes/Gee-_Zoom"
 #: plug-ins/common/gee_zoom.c:205
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 msgstr ""
-"GEE-ZOOM: La extensión anteriormente conocida como «El huevo de Pascua de El "
+"GEE-ZOOM: El complemento anteriormente conocido como «El huevo de Pascua de El "
 "GIMP»"
 
 #: plug-ins/common/gee_zoom.c:229
@@ -3760,8 +3754,7 @@ msgstr ""
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
 #: plug-ins/common/gif.c:967
-msgid ""
-"Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
+msgid "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 "Lo siento, no se pueden guardar imágenes RGB como GIFs - convierta a "
 "INDEXADA o TONOS DE GRIS primero."
@@ -3778,8 +3771,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1148
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr ""
-"Retardo insertado para evitar la maldita animación de chupadora de CPU."
+msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
 
 #: plug-ins/common/gif.c:1192
 msgid "GIF Warning"
@@ -4154,8 +4146,7 @@ msgstr "El número de píxeles en el borde de la tabla."
 
 #: plug-ins/common/gtm.c:610
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
-"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+msgstr "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: plug-ins/common/gtm.c:626
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -4352,7 +4343,7 @@ msgid "Thresho_ld:"
 msgstr "U_mbral:"
 
 #: plug-ins/common/iwarp.c:1169 plug-ins/common/sinus.c:1774
-#: plug-ins/gflare/gflare.c:2794
+#: plug-ins/gflare/gflare.c:2787
 msgid "_Settings"
 msgstr "C_onfiguración"
 
@@ -4802,8 +4793,7 @@ msgstr "Nivel de compresión de PNG:"
 
 #: plug-ins/common/mng.c:1258 plug-ins/common/png.c:1388
 msgid "Choose a high compression level for small file size"
-msgstr ""
-"Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
+msgstr "Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
 
 #: plug-ins/common/mng.c:1271
 msgid "JPEG Compression Quality:"
@@ -4907,7 +4897,7 @@ msgid "C_ell Size:"
 msgstr "Tamaño de c_elda:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1293 plug-ins/gflare/gflare.c:578
+#: plug-ins/common/newsprint.c:1293 plug-ins/gflare/gflare.c:571
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -5236,7 +5226,7 @@ msgstr "Procedimiento interno de El GIMP"
 
 #: plug-ins/common/plugindetails.c:107
 msgid "GIMP Plug-In"
-msgstr "Extensión de El GIMP"
+msgstr "Complemento de El GIMP"
 
 #: plug-ins/common/plugindetails.c:108
 msgid "GIMP Extension"
@@ -5248,7 +5238,7 @@ msgstr "Procedimiento temporal"
 
 #: plug-ins/common/plugindetails.c:145
 msgid "<Toolbox>/Xtns/_Plugin Details..."
-msgstr "<Toolbox>/Exts/Detalles de la ex_tensiones..."
+msgstr "<Toolbox>/Exts/Detalles del com_plemento..."
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
@@ -5262,7 +5252,7 @@ msgstr "Detalles >>"
 #: plug-ins/common/plugindetails.c:317
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
-msgstr "Número de interfaces de extensiones: %d"
+msgstr "Número de interfaces de complementos: %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:335
@@ -5293,7 +5283,7 @@ msgstr "Tipo:"
 
 #: plug-ins/common/plugindetails.c:993
 msgid "Plugin Descriptions"
-msgstr "Descripciones de la extensiones"
+msgstr "Descripciones de complementos"
 
 #: plug-ins/common/plugindetails.c:1000
 msgid "Search by Name"
@@ -6259,8 +6249,7 @@ msgstr "Saturació_n aleatoria:"
 
 #: plug-ins/common/sparkle.c:467
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr ""
-"Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
+msgstr "Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
 
 #: plug-ins/common/sparkle.c:485
 msgid "_Preserve Luminosity"
@@ -6762,8 +6751,7 @@ msgid "ID"
 msgstr "Identificador"
 
 #: plug-ins/common/uniteditor.c:83
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadena será usada para identificar una unidad en los archivos de "
 "configuración de El GIMP."
@@ -7094,7 +7082,7 @@ msgid "Smear"
 msgstr "Manchar"
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3172
+#: plug-ins/flame/flame.c:1118 plug-ins/gfig/gfig.c:3172
 msgid "Black"
 msgstr "Negro"
 
@@ -7511,11 +7499,11 @@ msgstr "Esc_ribir archivo de máscara extra"
 msgid "_Mask File Extension:"
 msgstr "Extensión del archivo de _máscara:"
 
-#: plug-ins/common/xpm.c:747
+#: plug-ins/common/xpm.c:767
 msgid "Save as XPM"
 msgstr "Guardar como XPM"
 
-#: plug-ins/common/xpm.c:777
+#: plug-ins/common/xpm.c:797
 msgid "_Alpha Threshold:"
 msgstr "Umbral de _alfa:"
 
@@ -7675,126 +7663,126 @@ msgstr "Según el dato máximo/mínimo"
 msgid "Image Composing"
 msgstr "Composición de imagen"
 
-#: plug-ins/flame/flame.c:148
+#: plug-ins/flame/flame.c:141
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/Filtros/Renderizado/Naturaleza/Llama..."
 
-#: plug-ins/flame/flame.c:233
+#: plug-ins/flame/flame.c:226
 msgid "Drawing Flame..."
 msgstr "Dibujando la llama..."
 
-#: plug-ins/flame/flame.c:312
+#: plug-ins/flame/flame.c:305
 msgid "Flame works only on RGB drawables."
 msgstr "Llama sólo funciona en imágenes de color RGB"
 
-#: plug-ins/flame/flame.c:423
+#: plug-ins/flame/flame.c:416
 #, c-format
 msgid "'%s' is not a regular file"
 msgstr "%s: no es un archivo normal"
 
-#: plug-ins/flame/flame.c:431
+#: plug-ins/flame/flame.c:424
 #, c-format
 msgid "Can't open '%s': %s"
 msgstr "No se puede abrir «%s»: %s"
 
-#: plug-ins/flame/flame.c:627
+#: plug-ins/flame/flame.c:620
 msgid "Edit Flame"
 msgstr "Editar llama"
 
-#: plug-ins/flame/flame.c:647
+#: plug-ins/flame/flame.c:640
 msgid "Directions"
 msgstr "Direcciones"
 
-#: plug-ins/flame/flame.c:678
+#: plug-ins/flame/flame.c:671
 msgid "Controls"
 msgstr "Controles"
 
-#: plug-ins/flame/flame.c:693
+#: plug-ins/flame/flame.c:686
 msgid "_Speed:"
 msgstr "Velo_cidad:"
 
-#: plug-ins/flame/flame.c:710
+#: plug-ins/flame/flame.c:703
 msgid "_Randomize"
 msgstr "A_leatorizar"
 
-#: plug-ins/flame/flame.c:724
+#: plug-ins/flame/flame.c:717
 msgid "Same"
 msgstr "El mismo"
 
-#: plug-ins/flame/flame.c:725 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/flame/flame.c:718 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/gimpressionist/size.c:120
 msgid "Random"
 msgstr "Aleatorio"
 
-#: plug-ins/flame/flame.c:729
+#: plug-ins/flame/flame.c:722
 msgid "Swirl"
 msgstr "Remolino"
 
-#: plug-ins/flame/flame.c:730
+#: plug-ins/flame/flame.c:723
 msgid "Horseshoe"
 msgstr "Herradura"
 
-#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3157
+#: plug-ins/flame/flame.c:724 plug-ins/gfig/gfig.c:3157
 msgid "Polar"
 msgstr "Polar"
 
-#: plug-ins/flame/flame.c:732
+#: plug-ins/flame/flame.c:725
 msgid "Bent"
 msgstr "Torcimiento"
 
-#: plug-ins/flame/flame.c:738
+#: plug-ins/flame/flame.c:731
 msgid "_Variation:"
 msgstr "_Variación:"
 
-#: plug-ins/flame/flame.c:769
+#: plug-ins/flame/flame.c:762
 msgid "Load Flame"
 msgstr "Cargar llama"
 
-#: plug-ins/flame/flame.c:791
+#: plug-ins/flame/flame.c:784
 msgid "Save Flame"
 msgstr "Guardar llama"
 
-#: plug-ins/flame/flame.c:920 plug-ins/flame/flame.c:961
+#: plug-ins/flame/flame.c:913 plug-ins/flame/flame.c:954
 msgid "Flame"
 msgstr "Llama"
 
-#: plug-ins/flame/flame.c:1010
+#: plug-ins/flame/flame.c:1003
 msgid "_Rendering"
 msgstr "_Renderizado"
 
-#: plug-ins/flame/flame.c:1036
+#: plug-ins/flame/flame.c:1029
 msgid "Co_ntrast:"
 msgstr "Co_ntraste:"
 
-#: plug-ins/flame/flame.c:1050
+#: plug-ins/flame/flame.c:1043
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: plug-ins/flame/flame.c:1064
+#: plug-ins/flame/flame.c:1057
 msgid "Sample _Density:"
 msgstr "_Densidad de la muestra:"
 
-#: plug-ins/flame/flame.c:1075
+#: plug-ins/flame/flame.c:1068
 msgid "Spa_tial Oversample:"
 msgstr "Sobremuestra es_pacial:"
 
-#: plug-ins/flame/flame.c:1086
+#: plug-ins/flame/flame.c:1079
 msgid "Spatial _Filter Radius:"
 msgstr "Radio del _filtro espacial:"
 
-#: plug-ins/flame/flame.c:1113
+#: plug-ins/flame/flame.c:1106
 msgid "Color_map:"
 msgstr "_Mapa de colores:"
 
-#: plug-ins/flame/flame.c:1162
+#: plug-ins/flame/flame.c:1155
 msgid "Custom Gradient"
 msgstr "Gradiente personalizado"
 
-#: plug-ins/flame/flame.c:1186
+#: plug-ins/flame/flame.c:1179
 msgid "C_amera"
 msgstr "Cámar_a"
 
-#: plug-ins/flame/flame.c:1191
+#: plug-ins/flame/flame.c:1184
 msgid "_Zoom:"
 msgstr "A_cercamiento:"
 
@@ -8069,8 +8057,7 @@ msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:2005
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Crear una curva de Bezier. Mays + botón termina la creación del objeto."
+msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:2011
 msgid "Move an object"
@@ -8319,7 +8306,7 @@ msgstr "Isométrica"
 msgid "Grid Type:"
 msgstr "Tipo de rejilla:"
 
-#: plug-ins/gfig/gfig.c:3171 plug-ins/gflare/gflare.c:575
+#: plug-ins/gfig/gfig.c:3171 plug-ins/gflare/gflare.c:568
 msgid "Normal"
 msgstr "Normal"
 
@@ -8485,7 +8472,7 @@ msgstr "Acerca de Gfig"
 
 #: plug-ins/gfig/gfig.c:4616
 msgid "Gfig - GIMP plug-in"
-msgstr "Gfig - Extensión de El GIMP"
+msgstr "Gfig - Complemento de El GIMP"
 
 #: plug-ins/gfig/gfig.c:4621
 msgid "Release 1.3"
@@ -8534,42 +8521,42 @@ msgstr "Error al leer el archivo"
 msgid "Hey where has the object gone ?"
 msgstr "¿dónde se ha ido el objeto?"
 
-#: plug-ins/gflare/gflare.c:576
+#: plug-ins/gflare/gflare.c:569
 msgid "Addition"
 msgstr "Suma"
 
-#: plug-ins/gflare/gflare.c:577
+#: plug-ins/gflare/gflare.c:570
 msgid "Overlay"
 msgstr "Solapar"
 
-#: plug-ins/gflare/gflare.c:841
+#: plug-ins/gflare/gflare.c:834
 msgid "<Image>/Filters/Light Effects/GFlare..."
 msgstr "<Image>/Filtros/Efectos de luz/Destello de El GIMP..."
 
-#: plug-ins/gflare/gflare.c:958
+#: plug-ins/gflare/gflare.c:951
 msgid "Gradient Flare..."
 msgstr "Destello con gradiente"
 
-#: plug-ins/gflare/gflare.c:970
+#: plug-ins/gflare/gflare.c:963
 msgid "GFlare: cannot operate on indexed color images"
 msgstr "Destello de El GIMP: no funciona sobre imágenes de color indexado"
 
-#: plug-ins/gflare/gflare.c:1257
+#: plug-ins/gflare/gflare.c:1250
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "No se ha podido abrir el archivo de destello «%s»: %s"
 
-#: plug-ins/gflare/gflare.c:1265
+#: plug-ins/gflare/gflare.c:1258
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "%s: no es un archivo normal"
 
-#: plug-ins/gflare/gflare.c:1318
+#: plug-ins/gflare/gflare.c:1311
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "archivo de Destello inválido: %s\n"
 
-#: plug-ins/gflare/gflare.c:1443
+#: plug-ins/gflare/gflare.c:1436
 #, c-format
 msgid ""
 "GFlare `%s' is not saved.\n"
@@ -8585,136 +8572,136 @@ msgstr ""
 "guardar sus propios GFlares de El GIMP\n"
 "en esa carpeta."
 
-#: plug-ins/gflare/gflare.c:1475
+#: plug-ins/gflare/gflare.c:1468
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Fallo al escribir el archivo de destello «%s»: %s"
 
-#: plug-ins/gflare/gflare.c:2288
+#: plug-ins/gflare/gflare.c:2281
 msgid "GFlare"
 msgstr "Destello de El GIMP"
 
-#: plug-ins/gflare/gflare.c:2348
+#: plug-ins/gflare/gflare.c:2341
 msgid "A_uto Update Preview"
 msgstr "Actualizar a_utomáticamente la previsualización"
 
-#: plug-ins/gflare/gflare.c:2403
+#: plug-ins/gflare/gflare.c:2396
 msgid "`Default' is created."
 msgstr "«Default» fue creado."
 
-#: plug-ins/gflare/gflare.c:2404
+#: plug-ins/gflare/gflare.c:2397
 msgid "Default"
 msgstr "Por omisión"
 
-#: plug-ins/gflare/gflare.c:2697
+#: plug-ins/gflare/gflare.c:2690
 msgid "Ro_tation:"
 msgstr "Ro_tación:"
 
-#: plug-ins/gflare/gflare.c:2709
+#: plug-ins/gflare/gflare.c:2702
 msgid "_Hue Rotation:"
 msgstr "R_otación de tono:"
 
-#: plug-ins/gflare/gflare.c:2721
+#: plug-ins/gflare/gflare.c:2714
 msgid "Vector _Angle:"
 msgstr "Ángulo del _vector:"
 
-#: plug-ins/gflare/gflare.c:2733
+#: plug-ins/gflare/gflare.c:2726
 msgid "Vector _Length:"
 msgstr "_Longitud del vector:"
 
-#: plug-ins/gflare/gflare.c:2754
+#: plug-ins/gflare/gflare.c:2747
 msgid "A_daptive Supersampling"
 msgstr "Supermuestreo a_daptativo"
 
-#: plug-ins/gflare/gflare.c:2774
+#: plug-ins/gflare/gflare.c:2767
 msgid "_Max Depth:"
 msgstr "Profundidad _máxima:"
 
-#: plug-ins/gflare/gflare.c:2784
+#: plug-ins/gflare/gflare.c:2777
 msgid "_Threshold"
 msgstr "U_mbral:"
 
-#: plug-ins/gflare/gflare.c:2901
+#: plug-ins/gflare/gflare.c:2894
 msgid "S_elector"
 msgstr "S_elector"
 
-#: plug-ins/gflare/gflare.c:2980
+#: plug-ins/gflare/gflare.c:2973
 msgid "New GFlare"
 msgstr "Nuevo destello de El GIMP"
 
-#: plug-ins/gflare/gflare.c:2983
+#: plug-ins/gflare/gflare.c:2976
 msgid "Enter a Name for the New GFlare:"
 msgstr "Ponga un nombre al nuevo destello de El GIMP"
 
-#: plug-ins/gflare/gflare.c:2984
+#: plug-ins/gflare/gflare.c:2977
 msgid "untitled"
 msgstr "sinnombre"
 
-#: plug-ins/gflare/gflare.c:3002
+#: plug-ins/gflare/gflare.c:2995
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "¡El nombre «%s» ya está usado!"
 
-#: plug-ins/gflare/gflare.c:3052
+#: plug-ins/gflare/gflare.c:3045
 msgid "Copy GFlare"
 msgstr "Copiar destello de El GIMP"
 
-#: plug-ins/gflare/gflare.c:3055
+#: plug-ins/gflare/gflare.c:3048
 msgid "Enter a Name for the Copied GFlare:"
 msgstr "Ponga un nombre al destello de El GIMP copiado:"
 
-#: plug-ins/gflare/gflare.c:3076
+#: plug-ins/gflare/gflare.c:3069
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "¡El nombre «%s» ya está usado!"
 
-#: plug-ins/gflare/gflare.c:3102
+#: plug-ins/gflare/gflare.c:3095
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "¡No se puede borrar! Al menos debe haber un destello de El GIMP."
 
-#: plug-ins/gflare/gflare.c:3112
+#: plug-ins/gflare/gflare.c:3105
 msgid "Delete GFlare"
 msgstr "Borrar destello de El GIMP"
 
-#: plug-ins/gflare/gflare.c:3169
+#: plug-ins/gflare/gflare.c:3162
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "no se encuentra %s en gflares_list"
 
-#: plug-ins/gflare/gflare.c:3210
+#: plug-ins/gflare/gflare.c:3203
 msgid "GFlare Editor"
 msgstr "Editor de destellos de El GIMP"
 
-#: plug-ins/gflare/gflare.c:3215
+#: plug-ins/gflare/gflare.c:3208
 msgid "Rescan Gradients"
 msgstr "Reescanear gradientes"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3336
+#: plug-ins/gflare/gflare.c:3329
 msgid "Glow Paint Options"
 msgstr "Opciones de dibujo del fulgor"
 
-#: plug-ins/gflare/gflare.c:3348 plug-ins/gflare/gflare.c:3378
-#: plug-ins/gflare/gflare.c:3408
+#: plug-ins/gflare/gflare.c:3341 plug-ins/gflare/gflare.c:3371
+#: plug-ins/gflare/gflare.c:3401
 msgid "Opacity:"
 msgstr "Opacidad:"
 
-#: plug-ins/gflare/gflare.c:3361 plug-ins/gflare/gflare.c:3391
-#: plug-ins/gflare/gflare.c:3421
+#: plug-ins/gflare/gflare.c:3354 plug-ins/gflare/gflare.c:3384
+#: plug-ins/gflare/gflare.c:3414
 msgid "Paint Mode:"
 msgstr "Modo de pintar:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3366
+#: plug-ins/gflare/gflare.c:3359
 msgid "Rays Paint Options"
 msgstr "Opciones de dibujo de los rayos"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3396
+#: plug-ins/gflare/gflare.c:3389
 msgid "Second Flares Paint Options"
 msgstr "Opciones de dibujo de los destellos secundarios"
 
-#: plug-ins/gflare/gflare.c:3425 plug-ins/gimpressionist/general.c:57
+#: plug-ins/gflare/gflare.c:3418 plug-ins/gimpressionist/general.c:57
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "_General"
 msgstr "_General"
@@ -8722,93 +8709,93 @@ msgstr "_General"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3451 plug-ins/gflare/gflare.c:3556
-#: plug-ins/gflare/gflare.c:3697
+#: plug-ins/gflare/gflare.c:3444 plug-ins/gflare/gflare.c:3549
+#: plug-ins/gflare/gflare.c:3690
 msgid "Gradients"
 msgstr "Gradientes"
 
-#: plug-ins/gflare/gflare.c:3463 plug-ins/gflare/gflare.c:3570
-#: plug-ins/gflare/gflare.c:3709
+#: plug-ins/gflare/gflare.c:3456 plug-ins/gflare/gflare.c:3563
+#: plug-ins/gflare/gflare.c:3702
 msgid "Radial Gradient:"
 msgstr "Gradiente radial:"
 
-#: plug-ins/gflare/gflare.c:3467 plug-ins/gflare/gflare.c:3574
+#: plug-ins/gflare/gflare.c:3460 plug-ins/gflare/gflare.c:3567
 msgid "Angular Gradient:"
 msgstr "Gradiente angular:"
 
-#: plug-ins/gflare/gflare.c:3471 plug-ins/gflare/gflare.c:3578
+#: plug-ins/gflare/gflare.c:3464 plug-ins/gflare/gflare.c:3571
 msgid "Angular Size Gradient:"
 msgstr "Tamaño angular del gradiente:"
 
-#: plug-ins/gflare/gflare.c:3492 plug-ins/gflare/gflare.c:3599
-#: plug-ins/gflare/gflare.c:3738
+#: plug-ins/gflare/gflare.c:3485 plug-ins/gflare/gflare.c:3592
+#: plug-ins/gflare/gflare.c:3731
 msgid "Size (%):"
 msgstr "Tamaño (%):"
 
-#: plug-ins/gflare/gflare.c:3504 plug-ins/gflare/gflare.c:3611
-#: plug-ins/gflare/gflare.c:3750
+#: plug-ins/gflare/gflare.c:3497 plug-ins/gflare/gflare.c:3604
+#: plug-ins/gflare/gflare.c:3743
 msgid "Rotation:"
 msgstr "Rotación:"
 
-#: plug-ins/gflare/gflare.c:3516 plug-ins/gflare/gflare.c:3624
-#: plug-ins/gflare/gflare.c:3763
+#: plug-ins/gflare/gflare.c:3509 plug-ins/gflare/gflare.c:3617
+#: plug-ins/gflare/gflare.c:3756
 msgid "Hue Rotation:"
 msgstr "Rotación de Tono:"
 
-#: plug-ins/gflare/gflare.c:3530
+#: plug-ins/gflare/gflare.c:3523
 msgid "G_low"
 msgstr "Fu_lgor"
 
-#: plug-ins/gflare/gflare.c:3636
+#: plug-ins/gflare/gflare.c:3629
 msgid "# of Spikes:"
 msgstr "nº de puntas:"
 
-#: plug-ins/gflare/gflare.c:3648
+#: plug-ins/gflare/gflare.c:3641
 msgid "Spike Thickness:"
 msgstr "Grosor de las puntas:"
 
-#: plug-ins/gflare/gflare.c:3662
+#: plug-ins/gflare/gflare.c:3655
 msgid "_Rays"
 msgstr "_Rayos"
 
-#: plug-ins/gflare/gflare.c:3713
+#: plug-ins/gflare/gflare.c:3706
 msgid "Size Factor Gradient:"
 msgstr "Gradiente de factor de tamaño:"
 
-#: plug-ins/gflare/gflare.c:3717
+#: plug-ins/gflare/gflare.c:3710
 msgid "Probability Gradient:"
 msgstr "Gradiente de probabilidad:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:3780
+#: plug-ins/gflare/gflare.c:3773
 msgid "Shape of Second Flares"
 msgstr "Forma de los Destellos secundarios"
 
-#: plug-ins/gflare/gflare.c:3789 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gflare/gflare.c:3782 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Círculo"
 
-#: plug-ins/gflare/gflare.c:3806 plug-ins/imagemap/imap_menu.c:371
+#: plug-ins/gflare/gflare.c:3799 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polígono"
 
-#: plug-ins/gflare/gflare.c:3839
+#: plug-ins/gflare/gflare.c:3832
 msgid "Random Seed:"
 msgstr "Semilla aleatoria:"
 
-#: plug-ins/gflare/gflare.c:3857
+#: plug-ins/gflare/gflare.c:3850
 msgid "_Second Flares"
 msgstr "Destellos _secundarios"
 
-#: plug-ins/gflare/gflare.c:4457
+#: plug-ins/gflare/gflare.c:4450
 msgid "none"
 msgstr "ninguno:"
 
-#: plug-ins/gflare/gflare.c:4470
+#: plug-ins/gflare/gflare.c:4463
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "No se encontró «%s»: se usó «%s» en su lugar"
@@ -8820,8 +8807,7 @@ msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:676
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
-"Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
+msgstr "Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
 
 #: plug-ins/gfli/gfli.c:818
 msgid "GFLI 1.3 - Load framestack"
@@ -8878,8 +8864,7 @@ msgstr "Relieve:"
 
 #: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
-"Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
+msgstr "Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
@@ -8895,8 +8880,7 @@ msgstr "C_entro de la brocha"
 
 #: plug-ins/gimpressionist/color.c:57
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
-"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+msgstr "Se calcula el color con el promedio de todos los píxeles bajo la brocha"
 
 #: plug-ins/gimpressionist/color.c:59
 msgid "Samples the color from the pixel in the center of the brush"
@@ -8936,8 +8920,7 @@ msgstr "Fondo con color sólido"
 
 #: plug-ins/gimpressionist/general.c:124
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
-"Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
+msgstr "Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
 
 #: plug-ins/gimpressionist/general.c:139
 msgid "Paint edges"
@@ -8945,8 +8928,7 @@ msgstr "Pintar bordes"
 
 #: plug-ins/gimpressionist/general.c:143
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
-"Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
+msgstr "Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:147 plug-ins/maze/maze_face.c:283
@@ -8955,8 +8937,7 @@ msgstr "Convertible en mosaico"
 
 #: plug-ins/gimpressionist/general.c:150
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
-"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Drop Shadow"
@@ -8987,8 +8968,7 @@ msgid "Shadow depth:"
 msgstr "Profundidad de sombras:"
 
 #: plug-ins/gimpressionist/general.c:191
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profundidad de las sombras arrojadas, es decir, cómo de apartada del "
 "objeto debería estar"
@@ -9083,8 +9063,7 @@ msgstr "Radio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
-"La distancia al centro de la imagen determina la dirección de la pincelada"
+msgstr "La distancia al centro de la imagen determina la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:136
 msgid "Selects a random direction of each stroke"
@@ -9097,8 +9076,7 @@ msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
-"Hace que la dirección desde el centro determine la dirección de la pincelada"
+msgstr "Hace que la dirección desde el centro determine la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:156
 #: plug-ins/gimpressionist/size.c:138
@@ -9268,8 +9246,7 @@ msgstr "Aplica el papel como está (sin darle relieve)"
 
 #: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
-"Especifica la escala de la textura (en porcentaje con el archivo original)"
+msgstr "Especifica la escala de la textura (en porcentaje con el archivo original)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9407,16 +9384,12 @@ msgid "The largest brush to create"
 msgstr "La mayor brocha a crear"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
-"Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgstr "Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
-msgstr ""
-"La distancia al centro de la imagen determina el tamaño de la pincelada"
+msgid "The distance from the center of the image determines the size of the stroke"
+msgstr "La distancia al centro de la imagen determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9432,8 +9405,7 @@ msgstr "El tono de la región determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:157
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
-"Selecciona el tamaño de la pincelada que más se parece a la imagen original"
+msgstr "Selecciona el tamaño de la pincelada que más se parece a la imagen original"
 
 #: plug-ins/gimpressionist/size.c:168
 msgid "Manually specify the stroke size"
@@ -9705,7 +9677,7 @@ msgstr "Cargar archivo FITS"
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
-msgstr "Extensión Imagemap 2.0"
+msgstr "Complemento Imagemap 2.0"
 
 #: plug-ins/imagemap/imap_about.c:44
 msgid "Copyright(c) 1999-2003 by Maurits Rijk"
@@ -11259,8 +11231,7 @@ msgid "Adjust Output..."
 msgstr "Ajustar la salida..."
 
 #: plug-ins/print/gimp_main_window.c:1462
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajustar el balance de color, brillo, contraste, saturación y el algoritmo de "
 "entramado"
@@ -11419,12 +11390,12 @@ msgstr ""
 "RLE agresivo\n"
 "(No soportado por SGI)"
 
-#: plug-ins/twain/twain.c:535
+#: plug-ins/twain/twain.c:533
 msgid "<Toolbox>/File/Acquire/TWAIN..."
 msgstr "<Toolbox>/Archivo/Adquirir/TWAIN..."
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:669
+#: plug-ins/twain/twain.c:667
 msgid "Transferring TWAIN data"
 msgstr "Transfiriendo datos TWAIN"
 
@@ -11742,3 +11713,4 @@ msgstr "Error: El archivo de propiedades XJT %s está vacío"
 #~ msgstr ""
 #~ "por Vidar Madsen\n"
 #~ "Septiembre 1999"
+
