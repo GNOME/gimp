@@ -1,7 +1,6 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Artur Polaczyñski <artie@kmfms.com> 1999,2000
 # GNOME PL Team <translators@gnome.pl>, 1999-2000
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"

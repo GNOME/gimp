@@ -1,12 +1,11 @@
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
 # Artur Polaczyñski <artie@kmfms.com>, 1999.
 # GNOME PL Team <translators@gnome.pl>, 1999-2000
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2000-10-27 18:28+0200\n"
-"PO-Revision-Date: 2000-11-09 00:34+0100\n"
+"POT-Creation-Date: 2000-11-09 16:53+0100\n"
+"PO-Revision-Date: 2000-11-14 23:15+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1589,16 +1588,16 @@ msgid ""
 "is not present or is unreadable"
 msgstr ""
 "%s\n"
-"nie istnieje lub b³±d odczytu"
+"nie istnieje lub wyst±pi³ b³±d odczytu"
 
 #: plug-ins/common/CEL.c:1
 msgid "CEL Can't create a new image"
-msgstr "CEL nie mogê utworzyæ nowego obrazu"
+msgstr "CEL: nie mo¿na utworzyæ nowego obrazu"
 
 #: plug-ins/common/CEL.c:1
 #, c-format
 msgid "Unsupported number of colors (%d)"
-msgstr "Nie obs³ugiwana liczba kolorów (%d)"
+msgstr "Nieobs³ugiwana liczba kolorów (%d)"
 
 #: plug-ins/common/CEL.c:1
 msgid "Only an indexed-alpha image can be saved in CEL format"
@@ -4338,7 +4337,7 @@ msgstr "<Image>/Plik/Wy¶lij obrazek..."
 
 #: plug-ins/common/mail.c:1
 msgid "Send to Mail"
-msgstr "Wy¶lij poczt±"
+msgstr "Wys³anie pliku poczt± elektroniczn±"
 
 #: plug-ins/common/mail.c:1
 msgid "Recipient:"
@@ -4371,7 +4370,7 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:1
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr "poczta: b³±d z rozszerzeniem pliku lub jego brakiem\n"
+msgstr "poczta: b³êdne rozszerzenie pliku lub jego brak\n"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "First Source Color"
@@ -4403,7 +4402,7 @@ msgid ""
 "Cannot operate on gray/indexed images"
 msgstr ""
 "Mapowanie koloru / Ustawianie FG/BG:\n"
-"Nie mogê pracowaæ na obrazach szarych/indeksowanych"
+"Obrazy indeksowane oraz w odcieniach szaro¶ci nie s± obs³ugiwane"
 
 #: plug-ins/common/mapcolor.c:1
 msgid "Adjusting Foreground/Background"
@@ -5060,7 +5059,7 @@ msgstr "Powoduje odwzorowanie obrazu wynikowego na prostok±t, zamiast na ko³o."
 
 #: plug-ins/common/ps.c:1
 msgid "PS: can't open file for reading"
-msgstr "PS: nie mogê otworzyæ pliku do zapisu"
+msgstr "PS: nie mo¿na otworzyæ pliku do odczytu"
 
 #: plug-ins/common/ps.c:1
 #, c-format
@@ -5077,11 +5076,11 @@ msgstr "Zapis PostScript nie obs³ugujo obrazów z kana³ami alfa"
 
 #: plug-ins/common/ps.c:1
 msgid "PS: cannot operate on unknown image types"
-msgstr "PS: nie mogê pracowaæ na nieznanych formatach obrazów"
+msgstr "PS: nie mo¿na pracowaæ na nieznanych formatach obrazów"
 
 #: plug-ins/common/ps.c:1
 msgid "PS: can't open file for writing"
-msgstr "PS: nie mogê otworzyæ pliku do zapisu"
+msgstr "PS: nie mo¿na otworzyæ pliku do zapisu"
 
 #: plug-ins/common/ps.c:1 plug-ins/common/ps.c:1
 #: plug-ins/common/ps.c:1 plug-ins/common/ps.c:1
@@ -5456,7 +5455,7 @@ msgstr "Selektywne rozmycie Gaussa"
 
 #: plug-ins/common/sel_gauss.c:1
 msgid "sel_gauss: Cannot operate on indexed color images"
-msgstr "sel_gauss: Nie mogê pracowaæ na obrazach indeksowanych"
+msgstr "sel_gauss: Obrazy indeksowane nie s± obs³ugiwane"
 
 #: plug-ins/common/sel_gauss.c:1
 msgid "Max. Delta:"
@@ -6001,11 +6000,11 @@ msgstr "Dolny-prawy"
 
 #: plug-ins/common/sunras.c:1 plug-ins/fits/fits.c:1
 msgid "Can't open file for reading"
-msgstr "Nie mogê otworzyæ pliku do odczytu"
+msgstr "Nie mo¿na otworzyæ pliku do odczytu"
 
 #: plug-ins/common/sunras.c:1
 msgid "Can't open file as SUN-raster-file"
-msgstr "Nie mogê otworzyæ pliku jako SUN-raster"
+msgstr "Nie mo¿na otworzyæ pliku jako SUN-raster"
 
 #: plug-ins/common/sunras.c:1
 msgid "The type of this SUN-rasterfile is not supported"
@@ -6013,7 +6012,7 @@ msgstr "Typ tego SUN-rastra nie jest obs³ugiwany"
 
 #: plug-ins/common/sunras.c:1
 msgid "Can't read color entries"
-msgstr "Nie mogê odczytaæ kolorów"
+msgstr "Nie mo¿na odczytaæ kolorów"
 
 #: plug-ins/common/sunras.c:1
 msgid "Type of colormap not supported"
@@ -6029,11 +6028,11 @@ msgstr "SUNRAS nie zapisuje obrazków z kana³ami alfa"
 
 #: plug-ins/common/sunras.c:1
 msgid "Can't operate on unknown image types"
-msgstr "nie mogê pracowaæ na nieznanych formatach obrazów"
+msgstr "Nie mo¿na pracowaæ na nieznanych formatach obrazów"
 
 #: plug-ins/common/sunras.c:1 plug-ins/fits/fits.c:1
 msgid "Can't open file for writing"
-msgstr "Nie mogê otworzyæ pliku do zapisu"
+msgstr "Nie mo¿na otworzyæ pliku do zapisu"
 
 #: plug-ins/common/sunras.c:1 plug-ins/common/sunras.c:1
 #: plug-ins/common/sunras.c:1 plug-ins/common/sunras.c:1
@@ -6041,7 +6040,7 @@ msgstr "Nie mogê otworzyæ pliku do zapisu"
 #: plug-ins/common/xwd.c:1 plug-ins/common/xwd.c:1
 #: plug-ins/fits/fits.c:1
 msgid "EOF encountered on reading"
-msgstr "Wyst±pi³ EOF podczas odczytu"
+msgstr "Podczas odczytu napotkano koniec pliku"
 
 #: plug-ins/common/sunras.c:1 plug-ins/common/sunras.c:1
 #: plug-ins/fits/fits.c:1 plug-ins/fits/fits.c:1
@@ -6859,7 +6858,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:1
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr "XBM: nie mogê stworzyæ \"%s\"\n"
+msgstr "XBM: nie mo¿na stworzyæ \"%s\"\n"
 
 #: plug-ins/common/xbm.c:1
 msgid "Save as XBM"
@@ -6938,11 +6937,11 @@ msgstr "XWD nie zapisuje obrazków z kana³ami alfa"
 
 #: plug-ins/common/xwd.c:1
 msgid "cannot operate on unknown image types"
-msgstr "nie mogê pracowaæ na nieznanych formatach obrazów"
+msgstr "nie mo¿na pracowaæ na nieznanych formatach obrazów"
 
 #: plug-ins/common/xwd.c:1
 msgid "can't open file for writing"
-msgstr "nie mogê otworzyæ pliku do zapisu"
+msgstr "nie mo¿na otworzyæ pliku do zapisu"
 
 #: plug-ins/common/xwd.c:1
 msgid "EOF encountered on "
@@ -7038,7 +7037,7 @@ msgstr "FITS nie zapisuje obrazków z kana³ami alfa"
 
 #: plug-ins/fits/fits.c:1
 msgid "Cannot operate on unknown image types"
-msgstr "Nie mogê pracowaæ na nieznanych typach obrazów"
+msgstr "Nie mo¿na pracowaæ na nieznanych typach obrazów"
 
 #: plug-ins/fits/fits.c:1
 msgid "Load FITS File"
@@ -9162,6 +9161,7 @@ msgid "Crop AnimFrames (all)"
 msgstr "Kadrowanie ramek filmu (wszystkich)"
 
 #: plug-ins/gap/gap_range_ops.c:1
+#, c-format
 msgid "Crop (original %dx%d)"
 msgstr "Kadrowanie (orygina³ %dx%d)"
 
@@ -9170,6 +9170,7 @@ msgid "Resize AnimFrames (all)"
 msgstr "Zmiana rozmiaru ramek (wszystkich)"
 
 #: plug-ins/gap/gap_range_ops.c:1
+#, c-format
 msgid "Resize (original %dx%d)"
 msgstr "Zmiana rozmiaru (orygina³ %dx%d)"
 
@@ -11312,12 +11313,11 @@ msgid ""
 "installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
-"<html><head><title>Nie mogê znale¼æ dokumentu</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Nie mogê znale¿æ dokumentu "
-"</h3><tt>%s</tt></center><p><small>To mo¿e oznaczaæ ¿e pomoc dla tego "
-"zagadnienia nie zosta³a jeszcze napisana lub co¶ posz³o nie tak z "
-"instalacj±. Proszê sprawd¼ to dok³adnie zanim wy¶lesz raport o "
-"b³êdzie.</small></body></html>"
+"<html><head><title>Nie odnaleziono dokumentu</title></head><body "
+"bgcolor=\"#ffffff\"><center><p>%s<h3>Nie mo¿na odnale¼æ dokumentu "
+"</h3><tt>%s</tt></center><p><small>Mo¿e to oznaczaæ ¿e pomoc dla tego "
+"zagadnienia nie zosta³a jeszcze napisana lub instalacja nie przebieg³a pomy¶lnie. "
+"Sprawd¼ to dok³adnie zanim wy¶lesz zg³oszenie b³êdu.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
 #, c-format
@@ -11330,12 +11330,12 @@ msgid ""
 "installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
-"<html><head><title>Nie mogê znale¼æ katalogu</title></head><body "
+"<html><head><title>Nie odnaleziono katalogu</title></head><body "
 "bgcolor=\"#ffffff\"><center><p>%s<h3>Nie mo¿na zmieniæ "
 "katalogu</h3><tt>%s</tt><h3>podczas próby otwarcia "
-"</h3><tt>%s</tt></center><p><small>To mo¿e oznaczaæ ¿e pomoc dla tego "
-"zagadnienia nie zosta³a jeszcze stworzona lub instalacja nie przebieg³a "
-"poprawnie. Sprawd¼ to dok³adnie zanim wy¶lesz zg³oszenie "
+"</h3><tt>%s</tt></center><p><small>Mo¿e to oznaczaæ ¿e pomoc dla tego "
+"zagadnienia nie zosta³a jeszcze napisana lub instalacja nie przebieg³a "
+"pomy¶lnie. Sprawd¼ to dok³adnie zanim wy¶lesz zg³oszenie "
 "b³êdu.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
@@ -11360,14 +11360,14 @@ msgid ""
 "Couldn't find my root html directory.\n"
 "(%s)"
 msgstr ""
-"B³±d przegl±darki pomocy GIMPa.\n"
+"B³±d przegl±darki pomocy GIMP-a.\n"
 "\n"
-"Nie mogê odnale¼æ katalogu z plikami HTML.\n"
+"Nie mo¿na odnale¼æ katalogu z plikami HTML.\n"
 "(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
 msgid "GIMP Help Browser"
-msgstr "Przegl±darka pomocy GIMPa"
+msgstr "Przegl±darka pomocy GIMP-a"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1
 msgid "Back"
@@ -11492,6 +11492,7 @@ msgid "Spot Radius:"
 msgstr "Promieñ plamki:"
 
 #: plug-ins/ifscompose/ifscompose.c:1
+#, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Renderowanie IFS (%d/%d)..."
 
