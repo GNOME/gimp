@@ -1,7 +1,18 @@
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
+	* tools/kernelgen.c: fixed rounding so that all brush kernels are
+	created with a constant sum of 256.
+
+	* app/paint/gimpbrushcore-kernels.h: regenerated.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask): use
+	the constant defined un app/paint/gimpbrushcore-kernels.h. Should
+	give a tiny speedup.
+
 2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
-	* app/paint/gimpbrushcore.c: invert dependence of brush size on pressure,
-	using formula from Dave Ahlswede in bug #149576.
+	* app/paint/gimpbrushcore.c: invert dependence of brush size on
+	pressure, using formula from Dave Ahlswede in bug #149576.
 	
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 

@@ -30,6 +30,7 @@
 #define STEPS          64
 #define KERNEL_WIDTH    3     /*  changing these makes no sense  */
 #define KERNEL_HEIGHT   3     /*  changing these makes no sense  */
+#define KERNEL_SUM    256
 #define SUBSAMPLE       4
 #define THRESHOLD       0.25  /*  try to change this one         */
 
@@ -58,7 +59,7 @@ create_kernel (double x,
 
       for (i = 0; i < STEPS * KERNEL_WIDTH; i++)
 	{
-	  dist_x = x - (((double)i + 0.5) / (double)STEPS);
+	  dist_x = x - (((double) i + 0.5) / (double) STEPS);
 
 	  /*  I've tried to use a gauss function here instead of a
 	      threshold, but the result was not that impressive.    */
@@ -73,8 +74,8 @@ create_kernel (double x,
     {
       for (i = 0; i < KERNEL_WIDTH; i++)
 	{
-	  w = 256.0 * (value[i][j] / sum);
-	  printf (" %3d,", (int)w);
+	  w = (double) KERNEL_SUM * value[i][j] / sum;
+	  printf (" %3d,", (int) (w + 0.5));
 	}
     }
 }
@@ -96,6 +97,7 @@ main (int    argc,
   printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
   printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
   printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
+  printf ("#define KERNEL_SUM       %d\n", KERNEL_SUM);
   printf ("\n\n");
   printf ("/*  Brush pixel subsampling kernels  */\n");
   printf ("static const int subsample[%d][%d][%d] =\n{\n",
@@ -103,13 +105,13 @@ main (int    argc,
 
   for (j = 0; j <= SUBSAMPLE; j++)
     {
-      y = (double)j / (double)(SUBSAMPLE);
+      y = (double) j / (double) SUBSAMPLE;
 
       printf ("  {\n");
 
       for (i = 0; i <= SUBSAMPLE; i++)
 	{
-	  x = (double)i / (double)(SUBSAMPLE);
+	  x = (double) i / (double) SUBSAMPLE;
 
 	  printf ("    {");
 	  create_kernel (x, y);
