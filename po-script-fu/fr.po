@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2001-11-10 12:55+0100\n"
-"PO-Revision-Date: 2001-11-10 12:52+0100\n"
+"POT-Creation-Date: 2001-11-17 15:12+0100\n"
+"PO-Revision-Date: 2001-11-17 15:04+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "Console pour Script-Fu"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2005
 msgid "Close"
 msgstr "Fermer"
 
@@ -58,70 +58,70 @@ msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1178
+#: plug-ins/script-fu/script-fu-scripts.c:1181
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1180
+#: plug-ins/script-fu/script-fu-scripts.c:1183
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1229
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1276
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1378
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1385
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1393
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1439
 msgid "Reset to Defaults"
 msgstr "Remettre aux valeurs par défaut"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1465
 msgid "About"
 msgstr "À propos"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 #: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "Valider"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
+#: plug-ins/script-fu/script-fu-scripts.c:1488
 #: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "Annuler"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid "NOT SET"
 msgstr "NON DÉFINI"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1683
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -131,29 +131,29 @@ msgstr ""
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:1976
 msgid "Author:"
 msgstr "Auteur :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:548
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-scripts.c:1982
 msgid "Copyright:"
 msgstr "Copyright :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:533
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/script-fu/script-fu-scripts.c:1988
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2161
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2228
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -205,7 +205,7 @@ msgstr "Rechercher par nom"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 msgid "Search by Blurb"
-msgstr ""
+msgstr "Rechercher par blurb"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 msgid "Apply"
@@ -222,17 +222,16 @@ msgstr "Nom :"
 
 #. show the description
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "Flou X"
+msgstr "Flou :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
 msgid "In:"
-msgstr ""
+msgstr "Entrée :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
 msgid "Out:"
-msgstr ""
+msgstr "Sortie :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 msgid "Help:"
@@ -240,20 +239,19 @@ msgstr "Aide :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:643
 msgid "DB Browser (by name - please wait)"
-msgstr ""
+msgstr "Navigateur BD (par nom - Veuillez patienter)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:667
 msgid "DB Browser (by blurb - please wait)"
-msgstr ""
+msgstr "Navigateur BD (par blurb - veuillez patienter)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:677
 msgid "DB Browser (please wait)"
-msgstr ""
+msgstr "Navigateur BD (veuillez patienter)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:743
-#, fuzzy
 msgid "DB Browser"
-msgstr "Parcourir..."
+msgstr "Navigateur BD"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -1216,29 +1214,29 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "Effect Size (pixels * 3)"
-msgstr ""
+msgstr "Taille de l'effet (pixels * 3)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Effect Size (pixels * 30)"
-msgstr ""
+msgstr "Taille de l'effet (pixels * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Effect Size (pixels * 4)"
-msgstr ""
+msgstr "Taille de l'effet (pixels * 4)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "Effect Size (pixels * 5)"
-msgstr ""
+msgstr "Taille de l'effet (pixels * 5)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "Effect Size (pixels)"
-msgstr ""
+msgstr "Taille de l'effet (pixels)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Elevation"
-msgstr ""
+msgstr "Élévation"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
@@ -1322,15 +1320,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Remplir l'AP avec un motif"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
-msgstr ""
+msgstr "Remplir avec la couleur d'AP"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
-msgstr ""
+msgstr "Remplir avec l'AP"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0

@@ -1,6 +1,6 @@
 # Traduction par David Monniaux
 
-Bienvenue à GIMP !
+Bienvenue dans GIMP !
 
 Presque toutes les opérations sur les images s'obtiennent en
 pressant le bouton de droite de la souris. Et ne vous inquiétez
