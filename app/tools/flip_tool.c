@@ -22,6 +22,7 @@
 #include "drawable.h"
 #include "flip_tool.h"
 #include "gdisplay.h"
+#include "gimage_mask.h"
 #include "temp_buf.h"
 #include "tool_options_ui.h"
 #include "transform_core.h"
@@ -154,15 +155,34 @@ flip_cursor_update (Tool           *tool,
 		    gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  Layer *layer;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
 
   gdisp = (GDisplay *) gdisp_ptr;
+  
+  if ((layer = gimage_get_active_layer (gdisp->gimage)))
+    {
+      int x, y, off_x, off_y;
 
-  if (flip_options->type == FLIP_HORZ)
-    ctype = GDK_SB_H_DOUBLE_ARROW;
-  else
-    ctype = GDK_SB_V_DOUBLE_ARROW;
+      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gdisplay_untransform_coords (gdisp, (double) mevent->x, 
+				   (double) mevent->y,
+				   &x, &y, TRUE, FALSE);
 
+      if (x >= off_x && y >= off_y &&
+      x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+      y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	{
+	  /*  Is there a selected region? If so, is cursor inside? */
+	  if (gimage_mask_is_empty (gdisp->gimage) || gimage_mask_value (gdisp->gimage, x, y))
+	    {
+	      if (flip_options->type == FLIP_HORZ)
+	    ctype = GDK_SB_H_DOUBLE_ARROW;
+	      else
+		ctype = GDK_SB_V_DOUBLE_ARROW;
+	    }
+	}
+    }
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 

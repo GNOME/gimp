@@ -1,3 +1,8 @@
+Tue Jun  8 01:12:31 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/flip_tool.c: Only install the tool cursor if we are inside a 
+	selected region.
+
 Tue Jun  8 00:30:57 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/bucket_fill.c
