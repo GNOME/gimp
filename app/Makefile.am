@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = pdb tools
+SUBDIRS = paint-funcs pdb tools
 
 scriptdata =
 
@@ -14,8 +14,7 @@ endif
 
 if HAVE_ASM_MMX
 mmx_sources = \
-	detect_mmx.S		\
-	paint_funcs_simd.S
+	detect_mmx.S
 else
 mmx_sources =
 endif
@@ -282,9 +281,7 @@ gimp_SOURCES = \
 	xcf.h			\
 	$(regex_sources)	\
 	\
-	paint_funcs.c		\
-	paint_funcs.h		\
-	$(mmx_sources)	        \
+	$(mmx_sources)		\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\
@@ -314,6 +311,10 @@ gimp_SOURCES = \
 	gimpcontainerview.c		\
 	gimpdatafactoryview.h		\
 	gimpdatafactoryview.c		\
+	gimpdock.c			\
+	gimpdock.h			\
+	gimpdockable.c			\
+	gimpdockable.h			\
 	gimpdrawablelistitem.c		\
 	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\
@@ -380,6 +381,7 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
+	paint-funcs/libapppaint-funcs.la				\
 	pdb/libapppdb.la						\
 	tools/libapptools.la						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\

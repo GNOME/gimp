@@ -782,6 +782,7 @@ libgimpwidgets/Makefile
 libgimpwidgets/makefile.mingw
 app/Makefile
 app/makefile.mingw
+app/paint-funcs/Makefile
 app/pdb/Makefile
 app/tools/Makefile
 plug-ins/Makefile

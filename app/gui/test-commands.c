@@ -34,6 +34,8 @@
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpdatafactoryview.h"
+#include "gimpdock.h"
+#include "gimpdockable.h"
 #include "gimpdrawablelistview.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
@@ -587,4 +589,25 @@ test_channel_list_cmd_callback (GtkWidget *widget,
 {
   drawable_view_new ("Channel List", TRUE,
 		     gimp_context_get_user ());
+}
+
+void
+test_dock_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  GtkWidget *dock;
+  GtkWidget *dockable;
+
+  dock = gimp_dock_new ();
+
+  dockable = gimp_dockable_new ("Test Dockable 1");
+  gimp_dock_add (dock, dockable);
+
+  dockable = gimp_dockable_new ("Test Dockable 2");
+  gimp_dock_add (dock, dockable);
+
+  dockable = gimp_dockable_new ("Test Dockable 3");
+  gimp_dock_add (dock, dockable);
+
+  gtk_widget_show (dock);
 }

@@ -161,6 +161,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
 
+  { { N_("/File/Test Dialogs/Dock..."), NULL, test_dock_cmd_callback, 1 },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
   { { N_("/File/Test Dialogs/Layer List..."), NULL, test_layer_list_cmd_callback, 1 },
     NULL, NULL },
   { { N_("/File/Test Dialogs/Channel List..."), NULL, test_channel_list_cmd_callback, 1 },

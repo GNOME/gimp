@@ -41,5 +41,7 @@ void test_layer_grid_cmd_callback                   (GtkWidget *, gpointer);
 void test_channel_list_cmd_callback                 (GtkWidget *, gpointer);
 void test_channel_grid_cmd_callback                 (GtkWidget *, gpointer);
 
+void test_dock_cmd_callback                         (GtkWidget *, gpointer);
+
 
 #endif /* __TEST_COMMANDS_H__ */
