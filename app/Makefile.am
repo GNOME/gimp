@@ -167,6 +167,8 @@ gimp_SOURCES = \
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
+	gradient_header.h	\
+	gradient_select.c	\
 	gradient.h		\
 	gximage.c		\
 	gximage.h		\

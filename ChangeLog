@@ -1,4 +1,18 @@
 
+Wed Nov  4 22:23:18 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/gradient.c 
+	* app/Makefile.am
+
+	New files
+
+	* app/gradient_select.c
+	* app/gradient_header.h
+
+	Split gradient selector dialog out of the main gradient code.
+	New gradient headerfile that contains the key gradient structures
+	and #defines.
+
 Tue Nov  3 21:47:53 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* plug-ins/script-fu/scripts/comic-logo.scm
