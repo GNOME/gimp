@@ -147,32 +147,32 @@ static void     path_close                   (Path *);
 /*  the ops buttons  */
 static GtkSignalFunc to_path_ext_callbacks[] = 
 { 
-  paths_dialog_advanced_to_path_callback, NULL, NULL, NULL
+  G_CALLBACK (paths_dialog_advanced_to_path_callback), NULL, NULL, NULL
 };
 
 static OpsButton paths_ops_buttons[] =
 {
-  { new_xpm, paths_dialog_new_path_callback, NULL,
+  { new_xpm, G_CALLBACK (paths_dialog_new_path_callback), NULL,
     N_("New Path"),
     "paths/new_path.html",
     NULL },
-  { duplicate_xpm, paths_dialog_dup_path_callback, NULL,
+  { duplicate_xpm, G_CALLBACK (paths_dialog_dup_path_callback), NULL,
     N_("Duplicate Path"),
     "paths/duplicate_path.html",
     NULL },
-  { toselection_xpm, paths_dialog_path_to_sel_callback, NULL,
+  { toselection_xpm, G_CALLBACK (paths_dialog_path_to_sel_callback), NULL,
     N_("Path to Selection"),
     "paths/path_to_selection.html",
     NULL },
-  { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks,
+  { topath_xpm, G_CALLBACK (paths_dialog_sel_to_path_callback), to_path_ext_callbacks,
     N_("Selection to Path"),
     "filters/sel2path.html",
     NULL },
-  { penstroke_xpm, paths_dialog_stroke_path_callback, NULL,
+  { penstroke_xpm, G_CALLBACK (paths_dialog_stroke_path_callback), NULL,
     N_("Stroke Path"),
     "paths/stroke_path.html",
     NULL },
-  { delete_xpm, paths_dialog_delete_path_callback, NULL,
+  { delete_xpm, G_CALLBACK (paths_dialog_delete_path_callback), NULL,
     N_("Delete Path"),
     "paths/delete_path.html",
     NULL },
@@ -181,19 +181,19 @@ static OpsButton paths_ops_buttons[] =
 
 static OpsButton point_ops_buttons[] =
 {
-  { pennorm_xpm, paths_dialog_new_point_callback, NULL,
+  { pennorm_xpm, G_CALLBACK (paths_dialog_new_point_callback), NULL,
     N_("New Point"),
     "#new_point_button",
     NULL },
-  { penadd_xpm, paths_dialog_add_point_callback, NULL,
+  { penadd_xpm, G_CALLBACK (paths_dialog_add_point_callback), NULL,
     N_("Add Point"),
     "#add_point_button",
     NULL },
-  { pendel_xpm, paths_dialog_delete_point_callback, NULL,
+  { pendel_xpm, G_CALLBACK (paths_dialog_delete_point_callback), NULL,
     N_("Delete Point"),
     "#delete_point_button",
     NULL },
-  { penedit_xpm, paths_dialog_edit_point_callback, NULL,
+  { penedit_xpm, G_CALLBACK (paths_dialog_edit_point_callback), NULL,
     N_("Edit Point"),
     "#edit_point_button",
     NULL },
@@ -1844,7 +1844,7 @@ file_ok_callback (GtkWidget *widget,
 {
   GtkFileSelection *fs;
   FILE *f; 
-  char* filename;
+  const char* filename;
   Path* bzpath;
   PathList* plp;
   gint row = paths_dialog->selected_row_num;

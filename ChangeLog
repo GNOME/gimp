@@ -1,3 +1,14 @@
+2001-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/brush-select.c
+	* app/gui/channels-commands.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/paths-dialog.c
+	* app/gui/preferences-dialog.c: use GObject functions, stuff.
+
 2001-07-25  Sven Neumann  <sven@gimp.org>
 
 	* app/nav_window.c

@@ -167,13 +167,14 @@ offset_dialog_create (GimpDrawable *drawable)
   /*  The fill options  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Fill Type"),
-			   gimp_radio_button_update,
-			   &off_d->fill_type, (gpointer) off_d->fill_type,
+			   G_CALLBACK (gimp_radio_button_update),
+			   &off_d->fill_type,
+			   GINT_TO_POINTER (off_d->fill_type),
 
-			   _("Background"),  (gpointer) OFFSET_BACKGROUND,
-			   NULL,
-			   _("Transparent"), (gpointer) OFFSET_TRANSPARENT,
-			   &radio_button,
+			   _("Background"),
+			   GINT_TO_POINTER (OFFSET_BACKGROUND), NULL,
+			   _("Transparent"),
+			   GINT_TO_POINTER (OFFSET_TRANSPARENT), &radio_button,
 
 			   NULL);
 
@@ -190,16 +191,16 @@ offset_dialog_create (GimpDrawable *drawable)
   gtk_widget_show (push);
 
   /*  Hook up the wrap around  */
-  gtk_signal_connect (GTK_OBJECT (check), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &off_d->wrap_around);
-  gtk_object_set_data (GTK_OBJECT (check), "inverse_sensitive", frame);
+  g_signal_connect (G_OBJECT (check), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &off_d->wrap_around);
+  g_object_set_data (G_OBJECT (check), "inverse_sensitive", frame);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
 
   /*  Hook up the by half  */
-  gtk_signal_connect (GTK_OBJECT (push), "clicked",
-		      (GtkSignalFunc) offset_halfheight_callback,
-		      off_d);
+  g_signal_connect (G_OBJECT (push), "clicked",
+		    G_CALLBACK (offset_halfheight_callback),
+		    off_d);
 
   gtk_widget_show (vbox);
   gtk_widget_show (off_d->dlg);

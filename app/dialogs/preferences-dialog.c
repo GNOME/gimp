@@ -242,8 +242,8 @@ static GtkWidget        * prefs_dlg = NULL;
  *  in the destination if there is one there already.
  */
 static void
-prefs_strset (gchar **dst,
-	      gchar  *src)
+prefs_strset (gchar       **dst,
+	      const gchar  *src)
 {
   if (*dst)
     g_free (*dst);
@@ -397,9 +397,9 @@ prefs_restart_notification (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+		    G_CALLBACK (gtk_main_quit),
+		    NULL);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, FALSE, 4);
@@ -916,7 +916,7 @@ prefs_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  prefs_strset (&gimprc.image_title_format,    old_image_title_format);
+  prefs_strset (&gimprc.image_title_format,         old_image_title_format);
   prefs_strset (&the_gimp->config->default_comment, old_default_comment);
 
   tool_manager_set_global_paint_options (the_gimp, old_global_paint_options);
@@ -1536,9 +1536,9 @@ preferences_dialog_create (void)
   gtk_object_set_user_data (GTK_OBJECT (prefs_dlg), notebook);
   gtk_object_set_user_data (GTK_OBJECT (ctree), notebook);
 
-  gtk_signal_connect (GTK_OBJECT (ctree), "tree_select_row",
-		      GTK_SIGNAL_FUNC (prefs_tree_select_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (ctree), "tree_select_row",
+		    G_CALLBACK (prefs_tree_select_callback),
+		    NULL);
 
   page_index = 0;
 
@@ -1593,15 +1593,15 @@ preferences_dialog_create (void)
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
 			      the_gimp->config->default_height);
 
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
-		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
-		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "refval_changed",
-		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
+		    G_CALLBACK (prefs_default_size_callback),
+		    NULL);
+  g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+		    G_CALLBACK (prefs_default_size_callback),
+		    NULL);
+  g_signal_connect (G_OBJECT (sizeentry), "refval_changed",
+		    G_CALLBACK (prefs_default_size_callback),
+		    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
@@ -1648,15 +1648,15 @@ preferences_dialog_create (void)
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2), 1,
 			      the_gimp->config->default_yresolution);
 
-  gtk_signal_connect (GTK_OBJECT (sizeentry2), "unit_changed",
-		      (GtkSignalFunc) prefs_default_resolution_callback,
-		      button);
-  gtk_signal_connect (GTK_OBJECT (sizeentry2), "value_changed",
-		      (GtkSignalFunc) prefs_default_resolution_callback,
-		      button);
-  gtk_signal_connect (GTK_OBJECT (sizeentry2), "refval_changed",
-		      (GtkSignalFunc) prefs_default_resolution_callback,
-		      button);
+  g_signal_connect (G_OBJECT (sizeentry2), "unit_changed",
+		    G_CALLBACK (prefs_default_resolution_callback),
+		    button);
+  g_signal_connect (G_OBJECT (sizeentry2), "value_changed",
+		    G_CALLBACK (prefs_default_resolution_callback),
+		    button);
+  g_signal_connect (G_OBJECT (sizeentry2), "refval_changed",
+		    G_CALLBACK (prefs_default_resolution_callback),
+		    button);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry2, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry2);
@@ -1673,14 +1673,16 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &the_gimp->config->default_type,
-			   (gpointer) the_gimp->config->default_type,
+			   GINT_TO_POINTER (the_gimp->config->default_type),
 
-			   _("RGB"),       (gpointer) RGB, NULL,
-			   _("Grayscale"), (gpointer) GRAY, NULL,
+			   _("RGB"),       GINT_TO_POINTER (RGB),  NULL,
+			   _("Grayscale"), GINT_TO_POINTER (GRAY), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Image Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -1690,12 +1692,13 @@ preferences_dialog_create (void)
 				   0, (4069.0 * 1024 * 1024 - 1), 
 				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_uint_adjustment_update),
-		      &gimprc.max_new_image_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Maximum Image Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_uint_adjustment_update),
+		    &gimprc.max_new_image_size);
 
   /* Default Comment page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1726,11 +1729,12 @@ preferences_dialog_create (void)
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
   gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
 		   the_gimp->config->default_comment, -1);
-  gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      GTK_SIGNAL_FUNC (prefs_text_callback),
-		      &the_gimp->config->default_comment);
   gtk_container_add (GTK_CONTAINER (hbox), text);
   gtk_widget_show (text);
+
+  g_signal_connect (G_OBJECT (text), "changed",
+		    G_CALLBACK (prefs_text_callback),
+		    &the_gimp->config->default_comment);
 #endif
 
   /* Display page */
@@ -1760,33 +1764,37 @@ preferences_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &gimprc.transparency_type,
-			   (gpointer) gimprc.transparency_type,
+  optionmenu = gimp_option_menu_new2
+    (FALSE,
+     G_CALLBACK (prefs_toggle_callback),
+     &gimprc.transparency_type,
+     GINT_TO_POINTER (gimprc.transparency_type),
 
-			   _("Light Checks"),    (gpointer) LIGHT_CHECKS, NULL,
-			   _("Mid-Tone Checks"), (gpointer) GRAY_CHECKS, NULL,
-			   _("Dark Checks"),     (gpointer) DARK_CHECKS, NULL,
-			   _("White Only"),      (gpointer) WHITE_ONLY, NULL,
-			   _("Gray Only"),       (gpointer) GRAY_ONLY, NULL,
-			   _("Black Only"),      (gpointer) BLACK_ONLY, NULL,
+     _("Light Checks"),    GINT_TO_POINTER (LIGHT_CHECKS), NULL,
+     _("Mid-Tone Checks"), GINT_TO_POINTER (GRAY_CHECKS),  NULL,
+     _("Dark Checks"),     GINT_TO_POINTER (DARK_CHECKS),  NULL,
+     _("White Only"),      GINT_TO_POINTER (WHITE_ONLY),   NULL,
+     _("Gray Only"),       GINT_TO_POINTER (GRAY_ONLY),    NULL,
+     _("Black Only"),      GINT_TO_POINTER (BLACK_ONLY),   NULL,
 
-			   NULL);
+     NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Transparency Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &gimprc.transparency_size,
-			   (gpointer) gimprc.transparency_size,
+			   GINT_TO_POINTER (gimprc.transparency_size),
 
-			   _("Small"),  (gpointer) SMALL_CHECKS, NULL,
-			   _("Medium"), (gpointer) MEDIUM_CHECKS, NULL,
-			   _("Large"),  (gpointer) LARGE_CHECKS, NULL,
+			   _("Small"),  GINT_TO_POINTER (SMALL_CHECKS),  NULL,
+			   _("Medium"), GINT_TO_POINTER (MEDIUM_CHECKS), NULL,
+			   _("Large"),  GINT_TO_POINTER (LARGE_CHECKS),  NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Check Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -1808,30 +1816,33 @@ preferences_dialog_create (void)
 			  27.0,
 			  gtk_check_version (1, 2, 8) ? 216.0 : 256.0,
 			  1.0, 8.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &edit_min_colors);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Minimum Number of Colors:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &edit_min_colors);
+
   button = gtk_check_button_new_with_label(_("Install Colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_install_cmap);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_install_cmap);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_install_cmap);
 
   button = gtk_check_button_new_with_label(_("Colormap Cycling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_cycled_marching_ants);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_cycled_marching_ants);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_cycled_marching_ants);
 
 
   /* Interface */
@@ -1862,52 +1873,57 @@ preferences_dialog_create (void)
      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                    auto_save);
      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-     gtk_signal_connect (GTK_OBJECT (button), "toggled",
-	                 GTK_SIGNAL_FUNC (prefs_toggle_callback),
-			 &auto_save);
      gtk_widget_show (button);
+
+     g_signal_connect (G_OBJECT (button), "toggled",
+	               G_CALLBACK (prefs_toggle_callback),
+			auto_save);
   */
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_preview_size_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_preview_size_callback),
 			   &gimprc.preview_size,
-			   (gpointer) gimprc.preview_size,
+			   GINT_TO_POINTER (gimprc.preview_size),
 
-			   _("None"),   (gpointer)   0, NULL,
-			   _("Tiny"),   (gpointer)  24, NULL,
-			   _("Small"),  (gpointer)  32, NULL,
-			   _("Medium"), (gpointer)  48, NULL,
-			   _("Large"),  (gpointer)  64, NULL,
-			   _("Huge"),   (gpointer) 128, NULL,
+			   _("None"),   GINT_TO_POINTER (0),   NULL,
+			   _("Tiny"),   GINT_TO_POINTER (24),  NULL,
+			   _("Small"),  GINT_TO_POINTER (32),  NULL,
+			   _("Medium"), GINT_TO_POINTER (48),  NULL,
+			   _("Large"),  GINT_TO_POINTER (64),  NULL,
+			   _("Huge"),   GINT_TO_POINTER (128), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Preview Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_nav_preview_size_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_nav_preview_size_callback),
 			   &gimprc.nav_preview_size,
-			   (gpointer) gimprc.nav_preview_size,
+			   GINT_TO_POINTER (gimprc.nav_preview_size),
 
-			   _("Small"),  (gpointer)  48, NULL,
-			   _("Medium"), (gpointer)  80, NULL,
-			   _("Large"),  (gpointer) 112, NULL,
+			   _("Small"),  GINT_TO_POINTER (48),  NULL,
+			   _("Medium"), GINT_TO_POINTER (80),  NULL,
+			   _("Large"),  GINT_TO_POINTER (112), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Nav Preview Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  spinbutton =
-    gimp_spin_button_new (&adjustment, edit_last_opened_size,
-			  0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &edit_last_opened_size);
+  spinbutton = gimp_spin_button_new (&adjustment, edit_last_opened_size,
+				     0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &edit_last_opened_size);
 
   /* Indicators */
   vbox2 = prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
@@ -1917,10 +1933,11 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_show_indicators);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_show_indicators);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_show_indicators);
 
   vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
 
@@ -1928,19 +1945,21 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_nav_window_per_display);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_nav_window_per_display);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_nav_window_per_display);
 
   button = gtk_check_button_new_with_label (_("Info Window Follows Mouse"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_info_window_follows_mouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_info_window_follows_mouse);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_info_window_follows_mouse);
 
   vbox2 = prefs_frame_new (_("Menus"), GTK_BOX (vbox));
 
@@ -1948,10 +1967,11 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_disable_tearoff_menus);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_disable_tearoff_menus);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_disable_tearoff_menus);
 
   /* Interface / Help System */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1971,20 +1991,22 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.show_tool_tips);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.show_tool_tips);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.show_tool_tips);
 
   button =
     gtk_check_button_new_with_label (_("Context Sensitive Help with \"F1\""));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.use_help);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.use_help);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.use_help);
 
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
 
@@ -1994,15 +2016,17 @@ preferences_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &gimprc.help_browser,
-			   (gpointer) gimprc.help_browser,
+  optionmenu = gimp_option_menu_new2
+    (FALSE,
+     G_CALLBACK (prefs_toggle_callback),
+     &gimprc.help_browser,
+     GINT_TO_POINTER (gimprc.help_browser),
 
-			   _("Internal"), (gpointer) HELP_BROWSER_GIMP, NULL,
-			   _("Netscape"), (gpointer) HELP_BROWSER_NETSCAPE, NULL,
+     _("Internal"), GINT_TO_POINTER (HELP_BROWSER_GIMP), NULL,
+     _("Netscape"), GINT_TO_POINTER (HELP_BROWSER_NETSCAPE), NULL,
 
-			   NULL);
+     NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Help Browser to Use:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2025,37 +2049,41 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.default_dot_for_dot);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.default_dot_for_dot);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.default_dot_for_dot);
 
   button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.allow_resize_windows);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.allow_resize_windows);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.allow_resize_windows);
 
   button = gtk_check_button_new_with_label(_("Show Rulers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.show_rulers);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.show_rulers);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.show_rulers);
 
   button = gtk_check_button_new_with_label(_("Show Statusbar"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.show_statusbar);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.show_statusbar);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.show_statusbar);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -2064,15 +2092,15 @@ preferences_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  spinbutton =
-    gimp_spin_button_new (&adjustment, gimprc.marching_speed,
-			  50.0, 32000.0, 10.0, 100.0, 1.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gimprc.marching_speed);
+  spinbutton = gimp_spin_button_new (&adjustment, gimprc.marching_speed,
+				     50.0, 32000.0, 10.0, 100.0, 1.0, 1.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Marching Ants Speed:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &gimprc.marching_speed);
 
   /* The title format string */
   combo = gtk_combo_new ();
@@ -2106,13 +2134,13 @@ preferences_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
   gtk_widget_show (comboitem);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), "changed",
-		      GTK_SIGNAL_FUNC (prefs_string_callback), 
-		      &gimprc.image_title_format);
-
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Image Title Format:"), 1.0, 0.5,
 			     combo, 1, FALSE);
+
+  g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
+		    G_CALLBACK (prefs_string_callback), 
+		    &gimprc.image_title_format);
   /* End of the title format string */
 
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
@@ -2122,19 +2150,21 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.perfectmouse);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.perfectmouse);
 
   button = gtk_check_button_new_with_label (_("Disable Cursor Updating"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.no_cursor_updating);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.no_cursor_updating);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.no_cursor_updating);
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -2143,18 +2173,20 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &gimprc.cursor_mode,
-                           (gpointer) gimprc.cursor_mode,
+			   GINT_TO_POINTER (gimprc.cursor_mode),
 
 			   _("Tool Icon"),
-			   (gpointer) CURSOR_MODE_TOOL_ICON, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_TOOL_ICON),      NULL,
 			   _("Tool Icon with Crosshair"),
-			   (gpointer) CURSOR_MODE_TOOL_CROSSHAIR, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_TOOL_CROSSHAIR), NULL,
 			   _("Crosshair only"),
-			   (gpointer) CURSOR_MODE_CROSSHAIR, NULL,
+			   GINT_TO_POINTER (CURSOR_MODE_CROSSHAIR),      NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Cursor Mode:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2179,10 +2211,11 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.global_paint_options);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.global_paint_options);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.global_paint_options);
 
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_BOX (vbox));
 
@@ -2194,15 +2227,15 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   /*  Default threshold  */
-  spinbutton =
-    gimp_spin_button_new (&adjustment, gimprc.default_threshold,
-			  0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &gimprc.default_threshold);
+  spinbutton = gimp_spin_button_new (&adjustment, gimprc.default_threshold,
+				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Threshold:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &gimprc.default_threshold);
 
   /* Expand the "Interface" branch */
   gtk_ctree_expand (GTK_CTREE (ctree), top_insert);
@@ -2225,11 +2258,12 @@ preferences_dialog_create (void)
   button = gtk_check_button_new_with_label(_("Conservative Memory Usage"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_stingy_memory_use);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &edit_stingy_memory_use);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &edit_stingy_memory_use);
 
 #ifdef ENABLE_MP
   table = gtk_table_new (3, 2, FALSE);
@@ -2243,37 +2277,41 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   /*  Levels of Undo  */
-  spinbutton = gimp_spin_button_new (&adjustment, the_gimp->config->levels_of_undo,
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     the_gimp->config->levels_of_undo,
 				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &the_gimp->config->levels_of_undo);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Levels of Undo:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &the_gimp->config->levels_of_undo);
 
   /*  The tile cache size  */
   adjustment = gtk_adjustment_new (edit_tile_cache_size, 
 				   0, (4069.0 * 1024 * 1024 - 1), 
 				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_uint_adjustment_update),
-		      &edit_tile_cache_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Tile Cache Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_uint_adjustment_update),
+		    &edit_tile_cache_size);
 
 #ifdef ENABLE_MP
   spinbutton =
     gimp_spin_button_new (&adjustment, base_config->num_processors,
 			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &base_config->num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &base_config->num_processors);
 #endif /* ENABLE_MP */
 
   frame = gtk_frame_new (_("Scaling")); 
@@ -2291,18 +2329,20 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &base_config->interpolation_type,
-			   (gpointer) base_config->interpolation_type,
+			   GINT_TO_POINTER (base_config->interpolation_type),
 
 			   _("Nearest Neighbor (Fast)"),
-			   (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (NEAREST_NEIGHBOR_INTERPOLATION), NULL,
 			   _("Linear"),
-			   (gpointer) LINEAR_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (LINEAR_INTERPOLATION), NULL,
 			   _("Cubic (Slow)"),
-			   (gpointer) CUBIC_INTERPOLATION, NULL,
+			   GINT_TO_POINTER (CUBIC_INTERPOLATION), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Interpolation Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2321,27 +2361,31 @@ preferences_dialog_create (void)
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &the_gimp->config->thumbnail_mode,
-			   (gpointer) the_gimp->config->thumbnail_mode,
+			   GINT_TO_POINTER (the_gimp->config->thumbnail_mode),
 
-			   _("Always"), (gpointer) 1, NULL,
-			   _("Never"),  (gpointer) 0, NULL,
+			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
+			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
 			   &gimprc.trust_dirty_flag,
-			   (gpointer) gimprc.trust_dirty_flag,
+			   GINT_TO_POINTER (gimprc.trust_dirty_flag),
 
-			   _("Only when Modified"), (gpointer) 1, NULL,
-			   _("Always"),             (gpointer) 0, NULL,
+			   _("Only when Modified"), GINT_TO_POINTER (TRUE),  NULL,
+			   _("Always"),             GINT_TO_POINTER (FALSE), NULL,
 
 			   NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
@@ -2365,10 +2409,11 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.save_session_info);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.save_session_info);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.save_session_info);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -2378,19 +2423,21 @@ preferences_dialog_create (void)
   button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (prefs_clear_session_info_callback),
-		      NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (prefs_clear_session_info_callback),
+		    NULL);
 
   button = gtk_check_button_new_with_label (_("Always Try to Restore Session"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.always_restore_session);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.always_restore_session);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.always_restore_session);
 
   vbox2 = prefs_frame_new (_("Devices"), GTK_BOX (vbox));
 
@@ -2398,10 +2445,11 @@ preferences_dialog_create (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				gimprc.save_device_status);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &gimprc.save_device_status);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_toggle_callback),
+		    &gimprc.save_device_status);
 
   /* Monitor */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -2465,12 +2513,12 @@ preferences_dialog_create (void)
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
 			      gimprc.monitor_yres);
 
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
-		      GTK_SIGNAL_FUNC (prefs_monitor_resolution_callback),
-		      button);
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "refval_changed",
-		      GTK_SIGNAL_FUNC (prefs_monitor_resolution_callback),
-		      button);
+  g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+		    G_CALLBACK (prefs_monitor_resolution_callback),
+		    button);
+  g_signal_connect (G_OBJECT (sizeentry), "refval_changed",
+		    G_CALLBACK (prefs_monitor_resolution_callback),
+		    button);
 
   gtk_container_add (GTK_CONTAINER (abox), sizeentry);
   gtk_widget_show (sizeentry);
@@ -2481,19 +2529,20 @@ preferences_dialog_create (void)
   
   calibrate_button = gtk_button_new_with_label (_("Calibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
-  gtk_signal_connect (GTK_OBJECT (calibrate_button), "clicked",
-		      GTK_SIGNAL_FUNC (prefs_resolution_calibrate_callback),
-		      sizeentry);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_button);
   gtk_widget_set_sensitive (calibrate_button, ! gimprc.using_xserver_resolution);
 
+  g_signal_connect (G_OBJECT (calibrate_button), "clicked",
+		    G_CALLBACK (prefs_resolution_calibrate_callback),
+		    sizeentry);
+
   group = NULL;
   button = gtk_radio_button_new_with_label (group, _("From windowing system"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (prefs_res_source_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "toggled",
+		    G_CALLBACK (prefs_res_source_callback),
+		    NULL);
   gtk_object_set_data (GTK_OBJECT (button), "monitor_resolution_sizeentry",
 		       sizeentry);
   gtk_object_set_data (GTK_OBJECT (button), "set_sensitive",
@@ -2562,12 +2611,13 @@ preferences_dialog_create (void)
 	fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
 						 *(dirs[i].mdir),
 						 TRUE, TRUE);
-	gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
-			    GTK_SIGNAL_FUNC (prefs_filename_callback),
-			    dirs[i].mdir);
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				   gettext(dirs[i].label), 1.0, 0.5,
 				   fileselection, 1, FALSE);
+
+	g_signal_connect (G_OBJECT (fileselection), "filename_changed",
+			  G_CALLBACK (prefs_filename_callback),
+			  dirs[i].mdir);
       }
   }
 
@@ -2625,11 +2675,12 @@ preferences_dialog_create (void)
 
 	patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
 					   *(paths[i].mpath));
-	gtk_signal_connect (GTK_OBJECT (patheditor), "path_changed",
-			    GTK_SIGNAL_FUNC (prefs_path_callback),
-			    paths[i].mpath);
 	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
 	gtk_widget_show (patheditor);
+
+	g_signal_connect (G_OBJECT (patheditor), "path_changed",
+			  G_CALLBACK (prefs_path_callback),
+			  paths[i].mpath);
       }
   }
 

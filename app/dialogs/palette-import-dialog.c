@@ -278,10 +278,11 @@ palette_import_image_menu_add (GimpImage *gimage)
   g_free (lab);
 
   gtk_widget_show (menuitem);
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (palette_import_image_sel_callback),
-		      gimage);
-  gtk_menu_append (GTK_MENU (import_dialog->optionmenu1_menu), menuitem);
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (palette_import_image_sel_callback),
+		    gimage);
+  gtk_menu_shell_append (GTK_MENU_SHELL (import_dialog->optionmenu1_menu),
+			 menuitem);
 }
 
 /* Last Param gives us control over what goes in the menu on a delete oper */
@@ -527,7 +528,7 @@ palette_import_image_destroyed (GimpContainer *container,
 }
 
 void
-palette_import_image_renamed (GimpImage* gimage)
+palette_import_image_renamed (GimpImage *gimage)
 {
   /* Now fill in the names if image menu shown */
   if (import_dialog &&
@@ -564,7 +565,7 @@ palette_import_import_callback (GtkWidget *widget,
   if (! import_dialog)
     return;
 
-  palette_name = gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
+  palette_name = (gchar *) gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
 
   if (! (palette_name && strlen (palette_name)))
     palette_name = g_strdup (_("Unnamed"));
@@ -695,31 +696,34 @@ palette_import_dialog_new (void)
   gtk_table_attach_defaults (GTK_TABLE (table), optionmenu, 1, 2, 1, 2);
   menuitem = import_dialog->image_menu_item_gradient = 
     gtk_menu_item_new_with_label (_("Gradient"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (palette_import_grad_callback),
-		      NULL);
-  gtk_menu_append (GTK_MENU (optionmenu_menu), menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
   gtk_widget_show (menuitem);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (palette_import_grad_callback),
+		    NULL);
 
   menuitem = import_dialog->image_menu_item_image =
     gtk_menu_item_new_with_label (_("Image"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-		      GTK_SIGNAL_FUNC (palette_import_image_callback),
-		      import_dialog);
-  gtk_menu_append (GTK_MENU (optionmenu_menu), menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
   gtk_widget_show (menuitem);
   gtk_widget_set_sensitive (menuitem,
 			    palette_import_image_count (IMAGE_IMPORT) > 0);
 
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (palette_import_image_callback),
+		    import_dialog);
+
   menuitem = import_dialog->image_menu_item_indexed =
     gtk_menu_item_new_with_label (_("Indexed Palette"));
-  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-                      GTK_SIGNAL_FUNC (palette_import_indexed_callback),
-                      import_dialog);
-  gtk_menu_append (GTK_MENU (optionmenu_menu), menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (optionmenu_menu), menuitem);
   gtk_widget_show (menuitem);
   gtk_widget_set_sensitive (menuitem,
 			    palette_import_image_count (INDEXED_IMPORT) > 0);
+
+  g_signal_connect (G_OBJECT (menuitem), "activate",
+		    G_CALLBACK (palette_import_indexed_callback),
+		    import_dialog);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), optionmenu_menu);
   gtk_widget_show (optionmenu);
@@ -775,28 +779,30 @@ palette_import_dialog_new (void)
 
   button = import_dialog->select = gtk_button_new_with_label (_("Select"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (palette_import_select_grad_callback),
-		      image);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked", 
+		    G_CALLBACK (palette_import_select_grad_callback),
+		    image);
 
   /*  Fill with the selected gradient  */
   palette_import_fill_grad_preview
     (image, gimp_context_get_gradient (gimp_get_user_context (the_gimp)));
   import_dialog->import_type = GRAD_IMPORT;
-  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
-		      "gradient_changed",
-		      GTK_SIGNAL_FUNC (palette_import_gradient_update),
-		      NULL);
+
+  g_signal_connect (G_OBJECT (gimp_get_user_context (the_gimp)),
+		    "gradient_changed",
+		    G_CALLBACK (palette_import_gradient_update),
+		    NULL);
 
   /*  keep the dialog up-to-date  */
-  gtk_signal_connect (GTK_OBJECT (the_gimp->images), "add",
-		      GTK_SIGNAL_FUNC (palette_import_image_new),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (the_gimp->images), "remove",
-		      GTK_SIGNAL_FUNC (palette_import_image_destroyed),
-		      NULL);
+  g_signal_connect (G_OBJECT (the_gimp->images), "add",
+		    G_CALLBACK (palette_import_image_new),
+		    NULL);
+  g_signal_connect (G_OBJECT (the_gimp->images), "remove",
+		    G_CALLBACK (palette_import_image_destroyed),
+		    NULL);
 
   return import_dialog;
 }

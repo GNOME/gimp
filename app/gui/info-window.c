@@ -376,8 +376,8 @@ static InfoDialog *info_window_auto = NULL;
 static gchar *
 info_window_title (GDisplay *gdisp)
 {
-  gchar *basename;
-  gchar *title;
+  const gchar *basename;
+  gchar       *title;
 
   basename = g_basename (gimp_image_filename (gdisp->gimage));
   
@@ -433,9 +433,9 @@ info_window_follow_auto (void)
     {
       info_window_auto = info_window_create (gdisp);
 
-      gtk_signal_connect (GTK_OBJECT (context), "display_changed",
-			  GTK_SIGNAL_FUNC (info_window_change_display), 
-			  NULL);
+      g_signal_connect (G_OBJECT (context), "display_changed",
+			G_CALLBACK (info_window_change_display), 
+			NULL);
 
       info_window_update (gdisp);
     }

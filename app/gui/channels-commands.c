@@ -176,7 +176,7 @@ channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 				 CHANNEL_OP_ADD, 
 				 0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      gtk_object_unref (GTK_OBJECT (new_channel));
+      g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }
@@ -202,7 +202,7 @@ channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 				  CHANNEL_OP_SUB, 
 				  0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      gtk_object_unref (GTK_OBJECT (new_channel));
+      g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }
@@ -228,7 +228,7 @@ channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 				 CHANNEL_OP_INTERSECT, 
 				 0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
-      gtk_object_unref (GTK_OBJECT (new_channel));
+      g_object_unref (G_OBJECT (new_channel));
       gdisplays_flush ();
     }
 }
@@ -360,9 +360,9 @@ channels_new_channel_query (GimpImage *gimage)
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -407,18 +407,20 @@ channels_new_channel_query (GimpImage *gimage)
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
   gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT (opacity_scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (channels_opacity_update),
-		      options->color_panel);
   gtk_widget_show (opacity_scale);
 
+  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+		    G_CALLBACK (channels_opacity_update),
+		    options->color_panel);
+
   /*  The color panel  */
-  gtk_signal_connect (GTK_OBJECT (options->color_panel), "color_changed",
-		      channels_color_changed,
-		      opacity_scale_data);		      
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
+
+  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+		    G_CALLBACK (channels_color_changed),
+		    opacity_scale_data);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);
@@ -511,13 +513,14 @@ channels_edit_channel_query (GimpChannel *channel)
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (channel), "removed",
-					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					 GTK_OBJECT (options->query_box));
+  g_signal_connect_object (G_OBJECT (channel), "removed",
+			   G_CALLBACK (gtk_widget_destroy),
+			   G_OBJECT (options->query_box),
+			   G_CONNECT_SWAPPED);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -562,18 +565,20 @@ channels_edit_channel_query (GimpChannel *channel)
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
   gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT (opacity_scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (channels_opacity_update),
-		      options->color_panel);
   gtk_widget_show (opacity_scale);
 
+  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+		    G_CALLBACK (channels_opacity_update),
+		    options->color_panel);
+
   /*  The color panel  */
-  gtk_signal_connect (GTK_OBJECT (options->color_panel), "color_changed",
-		      channels_color_changed,
-		      opacity_scale_data);		      
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
+
+  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+		    G_CALLBACK (channels_color_changed),
+		    opacity_scale_data);		      
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);

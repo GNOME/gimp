@@ -594,9 +594,9 @@ layers_new_layer_query (GimpImage *gimage)
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -683,17 +683,18 @@ layers_new_layer_query (GimpImage *gimage)
   gtk_widget_show (table);
 
   /*  The radio frame  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Layer Fill Type"),
-			   gimp_radio_button_update,
-			   &options->fill_type, (gpointer) options->fill_type,
+  frame = gimp_radio_group_new2
+    (TRUE, _("Layer Fill Type"),
+     G_CALLBACK (gimp_radio_button_update),
+     &options->fill_type,
+     GINT_TO_POINTER (options->fill_type),
 
-			   _("Foreground"),  (gpointer) FOREGROUND_FILL, NULL,
-			   _("Background"),  (gpointer) BACKGROUND_FILL, NULL,
-			   _("White"),       (gpointer) WHITE_FILL, NULL,
-			   _("Transparent"), (gpointer) TRANSPARENT_FILL, NULL,
+     _("Foreground"),  GINT_TO_POINTER (FOREGROUND_FILL),  NULL,
+     _("Background"),  GINT_TO_POINTER (BACKGROUND_FILL),  NULL,
+     _("White"),       GINT_TO_POINTER (WHITE_FILL),       NULL,
+     _("Transparent"), GINT_TO_POINTER (TRANSPARENT_FILL), NULL,
 
-			   NULL);
+     NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -776,13 +777,14 @@ layers_edit_layer_query (GimpLayer *layer)
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (layer), "removed",
-					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					 GTK_OBJECT (options->query_box));
+  g_signal_connect_object (G_OBJECT (layer), "removed",
+			   G_CALLBACK (gtk_widget_destroy),
+			   G_OBJECT (options->query_box),
+			   G_CONNECT_SWAPPED);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -804,10 +806,11 @@ layers_edit_layer_query (GimpLayer *layer)
 		      ((gimp_layer_is_floating_sel (layer) ?
 			_("Floating Selection") :
 			gimp_object_get_name (GIMP_OBJECT (layer)))));
-  gtk_signal_connect (GTK_OBJECT (options->name_entry), "activate",
-		      edit_layer_query_ok_callback,
-		      options);
   gtk_widget_show (options->name_entry);
+
+  g_signal_connect (G_OBJECT (options->name_entry), "activate",
+		    G_CALLBACK (edit_layer_query_ok_callback),
+		    options);
 
   gtk_widget_show (hbox);
 
@@ -879,13 +882,14 @@ layers_add_mask_query (GimpLayer *layer)
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (layer), "removed",
-					 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					 GTK_OBJECT (options->query_box));
+  g_signal_connect_object (G_OBJECT (layer), "removed",
+			   G_CALLBACK (gtk_widget_destroy),
+			   G_OBJECT (options->query_box),
+			   G_CONNECT_SWAPPED);
 
   /*  The radio frame and box  */
   if (gimage->selection_mask)
@@ -893,35 +897,37 @@ layers_add_mask_query (GimpLayer *layer)
       options->add_mask_type = ADD_SELECTION_MASK;
 
       frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-				     gimp_radio_button_update,
+				     G_CALLBACK (gimp_radio_button_update),
 				     &options->add_mask_type,
-				     (gpointer) options->add_mask_type,
+				     GINT_TO_POINTER (options->add_mask_type),
 
 				     _("Selection"),
-				     (gpointer) ADD_SELECTION_MASK, NULL,
+				     GINT_TO_POINTER (ADD_SELECTION_MASK), NULL,
 				     _("Inverse Selection"),
-				     (gpointer) ADD_INV_SELECTION_MASK, NULL,
+				     GINT_TO_POINTER (ADD_INV_SELECTION_MASK), NULL,
 				     _("White (Full Opacity)"),
-				     (gpointer) ADD_WHITE_MASK, NULL,
+				     GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
 				     _("Black (Full Transparency)"),
-				     (gpointer) ADD_BLACK_MASK, NULL,
+				     GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
 				     _("Layer's Alpha Channel"),
-				     (gpointer) ADD_ALPHA_MASK, NULL,
+				     GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+
 				     NULL);
     }
   else
     {
       frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-				     gimp_radio_button_update,
+				     G_CALLBACK (gimp_radio_button_update),
 				     &options->add_mask_type,
-				     (gpointer) options->add_mask_type,
+				     GINT_TO_POINTER (options->add_mask_type),
 
 				     _("White (Full Opacity)"),
-				     (gpointer) ADD_WHITE_MASK, NULL,
+				     GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
 				     _("Black (Full Transparency)"),
-				     (gpointer) ADD_BLACK_MASK, NULL,
+				     GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
 				     _("Layer's Alpha Channel"),
-				     (gpointer) ADD_ALPHA_MASK, NULL,
+				     GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+
 				     NULL);
     }
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -1000,7 +1006,7 @@ layers_scale_layer_query (GimpImage *gimage,
   options->resize =
     resize_widget_new (ScaleWidget,
 		       ResizeLayer,
-		       GTK_OBJECT (layer),
+		       G_OBJECT (layer),
 		       "removed",
 		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
 		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
@@ -1008,14 +1014,13 @@ layers_scale_layer_query (GimpImage *gimage,
 		       gimage->yresolution,
 		       gimage->unit,
 		       TRUE,
-		       scale_layer_query_ok_callback,
+		       G_CALLBACK (scale_layer_query_ok_callback),
 		       NULL,
 		       options);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
-			     "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->resize->resize_shell), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
@@ -1089,7 +1094,7 @@ layers_resize_layer_query (GimpImage *gimage,
   options->resize =
     resize_widget_new (ResizeWidget,
 		       ResizeLayer,
-		       GTK_OBJECT (layer),
+		       G_OBJECT (layer),
 		       "removed",
 		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
 		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
@@ -1097,14 +1102,13 @@ layers_resize_layer_query (GimpImage *gimage,
 		       gimage->yresolution,
 		       gimage->unit,
 		       TRUE,
-		       resize_layer_query_ok_callback,
+		       G_CALLBACK (resize_layer_query_ok_callback),
 		       NULL,
 		       options);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
-			     "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->resize->resize_shell), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
@@ -1172,9 +1176,9 @@ layers_layer_merge_query (GimpImage   *gimage,
 
 		     NULL);
 
-  gtk_signal_connect_object (GTK_OBJECT (options->query_box), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) options);
+  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
+			    G_CALLBACK (g_free),
+			    options);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -1186,16 +1190,16 @@ layers_layer_merge_query (GimpImage   *gimage,
 				 merge_visible ?
 				 _("Final, Merged Layer should be:") :
 				 _("Final, Anchored Layer should be:"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &options->merge_type,
-				 (gpointer) options->merge_type,
+				 GINT_TO_POINTER (options->merge_type),
 
 				 _("Expanded as necessary"),
-				 (gpointer) EXPAND_AS_NECESSARY, NULL,
+				 GINT_TO_POINTER (EXPAND_AS_NECESSARY), NULL,
 				 _("Clipped to image"),
-				 (gpointer) CLIP_TO_IMAGE, NULL,
+				 GINT_TO_POINTER (CLIP_TO_IMAGE), NULL,
 				 _("Clipped to bottom layer"),
-				 (gpointer) CLIP_TO_BOTTOM_LAYER, NULL,
+				 GINT_TO_POINTER (CLIP_TO_BOTTOM_LAYER), NULL,
 
 				 NULL);
 
