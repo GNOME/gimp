@@ -1,4 +1,8 @@
-Sun Mar 14 14:27:25 EST 1999
+Sun Mar 14 15:07:47 EST 1999 Matt Wilson <msw@gimp.org>
+
+	* configure.in: preparing for 1.0.3 release
+
+Sun Mar 14 14:27:25 EST 1999 Matt Wilson <msw@gimp.org>
 
         * plug-ins/gfig/gfig.c: backport from HEAD
 	* plug-ins/libgck/gck/*.[ch]: backport from HEAD
