@@ -10091,7 +10091,7 @@ msgstr "Všechny filtry"
 #: app/widgets/gimpfiledialog.c:635
 #, c-format
 msgid "Select File _Type (%s)"
-msgstr "Zvolte _typ souboru (%s("
+msgstr "Zvolte _typ souboru (%s)"
 
 #: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
