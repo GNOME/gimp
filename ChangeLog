@@ -1,5 +1,15 @@
 2004-11-25  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/dog.c: Add the temporary layers to the image, so
+	things work. Fixes bug #158895.
+
+	* plug-ins/common/iwarp.c: Fix same naughtiness as above. There's
+	other naughtiness still though.
+
+	* plug-ins/common/sunras.c: use gboolean for byte2bit invert argument.
+
+2004-11-25  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/jpeg.c: Use a jpeg_error_mgr that lives within
 	PreviewPersistent, instead of an automatic variable in save_image.
 	Fixes bug #159076.

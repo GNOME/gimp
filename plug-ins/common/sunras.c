@@ -125,7 +125,7 @@ static L_CARD32 read_card32 (FILE *, int *);
 
 static void write_card32    (FILE *, L_CARD32);
 
-static void byte2bit        (unsigned char *, int, unsigned char *, int);
+static void byte2bit        (unsigned char *, int, unsigned char *, gboolean);
 
 static void rle_startread   (FILE *);
 static int  rle_fread       (char *, int, int, FILE *);
@@ -574,10 +574,10 @@ write_card32 (FILE     *ofp,
 
 /* Convert n bytes of 0/1 to a line of bits */
 static void
-byte2bit (guchar *byteline,
-	  gint    width,
-	  guchar *bitline,
-	  gint    invert)
+byte2bit (guchar   *byteline,
+	  gint      width,
+	  guchar   *bitline,
+	  gboolean  invert)
 {
   register guchar bitval;
   guchar rest[8];

@@ -785,6 +785,9 @@ iwarp (void)
           gimp_layer_add_alpha (animlayers[i]);
           gimp_drawable_set_name (animlayers[i], st);
           g_free (st);
+
+          gimp_image_add_layer (imageID, animlayers[i], 0);
+
           destdrawable = gimp_drawable_get (animlayers[i]);
 
           st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
@@ -794,7 +797,6 @@ iwarp (void)
           if (animate_deform_value > 0.0)
             iwarp_frame ();
 
-          gimp_image_add_layer (imageID, animlayers[i], 0);
           animate_deform_value = animate_deform_value + delta;
           frame_number++;
         }
@@ -815,6 +817,7 @@ iwarp (void)
               st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
               gimp_drawable_set_name (layerID, st);
               g_free (st);
+
               gimp_image_add_layer (imageID, layerID, 0);
             }
         }

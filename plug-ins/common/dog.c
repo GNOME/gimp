@@ -70,7 +70,8 @@ static void      compute_difference   (GimpDrawable *drawable,
 static void      normalize            (GimpDrawable *drawable,
                                        guint         maxval);
 
-static void      dog                  (GimpDrawable *drawable,
+static void      dog                  (gint32        image_ID,
+                                       GimpDrawable *drawable,
                                        gdouble       inner,
                                        gdouble       outer,
                                        gboolean      show_progress);
@@ -227,7 +228,7 @@ run (const gchar      *name,
 
           /*  run the Difference of Gaussians  */
           gimp_image_undo_group_start (image_ID);
-          dog (drawable, dogvals.inner, dogvals.outer, TRUE);
+          dog (image_ID, drawable, dogvals.inner, dogvals.outer, TRUE);
 
           gimp_image_undo_group_end (image_ID);
 
@@ -407,7 +408,8 @@ separate_alpha (guchar *buf,
 }
 
 static void
-dog (GimpDrawable *drawable,
+dog (gint32        image_ID,
+     GimpDrawable *drawable,
      gdouble       inner,
      gdouble       outer,
      gboolean      show_progress)
@@ -429,9 +431,16 @@ dog (GimpDrawable *drawable,
   gimp_drawable_flush (drawable);
 
   layer1 = gimp_layer_copy (drawable_id);
-  drawable1 = gimp_drawable_get (layer1);
+  gimp_drawable_set_visible (layer1, FALSE);
+  gimp_drawable_set_name (layer1, "dog_scratch_layer1");
+  gimp_image_add_layer (image_ID, layer1, 0);
 
   layer2 = gimp_layer_copy (drawable_id);
+  gimp_drawable_set_visible (layer2, FALSE);
+  gimp_drawable_set_name (layer2, "dog_scratch_layer2");
+  gimp_image_add_layer (image_ID, layer2, 0);
+
+  drawable1 = gimp_drawable_get (layer1);
   drawable2 = gimp_drawable_get (layer2);
 
   gauss_rle (drawable1, inner, 0, show_progress);
@@ -442,8 +451,8 @@ dog (GimpDrawable *drawable,
   gimp_drawable_detach (drawable1);
   gimp_drawable_detach (drawable2);
 
-  gimp_drawable_delete (layer1);
-  gimp_drawable_delete (layer2);
+  gimp_image_remove_layer (image_ID, layer1);
+  gimp_image_remove_layer (image_ID, layer2);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable_id, TRUE);
@@ -949,7 +958,7 @@ preview_update_preview (GimpPreview  *preview,
   gimp_drawable_merge_shadow (preview_id, TRUE);
   gimp_drawable_update (preview_id, 0, 0, width, height);
 
-  dog (preview_drawable, dogvals.inner, dogvals.outer, FALSE);
+  dog (image_id, preview_drawable, dogvals.inner, dogvals.outer, FALSE);
 
   gimp_pixel_rgn_get_rect (&preview_rgn, buffer,
                            0, 0, width, height);
