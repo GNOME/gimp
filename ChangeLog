@@ -1,3 +1,8 @@
+Mon Jan 14 11:00:13 PST 2002 Manish Singh <yosh@gimp.org>
+
+	* HACKING: remove note about CVS, there really isn't any reason to
+	track CVS gtk+ 1.2 anymore
+
 2002-01-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/xbm.c: corrected logic for saving images without an
