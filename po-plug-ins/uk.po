@@ -1,18 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ukrainian translation of gimp-plugins.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GIMP 1.1.9\n"
 "POT-Creation-Date: 2000-02-02 17:39-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-02-08 16:11+0200\n"
+"Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=koi8-u\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/AlienMap/AlienMap.c:180
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
@@ -33,7 +32,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-scripts.c:1461
 #: plug-ins/webbrowser/webbrowser.c:273
 msgid "About"
-msgstr ""
+msgstr "Про"
 
 #. the 3 Action Buttons
 #: plug-ins/AlienMap/AlienMap.c:634 plug-ins/AlienMap/AlienMap.c:895
@@ -117,7 +116,7 @@ msgstr ""
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:286
 #: plug-ins/xjt/xjt.c:747
 msgid "OK"
-msgstr ""
+msgstr "Гаразд"
 
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
@@ -200,7 +199,7 @@ msgstr ""
 #: plug-ins/struc/struc.c:259 plug-ins/webbrowser/webbrowser.c:295
 #: plug-ins/winsnap/winsnap.c:907 plug-ins/xjt/xjt.c:749
 msgid "Cancel"
-msgstr ""
+msgstr "В╕дмова"
 
 #.
 #. * Red slider...
@@ -212,11 +211,11 @@ msgstr ""
 #: plug-ins/common/noisify.c:390 plug-ins/common/noisify.c:417
 #: plug-ins/fp/fp_gtk.c:149 plug-ins/print/print.c:1163
 msgid "Red:"
-msgstr ""
+msgstr "Червоний:"
 
 #: plug-ins/AlienMap/AlienMap.c:677
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "Зм╕на ╕нтенсивност╕ червоного каналу"
 
 #.
 #. * Green slider...
@@ -228,11 +227,11 @@ msgstr ""
 #: plug-ins/common/noisify.c:398 plug-ins/common/noisify.c:425
 #: plug-ins/fp/fp_gtk.c:150 plug-ins/print/print.c:1198
 msgid "Green:"
-msgstr ""
+msgstr "Зелений:"
 
 #: plug-ins/AlienMap/AlienMap.c:685
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "Зм╕на ╕нтенсивност╕ зеленого каналу"
 
 #.
 #. * Blue slider...
@@ -244,11 +243,11 @@ msgstr ""
 #: plug-ins/common/noisify.c:406 plug-ins/common/noisify.c:433
 #: plug-ins/fp/fp_gtk.c:151 plug-ins/print/print.c:1233
 msgid "Blue:"
-msgstr ""
+msgstr "Син╕й:"
 
 #: plug-ins/AlienMap/AlienMap.c:693
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "Зм╕на ╕нтенсивност╕ синього каналу"
 
 #. Redmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:699 plug-ins/FractalExplorer/Dialogs.c:718
@@ -482,18 +481,16 @@ msgid "Zoom Options"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
-#, fuzzy
 msgid "Undo Zoom"
-msgstr "В╕дм╕нити %s"
+msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:403
 msgid "Undo last zoom"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:405
-#, fuzzy
 msgid "Redo Zoom"
-msgstr "Повернути %s"
+msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:411
 msgid "Redo last zoom"
@@ -6404,9 +6401,9 @@ msgstr ""
 
 #. Rendering
 #: plug-ins/common/wmf.c:950
-#, fuzzy, c-format
+#, c-format
 msgid "Rendering %s"
-msgstr "Повернути %s"
+msgstr ""
 
 #: plug-ins/common/wmf.c:967
 msgid "Scale (log 2):"
@@ -9145,7 +9142,6 @@ msgid "%s copy"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:6522
-#, fuzzy
 msgid "Save as..."
 msgstr "Зберегти як..."
 
@@ -10221,9 +10217,8 @@ msgid "Auto"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:953
-#, fuzzy
 msgid "Spatial Transformation"
-msgstr "AlienMap Color Transformation Plug-In"
+msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:959
 msgid "Color Transformation"
@@ -10330,7 +10325,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:163 plug-ins/imagemap/imap_grid.c:197
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "Left Start at"
@@ -10399,7 +10394,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:289
 #: plug-ins/imagemap/imap_popup.c:152 plug-ins/imagemap/imap_toolbar.c:134
 msgid "Paste"
-msgstr ""
+msgstr "Вставити"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:51
 msgid "Select Next"
@@ -10424,7 +10419,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_default_dialog.c:123
 msgid "Help..."
-msgstr ""
+msgstr "Дов╕дка..."
 
 #: plug-ins/imagemap/imap_edit_area_info.c:167
 msgid "Link Type"
@@ -10440,7 +10435,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:188
 msgid "Gopher"
-msgstr ""
+msgstr "Gopher"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:194
 msgid "Other"
@@ -10449,19 +10444,19 @@ msgstr ""
 #: plug-ins/imagemap/imap_edit_area_info.c:200
 #: plug-ins/imagemap/imap_menu.c:210 plug-ins/print/print.c:3124
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:206
 msgid "WAIS"
-msgstr ""
+msgstr "WAIS"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:212
 msgid "Telnet"
-msgstr ""
+msgstr "Telnet"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:218
 msgid "e-mail"
-msgstr ""
+msgstr "е-пошта"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:224
 msgid "URL to activate when this area is clicked: (required)"
@@ -10489,7 +10484,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:324
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:415
 msgid "Area Settings"
@@ -10510,7 +10505,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:78
 msgid "File exists!"
-msgstr ""
+msgstr "Файл ╕сну╓!"
 
 #: plug-ins/imagemap/imap_file.c:83
 msgid ""
@@ -10524,11 +10519,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:138
 msgid "Error"
-msgstr ""
+msgstr "Помилка"
 
 #: plug-ins/imagemap/imap_grid.c:142
 msgid "Grid Settings"
-msgstr ""
+msgstr "Установки с╕тки"
 
 #: plug-ins/imagemap/imap_grid.c:153
 msgid "Snap-To Grid Enabled"
@@ -10590,7 +10585,7 @@ msgstr "Зберегти як..."
 
 #: plug-ins/imagemap/imap_menu.c:223
 msgid "Preferences..."
-msgstr ""
+msgstr "Установки..."
 
 #: plug-ins/imagemap/imap_menu.c:242
 #, c-format
@@ -10645,7 +10640,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:131
 #: plug-ins/imagemap/imap_rectangle.c:59
 msgid "Rectangle"
-msgstr ""
+msgstr "Прямокутник"
 
 #: plug-ins/imagemap/imap_menu.c:391
 msgid "Edit Map Info..."
@@ -10657,7 +10652,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 msgid "Grid Settings..."
-msgstr ""
+msgstr "Установки с╕тки..."
 
 #: plug-ins/imagemap/imap_menu.c:402
 msgid "Create Guides..."
@@ -11026,111 +11021,111 @@ msgstr ""
 
 #: plug-ins/print/print.c:187
 msgid "PostScript Level 1"
-msgstr ""
+msgstr "PostScript Level 1"
 
 #: plug-ins/print/print.c:191
 msgid "HP DeskJet 500, 520"
-msgstr ""
+msgstr "HP DeskJet 500, 520"
 
 #: plug-ins/print/print.c:193
 msgid "HP DeskJet 500C, 540C"
-msgstr ""
+msgstr "HP DeskJet 500C, 540C"
 
 #: plug-ins/print/print.c:195
 msgid "HP DeskJet 550C, 560C"
-msgstr ""
+msgstr "HP DeskJet 550C, 560C"
 
 #: plug-ins/print/print.c:197
 msgid "HP DeskJet 600 series"
-msgstr ""
+msgstr "HP DeskJet 600 series"
 
 #: plug-ins/print/print.c:199
 msgid "HP DeskJet 800 series"
-msgstr ""
+msgstr "HP DeskJet 800 series"
 
 #: plug-ins/print/print.c:201
 msgid "HP DeskJet 1100C, 1120C"
-msgstr ""
+msgstr "HP DeskJet 1100C, 1120C"
 
 #: plug-ins/print/print.c:203
 msgid "HP DeskJet 1200C, 1600C"
-msgstr ""
+msgstr "HP DeskJet 1200C, 1600C"
 
 #: plug-ins/print/print.c:205
 msgid "HP LaserJet II series"
-msgstr ""
+msgstr "HP LaserJet II series"
 
 #: plug-ins/print/print.c:207
 msgid "HP LaserJet III series"
-msgstr ""
+msgstr "HP LaserJet III series"
 
 #: plug-ins/print/print.c:209
 msgid "HP LaserJet 4 series"
-msgstr ""
+msgstr "HP LaserJet 4 series"
 
 #: plug-ins/print/print.c:211
 msgid "HP LaserJet 4V, 4Si"
-msgstr ""
+msgstr "HP LaserJet 4V, 4Si"
 
 #: plug-ins/print/print.c:213
 msgid "HP LaserJet 5 series"
-msgstr ""
+msgstr "HP LaserJet 5 series"
 
 #: plug-ins/print/print.c:215
 msgid "HP LaserJet 5Si"
-msgstr ""
+msgstr "HP LaserJet 5Si"
 
 #: plug-ins/print/print.c:217
 msgid "HP LaserJet 6 series"
-msgstr ""
+msgstr "HP LaserJet 6 series"
 
 #: plug-ins/print/print.c:219
 msgid "EPSON Stylus Color"
-msgstr ""
+msgstr "EPSON Stylus Color"
 
 #: plug-ins/print/print.c:221
 msgid "EPSON Stylus Color Pro"
-msgstr ""
+msgstr "EPSON Stylus Color Pro"
 
 #: plug-ins/print/print.c:223
 msgid "EPSON Stylus Color Pro XL"
-msgstr ""
+msgstr "EPSON Stylus Color Pro XL"
 
 #: plug-ins/print/print.c:225
 msgid "EPSON Stylus Color 1500"
-msgstr ""
+msgstr "EPSON Stylus Color 1500"
 
 #: plug-ins/print/print.c:227
 msgid "EPSON Stylus Color 400"
-msgstr ""
+msgstr "EPSON Stylus Color 400"
 
 #: plug-ins/print/print.c:229
 msgid "EPSON Stylus Color 500"
-msgstr ""
+msgstr "EPSON Stylus Color 500"
 
 #: plug-ins/print/print.c:231
 msgid "EPSON Stylus Color 600"
-msgstr ""
+msgstr "EPSON Stylus Color 600"
 
 #: plug-ins/print/print.c:233
 msgid "EPSON Stylus Color 800"
-msgstr ""
+msgstr "EPSON Stylus Color 800"
 
 #: plug-ins/print/print.c:235
 msgid "EPSON Stylus Color 1520"
-msgstr ""
+msgstr "EPSON Stylus Color 1520"
 
 #: plug-ins/print/print.c:237
 msgid "EPSON Stylus Color 3000"
-msgstr ""
+msgstr "EPSON Stylus Color 3000"
 
 #: plug-ins/print/print.c:239
 msgid "EPSON Stylus Photo 700"
-msgstr ""
+msgstr "EPSON Stylus Photo 700"
 
 #: plug-ins/print/print.c:241 plug-ins/print/print.c:243
 msgid "EPSON Stylus Photo EX"
-msgstr ""
+msgstr "EPSON Stylus Photo EX"
 
 #: plug-ins/print/print.c:387
 msgid "<Image>/File/Print..."
@@ -11205,7 +11200,7 @@ msgstr ""
 
 #: plug-ins/print/print.c:1030
 msgid "Percent"
-msgstr ""
+msgstr "В╕дсоток"
 
 #: plug-ins/print/print.c:1039
 msgid "PPI"
@@ -11220,7 +11215,7 @@ msgstr ""
 #.
 #: plug-ins/print/print.c:1339
 msgid "Printer:"
-msgstr ""
+msgstr "Принтер:"
 
 #: plug-ins/print/print.c:1373 plug-ins/print/print.c:1407
 msgid "Setup"
@@ -11228,7 +11223,7 @@ msgstr ""
 
 #: plug-ins/print/print.c:1386
 msgid "Print"
-msgstr ""
+msgstr "Друкувати"
 
 #.
 #. * Printer driver option menu...
@@ -11438,15 +11433,15 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:1933
 msgid "Copyright:"
-msgstr ""
+msgstr "Авторське право:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1939
 msgid "Date:"
-msgstr ""
+msgstr "Дата:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1947
 msgid "Image Types:"
-msgstr ""
+msgstr "Типи зображень:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2096
 msgid "Script-Fu Font Selection"
@@ -11513,7 +11508,7 @@ msgstr ""
 
 #: plug-ins/sgi/sgi.c:650
 msgid "Save as SGI"
-msgstr ""
+msgstr "Зберегти як SGI"
 
 #: plug-ins/sgi/sgi.c:666
 msgid "Compression Type"
@@ -11594,23 +11589,23 @@ msgstr ""
 
 #: plug-ins/sinus/sinus.c:948
 msgid "First Color"
-msgstr ""
+msgstr "Перший кол╕р"
 
 #: plug-ins/sinus/sinus.c:953
 msgid "Second Color"
-msgstr ""
+msgstr "Другий кол╕р"
 
 #: plug-ins/sinus/sinus.c:961
 msgid "Alpha Channels"
-msgstr ""
+msgstr "Альфа-канали"
 
 #: plug-ins/sinus/sinus.c:973
 msgid "First Color:"
-msgstr ""
+msgstr "Перший кол╕р:"
 
 #: plug-ins/sinus/sinus.c:991
 msgid "Second Color:"
-msgstr ""
+msgstr "Другий кол╕р:"
 
 #: plug-ins/sinus/sinus.c:1020
 msgid "Blend Settings"
@@ -11663,17 +11658,17 @@ msgstr ""
 
 #: plug-ins/webbrowser/webbrowser.c:260
 msgid "Open URL"
-msgstr ""
+msgstr "В╕дкрити URL"
 
 #. URL:  Label
 #: plug-ins/webbrowser/webbrowser.c:313
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #. Window label
 #: plug-ins/webbrowser/webbrowser.c:336
 msgid "Window:"
-msgstr ""
+msgstr "В╕кно:"
 
 #: plug-ins/webbrowser/webbrowser.c:347
 msgid "Current"
@@ -11717,7 +11712,7 @@ msgstr ""
 
 #: plug-ins/xjt/xjt.c:742
 msgid "Save as XJT"
-msgstr ""
+msgstr "Зберегти як XJT"
 
 #: plug-ins/xjt/xjt.c:779
 msgid "Clear Transparent"
@@ -11739,12 +11734,12 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:1572 plug-ins/xjt/xjt.c:3170
 #, c-format
 msgid "Can't create working dir: %s"
-msgstr ""
+msgstr "Неможливо створити робочий каталог: %s"
 
 #: plug-ins/xjt/xjt.c:1581
 #, c-format
 msgid "Can't open : %s"
-msgstr ""
+msgstr "Неможливо в╕дкрити : %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2399 plug-ins/xjt/xjt.c:2406

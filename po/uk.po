@@ -770,12 +770,10 @@ msgid "General Palette Options"
 msgstr "Загальн╕ параметри пал╕три"
 
 #: app/convert.c:530
-#, fuzzy
 msgid "Generate Optimal Palette:"
 msgstr "Створити оптимальну пал╕тру:"
 
 #: app/convert.c:563
-#, fuzzy
 msgid "# of Colors:"
 msgstr "К╕льк╕сть кольор╕в:"
 
@@ -785,22 +783,18 @@ msgid "Custom Palette Options"
 msgstr "Параметри власно╖ пал╕три"
 
 #: app/convert.c:585
-#, fuzzy
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Вилучити невикористан╕ кольори з к╕нцево╖ пал╕три"
 
 #: app/convert.c:597
-#, fuzzy
 msgid "Use Custom Palette:"
-msgstr "Використовувати власну пал╕тру"
+msgstr "Використовувати власну пал╕тру:"
 
 #: app/convert.c:631
-#, fuzzy
 msgid "Use WWW-Optimized Palette"
-msgstr "Використовувати WWW-оптим╕зовану пал╕тру"
+msgstr "Використовувати пал╕тру оптим╕зовану для WWW"
 
 #: app/convert.c:647
-#, fuzzy
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Використовувати чорноб╕лу (1-б╕тну) пал╕тру"
 
@@ -809,27 +803,22 @@ msgid "Dither Options"
 msgstr "Параметри зм╕шування"
 
 #: app/convert.c:671
-#, fuzzy
 msgid "No Color Dithering"
 msgstr "Без зм╕шування кольор╕в"
 
 #: app/convert.c:685
-#, fuzzy
 msgid "Positioned Color Dithering"
 msgstr "Позиц╕оноване зм╕шування кольор╕в"
 
 #: app/convert.c:699
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Зм╕шування кольор╕в за Флойдом-Стейнбергом (зменшене розт╕кання)"
 
 #: app/convert.c:712
-#, fuzzy
 msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr "Смешивание цветов по Флойду-Стейнбергу (нормальне)"
+msgstr "Зм╕шування кольор╕в за Флойдом-Стейнбергом (звичайне)"
 
 #: app/convert.c:726
-#, fuzzy
 msgid "Enable Dithering of Transparency"
 msgstr "Дозволити прозоре розмивання"
 
@@ -850,9 +839,8 @@ msgstr ""
 "спод╕ва╓тесь створити прозорий чи ан╕мований GIF-файл з цього зображення."
 
 #: app/convert.c:965
-#, fuzzy
 msgid "Select Custom Palette"
-msgstr "Використовувати власну пал╕тру"
+msgstr "Вибрати власну пал╕тру"
 
 #: app/convolve.c:172
 msgid "Convolve Type"
@@ -976,19 +964,16 @@ msgid "Save"
 msgstr "Зберегти"
 
 #: app/curves.c:1359
-#, fuzzy
 msgid "Load Curves"
-msgstr "Завантажити р╕вн╕"
+msgstr "Завантажити крив╕"
 
 #: app/curves.c:1374
-#, fuzzy
 msgid "Save Curves"
-msgstr "Зберегти р╕вн╕"
+msgstr "Зберегти крив╕"
 
 #: app/curves.c:1655
-#, fuzzy
 msgid "Load/Save Curves"
-msgstr "Завантаження/Збереження р╕вн╕в"
+msgstr "Завантаження/Збереження кривих"
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1497 app/levels.c:1515
 #: app/paths_dialog.c:2229
@@ -1210,12 +1195,10 @@ msgstr "Завантажити зображення"
 
 #. format-chooser frame
 #: app/fileops.c:283
-#, fuzzy
 msgid "Determine File Type"
 msgstr "Визначити тип файлу"
 
 #: app/fileops.c:356
-#, fuzzy
 msgid ""
 "Generate\n"
 "Preview"
@@ -1224,14 +1207,13 @@ msgstr ""
 "поперн╕й перегляд"
 
 #: app/fileops.c:375
-#, fuzzy
 msgid "No Selection."
 msgstr "Нема╓ вид╕лення."
 
 #: app/fileops.c:418 app/fileops.c:1624 app/fileops.c:1731
-#, fuzzy, c-format
+#, c-format
 msgid "Save failed: %s"
-msgstr "Невдале збереження: "
+msgstr "Збереження не вдалось: %s"
 
 #: app/fileops.c:438 app/fileops.c:473
 msgid "Save Image"
@@ -1242,7 +1224,6 @@ msgid "Save Options"
 msgstr "Параметри збереження"
 
 #: app/fileops.c:495
-#, fuzzy
 msgid "Determine File Type:"
 msgstr "Визначити тип файлу:"
 
@@ -1259,7 +1240,6 @@ msgid "(This thumbnail may be out of date)"
 msgstr ""
 
 #: app/fileops.c:1241
-#, fuzzy
 msgid "(No Information)"
 msgstr "(нема╓ ╕нформац╕╖)"
 
@@ -1276,18 +1256,17 @@ msgid "(Thumbnail file not written)"
 msgstr ""
 
 #: app/fileops.c:1276
-#, fuzzy
 msgid "No preview available"
-msgstr "попередн╕й перегляд не доступний"
+msgstr "Попередн╕й перегляд не доступний"
 
 #: app/fileops.c:1394
 msgid "(could not make preview)"
 msgstr "(не вдалось виконати перегляд)"
 
 #: app/fileops.c:1467 app/fileops.c:1546
-#, fuzzy, c-format
+#, c-format
 msgid "Open failed: %s"
-msgstr "Невдале в╕дкривання: "
+msgstr "В╕дкривання не вдалось: %s"
 
 #: app/fileops.c:1602
 #, c-format
@@ -1312,9 +1291,8 @@ msgid "No"
 msgstr "Н╕"
 
 #: app/flip_tool.c:82
-#, fuzzy
 msgid "Flip Tool"
-msgstr "Параметри в╕дзеркаленя"
+msgstr "В╕дзеркаленя"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1588
 #: app/preferences_dialog.c:2347
@@ -1457,9 +1435,8 @@ msgid ""
 msgstr ""
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Не вдалося зчитати контур з %s"
+msgstr ""
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -2633,11 +2610,11 @@ msgstr "╤гнорувати"
 
 #: app/install.c:294 app/install.c:440
 msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:296
 msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
 
 #: app/install.c:411
 msgid "Installation Log"
@@ -2649,7 +2626,7 @@ msgstr "Продовжити"
 
 #: app/install.c:441
 msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
@@ -3079,7 +3056,6 @@ msgid "Load/Save Levels"
 msgstr "Завантаження/Збереження р╕вн╕в"
 
 #: app/magnify.c:99
-#, fuzzy
 msgid "Magnify Tool"
 msgstr "Лупа"
 
@@ -3814,17 +3790,14 @@ msgid "/Tools/Swap Colors"
 msgstr "/╤нструменти/Обм╕няти кольори"
 
 #: app/menus.c:543
-#, fuzzy
 msgid "/Tools/Select Tools"
-msgstr "/╤нструменти/Вид╕лення прямокутника"
+msgstr "/╤нструменти/Вид╕лення"
 
 #: app/menus.c:545
-#, fuzzy
 msgid "/Tools/Transform Tools"
 msgstr "/╤нструменти/Перетворення"
 
 #: app/menus.c:547
-#, fuzzy
 msgid "/Tools/Paint Tools"
 msgstr "/╤нструменти/Пензель"
 
@@ -3968,7 +3941,6 @@ msgid "/Automatic"
 msgstr "/Автоматично"
 
 #: app/menus.c:676
-#, fuzzy
 msgid "/By Extension"
 msgstr "/За розширенням"
 
@@ -4054,9 +4026,8 @@ msgid "/Alpha to Selection"
 msgstr "/Альфа у вид╕лення"
 
 #: app/menus.c:749
-#, fuzzy
 msgid "/Edit Layer Attributes..."
-msgstr "Зм╕на атрибут╕в шару"
+msgstr "/Зм╕на атрибут╕в шару..."
 
 #: app/menus.c:760
 msgid "/New Channel..."
@@ -4095,9 +4066,8 @@ msgid "/Delete Channel"
 msgstr "/Видалити канал"
 
 #: app/menus.c:787
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Редагування атрибут╕в каналу"
+msgstr "/Редагування атрибут╕в каналу"
 
 #: app/menus.c:798
 msgid "/New Path"
@@ -4140,9 +4110,8 @@ msgid "/Export Path..."
 msgstr "/Експортувати контур..."
 
 #: app/menus.c:824
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Зм╕на атрибут╕в шару"
+msgstr "/Зм╕на атрибут╕в контуру..."
 
 #: app/menus.c:1333
 #, c-format
@@ -4241,9 +4210,8 @@ msgid "Autoload during startup"
 msgstr "Автозавантаження на старт╕"
 
 #: app/move.c:454
-#, fuzzy
 msgid "Move Tool"
-msgstr "Параметри перем╕щення"
+msgstr "Перем╕щення"
 
 #. create the info dialog
 #: app/nav_window.c:1254
@@ -4464,9 +4432,8 @@ msgid "Palette Selection"
 msgstr "Виб╕р пал╕три"
 
 #: app/path_tool.c:1412
-#, fuzzy
 msgid "Path Tool"
-msgstr "Параметри контуру"
+msgstr "Контур"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -4514,9 +4481,8 @@ msgid "Path %d"
 msgstr "Контур %d"
 
 #: app/paths_dialog.c:1242
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Зм╕на атрибут╕в шару"
+msgstr "Зм╕на атрибут╕в контуру"
 
 #: app/paths_dialog.c:1245
 msgid "Enter a new name for the path"
@@ -4838,14 +4804,12 @@ msgstr "Розм╕р списку документ╕в, що в╕дкривалися:"
 
 #. Indicators
 #: app/preferences_dialog.c:1841
-#, fuzzy
 msgid "Toolbox"
-msgstr "/╤нструменти/Панель ╕нструмент╕в"
+msgstr "Панель ╕нструмент╕в"
 
 #: app/preferences_dialog.c:1844
-#, fuzzy
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Показувати ╕ндикатор пензля та шаблону на панел╕"
+msgstr "Показувати ╕ндикатори пензля, шаблону та град╕╓нту"
 
 #: app/preferences_dialog.c:1853
 msgid "Dialog Behaviour"
@@ -4947,7 +4911,6 @@ msgid "Pointer Movement Feedback"
 msgstr "Зворотн╕й зв'язок руху вказ╕вника"
 
 #: app/preferences_dialog.c:2038
-#, fuzzy
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Досконале-але-пов╕льне пересування вказ╕вника"
 
@@ -5024,12 +4987,10 @@ msgid "Try to Write a Thumbnail File:"
 msgstr ""
 
 #: app/preferences_dialog.c:2245
-#, fuzzy
 msgid "Only when Modified"
 msgstr "Лише якщо було зм╕нено"
 
 #: app/preferences_dialog.c:2250
-#, fuzzy
 msgid "\"File > Save\" Saves the Image:"
 msgstr "\"Файл > Зберегти\" збер╕га╓ зображення:"
 
@@ -5413,36 +5374,30 @@ msgid "This tool has no options."
 msgstr "Цей ╕нструмент не ма╓ параметр╕в"
 
 #: app/tool_options.c:119
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Параметри вид╕лення прямокутником"
+msgstr "Вид╕лення прямокутником"
 
 #: app/tool_options.c:121
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Параметри вид╕лення ел╕псом"
+msgstr "Вид╕лення ел╕псом"
 
 #: app/tool_options.c:123
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Параметри дов╕льного вид╕лення"
+msgstr "Дов╕льне вид╕лення"
 
 #: app/tool_options.c:125
-#, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Чар╕вна паличка"
 
 #: app/tool_options.c:127
-#, fuzzy
 msgid "Bezier Selection"
-msgstr "Вид╕лення Без'╓"
+msgstr "Вид╕лення кривими Без'╓"
 
 #: app/tool_options.c:129 app/tools.c:165
 msgid "Intelligent Scissors"
 msgstr "Розумн╕ ножиц╕"
 
 #: app/tool_options.c:131
-#, fuzzy
 msgid "By-Color Selection"
 msgstr "Вид╕лення за кольором"
 
@@ -5459,9 +5414,8 @@ msgid "Bucket Fill"
 msgstr "Заповнення"
 
 #: app/tool_options.c:424
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Злиття: "
+msgstr "Злиття"
 
 #: app/tool_options.c:426 app/tools.c:373
 msgid "Pencil"
@@ -5480,25 +5434,22 @@ msgid "Airbrush"
 msgstr "Аерограф"
 
 #: app/tool_options.c:434
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Параметри клонування"
+msgstr "Клонування"
 
 #: app/tool_options.c:436
-#, fuzzy
 msgid "Convolver"
 msgstr "Розмивач"
 
 #: app/tool_options.c:438
 msgid "Ink Tool"
-msgstr ""
+msgstr "Чорнило"
 
 #: app/tool_options.c:440 app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
 msgstr "Осв╕тлення чи затемнення"
 
 #: app/tool_options.c:442
-#, fuzzy
 msgid "Smudge Tool"
 msgstr "Палець"
 
@@ -5531,9 +5482,8 @@ msgid "Rect Select"
 msgstr "Вид╕лення прямокутника"
 
 #: app/tools.c:86
-#, fuzzy
 msgid "/Tools/Select Tools/Rect Select"
-msgstr "/╤нструменти/Вид╕лення прямокутника"
+msgstr "/╤нструменти/Вид╕лення/Вид╕лення прямокутником"
 
 #: app/tools.c:89
 msgid "Select rectangular regions"
@@ -5544,9 +5494,8 @@ msgid "Ellipse Select"
 msgstr "Вид╕лення ел╕пса"
 
 #: app/tools.c:102
-#, fuzzy
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr "/╤нструменти/Вид╕лення ел╕пса"
+msgstr "/╤нструменти/Вид╕лення/Вид╕лення ел╕псом"
 
 #: app/tools.c:105
 msgid "Select elliptical regions"
@@ -5557,9 +5506,8 @@ msgid "Free Select"
 msgstr "Дов╕льне вид╕лення"
 
 #: app/tools.c:118
-#, fuzzy
 msgid "/Tools/Select Tools/Free Select"
-msgstr "/╤нструменти/Дов╕льне вид╕лення"
+msgstr "/╤нструменти/Вид╕лення/Дов╕льне вид╕лення"
 
 #: app/tools.c:121
 msgid "Select hand-drawn regions"
@@ -5570,9 +5518,8 @@ msgid "Fuzzy Select"
 msgstr "Чар╕вна паличка"
 
 #: app/tools.c:134
-#, fuzzy
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr "/╤нструменти/Чар╕вна паличка"
+msgstr "/╤нструменти/Вид╕лення/Чар╕вна паличка"
 
 #: app/tools.c:137
 msgid "Select contiguous regions"
@@ -5583,18 +5530,16 @@ msgid "Bezier Select"
 msgstr "Вид╕лення Без'╓"
 
 #: app/tools.c:150
-#, fuzzy
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/╤нструменти/Вид╕лення Без'╓"
+msgstr "/╤нструменти/Вид╕лення/Вид╕лення кривими Без'╓"
 
 #: app/tools.c:153
 msgid "Select regions using Bezier curves"
 msgstr "Вид╕лення д╕лянок використовуючи крив╕ Без'╓"
 
 #: app/tools.c:166
-#, fuzzy
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/╤нструменти/Розумн╕ ножиц╕"
+msgstr "/╤нструменти/Вид╕лення/Розумн╕ ножиц╕"
 
 #: app/tools.c:169
 msgid "Select shapes from image"
@@ -5605,9 +5550,8 @@ msgid "Move"
 msgstr "Перем╕стити"
 
 #: app/tools.c:182
-#, fuzzy
 msgid "/Tools/Transform Tools/Move"
-msgstr "/╤нструменти/Перетворення"
+msgstr "/╤нструменти/Перетворення/Перем╕щення"
 
 #: app/tools.c:185
 msgid "Move layers & selections"
@@ -5618,18 +5562,16 @@ msgid "Magnify"
 msgstr "Лупа"
 
 #: app/tools.c:198
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/╤нструменти/Перетворення"
+msgstr "/╤нструменти/Перетворення/Лупа"
 
 #: app/tools.c:201
 msgid "Zoom in & out"
 msgstr "Зб╕льшення та зменшення"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/╤нструменти/Кадрування та зм╕на розм╕ру"
+msgstr "/╤нструменти/Перетворення/Кадрування ╕ зм╕на розм╕ру"
 
 #: app/tools.c:217
 msgid "Crop or resize the image"
@@ -5642,9 +5584,8 @@ msgid "Transform"
 msgstr "Перетворення"
 
 #: app/tools.c:230
-#, fuzzy
 msgid "/Tools/Transform Tools/Transform"
-msgstr "/╤нструменти/Перетворення"
+msgstr "/╤нструменти/Перетворення/Перетворення"
 
 #: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Rotation, scaling, shearing, perspective."
@@ -5655,9 +5596,8 @@ msgid "Flip"
 msgstr "В╕дзеркалення"
 
 #: app/tools.c:294
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/╤нструменти/Перетворення"
+msgstr "/╤нструменти/Перетворення/В╕дзеркалення"
 
 #: app/tools.c:297
 msgid "Flip the layer or selection"
@@ -5928,7 +5868,6 @@ msgid "Transformation"
 msgstr "Перетворення"
 
 #: app/transform_tool.c:190
-#, fuzzy
 msgid "Transform Tool"
 msgstr "Перетворення"
 
@@ -6254,9 +6193,8 @@ msgid "Painter-style color selector as a pluggable color selector"
 msgstr ""
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
-#, fuzzy
 msgid "Triangle"
-msgstr "Трикутний цикл"
+msgstr "Трикутник"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
@@ -6267,175 +6205,5 @@ msgid "Watercolor"
 msgstr ""
 
 #: modules/colorsel_water.c:640
-#, fuzzy
 msgid "Color History"
-msgstr "П╕петка"
-
-#~ msgid "Brightness-Contrast Options"
-#~ msgstr "Параметри яскравост╕-контрасту"
-
-#~ msgid ""
-#~ "We are all fresh out of brush editors today,\n"
-#~ "please write your own or try back tomorrow\n"
-#~ msgstr ""
-#~ "Кожен з нас сьогодн╕ в╕льний у вибор╕ редактора пензл╕в,\n"
-#~ "будь ласка, напиш╕ть ваш власний або приходьте завтра\n"
-
-#~ msgid "Wilber says: \"I don't know how to delete that brush.\""
-#~ msgstr "В╕лбер говорить: \"Я не знаю як видалити цей пензель.\""
-
-#~ msgid "Color Balance Options"
-#~ msgstr "Параметри балансу кольор╕в"
-
-#~ msgid "Color Picker Options"
-#~ msgstr "Параметри п╕петки"
-
-#~ msgid "Crop & Resize Options"
-#~ msgstr "Параметри кадрування та зм╕ни розм╕ру"
-
-#~ msgid "Curves Options"
-#~ msgstr "Параметри кривих"
-
-#~ msgid "Histogram Options"
-#~ msgstr "Параметри г╕стограми"
-
-#~ msgid "Hue-Saturation Options"
-#~ msgstr "Параметри тону-насиченост╕"
-
-#~ msgid "Levels Options"
-#~ msgstr "Параметри р╕вн╕в"
-
-#~ msgid "Magnify Options"
-#~ msgstr "Параметри лупи"
-
-#~ msgid "Measure Options"
-#~ msgstr "Параметри вим╕рювача"
-
-#~ msgid "/Xtns/Perl-Fu"
-#~ msgstr "/Розширення/Perl-Fu"
-
-#~ msgid "/Xtns/Perl-Fu/Logos"
-#~ msgstr "/Розширення/Perl-Fu/Логотипи"
-
-#~ msgid "/Xtns/Perl"
-#~ msgstr "/Розширення/Perl"
-
-#~ msgid "/Xtns/Render"
-#~ msgstr "/Розширення/В╕зуал╕зац╕я"
-
-#~ msgid "/Xtns/Render/Logos"
-#~ msgstr "/Розширення/В╕зуал╕зац╕я/Логотипи"
-
-#~ msgid "/Xtns/Render/Povray"
-#~ msgstr "/Розширення/В╕зуал╕зац╕я/Povray"
-
-#~ msgid "Rename path"
-#~ msgstr "Перейменування контуру"
-
-#~ msgid "New File Settings"
-#~ msgstr "Установки нового файлу"
-
-#~ msgid "Display Settings"
-#~ msgstr "Параметри в╕дображення"
-
-#~ msgid "Interface Settings"
-#~ msgstr "Установки ╕нтерфейсу"
-
-#~ msgid "Help System Settings"
-#~ msgstr "Установки системи дов╕дки"
-
-#~ msgid "Image Windows Settings"
-#~ msgstr "Установки в╕кна зображення"
-
-#~ msgid "Tool Options Settings"
-#~ msgstr "Установки параметр╕в ╕нструмент╕в"
-
-#~ msgid "Environment Settings"
-#~ msgstr "Установки середовища"
-
-#~ msgid "Monitor Information"
-#~ msgstr "╤нформац╕я про мон╕тор"
-
-#~ msgid "Directories Settings"
-#~ msgstr "Установки каталог╕в"
-
-#~ msgid "Text Tool Options"
-#~ msgstr "Параметри тексту"
-
-#~ msgid "Threshold Options"
-#~ msgstr "Параметри порогу"
-
-#~ msgid "Fuzzy Selection Options"
-#~ msgstr "Параметри вид╕лення чар╕вною паличкою"
-
-#~ msgid "Bezier Selection Options"
-#~ msgstr "Параметри вид╕лення Без'╓"
-
-#~ msgid "Intelligent Scissors Options"
-#~ msgstr "Параменти розумних ножиць"
-
-#~ msgid "By-Color Select Options"
-#~ msgstr "Параметри вид╕лення за кольором"
-
-#~ msgid "Bucket Fill Options"
-#~ msgstr "Параметри заповнення"
-
-#~ msgid "Blend Options"
-#~ msgstr "Параметри злиття"
-
-#~ msgid "Pencil Options"
-#~ msgstr "Параметри ол╕вця"
-
-#~ msgid "Paintbrush Options"
-#~ msgstr "Париметри пензля"
-
-#~ msgid "Eraser Options"
-#~ msgstr "Параметри гумки"
-
-#~ msgid "Airbrush Options"
-#~ msgstr "Параметри аерографу"
-
-#~ msgid "Convolver Options"
-#~ msgstr "Параметри розмивання"
-
-#~ msgid "Ink Options"
-#~ msgstr "Параметри чорнила"
-
-#~ msgid "Dodge or Burn Options"
-#~ msgstr "Параметри осв╕тлювача чи затемнювача"
-
-#~ msgid "Smudge Options"
-#~ msgstr "Параметри пальцю"
-
-#~ msgid "Xinput Airbrush Options"
-#~ msgstr "Параметри аерографу Xinput"
-
-#~ msgid "/Tools/Move"
-#~ msgstr "/╤нструменти/Перем╕стити"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/╤нструменти/Лупа"
-
-#~ msgid "Transform the layer or selection"
-#~ msgstr "Перетворити шар чи вид╕лення"
-
-#~ msgid "/Tools/Flip"
-#~ msgstr "/╤нстументи/В╕дзеркалення"
-
-#~ msgid "/Tools/Airbrush"
-#~ msgstr "/╤нструменти/Аерограф"
-
-#~ msgid "/Tools/Ink"
-#~ msgstr "/╤нструменти/Чорнило"
-
-#~ msgid "Transform Tool Options"
-#~ msgstr "Параметри перетворення"
-
-#~ msgid "xcf: zlib compression unimplemented"
-#~ msgstr "xcf: стиснення засобами zlib не реал╕зовано"
-
-#~ msgid "xcf: fractal compression unimplemented"
-#~ msgstr "xcf: фрактальне стиснення не реал╕зовано"
-
-#~ msgid "unknown compression type: %d"
-#~ msgstr "нев╕домий тип зтиснення: %d"
+msgstr ""
