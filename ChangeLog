@@ -1,3 +1,8 @@
+2004-09-16  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/script-fu/scripts/burn-in-anim.scm: merged patch from 
+	Kevin Cozens which reinstates corona. Fixes bug #142282.
+
 2004-09-15  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD:
