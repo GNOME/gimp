@@ -662,8 +662,6 @@
       <xi:include href="xml/gimpcolorframe.xml"/>
       <xi:include href="xml/gimpcolorpanel.xml"/>
       <xi:include href="xml/gimpcontainerpopup.xml"/>
-      <xi:include href="xml/gimpfontselection-dialog.xml"/>
-      <xi:include href="xml/gimpfontselection.xml"/>
       <xi:include href="xml/gimphistogrambox.xml"/>
       <xi:include href="xml/gimphistogramview.xml"/>
       <xi:include href="xml/gimptexteditor.xml"/>

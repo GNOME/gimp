@@ -106,9 +106,6 @@ typedef struct _GimpContainerPopup      GimpContainerPopup;
 typedef struct _GimpViewableButton      GimpViewableButton;
 typedef struct _GimpViewableDialog      GimpViewableDialog;
 
-typedef struct _GimpFontSelection       GimpFontSelection;
-typedef struct _GimpFontSelectionDialog GimpFontSelectionDialog;
-
 typedef struct _GimpHistogramView       GimpHistogramView;
 typedef struct _GimpHistogramBox        GimpHistogramBox;
 typedef struct _GimpHistogramEditor     GimpHistogramEditor;

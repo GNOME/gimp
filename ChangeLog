@@ -1,3 +1,8 @@
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-types.h: removed GimpFontSelection and
+	GimpFontSelectionDialog typedefs.
+
 2003-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c

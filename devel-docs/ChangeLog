@@ -1,3 +1,9 @@
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated after removal of GimpFontSelection.
+
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

@@ -3912,26 +3912,6 @@ GIMP_ERROR_CONSOLE_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpfontselection</FILE>
-<TITLE>GimpFontSelection</TITLE>
-GimpFontSelection
-gimp_font_selection_new
-gimp_font_selection_set_fontname
-gimp_font_selection_get_fontname
-gimp_font_selection_set_font_desc
-gimp_font_selection_get_font_desc
-gimp_font_selection_font_changed
-<SUBSECTION Standard>
-GimpFontSelectionClass
-GIMP_FONT_SELECTION
-GIMP_IS_FONT_SELECTION
-GIMP_TYPE_FONT_SELECTION
-gimp_font_selection_get_type
-GIMP_FONT_SELECTION_CLASS
-GIMP_IS_FONT_SELECTION_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpfontview</FILE>
 <TITLE>GimpFontView</TITLE>
 GimpFontView
@@ -4017,8 +3997,6 @@ GIMP_HISTOGRAM_EDITOR_GET_CLASS
 
 <SECTION>
 <FILE>gimphistogramview</FILE>
-GIMP_HISTOGRAM_VIEW_WIDTH
-GIMP_HISTOGRAM_VIEW_HEIGHT
 <TITLE>GimpHistogramView</TITLE>
 GimpHistogramView
 gimp_histogram_view_new
@@ -7007,6 +6985,7 @@ gimp_container_view_get_by_dockable
 <SECTION>
 <FILE>gimpcursor</FILE>
 gimp_cursor_new
+gimp_cursor_set
 </SECTION>
 
 <SECTION>
@@ -7046,6 +7025,7 @@ GIMP_TARGET_TEMPLATE
 GIMP_TARGET_TOOL
 GIMP_TARGET_DIALOG
 GimpDndDropFileFunc
+gimp_dnd_init
 gimp_dnd_file_dest_add
 gimp_dnd_file_dest_remove
 gimp_dnd_open_files
@@ -7063,15 +7043,6 @@ gimp_dnd_drag_dest_set_by_type
 gimp_dnd_viewable_dest_add
 gimp_dnd_viewable_dest_remove
 gimp_dnd_get_drag_data
-</SECTION>
-
-<SECTION>
-<FILE>gimpfontselection-dialog</FILE>
-GimpFontSelectionDialog
-gimp_font_selection_dialog_new
-gimp_font_selection_dialog_destroy
-gimp_font_selection_dialog_show
-gimp_font_selection_dialog_set_font_desc
 </SECTION>
 
 <SECTION>
@@ -7095,7 +7066,6 @@ gimp_prop_opacity_entry_new
 gimp_prop_memsize_entry_new
 gimp_prop_entry_new
 gimp_prop_text_buffer_new
-gimp_prop_font_selection_new
 gimp_prop_file_entry_new
 gimp_prop_path_editor_new
 gimp_prop_coordinates_new
