@@ -72,11 +72,6 @@ struct _ByColorDialog
   GtkWidget *preview;
   GtkWidget *gimage_name;
 
-  GtkWidget *replace_button;
-  GtkObject *threshold_adj;
-
-  gint       threshold;  /*  threshold value for color select               */
-  gint       operation;  /*  Add, Subtract, Replace                         */
   GimpImage *gimage;     /*  gimpimage which is currently under examination */
 };
 
@@ -134,8 +129,6 @@ static void   by_color_select_invert_callback      (GtkWidget      *,
 static void   by_color_select_select_all_callback  (GtkWidget      *,
 						    gpointer        );
 static void   by_color_select_select_none_callback (GtkWidget      *,
-						    gpointer        );
-static void   by_color_select_reset_callback       (GtkWidget      *,
 						    gpointer        );
 static void   by_color_select_close_callback       (GtkWidget      *,
 						    gpointer        );
@@ -366,12 +359,14 @@ by_color_select_button_release (GimpTool        *tool,
 				GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
+  GimpSelectionTool     *sel_tool;
   SelectionOptions      *sel_options;
   GimpDrawable          *drawable;
   guchar                *col;
   GimpRGB                color;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+  sel_tool     = GIMP_SELECTION_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
@@ -413,8 +408,8 @@ by_color_select_button_release (GimpTool        *tool,
 	  gimp_image_mask_select_by_color (gdisp->gimage, drawable,
                                            sel_options->sample_merged,
                                            &color,
-                                           by_color_dialog->threshold,
-                                           by_color_sel->operation,
+                                           sel_options->threshold,
+                                           sel_tool->op,
                                            sel_options->antialias,
                                            sel_options->feather,
                                            sel_options->feather_radius,
@@ -436,36 +431,31 @@ by_color_select_oper_update (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpByColorSelectTool *by_col_sel;
+  GimpSelectionTool *sel_tool;
+  SelectionOptions  *sel_options;
 
   if (tool->state == ACTIVE)
     return;
 
-  by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+  sel_tool = GIMP_SELECTION_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
     {
-      by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
+      sel_tool->op = SELECTION_INTERSECT; /* intersect with selection */
     }
   else if (state & GDK_SHIFT_MASK)
     {
-      by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
+      sel_tool->op = SELECTION_ADD;   /* add to the selection */
     }
   else if (state & GDK_CONTROL_MASK)
     {
-      by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
+      sel_tool->op = SELECTION_SUB;   /* subtract from the selection */
     }
   else
     {
-      if (by_color_dialog)
-        {
-          /* To be careful, set it to by_select_dialog's default */
-          by_col_sel->operation = by_color_dialog->operation;
-        }
-      else
-        {
-          by_col_sel->operation = SELECTION_REPLACE;
-        }
+      sel_tool->op = sel_options->op;
     }
 }
 
@@ -488,61 +478,18 @@ by_color_select_cursor_update (GimpTool        *tool,
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
-  if (sel_options->sample_merged ||
-      (layer && layer == gdisp->gimage->active_layer))
+  if (! sel_options->sample_merged &&
+      layer && layer != gdisp->gimage->active_layer)
     {
-      switch (by_col_sel->operation)
-	{
-	case SELECTION_ADD:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_PLUS);
-	  break;
-	case SELECTION_SUB:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_MINUS);
-	  break;
-	case SELECTION_INTERSECT: 
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_INTERSECT);
-	  break;
-	case SELECTION_REPLACE:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
-	  break;
-	case SELECTION_MOVE_MASK:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_MOVE);
-	  break;
-	case SELECTION_MOVE: 
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_MOVE_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
-	  break;
-	case SELECTION_ANCHOR:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_ANCHOR);
-	}
-
-      return;
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_BAD_CURSOR,
+                                              tool->tool_cursor,
+                                              GIMP_CURSOR_MODIFIER_NONE);
     }
-
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GIMP_BAD_CURSOR,
-                                          GIMP_TOOL_CURSOR_NONE,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+    }
 }
 
 void
@@ -560,19 +507,13 @@ static ByColorDialog *
 by_color_select_dialog_new (void)
 {
   ByColorDialog *bcd;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *options_box;
-  GtkWidget *label;
-  GtkWidget *util_box;
-  GtkWidget *slider;
-  GtkWidget *table;
-  GtkWidget *button;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *hbox;
+  GtkWidget     *button;
 
   bcd = g_new (ByColorDialog, 1);
   bcd->gimage    = NULL;
-  bcd->operation = SELECTION_REPLACE;
-  bcd->threshold = gimprc.default_threshold;
 
   /*  The shell and main vbox  */
   bcd->shell = gimp_dialog_new (_("By Color Selection"), "by_color_selection",
@@ -580,25 +521,30 @@ by_color_select_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("Reset"), by_color_select_reset_callback,
-				bcd, NULL, NULL, FALSE, FALSE,
-				GTK_STOCK_CLOSE, by_color_select_close_callback,
+				"_delete_event_", by_color_select_close_callback,
 				bcd, NULL, NULL, TRUE, TRUE,
 
 				NULL);
 
-  /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), hbox);
+  gtk_dialog_set_has_separator (GTK_DIALOG (bcd->shell), FALSE);
+  gtk_widget_hide (GTK_DIALOG (bcd->shell)->action_area);
+
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  /*  Create the active image label  */
+  bcd->gimage_name = gtk_label_new (_("Inactive"));
+  gtk_misc_set_alignment (GTK_MISC (bcd->gimage_name), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), bcd->gimage_name, FALSE, FALSE, 0);
+  gtk_widget_show (bcd->gimage_name);
 
   /*  The preview  */
-  util_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), util_box, FALSE, FALSE, 0);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (util_box), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   bcd->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (bcd->preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
@@ -621,75 +567,18 @@ by_color_select_dialog_new (void)
 
   gtk_widget_show (bcd->preview);
   gtk_widget_show (frame);
-  gtk_widget_show (util_box);
-
-  /*  options box  */
-  options_box = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), options_box, FALSE, FALSE, 0);
-
-  /*  Create the active image label  */
-  util_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
-
-  bcd->gimage_name = gtk_label_new (_("Inactive"));
-  gtk_box_pack_start (GTK_BOX (util_box), bcd->gimage_name, FALSE, FALSE, 0);
-
-  gtk_widget_show (bcd->gimage_name);
-  gtk_widget_show (util_box);
-
-  /*  Create the selection mode radio box  */
-  frame = gimp_radio_group_new2
-    (TRUE, _("Selection Mode"),
-     G_CALLBACK (gimp_radio_button_update),
-     &bcd->operation,
-     GINT_TO_POINTER (bcd->operation),
-
-     _("Replace"),   GINT_TO_POINTER (SELECTION_REPLACE),   &bcd->replace_button,
-     _("Add"),       GINT_TO_POINTER (SELECTION_ADD),       NULL,
-     _("Subtract"),  GINT_TO_POINTER (SELECTION_SUB),       NULL,
-     _("Intersect"), GINT_TO_POINTER (SELECTION_INTERSECT), NULL,
-
-     NULL);
-
-  gtk_box_pack_start (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  /*  Create the opacity scale widget  */
-  util_box = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Fuzziness Threshold"));
-  gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-
-  gtk_widget_show (label);
-  gtk_widget_show (util_box);
-
-  bcd->threshold_adj =
-    gtk_adjustment_new (bcd->threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (bcd->threshold_adj));
-  gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-
-  g_signal_connect (G_OBJECT (bcd->threshold_adj), "value_changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &bcd->threshold);
-
-  gtk_widget_show (slider);
 
   frame = gtk_frame_new (_("Selection"));
-  gtk_box_pack_end (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, TRUE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  hbox = gtk_hbox_new (TRUE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   button = gtk_button_new_with_label (_("Invert"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 0, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
@@ -697,7 +586,7 @@ by_color_select_dialog_new (void)
 		    bcd);
 
   button = gtk_button_new_with_label (_("All"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
@@ -705,15 +594,13 @@ by_color_select_dialog_new (void)
 		    bcd);
 
   button = gtk_button_new_with_label (_("None"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 2, 1, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
 		    G_CALLBACK (by_color_select_select_none_callback),
 		    bcd);
 
-  gtk_widget_show (options_box);
-  gtk_widget_show (hbox);
   gtk_widget_show (bcd->shell);
 
   return bcd;
@@ -869,19 +756,6 @@ by_color_select_preview_events (GtkWidget      *widget,
 }
 
 static void
-by_color_select_reset_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  ByColorDialog *bcd;
-
-  bcd = (ByColorDialog *) data;
-
-  gtk_widget_activate (bcd->replace_button);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (bcd->threshold_adj),
-			    gimprc.default_threshold);
-}
-
-static void
 by_color_select_invert_callback (GtkWidget *widget,
 				 gpointer   data)
 {
@@ -1021,7 +895,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 	   (bevent->state & GDK_SHIFT_MASK))
     operation = SELECTION_INTERSECT;
   else
-    operation = by_color_dialog->operation;
+    operation = sel_options->op;
 
   /*  Find x, y and modify selection  */
 
@@ -1061,7 +935,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   gimp_image_mask_select_by_color (bcd->gimage, drawable,
                                    sel_options->sample_merged,
                                    &color,
-                                   bcd->threshold,
+                                   sel_options->threshold,
                                    operation,
                                    sel_options->antialias,
                                    sel_options->feather,
@@ -1099,8 +973,8 @@ by_color_select_color_drop (GtkWidget     *widget,
   gimp_image_mask_select_by_color (bcd->gimage, drawable,
                                    sel_options->sample_merged,
                                    color,
-                                   bcd->threshold,
-                                   bcd->operation,
+                                   sel_options->threshold,
+                                   sel_options->op,
                                    sel_options->antialias,
                                    sel_options->feather,
                                    sel_options->feather_radius,

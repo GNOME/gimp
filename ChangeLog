@@ -1,5 +1,31 @@
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: key press and release
+	events were sent swapped to tools.
+
+	* app/tools/selection_options.[ch]: added radio buttons for the
+	selection operation (REPLACE, ADD, ...). Partly fixes #51108.
+
+	* app/tools/gimpselectiontool.[ch]: honor the new tool options
+	stuff. Do evil things in gimp_selection_tool_modifier_key().
+
+	* app/tools/gimpbycolorselecttool.[ch]: removed most of the
+	widgets from the by_color_select window because they are all in
+	the selection_options now.
+
+	* libgimpwidgets/gimpstock.[ch]: added new stock items for the
+	buttons.
+
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-button-selection-add.png
+	* themes/Default/images/stock-button-selection-intersect.png
+	* themes/Default/images/stock-button-selection-replace.png
+	* themes/Default/images/stock-button-selection-subtract.png: new
+	stock images.
+
+2001-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/selection_options.c: added "reset" code for the new
 	auto_shrink tool options.
 
@@ -53,7 +79,7 @@
 
 2001-11-20  David Neary <dneary@eircom.net>
 
-        * app/core/gimppalette.c: Included errno,h
+	* app/core/gimppalette.c: Included errno.h
 
 2001-11-20  Rebecca Walter <rjp@mail.tele.dk>
 

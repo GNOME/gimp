@@ -38,7 +38,8 @@ struct _GimpSelectionTool
 {
   GimpDrawTool  parent_instance;
   
-  SelectOps     op;  /*  selection operation (SELECTION_ADD etc.)  */
+  SelectOps     op;       /*  selection operation (SELECTION_ADD etc.)  */
+  SelectOps     saved_op; /*  saved tool options state                  */
 };
 
 struct _GimpSelectionToolClass

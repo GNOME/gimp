@@ -30,6 +30,10 @@ struct _SelectionOptions
   GimpToolOptions  tool_options;
 
   /*  options used by all selection tools  */
+  SelectOps    op;
+  SelectOps    op_d;
+  GtkWidget   *op_w[4]; /*  4 radio buttons  */
+
   gboolean     feather;
   gboolean     feather_d;
   GtkWidget   *feather_w;

@@ -40,8 +40,7 @@ struct _GimpByColorSelectTool
 {
   GimpSelectionTool parent_instance;
 
-  gint       x, y;       /*  Point from which to execute seed fill  */
-  SelectOps  operation;  /*  add, subtract, normal color selection  */
+  gint              x, y;  /*  Point from which to execute seed fill  */
 };
 
 

@@ -60,9 +60,15 @@ selection_options_init (SelectionOptions *options,
   vbox = options->tool_options.main_vbox;
 
   /*  initialize the selection options structure  */
+  options->op             = options->op_d             = SELECTION_REPLACE;
   options->feather        = options->feather_d        = FALSE;
   options->feather_radius = options->feather_radius_d = 10.0;
-  options->antialias      = options->antialias_d      = TRUE;
+
+  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+    options->antialias    = options->antialias_d      = FALSE;
+  else
+    options->antialias    = options->antialias_d      = TRUE;
+
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->threshold                                  = gimprc.default_threshold;
   options->auto_shrink    = options->auto_shrink_d    = FALSE;
@@ -85,6 +91,63 @@ selection_options_init (SelectionOptions *options,
   options->fixed_width_w    = NULL;
   options->fixed_unit_w     = NULL;
   options->interactive_w    = NULL;
+
+  /*  the selection operation radio buttons  */
+  {
+    struct
+    {
+      SelectOps    op;
+      const gchar *stock_id;
+    }
+    select_op_entries[] =
+    {
+      { SELECTION_REPLACE,   GIMP_STOCK_SELECTION_REPLACE   },
+      { SELECTION_ADD,       GIMP_STOCK_SELECTION_ADD       },
+      { SELECTION_SUB,       GIMP_STOCK_SELECTION_SUBTRACT  },
+      { SELECTION_INTERSECT, GIMP_STOCK_SELECTION_INTERSECT }
+    };
+
+    GtkWidget *hbox;
+    GtkWidget *label;
+    GtkWidget *image;
+    GSList    *group = NULL;
+    gint       i;
+
+    hbox = gtk_hbox_new (FALSE, 2);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
+
+    label = gtk_label_new (_("Mode:"));
+    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+
+    for (i = 0; i < G_N_ELEMENTS (select_op_entries); i++)
+      {
+        options->op_w[i] = gtk_radio_button_new (group);
+        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (options->op_w[i]));
+        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (options->op_w[i]),
+                                    FALSE);
+        gtk_box_pack_start (GTK_BOX (hbox), options->op_w[i], FALSE, FALSE, 0);
+        gtk_widget_show (options->op_w[i]);
+
+        image = gtk_image_new_from_stock (select_op_entries[i].stock_id,
+                                          GTK_ICON_SIZE_BUTTON);
+        gtk_container_add (GTK_CONTAINER (options->op_w[i]), image);
+        gtk_widget_show (image);
+
+        if (select_op_entries[i].op == options->op)
+          {
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->op_w[i]),
+                                          TRUE);
+          }
+
+        g_object_set_data (G_OBJECT (options->op_w[i]), "user_data",
+                           GINT_TO_POINTER (select_op_entries[i].op));
+        g_signal_connect (G_OBJECT (options->op_w[i]), "toggled",
+                          G_CALLBACK (gimp_radio_button_update),
+                          &options->op);
+      }
+  }
 
   /*  the feather toggle button  */
   table = gtk_table_new (2, 2, FALSE);
@@ -135,14 +198,18 @@ selection_options_init (SelectionOptions *options,
   gtk_widget_show (table);
 
   /*  the antialias toggle button  */
-  if (tool_info->tool_type != GIMP_TYPE_RECT_SELECT_TOOL)
-    {
-      options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-				    options->antialias_d);
-      gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
-      gtk_widget_show (options->antialias_w);
+  options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+                                options->antialias_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->antialias_w);
 
+  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+    {
+      gtk_widget_set_sensitive (options->antialias_w, FALSE);
+    }
+  else
+    {
       g_signal_connect (G_OBJECT (options->antialias_w), "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->antialias);

@@ -25,17 +25,24 @@
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
 #include "gimpdrawtool.h"
 #include "gimpselectiontool.h"
+#include "selection_options.h"
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);
 static void   gimp_selection_tool_init          (GimpSelectionTool      *selection_tool);
 
+static void   gimp_selection_tool_modifier_key    (GimpTool          *tool,
+                                                   GdkModifierType    key,
+                                                   gboolean           press,
+                                                   GdkModifierType    state,
+                                                   GimpDisplay       *gdisp);
 static void   gimp_selection_tool_oper_update     (GimpTool          *tool,
                                                    GimpCoords        *coords,
                                                    GdkModifierType    state,
@@ -86,6 +93,7 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  tool_class->modifier_key  = gimp_selection_tool_modifier_key;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
   tool_class->cursor_update = gimp_selection_tool_cursor_update;
 }
@@ -97,7 +105,62 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 
   tool = GIMP_TOOL (selection_tool);
   
-  selection_tool->op = SELECTION_REPLACE;
+  selection_tool->op       = SELECTION_REPLACE;
+  selection_tool->saved_op = SELECTION_REPLACE;
+}
+
+static void
+gimp_selection_tool_modifier_key (GimpTool        *tool,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *gdisp)
+{
+  GimpSelectionTool *selection_tool;
+  SelectionOptions  *sel_options;
+  gint               eek[4]       = { 1, 2, 0, 3 };
+  gint               press_button = -1;
+
+  selection_tool = GIMP_SELECTION_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+
+  if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
+    {
+      if (press)
+        {
+          if (key == state) /*  first modifier pressed  */
+            {
+              selection_tool->saved_op = sel_options->op;
+            }
+        }
+      else
+        {
+          if (! state) /*  last modifier released  */
+            {
+              press_button = eek[selection_tool->saved_op];
+            }
+        }
+
+      if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+        {
+          press_button = eek[SELECTION_INTERSECT];
+        }
+      else if (state & GDK_SHIFT_MASK)
+        {
+          press_button = eek[SELECTION_ADD];
+        }
+      else if (state & GDK_CONTROL_MASK)
+        {
+          press_button = eek[SELECTION_SUB];
+        }
+
+      if (press_button != -1)
+        {
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (sel_options->op_w[press_button]), TRUE);
+        }
+    }
 }
 
 static void
@@ -107,16 +170,18 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
                                  GimpDisplay     *gdisp)
 {
   GimpSelectionTool *selection_tool;
+  SelectionOptions  *sel_options;
   GimpLayer         *layer;
   GimpLayer         *floating_sel;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+
   if (tool->state == ACTIVE)
     return;
 
-  layer        = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                                  coords->x, coords->y);
+  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);
 
   if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
@@ -149,7 +214,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      selection_tool->op = SELECTION_REPLACE;   /* replace the selection */
+      selection_tool->op = sel_options->op;
     }
 }
 

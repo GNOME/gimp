@@ -52,6 +52,11 @@ extern "C" {
 #define GIMP_STOCK_QMASK_OFF    "gimp-qmask-off"
 #define GIMP_STOCK_QMASK_ON     "gimp-qmask-on"
 
+#define GIMP_STOCK_SELECTION_REPLACE   "gimp-selection-replace"
+#define GIMP_STOCK_SELECTION_ADD       "gimp-selection-add"
+#define GIMP_STOCK_SELECTION_SUBTRACT  "gimp-selection-subtract"
+#define GIMP_STOCK_SELECTION_INTERSECT "gimp-selection-intersect"
+
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
 #define GIMP_STOCK_TOOL_BLEND               "gimp-tool-blend"

@@ -878,7 +878,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             if (! gimp_image_is_empty (gdisp->gimage))
               {
                 tool_manager_modifier_key_active (gdisp->gimage->gimp,
-                                                  key, FALSE, state,
+                                                  key, TRUE, state,
                                                   gdisp);
 
                 return_val = TRUE;
@@ -920,7 +920,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             if (! gimp_image_is_empty (gdisp->gimage))
               {
                 tool_manager_modifier_key_active (gdisp->gimage->gimp,
-                                                  key, TRUE, state,
+                                                  key, FALSE, state,
                                                   gdisp);
               }
             break;

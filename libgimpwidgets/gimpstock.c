@@ -105,7 +105,12 @@ static GtkStockItem gimp_stock_items[] =
 
   { GIMP_STOCK_NAVIGATION,   NULL,                    0, 0, "gimp-libgimp" },
   { GIMP_STOCK_QMASK_OFF,    NULL,                    0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_QMASK_ON,     NULL,                    0, 0, "gimp-libgimp" }
+  { GIMP_STOCK_QMASK_ON,     NULL,                    0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_SELECTION_REPLACE,   NULL,             0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_ADD,       NULL,             0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_SUBTRACT,  NULL,             0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_INTERSECT, NULL,             0, 0, "gimp-libgimp" }
 };
 
 static struct
@@ -132,6 +137,11 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TO_PATH,                  stock_button_to_path                  },
   { GIMP_STOCK_TO_SELECTION,             stock_button_to_selection             },
   { GIMP_STOCK_VISIBLE,                  stock_button_eye                      },
+
+  { GIMP_STOCK_SELECTION_REPLACE,        stock_button_selection_replace        },
+  { GIMP_STOCK_SELECTION_ADD,            stock_button_selection_add            },
+  { GIMP_STOCK_SELECTION_SUBTRACT,       stock_button_selection_subtract       },
+  { GIMP_STOCK_SELECTION_INTERSECT,      stock_button_selection_intersect      },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_button_airbrush            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_button_bezier_select       },
