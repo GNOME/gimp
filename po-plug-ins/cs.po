@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
-"PO-Revision-Date: 2004-07-20 17:34+0200\n"
+"POT-Creation-Date: 2004-08-30 19:38+0200\n"
+"PO-Revision-Date: 2004-08-31 00:56+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -327,8 +327,8 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
-#: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2841
+#: plug-ins/common/postscript.c:2853 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Nic"
@@ -1050,7 +1050,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Poloha Z objektu v prostoru XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3002
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3005
 msgid "Rotation"
 msgstr "Rotace"
 
@@ -1224,7 +1224,7 @@ msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
 #: plug-ins/bmp/bmpread.c:435
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Neznámý nebo neplatný formát komprese BMP."
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1234,7 +1234,7 @@ msgstr ""
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
-#: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
+#: plug-ins/common/gifload.c:864 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
@@ -2038,7 +2038,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
-#: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
+#: plug-ins/common/vpropagate.c:1077 plug-ins/common/waves.c:343
 #: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
@@ -2571,7 +2571,7 @@ msgid "Colorify"
 msgstr "Kolorování"
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2826 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -3357,7 +3357,7 @@ msgid "Create _Histogram"
 msgstr "Vytvořit _histogram"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
+#: plug-ins/common/postscript.c:2782 plug-ins/common/postscript.c:2941
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3543,8 +3543,8 @@ msgid "_Limit Line Width"
 msgstr "_Omezení šířky řádku"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
-#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2791
+#: plug-ins/common/postscript.c:2950 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -4036,23 +4036,23 @@ msgstr "Toto není soubor GIF"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Nečtvercové pixely. Obrázek může vypadat rozmáčkle."
 
-#: plug-ins/common/gifload.c:859
+#: plug-ins/common/gifload.c:866
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Pozadí (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/gifload.c:914 plug-ins/common/iwarp.c:787
 #: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "Políčko %d"
 
-#: plug-ins/common/gifload.c:909
+#: plug-ins/common/gifload.c:916
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Políčko %d (%d%s)"
 
-#: plug-ins/common/gifload.c:939
+#: plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -5775,92 +5775,92 @@ msgstr "PostScript zápis neumí zpracovat obrázky s alfa kanály"
 msgid "Error starting ghostscript (%s)"
 msgstr "Chyba při spouštění ghostscriptu (%s)"
 
-#: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
-#: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
+#: plug-ins/common/postscript.c:2300 plug-ins/common/postscript.c:2432
+#: plug-ins/common/postscript.c:2582 plug-ins/common/postscript.c:2710
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occurred"
 msgstr "Došlo k chybě při zápisu"
 
-#: plug-ins/common/postscript.c:2733
+#: plug-ins/common/postscript.c:2736
 msgid "Load PostScript"
 msgstr "Čtení PostScriptu"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2753
+#: plug-ins/common/postscript.c:2756
 msgid "Rendering"
 msgstr "Vyobrazení"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2773 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: plug-ins/common/postscript.c:2798
+#: plug-ins/common/postscript.c:2801
 msgid "Pages:"
 msgstr "Stránky:"
 
-#: plug-ins/common/postscript.c:2804
+#: plug-ins/common/postscript.c:2807
 msgid "Try Bounding Box"
 msgstr "Zkusit ohraničení (Bounding Box)"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2817
+#: plug-ins/common/postscript.c:2820
 msgid "Coloring"
 msgstr "Barevnost"
 
-#: plug-ins/common/postscript.c:2821
+#: plug-ins/common/postscript.c:2824
 msgid "B/W"
 msgstr "Č/B"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2822 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2825 plug-ins/rcm/rcm_dialog.c:409
 msgid "Gray"
 msgstr "Šedá"
 
-#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2827 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automatické"
 
-#: plug-ins/common/postscript.c:2834
+#: plug-ins/common/postscript.c:2837
 msgid "Text Antialiasing"
 msgstr "Vyhlazování textu"
 
-#: plug-ins/common/postscript.c:2839 plug-ins/common/postscript.c:2851
+#: plug-ins/common/postscript.c:2842 plug-ins/common/postscript.c:2854
 msgid "Weak"
 msgstr "Slabé"
 
-#: plug-ins/common/postscript.c:2840 plug-ins/common/postscript.c:2852
+#: plug-ins/common/postscript.c:2843 plug-ins/common/postscript.c:2855
 msgid "Strong"
 msgstr "Silné"
 
-#: plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2849
 msgid "Graphic Antialiasing"
 msgstr "Vyhlazování grafiky"
 
-#: plug-ins/common/postscript.c:2898
+#: plug-ins/common/postscript.c:2901
 msgid "Save as PostScript"
 msgstr "Zapsat jako PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2921
+#: plug-ins/common/postscript.c:2924
 msgid "Image Size"
 msgstr "Velikost obrázku"
 
-#: plug-ins/common/postscript.c:2956
+#: plug-ins/common/postscript.c:2959
 msgid "_X-Offset:"
 msgstr "_X posun:"
 
-#: plug-ins/common/postscript.c:2965
+#: plug-ins/common/postscript.c:2968
 msgid "_Y-Offset:"
 msgstr "_Y posun:"
 
-#: plug-ins/common/postscript.c:2971
+#: plug-ins/common/postscript.c:2974
 msgid "_Keep Aspect Ratio"
 msgstr "_Zachovat poměr stran"
 
-#: plug-ins/common/postscript.c:2977
+#: plug-ins/common/postscript.c:2980
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5869,36 +5869,36 @@ msgstr ""
 "beze změny poměru stran."
 
 #. Unit
-#: plug-ins/common/postscript.c:2986
+#: plug-ins/common/postscript.c:2989
 msgid "Unit"
 msgstr "Jednotka"
 
-#: plug-ins/common/postscript.c:2990
+#: plug-ins/common/postscript.c:2993
 msgid "_Inch"
 msgstr "_Palec"
 
-#: plug-ins/common/postscript.c:2991
+#: plug-ins/common/postscript.c:2994
 msgid "_Millimeter"
 msgstr "_Milimetr"
 
 #. Format
-#: plug-ins/common/postscript.c:3017
+#: plug-ins/common/postscript.c:3020
 msgid "Output"
 msgstr "Výstup"
 
-#: plug-ins/common/postscript.c:3024
+#: plug-ins/common/postscript.c:3027
 msgid "_PostScript Level 2"
 msgstr "_PostScript úroveň 2"
 
-#: plug-ins/common/postscript.c:3033
+#: plug-ins/common/postscript.c:3036
 msgid "_Encapsulated PostScript"
 msgstr "_Zapouzdřený PostScript (eps)"
 
-#: plug-ins/common/postscript.c:3042
+#: plug-ins/common/postscript.c:3045
 msgid "P_review"
 msgstr "_Náhled"
 
-#: plug-ins/common/postscript.c:3063
+#: plug-ins/common/postscript.c:3066
 msgid "Preview _Size:"
 msgstr "_Velikost náhledu:"
 
@@ -7331,52 +7331,52 @@ msgstr "<Image>/Filtry/Obecné/_Eroze"
 msgid "<Image>/Filters/Generic/_Dilate"
 msgstr "<Image>/Filtry/Obecné/_Dilatace"
 
-#: plug-ins/common/vpropagate.c:455
+#: plug-ins/common/vpropagate.c:459
 msgid "Value Propagating..."
 msgstr "Rozšiřuji hodnotu..."
 
-#: plug-ins/common/vpropagate.c:1027
+#: plug-ins/common/vpropagate.c:1031
 msgid "Value Propagate"
 msgstr "Rozšíření hodnoty"
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1042
+#: plug-ins/common/vpropagate.c:1046
 msgid "Propagate Mode"
 msgstr "Režim rozšíření"
 
-#: plug-ins/common/vpropagate.c:1083
+#: plug-ins/common/vpropagate.c:1087
 msgid "Lower T_hreshold:"
 msgstr "_Dolní práh:"
 
-#: plug-ins/common/vpropagate.c:1092
+#: plug-ins/common/vpropagate.c:1096
 msgid "_Upper Threshold:"
 msgstr "_Horní práh:"
 
-#: plug-ins/common/vpropagate.c:1101
+#: plug-ins/common/vpropagate.c:1105
 msgid "_Propagating Rate:"
 msgstr "Poměr _rozšíření:"
 
-#: plug-ins/common/vpropagate.c:1113
+#: plug-ins/common/vpropagate.c:1117
 msgid "To L_eft"
 msgstr "Do_leva"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1120
 msgid "To _Right"
 msgstr "Do_prava"
 
-#: plug-ins/common/vpropagate.c:1119
+#: plug-ins/common/vpropagate.c:1123
 msgid "To _Top"
 msgstr "Na_horu"
 
-#: plug-ins/common/vpropagate.c:1122
+#: plug-ins/common/vpropagate.c:1126
 msgid "To _Bottom"
 msgstr "_Dolů"
 
-#: plug-ins/common/vpropagate.c:1135
+#: plug-ins/common/vpropagate.c:1139
 msgid "Propagating _Alpha Channel"
 msgstr "Rozšíření v _alfa kanálu"
 
-#: plug-ins/common/vpropagate.c:1145
+#: plug-ins/common/vpropagate.c:1149
 msgid "Propagating Value Channel"
 msgstr "Rozšíření v kanálu hodnot"
 
