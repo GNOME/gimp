@@ -43,14 +43,21 @@ GIMP 2.1 includes the following enhancements:
 
    * The toolbox now has an optional preview of the active image.
 
-   * Gradients can now be created, deleted, renamed and edited through
-     the PDB.
+- More internal cleanup and refactoring of the core object model.
+
+- The brush rendering code has been separated from the generic paint
+  tool code. The ink tool is now a paint tool (it can do straight
+  lines) and the new infrastructure allows to implement new kinds of
+  paint methods like vector based painting.
+
+- Gradients can now be created, deleted, renamed and edited through
+  the PDB.
 
  - Some changes to plug-ins.
 
    * Plug-ins can now register the same procedures in multiple places (the
      API to register menu entries has been changed in a backward-compatible 
-     fashion.)
+     fashion).
 
    * Plug-ins can now optionally register a menu icon.
 
