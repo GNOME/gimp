@@ -1,4 +1,5 @@
 EXPORTS
+	_gp_params_destroy
 	gimp_any_to_utf8
 	gimp_base_init
 	gimp_data_directory
