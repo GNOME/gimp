@@ -1,3 +1,108 @@
+2003-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.[ch]: added "gchar *stock_id" to the
+	GimpViewable struct. It is used by the GUI if the get_preview()
+	functions return NULL. Default to GTK_STOCK_DIALOG_QUESTION.
+
+	* app/core/gimptoolinfo.[ch]: set the tool's stock_id. Removed
+	the cached GdkPixbuf. Don't implement any preview function
+	so the GUI uses the stock_id.
+
+	* app/tools/tool_manager.c: removed GdkPixbuf creation, removed
+	the #warning about the buggy way we created the pixbuf.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/image-menu.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimptoolbox.c: use viewable->stock_id instead
+	of tool_info->stock_id.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpundo.c: simplified get_preview() implementations:
+
+	- never scale previews up, only down.
+	- don't render white or checks backgrounds but simply return
+	  TempBufs with alpha and let the preview system do its job.
+	- don't add padding but simply return previews smaller than
+	  requested.
+
+	* app/display/gimpdisplayshell-render.[ch]: added
+	"render_blend_white", a 2d lookup table for blending on white,
+	just as the check lookup tables. Added "render_white_buf".
+
+	* app/widgets/gimppreview.[ch]: changed a lot:
+
+	- don't render the preview's border into the buffer.
+	- added "GdkGC *border_gc" and draw the preview's border in expose()
+	  using gdk_draw_rectangle().
+	- added "GdkPixbuf *no_preview_pixbuf" and create it in
+	  gimp_preview_real_render() if gimp_viewable_get_preview()
+	  returned NULL.
+	- factored the actual preview rendering out to
+	  gimp_preview_render_to_buffer(). Added configurable background
+	  rendering for the preview itself and it's padding area
+	  (the area the preview is larger than the buffer returned
+	  by gimp_viewable_get_preview()).
+	- changed gimp_preview_render_and_flush() to
+	  gimp_preview_render_preview() and added "inside_bg" and
+	  "outside_bg" parameters.
+	- use the new render buffers for blending on white.
+
+	* app/widgets/gimpbrushpreview.c
+	* app/widgets/gimpbufferpreview.c
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpgradientpreview.c
+	* app/widgets/gimpimagepreview.c
+	* app/widgets/gimppalettepreview.c
+	* app/widgets/gimppatternpreview.c: don't create large white
+	TempBufs to center the previews in but simply set the TempBuf's
+	offsets to get them centered. Simplified & cleaned up many preview
+	render functions. Pass the correct GimpPreviewBG modes to
+	gimp_preview_render_preview().
+
+	* app/widgets/gimpcellrendererviewable.[ch]: new GtkCellRenderer
+	class derived from GtkCellRendererPixbuf which knows how
+	to use gimp_viewable_get_preview_size() and renders the
+	viewable's stock item if no preview can be created.
+
+	* app/widgets/gimpcontainertreeview.c: added a GtkTreeCellDataFunc
+	which creates the preview pixbuf if needed so we don't create it
+	unconditionally upon item insertion. Fixed preview size assertion
+	to use GIMP_PREVIEW_MAX_SIZE, not "64". Block "selection_changed"
+	while reordering the selected item.
+
+	* app/widgets/gimpcontainerview.c: cosmetic.
+
+	* app/widgets/gimpimagefilepreview.[ch]
+	* app/widgets/gimptoolinfopreview.[ch]
+	* app/widgets/gimpundopreview.[ch]: removed because the default
+	implementation is good enough.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppreview-utils.c: changed accordingly.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: register grid and tree view variants
+	of the document history.
+
+	Unrelated:
+
+	* app/gui/gui.c (gui_exit_finish_callback): disconnect from
+	signals earlier.
+
+	* app/gui/user-install-dialog.c: create the "tool-options" subdir
+	of the user's ~/.gimp-1.3 directory.
+
 2003-02-26  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: moved the call to libtoolize before automake.

@@ -45,7 +45,7 @@ static void      gimp_undo_finalize            (GObject             *object);
 
 static gsize     gimp_undo_get_memsize         (GimpObject          *object);
 
-static TempBuf * gimp_undo_get_preview         (GimpViewable        *viewable,
+static TempBuf * gimp_undo_get_new_preview     (GimpViewable        *viewable,
                                                 gint                 width,
                                                 gint                 height);
 
@@ -126,14 +126,14 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_TYPE_NONE, 1,
                   GIMP_TYPE_UNDO_MODE);
 
-  object_class->finalize         = gimp_undo_finalize;
+  object_class->finalize          = gimp_undo_finalize;
 
-  gimp_object_class->get_memsize = gimp_undo_get_memsize;
+  gimp_object_class->get_memsize  = gimp_undo_get_memsize;
 
-  viewable_class->get_preview    = gimp_undo_get_preview;
+  viewable_class->get_new_preview = gimp_undo_get_new_preview;
 
-  klass->pop                     = gimp_undo_real_pop;
-  klass->free                    = gimp_undo_real_free;
+  klass->pop                      = gimp_undo_real_pop;
+  klass->free                     = gimp_undo_real_free;
 }
 
 static void
@@ -187,11 +187,39 @@ gimp_undo_get_memsize (GimpObject *object)
 }
 
 static TempBuf *
-gimp_undo_get_preview (GimpViewable *viewable,
-                       gint          width,
-                       gint          height)
+gimp_undo_get_new_preview (GimpViewable *viewable,
+                           gint          width,
+                           gint          height)
 {
-  return GIMP_UNDO (viewable)->preview;
+  GimpUndo *undo;
+
+  undo = GIMP_UNDO (viewable);
+
+  if (undo->preview)
+    {
+      gint preview_width;
+      gint preview_height;
+
+      gimp_viewable_calc_preview_size (viewable,
+                                       undo->preview->width,
+                                       undo->preview->height,
+                                       width,
+                                       height,
+                                       TRUE, 1.0, 1.0,
+                                       &preview_width,
+                                       &preview_height,
+                                       NULL);
+
+      if (preview_width  < undo->preview->width &&
+          preview_height < undo->preview->height)
+        {
+          return temp_buf_scale (undo->preview, preview_width, preview_height);
+        }
+
+      return temp_buf_copy (undo->preview, NULL);
+    }
+
+  return NULL;
 }
 
 static void

@@ -196,19 +196,17 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   GimpGradient *gradient;
   TempBuf      *temp_buf;
   guchar       *buf;
-  guchar       *p0, *p1;
-  guchar       *even, *odd;
+  guchar       *p;
+  guchar       *row;
   gint          x, y;
   gdouble       dx, cur_x;
   GimpRGB       color;
-  gdouble       c0, c1;
 
   gradient = GIMP_GRADIENT (viewable);
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
-  p0    = even = g_malloc (width * 3);
-  p1    = odd  = g_malloc (width * 3);
+  p     = row = g_malloc (width * 4);
 
   /* Create lines to fill the image */
 
@@ -216,49 +214,22 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
     {
       gimp_gradient_get_color_at (gradient, cur_x, &color);
 
-      if ((x / GIMP_CHECK_SIZE_SM) & 1)
-        {
-          c0 = GIMP_CHECK_LIGHT;
-          c1 = GIMP_CHECK_DARK;
-        }
-      else
-        {
-          c0 = GIMP_CHECK_DARK;
-          c1 = GIMP_CHECK_LIGHT;
-        }
-
-      *p0++ = (c0 + (color.r - c0) * color.a) * 255.0;
-      *p0++ = (c0 + (color.g - c0) * color.a) * 255.0;
-      *p0++ = (c0 + (color.b - c0) * color.a) * 255.0;
-
-      *p1++ = (c1 + (color.r - c1) * color.a) * 255.0;
-      *p1++ = (c1 + (color.g - c1) * color.a) * 255.0;
-      *p1++ = (c1 + (color.b - c1) * color.a) * 255.0;
+      *p++ = color.r * 255.0;
+      *p++ = color.g * 255.0;
+      *p++ = color.b * 255.0;
+      *p++ = color.a * 255.0;
 
       cur_x += dx;
     }
 
-  temp_buf = temp_buf_new (width, height,
-			   3,
-			   0, 0,
-			   NULL);
+  temp_buf = temp_buf_new (width, height, 4, 0, 0, NULL);
 
   buf = temp_buf_data (temp_buf);
 
   for (y = 0; y < height; y++)
-    {
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-        {
-          memcpy (buf + (width * y * 3), odd, width * 3); 
-        }
-      else
-        {
-          memcpy (buf + (width * y * 3), even, width * 3); 
-        }
-    }
+    memcpy (buf + (width * y * 4), row, width * 4); 
 
-  g_free (even);
-  g_free (odd);
+  g_free (row);
 
   return temp_buf;
 }

@@ -38,10 +38,6 @@ static void      gimp_tool_info_init            (GimpToolInfo      *tool_info);
 
 static void      gimp_tool_info_finalize        (GObject           *object);
 
-static TempBuf * gimp_tool_info_get_new_preview (GimpViewable      *viewable,
-						 gint               width,
-						 gint               height);
-
 
 static GimpDataClass *parent_class = NULL;
 
@@ -77,17 +73,13 @@ gimp_tool_info_get_type (void)
 static void
 gimp_tool_info_class_init (GimpToolInfoClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpViewableClass *viewable_class;
+  GObjectClass *object_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize          = gimp_tool_info_finalize;
-
-  viewable_class->get_new_preview = gimp_tool_info_get_new_preview;
+  object_class->finalize = gimp_tool_info_finalize;
 }
 
 static void
@@ -104,9 +96,6 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
 
   tool_info->help_domain       = NULL;
   tool_info->help_data         = NULL;
-
-  tool_info->stock_id          = NULL;
-  tool_info->stock_pixbuf      = NULL;
 
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = NULL;
@@ -152,17 +141,6 @@ gimp_tool_info_finalize (GObject *object)
       tool_info->help_data = NULL;
     }
 
-  if (tool_info->stock_id)
-    {
-      g_free (tool_info->stock_id);
-      tool_info->stock_id = NULL;
-    }
-  if (tool_info->stock_pixbuf)
-    {
-      g_object_unref (tool_info->stock_pixbuf);
-      tool_info->stock_pixbuf = NULL;
-    }
-
   if (tool_info->tool_options)
     {
       g_object_unref (tool_info->tool_options);
@@ -170,72 +148,6 @@ gimp_tool_info_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static TempBuf *
-temp_buf_new_from_pixbuf (GdkPixbuf *pixbuf,
-			  gint       width,
-			  gint       height)
-{
-  TempBuf   *temp_buf;
-  gint       pixbuf_width;
-  gint       pixbuf_height;
-  gint       bytes;
-  guchar     transparent[4] = { 0, 0, 0, 0 };
-  guchar    *p_data;
-  guchar    *t_data;
-  gint       y;
-
-  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
-
-  pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
-  pixbuf_height = gdk_pixbuf_get_height (pixbuf);
-
-  if (pixbuf_width != width || pixbuf_height != height)
-    {
-      GdkPixbuf *scaled_pixbuf;
-
-      scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-					       width, height,
-					       GDK_INTERP_BILINEAR);
-
-      pixbuf = scaled_pixbuf;
-    }
-  else
-    {
-      g_object_ref (pixbuf);
-    }
-
-  bytes = gdk_pixbuf_get_n_channels (pixbuf);
-
-  temp_buf = temp_buf_new (width, height, bytes, 0, 0, transparent);
-
-  p_data = gdk_pixbuf_get_pixels (pixbuf);
-  t_data = temp_buf_data (temp_buf);
-
-  for (y = 0; y < height; y++)
-    {
-      memcpy (t_data, p_data, width * bytes);
-
-      p_data += gdk_pixbuf_get_rowstride (pixbuf);
-      t_data += width * bytes;
-    }
-
-  g_object_unref (pixbuf);
-
-  return temp_buf;
-}
-
-static TempBuf *
-gimp_tool_info_get_new_preview (GimpViewable *viewable,
-				gint          width,
-				gint          height)
-{
-  GimpToolInfo *tool_info;
-
-  tool_info = GIMP_TOOL_INFO (viewable);
-
-  return temp_buf_new_from_pixbuf (tool_info->stock_pixbuf, width, height);
 }
 
 GimpToolInfo *
@@ -251,11 +163,11 @@ gimp_tool_info_new (Gimp         *gimp,
 		    const gchar  *help_domain,
 		    const gchar  *help_data,
                     const gchar  *paint_core_name,
-		    const gchar  *stock_id,
-		    GdkPixbuf    *stock_pixbuf)
+		    const gchar  *stock_id)
 {
   GimpPaintInfo *paint_info;
   GimpToolInfo  *tool_info;
+  GimpViewable  *viewable;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
@@ -264,7 +176,6 @@ gimp_tool_info_new (Gimp         *gimp,
   g_return_val_if_fail (menu_path != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
-  g_return_val_if_fail (! stock_pixbuf || GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
   paint_info = (GimpPaintInfo *)
     gimp_container_get_child_by_name (gimp->paint_info_list, paint_core_name);
@@ -274,6 +185,8 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
                             "name", identifier,
                             NULL);
+
+  viewable = GIMP_VIEWABLE (tool_info);
 
   tool_info->use_context       = tool_context;
   tool_info->tool_options      = NULL;
@@ -292,11 +205,9 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->help_domain       = g_strdup (help_domain);
   tool_info->help_data         = g_strdup (help_data);
 
-  tool_info->stock_id          = g_strdup (stock_id);
-  tool_info->stock_pixbuf      = stock_pixbuf;
-
-  if (stock_pixbuf)
-    g_object_ref (stock_pixbuf);
+  if (viewable->stock_id)
+    g_free (viewable->stock_id);
+  viewable->stock_id = g_strdup (stock_id);
 
   return tool_info;
 }

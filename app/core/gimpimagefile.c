@@ -636,8 +636,37 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
 
   temp_buf = gimp_imagefile_read_png_thumb (imagefile, MAX (width, height));
 
-  if (!temp_buf)
+  if (! temp_buf)
     temp_buf = gimp_imagefile_read_xv_thumb (imagefile);
+
+  if (temp_buf)
+    {
+      gint preview_width;
+      gint preview_height;
+
+      gimp_viewable_calc_preview_size (viewable,
+                                       temp_buf->width,
+                                       temp_buf->height,
+                                       width,
+                                       height,
+                                       TRUE, 1.0, 1.0,
+                                       &preview_width,
+                                       &preview_height,
+                                       NULL);
+
+      if (preview_width  < temp_buf->width &&
+          preview_height < temp_buf->height)
+        {
+          TempBuf *scaled_buf;
+
+          scaled_buf = temp_buf_scale (temp_buf,
+                                       preview_width, preview_height);
+
+          temp_buf_free (temp_buf);
+
+          return scaled_buf;
+        }
+    }
 
   return temp_buf;
 }

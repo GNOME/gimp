@@ -212,25 +212,21 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 			    gint          height)
 {
   GimpBrush *brush;
-  gboolean   scale      = FALSE;
   gint       brush_width;
   gint       brush_height;
-  gint       offset_x;
-  gint       offset_y;
   TempBuf   *mask_buf   = NULL;
   TempBuf   *pixmap_buf = NULL;
   TempBuf   *return_buf = NULL;
-  guchar     white[3] = { 255, 255, 255 };
+  guchar     transp[4] = { 0, 0, 0, 0 };
   guchar    *mask;
   guchar    *buf;
-  guchar    *b;
-  guchar     bg;
   gint       x, y;
+  gboolean   scale = FALSE;
 
   brush = GIMP_BRUSH (viewable);
 
-  mask_buf     = gimp_brush_get_mask (brush);
-  pixmap_buf   = gimp_brush_get_pixmap (brush);
+  mask_buf   = gimp_brush_get_mask (brush);
+  pixmap_buf = gimp_brush_get_pixmap (brush);
 
   brush_width  = mask_buf->width;
   brush_height = mask_buf->height;
@@ -257,15 +253,10 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
       scale = TRUE;
     }
 
-  offset_x = (width  - brush_width)  / 2;
-  offset_y = (height - brush_height) / 2;
-
-  return_buf = temp_buf_new (width, height, 3, 0, 0, white);
+  return_buf = temp_buf_new (brush_width, brush_height, 4, 0, 0, transp);
 
   mask = temp_buf_data (mask_buf);
   buf  = temp_buf_data (return_buf);
-
-  b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
 
   if (pixmap_buf)
     {
@@ -275,16 +266,11 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         {
           for (x = 0; x < brush_width ; x++)
             {
-              bg = (255 - *mask);
-
-              *b++ = bg + (*mask * *pixmap++) / 255;
-              *b++ = bg + (*mask * *pixmap++) / 255;
-              *b++ = bg + (*mask * *pixmap++) / 255;
-
-              mask++;
+              *buf++ = *pixmap++;
+              *buf++ = *pixmap++;
+              *buf++ = *pixmap++;
+              *buf++ = *mask++;
             }
-
-	  b += (return_buf->width - brush_width) * return_buf->bytes;
         }
     }
   else
@@ -293,14 +279,11 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         {
           for (x = 0; x < brush_width ; x++)
             {
-              bg = 255 - *mask++;
-
-              *b++ = bg;
-              *b++ = bg;
-              *b++ = bg;
+              *buf++ = 0;
+              *buf++ = 0;
+              *buf++ = 0;
+              *buf++ = *mask++;
             }
-
-	  b += (return_buf->width - brush_width) * return_buf->bytes;
         }
     }
 

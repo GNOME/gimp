@@ -20,8 +20,6 @@
 #define __GIMP_TOOL_INFO_H__
 
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
 #include "gimpdata.h"
 
 
@@ -37,28 +35,25 @@ typedef struct _GimpToolInfoClass GimpToolInfoClass;
 
 struct _GimpToolInfo
 {
-  GimpData          parent_instance;
+  GimpData         parent_instance;
 
-  Gimp             *gimp;
+  Gimp            *gimp;
 
-  GType             tool_type;
-  GType             tool_options_type;
+  GType            tool_type;
+  GType            tool_options_type;
 
-  gchar            *blurb;
-  gchar            *help;
+  gchar           *blurb;
+  gchar           *help;
 
-  gchar            *menu_path;  
-  gchar            *menu_accel; 
+  gchar           *menu_path;  
+  gchar           *menu_accel; 
 
-  gchar            *help_domain;
-  gchar            *help_data;
+  gchar           *help_domain;
+  gchar           *help_data;
 
-  gchar            *stock_id;
-  GdkPixbuf        *stock_pixbuf;
-
-  gboolean          use_context;
-  GimpToolOptions  *tool_options;
-  GimpPaintInfo    *paint_info;
+  gboolean         use_context;
+  GimpToolOptions *tool_options;
+  GimpPaintInfo   *paint_info;
 };
 
 struct _GimpToolInfoClass
@@ -81,8 +76,7 @@ GimpToolInfo * gimp_tool_info_new          (Gimp         *gimp,
 					    const gchar  *help_domain,
 					    const gchar  *help_data,
                                             const gchar  *paint_core_name,
-					    const gchar  *stock_id,
-					    GdkPixbuf    *stock_pixbuf);
+					    const gchar  *stock_id);
 
 void           gimp_tool_info_set_standard (Gimp         *gimp,
 					    GimpToolInfo *tool_info);

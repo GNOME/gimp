@@ -41,6 +41,8 @@ typedef struct _GimpViewableClass GimpViewableClass;
 struct _GimpViewable
 {
   GimpObject  parent_instance;
+
+  gchar      *stock_id;
 };
 
 struct _GimpViewableClass

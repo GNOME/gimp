@@ -42,7 +42,9 @@ enum
 static void    gimp_viewable_class_init         (GimpViewableClass *klass);
 static void    gimp_viewable_init               (GimpViewable      *viewable);
 
-static gsize   gimp_viewable_get_memsize        (GimpObject        *object);
+static void    gimp_viewable_finalize                (GObject      *object);
+
+static gsize   gimp_viewable_get_memsize             (GimpObject   *object);
 
 static void    gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
 
@@ -93,8 +95,10 @@ gimp_viewable_get_type (void)
 static void
 gimp_viewable_class_init (GimpViewableClass *klass)
 {
+  GObjectClass    *object_class;
   GimpObjectClass *gimp_object_class;
 
+  object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -120,6 +124,8 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  object_class->finalize         = gimp_viewable_finalize;
+
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
   klass->name_changed_signal     = "name_changed";
@@ -135,6 +141,23 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
+  viewable->stock_id = g_strdup ("gtk-dialog-question");
+}
+
+static void
+gimp_viewable_finalize (GObject *object)
+{
+  GimpViewable *viewable;
+
+  viewable = GIMP_VIEWABLE (object);
+
+  if (viewable->stock_id)
+    {
+      g_free (viewable->stock_id);
+      viewable->stock_id = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gsize
