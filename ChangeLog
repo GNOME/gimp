@@ -1,3 +1,8 @@
+2005-03-26  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_lcms.c: disconnect from the config in dispose
+	instead of in finalize.
+
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/bmp/bmpread.c: better error message (bug #171646).

@@ -68,7 +68,7 @@ enum
 static GType  cdisplay_lcms_get_type     (GTypeModule       *module);
 static void   cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
 static void   cdisplay_lcms_init         (CdisplayLcms      *lcms);
-static void   cdisplay_lcms_finalize     (GObject           *object);
+static void   cdisplay_lcms_dispose      (GObject           *object);
 static void   cdisplay_lcms_get_property (GObject           *object,
                                           guint              property_id,
                                           GValue            *value,
@@ -151,7 +151,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = cdisplay_lcms_finalize;
+  object_class->dispose      = cdisplay_lcms_dispose;
   object_class->get_property = cdisplay_lcms_get_property;
   object_class->set_property = cdisplay_lcms_set_property;
 
@@ -176,13 +176,13 @@ cdisplay_lcms_init (CdisplayLcms *lcms)
 }
 
 static void
-cdisplay_lcms_finalize (GObject *object)
+cdisplay_lcms_dispose (GObject *object)
 {
   CdisplayLcms *lcms = CDISPLAY_LCMS (object);
 
   cdisplay_lcms_set_config (lcms, NULL);
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
