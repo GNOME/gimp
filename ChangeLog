@@ -1,7 +1,14 @@
+2003-08-18  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c
+	* libgimpbase/gimpenv.c: changed prefix of environment variables
+	to GIMP2 (bug #118553).
+
+	* docs/gimprc-1.3.5.in: regenerated.
+
 2003-08-18  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* app/composite:
-	  Various beautifications, dead code removal.
+	* app/composite: Various beautifications, dead code removal.
 
 2003-08-18  Michael Natterer  <mitch@gimp.org>
 

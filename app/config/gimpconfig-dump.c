@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpConfig object property dumper. 
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,8 +164,8 @@ static const gchar *system_gimprc_header =
 "documents the default values and shows what changes are possible.\n" 
 "\n"
 "The variable ${gimp_dir} is set to the value of the environment "
-"variable GIMP_DIRECTORY or, if that is not set, the compiled-in "
-"default value is used.  If GIMP_DIRECTORY is not an absolute path, "
+"variable GIMP2_DIRECTORY or, if that is not set, the compiled-in "
+"default value is used.  If GIMP2_DIRECTORY is not an absolute path, "
 "it is interpreted relative to your home directory.";
 
 static void
@@ -264,21 +264,21 @@ static const gchar *man_page_path =
 ".TP\n"
 ".I gimp_dir\n"
 "The personal gimp directory which is set to the value of the environment\n"
-"variable GIMP_DIRECTORY or to ~/@gimpdir@.\n"
+"variable GIMP2_DIRECTORY or to ~/@gimpdir@.\n"
 ".TP\n"
 ".I gimp_data_dir\n"
 "Nase for paths to shareable data, which is set to the value of the\n"
-"environment variable GIMP_DATADIR or to the compiled-in default value\n"
+"environment variable GIMP2_DATADIR or to the compiled-in default value\n"
 "@gimpdatadir@.\n"
 ".TP\n"
 ".I gimp_plug_in_dir\n"
 "Base to paths for architecture-specific plugins and modules, which is set\n"
-"to the value of the environment variable GIMP_PLUGINDIR or to the\n"
+"to the value of the environment variable GIMP2_PLUGINDIR or to the\n"
 "compiled-in default value @gimpplugindir@.\n"
 ".TP\n"
 ".I gimp_sysconf_dir\n"
 "Path to configuration files, which is set to the value of the environment\n"
-"variable GIMP_SYSCONFDIR or to the compiled-in default value \n"
+"variable GIMP2_SYSCONFDIR or to the compiled-in default value \n"
 "@gimpsysconfdir@.\n"
 "\n";
 

@@ -71,13 +71,13 @@ static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
  * gimp_directory:
  *
  * Returns the user-specific GIMP settings directory. If the
- * environment variable GIMP_DIRECTORY exists, it is used. If it is an
- * absolute path, it is used as is.  If it is a relative path, it is
- * taken to be a subdirectory of the home directory. If it is a
+ * environment variable GIMP2_DIRECTORY exists, it is used. If it is
+ * an absolute path, it is used as is.  If it is a relative path, it
+ * is taken to be a subdirectory of the home directory. If it is a
  * relative path, and no home directory can be determined, it is taken
  * to be a subdirectory of gimp_data_directory().
  *
- * The usual case is that no GIMP_DIRECTORY environment variable
+ * The usual case is that no GIMP2_DIRECTORY environment variable
  * exists, and then we use the GIMPDIR subdirectory of the home
  * directory. If no home directory exists, we use a per-user
  * subdirectory of gimp_data_directory().  In any case, we always
@@ -100,7 +100,7 @@ gimp_directory (void)
   if (gimp_dir)
     return gimp_dir;
 
-  env_gimp_dir = g_getenv ("GIMP_DIRECTORY");
+  env_gimp_dir = g_getenv ("GIMP2_DIRECTORY");
   home_dir     = g_get_home_dir ();
 
   if (env_gimp_dir)
@@ -243,11 +243,11 @@ gimp_toplevel_directory ()
 /**
  * gimp_data_directory:
  *
- * Returns the top directory for GIMP data. If the environment variable 
- * GIMP_DATADIR exists, that is used.  It should be an absolute pathname.
- * Otherwise, on Unix the compile-time defined directory is used.  On
- * Win32, the installation directory as deduced from the executable's
- * name is used.
+ * Returns the top directory for GIMP data. If the environment
+ * variable GIMP2_DATADIR exists, that is used.  It should be an
+ * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * directory is used.  On Win32, the installation directory as deduced
+ * from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
  * freed with g_free().
@@ -262,7 +262,7 @@ gimp_data_directory (void)
   if (gimp_data_dir)
     return gimp_data_dir;
 
-  gimp_data_dir = gimp_env_get_dir ("GIMP_DATADIR", DATADIR);
+  gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", DATADIR);
 
   return gimp_data_dir;
 }
@@ -271,7 +271,7 @@ gimp_data_directory (void)
  * gimp_locale_directory:
  *
  * Returns the top directory for GIMP locale files. If the environment
- * variable GIMP_LOCALEDIR exists, that is used.  It should be an
+ * variable GIMP2_LOCALEDIR exists, that is used.  It should be an
  * absolute pathname.  Otherwise, on Unix the compile-time defined
  * directory is used.  On Win32, the installation directory as deduced
  * from the executable's name is used.
@@ -289,7 +289,7 @@ gimp_locale_directory (void)
   if (gimp_locale_dir != NULL)
     return gimp_locale_dir;
 
-  gimp_locale_dir = gimp_env_get_dir ("GIMP_LOCALEDIR", LOCALEDIR);
+  gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", LOCALEDIR);
 
   return gimp_locale_dir;
 }
@@ -298,7 +298,7 @@ gimp_locale_directory (void)
  * gimp_sysconf_directory:
  *
  * Returns the top directory for GIMP config files. If the environment
- * variable GIMP_SYSCONFDIR exists, that is used.  It should be an
+ * variable GIMP2_SYSCONFDIR exists, that is used.  It should be an
  * absolute pathname.  Otherwise, on Unix the compile-time defined
  * directory is used.  On Win32, the installation directory as deduced
  * from the executable's name is used.
@@ -316,7 +316,7 @@ gimp_sysconf_directory (void)
   if (gimp_sysconf_dir != NULL)
     return gimp_sysconf_dir;
 
-  gimp_sysconf_dir = gimp_env_get_dir ("GIMP_SYSCONFDIR", SYSCONFDIR);
+  gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", SYSCONFDIR);
 
   return gimp_sysconf_dir;
 }
@@ -325,7 +325,7 @@ gimp_sysconf_directory (void)
  * gimp_plug_in_directory:
  *
  * Returns the top directory for GIMP plug_ins and modules. If the 
- * environment variable GIMP_PLUGINDIR exists, that is used.  It 
+ * environment variable GIMP2_PLUGINDIR exists, that is used.  It 
  * should be an absolute pathname. Otherwise, on Unix the compile-time 
  * defined directory is used. On Win32, the installation directory as 
  * deduced from the executable's name is used.
@@ -343,7 +343,7 @@ gimp_plug_in_directory (void)
   if (gimp_plug_in_dir)
     return gimp_plug_in_dir;
 
-  gimp_plug_in_dir = gimp_env_get_dir ("GIMP_PLUGINDIR", PLUGINDIR);
+  gimp_plug_in_dir = gimp_env_get_dir ("GIMP2_PLUGINDIR", PLUGINDIR);
 
   return gimp_plug_in_dir;
 }
