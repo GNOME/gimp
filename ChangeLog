@@ -1,3 +1,7 @@
+2001-11-19  Stanislav Brabec  <utx@penguin.cz>
+
+	* tips/gimp_tips.cs.txt: Update and fixes.
+
 2001-11-19  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/Makefile.am: Don't use if !OS_WIN32, automake

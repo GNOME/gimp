@@ -39,7 +39,7 @@ tlaèítka my¹i. A nebojte se, vìt¹inu chyb mù¾ete napravit...
 
 #You can get context-sensitive help for most of the GIMP's features by
 #pressing the F1 key at any time.  This also works inside the menus.
-Kontextovì citlivou nápovìdu k vìt¹inì význaèných vlastností programu
+Kontextovì citlivou nápovìdu k vìt¹inì dùle¾itých funkcí programu
 GIMP získáte kdykoliv stisknutím klávesy F1. Funguje to i v menu.
 
 #The GIMP uses layers to let you organize your image.  Think of them
@@ -60,17 +60,17 @@ na textovém návì¹tí vrstvy v dialogu "Vrstvy, kanály a cesty".
 #Once a project is completed, you can save it as JPEG, PNG, GIF, ...
 Pøi zápisu obrázku, na kterém se bude pozdìji pracovat, je vhodný XCF,
 nativní formát programu GIMP (u¾ívá pøíponu ".xcf").
-Ten zachová vrstvy, a celé vzezøení rozpracovaného dokumentu.
-Po dokonèení projektu lze soubor zapsat jako JPEGm PNG, GIF,...
+Ten zachová vrstvy, a celý vzhled rozpracovaného dokumentu.
+Po dokonèení projektu lze soubor zapsat jako JPEG, PNG, GIF,...
 
-#The layer named "Background" it special because it lacks transparency.
+#The layer named "Background" is special because it lacks transparency.
 #This prevents you from adding a layer mask or moving the layer up in
 #the stack.  You may add transparency to it by right-clicking in the
 #"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
-Vrstvy "Pozadí" je zvlá¹tní, proto¾e jí chybí prùhlednost. To
-znemo¾òuje pøidat masku vrstvy nebo posunout vrstvu vý¹ ve stohu.
-Prùhlednost lze pøidat poklepem na pravé tlaèítko v dialogu "Vrstvy,
-kanály a cesty" a volbou "Pøidat alfa kanál".
+Vrstva "Pozadí" je zvlá¹tní, proto¾e není prùhledná. To znemo¾òuje
+pøidat masku vrstvy nebo posunout vrstvu vý¹ ve stohu. Prùhlednost
+lze pøidat poklepem na pravé tlaèítko v dialogu "Vrstvy, kanály
+a cesty" a volbou "Pøidat alfa kanál".
 
 #Most plug-ins work on the current layer of the current image.  In
 #some cases, you will have to merge all layers (Layers->Flatten Image)
@@ -102,10 +102,10 @@ do obrázku vyplní aktuální obrázek nebo výbìr touto barvou.
 #Shift-click will draw a straight line from your last drawing
 #point to your current cursor position.  If you also press Ctrl,
 #the line will be constrained to 15 degree angles.
-Pøi pou¾ití kreslicího nástroje (©tìtce, Rozpra¹ovaèe nebo Tu¾ky),
+Pøi pou¾ití kreslicího nástroje (©tìtce, Rozpra¹ovaèe nebo Tu¾ky)
 klepnutí s Pøeøaïovaèem nakreslí rovnou èáru mezi posledním
 kresleným místem a nynìj¹í polohou kurzoru. Pokud se stiskne
-i Control, èára bude navíc kreslená jen v 15stupòových krocích.
+i Control, èára bude navíc kreslená jen v 15stupòových skocích.
 
 #The file selection dialog box has command-line completion with
 #Tab, just like the shell.  Type part of a filename, hit tab, and voila!
@@ -117,7 +117,7 @@ a je to! Dokonèené.
 #You can reassign shortcut keys on any menu by bringing up the menu,
 #selecting a menu item, and pressing the new shortcut key combination.
 #This is dynamic and is saved when you exit GIMP.
-Je mo¾né zmìnit klávesové zkratky pro kterékoliv menu souèasným
+Pro kterékoliv menu je mo¾né zmìnit klávesovou zkratku souèasným
 výbìrem polo¾ky menu a stisknutím nové klávesové kombinace. Zmìna
 je dynamická a je zapsána pøi opu¹tìní programu GIMP.
 
@@ -162,8 +162,8 @@ i ètení obrázkù.
 #you to add to the current selection instead of replacing it.  Using
 #Ctrl before making a selection subtracts from the current one.
 Stisknutí a dr¾ení Pøeøaïovaèe pøed provedením výbìru umo¾òuje
-pøidávat do výbìru namísto zmìny výbìru. Naproti tomu pomocí
-Control lze pøed provedením výbìru z nìj lze ubírat.
+namísto zmìny výbìru do výbìru pøidávat. Naproti tomu pomocí
+Control pøed provedením výbìru z nìj lze lze ubírat.
 
 #You can press or release the Shift and Ctrl keys while you are
 #making a selection in order to constrain it to a perfect square
@@ -245,15 +245,15 @@ pøepíná pøímé zobrazení masky.
 Stiskem Alt-Tab lze cyklovat pøes v¹echny vrstvy v obrázku
 (pokud tuto kombinaci neodchytává správce oken...).
 
-#Shift-click with the Bucket Fill tool to have it use 
+#Ctrl-click with the Bucket Fill tool to have it use 
 #the background color instead of the foreground color.
-Klepnutí s Pøeøaïovaèem pøi vyplòování z Plechovky
-zpùsobí vyplòování barvou pozadí namísto popøedí.
+Klepnutím s Control bude vyplòování z Plechovky
+vyplòovat barvou pozadí namísto barvy popøedí.
 
 #Control-drag with the Transform tool in rotation mode 
 #will constrain the rotation to 15 degree angles.
 Pota¾ení s Controlem v nástroji Transformace v re¾imu
-rotace zpùsobí rotaci v 15stupòových skocích.
+rotace omezí úhel na 15stupòové skoky.
 
 #You can adjust and re-place a selection by using Alt-drag.
 Výbìr lze doladit a pøemístit pomocí pota¾ení s Altem.
@@ -265,7 +265,7 @@ Výbìr lze doladit a pøemístit pomocí pota¾ení s Altem.
 Pokud se písma zobrazují jako bloky, je to proto, ¾e nejsou vektorová.
 Vìt¹ina X serverù podporuje Postscriptová vektorová písma Type 1.
 Nahrajte a nainstalujte je. Nìkteré servery písem umo¾òují pou¾ívat
-té¾ TrueType (.ttf) písma, která jsou té¾ vektorová.
+TrueType (.ttf) písma, která jsou té¾ vektorová.
 
 #To create a perfect circle, hold Shift while doing an ellipse select. To
 #place a circle precisely, drag horizontal and vertical guides tangent to
