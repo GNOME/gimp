@@ -196,6 +196,7 @@ fi
 $AUTOMAKE --add-missing $am_opt
 autoconf
 
+libtoolize --copy --force
 glib-gettextize --copy --force
 intltoolize --copy --force --automake
 

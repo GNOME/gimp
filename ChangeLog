@@ -1,3 +1,8 @@
+2002-10-01  Manish Singh  <yosh@gimp.org>
+
+	* autogen.sh: call libtoolize explictly, since newer automakes
+	don't run it for us anymore
+
 2002-09-30  Simon Budig  <simon@gimp.org>
 
 	* data/brushes/1circle.gbr: fixed the default spacing, so that
