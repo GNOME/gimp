@@ -58,6 +58,7 @@ EXTRA_DIST = \
 	pixmaps/penstroke.xpm	\
 	pixmaps/qmasksel.xpm	\
 	pixmaps/qmasknosel.xpm	\
+	pixmaps/question.xpm	\
 	pixmaps/topath.xpm	\
 	pixmaps/toselection.xpm	\
 	pixmaps/yes.xpm         \

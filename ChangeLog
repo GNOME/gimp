@@ -1,3 +1,8 @@
+Tue Nov  2 17:36:21 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* pixmaps/question.xpm: fake one from alt's screenshot since he
+	forgot to cvs add
+
 Tue Nov  2 22:50:31 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/undo.h
