@@ -48,8 +48,6 @@
 #include "gimp-intl.h"
 
 
-
-
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
 static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
 
@@ -184,10 +182,13 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   sel_tool = GIMP_SELECTION_TOOL (tool);
   options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  rect_sel->x = RINT (coords->x);
-  rect_sel->y = RINT (coords->y);
-  rect_sel->w = 0;
-  rect_sel->h = 0;
+  rect_sel->x      = RINT (coords->x);
+  rect_sel->y      = RINT (coords->y);
+  rect_sel->w      = 0;
+  rect_sel->h      = 0;
+  rect_sel->center = FALSE;
+
+  rect_sel->last_coords = *coords;
 
   rect_sel->fixed_mode   = options->fixed_mode;
   rect_sel->fixed_width  = options->fixed_width;
@@ -215,8 +216,6 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   rect_sel->fixed_width  = MAX (1, rect_sel->fixed_width);
   rect_sel->fixed_height = MAX (1, rect_sel->fixed_height);
-
-  rect_sel->center = FALSE;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -338,124 +337,138 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /* Calculate starting point */
-
-  if (rect_sel->center)
+  if (state & GDK_MOD1_MASK)
     {
-      ox = rect_sel->x + rect_sel->w / 2;
-      oy = rect_sel->y + rect_sel->h / 2;
+      /*  Just move the selection rectangle around  */
+
+      rect_sel->x += RINT (coords->x - rect_sel->last_coords.x);
+      rect_sel->y += RINT (coords->y - rect_sel->last_coords.y);
     }
   else
     {
-      ox = rect_sel->x;
-      oy = rect_sel->y;
-    }
+      /*  Change the selection rectangle's size  */
 
-  switch (rect_sel->fixed_mode)
-    {
-    case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
-      w = (RINT (coords->x) - ox > 0 ?
-           rect_sel->fixed_width  : -rect_sel->fixed_width);
+      /*  Calculate starting point  */
 
-      h = (RINT (coords->y) - oy > 0 ?
-           rect_sel->fixed_height : -rect_sel->fixed_height);
-      break;
-
-    case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
-      ratio = ((gdouble) rect_sel->fixed_height /
-               (gdouble) rect_sel->fixed_width);
-      tw = RINT (coords->x) - ox;
-      th = RINT (coords->y) - oy;
-
-      /* This is probably an inefficient way to do it, but it gives
-       * nicer, more predictable results than the original agorithm
-       */
-      if ((abs (th) < (ratio * abs (tw))) &&
-          (abs (tw) > (abs (th) / ratio)))
+      if (rect_sel->center)
         {
-          w = tw;
-          h = (gint) (tw * ratio);
-          /* h should have the sign of th */
-          if ((th < 0 && h > 0) || (th > 0 && h < 0))
-            h = -h;
+          ox = rect_sel->x + rect_sel->w / 2;
+          oy = rect_sel->y + rect_sel->h / 2;
         }
-      else 
+      else
         {
-          h = th;
-          w = (gint) (th / ratio);
-          /* w should have the sign of tw */
-          if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
-            w = -w;
+          ox = rect_sel->x;
+          oy = rect_sel->y;
         }
-      break;
-
-    default:
-      w = (RINT (coords->x) - ox);
-      h = (RINT (coords->y) - oy);
-      break;
-    }
-
-  /* If the shift key is down, then make the rectangle square (or
-   * ellipse circular)
-   */
-  if ((state & GDK_SHIFT_MASK) &&
-      rect_sel->fixed_mode == GIMP_RECT_SELECT_MODE_FREE)
-    {
-      s = MAX (abs (w), abs (h));
-
-      if (w < 0)
-	w = -s;
-      else
-	w = s;
-
-      if (h < 0)
-	h = -s;
-      else
-	h = s;
-    }
-
-  /*  If the control key is down, create the selection from the center out
-   */
-  if (state & GDK_CONTROL_MASK)
-    {
-      rect_sel->center = TRUE;
 
       switch (rect_sel->fixed_mode)
         {
         case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
-          rect_sel->x = ox - w / 2;
-          rect_sel->y = oy - h / 2;
-          rect_sel->w = w;
-          rect_sel->h = h;
+          w = (RINT (coords->x) - ox > 0 ?
+               rect_sel->fixed_width  : -rect_sel->fixed_width);
+
+          h = (RINT (coords->y) - oy > 0 ?
+               rect_sel->fixed_height : -rect_sel->fixed_height);
           break;
 
         case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
-          rect_sel->x = ox - w;
-          rect_sel->y = oy - h;
-          rect_sel->w = w * 2;
-          rect_sel->h = h * 2;
+          ratio = ((gdouble) rect_sel->fixed_height /
+                   (gdouble) rect_sel->fixed_width);
+          tw = RINT (coords->x) - ox;
+          th = RINT (coords->y) - oy;
+
+          /* This is probably an inefficient way to do it, but it gives
+           * nicer, more predictable results than the original agorithm
+           */
+          if ((abs (th) < (ratio * abs (tw))) &&
+              (abs (tw) > (abs (th) / ratio)))
+            {
+              w = tw;
+              h = (gint) (tw * ratio);
+              /* h should have the sign of th */
+              if ((th < 0 && h > 0) || (th > 0 && h < 0))
+                h = -h;
+            }
+          else 
+            {
+              h = th;
+              w = (gint) (th / ratio);
+              /* w should have the sign of tw */
+              if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
+                w = -w;
+            }
           break;
 
         default:
-	  w = abs (w);
-	  h = abs (h);
-
-	  rect_sel->x = ox - w;
-	  rect_sel->y = oy - h;
-	  rect_sel->w = 2 * w + 1;
-	  rect_sel->h = 2 * h + 1;
+          w = (RINT (coords->x) - ox);
+          h = (RINT (coords->y) - oy);
           break;
         }
-    }
-  else
-    {
-      rect_sel->center = FALSE;
 
-      rect_sel->x = ox;
-      rect_sel->y = oy;
-      rect_sel->w = w;
-      rect_sel->h = h;
+      /* If the shift key is down, then make the rectangle square (or
+       * ellipse circular)
+       */
+      if ((state & GDK_SHIFT_MASK) &&
+          rect_sel->fixed_mode == GIMP_RECT_SELECT_MODE_FREE)
+        {
+          s = MAX (abs (w), abs (h));
+
+          if (w < 0)
+            w = -s;
+          else
+            w = s;
+
+          if (h < 0)
+            h = -s;
+          else
+            h = s;
+        }
+
+      /*  If the control key is down, create the selection from the center out
+       */
+      if (state & GDK_CONTROL_MASK)
+        {
+          rect_sel->center = TRUE;
+
+          switch (rect_sel->fixed_mode)
+            {
+            case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
+              rect_sel->x = ox - w / 2;
+              rect_sel->y = oy - h / 2;
+              rect_sel->w = w;
+              rect_sel->h = h;
+              break;
+
+            case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
+              rect_sel->x = ox - w;
+              rect_sel->y = oy - h;
+              rect_sel->w = w * 2;
+              rect_sel->h = h * 2;
+              break;
+
+            default:
+              w = abs (w);
+              h = abs (h);
+
+              rect_sel->x = ox - w;
+              rect_sel->y = oy - h;
+              rect_sel->w = 2 * w + 1;
+              rect_sel->h = 2 * h + 1;
+              break;
+            }
+        }
+      else
+        {
+          rect_sel->center = FALSE;
+
+          rect_sel->x = ox;
+          rect_sel->y = oy;
+          rect_sel->w = w;
+          rect_sel->h = h;
+        }
     }
+
+  rect_sel->last_coords = *coords;
 
   gimp_rect_select_tool_update_options (rect_sel, gdisp);
 

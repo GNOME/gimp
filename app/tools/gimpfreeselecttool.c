@@ -74,6 +74,9 @@ static void   gimp_free_select_tool_draw           (GimpDrawTool    *draw_tool);
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gdouble             x,
                                                     gdouble             y);
+static void   gimp_free_select_tool_move_points    (GimpFreeSelectTool *free_sel,
+                                                    gdouble             dx,
+                                                    gdouble             dy);
 
 
 static GimpSelectionToolClass *parent_class = NULL;
@@ -162,7 +165,6 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_FREE_SELECT_TOOL_CURSOR);
 
-
   free_select->points     = NULL;
   free_select->num_points = 0;
   free_select->max_segs   = 0;
@@ -213,7 +215,8 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
       break;
     }
 
-  free_sel->num_points = 0;
+  free_sel->last_coords = *coords;
+  free_sel->num_points  = 0;
 
   gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
 
@@ -287,14 +290,29 @@ gimp_free_select_tool_motion (GimpTool        *tool,
       gimp_tool_cursor_update (tool, coords, state, gdisp);
     }
 
-  gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
+  if (state & GDK_MOD1_MASK)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_draw_tool_draw_line (GIMP_DRAW_TOOL (tool),
-                            free_sel->points[free_sel->num_points - 2].x,
-                            free_sel->points[free_sel->num_points - 2].y,
-                            free_sel->points[free_sel->num_points - 1].x,
-                            free_sel->points[free_sel->num_points - 1].y,
-                            FALSE);
+      gimp_free_select_tool_move_points (free_sel,
+                                         coords->x - free_sel->last_coords.x,
+                                         coords->y - free_sel->last_coords.y);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
+  else
+    {
+      gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
+
+      gimp_draw_tool_draw_line (GIMP_DRAW_TOOL (tool),
+                                free_sel->points[free_sel->num_points - 2].x,
+                                free_sel->points[free_sel->num_points - 2].y,
+                                free_sel->points[free_sel->num_points - 1].x,
+                                free_sel->points[free_sel->num_points - 1].y,
+                                FALSE);
+    }
+
+  free_sel->last_coords = *coords;
 }
 
 static void
@@ -333,4 +351,18 @@ gimp_free_select_tool_add_point (GimpFreeSelectTool *free_sel,
   free_sel->points[free_sel->num_points].y = y;
 
   free_sel->num_points++;
+}
+
+static void
+gimp_free_select_tool_move_points (GimpFreeSelectTool *free_sel,
+                                   gdouble             dx,
+                                   gdouble             dy)
+{
+  gint i;
+
+  for (i = 0; i < free_sel->num_points; i++)
+    {
+      free_sel->points[i].x += dx;
+      free_sel->points[i].y += dy;
+    }
 }

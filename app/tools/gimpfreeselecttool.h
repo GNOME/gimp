@@ -38,6 +38,8 @@ struct _GimpFreeSelectTool
 {
   GimpSelectionTool  parent_instance;
 
+  GimpCoords         last_coords;
+
   GimpVector2       *points;
   gint               num_points;
   gint               max_segs;

@@ -1,5 +1,14 @@
 2003-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimprectselecttool.[ch]: added the possibility to
+	<alt>+drag the whole selection preview line *while* creating the
+	selection. Used a modified version of
+	http://aeropc5.hut.fi/~mjkorhon/gimp-move-selection.patch (found
+	in the mailing list archives). Fixes bug #87688.
+
+2003-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/select-commands.c (select_save_cmd_callback): switch
 	to the "Channels" tab after adding the new channel.
 	Fixes bug #101970.

@@ -43,6 +43,8 @@ struct _GimpRectSelectTool
   gint               center;      /*  is the selection being created from the
                                    *  center out?  */
 
+  GimpCoords         last_coords; /*  last button_press/motion coords  */
+
   GimpRectSelectMode fixed_mode;
   gdouble            fixed_width;
   gdouble            fixed_height;
