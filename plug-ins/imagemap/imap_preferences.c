@@ -30,6 +30,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "imap_command.h"
 #include "imap_file.h"

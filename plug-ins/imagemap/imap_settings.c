@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "imap_browse.h"
 #include "imap_main.h"
 #include "imap_settings.h"

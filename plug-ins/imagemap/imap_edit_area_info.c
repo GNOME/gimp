@@ -26,8 +26,9 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "imap_browse.h"
 #include "imap_commands.h"
@@ -88,7 +89,7 @@ set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
       if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED) {
 	 char *p;
 	 gchar *url = g_strdup(gtk_entry_get_text(GTK_ENTRY(param->url)));
-	 
+
 	 p = strstr(url, "//");    /* 'http://' */
 	 if (p) {
 	    p += 2;
@@ -171,7 +172,7 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
    icon = gtk_image_new_from_stock (icon_name, GTK_ICON_SIZE_MENU);
    gtk_container_add (GTK_CONTAINER (hbox), icon);
    gtk_widget_show (icon);
-   
+
    label = gtk_label_new_with_mnemonic(label_name);
    gtk_container_add (GTK_CONTAINER (hbox), label);
    gtk_widget_show (label);
@@ -191,7 +192,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
-   
+
    frame = gimp_frame_new(_("Link Type"));
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
    gtk_widget_show(frame);
@@ -200,51 +201,51 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_container_add(GTK_CONTAINER(frame), subtable);
    gtk_widget_show(subtable);
 
-   dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0, 
+   dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0,
 						   _("_Web Site"));
-   g_signal_connect(dialog->web_site, "toggled", 
+   g_signal_connect(dialog->web_site, "toggled",
                     G_CALLBACK (select_web_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
-   dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1, 
+   dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1,
 						   _("_Ftp Site"));
-   g_signal_connect(dialog->ftp_site, "toggled", 
+   g_signal_connect(dialog->ftp_site, "toggled",
                     G_CALLBACK (select_ftp_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
-   dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2, 
+   dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2,
 						 _("_Gopher"));
-   g_signal_connect(dialog->gopher, "toggled", 
+   g_signal_connect(dialog->gopher, "toggled",
                     G_CALLBACK (select_gopher_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->gopher));
 
-   dialog->other = create_radio_button_in_table(subtable, group, 0, 3, 
+   dialog->other = create_radio_button_in_table(subtable, group, 0, 3,
 						_("Ot_her"));
-   g_signal_connect(dialog->other, "toggled", 
+   g_signal_connect(dialog->other, "toggled",
                     G_CALLBACK (select_other_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->other));
 
-   dialog->file = create_radio_button_in_table(subtable, group, 1, 0, 
+   dialog->file = create_radio_button_in_table(subtable, group, 1, 0,
 					       _("F_ile"));
-   g_signal_connect(dialog->file, "toggled", 
+   g_signal_connect(dialog->file, "toggled",
                     G_CALLBACK (select_file_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->file));
 
-   dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, 
+   dialog->wais = create_radio_button_in_table(subtable, group, 1, 1,
 					       _("WAI_S"));
-   g_signal_connect(dialog->wais, "toggled", 
+   g_signal_connect(dialog->wais, "toggled",
                     G_CALLBACK (select_wais_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->wais));
 
-   dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2, 
+   dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2,
 						 _("Tel_net"));
-   g_signal_connect(dialog->telnet, "toggled", 
+   g_signal_connect(dialog->telnet, "toggled",
                     G_CALLBACK (select_telnet_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->telnet));
 
-   dialog->email = create_radio_button_in_table(subtable, group, 1, 3, 
+   dialog->email = create_radio_button_in_table(subtable, group, 1, 3,
 						_("e-_mail"));
-   g_signal_connect(dialog->email, "toggled", 
+   g_signal_connect(dialog->email, "toggled",
                     G_CALLBACK (select_email_cb), (gpointer) dialog);
 
    label = create_label_in_table(
@@ -255,13 +256,13 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
    gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
    dialog->url = browse->file;
-   g_signal_connect(dialog->url, "changed", G_CALLBACK(url_changed), 
+   g_signal_connect(dialog->url, "changed", G_CALLBACK(url_changed),
 		    dialog);
    gtk_label_set_mnemonic_widget(GTK_LABEL(label), dialog->url);
 
-   dialog->relative_link = create_check_button_in_table(table, 4, 0, 
+   dialog->relative_link = create_check_button_in_table(table, 4, 0,
 							_("Relati_ve link"));
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->relative_link), 
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->relative_link),
 				TRUE);
 
    label = create_label_in_table(
@@ -272,7 +273,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_table(table, 9, 0, _("ALT te_xt: (optional)"));
    dialog->comment = create_entry_in_table(table, label, 10, 0);
 
-   append_page (notebook, table, IMAP_STOCK_LINK, _("_Link")); 
+   append_page (notebook, table, IMAP_STOCK_LINK, _("_Link"));
 }
 
 static void
@@ -301,7 +302,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
    GtkWidget *vbox, *frame, *preview;
    Object_t *obj = dialog->obj;
-   
+
    vbox = gtk_vbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
    gtk_widget_show(vbox);
@@ -311,7 +312,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(frame);
 
    preview = gtk_check_button_new_with_mnemonic(_("Pre_view"));
-   g_signal_connect(preview, "toggled", 
+   g_signal_connect(preview, "toggled",
                     G_CALLBACK (toggle_preview_cb), (gpointer) dialog);
    gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
    gtk_widget_show(preview);
@@ -319,14 +320,14 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    dialog->infotab = obj->class->create_info_widget(frame);
 
    append_page (notebook, vbox, obj->class->get_stock_icon_name (),
-		gettext (obj->class->name)); 
+		gettext (obj->class->name));
 }
 
 static void
 create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
    GtkWidget *vbox, *table, *label;
-   
+
    vbox = gtk_vbox_new(FALSE, 1);
    gtk_widget_show(vbox);
 
@@ -335,7 +336,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
-   
+
    label = create_label_in_table(table, 0, 0, "o_nMouseover:");
    dialog->mouse_over = create_entry_in_table(table, label, 1, 0);
 
@@ -375,7 +376,7 @@ edit_area_apply_cb(gpointer data)
    object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->url)));
    object_set_target(obj, gtk_entry_get_text(GTK_ENTRY(param->target)));
    object_set_comment(obj, gtk_entry_get_text(GTK_ENTRY(param->comment)));
-   object_set_mouse_over(obj, 
+   object_set_mouse_over(obj,
 			 gtk_entry_get_text(GTK_ENTRY(param->mouse_over)));
    object_set_mouse_out(obj, gtk_entry_get_text(GTK_ENTRY(param->mouse_out)));
    object_set_focus(obj, gtk_entry_get_text(GTK_ENTRY(param->focus)));
@@ -423,7 +424,7 @@ edit_area_cancel_cb(gpointer data)
 }
 
 static void
-switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num, 
+switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
 	    gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
@@ -454,10 +455,10 @@ create_edit_area_info_dialog(Object_t *obj)
 
    data->notebook = notebook = gtk_notebook_new();
    gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   g_signal_connect_after(notebook, "switch_page", 
+   g_signal_connect_after(notebook, "switch_page",
                           G_CALLBACK(switch_page), (gpointer) data);
 
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox), 
+   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox),
 		      notebook, TRUE, TRUE, 10);
    create_link_tab(data, notebook);
    create_info_tab(data, notebook);
@@ -468,7 +469,7 @@ create_edit_area_info_dialog(Object_t *obj)
 }
 
 void
-edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj, 
+edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
 			   gboolean add)
 {
    gchar *title;
@@ -488,10 +489,10 @@ edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
    gtk_entry_set_text(GTK_ENTRY(dialog->blur), obj->blur);
    gtk_widget_grab_focus(dialog->url);
 
-   dialog->geometry_cb_id = 
+   dialog->geometry_cb_id =
       object_list_add_geometry_cb(obj->list, geometry_changed, dialog);
 
-   title = g_strdup_printf (_("Area #%d Settings"), 
+   title = g_strdup_printf (_("Area #%d Settings"),
 			    object_get_position_in_list(obj) + 1);
    default_dialog_set_title(dialog->dialog, title);
    g_free (title);

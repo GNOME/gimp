@@ -1,3 +1,10 @@
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_cmd_gimp_guides.c
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_settings.c: need to include gimpwidgets.h.
+
 2004-05-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.h
