@@ -34,6 +34,13 @@
 
 2003-02-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c: fixed some obvious problems
+	like drawing outside the expose_event handler and not returning a
+	value from event handlers. This code really is a mess :(
+
+2003-02-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/uniteditor.c: argh, the "cell-background-gdk"
 	property was introduced in GTK+-2.2. Added a run-time version check.
 
