@@ -349,9 +349,9 @@ void  extract_from_region                 (PixelRegion *src,
 
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
-                                           gint                *matrix,
+                                           gfloat              *matrix,
                                            gint                 size,
-                                           gint                 divisor,
+                                           gdouble              divisor,
                                            GimpConvolutionType  mode);
 
 void  multiply_alpha_region               (PixelRegion *srcR);

@@ -1,5 +1,12 @@
 2004-05-31  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpconvolve.c
+	* app/paint-funcs/paint-funcs.[ch]
+	* app/tools/gimpiscissorstool.c: applied a patch from Philip
+	Lafleur that fixes RGBA resampling in Convolve tool (bug #72878).
+
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_cmd_gimp_guides.c
 	* plug-ins/imagemap/imap_edit_area_info.c
 	* plug-ins/imagemap/imap_preferences.c

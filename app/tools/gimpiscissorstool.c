@@ -234,21 +234,21 @@ static guchar  maxgrad_conv1[TILE_WIDTH * TILE_HEIGHT * 4] = "";
 static guchar  maxgrad_conv2[TILE_WIDTH * TILE_HEIGHT * 4] = "";
 
 
-static gint horz_deriv[9] =
+static gfloat horz_deriv[9] =
 {
   1, 0, -1,
   2, 0, -2,
   1, 0, -1,
 };
 
-static gint vert_deriv[9] =
+static gfloat vert_deriv[9] =
 {
   1, 2, 1,
   0, 0, 0,
   -1, -2, -1,
 };
 
-static gint blur_32[9] =
+static gfloat blur_32[9] =
 {
   1, 1, 1,
   1, 24, 1,

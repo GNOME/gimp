@@ -55,35 +55,31 @@ typedef enum
 } ConvolveClipType;
 
 
-static void   gimp_convolve_class_init       (GimpConvolveClass   *klass);
-static void   gimp_convolve_init             (GimpConvolve        *convolve);
+static void    gimp_convolve_class_init       (GimpConvolveClass   *klass);
+static void    gimp_convolve_init             (GimpConvolve        *convolve);
 
-static void   gimp_convolve_paint            (GimpPaintCore       *paint_core,
-                                              GimpDrawable        *drawable,
-                                              GimpPaintOptions    *paint_options,
-                                              GimpPaintCoreState   paint_state,
-                                              guint32              time);
-static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
-                                              GimpDrawable        *drawable,
-                                              GimpPaintOptions    *paint_options);
+static void    gimp_convolve_paint            (GimpPaintCore       *paint_core,
+                                               GimpDrawable        *drawable,
+                                               GimpPaintOptions    *paint_options,
+                                               GimpPaintCoreState   paint_state,
+                                               guint32              time);
+static void    gimp_convolve_motion           (GimpPaintCore       *paint_core,
+                                               GimpDrawable        *drawable,
+                                               GimpPaintOptions    *paint_options);
 
-static void   gimp_convolve_calculate_matrix (GimpConvolveType     type,
-                                              gdouble              rate);
-static void   gimp_convolve_integer_matrix   (const gfloat        *source,
-                                              gint                *dest,
-                                              gint                 size);
-static void   gimp_convolve_copy_matrix      (const gfloat        *src,
-                                              gfloat              *dest,
-                                              gint                 size);
-static gint   gimp_convolve_sum_matrix       (const gint          *matrix,
-                                              gint                 size);
+static void    gimp_convolve_calculate_matrix (GimpConvolveType     type,
+                                               gdouble              rate);
+static void    gimp_convolve_copy_matrix      (const gfloat        *src,
+                                               gfloat              *dest,
+                                               gint                 size);
+static gdouble gimp_convolve_sum_matrix       (const gfloat        *matrix,
+                                               gint                 size);
 
 
-static gint matrix[25];
-static gint matrix_size;
-static gint matrix_divisor;
+static gint    matrix_size;
+static gdouble matrix_divisor;
 
-static gfloat custom_matrix[25] =
+static gfloat matrix[25] =
 {
   0, 0, 0, 0, 0,
   0, 0, 0, 0, 0,
@@ -439,7 +435,7 @@ static void
 gimp_convolve_calculate_matrix (GimpConvolveType type,
                                 gdouble          rate)
 {
-  gfloat percent;
+  gdouble percent;
 
   /*  find percent of tool pressure  */
   percent = MIN (rate / 100.0, 1.0);
@@ -450,13 +446,13 @@ gimp_convolve_calculate_matrix (GimpConvolveType type,
     case GIMP_BLUR_CONVOLVE:
       matrix_size = 5;
       blur_matrix[12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
-      gimp_convolve_copy_matrix (blur_matrix, custom_matrix, matrix_size);
+      gimp_convolve_copy_matrix (blur_matrix, matrix, matrix_size);
       break;
 
     case GIMP_SHARPEN_CONVOLVE:
       matrix_size = 5;
       sharpen_matrix[12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
-      gimp_convolve_copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
+      gimp_convolve_copy_matrix (sharpen_matrix, matrix, matrix_size);
       break;
 
     case GIMP_CUSTOM_CONVOLVE:
@@ -464,24 +460,10 @@ gimp_convolve_calculate_matrix (GimpConvolveType type,
       break;
     }
 
-  gimp_convolve_integer_matrix (custom_matrix, matrix, matrix_size);
   matrix_divisor = gimp_convolve_sum_matrix (matrix, matrix_size);
 
   if (!matrix_divisor)
-    matrix_divisor = 1;
-}
-
-static void
-gimp_convolve_integer_matrix (const gfloat *source,
-                              gint         *dest,
-                              gint          size)
-{
-  gint i;
-
-#define PRECISION  10000
-
-  for (i = 0; i < size*size; i++)
-    *dest++ = (gint) (*source ++ * PRECISION);
+    matrix_divisor = 1.0;
 }
 
 static void
@@ -489,20 +471,18 @@ gimp_convolve_copy_matrix (const gfloat *src,
                            gfloat       *dest,
                            gint          size)
 {
-  gint i;
-
-  for (i = 0; i < size*size; i++)
+  size *= size;
+  while (size --)
     *dest++ = *src++;
 }
 
-static gint
-gimp_convolve_sum_matrix (const gint *matrix,
-                          gint        size)
+static gdouble
+gimp_convolve_sum_matrix (const gfloat *matrix,
+                          gint          size)
 {
-  gint sum = 0;
+  gdouble sum = 0.0;
 
   size *= size;
-
   while (size --)
     sum += *matrix++;
 

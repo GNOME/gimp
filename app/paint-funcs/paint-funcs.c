@@ -2358,27 +2358,30 @@ extract_from_region (PixelRegion *src,
 
 
 void
-convolve_region (PixelRegion             *srcR,
-                 PixelRegion             *destR,
-                 gint                     *matrix,
-                 gint                      size,
-                 gint                      divisor,
+convolve_region (PixelRegion         *srcR,
+                 PixelRegion         *destR,
+                 gfloat              *matrix,
+                 gint                 size,
+                 gdouble              divisor,
                  GimpConvolutionType  mode)
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
-  guchar *src, *s_row, *s;
-  guchar *dest, *d;
-  gint   *m;
-  gint    total [4];
-  gint    b, bytes;
-  gint    length;
-  gint    wraparound;
-  gint    margin;      /*  margin imposed by size of conv. matrix  */
-  gint    i, j;
-  gint    x, y;
-  gint    offset;
-
+  guchar  *src, *s_row, *s;
+  guchar  *dest, *d;
+  gfloat  *m;
+  gdouble  total [4];
+  gint     b, bytes;
+  gint     alpha, a_byte;
+  gint     length;
+  gint     wraparound;
+  gint     margin;      /*  margin imposed by size of conv. matrix  */
+  gint     i, j;
+  gint     x, y;
+  gint     offset;
+  gdouble  matrixsum = 0.0;
+  gdouble  weighted_divisor, mult_alpha;
+  
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == GIMP_NEGATIVE_CONVOL)
     {
@@ -2394,10 +2397,25 @@ convolve_region (PixelRegion             *srcR,
 
   /*  Initialize some values  */
   bytes = srcR->bytes;
+  a_byte = bytes - 1;
   length = bytes * srcR->w;
   margin = size / 2;
   src = srcR->data;
   dest = destR->data;
+
+  if (HAS_ALPHA (bytes))
+    {
+      m = matrix;
+      i = size;
+      while (i --)
+        {
+          j = size;
+          while (j --)
+            matrixsum += *m++;
+        }
+      if (matrixsum == 0.0)
+        matrixsum = 1.0;
+    } 
 
   /*  calculate the source wraparound value  */
   wraparound = srcR->rowstride - size * bytes;
@@ -2411,7 +2429,7 @@ convolve_region (PixelRegion             *srcR,
     }
 
   src = srcR->data;
-
+  
   for (y = margin; y < srcR->h - margin; y++)
     {
       s_row = src;
@@ -2425,42 +2443,113 @@ convolve_region (PixelRegion             *srcR,
 
       /* now, handle the center pixels */
       x = srcR->w - margin*2;
-      while (x--)
-        {
-          s = s_row;
 
-          m = matrix;
-          total [0] = total [1] = total [2] = total [3] = 0;
-          i = size;
-          while (i --)
-            {
-              j = size;
-              while (j --)
-                {
-                  for (b = 0; b < bytes; b++)
-                    total [b] += *m * *s++;
-                  m ++;
-                }
+      if (HAS_ALPHA (bytes))
+        while (x--)
+          {
+            s = s_row;
 
-              s += wraparound;
-            }
+            m = matrix;
+            total [0] = total [1] = total [2] = total [3] = 0.0;
+            weighted_divisor = 0.0;
+              
+            i = size;
+            while (i --)
+              {
+                j = size;
+                while (j --)
+                  {
+                    alpha = s [a_byte];
 
-          for (b = 0; b < bytes; b++)
-            {
-              total [b] = total [b] / divisor + offset;
+                    if (alpha && *m)
+                      {
+                        if (alpha == 255)
+                          {
+                            weighted_divisor += *m;
 
-              if (total [b] < 0 && mode != GIMP_NORMAL_CONVOL)
-                total [b] = - total [b];
+                            for (b = 0; b < a_byte; b++)
+                              total [b] += *m * *s++;
+                          }
+                        else
+                          {
+                            mult_alpha = *m * (alpha / 255.0);
+                            weighted_divisor += mult_alpha;
 
-              if (total [b] < 0)
-                *d++ = 0;
-              else
-                *d++ = (total [b] > 255) ? 255 : (guchar) total [b];
-            }
+                            for (b = 0; b < a_byte; b++)
+                              total [b] += mult_alpha * *s++;
+                          }
+                        total [a_byte] += *m * *s++;
+                      }
+                    else
+                      s += bytes;
+                      
+                    m ++;
+                  }
 
-          s_row += bytes;
+                s += wraparound;
+              }
 
-        }
+            if (weighted_divisor == 0.0)
+              weighted_divisor = 1.0;
+
+            for (b = 0; b < bytes; b++)
+              {
+                total [b] /= divisor;
+                if (b != a_byte)
+                  total [b] = total [b] * matrixsum / weighted_divisor;
+                total [b] += offset;
+
+                if (total [b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
+                  total [b] = - total [b];
+
+                if (total [b] < 0)
+                  *d++ = 0;
+                else
+                  *d++ = (total [b] > 255.0) ? 255 : (guchar) total [b];
+              }
+
+            s_row += bytes;
+          }
+      else
+        while (x--)
+          {
+            s = s_row;
+
+            m = matrix;
+            total [0] = total [1] = total [2] = total [3] = 0.0;
+
+            i = size;
+            while (i --)
+              {
+                j = size;
+                while (j --)
+                  {
+                    if (*m)
+                      for (b = 0; b < bytes; b++)
+                        total [b] += *m * *s++;
+                    else
+                      s += bytes;
+                    m ++;
+                  }
+
+                s += wraparound;
+              }
+
+            for (b = 0; b < bytes; b++)
+              {
+                total [b] = total [b] / divisor + offset;
+
+                if (total [b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
+                  total [b] = - total [b];
+
+                if (total [b] < 0.0)
+                  *d++ = 0.0;
+                else
+                  *d++ = (total [b] > 255.0) ? 255 : (guchar) total [b];
+              }
+
+            s_row += bytes;
+          }
 
       /* handle the last pixel... */
       s = s_row + (srcR->rowstride + bytes) * margin;
