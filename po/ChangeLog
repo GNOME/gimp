@@ -1,3 +1,7 @@
+2004-04-22  Adam Weinberger  <adamw@gnome.org>
+
+	* POTFILES.in: Removed app/gui/*-commands.c
+
 2004-04-17  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
