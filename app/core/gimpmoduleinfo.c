@@ -125,7 +125,6 @@ gimp_module_info_init (GimpModuleInfoObj *module_info)
   module_info->load_inhibit      = FALSE;
 
   module_info->module            = NULL;
-  module_info->info              = NULL;
   module_info->last_module_error = NULL;
 
   module_info->register_module   = NULL;
@@ -156,9 +155,10 @@ gimp_module_info_finalize (GObject *object)
 static gboolean
 gimp_module_info_load (GTypeModule *module)
 {
-  GimpModuleInfoObj *module_info;
-  gpointer           symbol;
-  gboolean           retval;
+  GimpModuleInfoObj    *module_info;
+  const GimpModuleInfo *info;
+  gpointer              symbol;
+  gboolean              retval;
 
   g_return_val_if_fail (GIMP_IS_MODULE_INFO (module), FALSE);
 
@@ -184,7 +184,58 @@ gimp_module_info_load (GTypeModule *module)
       return FALSE;
     }
 
-  /* find the module_init symbol */
+  /* find the gimp_module_query symbol */
+  if (! g_module_symbol (module_info->module, "gimp_module_query", &symbol))
+    {
+      module_info->state = GIMP_MODULE_STATE_ERROR;
+
+      gimp_module_info_set_last_error (module_info,
+                                       _("Missing gimp_module_query() symbol"));
+
+      if (module_info->verbose)
+	g_message (_("Module '%s' load error:\n%s"),
+		   module_info->filename, module_info->last_module_error);
+      g_module_close (module_info->module);
+      module_info->module = NULL;
+      return FALSE;
+    }
+
+  module_info->query_module = symbol;
+
+  info = module_info->query_module (module);
+
+  if (! info)
+    {
+      module_info->state = GIMP_MODULE_STATE_ERROR;
+
+      gimp_module_info_set_last_error (module_info,
+                                       _("gimp_module_query() returned NULL"));
+
+      if (module_info->verbose)
+	g_message (_("Module '%s' load error:\n%s"),
+		   module_info->filename, module_info->last_module_error);
+      g_module_close (module_info->module);
+      module_info->module       = NULL;
+      module_info->query_module = NULL;
+      return FALSE;
+    }
+
+  g_free ((gchar *) module_info->info.purpose);
+  module_info->info.purpose = g_strdup (info->purpose);
+
+  g_free ((gchar *) module_info->info.author);
+  module_info->info.author = g_strdup (info->author);
+
+  g_free ((gchar *) module_info->info.version);
+  module_info->info.version = g_strdup (info->version);
+
+  g_free ((gchar *) module_info->info.copyright);
+  module_info->info.copyright = g_strdup (info->copyright);
+
+  g_free ((gchar *) module_info->info.date);
+  module_info->info.date = g_strdup (info->date);
+
+  /* find the gimp_module_register symbol */
   if (! g_module_symbol (module_info->module, "gimp_module_register", &symbol))
     {
       module_info->state = GIMP_MODULE_STATE_ERROR;
@@ -202,7 +253,7 @@ gimp_module_info_load (GTypeModule *module)
 
   module_info->register_module = symbol;
 
-  retval = module_info->register_module (module, &module_info->info);
+  retval = module_info->register_module (module);
 
   if (retval)
     module_info->state = GIMP_MODULE_STATE_LOADED_OK;
@@ -225,7 +276,7 @@ gimp_module_info_unload (GTypeModule *module)
 
   g_module_close (module_info->module); /* FIXME: error handling */
   module_info->module          = NULL;
-  module_info->info            = NULL;
+  module_info->query_module    = NULL;
   module_info->register_module = NULL;
 
   module_info->state = GIMP_MODULE_STATE_UNLOADED_OK;

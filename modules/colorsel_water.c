@@ -103,7 +103,7 @@ static void       pressure_adjust_update    (GtkAdjustment     *adj,
                                              ColorselWater     *water);
 
 
-static GimpModuleInfo colorsel_water_info =
+static const GimpModuleInfo colorsel_water_info =
 {
   N_("Watercolor style color selector as a pluggable module"),
   "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
@@ -122,14 +122,16 @@ static GType                   colorsel_water_type = 0;
 static GimpColorSelectorClass *parent_class           = NULL;
 
 
+G_MODULE_EXPORT const GimpModuleInfo *
+gimp_module_query (GTypeModule *module)
+{
+  return &colorsel_water_info;
+}
+
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule     *module,
-                      GimpModuleInfo **info_return)
+gimp_module_register (GTypeModule *module)
 {
   colorsel_water_get_type (module);
-
-  if (info_return)
-    *info_return = &colorsel_water_info;
 
   return TRUE;
 }

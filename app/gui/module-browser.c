@@ -386,13 +386,13 @@ browser_info_update (GimpModuleInfoObj *mod,
       return;
     }
 
-  if (mod->info)
+  if (mod->info.purpose)
     {
-      text[0] = mod->info->purpose;
-      text[1] = mod->info->author;
-      text[2] = mod->info->version;
-      text[3] = mod->info->copyright;
-      text[4] = mod->info->date;
+      text[0] = mod->info.purpose;
+      text[1] = mod->info.author;
+      text[2] = mod->info.version;
+      text[3] = mod->info.copyright;
+      text[4] = mod->info.date;
       text[5] = mod->on_disk ? _("On disk") : _("Only in memory");
     }
   else

@@ -93,7 +93,7 @@ static void    gamma_configure_cancel_callback  (GtkWidget        *widget,
                                                  CdisplayGamma    *gamma);
 
 
-static GimpModuleInfo cdisplay_gamma_info = 
+static const GimpModuleInfo cdisplay_gamma_info = 
 {
   N_("Gamma color display filter"),
   "Manish Singh <yosh@gimp.org>",
@@ -106,14 +106,16 @@ static GType                  cdisplay_gamma_type = 0;
 static GimpColorDisplayClass *parent_class        = NULL;
 
 
+G_MODULE_EXPORT const GimpModuleInfo *
+gimp_module_query (GTypeModule *module)
+{
+  return &cdisplay_gamma_info;
+}
+
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule     *module,
-                      GimpModuleInfo **inforet)
+gimp_module_register (GTypeModule *module)
 {
   cdisplay_gamma_get_type (module);
-
-  if (inforet)
-    *inforet = &cdisplay_gamma_info;
 
   return TRUE;
 }

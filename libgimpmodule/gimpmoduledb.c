@@ -286,23 +286,23 @@ print_module_info (gpointer data,
   g_print ("\n%s: %i\n",
 	   i->filename,
            i->state /* statename[i->state] */);
-  g_print ("  module:%p  lasterr:%s  register:%p\n",
+
+  g_print ("  module:%p  lasterr:%s  query:%p register:%p\n",
 	   i->module,
-           i->last_module_error? i->last_module_error : "NONE",
+           i->last_module_error ? i->last_module_error : "NONE",
+	   i->query_module,
 	   i->register_module);
-  if (i->info)
-    {
-      g_print ("  purpose:   %s\n"
-	       "  author:    %s\n"
-	       "  version:   %s\n"
-	       "  copyright: %s\n"
-	       "  date:      %s\n",
-	       i->info->purpose,
-               i->info->author,
-               i->info->version,
-	       i->info->copyright,
-               i->info->date);
-    }
+
+  g_print ("  purpose:   %s\n"
+           "  author:    %s\n"
+           "  version:   %s\n"
+           "  copyright: %s\n"
+           "  date:      %s\n",
+           i->info.purpose   ? i->info.purpose   : "NONE",
+           i->info.author    ? i->info.author    : "NONE",
+           i->info.version   ? i->info.version   : "NONE",
+           i->info.copyright ? i->info.copyright : "NONE",
+           i->info.date      ? i->info.date      : "NONE");
 }
 #endif
 

@@ -40,8 +40,8 @@ struct _GimpModuleInfo
 };
 
 
-typedef gboolean (* GimpModuleRegisterFunc) (GTypeModule     *module,
-                                             GimpModuleInfo **module_info);
+typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
+typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 
 
 G_END_DECLS

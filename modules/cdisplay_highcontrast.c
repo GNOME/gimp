@@ -93,7 +93,7 @@ static void    contrast_configure_cancel_callback  (GtkWidget        *widget,
                                                  CdisplayContrast    *contrast);
 
 
-static GimpModuleInfo cdisplay_contrast_info = 
+static const GimpModuleInfo cdisplay_contrast_info = 
 {
   N_("High Contrast color display filter"),
   "Jay Cox <jaycox@earthlink.net>",
@@ -106,14 +106,16 @@ static GType                  cdisplay_contrast_type = 0;
 static GimpColorDisplayClass *parent_class        = NULL;
 
 
+G_MODULE_EXPORT const GimpModuleInfo *
+gimp_module_query (GTypeModule *module)
+{
+  return &cdisplay_contrast_info;
+}
+
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule     *module,
-                      GimpModuleInfo **inforet)
+gimp_module_register (GTypeModule *module)
 {
   cdisplay_contrast_get_type (module);
-
-  if (inforet)
-    *inforet = &cdisplay_contrast_info;
 
   return TRUE;
 }

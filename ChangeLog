@@ -1,5 +1,21 @@
 2002-10-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmoduleinfo.[ch]
+	* libgimp/gimpmodule.h: separated module query from type
+	registration by adding a separate "gimp_module_query" function
+	which must be implemented by modules. Make local copies of the
+	strings returned by the query function.
+
+	* app/core/gimpmodules.c
+	* app/gui/module-browser.c: changed accordingly.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: added the gimp_module_query() functions.
+
+2002-10-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-filter.[ch]: removed the
 	ColorDisplayNode struct entirely. GimpDisplayShell->filters is now
 	just a GList of GimpColorDisplay objects.

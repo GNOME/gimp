@@ -106,7 +106,7 @@ static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
                                                      ColorselTriangle *triangle);
 
 
-static GimpModuleInfo colorsel_triangle_info =
+static const GimpModuleInfo colorsel_triangle_info =
 {
   N_("Painter-style color selector as a pluggable color selector"),
   "Simon Budig <Simon.Budig@unix-ag.org>",
@@ -125,14 +125,16 @@ static GType                   colorsel_triangle_type = 0;
 static GimpColorSelectorClass *parent_class           = NULL;
 
 
+G_MODULE_EXPORT const GimpModuleInfo *
+gimp_module_query (GTypeModule *module)
+{
+  return &colorsel_triangle_info;
+}
+
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule     *module,
-                      GimpModuleInfo **info_return)
+gimp_module_register (GTypeModule *module)
 {
   colorsel_triangle_get_type (module);
-
-  if (info_return)
-    *info_return = &colorsel_triangle_info;
 
   return TRUE;
 }

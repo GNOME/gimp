@@ -58,11 +58,11 @@ struct _GimpModuleInfoObj
 
   /* stuff from now on may be NULL depending on the state the module is in    */
   GModule         *module;       /* handle on the module                      */
-  GimpModuleInfo  *info;         /* returned values from module_register      */
+  GimpModuleInfo   info;         /* returned values from module_query         */
   gchar           *last_module_error;
 
-  gboolean       (* register_module) (GTypeModule     *module,
-                                      GimpModuleInfo **module_info);
+  const GimpModuleInfo * (* query_module)    (GTypeModule *module);
+  gboolean               (* register_module) (GTypeModule *module);
 };
 
 struct _GimpModuleInfoObjClass
