@@ -144,20 +144,20 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
     {
       switch (options->type)
         {
-        case DODGE:
+        case GIMP_DODGE:
           gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (BURN));
+                                       GINT_TO_POINTER (GIMP_BURN));
           break;
-        case BURN:
+        case GIMP_BURN:
           gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (DODGE));
+                                       GINT_TO_POINTER (GIMP_DODGE));
           break;
         default:
           break;
         }
     }
 
-  tool->toggled = (options->type == BURN);
+  tool->toggled = (options->type == GIMP_BURN);
 }
 
 static void
@@ -170,7 +170,7 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpDodgeBurnOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = (options->type == BURN);
+  tool->toggled = (options->type == GIMP_BURN);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -202,11 +202,11 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
 				 GINT_TO_POINTER (options->type),
 
 				 _("Dodge"),
-                                 GINT_TO_POINTER (DODGE),
+                                 GINT_TO_POINTER (GIMP_DODGE),
 				 &options->type_w[0],
 
 				 _("Burn"),
-                                 GINT_TO_POINTER (BURN),
+                                 GINT_TO_POINTER (GIMP_BURN),
 				 &options->type_w[1],
 
 				 NULL);

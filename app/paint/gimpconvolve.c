@@ -63,11 +63,11 @@ static void   gimp_convolve_paint            (GimpPaintCore       *paint_core,
 static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
                                               GimpDrawable        *drawable, 
                                               GimpPressureOptions *pressure_options,
-                                              ConvolveType         type,
+                                              GimpConvolveType     type,
                                               gdouble              rate);
 
 
-static void   gimp_convolve_calculate_matrix (ConvolveType         type,
+static void   gimp_convolve_calculate_matrix (GimpConvolveType     type,
                                               gdouble              rate);
 static void   gimp_convolve_integer_matrix   (gfloat              *source,
                                               gint                *dest,
@@ -194,7 +194,7 @@ static void
 gimp_convolve_motion (GimpPaintCore       *paint_core,
                       GimpDrawable        *drawable,
                       GimpPressureOptions *pressure_options,
-                      ConvolveType         type,
+                      GimpConvolveType     type,
                       gdouble              rate)
 {
   TempBuf          *area;
@@ -417,14 +417,15 @@ gimp_convolve_motion (GimpPaintCore       *paint_core,
   gimp_paint_core_replace_canvas (paint_core, drawable,
                                   GIMP_OPACITY_OPAQUE,
 				  gimp_context_get_opacity (context),
-				  pressure_options->pressure ? PRESSURE : SOFT,
+				  (pressure_options->pressure ? 
+                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
 				  scale,
-                                  INCREMENTAL);
+                                  GIMP_PAINT_INCREMENTAL);
 }
 
 static void
-gimp_convolve_calculate_matrix (ConvolveType type,
-                                gdouble      rate)
+gimp_convolve_calculate_matrix (GimpConvolveType type,
+                                gdouble          rate)
 {
   gfloat percent;
 
@@ -434,19 +435,19 @@ gimp_convolve_calculate_matrix (ConvolveType type,
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
     {
-    case BLUR_CONVOLVE:
+    case GIMP_BLUR_CONVOLVE:
       matrix_size = 5;
       blur_matrix [12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       gimp_convolve_copy_matrix (blur_matrix, custom_matrix, matrix_size);
       break;
 
-    case SHARPEN_CONVOLVE:
+    case GIMP_SHARPEN_CONVOLVE:
       matrix_size = 5;
       sharpen_matrix [12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       gimp_convolve_copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
       break;
 
-    case CUSTOM_CONVOLVE:
+    case GIMP_CUSTOM_CONVOLVE:
       matrix_size = 5;
       break;
     }
@@ -500,7 +501,7 @@ gimp_convolve_sum_matrix (gint *matrix,
 /*  paint options stuff  */
 
 #define DEFAULT_CONVOLVE_RATE  50.0
-#define DEFAULT_CONVOLVE_TYPE  BLUR_CONVOLVE
+#define DEFAULT_CONVOLVE_TYPE  GIMP_BLUR_CONVOLVE
 
 GimpConvolveOptions *
 gimp_convolve_options_new (void)

@@ -161,42 +161,44 @@ void      gimp_paint_core_interpolate (GimpPaintCore       *core,
 
 /*  protected functions  */
 
-void    gimp_paint_core_get_color_from_gradient (GimpPaintCore        *core,
-                                                 GimpGradient         *gradient,
-						 gdouble               gradient_length,
-						 GimpRGB              *color,
-						 GradientPaintMode     mode);
+void    gimp_paint_core_get_color_from_gradient 
+                                         (GimpPaintCore            *core,
+                                          GimpGradient             *gradient,
+                                          gdouble                   gradient_length,
+                                          GimpRGB                  *color,
+                                          GimpGradientPaintMode     mode);
 
-TempBuf * gimp_paint_core_get_paint_area        (GimpPaintCore        *core,
-                                                 GimpDrawable         *drawable,
-                                                 gdouble               scale);
-TempBuf * gimp_paint_core_get_orig_image        (GimpPaintCore        *core,
-                                                 GimpDrawable         *drawable,
-                                                 gint                  x1,
-                                                 gint                  y1,
-                                                 gint                  x2,
-                                                 gint                  y2);
-void      gimp_paint_core_paste_canvas          (GimpPaintCore        *core,
-                                                 GimpDrawable         *drawable,
-                                                 gdouble               brush_opacity,
-                                                 gdouble               image_opacity,
-                                                 GimpLayerModeEffects  paint_mode,
-                                                 BrushApplicationMode  brush_hardness,
-                                                 gdouble               brush_scale,
-                                                 PaintApplicationMode  mode);
-void      gimp_paint_core_replace_canvas        (GimpPaintCore        *core,
-                                                 GimpDrawable         *drawable,
-                                                 gdouble               brush_opacity,
-                                                 gdouble               image_opacity,
-                                                 BrushApplicationMode  brush_hardness,
-                                                 gdouble               brush_scale,
-                                                 PaintApplicationMode  mode);
-void     gimp_paint_core_color_area_with_pixmap (GimpPaintCore        *core,
-                                                 GimpImage            *dest, 
-                                                 GimpDrawable         *drawable,
-                                                 TempBuf              *area, 
-                                                 gdouble               scale, 
-                                                 BrushApplicationMode  mode);
+TempBuf * gimp_paint_core_get_paint_area (GimpPaintCore            *core,
+                                          GimpDrawable             *drawable,
+                                          gdouble                   scale);
+TempBuf * gimp_paint_core_get_orig_image (GimpPaintCore            *core,
+                                          GimpDrawable             *drawable,
+                                          gint                      x1,
+                                          gint                      y1,
+                                          gint                      x2,
+                                          gint                      y2);
+void      gimp_paint_core_paste_canvas   (GimpPaintCore            *core,
+                                          GimpDrawable             *drawable,
+                                          gdouble                   brush_opacity,
+                                          gdouble                   image_opacity,
+                                          GimpLayerModeEffects      paint_mode,
+                                          GimpBrushApplicationMode  brush_hardness,
+                                          gdouble                   brush_scale,
+                                          GimpPaintApplicationMode  mode);
+void      gimp_paint_core_replace_canvas (GimpPaintCore            *core,
+                                          GimpDrawable             *drawable,
+                                          gdouble                   brush_opacity,
+                                          gdouble                   image_opacity,
+                                          GimpBrushApplicationMode  brush_hardness,
+                                          gdouble                   brush_scale,
+                                          GimpPaintApplicationMode  mode);
+void     gimp_paint_core_color_area_with_pixmap 
+                                         (GimpPaintCore            *core,
+                                          GimpImage                *dest, 
+                                          GimpDrawable             *drawable,
+                                          TempBuf                  *area, 
+                                          gdouble                   scale, 
+                                          GimpBrushApplicationMode  mode);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */

@@ -56,11 +56,11 @@ enum_headers = \
 	../../libgimpbase/gimpbasetypes.h		\
 	../../app/paint-funcs/paint-funcs-types.h	\
 	../../app/base/base-enums.h			\
-	../../app/core/core-types.h			\
 	../../app/core/core-enums.h			\
-	../../app/paint/paint-types.h			\
+	../../app/core/core-types.h			\
+	../../app/paint/paint-enums.h			\
 	../../app/plug-in/plug-in-types.h		\
-	../../app/tools/tools-types.h			\
+	../../app/tools/tools-enums.h			\
 	../../app/tools/gimphuesaturationtool.h		\
 	../../app/tools/gimptexttool.h
 

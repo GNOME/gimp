@@ -77,8 +77,8 @@ struct _GimpCloneOptions
 {
   GimpPaintOptions  paint_options;
 
-  CloneType         type;
-  CloneType         type_d;
+  GimpCloneType     type;
+  GimpCloneType     type_d;
   GtkWidget        *type_w[2];  /* 2 radio buttons */
 
   AlignType         aligned;

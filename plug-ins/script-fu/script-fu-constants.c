@@ -23,20 +23,6 @@
 void
 init_generated_constants (void)
 {
-  setvar (cintern ("HARD"), flocons (0), NIL);
-  setvar (cintern ("SOFT"), flocons (1), NIL);
-  setvar (cintern ("PRESSURE"), flocons (2), NIL);
-
-  setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
-  setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
-
-  setvar (cintern ("BLUR-CONVOLVE"), flocons (0), NIL);
-  setvar (cintern ("SHARPEN-CONVOLVE"), flocons (1), NIL);
-  setvar (cintern ("CUSTOM-CONVOLVE"), flocons (2), NIL);
-
-  setvar (cintern ("DODGE"), flocons (0), NIL);
-  setvar (cintern ("BURN"), flocons (1), NIL);
-
   setvar (cintern ("ADD-WHITE-MASK"), flocons (0), NIL);
   setvar (cintern ("ADD-BLACK-MASK"), flocons (1), NIL);
   setvar (cintern ("ADD-ALPHA-MASK"), flocons (2), NIL);
@@ -49,6 +35,10 @@ init_generated_constants (void)
   setvar (cintern ("FG-BG-HSV-MODE"), flocons (1), NIL);
   setvar (cintern ("FG-TRANSPARENT-MODE"), flocons (2), NIL);
   setvar (cintern ("CUSTOM-MODE"), flocons (3), NIL);
+
+  setvar (cintern ("BRUSH-HARD"), flocons (0), NIL);
+  setvar (cintern ("BRUSH-SOFT"), flocons (1), NIL);
+  setvar (cintern ("BRUSH-PRESSURE"), flocons (2), NIL);
 
   setvar (cintern ("FG-BUCKET-FILL"), flocons (0), NIL);
   setvar (cintern ("BG-BUCKET-FILL"), flocons (1), NIL);
@@ -72,6 +62,9 @@ init_generated_constants (void)
   setvar (cintern ("INDEXED-CHANNEL"), flocons (4), NIL);
   setvar (cintern ("ALPHA-CHANNEL"), flocons (5), NIL);
 
+  setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
+  setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
+
   setvar (cintern ("NO-DITHER"), flocons (0), NIL);
   setvar (cintern ("FS-DITHER"), flocons (1), NIL);
   setvar (cintern ("FSLOWBLEED-DITHER"), flocons (2), NIL);
@@ -88,11 +81,23 @@ init_generated_constants (void)
   setvar (cintern ("ABSOLUTE-CONVOL"), flocons (1), NIL);
   setvar (cintern ("NEGATIVE-CONVOL"), flocons (2), NIL);
 
+  setvar (cintern ("BLUR-CONVOLVE"), flocons (0), NIL);
+  setvar (cintern ("SHARPEN-CONVOLVE"), flocons (1), NIL);
+  setvar (cintern ("CUSTOM-CONVOLVE"), flocons (2), NIL);
+
+  setvar (cintern ("DODGE"), flocons (0), NIL);
+  setvar (cintern ("BURN"), flocons (1), NIL);
+
   setvar (cintern ("FOREGROUND-FILL"), flocons (0), NIL);
   setvar (cintern ("BACKGROUND-FILL"), flocons (1), NIL);
   setvar (cintern ("WHITE-FILL"), flocons (2), NIL);
   setvar (cintern ("TRANSPARENT-FILL"), flocons (3), NIL);
   setvar (cintern ("NO-FILL"), flocons (4), NIL);
+
+  setvar (cintern ("GRADIENT-ONCE-FORWARD"), flocons (0), NIL);
+  setvar (cintern ("GRADIENT-ONCE-BACKWARD"), flocons (1), NIL);
+  setvar (cintern ("GRADIENT-LOOP-SAWTOOTH"), flocons (2), NIL);
+  setvar (cintern ("GRADIENT-LOOP-TRIANGLE"), flocons (3), NIL);
 
   setvar (cintern ("LINEAR"), flocons (0), NIL);
   setvar (cintern ("BILINEAR"), flocons (1), NIL);
@@ -188,6 +193,9 @@ init_generated_constants (void)
   setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
   setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
 
+  setvar (cintern ("PAINT-CONSTANT"), flocons (0), NIL);
+  setvar (cintern ("PAINT-INCREMENTAL"), flocons (1), NIL);
+
   setvar (cintern ("REPEAT-NONE"), flocons (0), NIL);
   setvar (cintern ("REPEAT-SAWTOOTH"), flocons (1), NIL);
   setvar (cintern ("REPEAT-TRIANGULAR"), flocons (2), NIL);
@@ -211,12 +219,6 @@ init_generated_constants (void)
   setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
   setvar (cintern ("UNIT-END"), flocons (5), NIL);
 
-  setvar (cintern ("ONCE-FORWARD"), flocons (0), NIL);
-  setvar (cintern ("ONCE-BACKWARDS"), flocons (1), NIL);
-  setvar (cintern ("LOOP-SAWTOOTH"), flocons (2), NIL);
-  setvar (cintern ("LOOP-TRIANGLE"), flocons (3), NIL);
-  setvar (cintern ("ONCE-END-COLOR"), flocons (4), NIL);
-
   setvar (cintern ("ALL-HUES"), flocons (0), NIL);
   setvar (cintern ("RED-HUES"), flocons (1), NIL);
   setvar (cintern ("YELLOW-HUES"), flocons (2), NIL);
@@ -228,9 +230,6 @@ init_generated_constants (void)
   setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
   setvar (cintern ("VERTICAL"), flocons (1), NIL);
   setvar (cintern ("UNKNOWN"), flocons (2), NIL);
-
-  setvar (cintern ("CONSTANT"), flocons (0), NIL);
-  setvar (cintern ("INCREMENTAL"), flocons (1), NIL);
 
   setvar (cintern ("PIXELS"), flocons (0), NIL);
   setvar (cintern ("POINTS"), flocons (1), NIL);

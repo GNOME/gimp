@@ -3,6 +3,7 @@
 noinst_LIBRARIES = libapppaint.a
 
 libapppaint_a_SOURCES = @STRIP_BEGIN@ \
+	paint-enums.h			\
 	paint-types.h			\
 	paint.c				\
 	paint.h				\

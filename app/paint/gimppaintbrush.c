@@ -41,22 +41,22 @@
 #include "gimppaintoptions.h"
 
 
-static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
-static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
+static void  gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
+static void  gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
 
-static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options,
-                                          GimpPaintCoreState   paint_state);
+static void  gimp_paintbrush_paint    (GimpPaintCore         *paint_core,
+                                       GimpDrawable          *drawable,
+                                       GimpPaintOptions      *paint_options,
+                                       GimpPaintCoreState     paint_state);
 
-static void   gimp_paintbrush_motion     (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPressureOptions *pressure_options,
-                                          GimpGradientOptions *gradient_options,
-                                          gdouble              fade_out,
-                                          gdouble              gradient_length,
-                                          gboolean             incremental,
-                                          GradientPaintMode    gradient_type);
+static void  gimp_paintbrush_motion   (GimpPaintCore         *paint_core,
+                                       GimpDrawable          *drawable,
+                                       GimpPressureOptions   *pressure_options,
+                                       GimpGradientOptions   *gradient_options,
+                                       gdouble                fade_out,
+                                       gdouble                gradient_length,
+                                       gboolean               incremental,
+                                       GimpGradientPaintMode  gradient_type);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -197,26 +197,29 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_paintbrush_motion (GimpPaintCore       *paint_core,
-                        GimpDrawable        *drawable,
-                        GimpPressureOptions *pressure_options,
-                        GimpGradientOptions *gradient_options,
-                        gdouble              fade_out,
-                        gdouble              gradient_length,
-                        gboolean             incremental,
-                        GradientPaintMode    gradient_type)
+gimp_paintbrush_motion (GimpPaintCore         *paint_core,
+                        GimpDrawable          *drawable,
+                        GimpPressureOptions   *pressure_options,
+                        GimpGradientOptions   *gradient_options,
+                        gdouble                fade_out,
+                        gdouble                gradient_length,
+                        gboolean               incremental,
+                        GimpGradientPaintMode  gradient_type)
 {
-  GimpImage            *gimage;
-  GimpContext          *context;
-  TempBuf              *area;
-  gdouble               x, paint_left;
-  guchar                local_blend = OPAQUE_OPACITY;
-  guchar                temp_blend  = OPAQUE_OPACITY;
-  guchar                col[MAX_CHANNELS];
-  GimpRGB               color;
-  gdouble               opacity;
-  gdouble               scale;
-  PaintApplicationMode  paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
+  GimpImage   *gimage;
+  GimpContext *context;
+  TempBuf     *area;
+  gdouble      x, paint_left;
+  guchar       local_blend = OPAQUE_OPACITY;
+  guchar       temp_blend  = OPAQUE_OPACITY;
+  guchar       col[MAX_CHANNELS];
+  GimpRGB      color;
+  gdouble      opacity;
+  gdouble      scale;
+
+  GimpPaintApplicationMode  paint_appl_mode = (incremental ? 
+                                               GIMP_PAINT_INCREMENTAL : 
+                                               GIMP_PAINT_CONSTANT);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -275,7 +278,7 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
 
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
-	  paint_appl_mode = INCREMENTAL;
+	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);
 	}
@@ -286,8 +289,8 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
 	{
 	  gimp_paint_core_color_area_with_pixmap (paint_core, gimage, drawable,
 						  area,
-						  scale, SOFT);
-	  paint_appl_mode = INCREMENTAL;
+						  scale, GIMP_BRUSH_SOFT);
+	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	}
       else
 	{
@@ -306,7 +309,8 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
 				    MIN (opacity, GIMP_OPACITY_OPAQUE),
 				    gimp_context_get_opacity (context),
 				    gimp_context_get_paint_mode (context),
-				    pressure_options->pressure ? PRESSURE : SOFT,
+				    (pressure_options->pressure ? 
+                                     GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
 				    scale, paint_appl_mode);
     }
 }

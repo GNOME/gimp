@@ -344,8 +344,9 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
   gimp_paint_core_replace_canvas (paint_core, drawable, 
 				  MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  GIMP_OPACITY_OPAQUE,
-				  pressure_options->pressure ? PRESSURE : SOFT,
-				  1.0, INCREMENTAL);
+				  (pressure_options->pressure ? 
+                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+				  1.0, GIMP_PAINT_INCREMENTAL);
 }
 
 static void

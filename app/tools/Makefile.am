@@ -3,9 +3,10 @@
 noinst_LIBRARIES = libapptools.a
 
 libapptools_a_SOURCES = @STRIP_BEGIN@ \
+	tools-enums.h			\
+	tools-types.h			\
 	tools.c				\
 	tools.h				\
-	tools-types.h			\
 	gimpairbrushtool.c		\
 	gimpairbrushtool.h		\
 	gimpbezierselecttool.c  	\

@@ -146,13 +146,14 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
   guchar                col[MAX_CHANNELS];
   gint                  opacity;
   gdouble               scale;
-  PaintApplicationMode  paint_appl_mode;
+  GimpPaintApplicationMode  paint_appl_mode;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   context = gimp_get_current_context (gimage->gimp);
 
-  paint_appl_mode = paint_options->incremental ? INCREMENTAL : CONSTANT;
+  paint_appl_mode = (paint_options->incremental ?
+                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 
   if (paint_options->pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -178,7 +179,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
 			   &col[BLUE_PIX],
 			   &col[ALPHA_PIX]);
 
-      paint_appl_mode = INCREMENTAL;
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height,
                     area->bytes);
@@ -188,8 +189,8 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
       /* if its a pixmap, do pixmap stuff */      
       gimp_paint_core_color_area_with_pixmap (paint_core,
                                               gimage, drawable, 
-                                              area, scale, HARD);
-      paint_appl_mode = INCREMENTAL;
+                                              area, scale, GIMP_BRUSH_HARD);
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
   else
     {
@@ -210,5 +211,5 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
                                 MIN (opacity, 255),
                                 gimp_context_get_opacity (context) * 255,
                                 gimp_context_get_paint_mode (context),
-                                HARD, scale, paint_appl_mode);
+                                GIMP_BRUSH_HARD, scale, paint_appl_mode);
 }

@@ -161,14 +161,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
 	},
-    OrientationType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
-	  mapping => { HORIZONTAL => '0',
-		       VERTICAL => '1',
-		       UNKNOWN => '2' }
-	},
     GimpBlendMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -343,53 +335,64 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
 		       GIMP_OFFSET_TRANSPARENT => '1' }
 	},
-    BrushApplicationMode =>
+    OrientationType =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(HARD SOFT PRESSURE) ],
-	  mapping => { HARD => '0',
-		       SOFT => '1',
-		       PRESSURE => '2' }
+	  header => 'core/core-types.h',
+	  symbols => [ qw(HORIZONTAL VERTICAL UNKNOWN) ],
+	  mapping => { HORIZONTAL => '0',
+		       VERTICAL => '1',
+		       UNKNOWN => '2' }
 	},
-    PaintApplicationMode =>
+    GimpBrushApplicationMode =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(CONSTANT INCREMENTAL) ],
-	  mapping => { CONSTANT => '0',
-		       INCREMENTAL => '1' }
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT
+			  GIMP_BRUSH_PRESSURE) ],
+	  mapping => { GIMP_BRUSH_HARD => '0',
+		       GIMP_BRUSH_SOFT => '1',
+		       GIMP_BRUSH_PRESSURE => '2' }
 	},
-    GradientPaintMode =>
+    GimpPaintApplicationMode =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
-			  LOOP_TRIANGLE ONCE_END_COLOR) ],
-	  mapping => { ONCE_FORWARD => '0',
-		       ONCE_BACKWARDS => '1',
-		       LOOP_SAWTOOTH => '2',
-		       LOOP_TRIANGLE => '3',
-		       ONCE_END_COLOR => '4' }
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
+	  mapping => { GIMP_PAINT_CONSTANT => '0',
+		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
-    DodgeBurnType =>
+    GimpGradientPaintMode =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(DODGE BURN) ],
-	  mapping => { DODGE => '0',
-		       BURN => '1' }
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_GRADIENT_ONCE_FORWARD
+			  GIMP_GRADIENT_ONCE_BACKWARD
+			  GIMP_GRADIENT_LOOP_SAWTOOTH
+			  GIMP_GRADIENT_LOOP_TRIANGLE) ],
+	  mapping => { GIMP_GRADIENT_ONCE_FORWARD => '0',
+		       GIMP_GRADIENT_ONCE_BACKWARD => '1',
+		       GIMP_GRADIENT_LOOP_SAWTOOTH => '2',
+		       GIMP_GRADIENT_LOOP_TRIANGLE => '3' }
 	},
-    ConvolveType =>
+    GimpDodgeBurnType =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
-	  mapping => { BLUR_CONVOLVE => '0',
-		       SHARPEN_CONVOLVE => '1',
-		       CUSTOM_CONVOLVE => '2' }
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
+	  mapping => { GIMP_DODGE => '0',
+		       GIMP_BURN => '1' }
 	},
-    CloneType =>
+    GimpConvolveType =>
 	{ contig => 1,
-	  header => 'paint/paint-types.h',
-	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
-	  mapping => { IMAGE_CLONE => '0',
-		       PATTERN_CLONE => '1' }
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE
+			  GIMP_CUSTOM_CONVOLVE) ],
+	  mapping => { GIMP_BLUR_CONVOLVE => '0',
+		       GIMP_SHARPEN_CONVOLVE => '1',
+		       GIMP_CUSTOM_CONVOLVE => '2' }
+	},
+    GimpCloneType =>
+	{ contig => 1,
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
+	  mapping => { GIMP_IMAGE_CLONE => '0',
+		       GIMP_PATTERN_CLONE => '1' }
 	},
     GimpRunMode =>
 	{ contig => 1,

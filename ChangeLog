@@ -1,3 +1,42 @@
+2002-03-19  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/Makefile.am
+	* app/paint/paint-enums.h
+	* app/paint/paint-types.h: split enums into their own file and
+	namespacified them.
+	
+	* app/tools/Makefile.am
+	* app/tools/tools-enums.h
+	* app/tools/tools-types.h: split enums into their own file.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.[ch]
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/paint_options.c
+	* plug-ins/gfig/gfig.c: changed accordingly.
+
+	* libgimp/gimpcompat.h
+	* plug-ins/script-fu/siod-wrapper.c: added compatibility defines for
+	changed enums.
+
+	* tools/pdbgen/Makefile.am: updated list of headers to parse for enums.
+
+	* app/pdb/paint_tools_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/paint_tools.pdb: regenerated.
+
 2002-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/menus.c: Oops, GimpContainer's "reorder" signal has more

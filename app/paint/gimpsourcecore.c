@@ -54,7 +54,7 @@ static void   gimp_clone_motion       (GimpPaintCore       *paint_core,
                                        GimpDrawable        *drawable,
                                        GimpDrawable        *src_drawable,
                                        GimpPressureOptions *pressure_options,
-                                       CloneType            type,
+                                       GimpCloneType        type,
                                        gint                 offset_x,
                                        gint                 offset_y);
 static void   gimp_clone_line_image   (GimpImage           *dest,
@@ -248,7 +248,7 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       if (clone->init_callback)
         clone->init_callback (clone, clone->callback_data);
 
-      if (options->type == PATTERN_CLONE)
+      if (options->type == GIMP_PATTERN_CLONE)
 	if (! gimp_context_get_pattern (context))
 	  g_message (_("No patterns available for this operation."));
       break;
@@ -274,7 +274,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
                    GimpDrawable        *drawable,
                    GimpDrawable        *src_drawable,
                    GimpPressureOptions *pressure_options,
-                   CloneType            type,
+                   GimpCloneType        type,
                    gint                 offset_x,
                    gint                 offset_y)
 {
@@ -298,7 +298,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
   pattern = NULL;
 
   /*  Make sure we still have a source if we are doing image cloning */
-  if (type == IMAGE_CLONE)
+  if (type == GIMP_IMAGE_CLONE)
     {
       if (!src_drawable)
 	return;
@@ -327,7 +327,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
 
   switch (type)
     {
-    case IMAGE_CLONE:
+    case GIMP_IMAGE_CLONE:
       /*  Set the paint area to transparent  */
       temp_buf_data_clear (area);
 
@@ -390,7 +390,7 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
       pr = pixel_regions_register (2, &srcPR, &destPR);
       break;
 
-    case PATTERN_CLONE:
+    case GIMP_PATTERN_CLONE:
       pattern = gimp_context_get_pattern (context);
 
       if (!pattern)
@@ -415,14 +415,14 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
 	{
 	  switch (type)
 	    {
-	    case IMAGE_CLONE:
+	    case GIMP_IMAGE_CLONE:
 	      gimp_clone_line_image (gimage, src_gimage,
                                      drawable, src_drawable,
                                      s, d, has_alpha, 
                                      srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
-	    case PATTERN_CLONE:
+	    case GIMP_PATTERN_CLONE:
 	      gimp_clone_line_pattern (gimage, drawable,
                                        pattern, d,
                                        area->x + offset_x, 
@@ -445,8 +445,9 @@ gimp_clone_motion (GimpPaintCore       *paint_core,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
-				pressure_options->pressure ? PRESSURE : SOFT, 
-				scale, CONSTANT);
+				(pressure_options->pressure ? 
+                                 GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT), 
+				scale, GIMP_PAINT_CONSTANT);
 }
 
 static void
@@ -558,7 +559,7 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
 
 /*  paint options stuff  */
 
-#define CLONE_DEFAULT_TYPE     IMAGE_CLONE
+#define CLONE_DEFAULT_TYPE     GIMP_IMAGE_CLONE
 #define CLONE_DEFAULT_ALIGNED  ALIGN_NO
 
 GimpCloneOptions *

@@ -253,20 +253,21 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options)
 {
-  GimpImage            *gimage;
-  GimpContext          *context;
-  TempBuf              *area;
-  guchar                col[MAX_CHANNELS];
-  gdouble               scale;
-  PaintApplicationMode  paint_appl_mode;
-  gdouble               pressure;
+  GimpImage                *gimage;
+  GimpContext              *context;
+  TempBuf                  *area;
+  guchar                    col[MAX_CHANNELS];
+  gdouble                   scale;
+  GimpPaintApplicationMode  paint_appl_mode;
+  gdouble                   pressure;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
   context = gimp_get_current_context (gimage->gimp);
 
-  paint_appl_mode = paint_options->incremental ? INCREMENTAL : CONSTANT;
+  paint_appl_mode = (paint_options->incremental ? 
+                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 
   pressure = ((GimpAirbrushOptions *) paint_options)->pressure / 100.0;
 
@@ -292,7 +293,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 			   &col[BLUE_PIX],
 			   &col[ALPHA_PIX]);
 
-      paint_appl_mode = INCREMENTAL;
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height,
@@ -300,11 +301,11 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
     }
   else if (paint_core->brush && paint_core->brush->pixmap)
     {
-      paint_appl_mode = INCREMENTAL;
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 
       gimp_paint_core_color_area_with_pixmap (paint_core, gimage,
 					      drawable, area, 
-					      scale, SOFT);
+					      scale, GIMP_BRUSH_SOFT);
     }
   else
     {
@@ -322,7 +323,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 				MIN (pressure, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
-				SOFT, scale, paint_appl_mode);
+				GIMP_BRUSH_SOFT, scale, paint_appl_mode);
 }
 
 

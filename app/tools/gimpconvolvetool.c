@@ -166,13 +166,13 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
     {
       switch (options->type)
         {
-        case BLUR_CONVOLVE:
+        case GIMP_BLUR_CONVOLVE:
           gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (SHARPEN_CONVOLVE));
+                                       GINT_TO_POINTER (GIMP_SHARPEN_CONVOLVE));
           break;
-        case SHARPEN_CONVOLVE:
+        case GIMP_SHARPEN_CONVOLVE:
           gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                                       GINT_TO_POINTER (BLUR_CONVOLVE));
+                                       GINT_TO_POINTER (GIMP_BLUR_CONVOLVE));
           break;
         default:
           break;
@@ -190,7 +190,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpConvolveOptions *) tool->tool_info->tool_options;
 
-  tool->toggled = (options->type == SHARPEN_CONVOLVE);
+  tool->toggled = (options->type == GIMP_SHARPEN_CONVOLVE);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -221,11 +221,11 @@ convolve_options_new (GimpToolInfo *tool_info)
                                  GINT_TO_POINTER (options->type),
 
 				 _("Blur"),
-                                 GINT_TO_POINTER (BLUR_CONVOLVE),
+                                 GINT_TO_POINTER (GIMP_BLUR_CONVOLVE),
 				 &options->type_w[0],
 
 				 _("Sharpen"),
-                                 GINT_TO_POINTER (SHARPEN_CONVOLVE),
+                                 GINT_TO_POINTER (GIMP_SHARPEN_CONVOLVE),
 				 &options->type_w[1],
 
 				 NULL);

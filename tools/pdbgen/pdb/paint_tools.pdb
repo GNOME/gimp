@@ -148,7 +148,7 @@ HELP
 	&drawable_arg,
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
-	{ name => 'clone_type', type => 'enum CloneType',
+	{ name => 'clone_type', type => 'enum GimpCloneType',
 	  desc => 'The type of clone: { %%desc%% }' },
 	{ name => 'src_x', type => 'float',
 	  desc => 'The x coordinate in the source image' },
@@ -276,7 +276,7 @@ HELP
 	{ name => 'pressure', type => '0 <= float <= 100',
 	  desc => 'The pressure: %%desc%%' },
 	{ name => 'convolve_type',
-	  type => 'enum ConvolveType (no CUSTOM_CONVOLVE)',
+	  type => 'enum GimpConvolveType (no GIMP_CUSTOM_CONVOLVE)',
 	  desc => 'Convolve type: { %%desc%% }' },
 	&stroke_arg
     );
@@ -352,9 +352,10 @@ HELP
     @inargs = (
 	&drawable_arg,
 	&stroke_arg,
-	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
+	{ name => 'hardness',
+	  type => 'enum GimpBrushApplicationMode (no GIMP_BRUSH_PRESSURE)',
 	  desc => '%%desc%%' },
-	{ name => 'method', type => 'enum PaintApplicationMode',
+	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' }
     );
 
@@ -395,9 +396,10 @@ HELP
     @inargs = (
 	&drawable_arg,
 	&stroke_arg,
-	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
+	{ name => 'hardness', 
+	  type => 'enum GimpBrushApplicationMode (no GIMP_BRUSH_PRESSURE)',
 	  desc => '%%desc%%' },
-	{ name => 'method', type => 'enum PaintApplicationMode',
+	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' }
     );
 
@@ -447,7 +449,7 @@ HELP
 	{ name => 'fade_out', type => '0 <= float',
 	  desc => 'Fade out parameter: %%desc%%' },
 	&stroke_arg,
-	{ name => 'method', type => 'enum PaintApplicationMode',
+	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => '%%desc%%' },
 	{ name => 'gradient_length', type => '0 <= float',
 	  desc => 'Length of gradient to draw: %%desc%%' }
@@ -647,7 +649,7 @@ HELP
 	&drawable_arg,
 	 { name => 'exposure', type => '0 <= float <= 100',
 	   desc => 'The exposer of the  strokes (%%desc%%)' },
-        { name => 'dodgeburn_type', type => 'enum DodgeBurnType',
+        { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
 	  desc => 'The type either dodge or burn: { %%desc%% }' },
         { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
 	  desc => 'The mode: { %%desc%% }' },

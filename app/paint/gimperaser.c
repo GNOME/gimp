@@ -147,6 +147,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   TempBuf             *area;
   guchar               col[MAX_CHANNELS];
   gdouble              scale;
+  GimpBrushApplicationMode  brush_mode;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
@@ -183,13 +184,22 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   /* paste the newly painted canvas to the gimage which is being
    * worked on
    */
+  
+  if (options->hard)
+    brush_mode = GIMP_BRUSH_HARD;
+  else
+    brush_mode = (pressure_options->pressure ? 
+                  GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT);
+
   gimp_paint_core_paste_canvas (paint_core, drawable, 
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
-				options->anti_erase ? GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE,
-				options->hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
+				(options->anti_erase ? 
+                                 GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
+				brush_mode,
 				scale,
-				paint_options->incremental ? INCREMENTAL : CONSTANT);
+				(paint_options->incremental ? 
+                                 GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT));
 }
 
 

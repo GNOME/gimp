@@ -39,6 +39,7 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppencil.h"
 #include "paint/gimpsmudge.h"
+#include "paint/paint-enums.h"
 
 #include "libgimpmath/gimpmath.h"
 
@@ -292,7 +293,7 @@ clone_invoker (Gimp     *gimp,
     success = FALSE;
 
   clone_type = args[2].value.pdb_int;
-  if (clone_type < IMAGE_CLONE || clone_type > PATTERN_CLONE)
+  if (clone_type < GIMP_IMAGE_CLONE || clone_type > GIMP_PATTERN_CLONE)
     success = FALSE;
 
   src_x = args[3].value.pdb_float;
@@ -346,7 +347,7 @@ static ProcArg clone_inargs[] =
   {
     GIMP_PDB_INT32,
     "clone_type",
-    "The type of clone: { IMAGE_CLONE (0), PATTERN_CLONE (1) }"
+    "The type of clone: { GIMP_IMAGE_CLONE (0), GIMP_PATTERN_CLONE (1) }"
   },
   {
     GIMP_PDB_FLOAT,
@@ -478,7 +479,7 @@ convolve_invoker (Gimp     *gimp,
     success = FALSE;
 
   convolve_type = args[2].value.pdb_int;
-  if (convolve_type < BLUR_CONVOLVE || convolve_type > SHARPEN_CONVOLVE)
+  if (convolve_type < GIMP_BLUR_CONVOLVE || convolve_type > GIMP_SHARPEN_CONVOLVE)
     success = FALSE;
 
   num_strokes = args[3].value.pdb_int;
@@ -521,7 +522,7 @@ static ProcArg convolve_inargs[] =
   {
     GIMP_PDB_INT32,
     "convolve_type",
-    "Convolve type: { BLUR_CONVOLVE (0), SHARPEN_CONVOLVE (1) }"
+    "Convolve type: { GIMP_BLUR_CONVOLVE (0), GIMP_SHARPEN_CONVOLVE (1) }"
   },
   {
     GIMP_PDB_INT32,
@@ -644,7 +645,7 @@ dodgeburn_invoker (Gimp     *gimp,
     success = FALSE;
 
   dodgeburn_type = args[2].value.pdb_int;
-  if (dodgeburn_type < DODGE || dodgeburn_type > BURN)
+  if (dodgeburn_type < GIMP_DODGE || dodgeburn_type > GIMP_BURN)
     success = FALSE;
 
   dodgeburn_mode = args[3].value.pdb_int;
@@ -692,7 +693,7 @@ static ProcArg dodgeburn_inargs[] =
   {
     GIMP_PDB_INT32,
     "dodgeburn_type",
-    "The type either dodge or burn: { DODGE (0), BURN (1) }"
+    "The type either dodge or burn: { GIMP_DODGE (0), GIMP_BURN (1) }"
   },
   {
     GIMP_PDB_INT32,
@@ -823,11 +824,11 @@ eraser_invoker (Gimp     *gimp,
   strokes = (gdouble *) args[2].value.pdb_pointer;
 
   hardness = args[3].value.pdb_int;
-  if (hardness < HARD || hardness > SOFT)
+  if (hardness < GIMP_BRUSH_HARD || hardness > GIMP_BRUSH_SOFT)
     success = FALSE;
 
   method = args[4].value.pdb_int;
-  if (method < CONSTANT || method > INCREMENTAL)
+  if (method < GIMP_PAINT_CONSTANT || method > GIMP_PAINT_INCREMENTAL)
     success = FALSE;
 
   if (success)
@@ -868,12 +869,12 @@ static ProcArg eraser_inargs[] =
   {
     GIMP_PDB_INT32,
     "hardness",
-    "HARD (0) or SOFT (1)"
+    "GIMP_BRUSH_HARD (0) or GIMP_BRUSH_SOFT (1)"
   },
   {
     GIMP_PDB_INT32,
     "method",
-    "CONSTANT (0) or INCREMENTAL (1)"
+    "GIMP_PAINT_CONSTANT (0) or GIMP_PAINT_INCREMENTAL (1)"
   }
 };
 
@@ -994,7 +995,7 @@ paintbrush_invoker (Gimp     *gimp,
   strokes = (gdouble *) args[3].value.pdb_pointer;
 
   method = args[4].value.pdb_int;
-  if (method < CONSTANT || method > INCREMENTAL)
+  if (method < GIMP_PAINT_CONSTANT || method > GIMP_PAINT_INCREMENTAL)
     success = FALSE;
 
   gradient_length = args[5].value.pdb_float;
@@ -1045,7 +1046,7 @@ static ProcArg paintbrush_inargs[] =
   {
     GIMP_PDB_INT32,
     "method",
-    "CONSTANT (0) or INCREMENTAL (1)"
+    "GIMP_PAINT_CONSTANT (0) or GIMP_PAINT_INCREMENTAL (1)"
   },
   {
     GIMP_PDB_FLOAT,

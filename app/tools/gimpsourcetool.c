@@ -256,7 +256,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  if (options->type == IMAGE_CLONE)
+  if (options->type == GIMP_IMAGE_CLONE)
     {
       if (state & GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
@@ -282,7 +282,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-      if (draw_tool->gdisp && options->type == IMAGE_CLONE)
+      if (draw_tool->gdisp && options->type == GIMP_IMAGE_CLONE)
         {
           GimpClone *clone;
 
@@ -373,11 +373,11 @@ clone_options_new (GimpToolInfo *tool_info)
                                  GINT_TO_POINTER (options->type),
 
 				 _("Image Source"),
-                                 GINT_TO_POINTER (IMAGE_CLONE),
+                                 GINT_TO_POINTER (GIMP_IMAGE_CLONE),
 				 &options->type_w[0],
 
 				 _("Pattern Source"),
-                                 GINT_TO_POINTER (PATTERN_CLONE),
+                                 GINT_TO_POINTER (GIMP_PATTERN_CLONE),
 				 &options->type_w[1],
 
 				 NULL);

@@ -530,16 +530,20 @@ gradient_options_init (GimpGradientOptions *gradient,
 			       (gpointer) gradient->gradient_type_d,
 
 			       _("Once Forward"),
-			       GINT_TO_POINTER (ONCE_FORWARD), NULL,
+			       GINT_TO_POINTER (GIMP_GRADIENT_ONCE_FORWARD), 
+                               NULL,
 
 			       _("Once Backward"),
-			       GINT_TO_POINTER (ONCE_BACKWARDS), NULL,
+			       GINT_TO_POINTER (GIMP_GRADIENT_ONCE_BACKWARD),
+                               NULL,
 
 			       _("Loop Sawtooth"),
-			       GINT_TO_POINTER (LOOP_SAWTOOTH), NULL,
+			       GINT_TO_POINTER (GIMP_GRADIENT_LOOP_SAWTOOTH),
+                               NULL,
 
 			       _("Loop Triangle"),
-			       GINT_TO_POINTER (LOOP_TRIANGLE), NULL,
+			       GINT_TO_POINTER (GIMP_GRADIENT_LOOP_TRIANGLE), 
+                               NULL,
 
 			       NULL);
 

@@ -19,8 +19,9 @@
 #ifndef __PAINT_TYPES_H__
 #define __PAINT_TYPES_H__
 
-
 #include "core/core-types.h"
+
+#include "paint/paint-enums.h"
 
 
 /*  objects  */
@@ -36,53 +37,6 @@ typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
 
 typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
                                             GimpPaintRegisterCallback  callback);
-
-
-/*  enums  */
-
-/* Brush application types  */
-typedef enum
-{
-  HARD,     /* pencil */
-  SOFT,     /* paintbrush */
-  PRESSURE  /* paintbrush with variable pressure */
-} BrushApplicationMode;
-
-/* Paint application modes  */
-typedef enum
-{
-  CONSTANT,    /* pencil, paintbrush, airbrush, clone */
-  INCREMENTAL  /* convolve, smudge */
-} PaintApplicationMode;
-
-/* gradient paint modes */
-typedef enum
-{
-  ONCE_FORWARD,    /* paint through once, then stop */
-  ONCE_BACKWARDS,  /* paint once, then stop, but run the gradient the other way */
-  LOOP_SAWTOOTH,   /* keep painting, looping through the grad start->end,start->end /|/|/| */
-  LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
-  ONCE_END_COLOR   /* paint once, but keep painting with the end color */
-} GradientPaintMode;
-
-typedef enum
-{
-  DODGE,
-  BURN
-} DodgeBurnType;
-
-typedef enum
-{
-  BLUR_CONVOLVE,
-  SHARPEN_CONVOLVE,
-  CUSTOM_CONVOLVE
-} ConvolveType;
-
-typedef enum
-{
-  IMAGE_CLONE,
-  PATTERN_CLONE
-} CloneType;
 
 
 #endif /* __PAINT_TYPES_H__ */

@@ -26,32 +26,6 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-  GIMP_HARD,
-  GIMP_SOFT,
-  GIMP_PRESSURE
-} GimpBrushApplicationMode;
-
-typedef enum
-{
-  GIMP_IMAGE_CLONE,
-  GIMP_PATTERN_CLONE
-} GimpCloneType;
-
-typedef enum
-{
-  GIMP_BLUR_CONVOLVE,
-  GIMP_SHARPEN_CONVOLVE,
-  GIMP_CUSTOM_CONVOLVE
-} GimpConvolveType;
-
-typedef enum
-{
-  GIMP_DODGE,
-  GIMP_BURN
-} GimpDodgeBurnType;
-
-typedef enum
-{
   GIMP_ADD_WHITE_MASK,
   GIMP_ADD_BLACK_MASK,
   GIMP_ADD_ALPHA_MASK,
@@ -68,6 +42,13 @@ typedef enum
   GIMP_FG_TRANSPARENT_MODE,
   GIMP_CUSTOM_MODE
 } GimpBlendMode;
+
+typedef enum
+{
+  GIMP_BRUSH_HARD,
+  GIMP_BRUSH_SOFT,
+  GIMP_BRUSH_PRESSURE
+} GimpBrushApplicationMode;
 
 typedef enum
 {
@@ -105,6 +86,12 @@ typedef enum
 
 typedef enum
 {
+  GIMP_IMAGE_CLONE,
+  GIMP_PATTERN_CLONE
+} GimpCloneType;
+
+typedef enum
+{
   GIMP_NO_DITHER,
   GIMP_FS_DITHER,
   GIMP_FSLOWBLEED_DITHER,
@@ -130,12 +117,33 @@ typedef enum
 
 typedef enum
 {
+  GIMP_BLUR_CONVOLVE,
+  GIMP_SHARPEN_CONVOLVE,
+  GIMP_CUSTOM_CONVOLVE
+} GimpConvolveType;
+
+typedef enum
+{
+  GIMP_DODGE,
+  GIMP_BURN
+} GimpDodgeBurnType;
+
+typedef enum
+{
   GIMP_FOREGROUND_FILL,
   GIMP_BACKGROUND_FILL,
   GIMP_WHITE_FILL,
   GIMP_TRANSPARENT_FILL,
   GIMP_NO_FILL
 } GimpFillType;
+
+typedef enum
+{
+  GIMP_GRADIENT_ONCE_FORWARD,
+  GIMP_GRADIENT_ONCE_BACKWARD,
+  GIMP_GRADIENT_LOOP_SAWTOOTH,
+  GIMP_GRADIENT_LOOP_TRIANGLE
+} GimpGradientPaintMode;
 
 typedef enum
 {
@@ -215,6 +223,12 @@ typedef enum
 
 typedef enum
 {
+  GIMP_PAINT_CONSTANT,
+  GIMP_PAINT_INCREMENTAL
+} GimpPaintApplicationMode;
+
+typedef enum
+{
   GIMP_REPEAT_NONE,
   GIMP_REPEAT_SAWTOOTH,
   GIMP_REPEAT_TRIANGULAR
@@ -236,15 +250,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_ONCE_FORWARD,
-  GIMP_ONCE_BACKWARDS,
-  GIMP_LOOP_SAWTOOTH,
-  GIMP_LOOP_TRIANGLE,
-  GIMP_ONCE_END_COLOR
-} GimpGradientPaintMode;
-
-typedef enum
-{
   GIMP_ALL_HUES,
   GIMP_RED_HUES,
   GIMP_YELLOW_HUES,
@@ -260,12 +265,6 @@ typedef enum
   GIMP_VERTICAL,
   GIMP_UNKNOWN
 } GimpOrientationType;
-
-typedef enum
-{
-  GIMP_CONSTANT,
-  GIMP_INCREMENTAL
-} GimpPaintApplicationMode;
 
 typedef enum
 {

@@ -23,6 +23,8 @@
 #include "paint/paint-types.h"
 #include "display/display-types.h"
 
+#include "tools/tools-enums.h"
+
 
 /*  tools  */
 
@@ -63,63 +65,6 @@ typedef void (* GimpToolRegisterCallback) (Gimp                     *gimp,
 
 typedef void (* GimpToolRegisterFunc)     (Gimp                     *gimp,
                                            GimpToolRegisterCallback  callback);
-
-
-/*  enums  */
-
-typedef enum /*< pdb-skip >*/
-{
-  SELECTION_ADD       = GIMP_CHANNEL_OP_ADD,
-  SELECTION_SUBTRACT  = GIMP_CHANNEL_OP_SUBTRACT,
-  SELECTION_REPLACE   = GIMP_CHANNEL_OP_REPLACE,
-  SELECTION_INTERSECT = GIMP_CHANNEL_OP_INTERSECT,
-  SELECTION_MOVE_MASK,
-  SELECTION_MOVE,
-  SELECTION_ANCHOR
-} SelectOps;
-
-/*  The possible states for tools  */
-typedef enum /*< pdb-skip >*/
-{
-  INACTIVE,
-  ACTIVE
-} GimpToolState;
-
-/*  Tool control actions  */
-typedef enum /*< pdb-skip >*/
-{
-  PAUSE,
-  RESUME,
-  HALT
-} GimpToolAction;
-
-/*  Motion event report modes  */
-typedef enum /*< pdb-skip >*/
-{
-  GIMP_MOTION_MODE_EXACT,
-  GIMP_MOTION_MODE_HINT,
-  GIMP_MOTION_MODE_COMPRESS
-} GimpMotionMode;
-
-/* possible transform functions */
-typedef enum /*< pdb-skip >*/
-{
-  TRANSFORM_CREATING,
-  TRANSFORM_HANDLE_1,
-  TRANSFORM_HANDLE_2,
-  TRANSFORM_HANDLE_3,
-  TRANSFORM_HANDLE_4,
-  TRANSFORM_HANDLE_CENTER
-} TransformAction;
-
-/* the different states that the transformation function can be called with */
-typedef enum /*< pdb-skip >*/
-{
-  TRANSFORM_INIT,
-  TRANSFORM_MOTION,
-  TRANSFORM_RECALC,
-  TRANSFORM_FINISH
-} TransformState;
 
 
 #endif /* __TOOLS_TYPES_H__ */

@@ -43,7 +43,7 @@ static void     gimp_dodgeburn_init       (GimpDodgeBurn      *dodgeburn);
 
 static void     gimp_dodgeburn_make_luts  (GimpPaintCore      *paint_core,
                                            gdouble             db_exposure,
-                                           DodgeBurnType       type,
+                                           GimpDodgeBurnType   type,
                                            GimpTransferMode    mode,
                                            GimpLut            *lut,
                                            GimpDrawable       *drawable);
@@ -134,7 +134,7 @@ gimp_dodgeburn_init (GimpDodgeBurn *dodgeburn)
 static void 
 gimp_dodgeburn_make_luts (GimpPaintCore     *paint_core,
                           gdouble            db_exposure,
-                          DodgeBurnType      type,
+                          GimpDodgeBurnType  type,
                           GimpTransferMode   mode,
                           GimpLut           *lut,
                           GimpDrawable      *drawable)
@@ -146,7 +146,7 @@ gimp_dodgeburn_make_luts (GimpPaintCore     *paint_core,
   exposure = db_exposure / 100.0;
 
   /* make the exposure negative if burn for luts*/
-  if (type == BURN)
+  if (type == GIMP_BURN)
     exposure = -exposure;
 
   switch (mode)
@@ -313,8 +313,9 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   gimp_paint_core_replace_canvas (paint_core, drawable, 
 			          MIN (opacity, GIMP_OPACITY_OPAQUE),
 		                  GIMP_OPACITY_OPAQUE,
-			          pressure_options->pressure ? PRESSURE : SOFT,
-			          scale, CONSTANT);
+			          (pressure_options->pressure ? 
+                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+			          scale, GIMP_PAINT_CONSTANT);
  
   g_free (temp_data);
 }
@@ -394,7 +395,7 @@ gimp_dodgeburn_shadows_lut_func (gpointer  user_data,
 /*  paint options stuff  */
 
 #define DODGEBURN_DEFAULT_EXPOSURE 50.0
-#define DODGEBURN_DEFAULT_TYPE     DODGE
+#define DODGEBURN_DEFAULT_TYPE     GIMP_DODGE
 #define DODGEBURN_DEFAULT_MODE     GIMP_HIGHLIGHTS
 
 GimpDodgeBurnOptions *

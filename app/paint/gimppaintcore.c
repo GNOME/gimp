@@ -90,7 +90,7 @@ static MaskBuf * gimp_paint_core_scale_pixmap     (GimpPaintCore    *core,
                                                    gdouble           scale);
 
 static MaskBuf * gimp_paint_core_get_brush_mask   (GimpPaintCore    *core,
-                                                   BrushApplicationMode  brush_hardness,
+                                                   GimpBrushApplicationMode  brush_hardness,
                                                    gdouble           scale);
 static void      gimp_paint_core_paste            (GimpPaintCore    *core,
                                                    MaskBuf	    *brush_mask,
@@ -98,13 +98,13 @@ static void      gimp_paint_core_paste            (GimpPaintCore    *core,
                                                    gdouble	     brush_opacity,
                                                    gdouble	     image_opacity,
                                                    GimpLayerModeEffects  paint_mode,
-                                                   PaintApplicationMode  mode);
+                                                   GimpPaintApplicationMode  mode);
 static void      gimp_paint_core_replace          (GimpPaintCore    *core,
                                                    MaskBuf          *brush_mask,
                                                    GimpDrawable	    *drawable,
                                                    gdouble	     brush_opacity,
                                                    gdouble           image_opacity,
-                                                   PaintApplicationMode  mode);
+                                                   GimpPaintApplicationMode  mode);
 
 static void      brush_to_canvas_tiles            (GimpPaintCore    *core,
                                                    MaskBuf          *brush_mask,
@@ -139,7 +139,7 @@ static void      paint_line_pixmap_mask           (GimpImage        *dest,
                                                    gint              y,
                                                    gint              bytes,
                                                    gint              width,
-                                                   BrushApplicationMode  mode);
+                                                   GimpBrushApplicationMode  mode);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -636,21 +636,23 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 /*  protected functions  */
 
 void
-gimp_paint_core_get_color_from_gradient (GimpPaintCore     *core,
-                                         GimpGradient      *gradient,
-					 gdouble            gradient_length,
-					 GimpRGB           *color,
-					 GradientPaintMode  mode)
+gimp_paint_core_get_color_from_gradient (GimpPaintCore         *core,
+                                         GimpGradient          *gradient,
+					 gdouble                gradient_length,
+					 GimpRGB               *color,
+					 GimpGradientPaintMode  mode)
 {
   gdouble pos;
 
   pos = (gdouble) core->pixel_dist / gradient_length;
 
   /*  for the once modes, set pos close to 1.0 after the first chunk  */
-  if ((mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && pos >= 1.0)
+  if ((mode == GIMP_GRADIENT_ONCE_FORWARD || 
+       mode == GIMP_GRADIENT_ONCE_BACKWARD) && pos >= 1.0)
     pos = 0.9999999;
 
-  if ((((gint) pos & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
+  if ((((gint) pos & 1) && mode != GIMP_GRADIENT_LOOP_SAWTOOTH) || 
+      mode == GIMP_GRADIENT_ONCE_BACKWARD)
     pos = 1.0 - (pos - (gint) pos);
   else
     pos = pos - (gint) pos;
@@ -791,14 +793,14 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
 }
 
 void
-gimp_paint_core_paste_canvas (GimpPaintCore        *core,
-			      GimpDrawable	   *drawable,
-			      gdouble		    brush_opacity,
-			      gdouble		    image_opacity,
-			      GimpLayerModeEffects  paint_mode,
-			      BrushApplicationMode  brush_hardness,
-			      gdouble               brush_scale,
-			      PaintApplicationMode  mode)
+gimp_paint_core_paste_canvas (GimpPaintCore            *core,
+			      GimpDrawable	       *drawable,
+			      gdouble		        brush_opacity,
+			      gdouble		        image_opacity,
+			      GimpLayerModeEffects      paint_mode,
+			      GimpBrushApplicationMode  brush_hardness,
+			      gdouble                   brush_scale,
+			      GimpPaintApplicationMode  mode)
 {
   MaskBuf *brush_mask;
 
@@ -819,13 +821,13 @@ gimp_paint_core_paste_canvas (GimpPaintCore        *core,
  * becomes transparent rather than opauqe.
  */
 void
-gimp_paint_core_replace_canvas (GimpPaintCore        *core,
-				GimpDrawable	     *drawable,
-				gdouble               brush_opacity,
-				gdouble               image_opacity,
-				BrushApplicationMode  brush_hardness,
-				gdouble               brush_scale,
-				PaintApplicationMode  mode)
+gimp_paint_core_replace_canvas (GimpPaintCore            *core,
+				GimpDrawable	         *drawable,
+				gdouble                   brush_opacity,
+				gdouble                   image_opacity,
+				GimpBrushApplicationMode  brush_hardness,
+				gdouble                   brush_scale,
+				GimpPaintApplicationMode  mode)
 {
   MaskBuf *brush_mask;
 
@@ -1197,9 +1199,9 @@ gimp_paint_core_scale_pixmap (GimpPaintCore *core,
 }
 
 static MaskBuf *
-gimp_paint_core_get_brush_mask (GimpPaintCore        *core,
-				BrushApplicationMode  brush_hardness,
-				gdouble               scale)
+gimp_paint_core_get_brush_mask (GimpPaintCore            *core,
+				GimpBrushApplicationMode  brush_hardness,
+				gdouble                   scale)
 {
   MaskBuf *mask;
 
@@ -1215,15 +1217,15 @@ gimp_paint_core_get_brush_mask (GimpPaintCore        *core,
 
   switch (brush_hardness)
     {
-    case SOFT:
+    case GIMP_BRUSH_SOFT:
       mask = gimp_paint_core_subsample_mask (core, mask,
 					     core->cur_coords.x,
                                              core->cur_coords.y);
       break;
-    case HARD:
+    case GIMP_BRUSH_HARD:
       mask = gimp_paint_core_solidify_mask (core, mask);
       break;
-    case PRESSURE:
+    case GIMP_BRUSH_PRESSURE:
       mask = gimp_paint_core_pressurize_mask (core, mask,
 					      core->cur_coords.x,
                                               core->cur_coords.y,
@@ -1237,13 +1239,13 @@ gimp_paint_core_get_brush_mask (GimpPaintCore        *core,
 }
 
 static void
-gimp_paint_core_paste (GimpPaintCore        *core,
-		       MaskBuf              *brush_mask,
-		       GimpDrawable         *drawable,
-		       gdouble               brush_opacity,
-		       gdouble               image_opacity,
-		       GimpLayerModeEffects  paint_mode,
-		       PaintApplicationMode  mode)
+gimp_paint_core_paste (GimpPaintCore            *core,
+		       MaskBuf                  *brush_mask,
+		       GimpDrawable             *drawable,
+		       gdouble                   brush_opacity,
+		       gdouble                   image_opacity,
+		       GimpLayerModeEffects      paint_mode,
+		       GimpPaintApplicationMode  mode)
 {
   GimpImage   *gimage;
   PixelRegion  srcPR;
@@ -1262,7 +1264,7 @@ gimp_paint_core_paste (GimpPaintCore        *core,
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the brush mask to the canvas tiles
    */
-  if (mode == CONSTANT)
+  if (mode == GIMP_PAINT_CONSTANT)
     {
       /*  initialize any invalid canvas tiles  */
       set_canvas_tiles (core,
@@ -1327,12 +1329,12 @@ gimp_paint_core_paste (GimpPaintCore        *core,
  * NORMAL mode.
  */
 static void
-gimp_paint_core_replace (GimpPaintCore        *core,
-			 MaskBuf              *brush_mask,
-			 GimpDrawable         *drawable,
-			 gdouble               brush_opacity,
-			 gdouble               image_opacity,
-			 PaintApplicationMode  mode)
+gimp_paint_core_replace (GimpPaintCore            *core,
+			 MaskBuf                  *brush_mask,
+			 GimpDrawable             *drawable,
+			 gdouble                   brush_opacity,
+			 gdouble                   image_opacity,
+			 GimpPaintApplicationMode  mode)
 {
   GimpImage   *gimage;
   PixelRegion  srcPR;
@@ -1360,7 +1362,7 @@ gimp_paint_core_replace (GimpPaintCore        *core,
 		  core->canvas_buf->width,
                   core->canvas_buf->height);
 
-  if (mode == CONSTANT)
+  if (mode == GIMP_PAINT_CONSTANT)
     {
       /*  initialize any invalid canvas tiles  */
       set_canvas_tiles (core,
@@ -1604,12 +1606,12 @@ set_canvas_tiles (GimpPaintCore *core,
 /**************************************************/
 
 void
-gimp_paint_core_color_area_with_pixmap (GimpPaintCore        *core,
-					GimpImage            *dest,
-					GimpDrawable         *drawable,
-					TempBuf              *area,
-					gdouble               scale,
-					BrushApplicationMode  mode)
+gimp_paint_core_color_area_with_pixmap (GimpPaintCore            *core,
+					GimpImage                *dest,
+					GimpDrawable             *drawable,
+					TempBuf                  *area,
+					gdouble                   scale,
+					GimpBrushApplicationMode  mode)
 {
   PixelRegion  destPR;
   void        *pr;
@@ -1630,7 +1632,7 @@ gimp_paint_core_color_area_with_pixmap (GimpPaintCore        *core,
                                               core->brush->pixmap,
                                               scale);
 
-  if (mode == SOFT)
+  if (mode == GIMP_BRUSH_SOFT)
     brush_mask = gimp_paint_core_scale_mask (core,
                                              core->brush->mask,
                                              scale);
@@ -1671,16 +1673,16 @@ gimp_paint_core_color_area_with_pixmap (GimpPaintCore        *core,
 }
 
 static void
-paint_line_pixmap_mask (GimpImage            *dest,
-			GimpDrawable         *drawable,
-			TempBuf              *pixmap_mask,
-			TempBuf              *brush_mask,
-			guchar               *d,
-			gint                  x,
-			gint                  y,
-			gint                  bytes,
-			gint                  width,
-			BrushApplicationMode  mode)
+paint_line_pixmap_mask (GimpImage                *dest,
+			GimpDrawable             *drawable,
+			TempBuf                  *pixmap_mask,
+			TempBuf                  *brush_mask,
+			guchar                   *d,
+			gint                      x,
+			gint                      y,
+			gint                      bytes,
+			gint                      width,
+			GimpBrushApplicationMode  mode)
 {
   guchar  *b;
   guchar  *p;
@@ -1700,9 +1702,10 @@ paint_line_pixmap_mask (GimpImage            *dest,
   b = temp_buf_data (pixmap_mask) +
     (y % pixmap_mask->height) * pixmap_mask->width * pixmap_mask->bytes;
     
-  if (mode == SOFT && brush_mask)
+  if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
-      /* ditto, except for the brush mask, so we can pre-multiply the alpha value */
+      /* ditto, except for the brush mask, 
+         so we can pre-multiply the alpha value */
       mask = temp_buf_data (brush_mask) +
 	(y % brush_mask->height) * brush_mask->width;
       for (i = 0; i < width; i++)

@@ -2515,7 +2515,7 @@ gfig_paint (BrushType brush_type,
       gimp_paintbrush (drawable_ID,
 		       selvals.brushfade,
 		       seg_count, line_pnts,
-		       GIMP_HARD,
+		       GIMP_PAINT_CONSTANT,
 		       selvals.brushgradient);
       break;
 
