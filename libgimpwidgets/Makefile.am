@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
 
 if PLATFORM_WIN32
