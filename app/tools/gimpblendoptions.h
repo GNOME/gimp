@@ -42,6 +42,8 @@ struct _GimpBlendOptions
   GimpGradientType  gradient_type;
   GimpRepeatMode    repeat;
    
+  gboolean          dither;
+  
   gboolean          supersample;
   gint              supersample_depth;
   gdouble           supersample_threshold;

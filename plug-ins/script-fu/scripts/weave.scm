@@ -66,6 +66,7 @@
 		FALSE
 		0
 		0
+		TRUE
 		(/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2)
 		0
 		0
@@ -91,6 +92,7 @@
 		FALSE
 		0
 		0
+		TRUE
 		0
 		(/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2)
 		0

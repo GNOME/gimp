@@ -65,6 +65,7 @@ blend_invoker (Gimp     *gimp,
   gboolean supersample;
   gint32 max_depth;
   gdouble threshold;
+  gboolean dither;
   gdouble x1;
   gdouble y1;
   gdouble x2;
@@ -108,13 +109,15 @@ blend_invoker (Gimp     *gimp,
   if (supersample && (threshold < 0.0 || threshold > 4.0))
     success = FALSE;
 
-  x1 = args[10].value.pdb_float;
+  dither = args[10].value.pdb_int ? TRUE : FALSE;
 
-  y1 = args[11].value.pdb_float;
+  x1 = args[11].value.pdb_float;
 
-  x2 = args[12].value.pdb_float;
+  y1 = args[12].value.pdb_float;
 
-  y2 = args[13].value.pdb_float;
+  x2 = args[13].value.pdb_float;
+
+  y2 = args[14].value.pdb_float;
 
   if (success)
     {
@@ -131,7 +134,7 @@ blend_invoker (Gimp     *gimp,
 			       opacity / 100.0,
 			       offset, repeat,
 			       supersample, max_depth,
-			       threshold,
+			       threshold, dither,
 			       x1, y1, x2, y2,
 			       NULL, NULL);
 	}
@@ -193,6 +196,11 @@ static ProcArg blend_inargs[] =
     "Supersampling threshold"
   },
   {
+    GIMP_PDB_INT32,
+    "dither",
+    "Use dithering to reduce banding (TRUE or FALSE)"
+  },
+  {
     GIMP_PDB_FLOAT,
     "x1",
     "The x coordinate of this blend's starting point"
@@ -223,7 +231,7 @@ static ProcRecord blend_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  14,
+  15,
   blend_inargs,
   0,
   NULL,

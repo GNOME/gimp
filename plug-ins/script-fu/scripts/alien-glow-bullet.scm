@@ -52,7 +52,7 @@
 ;    (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(90 90 90))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend bullet-layer FG-BG-RGB NORMAL RADIAL 100 0 REPEAT-NONE FALSE 0 0 blend-start blend-start (+ half-radius radius)(+ half-radius radius ))
+    (gimp-blend bullet-layer FG-BG-RGB NORMAL RADIAL 100 0 REPEAT-NONE FALSE 0 0 TRUE blend-start blend-start (+ half-radius radius)(+ half-radius radius ))
 
     (gimp-palette-set-foreground glow-color)
     (gimp-selection-grow img border)

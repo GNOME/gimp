@@ -57,7 +57,7 @@
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
-    (gimp-blend logo-layer FG-BG-RGB NORMAL RADIAL 95 0 REPEAT-NONE FALSE 0 0 indentX indentY indentX (- height indentY))
+    (gimp-blend logo-layer FG-BG-RGB NORMAL RADIAL 95 0 REPEAT-NONE FALSE 0 0 TRUE indentX indentY indentX (- height indentY))
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)
     (plug-in-bump-map 1 img logo-layer blur-layer 115 bevel-height 5 0 0 0 15 TRUE FALSE 0)

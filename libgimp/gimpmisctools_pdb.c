@@ -37,6 +37,7 @@
  * @supersample: Do adaptive supersampling.
  * @max_depth: Maximum recursion levels for supersampling.
  * @threshold: Supersampling threshold.
+ * @dither: Use dithering to reduce banding.
  * @x1: The x coordinate of this blend's starting point.
  * @y1: The y coordinate of this blend's starting point.
  * @x2: The x coordinate of this blend's ending point.
@@ -63,6 +64,7 @@ gimp_blend (gint32               drawable_ID,
 	    gboolean             supersample,
 	    gint                 max_depth,
 	    gdouble              threshold,
+	    gboolean             dither,
 	    gdouble              x1,
 	    gdouble              y1,
 	    gdouble              x2,
@@ -84,6 +86,7 @@ gimp_blend (gint32               drawable_ID,
 				    GIMP_PDB_INT32, supersample,
 				    GIMP_PDB_INT32, max_depth,
 				    GIMP_PDB_FLOAT, threshold,
+				    GIMP_PDB_INT32, dither,
 				    GIMP_PDB_FLOAT, x1,
 				    GIMP_PDB_FLOAT, y1,
 				    GIMP_PDB_FLOAT, x2,

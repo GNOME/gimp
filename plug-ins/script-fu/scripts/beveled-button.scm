@@ -49,6 +49,7 @@
 	      FALSE
 	      0
 	      0
+	      TRUE
 	      x1
 	      y1
 	      x2
@@ -121,6 +122,7 @@
 		FALSE
 		0
 		0
+		TRUE
 		0
 		0
 		(- img-width 1)

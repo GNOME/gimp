@@ -161,13 +161,13 @@
 	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
     (gimp-ellipse-select img (- cx radius) (- cy radius) (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
     (gimp-blend drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
-		FALSE 0 0 light-x light-y light-end-x light-end-y)
+		FALSE 0 0 TRUE light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
 
     (gimp-gradients-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
     (gimp-blend drawable CUSTOM NORMAL LINEAR 100 offset REPEAT-NONE
-		FALSE 0 0 10 10 30 60)
+		FALSE 0 0 TRUE 10 10 30 60)
     (gimp-selection-none img)
 
     (gimp-palette-set-foreground '(0 0 0))

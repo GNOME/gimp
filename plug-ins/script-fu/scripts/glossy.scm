@@ -77,7 +77,7 @@
     (if (= use-pattern-text FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-text)
-        (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
+        (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 
@@ -98,7 +98,7 @@
     (if (= use-pattern-outline FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-outline)
-        (gimp-blend grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 0 (+ height 5))))
+        (gimp-blend grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 

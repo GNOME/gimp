@@ -66,6 +66,8 @@ typedef struct
   guchar      *row_data;
   gint         bytes;
   gint         width;
+  gboolean     dither;
+  GRand       *dither_rand;
 } PutPixelData;
 
 
@@ -143,6 +145,7 @@ static void    gradient_fill_region          (GimpImage        *gimage,
                                               gint              supersample,
                                               gint              max_depth,
                                               gdouble           threshold,
+                                              gboolean          dither,
                                               gdouble           sx,
                                               gdouble           sy,
                                               gdouble           ex,
@@ -178,6 +181,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
                      gint              supersample,
                      gint              max_depth,
                      gdouble           threshold,
+                     gboolean          dither,
                      gdouble           startx,
                      gdouble           starty,
                      gdouble           endx,
@@ -219,7 +223,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   gradient_fill_region (gimage, drawable,
 			&bufPR, (x2 - x1), (y2 - y1),
 			blend_mode, gradient_type, offset, repeat,
-			supersample, max_depth, threshold,
+			supersample, max_depth, threshold, dither,
 			(startx - x1), (starty - y1),
 			(endx - x1), (endy - y1),
 			progress_callback, progress_data);
@@ -798,6 +802,42 @@ gradient_put_pixel (int      x,
 
   if (ppd->bytes >= 3)
     {
+      if (ppd->dither)
+        {
+	  gdouble dither_prob;
+          gdouble ftmp;
+          gint    itmp;
+
+          ftmp = color->r * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
+            color->r += (1.0 / 255.0);
+
+          ftmp = color->g * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
+            color->g += (1.0 / 255.0);
+
+          ftmp = color->b * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if(g_rand_double (ppd->dither_rand) < dither_prob)
+            color->b += (1.0 / 255.0);
+
+          ftmp = color->a * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if(g_rand_double (ppd->dither_rand) < dither_prob)
+            color->a += (1.0 / 255.0);
+
+          if (color->r > 1.0) color->r = 1.0;
+          if (color->g > 1.0) color->g = 1.0;
+          if (color->b > 1.0) color->b = 1.0;
+          if (color->a > 1.0) color->a = 1.0;
+        }
+
       *data++ = color->r * 255.0;
       *data++ = color->g * 255.0;
       *data++ = color->b * 255.0;
@@ -806,15 +846,37 @@ gradient_put_pixel (int      x,
   else
     {
       /* Convert to grayscale */
+      gdouble gray = INTENSITY (color->r, color->g, color->b);
+                      
+      if (ppd->dither)
+        {
+	  gdouble dither_prob;
+          gdouble ftmp;
+          gint    itmp;
+                          
+          ftmp = gray * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
+            gray += (1.0 / 255.0);
+                          
+          ftmp = color->a * 255.0;
+          itmp = ftmp;
+          dither_prob = ftmp - itmp;
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
+            color->a += (1.0 / 255.0);
+                      
+          if (color->a > 1.0) color->a = 1.0;
+        }
 
-      *data++ = 255.0 * INTENSITY (color->r, color->g, color->b);
+      *data++ = gray * 255.0;
       *data++ = color->a * 255.0;
     }
 
   /* Paint whole row if we are on the rightmost pixel */
 
   if (x == (ppd->width - 1))
-    pixel_region_set_row(ppd->PR, 0, y, ppd->width, ppd->row_data);
+    pixel_region_set_row (ppd->PR, 0, y, ppd->width, ppd->row_data);
 }
 
 static void
@@ -830,6 +892,7 @@ gradient_fill_region (GimpImage        *gimage,
 		      gint              supersample,
 		      gint              max_depth,
 		      gdouble           threshold,
+		      gboolean          dither,
 		      gdouble           sx,
 		      gdouble           sy,
 		      gdouble           ex,
@@ -845,6 +908,7 @@ gradient_fill_region (GimpImage        *gimage,
   guchar          *data;
   GimpRGB          color;
   GimpContext     *context;
+  GRand           *dither_rand = NULL;
 
   context = gimp_get_current_context (gimage->gimp);
 
@@ -963,17 +1027,21 @@ gradient_fill_region (GimpImage        *gimage,
   rbd.blend_mode    = blend_mode;
   rbd.gradient_type = gradient_type;
 
+  if (dither)
+    dither_rand = g_rand_new ();
+
   /* Render the gradient! */
 
   if (supersample)
     {
       /* Initialize put pixel data */
 
-      ppd.PR       = PR;
-      ppd.row_data = g_malloc (width * PR->bytes);
-      ppd.bytes    = PR->bytes;
-      ppd.width    = width;
-
+      ppd.PR          = PR;
+      ppd.row_data    = g_malloc (width * PR->bytes);
+      ppd.bytes       = PR->bytes;
+      ppd.width       = width;
+      ppd.dither      = dither;
+      ppd.dither_rand = dither_rand;
       /* Render! */
 
       gimp_adaptive_supersample_area (0, 0, (width - 1), (height - 1),
@@ -989,7 +1057,7 @@ gradient_fill_region (GimpImage        *gimage,
   else
     {
       gint max_progress = PR->w * PR->h;
-      gint progress = 0;
+      gint progress     = 0;
 
       for (pr = pixel_regions_register (1, PR);
 	   pr != NULL;
@@ -1007,6 +1075,42 @@ gradient_fill_region (GimpImage        *gimage,
 
                   if (PR->bytes >= 3)
                     {
+                      if (dither)
+                        {
+			  gdouble dither_prob;
+                          gdouble ftmp;
+                          gint    itmp;
+                    
+                          ftmp = color.r * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            color.r += (1.0 / 255.0);
+
+                          ftmp = color.g * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            color.g += (1.0 / 255.0);
+
+                          ftmp = color.b * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            color.b += (1.0 / 255.0);
+
+                          ftmp = color.a * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            color.a += (1.0 / 255.0);
+                      
+                          if (color.r > 1.0) color.r = 1.0;
+                          if (color.g > 1.0) color.g = 1.0;
+                          if (color.b > 1.0) color.b = 1.0;
+                          if (color.a > 1.0) color.a = 1.0;
+                        }
+
                       *data++ = color.r * 255.0;
                       *data++ = color.g * 255.0;
                       *data++ = color.b * 255.0;
@@ -1015,8 +1119,30 @@ gradient_fill_region (GimpImage        *gimage,
                   else
                     {
                       /* Convert to grayscale */
+                      gdouble gray = INTENSITY (color.r, color.g, color.b);
+                      
+		      if (dither)
+                        {
+			  gdouble dither_prob;
+                          gdouble ftmp;
+                          gint    itmp;
+                          
+                          ftmp = gray * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            gray += (1.0 / 255.0);
+                          
+                          ftmp = color.a * 255.0;
+                          itmp = ftmp;
+                          dither_prob = ftmp - itmp;
+                          if (g_rand_double (dither_rand) < dither_prob)
+                            color.a += (1.0 / 255.0);
+                      
+                          if (color.a > 1.0) color.a = 1.0;
+                        }
 
-                      *data++ = 255.0 * INTENSITY (color.r, color.g, color.b);
+                      *data++ = gray * 255.0;
                       *data++ = color.a * 255.0;
                     }
                 }
@@ -1027,4 +1153,7 @@ gradient_fill_region (GimpImage        *gimage,
 	    (* progress_callback) (0, max_progress, progress, progress_data);
 	}
     }
+
+  if (dither)
+    g_rand_free (dither_rand);
 }

@@ -71,7 +71,7 @@
     (gimp-gradients-set-gradient gradient)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
-    (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 (* height 0.33333) 0 (* height 0.83333))
+    (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 (* height 0.33333) 0 (* height 0.83333))
     (plug-in-noisify 1 img logo-layer 0 0.20 0.20 0.20 0.20)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)

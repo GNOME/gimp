@@ -53,6 +53,7 @@ Functions giving access to common toolbox tools.
 @supersample: 
 @max_depth: 
 @threshold: 
+@dither: 
 @x1: 
 @y1: 
 @x2: 

@@ -47,7 +47,8 @@ enum
   PROP_REPEAT,
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
-  PROP_SUPERSAMPLE_THRESHOLD
+  PROP_SUPERSAMPLE_THRESHOLD,
+  PROP_DITHER
 };
 
 
@@ -138,6 +139,11 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                                    "supersample-threshold", NULL,
                                    0.0, 4.0, 0.2,
                                    0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DITHER,
+                                    "dither", NULL,
+                                    TRUE,
+                                    0);
 }
 
 static void
@@ -177,6 +183,10 @@ gimp_blend_options_set_property (GObject      *object,
       options->supersample_threshold = g_value_get_double (value);
       break;
 
+    case PROP_DITHER:
+      options->dither = g_value_get_boolean (value);
+      break;
+    
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -215,6 +225,10 @@ gimp_blend_options_get_property (GObject    *object,
       g_value_set_double (value, options->supersample_threshold);
       break;
 
+    case PROP_DITHER:
+      g_value_set_boolean (value, options->dither);
+      break;
+    
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -262,6 +276,11 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                     G_CALLBACK (blend_options_gradient_type_notify),
                     menu);
 
+  button = gimp_prop_check_button_new (config, "dither",
+                                       _("Dithering"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  
   /*  frame for supersampling options  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);

@@ -46,6 +46,7 @@
 	      FALSE
 	      0
 	      0
+	      TRUE
 	      x1
 	      y1
 	      x2
@@ -100,7 +101,7 @@
     (gimp-rect-select img 0 0 img-width img-height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 img-height img-width)
+    (gimp-blend button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 img-height img-width)
     (gimp-edit-clear glow-layer)
     (gimp-rect-select img (/ glow-radius 4) (/ glow-radius 4) (- img-width (/ glow-radius 2)) (- img-height (/ glow-radius 2)) REPLACE FALSE 0 )
     (gimp-palette-set-foreground glow-color)

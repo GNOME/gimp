@@ -70,7 +70,7 @@
       
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
-      (gimp-blend temp-draw FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 size size (* size 2) (/ size 2) )
+      (gimp-blend temp-draw FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 TRUE size size (* size 2) (/ size 2) )
 
       (center-ellipse temp-img size (* size 2)  outer-radius outer-radius REPLACE TRUE FALSE 0)
       (center-ellipse temp-img size (* size 2) inner-radius inner-radius SUB TRUE FALSE 0)
@@ -78,7 +78,7 @@
       (center-ellipse temp-img (* size 2) size  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) size  inner-radius inner-radius SUB TRUE FALSE 0)
       ;(gimp-edit-fill temp-img temp-draw2 BG-IMAGE-FILL)
-      (gimp-blend temp-draw2 FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 size size (* size 2) (* size 2) )
+      (gimp-blend temp-draw2 FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 TRUE size size (* size 2) (* size 2) )
       
       (gimp-selection-none temp-img)
 

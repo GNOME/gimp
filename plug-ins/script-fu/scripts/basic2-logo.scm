@@ -43,7 +43,7 @@
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend logo-layer FG-BG-RGB MULTIPLY RADIAL 100 20 REPEAT-NONE FALSE 0 0 0 0 width height)
+    (gimp-blend logo-layer FG-BG-RGB MULTIPLY RADIAL 100 20 REPEAT-NONE FALSE 0 0 TRUE 0 0 width height)
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-layer-translate highlight-layer (- posx 2) (- posy 2))
     (gimp-layer-set-name highlight-layer "Highlight")

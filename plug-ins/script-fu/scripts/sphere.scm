@@ -42,7 +42,7 @@
 	 (gimp-bucket-fill drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
     (gimp-ellipse-select img (- cx radius) (- cy radius) (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
     (gimp-blend drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
-		FALSE 0 0 light-x light-y light-end-x light-end-y)
+		FALSE 0 0 TRUE light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)

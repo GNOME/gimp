@@ -30,7 +30,7 @@
     (gimp-selection-none img)
     (gimp-palette-set-background '(0 0 0))
     (gimp-palette-set-foreground '(79 79 79))
-    (gimp-blend logo-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 1 1)
+    (gimp-blend logo-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 1 1)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 

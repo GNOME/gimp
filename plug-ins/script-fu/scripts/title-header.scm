@@ -122,7 +122,7 @@
 
     (gimp-layer-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0.2 3
+    (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0.2 3 TRUE
 		padding
 		padding
 		(- text-width padding 1)
@@ -152,6 +152,7 @@
 		FALSE
 		0.2
 		3
+		TRUE
 		(- img-width fade-width)
 		0
 		(- img-width 1)

@@ -1,5 +1,18 @@
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-blend.[ch]
+	* app/tools/gimpblendoptions.[ch]
+	* app/tools/gimpblendtool.c
+	* tools/pdbgen/pdb/misc_tools.pdb
+	* plug-ins/script-fu/scripts/: applied a slightly modified patch
+	from Alastair M. Robinson that adds dithering to the blend tool
+	(bug #97777).
+
+	* app/pdb/misc_tools_cmds.c
+	* libgimp/gimpmisctools_pdb.[ch]: regenerated.
+
+2003-07-21  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am (gimpconfig_libs): added libgimpmath.
 
 	* app/composite/Makefile.am (libappcomposite_a_sources)
