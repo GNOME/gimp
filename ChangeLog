@@ -1,3 +1,17 @@
+Mon Oct  4 19:13:39 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/color_display.h
+	* app/gdisplay.c: add bpl param for convert func
+
+	* gdisplay_color.c: guard against head and tail cases in reorders
+
+	* app/gdisplay_color_ui.c: expose_full on all actions, so there is
+	immediate feedback. Check for no selection and do nothing on actions
+
+	* app/path_tool.c: #warning is not portable; change to /* XXX: */
+
+	* modules/cdisplay_gamma.c: make it so it actually works properly
+
 Mon Oct  4 21:09:20 1999  Tim Janik  <timj@gtk.org>
 
 	* plug-ins/common/csource.c: minor cleanups. fixed up alpha channel

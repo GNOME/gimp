@@ -44,9 +44,10 @@ static void       gamma_create_lookup_table       (GammaContext *context);
 static void       gamma_destroy                   (gpointer      cd_ID);
 static void       gamma_convert                   (gpointer      cd_ID,
 						   guchar       *buf,
-						   int           width,
-						   int           height,
-						   int           bpp);
+						   int           w,
+						   int           h,
+						   int           bpp,
+						   int           bpl);
 static void       gamma_load                      (gpointer      cd_ID,
 						   Parasite     *state);
 static Parasite * gamma_save                      (gpointer      cd_ID);
@@ -116,6 +117,7 @@ gamma_new (int type)
     context->lookup[i] = i;
 
   gamma_create_lookup_table (context);
+
   return context;
 }
 
@@ -155,13 +157,36 @@ gamma_convert (gpointer  cd_ID,
     	       guchar   *buf,
 	       int       width,
 	       int       height,
-	       int       bpp)
+	       int       bpp,
+	       int       bpl)
 {
-  int i;
   guchar *lookup = ((GammaContext *) cd_ID)->lookup;
+  int i, j = height;
 
-  for (i = 0; i < width * height * bpp; i++)
-    *buf++ = lookup[*buf];
+  /* You will not be using the entire buffer most of the time. 
+   * Hence, the simplistic code for this is as follows:
+   *
+   * for (j = 0; j < height; j++)
+   *   {
+   *     for (i = 0; i < width * bpp; i++)
+   *       buf[i] = lookup[buf[i]];
+   *     buf += bpl;
+   *   }
+   */
+
+  width *= bpp;
+  bpl -= width;
+
+  while (j--)
+    {
+      i = width;
+      while (i--)
+	{
+	  *buf = lookup[*buf];
+	  buf++;
+	}
+      buf += bpl;
+    }
 }
 
 static void

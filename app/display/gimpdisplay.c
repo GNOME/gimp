@@ -1261,10 +1261,11 @@ gdisplay_display_area (GDisplay *gdisp,
   int i, j;
   GList *list;
   guchar *buf;
-  int bpp;
+  int bpp, bpl;
 
   buf = gximage_get_data ();
   bpp = gximage_get_bpp ();
+  bpl = gximage_get_bpl ();
 
   sx = SCALEX (gdisp, gdisp->gimage->width);
   sy = SCALEY (gdisp, gdisp->gimage->height);
@@ -1347,7 +1348,7 @@ gdisplay_display_area (GDisplay *gdisp,
 	while (list)
 	  {
 	    ColorDisplayNode *node = (ColorDisplayNode *) list->data;
-	    node->cd_convert (node->cd_ID, buf, dx, dy, bpp);
+	    node->cd_convert (node->cd_ID, buf, dx, dy, bpp, bpl);
 	    list = list->next;
 	  }
 

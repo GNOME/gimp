@@ -242,8 +242,11 @@ gdisplay_color_reorder_up (GDisplay         *gdisp,
 
   node_list = g_list_find (gdisp->cd_list, node);
 
-  node_list->data = node_list->prev->data;
-  node_list->prev->data = node;
+  if (node_list->prev)
+    {
+      node_list->data = node_list->prev->data;
+      node_list->prev->data = node;
+    }
 }
 
 void
@@ -254,8 +257,11 @@ gdisplay_color_reorder_down (GDisplay         *gdisp,
 
   node_list = g_list_find (gdisp->cd_list, node);
 
-  node_list->data = node_list->next->data;
-  node_list->next->data = node;
+  if (node_list->next)
+    {
+      node_list->data = node_list->next->data;
+      node_list->next->data = node;
+    }
 }
 
 static gint

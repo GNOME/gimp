@@ -188,7 +188,7 @@ path_traverse_segment (Path *path, PathCurve *curve, PathSegment *segment, Segme
    fprintf(stderr, "path_traverse_segment\n");
 #endif PATH_TOOL_DEBUG
 
-   #warning here we need path_curve_get_point(s)
+   /* XXX: here we need path_curve_get_point(s) */
 
    /* Something like:
     * for i = 1 to subsamples {
@@ -267,7 +267,7 @@ PathSegment * path_append_segment  (Path * cur_path, PathCurve * cur_curve, Segm
 
          cur_curve->cur_segment = new_segment;
 
-         #warning we need initialisation of the segment here.
+         /* XXX: we need initialisation of the segment here. */
 
       }
 #ifdef PATH_TOOL_DEBUG
@@ -313,7 +313,7 @@ PathSegment * path_prepend_segment  (Path * cur_path, PathCurve * cur_curve, Seg
 
          cur_curve->segments = new_segment;
          cur_curve->cur_segment = new_segment;
-         #warning we need initialisation of the segment here.
+         /* XXX: we need initialisation of the segment here. */
       }
 #ifdef PATH_TOOL_DEBUG
       else
@@ -339,7 +339,7 @@ PathSegment * path_split_segment   (PathSegment *segment, gdouble position)
       new_segment = g_new (PathSegment, 1);
 
       new_segment->type = segment->type;
-      #warning Giving PathTool as NULL Pointer!
+      /* XXX: Giving PathTool as NULL Pointer! */
       path_curve_get_point (NULL, segment, position, &(new_segment->x), &(new_segment->y));
       new_segment->flags = 0;
       new_segment->parent = segment->parent;
@@ -347,7 +347,7 @@ PathSegment * path_split_segment   (PathSegment *segment, gdouble position)
       new_segment->prev = segment;
       new_segment->data = NULL;
 
-      #warning we need initialisation of the segment here.
+      /* XXX: we need initialisation of the segment here. */
 
       new_segment->next->prev = new_segment;
       segment->next = new_segment;
@@ -390,7 +390,7 @@ path_join_curves (PathSegment *segment1, PathSegment *segment2) {
 	 segment2->prev = segment1;
 	 segment1->next = segment2;
       }
-#warning Probably some segment-updates needed
+/* XXX: Probably some segment-updates needed */
       return;
    }
 
@@ -442,7 +442,7 @@ path_join_curves (PathSegment *segment1, PathSegment *segment2) {
 	 tmp->parent = curve1;
 	 tmp = tmp->next;
       }
-#warning Probably some segment-updates needed
+/* XXX: Probably some segment-updates needed */
       return;
    }
 
@@ -473,7 +473,7 @@ path_join_curves (PathSegment *segment1, PathSegment *segment2) {
 	 tmp = tmp->prev;
       }
       return;
-#warning Probably some segment-updates needed
+/* XXX: Probably some segment-updates needed */
    }
 
 #ifdef PATH_TOOL_DEBUG
@@ -495,7 +495,7 @@ path_flip_curve (PathCurve *curve)
 
    PathSegment *tmp, *tmp2;
    
-#warning Please add path_curve_flip_segment here
+/* XXX: Please add path_curve_flip_segment here */
 
    if (!curve && !curve->segments) {
 #ifdef PATH_TOOL_DEBUG
@@ -526,7 +526,7 @@ path_flip_curve (PathCurve *curve)
 	 tmp->data = end_data;
       }
       tmp = tmp->next;
-#warning Probably some segment-updates needed
+/* XXX: Probably some segment-updates needed */
    }
 }
 
@@ -582,7 +582,7 @@ path_free_segment (PathSegment *segment)
 	              segment->parent, segment, 0, SEGMENT_ACTIVE);
       if (segment->data)
          g_free(segment->data);
-#warning Free Segment needs an own hook in the different curve-types!
+/* XXX: Free Segment needs an own hook in the different curve-types! */
       g_free (segment);
    }
 }
@@ -632,7 +632,7 @@ path_delete_segment (PathSegment *segment)
       /*
        * here we have to update the surrounding segments
        */
-#warning Please add path_curve_update_segment here
+/* XXX: Please add path_curve_update_segment here */
    }
 }
 
@@ -1398,7 +1398,7 @@ path_offset_active_helper (Path *path, PathCurve *curve, PathSegment *segment, g
       segment->x += data->dx;
       segment->y += data->dy;
    }
-#warning Do a segment_update here!
+/* XXX: Do a segment_update here! */
 }
 
 void

@@ -29,7 +29,8 @@ typedef void       (*GimpColorDisplayConvert)   (gpointer  cd_ID,
 						 guchar    *buf,
 						 int        width,
 						 int        height,
-						 int        bpp);
+						 int        bpp,
+						 int        bpl);
 typedef void       (*GimpColorDisplayDestroy)   (gpointer   cd_ID);
 typedef void       (*GimpColorDisplayFinalize)  (void);
 typedef void       (*GimpColorDisplayLoadState) (gpointer   cd_ID,
