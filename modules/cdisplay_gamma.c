@@ -48,8 +48,6 @@ struct _CdisplayGamma
 
   gdouble           gamma;
   guchar            lookup[256];
-
-  GtkWidget        *widget;
 };
 
 struct _CdisplayGammaClass
@@ -68,7 +66,6 @@ enum
 static GType       cdisplay_gamma_get_type     (GTypeModule        *module);
 static void        cdisplay_gamma_class_init   (CdisplayGammaClass *klass);
 
-static void        cdisplay_gamma_dispose      (GObject            *object);
 static void        cdisplay_gamma_set_property (GObject            *object,
                                                 guint               property_id,
                                                 const GValue       *value,
@@ -153,7 +150,6 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = cdisplay_gamma_dispose;
   object_class->get_property = cdisplay_gamma_get_property;
   object_class->set_property = cdisplay_gamma_set_property;
 
@@ -166,17 +162,6 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   display_class->help_id     = "gimp-colordisplay-gamma";
   display_class->convert     = cdisplay_gamma_convert;
   display_class->configure   = cdisplay_gamma_configure;
-}
-
-static void
-cdisplay_gamma_dispose (GObject *object)
-{
-  CdisplayGamma *gamma = CDISPLAY_GAMMA (object);
-
-  if (gamma->widget)
-    gtk_widget_destroy (gamma->widget);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -262,9 +247,6 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
   GtkWidget     *label;
   GtkWidget     *spinbutton;
 
-  if (gamma->widget)
-    gtk_widget_destroy (gamma->widget);
-
   hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("_Gamma:"));
@@ -278,12 +260,7 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  gamma->widget = hbox;
-  g_signal_connect (gamma->widget, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &gamma->widget);
-
-  return gamma->widget;
+  return hbox;
 }
 
 static void

@@ -81,8 +81,6 @@ struct _CdisplayProof
   gchar            *profile;
 
   cmsHTRANSFORM     transform;
-
-  GtkWidget        *widget;
 };
 
 struct _CdisplayProofClass
@@ -104,7 +102,6 @@ static GType       cdisplay_proof_get_type     (GTypeModule        *module);
 static void        cdisplay_proof_class_init   (CdisplayProofClass *klass);
 static void        cdisplay_proof_init         (CdisplayProof      *proof);
 
-static void        cdisplay_proof_dispose      (GObject          *object);
 static void        cdisplay_proof_finalize     (GObject          *object);
 static void        cdisplay_proof_get_property (GObject          *object,
                                                 guint             property_id,
@@ -206,7 +203,6 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = cdisplay_proof_dispose;
   object_class->finalize     = cdisplay_proof_finalize;
   object_class->get_property = cdisplay_proof_get_property;
   object_class->set_property = cdisplay_proof_set_property;
@@ -238,18 +234,6 @@ cdisplay_proof_init (CdisplayProof *proof)
 {
   proof->transform = NULL;
   proof->profile   = NULL;
-  proof->widget     = NULL;
-}
-
-static void
-cdisplay_proof_dispose (GObject *object)
-{
-  CdisplayProof *proof = CDISPLAY_PROOF (object);
-
-  if (proof->widget)
-    gtk_widget_destroy (proof->widget);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -354,9 +338,6 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   GtkWidget     *entry;
   GtkWidget     *toggle;
 
-  if (proof->widget)
-    gtk_widget_destroy (proof->widget);
-
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
@@ -380,12 +361,7 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 1, 2, 2, 3);
   gtk_widget_show (toggle);
 
-  proof->widget = table;
-  g_signal_connect (proof->widget, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &proof->widget);
-
-  return proof->widget;
+  return table;
 }
 
 static void

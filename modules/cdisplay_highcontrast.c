@@ -48,8 +48,6 @@ struct _CdisplayContrast
 
   gdouble           contrast;
   guchar            lookup[256];
-
-  GtkWidget        *widget;
 };
 
 struct _CdisplayContrastClass
@@ -68,7 +66,6 @@ enum
 static GType       cdisplay_contrast_get_type     (GTypeModule           *module);
 static void        cdisplay_contrast_class_init   (CdisplayContrastClass *klass);
 
-static void        cdisplay_contrast_dispose      (GObject          *object);
 static void        cdisplay_contrast_set_property (GObject          *object,
                                                    guint             property_id,
                                                    const GValue     *value,
@@ -153,7 +150,6 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = cdisplay_contrast_dispose;
   object_class->get_property = cdisplay_contrast_get_property;
   object_class->set_property = cdisplay_contrast_set_property;
 
@@ -166,17 +162,6 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   display_class->help_id     = "gimp-colordisplay-contrast";
   display_class->convert     = cdisplay_contrast_convert;
   display_class->configure   = cdisplay_contrast_configure;
-}
-
-static void
-cdisplay_contrast_dispose (GObject *object)
-{
-  CdisplayContrast *contrast = CDISPLAY_CONTRAST (object);
-
-  if (contrast->widget)
-    gtk_widget_destroy (contrast->widget);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -262,9 +247,6 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
   GtkWidget        *label;
   GtkWidget        *spinbutton;
 
-  if (contrast->widget)
-    gtk_widget_destroy (contrast->widget);
-
   hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("Contrast C_ycles:"));
@@ -278,12 +260,7 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  contrast->widget = hbox;
-  g_signal_connect (contrast->widget, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &contrast->widget);
-
-  return contrast->widget;
+  return hbox;
 }
 
 static void

@@ -1,5 +1,13 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: there's no longer a need to keep a
+	pointer to the widget returned by GimpColorDisplay::configure.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolordisplay.[ch]: deprecate the
 	implementation of the class methods clone, load_state, save_state
 	and configure_reset and implement them in the base class using the

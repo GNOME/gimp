@@ -102,8 +102,6 @@ struct _CdisplayColorblind
   gfloat                inflection;
 
   guint32               cache[2 * COLOR_CACHE_SIZE];
-
-  GtkWidget            *widget;
 };
 
 struct _CdisplayColorblindClass
@@ -119,19 +117,18 @@ enum
 };
 
 
-static GType       cdisplay_colorblind_get_type   (GTypeModule             *module);
-static void        cdisplay_colorblind_class_init (CdisplayColorblindClass *klass);
-static void        cdisplay_colorblind_init       (CdisplayColorblind      *colorblind);
+static GType       cdisplay_colorblind_get_type   (GTypeModule              *module);
+static void        cdisplay_colorblind_class_init (CdisplayColorblindClass  *klass);
+static void        cdisplay_colorblind_init       (CdisplayColorblind       *colorblind);
 
-static void        cdisplay_colorblind_dispose       (GObject      *object);
-static void        cdisplay_colorblind_set_property  (GObject      *object,
-                                                      guint         property_id,
-                                                      const GValue *value,
-                                                      GParamSpec   *pspec);
-static void        cdisplay_colorblind_get_property  (GObject      *object,
-                                                      guint         property_id,
-                                                      GValue       *value,
-                                                      GParamSpec   *pspec);
+static void        cdisplay_colorblind_set_property  (GObject               *object,
+                                                      guint                  property_id,
+                                                      const GValue          *value,
+                                                      GParamSpec            *pspec);
+static void        cdisplay_colorblind_get_property  (GObject               *object,
+                                                      guint                  property_id,
+                                                      GValue                *value,
+                                                      GParamSpec            *pspec);
 
 static void        cdisplay_colorblind_convert       (GimpColorDisplay      *display,
                                                       guchar                *buf,
@@ -229,7 +226,6 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = cdisplay_colorblind_dispose;
   object_class->get_property = cdisplay_colorblind_get_property;
   object_class->set_property = cdisplay_colorblind_set_property;
 
@@ -296,17 +292,6 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
   colorblind->gammaRGB[0] = 2.1;
   colorblind->gammaRGB[1] = 2.0;
   colorblind->gammaRGB[2] = 2.1;
-}
-
-static void
-cdisplay_colorblind_dispose (GObject *object)
-{
-  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (object);
-
-  if (colorblind->widget)
-    gtk_widget_destroy (colorblind->widget);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -483,9 +468,6 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   GtkWidget          *label;
   GtkWidget          *combo;
 
-  if (colorblind->widget)
-    gtk_widget_destroy (colorblind->widget);
-
   hbox = gtk_hbox_new (FALSE, 6);
 
   label = gtk_label_new_with_mnemonic (_("Color _Deficiency Type:"));
@@ -500,12 +482,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  colorblind->widget = hbox;
-  g_signal_connect (colorblind->widget, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &colorblind->widget);
-
-  return colorblind->widget;
+  return hbox;
 }
 
 static void
