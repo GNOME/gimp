@@ -535,7 +535,7 @@ static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
  * function with a %NULL @value.
  **/
 void
-gimp_config_add_unknown_token (GimpConfig     *config,
+gimp_config_add_unknown_token (GimpConfig  *config,
                                const gchar *key,
                                const gchar *value)
 {
@@ -613,7 +613,7 @@ gimp_config_add_unknown_token (GimpConfig     *config,
  * Returns: a pointer to a constant string.
  **/
 const gchar *
-gimp_config_lookup_unknown_token (GimpConfig     *config,
+gimp_config_lookup_unknown_token (GimpConfig  *config,
                                   const gchar *key)
 {
   GimpConfigToken *token;
@@ -647,7 +647,7 @@ gimp_config_lookup_unknown_token (GimpConfig     *config,
  * gimp_config_add_unknown_token().
  **/
 void
-gimp_config_foreach_unknown_token (GimpConfig               *config,
+gimp_config_foreach_unknown_token (GimpConfig            *config,
                                    GimpConfigForeachFunc  func,
                                    gpointer               user_data)
 {

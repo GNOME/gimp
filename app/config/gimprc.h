@@ -51,15 +51,18 @@ struct _GimpRcClass
 };
 
 
-GType     gimp_rc_get_type     (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new          (const gchar *system_gimprc,
-                                const gchar *user_gimprc,
-                                gboolean     verbose);
-void      gimp_rc_set_autosave (GimpRc      *gimprc,
-                                gboolean     autosave);
-void      gimp_rc_save         (GimpRc      *gimprc);
-gchar   * gimp_rc_query        (GimpRc      *rc,
-                                const gchar *key);
+GType     gimp_rc_get_type          (void) G_GNUC_CONST;
+GimpRc  * gimp_rc_new               (const gchar *system_gimprc,
+                                     const gchar *user_gimprc,
+                                     gboolean     verbose);
+void      gimp_rc_set_autosave      (GimpRc      *gimprc,
+                                     gboolean     autosave);
+void      gimp_rc_save              (GimpRc      *gimprc);
+gchar   * gimp_rc_query             (GimpRc      *rc,
+                                     const gchar *key);
+void      gimp_rc_set_unknown_token (GimpRc      *rc,
+                                     const gchar *token,
+                                     const gchar *value);
 
 
 #endif /* GIMP_RC_H__ */

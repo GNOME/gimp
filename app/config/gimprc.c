@@ -541,6 +541,28 @@ gimp_rc_query (GimpRc      *rc,
 }
 
 /**
+ * gimp_rc_set_unkown_token:
+ * @gimprc: a #GimpRc object.
+ * @token:
+ * @value:
+ *
+ * Calls gimp_config_add_unknown_token() and triggers an idle-save if
+ * autosave is enabled on @gimprc.
+ **/
+void
+gimp_rc_set_unknown_token (GimpRc      *rc,
+                           const gchar *token,
+                           const gchar *value)
+{
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  gimp_config_add_unknown_token (GIMP_CONFIG (rc), token, value);
+
+  if (rc->autosave)
+    gimp_rc_notify (rc, NULL, NULL);
+}
+
+/**
  * gimp_rc_save:
  * @gimprc: a #GimpRc object.
  *

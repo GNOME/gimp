@@ -1,3 +1,18 @@
+2004-02-04  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.[ch]: added the new function
+	gimp_rc_set_unknown_token() to get autosave working for unknown
+	gimprc tokens.
+	
+	* app/config/gimpconfig.c: indentation.
+
+	* tools/pdbgen/pdb/gimprc.pdb: gimp->edit_config was used for a
+	good reason, it's the one that's saved. Reverted a change I did
+	about a month ago. Use gimp_rc_set_unknown_token() so unknown
+	tokens get saved. This really fixes gimp_gimprc_set().
+
+	* app/pdb/gimprc_cmds.c: regenerated.
+
 2004-02-03  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Allow generated files with versions.

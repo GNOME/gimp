@@ -70,7 +70,8 @@ gimprc_query_invoker (Gimp     *gimp,
 
   if (success)
     {
-      value = gimp_rc_query (GIMP_RC (gimp->config), token);
+      /*  use edit_config because unknown tokens are set there  */
+      value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
     
       if (! value)
 	success = FALSE;
@@ -136,7 +137,8 @@ gimprc_set_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_config_add_unknown_token (GIMP_CONFIG (gimp->config), token, value);
+      /*  use edit_config because that's the one that gets saved  */
+      gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
     }
 
   return procedural_db_return_args (&gimprc_set_proc, success);
