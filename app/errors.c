@@ -65,14 +65,14 @@ gimp_errors_init (const gchar        *_full_prog_name,
   g_return_if_fail (_full_prog_name != NULL);
   g_return_if_fail (full_prog_name == NULL);
 
-#if (GIMP_MINOR_VERSION % 2) == 1
+#ifdef GIMP_UNSTABLE
   g_printerr ("This is a development version of The GIMP.\n"
 	      "Debug messages may appear here.\n\n");
 
 #ifdef G_OS_WIN32
   g_printerr ("You can minimize this window, but don't close it.\n\n");
 #endif
-#endif /* odd minor version */
+#endif /* GIMP_UNSTABLE */
 
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;

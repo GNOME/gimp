@@ -360,9 +360,11 @@ gimp_composite_init (gboolean use_cpu_accel)
       gimp_composite_options.bits = strtoul(p, NULL, 16);
     }
 
-  g_printerr ("gimp_composite: use=%s, verbose=%s",
+#ifdef GIMP_UNSTABLE
+  g_printerr ("gimp_composite: use=%s, verbose=%s\n",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) ? "yes" : "no",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
+#endif
 
   gimp_composite_generic_install ();
 
@@ -384,37 +386,28 @@ gimp_composite_init (gboolean use_cpu_accel)
       extern gboolean gimp_composite_3dnow_install ();
       extern gboolean gimp_composite_altivec_install ();
       extern gboolean gimp_composite_vis_install ();
+      gboolean can_use_mmx;
+      gboolean can_use_sse;
+      gboolean can_use_sse2;
+      gboolean can_use_3dnow;
+      gboolean can_use_altivec;
+      gboolean can_use_vis;
 
-      if (gimp_composite_mmx_install ())
-        g_printerr (" +mmx");
-      else
-        g_printerr (" -mmx");
+      can_use_mmx = gimp_composite_mmx_install ();
+      can_use_sse = gimp_composite_sse_install ();
+      can_use_sse2 = gimp_composite_sse2_install ();
+      can_use_3dnow = gimp_composite_3dnow_install ();
+      can_use_altivec = gimp_composite_altivec_install ();
+      can_use_vis = gimp_composite_vis_install ();
 
-      if (gimp_composite_sse_install ())
-        g_printerr (" +sse");
-      else
-        g_printerr (" -sse");
-
-      if (gimp_composite_sse2_install ())
-        g_printerr (" +sse2");
-      else
-        g_printerr (" -sse2");
-
-      if (gimp_composite_3dnow_install ())
-        g_printerr (" +3dnow");
-      else
-        g_printerr (" -3dnow");
-
-      if (gimp_composite_altivec_install ())
-        g_printerr (" +altivec");
-      else
-        g_printerr (" -altivec");
-
-      if (gimp_composite_vis_install ())
-        g_printerr (" +vis");
-      else
-        g_printerr (" -vis");
+#ifdef GIMP_UNSTABLE
+      g_printerr ("supported by gimp_composite: %cmmx %csse %csse2 %c3dnow %caltivec %cvis\n",
+                  can_use_mmx ? '+' : '-',
+                  can_use_sse ? '+' : '-',
+                  can_use_sse2 ? '+' : '-',
+                  can_use_3dnow ? '+' : '-',
+                  can_use_altivec ? '+' : '-',
+                  can_use_vis ? '+' : '-');
+#endif
     }
-
-  g_printerr ("\n");
 }

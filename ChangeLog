@@ -1,3 +1,18 @@
+2004-02-05  Raphaël Quinet  <quinet@gamers.org>
+
+	* configure.in: Added a conditional definition of the preprocessor
+	symbol GIMP_UNSTABLE if the autoconf symbol GIMP_UNSTABLE is
+	defined.
+
+	* app/errors.c (gimp_errors_init): Replaced the #if test on
+	GIMP_MINOR_VERSION modulo 2 by #ifdef GIMP_UNSTABLE.
+
+	* app/composite/gimp-composite.c (gimp_composite_init): Print the
+	init messages only in unstable versions.  Split the messages in
+	two lines and mention "supported by gimp_composite" in order to
+	give a hint that the availability of some features depends also on
+	what code has been written.  Fixes bug #128825.
+
 2004-02-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpchannel.c

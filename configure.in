@@ -99,6 +99,12 @@ AC_SUBST(GIMP_USER_VERSION)
 AC_SUBST(GIMP_UNSTABLE)
 AC_SUBST(GIMP_FULL_NAME)
 
+dnl The symbol GIMP_UNSTABLE is defined above for substitution in
+dnl Makefiles and conditionally defined here as a preprocessor symbol.
+if test "x$GIMP_UNSTABLE" = "xyes"; then
+  AC_DEFINE(GIMP_UNSTABLE,1,
+            [Define to 1 if this is an unstable version of the GIMP])
+fi
 
 # libtool versioning
 #LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
