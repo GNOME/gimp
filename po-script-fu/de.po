@@ -428,7 +428,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Schneller Text..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Test/Kugel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Verschiedenes/Kugel..."
 
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr "<Image>/Script-Fu/Animation/Drehender Globus..."
