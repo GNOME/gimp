@@ -2,7 +2,7 @@
 
 	* app/widgets/gimptoolbox.c (toolbox_create_tools): added an evil
 	hack as workaround for the missing gtk_action_get_accel_closure().
-	Re-enables accelerator display in the tool button labels.
+	Re-enables accelerator display in the tool button tooltips.
 
 2004-05-24  Michael Natterer  <mitch@gimp.org>
 
