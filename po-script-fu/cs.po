@@ -1,13 +1,13 @@
-# Czech translation of GIMP script-fu 1.1.30.
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
+# Czech translation of GIMP script-fu 1.2.1.
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@penguin.cz>, 2000-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.30\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-12-18 13:13+01:00\n"
-"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Project-Id-Version: gimp-script-fu 1.2.1\n"
+"POT-Creation-Date: 2001-02-17 17:44+0100\n"
+"PO-Revision-Date: 2001-02-17 19:20+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -202,7 +202,7 @@ msgstr "<Image>/Skript-fu/Alchymie/Vymazat ka¾dou jinou øadu..."
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr "<Image>/Skript-fu/Alchymie/Dravec..."
+msgstr "<Image>/Skript-fu/Alchymie/Predator..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
@@ -218,11 +218,11 @@ msgstr "<Image>/Skript-fu/Alfa do loga/3D obrys..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Image>/Skript-fu/Alfa do loga/Cizí ¾ár..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Mimozemská záøe..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Image>/Skript-fu/Alfa do loga/Cizí neon..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Mimozemský neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
@@ -270,7 +270,7 @@ msgstr "<Image>/Skript-fu/Alfa do loga/Lesk..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Image>/Skript-fu/Alfa do loga/Sálavý ¾ár..."
+msgstr "<Image>/Skript-fu/Alfa do loga/Sálající záøe..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
@@ -282,7 +282,7 @@ msgstr "<Image>/Skript-fu/Alfa do loga/Neon..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Image>/Skript-fu/Alfa do loga/Rozmáznutí......"
+msgstr "<Image>/Skript-fu/Alfa do loga/Stopa èástic..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
@@ -426,11 +426,11 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/3D obrys..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Cizí ¾ár..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Mimozemská záøe..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Cizí neon..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Mimozemský neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
@@ -486,7 +486,7 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Lesk..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Sálavý ¾ár..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Sálající záøe..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
@@ -506,7 +506,7 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Novinový text..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Rozmáznutí......"
+msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Stopa èástic..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
@@ -606,19 +606,20 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Pomùcky/Znaková mapa..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Cizí ¾ár/©ipka..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Mimozemská záøe/©ipka..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Cizí ¾ár/Puntík..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Mimozemská záøe/Puntík..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Cizí ¾ár/Tlaèítko..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Mimozemská záøe/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Témata z webu/Cizí ¾ár/Vodorovná èára..."
+msgstr ""
+"<Toolbox>/Roz¹./Skript-fu/Témata z webu/Mimozemská záøe/Vodorovná èára..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
@@ -1373,7 +1374,7 @@ msgstr "Velikost rámeèku"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr "Rámeèky"
+msgstr "Poèet políèek"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
@@ -1388,15 +1389,15 @@ msgstr "Odshora zleva dolù doprava"
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr "Barva ¾áru"
+msgstr "Barva záøe"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr "Polomìr ¾áru"
+msgstr "Polomìr záøe"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
-msgstr "Velikost ¾áru (pixely * 4)"
+msgstr "Velikost záøe (pixely * 4)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1615,7 +1616,7 @@ msgstr "Poèet kopií"
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
-msgstr "Poèet rámeèkù"
+msgstr "Poèet políèek"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Number of Lines"

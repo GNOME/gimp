@@ -1,13 +1,13 @@
-# Czech translation of GIMP plugins 1.1.24.
+# Czech translation of GIMP plugins 1.2.0.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
+# Stanislav Brabec <utx@penguin.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.24\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-07-10 17:39+02:00\n"
-"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Project-Id-Version: gimp-std-plugins 1.2.0\n"
+"POT-Creation-Date: 2000-12-28 11:03+0100\n"
+"PO-Revision-Date: 2000-12-28 12:00+01:00\n"
+"Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
