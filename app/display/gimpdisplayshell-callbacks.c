@@ -1282,10 +1282,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (update_cursor)
     {
       gimp_display_shell_update_cursor (shell,
-                                        display_coords.x,
-                                        display_coords.y,
-                                        image_coords.x,
-                                        image_coords.y);
+                                        RINT (display_coords.x),
+                                        RINT (display_coords.y),
+                                        RINT (image_coords.x),
+                                        RINT (image_coords.y));
     }
 
   return return_val;

@@ -480,9 +480,9 @@ gimp_move_tool_motion (GimpTool        *tool,
       else
         {
           if (move->guide_orientation == GIMP_ORIENTATION_HORIZONTAL)
-            move->guide_position = ROUND (coords->y);
+            move->guide_position = RINT (coords->y);
           else
-            move->guide_position = ROUND (coords->x);
+            move->guide_position = RINT (coords->x);
         }
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

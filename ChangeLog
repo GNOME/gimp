@@ -1,5 +1,17 @@
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
+	Fix bug #141719:
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_motion): use RINT()
+	instead of ROUND() to round double coords to guide positions.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): pass RINT()-rounded
+	coords to gimp_display_shell_update_cursor() instead of implicitly
+	truncating by casting to int.
+
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpundoeditor.c: removed code duplication by adding
 	utility function gimp_undo_editor_update_buttons(), some general
 	cleanups.
