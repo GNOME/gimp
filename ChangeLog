@@ -1,3 +1,9 @@
+Mon Nov 15 11:30:42 CET 1999 Olof S Kylander <olof@gimp.org>
+	
+	* app/xinput_airbrush.c
+
+	A bit better std values for people w/o patch_xinput_airbrush
+
 Mon Nov 15 02:09:30 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/plugin-defs.pl, plug-ins/common/Makefile.am,
