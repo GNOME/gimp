@@ -1,3 +1,9 @@
+2003-03-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/script-fu/interp_slib.c
+	* plug-ins/script-fu/interp_sliba.c: patch from Pedro Gimeno to fix
+	printing of floating point numbers in script-fu. (Bug #109505)
+
 2003-03-29  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]

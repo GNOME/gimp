@@ -168,7 +168,7 @@ array_prin1 (LISP ptr, struct gen_printio *f)
       gput_st (f, "#(");
       for (j = 0; j < ptr->storage_as.double_array.dim; ++j)
 	{
-          g_ascii_formatd (tkbuffer, sizeof(tkbuffer), "%g",
+          g_ascii_formatd (tkbuffer, TKBUFFERN, "%g",
                            ptr->storage_as.double_array.data[j]);
 	  gput_st (f, tkbuffer);
 	  if ((j + 1) < ptr->storage_as.double_array.dim)

@@ -2711,7 +2711,7 @@ lprin1g (LISP exp, struct gen_printio * f)
       if (((double) n) == FLONM (exp))
 	sprintf (tkbuffer, "%ld", n);
       else
-        g_ascii_formatd (tkbuffer, sizeof(tkbuffer), "%g", FLONM (exp));
+        g_ascii_formatd (tkbuffer, TKBUFFERN, "%g", FLONM (exp));
       gput_st (f, tkbuffer);
       break;
     case tc_symbol:
