@@ -1,17 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Finnish translation of GIMP 1.1
+# Copyright (C) 1999-2000 Free Software Foundation, Inc.
+# Ville Hautamäki <villeh@cs.joensuu.fi>
+# Tor Lillqvist <tml@iki.fi>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-02-11 23:15+0200\n"
+"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
+"Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:105
 msgid "/Use Foreground Color"
