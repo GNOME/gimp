@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "tools-types.h"
 
 #include "config/gimpconfig.h"
@@ -170,6 +172,58 @@ gimp_tool_options_reset (GimpToolOptions *tool_options)
   g_return_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options));
 
   GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
+}
+
+gboolean
+gimp_tool_options_serialize (GimpToolOptions  *tool_options,
+                             GError          **error)
+{
+  gchar    *filename;
+  gboolean  retval;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options",
+                               GIMP_OBJECT (tool_options->tool_info)->name,
+                               NULL);
+
+  retval = gimp_config_serialize (G_OBJECT (tool_options),
+                                  filename,
+                                  "# tool options\n",
+                                  "# end tool options",
+                                  NULL,
+                                  error);
+
+  g_free (filename);
+
+  return retval;
+}
+
+gboolean
+gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
+                               GError          **error)
+{
+  gchar    *filename;
+  gboolean  retval;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options",
+                               GIMP_OBJECT (tool_options->tool_info)->name,
+                               NULL);
+
+  retval = gimp_config_deserialize (G_OBJECT (tool_options),
+                                    filename,
+                                    NULL,
+                                    error);
+
+  g_free (filename);
+
+  return retval;
 }
 
 void

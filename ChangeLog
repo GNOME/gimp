@@ -1,5 +1,12 @@
 2003-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_options.[ch]: added
+	gimp_tool_options_[de]serialize() utility functions.
+
+	* app/gui/tool-options-dialog.c: use them, cleanup.
+
+2003-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpscanner.c: allow G_CSET_DIGITS in identifiers so
 	we can parse e.g. (foo-1 bar).
 

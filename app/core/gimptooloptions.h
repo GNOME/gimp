@@ -50,11 +50,16 @@ struct _GimpToolOptionsClass
 };
 
 
-GType   gimp_tool_options_get_type (void) G_GNUC_CONST;
+GType      gimp_tool_options_get_type    (void) G_GNUC_CONST;
 
-void    gimp_tool_options_reset    (GimpToolOptions *tool_options);
+void       gimp_tool_options_reset       (GimpToolOptions  *tool_options);
 
-void    gimp_tool_options_gui      (GimpToolOptions *tool_options);
+gboolean   gimp_tool_options_serialize   (GimpToolOptions  *tool_options,
+                                          GError          **error);
+gboolean   gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
+                                          GError          **error);
+
+void       gimp_tool_options_gui         (GimpToolOptions *tool_options);
 
 
 #endif  /*  __TOOL_OPTIONS_H__  */

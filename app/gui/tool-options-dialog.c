@@ -20,22 +20,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
-#include "config/gimpconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpeditor.h"
-#include "widgets/gimppreview.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "tools/tool_options.h"
 
@@ -79,10 +73,9 @@ static GimpToolOptions *visible_tool_options = NULL;
 GtkWidget *
 tool_options_dialog_create (Gimp *gimp)
 {
-  GimpContext  *user_context;
-  GimpToolInfo *tool_info;
-  GtkWidget    *editor;
-  GtkWidget    *scrolled_win;
+  GimpContext *user_context;
+  GtkWidget   *editor;
+  GtkWidget   *scrolled_win;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -90,14 +83,6 @@ tool_options_dialog_create (Gimp *gimp)
     return options_shell;
 
   user_context = gimp_get_user_context (gimp);
-
-  tool_info = gimp_context_get_tool (user_context);
-
-  if (! tool_info)
-    {
-      g_warning ("%s(): no tool info registered for active tool",
-                 G_GNUC_FUNCTION);
-    }
 
   editor = g_object_new (GIMP_TYPE_EDITOR, NULL);
 
@@ -156,18 +141,18 @@ tool_options_dialog_create (Gimp *gimp)
                      NULL, 0,
                      GDK_ACTION_COPY);
   gimp_dnd_viewable_dest_add (options_shell,
-			      GIMP_TYPE_TOOL_INFO,
-			      tool_options_dialog_drop_tool,
+                              GIMP_TYPE_TOOL_INFO,
+                              tool_options_dialog_drop_tool,
                               user_context);
 
   g_signal_connect_object (user_context, "tool_changed",
-			   G_CALLBACK (tool_options_dialog_tool_changed),
-			   options_shell,
-			   0);
+                           G_CALLBACK (tool_options_dialog_tool_changed),
+                           options_shell,
+                           0);
 
   tool_options_dialog_tool_changed (user_context,
-				    tool_info,
-				    options_shell);
+                                    gimp_context_get_tool (user_context),
+                                    options_shell);
 
   return editor;
 }
@@ -209,25 +194,26 @@ tool_options_dialog_tool_changed (GimpContext  *context,
       visible_tool_options = NULL;
     }
 
-  if (tool_info)
+  if (tool_info && tool_info->tool_options)
     {
-      if (tool_info->tool_options)
-	{
-	  if (! GTK_WIDGET (tool_info->tool_options->main_vbox)->parent)
-	    gtk_box_pack_start (GTK_BOX (options_vbox),
-				tool_info->tool_options->main_vbox,
-				FALSE, FALSE, 0);
+      if (! GTK_WIDGET (tool_info->tool_options->main_vbox)->parent)
+        gtk_box_pack_start (GTK_BOX (options_vbox),
+                            tool_info->tool_options->main_vbox,
+                            FALSE, FALSE, 0);
 
-	  gtk_widget_show (tool_info->tool_options->main_vbox);
+      gtk_widget_show (tool_info->tool_options->main_vbox);
 
-	  visible_tool_options = tool_info->tool_options;
+      visible_tool_options = tool_info->tool_options;
 
-          gtk_widget_set_sensitive (options_reset_button, TRUE);
-	}
-      else
-	{
-	  gtk_widget_set_sensitive (options_reset_button, FALSE);
-	}
+      gtk_widget_set_sensitive (options_save_button,   TRUE);
+      gtk_widget_set_sensitive (options_revert_button, TRUE);
+      gtk_widget_set_sensitive (options_reset_button,  TRUE);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (options_save_button,   FALSE);
+      gtk_widget_set_sensitive (options_revert_button, FALSE);
+      gtk_widget_set_sensitive (options_reset_button,  FALSE);
     }
 }
 
@@ -248,7 +234,6 @@ tool_options_dialog_save_callback (GtkWidget   *widget,
                                    GimpContext *context)
 {
   GimpToolInfo *tool_info;
-  gchar        *filename;
   GError       *error = NULL;
 
   tool_info = gimp_context_get_tool (context);
@@ -256,23 +241,11 @@ tool_options_dialog_save_callback (GtkWidget   *widget,
   if (! tool_info)
     return;
 
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               gimp_object_get_name (GIMP_OBJECT (tool_info)),
-                               NULL);
-
-  if (! gimp_config_serialize (G_OBJECT (tool_info->tool_options),
-                               filename,
-                               "# foo\n",
-                               "# bar",
-                               NULL,
-                               &error))
+  if (! gimp_tool_options_serialize (tool_info->tool_options, &error))
     {
       g_message ("EEK: %s\n", error->message);
       g_clear_error (&error);
     }
-
-  g_free (filename);
 }
 
 static void
@@ -280,7 +253,6 @@ tool_options_dialog_restore_callback (GtkWidget   *widget,
                                       GimpContext *context)
 {
   GimpToolInfo *tool_info;
-  gchar        *filename;
   GError       *error = NULL;
 
   tool_info = gimp_context_get_tool (context);
@@ -288,21 +260,11 @@ tool_options_dialog_restore_callback (GtkWidget   *widget,
   if (! tool_info)
     return;
 
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               gimp_object_get_name (GIMP_OBJECT (tool_info)),
-                               NULL);
-
-  if (! gimp_config_deserialize (G_OBJECT (tool_info->tool_options),
-                                 filename,
-                                 NULL,
-                                 &error))
+  if (! gimp_tool_options_deserialize (tool_info->tool_options, &error))
     {
       g_message ("EEK: %s\n", error->message);
       g_clear_error (&error);
     }
-
-  g_free (filename);
 }
 
 static void
