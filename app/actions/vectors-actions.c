@@ -282,9 +282,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("vectors-visible", visible);
   SET_ACTIVE ("vectors-linked",  linked);
 
-  SET_SENSITIVE ("vectors-selection-to-vectors",          ! mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-short",    ! mask_empty);
-  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", ! mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors",          gimage && !mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-short",    gimage && !mask_empty);
+  SET_SENSITIVE ("vectors-selection-to-vectors-advanced", gimage && !mask_empty);
   SET_SENSITIVE ("vectors-stroke",                        vectors);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);

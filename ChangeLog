@@ -1,5 +1,17 @@
 2004-10-15  Michael Natterer  <mitch@gimp.org>
 
+	Fixed bug #155328:
+
+	* app/actions/vectors-actions.c (vectors_actions_update): don't
+	set the "selection to path" actions sensitive if there is no
+	image.
+
+	* app/widgets/gimpitemtreeview.c: update the UI manager after
+	setting the view's image. Connect to GimpImage::flush() and
+	update the UI manager in the callback, too.
+
+2004-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/view-actions.c (view_zoom_actions): removed
 	duplicate "view-zoom-in" action (cut'n'paste error) and fixed the
 	swapped "zoom in/out a lot" actions. Fixes bug #155446.

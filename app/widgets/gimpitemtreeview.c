@@ -95,6 +95,9 @@ static void   gimp_item_tree_view_destroy           (GtkObject         *object);
 static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
                                                      GimpImage         *gimage);
 
+static void   gimp_item_tree_view_image_flush       (GimpImage         *gimage,
+                                                     GimpItemTreeView  *view);
+
 static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
                                                      GimpContainer     *container);
 static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
@@ -695,6 +698,8 @@ gimp_item_tree_view_set_image (GimpItemTreeView *view,
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (view, view_signals[SET_IMAGE], 0, gimage);
+
+  gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
 }
 
 static void
@@ -714,6 +719,10 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 					    view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
+
+      g_signal_handlers_disconnect_by_func (view->gimage,
+                                            gimp_item_tree_view_image_flush,
+                                            view);
     }
 
   view->gimage = gimage;
@@ -734,14 +743,21 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 			G_CALLBACK (gimp_item_tree_view_size_changed),
 			view);
 
+      g_signal_connect (view->gimage, "flush",
+                        G_CALLBACK (gimp_item_tree_view_image_flush),
+                        view);
+
       gimp_item_tree_view_item_changed (view->gimage, view);
-    }
-  else
-    {
-      gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
     }
 
   gtk_widget_set_sensitive (view->new_button, (view->gimage != NULL));
+}
+
+static void
+gimp_item_tree_view_image_flush (GimpImage        *gimage,
+                                 GimpItemTreeView *view)
+{
+  gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
 }
 
 
