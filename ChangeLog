@@ -1,3 +1,13 @@
+2004-01-13  Simon Budig  <simon@gimp.org>
+
+	* data/images/gimp_logo.png: New image for the about dialog by
+	Jakub Steiner.
+
+	* app/gui/about-dialog.c: Adjusted to new image. Also could not
+	resist to add a fancy effect...
+
+	* data/images/gimp1_2_logo.png: Saved the image from 1.2.
+
 2004-01-13  Michael Natterer  <mitch@gimp.org>
 
 	Allow invoking the text tool by double clicking a text layer in
