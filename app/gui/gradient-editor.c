@@ -77,7 +77,6 @@
 #include "gimplist.h"
 #include "gimprc.h"
 #include "gradient_editor.h"
-#include "gradients.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimplimits.h"
@@ -236,6 +235,8 @@ typedef struct
 
 
 /***** Local functions *****/
+
+static void       gradient_editor_create           (void);
 
 static void       gradient_editor_drop_gradient    (GtkWidget    *widget,
 						    GimpViewable *viewable,
@@ -530,9 +531,35 @@ static void      seg_get_closest_handle           (GimpGradient         *grad,
 static GradientEditor *g_editor = NULL;
 
 
+/***** Public gradient editor functions *****/
+
+void
+gradient_editor_set_gradient (GimpGradient *gradient)
+{
+  if (! g_editor)
+    gradient_editor_create ();
+
+  if (gimp_container_have (global_gradient_factory->container,
+			   GIMP_OBJECT (gradient)))
+    {
+      gimp_context_set_gradient (g_editor->context, gradient);
+    }
+
+  if (! GTK_WIDGET_VISIBLE (g_editor->shell))
+    gtk_widget_show (g_editor->shell);
+  else
+    gdk_window_raise (g_editor->shell->window);
+}
+
+void
+gradient_editor_free (void)
+{
+}
+
+
 /***** The main gradient editor dialog *****/
 
-void 
+static void 
 gradient_editor_create (void)
 {
   GtkWidget   *vbox;
@@ -544,14 +571,7 @@ gradient_editor_create (void)
 
   /* If the editor already exists, just show it */
   if (g_editor)
-    {
-      if (! GTK_WIDGET_VISIBLE (g_editor->shell))
-	gtk_widget_show (g_editor->shell);
-      else
-	gdk_window_raise (g_editor->shell->window);
-
-      return;
-    }
+    return;
 
   g_editor = g_new (GradientEditor, 1);
 
@@ -855,24 +875,6 @@ gradient_editor_create (void)
   gtk_widget_show (g_editor->shell);
 }
 
-void
-gradient_editor_free (void)
-{
-}
-
-void
-gradient_editor_set_gradient (GimpGradient *gradient)
-{
-  if (gimp_container_have (global_gradient_factory->container,
-			   GIMP_OBJECT (gradient)) &&
-      g_editor)
-    {
-      gimp_context_set_gradient (g_editor->context, gradient);
-    }
-}
-
-/***** Gradient editor functions *****/
-
 static void
 gradient_editor_drop_gradient (GtkWidget    *widget,
 			       GimpViewable *viewable,
@@ -886,7 +888,7 @@ gradient_editor_gradient_changed (GimpContext  *context,
 				  GimpGradient *gradient,
 				  gpointer      data)
 {
-  preview_update (TRUE);
+  ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 }
 
 /*****/
@@ -912,8 +914,6 @@ ed_update_editor (int flags)
   if (flags & GRAD_RESET_CONTROL)
     control_update (gradient, TRUE);
 }
-
-/*****/
 
 static GtkWidget *
 ed_create_button (gchar         *label,
@@ -943,8 +943,6 @@ ed_set_hint (gchar *str)
 {
   gtk_label_set_text (GTK_LABEL (g_editor->hint_label), str);
 }
-
-/*****/
 
 static void
 ed_initialize_saved_colors (void)
@@ -1375,7 +1373,7 @@ static void
 ed_refresh_grads_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gradients_init (FALSE);
+  gimp_data_factory_data_init (global_gradient_factory, FALSE);
 
   if (! gimp_container_num_children (global_gradient_factory->container))
     {

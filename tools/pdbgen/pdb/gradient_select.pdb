@@ -228,7 +228,7 @@ CODE
 }
 
 @headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
-	      "gimpcontainer.h" "gimpdatafactory.h" "gradients.h"
+	      "gimpcontainer.h" "gimpdatafactory.h"
               "gimpgradient.h" "gradient_select.h");
 
 $extra{app}->{code} = <<'CODE';

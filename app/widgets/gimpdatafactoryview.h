@@ -23,6 +23,9 @@
 #include <gtk/gtkvbox.h>
 
 
+typedef void (* GimpDataEditFunc) (GimpData *data);
+
+
 typedef enum
 {
   GIMP_VIEW_TYPE_GRID,
@@ -37,7 +40,6 @@ typedef enum
 #define GIMP_IS_DATA_FACTORY_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY_VIEW))
 
 
-typedef struct _GimpDataFactoryView       GimpDataFactoryView;
 typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
 
 struct _GimpDataFactoryView
@@ -45,6 +47,8 @@ struct _GimpDataFactoryView
   GtkVBox            parent_instance;
 
   GimpDataFactory   *factory;
+  GimpDataEditFunc   data_edit_func;
+
   GimpContainerView *view;
 
   GtkWidget         *button_box;
@@ -64,12 +68,13 @@ struct _GimpDataFactoryViewClass
 
 
 GtkType     gimp_data_factory_view_get_type (void);
-GtkWidget * gimp_data_factory_view_new      (GimpViewType     view_type,
-					     GimpDataFactory *factory,
-					     GimpContext     *context,
-					     gint             preview_size,
-					     gint             min_items_x,
-					     gint             min_items_y);
+GtkWidget * gimp_data_factory_view_new      (GimpViewType      view_type,
+					     GimpDataFactory  *factory,
+					     GimpDataEditFunc  edit_func,
+					     GimpContext      *context,
+					     gint              preview_size,
+					     gint              min_items_x,
+					     gint              min_items_y);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

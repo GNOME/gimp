@@ -23,8 +23,18 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewDefaultFunc)  (const gchar *name);
-typedef GimpData * (* GimpDataNewStandardFunc) (void);
+typedef GimpData * (* GimpDataNewFunc)         (const gchar *name);
+typedef GimpData * (* GimpDataLoadFunc)        (const gchar *filename);
+typedef GimpData * (* GimpDataGetStandardFunc) (void);
+
+
+typedef struct _GimpDataFactoryLoaderEntry GimpDataFactoryLoaderEntry;
+
+struct _GimpDataFactoryLoaderEntry
+{
+  GimpDataLoadFunc  load_func;
+  const gchar      *extension;
+};
 
 
 #define GIMP_TYPE_DATA_FACTORY            (gimp_data_factory_get_type ())
@@ -38,14 +48,17 @@ typedef struct _GimpDataFactoryClass  GimpDataFactoryClass;
 
 struct _GimpDataFactory
 {
-  GimpObject              *object;
+  GimpObject                   parent_instance;
 
-  GimpContainer           *container;
+  GimpContainer               *container;
 
-  const gchar            **data_path;
+  const gchar                **data_path;
 
-  GimpDataNewDefaultFunc   new_default_data_func;
-  GimpDataNewStandardFunc  new_standard_data_func;
+  GimpDataFactoryLoaderEntry  *loader_entries;
+  gint                         n_loader_entries;
+
+  GimpDataNewFunc              data_new_func;
+  GimpDataGetStandardFunc      data_get_standard_func;
 };
 
 struct _GimpDataFactoryClass
@@ -55,13 +68,24 @@ struct _GimpDataFactoryClass
 
 
 GtkType           gimp_data_factory_get_type (void);
-GimpDataFactory * gimp_data_factory_new      (GtkType                  data_type,
-					      const gchar            **data_path,
-					      GimpDataNewDefaultFunc   default_func,
-					      GimpDataNewStandardFunc  standard_func);
+GimpDataFactory * gimp_data_factory_new      (GtkType                      data_type,
+					      const gchar                **data_path,
+					      GimpDataFactoryLoaderEntry  *loader_entries,
+					      gint                         n_loader_entries,
+					      GimpDataNewFunc              new_func,
+					      GimpDataGetStandardFunc      standard_func);
 
-void   gimp_data_factory_data_init    (GimpDataFactory *factory);
-void   gimp_data_factory_data_free    (GimpDataFactory *factory);
+void       gimp_data_factory_data_init         (GimpDataFactory *factory,
+						gboolean         no_data);
+void       gimp_data_factory_data_save         (GimpDataFactory *factory);
+void       gimp_data_factory_data_free         (GimpDataFactory *factory);
+
+GimpData * gimp_data_factory_data_new          (GimpDataFactory *factory,
+						const gchar     *name);
+GimpData * gimp_data_factory_data_duplicate    (GimpDataFactory *factory,
+						GimpData        *data,
+						const gchar     *name);
+GimpData * gimp_data_factory_data_get_standard (GimpDataFactory *factory);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */

@@ -32,7 +32,6 @@
 #include "gimpdatafactory.h"
 #include "gimplist.h"
 #include "gimppattern.h"
-#include "patterns.h"
 #include "temp_buf.h"
 
 static ProcRecord patterns_get_pattern_proc;

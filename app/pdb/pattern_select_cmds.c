@@ -33,7 +33,6 @@
 #include "gimplist.h"
 #include "gimppattern.h"
 #include "pattern_select.h"
-#include "patterns.h"
 
 static ProcRecord patterns_popup_proc;
 static ProcRecord patterns_close_popup_proc;

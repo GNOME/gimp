@@ -37,7 +37,6 @@
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gradient_editor.h"
-#include "gradients.h"
 #include "gradient_select.h"
 #include "session.h"
 
@@ -141,7 +140,7 @@ gradient_select_new (gchar *title,
     }
 
   if (no_data && first_call)
-    gradients_init (FALSE);
+    gimp_data_factory_data_init (global_gradient_factory, FALSE);
 
   first_call = FALSE;
 
@@ -348,8 +347,6 @@ gradient_select_edit_callback (GtkWidget *widget,
   GradientSelect *gsp;
 
   gsp = (GradientSelect *) data;
-
-  gradient_editor_create ();
 
   gradient_editor_set_gradient (gimp_context_get_gradient (gsp->context));
 }

@@ -32,7 +32,6 @@
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimplist.h"
-#include "gradients.h"
 
 static ProcRecord gradients_get_list_proc;
 static ProcRecord gradients_get_active_proc;

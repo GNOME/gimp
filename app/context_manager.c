@@ -27,6 +27,8 @@
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
+#include "gimpbrushgenerated.h"
+#include "gimpbrushpipe.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
@@ -145,7 +147,40 @@ context_manager_init (void)
   GimpContext *standard_context;
   GimpContext *default_context;
   GimpContext *user_context;
-  gint i;
+  gint         i;
+
+  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
+  {
+    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION },
+    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION },
+    { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
+    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION }
+  };
+  static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
+					sizeof (brush_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
+  {
+    { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
+  };
+  static gint n_pattern_loader_entries = (sizeof (pattern_loader_entries) /
+					  sizeof (pattern_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
+  {
+    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
+    { gimp_gradient_load, NULL /* legacy loader */     }
+  };
+  static gint n_gradient_loader_entries = (sizeof (gradient_loader_entries) /
+					   sizeof (gradient_loader_entries[0]));
+
+  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
+  {
+    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
+    { gimp_palette_load, NULL /* legacy loader */     }
+  };
+  static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
+					  sizeof (palette_loader_entries[0]));
 
   /* Create the context of all existing images */
   image_context = GIMP_CONTAINER (gimp_list_new (GIMP_TYPE_IMAGE,
@@ -155,24 +190,32 @@ context_manager_init (void)
   global_brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
 			   (const gchar **) &brush_path,
+			   brush_loader_entries,
+			   n_brush_loader_entries,
 			   gimp_brush_new,
 			   gimp_brush_get_standard);
 
   global_pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
 			   (const gchar **) &pattern_path,
+			   pattern_loader_entries,
+			   n_pattern_loader_entries,
 			   gimp_pattern_new,
 			   gimp_pattern_get_standard);
 
   global_gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
 			   (const gchar **) &gradient_path,
+			   gradient_loader_entries,
+			   n_gradient_loader_entries,
 			   gimp_gradient_new,
 			   gimp_gradient_get_standard);
 
   global_palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
 			   (const gchar **) &palette_path,
+			   palette_loader_entries,
+			   n_palette_loader_entries,
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
 
@@ -181,13 +224,6 @@ context_manager_init (void)
 
   /*  TODO: load from disk  */
   default_context = gimp_context_new ("Default", NULL);
-
-  /*
-  default_context->brush_name    = g_strdup (default_brush);
-  default_context->pattern_name  = g_strdup (default_pattern);
-  default_context->gradient_name = g_strdup (default_gradient);
-  default_context->palette_name  = g_strdup (default_palette);
-  */
 
   gimp_context_set_default (default_context);
 
@@ -280,6 +316,11 @@ context_manager_free (void)
   /*  TODO: Save to disk before destroying  */
   gtk_object_unref (GTK_OBJECT (gimp_context_get_default ()));
   gimp_context_set_default (NULL);
+
+  gimp_data_factory_data_free (global_brush_factory);
+  gimp_data_factory_data_free (global_pattern_factory);
+  gimp_data_factory_data_free (global_gradient_factory);
+  gimp_data_factory_data_free (global_palette_factory);
 }
 
 void

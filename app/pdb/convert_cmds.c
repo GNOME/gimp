@@ -34,7 +34,6 @@
 #include "gimpimage.h"
 #include "gimppalette.h"
 #include "palette.h"
-#include "palettes.h"
 
 static ProcRecord convert_rgb_proc;
 static ProcRecord convert_grayscale_proc;
@@ -196,7 +195,7 @@ convert_indexed_invoker (Argument *args)
     
 	    case CUSTOM_PALETTE:
 	      if (! global_palette_factory->container->num_children)
-		palettes_init (FALSE);
+		gimp_data_factory_data_init (global_palette_factory, FALSE);
     
 	      palette = (GimpPalette *)
 		gimp_container_get_child_by_name (global_palette_factory->container,

@@ -48,7 +48,6 @@
 #include "app_procs.h"
 #include "batch.h"
 #include "brush_select.h"
-#include "brushes.h"
 #include "color_transfer.h"
 #include "colormaps.h"
 #include "context_manager.h"
@@ -58,21 +57,19 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "global_edit.h"
 #include "gradient_select.h"
-#include "gradients.h"
 #include "gximage.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "menus.h"
 #include "paint_funcs.h"
-#include "palettes.h"
 #include "palette.h"
 #include "pattern_select.h"
-#include "patterns.h"
 #include "plug_in.h"
 #include "module_db.h"
 #include "session.h"
@@ -570,16 +567,26 @@ app_init (void)
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
+  /*  initialize  the global parasite table  */
   app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
-  gimp_init_parasites ();          /*  initialize  the global parasite table  */
+  gimp_init_parasites ();
+
+  /*  initialize the list of gimp brushes    */
   app_init_update_status (NULL, _("Brushes"), 0.20);
-  brushes_init (no_data);          /*  initialize the list of gimp brushes    */
+  gimp_data_factory_data_init (global_brush_factory, no_data); 
+
+  /*  initialize the list of gimp patterns   */
   app_init_update_status (NULL, _("Patterns"), 0.40);
-  patterns_init (no_data);         /*  initialize the list of gimp patterns   */
+  gimp_data_factory_data_init (global_pattern_factory, no_data); 
+
+  /*  initialize the list of gimp palettes   */
   app_init_update_status (NULL, _("Palettes"), 0.60);
-  palettes_init (no_data);         /*  initialize the list of gimp palettes   */
+  gimp_data_factory_data_init (global_palette_factory, no_data); 
+
+  /*  initialize the list of gimp gradients  */
   app_init_update_status (NULL, _("Gradients"), 0.80);
-  gradients_init (no_data);        /*  initialize the list of gimp gradients  */
+  gimp_data_factory_data_init (global_gradient_factory, no_data); 
+
   app_init_update_status (NULL, NULL, 1.00);
 
   plug_in_init ();           /*  initialize the plug in structures  */
@@ -695,13 +702,9 @@ app_exit_finish (void)
   named_buffers_free ();
   swapping_free ();
   brush_dialog_free ();
-  brushes_free ();
   pattern_dialog_free ();
-  patterns_free ();
   palette_dialog_free ();
-  palettes_free ();
   gradient_dialog_free ();
-  gradients_free ();
   context_manager_free ();
   hue_saturation_free ();
   curves_free ();

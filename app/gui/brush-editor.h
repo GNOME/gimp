@@ -43,9 +43,11 @@ struct _BrushEditGeneratedWindow
   gint                scale;
 };
 
+
 BrushEditGeneratedWindow * brush_edit_generated_new (void);
 
 void   brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 				       GimpBrush                *brush);
+
 
 #endif  /*  __BRUSH_EDIT_H__  */

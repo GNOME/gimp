@@ -137,9 +137,9 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "patterns.h"
-	      "pattern_select.h" "gimpcontext.h" "gimpdatafactory.h"
-              "gimplist.h" "gimppattern.h");
+@headers = qw(<string.h> "context_manager.h" "pattern_select.h"
+              "gimpcontext.h" "gimpdatafactory.h" "gimplist.h"
+              "gimppattern.h");
 
 $extra{app}->{code} = <<'CODE';
 static PatternSelect *

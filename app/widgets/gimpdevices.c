@@ -30,7 +30,6 @@
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "brushes.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimpbrush.h"
@@ -42,8 +41,6 @@
 #include "gimppreview.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "gradients.h"
-#include "patterns.h"
 #include "session.h"
 
 #include "tools/tools.h"

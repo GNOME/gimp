@@ -30,7 +30,6 @@
 #include "context_manager.h"
 #include "brush_edit.h"
 #include "brush_select.h"
-#include "brushes.h"
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
 #include "gimpcontainer.h"
@@ -199,7 +198,7 @@ brush_select_new (gchar   *title,
     }
 
   if (no_data && first_call)
-    brushes_init (FALSE);
+    gimp_data_factory_data_init (global_brush_factory, FALSE);
 
   first_call = FALSE;
 
@@ -745,8 +744,7 @@ static void
 brush_select_refresh_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  /*  re-init the brush list  */
-  brushes_init (FALSE);
+  gimp_data_factory_data_init (global_brush_factory, FALSE);
 }
 
 static void

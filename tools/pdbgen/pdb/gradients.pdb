@@ -238,7 +238,7 @@ CODE
 }
 
 @headers = qw("context_manager.h" "gimpcontext.h" "gimpcontainer.h"
-	      "gimpdatafactory.h" "gimplist.h" "gradients.h" "gimpgradient.h");
+	      "gimpdatafactory.h" "gimplist.h" "gimpgradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

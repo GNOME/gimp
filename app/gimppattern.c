@@ -45,7 +45,6 @@
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimprc.h"
-#include "patterns.h"
 #include "pattern_header.h"
 #include "temp_buf.h"
 

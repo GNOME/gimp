@@ -83,8 +83,10 @@ typedef struct _GimpPatternPreview    GimpPatternPreview;
 typedef struct _GimpPalettePreview    GimpPalettePreview;
 typedef struct _GimpGradientPreview   GimpGradientPreview;
 
+typedef struct _GimpContainerView     GimpContainerView;
 typedef struct _GimpContainerListView GimpContainerListView;
 typedef struct _GimpContainerGridView GimpContainerGridView;
+typedef struct _GimpDataFactoryView   GimpDataFactoryView;
 typedef struct _HistogramWidget       HistogramWidget;
 
 

@@ -125,7 +125,7 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("brushes.h" "gimpbrush.h" "gimplist.h") ],
+	headers => [ qw("gimpbrush.h" "gimplist.h") ],
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {

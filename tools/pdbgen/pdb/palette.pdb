@@ -162,14 +162,13 @@ HELP
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  palettes_free ();
-  palettes_init (FALSE);
+  gimp_data_factory_data_init (global_palette_factory, FALSE);
 }
 CODE
     );
 }
 
-@headers = qw("gimpcontext.h" "palettes.h");
+@headers = qw("context_manager.h" "gimpcontext.h" "gimpdatafactory.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

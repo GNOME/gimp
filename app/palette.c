@@ -39,7 +39,6 @@
 #include "palette.h"
 #include "palette_import.h"
 #include "palette_select.h"
-#include "palettes.h"
 #include "paletteP.h"
 #include "session.h"
 
@@ -415,7 +414,7 @@ palette_refresh_all (void)
 
   default_palette_entries = NULL;
 
-  palettes_init (FALSE);
+  gimp_data_factory_data_init (global_palette_factory, FALSE);
 
   if ((palette_dialog = top_level_palette))
     {

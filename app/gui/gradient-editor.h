@@ -23,10 +23,8 @@
 #define __GRADIENT_EDITOR_H__
 
 
-void   gradient_editor_create       (void);
-void   gradient_editor_free         (void);
-
 void   gradient_editor_set_gradient (GimpGradient *gradient);
+void   gradient_editor_free         (void);
 
 
 #endif  /* __GRADIENT_EDITOR_H__ */

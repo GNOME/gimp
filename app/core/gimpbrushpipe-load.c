@@ -48,7 +48,6 @@
 #include "appenv.h"
 #include "brush_header.h"
 #include "pattern_header.h"
-#include "patterns.h"
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
 #include "gimprc.h"

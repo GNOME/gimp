@@ -26,9 +26,10 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "context_manager.h"
 #include "gimpcontext.h"
+#include "gimpdatafactory.h"
 #include "gimpimage.h"
-#include "palettes.h"
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -264,8 +265,7 @@ palette_refresh_invoker (Argument *args)
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  palettes_free ();
-  palettes_init (FALSE);
+  gimp_data_factory_data_init (global_palette_factory, FALSE);
 
   return procedural_db_return_args (&palette_refresh_proc, TRUE);
 }

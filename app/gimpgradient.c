@@ -33,7 +33,6 @@
 #include "gimpimage.h"
 #include "gimpgradient.h"
 #include "gimprc.h"
-#include "gradients.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimplimits.h"

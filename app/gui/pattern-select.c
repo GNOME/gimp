@@ -35,7 +35,6 @@
 #include "gimpdatafactory.h"
 #include "gimpdnd.h"
 #include "gimppattern.h"
-#include "patterns.h"
 #include "pattern_select.h"
 #include "session.h"
 #include "temp_buf.h"
@@ -155,7 +154,7 @@ pattern_select_new (gchar *title,
     }
 
   if (no_data && first_call)
-    patterns_init (FALSE);
+    gimp_data_factory_data_init (global_pattern_factory, FALSE);
 
   first_call = FALSE;
 
@@ -432,5 +431,5 @@ static void
 pattern_select_refresh_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  patterns_init (FALSE);
+  gimp_data_factory_data_init (global_pattern_factory, FALSE);
 }

@@ -30,7 +30,6 @@
 #define GIMP_IS_CONTAINER_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_VIEW))
 
 
-typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerViewClass  GimpContainerViewClass;
 
 struct _GimpContainerView

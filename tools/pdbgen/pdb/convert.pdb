@@ -130,7 +130,7 @@ HELP
 
 	case CUSTOM_PALETTE:
 	  if (! global_palette_factory->container->num_children)
-	    palettes_init (FALSE);
+	    gimp_data_factory_data_init (global_palette_factory, FALSE);
 
           palette = (GimpPalette *)
             gimp_container_get_child_by_name (global_palette_factory->container,
@@ -157,7 +157,7 @@ CODE
 }
 
 @headers = qw("context_manager.h" "gimpcontainer.h" "gimpimage.h"
-	      "gimpdatafactory.h" "gimppalette.h" "palettes.h" "convert.h");
+	      "gimpdatafactory.h" "gimppalette.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

@@ -34,8 +34,6 @@ gimp_SOURCES = \
 	brush_scale.h		\
 	brush_select.c		\
 	brush_select.h		\
-	brushes.c		\
-	brushes.h		\
 	channels_dialog.c	\
 	channels_dialog.h	\
 	channel_ops.c		\
@@ -167,8 +165,6 @@ gimp_SOURCES = \
 	global_edit.h		\
 	gradient_editor.c	\
 	gradient_editoe.h	\
-	gradients.c		\
-	gradients.h		\
 	gradient_select.h	\
 	gradient_select.c	\
 	gximage.c		\
@@ -216,8 +212,6 @@ gimp_SOURCES = \
 	palette_import.h	\
 	palette_select.c	\
 	palette_select.h	\
-	palettes.c		\
-	palettes.h		\
 	paletteP.h		\
 	parasitelist.c		\
 	parasitelist.h		\
@@ -231,8 +225,6 @@ gimp_SOURCES = \
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\
-	patterns.c		\
-	patterns.h		\
 	plug_in.c		\
 	plug_in.h		\
 	preferences_dialog.c	\

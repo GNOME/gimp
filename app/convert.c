@@ -109,7 +109,6 @@
 #include "gimplist.h"
 #include "gimplayer.h"
 #include "gimppalette.h"
-#include "palettes.h"
 #include "palette_select.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

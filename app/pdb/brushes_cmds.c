@@ -27,7 +27,6 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "brushes.h"
 #include "context_manager.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
@@ -74,7 +73,7 @@ brushes_refresh_invoker (Argument *args)
    *                         <sjburges@gimp.org>
    */
 
-  brushes_init (FALSE);
+  gimp_data_factory_data_init (global_brush_factory, FALSE);
 
   return procedural_db_return_args (&brushes_refresh_proc, TRUE);
 }

@@ -1797,7 +1797,7 @@ gimp_context_pattern_removed (GimpContainer *container,
       gtk_object_unref (GTK_OBJECT (pattern));
 
       if (! gimp_container_frozen (container))
-	gimp_context_brush_list_thaw (container, context);
+	gimp_context_pattern_list_thaw (container, context);
     }
 }
 
@@ -1961,7 +1961,7 @@ gimp_context_gradient_removed (GimpContainer *container,
       gtk_object_unref (GTK_OBJECT (gradient));
 
       if (! gimp_container_frozen (container))
-	gimp_context_brush_list_thaw (container, context);
+	gimp_context_gradient_list_thaw (container, context);
     }
 }
 
@@ -2110,7 +2110,7 @@ gimp_context_palette_removed (GimpContainer *container,
       gtk_object_unref (GTK_OBJECT (palette));
 
       if (! gimp_container_frozen (container))
-	gimp_context_brush_list_thaw (container, context);
+	gimp_context_palette_list_thaw (container, context);
     }
 }
 
