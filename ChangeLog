@@ -1,3 +1,9 @@
+2001-02-21  Simon Budig   <simon@gimp.org>
+	
+	* app/interface.c: Fixed stupid bug with the icon preview when
+	creating the second preview. Please note that it still crashes
+	on the second image, but this is hopefully not my fault...  :-)
+
 2001-02-21  Michael Natterer  <mitch@gimp.org>
 
 	Made the tool system work again and integrated it back with the

@@ -392,12 +392,16 @@ create_display_shell (GDisplay *gdisp,
 
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
 
+  /* We need to realize the shell so that we have a GdkWindow for
+   * the pixmap creation.  */
+
+  gtk_widget_realize (gdisp->shell);
+  
   /*  create the pixmaps  ****************************************************/
   if (!qmasksel_pixmap)
     {
       GtkStyle *style;
 
-      gtk_widget_realize (gdisp->shell);
       style = gtk_widget_get_style (gdisp->shell);
 
       qmasksel_pixmap =
@@ -415,18 +419,19 @@ create_display_shell (GDisplay *gdisp,
 				      &navbutton_mask,
 				      &style->bg[GTK_STATE_NORMAL],
 				      navbutton_xpm);   
-      /*  Icon stuff  */
-      gdisp->iconsize = 32;
-      gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
-		      		    gdisp->iconsize,
-				    gdisp->iconsize,
-				    -1);
-      gdisp->iconmask = gdk_pixmap_new (NULL,
-		      		        gdisp->iconsize,
-				        gdisp->iconsize,
-				        1);
-      gdisp->icon_needs_update = 1;
     }
+
+  /*  Icon stuff  */
+  gdisp->iconsize = 32;
+  gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
+				gdisp->iconsize,
+				gdisp->iconsize,
+				-1);
+  gdisp->iconmask = gdk_pixmap_new (NULL,
+				    gdisp->iconsize,
+				    gdisp->iconsize,
+				    1);
+  gdisp->icon_needs_update = 1;
 
   /*  create the GtkPixmaps  */
   pixmap = gtk_pixmap_new (qmasksel_pixmap, qmasksel_mask);
