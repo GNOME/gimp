@@ -1,3 +1,13 @@
+2004-02-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpdialog.c (gimp_dialog_new_valist): if the
+	parent widget is not a GtkWindow, use gtk_widget_get_toplevel()
+	to get a pointer to the window the widget lives in.
+
+	* app/gui/resolution-calibrate-dialog.c: don't make the dialog
+	modal. It was a bad idea to do that, leading to problems spotted
+	by Pedro Gimeno (bug #135630).
+
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpfileentry.c: removed useless #includes.
