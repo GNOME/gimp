@@ -1,3 +1,7 @@
+Mon Feb 21 01:15:28 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* .cvsignore: added a few files that shouldn't be in CVS
+
 Mon Feb 21 02:05:14 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* de.po: Updated translation.
