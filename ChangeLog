@@ -1,3 +1,8 @@
+2004-09-15  Manish Singh  <yosh@gimp.org>
+
+	* modules/controller_linux_input.c: use guint16 instead of __u16.
+	Should fix bug #152746.
+
 2004-09-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablepreview.[ch]

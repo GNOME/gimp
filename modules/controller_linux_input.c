@@ -42,7 +42,7 @@
 
 typedef struct
 {
-  __u16         code;
+  guint16       code;
   const gchar  *name;
   const gchar  *blurb;
 } LinuxInputEvent;
