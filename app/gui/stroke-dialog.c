@@ -27,6 +27,7 @@
 #include "gui-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
@@ -48,13 +49,13 @@
 
 /*  local functions  */
 
-static void stroke_dialog_response            (GtkWidget    *widget,
-                                               gint          response_id,
-                                               GtkWidget    *dialog);
-static void stroke_dialog_paint_info_selected (GtkWidget    *menu,
-                                               GimpViewable *viewable,
-                                               gpointer      insert_date,
-                                               GtkWidget    *dialog);
+static void  stroke_dialog_response            (GtkWidget    *widget,
+                                                gint          response_id,
+                                                GtkWidget    *dialog);
+static void  stroke_dialog_paint_info_selected (GtkWidget    *menu,
+                                                GimpViewable *viewable,
+                                                gpointer      insert_date,
+                                                GtkWidget    *dialog);
 
 
 /*  public function  */
@@ -66,8 +67,8 @@ stroke_dialog_new (GimpItem    *item,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
-  static GimpStrokeOptions *options = NULL;
-
+  GimpStrokeOptions *options;
+  GimpStrokeOptions *saved_options;
   GimpImage         *image;
   GtkWidget         *dialog;
   GtkWidget         *main_vbox;
@@ -82,10 +83,14 @@ stroke_dialog_new (GimpItem    *item,
 
   image = gimp_item_get_image (item);
 
-  if (!options)
-    options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
-                            "gimp", image->gimp,
-                            NULL);
+  options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
+                          "gimp", image->gimp,
+                          NULL);
+
+  saved_options = g_object_get_data (G_OBJECT (image->gimp),
+                                     "saved-stroke-options");
+  if (saved_options)
+    gimp_config_sync (GIMP_CONFIG (saved_options), GIMP_CONFIG (options), 0);
 
   gimp_context_set_parent (GIMP_CONTEXT (options),
                            gimp_get_user_context (image->gimp));
@@ -115,7 +120,8 @@ stroke_dialog_new (GimpItem    *item,
                     dialog);
 
   g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
-  g_object_set_data (G_OBJECT (dialog), "gimp-stroke-options", options);
+  g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-options", options,
+                          (GDestroyNotify) g_object_unref);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -265,16 +271,32 @@ stroke_dialog_response (GtkWidget  *widget,
           }
 
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
-          options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
+          {
+            GObject *saved_options;
+
+            options = g_object_get_data (G_OBJECT (dialog),
+                                         "gimp-stroke-options");
+
+            saved_options = g_object_get_data (G_OBJECT (image->gimp),
+                                               "saved-stroke-options");
+            if (saved_options)
+              gimp_config_sync (GIMP_CONFIG (options),
+                                GIMP_CONFIG (saved_options), 0);
+            else
+              g_object_set_data_full (G_OBJECT (image->gimp),
+                                      "saved-stroke-options",
+                                      g_object_ref (options),
+                                      (GDestroyNotify) g_object_unref);
+          }
         else
-          options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
+          {
+            options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
+          }
 
         gimp_item_stroke (item, drawable, options);
         gimp_image_flush (image);
-
-        gtk_widget_destroy (dialog);
       }
-      break;
+      /* fallthrough */
 
     default:
       gtk_widget_destroy (dialog);
