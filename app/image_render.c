@@ -2461,18 +2461,12 @@ render_image_rgb_a_4 (RenderInfo *info)
 		    r = blend_dark_check[(a | src[RED_PIX])];
 		    g = blend_dark_check[(a | src[GREEN_PIX])];
 		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		    r =  src[RED_PIX];
-		    g =  src[GREEN_PIX];
-		    b =  src[BLUE_PIX];
 		  }
 		else
 		  {
 		    r = blend_light_check[(a | src[RED_PIX])];
 		    g = blend_light_check[(a | src[GREEN_PIX])];
 		    b = blend_light_check[(a | src[BLUE_PIX])];
-		    r =  src[RED_PIX];
-		    g =  src[GREEN_PIX];
-		    b =  src[BLUE_PIX];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3916,18 +3910,12 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
 		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
 		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
 		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
-		    r =  U16_TO_U8(src[RED_PIX]);
-		    g =  U16_TO_U8(src[GREEN_PIX]);
-		    b =  U16_TO_U8(src[BLUE_PIX]);
 		  }
 		else
 		  {
 		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
 		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
 		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
-		    r =  U16_TO_U8(src[RED_PIX]);
-		    g =  U16_TO_U8(src[GREEN_PIX]);
-		    b =  U16_TO_U8(src[BLUE_PIX]);
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
