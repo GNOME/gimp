@@ -1,3 +1,10 @@
+2004-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c: moved initialization of the
+	gimage->visible[] and gimage->active[] arrays from
+	gimp_image_new() to gimp_image_init(). Use gimp_rgba_set()
+	to initialize gimage->qmask_color.
+
 2004-01-15  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/helpbrowser/domain.c: Modify error messages shown when 

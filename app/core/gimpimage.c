@@ -447,6 +447,8 @@ gimp_image_class_init (GimpImageClass *klass)
 static void
 gimp_image_init (GimpImage *gimage)
 {
+  gint i;
+
   gimage->ID                    = 0;
 
   gimage->save_proc             = NULL;
@@ -528,12 +530,15 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->parasites             = gimp_parasite_list_new ();
 
+  for (i = 0; i < MAX_CHANNELS; i++)
+    {
+      gimage->visible[i] = TRUE;
+      gimage->active[i]  = TRUE;
+    }
+
   gimage->qmask_state           = FALSE;
   gimage->qmask_inverted        = FALSE;
-  gimage->qmask_color.r         = 1.0;
-  gimage->qmask_color.g         = 0.0;
-  gimage->qmask_color.b         = 0.0;
-  gimage->qmask_color.a         = 0.5;
+  gimp_rgba_set (&gimage->qmask_color, 1.0, 0.0, 0.0, 0.5);
 
   gimage->undo_stack            = gimp_undo_stack_new (gimage);
   gimage->redo_stack            = gimp_undo_stack_new (gimage);
@@ -921,7 +926,6 @@ gimp_image_new (Gimp              *gimp,
 		GimpImageBaseType  base_type)
 {
   GimpImage *gimage;
-  gint       i;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -956,13 +960,6 @@ gimp_image_new (Gimp              *gimp,
       break;
     default:
       break;
-    }
-
-  /*  set all color channels visible and active  */
-  for (i = 0; i < MAX_CHANNELS; i++)
-    {
-      gimage->visible[i] = TRUE;
-      gimage->active[i]  = TRUE;
     }
 
   /* create the selection mask */
