@@ -7,10 +7,7 @@ use Gimp::Fu;
 use Gimp::UI;
 use Fcntl;
 
-# Gimp::set_trace(TRACE_ALL);
-
-sub encode_base64 ($;$)
-{
+sub encode_base64($) {
     my $res = substr pack ("u", $_[0]), 1;
     $res =~ s/\n.//mg;
     $res =~ tr|` -_|AA-Za-z0-9+/|; #` # syntax-hiliting in emacs kanns nicht

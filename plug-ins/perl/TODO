@@ -33,24 +33,24 @@ olof
 
 bugs
 
-  * rate-limiting for gimp_message BEFORE 1.2
+  * update logulator
+  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
+[DONE]  * rate-limiting for gimp_message BEFORE 1.2
   * on-query => remove gimp::fu parasite(?)
   * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
-  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-[DONE]  * /root/gimprelease && TODO -> publish! PUSH PUSH
   * perl_require_pv with _59?
   * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
-  * podestions are not expanded in dialog help strings etc..
+  * document Gimp:PDL!!!
   * Kommandozeilenmodus(!).
-  * don't start gimp in cmdline mode and error.
+[KILL]  * don't start gimp in cmdline mode and error.
   * KILL :auto from default(!)
   * auto-flush of gdrawable when merge_shadow(?)
   * gimp-piddle must be written back automatically on destroy, if changed
-  * possibly rename "Brush Selection" to "Paint Settings"
+[KILL]  * possibly rename "Brush Selection" to "Paint Settings"
   * gimp-tile set dirty automatically(!)
   * perl module install dependency
   * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
@@ -61,11 +61,10 @@ bugs
 important issues
 
   * constant names (RADIO) automatically into help strings!
-  * gimpdoc with caching & [DONE]exampling ;--->
+[KILL]  * gimpdoc with caching & [DONE]exampling ;--->
   * migrate BOOT: into INIT() (forgot why but important for B)
   * gimp_progress_done, gimp_progress_close
   * maybe implement --enable-perl=runtime-only?
-  * pdb_proc_renameto
   * gimp_default_display (...) for libgimp
   * Gimp::Module for modules (!)
   * PerlCC configurable options for Perl-Server startup, Gipm_host etc.
@@ -75,7 +74,7 @@ important issues
   * change set_usize to something else..
   * Gimp::IO (?)
   * install scripts in share/
-  * register dummy function to calm gimp down (really??)
+[KILL]  * register dummy function to calm gimp down (really??)
   * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
   * Gimp::ping

@@ -40,7 +40,6 @@ register "file_colorhtml_save",
          ],
          sub {
    my($img,$drawable,$filename,$filename2,$source,$text,$size,$html40,$closetag) = @_;
-   print " @_\n";
    my($new_img,$new_drawable);
    my $max;
    my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "COLORHTML",
