@@ -37,11 +37,15 @@
 
 #include "tools-types.h"
 
+#include "config/gimpbaseconfig.h"
+
 #include "base/curves.h"
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
@@ -49,6 +53,7 @@
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
 
@@ -127,11 +132,11 @@ static void   curves_load_callback            (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
 static void   curves_save_callback            (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
-static gint   curves_graph_events             (GtkWidget        *widget,
+static gboolean curves_graph_events           (GtkWidget        *widget,
                                                GdkEvent         *event,
                                                GimpCurvesTool   *c_tool);
-static void   curves_graph_expose             (GtkWidget        *widget,
-                                               GdkRectangle     *area,
+static gboolean curves_graph_expose           (GtkWidget        *widget,
+                                               GdkEventExpose   *eevent,
                                                GimpCurvesTool   *c_tool);
 
 static void       file_dialog_create          (GimpCurvesTool   *c_tool);
@@ -261,6 +266,11 @@ gimp_curves_tool_finalize (GObject *object)
       gimp_lut_free (c_tool->lut);
       c_tool->lut = NULL;
     }
+  if (c_tool->hist)
+    {
+      gimp_histogram_free (c_tool->hist);
+      c_tool->hist = NULL;
+    }
   if (c_tool->cursor_layout)
     {
       g_object_unref (c_tool->cursor_layout);
@@ -293,6 +303,13 @@ gimp_curves_tool_initialize (GimpTool    *tool,
       return;
     }
 
+  if (! c_tool->hist)
+    {
+      Gimp *gimp = GIMP_TOOL (c_tool)->tool_info->gimp;
+
+      c_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+    }
+
   curves_init (c_tool->curves);
 
   c_tool->color   = gimp_drawable_is_rgb (drawable);
@@ -317,6 +334,10 @@ gimp_curves_tool_initialize (GimpTool    *tool,
                                     c_tool->channel);
 
   curves_update (c_tool, ALL);
+
+  gimp_drawable_calculate_histogram (drawable, c_tool->hist);
+  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (c_tool->graph),
+                                     c_tool->hist);
 }
 
 static void
@@ -524,17 +545,25 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 		    GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
-  c_tool->graph = gtk_drawing_area_new ();
+  c_tool->graph = gimp_histogram_view_new (FALSE);
   gtk_widget_set_size_request (c_tool->graph,
                                GRAPH_WIDTH  + RADIUS * 2,
                                GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (c_tool->graph, GRAPH_MASK);
+  g_object_set (c_tool->graph,
+                "border-width", RADIUS,
+                "subdivisions", 1,
+                NULL);
+  GIMP_HISTOGRAM_VIEW (c_tool->graph)->light_histogram = TRUE;
   gtk_container_add (GTK_CONTAINER (frame), c_tool->graph);
   gtk_widget_show (c_tool->graph);
 
   g_signal_connect (c_tool->graph, "event",
 		    G_CALLBACK (curves_graph_events),
 		    c_tool);
+  g_signal_connect_after (c_tool->graph, "expose_event",
+                          G_CALLBACK (curves_graph_expose),
+                          c_tool);
 
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
@@ -756,19 +785,22 @@ curves_channel_callback (GtkWidget      *widget,
 {
   gimp_menu_item_update (widget, &c_tool->channel);
 
-  if (! c_tool->color)
+  if (c_tool->color)
     {
-      if (c_tool->channel > 1)
-        c_tool->channel = 2;
-      else
-        c_tool->channel = 1;
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (c_tool->graph),
+                                       c_tool->channel);
+    }
+  else
+    {
+      c_tool->channel = (c_tool->channel > 1) ? 2 : 1;
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (c_tool->graph),
+                                       c_tool->channel - 1);
     }
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
 			           c_tool->curves->curve_type[c_tool->channel]);
 
   curves_update (c_tool, XRANGE_TOP | YRANGE);
-  gtk_widget_queue_draw (c_tool->graph);
 }
 
 static void
@@ -857,12 +889,6 @@ curves_graph_events (GtkWidget      *widget,
   gint            closest_point;
   gint            distance;
   gint            x1, x2, y1, y2;
-
-  if (event->type == GDK_EXPOSE)
-    {
-      curves_graph_expose (widget, &((GdkEventExpose *) event)->area, c_tool);
-      return TRUE;
-    }
 
   /*  get the pointer position  */
   gdk_window_get_pointer (c_tool->graph->window, &tx, &ty, NULL);
@@ -1083,18 +1109,18 @@ curve_print_loc (GimpCurvesTool *c_tool)
                    c_tool->cursor_layout);
 }
 
-static void
+static gboolean
 curves_graph_expose (GtkWidget      *widget,
-                     GdkRectangle   *area,
+                     GdkEventExpose *eevent,
                      GimpCurvesTool *c_tool)
 {
-  GimpHistogramChannel sel_channel;
-
-  gchar    buf[32];
-  gint     offset;
-  gint     height;
-  gint     i;
-  GdkPoint points[256];
+  GimpHistogramChannel  sel_channel;
+  gchar                 buf[32];
+  gint                  offset;
+  gint                  height;
+  gint                  i;
+  GdkPoint              points[256];
+  GdkGC                *graph_gc;
 
   if (c_tool->color)
     {
@@ -1108,27 +1134,26 @@ curves_graph_expose (GtkWidget      *widget,
         sel_channel = GIMP_HISTOGRAM_VALUE;
     }
 
-  /*  Draw the background  */
-  gdk_draw_rectangle (widget->window,
-                      widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
-                      0, 0,
-                      widget->allocation.width,
-                      widget->allocation.height);
-
   /*  Draw the grid lines  */
-  for (i = 0; i < 5; i++)
+  for (i = 1; i < 4; i++)
     {
       gdk_draw_line (widget->window,
                      c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
-                     RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS,
-                     GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
+                     RADIUS,
+                     RADIUS + i * (GRAPH_HEIGHT / 4),
+                     RADIUS + GRAPH_WIDTH - 1,
+                     RADIUS + i * (GRAPH_HEIGHT / 4));
       gdk_draw_line (widget->window,
                      c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
-                     i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS,
-                     i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
+                     RADIUS + i * (GRAPH_WIDTH / 4),
+                     RADIUS,
+                     RADIUS + i * (GRAPH_WIDTH / 4),
+                     RADIUS + GRAPH_HEIGHT - 1);
     }
 
   /*  Draw the curve  */
+  graph_gc = c_tool->graph->style->text_gc[GTK_STATE_NORMAL];
+
   for (i = 0; i < 256; i++)
     {
       points[i].x = i + RADIUS;
@@ -1138,13 +1163,13 @@ curves_graph_expose (GtkWidget      *widget,
   if (c_tool->curves->curve_type[c_tool->channel] == GIMP_CURVE_FREE)
     {
       gdk_draw_points (widget->window,
-                       c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
+                       graph_gc,
                        points, 256);
     }
   else
     {
       gdk_draw_lines (widget->window,
-                      c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
+                      graph_gc,
                       points, 256);
 
       /*  Draw the points  */
@@ -1152,7 +1177,7 @@ curves_graph_expose (GtkWidget      *widget,
         {
           if (c_tool->curves->points[c_tool->channel][i][0] != -1)
             gdk_draw_arc (widget->window,
-                          c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
+                          graph_gc,
                           TRUE,
                           c_tool->curves->points[c_tool->channel][i][0],
                           255 - c_tool->curves->points[c_tool->channel][i][1],
@@ -1164,11 +1189,11 @@ curves_graph_expose (GtkWidget      *widget,
     {
       /* draw the color line */
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
+                     graph_gc,
                      c_tool->col_value[sel_channel] + RADIUS,
                      RADIUS,
                      c_tool->col_value[sel_channel] + RADIUS,
-                     GRAPH_HEIGHT + RADIUS);
+                     GRAPH_HEIGHT + RADIUS - 1);
 
       /* and xpos indicator */
       g_snprintf (buf, sizeof (buf), "x:%d",
@@ -1188,15 +1213,16 @@ curves_graph_expose (GtkWidget      *widget,
         offset = - (offset + 2);
 
       gdk_draw_layout (widget->window,
-                       c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
+                       graph_gc,
                        c_tool->col_value[sel_channel] + offset,
                        GRAPH_HEIGHT - height - 2,
                        c_tool->xpos_layout);
     }
 
   curve_print_loc (c_tool);
-}
 
+  return FALSE;
+}
 
 static void
 curves_load_callback (GtkWidget      *widget,

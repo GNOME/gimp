@@ -46,6 +46,9 @@ struct _GimpHistogramView
   gint                   border_width;
   gint                   subdivisions;
   GdkGC                 *range_gc;
+
+  /* hack */
+  gboolean               light_histogram;
 };
 
 struct _GimpHistogramViewClass

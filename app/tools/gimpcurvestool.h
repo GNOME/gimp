@@ -50,14 +50,16 @@ struct _GimpCurvesTool
   gint                  rightmost;
   gint                  col_value[5];
 
+  GimpHistogram        *hist;
+
   GtkWidget            *channel_menu;
   GtkWidget            *xrange;
   GtkWidget            *yrange;
   GtkWidget            *graph;
   GtkWidget            *curve_type;
-  
+
   gint                  cursor_x;
-  gint                  cursor_y;  
+  gint                  cursor_y;
   PangoLayout          *xpos_layout;
   PangoLayout          *cursor_layout;
   PangoRectangle        cursor_rect;

@@ -1,3 +1,13 @@
+2003-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphistogramview.[ch]: added a hack that allows to
+	render the histogram in a brighter color. Fixed initial range for
+	views that are not selectable.
+
+	* app/tools/gimpcurvestool.[ch]: replaced the GtkDrawingArea by a
+	bright GimpHistogramView and render the curves tool controls on
+	top of the histogram. Fixes bug #71633.
+
 2003-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_init): suppress

@@ -358,6 +358,8 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 	}
 
       gdk_draw_line (widget->window,
+                     view->light_histogram ?
+                     widget->style->mid_gc[GTK_STATE_NORMAL] :
                      widget->style->text_gc[GTK_STATE_NORMAL],
                      x + border, height + border - 1,
                      x + border, height + border - y - 1);
@@ -463,17 +465,10 @@ gimp_histogram_view_new (gboolean range)
   GtkWidget *view = g_object_new (GIMP_TYPE_HISTOGRAM_VIEW, NULL);
 
   if (range)
-    {
-      gtk_widget_add_events (view,
-                             GDK_BUTTON_PRESS_MASK   |
-                             GDK_BUTTON_RELEASE_MASK |
-                             GDK_BUTTON1_MOTION_MASK);
-    }
-  else
-    {
-      GIMP_HISTOGRAM_VIEW (view)->start = -1;
-      GIMP_HISTOGRAM_VIEW (view)->end   = -1;
-    }
+    gtk_widget_add_events (view,
+                           GDK_BUTTON_PRESS_MASK   |
+                           GDK_BUTTON_RELEASE_MASK |
+                           GDK_BUTTON1_MOTION_MASK);
 
   return view;
 }
