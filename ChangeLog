@@ -1,5 +1,10 @@
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpclonetool.c (gimp_clone_tool_oper_update): check
+	for options->clone_type.
+
+2005-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppainttool.[ch] export paint tool statusbar API.
 	
 	* app/tools/gimpclonetool.c: added statusbar hint.

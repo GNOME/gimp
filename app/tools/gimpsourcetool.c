@@ -246,11 +246,16 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
+  GimpToolOptions *options = tool->tool_info->tool_options;
+
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
 
-  if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
-    gimp_paint_tool_replace_status (tool, gdisp,
-                                    _("Ctrl-Click to set a clone source."));
+  if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
+      GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL)
+    {
+      gimp_paint_tool_replace_status (tool, gdisp,
+                                      _("Ctrl-Click to set a clone source."));
+    }
 }
 
 static void
