@@ -29,15 +29,15 @@ typedef enum
   ERROR_CONSOLE
 } MessageHandlerType;
 
-extern gint no_interface;
-extern gint no_splash;
-extern gint no_splash_image;
-extern gint no_data;
-extern gint be_verbose;
-extern gint use_debug_handler;
-extern gint console_messages;
-extern gint restore_session;
-extern gint we_are_exiting;      /* this is used in session_get_window_info() */
+extern gboolean no_interface;
+extern gboolean no_splash;
+extern gboolean no_splash_image;
+extern gboolean no_data;
+extern gboolean be_verbose;
+extern gboolean use_debug_handler;
+extern gboolean console_messages;
+extern gboolean restore_session;
+extern gboolean we_are_exiting;      /* this is used in session_get_window_info() */
 extern GimpSet *image_context;
 extern MessageHandlerType message_handler;
 
