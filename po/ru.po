@@ -1,3 +1,4 @@
+# translation of gimp.HEAD.22.po to russian
 # translation of gimp.HEAD.1610.po to russian
 # translation of gimp.MAVKA.po to russian
 # translation of gimp.HEAD.po to russian
@@ -13,10 +14,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD.1610\n"
+"Project-Id-Version: gimp.HEAD.22\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-03 00:57+0100\n"
-"PO-Revision-Date: 2003-10-16 23:42+0400\n"
+"PO-Revision-Date: 2003-11-10 00:28+0300\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,13 +135,11 @@ msgstr "  -s, --no-splash              Не показывать окно зап
 
 #: app/main.c:464
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
+msgstr "  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
 
 #: app/main.c:465
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr ""
-"  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+msgstr "  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
 
 #: app/main.c:466
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -153,8 +152,7 @@ msgstr ""
 "gimprc.\n"
 
 #: app/main.c:468
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 
 #: app/main.c:469
@@ -166,14 +164,12 @@ msgstr ""
 "диалоговых окон.\n"
 
 #: app/main.c:470
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
 
 #: app/main.c:471
-#, fuzzy
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -183,7 +179,6 @@ msgstr ""
 "\n"
 
 #: app/main.c:473
-#, fuzzy
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b --batch <команды>     Запустить в командном режиме.\n"
 
@@ -491,8 +486,7 @@ msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:133
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Устанавливает уровень интерполяции, используемый при масштабировании и "
 "подобных изменениях."
@@ -580,8 +574,7 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Восстанавливать последнюю сохраненную позицию окон при каждом запуске."
 
 #: app/config/gimprc-blurbs.h:215
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Запомнить текущие инструменты, шаблоны, цвета и кисти."
 
 #: app/config/gimprc-blurbs.h:219
@@ -699,10 +692,8 @@ msgstr ""
 "инструментов."
 
 #: app/config/gimprc-blurbs.h:284
-msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
-msgstr ""
-"Когда эта опция включена, клавиши быстрого доступа можно менять \"на лету\"."
+msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgstr "Когда эта опция включена, клавиши быстрого доступа можно менять \"на лету\"."
 
 #: app/config/gimprc-blurbs.h:287
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -765,8 +756,7 @@ msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr ""
-"Устанавливает лимит памяти, используемый для откатов в каждом изображении."
+msgstr "Устанавливает лимит памяти, используемый для откатов в каждом изображении."
 
 #: app/config/gimprc-blurbs.h:335
 msgid "When enabled, pressing F1 will open the help browser."
@@ -1771,13 +1761,11 @@ msgid "Line style used for the grid."
 msgstr ""
 
 #: app/core/gimpgrid.c:134
-#, fuzzy
 msgid "The foreground color of the grid."
 msgstr "Установить цвет переднего плана в:"
 
 #: app/core/gimpgrid.c:139
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr ""
 
 #: app/core/gimpgrid.c:145
@@ -1789,8 +1777,7 @@ msgid "Vertical spacing of grid lines."
 msgstr ""
 
 #: app/core/gimpgrid.c:159
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 
 #: app/core/gimpgrid.c:166
@@ -2108,8 +2095,7 @@ msgstr "Вращать слой"
 
 #: app/core/gimplayer.c:935
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
+msgstr "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
 #: app/core/gimplayer.c:942
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2997,12 +2983,10 @@ msgid "/Add Tab/_Paths"
 msgstr "/Добавить закладку/Контуры..."
 
 #: app/gui/dialogs-menu.c:81
-#, fuzzy
 msgid "/Add Tab/Inde_xed Palette"
 msgstr "/Добавить закладку/Индексированная палитра..."
 
 #: app/gui/dialogs-menu.c:83
-#, fuzzy
 msgid "/Add Tab/Histogra_m"
 msgstr "/Добавить закладку/История ..."
 
@@ -3047,7 +3031,6 @@ msgid "/Add Tab/_Buffers"
 msgstr "/Добавить закладку/Буферы..."
 
 #: app/gui/dialogs-menu.c:111
-#, fuzzy
 msgid "/Add Tab/_Images"
 msgstr "/Добавить закладку/Изображения..."
 
@@ -3060,7 +3043,6 @@ msgid "/Add Tab/_Templates"
 msgstr "/Добавить закладку/Образцы..."
 
 #: app/gui/dialogs-menu.c:117
-#, fuzzy
 msgid "/Add Tab/T_ools"
 msgstr "/Добавить закладку/Инструменты..."
 
@@ -3411,9 +3393,8 @@ msgid ""
 msgstr ""
 
 #: app/gui/fonts-menu.c:44
-#, fuzzy
 msgid "/_Rescan Font List"
-msgstr "Перечитать список шрифтов"
+msgstr "/Перечитать список шрифтов"
 
 #: app/gui/gradient-editor-commands.c:86
 msgid "Left Endpoint Color"
@@ -3541,8 +3522,7 @@ msgstr "/Загрузить цвет крайней правой точки из
 
 #: app/gui/gradient-editor-menu.c:123
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr ""
-"/Загрузить цвет крайней правой точки из/Соседних справа к крайней левой точке"
+msgstr "/Загрузить цвет крайней правой точки из/Соседних справа к крайней левой точке"
 
 #: app/gui/gradient-editor-menu.c:127
 msgid "/Load Right Color From/_Left Endpoint"
@@ -3873,7 +3853,6 @@ msgid "/Edit/_Redo"
 msgstr "/Правка/Повторить"
 
 #: app/gui/image-menu.c:169
-#, fuzzy
 msgid "/Edit/Undo _History"
 msgstr "/Добавить закладку/История ..."
 
@@ -3935,7 +3914,6 @@ msgid "/Edit/_Stroke Selection..."
 msgstr "/Правка/Обвести выделение"
 
 #: app/gui/image-menu.c:250
-#, fuzzy
 msgid "/Edit/St_roke Path..."
 msgstr "/Правка/Обвести по контуру"
 
@@ -4500,14 +4478,12 @@ msgid "/Dialogs/_Paths"
 msgstr "/Диалоги/Контуры..."
 
 #: app/gui/image-menu.c:957
-#, fuzzy
 msgid "/Dialogs/Inde_xed Palette"
 msgstr "/Диалоги/Индексированная палитра..."
 
 #: app/gui/image-menu.c:962
-#, fuzzy
 msgid "/Dialogs/Histogra_m"
-msgstr "/Диалоги/История отмен..."
+msgstr "/Диалоги/Гистограмма"
 
 #: app/gui/image-menu.c:967
 msgid "/Dialogs/_Selection Editor"
@@ -4550,7 +4526,6 @@ msgid "/Dialogs/_Buffers"
 msgstr "/Диалоги/Буферы..."
 
 #: app/gui/image-menu.c:1023
-#, fuzzy
 msgid "/Dialogs/_Images"
 msgstr "/Диалоги/Изображения..."
 
@@ -4563,9 +4538,8 @@ msgid "/Dialogs/_Templates"
 msgstr "/Диалоги/Образцы..."
 
 #: app/gui/image-menu.c:1038
-#, fuzzy
 msgid "/Dialogs/T_ools"
-msgstr "/Диалоги/Шрифты..."
+msgstr "/Диалоги/Инструменты"
 
 #: app/gui/image-menu.c:1043
 msgid "/Dialogs/Error Co_nsole"
@@ -5027,9 +5001,8 @@ msgid "Palettes Menu"
 msgstr "Меню палитр"
 
 #: app/gui/menus.c:198
-#, fuzzy
 msgid "Fonts Menu"
-msgstr "Меню документов"
+msgstr "Меню шрифтов"
 
 #: app/gui/menus.c:205
 msgid "Buffers Menu"
@@ -5372,7 +5345,6 @@ msgstr ""
 "подействовали изменения:"
 
 #: app/gui/preferences-dialog.c:838
-#, fuzzy
 msgid "Show _Menubar"
 msgstr "Показать меню"
 
@@ -5381,7 +5353,6 @@ msgid "Show _Rulers"
 msgstr "Показывать линейки "
 
 #: app/gui/preferences-dialog.c:844
-#, fuzzy
 msgid "Show Scroll_bars"
 msgstr "Показывать линейки прокрутки"
 
@@ -5390,22 +5361,18 @@ msgid "Show S_tatusbar"
 msgstr "Показывать строку состояния"
 
 #: app/gui/preferences-dialog.c:855
-#, fuzzy
 msgid "Show S_election"
-msgstr "Увеличение выделения"
+msgstr "Показать выделение"
 
 #: app/gui/preferences-dialog.c:858
-#, fuzzy
 msgid "Show _Layer Boundary"
-msgstr "/Просмотр/Показать границы слоя"
+msgstr "Показать границы слоя"
 
 #: app/gui/preferences-dialog.c:861
-#, fuzzy
 msgid "Show _Guides"
-msgstr "/Просмотр/Показать направляющие"
+msgstr "Показать направляющие"
 
 #: app/gui/preferences-dialog.c:864
-#, fuzzy
 msgid "Show Gri_d"
 msgstr "Показать сетку"
 
@@ -6318,14 +6285,12 @@ msgid "/File/Dialogs/_Paths"
 msgstr "/Файл/Диалоги/Контуры..."
 
 #: app/gui/toolbox-menu.c:136
-#, fuzzy
 msgid "/File/Dialogs/Inde_xed Palette"
 msgstr "/Файл/Диалоги/Индексированная палитра..."
 
 #: app/gui/toolbox-menu.c:141
-#, fuzzy
 msgid "/File/Dialogs/Histogra_m"
-msgstr "/Файл/Диалоги/История..."
+msgstr "/Файл/Диалоги/Гистограмма"
 
 #: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/_Selection Editor"
@@ -6368,7 +6333,6 @@ msgid "/File/Dialogs/_Buffers"
 msgstr "/Файл/Диалоги/Буферы..."
 
 #: app/gui/toolbox-menu.c:202
-#, fuzzy
 msgid "/File/Dialogs/_Images"
 msgstr "/Файл/Диалоги/Изображения..."
 
@@ -6381,9 +6345,8 @@ msgid "/File/Dialogs/_Templates"
 msgstr "/Файл/Диалоги/Образцы..."
 
 #: app/gui/toolbox-menu.c:217
-#, fuzzy
 msgid "/File/Dialogs/T_ools"
-msgstr "/Файл/Диалоги/Шрифты..."
+msgstr "/Файл/Диалоги/Инструменты"
 
 #: app/gui/toolbox-menu.c:222
 msgid "/File/Dialogs/Error Co_nsole"
@@ -6794,8 +6757,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Нажмите \"Продолжить\", чтобы принять предложенные настройки."
 
 #: app/gui/user-install-dialog.c:951
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Для оптимальной производительности GIMP, могут быть подрегулированны "
 "некоторые настройки.</b>"
@@ -7364,8 +7326,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(недопустимая строка UTF-8)"
 
 #: app/text/gimptext.c:178
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Инструктирование изменяет контуры символа, чтобы выдать более чёткие растры "
 "при маленьких размерах"
@@ -7423,14 +7384,12 @@ msgid "Pick Only"
 msgstr "Только черное"
 
 #: app/tools/tools-enums.c:15
-#, fuzzy
 msgid "Set Foreground Color"
-msgstr "Редактировать цвет переднего плана"
+msgstr "Установить цвет переднего плана"
 
 #: app/tools/tools-enums.c:16
-#, fuzzy
 msgid "Set Background Color"
-msgstr "Редактировать цвет фона"
+msgstr "Установить цвет фона"
 
 #: app/tools/tools-enums.c:34
 msgid "Crop"
@@ -7987,8 +7946,7 @@ msgstr "Изменение тона, осветления, насыщеннос�
 
 #: app/tools/gimphuesaturationtool.c:209
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr ""
-"Тон-Насыщенность действует только на цветные изображения в формате RGB."
+msgstr "Тон-Насыщенность действует только на цветные изображения в формате RGB."
 
 #: app/tools/gimphuesaturationtool.c:262
 msgid "_Master"
@@ -8189,7 +8147,6 @@ msgid "Measure"
 msgstr "Измеритель"
 
 #: app/tools/gimpmeasuretool.c:114
-#, fuzzy
 msgid "Measure distances and angles"
 msgstr "Измерение расстояний и углов"
 
@@ -8215,7 +8172,6 @@ msgid "Pick a Layer or Guide to Move"
 msgstr "Выбрать слой для перемещения"
 
 #: app/tools/gimpmoveoptions.c:180
-#, fuzzy
 msgid "Move the Current Layer"
 msgstr "Переместить текущий слой"
 
@@ -9305,17 +9261,15 @@ msgid "Intensity Range:"
 msgstr "Интенсивность:"
 
 #: app/widgets/gimphistogrameditor.c:148
-#, fuzzy
 msgid "Channel:"
-msgstr "Канал"
+msgstr "Канал:"
 
 #: app/widgets/gimpimagedock.c:187
 msgid "Auto"
 msgstr "Авто"
 
 #: app/widgets/gimpimagedock.c:198
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 
 #: app/widgets/gimpimageview.c:139
@@ -9580,9 +9534,9 @@ msgid ""
 msgstr ""
 
 #: app/widgets/gimptooloptionseditor.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "%s Options"
-msgstr "Параметры:\n"
+msgstr "%s Параметры"
 
 #: app/widgets/gimptooloptionseditor.c:411
 #, fuzzy
@@ -9840,9 +9794,8 @@ msgstr ""
 "Замещение на карту в градациях серого."
 
 #: app/xcf/xcf-read.c:107
-#, fuzzy
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Недопустимая строка UTF-8 в файле кистей '%s'."
+msgstr "Недопустимая строка UTF-8 в XCF файле."
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
 #: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:201 app/xcf/xcf.c:318
@@ -10187,3 +10140,4 @@ msgstr "GIMP (нестабильный)"
 
 #~ msgid "Hex Triplet"
 #~ msgstr "Шестнадцатеричный триплет"
+
