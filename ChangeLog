@@ -1,3 +1,9 @@
+1999-09-06  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/disp_callbacks.c app/gdisplay_color.c app/image_new.c
+	* app/info_dialog.c app/nav_window.c app/qmask.c app/undo.c:
+	i18n fixes.
+
 Sun Sep  5 22:55:52 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_triangle.c: color dnd for the triangle selector.

@@ -17,6 +17,7 @@
  */
 
 
+#include "config.h"
 #include "image_new.h"
 
 #include "gimprc.h"
