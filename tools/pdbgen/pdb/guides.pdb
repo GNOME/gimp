@@ -1,0 +1,302 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Adam D. Moss';
+    $date = '1998';
+}
+
+sub image_add_guide {
+    my ($desc, $type, $max, $pos) = @_;
+
+    $blurb = "Add a $desc guide to an image.";
+
+    $help = <<HELP;
+This procedure adds a $desc guide to an image. It takes the input image and the
+$type-position of the new guide as parameters. It returns the guide ID of the
+new guide.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => "${type}position", type => '0 < int32',
+	  desc => "The guide's ${type}-offset from $pos of image",
+	  alias => 'offset' }
+    );
+
+    @outargs = (
+	{ name => 'guide_id', type => 'guide', init => 1,
+	  desc => 'The new guide' }
+    );
+
+    my $func = substr($desc, 0, 1);
+    %invoke = (
+	vars => [ 'Guide *guide' ],
+	code => <<CODE
+{
+  if (offset < gimage->$max)
+    {
+      guide = gimp_image_add_${func}guide (gimage);
+      guide->position = offset;
+      guide_id = guide->guide_ID;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+# The defs
+
+sub image_add_hguide {
+    &image_add_guide('horizontal', 'y', 'height', 'top');
+}
+
+sub image_add_vguide {
+    &image_add_guide('vertical', 'x', 'width', 'left');
+}
+
+sub image_delete_guide {
+    $blurb = 'Deletes a guide from an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and removes the specified
+guide from the specified image.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'guide', type => 'guide',
+	  desc => 'The ID of the guide to be removed' }
+    );
+
+    %invoke = (
+	headers => [ qw("undo.h") ],
+	vars => [ 'GList *guides' ],
+	code => <<'CODE'
+{
+  success = FALSE;
+
+  guides = gimage->guides;
+
+  while (guides)
+    {
+      if ((((Guide *) guides->data)->guide_ID == guide) &&
+	  (((Guide *) guides->data)->position >= 0))
+	{
+	  GList *tmp_next;
+
+	  success = TRUE;
+
+	  tmp_next = guides->next;
+
+	  ((Guide *) guides->data)->position = -1;
+	  undo_push_guide (gimage, ((Guide *) guides->data));
+	  /* gimp_image_remove_guide (gimage, ((Guide *) guides->data)); */
+
+	  guides = tmp_next;
+	}
+      else
+	guides = guides->next;
+    }
+}
+CODE
+    );
+}
+
+sub image_find_next_guide {
+    $blurb = 'Find next guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and finds the guide ID of
+the successor of the given guide ID in the image's guide list. If the supplied
+guide ID is 0, the procedure will return the first Guide. The procedure will
+return 0 if given the final guide ID as an argument or the image has no guides.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'guide', type => 'guide',
+	  desc => 'The ID of the current guide (0 if first invocation)' }
+    );
+
+    @outargs = (
+	{ name => 'next_guide', type => 'guide', init => 1,
+	  desc => "The next guide's ID" }
+    );
+
+    %invoke = (
+	vars => [ 'GList *guides' ],
+	code => <<'CODE'
+{
+  guides = gimage->guides;
+
+  if (guides != NULL)
+    {
+      if (guide == 0) /* init - Return first guide ID in list */
+	{
+	  while (guides && (((Guide *) guides->data)->position < 0))
+	    guides = guides->next;
+
+	  if (guides) /* didn't just come to end of list */
+	    next_guide = ((Guide *) guides->data)->guide_ID;
+	}
+      else
+	{
+	  success = FALSE;
+              
+	  while (guides)
+	    {
+	      if ((((Guide *) guides->data)->guide_ID == guide) &&
+		  (((Guide *) guides->data)->position >= 0))
+		{
+		  GList* tmplist;
+
+		  success = TRUE;
+
+		  tmplist = guides->next;
+                      
+		  while (tmplist && (((Guide *) tmplist->data)->position < 0))
+		    tmplist = tmplist->next;
+
+		  if (tmplist);
+		     next_guide = ((Guide *) tmplist->data)->guide_ID;
+
+                  break;
+                }
+
+	      guides = guides->next;
+            }
+
+	}
+    }
+}
+CODE
+    );
+}
+
+sub image_get_guide_orientation {
+    $blurb = 'Get orientation of a guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and returns the
+orientations of the guide.
+HELP
+
+    &pdb_misc;
+    
+    @inargs = (
+	&std_image_arg,
+	{ name => 'guide', type => 'guide',
+	  desc => 'The guide' }
+    );
+
+    @outargs = (
+	{ name => 'orientation', type => 'enum GuideOrientation', init => 1,
+	  desc => "The guide's orientation: { %%desc%% }" }
+    );
+
+    %invoke = (
+	vars => [ 'GList *guides' ],
+	code => <<'CODE'
+{
+  guides = gimage->guides;
+
+  success = FALSE;
+
+  while (guides)
+    {
+      if ((((Guide *) guides->data)->guide_ID == guide) &&
+	  (((Guide *) guides->data)->position >= 0))
+	{
+	  orientation = ((Guide *) guides->data)->orientation;
+	  success = TRUE;
+	  break;
+	}
+
+      guides = guides->next;
+    }
+}
+CODE
+    );
+}
+
+sub image_get_guide_position {
+    $blurb = 'Get position of a guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and returns the position
+of the guide relative to the top or left of the image.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'guide', type => 'guide',
+	  desc => 'The guide' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32', init => 1,
+	  desc => "The guide's position relative to top or left of image" }
+    );
+
+    %invoke = (
+	vars => [ 'GList *guides' ],
+	code => <<'CODE'
+{
+  guides = gimage->guides;
+
+  success = FALSE;
+
+  while (guides)
+    {
+      if ((((Guide *) guides->data)->guide_ID == guide) &&
+	  (((Guide *) guides->data)->position >= 0))
+	{
+	  position = ((Guide *) guides->data)->position;
+	  success = TRUE;
+	  break;
+	}
+
+      guides = guides->next;
+    } 
+}
+CODE
+    );
+}
+
+@headers = qw("gimage.h");
+
+@procs = qw(image_add_hguide image_add_vguide image_delete_guide
+	    image_find_next_guide image_get_guide_orientation
+	    image_get_guide_position);
+%exports = (app => [@procs]);
+
+$desc = 'Guide procedures';
+
+1;

@@ -33,39 +33,44 @@ package Gimp::CodeGen::pdb;
 
     color  => { name => 'COLOR' , type => 'guchar *' },
 
-    display   => { name => 'DISPLAY',
-		   type => 'GDisplay *',
-		   headers => [ qw("gdisplay.h") ],
-		   id_func => 'gdisplay_get_ID',
-		   id_ret_func => '$var->ID' },
-    image     => { name => 'IMAGE',
-		   type => 'GimpImage *', 
-		   headers => [ qw("procedural_db.h") ],
-		   id_func => 'pdb_id_to_image',
-		   id_ret_func => 'pdb_image_to_id ($var)' },
-    layer     => { name => 'LAYER',
-		   type => 'GimpLayer *', 
-		   headers => [ qw("drawable.h" "layer.h") ],
-		   id_func => 'layer_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
-    channel   => { name => 'CHANNEL',
-		   type => 'Channel *',
-		   headers => [ qw("drawable.h" "channel.h") ],
-		   id_func => 'channel_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
-    drawable  => { name => 'DRAWABLE',
-		   type => 'GimpDrawable *',
-		   headers => [ qw("drawable.h") ],
-		   id_func => 'gimp_drawable_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
-    selection => { name => 'SELECTION',
-		   type => 'Channel *',
-		   headers => [ qw("drawable.h" "channel.h") ],
-		   id_func => 'channel_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
-
-    parasite => { name => 'PARASITE', type => 'Parasite *',
-		  headers => [ qw("libgimp/parasite.h") ] },
+    display    => { name => 'DISPLAY',
+		    type => 'GDisplay *',
+		    headers => [ qw("gdisplay.h") ],
+		    id_func => 'gdisplay_get_ID',
+		    id_ret_func => '$var->ID' },
+    image      => { name => 'IMAGE',
+		    type => 'GimpImage *', 
+		    headers => [ qw("procedural_db.h") ],
+		    id_func => 'pdb_id_to_image',
+		    id_ret_func => 'pdb_image_to_id ($var)' },
+    layer      => { name => 'LAYER',
+		    type => 'GimpLayer *', 
+		    headers => [ qw("drawable.h" "layer.h") ],
+		    id_func => 'layer_get_ID',
+		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+    channel    => { name => 'CHANNEL',
+		    type => 'Channel *',
+		    headers => [ qw("drawable.h" "channel.h") ],
+		    id_func => 'channel_get_ID',
+		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+    drawable   => { name => 'DRAWABLE',
+		    type => 'GimpDrawable *',
+		    headers => [ qw("drawable.h") ],
+		    id_func => 'gimp_drawable_get_ID',
+		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+    selection  => { name => 'SELECTION',
+		    type => 'Channel *',
+		    headers => [ qw("drawable.h" "channel.h") ],
+		    id_func => 'channel_get_ID',
+		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+    layer_mask => { name => 'CHANNEL',
+		    type => 'LayerMask *', 
+		    headers => [ qw("drawable.h" "channel.h") ],
+		    id_func => 'layer_mask_get_ID',
+		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+    parasite   => { name => 'PARASITE',
+		    type => 'Parasite *',
+		    headers => [ qw("libgimp/parasite.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
     path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME
@@ -75,6 +80,7 @@ package Gimp::CodeGen::pdb;
     enum    => { name => 'INT32', type => 'gint32 '   },
     boolean => { name => 'INT32', type => 'gboolean ' },
     tattoo  => { name => 'INT32', type => 'gint32 '   },
+    guide   => { name => 'INT32', type => 'gint32 '   },
     unit    => { name => 'INT32', type => 'GUnit '    },
 
     region => { name => 'REGION', type => 'gpointer ' } # not supported
@@ -107,6 +113,11 @@ sub arg_parse {
 	    push @retvals, split(/,\s*/, $remove);
 	}
 
+	return @retvals;
+    }
+    elsif ($arg =~ /^unit(?: \(min (.*?)\))?/) {
+	my @retvals = ('unit');
+	push @retvals, $1 if $1;
 	return @retvals;
     }
     elsif ($arg =~ /^(?:([+-.\d][^\s]*) \s* (<=|<))?

@@ -17,7 +17,8 @@ enum_headers = \
 	../../app/shear_tool.h		\
 	../../app/color_balance.h	\
 	../../app/hue_saturation.h	\
-	../../app/layerF.h
+	../../app/layerF.h		\
+	../../app/layer.h
 
 enums.pl: enumgen.pl $(enum_headers)
 	cd $(srcdir) \

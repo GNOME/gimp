@@ -17,11 +17,9 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# The defs
-
 sub pdb_misc {
     $author = $copyright = 'Jay Cox';
-    $date = 1998;
+    $date = '1998';
 }
 
 sub name_arg {{
@@ -44,14 +42,19 @@ sub drawable_arg () {{
     desc => 'The drawable'
 }}
 
-sub drawable_convert {
-    foreach ($blurb, $help, $inargs[0]->{desc}) { s/the gimp/a drawable/ }
+sub convert_proc {
+    my ($type, $arg, $var) = @_;
+    my $desc = ($type =~ /^[aeiou]/ ? 'an ' : 'a ') . $type;
 
-    unshift @inargs, &drawable_arg;
+    foreach ($blurb, $help, $inargs[0]->{desc}) { s/the gimp/$desc/e }
 
-    $invoke{code} =~ s/gimp/gimp_drawable/;
-    $invoke{code} =~ s/\(((?!gimp).*?(?:parasite|name))/(drawable, $1/;
+    unshift @inargs, $arg;
+
+    $invoke{code} =~ s/gimp/"gimp_$type"/e;
+    $invoke{code} =~ s/\(((?!gimp).*?(?:parasite|name))/"($var, $1"/e;
 }
+
+# The defs
 
 sub parasite_new {
     $blurb = 'Creates a new parasite.';
@@ -158,31 +161,8 @@ sub parasite_list {
     %invoke = ( code => 'parasites = gimp_parasite_list (&num_parasites);' );
 }
 
-sub drawable_find_parasite {
-    &find_parasite;
-    &drawable_convert;
-    $blurb =~ s/\.$/in a drawable./;
-}
-
-sub drawable_attach_parasite {
-    &attach_parasite;
-    &drawable_convert;
-}
-
-sub drawable_detach_parasite {
-    &detach_parasite;
-    &drawable_convert;
-}
-
-sub drawable_parasite_list {
-    &parasite_list;
-    @inargs = ( &drawable_arg );
-    &drawable_convert;
-    @inargs = ( &drawable_arg );
-    $outargs[0]->{init} = 1;
-}
-
-@headers = qw("libgimp/parasite.h" "gimpparasite.h" "gimpdrawable.h");
+@headers = qw("libgimp/parasite.h" "gimpparasite.h" "gimpdrawable.h"
+	      "gimpimage.h");
 
 $extra{lib}->{protos} = <<'CODE';
 void gimp_attach_new_parasite (const char *name, int flags, int size
@@ -202,7 +182,39 @@ CODE
 
 @procs = qw(parasite_new find_parasite attach_parasite detach_parasite
 	    parasite_list);
-push @procs, map { 'drawable_' . $_ } @procs[1..4];
+
+@types = (
+    ['drawable', '&drawable_arg' , 'drawable'],
+    ['image'   , '&std_image_arg', 'gimage' ]
+);
+
+foreach $type (@types) {
+    foreach (@procs[1..4]) {
+        my $desc = ($type->[0] =~ /^[aeiou]/ ? 'an ' : 'a ') . $type->[0];
+        my $args = join(', ', map { /^&/ ? $_ : "'$_'" } @$type);
+	my $pre = ""; my $post = "";
+
+	if (/find/) { 
+	    $pre = "\$blurb =~ s/\\.\$/ in $desc/;";
+	}
+	elsif (/list/) {
+	    $pre = "\@inargs = ( $type->[1] );";
+    	    $post = "\@inargs = ( $type->[1] ); \$outargs[0]->{init} = 1;";
+	}
+
+	eval <<SUB;
+sub $type->[0]_$_ {
+    \&$_;
+    $pre
+    &convert_proc($args);
+    $post;
+}
+SUB
+
+	push @procs, "$type->[0]_$_";
+    }
+}
+
 %exports = (app => [@procs], lib => [@procs[1..3]]);
 
 $desc = 'Parasite procedures';

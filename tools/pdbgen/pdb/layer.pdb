@@ -425,8 +425,7 @@ sub layer_mask {
     $blurb = "Get the specified layer's mask if it exists.";
 
     $help = <<'HELP';
-This procedure returns the specified layer's mask. If there is no layer mask,
-the procedure fails.
+This procedure returns the specified layer's mask, or -1 if none exists.
 HELP
 
     &std_pdb_misc;
@@ -436,10 +435,9 @@ HELP
     @outargs = (
 	{ name => 'mask', type => 'channel',
 	  desc => 'The layer mask',
-	  alias => 'layer->mask', no_declare => 1 }
+	  alias => 'layer->mask', no_declare => 1,
+	  return_fail => -1 }
     );
-
-    %invoke = ( code => 'success = layer->mask ? TRUE : FALSE;' );
 }
 
 sub layer_is_floating_sel {
@@ -543,10 +541,10 @@ HELP
     $author = $copyright = 'Jay Cox';
     $date = '1998';
 CODE
+$#procs--;
 
 @headers = qw("layer.h" "layer_pvt.h");
 
-$#procs--;
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha
 		   layer_set_offsets layer_mask layer_is_floating_sel);

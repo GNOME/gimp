@@ -225,9 +225,10 @@ sub marshal_inargs {
 	my $var = &arg_vname($_);
 	
 	if (exists $arg->{id_func}) {
-	    $result .= <<CODE;
-  $var = $arg->{id_func} (args[$argc].value.pdb_$type);
-CODE
+	    my $id_func = $arg->{id_func};
+	    $id_func = $_->{id_func} if exists $_->{id_func};
+
+	    $result .= "  $var = $id_func (args[$argc].value.pdb_$type);\n";
 	    $result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 				      "$var == NULL");
 	}
@@ -248,11 +249,12 @@ CODE
 	    }
 	    elsif ($pdbtype eq 'tattoo') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-					  '$var == 0');
+					  "$var == 0");
 	    }
 	    elsif ($pdbtype eq 'unit') {
+		$typeinfo[0] = 'UNIT_PIXEL' unless defined $typeinfo[0];
 		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
-					  "$var < UNIT_PIXEL || $var >= " .
+					  "$var < $typeinfo[0] || $var >= " .
 					  'gimp_unit_get_number_of_units ()');
 	    }
 	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
@@ -395,7 +397,15 @@ CODE
 	    $argc++; $outargs .= ' ' x 2;
 
             if (exists $arg->{id_ret_func}) {
-		$var = eval qq/"$arg->{id_ret_func}"/;
+		my $ret = eval qq/"$arg->{id_ret_func}"/;
+		$ret = eval qq/"$_->{id_ret_func}"/ if exists $_->{id_ret_func};
+
+		if (exists $_->{return_fail}) {
+		    $var = "$var ? $ret : $_->{return_fail}";
+		}
+		else {
+		    $var = $ret;
+		}
 	    }
 
 	    $outargs .= "return_args[$argc].value.pdb_$type = $var;\n";
@@ -688,7 +698,7 @@ HEADER
 	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (void);\n";
 	}
 	chop $group_procs;
-	print IFILE "\n/* $total total procedures registered total */\n\n";
+	print IFILE "\n/* $total procedures registered total */\n\n";
 	print IFILE "void\ninternal_procs_init (void)\n{\n$group_procs}\n";
 	close IFILE;
 	&write_file($internal);

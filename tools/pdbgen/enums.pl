@@ -82,26 +82,36 @@ package Gimp::CodeGen::enums;
 		       GRAY => '1',
 		       INDEXED => '2' }
 	},
+    GuideOrientation =>
+	{ contig => 1,
+	  header => 'gimpimage.h',
+	  symbols => [ qw(HORIZONTAL_GUIDE VERTICAL_GUIDE) ],
+	  mapping => { HORIZONTAL_GUIDE => '0',
+		       VERTICAL_GUIDE => '1' },
+	  nicks   => { HORIZONTAL_GUIDE => 'HORIZONTAL',
+		       VERTICAL_GUIDE => 'VERTICAL' }
+	},
     ChannelType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
-	  symbols => [ qw(Red Green Blue Gray Indexed Auxillary) ],
-	  mapping => { Red => '0',
-		       Green => '1',
-		       Blue => '2',
-		       Gray => '3',
-		       Indexed => '4',
-		       Auxillary => '5' }
+	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
+			  GRAY_CHANNEL INDEXED_CHANNEL AUXILLARY_CHANNEL) ],
+	  mapping => { RED_CHANNEL => '0',
+		       GREEN_CHANNEL => '1',
+		       BLUE_CHANNEL => '2',
+		       GRAY_CHANNEL => '3',
+		       INDEXED_CHANNEL => '4',
+		       AUXILLARY_CHANNEL => '5' }
 	},
     MergeType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
-	  symbols => [ qw(ExpandAsNecessary ClipToImage ClipToBottomLayer
-			  FlattenImage) ],
-	  mapping => { ExpandAsNecessary => '0',
-		       ClipToImage => '1',
-		       ClipToBottomLayer => '2',
-		       FlattenImage => '3' }
+	  symbols => [ qw(EXPAND_AS_NECESSARY CLIP_TO_IMAGE
+			  CLIP_TO_BOTTOM_LAYER FLATTEN_IMAGE) ],
+	  mapping => { EXPAND_AS_NECESSARY => '0',
+		       CLIP_TO_IMAGE => '1',
+		       CLIP_TO_BOTTOM_LAYER => '2',
+		       FLATTEN_IMAGE => '3' }
 	},
     PDBArgType =>
 	{ contig => 1,
@@ -192,8 +202,8 @@ package Gimp::CodeGen::enums;
 		       DIFFERENCE_MODE => 'DIFFERENCE',
 		       ADDITION_MODE => 'ADDITION',
 		       SUBTRACT_MODE => 'SUBTRACT',
-		       DARKEN_ONLY_MODE => 'DARKEN-ONLY',
-		       LIGHTEN_ONLY_MODE => 'LIGHTEN-ONLY',
+		       DARKEN_ONLY_MODE => 'DARKEN_ONLY',
+		       LIGHTEN_ONLY_MODE => 'LIGHTEN_ONLY',
 		       HUE_MODE => 'HUE',
 		       SATURATION_MODE => 'SATURATION',
 		       COLOR_MODE => 'COLOR',
@@ -360,6 +370,13 @@ package Gimp::CodeGen::enums;
 	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
 		       ADD_BLACK_MASK => 'BLACK_MASK',
 		       ADD_ALPHA_MASK => 'ALPHA_MASK' }
+	},
+    MaskApplyMode =>
+	{ contig => 1,
+	  header => 'layer.h',
+	  symbols => [ qw(APPLY DISCARD) ],
+	  mapping => { APPLY => '0',
+		       DISCARD => '1' }
 	}
 );
 
