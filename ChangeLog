@@ -1,5 +1,11 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpintstore.c (gimp_int_store_add_empty):
+	allocate the empty_iter using g_new0(). Fixes valgrind warnings
+	about reads from uninitialized memory.
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/context-actions.c: use GTK_STOCK_JUMP_TO for
 	all "Set" actions (like context-foreground-red-set).
 

@@ -88,7 +88,6 @@ gimp_int_store_get_type (void)
 
 static void
 gimp_int_store_class_init (GimpIntStoreClass *klass)
-
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -110,13 +109,13 @@ static void
 gimp_int_store_init (GimpIntStore *store)
 {
   GType types[GIMP_INT_STORE_NUM_COLUMNS] =
-    {
-      G_TYPE_INT,       /*  GIMP_INT_STORE_VALUE      */
-      G_TYPE_STRING,    /*  GIMP_INT_STORE_LABEL      */
-      G_TYPE_STRING,    /*  GIMP_INT_STORE_STOCK_ID   */
-      GDK_TYPE_PIXBUF,  /*  GIMP_INT_STORE_PIXBUF     */
-      G_TYPE_POINTER    /*  GIMP_INT_STORE_USER_DATA  */
-    };
+  {
+    G_TYPE_INT,       /*  GIMP_INT_STORE_VALUE      */
+    G_TYPE_STRING,    /*  GIMP_INT_STORE_LABEL      */
+    G_TYPE_STRING,    /*  GIMP_INT_STORE_STOCK_ID   */
+    GDK_TYPE_PIXBUF,  /*  GIMP_INT_STORE_PIXBUF     */
+    G_TYPE_POINTER    /*  GIMP_INT_STORE_USER_DATA  */
+  };
 
   store->empty_iter = NULL;
 
@@ -175,7 +174,7 @@ gimp_int_store_add_empty (GimpIntStore *store)
 {
   g_return_if_fail (store->empty_iter == NULL);
 
-  store->empty_iter = g_new (GtkTreeIter, 1);
+  store->empty_iter = g_new0 (GtkTreeIter, 1);
 
   gtk_list_store_prepend (GTK_LIST_STORE (store), store->empty_iter);
   gtk_list_store_set (GTK_LIST_STORE (store), store->empty_iter,
