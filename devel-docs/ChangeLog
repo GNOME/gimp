@@ -1,3 +1,8 @@
+Fre Feb  4 16:18:39 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am: I'm still tweaking it a bit...
+	* README: Filled in the HOWTO section.
+
 Fre Feb  4 13:59:25 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/.cvsignore

@@ -48,5 +48,31 @@ gtk-doc - This package automatically generates DocBook
 HOWTO
 -----
 Carefully read the README that comes with gtk-doc. Then 
-read it again. Once you think you really understood how 
-it is supposed to work, fill in this chapter.
+read it again! The following lines will only give you hints
+about how our system works. You should have understood the
+principles of gtk-doc before you touch it.
+
+The system is already set up so unless there are substantial
+changes to the source e.g. new files were added, functions 
+were added, renamed or removed or parameters changed, there
+is no need to repeat the scan step or rebuild the templates.
+
+The Makefile will only work if gtk-doc was successfully
+found when configure was ran. To rerun the scan step you also
+need to have gimp installed (the version you are documenting)
+and the correct version of gimptool should be found in your 
+PATH. If everything was set up correctly running a simple 
+make should do the trick and generate the SGML and HTML files 
+for you.
+
+In most cases you will work on the documentation by adding or
+editing comment blocks in the C source and by editing the 
+template SGML files in the tmpl dir. The following steps 
+should rebuild the documentation after a change:
+
+make sgml  - Creates the SGML files from the templates found
+             in the tmpl dir and from the comment blocks found
+             in the source.
+
+make html  - Build HTML pages out of the SGML files.
+

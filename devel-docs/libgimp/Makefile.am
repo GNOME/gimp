@@ -64,7 +64,8 @@ EXTRA_DIST =
 
 if ENABLE_GTK_DOC
 libgimp.html: html/book1.html
-	-cd $(srcdir) && cp html/book1.html libgimp.html
+	-cd $(srcdir) &&	\
+	sed -e 's/HREF=\"/HREF=\"libgimp\//' html/book1.html > libgimp.html
 else
 libgimp.html:
 endif
@@ -94,7 +95,7 @@ html:
 	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
 
 clean-local:
-	rm -f *~ *.bak *-unused.txt
+	rm -f *~ *.bak *-unused.txt libgimp.html
 
 maintainer-clean-local: clean
 	cd $(srcdir) && rm -rf sgml html $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt 
@@ -127,3 +128,6 @@ dist-hook:
 .PHONY : html sgml templates scan
 
 # devel-docs/libgimp/Makefile.am ends here
+
+
+
