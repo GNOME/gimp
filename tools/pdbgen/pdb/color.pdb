@@ -621,6 +621,71 @@ CODE
     );
 }
 
+sub colorize {
+    $blurb = 'Render the drawable as a grayscale image seen through a colored glass.';
+
+    $help = <<'HELP';
+Desatures the drawable, then tints it with the specified color. This tool is
+only valid on RGB color images. It will not operate on grayscale or indexed
+drawables.
+HELP
+
+    &std_pdb_misc;
+    $date = '2004';
+    $since = '2.2';
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'hue', type => '0 <= float <= 360',
+	  desc => 'Hue in degrees: (%%desc%%)' },
+	{ name => 'saturation', type => '0 <= float <= 100',
+	  desc => 'Saturation in percent: (%%desc%%)' },
+	{ name => 'lightness', type => '-100 <= float <= 100',
+	  desc => 'Lightness in percent: (%%desc%%)' }
+    );
+
+    %invoke = (
+	headers => [ qw("base/colorize.h") ],
+	vars => [ 'Colorize colors', 'PixelRegionIterator *pr',
+		  'PixelRegion srcPR, destPR', 'gint x1, y1, x2, y2' ],
+	code => <<'CODE'
+{
+  if (! gimp_drawable_is_rgb (drawable))
+    success = FALSE;
+
+  if (success)
+    {
+      colorize_init (&colors);
+
+      colors.hue        = hue;
+      colors.saturation = saturation;
+      colors.lightness  = lightness;
+
+      colorize_calculate (&colors);
+
+      /* The application should occur only within selection bounds */
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      for (pr = pixel_regions_register (2, &srcPR, &destPR);
+	   pr;
+	   pr = pixel_regions_process (pr))
+        {
+          colorize (&srcPR, &destPR, &colors);
+        }
+
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
+      gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+    }
+}
+CODE
+    );
+}
+
 sub histogram {
     $blurb = <<'BLURB';
 Returns information on the intensity histogram for the specified drawable.
@@ -831,14 +896,15 @@ CODE
     );
 }
 
-@headers = qw("base/gimphistogram.h" "base/gimplut.h" "base/lut-funcs.h"
+@headers = qw("base/gimphistogram.h"
+              "base/gimplut.h" "base/lut-funcs.h"
 	      "base/pixel-region.h" "base/pixel-processor.h"
               "core/gimpdrawable.h" "core/gimpimage.h"
               "gimp-intl.h");
 
 @procs = qw(brightness_contrast levels levels_auto posterize desaturate
 	    equalize invert curves_spline curves_explicit color_balance
-	    histogram hue_saturation threshold);
+	    colorize histogram hue_saturation threshold);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';

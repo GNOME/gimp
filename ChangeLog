@@ -1,3 +1,12 @@
+2004-10-03  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb: export the Colorize tool to the PDB.
+	Fixes bug #154368.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpcolor_pdb.[ch]: regenerated.
+
 2004-10-03  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/blinds.c: use a GimpAspectPreview to make the

@@ -60,6 +60,10 @@ gboolean gimp_color_balance       (gint32                drawable_ID,
 				   gdouble               cyan_red,
 				   gdouble               magenta_green,
 				   gdouble               yellow_blue);
+gboolean gimp_colorize            (gint32                drawable_ID,
+				   gdouble               hue,
+				   gdouble               saturation,
+				   gdouble               lightness);
 gboolean gimp_histogram           (gint32                drawable_ID,
 				   GimpHistogramChannel  channel,
 				   gint                  start_range,

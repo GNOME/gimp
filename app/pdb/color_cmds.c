@@ -27,6 +27,7 @@
 #include "procedural_db.h"
 
 #include "base/color-balance.h"
+#include "base/colorize.h"
 #include "base/curves.h"
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
@@ -56,6 +57,7 @@ static ProcRecord invert_proc;
 static ProcRecord curves_spline_proc;
 static ProcRecord curves_explicit_proc;
 static ProcRecord color_balance_proc;
+static ProcRecord colorize_proc;
 static ProcRecord histogram_proc;
 static ProcRecord hue_saturation_proc;
 static ProcRecord threshold_proc;
@@ -73,6 +75,7 @@ register_color_procs (Gimp *gimp)
   procedural_db_register (gimp, &curves_spline_proc);
   procedural_db_register (gimp, &curves_explicit_proc);
   procedural_db_register (gimp, &color_balance_proc);
+  procedural_db_register (gimp, &colorize_proc);
   procedural_db_register (gimp, &histogram_proc);
   procedural_db_register (gimp, &hue_saturation_proc);
   procedural_db_register (gimp, &threshold_proc);
@@ -1032,6 +1035,116 @@ static ProcRecord color_balance_proc =
   0,
   NULL,
   { { color_balance_invoker } }
+};
+
+static Argument *
+colorize_invoker (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble hue;
+  gdouble saturation;
+  gdouble lightness;
+  Colorize colors;
+  PixelRegionIterator *pr;
+  PixelRegion srcPR, destPR;
+  gint x1, y1, x2, y2;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  hue = args[1].value.pdb_float;
+  if (hue < 0.0 || hue > 360.0)
+    success = FALSE;
+
+  saturation = args[2].value.pdb_float;
+  if (saturation < 0.0 || saturation > 100.0)
+    success = FALSE;
+
+  lightness = args[3].value.pdb_float;
+  if (lightness < -100.0 || lightness > 100.0)
+    success = FALSE;
+
+  if (success)
+    {
+      if (! gimp_drawable_is_rgb (drawable))
+        success = FALSE;
+
+      if (success)
+        {
+          colorize_init (&colors);
+
+          colors.hue        = hue;
+          colors.saturation = saturation;
+          colors.lightness  = lightness;
+
+          colorize_calculate (&colors);
+
+          /* The application should occur only within selection bounds */
+          gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+          pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                             x1, y1, (x2 - x1), (y2 - y1), FALSE);
+          pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
+                             x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+          for (pr = pixel_regions_register (2, &srcPR, &destPR);
+               pr;
+               pr = pixel_regions_process (pr))
+            {
+              colorize (&srcPR, &destPR, &colors);
+            }
+
+          gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
+          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+        }
+    }
+
+  return procedural_db_return_args (&colorize_proc, success);
+}
+
+static ProcArg colorize_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "hue",
+    "Hue in degrees: (0 <= hue <= 360)"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "saturation",
+    "Saturation in percent: (0 <= saturation <= 100)"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "lightness",
+    "Lightness in percent: (-100 <= lightness <= 100)"
+  }
+};
+
+static ProcRecord colorize_proc =
+{
+  "gimp_colorize",
+  "Render the drawable as a grayscale image seen through a colored glass.",
+  "Desatures the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale or indexed drawables.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "2004",
+  GIMP_INTERNAL,
+  4,
+  colorize_inargs,
+  0,
+  NULL,
+  { { colorize_invoker } }
 };
 
 static Argument *

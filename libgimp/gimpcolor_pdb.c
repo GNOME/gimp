@@ -427,6 +427,49 @@ gimp_color_balance (gint32           drawable_ID,
 }
 
 /**
+ * gimp_colorize:
+ * @drawable_ID: The drawable.
+ * @hue: Hue in degrees.
+ * @saturation: Saturation in percent.
+ * @lightness: Lightness in percent.
+ *
+ * Render the drawable as a grayscale image seen through a colored
+ * glass.
+ *
+ * Desatures the drawable, then tints it with the specified color. This
+ * tool is only valid on RGB color images. It will not operate on
+ * grayscale or indexed drawables.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_colorize (gint32  drawable_ID,
+	       gdouble hue,
+	       gdouble saturation,
+	       gdouble lightness)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_colorize",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_FLOAT, hue,
+				    GIMP_PDB_FLOAT, saturation,
+				    GIMP_PDB_FLOAT, lightness,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_histogram:
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
