@@ -209,7 +209,7 @@ gimp_prop_enum_option_menu_new (GObject     *config,
 {
   return gimp_prop_enum_option_menu_new_full (config, property_name,
                                               minimum, maximum, 
-                                              0, 0);
+                                              0, NULL);
 }
 
 GtkWidget *
