@@ -576,23 +576,6 @@ duplicate (GimpImage *gimage)
   new_gimage->yresolution = gimage->yresolution;
   new_gimage->unit = gimage->unit;
 
-  /*  Copy-on-write the projection tilemanager so we don't have
-   *  to reproject the new gimage - since if we do the duplicate
-   *  operation correctly, the projection for the new gimage is
-   *  identical to that of the source.
-   */
-  new_gimage->construct_flag = gimage->construct_flag;
-  new_gimage->proj_type = gimage->proj_type;
-  new_gimage->proj_bytes = gimage->proj_bytes;
-  new_gimage->proj_level = gimage->proj_level;
-  pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
-		     gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, gimp_image_projection (new_gimage), 0, 0,
-		     new_gimage->width, new_gimage->height, TRUE);
-  /*  We don't want to copy a half-redrawn projection, so force a flush.  */
-  gdisplays_finish_draw();
-  copy_region(&srcPR, &destPR);
-
   /*  Copy floating layer  */
   floating_layer = gimage_floating_sel (gimage);
   if (floating_layer)
@@ -726,8 +709,79 @@ duplicate (GimpImage *gimage)
   return new_gimage;
 }
 
+
+#ifdef I_LIKE_BOGUS_CRAP
+static void
+duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
+		      GDisplay *newgdisplay)
+{
+  PixelRegion srcPR, destPR;
+
+  /*  Copy-on-write the projection tilemanager so we don't have
+   *  to reproject the new gimage - since if we do the duplicate
+   *  operation correctly, the projection for the new gimage is
+   *  identical to that of the source.  (Is this true?  View-only
+   *  attributes vs. image meta-attributes? -- View-only attributes
+   *  *should* strictly be applied post-projection.)
+   */
+
+#if 0
+  newgimage->construct_flag = oldgimage->construct_flag;
+
+  g_warning("CONSTR:%d %dx%dx%d",newgimage->construct_flag,
+	    tile_manager_level_width(gimp_image_projection (newgimage)),
+	    tile_manager_level_height(gimp_image_projection (newgimage)),
+	    tile_manager_level_bpp(gimp_image_projection (newgimage))
+	    );
+
+  gdisplay_expose_area(newgdisplay,
+		       newgdisplay->disp_xoffset, newgdisplay->disp_yoffset,
+		       newgdisplay->disp_width, newgdisplay->disp_height);
+  
+  if (newgimage->construct_flag)
+#endif
+    {
+
+      /* We don't want to copy a half-redrawn projection, so force a flush. */
+      gdisplays_finish_draw();
+      gdisplays_flush_now();
+
+      /*
+      newgimage->proj_type = oldgimage->proj_type;
+      newgimage->proj_bytes = oldgimage->proj_bytes;
+      newgimage->proj_level = oldgimage->proj_level;
+      
+      gimage_projection_realloc (new_gimage);*/
+      /*
+      pixel_region_init (&srcPR, gimp_image_projection (oldgimage), 0, 0,
+			 oldgimage->width, oldgimage->height, FALSE);
+      pixel_region_init (&destPR, gimp_image_projection (newgimage), 0, 0,
+			 newgimage->width, newgimage->height, TRUE);
+			 copy_region(&srcPR, &destPR);*/
+
+      pixel_region_init (&srcPR, gimp_image_projection (oldgimage),
+			 newgdisplay->disp_xoffset, newgdisplay->disp_yoffset,
+			 newgdisplay->disp_width, newgdisplay->disp_height,
+			 FALSE);
+      pixel_region_init (&destPR, gimp_image_projection (newgimage),
+			 newgdisplay->disp_xoffset, newgdisplay->disp_yoffset,
+			 newgdisplay->disp_width, newgdisplay->disp_height,
+			 TRUE);
+      copy_region(&srcPR, &destPR);
+    }
+}
+#endif
+
+
 void
 channel_ops_duplicate (GimpImage *gimage)
 {
-  gdisplay_new (duplicate (gimage), 0x0101);
+  GDisplay *new_gdisp;
+  GImage   *new_gimage;
+
+  new_gimage = duplicate (gimage);
+
+  new_gdisp = gdisplay_new (new_gimage, 0x0101);
+  
+  /* duplicate_projection(gimage, new_gimage, new_gdisp); */
 }

@@ -1,3 +1,11 @@
+Mon Nov 22 13:18:40 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/channel_ops.c: Disabled the copy-on-write for gimage
+	projection.  Duplicate op will now take as much time and
+	memory as GIMP 1.0 in this respect.  That sucks, but I'm
+	damned if I can follow the twisted paths which GIMP treads
+	in making this bahave badly.  Can you?
+
 1999-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c: move all sub-sub-menus of <Image>/Filters to the
