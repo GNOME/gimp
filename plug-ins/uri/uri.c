@@ -91,7 +91,7 @@ query (void)
 
   gimp_register_load_handler ("file_url_load",
 			      "",
-			      "http:,ftp:");
+			      "http:,https:,ftp:");
 }
 
 static void

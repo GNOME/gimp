@@ -1,3 +1,8 @@
+2003-04-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/url.c (query): register the plug-in for https
+	as well. Most wget installations seem to handle this nowadays.
+
 2003-04-21  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* configure.in: Removed the plug-ins/tools/Makefile line that was
