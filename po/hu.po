@@ -4250,7 +4250,9 @@ msgstr "Hiba: az alapértelmezett felbontás nem lehet nulla."
 
 #: app/preferences_dialog.c:307
 msgid "Error: Default resolution unit must be within unit range."
-msgstr "Hiba: az alapértelmezett felbontási egységnek az egységtartományban kell lennie."
+msgstr ""
+"Hiba: az alapértelmezett felbontási egységnek az egységtartományban kell "
+"lennie."
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
