@@ -1,5 +1,10 @@
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/CML_explorer.c (parse_line_to_gdouble): use
+	g_ascii_strtod() instead of the locale-dependant atof().
+
+2004-01-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/CML_explorer.c: render a grayscale preview when
 	the plug-in is run on a grayscale drawable (fixes bug #82465).
 

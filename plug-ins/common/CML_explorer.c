@@ -417,20 +417,20 @@ static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
   { NULL, 0 }
 };
 
-static GRand   *gr;
-static gint     drawable_id = 0;
-static gint     copy_source = 0;
-static gint     copy_destination = 0;
-static gint     selective_load_source = 0;
-static gint     selective_load_destination = 0;
-static gint     CML_preview_defer = FALSE;
+static GRand    *gr;
+static gint      drawable_id = 0;
+static gint      copy_source = 0;
+static gint      copy_destination = 0;
+static gint      selective_load_source = 0;
+static gint      selective_load_destination = 0;
+static gboolean  CML_preview_defer = FALSE;
 
-static gdouble *mem_chank0 = NULL;
-static gint     mem_chank0_size = 0;
-static guchar  *mem_chank1 = NULL;
-static gint     mem_chank1_size = 0;
-static guchar  *mem_chank2 = NULL;
-static gint     mem_chank2_size = 0;
+static gdouble  *mem_chank0 = NULL;
+static gint      mem_chank0_size = 0;
+static guchar   *mem_chank1 = NULL;
+static gint      mem_chank1_size = 0;
+static guchar   *mem_chank2 = NULL;
+static gint      mem_chank2_size = 0;
 
 MAIN ()
 
@@ -528,13 +528,13 @@ CML_main_function (gboolean preview_p)
   GimpDrawable *drawable = NULL;
   GimpPixelRgn  dest_rgn, src_rgn;
   guchar    *dest_buffer = NULL;
-  guchar    *src_buffer = NULL;
+  guchar    *src_buffer  = NULL;
   gint       x1, x2, y1, y2;
   gint       dx, dy;
-  gint       dest_has_alpha = FALSE;
-  gint       dest_is_gray = FALSE;
-  gint       src_has_alpha = FALSE;
-  gint       src_is_gray = FALSE;
+  gboolean   dest_has_alpha = FALSE;
+  gboolean   dest_is_gray   = FALSE;
+  gboolean   src_has_alpha  = FALSE;
+  gboolean   src_is_gray    = FALSE;
   gint       total, processed = 0;
   gint       keep_height = 1;
   gint       cell_num, width_by_pixel, height_by_pixel;
@@ -799,7 +799,7 @@ CML_main_function (gboolean preview_p)
 
 		    for (i = 0; i < src_bpp; i++)
 		      rgbi[i] = src_buffer[offset_y * src_bpl
-					  + (dx * VALS.scale + offset_x) * src_bpp + i];
+                                           + (dx * VALS.scale + offset_x) * src_bpp + i];
 		    if (src_is_gray && (VALS.val.function == CML_KEEP_VALUES))
                       {
                         b = rgbi[0];
@@ -814,7 +814,10 @@ CML_main_function (gboolean preview_p)
 			gimp_hsv_to_rgb_int (&r, &g, &b);
 		      }
 		  }
-		dest_offset = offset_y * dest_bpl + (dx * VALS.scale + offset_x) * dest_bpp;
+
+		dest_offset = (offset_y * dest_bpl +
+                               (dx * VALS.scale + offset_x) * dest_bpp);
+
 		if (dest_is_gray)
                   {
                     dest_buffer[dest_offset++] = b;
@@ -1881,7 +1884,7 @@ CML_dialog_advanced_panel_new (void)
 void
 preview_update (void)
 {
-  if (CML_preview_defer == FALSE)
+  if (! CML_preview_defer)
     CML_main_function (TRUE);
 }
 
@@ -2016,6 +2019,7 @@ CML_copy_parameters_callback (GtkWidget *widget,
   *channel_params[copy_destination] = *channel_params[copy_source];
   CML_preview_defer = TRUE;
   widgets = widget_pointers[copy_destination];
+
   for (index = 0; index < CML_PARAM_NUM; index++)
     if (widgets[index].widget && widgets[index].updater)
       (widgets[index].updater) (widgets + index);
@@ -2316,7 +2320,7 @@ CML_load_from_file_response (GtkFileSelection *fs,
   gtk_widget_hide (GTK_WIDGET (fs));
 }
 
-static gint
+static gboolean
 CML_load_parameter_file (const gchar *filename,
 			 gboolean     interactive_mode)
 {
@@ -2421,10 +2425,10 @@ CML_load_parameter_file (const gchar *filename,
 	      seed = 0;
 	    }
 	}
-      fclose(file);
+      fclose (file);
     }
 
-  if (flag == FALSE)
+  if (! flag)
     {
       if (interactive_mode)
 	gimp_message (_("Error: failed to load parameters"));
@@ -2456,7 +2460,7 @@ CML_load_parameter_file (const gchar *filename,
 }
 
 static gint
-parse_line_to_gint (FILE *file,
+parse_line_to_gint (FILE     *file,
 		    gboolean *flag)
 {
   gchar  line[CML_LINE_SIZE];
@@ -2477,36 +2481,41 @@ parse_line_to_gint (FILE *file,
 	return 0;
       }
     else
-      str++;
+      {
+        str++;
+      }
 
-  return (gint) atoi (str + 1);
+  return atoi (str + 1);
 }
 
 static gdouble
-parse_line_to_gdouble (FILE *file,
+parse_line_to_gdouble (FILE     *file,
 		       gboolean *flag)
 {
   gchar    line[CML_LINE_SIZE];
   gchar   *str;
 
   if (! *flag)
-    return 0;
+    return 0.0;
+
   if (fgets (line, CML_LINE_SIZE - 1, file) == NULL)
     {
       *flag = FALSE;		/* set FALSE if fail to parse */
-      return 0;
+      return 0.0;
     }
   str = &line[0];
   while (*str != ':')
     if (*str == '\000')
       {
 	*flag = FALSE;
-	return 0;
+	return 0.0;
       }
     else
-      str++;
+      {
+        str++;
+      }
 
-  return (gdouble) atof (str + 1);
+  return g_ascii_strtod (str + 1, NULL);
 }
 
 
