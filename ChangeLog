@@ -1,5 +1,10 @@
 2003-10-26  Henrik Brix Andersen  <brix@gimp.org>
 
+	* themes/Default/images/preferences/Makefile.am: really committed
+	the change this time
+
+2003-10-26  Henrik Brix Andersen  <brix@gimp.org>
+
 	* gimp/app/widgets/gimphelp-ids.h
 	* gimp/app/gui/preferences-dialog.c:
 	- moved all session related settings to a new Session Management page
