@@ -44,6 +44,8 @@
 
 
 #include "print.h"
+#include <libgimp/gimp.h>
+#include "libgimp/gimpcolorspace.h"
 #include <math.h>
 
 /*
@@ -1329,15 +1331,22 @@ indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 
     while (width > 0)
     {
-      double h, s, v;
       rgb[0] = lut->red[cmap[*indexed * 3 + 0]];
       rgb[1] = lut->green[cmap[*indexed * 3 + 1]];
       rgb[2] = lut->blue[cmap[*indexed * 3 + 2]];
       if (vars->saturation != 1.0)
 	{
-	  gimp_rgb_to_hsv4 (rgb, &h, &s, &v);
+	  double h, s, v;
+	  unsigned char rgb1[3];
+	  rgb1[0] = rgb[0];
+	  rgb1[1] = rgb[1];
+	  rgb1[2] = rgb[2];
+	  gimp_rgb_to_hsv4 (rgb1, &h, &s, &v);
 	  s = pow(s, 1.0 / vars->saturation);
-	  gimp_hsv_to_rgb (rgb, h, s, v);
+	  gimp_hsv_to_rgb4 (rgb1, h, s, v);
+	  rgb[0] = rgb1[0];
+	  rgb[1] = rgb1[1];
+	  rgb[2] = rgb1[2];
 	}
       rgb += 3;
       indexed ++;
@@ -1352,7 +1361,6 @@ indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 
     while (width > 0)
     {
-      double h, s, v;
       rgb[0] = lut->red[cmap[indexed[0] * 3 + 0] * indexed[1] / 255 +
 		       255 - indexed[1]];
       rgb[1] = lut->green[cmap[indexed[0] * 3 + 1] * indexed[1] / 255 +
@@ -1361,9 +1369,17 @@ indexed_to_rgb(unsigned char *indexed,	/* I - Indexed pixels */
 			255 - indexed[1]];
       if (vars->saturation != 1.0)
 	{
-	  gimp_rgb_to_hsv4 (rgb, &h, &s, &v);
+	  double h, s, v;
+	  unsigned char rgb1[3];
+	  rgb1[0] = rgb[0];
+	  rgb1[1] = rgb[1];
+	  rgb1[2] = rgb[2];
+	  gimp_rgb_to_hsv4 (rgb1, &h, &s, &v);
 	  s = pow(s, 1.0 / vars->saturation);
-	  gimp_hsv_to_rgb4 (rgb, h, s, v);
+	  gimp_hsv_to_rgb4 (rgb1, h, s, v);
+	  rgb[0] = rgb1[0];
+	  rgb[1] = rgb1[1];
+	  rgb[2] = rgb1[2];
 	}
       rgb += 3;
       indexed += bpp;
@@ -1445,13 +1461,17 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 
     while (width > 0)
     {
-      double h, s, v;
       rgbout[0] = lut->red[rgbin[0]];
       rgbout[1] = lut->green[rgbin[1]];
       rgbout[2] = lut->blue[rgbin[2]];
       if (vars->saturation != 1.0 || vars->contrast != 100)
 	{
-	  gimp_rgb_to_hsv4 (rgbout, &h, &s, &v);
+	  double h, s, v;
+	  unsigned char rgb1[3];
+	  rgb1[0] = rgbout[0];
+	  rgb1[1] = rgbout[1];
+	  rgb1[2] = rgbout[2];
+	  gimp_rgb_to_hsv4 (rgb1, &h, &s, &v);
 	  if (vars->saturation != 1.0)
 	    s = pow(s, 1.0 / vars->saturation);
 #if 0
@@ -1465,7 +1485,10 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	      v = (tv / 2.0) + .5;
 	    }
 #endif
-	  gimp_hsv_to_rgb4 (rgbout, h, s, v);
+	  gimp_hsv_to_rgb4 (rgb1, h, s, v);
+	  rgbout[0] = rgb1[0];
+	  rgbout[1] = rgb1[1];
+	  rgbout[2] = rgb1[2];
 	}
       if (vars->density != 1.0)
 	{
@@ -1493,14 +1516,18 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 
     while (width > 0)
     {
-      double h, s, v;
       rgbout[0] = lut->red[rgbin[0] * rgbin[3] / 255 + 255 - rgbin[3]];
       rgbout[1] = lut->green[rgbin[1] * rgbin[3] / 255 + 255 - rgbin[3]];
       rgbout[2] = lut->blue[rgbin[2] * rgbin[3] / 255 + 255 - rgbin[3]];
       if (vars->saturation != 1.0 || vars->contrast != 100 ||
 	  vars->density != 1.0)
 	{
-	  gimp_rgb_to_hsv4 (rgbout, &h, &s, &v);
+	  double h, s, v;
+	  unsigned char rgb1[3];
+	  rgb1[0] = rgbout[0];
+	  rgb1[1] = rgbout[1];
+	  rgb1[2] = rgbout[2];
+	  gimp_rgb_to_hsv4 (rgb1, &h, &s, &v);
 	  if (vars->saturation != 1.0)
 	    s = pow(s, 1.0 / vars->saturation);
 #if 0
@@ -1514,7 +1541,10 @@ rgb_to_rgb(unsigned char	*rgbin,		/* I - RGB pixels */
 	      v = (tv / 2.0) + .5;
 	    }
 #endif
-	  gimp_hsv_to_rgb4 (rgbout, h, s, v);
+	  gimp_hsv_to_rgb4 (rgb1, h, s, v);
+	  rgbout[0] = rgb1[0];
+	  rgbout[1] = rgb1[1];
+	  rgbout[2] = rgb1[2];
 	}
       if (vars->density != 1.0)
 	{

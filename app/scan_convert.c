@@ -21,6 +21,7 @@
 #include "scan_convert.h"
 #include "libgimp/gimpmath.h"
 
+#include <string.h>
 
 #ifdef DEBUG
 #define TRC(x) printf x

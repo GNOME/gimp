@@ -32,8 +32,6 @@
 #include "airbrush_blob.h"
 
 
-#define ROUND(A) floor((A)+0.5)
-
 #define SUBSAMPLE 8.0
 #define SU 8.0
 

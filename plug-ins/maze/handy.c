@@ -50,10 +50,6 @@ get_colors (GDrawable *drawable,
 	    guint8    *fg, 
 	    guint8    *bg) 
 {
-  
-  GParam *return_vals;
-  gint nreturn_vals;
-
   switch ( gimp_drawable_type (drawable->id) )
     {
     case RGBA_IMAGE:   /* ASSUMPTION: Assuming the user wants entire */

@@ -3929,7 +3929,7 @@ ed_make_page_rays (GFlareEditor *ed,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Spike Thikness:"), SCALE_WIDTH, 0,
+			      _("Spike Thickness:"), SCALE_WIDTH, 0,
 			      gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
 			      FALSE, 0, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);

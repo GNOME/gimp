@@ -657,27 +657,6 @@ channels_dialog_set_menu_sensitivity (void)
 }
 
 static void
-channels_dialog_scroll_index (gint index)
-{
-  GtkAdjustment *adj;
-  gint item_height;
-
-  item_height = 6 + (preview_size ? preview_size : channel_height);
-  adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (channelsD->scrolled_win));
- 
-  if (index * item_height < adj->value)
-    {
-      adj->value = index * item_height;
-      gtk_adjustment_value_changed (adj);
-    }
-  else if ((index + 1) * item_height > adj->value + adj->page_size)
-    {
-      adj->value = (index + 1) * item_height - adj->page_size;
-      gtk_adjustment_value_changed (adj);
-    }
-}
-
-static void
 channels_dialog_set_channel (ChannelWidget *channel_widget)
 {
   GtkStateType state;

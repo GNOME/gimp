@@ -390,10 +390,7 @@ update_real_view (NavWinData *iwd,
   ypnt = (gint)(((gdouble)(ty)*yratio)/iwd->ratio+0.5);
 
   if (!gdisp->dot_for_dot) /* here */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
       xpnt = ((gdouble)xpnt * gdisp->gimage->xresolution) / gdisp->gimage->yresolution + 0.5;
-    }
 
   xoffset = xpnt - gdisp->offset_x;
   yoffset = ypnt - gdisp->offset_y;

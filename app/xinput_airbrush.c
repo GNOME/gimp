@@ -849,10 +849,11 @@ static void
 
     gboolean turn_around;
 
-    /*test*/
+#ifdef GTK_HAVE_SIX_VALUATORS
     double min_height;
     double max_height;
     double inter_height;
+#endif /* GTK_HAVE_SIX_VALUATORS */
     double height;
 
     gdisp = (GDisplay *) gdisp_ptr;

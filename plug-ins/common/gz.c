@@ -58,9 +58,8 @@
 
 #include "config.h"
 
-#include <glib.h>		/* For G_OS_WIN32 */
-
 #ifdef G_OS_WIN32
+#include <glib.h>		/* For G_OS_WIN32 */
 #define STRICT
 #define WinMain WinMain_foo
 #include <windows.h>

@@ -965,7 +965,6 @@ path_tool_button_press_handle (Tool *tool,
    PathTool *path_tool = tool->private;
    
    Path * cur_path = path_tool->cur_path;
-   PathSegment *p_sas;
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG

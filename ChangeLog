@@ -1,3 +1,21 @@
+Mon Feb  7 13:41:08 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gflare/gflare.c: Typo fix.
+
+Mon Feb  7 12:57:16 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/common/sparkle.c, plug-ins/common/bumpmap.c,
+	* plug-ins/common/gz.c, plug-ins/common/tileit.c,
+	* plug-ins/common/oilify.c, plug-ins/maze/handy.c,
+	* plug-ins/print/print-util.c, plug-ins/sinus/sinus.c,
+	* app/channels_dialog.c, app/fileops_cmds.c,
+	* app/nav_window.c, app/path_tool.c, app/scan_convert.c,
+	* app/xinput_airbrush.c, app/airbrush_blob.c:
+	On request of Martin Weber <martweb@gmx.net>.
+	Remove obsoletted rgb<->hsv routines, purifications.
+
+	* plug-ins/AlienMap2/AlienMap2.c: e-mail update.
+
 2000-02-07  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* app/interface.c: restructured toolbox to use a single
