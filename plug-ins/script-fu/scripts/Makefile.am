@@ -47,7 +47,7 @@ scriptdata_DATA = \
 	flatland.scm				\
 	font-map.scm				\
 	frosty-logo.scm				\
-	fuzzy_border.scm			\
+	fuzzyborder.scm				\
 	gimp-headers.scm			\
 	gimp-labels.scm				\
 	glossy.scm				\
