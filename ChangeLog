@@ -1,3 +1,9 @@
+2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/mng.c: Now writes a global palette chunk, and
+	empty palette chunks for the frames that use it. This saves a
+	bit of diskspace.
+
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: added properties "gimp", "id", "width",

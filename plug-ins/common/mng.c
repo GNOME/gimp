@@ -349,10 +349,11 @@ find_unused_ia_colour (guchar *pixels,
 
 /* Spins the color map (palette) putting the transparent color at
  * index 0 if there is space. If there isn't any space, warn the user
- * and forget about transparency.
+ * and forget about transparency. Returns TRUE if the colormap has
+ * been changed and FALSE otherwise.
  */
 
-static void
+static gboolean
 respin_cmap (png_structp  png_ptr,
              png_infop    png_info_ptr,
              guchar       *remap,
@@ -410,14 +411,17 @@ respin_cmap (png_structp  png_ptr,
           palette[i].blue = before[3 * remap[i] + 2];
         }
 
-      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette,
-                    colors);
+      png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette, colors);
+
+      return TRUE;
     }
   else
     {
       g_message ("Couldn't losslessly save transparency, so saving opacity instead.");
       png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
     }
+
+  return FALSE;
 }
 
 
@@ -453,6 +457,7 @@ mng_save_image (const gchar *filename,
   guint8          layer_mng_colortype;
   guint8          layer_mng_compression_type;
   guint8          layer_mng_interlace_type;
+  gboolean        layer_has_unique_palette;
 
   gchar           frame_mode;
   int             frame_delay;
@@ -697,16 +702,37 @@ mng_save_image (const gchar *filename,
         }
     }
 
+  if (gimp_image_base_type (image_id) == GIMP_INDEXED)
+    {
+      guchar *palette;
+      gint    numcolors;
+
+      palette = gimp_image_get_cmap (image_id, &numcolors);
+
+      if (numcolors != 0 &&
+          (ret = mng_putchunk_plte (handle, numcolors, (mng_palette8e *) palette))
+          != MNG_NOERROR)
+        {
+          g_warning ("Unable to mng_putchunk_plte() in mng_save_image()");
+          mng_cleanup (&handle);
+          fclose (userdata->fp);
+          g_free (userdata);
+          return 0;
+        }
+    }
+
   for (i = (num_layers - 1); i >= 0; i--)
     {
-      layer_name = gimp_drawable_get_name (layers[i]);
-      layer_chunks_type = parse_chunks_type_from_layer_name (layer_name);
+      layer_name          = gimp_drawable_get_name (layers[i]);
+      layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
 
-      layer_drawable = gimp_drawable_get (layers[i]);
-      layer_rows = layer_drawable->height;
-      layer_cols = layer_drawable->width;
+      layer_drawable      = gimp_drawable_get (layers[i]);
+      layer_rows          = layer_drawable->height;
+      layer_cols          = layer_drawable->width;
       gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
+
+      layer_has_unique_palette = TRUE;
 
       for (j = 0; j < 256; j++)
         layer_remap[j] = j;
@@ -924,7 +950,9 @@ mng_save_image (const gchar *filename,
           break;
         case GIMP_INDEXEDA_IMAGE:
           png_info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
-          respin_cmap (png_ptr, png_info_ptr, layer_remap, image_id, layer_drawable);
+          layer_has_unique_palette =
+            respin_cmap (png_ptr, png_info_ptr, layer_remap,
+                         image_id, layer_drawable);
           break;
         default:
           g_warning ("This can't be!\n");
@@ -1102,9 +1130,10 @@ mng_save_image (const gchar *filename,
           else if (strncmp (chunkname, "PLTE", 4) == 0)
             {
               if ((ret =
-                   mng_putchunk_plte (handle, (chunksize / 3),
-                                      (mng_palette8e *) chunkbuffer)) !=
-                  MNG_NOERROR)
+                   mng_putchunk_plte (handle,
+                                      layer_has_unique_palette ? (chunksize / 3) : 0,
+                                      (mng_palette8e *) chunkbuffer))
+                  != MNG_NOERROR)
                 {
                   g_warning
                     ("Unable to mng_putchunk_plte() in mng_save_image()");
@@ -1459,9 +1488,6 @@ query (void)
     { GIMP_PDB_INT32,    "time", "Write tIME (creation time) chunk" }
   };
 
-  /* As a workaround for http://bugzilla.gnome.org/show_bug.cgi?id=139947 the
-   * registration for INDEXED* mode has been disabled.  It should be re-added
-   * to the list of supported modes when the indexed mode really works. */
   gimp_install_procedure ("file_mng_save",
                           "Saves images in the MNG file format",
                           "This plug-in saves images in the Multiple-image "
@@ -1514,7 +1540,6 @@ run (const gchar      *name,
           gimp_procedural_db_get_data ("file_mng_save", &mng_data);
 
           gimp_ui_init ("mng", FALSE);
-          /* GIMP_EXPORT_CAN_HANDLE_INDEXED commented out - see bug #139947 */
           export = gimp_export_image (&image_id, &drawable_id, "MNG",
                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
