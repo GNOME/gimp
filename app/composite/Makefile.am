@@ -27,7 +27,7 @@ libappcomposite_a_sources = \
 	gimp-composite-mmx.c		\
 	gimp-composite-mmx.h		\
 	gimp-composite-sse.c		\
-	gimp-composite-ssex.h		\
+	gimp-composite-sse.h		\
 	gimp-composite-util.h
 
 libappcomposite_a_built_sources = gimp-composite-dispatch.c
