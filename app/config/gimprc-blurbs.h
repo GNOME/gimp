@@ -72,7 +72,7 @@ N_("This is the distance in pixels where Guide and Grid snapping " \
 
 #define DEFAULT_THRESHOLD_BLURB \
 N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
-   "seed-fill algorithm.  The seed fill starts at the intially selected " \
+   "seed-fill algorithm.  The seed fill starts at the initially selected " \
    "pixel and progresses in all directions until the difference of pixel " \
    "intensity from the original is greater than a specified threshold. " \
    "This value represents the default threshold.")

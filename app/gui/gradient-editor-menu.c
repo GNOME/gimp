@@ -175,7 +175,7 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
       GIMP_GRAD_CURVED, "/blendingfunction/Linear" },
     NULL,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
-  { { N_("/blendingfunction/_Sinusodial"), NULL,
+  { { N_("/blendingfunction/_Sinusoidal"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SINE, "/blendingfunction/Linear" },
     NULL,

@@ -1509,7 +1509,7 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_boolean_option_menu_add (object, "initial-zoom-to-fit",
                                  _("Fit to Window"),
                                  "1:1",
-                                 _("Inital Zoom Ratio:"),
+                                 _("Initial Zoom Ratio:"),
                                  GTK_TABLE (table), 0);
 
   /*  Pointer Movement Feedback  */
@@ -1667,7 +1667,7 @@ prefs_dialog_new (Gimp       *gimp,
 
             gtk_list_store_append (list_store, &iter);
             gtk_list_store_set (list_store, &iter,
-                                0, format_names[i],
+                                0, gettext (format_names[i]),
                                 1, format_strings[i],
                                 -1);
 
