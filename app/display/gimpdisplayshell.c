@@ -714,6 +714,8 @@ create_display_shell (GDisplay* gdisp,
   gdisp->cursor_label = gtk_label_new (" ");
   gtk_container_add (GTK_CONTAINER (frame), gdisp->cursor_label);
 
+  gdisplay_resize_cursor_label (gdisp);
+
   gdisp->statusbar = gtk_statusbar_new ();
   gtk_widget_set_usize (gdisp->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
@@ -764,8 +766,6 @@ create_display_shell (GDisplay* gdisp,
     }
   gtk_widget_show (vbox);
   gtk_widget_show (gdisp->shell);
-
-  gdisplay_resize_cursor_label (gdisp);
 
 #ifdef __GNUC__
 #warning DODGY?

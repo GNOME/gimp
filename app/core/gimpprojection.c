@@ -936,7 +936,6 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   cursor_label_width = 
     gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
   gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
-  gtk_widget_queue_resize (gdisp->statusarea);
 }
 
 void
@@ -1443,7 +1442,6 @@ gdisplay_expose_full (GDisplay *gdisp)
   gdisplay_add_display_area (gdisp, 0, 0,
 			     gdisp->disp_width,
 			     gdisp->disp_height);
-  gdisplay_resize_cursor_label (gdisp);
 }
 
 /**************************************************/

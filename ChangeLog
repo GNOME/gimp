@@ -1,3 +1,13 @@
+Sat Dec 12 17:36:51 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/interface.c
+	* app/gdisplay.c: tweak to make status bar update correctly (most
+ 	of the time).  As Sven has already noted, there seems to be a GTK
+ 	bug involved.
+
+	* app/disp_callbacks.c: only update the cursor co-ords if we
+ 	actually know them.  Gets rid of silly (0,0) announcements.
+
 Thu Dec 10 19:09:53 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* configure.in: check only for "perl", not "perl5.005xx".

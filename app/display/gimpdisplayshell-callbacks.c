@@ -102,7 +102,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   gint return_val = FALSE;
   static gboolean scrolled = FALSE;
   static guint key_signal_id = 0;
-  int update_cursor = 1;
+  int update_cursor = FALSE;
 
   tx = ty = 0;
 
@@ -170,11 +170,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
       gtk_label_set(GTK_LABEL (gdisp->cursor_label), "");
     case GDK_PROXIMITY_OUT:
       gdisp->proximity = FALSE;
-      update_cursor = 0;
       break;
 
     case GDK_ENTER_NOTIFY:
-      update_cursor = 0; /* Actually, should figure out tx,ty here */
+      /* Actually, should figure out tx,ty here */
       break;
 
     case GDK_BUTTON_PRESS:
@@ -208,6 +207,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
 		    bevent->x = tx;
 		    bevent->y = ty;
+		    update_cursor = TRUE;
 		  }
 		
 		/* reset the current tool if we're changing gdisplays */
@@ -243,6 +243,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  popup_shell = gdisp->shell;
 	  gdisplay_set_menu_sensitivity (gdisp);
 	  gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 3, bevent->time);
+	  
 	  break;
 
 	default:
@@ -275,6 +276,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
 		    bevent->x = tx;
 		    bevent->y = ty;
+		    update_cursor = TRUE;
 		  }
 
 		(* active_tool->button_release_func) (active_tool, bevent, gdisp);
@@ -310,6 +312,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  tx = mevent->x;
 	  ty = mevent->y;
 	}
+      update_cursor = TRUE;
 
       if (!gdisp->proximity)
 	{
@@ -339,6 +342,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  gdisplay_snap_point (gdisp, mevent->x, mevent->y, &tx, &ty);
 		  mevent->x = tx;
 		  mevent->y = ty;
+		  update_cursor = TRUE;
 		}
 
 	      (* active_tool->motion_func) (active_tool, mevent, gdisp);
@@ -484,8 +488,7 @@ gdisplay_origin_button_press (GtkWidget      *widget,
       gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 1, event->time);
 
       /* Stop the signal emission so the button doesn't grab the
-       * pointer away from us
-       */
+       * pointer away from us */
       gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
     }
 
