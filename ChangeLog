@@ -1,3 +1,13 @@
+2003-05-26  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/selection.c (selection_transform_segs)
+	* app/edit_selection.c (selection_transform_segs,
+	edit_selection_draw): Merged last bit of the fix for bug #17904
+	from HEAD. Also merged fix for bug #110014.
+
+	* app/rect_select.c (rect_select_draw): Added more clampings to
+	avoid 16-bit overflows like those in bug #110014.
+
 2003-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/lic.c (create_main_dialog): honor the

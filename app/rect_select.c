@@ -486,11 +486,18 @@ rect_select_draw (Tool *tool)
   gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, FALSE);
   gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, FALSE);
 
+  x1 = CLAMP (x1, -1, gdisp->disp_width + 1);
+  y1 = CLAMP (y1, -1, gdisp->disp_height + 1);
+  x2 = CLAMP (x2, -1, gdisp->disp_width + 1);
+  y2 = CLAMP (y2, -1, gdisp->disp_height + 1);
+
   if (x2 > x1 && y2 > y1)
-    gdk_draw_rectangle (rect_sel->core->win,
-                        rect_sel->core->gc, FALSE,
-                        x1, y1, 
-                        x2 - x1 - 1, y2 - y1 - 1);
+    {
+      gdk_draw_rectangle (rect_sel->core->win,
+                          rect_sel->core->gc, FALSE,
+                          x1, y1,
+                          x2 - x1 - 1, y2 - y1 - 1);
+    }
 }
 
 static void

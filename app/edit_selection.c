@@ -464,6 +464,10 @@ selection_transform_segs (GDisplay   *gdisp,
 {
   gint x, y;
   gint i;
+  gint xclamp, yclamp;
+
+  xclamp = gdisp->disp_width + 1;
+  yclamp = gdisp->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {
@@ -472,17 +476,36 @@ selection_transform_segs (GDisplay   *gdisp,
 				 src_segs[i].y1 + edit_select.cumly,
 				 &x, &y, FALSE);
 
-      dest_segs[i].x1 = x;
-      dest_segs[i].y1 = y;
+      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
 
       gdisplay_transform_coords (gdisp, 
 				 src_segs[i].x2 + edit_select.cumlx, 
 				 src_segs[i].y2 + edit_select.cumly,
 				 &x, &y, FALSE);
 
-      dest_segs[i].x2 = x;
-      dest_segs[i].y2 = y;
+      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
 
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (!src_segs[i].open)
+	{
+	  /*  If it is vertical  */
+	  if (dest_segs[i].x1 == dest_segs[i].x2)
+	    {
+	      dest_segs[i].x1 -= 1;
+	      dest_segs[i].x2 -= 1;
+	    }
+	  else
+	    {
+	      dest_segs[i].y1 -= 1;
+	      dest_segs[i].y2 -= 1;
+	    }
+	}
     }
 }
 
@@ -545,6 +568,12 @@ edit_selection_draw (Tool *tool)
       gdisplay_transform_coords (gdisp, 
 				 edit_select.x2, edit_select.y2, 
 				 &x2, &y2, TRUE);
+
+      x1 = CLAMP (x1, -1, gdisp->disp_width + 1);
+      y1 = CLAMP (y1, -1, gdisp->disp_height + 1);
+      x2 = CLAMP (x2, -1, gdisp->disp_width + 1);
+      y2 = CLAMP (y2, -1, gdisp->disp_height + 1);
+
       if (x2 > x1 && y2 > y1)
         gdk_draw_rectangle (edit_select.core->win,
                             edit_select.core->gc, FALSE,
@@ -583,6 +612,11 @@ edit_selection_draw (Tool *tool)
 		y2 = y4;
 	    }
 	}
+
+      x1 = CLAMP (x1, -1, gdisp->disp_width + 1);
+      y1 = CLAMP (y1, -1, gdisp->disp_height + 1);
+      x2 = CLAMP (x2, -1, gdisp->disp_width + 1);
+      y2 = CLAMP (y2, -1, gdisp->disp_height + 1);
 
       if (x2 > x1 && y2 > y1)
         gdk_draw_rectangle (edit_select.core->win,

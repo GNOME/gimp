@@ -282,25 +282,29 @@ selection_transform_segs (Selection  *select,
 			  GdkSegment *dest_segs,
 			  int         num_segs)
 {
-  GDisplay * gdisp;
-  int x, y;
-  int i;
+  GDisplay *gdisp;
+  gint      x, y;
+  gint      i;
+  gint      xclamp, yclamp;
 
   gdisp = (GDisplay *) select->gdisp;
+
+  xclamp = gdisp->disp_width + 1;
+  yclamp = gdisp->disp_height + 1;
 
   for (i = 0; i < num_segs; i++)
     {
       gdisplay_transform_coords (gdisp, src_segs[i].x1, src_segs[i].y1,
-				 &x, &y, FALSE);
+                                 &x, &y, FALSE);
 
-      dest_segs[i].x1 = x;
-      dest_segs[i].y1 = y;
+      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
 
       gdisplay_transform_coords (gdisp, src_segs[i].x2, src_segs[i].y2,
-				 &x, &y, FALSE);
+                                 &x, &y, FALSE);
 
-      dest_segs[i].x2 = x;
-      dest_segs[i].y2 = y;
+      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
 
       /*  If this segment is a closing segment && the segments lie inside
        *  the region, OR if this is an opening segment and the segments
@@ -308,19 +312,19 @@ selection_transform_segs (Selection  *select,
        *  we need to transform it by one display pixel
        */
       if (!src_segs[i].open)
-	{
-	  /*  If it is vertical  */
-	  if (dest_segs[i].x1 == dest_segs[i].x2)
-	    {
-	      dest_segs[i].x1 -= 1;
-	      dest_segs[i].x2 -= 1;
-	    }
-	  else
-	    {
-	      dest_segs[i].y1 -= 1;
-	      dest_segs[i].y2 -= 1;
-	    }
-	}
+        {
+          /*  If it is vertical  */
+          if (dest_segs[i].x1 == dest_segs[i].x2)
+            {
+              dest_segs[i].x1 -= 1;
+              dest_segs[i].x2 -= 1;
+            }
+          else
+            {
+              dest_segs[i].y1 -= 1;
+              dest_segs[i].y2 -= 1;
+            }
+        }
     }
 }
 
