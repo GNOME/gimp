@@ -171,6 +171,7 @@
     <chapter id="app-core-context">
       <title>GimpContext Objects</title>
       <xi:include href="xml/gimpcontext.xml"/>
+      <xi:include href="xml/gimpstrokeoptions.xml"/>
       <xi:include href="xml/gimptooloptions.xml"/>
     </chapter>
 
@@ -584,6 +585,7 @@
       <xi:include href="xml/gimpcoloreditor.xml"/>
       <xi:include href="xml/gimpdevicestatus.xml"/>
       <xi:include href="xml/gimperrorconsole.xml"/>
+      <xi:include href="xml/gimpstrokeeditor.xml"/>
       <xi:include href="xml/gimptemplateeditor.xml"/>
     </chapter>
 
@@ -675,6 +677,7 @@
       <xi:include href="xml/gimppreviewrenderergradient.xml"/>
       <xi:include href="xml/gimppreviewrendererimage.xml"/>
       <xi:include href="xml/gimppreviewrendererlayer.xml"/>
+      <xi:include href="xml/gimppreviewrenderervectors.xml"/>
     </chapter>
 
     <chapter id="app-widgets-cell-renderers">
@@ -738,6 +741,7 @@
       <xi:include href="xml/preferences-dialog.xml"/>
       <xi:include href="xml/resize-dialog.xml"/>
       <xi:include href="xml/resolution-calibrate-dialog.xml"/>
+      <xi:include href="xml/stroke-dialog.xml"/>
       <xi:include href="xml/tips-dialog.xml"/>
       <xi:include href="xml/tips-parser.xml"/>
       <xi:include href="xml/tool-options-dialog.xml"/>

@@ -784,6 +784,7 @@ gimp_image_get_foreground
 gimp_image_get_background
 gimp_image_get_color
 gimp_image_transform_color
+gimp_image_transform_temp_buf
 gimp_image_shadow
 gimp_image_free_shadow
 gimp_image_apply_image
@@ -1179,6 +1180,21 @@ gimp_template_get_type
 GIMP_TEMPLATE_CLASS
 GIMP_IS_TEMPLATE_CLASS
 GIMP_TEMPLATE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpstrokeoptions</FILE>
+<TITLE>GimpStrokeOptions</TITLE>
+GimpStrokeOptions
+<SUBSECTION Standard>
+GimpStrokeOptionsClass
+GIMP_STROKE_OPTIONS
+GIMP_IS_STROKE_OPTIONS
+GIMP_TYPE_STROKE_OPTIONS
+gimp_stroke_options_get_type
+GIMP_STROKE_OPTIONS_CLASS
+GIMP_IS_STROKE_OPTIONS_CLASS
+GIMP_STROKE_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4205,6 +4221,21 @@ GIMP_PREVIEW_RENDERER_LAYER_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppreviewrenderervectors</FILE>
+<TITLE>GimpPreviewRendererVectors</TITLE>
+GimpPreviewRendererVectors
+<SUBSECTION Standard>
+GimpPreviewRendererVectorsClass
+GIMP_PREVIEW_RENDERER_VECTORS
+GIMP_IS_PREVIEW_RENDERER_VECTORS
+GIMP_TYPE_PREVIEW_RENDERER_VECTORS
+gimp_preview_renderer_vectors_get_type
+GIMP_PREVIEW_RENDERER_VECTORS_CLASS
+GIMP_IS_PREVIEW_RENDERER_VECTORS_CLASS
+GIMP_PREVIEW_RENDERER_VECTORS_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpselectioneditor</FILE>
 <TITLE>GimpSelectionEditor</TITLE>
 GimpSelectionEditor
@@ -4218,6 +4249,22 @@ gimp_selection_editor_get_type
 GIMP_SELECTION_EDITOR_CLASS
 GIMP_IS_SELECTION_EDITOR_CLASS
 GIMP_SELECTION_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpstrokeeditor</FILE>
+<TITLE>GimpStrokeEditor</TITLE>
+GimpStrokeEditor
+gimp_stroke_editor_new
+<SUBSECTION Standard>
+GimpStrokeEditorClass
+GIMP_STROKE_EDITOR
+GIMP_IS_STROKE_EDITOR
+GIMP_TYPE_STROKE_EDITOR
+gimp_stroke_editor_get_type
+GIMP_STROKE_EDITOR_CLASS
+GIMP_IS_STROKE_EDITOR_CLASS
+GIMP_STROKE_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4294,8 +4341,8 @@ gimp_toolbox_dnd_init
 <SECTION>
 <FILE>gimptoolbox-color-area</FILE>
 <TITLE>GimpToolbox-color-area</TITLE>
-2color_area_gdisp
 gimp_toolbox_color_area_create
+color_area_gdisp
 </SECTION>
 
 <SECTION>
@@ -4477,29 +4524,30 @@ gimp_unit_get_plural
 <SECTION>
 <FILE>base-enums</FILE>
 GIMP_TYPE_CHECK_SIZE
-gimp_check_size_get_type
 GimpCheckSize
 GIMP_TYPE_CHECK_TYPE
-gimp_check_type_get_type
 GimpCheckType
 GIMP_TYPE_CURVE_TYPE
-gimp_curve_type_get_type
 GimpCurveType
 GIMP_TYPE_HISTOGRAM_CHANNEL
-gimp_histogram_channel_get_type
 GimpHistogramChannel
 GIMP_TYPE_INTERPOLATION_TYPE
-gimp_interpolation_type_get_type
 GimpInterpolationType
 GIMP_TYPE_LAYER_MODE_EFFECTS
-gimp_layer_mode_effects_get_type
 GimpLayerModeEffects
 GIMP_TYPE_TRANSFER_MODE
-gimp_transfer_mode_get_type
 GimpTransferMode
 GimpConvolutionType
 GimpChannelLutType
 GimpHueRange
+<SUBSECTION Standard>
+gimp_check_size_get_type
+gimp_check_type_get_type
+gimp_curve_type_get_type
+gimp_histogram_channel_get_type
+gimp_interpolation_type_get_type
+gimp_layer_mode_effects_get_type
+gimp_transfer_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -5006,79 +5054,56 @@ gimp_xml_parser_free
 <SECTION>
 <FILE>core-enums</FILE>
 GIMP_TYPE_ADD_MASK_TYPE
-gimp_add_mask_type_get_type
 GimpAddMaskType
 GIMP_TYPE_BLEND_MODE
-gimp_blend_mode_get_type
 GimpBlendMode
 GIMP_TYPE_BUCKET_FILL_MODE
-gimp_bucket_fill_mode_get_type
 GimpBucketFillMode
 GIMP_TYPE_CAP_STYLE
-gimp_cap_style_get_type
 GimpCapStyle
 GIMP_TYPE_CHANNEL_OPS
-gimp_channel_ops_get_type
 GimpChannelOps
 GIMP_TYPE_CHANNEL_TYPE
-gimp_channel_type_get_type
 GimpChannelType
 GIMP_TYPE_CONTAINER_POLICY
-gimp_container_policy_get_type
 GimpContainerPolicy
 GIMP_TYPE_CONVERT_DITHER_TYPE
-gimp_convert_dither_type_get_type
 GimpConvertDitherType
 GIMP_TYPE_GRAVITY_TYPE
-gimp_gravity_type_get_type
 GimpGravityType
 GIMP_TYPE_FILL_TYPE
-gimp_fill_type_get_type
 GimpFillType
 GIMP_TYPE_GRADIENT_TYPE
-gimp_gradient_type_get_type
 GimpGradientType
 GIMP_TYPE_GRID_STYLE
-gimp_grid_style_get_type
 GimpGridStyle
 GIMP_TYPE_IMAGE_BASE_TYPE
-gimp_image_base_type_get_type
 GimpImageBaseType
 GIMP_TYPE_IMAGE_TYPE
-gimp_image_type_get_type
 GimpImageType
 GIMP_TYPE_JOIN_STYLE
-gimp_join_style_get_type
 GimpJoinStyle
 GIMP_TYPE_ORIENTATION_TYPE
-gimp_orientation_type_get_type
 GimpOrientationType
 GIMP_TYPE_ROTATION_TYPE
-gimp_rotation_type_get_type
 GimpRotationType
 GIMP_TYPE_PREVIEW_SIZE
-gimp_preview_size_get_type
 GimpPreviewSize
 GIMP_TYPE_REPEAT_MODE
-gimp_repeat_mode_get_type
 GimpRepeatMode
 GIMP_TYPE_SELECTION_CONTROL
-gimp_selection_control_get_type
 GimpSelectionControl
+GIMP_TYPE_STROKE_STYLE
+GimpStrokeStyle
 GIMP_TYPE_THUMBNAIL_SIZE
-gimp_thumbnail_size_get_type
 GimpThumbnailSize
 GIMP_TYPE_TRANSFORM_DIRECTION
-gimp_transform_direction_get_type
 GimpTransformDirection
 GIMP_TYPE_UNDO_MODE
-gimp_undo_mode_get_type
 GimpUndoMode
 GIMP_TYPE_UNDO_EVENT
-gimp_undo_event_get_type
 GimpUndoEvent
 GIMP_TYPE_UNDO_TYPE
-gimp_undo_type_get_type
 GimpUndoType
 GimpContextPropType
 GimpContextPropMask
@@ -5088,6 +5113,33 @@ GimpGradientSegmentColor
 GimpMaskApplyMode
 GimpMergeType
 GimpOffsetType
+<SUBSECTION Standard>
+gimp_add_mask_type_get_type
+gimp_blend_mode_get_type
+gimp_bucket_fill_mode_get_type
+gimp_cap_style_get_type
+gimp_channel_ops_get_type
+gimp_channel_type_get_type
+gimp_container_policy_get_type
+gimp_convert_dither_type_get_type
+gimp_gravity_type_get_type
+gimp_fill_type_get_type
+gimp_gradient_type_get_type
+gimp_grid_style_get_type
+gimp_image_base_type_get_type
+gimp_image_type_get_type
+gimp_join_style_get_type
+gimp_orientation_type_get_type
+gimp_rotation_type_get_type
+gimp_preview_size_get_type
+gimp_repeat_mode_get_type
+gimp_selection_control_get_type
+gimp_stroke_style_get_type
+gimp_thumbnail_size_get_type
+gimp_transform_direction_get_type
+gimp_undo_mode_get_type
+gimp_undo_event_get_type
+gimp_undo_type_get_type
 </SECTION>
 
 <SECTION>
@@ -5099,9 +5151,10 @@ GimpCoords
 GimpTattoo
 GimpInitStatusFunc
 GimpDataObjectLoaderFunc
+GimpObjectFilterFunc
+GimpStrokeItemFunc
 GimpUndoPopFunc
 GimpUndoFreeFunc
-GimpObjectFilterFunc
 </SECTION>
 
 <SECTION>
@@ -5504,11 +5557,12 @@ gimp_marshal_VOID__VOID
 <SECTION>
 <FILE>display-enums</FILE>
 GIMP_TYPE_CURSOR_MODE
-gimp_cursor_mode_get_type
 GimpCursorMode
 GIMP_TYPE_DISPLAY_PADDING_MODE
-gimp_display_padding_mode_get_type
 GimpDisplayPaddingMode
+<SUBSECTION Standard>
+gimp_cursor_mode_get_type
+gimp_display_padding_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -5923,6 +5977,11 @@ grid_dialog_new
 </SECTION>
 
 <SECTION>
+<FILE>stroke-dialog</FILE>
+stroke_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>gui</FILE>
 gui_init
 gui_libs_init
@@ -6277,6 +6336,7 @@ vectors_export_cmd_callback
 vectors_vectors_tool_cmd_callback
 vectors_edit_attributes_cmd_callback
 vectors_selection_to_vectors
+vectors_stroke_vectors
 vectors_vectors_tool
 vectors_new_vectors_query
 vectors_edit_vectors_query
@@ -6317,24 +6377,25 @@ view_shrink_wrap_cmd_callback
 <SECTION>
 <FILE>paint-enums</FILE>
 GIMP_TYPE_CLONE_TYPE
-gimp_clone_type_get_type
 GimpCloneType
 GIMP_TYPE_CLONE_ALIGN_MODE
-gimp_clone_align_mode_get_type
 GimpCloneAlignMode
 GIMP_TYPE_DODGE_BURN_TYPE
-gimp_dodge_burn_type_get_type
 GimpDodgeBurnType
 GIMP_TYPE_CONVOLVE_TYPE
-gimp_convolve_type_get_type
 GimpConvolveType
 GIMP_TYPE_INK_BLOB_TYPE
-gimp_ink_blob_type_get_type
 GimpInkBlobType
 GIMP_TYPE_PAINT_APPLICATION_MODE
-gimp_paint_application_mode_get_type
 GimpPaintApplicationMode
 GimpBrushApplicationMode
+<SUBSECTION Standard>
+gimp_clone_type_get_type
+gimp_clone_align_mode_get_type
+gimp_dodge_burn_type_get_type
+gimp_convolve_type_get_type
+gimp_ink_blob_type_get_type
+gimp_paint_application_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -6391,6 +6452,8 @@ combine_inten_a_and_channel_selection_pixels
 extract_from_inten_pixels
 extract_from_indexed_pixels
 color_region
+color_region_mask
+pattern_region
 blend_region
 shade_region
 copy_region
@@ -6578,14 +6641,15 @@ plug_ins_image_types_parse
 <SECTION>
 <FILE>text-enums</FILE>
 GIMP_TYPE_TEXT_BOX_MODE
-gimp_text_box_mode_get_type
 GimpTextBoxMode
 GIMP_TYPE_TEXT_DIRECTION
-gimp_text_direction_get_type
 GimpTextDirection
 GIMP_TYPE_TEXT_JUSTIFICATION
-gimp_text_justification_get_type
 GimpTextJustification
+<SUBSECTION Standard>
+gimp_text_box_mode_get_type
+gimp_text_direction_get_type
+gimp_text_justification_get_type
 </SECTION>
 
 <SECTION>
@@ -6643,25 +6707,29 @@ tool_manager_cursor_update_active
 
 <SECTION>
 <FILE>tools-enums</FILE>
+GIMP_TYPE_COLOR_PICK_MODE
+GimpColorPickMode
 GIMP_TYPE_CROP_MODE
-gimp_crop_mode_get_type
 GimpCropMode
 SelectOps
 GimpToolAction
 GimpMotionMode
 GIMP_TYPE_RECT_SELECT_MODE
-gimp_rect_select_mode_get_type
 GimpRectSelectMode
 GIMP_TYPE_TRANSFORM_TYPE
-gimp_transform_type_get_type
 GimpTransformType
 GIMP_TYPE_VECTOR_MODE
-gimp_vector_mode_get_type
 GimpVectorMode
 GIMP_TYPE_TRANSFORM_GRID_TYPE
-gimp_transform_grid_type_get_type
 GimpTransformGridType
 TransformAction
+<SUBSECTION Standard>
+gimp_color_pick_mode_get_type
+gimp_crop_mode_get_type
+gimp_rect_select_mode_get_type
+gimp_transform_type_get_type
+gimp_vector_mode_get_type
+gimp_transform_grid_type_get_type
 </SECTION>
 
 <SECTION>
@@ -6838,22 +6906,16 @@ gimp_rgb_get_gdk_color
 <SECTION>
 <FILE>widgets-enums</FILE>
 GIMP_TYPE_ASPECT_TYPE
-gimp_aspect_type_get_type
 GimpAspectType
 GIMP_TYPE_HELP_BROWSER_TYPE
-gimp_help_browser_type_get_type
 GimpHelpBrowserType
 GIMP_TYPE_HISTOGRAM_SCALE
-gimp_histogram_scale_get_type
 GimpHistogramScale
 GIMP_TYPE_TAB_STYLE
-gimp_tab_style_get_type
 GimpTabStyle
 GIMP_TYPE_VIEW_TYPE
-gimp_view_type_get_type
 GimpViewType
 GIMP_TYPE_ZOOM_TYPE
-gimp_zoom_type_get_type
 GimpZoomType
 GimpPreviewBG
 GimpDropType
@@ -6861,6 +6923,13 @@ GimpCursorType
 GimpToolCursorType
 GimpCursorModifier
 GimpDeviceValues
+<SUBSECTION Standard>
+gimp_aspect_type_get_type
+gimp_help_browser_type_get_type
+gimp_histogram_scale_get_type
+gimp_tab_style_get_type
+gimp_view_type_get_type
+gimp_zoom_type_get_type
 </SECTION>
 
 <SECTION>
