@@ -1,3 +1,8 @@
+2000-06-30  Nick Lamb  <njl195@zepler.org.uk>
+
+	* makedummyhelpfile.sh
+	* makeindex.sh: Not valid SGML (DOCTYPE screw-up) now it is
+
 Sun Mar 12 01:04:21 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* C/dialogs/preferences/Makefile.am
