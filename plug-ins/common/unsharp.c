@@ -758,9 +758,6 @@ preview_update (GimpPreview *preview)
 
   GimpPixelRgn  srcPR, destPR;        /* Pixel regions */
 
-  if (!unsharp_params.update_preview)
-    return;
-
   drawable =
     gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 

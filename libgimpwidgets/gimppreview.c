@@ -399,6 +399,8 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
     {
       preview->update_preview = TRUE;
 
+      g_object_notify (G_OBJECT (preview), "update");
+
       if (preview->timeout_id)
         g_source_remove (preview->timeout_id);
 
@@ -408,10 +410,10 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
     {
       preview->update_preview = FALSE;
 
+      g_object_notify (G_OBJECT (preview), "update");
+
       gimp_preview_draw (preview);
     }
-
-  g_object_notify (G_OBJECT (preview), "update");
 }
 
 static void

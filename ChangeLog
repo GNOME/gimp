@@ -1,3 +1,14 @@
+2004-11-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.c (gimp_preview_toggle_callback):
+	change the "update" property and notify listeners (in particular
+	GimpDrawablePreview) before invalidating the preview. Plug-ins
+	might (needlessly) look at the property to decide whether they
+	need to redraw. Fixes bug #159816.
+
+	* plug-ins/common/unsharp.c (preview_update): no need to look at
+	the value of the "Preview" toggle. GimpPreview takes care this.
+
 2004-11-29  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: issue a repaint after the
