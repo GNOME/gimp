@@ -1,5 +1,16 @@
 2003-06-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: moved the convenience items which
+	create new docks from the "Dialogs/" level to a new
+	"Dialogs/Create New Dock/" sub-menu.  Fixes bug #111278.
+
+	* app/gui/dialogs-commands.[ch] (dialogs_create_data_cmd_callback):
+	new convenience constructor callback. Factored out duplicated
+	code to the new dialogs_create_dock() utility function.
+
+2003-06-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c: added CW/CCW to the "Rotate" menu entries
 	as suggested in bug #57797. Cleaned up image_menu_update().
 

@@ -35,6 +35,14 @@
 #include "dialogs-commands.h"
 
 
+/*  local function prototypes  */
+
+static void   dialogs_create_dock (const gchar *tabs[],
+                                   gint         n_tabs);
+
+
+/*  public functions  */
+
 void
 dialogs_show_toolbox_cmd_callback (GtkWidget *widget,
                                    gpointer   data,
@@ -296,37 +304,32 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
                                 gpointer   data,
                                 guint      action)
 {
-  GtkWidget *dock;
-  GtkWidget *dockbook;
-  GtkWidget *dockable;
-
-  const gchar *tabs[] =
+  static const gchar *tabs[] =
   {
     "gimp-layer-list",
     "gimp-channel-list",
     "gimp-vectors-list",
     "gimp-indexed-palette"
   };
-  gint i;
 
-  dock = gimp_dialog_factory_dock_new (global_dock_factory);
+  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
+}
 
-  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), TRUE);
+void
+dialogs_create_data_cmd_callback (GtkWidget *widget,
+                                  gpointer   data,
+                                  guint      action)
+{
+  static const gchar *tabs[] =
+  {
+    "gimp-brush-grid",
+    "gimp-pattern-grid",
+    "gimp-gradient-list",
+    "gimp-palette-list",
+    "gimp-font-list"
+  };
 
-  dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
-
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
-
-  for (i = 0; i < G_N_ELEMENTS (tabs); i++)
-    {
-      dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
-                                                 tabs[i], -1);
-
-      if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
-        gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-    }
-
-  gtk_widget_show (dock);
+  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
 }
 
 void
@@ -334,38 +337,15 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
                                    gpointer   data,
                                    guint      action)
 {
-  GtkWidget *dock;
-  GtkWidget *dockbook;
-  GtkWidget *dockable;
-
-  const gchar *tabs[] =
+  static const gchar *tabs[] =
   {
-    "gimp-brush-grid",
-    "gimp-pattern-grid",
-    "gimp-gradient-list",
-    "gimp-palette-list",
     "gimp-buffer-list",
     "gimp-image-list",
-    "gimp-document-history"
+    "gimp-document-list",
+    "gimp-template-list"
   };
-  gint i;
 
-  dock = gimp_dialog_factory_dock_new (global_dock_factory);
-
-  dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
-
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
-
-  for (i = 0; i < G_N_ELEMENTS (tabs); i++)
-    {
-      dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
-                                                 tabs[i], -1);
-
-      if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
-        gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-    }
-
-  gtk_widget_show (dock);
+  dialogs_create_dock (tabs, G_N_ELEMENTS (tabs));
 }
 
 void
@@ -394,4 +374,34 @@ dialogs_show_toolbox (void)
             }
         }
     }
+}
+
+
+/*  private functions  */
+
+static void
+dialogs_create_dock (const gchar *tabs[],
+                     gint         n_tabs)
+{
+  GtkWidget *dock;
+  GtkWidget *dockbook;
+  GtkWidget *dockable;
+  gint       i;
+
+  dock = gimp_dialog_factory_dock_new (global_dock_factory);
+
+  dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
+
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+
+  for (i = 0; i < n_tabs; i++)
+    {
+      dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+                                                 tabs[i], -1);
+
+      if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
+        gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+    }
+
+  gtk_widget_show (dock);
 }

@@ -89,14 +89,21 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
 
   MENU_BRANCH (N_("/File/_Dialogs")),
 
-  { { N_("/File/Dialogs/Layers, Channels & Paths..."), NULL,
+  MENU_BRANCH (N_("/File/Dialogs/_Create New Dock")),
+
+  { { N_("/File/Dialogs/Create New Dock/Layers, Channels & Paths..."), NULL,
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
     "file/dialogs/layers_and_channels.html", NULL },
-  { { N_("/File/Dialogs/Brushes, Patterns & Stuff..."), NULL,
+  { { N_("/File/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."), NULL,
+      dialogs_create_data_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+  { { N_("/File/Dialogs/Create New Dock/Misc. Stuff..."), NULL,
       dialogs_create_stuff_cmd_callback, 0 },
     NULL,
     NULL, NULL },
+
   { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_OPTIONS },
