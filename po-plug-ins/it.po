@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"POT-Creation-Date: 2004-05-20 22:00+0200\n"
-"PO-Revision-Date: 2004-05-17 14:20+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-24 08:50+0200\n"
+"PO-Revision-Date: 2004-05-24 08:58+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:532 plug-ins/gfig/gfig.c:2912
 #: plug-ins/gflare/gflare.c:897
@@ -322,8 +322,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Se si attiva questa opzione i valori dei colori alti saranno scambiati con "
-"il più bassi e vice versa"
+"Se si attiva questa opzione i valori dei colori alti saranno scambiati con i "
+"più bassi e viceversa"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:1016 plug-ins/common/channel_mixer.c:604
@@ -352,7 +352,7 @@ msgid ""
 "function). The result is visible in the preview image"
 msgstr ""
 "Crea una mappa colore con l'opzione specificata sopra (funzione densità/"
-"colore). Il risultato è visibile nell'immagine anteprima"
+"colore). Il risultato è visibile nell'anteprima"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1129
 msgid "Apply active gradient to final image"
@@ -388,7 +388,7 @@ msgstr "_Frattali"
 #: plug-ins/common/tiff.c:1798 plug-ins/common/xbm.c:1000
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:454
 #: plug-ins/flame/flame.c:439 plug-ins/gfig/gfig.c:1023
-#: plug-ins/gfli/gfli.c:720 plug-ins/ifscompose/ifscompose.c:2543
+#: plug-ins/gfli/gfli.c:718 plug-ins/ifscompose/ifscompose.c:2542
 #: plug-ins/winicon/icosave.c:218 plug-ins/xjt/xjt.c:1267
 #: plug-ins/xjt/xjt.c:1706
 #, c-format
@@ -409,6 +409,7 @@ msgid "Save Fractal Parameters"
 msgstr "Salva parametri frattali"
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2075 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:309 plug-ins/common/CML_explorer.c:2196
 #: plug-ins/common/channel_mixer.c:1192 plug-ins/common/curve_bend.c:914
@@ -425,7 +426,7 @@ msgstr "Salva parametri frattali"
 #: plug-ins/common/tiff.c:511 plug-ins/common/xbm.c:723
 #: plug-ins/common/xwd.c:388 plug-ins/faxg3/faxg3.c:221
 #: plug-ins/fits/fits.c:341 plug-ins/flame/flame.c:408
-#: plug-ins/gfig/gfig.c:720 plug-ins/gfli/gfli.c:429 plug-ins/gfli/gfli.c:465
+#: plug-ins/gfig/gfig.c:720 plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
 #: plug-ins/help/domain.c:380 plug-ins/winicon/icoload.c:134
 #: plug-ins/xjt/xjt.c:2530 plug-ins/xjt/xjt.c:2538
 #, c-format
@@ -449,14 +450,14 @@ msgstr "Esploratore _frattali..."
 #: plug-ins/FractalExplorer/FractalExplorer.c:268
 #: plug-ins/common/spheredesigner.c:3127 plug-ins/gfig/gfig.c:355
 msgid "<Image>/Filters/Render"
-msgstr "<Image>/Filters/Render"
+msgstr "<Image>/Filtri/Render"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:392
 msgid "Rendering Fractal..."
 msgstr "Rendering frattale..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:766 plug-ins/gfig/gfig.c:3842
-#: plug-ins/gflare/gflare.c:3108
+#: plug-ins/gflare/gflare.c:3100
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
@@ -534,7 +535,7 @@ msgstr "<Image>/Filtri/Effetti luce"
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:317 plug-ins/MapObject/mapobject_ui.c:505
 msgid "General Options"
-msgstr "Opzioni Generali"
+msgstr "Opzioni generali"
 
 #.
 #. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
@@ -628,7 +629,7 @@ msgstr "Punto"
 
 #: plug-ins/Lighting/lighting_ui.c:496
 msgid "L_ight Type:"
-msgstr "T_ipo di Luce:"
+msgstr "T_ipo di luce:"
 
 #: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:677
 msgid "Type of light source to apply"
@@ -654,7 +655,7 @@ msgstr "Posizione"
 
 #: plug-ins/Lighting/lighting_ui.c:534 plug-ins/common/flarefx.c:730
 #: plug-ins/common/nova.c:457 plug-ins/common/papertile.c:267
-#: plug-ins/flame/flame.c:1174 plug-ins/gflare/gflare.c:2649
+#: plug-ins/flame/flame.c:1174 plug-ins/gflare/gflare.c:2644
 msgid "_X:"
 msgstr "_X:"
 
@@ -664,7 +665,7 @@ msgstr "Posizione X della sorgente di luce nello spazio XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:551 plug-ins/common/flarefx.c:751
 #: plug-ins/common/nova.c:478 plug-ins/common/papertile.c:276
-#: plug-ins/flame/flame.c:1188 plug-ins/gflare/gflare.c:2653
+#: plug-ins/flame/flame.c:1188 plug-ins/gflare/gflare.c:2648
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -867,6 +868,22 @@ msgstr "I_nterattivo"
 msgid "Enable/disable real time preview of changes"
 msgstr "Attiva/disattiva anteprima cambiamenti in tempo reale"
 
+#: plug-ins/MapObject/mapobject_apply.c:273
+msgid "Map to Plane..."
+msgstr "Mappa su piano..."
+
+#: plug-ins/MapObject/mapobject_apply.c:276
+msgid "Map to Sphere..."
+msgstr "Mappa su sfera..."
+
+#: plug-ins/MapObject/mapobject_apply.c:279
+msgid "Map to Box..."
+msgstr "Mappa su cubo..."
+
+#: plug-ins/MapObject/mapobject_apply.c:282
+msgid "Map to Cylinder..."
+msgstr "Mappa su cilindro..."
+
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "Map _Object..."
 msgstr "_Oggetto mappa..."
@@ -883,7 +900,7 @@ msgstr "<Image>/Filtri/Mappa"
 #: plug-ins/MapObject/mapobject_ui.c:258
 #: plug-ins/MapObject/mapobject_ui.c:1330
 msgid "_Box"
-msgstr "_Box"
+msgstr "Cu_bo"
 
 #: plug-ins/MapObject/mapobject_ui.c:276
 #: plug-ins/MapObject/mapobject_ui.c:1336
@@ -904,7 +921,7 @@ msgstr "Sfera"
 
 #: plug-ins/MapObject/mapobject_ui.c:523
 msgid "Box"
-msgstr "Box"
+msgstr "Cubo"
 
 #: plug-ins/MapObject/mapobject_ui.c:524
 msgid "Cylinder"
@@ -940,7 +957,7 @@ msgstr "Attiva _antialiasing"
 
 #: plug-ins/MapObject/mapobject_ui.c:590
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Attiva/disattiva jagged edges removal (antialiasing)"
+msgstr "Commuta rimozione bordi scalettati (antialiasing)"
 
 #: plug-ins/MapObject/mapobject_ui.c:619 plug-ins/common/unsharp.c:678
 #: plug-ins/common/wind.c:989 plug-ins/imagemap/imap_preferences.c:537
@@ -949,23 +966,23 @@ msgstr "_Soglia:"
 
 #: plug-ins/MapObject/mapobject_ui.c:662
 msgid "Point Light"
-msgstr "Punto Luce"
+msgstr "Punto luce"
 
 #: plug-ins/MapObject/mapobject_ui.c:663
 msgid "Directional Light"
-msgstr "Luce Direzionale"
+msgstr "Luce direzionale"
 
 #: plug-ins/MapObject/mapobject_ui.c:664
 msgid "No Light"
-msgstr "Nessuna Luce"
+msgstr "Nessuna luce"
 
 #: plug-ins/MapObject/mapobject_ui.c:674
 msgid "Lightsource Type:"
-msgstr "Tipologia delle Sorgenti di Luce:"
+msgstr "Tipologia delle sorgenti di luce:"
 
 #: plug-ins/MapObject/mapobject_ui.c:684
 msgid "Lightsource Color:"
-msgstr "Sorgenti di Luce Colore:"
+msgstr "Sorgenti di luce colore:"
 
 #: plug-ins/MapObject/mapobject_ui.c:843
 msgid "Ambient:"
@@ -1042,7 +1059,7 @@ msgstr "Destra:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 msgid "Map Images to Box Faces"
-msgstr "Mappa Immagini sulle facciate di un Cubo"
+msgstr "Mappa Immagini sulle facciate di un cubo"
 
 #: plug-ins/MapObject/mapobject_ui.c:1168
 #: plug-ins/common/spheredesigner.c:2698
@@ -1135,6 +1152,11 @@ msgid "Bad colormap"
 msgstr "Mappa colore non valida"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:314
 #: plug-ins/common/dicom.c:299 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:640
@@ -1146,7 +1168,7 @@ msgstr "Mappa colore non valida"
 #: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:516
 #: plug-ins/common/wmf.c:400 plug-ins/common/xbm.c:728
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:439
-#: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:470 plug-ins/sgi/sgi.c:327
+#: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327
 #: plug-ins/xjt/xjt.c:3316
 #, c-format
 msgid "Opening '%s'..."
@@ -1201,6 +1223,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Impossibile manipolare tipi immagine sconosciuti"
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:586
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1004
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:248
@@ -1211,7 +1235,7 @@ msgstr "Impossibile manipolare tipi immagine sconosciuti"
 #: plug-ins/common/psd_save.c:1563 plug-ins/common/sunras.c:521
 #: plug-ins/common/tga.c:1037 plug-ins/common/tiff.c:1803
 #: plug-ins/common/xbm.c:1005 plug-ins/common/xpm.c:624
-#: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:687
+#: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:685
 #: plug-ins/sgi/sgi.c:542 plug-ins/xjt/xjt.c:1686
 #, c-format
 msgid "Saving '%s'..."
@@ -1327,6 +1351,7 @@ msgid "Phase angle, range 0-360"
 msgstr "Angolo di fase, campo 0-360"
 
 #. Propagate Mode
+#. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:529 plug-ins/common/hot.c:589
 #: plug-ins/common/vpropagate.c:1049 plug-ins/common/waves.c:323
 #: plug-ins/rcm/rcm_dialog.c:492
@@ -1651,10 +1676,11 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"Il bottone \"Seme Fissato\" è un alias.\n"
+"Il bottone \"Seme fissato\" è un alias.\n"
 "Lo stesso seme produce la stessa immagine, se (1) la larghezza delle "
-"immaginisono le stesse (questa è la ragione per il quale l'immagine è "
-"differentedall'anteprima), (2) tutte le mutazioni sono uguali a zero."
+"immagini è la stessa (questa è la ragione per la quale l'immagine è "
+"differente dall'anteprima), (2) tutte le velocità di mutazione sono uguali a "
+"zero."
 
 #: plug-ins/common/CML_explorer.c:1402
 msgid "O_thers"
@@ -1746,7 +1772,7 @@ msgstr "Sensibilità di canale:"
 
 #: plug-ins/common/CML_explorer.c:1719
 msgid "Mutation Rate:"
-msgstr "Tasso di mutazione:"
+msgstr "Velocità di mutazione:"
 
 #: plug-ins/common/CML_explorer.c:1729
 msgid "Mutation Dist.:"
@@ -1867,7 +1893,7 @@ msgid "Left Edge"
 msgstr "Bordo Sinistro"
 
 #: plug-ins/common/align_layers.c:440 plug-ins/common/align_layers.c:470
-#: plug-ins/gflare/gflare.c:2637
+#: plug-ins/gflare/gflare.c:2632
 msgid "Center"
 msgstr "Centro"
 
@@ -2204,8 +2230,8 @@ msgid "_Spherical Map"
 msgstr "Mappa _sferica"
 
 #: plug-ins/common/bumpmap.c:970
-msgid "S_inuosidal Map"
-msgstr "Mappa si_nusoidale"
+msgid "S_inusoidal Map"
+msgstr "Mappa s_inusoidale"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:977
@@ -2457,7 +2483,7 @@ msgid "Color to Alpha"
 msgstr "Colore ad alfa"
 
 #: plug-ins/common/colortoalpha.c:333 plug-ins/common/mapcolor.c:629
-#: plug-ins/gfli/gfli.c:840 plug-ins/gfli/gfli.c:903
+#: plug-ins/gfli/gfli.c:838 plug-ins/gfli/gfli.c:901
 msgid "From:"
 msgstr "Da:"
 
@@ -2751,13 +2777,13 @@ msgstr "Us_a le Macro invece delle Struct"
 #.
 #: plug-ins/common/csource.c:713
 msgid "Use _1 Byte Run-Length-Encoding"
-msgstr "Utilizza encoding Run-Length a _1 Byte"
+msgstr "Utilizza encoding run-length a _1 byte"
 
 #. Alpha
 #.
 #: plug-ins/common/csource.c:725
 msgid "Sa_ve Alpha Channel (RGBA/RGB)"
-msgstr "Sal_va Canale Alpha (RGBA/RGB)"
+msgstr "Sal_va canale alfa (RGBA/RGB)"
 
 #: plug-ins/common/csource.c:743 plug-ins/common/sparkle.c:427
 msgid "Op_acity:"
@@ -2810,11 +2836,13 @@ msgstr "Impossibile operare su selezioni vuote."
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1240
 msgid "Curve Bend"
-msgstr "Curve Bend"
+msgstr "Piega curva"
 
 #. Preview area, top of column
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/common/curve_bend.c:1270 plug-ins/common/sinus.c:1043
-#: plug-ins/gflare/gflare.c:2323 plug-ins/gflare/gflare.c:3241
 #: plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
 #: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
@@ -2833,6 +2861,8 @@ msgid "Automatic Pre_view"
 msgstr "Anteprima a_utomatica"
 
 #. Options area, bottom of column
+#. the vertical box and its toggle buttons
+#. Options section
 #: plug-ins/common/curve_bend.c:1323 plug-ins/common/mosaic.c:530
 #: plug-ins/common/ripple.c:446 plug-ins/gfig/gfig.c:3001
 msgid "Options"
@@ -3221,7 +3251,7 @@ msgstr "_Ricorsivo"
 
 #: plug-ins/common/despeckle.c:737 plug-ins/common/nlfilt.c:376
 #: plug-ins/common/nova.c:361 plug-ins/common/unsharp.c:660
-#: plug-ins/common/whirlpinch.c:721 plug-ins/gflare/gflare.c:2684
+#: plug-ins/common/whirlpinch.c:721 plug-ins/gflare/gflare.c:2677
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "_Raggio:"
@@ -3300,7 +3330,7 @@ msgid "Sc_attering:"
 msgstr "Sc_attering:"
 
 #: plug-ins/common/diffraction.c:635
-msgid "Po_latization:"
+msgid "Po_larization:"
 msgstr "Po_larizzazione:"
 
 #: plug-ins/common/diffraction.c:643
@@ -3751,7 +3781,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
 #: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:484
-#: plug-ins/common/gih.c:1124 plug-ins/gflare/gflare.c:2984
+#: plug-ins/common/gih.c:1124 plug-ins/gflare/gflare.c:2976
 msgid "Unnamed"
 msgstr "Senzanome"
 
@@ -4437,7 +4467,7 @@ msgid "Thresho_ld:"
 msgstr "Sog_lia:"
 
 #: plug-ins/common/iwarp.c:1186 plug-ins/common/sinus.c:772
-#: plug-ins/gflare/gflare.c:2794
+#: plug-ins/gflare/gflare.c:2786
 msgid "_Settings"
 msgstr "_Impostazioni"
 
@@ -4602,7 +4632,7 @@ msgstr "Virgola mobile"
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Metodo DCT (compromesso velocità/qualità)"
 
-#: plug-ins/common/jpeg.c:1925 plug-ins/imagemap/imap_selection.c:343
+#: plug-ins/common/jpeg.c:1925
 msgid "Comment"
 msgstr "Commento"
 
@@ -4781,8 +4811,8 @@ msgstr "Sorgente scala colore"
 msgid "Destination color range"
 msgstr "Destinazione scala colore"
 
-#: plug-ins/common/mapcolor.c:629 plug-ins/gfli/gfli.c:849
-#: plug-ins/gfli/gfli.c:912
+#: plug-ins/common/mapcolor.c:629 plug-ins/gfli/gfli.c:847
+#: plug-ins/gfli/gfli.c:910
 msgid "To:"
 msgstr "A:"
 
@@ -5137,6 +5167,7 @@ msgid "_Factory Defaults"
 msgstr "_Valori predefiniti"
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1376 plug-ins/gfig/gfig.c:2400
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -5568,8 +5599,6 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1536
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -5766,8 +5795,10 @@ msgstr "Errore nell'esecuzione di ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2360 plug-ins/common/postscript.c:2492
 #: plug-ins/common/postscript.c:2642 plug-ins/common/postscript.c:2770
-msgid "write error occured"
-msgstr "riscontrato errore in scrittura"
+#: plug-ins/common/sunras.c:1457 plug-ins/common/sunras.c:1565
+#: plug-ins/fits/fits.c:831 plug-ins/fits/fits.c:955
+msgid "Write error occurred"
+msgstr "Errore di scrittura"
 
 #: plug-ins/common/postscript.c:2796
 msgid "Load PostScript"
@@ -6148,6 +6179,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Errore di cattura dello schermo"
 
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:669 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Cattura"
@@ -6487,9 +6519,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Angolo dei picchi (-1: casuale):"
 
 #: plug-ins/common/sparkle.c:409
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
-msgstr ""
-"Imposta l'angolo dei picchi (-1 significa che si sceglie un angolo casuale)"
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
+msgstr "Imposta l'angolo dei picchi (-1 significa che viene scelto un angolo casuale)"
 
 #: plug-ins/common/sparkle.c:417
 msgid "Spik_e Density:"
@@ -6806,11 +6837,6 @@ msgstr "Impossibile operare su tipi di immagine sconosciuti"
 msgid "EOF encountered on reading"
 msgstr "EOF riscontrato in lettura"
 
-#: plug-ins/common/sunras.c:1457 plug-ins/common/sunras.c:1565
-#: plug-ins/fits/fits.c:831 plug-ins/fits/fits.c:955
-msgid "Write error occured"
-msgstr "Errore di scrittura"
-
 #: plug-ins/common/sunras.c:1582
 msgid "Save as SUNRAS"
 msgstr "Salva come SUNRAS"
@@ -6871,6 +6897,7 @@ msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #: plug-ins/common/svg.c:822
+#, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
@@ -7042,6 +7069,7 @@ msgid "TileIt"
 msgstr "Piastrella!"
 
 #. Area for buttons etc
+#. Flip
 #: plug-ins/common/tileit.c:412 plug-ins/ifscompose/ifscompose.c:640
 msgid "Flip"
 msgstr "Inverti"
@@ -7217,7 +7245,7 @@ msgid "Create a new unit from scratch."
 msgstr "Crea una nuova unità di misura."
 
 #: plug-ins/common/uniteditor.c:567
-msgid "Create a new unit with the currently seleted unit as template."
+msgid "Create a new unit with the currently selected unit as template."
 msgstr "Crea una nuova unità di misura basata su quella selezionata."
 
 #: plug-ins/common/unsharp.c:148
@@ -7368,7 +7396,7 @@ msgstr "Soglia s_uperiore:"
 
 #: plug-ins/common/vpropagate.c:1109
 msgid "_Propagating Rate:"
-msgstr "In_tensità propagazione:"
+msgstr "Velocità di _propagazione:"
 
 #: plug-ins/common/vpropagate.c:1117
 msgid "To L_eft"
@@ -7388,7 +7416,7 @@ msgstr "In _basso"
 
 #: plug-ins/common/vpropagate.c:1135
 msgid "Propagating _Alpha Channel"
-msgstr "Propaga canale _alfa"
+msgstr "Propagazione canale _alfa"
 
 #: plug-ins/common/vpropagate.c:1146
 msgid "Propagating Value Channel"
@@ -7410,7 +7438,7 @@ msgstr "Opzioni di base"
 msgid "Step Size:"
 msgstr "Incremento:"
 
-#: plug-ins/common/warp.c:428 plug-ins/ifscompose/ifscompose.c:1294
+#: plug-ins/common/warp.c:428 plug-ins/ifscompose/ifscompose.c:1293
 msgid "Iterations:"
 msgstr "Iterazioni:"
 
@@ -7819,7 +7847,6 @@ msgstr ""
 "'%s':\n"
 "Nessun tipo di dati immagini specificato"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:964
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8042,7 +8069,7 @@ msgstr "Il file FITS non contiene nessuna immagine visualizzabile"
 
 #: plug-ins/fits/fits.c:434
 msgid "FITS save cannot handle images with alpha channels"
-msgstr "Salvataggio FITS non può gestire immagini con canali alpha"
+msgstr "Salvataggio FITS non può gestire immagini con canali alfa"
 
 #: plug-ins/fits/fits.c:974
 msgid "Load FITS File"
@@ -8481,7 +8508,7 @@ msgid "Draw on:"
 msgstr "Disegna su:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2052 plug-ins/imagemap/imap_selection.c:365
+#: plug-ins/gfig/gfig.c:2052 plug-ins/imagemap/imap_selection.c:404
 #: plug-ins/rcm/rcm_dialog.c:688
 msgid "Selection"
 msgstr "Selezione"
@@ -8891,6 +8918,7 @@ msgid "(none)"
 msgstr "(nessuno)"
 
 #: plug-ins/gfig/gfig-preview.c:577 plug-ins/gfig/gfig-preview.c:608
+#, c-format
 msgid "<NONE>"
 msgstr "<NESSUNO>"
 
@@ -8900,8 +8928,8 @@ msgid "XY Position:"
 msgstr "Posizione XY:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-msgid "Spiral Number of Points"
-msgstr "Numeri di punti spirale"
+msgid "Spiral Number of Turns"
+msgstr "Numeri di giri di spirale"
 
 #: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
@@ -8963,131 +8991,134 @@ msgstr "Errore di scrittura file chiarore a gradiente '%s': %s"
 msgid "GFlare"
 msgstr "Chiarore a gradiente"
 
-#: plug-ins/gflare/gflare.c:2352
+#: plug-ins/gflare/gflare.c:2347
 msgid "A_uto Update Preview"
 msgstr "A_utoaggiorna l'anteprima"
 
-#: plug-ins/gflare/gflare.c:2403
+#: plug-ins/gflare/gflare.c:2398
 msgid "`Default' is created."
 msgstr "È stato creato 'predefinito'"
 
-#: plug-ins/gflare/gflare.c:2404
+#: plug-ins/gflare/gflare.c:2399
 msgid "Default"
 msgstr "Predefinito"
 
 #.
 #. *  Scales
 #.
-#: plug-ins/gflare/gflare.c:2670 plug-ins/gflare/gflare.c:3478
-#: plug-ins/gflare/gflare.c:3585 plug-ins/gflare/gflare.c:3724
+#.
+#. *	Scales
+#.
+#: plug-ins/gflare/gflare.c:2664 plug-ins/gflare/gflare.c:3461
+#: plug-ins/gflare/gflare.c:3566 plug-ins/gflare/gflare.c:3703
 msgid "Parameters"
 msgstr "Parametri"
 
-#: plug-ins/gflare/gflare.c:2697
+#: plug-ins/gflare/gflare.c:2690
 msgid "Ro_tation:"
 msgstr "Ro_tazione:"
 
-#: plug-ins/gflare/gflare.c:2709
+#: plug-ins/gflare/gflare.c:2702
 msgid "_Hue Rotation:"
 msgstr "Rotazione _tonalità:"
 
-#: plug-ins/gflare/gflare.c:2721
+#: plug-ins/gflare/gflare.c:2714
 msgid "Vector _Angle:"
 msgstr "_Angolo vettore:"
 
-#: plug-ins/gflare/gflare.c:2733
+#: plug-ins/gflare/gflare.c:2726
 msgid "Vector _Length:"
 msgstr "_Lunghezza vettore:"
 
-#: plug-ins/gflare/gflare.c:2754
+#: plug-ins/gflare/gflare.c:2747
 msgid "A_daptive Supersampling"
 msgstr "Supercampionamento a_dattivo"
 
-#: plug-ins/gflare/gflare.c:2774
+#: plug-ins/gflare/gflare.c:2766
 msgid "_Max Depth:"
 msgstr "_Massima definizione:"
 
-#: plug-ins/gflare/gflare.c:2784
+#: plug-ins/gflare/gflare.c:2776
 msgid "_Threshold"
 msgstr "_Soglia"
 
-#: plug-ins/gflare/gflare.c:2901
+#: plug-ins/gflare/gflare.c:2893
 msgid "S_elector"
 msgstr "S_elettore"
 
-#: plug-ins/gflare/gflare.c:2980
+#: plug-ins/gflare/gflare.c:2972
 msgid "New GFlare"
 msgstr "Nuovo GFlare"
 
-#: plug-ins/gflare/gflare.c:2983
+#: plug-ins/gflare/gflare.c:2975
 msgid "Enter a name for the new GFlare"
 msgstr "Digitate un nome per il nuovo GFlare"
 
-#: plug-ins/gflare/gflare.c:3002
+#: plug-ins/gflare/gflare.c:2994
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Il nome '%s' è già in uso!"
 
-#: plug-ins/gflare/gflare.c:3052
+#: plug-ins/gflare/gflare.c:3044
 msgid "Copy GFlare"
 msgstr "Copia GFlare"
 
-#: plug-ins/gflare/gflare.c:3055
+#: plug-ins/gflare/gflare.c:3047
 msgid "Enter a name for the copied GFlare"
 msgstr "Digitate un nome per il GFlare copiato"
 
-#: plug-ins/gflare/gflare.c:3076
+#: plug-ins/gflare/gflare.c:3068
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Il nome '%s' è già in uso!"
 
-#: plug-ins/gflare/gflare.c:3102
+#: plug-ins/gflare/gflare.c:3094
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Impossibile eliminare! Dev'esserci almeno un GFlare."
 
-#: plug-ins/gflare/gflare.c:3112
+#: plug-ins/gflare/gflare.c:3104
 msgid "Delete GFlare"
 msgstr "Elimina GFlare"
 
-#: plug-ins/gflare/gflare.c:3169
+#: plug-ins/gflare/gflare.c:3161
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "non è stato trovato %s in gflare_list"
 
-#: plug-ins/gflare/gflare.c:3210
+#: plug-ins/gflare/gflare.c:3202
 msgid "GFlare Editor"
 msgstr "Editor GFlare"
 
-#: plug-ins/gflare/gflare.c:3214
+#: plug-ins/gflare/gflare.c:3206
 msgid "Rescan Gradients"
 msgstr "Aggiorna gradienti"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3338
+#: plug-ins/gflare/gflare.c:3325
 msgid "Glow Paint Options"
 msgstr "Opzioni pittura luminescente"
 
-#: plug-ins/gflare/gflare.c:3350 plug-ins/gflare/gflare.c:3379
-#: plug-ins/gflare/gflare.c:3408
+#: plug-ins/gflare/gflare.c:3336 plug-ins/gflare/gflare.c:3364
+#: plug-ins/gflare/gflare.c:3392
 msgid "Opacity:"
 msgstr "Opacità:"
 
-#: plug-ins/gflare/gflare.c:3363 plug-ins/gflare/gflare.c:3392
-#: plug-ins/gflare/gflare.c:3421
+#: plug-ins/gflare/gflare.c:3349 plug-ins/gflare/gflare.c:3377
+#: plug-ins/gflare/gflare.c:3405
 msgid "Paint Mode:"
 msgstr "Modalità disegno:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3367
+#: plug-ins/gflare/gflare.c:3353
 msgid "Rays Paint Options"
 msgstr "Opzioni pittura a raggi"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3396
+#: plug-ins/gflare/gflare.c:3381
 msgid "Second Flares Paint Options"
 msgstr "Opzioni pittura seconde fiammate"
 
-#: plug-ins/gflare/gflare.c:3424 plug-ins/gimpressionist/general.c:57
+#: plug-ins/gflare/gflare.c:3408 plug-ins/gimpressionist/general.c:57
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "_General"
 msgstr "_Generale"
@@ -9095,107 +9126,107 @@ msgstr "_Generale"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3450 plug-ins/gflare/gflare.c:3555
-#: plug-ins/gflare/gflare.c:3696
+#: plug-ins/gflare/gflare.c:3434 plug-ins/gflare/gflare.c:3537
+#: plug-ins/gflare/gflare.c:3676
 msgid "Gradients"
 msgstr "Gradienti"
 
-#: plug-ins/gflare/gflare.c:3462 plug-ins/gflare/gflare.c:3569
-#: plug-ins/gflare/gflare.c:3708
+#: plug-ins/gflare/gflare.c:3445 plug-ins/gflare/gflare.c:3550
+#: plug-ins/gflare/gflare.c:3687
 msgid "Radial Gradient:"
 msgstr "Gradienti radiali:"
 
-#: plug-ins/gflare/gflare.c:3466 plug-ins/gflare/gflare.c:3573
+#: plug-ins/gflare/gflare.c:3449 plug-ins/gflare/gflare.c:3554
 msgid "Angular Gradient:"
 msgstr "Gradienti angolari:"
 
-#: plug-ins/gflare/gflare.c:3470 plug-ins/gflare/gflare.c:3577
+#: plug-ins/gflare/gflare.c:3453 plug-ins/gflare/gflare.c:3558
 msgid "Angular Size Gradient:"
 msgstr "Dimensione gradienti angolari:"
 
-#: plug-ins/gflare/gflare.c:3491 plug-ins/gflare/gflare.c:3598
-#: plug-ins/gflare/gflare.c:3737
+#: plug-ins/gflare/gflare.c:3473 plug-ins/gflare/gflare.c:3578
+#: plug-ins/gflare/gflare.c:3715
 msgid "Size (%):"
 msgstr "Dimensione (%):"
 
-#: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3610
-#: plug-ins/gflare/gflare.c:3749
+#: plug-ins/gflare/gflare.c:3485 plug-ins/gflare/gflare.c:3590
+#: plug-ins/gflare/gflare.c:3727
 msgid "Rotation:"
 msgstr "Rotazione:"
 
-#: plug-ins/gflare/gflare.c:3515 plug-ins/gflare/gflare.c:3623
-#: plug-ins/gflare/gflare.c:3762
+#: plug-ins/gflare/gflare.c:3497 plug-ins/gflare/gflare.c:3603
+#: plug-ins/gflare/gflare.c:3740
 msgid "Hue Rotation:"
 msgstr "Rotazione tonalità:"
 
-#: plug-ins/gflare/gflare.c:3529
+#: plug-ins/gflare/gflare.c:3511
 msgid "G_low"
 msgstr "Scintil_lio"
 
-#: plug-ins/gflare/gflare.c:3635
+#: plug-ins/gflare/gflare.c:3615
 msgid "# of Spikes:"
 msgstr "n° di picchi:"
 
-#: plug-ins/gflare/gflare.c:3647
+#: plug-ins/gflare/gflare.c:3627
 msgid "Spike Thickness:"
 msgstr "Spessore picco:"
 
-#: plug-ins/gflare/gflare.c:3661
+#: plug-ins/gflare/gflare.c:3641
 msgid "_Rays"
 msgstr "_Raggi"
 
-#: plug-ins/gflare/gflare.c:3712
+#: plug-ins/gflare/gflare.c:3691
 msgid "Size Factor Gradient:"
 msgstr "Dimensione fattore gradiente:"
 
-#: plug-ins/gflare/gflare.c:3716
+#: plug-ins/gflare/gflare.c:3695
 msgid "Probability Gradient:"
 msgstr "Probabilità gradiente:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:3779
+#: plug-ins/gflare/gflare.c:3757
 msgid "Shape of Second Flares"
 msgstr "Forma delle fiamme secondarie"
 
-#: plug-ins/gflare/gflare.c:3788 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gflare/gflare.c:3765 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Cerchio"
 
-#: plug-ins/gflare/gflare.c:3805 plug-ins/imagemap/imap_menu.c:371
+#: plug-ins/gflare/gflare.c:3782 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Poligono"
 
-#: plug-ins/gflare/gflare.c:3838
+#: plug-ins/gflare/gflare.c:3815
 msgid "Random Seed:"
 msgstr "Seme Casuale:"
 
-#: plug-ins/gflare/gflare.c:3852
+#: plug-ins/gflare/gflare.c:3829
 msgid "_Second Flares"
 msgstr "_Seconde fiammate"
 
-#: plug-ins/gfli/gfli.c:160 plug-ins/gfli/gfli.c:181
+#: plug-ins/gfli/gfli.c:158 plug-ins/gfli/gfli.c:179
 msgid "AutoDesk FLIC animation"
 msgstr "Animazione AutoDesk FLIC"
 
-#: plug-ins/gfli/gfli.c:532
+#: plug-ins/gfli/gfli.c:530
 #, c-format
 msgid "Frame (%i)"
 msgstr "Frame (%i)"
 
-#: plug-ins/gfli/gfli.c:683
+#: plug-ins/gfli/gfli.c:681
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr ""
 "Spiacente, è possibile salvare solo immagine in scala di grigi o indicizzate."
 
-#: plug-ins/gfli/gfli.c:816
+#: plug-ins/gfli/gfli.c:814
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Caricamento quadri"
 
-#: plug-ins/gfli/gfli.c:879
+#: plug-ins/gfli/gfli.c:877
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Salvataggio quadri"
 
@@ -9376,7 +9407,6 @@ msgstr "_GIMPressionista..."
 msgid "Painting..."
 msgstr "Pittura..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -9417,13 +9447,16 @@ msgid "Start angle:"
 msgstr "Angolo di partenza:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#: plug-ins/gimpressionist/orientation.c:90
-msgid "The angle of the first brush to create"
-msgstr "L'angolo del primo pennello da creare"
+msgid "The starting angle of the first brush to create"
+msgstr "L'angolo di partenza del primo pennello da creare"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Ampiezza angolo:"
+
+#: plug-ins/gimpressionist/orientation.c:90
+msgid "The angle span of the first brush to create"
+msgstr "L'ampiezza dell'angolo del primo pennello da creare"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -10037,66 +10070,66 @@ msgstr "/Ricalcola centro"
 msgid "IfsCompose Options"
 msgstr "Opzioni IfsCompose"
 
-#: plug-ins/ifscompose/ifscompose.c:1281
+#: plug-ins/ifscompose/ifscompose.c:1280
 msgid "Max. Memory:"
 msgstr "Memoria massima:"
 
-#: plug-ins/ifscompose/ifscompose.c:1308
+#: plug-ins/ifscompose/ifscompose.c:1307
 msgid "Subdivide:"
 msgstr "Suddividi:"
 
-#: plug-ins/ifscompose/ifscompose.c:1321
+#: plug-ins/ifscompose/ifscompose.c:1320
 msgid "Spot Radius:"
 msgstr "Raggio:"
 
-#: plug-ins/ifscompose/ifscompose.c:1394
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Rendering IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1413
+#: plug-ins/ifscompose/ifscompose.c:1412
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copia IFS sull'immagine (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1552
+#: plug-ins/ifscompose/ifscompose.c:1551
 #, c-format
 msgid "Transformation %s"
 msgstr "Trasformazione %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2548
+#: plug-ins/ifscompose/ifscompose.c:2547
 msgid "Save failed"
 msgstr "Salvataggio fallito"
 
-#: plug-ins/ifscompose/ifscompose.c:2630 plug-ins/ifscompose/ifscompose.c:2643
+#: plug-ins/ifscompose/ifscompose.c:2629 plug-ins/ifscompose/ifscompose.c:2642
 msgid "Open failed"
 msgstr "Apertura fallita"
 
-#: plug-ins/ifscompose/ifscompose.c:2637
+#: plug-ins/ifscompose/ifscompose.c:2636
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "Il file '%s' non sembra essere un file IFS Compose."
 
-#: plug-ins/ifscompose/ifscompose.c:2679
+#: plug-ins/ifscompose/ifscompose.c:2678
 msgid "Save as IFS file"
 msgstr "Salva come file IFS"
 
-#: plug-ins/ifscompose/ifscompose.c:2709
+#: plug-ins/ifscompose/ifscompose.c:2708
 msgid "Open IFS file"
 msgstr "Apri file IFS"
 
 #: plug-ins/imagemap/imap_about.c:42
-msgid "Imagemap plug-in 2.0"
-msgstr "Plug-in Imagemap 2.0"
+msgid "Imagemap plug-in 2.2"
+msgstr "Plug-in Imagemap 2.2"
 
 #: plug-ins/imagemap/imap_about.c:44
-msgid "Copyright(c) 1999-2003 by Maurits Rijk"
-msgstr "Copyright(c) 1999-2003 by Maurits Rijk"
+msgid "Copyright(c) 1999-2004 by Maurits Rijk"
+msgstr "Copyright(c) 1999-2004 by Maurits Rijk"
 
 #: plug-ins/imagemap/imap_about.c:45
-msgid "lpeek.mrijk@consunet.nl"
-msgstr "lpeek.mrijk@consunet.nl"
+msgid "m.rijk@chello.nl"
+msgstr "m.rijk@chello.nl"
 
 #: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
@@ -10141,7 +10174,7 @@ msgid "Cut"
 msgstr "Taglia"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
-#: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
+#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
 msgstr "Elimina"
 
@@ -10259,7 +10292,7 @@ msgstr "Inserisci punti"
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_object_popup.c:109
-#: plug-ins/imagemap/imap_selection.c:169
+#: plug-ins/imagemap/imap_selection.c:170
 msgid "Move Down"
 msgstr "Sposta in basso"
 
@@ -10279,7 +10312,7 @@ msgstr "Sposta davanti"
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_object_popup.c:107
-#: plug-ins/imagemap/imap_selection.c:165
+#: plug-ins/imagemap/imap_selection.c:166
 msgid "Move Up"
 msgstr "Sposta in alto"
 
@@ -10398,7 +10431,7 @@ msgstr "Impostazioni area"
 msgid "Area #%d Settings"
 msgstr "Impostazioni area #%d"
 
-#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:64
+#: plug-ins/imagemap/imap_file.c:49 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
 msgstr "Errore di apertura file"
 
@@ -10406,19 +10439,17 @@ msgstr "Errore di apertura file"
 msgid "Load Imagemap"
 msgstr "Carica imagemap"
 
-#: plug-ins/imagemap/imap_file.c:93
-msgid "File exists!"
-msgstr "Il file esiste!"
-
-#: plug-ins/imagemap/imap_file.c:98
+#: plug-ins/imagemap/imap_file.c:112
 msgid ""
-"File already exists.\n"
-"  Do you really want to overwrite?  "
+"<span weight=\"bold\" size=\"larger\">File already exists.</span>\n"
+"\n"
+"Do you really want to overwrite?"
 msgstr ""
-"Il file esiste già\n"
-"  Sicuro di volerlo sovrascrivere?  "
+"<span weight=\"bold\" size=\"larger\">Il file esiste già.</span>\n"
+"\n"
+"Sicuro di volerlo sovrascrivere?"
 
-#: plug-ins/imagemap/imap_file.c:134
+#: plug-ins/imagemap/imap_file.c:155
 msgid "Save Imagemap"
 msgstr "Salva mappa immagine"
 
@@ -10478,40 +10509,40 @@ msgstr "Mappa_immagine..."
 msgid "<Image>/Filters/Web"
 msgstr "<Image>/Filtri/Web"
 
-#: plug-ins/imagemap/imap_main.c:589 plug-ins/imagemap/imap_settings.c:167
+#: plug-ins/imagemap/imap_main.c:595 plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<senzatitolo>"
 
-#: plug-ins/imagemap/imap_main.c:741
+#: plug-ins/imagemap/imap_main.c:747
 msgid "Some data has been changed!"
 msgstr "Alcuni dati sono cambiati!"
 
-#: plug-ins/imagemap/imap_main.c:742
+#: plug-ins/imagemap/imap_main.c:748
 msgid "Do you really want to discard your changes?"
 msgstr "Se sicuro di voler abbandonare i cambiamenti?"
 
-#: plug-ins/imagemap/imap_main.c:950
+#: plug-ins/imagemap/imap_main.c:956
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" salvato."
 
-#: plug-ins/imagemap/imap_main.c:954
+#: plug-ins/imagemap/imap_main.c:960
 msgid "Couldn't save file:"
 msgstr "Impossibile salvare il file:"
 
-#: plug-ins/imagemap/imap_main.c:980
+#: plug-ins/imagemap/imap_main.c:986
 msgid "Image size has changed."
 msgstr "La dimensione immagine è cambiata"
 
-#: plug-ins/imagemap/imap_main.c:981
+#: plug-ins/imagemap/imap_main.c:987
 msgid "Resize area's?"
 msgstr "Ridimensionamento area?"
 
-#: plug-ins/imagemap/imap_main.c:1009
+#: plug-ins/imagemap/imap_main.c:1015
 msgid "Couldn't read file:"
 msgstr "Impossibile leggere il file:"
 
-#: plug-ins/imagemap/imap_main.c:1056
+#: plug-ins/imagemap/imap_main.c:1062
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -10718,17 +10749,25 @@ msgstr "In alto a sinistra _x:"
 msgid "Upper left _y:"
 msgstr "In alto a sinistra _y:"
 
-#: plug-ins/imagemap/imap_selection.c:174 plug-ins/imagemap/imap_tools.c:167
+#: plug-ins/imagemap/imap_selection.c:175 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Modifica"
 
-#: plug-ins/imagemap/imap_selection.c:343
+#: plug-ins/imagemap/imap_selection.c:415
+msgid "#"
+msgstr "#"
+
+#: plug-ins/imagemap/imap_selection.c:426
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:343
+#: plug-ins/imagemap/imap_selection.c:444
+msgid "ALT Text"
+msgstr "Testo ALT"
+
+#: plug-ins/imagemap/imap_selection.c:454
 msgid "Target"
-msgstr "Obbiettivo"
+msgstr "Target"
 
 #: plug-ins/imagemap/imap_settings.c:88
 msgid "Settings for this Mapfile"
@@ -10849,6 +10888,11 @@ msgstr "_Labirinto..."
 #: plug-ins/maze/maze.c:457
 msgid "Drawing Maze..."
 msgstr "Disegno labirinto..."
+
+#. $Id$
+#: plug-ins/maze/maze.h:2
+msgid "Maze"
+msgstr "Labirinto"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:214
@@ -11404,6 +11448,10 @@ msgstr "Scalatura:"
 #: plug-ins/print/gimp_main_window.c:1146
 msgid "Set the scale (size) of the image"
 msgstr "Imposta la scala (grandezza) dell'immagine"
+
+#: plug-ins/print/gimp_main_window.c:1174
+msgid "Scale by:"
+msgstr "Scala per:"
 
 #: plug-ins/print/gimp_main_window.c:1179
 msgid ""

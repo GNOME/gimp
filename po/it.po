@@ -21,14 +21,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"POT-Creation-Date: 2004-05-22 23:13+0200\n"
-"PO-Revision-Date: 2004-05-17 10:01+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-24 08:02+0200\n"
+"PO-Revision-Date: 2004-05-24 08:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -388,20 +388,20 @@ msgstr "Modifica il colore del canale"
 msgid "Edit Channel Attributes"
 msgstr "Modifica attributi di canale"
 
-#: app/actions/colormap-editor-actions.c:42
+#: app/actions/colormap-editor-actions.c:43
 msgid "Indexed Palette Menu"
 msgstr "Menu tavolozza indicizzata"
 
-#: app/actions/colormap-editor-actions.c:46
-#: app/actions/palette-editor-actions.c:44
+#: app/actions/colormap-editor-actions.c:47
+#: app/actions/palette-editor-actions.c:47
 msgid "_Edit Color..."
 msgstr "_Modifica colore..."
 
-#: app/actions/colormap-editor-actions.c:54
+#: app/actions/colormap-editor-actions.c:55
 msgid "_Add Color from FG"
 msgstr "_Aggiungi colore dal PP"
 
-#: app/actions/colormap-editor-actions.c:59
+#: app/actions/colormap-editor-actions.c:60
 msgid "_Add Color from BG"
 msgstr "_Aggiungi colore dallo SF"
 
@@ -753,11 +753,11 @@ msgstr "Inverti non agisce su livelli indicizzati."
 msgid "Equalize does not operate on indexed layers."
 msgstr "Equalizza non agisce su livelli indicizzati."
 
-#: app/actions/drawable-commands.c:135 app/core/gimplayer.c:257
+#: app/actions/drawable-commands.c:134 app/core/gimplayer.c:257
 msgid "Flip Layer"
 msgstr "Rifletti livello"
 
-#: app/actions/drawable-commands.c:173 app/core/gimplayer.c:258
+#: app/actions/drawable-commands.c:171 app/core/gimplayer.c:258
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
@@ -1098,7 +1098,7 @@ msgid "_Curved"
 msgstr "_Curvato"
 
 #: app/actions/gradient-editor-actions.c:255
-msgid "_Sinusodial"
+msgid "_Sinusoidal"
 msgstr "_Sinusoidale"
 
 #: app/actions/gradient-editor-actions.c:260
@@ -1126,75 +1126,75 @@ msgstr "HSV (tonalità in senso _antiorario)"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (tonalità in senso _orario)"
 
-#: app/actions/gradient-editor-actions.c:473
+#: app/actions/gradient-editor-actions.c:478
 msgid "_Blending Function for Segment"
 msgstr "Tipo di _sfumatura per il segmento"
 
-#: app/actions/gradient-editor-actions.c:475
+#: app/actions/gradient-editor-actions.c:480
 msgid "Coloring _Type for Segment"
 msgstr "_Tipo di colorazione per il segmento"
 
-#: app/actions/gradient-editor-actions.c:478
+#: app/actions/gradient-editor-actions.c:483
 msgid "_Flip Segment"
 msgstr "Ri_fletti segmento"
 
-#: app/actions/gradient-editor-actions.c:480
+#: app/actions/gradient-editor-actions.c:485
 msgid "_Replicate Segment..."
 msgstr "D_uplica segmento..."
 
-#: app/actions/gradient-editor-actions.c:482
+#: app/actions/gradient-editor-actions.c:487
 msgid "Split Segment at _Midpoint"
 msgstr "Dividi segmento a _metà"
 
-#: app/actions/gradient-editor-actions.c:484
+#: app/actions/gradient-editor-actions.c:489
 msgid "Split Segment _Uniformly..."
 msgstr "Dividi il segmento _uniformemente..."
 
-#: app/actions/gradient-editor-actions.c:486
+#: app/actions/gradient-editor-actions.c:491
 msgid "_Delete Segment"
 msgstr "_Elimina segmento"
 
-#: app/actions/gradient-editor-actions.c:488
+#: app/actions/gradient-editor-actions.c:493
 msgid "Re-_center Segment's Midpoint"
 msgstr "Ri-_centra la metà del segmento"
 
-#: app/actions/gradient-editor-actions.c:490
+#: app/actions/gradient-editor-actions.c:495
 msgid "Re-distribute _Handles in Segment"
 msgstr "Ri-distribuzione _punti nel segmento"
 
-#: app/actions/gradient-editor-actions.c:495
+#: app/actions/gradient-editor-actions.c:500
 msgid "_Blending Function for Selection"
 msgstr "_Sfumatura della selezione"
 
-#: app/actions/gradient-editor-actions.c:497
+#: app/actions/gradient-editor-actions.c:502
 msgid "Coloring _Type for Selection"
 msgstr "_Tipo di colorazione per la selezione"
 
-#: app/actions/gradient-editor-actions.c:500
+#: app/actions/gradient-editor-actions.c:505
 msgid "_Flip Selection"
 msgstr "Ri_flessione selezione"
 
-#: app/actions/gradient-editor-actions.c:502
+#: app/actions/gradient-editor-actions.c:507
 msgid "_Replicate Selection..."
 msgstr "D_uplica selezione..."
 
-#: app/actions/gradient-editor-actions.c:504
+#: app/actions/gradient-editor-actions.c:509
 msgid "Split Segments at _Midpoints"
 msgstr "Dividi i seg_menti a metà"
 
-#: app/actions/gradient-editor-actions.c:506
+#: app/actions/gradient-editor-actions.c:511
 msgid "Split Segments _Uniformly..."
 msgstr "Dividi i segmenti _uniformemente..."
 
-#: app/actions/gradient-editor-actions.c:508
+#: app/actions/gradient-editor-actions.c:513
 msgid "_Delete Selection"
 msgstr "_Elimina la selezione"
 
-#: app/actions/gradient-editor-actions.c:510
+#: app/actions/gradient-editor-actions.c:515
 msgid "Re-_center Midpoints in Selection"
 msgstr "Ri-_centra le metà nella selezione"
 
-#: app/actions/gradient-editor-actions.c:512
+#: app/actions/gradient-editor-actions.c:517
 msgid "Re-distribute _Handles in Selection"
 msgstr "Ri-distribuizione dei _punti nella selezione"
 
@@ -1711,6 +1711,7 @@ msgid "Layer _Name:"
 msgstr "_Nome livello:"
 
 #. The size labels
+#. the image size labels
 #: app/actions/layers-commands.c:776 app/tools/gimpcroptool.c:1036
 #: app/tools/gimpselectionoptions.c:566 app/widgets/gimptemplateeditor.c:226
 msgid "Width:"
@@ -1768,31 +1769,31 @@ msgstr "In_verti maschera"
 msgid "Invalid width or height. Both must be positive."
 msgstr "Larghezza o altezza non valide. Devono essere entrambe positive."
 
-#: app/actions/palette-editor-actions.c:39
+#: app/actions/palette-editor-actions.c:42
 msgid "Palette Editor Menu"
 msgstr "Menu editor tavolozza"
 
-#: app/actions/palette-editor-actions.c:49
+#: app/actions/palette-editor-actions.c:52
 msgid "New Color from _FG"
 msgstr "Nuovo colore dal _PP"
 
-#: app/actions/palette-editor-actions.c:54
+#: app/actions/palette-editor-actions.c:57
 msgid "New Color from _BG"
 msgstr "Nuovo colore dallo _SF"
 
-#: app/actions/palette-editor-actions.c:59
+#: app/actions/palette-editor-actions.c:62
 msgid "_Delete Color"
 msgstr "_Cancella colore"
 
-#: app/actions/palette-editor-actions.c:64 app/actions/view-actions.c:70
+#: app/actions/palette-editor-actions.c:67 app/actions/view-actions.c:70
 msgid "Zoom _Out"
 msgstr "Zoom _indietro"
 
-#: app/actions/palette-editor-actions.c:69 app/actions/view-actions.c:75
+#: app/actions/palette-editor-actions.c:72 app/actions/view-actions.c:75
 msgid "Zoom _In"
 msgstr "Zoom _avanti"
 
-#: app/actions/palette-editor-actions.c:74
+#: app/actions/palette-editor-actions.c:77
 msgid "Zoom _All"
 msgstr "Zoom _totale"
 
@@ -2171,7 +2172,7 @@ msgstr "Selezione bordo"
 msgid "Border selection by"
 msgstr "Selezione bordo di"
 
-#: app/actions/select-commands.c:308 app/actions/vectors-commands.c:309
+#: app/actions/select-commands.c:293 app/actions/vectors-commands.c:254
 #: app/gui/stroke-dialog.c:293
 msgid "There is no active layer or channel to stroke to."
 msgstr "Non c'è un livello o un canale attivo su cui delineare."
@@ -2444,36 +2445,37 @@ msgstr "Selezi_one a tracciato "
 msgid "Selection to Path (_Advanced)"
 msgstr "Selezione a tracciato (_avanzata)"
 
-#: app/actions/vectors-commands.c:461
+#: app/actions/vectors-commands.c:439
 msgid "Empty Path"
 msgstr "Svuota tracciato"
 
-#: app/actions/vectors-commands.c:475 app/actions/vectors-commands.c:523
+#: app/actions/vectors-commands.c:453 app/actions/vectors-commands.c:501
 msgid "New Path"
 msgstr "Nuovo tracciato"
 
-#: app/actions/vectors-commands.c:477
+#: app/actions/vectors-commands.c:455
 msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #. The name entry hbox, label and entry
-#: app/actions/vectors-commands.c:512 app/actions/vectors-commands.c:630
+#. The name entry
+#: app/actions/vectors-commands.c:490 app/actions/vectors-commands.c:608
 msgid "Path name:"
 msgstr "Nome tracciato:"
 
-#: app/actions/vectors-commands.c:593
+#: app/actions/vectors-commands.c:571
 msgid "Path Attributes"
 msgstr "Attributi tracciato"
 
-#: app/actions/vectors-commands.c:595 app/widgets/gimpvectorstreeview.c:102
+#: app/actions/vectors-commands.c:573 app/widgets/gimpvectorstreeview.c:102
 msgid "Edit Path Attributes"
 msgstr "Modifica attributi tracciato"
 
-#: app/actions/vectors-commands.c:690
+#: app/actions/vectors-commands.c:668
 msgid "Import Paths from SVG"
 msgstr "Importa tracciato da SVG"
 
-#: app/actions/vectors-commands.c:757
+#: app/actions/vectors-commands.c:735
 msgid "Export Path to SVG"
 msgstr "Esporta tracciato a SVG"
 
@@ -2889,7 +2891,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -2992,6 +2994,20 @@ msgid ""
 msgstr ""
 "Riguarda solitamente solo schermi a 8 bit; imposta il numero minimo di "
 "colori allocati per GIMP."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr "Imposta la risoluzione orizzontale del monitor in punti per pollice. Se impostato a 0, forza il server X ad essere interrogato sia per le informazioni di risoluzione orizzontale che verticale."
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr "Imposta la risoluzione verticale del monitor in punti per pollice. Se impostato a 0, forza il server X ad essere interrogato sia per le informazioni di risoluzione orizzontale che verticale."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -4732,7 +4748,6 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -4833,8 +4848,8 @@ msgstr ""
 "punto."
 
 #: app/core/gimptemplate.c:151
-msgid "The horizonal image resolution."
-msgstr "Risoluzione orizzontale dell'immagine."
+msgid "The horizontal image resolution."
+msgstr "La risoluzione orizzontale dell'immagine."
 
 #: app/core/gimptemplate.c:156
 msgid "The vertical image resolution."
@@ -4849,8 +4864,8 @@ msgstr "Sfondo"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixel"
 
@@ -5980,7 +5995,7 @@ msgid "Fit to Window"
 msgstr "Aggiusta sulla finestra"
 
 #: app/gui/preferences-dialog.c:1455
-msgid "Inital Zoom Ratio:"
+msgid "Initial Zoom Ratio:"
 msgstr "Rapporto di zoom iniziale:"
 
 #. Pointer Movement Feedback
@@ -6400,6 +6415,7 @@ msgid "Current Height:"
 msgstr "Altezza corrente:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:317 app/gui/resize-dialog.c:572
 msgid "New Width:"
 msgstr "Nuova larghezza:"
@@ -6439,6 +6455,7 @@ msgid "Y Resolution:"
 msgstr "Risoluzione Y:"
 
 #: app/gui/resize-dialog.c:659 app/widgets/gimptemplateeditor.c:351
+#, c-format
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
@@ -7226,8 +7243,8 @@ msgstr "Versione di GIMP"
 msgid "Temporary Procedure"
 msgstr "Procedure temporanee"
 
-#: app/pdb/selection_tools_cmds.c:329 app/tools/gimpfreeselecttool.c:97
-#: app/tools/tools-enums.c:53
+#: app/pdb/selection_tools_cmds.c:329 app/tools/tools-enums.c:53
+#: app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
 msgstr "Selezione libera"
 
@@ -7446,7 +7463,7 @@ msgstr "Progetta"
 msgid "Edit"
 msgstr "Modifica"
 
-#: app/tools/gimpmovetool.c:109 app/tools/tools-enums.c:95
+#: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:109
 msgid "Move"
 msgstr "Muovi"
 
@@ -8963,19 +8980,19 @@ msgstr "Nessun filtro selezionato"
 msgid "Configure Selected Filter"
 msgstr "Configura il filtro selezionato"
 
-#: app/widgets/gimpcoloreditor.c:244
+#: app/widgets/gimpcoloreditor.c:243
 msgid "FG"
 msgstr "PP"
 
-#: app/widgets/gimpcoloreditor.c:244
+#: app/widgets/gimpcoloreditor.c:243
 msgid "BG"
 msgstr "SF"
 
-#: app/widgets/gimpcoloreditor.c:248
+#: app/widgets/gimpcoloreditor.c:247
 msgid "Edit Foreground Color"
 msgstr "Modifica colore del primo piano"
 
-#: app/widgets/gimpcoloreditor.c:248
+#: app/widgets/gimpcoloreditor.c:247
 msgid "Edit Background Color"
 msgstr "Modifica colore dello sfondo"
 
@@ -9375,7 +9392,7 @@ msgstr ""
 "Se abilitata, la finestra segue automaticamente l'immagine su cui si sta "
 "lavorando."
 
-#: app/widgets/gimpitemtreeview.c:361
+#: app/widgets/gimpitemtreeview.c:360
 #, c-format
 msgid ""
 "%s\n"
@@ -9384,7 +9401,7 @@ msgstr ""
 "%s\t\n"
 "%s  In alto"
 
-#: app/widgets/gimpitemtreeview.c:375
+#: app/widgets/gimpitemtreeview.c:374
 #, c-format
 msgid ""
 "%s\n"
@@ -9393,11 +9410,11 @@ msgstr ""
 "%s  \n"
 "%s  In basso"
 
-#: app/widgets/gimpitemtreeview.c:1371
+#: app/widgets/gimpitemtreeview.c:1373
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
-#: app/widgets/gimpitemtreeview.c:1379
+#: app/widgets/gimpitemtreeview.c:1381
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
