@@ -2,9 +2,9 @@
 
 #BEGIN {$^W=1};
 
+use Gimp::Feature qw(:perl-5.005 :gtk);
 use Gimp (':consts');
 use Gimp::Fu;
-use Gimp::Feature qw(:perl-5.005 :gtk);
 use Gtk;
 use Gtk::Gdk;
 

@@ -2,9 +2,9 @@
 
 #BEGIN {$^W=1};
 
+use Gimp::Feature qw(:pdl);
 use Gimp;
 use Gimp::Fu;
-use Gimp::Feature qw(:pdl);
 use Gimp::PDL;
 use PDL::LiteF;
 

@@ -3,10 +3,10 @@
 BEGIN { $^W=1 }
 use strict;
 
-use Gimp;
-use Gimp::Fu;
 use Gimp::Feature qw(:pdl);
 BEGIN { eval "use PDL::Graphics::TriD"; $@ and Gimp::Feature::missing('PDL TriD (OpenGL) support') }
+use Gimp;
+use Gimp::Fu;
 use PDL::Math;
 use PDL::Core;
 use PDL;

@@ -6,6 +6,15 @@ use Config;
 $topdir=".";
 $|=1;
 
+@examples =
+   qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
+      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
+      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
+      sethspin.pl animate_cells);
+@shebang = (map("examples/$_",@examples),
+   qw(Perl-Server scm2perl scm2scm examples/example-net.pl examples/homepage-logo.pl
+      examples/example-fu.pl examples/example-oo.pl));
+
 if ($ARGV[0] ne "--writemakefile") {
    for(@ARGV) {
       s/^prefix=/--prefix=/i;
@@ -153,14 +162,6 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 
 EOF
 }
-
-@examples =
-   qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
-      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc);
-@shebang = (map("examples/$_",@examples),
-   qw(Perl-Server scm2perl scm2scm examples/example-net.pl examples/homepage-logo.pl
-      examples/example-fu.pl examples/example-oo.pl));
 
 for(@shebang) {
    system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);

@@ -1,10 +1,17 @@
-This file describes the various files in the example/ directory. It also
-contains links to applications/scripts people have written. If you
-want to be added, drop me a note at <pcg@goof.com>
+This file describes the various files in the examples/ directory. It also
+contains links to applications/scripts people have written. If you want to
+be added, drop me a note at <pcg@goof.com>.
+
+Most of these scripts are distributed under the GPL only, not under the
+Artistic License. If you need a script released under the Artistic License
+please contact its author directly.
+
+Also, most scripts in the examples directory are not described or
+documented here. See their source for more info.
 
 example-fu.pl
-	a very small, bare-bones Gimp::Fu script. it is useful
-	as a starting point for experiments.
+        a very small, bare-bones Gimp::Fu script. it is useful as a
+        starting point for experiments.
 
 webify.pl
 	a small plugin that flattens an image, makes the background

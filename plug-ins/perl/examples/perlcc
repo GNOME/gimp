@@ -44,7 +44,7 @@ sub generate_log {
    $log.=sprintf "%-16s %-5s %s\n", 'File','Fatal', 'Message';
    for (split /\x00/,Gimp->get_data ('gimp-perl-log')) {
       my ($file,$function,$msg,$installed)=split /\x01/;
-      @msg = split /\n/,Gimp::wrap_text ($msg.($function ? " ($function)" : ""),56);
+      @msg = split /\n/,Gimp::wrap_text ($msg.($function ? " ($function)" : ""),55);
       $log.=sprintf "%-16s %-5s %s\n",$file,$installed ? 'Yes':'No',shift(@msg);
       while(@msg) {
          $log.=sprintf "%-16s %-5s %s\n",'','+->',shift(@msg);

@@ -64,3 +64,5 @@ examples/terral_text
 examples/xachvision.pl
 examples/gimpmagick
 examples/perlcc
+examples/sethspin.pl
+examples/animate_cells

@@ -10,11 +10,9 @@ use File::Basename;
 use base qw(Exporter);
 
 require Exporter;
-require DynaLoader;
-require AutoLoader;
 
 eval {
-   require Data::Dumperx;
+   require Data::Dumper;
    import Data::Dumper;
 };
 if ($@) {
@@ -474,6 +472,17 @@ sub interact($$$@) {
    }
 }
 
+sub fu_feature_present($$) {
+   my ($feature,$function)=@_;
+   require Gimp::Feature;
+   if (Gimp::Feature::present($feature)) {
+      1;
+   } else {
+      Gimp::Feature::missing(Gimp::Feature::describe($feature),$function);
+      0;
+   }
+}
+
 sub this_script {
    return $scripts[0] unless $#scripts;
    # well, not-so-easy-day today
@@ -535,6 +544,10 @@ sub net {
    my($interact)=1;
    my $params = $this->[8];
    
+   for(@{$this->[10]}) {
+      return unless fu_feature_present($_,$this->[0]);
+   }
+
    # %map is a hash that associates (mangled) parameter names to parameter index
    @map{map mangle_key($_->[1]), @{$params}} = (0..$#{$params});
    
@@ -586,14 +599,8 @@ sub query {
       my($function,$blurb,$help,$author,$copyright,$date,
          $menupath,$imagetypes,$params,$results,$features,$code)=@$_;
 
-      if(@$features) {
-         require Gimp::Feature;
-         for(@$features) {
-            unless (Gimp::Feature::present($_)) {
-               Gimp::Feature::missing(Gimp::Feature::describe($_),$function);
-               next script;
-            }
-         }
+      for(@$features) {
+         next script unless fu_feature_present($_,$function);
       }
       
       if ($menupath=~/^<Image>\//) {

@@ -1,24 +1,26 @@
 Revision history for Gimp-Perl extension.
 
-	- fixed Gimp::Util::gimp_image_layertype.
-	- make install checks for install directory writability
-          and refuses to install if it isn't.
-        - fixed a longstanding bug that caused (some) set_trace calls
-          to be ignored with Gimp::Net.
-	- added new convinience functions to Gimp::Util.
-        - Gimp::Fu checks for the presence of Gtk and dies
-          if it can't be found.
-        - Uh, ah, debugging code in the repository, again!
-        - PF_FONT should now display a string widget in gtk+ 1.0.
-        - PixelRgn/Tile data sould now be accessible again.
-        - updated PDB.
-        - extensive tests is now always on.
-        - added examples/gimpmagick.
+1.061 Fri Mar 12 21:27:26 CET 1999
         - closed big, BIG security hole on password authenticitation
           (basically one could do anything includung killing your
           system without authorization. argh). This required a
           protocol change, so old clients are unable to connect using
           password-authenticitation.
+        - sped up Gimp::Net considerably, by getting rid of the IO::Socket
+          module, which required half a second(!!) to load.
+	- fixed Gimp::Util::gimp_image_layertype.
+	- make install checks for install directory writability
+          and refuses to install if it isn't.
+        - fixed a longstanding bug that caused (some) set_trace calls
+          to be ignored when running under Gimp::Net.
+	- added new convinience functions to Gimp::Util.
+        - Gimp::Fu checks for the presence of Gtk and dies
+          if it can't be found.
+        - PF_FONT should now display a string widget in gtk+ 1.0.
+        - PixelRgn/Tile data sould now be accessible again.
+        - updated PDB.
+        - extensive tests is now always on.
+        - added examples/gimpmagick, examples/sethspin.pl, animate_cells.
         - new function Gimp::initialized that returns true whenever its
           safe to call gimp functins.
         - added the Gimp::Feature module, allowing for easy feature checks.
@@ -26,9 +28,11 @@ Revision history for Gimp-Perl extension.
           usage.
         - added perlcc, the perl control center. Only displays log messages
           at the moment.
+        - error and warning logging through the Perl Control Center.
         - Data::Dumper is now longer required to run the scripts, some
           buttons and RUN_WITH_LAST_VALS won't work, though.
         - removed POSIX dependency in examples/gimpmagick.
+        - Uh, ah, debugging code in the repository, again!
 
 1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it

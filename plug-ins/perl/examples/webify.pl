@@ -27,7 +27,7 @@ register "webify",
    $img = $img->channel_ops_duplicate if $new;
    
    eval { $img->undo_group_start };
-   
+
    $drawable = $img->flatten;
    
    if ($alpha) {

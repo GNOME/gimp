@@ -1,11 +1,8 @@
 package Gimp::Feature;
 
-use Carp;
-use Gimp ();
-use base qw(Exporter);
-
 require Exporter;
 
+@ISA=(Exporter);
 @EXPORT = ();
 
 my($gtk,$gtk_10,$gtk_11);
@@ -19,6 +16,7 @@ sub _check_gtk {
       $gtk_10 = (Gtk->major_version==1 && Gtk->minor_version==0);
       $gtk_11 = (Gtk->major_version==1 && Gtk->minor_version>=1) || Gtk->major_version>1;
       $gtk_12 = (Gtk->major_version==1 && Gtk->minor_version>=2) || Gtk->major_version>1;
+      $gtk_13 = (Gtk->major_version==1 && Gtk->minor_version>=3) || Gtk->major_version>1;
    }
 }
 
@@ -26,12 +24,15 @@ my %description = (
    'gtk'        => 'the gtk perl module',
    'gtk-1.1'    => 'gtk+ version 1.1 or higher',
    'gtk-1.2'    => 'gtk+ version 1.2 or higher',
+   'gtk-1.3'    => 'gtk+ version 1.3 or higher',
    'gimp-1.1'   => 'gimp version 1.1 or higher',
    'gimp-1.2'   => 'gimp version 1.2 or higher',
    'perl-5.005' => 'perl version 5.005 or higher',
    'pdl'        => 'PDL (the Perl Data Language), version 1.9906 or higher',
    'gnome'      => 'the gnome perl module',
    'gtkxmhtml'  => 'the Gtk::XmHTML module',
+   'dumper'     => 'the Data::Dumper module',
+   'never'      => '(for testing, will never be present)',
 );
 
 # calm down the gimp module
@@ -50,6 +51,7 @@ sub import {
 
 sub missing {
    my ($msg,$function)=@_;
+   require Gimp;
    Gimp::logger(message => "$_[0] is required but not found", function => $function);
 }
 
@@ -57,7 +59,7 @@ sub need {
    my ($feature,$function)=@_;
    unless (present($feature)) {
       missing($description{$feature},$function);
-      Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit eval { Gimp::main() };
+      Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::main();
    }
 }
 
@@ -77,7 +79,9 @@ sub present {
    } elsif ($_ eq "gtk-1.1") {
       _check_gtk; $gtk_11;
    } elsif ($_ eq "gtk-1.2") {
-      _check_gtk; $gtk_11;
+      _check_gtk; $gtk_12;
+   } elsif ($_ eq "gtk-1.3") {
+      _check_gtk; $gtk_13;
    } elsif ($_ eq "gimp-1.1") {
       (Gimp->major_version==1 && Gimp->minor_version>=1) || Gimp->major_version>1;
    } elsif ($_ eq "gimp-1.2") {
@@ -90,6 +94,14 @@ sub present {
       eval { require Gnome }; $@ eq "";
    } elsif ($_ eq "gtkxmhtml") {
       eval { require Gtk::XmHTML }; $@ eq "";
+   } elsif ($_ eq "dumper") {
+      eval { require Data::Dumper }; $@ eq "";
+   } elsif ($_ eq "never") {
+      0;
+   } else {
+      require Gimp;
+      Gimp::logger(message => "unimplemented requirement '$_' (failed)", fatal => 1);
+      0;
    }
 }
 

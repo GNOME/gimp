@@ -8,10 +8,9 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @gimp_gui_functions
             $help $verbose $host);
 
-use base qw(DynaLoader);
-
 require DynaLoader;
 
+@ISA=qw(DynaLoader);
 $VERSION = 1.061;
 
 @_param = qw(
@@ -287,10 +286,34 @@ sub logger {
    $args{message}  = "unknown message"    unless defined $args{message};
    $args{function} = ""                   unless defined $args{function};
    $args{fatal}    = 1                    unless defined $args{fatal};
-   print STDERR "$file: $args{message} (for function $args{function})\n" if $verbose || $interface_type eq 'net';
+   print STDERR "$file: $args{message} ",($args{function} ? "(for function $args{function})":""),"\n" if $verbose || $interface_type eq 'net';
    push(@log,[$file,@args{'function','message','fatal'}]);
    _initialized_callback if initialized();
 }
+
+# calm down the gimp module
+sub net {}
+sub query {}
+
+sub normal_context {
+   !$^S && defined $^S;
+}
+
+$SIG{__DIE__} = sub {
+   if (normal_context) {
+      logger(message => substr($_[0],0,-1), fatal => 1, function => 'DIE');
+      initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit main();
+   }
+   die $_[0];
+};
+
+$SIG{__WARN__} = sub {
+   if (normal_context) {
+      logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARN');
+   } else {
+      warn $_[0];
+   }
+};
 
 if ($interface_type=~/^lib$/i) {
    $interface_pkg="Gimp::Lib";
