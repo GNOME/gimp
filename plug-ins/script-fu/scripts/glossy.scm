@@ -172,7 +172,7 @@
 
 
 (script-fu-register "script-fu-glossy-logo-alpha"
-                    _"<Image>/Script-Fu/Alpha to Logo/Glossy..."
+                    _"<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
                     "Creates anything you can create with it :)"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
@@ -236,7 +236,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glossy-logo"
-                    _"<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
                     "Creates anything you can create with it :)"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"

@@ -52,7 +52,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-alien-glow-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -84,7 +84,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

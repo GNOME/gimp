@@ -257,7 +257,7 @@ plug_in_menus_delete_entry (const gchar *menu_path)
 
   g_return_if_fail (menu_path != NULL);
 
-  path = gimp_menu_path_strip_uline (menu_path);
+  path = gimp_strip_uline (menu_path);
 
   for (list = gimp_item_factories_from_path (menu_path);
        list;
@@ -327,7 +327,7 @@ plug_in_menus_update (GimpItemFactory *item_factory,
             {
               gchar *menu_path;
 
-              menu_path = gimp_menu_path_strip_uline (proc_def->menu_path);
+              menu_path = gimp_strip_uline (proc_def->menu_path);
 
               gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
                                                menu_path,
@@ -354,7 +354,7 @@ plug_in_menus_update (GimpItemFactory *item_factory,
                                                        progname, NULL),
                                proc_def->menu_path);
 
-              stripped = gimp_menu_path_strip_uline (path);
+              stripped = gimp_strip_uline (path);
               basename = g_path_get_basename (stripped);
 
               g_free (stripped);

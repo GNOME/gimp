@@ -177,7 +177,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carve-it"
-		    _"<Image>/Script-Fu/Stencil Ops/Carve-It..."
+		    _"<Image>/Script-Fu/Stencil Ops/C_arve-It..."
 		    "Use the specified [GRAY] drawable as a stencil to carve from the specified image. The specified image must be either RGB colour or grayscale, not indexed."
 		    "Spencer Kimball"
 		    "Spencer Kimball"

@@ -26,5 +26,7 @@ gchar * gimp_utf8_strtrim      (const gchar *str,
 
 gchar * gimp_memsize_to_string (gulong       memsize);
 
+gchar * gimp_strip_uline       (const gchar *str);
+
 
 #endif  /* __GIMP_UTILS_H__ */

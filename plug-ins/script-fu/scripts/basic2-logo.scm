@@ -68,7 +68,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-basic2-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Basic II..."
+		    _"<Image>/Script-Fu/Alpha to Logo/B_asic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -94,7 +94,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic2-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

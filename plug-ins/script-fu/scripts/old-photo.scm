@@ -84,7 +84,7 @@
 
 (script-fu-register
     "script-fu-old-photo"
-    _"<Image>/Script-Fu/Decor/Old Photo..."
+    _"<Image>/Script-Fu/Decor/_Old Photo..."
     "Makes the image look like an old photo. A border size of 0 means no border."
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

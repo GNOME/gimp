@@ -101,7 +101,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-3d-outline-logo-alpha"
-                    _"<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+                    _"<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
                     "Creates outlined texts with drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"
@@ -138,7 +138,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-3d-outline-logo"
-                    _"<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
                     "Creates outlined texts with drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"

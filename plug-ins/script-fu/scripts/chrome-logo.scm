@@ -74,7 +74,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chrome-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Chrome..."
+		    _"<Image>/Script-Fu/Alpha to Logo/C_hrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"
@@ -100,7 +100,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chrome-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"

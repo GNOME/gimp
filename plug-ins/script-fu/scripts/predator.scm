@@ -96,7 +96,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
-		    _"<Image>/Script-Fu/Alchemy/Predator..."
+		    _"<Image>/Script-Fu/Alchemy/_Predator..."
 		    "Looks like images from the movie Predator"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

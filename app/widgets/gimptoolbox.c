@@ -666,7 +666,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           GtkWidget *menu_item;
           gchar     *menu_path;
 
-          menu_path = gimp_menu_path_strip_uline (tool_info->menu_path);
+          menu_path = gimp_strip_uline (tool_info->menu_path);
 
           menu_item =
             gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),

@@ -23,7 +23,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-erase-rows"
-		    _"<Image>/Script-Fu/Alchemy/Erase every other Row..."
+		    _"<Image>/Script-Fu/Alchemy/_Erase every other Row..."
 		    "Erase every other row/column with the background color"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

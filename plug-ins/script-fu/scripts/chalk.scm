@@ -65,7 +65,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chalk-logo-alpha"
-                    _"<Image>/Script-Fu/Alpha to Logo/Chalk..."
+                    _"<Image>/Script-Fu/Alpha to Logo/_Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"
@@ -97,7 +97,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chalk-logo"
-                    _"<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+                    _"<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"

@@ -90,7 +90,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-bullet"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
 		    "Create a Bullet with an Alien Glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"

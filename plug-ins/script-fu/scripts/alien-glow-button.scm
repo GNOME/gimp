@@ -130,7 +130,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-button"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
 		    "Button with an eerie glow"
 		    "Adrian Likins"
 		    "Adrian Likins"

@@ -102,7 +102,7 @@
 
 (script-fu-register
     "script-fu-spinning-globe"
-    _"<Image>/Script-Fu/Animators/Spinning Globe..."
+    _"<Image>/Script-Fu/Animators/_Spinning Globe..."
     "Maps the image on an animated spinning globe"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

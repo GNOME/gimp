@@ -70,7 +70,7 @@
 
 
 (script-fu-register "script-fu-alien-glow-horizontal-ruler"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 		    "Create an Hrule with the Alien Glow look"
 		    "Adrian Likins"
 		    "Adrian Likins"

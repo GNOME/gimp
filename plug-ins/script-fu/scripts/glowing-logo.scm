@@ -67,7 +67,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-glowing-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -92,7 +92,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glowing-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

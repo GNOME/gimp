@@ -84,7 +84,7 @@
 
 (script-fu-register
  "script-fu-camo-pattern"
- _"<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+ _"<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
  "Camouflage pattern"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "28th April 1998"

@@ -39,15 +39,15 @@
 
 GimpItemFactoryEntry images_menu_entries[] =
 {
-  { { N_("/Raise Displays"), NULL,
+  { { N_("/_Raise Displays"), NULL,
       images_raise_displays_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_GOTO_TOP },
     NULL, NULL, NULL },
-  { { N_("/New Display"), NULL,
+  { { N_("/_New Display"), NULL,
       images_new_display_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL, NULL, NULL },
-  { { N_("/Delete Image"), NULL,
+  { { N_("/_Delete Image"), NULL,
       images_delete_image_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL, NULL, NULL }

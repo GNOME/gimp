@@ -1,3 +1,53 @@
+2003-08-11  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/widgets/gimpwidgets-utils.[ch]: removed function
+	gimp_menu_path_strip_uline() ...
+
+	* gimp/libgimpbase/gimputils.[ch]: ... and added it here under the
+	name gimp_strip_uline()
+
+	* gimp/devel-docs/libgimpbase/libgimpbase-sections.txt: added
+	gimp_strip_uline to gimputils section
+
+	* gimp/app/plug-in/plug-in.c
+	* gimp/app/widgets/gimpitemfactory.c
+	* gimp/app/widgets/gimptoolbox.
+	* gimp/app/gui/plug-in-menus.c: changed accordingly
+
+	* gimp/plug-ins/script-fu/script-fu-scripts.c
+	(script_fu_interface): use gimp_strip_uline() to strip mnemonics
+	from script-fu menu paths
+
+	* gimp/app/gui/vectors-menu.c
+	* gimp/app/gui/templates-menu.c
+	* gimp/app/gui/qmask-menu.c
+	* gimp/app/gui/palettes-menu.c
+	* gimp/app/gui/palette-editor-menu.c
+	* gimp/app/gui/images-menu.c
+	* gimp/app/gui/gradients-menu.c
+	* gimp/app/gui/gradient-editor-menu.c
+	* gimp/app/gui/documents-menu.c
+	* gimp/app/gui/dialogs-menu.c
+	* gimp/app/gui/colormap-editor-menu.c
+	* gimp/app/gui/channels-menu.c
+	* gimp/app/gui/buffers-menu.c
+	* gimp/app/gui/brushes-menu.c
+	* gimp/app/gui/layers-menu.c
+	* gimp/plug-ins/pygimp/plug-ins/clothify.py
+	* gimp/plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* gimp/plug-ins/pygimp/plug-ins/whirlpinch.py
+	* gimp/plug-ins/pygimp/plug-ins/foggify.py
+	* gimp/plug-ins/script-fu/scripts/*.scm
+	* gimp/plug-ins/script-fu/script-fu.c: added mnemonics fixing more
+	of bug #106991
+
+	* gimp/app/gui/error-console-menu.c (error_console_menu_update):
+	updated menu item names, added mnemonics
+
+	* gimp/plug-ins/common/animoptimize.c *
+	gimp/plug-ins/common/animationplay.c: don't prepend every menu
+	entry with "Animation"
+
 2003-08-10  Dave Neary  <bolsh@gimp.org>
 
 	* Made 1.3.18 release.

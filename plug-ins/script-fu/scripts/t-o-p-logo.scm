@@ -95,7 +95,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-t-o-p-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+		    _"<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
 		    "Trace of Particles Effect"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"
@@ -131,7 +131,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-t-o-p-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 		    "Trace of Particles Effect"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"

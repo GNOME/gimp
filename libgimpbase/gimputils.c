@@ -140,3 +140,46 @@ gimp_memsize_to_string (gulong memsize)
       return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0);
     }
 }
+
+/**
+ * gimp_strip_uline:
+ * @str: Underline infested string (or %NULL)
+ *
+ * This function returns a copy of @str stripped of underline
+ * characters. This comes in handy when needing to strip mnemonics
+ * from menu paths etc.
+ *
+ * Return value: A (possibly stripped) copy of @str which should be
+ * freed using g_free() when it is not needed any longer.
+ **/
+gchar *
+gimp_strip_uline (const gchar *str)
+{
+  gchar *escaped;
+  gchar *p;
+
+  if (! str)
+    return NULL;
+
+  p = escaped = g_strdup (str);
+
+  while (*str)
+    {
+      if (*str == '_')
+        {
+          /*  "__" means a literal "_" in the menu path  */
+          if (str[1] == '_')
+            *p++ = *str++;
+
+          str++;
+        }
+      else
+        {
+          *p++ = *str++;
+        }
+    }
+
+  *p = '\0';
+
+  return escaped;
+}

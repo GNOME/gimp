@@ -38,7 +38,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-swirl-tile"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 		    "Create an interesting swirled tile"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"

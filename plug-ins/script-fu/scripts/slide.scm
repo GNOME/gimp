@@ -225,7 +225,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-slide"
-		    _"<Image>/Script-Fu/Decor/Slide..."
+		    _"<Image>/Script-Fu/Decor/_Slide..."
 		    "Gives the image the look of a slide"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"

@@ -175,7 +175,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-neon-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Neon..."
+		    _"<Image>/Script-Fu/Alpha to Logo/N_eon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -205,7 +205,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-neon-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

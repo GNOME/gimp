@@ -148,7 +148,7 @@
 
 (script-fu-register
     "script-fu-fuzzy-border"
-    _"<Image>/Script-Fu/Decor/Fuzzy Border..."
+    _"<Image>/Script-Fu/Decor/_Fuzzy Border..."
     "Fade border to chosen color"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

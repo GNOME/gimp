@@ -202,7 +202,7 @@
   )
 
 (script-fu-register "script-fu-add-bevel"
-		    _"<Image>/Script-Fu/Decor/Add Bevel..."
+		    _"<Image>/Script-Fu/Decor/Add B_evel..."
 		    "Add a bevel to an image"
 		    "Andrew Donkin <ard@cs.waikato.ac.nz>"
 		    "Andrew Donkin"

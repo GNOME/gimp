@@ -43,7 +43,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Python-Fu/Effects/Drop Shadow and Bevel",
+    "<Image>/Python-Fu/Effects/_Drop Shadow and Bevel",
     "RGBA, GRAYA",
     [
         (PF_SLIDER, "blur",   "Shadow Blur", 6, (1, 30, 1)),

@@ -133,7 +133,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-button00"
-		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
 		    "Simple beveled button"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

@@ -1082,6 +1082,7 @@ script_fu_interface (SFScript *script)
   GtkWidget *hbox;
   GtkWidget *menu_item;
   GSList    *list;
+  gchar     *title;
   gchar     *buf;
   gint       start_args;
   gint       i;
@@ -1112,9 +1113,13 @@ script_fu_interface (SFScript *script)
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   buf = strstr (gettext (script->description), _("/Script-Fu/"));
   if (buf)
-    sf_interface->title = g_strdup (buf + strlen (_("/Script-Fu/")));
+    title = g_strdup (buf + strlen (_("/Script-Fu/")));
   else 
-    sf_interface->title = g_strdup (gettext (script->description));
+    title = g_strdup (gettext (script->description));
+
+  /* strip mnemonics from the menupath */
+  sf_interface->title = gimp_strip_uline (title);
+  g_free (title);
 
   buf = strstr (sf_interface->title, "...");
   if (buf)

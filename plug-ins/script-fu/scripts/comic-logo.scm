@@ -103,7 +103,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-comic-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -138,7 +138,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-comic-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"

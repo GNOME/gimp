@@ -60,7 +60,5 @@ void          gimp_get_screen_resolution (GdkScreen   *screen,
 void          gimp_rgb_get_gdk_color     (const GimpRGB *rgb,
                                           GdkColor      *gdk_color);
 
-gchar       * gimp_menu_path_strip_uline (const gchar   *menu_path);
-
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

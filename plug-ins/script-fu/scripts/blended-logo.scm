@@ -107,7 +107,7 @@
 
 
 (script-fu-register "script-fu-blended-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Blended..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -152,7 +152,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-blended-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

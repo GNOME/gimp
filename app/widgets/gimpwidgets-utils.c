@@ -544,35 +544,3 @@ gimp_rgb_get_gdk_color (const GimpRGB *rgb,
   gdk_color->green = (g << 8) | g;
   gdk_color->blue  = (b << 8) | b;
 }
-
-gchar *
-gimp_menu_path_strip_uline (const gchar *menu_path)
-{
-  gchar *escaped;
-  gchar *p;
-
-  if (! menu_path)
-    return NULL;
-
-  p = escaped = g_strdup (menu_path);
-
-  while (*menu_path)
-    {
-      if (*menu_path == '_')
-        {
-          /*  "__" means a literal "_" in the menu path  */
-          if (menu_path[1] == '_')
-            *p++ = *menu_path++;
-
-          menu_path++;
-        }
-      else
-        {
-          *p++ = *menu_path++;
-        }
-    }
-
-  *p = '\0';
-
-  return escaped;
-}

@@ -135,7 +135,7 @@
 
 (script-fu-register
  "script-fu-show-image-structure"
- _"<Image>/Script-Fu/Utils/Show Image Structure..."
+ _"<Image>/Script-Fu/Utils/Show Image _Structure..."
  "Show the layer structure of the image"
  "Shuji Narazaki <narazaki@InetQ.or.jp>"
  "Shuji Narazaki"

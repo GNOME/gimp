@@ -41,22 +41,22 @@
 
 GimpItemFactoryEntry brushes_menu_entries[] =
 {
-  { { N_("/New Brush"), NULL,
+  { { N_("/_New Brush"), NULL,
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
-  { { N_("/Duplicate Brush"), NULL,
+  { { N_("/D_uplicate Brush"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     NULL, NULL },
-  { { N_("/Edit Brush..."), NULL,
+  { { N_("/_Edit Brush..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
     NULL, NULL },
-  { { N_("/Delete Brush..."), NULL,
+  { { N_("/_Delete Brush..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
@@ -64,7 +64,7 @@ GimpItemFactoryEntry brushes_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Refresh Brushes"), NULL,
+  { { N_("/_Refresh Brushes"), NULL,
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,

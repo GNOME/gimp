@@ -120,7 +120,7 @@
 
 
 (script-fu-register "script-fu-selection-round"
-		    _"<Image>/Script-Fu/Selection/Round..."
+		    _"<Image>/Script-Fu/Selection/_Round..."
 		    "Rounds the active selection. The selection should be rectangular."
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"

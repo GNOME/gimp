@@ -72,7 +72,7 @@
 ; Register the function with the GIMP:
 
 (script-fu-register "script-fu-coffee-stain"
-		    _"<Image>/Script-Fu/Decor/Coffee Stain..."
+		    _"<Image>/Script-Fu/Decor/_Coffee Stain..."
 		    "Draws realistic looking coffee stains"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

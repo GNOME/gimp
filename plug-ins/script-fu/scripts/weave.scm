@@ -386,7 +386,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-weave"
-		    _"<Image>/Script-Fu/Alchemy/Weave..."
+		    _"<Image>/Script-Fu/Alchemy/_Weave..."
 		    "Weave effect like Alien Skin"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

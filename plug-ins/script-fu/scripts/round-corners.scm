@@ -115,7 +115,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-round-corners"
-		    _"<Image>/Script-Fu/Decor/Round Corners..."
+		    _"<Image>/Script-Fu/Decor/_Round Corners..."
 		    "Round the corners of an image and optionally adds a drop-shadow and a background"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"

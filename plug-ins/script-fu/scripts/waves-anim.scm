@@ -86,7 +86,7 @@
   (gimp-display-new image)))
 
 (script-fu-register "script-fu-waves-anim"
-		    _"<Image>/Script-Fu/Animators/Waves..."
+		    _"<Image>/Script-Fu/Animators/_Waves..."
 		    "Animate an image like a stone's been thrown into it"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"

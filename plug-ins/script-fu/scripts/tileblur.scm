@@ -59,7 +59,7 @@
 
 (script-fu-register
     "script-fu-tile-blur"
-    _"<Image>/Filters/Blur/Tileable Blur..."
+    _"<Image>/Filters/Blur/_Tileable Blur..."
     "Blurs image edges so that the final result tiles seamlessly"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

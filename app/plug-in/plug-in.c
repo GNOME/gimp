@@ -909,7 +909,7 @@ plug_in_get_undo_desc (PlugIn *plug_in)
                                                plug_in->prog, NULL),
                        proc_def->menu_path);
 
-      stripped  = gimp_menu_path_strip_uline (path);
+      stripped  = gimp_strip_uline (path);
       undo_desc = g_path_get_basename (stripped);
       g_free (stripped);
 

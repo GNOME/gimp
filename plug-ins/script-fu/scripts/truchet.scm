@@ -144,7 +144,7 @@
   )
 
 (script-fu-register "script-fu-truchet"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 		    "Create a Truchet pattern \n\nWorks best with even sized thicknesses"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"

@@ -55,24 +55,26 @@
 
 GimpItemFactoryEntry gradient_editor_menu_entries[] =
 {
-  { { N_("/Left Endpoint's Color..."), NULL,
+  { { N_("/L_eft Endpoint's Color..."), NULL,
       gradient_editor_left_color_cmd_callback, 0 },
     NULL,
     NULL, NULL },
 
-  { { N_("/Load Left Color From/Left Neighbor's Right Endpoint"), NULL,
+  MENU_BRANCH (N_("/_Load Left Color From")),
+
+  { { N_("/Load Left Color From/_Left Neighbor's Right Endpoint"), NULL,
       gradient_editor_load_left_cmd_callback, 0 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Left Color From/Right Endpoint"), NULL,
+  { { N_("/Load Left Color From/_Right Endpoint"), NULL,
       gradient_editor_load_left_cmd_callback, 1 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Left Color From/FG Color"), NULL,
+  { { N_("/Load Left Color From/_FG Color"), NULL,
       gradient_editor_load_left_cmd_callback, 2 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Left Color From/BG Color"), NULL,
+  { { N_("/Load Left Color From/_BG Color"), NULL,
       gradient_editor_load_left_cmd_callback, 3 },
     NULL,
     NULL, NULL },
@@ -90,7 +92,7 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
   LOAD_LEFT_FROM ("09", 12),
   LOAD_LEFT_FROM ("10", 13),
 
-  MENU_BRANCH (N_("/Save Left Color To")),
+  MENU_BRANCH (N_("/_Save Left Color To")),
 
   SAVE_LEFT_TO ("01", 0),
   SAVE_LEFT_TO ("02", 1),
@@ -105,24 +107,26 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Right Endpoint's Color..."), NULL,
+  { { N_("/R_ight Endpoint's Color..."), NULL,
       gradient_editor_right_color_cmd_callback, 0 },
     NULL,
     NULL, NULL },
 
-  { { N_("/Load Right Color From/Right Neighbor's Left Endpoint"), NULL,
+  MENU_BRANCH (N_("/Load Right Color Fr_om")),
+
+  { { N_("/Load Right Color From/_Right Neighbor's Left Endpoint"), NULL,
       gradient_editor_load_right_cmd_callback, 0 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Right Color From/Left Endpoint"), NULL,
+  { { N_("/Load Right Color From/_Left Endpoint"), NULL,
       gradient_editor_load_right_cmd_callback, 1 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Right Color From/FG Color"), NULL,
+  { { N_("/Load Right Color From/_FG Color"), NULL,
       gradient_editor_load_right_cmd_callback, 2 },
     NULL,
     NULL, NULL },
-  { { N_("/Load Right Color From/BG Color"), NULL,
+  { { N_("/Load Right Color From/_BG Color"), NULL,
       gradient_editor_load_right_cmd_callback, 3 },
     NULL,
     NULL, NULL },
@@ -140,7 +144,7 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
   LOAD_RIGHT_FROM ("09", 12),
   LOAD_RIGHT_FROM ("10", 13),
 
-  MENU_BRANCH (N_("/Save Right Color To")),
+  MENU_BRANCH (N_("/Sa_ve Right Color To")),
 
   SAVE_RIGHT_TO ("01", 0),
   SAVE_RIGHT_TO ("02", 1),
@@ -155,27 +159,27 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/blendingfunction/Linear"), NULL,
+  { { N_("/blendingfunction/_Linear"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_LINEAR, "<RadioItem>" },
     NULL,
     NULL, NULL },
-  { { N_("/blendingfunction/Curved"), NULL,
+  { { N_("/blendingfunction/_Curved"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_CURVED, "/blendingfunction/Linear" },
     NULL,
     NULL, NULL },
-  { { N_("/blendingfunction/Sinusodial"), NULL,
+  { { N_("/blendingfunction/_Sinusodial"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SINE, "/blendingfunction/Linear" },
     NULL,
     NULL, NULL },
-  { { N_("/blendingfunction/Spherical (increasing)"), NULL,
+  { { N_("/blendingfunction/Spherical (i_ncreasing)"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SPHERE_INCREASING, "/blendingfunction/Linear" },
     NULL,
     NULL, NULL },
-  { { N_("/blendingfunction/Spherical (decreasing)"), NULL,
+  { { N_("/blendingfunction/Spherical (_decreasing)"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SPHERE_DECREASING, "/blendingfunction/Linear" },
     NULL,
@@ -185,17 +189,17 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
     NULL,
     NULL, NULL },
 
-  { { N_("/coloringtype/RGB"), NULL,
+  { { N_("/coloringtype/_RGB"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_RGB, "<RadioItem>" },
     NULL,
     NULL, NULL },
-  { { N_("/coloringtype/HSV (counter-clockwise hue)"), NULL,
+  { { N_("/coloringtype/HSV (_counter-clockwise hue)"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_HSV_CCW, "/coloringtype/RGB" },
     NULL,
     NULL, NULL },
-  { { N_("/coloringtype/HSV (clockwise hue)"), NULL,
+  { { N_("/coloringtype/HSV (clockwise _hue)"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_HSV_CW, "/coloringtype/RGB" },
     NULL,
@@ -238,11 +242,11 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Blend Endpoints' Colors"), "B",
+  { { N_("/Ble_nd Endpoints' Colors"), "B",
       gradient_editor_blend_color_cmd_callback, 0 },
     NULL,
     NULL, NULL },
-  { { N_("/Blend Endpoints' Opacity"), "<control>B",
+  { { N_("/Blend Endpoints' Opacit_y"), "<control>B",
       gradient_editor_blend_opacity_cmd_callback, 0 },
     NULL,
     NULL, NULL },
@@ -387,29 +391,29 @@ gradient_editor_menu_update (GtkItemFactory *factory,
 
   if (! selection)
     {
-      SET_LABEL ("/blendingfunction", _("Blending Function for Segment"));
-      SET_LABEL ("/coloringtype",     _("Coloring Type for Segment"));
+      SET_LABEL ("/blendingfunction", _("_Blending Function for Segment"));
+      SET_LABEL ("/coloringtype",     _("Coloring _Type for Segment"));
 
-      SET_LABEL ("/flip",             _("Flip Segment"));
-      SET_LABEL ("/replicate",        _("Replicate Segment..."));
-      SET_LABEL ("/splitmidpoint",    _("Split Segment at Midpoint"));
-      SET_LABEL ("/splituniformly",   _("Split Segment Uniformly..."));
-      SET_LABEL ("/delete",           _("Delete Segment"));
-      SET_LABEL ("/recenter",         _("Re-center Segment's Midpoint"));
-      SET_LABEL ("/redistribute",     _("Re-distribute Handles in Segment"));
+      SET_LABEL ("/flip",             _("_Flip Segment"));
+      SET_LABEL ("/replicate",        _("_Replicate Segment..."));
+      SET_LABEL ("/splitmidpoint",    _("Split Segment at _Midpoint"));
+      SET_LABEL ("/splituniformly",   _("Split Segment _Uniformly..."));
+      SET_LABEL ("/delete",           _("_Delete Segment"));
+      SET_LABEL ("/recenter",         _("Re-_center Segment's Midpoint"));
+      SET_LABEL ("/redistribute",     _("Re-distribute _Handles in Segment"));
     }
   else
     {
-      SET_LABEL ("/blendingfunction", _("Blending Function for Selection"));
-      SET_LABEL ("/coloringtype",     _("Coloring Type for Selection"));
+      SET_LABEL ("/blendingfunction", _("_Blending Function for Selection"));
+      SET_LABEL ("/coloringtype",     _("Coloring _Type for Selection"));
 
-      SET_LABEL ("/flip",             _("Flip Selection"));
-      SET_LABEL ("/replicate",        _("Replicate Selection..."));
-      SET_LABEL ("/splitmidpoint",    _("Split Segments at Midpoints"));
-      SET_LABEL ("/splituniformly",   _("Split Segments Uniformly..."));
-      SET_LABEL ("/delete",           _("Delete Selection"));
-      SET_LABEL ("/recenter",         _("Re-center Midpoints in Selection"));
-      SET_LABEL ("/redistribute",     _("Re-distribute Handles in Selection"));
+      SET_LABEL ("/flip",             _("_Flip Selection"));
+      SET_LABEL ("/replicate",        _("_Replicate Selection..."));
+      SET_LABEL ("/splitmidpoint",    _("Split Segments at _Midpoints"));
+      SET_LABEL ("/splituniformly",   _("Split Segments _Uniformly..."));
+      SET_LABEL ("/delete",           _("_Delete Selection"));
+      SET_LABEL ("/recenter",         _("Re-_center Midpoints in Selection"));
+      SET_LABEL ("/redistribute",     _("Re-distribute _Handles in Selection"));
     }
 
   SET_SENSITIVE ("/blendingfunction/(Varies)", FALSE);

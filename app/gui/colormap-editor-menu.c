@@ -37,12 +37,12 @@
 
 GimpItemFactoryEntry colormap_editor_menu_entries[] =
 {
-  { { N_("/Add Color"), NULL,
+  { { N_("/_Add Color"), NULL,
       colormap_editor_add_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
-  { { N_("/Edit Color..."), NULL,
+  { { N_("/_Edit Color..."), NULL,
       colormap_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,

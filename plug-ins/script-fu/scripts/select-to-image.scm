@@ -64,7 +64,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-selection-to-image"
-		    _"<Image>/Script-Fu/Selection/To Image"
+		    _"<Image>/Script-Fu/Selection/To _Image"
 		    "Convert a selection to an image"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

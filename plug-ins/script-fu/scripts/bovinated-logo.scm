@@ -77,7 +77,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-bovinated-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Bovination..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -105,7 +105,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-bovinated-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"

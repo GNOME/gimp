@@ -35,30 +35,30 @@
 
 GimpItemFactoryEntry palette_editor_menu_entries[] =
 {
-  { { N_("/New Color"), "",
+  { { N_("/_New Color"), "",
       palette_editor_new_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL, NULL, NULL },
-  { { N_("/Edit Color..."), "",
+  { { N_("/_Edit Color..."), "",
       palette_editor_edit_color_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL, NULL, NULL },
-  { { N_("/Delete Color"), "",
+  { { N_("/_Delete Color"), "",
       palette_editor_delete_color_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL, NULL, NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
 
-  { { N_("/Zoom Out"), "",
+  { { N_("/Zoom _Out"), "",
       palette_editor_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
     NULL, NULL, NULL },
-  { { N_("/Zoom In"), "",
+  { { N_("/Zoom _In"), "",
       palette_editor_zoom_in_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL, NULL, NULL },
-  { { N_("/Zoom All"), "",
+  { { N_("/Zoom _All"), "",
       palette_editor_zoom_all_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_FIT },
     NULL, NULL, NULL }

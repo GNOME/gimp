@@ -40,22 +40,22 @@
 
 GimpItemFactoryEntry qmask_menu_entries[] =
 {
-  { { N_("/QMask Active"), NULL,
+  { { N_("/_QMask Active"), NULL,
       qmask_toggle_cmd_callback, 0, "<ToggleItem>" },
     NULL, NULL, NULL },
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Mask Selected Areas"), NULL,
+  { { N_("/Mask _Selected Areas"), NULL,
       qmask_invert_cmd_callback, TRUE, "<RadioItem>" },
     NULL, NULL, NULL },
-  { { N_("/Mask Unselected Areas"), NULL,
+  { { N_("/Mask _Unselected Areas"), NULL,
       qmask_invert_cmd_callback, FALSE, "/Mask Selected Areas" },
     NULL, NULL, NULL },
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Configure Color and Opacity..."), NULL,
+  { { N_("/_Configure Color and Opacity..."), NULL,
       qmask_configure_cmd_callback, 0 },
     NULL, NULL, NULL }
 };

@@ -72,7 +72,7 @@
   (gimp-display-new theImage))
 
 (script-fu-register "script-fu-render-map"
-		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 		    "Another pattern which resembles a map"
 		    "Chris Gutteridge: cjg@ecs.soton.ac.uk"
 		    "28th April 1998"

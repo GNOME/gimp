@@ -208,7 +208,7 @@
 
 (script-fu-register
  "script-fu-asc-2-img"
- _"<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+ _"<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
  "Create a new image containing text from a simple text file"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "8th April 1998"

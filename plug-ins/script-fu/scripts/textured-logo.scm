@@ -113,7 +113,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-textured-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Textured..."
+		    _"<Image>/Script-Fu/Alpha to Logo/_Textured..."
 		    "Creates textured logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -150,7 +150,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-textured-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 		    "Creates textured logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

@@ -112,7 +112,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-selection-to-brush"
-		    _"<Image>/Script-Fu/Selection/To Brush..."
+		    _"<Image>/Script-Fu/Selection/To _Brush..."
 		    "Convert a selection to a brush"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

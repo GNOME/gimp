@@ -312,7 +312,7 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
   if (textdomain)
     g_object_set_data (G_OBJECT (item_factory), "textdomain", NULL);
 
-  menu_path = gimp_menu_path_strip_uline (((GtkItemFactoryEntry *) entry)->path);
+  menu_path = gimp_strip_uline (((GtkItemFactoryEntry *) entry)->path);
 
   menu_item = gtk_item_factory_get_item (GTK_ITEM_FACTORY (item_factory),
                                          menu_path);

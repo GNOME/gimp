@@ -124,7 +124,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-starscape-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Starscape..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
@@ -151,7 +151,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-starscape-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

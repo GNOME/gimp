@@ -121,7 +121,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-cool-metal-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"
@@ -152,7 +152,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-cool-metal-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"

@@ -179,7 +179,7 @@
 
 
 (script-fu-register "script-fu-burn-in-anim"
-		    "<Image>/Script-Fu/Animators/Burn-In..."
+		    "<Image>/Script-Fu/Animators/B_urn-In..."
 		    "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 		    "Roland Berger roland@fuchur.leute.server.de"
 		    "Roland Berger"

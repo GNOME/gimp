@@ -85,7 +85,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-selection-to-pattern"
-		    _"<Image>/Script-Fu/Selection/To Pattern..."
+		    _"<Image>/Script-Fu/Selection/To _Pattern..."
 		    "Convert a selection to a pattern"
 		    "Cameron Gregory <cameron@bloke.com>"
 		    "Cameron Gregory"

@@ -115,7 +115,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-alien-neon-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
 		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"
@@ -151,7 +151,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-neon-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 		    "Creates a psychedelic effect with outlines of the specified color around the letters"
 		    "Raphael Quinet (quinet@gamers.org)"
 		    "Raphael Quinet"

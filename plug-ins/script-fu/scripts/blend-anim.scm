@@ -217,7 +217,7 @@
   (gimp-message "Blend Animation needs at least three source layers"))))
 
 (script-fu-register "script-fu-blend-anim"
-		    _"<Image>/Script-Fu/Animators/Blend..."
+		    _"<Image>/Script-Fu/Animators/_Blend..."
 		    "Blend two or more layers over a background, so that an 
                      animation can be saved"
 		    "Sven Neumann <sven@gimp.org>"

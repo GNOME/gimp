@@ -76,7 +76,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-starburst-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Starburst..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"
@@ -103,7 +103,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-starburst-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"

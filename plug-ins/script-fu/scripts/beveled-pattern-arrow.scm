@@ -134,7 +134,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
 		    "Beveled pattern arrow"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

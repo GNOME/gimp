@@ -40,7 +40,7 @@
 
 
 (script-fu-register "script-fu-clothify"
-		    _"<Image>/Script-Fu/Alchemy/Clothify..."
+		    _"<Image>/Script-Fu/Alchemy/_Clothify..."
 		    "Gives the current layer a cloth-like texture"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"

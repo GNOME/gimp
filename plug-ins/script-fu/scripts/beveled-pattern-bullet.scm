@@ -74,7 +74,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-bullet"
-		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
 		    "Beveled pattern bullet"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

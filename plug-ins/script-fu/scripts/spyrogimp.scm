@@ -329,7 +329,7 @@
 
 
 (script-fu-register "script-fu-spyrogimp"
- "<Image>/Script-Fu/Render/Spyrogimp..."
+ "<Image>/Script-Fu/Render/_Spyrogimp..."
  "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
  "Elad Shahar <elad@wisdom.weizmann.ac.il>"
  "Elad Shahar"

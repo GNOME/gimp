@@ -42,22 +42,22 @@
 
 GimpItemFactoryEntry palettes_menu_entries[] =
 {
-  { { N_("/New Palette"), NULL,
+  { { N_("/_New Palette"), NULL,
       data_new_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
-  { { N_("/Duplicate Palette"), NULL,
+  { { N_("/D_uplicate Palette"), NULL,
       data_duplicate_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     NULL, NULL },
-  { { N_("/Edit Palette..."), NULL,
+  { { N_("/_Edit Palette..."), NULL,
       data_edit_data_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL,
     NULL, NULL },
-  { { N_("/Delete Palette..."), NULL,
+  { { N_("/_Delete Palette..."), NULL,
       data_delete_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
@@ -65,7 +65,7 @@ GimpItemFactoryEntry palettes_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Refresh Palettes"), NULL,
+  { { N_("/_Refresh Palettes"), NULL,
       data_refresh_data_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
@@ -73,12 +73,12 @@ GimpItemFactoryEntry palettes_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Import Palette..."), NULL,
+  { { N_("/_Import Palette..."), NULL,
       palettes_import_palette_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CONVERT },
     NULL,
     NULL, NULL },
-  { { N_("/Merge Palettes..."), NULL,
+  { { N_("/_Merge Palettes..."), NULL,
       palettes_merge_palettes_cmd_callback, 0 },
     NULL,
     NULL, NULL }

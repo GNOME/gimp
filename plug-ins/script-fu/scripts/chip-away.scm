@@ -130,7 +130,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chip-away-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"
@@ -172,7 +172,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chip-away-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"

@@ -85,7 +85,7 @@
 ; Register the function with the GIMP:
 
 (script-fu-register "script-fu-distress-selection"
-		    _"<Image>/Script-Fu/Selection/Distress Selection..."
+		    _"<Image>/Script-Fu/Selection/_Distress Selection..."
 		    "No description"
 		    "Chris Gutteridge"
 		    "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

@@ -39,23 +39,23 @@
 
 GimpItemFactoryEntry templates_menu_entries[] =
 {
-  { { N_("/New Template..."), "",
+  { { N_("/_New Template..."), "",
       templates_new_template_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL, NULL, NULL },
-  { { N_("/Duplicate Template..."), "",
+  { { N_("/D_uplicate Template..."), "",
       templates_duplicate_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL, NULL, NULL },
-  { { N_("/Edit Template..."), "",
+  { { N_("/_Edit Template..."), "",
       templates_edit_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
     NULL, NULL, NULL },
-  { { N_("/Create Image from Template..."), "",
+  { { N_("/_Create Image from Template..."), "",
       templates_create_image_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_IMAGE },
     NULL, NULL, NULL },
-  { { N_("/Delete Template..."), "",
+  { { N_("/_Delete Template..."), "",
       templates_delete_template_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
     NULL, NULL, NULL }

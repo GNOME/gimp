@@ -65,7 +65,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-sphere"
-		    _"<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+		    _"<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
 		    "Simple sphere with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

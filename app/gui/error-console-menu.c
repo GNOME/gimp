@@ -35,18 +35,18 @@
 
 GimpItemFactoryEntry error_console_menu_entries[] =
 {
-  { { N_("/Clear Errors"), "",
+  { { N_("/_Clear Errors"), "",
       error_console_clear_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CLEAR },
     NULL, NULL, NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
 
-  { { N_("/Save all Errors to File..."), "",
+  { { N_("/Save _All Errors to File..."), "",
       error_console_save_all_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL, NULL, NULL },
-  { { N_("/Save Selection to File..."), "",
+  { { N_("/Save _Selection to File..."), "",
       error_console_save_selection_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
     NULL, NULL, NULL }
@@ -70,8 +70,8 @@ error_console_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Clear Console",              TRUE);
-  SET_SENSITIVE ("/Save all Errors to File...", TRUE);
+  SET_SENSITIVE ("/Clear Errors",               TRUE);
+  SET_SENSITIVE ("/Save All Errors to File...", TRUE);
   SET_SENSITIVE ("/Save Selection to File...",  selection);
 
 #undef SET_SENSITIVE

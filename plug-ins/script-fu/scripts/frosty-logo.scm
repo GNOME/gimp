@@ -84,7 +84,7 @@
 
 
 (script-fu-register "script-fu-frosty-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Frosty..."
+		    _"<Image>/Script-Fu/Alpha to Logo/_Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"
@@ -110,7 +110,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-frosty-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"

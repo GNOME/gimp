@@ -88,7 +88,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-gradient-bevel-logo-alpha"
-		    _"<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+		    _"<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
@@ -119,7 +119,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-gradient-bevel-logo"
-		    _"<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+		    _"<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"
