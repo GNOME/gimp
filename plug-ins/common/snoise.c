@@ -231,12 +231,18 @@ run (const gchar      *name,
 	  snvals.detail    = param[6].data.d_int32;
 	  snvals.xsize     = param[7].data.d_float;
 	  snvals.ysize     = param[8].data.d_float;
+
+          if (snvals.random_seed)
+            snvals.seed = g_random_int ();
 	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_solid_noise", &snvals);
+
+      if (snvals.random_seed)
+        snvals.seed = g_random_int ();
       break;
 
     default:
@@ -358,8 +364,8 @@ solid_noise_init (void)
   GRand  *gr;
 
   gr = g_rand_new ();
-  if (!snvals.random_seed)
-    g_rand_set_seed (gr, snvals.seed);
+
+  g_rand_set_seed (gr, snvals.seed);
 
   /*  Force sane parameters  */
   snvals.detail = CLAMP (snvals.detail, 0, 15);

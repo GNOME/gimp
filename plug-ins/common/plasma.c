@@ -237,7 +237,7 @@ run (const gchar      *name,
 	}
       else
 	{
-	  pvals.seed = (guint32) param[3].data.d_int32;
+	  pvals.seed       = (guint32) param[3].data.d_int32;
 	  pvals.turbulence = (gdouble) param[4].data.d_float;
 
 	  if (pvals.turbulence <= 0)
@@ -248,6 +248,7 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
+
       if (pvals.random_seed)
         pvals.seed = g_random_int ();
       break;
@@ -347,11 +348,6 @@ plasma_dialog (GimpDrawable  *drawable,
                             G_CALLBACK (plasma_seed_changed_callback),
                             drawable);
 
-  g_signal_connect_swapped (GIMP_RANDOM_SEED_TOGGLE (seed),
-                            "toggled",
-                            G_CALLBACK (plasma_seed_changed_callback),
-                            drawable);
-
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("T_urbulence:"), SCALE_WIDTH, 0,
 			      pvals.turbulence,
@@ -378,9 +374,6 @@ static void
 plasma_seed_changed_callback (GimpDrawable *drawable,
                               gpointer      data)
 {
-  if (pvals.random_seed)
-       pvals.seed = g_random_int ();
-
   plasma (drawable, TRUE);
 }
 

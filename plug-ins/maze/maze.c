@@ -212,7 +212,8 @@ run (const gchar      *name,
 
       /* The interface needs to know the dimensions of the image... */
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      sel_w=x2-x1; sel_h=y2-y1;
+      sel_w = x2 - x1;
+      sel_h = y2 - y1;
 
       /* Acquire info with a dialog */
       if (! maze_dialog ())
@@ -235,12 +236,18 @@ run (const gchar      *name,
 	  mvals.seed = (guint32)    param[7].data.d_int32;
 	  mvals.multiple = (gint16) param[8].data.d_int16;
 	  mvals.offset = (gint16)   param[9].data.d_int16;
+
+          if (mvals.random_seed)
+            mvals.seed = g_random_int ();
 	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_maze", &mvals);
+
+      if (mvals.random_seed)
+        mvals.seed = g_random_int ();
       break;
 
     default:
@@ -367,10 +374,7 @@ maze (GimpDrawable * drawable)
       switch (mvals.algorithm)
         {
         case DEPTH_FIRST:
-          if (mvals.random_seed)
-            mazegen_tileable (0, maz, mw, mh, g_random_int ());
-          else
-            mazegen_tileable (0, maz, mw, mh, mvals.seed);
+          mazegen_tileable (0, maz, mw, mh, mvals.seed);
           break;
 
         case PRIMS_ALGORITHM:
@@ -400,10 +404,7 @@ maze (GimpDrawable * drawable)
                       switch (mvals.algorithm)
                         {
                         case DEPTH_FIRST:
-                          if (mvals.random_seed)
-                            mazegen (maz_yy+maz_xx, maz, mw, mh, g_random_int());
-                          else
-                            mazegen (maz_yy+maz_xx, maz, mw, mh, mvals.seed);
+                          mazegen (maz_yy+maz_xx, maz, mw, mh, mvals.seed);
                           break;
 
                         case PRIMS_ALGORITHM:
@@ -425,10 +426,7 @@ maze (GimpDrawable * drawable)
           switch (mvals.algorithm)
             {
 	    case DEPTH_FIRST:
-              if (mvals.random_seed)
-                mazegen (pos, maz, mw, mh, g_random_int ());
-              else
-                mazegen (pos, maz, mw, mh, mvals.seed);
+              mazegen (pos, maz, mw, mh, mvals.seed);
               break;
 
 	    case PRIMS_ALGORITHM:

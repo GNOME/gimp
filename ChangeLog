@@ -1,5 +1,41 @@
 2004-02-01  Michael Natterer  <mitch@gimp.org>
 
+	Reworked random seed handling once more:
+
+	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): make sure
+	the displayed random seed value is always the one which will be
+	used, whether "Randomize" is checked or not.
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/maze.c: if running interactively, always take
+	the seed value produced by the gimp_random_seed widget and don't
+	touch it because the widgets honors the "randomize" toggle
+	correctly now.
+
+	For noninteractive and last_vals runs, look at the "randomize"
+	boolean and generate a seed if it is TRUE.
+
+	Initialize the random number generators from the seed determined
+	by either of the above ways and don't fiddle with it in the inner
+	algorithms itself.
+
+	* plug-ins/gflare/gflare.c (plugin_run): initialize the GRand
+	from the seed unconditionally.
+
+	(ed_make_page_sflare): no need to get the entry from the random
+	seed widget to get its adjustment. Instead get the adjustment
+	directly.
+
+	(The random handling code of gflare looks somewhat broken, but
+	that applies to the whole plug-in).
+
+2004-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-ins.c (plug_ins_init): when removing a
 	duplicate PDB procedure, also remove it from gimp->load_procs and
 	gimp->save_procs.  Fixes bug #133099.

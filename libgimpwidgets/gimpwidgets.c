@@ -1214,16 +1214,23 @@ static void
 gimp_random_seed_update (GtkWidget *widget,
 		         gpointer   data)
 {
-  GtkWidget *w = data;
+  GtkWidget *spinbutton = data;
 
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (w),
-                             (guint) g_random_int ());
+  /* Generate a new seed if the "New Seed" button was clicked or
+   * of the "Randomize" toggle is activated
+   */
+  if (! GTK_IS_TOGGLE_BUTTON (widget) ||
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
+                                 (guint) g_random_int ());
+    }
 }
 
 /**
  * gimp_random_seed_new:
  * @seed:        A pointer to the variable which stores the random seed.
- * @random_seed: A pointer to a boolean indicating whether seed should be 
+ * @random_seed: A pointer to a boolean indicating whether seed should be
  *               initialised randomly or not.
  *
  * Creates a widget that allows the user to control how the random number
@@ -1233,7 +1240,8 @@ gimp_random_seed_update (GtkWidget *widget,
  *          a #GtkButton for setting a random seed.
  **/
 GtkWidget *
-gimp_random_seed_new (guint *seed, gboolean *random_seed)
+gimp_random_seed_new (guint    *seed,
+                      gboolean *random_seed)
 {
   GtkWidget *hbox;
   GtkWidget *toggle;
@@ -1241,61 +1249,69 @@ gimp_random_seed_new (guint *seed, gboolean *random_seed)
   GtkObject *adj;
   GtkWidget *button;
 
+  g_return_val_if_fail (seed != NULL, NULL);
+  g_return_val_if_fail (random_seed != NULL, NULL);
+
   hbox = gtk_hbox_new (FALSE, 4);
 
   /* If we're being asked to generate a random seed, generate one. */
-  /* I'm not sure this should be here
   if (*random_seed)
-    {
-      *seed = g_random_int ();
-    }
-  */
+    *seed = g_random_int ();
 
   spinbutton = gimp_spin_button_new (&adj, *seed,
                                      0, (guint32) -1 , 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_uint_adjustment_update),
                     seed);
-  gtk_widget_show (spinbutton);
 
   gimp_help_set_help_data (spinbutton,
                            _("Use this value for random number generator "
                              "seed - this allows you to repeat a "
                              "given \"random\" operation"), NULL);
 
-  button = gtk_button_new_with_mnemonic (_("_New seed"));
+  button = gtk_button_new_with_mnemonic (_("_New Seed"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  /* Send spinbutton as data so that we can change the value in
-   * gimp_random_seed_update() */
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_random_seed_update),
-                    spinbutton);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  /* Send spinbutton as data so that we can change the value in
+   * gimp_random_seed_update()
+   */
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_random_seed_update),
+                    spinbutton);
+
   gimp_help_set_help_data (button,
-                           _("Seed random number generator with a generated random number"),
+                           _("Seed random number generator with a generated "
+                             "random number"),
                            NULL);
 
   toggle = gtk_check_button_new_with_label (_("Randomize"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *random_seed);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  
+
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     random_seed);
+
+  /* Need to create a new seed when the "Randomize" toggle is activated  */
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_random_seed_update),
+                    spinbutton);
 
   g_object_set_data (G_OBJECT (hbox), "spinbutton", spinbutton);
   g_object_set_data (G_OBJECT (hbox), "button", button);
   g_object_set_data (G_OBJECT (hbox), "toggle", toggle);
 
-  /* Set sensitivity data for the toggle, this stuff makes 
-   * gimp_toggle_button_sensitive_update work */
+  /* Set sensitivity data for the toggle, this stuff makes
+   * gimp_toggle_button_sensitive_update work
+   */
   g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", spinbutton);
   g_object_set_data (G_OBJECT (spinbutton), "inverse_sensitive", button);
-  // g_object_set_data (G_OBJECT (button), "inverse_sensitive", adj);
 
   /* Initialise sensitivity */
   gimp_toggle_button_update (toggle, random_seed);

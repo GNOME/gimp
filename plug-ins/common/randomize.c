@@ -314,9 +314,9 @@ run (const gchar      *name,
   /*
    *  Make sure the drawable type is appropriate.
    */
-  if (gimp_drawable_is_rgb(drawable->drawable_id) ||
-      gimp_drawable_is_gray(drawable->drawable_id) ||
-      gimp_drawable_is_indexed(drawable->drawable_id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id)  ||
+      gimp_drawable_is_gray (drawable->drawable_id) ||
+      gimp_drawable_is_indexed (drawable->drawable_id))
     {
       switch (run_mode)
 	{
@@ -324,8 +324,9 @@ run (const gchar      *name,
 	   *  If we're running interactively, pop up the dialog box.
 	   */
 	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
-	  if (!randomize_dialog())        /* return on Cancel */
+	  gimp_get_data (PLUG_IN_NAME[rndm_type - 1], &pivals);
+
+	  if (! randomize_dialog ()) /* return on Cancel */
 	    return;
 	  break;
 	  /*
@@ -341,10 +342,13 @@ run (const gchar      *name,
 	    }
 	  else
 	    {
-	      pivals.rndm_pct = (gdouble) param[3].data.d_float;
+	      pivals.rndm_pct    = (gdouble) param[3].data.d_float;
 	      pivals.rndm_rcount = (gdouble) param[4].data.d_float;
-	      pivals.randomize = (gboolean) param[5].data.d_int32;
-	      pivals.seed = (gint) param[6].data.d_int32;
+	      pivals.randomize   = (gboolean) param[5].data.d_int32;
+	      pivals.seed        = (gint) param[6].data.d_int32;
+
+              if (pivals.randomize)
+                pivals.seed = g_random_int ();
 
 	      if ((rndm_type != RNDM_PICK &&
 		   rndm_type != RNDM_SLUR &&
@@ -361,6 +365,9 @@ run (const gchar      *name,
 	   */
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data (PLUG_IN_NAME[rndm_type - 1], &pivals);
+
+          if (pivals.randomize)
+            pivals.seed = g_random_int ();
 	  break;
 	  /*
 	   *  Hopefully we never get here!
@@ -368,6 +375,7 @@ run (const gchar      *name,
 	default:
 	  break;
         }
+
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  /*
@@ -379,16 +387,16 @@ run (const gchar      *name,
 	    case RNDM_PICK: rndm_type_str = "pick"; break;
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
+
 	  sprintf (prog_label, "%s (%s)...",
-                   gettext(RNDM_VERSION[rndm_type - 1]),
-		   gettext(rndm_type_str));
-	  gimp_progress_init(prog_label);
-	  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+                   gettext (RNDM_VERSION[rndm_type - 1]),
+		   gettext (rndm_type_str));
+	  gimp_progress_init (prog_label);
+	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  /*
 	   *  Initialize the g_rand() function seed
 	   */
-          if (!pivals.randomize)
-            g_rand_set_seed (gr, pivals.seed);
+          g_rand_set_seed (gr, pivals.seed);
 
 	  randomize (drawable, gr);
 	  /*
@@ -396,15 +404,15 @@ run (const gchar      *name,
 	   */
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
-	      gimp_displays_flush();
+	      gimp_displays_flush ();
             }
 	  /*
 	   *  If we use the dialog popup, set the data for future use.
 	   */
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
-	      gimp_set_data(PLUG_IN_NAME[rndm_type - 1], &pivals,
-			    sizeof(RandomizeVals));
+	      gimp_set_data (PLUG_IN_NAME[rndm_type - 1], &pivals,
+                             sizeof (RandomizeVals));
             }
         }
     }

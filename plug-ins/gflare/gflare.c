@@ -926,11 +926,6 @@ plugin_run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-#if 0
-      printf("Currently non interactive call of gradient flare is not supported\n");
-      status = GIMP_PDB_CALLING_ERROR;
-      break;
-#endif
       if (nparams != 14)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;
@@ -1883,8 +1878,7 @@ calc_place_sflare (void)
       prob[i] = sum2 / sum;
     }
 
-  if (!gflare->random_seed)
-    g_rand_set_seed (gr, gflare->sflare_seed);
+  g_rand_set_seed (gr, gflare->sflare_seed);
 
   for (n = 0; n < SFLARE_NUM; n++)
     {
@@ -3696,7 +3690,6 @@ ed_make_page_sflare (GFlareEditor *ed,
   GtkObject    *adj;
   gchar         buf[256];
   gint          row;
-  gboolean      randomize = FALSE;
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -3853,14 +3846,10 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (label);
 
   seed = gimp_random_seed_new (&gflare->sflare_seed, &gflare->random_seed);
-
-  entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
-
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
-  g_signal_connect (GTK_SPIN_BUTTON (entry)->adjustment,
-                    "value_changed",
+  g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value_changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 

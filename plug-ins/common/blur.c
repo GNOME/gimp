@@ -251,7 +251,7 @@ run (const gchar      *name,
            */
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (PLUG_IN_NAME, &pivals);
-          if (!blur_dialog ())        /* return on Cancel */
+          if (! blur_dialog ())        /* return on Cancel */
             return;
           break;
 
@@ -273,6 +273,9 @@ run (const gchar      *name,
               pivals.blur_rcount    = (gdouble) MAX (1.0, pivals.blur_rcount);
               pivals.blur_randomize = (gboolean) param[5].data.d_int32;
               pivals.blur_seed      = (gint) param[6].data.d_int32;
+
+              if (pivals.blur_randomize)
+                pivals.blur_seed = g_random_int ();
             }
           else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
                    (nparams == 3))
@@ -293,6 +296,9 @@ run (const gchar      *name,
            */
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (PLUG_IN_NAME, &pivals);
+
+          if (pivals.blur_randomize)
+            pivals.blur_seed = g_random_int ();
           break;
 
           /*
@@ -310,11 +316,8 @@ run (const gchar      *name,
           gimp_progress_init (_("Blurring..."));
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
                                        + 1));
-          /*
-           *  Initialize the rand() function seed
-           */
-          if (pivals.blur_randomize)
-            g_random_set_seed (pivals.blur_seed);
+
+          g_random_set_seed (pivals.blur_seed);
 
           blur (drawable);
           /*

@@ -72,7 +72,7 @@ typedef struct
   glong     colors;
   GimpRGB   col1;
   GimpRGB   col2;
-  gboolean random_seed;
+  gboolean  random_seed;
 } SinusVals;
 
 static SinusVals svals =
@@ -87,7 +87,8 @@ static SinusVals svals =
   LINEAR,
   USE_COLORS,
   { 1.0, 1.0, 0.0, 1.0 },
-  { 0.0, 0.0, 1.0, 1.0 }
+  { 0.0, 0.0, 1.0, 1.0 },
+  FALSE
 };
 
 typedef struct
@@ -231,7 +232,7 @@ run (const gchar      *name,
       thePreview = mw_preview_build_virgin(drawable);
       drawable_is_grayscale = gimp_drawable_is_gray (drawable->drawable_id);
 
-      if (!sinus_dialog())
+      if (! sinus_dialog ())
         return;
 
       break;
@@ -257,12 +258,18 @@ run (const gchar      *name,
 	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
 	  svals.blend_power  = param[15].data.d_float;
+
+          if (svals.random_seed)
+            svals.seed = g_random_int ();
 	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sinus", &svals);
+
+      if (svals.random_seed)
+        svals.seed = g_random_int ();
       break;
 
     default:
@@ -313,8 +320,7 @@ prepare_coef (params *p)
 
   gr = g_rand_new ();
 
-  if (!svals.random_seed)
-    g_rand_set_seed (gr, svals.seed);
+  g_rand_set_seed (gr, svals.seed);
 
   switch (svals.colorization)
     {
