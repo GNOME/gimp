@@ -25,10 +25,14 @@
 typedef void (* PixelProcessorFunc) (void);
 
 
-void  pixel_regions_process_parallel (PixelProcessorFunc  func,
-                                      gpointer            data,
-                                      gint                num_regions,
-                                      ...);
+void  pixel_processor_init            (gint num_threads);
+void  pixel_processor_set_num_threads (gint num_threads);
+void  pixel_processor_exit            (void);
+
+void  pixel_regions_process_parallel  (PixelProcessorFunc  func,
+                                       gpointer            data,
+                                       gint                num_regions,
+                                       ...);
 
 
 #endif /* __PIXEL_PROCESSOR_H__ */

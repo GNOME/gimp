@@ -46,6 +46,7 @@
 #include "composite/gimp-composite.h"
 
 #include "base.h"
+#include "pixel-processor.h"
 #include "temp-buf.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
@@ -58,6 +59,9 @@ static void   base_toast_old_temp_files   (GimpBaseConfig *config);
 static void   base_tile_cache_size_notify (GObject        *config,
                                            GParamSpec     *param_spec,
                                            gpointer        data);
+static void   base_num_processors_notify  (GObject        *config,
+                                           GParamSpec     *param_spec,
+                                           gpointer        data);
 
 
 /*  public functions  */
@@ -67,9 +71,6 @@ base_init (GimpBaseConfig *config,
            gboolean        be_verbose,
            gboolean        use_cpu_accel)
 {
-  gchar    *swapfile;
-  gchar    *swapdir;
-  gchar    *path;
   gboolean  swap_is_ok;
 
   g_return_val_if_fail (GIMP_IS_BASE_CONFIG (config), FALSE);
@@ -78,7 +79,6 @@ base_init (GimpBaseConfig *config,
   base_config = g_object_ref (config);
 
   tile_cache_init (config->tile_cache_size);
-
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (base_tile_cache_size_notify),
                     NULL);
@@ -89,19 +89,14 @@ base_init (GimpBaseConfig *config,
   if (! config->swap_path)
     g_object_set (config, "swap_path", "${gimp_dir}", NULL);
 
-  swapdir  = gimp_config_path_expand (config->swap_path, TRUE, NULL);
-  swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
-
-  path = g_build_filename (swapdir, swapfile, NULL);
-
-  g_free (swapfile);
-  g_free (swapdir);
-
-  tile_swap_add (path, NULL, NULL);
-
-  g_free (path);
+  tile_swap_init (config->swap_path);
 
   swap_is_ok = tile_swap_test ();
+
+  pixel_processor_init (config->num_processors);
+  g_signal_connect (config, "notify::num_processors",
+                    G_CALLBACK (base_num_processors_notify),
+                    NULL);
 
   gimp_composite_init (be_verbose, use_cpu_accel);
 
@@ -115,6 +110,7 @@ base_exit (void)
 {
   g_return_if_fail (base_config != NULL);
 
+  pixel_processor_exit ();
   swapping_free ();
   paint_funcs_free ();
   tile_swap_exit ();
@@ -191,4 +187,12 @@ base_tile_cache_size_notify (GObject    *config,
                              gpointer    data)
 {
   tile_cache_set_size (GIMP_BASE_CONFIG (config)->tile_cache_size);
+}
+
+static void
+base_num_processors_notify (GObject    *config,
+                            GParamSpec *param_spec,
+                            gpointer    data)
+{
+  pixel_processor_set_num_threads (GIMP_BASE_CONFIG (config)->num_processors);
 }

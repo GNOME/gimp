@@ -37,10 +37,7 @@
 #include "tile.h"
 #endif
 
-#ifdef __GNUC__
-#warning FIXME: extern GimpBaseConfig *base_config;
-#endif
-extern GimpBaseConfig *base_config;
+static gint  num_threads = 0;
 
 
 typedef void (* p1_func) (gpointer     data,
@@ -223,7 +220,7 @@ static void
 pixel_regions_do_parallel (PixelProcessor *processor)
 {
 #ifdef ENABLE_MP
-  gint  nthreads = MIN (base_config->num_processors, MAX_THREADS);
+  gint  nthreads = MIN (num_threads, MAX_THREADS);
 
   /* make sure we have at least one tile per thread */
   nthreads = MIN (nthreads,
@@ -328,6 +325,24 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
 #ifdef ENABLE_MP
   g_mutex_free (processor.mutex);
 #endif
+}
+
+void
+pixel_processor_init (gint num_threads)
+{
+  num_threads = MAX (num_threads, MAX_THREADS);
+}
+
+void
+pixel_processor_set_num_threads (gint num_threads)
+{
+  num_threads = MAX (num_threads, MAX_THREADS);
+}
+
+void
+pixel_processor_exit (void)
+{
+  num_threads = 0;
 }
 
 void

@@ -34,6 +34,7 @@
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -91,7 +92,6 @@ struct _AsyncSwapArgs
 };
 
 
-static void    tile_swap_init             (void);
 static guint   tile_swap_hash             (gint        *key);
 static gint    tile_swap_compare          (gint        *a,
 					   gint        *b);
@@ -129,7 +129,7 @@ static gpointer tile_swap_in_thread       (gpointer);
 #endif
 
 
-static gboolean        initialize       = TRUE;
+static gboolean        initialized      = FALSE;
 static GHashTable    * swap_files       = NULL;
 static GList         * open_swap_files  = NULL;
 static gint            nopen_swap_files = 0;
@@ -209,8 +209,42 @@ tile_swap_exit1 (gpointer key,
 }
 
 void
+tile_swap_init (const gchar *path)
+{
+  gchar *swapfile;
+  gchar *swapdir;
+  gchar *swappath;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (! initialized);
+
+  initialized = TRUE;
+
+  swap_files = g_hash_table_new ((GHashFunc) tile_swap_hash,
+                                 (GCompareFunc) tile_swap_compare);
+
+  swapdir  = gimp_config_path_expand (path, TRUE, NULL);
+  swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
+
+  swappath = g_build_filename (swapdir, swapfile, NULL);
+
+  g_free (swapfile);
+  g_free (swapdir);
+
+  tile_swap_add (swappath, NULL, NULL);
+
+  g_free (swappath);
+
+#ifdef NOTDEF /* USE_PTHREADS */
+  pthread_create (&swapin_thread, NULL, &tile_swap_in_thread, NULL);
+#endif
+}
+
+void
 tile_swap_exit (void)
 {
+  g_return_if_fail (initialized);
+
 #ifdef HINTS_SANITY
   extern int tile_exist_peak;
 
@@ -220,6 +254,8 @@ tile_swap_exit (void)
 
   if (swap_files)
     g_hash_table_foreach (swap_files, tile_swap_exit1, NULL);
+
+  initialized = FALSE;
 }
 
 gint
@@ -234,8 +270,7 @@ tile_swap_add (gchar    *filename,
   pthread_mutex_lock(&swapfile_mutex);
 #endif
 
-  if (initialize)
-    tile_swap_init ();
+  g_return_val_if_fail (initialized, -1);
 
   swap_file = g_new (SwapFile, 1);
   swap_file->filename = g_strdup (filename);
@@ -271,11 +306,10 @@ tile_swap_remove (gint swap_num)
   SwapFile *swap_file;
 
 #ifdef USE_PTHREADS
-  pthread_mutex_lock(&swapfile_mutex);
+  pthread_mutex_lock (&swapfile_mutex);
 #endif
 
-  if (initialize)
-    tile_swap_init ();
+  g_return_if_fail (initialized);
 
   swap_file = g_hash_table_lookup (swap_files, &swap_num);
   if (!swap_file)
@@ -340,7 +374,8 @@ tile_swap_test (void)
   SwapFile *swap_file;
   int       swap_num = 1;
 
-  g_assert (initialize == FALSE);
+  g_return_val_if_fail (initialized, FALSE);
+
   swap_file = g_hash_table_lookup (swap_files, &swap_num);
   g_assert (swap_file->fd == -1);
 
@@ -354,27 +389,11 @@ tile_swap_test (void)
       close (swap_file->fd);
       swap_file->fd = -1;
       g_unlink (swap_file->filename);
+
       return TRUE;
     }
 
   return FALSE;
-}
-
-static void
-tile_swap_init (void)
-{
-
-  if (initialize)
-    {
-      initialize = FALSE;
-
-      swap_files = g_hash_table_new ((GHashFunc) tile_swap_hash,
-				     (GCompareFunc) tile_swap_compare);
-
-#ifdef NOTDEF /* USE_PTHREADS */
-      pthread_create (&swapin_thread, NULL, &tile_swap_in_thread, NULL);
-#endif
-    }
 }
 
 static guint
@@ -399,8 +418,7 @@ tile_swap_command (Tile *tile,
   pthread_mutex_lock(&swapfile_mutex);
 #endif
 
-  if (initialize)
-    tile_swap_init ();
+  g_return_if_fail (initialized);
 
   do {
     swap_file = g_hash_table_lookup (swap_files, &tile->swap_num);

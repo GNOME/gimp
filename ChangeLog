@@ -1,5 +1,16 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base.c
+	* app/base/tile-swap.[ch]: moved some code from base_init() into
+	tile_swap_init().
+
+	* app/base/pixel-processor.[ch]: prepared for porting to GThreadPool.
+
+	* app/config/gimpbaseconfig.c: changed "num-processors" option to
+	require a confirmation before being changed.
+
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: check for gthread-2.0 unless the --disable-mp
 	option is given.
 
