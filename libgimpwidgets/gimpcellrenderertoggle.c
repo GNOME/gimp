@@ -266,7 +266,9 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
     {
       if (x_offset)
 	{
-	  *x_offset = cell->xalign * (cell_area->width - calc_width);
+	  *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+                        (1.0 - cell->xalign) : cell->xalign) *
+                       (cell_area->width - calc_width));
 	  *x_offset = MAX (*x_offset, 0);
 	}
       if (y_offset)
