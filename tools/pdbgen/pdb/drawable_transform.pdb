@@ -571,7 +571,7 @@ HELP
                                    &matrix);
 CODE
              trans_info[X0] < trans_info[X1] &&
-             trans_info[Y0] < trans_info[X1]);
+             trans_info[Y0] < trans_info[Y1]);
 CODE2
 }
 
@@ -618,7 +618,7 @@ HELP
                                    &matrix);
 CODE
              trans_info[X0] < trans_info[X1] &&
-             trans_info[Y0] < trans_info[X1]);
+             trans_info[Y0] < trans_info[Y1]);
 CODE2
 }
 

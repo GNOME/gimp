@@ -1327,7 +1327,7 @@ drawable_transform_scale_invoker (Gimp         *gimp,
 
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
                  trans_info[X0] < trans_info[X1] &&
-                 trans_info[Y0] < trans_info[X1]);
+                 trans_info[Y0] < trans_info[Y1]);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1480,7 +1480,7 @@ drawable_transform_scale_default_invoker (Gimp         *gimp,
 
       success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
                  trans_info[X0] < trans_info[X1] &&
-                 trans_info[Y0] < trans_info[X1]);
+                 trans_info[Y0] < trans_info[Y1]);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))

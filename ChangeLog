@@ -1,6 +1,22 @@
+2005-03-13  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	(drawable_transform_scale)
+	(drawable_transform_scale_default): applied fix from Theodor de
+	Ment which fixes a wrong precondition check which made certain
+	scale operations impossible. Fixes bug #170195.
+
+	* tools/pdbgen/pdb/transform_tools.pdb (scale): fixed the same
+	copy & paste bug here.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2005-03-10  Manish Singh  <yosh@gimp.org>
 
-        * plug-ins/common/url.c: force the server-response wget option off
+	* plug-ins/common/url.c: force the server-response wget option off
 	so it doesn't screw up our parsing.
 
 2005-03-08  Sven Neumann  <sven@gimp.org>
