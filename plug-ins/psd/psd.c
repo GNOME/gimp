@@ -99,7 +99,7 @@
 /* *** DEFINES *** */
 
 /* set to TRUE if you want debugging, FALSE otherwise */
-#define PSD_DEBUG FALSE
+#define PSD_DEBUG TRUE
 
 /* the max number of layers that this plugin should try to load */
 #define MAX_LAYERS 100
@@ -523,6 +523,14 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 		  (*offset)++;
 		  remaining--;
 
+		  if (psd_image.aux_channel[psd_image.num_aux_channels].name
+		      == NULL)
+		    {
+		      IFDBG printf("\t\t\tNull channel name %d.\n",
+				   psd_image.num_aux_channels);
+		      fflush(stdout);
+		    }
+
 		  if (psd_image.aux_channel[psd_image.num_aux_channels].name)
 		    {
 		      guint32 alpha_name_len;
@@ -672,7 +680,7 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	
       default:
 	IFDBG printf ("\t\t<Undocumented field.>\n");
-	throwchunk(Size, fd, "dispatch_res");
+	dumpchunk(Size, fd, "dispatch_res");
 	(*offset) += Size;
 	break;
       }
@@ -1963,7 +1971,7 @@ decode(long clen, long uclen, char * src, char * dst, int step)
     for (i = 0; i < PSDheader.rows*PSDheader.channels; ++i)
 	l -= PSDheader.rowlength[i];
     if (l)
-	printf("*** %ld should be zero\n", (long)l);
+	g_warning("decode: %ld should be zero\n", (long)l);
 
     w = PSDheader.rowlength;
     
@@ -2224,10 +2232,8 @@ getpascalstring(FILE *fd, gchar *why)
 
   if (len==0)
     {
+//      xfread(fd, &len, 1, why); /* Throw away a byte? */
       return (NULL);
-
-      /*      tmpchunk[0]=0;
-      return (tmpchunk);*/
     }
 
   tmpchunk = xmalloc(len+1);

@@ -60,6 +60,7 @@ struct _GDisplay
   GtkWidget *popup;               /*  widget for popup menu                   */
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */
+  GtkWidget *cancelbutton;        /*  widget for cancel button                */
   guint progressid;               /*  id of statusbar message for progress    */
 
   InfoDialog *window_info_dialog; /*  dialog box for image information        */

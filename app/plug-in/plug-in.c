@@ -112,6 +112,8 @@ static void      plug_in_args_destroy   (Argument  *args,
   					 int        nargs,
   					 int        full_destroy);
 
+static void      plug_in_disconnect_cancel (PlugIn *plug_in);
+
 static Argument* progress_init_invoker   (Argument *args);
 static Argument* progress_update_invoker (Argument *args);
 
@@ -808,6 +810,9 @@ plug_in_destroy (PlugIn *plug_in)
 						    "progress");
 	  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), c_id);
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(gdisp->progressbar), 0.0);
+	  
+	  plug_in_disconnect_cancel (plug_in);
+
 	  gdisp->progressid = 0;
 	}
 
@@ -2971,6 +2976,21 @@ plug_in_progress_cancel (GtkWidget *widget,
 }
 
 static void
+plug_in_disconnect_cancel (PlugIn    *plug_in)
+{
+  GDisplay *gdisp = NULL;
+  
+  /*printf("\nplug_in_disconnect_cancel\n");fflush(stdout);*/
+  
+  gdisp = gdisplay_get_ID (plug_in->progress_gdisp_ID);
+  gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
+  
+  gtk_signal_disconnect_by_func (GTK_OBJECT (gdisp->cancelbutton),
+				 (GtkSignalFunc) plug_in_progress_cancel,
+				 plug_in);
+}
+
+static void
 plug_in_progress_init (PlugIn *plug_in,
 		       char   *message,
 		       gint   gdisp_ID)
@@ -2998,6 +3018,12 @@ plug_in_progress_init (PlugIn *plug_in,
       gdisp->progressid = gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
 					     context_id, message);
       plug_in->progress_gdisp_ID = gdisp_ID;
+
+      /*printf("\nHERE\n");fflush(stdout);*/
+      gtk_signal_connect (GTK_OBJECT (gdisp->cancelbutton), "clicked",
+			  (GtkSignalFunc) plug_in_progress_cancel,
+			  plug_in);
+      gtk_widget_set_sensitive (gdisp->cancelbutton, TRUE);
     } 
 #ifdef SEPARATE_PROGRESS_BAR
   else if (!plug_in->progress)

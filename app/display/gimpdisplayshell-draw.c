@@ -716,6 +716,10 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_usize(gdisp->progressbar, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->progressbar, FALSE, TRUE, 0);
   
+  gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
+  gtk_box_pack_start (GTK_BOX (hbox), gdisp->cancelbutton, FALSE, TRUE, 0);
+  gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
+  
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 
@@ -731,6 +735,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (gdisp->canvas);
   gtk_widget_show (gdisp->statusbar);
   gtk_widget_show (gdisp->progressbar);
+  gtk_widget_show (gdisp->cancelbutton);
   gtk_widget_show (table_inner);
   gtk_widget_show (table);
   gtk_widget_show (hbox);
