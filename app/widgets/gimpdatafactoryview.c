@@ -51,8 +51,6 @@
 static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);
 static void   gimp_data_factory_view_init       (GimpDataFactoryView      *view);
 
-static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
-                                                     GimpViewable        *viewable);
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
 static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
@@ -99,7 +97,6 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
 }
 
@@ -211,7 +208,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
       factory_view->edit_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                       str);
+                                       str, NULL);
 
       g_free (str);
     }
@@ -222,7 +219,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
       factory_view->new_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                       str);
+                                       str, NULL);
 
       g_free (str);
     }
@@ -231,7 +228,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->duplicate_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                   str);
+                                   str, NULL);
 
   g_free (str);
 
@@ -239,7 +236,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                   str);
+                                   str, NULL);
 
   g_free (str);
 
@@ -247,7 +244,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
-                                   str);
+                                   str, NULL);
 
   g_free (str);
 
@@ -266,16 +263,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return TRUE;
-}
-
-static void
-gimp_data_factory_view_select_item (GimpContainerEditor *editor,
-				    GimpViewable        *viewable)
-{
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

@@ -333,14 +333,14 @@ gimp_colormap_editor_new (GimpImage       *gimage,
   GtkWidget          *frame;
   GtkWidget          *table;
 
-  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR, NULL);
-
-  gimp_editor_create_menu (GIMP_EDITOR (editor),
-                           menu_factory, "<ColormapEditor>",
-                           "/colormap-editor-popup", editor);
+  editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR,
+                         "menu-factory",    menu_factory,
+                         "menu-identifier", "<ColormapEditor>",
+                         "ui-path",         "/colormap-editor-popup",
+                         NULL);
 
   /*  The palette frame  */
   frame = gtk_frame_new (NULL);
@@ -758,7 +758,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
                               GIMP_EDITOR (editor)->popup_data);
       gimp_ui_manager_ui_popup (GIMP_EDITOR (editor)->ui_manager,
                                 GIMP_EDITOR (editor)->ui_path,
-                                GIMP_EDITOR (editor)->ui_manager,
+                                GIMP_EDITOR (editor)->popup_data,
                                 GTK_WIDGET (editor),
                                 NULL, NULL, NULL);
       return TRUE;

@@ -33,7 +33,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -43,7 +42,6 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
-#include "gui/stroke-dialog.h"
 
 #include "actions.h"
 #include "edit-commands.h"
@@ -83,6 +81,44 @@ edit_redo_cmd_callback (GtkAction *action,
 
   if (gimp_image_redo (gimage))
     gimp_image_flush (gimage);
+}
+
+static void
+edit_undo_clear_callback (GtkWidget *widget,
+                          gboolean   clear,
+                          gpointer   data)
+{
+  if (clear)
+    {
+      GimpImage *gimage = data;
+
+      gimp_image_undo_disable (gimage);
+      gimp_image_undo_enable (gimage);
+      gimp_image_flush (gimage);
+    }
+}
+
+void
+edit_undo_clear_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage *gimage;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
+
+  dialog = gimp_query_boolean_box (_("Clear Undo History"), widget,
+                                   gimp_standard_help_func,
+                                   GIMP_HELP_EDIT_UNDO_CLEAR,
+                                   GIMP_STOCK_QUESTION,
+                                   _("Really clear image's undo history?"),
+                                   GTK_STOCK_CLEAR, GTK_STOCK_CANCEL,
+                                   G_OBJECT (gimage),
+                                   "disconnect",
+                                   edit_undo_clear_callback,
+                                   gimage);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -243,46 +279,6 @@ edit_fill_cmd_callback (GtkAction *action,
   gimp_edit_fill (gimage, drawable, gimp_get_user_context (gimage->gimp),
                   fill_type);
   gimp_image_flush (gimage);
-}
-
-void
-edit_stroke_cmd_callback (GtkAction *action,
-                          gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  GtkWidget    *widget;
-  return_if_no_drawable (gimage, drawable, data);
-  return_if_no_widget (widget, data);
-
-  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
-}
-
-void
-edit_stroke_selection (GimpItem  *item,
-                       GtkWidget *parent)
-{
-  GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  GtkWidget    *dialog;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (GTK_IS_WIDGET (parent));
-
-  gimage = gimp_item_get_image (item);
-
-  active_drawable = gimp_image_active_drawable (gimage);
-
-  if (! active_drawable)
-    {
-      g_message (_("There is no active layer or channel to stroke to."));
-      return;
-    }
-
-  dialog = stroke_dialog_new (item, GIMP_STOCK_SELECTION_STROKE,
-                              GIMP_HELP_SELECTION_STROKE,
-                              parent);
-  gtk_widget_show (dialog);
 }
 
 

@@ -177,10 +177,10 @@ layers_raise_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_image_raise_layer (gimage, active_layer);
+  gimp_image_raise_layer (gimage, layer);
   gimp_image_flush (gimage);
 }
 
@@ -189,10 +189,10 @@ layers_lower_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_image_lower_layer (gimage, active_layer);
+  gimp_image_lower_layer (gimage, layer);
   gimp_image_flush (gimage);
 }
 
@@ -201,10 +201,10 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
 				  gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_image_raise_layer_to_top (gimage, active_layer);
+  gimp_image_raise_layer_to_top (gimage, layer);
   gimp_image_flush (gimage);
 }
 
@@ -213,10 +213,10 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_image_lower_layer_to_bottom (gimage, active_layer);
+  gimp_image_lower_layer_to_bottom (gimage, layer);
   gimp_image_flush (gimage);
 }
 
@@ -237,13 +237,13 @@ layers_duplicate_cmd_callback (GtkAction *action,
 			       gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GimpLayer *new_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
 
   new_layer =
-    GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (active_layer),
-                                     G_TYPE_FROM_INSTANCE (active_layer),
+    GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                     G_TYPE_FROM_INSTANCE (layer),
                                      TRUE));
   gimp_image_add_layer (gimage, new_layer, -1);
 
@@ -255,12 +255,12 @@ layers_anchor_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (gimp_layer_is_floating_sel (active_layer))
+  if (gimp_layer_is_floating_sel (layer))
     {
-      floating_sel_anchor (active_layer);
+      floating_sel_anchor (layer);
       gimp_image_flush (gimage);
     }
 }
@@ -270,11 +270,10 @@ layers_merge_down_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_image_merge_down (gimage, active_layer,
-                         gimp_get_user_context (gimage->gimp),
+  gimp_image_merge_down (gimage, layer, action_data_get_context (data),
                          GIMP_EXPAND_AS_NECESSARY);
   gimp_image_flush (gimage);
 }
@@ -284,13 +283,13 @@ layers_delete_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (gimp_layer_is_floating_sel (active_layer))
-    floating_sel_remove (active_layer);
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_remove (layer);
   else
-    gimp_image_remove_layer (gimage, active_layer);
+    gimp_image_remove_layer (gimage, layer);
 
   gimp_image_flush (gimage);
 }
@@ -300,11 +299,11 @@ layers_text_discard_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (GIMP_IS_TEXT_LAYER (active_layer))
-    gimp_text_layer_discard (GIMP_TEXT_LAYER (active_layer));
+  if (GIMP_IS_TEXT_LAYER (layer))
+    gimp_text_layer_discard (GIMP_TEXT_LAYER (layer));
 }
 
 void
@@ -312,12 +311,12 @@ layers_resize_cmd_callback (GtkAction *action,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GtkWidget *widget;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_resize_layer_query (gimage, active_layer, widget);
+  layers_resize_layer_query (gimage, layer, widget);
 }
 
 void
@@ -325,11 +324,10 @@ layers_resize_to_image_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  gimp_layer_resize_to_image (active_layer,
-                              gimp_get_user_context (gimage->gimp));
+  gimp_layer_resize_to_image (layer, action_data_get_context (data));
   gimp_image_flush (gimage);
 }
 
@@ -338,13 +336,13 @@ layers_scale_cmd_callback (GtkAction *action,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GtkWidget *widget;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
   layers_scale_layer_query (GIMP_IS_DISPLAY (data) ? data : NULL,
-                            gimage, active_layer, widget);
+                            gimage, layer, widget);
 }
 
 void
@@ -352,10 +350,10 @@ layers_crop_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   gint       x1, y1, x2, y2;
   gint       off_x, off_y;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
 
   if (! gimp_channel_bounds (gimp_image_get_mask (gimage),
                              &x1, &y1, &x2, &y2))
@@ -364,7 +362,7 @@ layers_crop_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_item_offsets (GIMP_ITEM (active_layer), &off_x, &off_y);
+  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
   off_x -= x1;
   off_y -= y1;
@@ -372,8 +370,7 @@ layers_crop_cmd_callback (GtkAction *action,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer"));
 
-  gimp_item_resize (GIMP_ITEM (active_layer),
-                    gimp_get_user_context (gimage->gimp),
+  gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
                     x2 - x1, y2 - y1, off_x, off_y);
 
   gimp_image_undo_group_end (gimage);
@@ -386,12 +383,12 @@ layers_mask_add_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GtkWidget *widget;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_add_mask_query (active_layer, widget);
+  layers_add_mask_query (layer, widget);
 }
 
 void
@@ -399,12 +396,12 @@ layers_mask_apply_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (gimp_layer_get_mask (active_layer))
+  if (gimp_layer_get_mask (layer))
     {
-      gimp_layer_apply_mask (active_layer, GIMP_MASK_APPLY, TRUE);
+      gimp_layer_apply_mask (layer, GIMP_MASK_APPLY, TRUE);
       gimp_image_flush (gimage);
     }
 }
@@ -414,12 +411,12 @@ layers_mask_delete_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (gimp_layer_get_mask (active_layer))
+  if (gimp_layer_get_mask (layer))
     {
-      gimp_layer_apply_mask (active_layer, GIMP_MASK_DISCARD, TRUE);
+      gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, TRUE);
       gimp_image_flush (gimage);
     }
 }
@@ -431,13 +428,13 @@ layers_mask_to_selection_cmd_callback (GtkAction *action,
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
-  GimpLayer      *active_layer;
+  GimpLayer      *layer;
   GimpLayerMask  *mask;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
 
   op = (GimpChannelOps) value;
 
-  mask = gimp_layer_get_mask (active_layer);
+  mask = gimp_layer_get_mask (layer);
 
   if (mask)
     {
@@ -459,12 +456,12 @@ layers_alpha_add_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer *layer;
+  return_if_no_layer (gimage, layer, data);
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
-      gimp_layer_add_alpha (active_layer);
+      gimp_layer_add_alpha (layer);
       gimp_image_flush (gimage);
     }
 }
@@ -476,13 +473,13 @@ layers_alpha_to_selection_cmd_callback (GtkAction *action,
 {
   GimpChannelOps  op;
   GimpImage      *gimage;
-  GimpLayer      *active_layer;
-  return_if_no_layer (gimage, active_layer, data);
+  GimpLayer      *layer;
+  return_if_no_layer (gimage, layer, data);
 
   op = (GimpChannelOps) value;
 
   gimp_channel_select_alpha (gimp_image_get_mask (gimage),
-                             GIMP_DRAWABLE (active_layer),
+                             GIMP_DRAWABLE (layer),
                              op, FALSE, 0.0, 0.0);
   gimp_image_flush (gimage);
 }
@@ -506,7 +503,7 @@ layers_flatten_image_cmd_callback (GtkAction *action,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_flatten (gimage, gimp_get_user_context (gimage->gimp));
+  gimp_image_flatten (gimage, action_data_get_context (data));
   gimp_image_flush (gimage);
 }
 
@@ -515,12 +512,12 @@ layers_text_tool_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GtkWidget *widget;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_text_tool (active_layer, widget);
+  layers_text_tool (layer, widget);
 }
 
 void
@@ -528,12 +525,12 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpLayer *layer;
   GtkWidget *widget;
-  return_if_no_layer (gimage, active_layer, data);
+  return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_edit_layer_query (active_layer, widget);
+  layers_edit_layer_query (layer, widget);
 }
 
 void

@@ -909,7 +909,7 @@ gimp_dockable_menu_end (GimpDockable *dockable)
                                               &dialog_ui_path,
                                               &dialog_popup_data);
 
-  if (dialog_ui_manager)
+  if (dialog_ui_manager && dialog_ui_path)
     {
       GtkWidget *child_menu_widget;
 
@@ -942,7 +942,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                                               &dialog_ui_path,
                                               &dialog_popup_data);
 
-  if (dialog_ui_manager)
+  if (dialog_ui_manager && dialog_ui_path)
     {
       GtkWidget   *child_menu_widget;
       GtkAction   *child_menu_action;

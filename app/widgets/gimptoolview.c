@@ -125,7 +125,7 @@ gimp_tool_view_new (GimpViewType     view_type,
 
   tool_view->reset_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "tools",
-                                   "tools-reset");
+                                   "tools-reset", NULL);
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 

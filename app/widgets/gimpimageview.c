@@ -42,8 +42,6 @@
 static void   gimp_image_view_class_init    (GimpImageViewClass  *klass);
 static void   gimp_image_view_init          (GimpImageView       *view);
 
-static void   gimp_image_view_select_item   (GimpContainerEditor *editor,
-                                             GimpViewable        *viewable);
 static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
                                              GimpViewable        *viewable);
 
@@ -86,7 +84,6 @@ gimp_image_view_class_init (GimpImageViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_image_view_select_item;
   editor_class->activate_item = gimp_image_view_activate_item;
 }
 
@@ -127,15 +124,15 @@ gimp_image_view_new (GimpViewType     view_type,
 
   image_view->raise_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
-                                   "images-raise-views");
+                                   "images-raise-views", NULL);
 
   image_view->new_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
-                                   "images-new-view");
+                                   "images-new-view", NULL);
 
   image_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
-                                   "images-delete");
+                                   "images-delete", NULL);
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (image_view->raise_button),
@@ -151,16 +148,6 @@ gimp_image_view_new (GimpViewType     view_type,
                           editor);
 
   return GTK_WIDGET (image_view);
-}
-
-static void
-gimp_image_view_select_item (GimpContainerEditor *editor,
-                             GimpViewable        *viewable)
-{
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

@@ -24,6 +24,8 @@ void   edit_undo_cmd_callback         (GtkAction *action,
                                        gpointer   data);
 void   edit_redo_cmd_callback         (GtkAction *action,
                                        gpointer   data);
+void   edit_undo_clear_cmd_callback   (GtkAction *action,
+                                       gpointer   data);
 void   edit_cut_cmd_callback          (GtkAction *action,
                                        gpointer   data);
 void   edit_copy_cmd_callback         (GtkAction *action,
@@ -45,11 +47,6 @@ void   edit_clear_cmd_callback        (GtkAction *action,
 void   edit_fill_cmd_callback         (GtkAction *action,
                                        gint       value,
                                        gpointer   data);
-void   edit_stroke_cmd_callback       (GtkAction *action,
-                                       gpointer   data);
-
-void   edit_stroke_selection          (GimpItem  *item,
-                                       GtkWidget *parent);
 
 
 #endif /* __EDIT_COMMANDS_H__ */

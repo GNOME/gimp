@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpvectorstreeview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,11 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -49,35 +46,12 @@
 static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
 static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
 
-static void  gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
-
-static gboolean gimp_vectors_tree_view_select_item  (GimpContainerView   *view,
-						     GimpViewable        *item,
-						     gpointer             insert_data);
-static void     gimp_vectors_tree_view_set_image    (GimpItemTreeView    *view,
-                                                     GimpImage           *gimage);
-static void   gimp_vectors_tree_view_toselection_clicked
-                                                    (GtkWidget           *widget,
-						     GimpVectorsTreeView *view);
-static void   gimp_vectors_tree_view_toselection_extended_clicked
-                                                    (GtkWidget           *widget,
-						     guint                state,
-						     GimpVectorsTreeView *view);
-
-static void   gimp_vectors_tree_view_tovectors_clicked
-                                                    (GtkWidget           *widget,
-                                                     GimpVectorsTreeView *view);
-static void   gimp_vectors_tree_view_tovectors_extended_clicked
-                                                    (GtkWidget           *widget,
-                                                     guint                state,
-                                                     GimpVectorsTreeView *view);
-
-static void   gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
-						     GimpVectorsTreeView *view);
+static GObject * gimp_vectors_tree_view_constructor (GType                  type,
+                                                     guint                  n_params,
+                                                     GObjectConstructParam *params);
 
 
-static GimpItemTreeViewClass      *parent_class      = NULL;
-static GimpContainerViewInterface *parent_view_iface = NULL;
+static GimpItemTreeViewClass *parent_class = NULL;
 
 
 GType
@@ -100,19 +74,9 @@ gimp_vectors_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_vectors_tree_view_init,
       };
 
-      static const GInterfaceInfo view_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_vectors_tree_view_view_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
       view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
                                           "GimpVectorsTreeView",
                                           &view_info, 0);
-
-      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
-                                   &view_iface_info);
     }
 
   return view_type;
@@ -121,11 +85,12 @@ gimp_vectors_tree_view_get_type (void)
 static void
 gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 {
+  GObjectClass          *object_class    = G_OBJECT_CLASS (klass);
   GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  item_view_class->set_image       = gimp_vectors_tree_view_set_image;
+  object_class->constructor        = gimp_vectors_tree_view_constructor;
 
   item_view_class->get_container   = gimp_image_get_vectors;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
@@ -156,8 +121,22 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 static void
 gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 {
-  GimpEditor *editor = GIMP_EDITOR (view);
-  gchar      *str;
+}
+
+static GObject *
+gimp_vectors_tree_view_constructor (GType                  type,
+                                    guint                  n_params,
+                                    GObjectConstructParam *params)
+{
+  GObject             *object;
+  GimpEditor          *editor;
+  GimpVectorsTreeView *view;
+  gchar               *str;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_EDITOR (object);
+  view   = GIMP_VECTORS_TREE_VIEW (object);
 
   /*  Hide basically useless Edit button  */
 
@@ -174,12 +153,18 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
                          gimp_get_mod_name_control ());
 
   view->toselection_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_SELECTION_REPLACE, str,
-                            GIMP_HELP_PATH_SELECTION_REPLACE,
-                            G_CALLBACK (gimp_vectors_tree_view_toselection_clicked),
-                            G_CALLBACK (gimp_vectors_tree_view_toselection_extended_clicked),
-                            view);
+    gimp_editor_add_action_button (editor, "vectors",
+                                   "vectors-selection-replace",
+                                   "vectors-selection-intersect",
+                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+                                   "vectors-selection-subtract",
+                                   GDK_CONTROL_MASK,
+                                   "vectors-selection-add",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+
+  gimp_help_set_help_data (view->toselection_button, str,
+                           GIMP_HELP_PATH_SELECTION_REPLACE);
 
   g_free (str);
 
@@ -188,22 +173,20 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
                          gimp_get_mod_name_shift ());
 
   view->tovectors_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_SELECTION_TO_PATH, str,
-                            GIMP_HELP_SELECTION_TO_PATH,
-                            G_CALLBACK (gimp_vectors_tree_view_tovectors_clicked),
-                            G_CALLBACK (gimp_vectors_tree_view_tovectors_extended_clicked),
-                            view);
+    gimp_editor_add_action_button (editor, "vectors",
+                                   "vectors-selection-to-vectors",
+                                   "vectors-selection-to-vectors-advanced",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+
+  gimp_help_set_help_data (view->tovectors_button, str,
+                           GIMP_HELP_SELECTION_TO_PATH);
 
   g_free (str);
 
   view->stroke_button =
-    gimp_editor_add_button (editor,
-                            GIMP_STOCK_PATH_STROKE, _("Stroke Path"),
-                            GIMP_HELP_PATH_STROKE,
-                            G_CALLBACK (gimp_vectors_tree_view_stroke_clicked),
-                            NULL,
-                            view);
+    gimp_editor_add_action_button (editor, "vectors",
+                                   "vectors-stroke", NULL);
 
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->toselection_button, 5);
@@ -219,121 +202,5 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 				  GTK_BUTTON (view->stroke_button),
 				  GIMP_TYPE_VECTORS);
 
-  gtk_widget_set_sensitive (view->toselection_button, FALSE);
-  gtk_widget_set_sensitive (view->tovectors_button,   FALSE);
-  gtk_widget_set_sensitive (view->stroke_button,      FALSE);
-}
-
-static void
-gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
-
-  view_iface->select_item = gimp_vectors_tree_view_select_item;
-}
-
-
-/*  GimpContainerView methods  */
-
-static gboolean
-gimp_vectors_tree_view_select_item (GimpContainerView *view,
-				    GimpViewable      *item,
-				    gpointer           insert_data)
-{
-  GimpVectorsTreeView *tree_view = GIMP_VECTORS_TREE_VIEW (view);
-  gboolean             success;
-
-  success = parent_view_iface->select_item (view, item, insert_data);
-
-  gtk_widget_set_sensitive (tree_view->toselection_button, item != NULL);
-  gtk_widget_set_sensitive (tree_view->stroke_button,      item != NULL);
-
-  return success;
-}
-
-static void
-gimp_vectors_tree_view_set_image (GimpItemTreeView *view,
-                                  GimpImage        *gimage)
-{
-  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (view, gimage);
-
-  gtk_widget_set_sensitive (GIMP_VECTORS_TREE_VIEW (view)->tovectors_button,
-                            gimage != NULL);
-}
-
-static void
-gimp_vectors_tree_view_toselection_clicked (GtkWidget           *widget,
-					    GimpVectorsTreeView *view)
-{
-  gimp_vectors_tree_view_toselection_extended_clicked (widget, 0, view);
-}
-
-static void
-gimp_vectors_tree_view_toselection_extended_clicked (GtkWidget           *widget,
-						     guint                state,
-						     GimpVectorsTreeView *view)
-{
-  GimpImage *gimage;
-  GimpItem  *item;
-
-  gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
-
-  if (item)
-    {
-      GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
-
-      if (state & GDK_SHIFT_MASK)
-	{
-	  if (state & GDK_CONTROL_MASK)
-	    operation = GIMP_CHANNEL_OP_INTERSECT;
-	  else
-	    operation = GIMP_CHANNEL_OP_ADD;
-	}
-      else if (state & GDK_CONTROL_MASK)
-	{
-	  operation = GIMP_CHANNEL_OP_SUBTRACT;
-	}
-
-      gimp_channel_select_vectors (gimp_image_get_mask (gimage),
-                                   _("Path to Selection"),
-                                   GIMP_VECTORS (item),
-                                   operation,
-                                   TRUE,
-                                   FALSE, 0, 0);
-      gimp_image_flush (gimage);
-    }
-}
-
-static void
-gimp_vectors_tree_view_tovectors_clicked (GtkWidget           *widget,
-                                          GimpVectorsTreeView *view)
-{
-  gimp_vectors_tree_view_tovectors_extended_clicked (widget, 0, view);
-}
-
-static void
-gimp_vectors_tree_view_tovectors_extended_clicked (GtkWidget           *widget,
-                                                   guint                state,
-                                                   GimpVectorsTreeView *view)
-{
-  if (view->selection_to_vectors_func)
-    view->selection_to_vectors_func (GIMP_ITEM_TREE_VIEW (view)->gimage,
-                                     (state & GDK_SHIFT_MASK) != 0);
-}
-
-static void
-gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
-                                       GimpVectorsTreeView *view)
-{
-  GimpImage *gimage;
-  GimpItem  *item;
-
-  gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
-
-  if (item && view->stroke_item_func)
-    view->stroke_item_func (item, GTK_WIDGET (view));
+  return object;
 }

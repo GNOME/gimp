@@ -64,14 +64,22 @@ static GimpActionEntry edit_actions[] =
   { "edit-buffer-menu", NULL, N_("Buffer") },
 
   { "edit-undo", GTK_STOCK_UNDO,
-    N_("_Undo"), "<control>Z", NULL,
+    N_("_Undo"), "<control>Z",
+    N_("Undo"),
     G_CALLBACK (edit_undo_cmd_callback),
     GIMP_HELP_EDIT_UNDO },
 
   { "edit-redo", GTK_STOCK_REDO,
-    N_("_Redo"), "<control>Y", NULL,
+    N_("_Redo"), "<control>Y",
+    N_("Redo"),
     G_CALLBACK (edit_redo_cmd_callback),
     GIMP_HELP_EDIT_REDO },
+
+  { "edit-undo-clear", GTK_STOCK_CLEAR,
+    N_("_Clear Undo History"), "",
+    N_("Clear undo history"),
+    G_CALLBACK (edit_undo_clear_cmd_callback),
+    GIMP_HELP_EDIT_UNDO_CLEAR },
 
   { "edit-cut", GTK_STOCK_CUT,
     N_("Cu_t"), "<control>X", NULL,
@@ -116,12 +124,7 @@ static GimpActionEntry edit_actions[] =
   { "edit-clear", GTK_STOCK_CLEAR,
     N_("Cl_ear"), "<control>K", NULL,
     G_CALLBACK (edit_clear_cmd_callback),
-    GIMP_HELP_EDIT_CLEAR },
-
-  { "edit-stroke", GIMP_STOCK_SELECTION_STROKE,
-    N_("_Stroke Selection..."), NULL, NULL,
-    G_CALLBACK (edit_stroke_cmd_callback),
-    GIMP_HELP_SELECTION_STROKE }
+    GIMP_HELP_EDIT_CLEAR }
 };
 
 static GimpEnumActionEntry edit_fill_actions[] =
@@ -205,8 +208,9 @@ edit_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   {
-    gchar *undo_name = NULL;
-    gchar *redo_name = NULL;
+    gchar    *undo_name = NULL;
+    gchar    *redo_name = NULL;
+    gboolean  enabled   = FALSE;
 
     if (gimage && gimp_image_undo_is_enabled (gimage))
       {
@@ -215,6 +219,8 @@ edit_actions_update (GimpActionGroup *group,
 
         undo = gimp_undo_stack_peek (gimage->undo_stack);
         redo = gimp_undo_stack_peek (gimage->redo_stack);
+
+        enabled = TRUE;
 
         if (undo)
           undo_name =
@@ -230,8 +236,9 @@ edit_actions_update (GimpActionGroup *group,
     SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
     SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));
 
-    SET_SENSITIVE ("edit-undo", undo_name);
-    SET_SENSITIVE ("edit-redo", redo_name);
+    SET_SENSITIVE ("edit-undo",       enabled && undo_name);
+    SET_SENSITIVE ("edit-redo",       enabled && redo_name);
+    SET_SENSITIVE ("edit-undo-clear", enabled && (redo_name || redo_name));
 
     g_free (undo_name);
     g_free (redo_name);
@@ -249,7 +256,6 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-fill-fg",      drawable);
   SET_SENSITIVE ("edit-fill-bg",      drawable);
   SET_SENSITIVE ("edit-fill-pattern", drawable);
-  SET_SENSITIVE ("edit-stroke",       drawable && sel);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE

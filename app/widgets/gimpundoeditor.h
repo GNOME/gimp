@@ -56,7 +56,8 @@ struct _GimpUndoEditorClass
 
 GType       gimp_undo_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_undo_editor_new       (GimpCoreConfig *config);
+GtkWidget * gimp_undo_editor_new       (GimpCoreConfig  *config,
+                                        GimpMenuFactory *menu_factory);
 
 
 #endif /* __GIMP_UNDO_EDITOR_H__ */

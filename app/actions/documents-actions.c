@@ -27,10 +27,9 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "documents-actions.h"
 #include "documents-commands.h"
 
@@ -43,7 +42,8 @@ static GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_DIALOG },
 
   { "documents-open", GTK_STOCK_OPEN,
-    N_("_Open Image"), "", NULL,
+    N_("_Open Image"), "",
+    N_("Open the selected entry"),
     G_CALLBACK (documents_open_document_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
@@ -58,12 +58,14 @@ static GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-remove", GTK_STOCK_REMOVE,
-    N_("Remove _Entry"), "", NULL,
+    N_("Remove _Entry"), "",
+    N_("Remove the selected entry"),
     G_CALLBACK (documents_remove_document_cmd_callback),
     GIMP_HELP_DOCUMENT_REMOVE },
 
   { "documents-recreate-preview", GTK_STOCK_REFRESH,
-    N_("Recreate _Preview"), "", NULL,
+    N_("Recreate _Preview"), "",
+    N_("Recreate preview"),
     G_CALLBACK (documents_recreate_preview_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
@@ -91,14 +93,13 @@ void
 documents_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpImagefile       *imagefile;
+  GimpContext   *context;
+  GimpImagefile *imagefile = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (data);
 
-  imagefile = gimp_context_get_imagefile (context);
+  if (context)
+    imagefile = gimp_context_get_imagefile (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

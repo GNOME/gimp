@@ -35,6 +35,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimphelp-ids.h"
+#include "gimpmenufactory.h"
 #include "gimpundoeditor.h"
 
 #include "gimp-intl.h"
@@ -63,13 +64,6 @@ static void      gimp_undo_editor_set_image      (GimpImageEditor   *editor,
 static void      gimp_undo_editor_fill           (GimpUndoEditor    *editor);
 static void      gimp_undo_editor_clear          (GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_undo_clicked   (GtkWidget         *widget,
-                                                  GimpImageEditor   *editor);
-static void      gimp_undo_editor_redo_clicked   (GtkWidget         *widget,
-                                                  GimpImageEditor   *editor);
-static void      gimp_undo_editor_clear_clicked  (GtkWidget         *widget,
-                                                  GimpImageEditor   *editor);
-
 static void      gimp_undo_editor_undo_event     (GimpImage         *gimage,
                                                   GimpUndoEvent      event,
                                                   GimpUndo          *undo,
@@ -79,8 +73,6 @@ static void      gimp_undo_editor_select_item    (GimpContainerView *view,
                                                   GimpUndo          *undo,
                                                   gpointer           insert_data,
                                                   GimpUndoEditor    *editor);
-
-static void      gimp_undo_editor_update_buttons (GimpUndoEditor    *editor);
 
 
 static GimpImageEditorClass *parent_class = NULL;
@@ -140,31 +132,6 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
 static void
 gimp_undo_editor_init (GimpUndoEditor *undo_editor)
 {
-  undo_editor->container = NULL;
-
-  undo_editor->undo_button =
-    gimp_editor_add_button (GIMP_EDITOR (undo_editor),
-                            GTK_STOCK_UNDO, _("Undo"),
-                            GIMP_HELP_EDIT_UNDO,
-                            G_CALLBACK (gimp_undo_editor_undo_clicked),
-                            NULL,
-                            undo_editor);
-
-  undo_editor->redo_button =
-    gimp_editor_add_button (GIMP_EDITOR (undo_editor),
-                            GTK_STOCK_REDO, _("Redo"),
-                            GIMP_HELP_EDIT_REDO,
-                            G_CALLBACK (gimp_undo_editor_redo_clicked),
-                            NULL,
-                            undo_editor);
-
-  undo_editor->clear_button =
-    gimp_editor_add_button (GIMP_EDITOR (undo_editor),
-                            GTK_STOCK_CLEAR, _("Clear Undo History"),
-                            GIMP_HELP_EDIT_UNDO_CLEAR,
-                            G_CALLBACK (gimp_undo_editor_clear_clicked),
-                            NULL,
-                            undo_editor);
 }
 
 static GObject *
@@ -188,6 +155,18 @@ gimp_undo_editor_constructor (GType                  type,
   g_signal_connect (undo_editor->view, "select_item",
                     G_CALLBACK (gimp_undo_editor_select_item),
                     undo_editor);
+
+  undo_editor->undo_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+                                   "edit-undo", NULL);
+
+  undo_editor->redo_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+                                   "edit-redo", NULL);
+
+  undo_editor->clear_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
+                                   "edit-undo-clear", NULL);
 
   return object;
 }
@@ -243,14 +222,19 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
 /*  public functions  */
 
 GtkWidget *
-gimp_undo_editor_new (GimpCoreConfig *config)
+gimp_undo_editor_new (GimpCoreConfig  *config,
+                      GimpMenuFactory *menu_factory)
 {
   g_return_val_if_fail (GIMP_IS_CORE_CONFIG (config), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   return g_object_new (GIMP_TYPE_UNDO_EDITOR,
-                       "preview-size", config->undo_preview_size,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<UndoEditor>",
+                       "preview-size",    config->undo_preview_size,
                        NULL);
 }
+
 
 /*  private functions  */
 
@@ -329,8 +313,6 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
   g_signal_handlers_unblock_by_func (editor->view,
                                      gimp_undo_editor_select_item,
                                      editor);
-
-  gimp_undo_editor_update_buttons (editor);
 }
 
 static void
@@ -348,66 +330,6 @@ gimp_undo_editor_clear (GimpUndoEditor *editor)
     {
       g_object_unref (editor->base_item);
       editor->base_item = NULL;
-    }
-}
-
-static void
-gimp_undo_editor_undo_clicked (GtkWidget       *widget,
-                               GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      if (gimp_image_undo (editor->gimage))
-        gimp_image_flush (editor->gimage);
-    }
-}
-
-static void
-gimp_undo_editor_redo_clicked (GtkWidget       *widget,
-                               GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      if (gimp_image_redo (editor->gimage))
-        gimp_image_flush (editor->gimage);
-    }
-}
-
-static void
-gimp_undo_editor_clear_callback (GtkWidget *widget,
-                                 gboolean   clear,
-                                 gpointer   data)
-{
-  if (clear)
-    {
-      GimpImage *gimage = data;
-
-      gimp_image_undo_disable (gimage);
-      gimp_image_undo_enable (gimage);
-      gimp_image_flush (gimage);
-    }
-}
-
-static void
-gimp_undo_editor_clear_clicked (GtkWidget       *widget,
-                                GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      GtkWidget *dialog;
-
-      dialog = gimp_query_boolean_box (_("Clear Undo History"),
-                                       GTK_WIDGET (editor),
-				       gimp_standard_help_func,
-                                       GIMP_HELP_EDIT_UNDO_CLEAR,
-				       GIMP_STOCK_QUESTION,
-				       _("Really clear image's undo history?"),
-				       GTK_STOCK_CLEAR, GTK_STOCK_CANCEL,
-				       G_OBJECT (editor->gimage),
-				       "disconnect",
-				       gimp_undo_editor_clear_callback,
-                                       editor->gimage);
-      gtk_widget_show (dialog);
     }
 }
 
@@ -480,8 +402,6 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
       gimp_undo_editor_fill (editor);
       break;
     }
-
-  gimp_undo_editor_update_buttons (editor);
 }
 
 static void
@@ -537,20 +457,4 @@ gimp_undo_editor_select_item (GimpContainerView *view,
     }
 
   gimp_image_flush (gimage);
-
-  gimp_undo_editor_update_buttons (editor);
-}
-
-static void
-gimp_undo_editor_update_buttons (GimpUndoEditor *editor)
-{
-  GimpImage *gimage        = GIMP_IMAGE_EDITOR (editor)->gimage;
-  GimpUndo  *top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
-  GimpUndo  *top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
-  gboolean   enabled       = gimp_image_undo_is_enabled (gimage);
-
-  gtk_widget_set_sensitive (editor->undo_button,  enabled && top_undo_item);
-  gtk_widget_set_sensitive (editor->redo_button,  enabled && top_redo_item);
-  gtk_widget_set_sensitive (editor->clear_button, enabled && (top_undo_item ||
-                                                              top_redo_item));
 }

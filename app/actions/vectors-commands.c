@@ -194,12 +194,13 @@ vectors_to_selection_cmd_callback (GtkAction *action,
 
 void
 vectors_selection_to_vectors_cmd_callback (GtkAction *action,
+                                           gint       value,
                                            gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  vectors_selection_to_vectors (gimage, FALSE);
+  vectors_selection_to_vectors (gimage, value);
 }
 
 void

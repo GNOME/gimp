@@ -40,6 +40,7 @@ void   vectors_to_selection_cmd_callback         (GtkAction   *action,
                                                   gint         value,
                                                   gpointer     data);
 void   vectors_selection_to_vectors_cmd_callback (GtkAction   *action,
+                                                  gint         value,
                                                   gpointer     data);
 void   vectors_stroke_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);

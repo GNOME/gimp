@@ -625,7 +625,7 @@ gimp_item_tree_view_new (gint                  preview_size,
                          GimpActivateItemFunc  activate_item_func,
                          GimpMenuFactory      *menu_factory,
                          const gchar          *menu_identifier,
-                         const gchar          *ui_identifier)
+                         const gchar          *ui_path)
 {
   GimpItemTreeView *item_view;
   GType             view_type;
@@ -642,7 +642,7 @@ gimp_item_tree_view_new (gint                  preview_size,
   g_return_val_if_fail (activate_item_func != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
-  g_return_val_if_fail (ui_identifier != NULL, NULL);
+  g_return_val_if_fail (ui_path != NULL, NULL);
 
   if (item_type == GIMP_TYPE_LAYER)
     {
@@ -664,9 +664,12 @@ gimp_item_tree_view_new (gint                  preview_size,
     }
 
   item_view = g_object_new (view_type,
-                            "reorderable", TRUE,
-                            "item-type",   item_type,
-                            "signal-name", signal_name,
+                            "reorderable",     TRUE,
+                            "menu-factory",    menu_factory,
+                            "menu-identifier", menu_identifier,
+                            "ui-path",         ui_path,
+                            "item-type",       item_type,
+                            "signal-name",     signal_name,
                             NULL);
 
   gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (item_view),
@@ -675,10 +678,6 @@ gimp_item_tree_view_new (gint                  preview_size,
   item_view->edit_item_func     = edit_item_func;
   item_view->new_item_func      = new_item_func;
   item_view->activate_item_func = activate_item_func;
-
-  gimp_editor_create_menu (GIMP_EDITOR (item_view),
-                           menu_factory, menu_identifier, ui_identifier,
-                           item_view);
 
   gimp_item_tree_view_set_image (item_view, gimage);
 
@@ -733,6 +732,10 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 			view);
 
       gimp_item_tree_view_item_changed (view->gimage, view);
+    }
+  else
+    {
+      gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
     }
 
   gtk_widget_set_sensitive (view->new_button, (view->gimage != NULL));
@@ -855,6 +858,8 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
   gtk_widget_set_sensitive (tree_view->lower_button,     lower_sensitive);
   gtk_widget_set_sensitive (tree_view->duplicate_button, duplicate_sensitive);
   gtk_widget_set_sensitive (tree_view->delete_button,    delete_sensitive);
+
+  gimp_ui_manager_update (GIMP_EDITOR (tree_view)->ui_manager, tree_view);
 
   return success;
 }

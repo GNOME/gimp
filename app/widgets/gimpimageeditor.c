@@ -27,6 +27,7 @@
 
 #include "gimpdocked.h"
 #include "gimpimageeditor.h"
+#include "gimpuimanager.h"
 
 
 static void   gimp_image_editor_class_init     (GimpImageEditorClass *klass);
@@ -37,10 +38,12 @@ static void   gimp_image_editor_set_docked_context (GimpDocked       *docked,
                                                     GimpContext      *context,
                                                     GimpContext      *prev_context);
 
-static void   gimp_image_editor_destroy        (GtkObject            *object);
+static void   gimp_image_editor_destroy            (GtkObject        *object);
+static void   gimp_image_editor_real_set_image     (GimpImageEditor  *editor,
+                                                    GimpImage        *gimage);
 
-static void   gimp_image_editor_real_set_image (GimpImageEditor      *editor,
-                                                GimpImage            *gimage);
+static void   gimp_image_editor_image_flush        (GimpImage        *gimage,
+                                                    GimpImageEditor  *editor);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -86,9 +89,7 @@ gimp_image_editor_get_type (void)
 static void
 gimp_image_editor_class_init (GimpImageEditorClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -147,9 +148,7 @@ gimp_image_editor_set_docked_context (GimpDocked  *docked,
 static void
 gimp_image_editor_destroy (GtkObject *object)
 {
-  GimpImageEditor *editor;
-
-  editor = GIMP_IMAGE_EDITOR (object);
+  GimpImageEditor *editor = GIMP_IMAGE_EDITOR (object);
 
   if (editor->gimage)
     gimp_image_editor_set_image (editor, NULL);
@@ -161,7 +160,17 @@ static void
 gimp_image_editor_real_set_image (GimpImageEditor *editor,
                                   GimpImage       *gimage)
 {
+  if (editor->gimage)
+    g_signal_handlers_disconnect_by_func (editor->gimage,
+                                          gimp_image_editor_image_flush,
+                                          editor);
+
   editor->gimage = gimage;
+
+  if (editor->gimage)
+    g_signal_connect (editor->gimage, "flush",
+                      G_CALLBACK (gimp_image_editor_image_flush),
+                      editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), gimage != NULL);
 }
@@ -174,10 +183,26 @@ gimp_image_editor_set_image (GimpImageEditor *editor,
                              GimpImage       *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE_EDITOR (editor));
-  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
 
-  if (gimage == editor->gimage)
-    return;
+  if (gimage != editor->gimage)
+    {
+      GIMP_IMAGE_EDITOR_GET_CLASS (editor)->set_image (editor, gimage);
 
-  GIMP_IMAGE_EDITOR_GET_CLASS (editor)->set_image (editor, gimage);
+      if (GIMP_EDITOR (editor)->ui_manager)
+        gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                                GIMP_EDITOR (editor)->popup_data);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_image_editor_image_flush (GimpImage       *gimage,
+                               GimpImageEditor *editor)
+{
+  if (GIMP_EDITOR (editor)->ui_manager)
+    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                            GIMP_EDITOR (editor)->popup_data);
 }

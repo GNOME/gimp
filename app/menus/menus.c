@@ -260,6 +260,19 @@ menus_init (Gimp *gimp)
                                       "colormap-editor-menu.xml", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<SelectionEditor>",
+                                      "select",
+                                      "vectors",
+                                      NULL,
+                                      "/selection-editor-popup",
+                                      "selection-editor-menu.xml", NULL,
+                                      NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<UndoEditor>",
+                                      "edit",
+                                      NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<ErrorConsole>",
                                       "error-console",
                                       NULL,

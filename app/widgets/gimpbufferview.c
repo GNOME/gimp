@@ -45,8 +45,6 @@
 static void   gimp_buffer_view_class_init    (GimpBufferViewClass *klass);
 static void   gimp_buffer_view_init          (GimpBufferView      *view);
 
-static void   gimp_buffer_view_select_item   (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
 static void   gimp_buffer_view_activate_item (GimpContainerEditor *editor,
                                               GimpViewable        *viewable);
 
@@ -89,7 +87,6 @@ gimp_buffer_view_class_init (GimpBufferViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_buffer_view_select_item;
   editor_class->activate_item = gimp_buffer_view_activate_item;
 }
 
@@ -131,19 +128,19 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
   buffer_view->paste_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste");
+                                   "buffers-paste", NULL);
 
   buffer_view->paste_into_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste-into");
+                                   "buffers-paste-into", NULL);
 
   buffer_view->paste_as_new_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste-as-new");
+                                   "buffers-paste-as-new", NULL);
 
   buffer_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-delete");
+                                   "buffers-delete", NULL);
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (buffer_view->paste_button),
@@ -161,16 +158,6 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return GTK_WIDGET (buffer_view);
-}
-
-static void
-gimp_buffer_view_select_item (GimpContainerEditor *editor,
-			      GimpViewable        *viewable)
-{
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

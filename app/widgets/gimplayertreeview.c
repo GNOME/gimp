@@ -45,6 +45,7 @@
 #include "gimphelp-ids.h"
 #include "gimplayertreeview.h"
 #include "gimppreviewrenderer.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-constructors.h"
 
 #include "gimp-intl.h"
@@ -88,9 +89,6 @@ static void   gimp_layer_tree_view_remove_item    (GimpImage           *gimage,
 static void   gimp_layer_tree_view_floating_selection_changed
                                                   (GimpImage           *gimage,
                                                    GimpLayerTreeView   *view);
-
-static void   gimp_layer_tree_view_anchor_clicked (GtkWidget           *widget,
-						   GimpLayerTreeView   *view);
 
 static void   gimp_layer_tree_view_paint_mode_menu_callback
                                                   (GtkWidget           *widget,
@@ -319,25 +317,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
 
-  /*  Anchor button  */
-
-  view->anchor_button =
-    gimp_editor_add_button (GIMP_EDITOR (view),
-                            GIMP_STOCK_ANCHOR, _("Anchor Floating Layer"),
-                            GIMP_HELP_LAYER_ANCHOR,
-                            G_CALLBACK (gimp_layer_tree_view_anchor_clicked),
-                            NULL,
-                            view);
-
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
-			 view->anchor_button, 5);
-
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
-				  GTK_BUTTON (view->anchor_button),
-				  GIMP_TYPE_LAYER);
-
   gtk_widget_set_sensitive (view->options_box,   FALSE);
-  gtk_widget_set_sensitive (view->anchor_button, FALSE);
 
   view->italic_attrs = pango_attr_list_new ();
   attr = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -403,6 +383,17 @@ gimp_layer_tree_view_constructor (GType                  type,
   g_signal_connect (layer_view->mask_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_mask_clicked),
                     layer_view);
+
+  layer_view->anchor_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                   "layers-anchor", NULL);
+
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+			 layer_view->anchor_button, 5);
+
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
+				  GTK_BUTTON (layer_view->anchor_button),
+				  GIMP_TYPE_LAYER);
 
   return object;
 }
@@ -559,7 +550,6 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   GimpItemTreeView  *item_view         = GIMP_ITEM_TREE_VIEW (view);
   GimpLayerTreeView *layer_view        = GIMP_LAYER_TREE_VIEW (view);
   gboolean           options_sensitive = FALSE;
-  gboolean           anchor_sensitive  = FALSE;
   gboolean           raise_sensitive   = FALSE;
   gboolean           success;
 
@@ -578,8 +568,6 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 
       if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
 	{
-	  anchor_sensitive = TRUE;
-
 	  gtk_widget_set_sensitive (item_view->edit_button,      FALSE);
 	  gtk_widget_set_sensitive (item_view->lower_button,     FALSE);
 	  gtk_widget_set_sensitive (item_view->duplicate_button, FALSE);
@@ -598,9 +586,8 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
 	}
     }
 
-  gtk_widget_set_sensitive (layer_view->options_box,   options_sensitive);
-  gtk_widget_set_sensitive (item_view->raise_button,   raise_sensitive);
-  gtk_widget_set_sensitive (layer_view->anchor_button, anchor_sensitive);
+  gtk_widget_set_sensitive (layer_view->options_box, options_sensitive);
+  gtk_widget_set_sensitive (item_view->raise_button, raise_sensitive);
 
   return success;
 }
@@ -747,25 +734,6 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *gimage,
                                     -1);
             }
         }
-    }
-}
-
-static void
-gimp_layer_tree_view_anchor_clicked (GtkWidget         *widget,
-				     GimpLayerTreeView *view)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-
-  gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
-
-  layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
-
-  if (layer && gimp_layer_is_floating_sel (layer))
-    {
-      floating_sel_anchor (layer);
-      gimp_image_flush (gimage);
     }
 }
 

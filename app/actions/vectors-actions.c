@@ -93,13 +93,9 @@ static GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_lower_to_bottom_cmd_callback),
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
-  { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
-    N_("Selecti_on to Path"), NULL, NULL,
-    G_CALLBACK (vectors_selection_to_vectors_cmd_callback),
-    GIMP_HELP_SELECTION_TO_PATH },
-
   { "vectors-stroke", GIMP_STOCK_PATH_STROKE,
-    N_("Stro_ke Path..."), NULL, NULL,
+    N_("Stro_ke Path..."), NULL,
+    N_("Stroke path"),
     G_CALLBACK (vectors_stroke_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
@@ -147,6 +143,19 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
     GIMP_HELP_PATH_SELECTION_INTERSECT }
 };
 
+static GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
+{
+  { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
+    N_("Selecti_on to Path"), NULL, NULL,
+    FALSE,
+    GIMP_HELP_SELECTION_TO_PATH },
+
+  { "vectors-selection-to-vectors-advanced", GIMP_STOCK_SELECTION_TO_PATH,
+    N_("Selection to Path (_Advanced)"), NULL, NULL,
+    TRUE,
+    GIMP_HELP_SELECTION_TO_PATH }
+};
+
 
 void
 vectors_actions_setup (GimpActionGroup *group)
@@ -159,6 +168,11 @@ vectors_actions_setup (GimpActionGroup *group)
                                       vectors_to_selection_actions,
                                       G_N_ELEMENTS (vectors_to_selection_actions),
                                       G_CALLBACK (vectors_to_selection_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      vectors_selection_to_vectors_actions,
+                                      G_N_ELEMENTS (vectors_selection_to_vectors_actions),
+                                      G_CALLBACK (vectors_selection_to_vectors_cmd_callback));
 }
 
 void

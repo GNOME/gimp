@@ -28,6 +28,7 @@ menudata_DATA = \
 	palettes-menu.xml		\
 	patterns-menu.xml		\
 	qmask-menu.xml			\
+	selection-editor-menu.xml	\
 	templates-menu.xml		\
 	tool-options-menu.xml		\
 	tools-menu.xml			\

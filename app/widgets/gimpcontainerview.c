@@ -714,8 +714,19 @@ gimp_container_view_item_selected (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
+  /* HACK */
+  if (private->container && private->context)
+    {
+      gimp_context_set_by_type (private->context,
+                                private->container->children_type,
+                                GIMP_OBJECT (viewable));
+
+      return TRUE;
+    }
+
   success = gimp_container_view_select_item (view, viewable);
 
+#if 0
   if (success && private->container && private->context)
     {
       GimpContext *context;
@@ -739,6 +750,7 @@ gimp_container_view_item_selected (GimpContainerView *view,
 
       g_object_unref (context);
     }
+#endif
 
   return success;
 }
@@ -967,18 +979,8 @@ gimp_container_view_context_changed (GimpContext       *context,
 				     GimpViewable      *viewable,
 				     GimpContainerView *view)
 {
-  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
-  gpointer                  insert_data;
-  gboolean                  success = FALSE;
-
-  insert_data = g_hash_table_lookup (private->hash_table, viewable);
-
-  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-                 viewable, insert_data, &success);
-
-  if (! success)
-    g_warning ("gimp_container_view_context_changed(): select_item() failed "
-               "(should not happen)");
+  if (! gimp_container_view_select_item (view, viewable))
+    g_warning ("%s: select_item() failed (should not happen)", G_STRFUNC);
 }
 
 static void
@@ -989,10 +991,11 @@ gimp_container_view_viewable_dropped (GtkWidget    *widget,
   GimpContainerView        *view    = GIMP_CONTAINER_VIEW (data);
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->context && private->container)
-    gimp_context_set_by_type (private->context,
-                              private->container->children_type,
-                              GIMP_OBJECT (viewable));
+  if (viewable && private->container &&
+      gimp_container_have (private->container, GIMP_OBJECT (viewable)))
+    {
+      gimp_container_view_item_selected (view, viewable);
+    }
 }
 
 static void

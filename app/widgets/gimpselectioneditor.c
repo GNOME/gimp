@@ -45,6 +45,7 @@
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimpmenufactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
@@ -55,24 +56,12 @@
 static void   gimp_selection_editor_class_init (GimpSelectionEditorClass *klass);
 static void   gimp_selection_editor_init       (GimpSelectionEditor      *selection_editor);
 
+static GObject * gimp_selection_editor_constructor (GType                type,
+                                                    guint                n_params,
+                                                    GObjectConstructParam *params);
+
 static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
                                                     GimpImage           *gimage);
-
-static void   gimp_selection_editor_invert_clicked (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_all_clicked    (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_none_clicked   (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_save_clicked   (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_path_clicked   (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_path_extended_clicked (GtkWidget    *widget,
-                                                    guint                state,
-                                                    GimpImageEditor     *editor);
-static void   gimp_selection_editor_stroke_clicked (GtkWidget           *widget,
-                                                    GimpImageEditor     *editor);
 
 static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -119,104 +108,98 @@ gimp_selection_editor_get_type (void)
 static void
 gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
 {
-  GimpImageEditorClass *image_editor_class;
-
-  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
+  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor     = gimp_selection_editor_constructor;
 
   image_editor_class->set_image = gimp_selection_editor_set_image;
 }
 
 static void
-gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
+gimp_selection_editor_init (GimpSelectionEditor *editor)
 {
   GtkWidget *frame;
-  gchar     *str;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (selection_editor), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  selection_editor->selection_to_vectors_func = NULL;
-
-  selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
-                                                         GIMP_TYPE_SELECTION,
-                                                         GIMP_PREVIEW_SIZE_HUGE,
-                                                         0, TRUE);
-  gtk_widget_set_size_request (selection_editor->preview,
+  editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
+                                               GIMP_TYPE_SELECTION,
+                                               GIMP_PREVIEW_SIZE_HUGE,
+                                               0, TRUE);
+  gimp_preview_renderer_set_background (GIMP_PREVIEW (editor->preview)->renderer,
+                                        GIMP_STOCK_TEXTURE);
+  gtk_widget_set_size_request (editor->preview,
                                GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
-  gimp_preview_set_expand (GIMP_PREVIEW (selection_editor->preview), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), selection_editor->preview);
-  gtk_widget_show (selection_editor->preview);
+  gimp_preview_set_expand (GIMP_PREVIEW (editor->preview), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
+  gtk_widget_show (editor->preview);
 
-  g_signal_connect (selection_editor->preview, "button_press_event",
+  g_signal_connect (editor->preview, "button_press_event",
                     G_CALLBACK (gimp_selection_preview_button_press),
-                    selection_editor);
+                    editor);
 
-  gimp_dnd_color_dest_add (selection_editor->preview,
+  gimp_dnd_color_dest_add (editor->preview,
                            gimp_selection_editor_drop_color,
-                           selection_editor);
+                           editor);
 
-  selection_editor->all_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_ALL, _("Select All"),
-                            GIMP_HELP_SELECTION_ALL,
-                            G_CALLBACK (gimp_selection_editor_all_clicked),
-                            NULL,
-                            selection_editor);
+  gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+}
 
-  selection_editor->none_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_NONE, _("Select None"),
-                            GIMP_HELP_SELECTION_NONE,
-                            G_CALLBACK (gimp_selection_editor_none_clicked),
-                            NULL,
-                            selection_editor);
+static GObject *
+gimp_selection_editor_constructor (GType                  type,
+                                   guint                  n_params,
+                                   GObjectConstructParam *params)
+{
+  GObject             *object;
+  GimpSelectionEditor *editor;
+  gchar               *str;
 
-  selection_editor->invert_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_INVERT, _("Invert Selection"),
-                            GIMP_HELP_SELECTION_INVERT,
-                            G_CALLBACK (gimp_selection_editor_invert_clicked),
-                            NULL,
-                            selection_editor);
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  selection_editor->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_TO_CHANNEL,
-                            _("Save Selection to Channel"),
-                            GIMP_HELP_SELECTION_TO_CHANNEL,
-                            G_CALLBACK (gimp_selection_editor_save_clicked),
-                            NULL,
-                            selection_editor);
+  editor = GIMP_SELECTION_EDITOR (object);
 
-  str = g_strdup_printf (_("Selection to Path\n"
-                           "%s  Advanced Options"),
+  editor->all_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+                                   "select-all", NULL);
+
+  editor->none_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+                                   "select-none", NULL);
+
+  editor->invert_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+                                   "select-invert", NULL);
+
+  editor->save_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+                                   "select-save", NULL);
+
+  str = g_strdup_printf (_("Selection to path\n"
+                           "%s  Advanced options"),
                          gimp_get_mod_name_shift ());
 
-  selection_editor->path_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_TO_PATH, str,
-                            GIMP_HELP_SELECTION_TO_PATH,
-                            G_CALLBACK (gimp_selection_editor_path_clicked),
-                            G_CALLBACK (gimp_selection_editor_path_extended_clicked),
-                            selection_editor);
+  editor->path_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "vectors",
+                                   "vectors-selection-to-vectors",
+                                   "vectors-selection-to-vectors-advanced",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+  gimp_help_set_help_data (editor->path_button, str,
+                           GIMP_HELP_SELECTION_TO_PATH);
 
   g_free (str);
 
-  selection_editor->stroke_button =
-    gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_STROKE,
-                            _("Stroke Selection"),
-                            GIMP_HELP_SELECTION_STROKE,
-                            G_CALLBACK (gimp_selection_editor_stroke_clicked),
-                            NULL,
-                            selection_editor);
+  editor->stroke_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
+                                   "select-stroke", NULL);
 
-
-  gtk_widget_set_sensitive (GTK_WIDGET (selection_editor), FALSE);
+  return object;
 }
 
 static void
@@ -252,104 +235,25 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
 
 /*  public functions  */
 
-#define PREVIEW_WIDTH       256
-#define PREVIEW_HEIGHT      256
-
 GtkWidget *
-gimp_selection_editor_new (GimpImage *gimage)
+gimp_selection_editor_new (GimpImage       *gimage,
+                           GimpMenuFactory *menu_factory)
 {
   GimpSelectionEditor *editor;
 
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR, NULL);
-
-  gimp_preview_renderer_set_background (GIMP_PREVIEW (editor->preview)->renderer,
-                                        GIMP_STOCK_TEXTURE);
+  editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR,
+                         "menu-factory",    menu_factory,
+                         "menu-identifier", "<SelectionEditor>",
+                         "ui-path",         "/selection-editor-popup",
+                         NULL);
 
   if (gimage)
     gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
 
   return GTK_WIDGET (editor);
-}
-
-static void
-gimp_selection_editor_invert_clicked (GtkWidget       *widget,
-                                      GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      gimp_channel_invert (gimp_image_get_mask (editor->gimage), TRUE);
-      gimp_image_flush (editor->gimage);
-    }
-}
-
-static void
-gimp_selection_editor_all_clicked (GtkWidget       *widget,
-                                   GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      gimp_channel_all (gimp_image_get_mask (editor->gimage), TRUE);
-      gimp_image_flush (editor->gimage);
-    }
-}
-
-static void
-gimp_selection_editor_none_clicked (GtkWidget       *widget,
-                                    GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      gimp_channel_clear (gimp_image_get_mask (editor->gimage), NULL, TRUE);
-      gimp_image_flush (editor->gimage);
-    }
-}
-
-static void
-gimp_selection_editor_save_clicked (GtkWidget       *widget,
-                                    GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      gimp_selection_save (gimp_image_get_mask (editor->gimage));
-    }
-}
-
-static void
-gimp_selection_editor_path_clicked (GtkWidget       *widget,
-                                    GimpImageEditor *editor)
-{
-  gimp_selection_editor_path_extended_clicked (widget, 0, editor);
-}
-
-static void
-gimp_selection_editor_path_extended_clicked (GtkWidget       *widget,
-                                             guint            state,
-                                             GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      GimpSelectionEditor *sel_editor = GIMP_SELECTION_EDITOR (editor);
-
-      if (sel_editor->selection_to_vectors_func)
-        sel_editor->selection_to_vectors_func (editor->gimage,
-                                               (state & GDK_SHIFT_MASK) != 0);
-    }
-}
-
-static void
-gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
-				      GimpImageEditor *editor)
-{
-  if (editor->gimage)
-    {
-      GimpSelectionEditor *sel_editor = GIMP_SELECTION_EDITOR (editor);
-
-      if (sel_editor->stroke_item_func)
-        sel_editor->stroke_item_func (GIMP_ITEM (gimp_image_get_mask (editor->gimage)),
-                                      GTK_WIDGET (editor));
-    }
 }
 
 static gboolean

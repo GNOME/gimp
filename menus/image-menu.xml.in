@@ -65,7 +65,7 @@
         <menuitem action="edit-fill-pattern" />
       </placeholder>
       <placeholder name="Stroke">
-        <menuitem action="edit-stroke" />
+        <menuitem action="select-stroke" />
         <menuitem action="vectors-stroke" />
       </placeholder>
       <separator />

@@ -49,14 +49,11 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_template_view_class_init (GimpTemplateViewClass *klass);
-static void   gimp_template_view_init       (GimpTemplateView      *view);
+static void   gimp_template_view_class_init     (GimpTemplateViewClass *klass);
+static void   gimp_template_view_init           (GimpTemplateView      *view);
 
-static void   gimp_template_view_select_item    (GimpContainerEditor *editor,
-                                                 GimpViewable        *viewable);
 static void   gimp_template_view_activate_item  (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
-
 static void gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
                                                  const gchar         *path_str,
                                                  const gchar         *new_name,
@@ -101,7 +98,6 @@ gimp_template_view_class_init (GimpTemplateViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_template_view_select_item;
   editor_class->activate_item = gimp_template_view_activate_item;
 }
 
@@ -161,23 +157,23 @@ gimp_template_view_new (GimpViewType     view_type,
 
   template_view->create_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
-                                   "templates-create-image");
+                                   "templates-create-image", NULL);
 
   template_view->new_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
-                                   "templates-new");
+                                   "templates-new", NULL);
 
   template_view->duplicate_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
-                                   "templates-duplicate");
+                                   "templates-duplicate", NULL);
 
   template_view->edit_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
-                                   "templates-edit");
+                                   "templates-edit", NULL);
 
   template_view->delete_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
-                                   "templates-delete");
+                                   "templates-delete", NULL);
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (template_view->create_button),
@@ -195,16 +191,6 @@ gimp_template_view_new (GimpViewType     view_type,
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return GTK_WIDGET (template_view);
-}
-
-static void
-gimp_template_view_select_item (GimpContainerEditor *editor,
-                                GimpViewable        *viewable)
-{
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpchanneltreeview.c
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,11 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
@@ -48,21 +46,13 @@ static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view)
 
 static void   gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
-static void   gimp_channel_tree_view_set_image      (GimpItemTreeView     *item_view,
-						     GimpImage            *gimage);
+static GObject * gimp_channel_tree_view_constructor   (GType              type,
+                                                       guint              n_params,
+                                                       GObjectConstructParam *params);
+static void   gimp_channel_tree_view_set_image        (GimpItemTreeView  *item_view,
+                                                       GimpImage         *gimage);
 
-static gboolean  gimp_channel_tree_view_select_item (GimpContainerView   *view,
-						     GimpViewable        *item,
-						     gpointer             insert_data);
 static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
-
-static void   gimp_channel_tree_view_toselection_clicked
-                                                    (GtkWidget           *widget,
-						     GimpChannelTreeView *view);
-static void   gimp_channel_tree_view_toselection_extended_clicked
-                                                    (GtkWidget           *widget,
-						     guint                state,
-						     GimpChannelTreeView *view);
 
 
 static GimpDrawableTreeViewClass  *parent_class      = NULL;
@@ -110,9 +100,12 @@ gimp_channel_tree_view_get_type (void)
 static void
 gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 {
+  GObjectClass          *object_class    = G_OBJECT_CLASS (klass);
   GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor        = gimp_channel_tree_view_constructor;
 
   item_view_class->set_image       = gimp_channel_tree_view_set_image;
 
@@ -145,7 +138,30 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 static void
 gimp_channel_tree_view_init (GimpChannelTreeView *view)
 {
-  gchar *str;
+}
+
+static void
+gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->set_preview_size = gimp_channel_tree_view_set_preview_size;
+}
+
+static GObject *
+gimp_channel_tree_view_constructor (GType                  type,
+                                    guint                  n_params,
+                                    GObjectConstructParam *params)
+{
+  GObject             *object;
+  GimpEditor          *editor;
+  GimpChannelTreeView *view;
+  gchar               *str;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_EDITOR (object);
+  view   = GIMP_CHANNEL_TREE_VIEW (object);
 
   str = g_strdup_printf (_("Channel to Selection\n"
                            "%s  Add\n"
@@ -158,12 +174,18 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
                          gimp_get_mod_name_control ());
 
   view->toselection_button =
-    gimp_editor_add_button (GIMP_EDITOR (view),
-                            GIMP_STOCK_SELECTION_REPLACE, str,
-                            GIMP_HELP_CHANNEL_SELECTION_REPLACE,
-                            G_CALLBACK (gimp_channel_tree_view_toselection_clicked),
-                            G_CALLBACK (gimp_channel_tree_view_toselection_extended_clicked),
-                            view);
+    gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",
+                                   "channels-selection-replace",
+                                   "channels-selection-intersect",
+                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+                                   "channels-selection-subtract",
+                                   GDK_CONTROL_MASK,
+                                   "channels-selection-add",
+                                   GDK_SHIFT_MASK,
+                                   NULL);
+
+  gimp_help_set_help_data (view->toselection_button, str,
+                           GIMP_HELP_CHANNEL_SELECTION_REPLACE);
 
   g_free (str);
 
@@ -174,16 +196,7 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
 				  GTK_BUTTON (view->toselection_button),
 				  GIMP_TYPE_CHANNEL);
 
-  gtk_widget_set_sensitive (view->toselection_button, FALSE);
-}
-
-static void
-gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
-{
-  parent_view_iface = g_type_interface_peek_parent (view_iface);
-
-  view_iface->select_item      = gimp_channel_tree_view_select_item;
-  view_iface->set_preview_size = gimp_channel_tree_view_set_preview_size;
+  return object;
 }
 
 
@@ -226,32 +239,6 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 
 /*  GimpContainerView methods  */
 
-static gboolean
-gimp_channel_tree_view_select_item (GimpContainerView *view,
-				    GimpViewable      *item,
-				    gpointer           insert_data)
-{
-  GimpItemTreeView    *item_view = GIMP_ITEM_TREE_VIEW (view);
-  GimpChannelTreeView *tree_view = GIMP_CHANNEL_TREE_VIEW (view);
-  gboolean             success;
-
-  success = parent_view_iface->select_item (view, item, insert_data);
-
-  if (item_view->gimage)
-    {
-      gboolean floating_sel;
-
-      floating_sel = (gimp_image_floating_sel (item_view->gimage) != NULL);
-
-      gtk_widget_set_sensitive (GIMP_EDITOR (view)->button_box, ! floating_sel);
-    }
-
-  gtk_widget_set_sensitive (tree_view->toselection_button,
-                            success && item != NULL);
-
-  return success;
-}
-
 static void
 gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
 {
@@ -265,49 +252,4 @@ gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
   if (channel_view->component_editor)
     gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
                                             preview_size);
-}
-
-static void
-gimp_channel_tree_view_toselection_clicked (GtkWidget           *widget,
-					    GimpChannelTreeView *view)
-{
-  gimp_channel_tree_view_toselection_extended_clicked (widget, 0, view);
-}
-
-static void
-gimp_channel_tree_view_toselection_extended_clicked (GtkWidget           *widget,
-						     guint                state,
-						     GimpChannelTreeView *view)
-{
-  GimpImage *gimage;
-  GimpItem  *item;
-
-  gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
-
-  if (item)
-    {
-      GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
-
-      if (state & GDK_SHIFT_MASK)
-	{
-	  if (state & GDK_CONTROL_MASK)
-	    operation = GIMP_CHANNEL_OP_INTERSECT;
-	  else
-	    operation = GIMP_CHANNEL_OP_ADD;
-	}
-      else if (state & GDK_CONTROL_MASK)
-	{
-	  operation = GIMP_CHANNEL_OP_SUBTRACT;
-	}
-
-      gimp_channel_select_channel (gimp_image_get_mask (gimage),
-                                   _("Channel to Selection"),
-                                   GIMP_CHANNEL (item),
-                                   0, 0,
-                                   operation,
-                                   FALSE, 0.0, 0.0);
-      gimp_image_flush (gimage);
-    }
 }

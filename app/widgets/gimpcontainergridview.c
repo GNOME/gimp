@@ -234,7 +234,6 @@ gimp_container_grid_view_view_iface_init (GimpContainerViewInterface *view_iface
   view_iface->select_item      = gimp_container_grid_view_select_item;
   view_iface->clear_items      = gimp_container_grid_view_clear_items;
   view_iface->set_preview_size = gimp_container_grid_view_set_preview_size;
-
 }
 
 GtkWidget *

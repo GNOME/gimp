@@ -411,7 +411,6 @@ dialogs_document_list_new (GimpDialogFactory *factory,
                                  context->gimp->documents,
                                  context,
                                  preview_size, 1,
-                                 file_file_open_dialog,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -614,7 +613,6 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
                                  context->gimp->documents,
                                  context,
                                  preview_size, 1,
-                                 file_file_open_dialog,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -695,9 +693,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 			       GimpContext       *context,
                                gint               preview_size)
 {
-  GimpVectorsTreeView *vectors_view;
-  GtkWidget           *view;
-  GtkWidget           *dockable;
+  GtkWidget *view;
+  GtkWidget *dockable;
 
   if (preview_size < 1)
     preview_size = context->gimp->config->layer_preview_size;
@@ -712,11 +709,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              (GimpActivateItemFunc) vectors_vectors_tool,
                              factory->menu_factory, "<Vectors>",
                              "/vectors-popup");
-
-  vectors_view = GIMP_VECTORS_TREE_VIEW (view);
-
-  vectors_view->stroke_item_func          = vectors_stroke_vectors;
-  vectors_view->selection_to_vectors_func = vectors_selection_to_vectors;
 
   dockable = dialogs_dockable_new (view,
 				   _("Paths"), NULL,
@@ -758,13 +750,10 @@ dialogs_histogram_editor_new (GimpDialogFactory *factory,
                               GimpContext       *context,
                               gint               preview_size)
 {
-  GimpHistogramEditor *histogram_editor;
-  GtkWidget           *view;
-  GtkWidget           *dockable;
+  GtkWidget *view;
+  GtkWidget *dockable;
 
   view = gimp_histogram_editor_new (gimp_context_get_image (context));
-
-  histogram_editor = GIMP_HISTOGRAM_EDITOR (view);
 
   dockable = dialogs_dockable_new (view,
 				   _("Histogram"), NULL,
@@ -781,16 +770,11 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
                               GimpContext       *context,
                               gint               preview_size)
 {
-  GimpSelectionEditor *selection_editor;
-  GtkWidget           *view;
-  GtkWidget           *dockable;
+  GtkWidget *view;
+  GtkWidget *dockable;
 
-  view = gimp_selection_editor_new (gimp_context_get_image (context));
-
-  selection_editor = GIMP_SELECTION_EDITOR (view);
-
-  selection_editor->stroke_item_func          = edit_stroke_selection;
-  selection_editor->selection_to_vectors_func = vectors_selection_to_vectors;
+  view = gimp_selection_editor_new (gimp_context_get_image (context),
+                                    factory->menu_factory);
 
   dockable = dialogs_dockable_new (view,
 				   _("Selection"), _("Selection Editor"),
@@ -811,7 +795,8 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
   GtkWidget *dockable;
   GimpImage *gimage;
 
-  editor = gimp_undo_editor_new (context->gimp->config);
+  editor = gimp_undo_editor_new (context->gimp->config,
+                                 factory->menu_factory);
 
   gimage = gimp_context_get_image (context);
   if (gimage)

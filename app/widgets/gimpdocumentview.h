@@ -26,11 +26,6 @@
 #include "gimpcontainereditor.h"
 
 
-typedef void (* GimpFileOpenDialogFunc) (Gimp        *gimp,
-                                         const gchar *uri,
-                                         GtkWidget   *parent);
-
-
 #define GIMP_TYPE_DOCUMENT_VIEW            (gimp_document_view_get_type ())
 #define GIMP_DOCUMENT_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCUMENT_VIEW, GimpDocumentView))
 #define GIMP_DOCUMENT_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCUMENT_VIEW, GimpDocumentViewClass))
@@ -43,13 +38,11 @@ typedef struct _GimpDocumentViewClass  GimpDocumentViewClass;
 
 struct _GimpDocumentView
 {
-  GimpContainerEditor     parent_instance;
+  GimpContainerEditor  parent_instance;
 
-  GimpFileOpenDialogFunc  file_open_dialog_func;
-
-  GtkWidget              *open_button;
-  GtkWidget              *remove_button;
-  GtkWidget              *refresh_button;
+  GtkWidget           *open_button;
+  GtkWidget           *remove_button;
+  GtkWidget           *refresh_button;
 };
 
 struct _GimpDocumentViewClass
@@ -60,13 +53,12 @@ struct _GimpDocumentViewClass
 
 GType       gimp_document_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_document_view_new      (GimpViewType            view_type,
-                                         GimpContainer          *container,
-                                         GimpContext            *context,
-                                         gint                    preview_size,
-                                         gint                    preview_border_width,
-                                         GimpFileOpenDialogFunc  file_open_dialog_func,
-                                         GimpMenuFactory        *menu_factory);
+GtkWidget * gimp_document_view_new      (GimpViewType     view_type,
+                                         GimpContainer   *container,
+                                         GimpContext     *context,
+                                         gint             preview_size,
+                                         gint             preview_border_width,
+                                         GimpMenuFactory *menu_factory);
 
 
 #endif  /*  __GIMP_DOCUMENT_VIEW_H__  */

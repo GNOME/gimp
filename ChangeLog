@@ -1,3 +1,91 @@
+2004-05-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/documents-actions.c
+	* app/actions/documents-commands.c
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.[ch]
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.c
+	* app/actions/select-actions.c
+	* app/actions/select-commands.[ch]
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: added tooltips for actions
+	which are now used for dialog buttons, added callback
+	implementations which formerly lived in various widgets, moved
+	some actions around and did some general cleanups.
+
+	* menus/image-menu.xml.in: s/edit-stroke/select-stroke/
+
+	* menus/Makefile.am
+	* menus/selection-editor-menu.xml: new popup menu.
+
+	* app/menus/menus.c: register <SelectionEditor> and <UndoEditor>
+	UI managers.
+
+	* app/widgets/gimpeditor.[ch]: added construct properties
+	"menu-factory", "menu-identifier", "ui-path" and "popup-data".
+	Implement GObject::constructor() and create the UI manager
+	if all needed properties were set. Enables creating action
+	buttons at widget construction time because they need a
+	UI manager.
+
+	(gimp_editor_add_action_button): extended to take a va_list of
+	"extended" actions which are invoked if the resp. button emits
+	"extended_clicked". Store the actions and their modifier masks in
+	a list attached to the button.
+
+	* app/widgets/gimpcontainerview.c
+	(gimp_container_view_item_selected): if the view has container
+	*and* context, simply change the context and return.
+
+	(gimp_container_view_context_changed): don't emit "select_item"
+	manually but simply call gimp_container_view_select_item().
+
+	(gimp_container_view_viewable_dropped): use
+	gimp_container_view_item_selected() instead of changing the
+	context directly.
+
+	* app/widgets/gimpcontainereditor.c
+	(gimp_container_editor_select_item): update the UI manager.
+
+	* app/widgets/gimpdockable.c: don't try to fiddle with the
+	dialog's menu if it doesn't have a ui_path (happens if the UI
+	manager is just a collection of actions for the dialog buttons and
+	has no menu registered).
+
+	* app/widgets/gimpimageeditor.c: connect to the image's "flush"
+	signal and update the UI manager in the callback.
+
+	* app/widgets/gimpitemtreeview.c: use GimpEditor's construct
+	properties to create the UI manager so GimpItemTreeView subclasses
+	can have action buttons. Update the UI manager in
+	gimp_item_tree_view_select_item().
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpfontview.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptoolview.c: changed calls to
+	gimp_editor_add_action_button() accordingly and removed some
+	unneeded select_item() implementations.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpvectorstreeview.[ch]
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpselectioneditor.[ch]
+	* app/widgets/gimpundoeditor.[ch]: use action buttons and removed
+	lots of callbacks which went to the resp. action callbacks.
+
+	* app/widgets/widgets-types.h: removed some now unneeded function
+	prototypes.
+
+	* app/gui/dialogs-constructors.c: changed (simplified) many dialog
+	constructors accordingly.
+
 2004-05-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_new_internal)

@@ -21,64 +21,34 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
-#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
-
-#include "file/file-open.h"
-#include "file/file-utils.h"
-
-#include "display/gimpdisplay.h"
 
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_document_view_class_init (GimpDocumentViewClass *klass);
-static void   gimp_document_view_init       (GimpDocumentView      *view);
+static void    gimp_document_view_class_init    (GimpDocumentViewClass *klass);
+static void    gimp_document_view_init          (GimpDocumentView      *view);
 
-static void   gimp_document_view_open_clicked          (GtkWidget        *widget,
-                                                        GimpDocumentView *view);
-static void   gimp_document_view_open_extended_clicked (GtkWidget        *widget,
-                                                        guint             state,
-                                                        GimpDocumentView *view);
-static void   gimp_document_view_remove_clicked        (GtkWidget        *widget,
-                                                        GimpDocumentView *view);
-static void   gimp_document_view_refresh_clicked       (GtkWidget        *widget,
-                                                        GimpDocumentView *view);
-static void   gimp_document_view_refresh_extended_clicked (GtkWidget     *widget,
-                                                           guint          state,
-                                                        GimpDocumentView *view);
-
-static void   gimp_document_view_select_item     (GimpContainerEditor *editor,
-                                                  GimpViewable        *viewable);
-static void   gimp_document_view_activate_item   (GimpContainerEditor *editor,
-                                                  GimpViewable        *viewable);
-static void   gimp_document_view_open_image      (GimpDocumentView    *view,
-                                                  GimpImagefile       *imagefile);
-static GList * gimp_document_view_drag_file      (GtkWidget           *widget,
-                                                  gpointer             data);
+static void    gimp_document_view_activate_item (GimpContainerEditor *editor,
+                                                 GimpViewable        *viewable);
+static GList * gimp_document_view_drag_file     (GtkWidget           *widget,
+                                                 gpointer             data);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -119,7 +89,6 @@ gimp_document_view_class_init (GimpDocumentViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_document_view_select_item;
   editor_class->activate_item = gimp_document_view_activate_item;
 }
 
@@ -132,19 +101,16 @@ gimp_document_view_init (GimpDocumentView *view)
 }
 
 GtkWidget *
-gimp_document_view_new (GimpViewType            view_type,
-                        GimpContainer          *container,
-                        GimpContext            *context,
-                        gint                    preview_size,
-                        gint                    preview_border_width,
-                        GimpFileOpenDialogFunc  file_open_dialog_func,
-                        GimpMenuFactory        *menu_factory)
+gimp_document_view_new (GimpViewType     view_type,
+                        GimpContainer   *container,
+                        GimpContext     *context,
+                        gint             preview_size,
+                        gint             preview_border_width,
+                        GimpMenuFactory *menu_factory)
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
   gchar               *str;
-
-  g_return_val_if_fail (file_open_dialog_func != NULL, NULL);
 
   document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
 
@@ -160,8 +126,6 @@ gimp_document_view_new (GimpViewType            view_type,
       return NULL;
     }
 
-  document_view->file_open_dialog_func = file_open_dialog_func;
-
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
   str = g_strdup_printf (_("Open the selected entry\n"
@@ -171,22 +135,27 @@ gimp_document_view_new (GimpViewType            view_type,
                          gimp_get_mod_name_control ());
 
   document_view->open_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_OPEN, str,
-                            GIMP_HELP_DOCUMENT_OPEN,
-                            G_CALLBACK (gimp_document_view_open_clicked),
-                            G_CALLBACK (gimp_document_view_open_extended_clicked),
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+                                   "documents-open",
+                                   "documents-raise-or-open",
+                                   GDK_SHIFT_MASK,
+                                   "documents-file-open-dialog",
+                                   GDK_CONTROL_MASK,
+                                   NULL);
+  gimp_help_set_help_data (document_view->open_button, str,
+                           GIMP_HELP_DOCUMENT_OPEN);
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (document_view->open_button),
+				  GIMP_TYPE_IMAGEFILE);
 
   g_free (str);
 
   document_view->remove_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REMOVE, _("Remove selected entry"),
-                            GIMP_HELP_DOCUMENT_REMOVE,
-                            G_CALLBACK (gimp_document_view_remove_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+                                   "documents-remove");
+  gimp_container_view_enable_dnd (editor->view,
+				  GTK_BUTTON (document_view->remove_button),
+				  GIMP_TYPE_IMAGEFILE);
 
   str = g_strdup_printf (_("Recreate preview\n"
                            "%s  Reload all previews\n"
@@ -195,26 +164,17 @@ gimp_document_view_new (GimpViewType            view_type,
                          gimp_get_mod_name_control ());
 
   document_view->refresh_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REFRESH, str,
-                            GIMP_HELP_DOCUMENT_REFRESH,
-                            G_CALLBACK (gimp_document_view_refresh_clicked),
-                            G_CALLBACK (gimp_document_view_refresh_extended_clicked),
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+                                   "documents-recreate-preview",
+                                   "documents-reload-previews",
+                                   GDK_SHIFT_MASK,
+                                   "documents-remove-dangling",
+                                   GDK_CONTROL_MASK,
+                                   NULL);
+  gimp_help_set_help_data (document_view->refresh_button, str,
+                           GIMP_HELP_DOCUMENT_REFRESH);
 
   g_free (str);
-
-  /*  set button sensitivity  */
-  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
-    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
-      (editor, (GimpViewable *) gimp_context_get_imagefile (context));
-
-  gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (document_view->open_button),
-				  GIMP_TYPE_IMAGEFILE);
-  gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (document_view->remove_button),
-				  GIMP_TYPE_IMAGEFILE);
 
   if (view_type == GIMP_VIEW_TYPE_LIST)
     {
@@ -227,202 +187,9 @@ gimp_document_view_new (GimpViewType            view_type,
                                 editor);
     }
 
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+
   return GTK_WIDGET (document_view);
-}
-
-static void
-gimp_document_view_open_clicked (GtkWidget        *widget,
-                                 GimpDocumentView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
-
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
-
-  imagefile = gimp_context_get_imagefile (context);
-
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
-    {
-      gimp_document_view_open_image (view, imagefile);
-    }
-  else
-    {
-      view->file_open_dialog_func (context->gimp, NULL, GTK_WIDGET (view));
-    }
-}
-
-
-typedef struct _RaiseClosure RaiseClosure;
-
-struct _RaiseClosure
-{
-  const gchar *name;
-  gboolean     found;
-};
-
-static void
-gimp_document_view_raise_display (gpointer data,
-                                  gpointer user_data)
-{
-  GimpDisplay  *gdisp   = (GimpDisplay *) data;
-  RaiseClosure *closure = (RaiseClosure *) user_data;
-  const gchar  *uri;
-
-  uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
-
-  if (uri && ! strcmp (closure->name, uri))
-    {
-      closure->found = TRUE;
-      gtk_window_present (GTK_WINDOW (gdisp->shell));
-    }
-}
-
-static void
-gimp_document_view_open_extended_clicked (GtkWidget        *widget,
-                                          guint             state,
-                                          GimpDocumentView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
-
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
-
-  imagefile = gimp_context_get_imagefile (context);
-
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
-    {
-      if (state & GDK_CONTROL_MASK)
-        {
-          view->file_open_dialog_func (context->gimp,
-                                       gimp_object_get_name (GIMP_OBJECT (imagefile)),
-                                       GTK_WIDGET (view));
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          RaiseClosure closure;
-
-          closure.name  = gimp_object_get_name (GIMP_OBJECT (imagefile));
-          closure.found = FALSE;
-
-          gimp_container_foreach (context->gimp->displays,
-                                  gimp_document_view_raise_display,
-                                  &closure);
-
-          if (! closure.found)
-            gimp_document_view_open_image (view, imagefile);
-        }
-    }
-  else
-    {
-      view->file_open_dialog_func (context->gimp, NULL, GTK_WIDGET (view));
-    }
-}
-
-static void
-gimp_document_view_remove_clicked (GtkWidget        *widget,
-                                   GimpDocumentView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
-
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
-
-  imagefile = gimp_context_get_imagefile (context);
-
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
-    {
-      gimp_container_remove (container, GIMP_OBJECT (imagefile));
-    }
-}
-
-static void
-gimp_document_view_refresh_clicked (GtkWidget        *widget,
-                                    GimpDocumentView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
-
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
-
-  imagefile = gimp_context_get_imagefile (context);
-
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
-    {
-      gint preview_size;
-
-      preview_size = gimp_container_view_get_preview_size (editor->view, NULL);
-
-      gimp_imagefile_create_thumbnail (imagefile, context, preview_size);
-    }
-}
-
-static void
-gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
-                                            GimpContainerView *view)
-{
-  if (gimp_thumbnail_peek_image (imagefile->thumbnail) ==
-      GIMP_THUMB_STATE_NOT_FOUND)
-    {
-      gimp_container_remove (gimp_container_view_get_container (view),
-                             GIMP_OBJECT (imagefile));
-    }
-}
-
-static void
-gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
-                                             guint             state,
-                                             GimpDocumentView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-
-  container = gimp_container_view_get_container (editor->view);
-
-  if (state & GDK_CONTROL_MASK)
-    {
-      gimp_container_foreach (container,
-                              (GFunc) gimp_document_view_delete_dangling_foreach,
-                              editor->view);
-    }
-  else if (state & GDK_SHIFT_MASK)
-    {
-      gimp_container_foreach (container,
-                              (GFunc) gimp_imagefile_update,
-                              editor->view);
-    }
-}
-
-static void
-gimp_document_view_select_item (GimpContainerEditor *editor,
-                                GimpViewable        *viewable)
-{
-  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (editor);
-  GimpContainer    *container;
-  gboolean          remove_sensitive = FALSE;
-
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  container = gimp_container_view_get_container (editor->view);
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
-    {
-      remove_sensitive = TRUE;
-    }
-
-  gtk_widget_set_sensitive (view->remove_button, remove_sensitive);
 }
 
 static void
@@ -439,39 +206,7 @@ gimp_document_view_activate_item (GimpContainerEditor *editor,
 
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
-      gimp_document_view_open_clicked (NULL, view);
-    }
-}
-
-static void
-gimp_document_view_open_image (GimpDocumentView *view,
-                               GimpImagefile    *imagefile)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  Gimp                *gimp;
-  const gchar         *uri;
-  GimpImage           *gimage;
-  GimpPDBStatusType    status;
-  GError              *error = NULL;
-
-  gimp = gimp_container_view_get_context (editor->view)->gimp;
-
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-  gimage = file_open_with_display (gimp, gimp_get_user_context (gimp),
-                                   uri, &status, &error);
-
-  if (! gimage && status != GIMP_PDB_CANCEL)
-    {
-      gchar *filename;
-
-      filename = file_utils_uri_to_utf8_filename (uri);
-
-      g_message (_("Opening '%s' failed:\n\n%s"),
-                 filename, error->message);
-      g_clear_error (&error);
-
-      g_free (filename);
+      gtk_button_clicked (GTK_BUTTON (view->open_button));
     }
 }
 
@@ -482,8 +217,11 @@ gimp_document_view_drag_file (GtkWidget *widget,
   GimpViewable *viewable = gimp_dnd_get_drag_data (widget);
 
   if (viewable)
-    return g_list_append (NULL,
-                          g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable))));
+    {
+      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (viewable));
+
+      return g_list_append (NULL, g_strdup (uri));
+    }
 
   return NULL;
 }

@@ -147,22 +147,17 @@ typedef struct _GimpSessionInfoAux      GimpSessionInfoAux;
 
 /*  function types  */
 
-typedef void (* GimpActionGroupSetupFunc)   (GimpActionGroup *group);
-typedef void (* GimpActionGroupUpdateFunc)  (GimpActionGroup *group,
-                                             gpointer         data);
+typedef void (* GimpActionGroupSetupFunc)  (GimpActionGroup *group);
+typedef void (* GimpActionGroupUpdateFunc) (GimpActionGroup *group,
+                                            gpointer         data);
 
-typedef void (* GimpUIManagerSetupFunc)     (GimpUIManager   *manager,
-                                             const gchar     *ui_path);
+typedef void (* GimpUIManagerSetupFunc)    (GimpUIManager   *manager,
+                                            const gchar     *ui_path);
 
-typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
-                                             gint            *x,
-                                             gint            *y,
-                                             gpointer         data);
-
-typedef void (* GimpStrokeItemFunc)         (GimpItem        *item,
-                                             GtkWidget       *parent);
-typedef void (* GimpSelectionToVectorsFunc) (GimpImage       *gimage,
-                                             gboolean         advanced);
+typedef void (* GimpMenuPositionFunc)      (GtkMenu         *menu,
+                                            gint            *x,
+                                            gint            *y,
+                                            gpointer         data);
 
 
 #endif /* __WIDGETS_TYPES_H__ */

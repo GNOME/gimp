@@ -41,8 +41,6 @@
 static void   gimp_font_view_class_init    (GimpFontViewClass   *klass);
 static void   gimp_font_view_init          (GimpFontView        *view);
 
-static void   gimp_font_view_select_item   (GimpContainerEditor *editor,
-                                            GimpViewable        *viewable);
 static void   gimp_font_view_activate_item (GimpContainerEditor *editor,
                                             GimpViewable        *viewable);
 
@@ -85,7 +83,6 @@ gimp_font_view_class_init (GimpFontViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->select_item   = gimp_font_view_select_item;
   editor_class->activate_item = gimp_font_view_activate_item;
 }
 
@@ -124,21 +121,11 @@ gimp_font_view_new (GimpViewType     view_type,
 
   font_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "fonts",
-                                   "fonts-refresh");
+                                   "fonts-refresh", NULL);
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return GTK_WIDGET (font_view);
-}
-
-static void
-gimp_font_view_select_item (GimpContainerEditor *editor,
-                            GimpViewable        *viewable)
-{
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void
