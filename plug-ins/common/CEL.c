@@ -46,15 +46,15 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static gint   load_palette   (FILE   *fp,
-			      guchar  palette[]);
-static gint32 load_image     (gchar  *file,
-			      gchar  *brief);
-static gint   save_image     (gchar  *file,
-			      gchar  *brief,
-			      gint32  image,
-			      gint32  layer);
-static void   palette_dialog (gchar  *title);
+static gint   load_palette   (FILE        *fp,
+			      guchar       palette[]);
+static gint32 load_image     (const gchar *file,
+			      const gchar *brief);
+static gint   save_image     (const gchar *file,
+			      const gchar *brief,
+			      gint32       image,
+			      gint32       layer);
+static void   palette_dialog (const gchar *title);
 
 /* Globals... */
 
@@ -224,8 +224,8 @@ run (const gchar      *name,
 /* Load CEL image into The GIMP */
 
 static gint32
-load_image (gchar *file,
-	    gchar *brief)
+load_image (const gchar *file,
+	    const gchar *brief)
 {
   FILE      *fp;            /* Read file pointer */
   gchar     *progress;      /* Title for progress display */
@@ -458,10 +458,10 @@ load_palette (FILE   *fp,
 }
 
 static gint
-save_image (gchar  *file,
-	    gchar  *brief,
-	    gint32  image,
-	    gint32  layer)
+save_image (const gchar *file,
+	    const gchar *brief,
+	    gint32       image,
+	    gint32       layer)
 {
   FILE          *fp;            /* Write file pointer */
   char          *progress;      /* Title for progress display */
@@ -594,7 +594,7 @@ palette_ok (GtkWidget  *widget,
 }
 
 static void
-palette_dialog (gchar *title)
+palette_dialog (const gchar *title)
 {
   GtkWidget *dialog;
 

@@ -121,11 +121,11 @@ static PSD_Image_Data PSDImageData;
  */
 
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 static void* xmalloc (size_t n);
 static void psd_lmode_layer (gint32 idLayer, gchar* psdMode);
 static void reshuffle_cmap_write (guchar *mapGimp);
@@ -134,7 +134,7 @@ static void save_color_mode_data (FILE *fd, gint32 image_id);
 static void save_resources (FILE *fd, gint32 image_id);
 static void save_layer_and_mask (FILE *fd, gint32 image_id);
 static void save_data (FILE *fd, gint32 image_id);
-static gint save_image (gchar *filename, gint32 image_id);
+static gint save_image (const gchar *filename, gint32 image_id);
 static void xfwrite (FILE *fd, void *buf, long len, gchar *why);
 static void write_pascalstring (FILE *fd, char *val, gint padding,
                                 gchar *why);
@@ -189,11 +189,11 @@ query ()
 
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[2];
   GimpRunMode      run_mode;
@@ -1513,9 +1513,10 @@ get_image_data (FILE *fd, gint32 image_id)
 
 
 gint
-save_image (gchar *filename, gint32 image_id)
+save_image (const gchar *filename,
+            gint32       image_id)
 {
-  FILE *fd;
+  FILE  *fd;
   gchar *name_buf;
 
   IFDBG printf (" Function: save_image\n");

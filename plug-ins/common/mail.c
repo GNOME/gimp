@@ -129,35 +129,35 @@
 
 
 static void   query (void);
-static void   run   (gchar      *name,
-		     gint        nparams,
-		     GimpParam  *param,
-		     gint       *nreturn_vals,
-		     GimpParam **return_vals);
+static void   run   (const gchar      *name,
+		     gint              nparams,
+		     const GimpParam  *param,
+		     gint             *nreturn_vals,
+		     GimpParam       **return_vals);
 
-static GimpPDBStatusType save_image (gchar  *filename,
-			             gint32  image_ID,
-			             gint32  drawable_ID,
-				     gint32  run_mode);
+static GimpPDBStatusType save_image (const gchar *filename,
+			             gint32       image_ID,
+			             gint32       drawable_ID,
+				     gint32       run_mode);
 
-static gint   save_dialog          (void);
-static void   ok_callback          (GtkWidget     *widget,
-				    gpointer       data);
-static void   mail_entry_callback  (GtkWidget     *widget,
-				    gpointer       data);
-static void   mesg_body_callback   (GtkTextBuffer *buffer,
-				    gpointer       data);
+static gint    save_dialog          (void);
+static void    ok_callback          (GtkWidget     *widget,
+                                     gpointer       data);
+static void    mail_entry_callback  (GtkWidget     *widget,
+                                     gpointer       data);
+static void    mesg_body_callback   (GtkTextBuffer *buffer,
+                                     gpointer       data);
 
-static gint   valid_file     (gchar *filename);
-static void   create_headers (FILE  *mailpipe);
-static char * find_extension (gchar *filename);
-static gint   to64           (FILE  *infile,
-			      FILE  *outfile);
-static void   output64chunk  (gint   c1,
-			      gint   c2,
-			      gint   c3,
-			      gint   pads,
-			      FILE  *outfile);
+static gint    valid_file     (const gchar *filename);
+static void    create_headers (FILE        *mailpipe);
+static gchar * find_extension (const gchar *filename);
+static gint    to64           (FILE        *infile,
+                               FILE        *outfile);
+static void    output64chunk  (gint         c1,
+                               gint         c2,
+                               gint         c3,
+                               gint         pads,
+                               FILE        *outfile);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -225,11 +225,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
@@ -305,10 +305,10 @@ run (gchar      *name,
 }
 
 static GimpPDBStatusType
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint32  run_mode)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID,
+	    gint32       run_mode)
 {
   gchar  *ext;
   gchar  *tmpname;
@@ -603,7 +603,7 @@ save_dialog (void)
 }
 
 static gint 
-valid_file (gchar *filename)
+valid_file (const gchar *filename)
 {
   int stat_res;
   struct stat buf;
@@ -617,11 +617,11 @@ valid_file (gchar *filename)
 }
 
 static gchar *
-find_content_type (gchar *filename)
+find_content_type (const gchar *filename)
 {
   /* This function returns a MIME Content-type: value based on the
      filename it is given.  */
-  gchar *type_mappings[20] =
+  const gchar *type_mappings[20] =
   {
     "gif" , "image/gif",
     "jpg" , "image/jpeg",
@@ -636,7 +636,7 @@ find_content_type (gchar *filename)
   };
 
   gchar *ext;
-  gchar *mimetype = malloc(100);
+  gchar *mimetype = g_new (gchar, 100);
   gint i=0;
 
   ext = find_extension (filename);
@@ -663,7 +663,7 @@ find_content_type (gchar *filename)
 }
 
 static gchar *
-find_extension (gchar *filename)
+find_extension (const gchar *filename)
 {
   gchar *filename_copy;
   gchar *ext;
@@ -766,14 +766,16 @@ create_headers (FILE *mailpipe)
   fprintf (mailpipe, "\n\n");
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
     {
-      char *content;
-      content = find_content_type (mail_info.filename);
+      gchar *content = find_content_type (mail_info.filename);
+
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
       fprintf (mailpipe, "Content-type: %s\n",content);
       fprintf (mailpipe, "Content-transfer-encoding: base64\n");
-      fprintf (mailpipe, "Content-disposition: attachment; filename=\"%s\"\n",mail_info.filename);
+      fprintf (mailpipe, "Content-disposition: attachment; filename=\"%s\"\n",
+               mail_info.filename);
       fprintf (mailpipe, "Content-description: %s\n\n",mail_info.filename);
-      free(content);
+
+      g_free (content);
     }
 }
 

@@ -74,18 +74,18 @@ static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-
 /* Standard Plug-in Functions */
 
 static void     query     (void);
-static void     run       (gchar    *name,
-			   gint      nparams,
-			   GimpParam   *param, 
-			   gint     *nreturn_vals,
-			   GimpParam  **return_vals);
+static void     run       (const gchar      *name,
+			   gint              nparams,
+			   const GimpParam  *param, 
+			   gint             *nreturn_vals,
+			   GimpParam       **return_vals);
 
 /* Local Helper Functions */ 
 
-static gint32   load_image (gchar   *filename);
-static gboolean save_image (gchar   *filename,
-			    gint32   image_ID,
-			    gint32   drawable_ID);
+static gint32   load_image (const gchar     *filename);
+static gboolean save_image (const gchar     *filename,
+			    gint32           image_ID,
+			    gint32           drawable_ID);
 
 static guint16  get_short  (FILE    *file);
 static void     put_short  (guint16  value,
@@ -178,17 +178,17 @@ query (void)
  */
 
 static void 
-run (gchar   *name, 
-     gint     nparams, 
-     GimpParam  *param, 
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name, 
+     gint              nparams, 
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -308,7 +308,7 @@ put_short (guint16  value,
  */
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   gint       i, j, tile_height, row;	
   FILE      *file = NULL;
@@ -485,9 +485,9 @@ load_image (gchar *filename)
  */
 
 static gboolean 
-save_image (gchar  *filename,  
-	    gint32  image_ID, 
-	    gint32  drawable_ID)
+save_image (const gchar *filename,  
+	    gint32       image_ID, 
+	    gint32       drawable_ID)
 {
   gint       depth, i, j, row, tile_height, writelen, rectHeight;
   gboolean   savingColor = TRUE;

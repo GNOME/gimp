@@ -41,21 +41,21 @@
 /*  local function prototypes  */
 
 static void       query          (void);
-static void       run            (gchar        *name,
-				  gint          nparams,
-				  GimpParam    *param,
-				  gint         *nreturn_vals,
-				  GimpParam   **return_vals);
-static gint32     load_image     (gchar        *filename);
-static gboolean   save_image     (gchar        *filename,
-				  gint32        image_ID,
-				  gint32        drawable_ID);
+static void       run            (const gchar      *name,
+				  gint              nparams,
+				  const GimpParam  *param,
+				  gint             *nreturn_vals,
+				  GimpParam       **return_vals);
+static gint32     load_image     (const gchar      *filename);
+static gboolean   save_image     (const gchar      *filename,
+				  gint32            image_ID,
+				  gint32            drawable_ID);
 
 static gboolean   save_dialog    (void);
-static void       ok_callback    (GtkWidget    *widget,
-				  gpointer      data);
-static void       entry_callback (GtkWidget    *widget,
-				  gpointer      data);
+static void       ok_callback    (GtkWidget        *widget,
+				  gpointer          data);
+static void       entry_callback (GtkWidget        *widget,
+				  gpointer          data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -136,11 +136,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -248,7 +248,7 @@ run (gchar      *name,
 }
 
 static gint32 
-load_image (gchar *filename) 
+load_image (const gchar *filename) 
 {
   gchar            *temp;
   gint              fd;
@@ -366,9 +366,9 @@ load_image (gchar *filename)
 }
 
 static gboolean
-save_image (gchar  *filename, 
-	    gint32  image_ID, 
-	    gint32  drawable_ID) 
+save_image (const gchar *filename, 
+	    gint32       image_ID, 
+	    gint32       drawable_ID) 
 {
   gint          fd;
   PatternHeader ph;

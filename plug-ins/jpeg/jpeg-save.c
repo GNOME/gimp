@@ -208,7 +208,7 @@ typedef struct
 
 typedef struct
 {
-  gint  run;
+  gboolean  run;
 } JpegSaveInterface;
 
 typedef struct 
@@ -223,7 +223,7 @@ typedef struct
   guchar       *src;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
-  gchar        *file_name;
+  const gchar  *file_name;
   gboolean      abort_me;
 } PreviewPersistent;
 
@@ -233,15 +233,15 @@ static gboolean *abort_me = NULL;
 /* Declare local functions.
  */
 static void     query                     (void);
-static void     run                       (gchar            *name,
+static void     run                       (const gchar      *name,
 					   gint              nparams,
-					   GimpParam        *param,
+					   const GimpParam  *param,
 					   gint             *nreturn_vals,
 					   GimpParam       **return_vals);
-static gint32   load_image                (gchar            *filename, 
+static gint32   load_image                (const gchar      *filename, 
 					   GimpRunMode       runmode, 
 					   gboolean          preview);
-static gboolean save_image                (gchar            *filename,
+static gboolean save_image                (const gchar      *filename,
 					   gint32            image_ID,
 					   gint32            drawable_ID,
 					   gint32            orig_image_ID,
@@ -369,11 +369,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[2];
   GimpRunMode           run_mode;
@@ -733,7 +733,7 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (gchar       *filename, 
+load_image (const gchar *filename, 
 	    GimpRunMode  runmode, 
 	    gboolean     preview)
 {
@@ -1180,7 +1180,6 @@ background_jpeg_save (PreviewPersistent *pp)
 
       /* we cleanup here (load_image doesn't run in the background) */
       unlink (pp->file_name);
-      g_free (pp->file_name);
 
       if (abort_me == &(pp->abort_me)) 
 	abort_me = NULL;
@@ -1225,11 +1224,11 @@ background_jpeg_save (PreviewPersistent *pp)
 }
 
 static gboolean
-save_image (gchar    *filename,
-	    gint32    image_ID,
-	    gint32    drawable_ID,
-	    gint32    orig_image_ID,
-	    gboolean  preview)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID,
+	    gint32       orig_image_ID,
+	    gboolean     preview)
 {
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;

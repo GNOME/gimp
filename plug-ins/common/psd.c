@@ -281,18 +281,18 @@ typedef struct PsdImage
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
-                          GimpParam  *param,
-                          gint    *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
 static GimpImageType  psd_type_to_gimp_type      (psd_imagetype  psdtype);
 static GimpImageBaseType     psd_type_to_gimp_base_type (psd_imagetype  psdtype);
 static GimpLayerModeEffects     psd_lmode_to_gimp_lmode    (gchar          modekey[4]);
 static GimpUnit       psd_unit_to_gimp_unit      (gint           psdunit);
 
-static gint32         load_image                 (gchar         *filename);
+static gint32         load_image                 (const gchar  *filename);
 
 
 
@@ -411,11 +411,11 @@ query (void)
 
 
 static void
-run (char    *name,
-     int      nparams,
-     GimpParam  *param,
-     int     *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[2];
   GimpRunMode run_mode;
@@ -1635,7 +1635,7 @@ resize_mask(guchar* src, guchar* dest,
 }
 
 static gint32
-load_image(char *name)
+load_image (const gchar *name)
 {
   FILE *fd;
   gboolean want_aux;

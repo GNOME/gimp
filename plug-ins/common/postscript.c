@@ -113,7 +113,7 @@ typedef struct
 
 typedef struct
 {
-  gint  run;  /*  run  */
+  gboolean run;
 } PSLoadInterface;
 
 static PSLoadVals plvals =
@@ -149,7 +149,7 @@ typedef struct
 
 typedef struct
 {
-  gint  run;  /*  run  */
+  gboolean  run;
 } PSSaveInterface;
 
 static PSSaveVals psvals =
@@ -174,16 +174,16 @@ static PSSaveInterface psint =
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
-static gint32 load_image (gchar   *filename);
-static gint   save_image (gchar   *filename,
-                          gint32   image_ID,
-                          gint32   drawable_ID);
+static gint32 load_image (const gchar   *filename);
+static gint   save_image (const gchar   *filename,
+                          gint32         image_ID,
+                          gint32         drawable_ID);
 
 static gint save_gray  (FILE   *ofp,
                         gint32  image_ID,
@@ -198,12 +198,12 @@ static gint save_rgb   (FILE   *ofp,
                         gint32  image_ID,
                         gint32  drawable_ID);
 
-static gint32 create_new_image (gchar      *filename,
-				guint       pagenum,
-				guint       width,
-				guint       height,
+static gint32 create_new_image (const gchar   *filename,
+				guint          pagenum,
+				guint          width,
+				guint          height,
 				GimpImageBaseType  type,
-				gint32     *layer_ID,
+				gint32        *layer_ID,
 				GimpDrawable **drawable,
 				GimpPixelRgn  *pixel_rgn);
 
@@ -213,13 +213,13 @@ static void   check_save_vals  (void);
 static gint   page_in_list  (gchar *list,
 			     guint  pagenum);
 
-static gint   get_bbox      (gchar *filename,
-			     gint  *x0,
-			     gint  *y0,
-			     gint  *x1,
-			     gint  *y1);
+static gint   get_bbox      (const gchar *filename,
+			     gint        *x0,
+			     gint        *y0,
+			     gint        *x1,
+			     gint        *y1);
 
-static FILE  *ps_open       (gchar            *filename,
+static FILE  *ps_open       (const gchar      *filename,
 			     const PSLoadVals *loadopt,
 			     gint             *llx,
 			     gint             *lly,
@@ -231,16 +231,16 @@ static void   ps_close      (FILE *ifp);
 
 static gint32 skip_ps       (FILE *ifp);
 
-static gint32 load_ps       (gchar *filename,
-			     guint  pagenum,
-			     FILE  *ifp,
-			     gint   llx,
-			     gint   lly,
-			     gint   urx,
-			     gint   ury);
+static gint32 load_ps       (const gchar *filename,
+			     guint        pagenum,
+			     FILE        *ifp,
+			     gint         llx,
+			     gint         lly,
+			     gint         urx,
+			     gint         ury);
 
-static void save_ps_header  (FILE   *ofp,
-			     gchar  *filename);
+static void save_ps_header  (FILE        *ofp,
+			     const gchar *filename);
 static void save_ps_setup   (FILE   *ofp,
 			     gint32  drawable_ID,
 			     gint    width,
@@ -645,11 +645,11 @@ ps_set_save_size (PSSaveVals *vals,
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -849,7 +849,7 @@ run (gchar      *name,
 
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   gint32 image_ID, *image_list, *nl;
   guint page_count;
@@ -954,9 +954,9 @@ load_image (gchar *filename)
 
 
 static gint
-save_image (gchar  *filename,
-            gint32  image_ID,
-            gint32  drawable_ID)
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID)
 {
   FILE* ofp;
   GimpImageType drawable_type;
@@ -1224,11 +1224,11 @@ static char *psfgets (char *s, int size, FILE *stream)
 /* Get the BoundingBox of a PostScript file. On success, 0 is returned. */
 /* On failure, -1 is returned. */
 static gint
-get_bbox (gchar *filename,
-          gint  *x0,
-          gint  *y0,
-          gint  *x1,
-          gint  *y1)
+get_bbox (const gchar *filename,
+          gint        *x0,
+          gint        *y0,
+          gint        *x1,
+          gint        *y1)
 {
   char line[1024], *src;
   FILE *ifp;
@@ -1264,7 +1264,7 @@ static gchar *indirfile = NULL;
 /* The filepointer returned will give a PNM-file generated */
 /* by the PostScript-interpreter. */
 static FILE *
-ps_open (gchar            *filename,
+ps_open (const gchar      *filename,
          const PSLoadVals *loadopt,
          gint             *llx,
          gint             *lly,
@@ -1524,7 +1524,7 @@ read_pnmraw_type (FILE *ifp,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar       *filename,
+create_new_image (const gchar *filename,
                   guint        pagenum,
                   guint        width,
                   guint        height,
@@ -1593,13 +1593,13 @@ skip_ps (FILE *ifp)
 
 /* Load PNM image generated from PostScript file */
 static gint32
-load_ps (gchar *filename,
-         guint  pagenum,
-         FILE  *ifp,
-         gint   llx,
-         gint   lly,
-         gint   urx,
-         gint   ury)
+load_ps (const gchar *filename,
+         guint        pagenum,
+         FILE        *ifp,
+         gint         llx,
+         gint         lly,
+         gint         urx,
+         gint         ury)
 {
   register guchar *dest;
   guchar *data, *bitline = NULL, *byteline = NULL, *byteptr, *temp;
@@ -1752,8 +1752,8 @@ load_ps (gchar *filename,
 
 
 /* Write out the PostScript file header */
-static void save_ps_header (FILE  *ofp,
-                            gchar *filename)
+static void save_ps_header (FILE        *ofp,
+                            const gchar *filename)
 {
   time_t cutime = time (NULL);
 

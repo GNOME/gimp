@@ -70,22 +70,22 @@
 
 typedef struct
 {
-  gint  run;  /*  run  */
+  gboolean run;
 } HRZSaveInterface;
 
 
 /* Declare some local functions.
  */
 static void   query       (void);
-static void   run         (gchar   *name,
-			   gint     nparams,
-			   GimpParam  *param,
-			   gint    *nreturn_vals,
-			   GimpParam **return_vals);
-static gint32 load_image  (gchar   *filename);
-static gint   save_image  (gchar   *filename,
-			   gint32   image_ID,
-			   gint32   drawable_ID);
+static void   run         (const gchar      *name,
+			   gint              nparams,
+			   const GimpParam  *param,
+			   gint             *nreturn_vals,
+			   GimpParam       **return_vals);
+static gint32 load_image  (const gchar      *filename);
+static gint   save_image  (const gchar      *filename,
+			   gint32            image_ID,
+			   gint32            drawable_ID);
 
 /*
 static gint   save_dialog      (void);
@@ -177,17 +177,17 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -282,7 +282,7 @@ run (gchar      *name,
 
 /************ load HRZ image row *********************/
 void
-do_hrz_load (void      *mapped,
+do_hrz_load (void         *mapped,
 	     GimpPixelRgn *pixel_rgn)
 {
   guchar *data, *d;
@@ -318,7 +318,7 @@ do_hrz_load (void      *mapped,
 
 /********************* Load HRZ image **********************/
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   GimpPixelRgn pixel_rgn;
   gint32 image_ID;
@@ -412,9 +412,9 @@ saverow (FILE   *fp,
 
 /********************* save image *********************/
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;

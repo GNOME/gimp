@@ -32,11 +32,11 @@
 /* Declare plug-in functions.  */
 
 static void query (void);
-static void run   (gchar   *name, 
-		   gint     nparams, 
-		   GimpParam  *param, 
-		   gint    *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name, 
+		   gint              nparams, 
+		   const GimpParam  *param, 
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
 #define qtohl(x) \
@@ -123,7 +123,7 @@ query (void)
 
 /* Declare internal functions. */
 
-static gint32 load_image (gchar  *filename);
+static gint32 load_image (const gchar *filename);
 static void   load_1     (FILE   *fp,
 			  gint    width,
 			  gint    height,
@@ -148,7 +148,7 @@ static void   readline   (FILE   *fp,
 			  guchar *buffer,
 			  gint    bytes);
 
-static gint   save_image (gchar  *filename,
+static gint   save_image (const gchar *filename,
 			  gint32  image,
 			  gint32  layer);
 static void   save_8     (FILE   *fp,
@@ -166,17 +166,17 @@ static void   writeline  (FILE   *fp,
 /* Plug-in implementation */
 
 static void
-run (gchar      *name, 
-     gint        nparams, 
-     GimpParam  *param, 
-     gint       *nreturn_vals,
-     GimpParam **return_vals) 
+run (const gchar      *name, 
+     gint              nparams, 
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals) 
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -285,7 +285,7 @@ static struct
 } pcx_header;
 
 static gint32
-load_image (gchar *filename) 
+load_image (const gchar *filename) 
 {
   FILE *fd;
   GimpDrawable *drawable;
@@ -521,9 +521,9 @@ readline (FILE   *fp,
 }
 
 static gint
-save_image (gchar   *filename, 
-	    gint32  image, 
-	    gint32  layer) 
+save_image (const gchar *filename, 
+	    gint32       image, 
+	    gint32       layer) 
 {
   FILE *fp;
   GimpPixelRgn pixel_rgn;

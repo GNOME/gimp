@@ -843,11 +843,11 @@ plugin_query (void)
 }
 
 static void
-plugin_run (gchar      *name,
-	    gint        numof_params,
-	    GimpParam  *params,
-	    gint       *numof_return_vals,
-	    GimpParam **return_vals)
+plugin_run (const gchar      *name,
+	    gint              numof_params,
+	    const GimpParam  *params,
+	    gint             *numof_return_vals,
+	    GimpParam       **return_vals)
 {
   GimpPDBStatusType status;
 

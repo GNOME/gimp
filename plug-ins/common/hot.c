@@ -143,11 +143,11 @@ static glong	ichroma_lim2;        /* chroma limit squared (scaled integer) */
 static gint	icompos_lim;         /* composite amplitude limit (scaled integer) */
 
 static void query        (void);
-static void run          (gchar      *name,
-			  gint        nparam,
-			  GimpParam  *param,
-			  gint       *nretvals,
-			  GimpParam **retvals);
+static void run          (const gchar      *name,
+			  gint              nparam,
+			  const GimpParam  *param,
+			  gint             *nretvals,
+			  GimpParam       **retvals);
 
 static gint pluginCore   (piArgs   *argp);
 static gint pluginCoreIA (piArgs   *argp);
@@ -222,11 +222,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparam,
-     GimpParam  *param,
-     gint       *nretvals,
-     GimpParam **retvals)
+run (const gchar      *name,
+     gint              nparam,
+     const GimpParam  *param,
+     gint             *nretvals,
+     GimpParam       **retvals)
 {
   static GimpParam rvals[1];
   piArgs    args;

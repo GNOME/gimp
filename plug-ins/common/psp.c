@@ -289,15 +289,15 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
-static gint32 load_image (gchar      *filename);
-static gint   save_image (gchar      *filename,
-			  gint32      image_ID,
-			  gint32      drawable_ID);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
+static gint32 load_image (const gchar      *filename);
+static gint   save_image (const gchar      *filename,
+			  gint32            image_ID,
+			  gint32            drawable_ID);
 
 /* Various local variables...
  */
@@ -1468,7 +1468,7 @@ compression_name (gint compression)
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   FILE *f;
   struct stat st;
@@ -1652,9 +1652,9 @@ load_image (gchar *filename)
 }
 
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   g_message ("Saving not implemented yet");
 
@@ -1662,11 +1662,11 @@ save_image (gchar  *filename,
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[2];
   GimpRunMode           run_mode;

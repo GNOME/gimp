@@ -88,17 +88,17 @@ PngSaveVals;
  */
 
 static void query (void);
-static void run (gchar * name,
-                 gint nparams,
-                 GimpParam * param,
-                 gint * nreturn_vals,
-                 GimpParam ** return_vals);
+static void run (const gchar      *name,
+                 gint              nparams,
+                 const GimpParam  *param,
+                 gint             *nreturn_vals,
+                 GimpParam       **return_vals);
 
-static gint32 load_image (gchar * filename);
-static gint save_image (gchar * filename,
-                        gint32 image_ID,
-                        gint32 drawable_ID,
-                        gint32 orig_image_ID);
+static gint32 load_image (const gchar *filename);
+static gint   save_image (const gchar *filename,
+                          gint32       image_ID,
+                          gint32       drawable_ID,
+                          gint32       orig_image_ID);
 
 static void respin_cmap (png_structp pp,
                          png_infop info,
@@ -257,18 +257,18 @@ query (void)
  */
 
 static void
-run (gchar * name,
-     gint nparams,
-     GimpParam * param,
-     gint * nreturn_vals,
-     GimpParam ** return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32 image_ID;
-  gint32 drawable_ID;
-  gint32 orig_image_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
+  gint32               orig_image_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
@@ -410,7 +410,7 @@ run (gchar * name,
  */
 
 static gint32
-load_image (gchar * filename)   /* I - File to load */
+load_image (const gchar *filename)
 {
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
@@ -776,13 +776,10 @@ load_image (gchar * filename)   /* I - File to load */
  */
 
 static gint
-save_image (gchar * filename,   /* I - File to save to */
-
-            gint32 image_ID,    /* I - Image to save */
-
-            gint32 drawable_ID, /* I - Current drawable */
-
-            gint32 orig_image_ID)       /* I - Original image before export */
+save_image (const gchar *filename,
+            gint32       image_ID,
+            gint32       drawable_ID,
+            gint32       orig_image_ID)
 {
   int i, k,                     /* Looping vars */
     bpp = 0,                    /* Bytes per pixel */
