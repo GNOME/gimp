@@ -1,3 +1,10 @@
+2003-10-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimptemplate.c: no need to reimplement the default
+	GimpConfigInterface implementation.
+
+	* app/config/gimpcoreconfig.c: renamed notify handlers.
+	
 2003-10-21  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/gimpimage-convert.c: Applied a slightly modified 

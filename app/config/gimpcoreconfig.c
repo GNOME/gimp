@@ -42,23 +42,23 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_core_config_class_init    (GimpCoreConfigClass *klass);
-static void  gimp_core_config_init          (GimpCoreConfig      *config);
-static void  gimp_core_config_finalize             (GObject      *object);
-static void  gimp_core_config_set_property         (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
-static void  gimp_core_config_get_property         (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
-static void gimp_core_config_default_image_changed (GObject      *object,
-                                                    GParamSpec   *pspec,
-                                                    gpointer      data);
-static void gimp_core_config_default_grid_changed  (GObject      *object,
-                                                    GParamSpec   *pspec,
-                                                    gpointer      data);
+static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);
+static void  gimp_core_config_init         (GimpCoreConfig      *config);
+static void  gimp_core_config_finalize            (GObject      *object);
+static void  gimp_core_config_set_property        (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void  gimp_core_config_get_property        (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
+static void gimp_core_config_default_image_notify (GObject      *object,
+                                                   GParamSpec   *pspec,
+                                                   gpointer      data);
+static void gimp_core_config_default_grid_notify  (GObject      *object,
+                                                   GParamSpec   *pspec,
+                                                   gpointer      data);
 
 
 #define DEFAULT_BRUSH     "Circle (11)"
@@ -266,12 +266,12 @@ gimp_core_config_init (GimpCoreConfig *config)
                                         "comment", DEFAULT_COMMENT,
                                         NULL);
   g_signal_connect (config->default_image, "notify",
-                    G_CALLBACK (gimp_core_config_default_image_changed),
+                    G_CALLBACK (gimp_core_config_default_image_notify),
                     config);
 
   config->default_grid = g_object_new (GIMP_TYPE_GRID, NULL);
   g_signal_connect (config->default_grid, "notify",
-                    G_CALLBACK (gimp_core_config_default_grid_changed),
+                    G_CALLBACK (gimp_core_config_default_grid_notify),
                     config);
 }
 
@@ -513,21 +513,17 @@ gimp_core_config_get_property (GObject    *object,
 }
 
 static void
-gimp_core_config_default_image_changed (GObject    *object,
-                                        GParamSpec *pspec,
-                                        gpointer    data)
-{
-  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (data);
-
-  g_object_notify (G_OBJECT (core_config), "default-image");
-}
-
-static void
-gimp_core_config_default_grid_changed (GObject    *object,
+gimp_core_config_default_image_notify (GObject    *object,
                                        GParamSpec *pspec,
                                        gpointer    data)
 {
-  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (data);
+  g_object_notify (G_OBJECT (data), "default-image");
+}
 
-  g_object_notify (G_OBJECT (core_config), "default-grid");
+static void
+gimp_core_config_default_grid_notify (GObject    *object,
+                                      GParamSpec *pspec,
+                                      gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "default-grid");
 }

@@ -30,8 +30,6 @@
 #include "core-types.h"
 
 #include "config/gimpconfig.h"
-#include "config/gimpconfig-deserialize.h"
-#include "config/gimpconfig-serialize.h"
 #include "config/gimpconfig-params.h"
 #include "config/gimpcoreconfig.h"
 
@@ -59,28 +57,19 @@ enum
 };
 
 
-static void  gimp_template_class_init        (GimpTemplateClass   *klass);
-static void  gimp_template_config_iface_init (GimpConfigInterface *config_iface);
+static void      gimp_template_class_init    (GimpTemplateClass *klass);
 
-static void      gimp_template_finalize      (GObject          *object);
-static void      gimp_template_set_property  (GObject          *object,
-                                              guint             property_id,
-                                              const GValue     *value,
-                                              GParamSpec       *pspec);
-static void      gimp_template_get_property  (GObject          *object,
-                                              guint             property_id,
-                                              GValue           *value,
-                                              GParamSpec       *pspec);
-static void      gimp_template_notify        (GObject          *object,
-                                              GParamSpec       *pspec);
-
-static gboolean  gimp_template_serialize     (GimpConfig       *config,
-                                              GimpConfigWriter *writer,
-                                              gpointer          data);
-static gboolean  gimp_template_deserialize   (GimpConfig       *config,
-                                              GScanner         *scanner,
-                                              gint              nest_level,
-                                              gpointer          data);
+static void      gimp_template_finalize      (GObject           *object);
+static void      gimp_template_set_property  (GObject           *object,
+                                              guint              property_id,
+                                              const GValue      *value,
+                                              GParamSpec        *pspec);
+static void      gimp_template_get_property  (GObject           *object,
+                                              guint              property_id,
+                                              GValue            *value,
+                                              GParamSpec        *pspec);
+static void      gimp_template_notify        (GObject           *object,
+                                              GParamSpec        *pspec);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -107,7 +96,7 @@ gimp_template_get_type (void)
       };
       static const GInterfaceInfo config_iface_info =
       {
-        (GInterfaceInitFunc) gimp_template_config_iface_init,
+        NULL,           /* iface_init     */
         NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
@@ -196,13 +185,6 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                    NULL,
                                    NULL,
                                    0);
-}
-
-static void
-gimp_template_config_iface_init (GimpConfigInterface *config_iface)
-{
-  config_iface->serialize   = gimp_template_serialize;
-  config_iface->deserialize = gimp_template_deserialize;
 }
 
 static void
@@ -356,24 +338,6 @@ gimp_template_notify (GObject    *object,
 
   if (! strcmp (pspec->name, "stock-id"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
-}
-
-static gboolean
-gimp_template_serialize (GimpConfig       *config,
-                         GimpConfigWriter *writer,
-                         gpointer          data)
-{
-  return gimp_config_serialize_properties (config, writer);
-}
-
-static gboolean
-gimp_template_deserialize (GimpConfig *config,
-                           GScanner   *scanner,
-                           gint        nest_level,
-                           gpointer    data)
-{
-  return gimp_config_deserialize_properties (config,
-                                             scanner, nest_level, FALSE);
 }
 
 
