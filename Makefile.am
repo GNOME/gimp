@@ -131,7 +131,3 @@ checkin: populate
 
 release:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`
-	path_bezier.c		\
-	path_bezier.h		\
-	path_curves.c		\
-	path_curves.h		\

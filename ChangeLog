@@ -1,3 +1,7 @@
+Mon Oct  4 19:02:08 CEST 1999 Olof S Kylander <olof@gimp.org>
+
+	* Makefile.am fix of a typo
+
 1999-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo_history.c: made it a bit bigger and sprinkled some
