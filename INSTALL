@@ -1,7 +1,7 @@
 There are three basic steps to building and installing the
 GIMP on unix:
 
-  1. You need to have installed GTK version 0.99.1 or better
+  1. You need to have installed GTK version 0.99.3 or better
   2. You may want to install other third party libraries that
      are needed for some of the available plugins: TIFF, PNG,
      JPEG, MPEG, etc.

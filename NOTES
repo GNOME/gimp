@@ -1,8 +1,8 @@
-Some notes on GIMP-0.99.17:
+Some notes on GIMP-0.99.18:
 
-* The AA, MathMap, GimpTcl, GAG, user_filter, rcm, FractalExplorer, and Gfig
-plugins are included but not yet integrated into the build cause of instability
-or other unresolved issues.
+* The AA, MathMap, GAG, user_filter, rcm, FractalExplorer, and Gfig plugins
+are included but not yet integrated into the build cause of instability or
+other unresolved issues.
 
 Please read the file TODO-DIST to find more information about things
 that were not included or that are (possibly) broken in this distribution.
