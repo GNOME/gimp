@@ -24,7 +24,6 @@ EXTRA_DIST = \
 	$(tipsdata_DATA)		\
 	$(tips_in_files)		\
 	gimp-tips.dtd			\
-	makefile.mingw			\
 	update.sh
 
 CLEANFILES = $(GETTEXT_PACKAGE)-tips.po
