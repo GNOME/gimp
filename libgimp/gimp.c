@@ -587,14 +587,18 @@ gimp_uninstall_temp_proc (char *name)
 {
   GPProcUninstall proc_uninstall;
   gpointer hash_name;
+  gboolean found;
   proc_uninstall.name = name;
 
   if (!gp_proc_uninstall_write (_writechannel, &proc_uninstall))
     gimp_quit ();
   
-  g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
-  g_free (hash_name);
-  g_hash_table_remove (temp_proc_ht, (gpointer) name);
+  found = g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
+  if (found)
+  {
+    g_free (hash_name);
+    g_hash_table_remove (temp_proc_ht, (gpointer) name);
+  }
 }
 
 void

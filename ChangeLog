@@ -1,3 +1,9 @@
+Tue Aug 17 16:36:54 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* libgimp/gimp.c (gimp_uninstall_temp_proc): Prevent calling free with
+	undefined memory pointer. This happened if the name wasn't found
+	in the hash table. 
+
 Mon Aug 16 20:48:33 1999 Adrian Likins <alikins@redhat.com>
 
 	* app/Makefile.am
