@@ -62,6 +62,7 @@ enum
 static gchar * gimp_text_get_xlfd_field (const gchar *fontname,
                                          gint         field_num,
                                          gchar       *buffer);
+static gchar * launder_font_name        (gchar       *name);
 
 
 /**
@@ -118,10 +119,10 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
   if (i < 4)
     fields[i] = NULL;
 
-  return g_strconcat (fields[0], " ",
-                      fields[1], " ",
-                      fields[2], " ",
-                      fields[3], NULL);
+  return launder_font_name (g_strconcat (fields[0], " ",
+                                         fields[1], " ",
+                                         fields[2], " ",
+                                         fields[3], NULL));
 }
 
 /**
@@ -250,7 +251,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
   for (t2 = t1; *t2; t2++)
     {
       if (*t2 == '-' && --num_dashes == 0)
-	break;
+        break;
     }
 
   if (t2 > t1)
@@ -258,7 +259,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
       /* Check we don't overflow the buffer */
       len = (gsize) t2 - (gsize) t1;
       if (len > XLFD_MAX_FIELD_LEN - 1)
-	return NULL;
+        return NULL;
 
       if (*t1 == '*')
         return NULL;
@@ -268,7 +269,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
 
       /* Convert to lower case. */
       for (p = buffer; *p; p++)
-	*p = g_ascii_tolower (*p);
+        *p = g_ascii_tolower (*p);
     }
   else
     {
@@ -276,4 +277,26 @@ gimp_text_get_xlfd_field (const gchar *fontname,
     }
 
   return buffer;
+}
+
+/* Guard against font names that end in numbers being interpreted as a
+ * font size in pango font descriptions
+ */
+static gchar *
+launder_font_name (gchar *name)
+{
+  gchar *laundered_name;
+  gchar  last_char;
+
+  last_char = name[strlen (name) - 1];
+
+  if (g_ascii_isdigit (last_char) || last_char == '.')
+    {
+      laundered_name = g_strconcat (name, ",", NULL);
+      g_free (name);
+
+      return laundered_name;
+    }
+  else
+    return name;
 }

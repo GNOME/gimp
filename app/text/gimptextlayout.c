@@ -142,8 +142,6 @@ gimp_text_layout_new (GimpText  *text,
 
   font_desc = pango_font_description_from_string (text->font);
   g_return_val_if_fail (font_desc != NULL, NULL);
-  if (!font_desc)
-    return NULL;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
