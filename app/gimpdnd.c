@@ -24,6 +24,8 @@
 #include "interface.h"
 #include "tools.h"
 
+#include "libgimp/gimplimits.h"
+
 #define DRAG_PREVIEW_SIZE 32
 
 #define DRAG_ICON_OFFSET  -8
@@ -238,17 +240,6 @@ static GimpDndDataDef dnd_data_defs[] =
 /*  drawable dnd functions  */
 /****************************/
 
-#define GRAD_CHECK_SIZE_SM 4
-
-#define GRAD_CHECK_DARK  (1.0 / 3.0)
-#define GRAD_CHECK_LIGHT (2.0 / 3.0)
-
-/* Good idea for size to be <= small preview size in LCP dialog.
- * that way we get good cache hits.
- */
-
-#define DRAG_IMAGE_SZ    32 
-
 void
 gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 				    GdkDragContext *context,
@@ -275,9 +266,9 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   gimage = gimp_drawable_gimage (drawable);
 
   if (gimage->width > gimage->height)
-    ratio = (gdouble) DRAG_IMAGE_SZ / (gdouble) gimage->width;
+    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->width;
   else
-    ratio = (gdouble) DRAG_IMAGE_SZ / (gdouble) gimage->height;
+    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->height;
 
   width =  (gint) (ratio * gimage->width);
   height = (gint) (ratio * gimage->height);
@@ -378,15 +369,15 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 		a = 1.0;
 	    }
 
-	  if ((x / GRAD_CHECK_SIZE_SM) & 1)
+	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	    {
-	      c0 = GRAD_CHECK_LIGHT;
-	      c1 = GRAD_CHECK_DARK;
+	      c0 = GIMP_CHECK_LIGHT;
+	      c1 = GIMP_CHECK_DARK;
 	    }
 	  else
 	    {
-	      c0 = GRAD_CHECK_DARK;
-	      c1 = GRAD_CHECK_LIGHT;
+	      c0 = GIMP_CHECK_DARK;
+	      c1 = GIMP_CHECK_LIGHT;
 	    }
 
 	  *p0++ = (c0 + (r - c0) * a) * 255.0;
@@ -399,7 +390,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
 	}
       
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
 	{
 	  gdk_draw_rgb_image (drag_pixmap, gc,
 			      1+offx, y+1+offy,
@@ -1031,7 +1022,6 @@ gimp_dnd_set_gradient_data (GtkWidget     *widget,
 			    gint           length)
 {
   gradient_t *gradient;
-  GSList *list;
   gchar *name;
 
   if ((format != 8) || (length < 1))

@@ -343,7 +343,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   /* get rid of signals handled by this display */
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
-  
+
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
 
@@ -353,8 +353,9 @@ gdisplay_delete (GDisplay *gdisp)
 
   gdisplay_free_area_list (gdisp->idle_render.update_areas);
 
-  /*  free the gimage  */
-  gimage_delete (gdisp->gimage);
+  /*  remove dialogs before removing the image because they may want to
+   *  disconnect from image signals
+   */
 
   /*  insure that if a window information dialog exists, it is removed  */
   if (gdisp->window_info_dialog)
@@ -363,6 +364,9 @@ gdisplay_delete (GDisplay *gdisp)
   /* Remove navigation dialog if we have one */
   if (gdisp->window_nav_dialog)
      nav_window_free(gdisp->window_nav_dialog);
+
+  /*  free the gimage  */
+  gimage_delete (gdisp->gimage);
 
   if (gdisp->nav_popup)
     nav_popup_free(gdisp->nav_popup);
@@ -673,8 +677,7 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
 
   /*  update the gdisplay's info dialog  */
   if (gdisp->window_info_dialog)
-    info_window_update (gdisp->window_info_dialog,
-			(void *) gdisp);
+    info_window_update (gdisp->window_info_dialog);
  
   /* update the gdisplay's qmask buttons */
   qmask_buttons_update (gdisp);
@@ -1054,10 +1057,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	  t_y >= active_drawable->height)
 	{
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
-	  info_window_update_RGB(gdisp->window_info_dialog,
-				 gdisp,
-				 -1,
-				 -1);
+	  info_window_update_RGB (gdisp->window_info_dialog, -1, -1);
 	} 
       else 
 	{
@@ -1078,10 +1078,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 		 (double) t_y * unit_factor / gdisp->gimage->yresolution);
 	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
-	  info_window_update_RGB(gdisp->window_info_dialog,
-				 gdisp,
-				 t_x,
-				 t_y);
+	  info_window_update_RGB (gdisp->window_info_dialog, t_x, t_y);
 	}
     }
 

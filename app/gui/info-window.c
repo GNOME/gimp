@@ -46,7 +46,7 @@ struct _InfoWinData
   gchar      resolution_str[MAX_BUF];
   gchar      unit_str[MAX_BUF];
 
-  void      *gdisp_ptr; /* I'a not happy 'bout this one */
+  GDisplay  *gdisp;
 
   GtkWidget *labelBvalue;
   GtkWidget *labelGvalue;
@@ -70,7 +70,7 @@ static gchar *visual_classes[] =
 
 static void
 get_shades (GDisplay *gdisp,
-	    char     *buf)
+	    gchar    *buf)
 {
   g_snprintf (buf, MAX_BUF, "Using GdkRgb - we'll get back to you");
 #if 0
@@ -109,6 +109,21 @@ get_shades (GDisplay *gdisp,
       break;
     }
 #endif
+}
+
+static void
+info_window_image_rename_callback (GimpImage *gimage,
+				   gpointer   data)
+{
+  InfoDialog *id;
+  gchar *title;
+
+  id = (InfoDialog *) data;
+
+  title = g_strdup_printf (_("%s: Window Info"),
+			   g_basename (gimage_filename (gimage)));
+  gtk_window_set_title (GTK_WINDOW (id->shell), title);
+  g_free (title);
 }
 
 static void
@@ -262,15 +277,12 @@ info_window_image_preview_book (InfoDialog *info_win)
  */
 
 InfoDialog *
-info_window_create (void *gdisp_ptr)
+info_window_create (GDisplay *gdisp)
 {
   InfoDialog *info_win;
-  GDisplay *gdisp;
   InfoWinData *iwd;
-  char * title, * title_buf;
-  int type;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  gchar *title, *title_buf;
+  gint type;
 
   title = g_basename (gimage_filename (gdisp->gimage));
   type = gimage_base_type (gdisp->gimage);
@@ -292,15 +304,16 @@ info_window_create (void *gdisp_ptr)
 
   iwd = g_new (InfoWinData, 1);
   info_win->user_data = iwd;
-  iwd->dimensions_str[0] = '\0';
-  iwd->resolution_str[0] = '\0';
-  iwd->unit_str[0] = '\0';
-  iwd->scale_str[0] = '\0';
-  iwd->color_type_str[0] = '\0';
+  iwd->dimensions_str[0]   = '\0';
+  iwd->resolution_str[0]   = '\0';
+  iwd->unit_str[0]         = '\0';
+  iwd->scale_str[0]        = '\0';
+  iwd->color_type_str[0]   = '\0';
   iwd->visual_class_str[0] = '\0';
   iwd->visual_depth_str[0] = '\0';
-  iwd->shades_str[0] = '\0';
-  iwd->showingPreview = FALSE;
+  iwd->shades_str[0]       = '\0';
+  iwd->gdisp               = gdisp;
+  iwd->showingPreview      = FALSE;
 
   /*  add the information fields  */
   info_dialog_add_label (info_win, _("Dimensions (w x h):"),
@@ -328,65 +341,71 @@ info_window_create (void *gdisp_ptr)
 			   iwd->shades_str);
 
   /*  update the fields  */
-  info_window_update (info_win, gdisp_ptr);
+  info_window_update (info_win);
 
-  /* Add extra tabs */
+  /*  Add extra tabs  */
   info_window_image_preview_book (info_win);
+
+  /*  keep track of image name changes  */
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "rename",
+		      GTK_SIGNAL_FUNC (info_window_image_rename_callback),
+		      info_win);
 
   return info_win;
 }
 
 void  
 info_window_update_RGB  (InfoDialog  *info_win,
-			 void        *gdisp_ptr,
 			 gdouble      tx,
 			 gdouble      ty)
 {
-  GDisplay    *gdisp;
   InfoWinData *iwd;
-  char buff[5];
+  GDisplay *gdisp;
+  gchar buff[5];
   guchar *color;
   gint has_alpha;
   gint sample_type;
 
-  if(!info_win)
+  if (!info_win)
     return;
 
-  gdisp = (GDisplay *) gdisp_ptr;
   iwd = (InfoWinData *) info_win->user_data;
+  gdisp = iwd->gdisp;
 
-  if(!iwd || iwd->showingPreview == FALSE)
+  if (!iwd || iwd->showingPreview == FALSE)
     return;
 
   /* gimage_active_drawable (gdisp->gimage) */
-  if (!(color = gimp_image_get_color_at(gdisp->gimage, tx, ty))
+  if (!(color = gimp_image_get_color_at (gdisp->gimage, tx, ty))
       || (tx <  0.0 && ty < 0.0))
     {
-      g_snprintf(buff,5,"%4s","N/A");
-      gtk_label_set_text(GTK_LABEL(iwd->labelBvalue),buff);
-      gtk_label_set_text(GTK_LABEL(iwd->labelGvalue),buff);
-      gtk_label_set_text(GTK_LABEL(iwd->labelRvalue),buff);
-      gtk_label_set_text(GTK_LABEL(iwd->labelAvalue),buff);
+      g_snprintf (buff, sizeof (buff), "%4s", "N/A");
+      gtk_label_set_text (GTK_LABEL (iwd->labelBvalue), buff);
+      gtk_label_set_text (GTK_LABEL (iwd->labelGvalue), buff);
+      gtk_label_set_text (GTK_LABEL (iwd->labelRvalue), buff);
+      gtk_label_set_text (GTK_LABEL (iwd->labelAvalue), buff);
 
       return;
     }
-  
-  g_snprintf(buff,5,"%4d",(gint)color[BLUE_PIX]);
-  gtk_label_set_text(GTK_LABEL(iwd->labelBvalue),buff);
-  g_snprintf(buff,5,"%4d",(gint)color[GREEN_PIX]);
-  gtk_label_set_text(GTK_LABEL(iwd->labelGvalue),buff);
-  g_snprintf(buff,5,"%4d",(gint)color[RED_PIX]);
-  gtk_label_set_text(GTK_LABEL(iwd->labelRvalue),buff);
+
+  g_snprintf (buff, sizeof (buff), "%4d", (gint) color[BLUE_PIX]);
+  gtk_label_set_text (GTK_LABEL (iwd->labelBvalue), buff);
+
+  g_snprintf (buff, sizeof (buff), "%4d", (gint) color[GREEN_PIX]);
+  gtk_label_set_text (GTK_LABEL (iwd->labelGvalue), buff);
+
+  g_snprintf (buff, sizeof (buff), "%4d", (gint) color[RED_PIX]);
+  gtk_label_set_text (GTK_LABEL (iwd->labelRvalue), buff);
 
   sample_type = gimp_image_composite_type (gdisp->gimage);
   has_alpha = TYPE_HAS_ALPHA (sample_type);
 
-  if(has_alpha)
-    g_snprintf(buff,5,"%4d",(gint)color[ALPHA_PIX]);
+  if (has_alpha)
+    g_snprintf (buff, sizeof (buff), "%4d", (gint) color[ALPHA_PIX]);
   else
-    g_snprintf(buff,5,"%4s","N/A");
+    g_snprintf (buff, sizeof (buff), "%4s", "N/A");
 
-  gtk_label_set_text(GTK_LABEL(iwd->labelAvalue),buff);
+  gtk_label_set_text (GTK_LABEL (iwd->labelAvalue), buff);
 
   g_free(color);
 }
@@ -394,23 +413,28 @@ info_window_update_RGB  (InfoDialog  *info_win,
 void
 info_window_free (InfoDialog *info_win)
 {
-  g_free (info_win->user_data);
+  InfoWinData *iwd;
+
+  iwd = (InfoWinData *) info_win->user_data;
+
+  gtk_signal_disconnect_by_data (GTK_OBJECT (iwd->gdisp->gimage), info_win);
+
+  g_free (iwd);
   info_dialog_free (info_win);
 }
 
 void
-info_window_update (InfoDialog *info_win,
-		    void       *gdisp_ptr)
+info_window_update (InfoDialog *info_win)
 {
-  GDisplay    *gdisp;
   InfoWinData *iwd;
-  int          type;
+  GDisplay    *gdisp;
+  gint         type;
   gdouble      unit_factor;
   gint         unit_digits;
   gchar        format_buf[32];
 
-  gdisp = (GDisplay *) gdisp_ptr;
   iwd = (InfoWinData *) info_win->user_data;
+  gdisp = iwd->gdisp;
 
   /*  width and height  */
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);

@@ -36,7 +36,6 @@
  *
  * BUGS:
  *  - clean pixmap in wrong place
- *  - window title not updated on image title change
  *
  *  Initial rev 0.01, (c) 19 Sept 1999 Austin Donnelly <austin@gimp.org>
  *
@@ -49,14 +48,11 @@
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimplimits.h"
 
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
 #include "pixmaps/yes.xpm"
-
-#define GRAD_CHECK_SIZE_SM 4
-#define GRAD_CHECK_DARK  (1.0 / 3.0)
-#define GRAD_CHECK_LIGHT (2.0 / 3.0)
 
 typedef struct
 {
@@ -222,15 +218,15 @@ undo_history_set_pixmap_idle (gpointer data)
 		a = 1.0;
 	    }
 
-	  if ((x / GRAD_CHECK_SIZE_SM) & 1)
+	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	    {
-	      c0 = GRAD_CHECK_LIGHT;
-	      c1 = GRAD_CHECK_DARK;
+	      c0 = GIMP_CHECK_LIGHT;
+	      c1 = GIMP_CHECK_DARK;
 	    }
 	  else
 	    {
-	      c0 = GRAD_CHECK_DARK;
-	      c1 = GRAD_CHECK_LIGHT;
+	      c0 = GIMP_CHECK_DARK;
+	      c1 = GIMP_CHECK_LIGHT;
 	    }
 
 	  *p0++ = (c0 + (r - c0) * a) * 255.0;
@@ -243,7 +239,7 @@ undo_history_set_pixmap_idle (gpointer data)
 
 	}
       
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
 	{
 	  gdk_draw_rgb_image (pixmap, gc,
 			      1, y + 1,
@@ -311,9 +307,23 @@ undo_history_close_callback (GtkWidget *widget,
  *        been freed.
  */
 
+/* gimage renamed */
+static void
+undo_history_gimage_rename_callback (GimpImage *gimage,
+				     gpointer   data)
+{
+  undo_history_st *st = data;
+  gchar *title;
+
+  title = g_strdup_printf (_("%s: undo history"),
+			   g_basename (gimage_filename (gimage)));
+  gtk_window_set_title (GTK_WINDOW (st->shell), title);
+  g_free (title);
+}
+
 /* gimage destroyed */
 static void
-undo_history_gimage_destroy_callback (GtkWidget *widget,
+undo_history_gimage_destroy_callback (GimpImage *gimage,
 				      gpointer   data)
 {
   undo_history_st *st = data;
@@ -607,16 +617,22 @@ undo_history_new (GImage *gimage)
 
   /*  gimage signals  */
   gtk_signal_connect (GTK_OBJECT (gimage), "undo_event",
-		      undo_history_undo_event, st);
+		      GTK_SIGNAL_FUNC (undo_history_undo_event),
+		      st);
+  gtk_signal_connect (GTK_OBJECT (gimage), "rename",
+		      GTK_SIGNAL_FUNC (undo_history_gimage_rename_callback),
+		      st);
   gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
-		      undo_history_gimage_destroy_callback, st);
+		      GTK_SIGNAL_FUNC (undo_history_gimage_destroy_callback),
+		      st);
   gtk_signal_connect (GTK_OBJECT (gimage), "clean",
-		      undo_history_clean_callback, st);
+		      GTK_SIGNAL_FUNC (undo_history_clean_callback),
+		      st);
 
   /*  The shell and main vbox  */
   {
-    char *title = g_strdup_printf (_("%s: undo history"),
-				   g_basename (gimage_filename (gimage)));
+    gchar *title = g_strdup_printf (_("%s: undo history"),
+				    g_basename (gimage_filename (gimage)));
     st->shell = gimp_dialog_new (title, "undo_history",
 				 gimp_standard_help_func,
 				 "dialogs/undo_history.html",
@@ -641,7 +657,8 @@ undo_history_new (GImage *gimage)
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_usize (GTK_WIDGET (scrolled_win), 
-			160 + st->preview_size, 4 * (MAX (st->preview_size, 16) + 4));
+			160 + st->preview_size,
+			4 * (MAX (st->preview_size, 16) + 4));
 
   /* clist of undo actions */
   st->clist = gtk_clist_new (3);
@@ -687,10 +704,12 @@ undo_history_new (GImage *gimage)
   st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
 
   /* draw the preview of the current state */
-  undo_history_set_pixmap (GTK_CLIST (st->clist), st->old_selection, st->preview_size, st->gimage);
+  undo_history_set_pixmap (GTK_CLIST (st->clist),
+			   st->old_selection, st->preview_size, st->gimage);
 
   gtk_signal_connect (GTK_OBJECT (st->clist), "select_row",
-		      undo_history_select_row_callback, st);
+		      GTK_SIGNAL_FUNC (undo_history_select_row_callback),
+		      st);
 
   gtk_widget_show (GTK_WIDGET (st->clist));
 
@@ -709,7 +728,8 @@ undo_history_new (GImage *gimage)
   button = gtk_button_new ();
   st->undo_button = button;
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      undo_history_undo_callback, st);
+		      GTK_SIGNAL_FUNC (undo_history_undo_callback),
+		      st);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -733,7 +753,8 @@ undo_history_new (GImage *gimage)
   button = gtk_button_new ();
   st->redo_button = button;
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      undo_history_redo_callback, st);
+		      GTK_SIGNAL_FUNC (undo_history_redo_callback),
+		      st);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);

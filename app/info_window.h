@@ -18,14 +18,15 @@
 #ifndef __INFO_WINDOW_H__
 #define __INFO_WINDOW_H__
 
+#include "gdisplayF.h"
 #include "info_dialog.h"
 
-InfoDialog *info_window_create (void *);
-void        info_window_free   (InfoDialog *);
-void        info_window_update (InfoDialog *, void *);
-void        info_window_update_RGB  (InfoDialog *,
-				     void *,
-				     gdouble,
-				     gdouble);
+InfoDialog * info_window_create      (GDisplay   *gdisp);
+void         info_window_free        (InfoDialog *info_win);
+
+void         info_window_update      (InfoDialog *info_win);
+void         info_window_update_RGB  (InfoDialog *info_win,
+				      gdouble     tx,
+				      gdouble     ty);
 
 #endif /*  __INFO_WINDOW_H__  */

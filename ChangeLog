@@ -1,5 +1,21 @@
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdnd.c
+	* app/undo_history.c: remove the remaining defines of
+	GRAD_CHECK_SIZE and include libgimp/gimplimits.h instead.
+
+	* app/undo_history.c: connect to the image's "rename" signal to
+	update the window title.
+
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/info_window.[ch]: did the same for the info dialog.
+	The info window has to remember the gdisplay to disconnect from
+	the image's "rename" signal, so I removed the gdisplay parameter
+	from the update functions. 
+
+1999-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdnd.c: forgot to set "connected" flag after connecting
 	to the dnd signals of a specific widget, so the dnd stuff
 	connected to these signals for every dnd data type (resulting ie
