@@ -1,3 +1,10 @@
+2005-01-17  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
+	* plug-ins/xjt/xjt.c: use gimp_temp_name instead of trying to
+	create temp dir at loc of file, fixes bug #164116.
+	
 2005-01-16  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
