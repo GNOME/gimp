@@ -1134,6 +1134,8 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
 
+  g_object_ref (adjustment);
+  gtk_object_sink (GTK_OBJECT (adjustment));
   g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
 			    G_CALLBACK (g_object_unref),
 			    adjustment);
