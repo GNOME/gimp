@@ -117,8 +117,11 @@ static gint   save_image              (gchar     *filename,
 static gint   save_dialog             (gint32     drawable_ID);
 static void   save_ok_callback        (GtkWidget *widget,
 				       gpointer   data);
+#if 0
+/* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void   comment_entry_callback  (GtkWidget *widget,
 				       gpointer   data);
+#endif
 static void   prefix_entry_callback   (GtkWidget *widget,
 				       gpointer   data);
 static void   mask_ext_entry_callback (GtkWidget *widget,
@@ -1006,8 +1009,12 @@ save_image (gchar    *filename,
     }
 
   /* Maybe write the image comment. */
+#if 0
+  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
+  /* a future version should write the comment at the end of the file */
   if (*comment)
     fprintf (fp, "/* %s */\n", comment);
+#endif
 
   /* Write out the image height and width. */
   fprintf (fp, "#define %s_width %d\n",  prefix, width);
@@ -1197,6 +1204,8 @@ save_dialog (gint32 drawable_ID)
                     NULL);
 
   /* comment string. */
+#if 0
+  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */    
   entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_COMMENT);
   gtk_widget_set_size_request (entry, 240, -1);
@@ -1207,6 +1216,7 @@ save_dialog (gint32 drawable_ID)
   g_signal_connect (G_OBJECT (entry), "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
+#endif
 
   /* hotspot toggle */
   toggle = gtk_check_button_new_with_label (_("Write Hot Spot Values"));
@@ -1295,6 +1305,8 @@ save_dialog (gint32 drawable_ID)
 
 
 /* Update the comment string. */
+#if 0
+/* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void
 comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
@@ -1303,6 +1315,7 @@ comment_entry_callback (GtkWidget *widget,
   strncpy (xsvals.comment,
 	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
 }
+#endif
 
 static void
 prefix_entry_callback (GtkWidget *widget,

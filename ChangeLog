@@ -1,3 +1,8 @@
+2002-11-07  Dave Neary  <bolsh@gimp.org>
+	* plug-ins/common/xbm.c: Applied patch from Raphael
+	Quinet to suppress printing of comments in XBM files.
+	Closes bug #82763.
+
 2002-11-07  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.10 release.
