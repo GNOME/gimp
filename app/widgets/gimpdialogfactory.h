@@ -140,6 +140,9 @@ GtkWidget * gimp_dialog_factory_dock_new          (GimpDialogFactory *factory);
 
 void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,
 						   GtkWidget         *dialog);
+void        gimp_dialog_factory_add_foreign       (GimpDialogFactory *factory,
+                                                   const gchar       *identifier,
+                                                   GtkWidget         *dialog);
 void        gimp_dialog_factory_remove_dialog     (GimpDialogFactory *factory,
 						   GtkWidget         *dialog);
 

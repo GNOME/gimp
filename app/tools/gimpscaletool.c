@@ -159,8 +159,9 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_RESIZE_TOOL_CURSOR);
 
-  tr_tool->shell_desc    = _("Scaling Information");
-  tr_tool->progress_text = _("Scaling...");
+  tr_tool->shell_identifier = "gimp-scale-tool-dialog";
+  tr_tool->shell_desc       = _("Scaling Information");
+  tr_tool->progress_text    = _("Scaling...");
 }
 
 static void

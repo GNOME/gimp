@@ -93,6 +93,7 @@ struct _GimpTransformTool
   gboolean        show_path;
 
   /*  transform info dialog  */
+  const gchar    *shell_identifier;
   const gchar    *shell_desc;
   const gchar    *progress_text;
 

@@ -158,9 +158,10 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_SHEAR_TOOL_CURSOR);
 
-  tr_tool->use_center    = FALSE;
-  tr_tool->shell_desc    = _("Shearing Information");
-  tr_tool->progress_text = _("Shearing...");
+  tr_tool->use_center       = FALSE;
+  tr_tool->shell_identifier = "gimp-shear-tool-dialog";
+  tr_tool->shell_desc       = _("Shearing Information");
+  tr_tool->progress_text    = _("Shearing...");
 }
 
 static void

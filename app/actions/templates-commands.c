@@ -31,10 +31,12 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "dialogs.h"
 #include "file-new-dialog.h"
 #include "templates-commands.h"
 
@@ -235,5 +237,11 @@ void
 templates_file_new_dialog (Gimp         *gimp,
                            GimpTemplate *template)
 {
-  file_new_dialog_create (gimp, NULL, template);
+  GtkWidget *dialog;
+
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           "gimp-file-new-dialog", -1);
+
+  if (dialog)
+    file_new_dialog_set (dialog, NULL, template);
 }

@@ -80,6 +80,7 @@
 #include "dialogs-constructors.h"
 #include "error-console-dialog.h"
 #include "file-commands.h"
+#include "file-new-dialog.h"
 #include "layers-commands.h"
 #include "module-browser.h"
 #include "paths-dialog.h"
@@ -154,6 +155,14 @@ static void dialogs_navigation_display_changed     (GimpContext         *context
 /**********************/
 /*  toplevel dialogs  */
 /**********************/
+
+GtkWidget *
+dialogs_file_new_new (GimpDialogFactory *factory,
+                      GimpContext       *context,
+                      gint               preview_size)
+{
+  return file_new_dialog_new (context->gimp);
+}
 
 GtkWidget *
 dialogs_device_status_get (GimpDialogFactory *factory,

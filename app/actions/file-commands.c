@@ -40,10 +40,13 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs.h"
 #include "file-commands.h"
 #include "file-new-dialog.h"
 #include "file-open-dialog.h"
@@ -97,6 +100,7 @@ file_new_cmd_callback (GtkWidget *widget,
 {
   Gimp      *gimp;
   GimpImage *gimage;
+  GtkWidget *dialog;
   return_if_no_gimp (gimp, data);
 
   /*  if called from the image menu  */
@@ -105,7 +109,11 @@ file_new_cmd_callback (GtkWidget *widget,
   else 
     gimage = NULL;
 
-  file_new_dialog_create (gimp, gimage, NULL);
+  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                           "gimp-file-new-dialog", -1);
+
+  if (dialog)
+    file_new_dialog_set (dialog, gimage, NULL);
 }
 
 void

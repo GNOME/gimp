@@ -22,6 +22,9 @@
 
 /*  toplevel dialogs  */
 
+GtkWidget * dialogs_file_new_new           (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

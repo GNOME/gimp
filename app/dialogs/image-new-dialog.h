@@ -20,9 +20,11 @@
 #define __FILE_NEW_DIALOG_H__
 
 
-void   file_new_dialog_create (Gimp         *gimp,
-                               GimpImage    *gimage,
-                               GimpTemplate *template);
+GtkWidget * file_new_dialog_new (Gimp         *gimp);
+
+void        file_new_dialog_set (GtkWidget    *widget,
+                                 GimpImage    *gimage,
+                                 GimpTemplate *template);
 
 
 #endif /* __FILE_NEW_DIALOG_H__ */

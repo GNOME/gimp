@@ -40,27 +40,62 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
+  /*  foreign toplevels without constructor  */
+  { "gimp-brightness-contrast-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-color-picker-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-crop-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-curves-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-color-balance-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-hue-saturation-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-levels-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-posterize-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-rotate-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-scale-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-shear-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-threshold-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+  { "gimp-perspective-tool-dialog",
+    NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
+
+  /*  ordinary toplevels  */
+  { "gimp-file-new-dialog",        dialogs_file_new_new,
+    0, FALSE, TRUE,  FALSE, FALSE },
+
+  /*  singleton toplevels  */
   { "gimp-device-status-dialog",   dialogs_device_status_get,
     0, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp-preferences-dialog",     dialogs_preferences_get,
-    0, TRUE,  FALSE, FALSE, TRUE  },
+    0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-module-browser-dialog",  dialogs_module_browser_get,
-    0, TRUE,  FALSE, FALSE, TRUE  },
+    0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-display-filters-dialog", dialogs_display_filters_get,
-    0, FALSE, FALSE, FALSE, TRUE  },
+    0, FALSE, TRUE,  FALSE, FALSE },
   { "gimp-tips-dialog",            dialogs_tips_get,
-    0, TRUE,  FALSE, FALSE, TRUE  },
+    0, TRUE,  FALSE, FALSE, FALSE },
   { "gimp-about-dialog",           dialogs_about_get,
-    0, TRUE,  FALSE, FALSE, TRUE  }
+    0, TRUE,  FALSE, FALSE, FALSE }
 };
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
+  /*  singleton dockables  */
   { "gimp-tool-options",     dialogs_tool_options_get,
     0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-error-console",    dialogs_error_console_get,
     0, TRUE,  FALSE, FALSE, TRUE },
 
+  /*  list views  */
   { "gimp-image-list",       dialogs_image_list_view_new,
     GIMP_PREVIEW_SIZE_MEDIUM, FALSE, FALSE, FALSE, TRUE },
   { "gimp-brush-list",       dialogs_brush_list_view_new,
@@ -77,7 +112,12 @@ static const GimpDialogFactoryEntry dock_entries[] =
     GIMP_PREVIEW_SIZE_SMALL, FALSE, FALSE, FALSE, TRUE },
   { "gimp-buffer-list",      dialogs_buffer_list_view_new,
     GIMP_PREVIEW_SIZE_MEDIUM, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-document-list",    dialogs_document_list_new,
+    GIMP_PREVIEW_SIZE_LARGE,  FALSE, FALSE, FALSE, TRUE },
+  { "gimp-template-list",    dialogs_template_list_new,
+    GIMP_PREVIEW_SIZE_SMALL,  FALSE, FALSE, FALSE, TRUE },
 
+  /*  grid views  */
   { "gimp-image-grid",       dialogs_image_grid_view_new,
     GIMP_PREVIEW_SIZE_MEDIUM, FALSE, FALSE, FALSE, TRUE },
   { "gimp-brush-grid",       dialogs_brush_grid_view_new,
@@ -94,7 +134,10 @@ static const GimpDialogFactoryEntry dock_entries[] =
     GIMP_PREVIEW_SIZE_SMALL, FALSE, FALSE, FALSE, TRUE },
   { "gimp-buffer-grid",      dialogs_buffer_grid_view_new,
     GIMP_PREVIEW_SIZE_MEDIUM, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-document-grid",    dialogs_document_grid_new,
+    GIMP_PREVIEW_SIZE_LARGE,  FALSE, FALSE, FALSE, TRUE },
 
+  /*  image related  */
   { "gimp-layer-list",       dialogs_layer_list_view_new,
     0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-channel-list",     dialogs_channel_list_view_new,
@@ -110,26 +153,21 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-undo-history",     dialogs_undo_history_new,
     0, FALSE, FALSE, FALSE, TRUE },
 
+  /*  display related  */
+  { "gimp-navigation-view",  dialogs_navigation_view_new,
+    0, FALSE, FALSE, FALSE, TRUE },
+
+  /*  editors  */
   { "gimp-color-editor",     dialogs_color_editor_new,
     0, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp-document-list",    dialogs_document_list_new,
-    GIMP_PREVIEW_SIZE_LARGE, FALSE, FALSE, FALSE, TRUE },
-  { "gimp-document-grid",    dialogs_document_grid_new,
-    GIMP_PREVIEW_SIZE_LARGE, FALSE, FALSE, FALSE, TRUE },
-
-  { "gimp-template-list",    dialogs_template_list_new,
-    GIMP_PREVIEW_SIZE_SMALL, FALSE, FALSE, FALSE, TRUE },
-
+  /*  singleton editors  */
   { "gimp-brush-editor",     dialogs_brush_editor_get,
     0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-gradient-editor",  dialogs_gradient_editor_get,
     0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-palette-editor",   dialogs_palette_editor_get,
     0, TRUE,  FALSE, FALSE, TRUE },
-
-  { "gimp-navigation-view",  dialogs_navigation_view_new,
-    0, FALSE, FALSE, FALSE, TRUE }
 };
 
 

@@ -145,11 +145,12 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (bc_tool);
 
-  image_map_tool->shell_desc  = _("Adjust Brightness and Contrast");
+  image_map_tool->shell_identifier = "gimp-brightness-contrast-tool-dialog";
+  image_map_tool->shell_desc       = _("Adjust Brightness and Contrast");
 
-  bc_tool->brightness         = 0.0;
-  bc_tool->contrast           = 0.0;
-  bc_tool->lut                = gimp_lut_new ();
+  bc_tool->brightness = 0.0;
+  bc_tool->contrast   = 0.0;
+  bc_tool->lut        = gimp_lut_new ();
 }
 
 static void

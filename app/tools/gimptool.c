@@ -133,11 +133,11 @@ gimp_tool_class_init (GimpToolClass *klass)
 static void
 gimp_tool_init (GimpTool *tool)
 {
-  tool->ID       = global_tool_ID++;
-  tool->control  = GIMP_TOOL_CONTROL (g_object_new (GIMP_TYPE_TOOL_CONTROL, 
-                                                    NULL)); 
-  tool->gdisp    = NULL;
-  tool->drawable = NULL;
+  tool->tool_info = NULL;
+  tool->ID        = global_tool_ID++;
+  tool->control   = g_object_new (GIMP_TYPE_TOOL_CONTROL, NULL);
+  tool->gdisp     = NULL;
+  tool->drawable  = NULL;
 }
 
 static void

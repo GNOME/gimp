@@ -27,6 +27,11 @@
 
 #include "tools-types.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
@@ -38,11 +43,13 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "gui/info-dialog.h"
-
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
+
+#include "gui/dialogs.h"
+#include "gui/info-dialog.h"
 
 #include "gimpcropoptions.h"
 #include "gimpcroptool.h"
@@ -1073,6 +1080,10 @@ crop_info_create (GimpCropTool *crop)
 
   gtk_box_pack_start (GTK_BOX (crop->crop_info->vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-crop-tool-dialog",
+                                   crop->crop_info->shell);
 }
 
 static void

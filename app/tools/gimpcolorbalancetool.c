@@ -157,10 +157,11 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
 
-  image_map_tool->shell_desc  = _("Adjust Color Balance");
+  image_map_tool->shell_identifier = "gimp-color-balance-tool-dialog";
+  image_map_tool->shell_desc       = _("Adjust Color Balance");
 
-  cb_tool->color_balance      = g_new0 (ColorBalance, 1);
-  cb_tool->transfer_mode      = GIMP_MIDTONES;
+  cb_tool->color_balance = g_new0 (ColorBalance, 1);
+  cb_tool->transfer_mode = GIMP_MIDTONES;
 
   color_balance_init (cb_tool->color_balance);
 }

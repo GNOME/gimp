@@ -76,19 +76,15 @@ static void   file_new_create_image    (FileNewDialog     *dialog);
 
 /*  public functions  */
 
-void
-file_new_dialog_create (Gimp         *gimp,
-                        GimpImage    *gimage,
-                        GimpTemplate *template)
+GtkWidget *
+file_new_dialog_new (Gimp *gimp)
 {
   FileNewDialog *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *table;
   GtkWidget     *optionmenu;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (template == NULL || GIMP_IS_TEMPLATE (template));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   dialog = g_new0 (FileNewDialog, 1);
 
@@ -113,6 +109,10 @@ file_new_dialog_create (Gimp         *gimp,
                               dialog, NULL, &dialog->ok_button, TRUE, FALSE,
 
                               NULL);
+
+  g_object_set_data_full (G_OBJECT (dialog->dialog),
+                          "gimp-file-new-dialog", dialog,
+                          (GDestroyNotify) g_free);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
@@ -154,6 +154,26 @@ file_new_dialog_create (Gimp         *gimp,
                     G_CALLBACK (file_new_template_notify),
                     dialog);
 
+  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se));
+
+  return dialog->dialog;
+}
+
+void
+file_new_dialog_set (GtkWidget    *widget,
+                     GimpImage    *gimage,
+                     GimpTemplate *template)
+{
+  FileNewDialog *dialog;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (template == NULL || GIMP_IS_TEMPLATE (template));
+
+  dialog = g_object_get_data (G_OBJECT (widget), "gimp-file-new-dialog");
+
+  g_return_if_fail (dialog != NULL);
+
   if (template)
     {
       gimp_container_menu_select_item (GIMP_CONTAINER_MENU (dialog->template_menu),
@@ -161,15 +181,11 @@ file_new_dialog_create (Gimp         *gimp,
     }
   else
     {
-      template = gimp_image_new_get_last_template (gimp, gimage);
+      template = gimp_image_new_get_last_template (dialog->gimp, gimage);
       gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
                                          template);
       g_object_unref (template);
     }
-
-  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se));
-
-  gtk_widget_show (dialog->dialog);
 }
 
 
@@ -191,7 +207,6 @@ file_new_cancel_callback (GtkWidget     *widget,
 			  FileNewDialog *dialog)
 {
   gtk_widget_destroy (dialog->dialog);
-  g_free (dialog);
 }
 
 static void
@@ -299,15 +314,16 @@ static void
 file_new_create_image (FileNewDialog *dialog)
 {
   GimpTemplate *template;
+  Gimp         *gimp;
 
   template =
     gimp_template_editor_get_template (GIMP_TEMPLATE_EDITOR (dialog->editor));
 
+  gimp = dialog->gimp;
+
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_template_create_image (dialog->gimp, template);
-  gimp_image_new_set_last_template (dialog->gimp, template);
+  gimp_template_create_image (gimp, template);
+  gimp_image_new_set_last_template (gimp, template);
   g_object_unref (template);
-
-  g_free (dialog);
 }

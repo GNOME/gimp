@@ -1,3 +1,55 @@
+2003-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.[ch]: added new function
+	gimp_dialog_factory_add_foreign() which adds a dialog that was not
+	created by the factory itself. Its identifier however must be
+	registered with the factory. Connect to all toplevel dialogs'
+	"configure_event" and remember the resulting window geometry so we
+	get session management for *all* dialogs, not only for those which
+	were open on exit.
+
+	* app/gui/dialogs.c: added the "File New" dialog. Added foreign
+	entries (without constructor) for all dialogs opened by tools.
+
+	* app/gui/dialogs-constructors.[ch]: added a constructor for
+	the file_new dialog.
+
+	* app/gui/file-new-dialog.[ch]: renamed file_new_dialog_create()
+	to file_new_dialog_new() and removed the gimage and template
+	paramaters. Adder new function file_new_dialog_set() to set
+	gimage and template after creation.
+
+	* app/gui/file-commands.c
+	* app/gui/templates-commands.c: changed accordingly.
+
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimptransformtool.[ch]: added
+	"const gchar *shell_identifier" to the tool structs. Register the
+	tool dialogs using gimp_dialog_factory_add_foreign().
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpthresholdtool.c: set "shell_identifier" so the
+	dialogs become session managed. Fixes bug #61091.
+
+	* app/tools/gimpcroptool.c: register the crop dialog with the
+	dialog factory. Fixes bug #52849.
+
+	* app/tools/gimpcolorpickertool.c: ditto.
+
+	Unrelated:
+
+	* app/tools/gimptool.c: no need to cast the return value of
+	g_object_new().
+
 2003-05-02  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint/gimppaintcore-stroke.c (gimp_paint_core_stroke,

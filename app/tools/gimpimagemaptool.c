@@ -24,16 +24,24 @@
 
 #include "tools-types.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+
+#include "gui/dialogs.h"
 
 #include "gimpimagemaptool.h"
 #include "gimptoolcontrol.h"
@@ -134,13 +142,14 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
 
-  image_map_tool->drawable    = NULL;
-  image_map_tool->image_map   = NULL;
-  image_map_tool->preview     = TRUE;
+  image_map_tool->drawable         = NULL;
+  image_map_tool->image_map        = NULL;
+  image_map_tool->preview          = TRUE;
 
-  image_map_tool->shell_desc  = NULL;
-  image_map_tool->shell       = NULL;
-  image_map_tool->main_vbox   = NULL;
+  image_map_tool->shell_identifier = NULL;
+  image_map_tool->shell_desc       = NULL;
+  image_map_tool->shell            = NULL;
+  image_map_tool->main_vbox        = NULL;
 }
 
 void
@@ -245,6 +254,12 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gimp_image_map_tool_dialog (image_map_tool);
 
       gtk_widget_show (vbox);
+
+      if (image_map_tool->shell_identifier)
+        gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                         image_map_tool->shell_identifier,
+                                         image_map_tool->shell);
+
     }
 
   drawable = gimp_image_active_drawable (gdisp->gimage);

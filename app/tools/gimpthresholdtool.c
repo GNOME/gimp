@@ -154,7 +154,8 @@ gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
 
-  image_map_tool->shell_desc  = _("Apply Threshold");
+  image_map_tool->shell_identifier = "gimp-threshold-tool-dialog";
+  image_map_tool->shell_desc       = _("Apply Threshold");
 
   t_tool->threshold = g_new0 (Threshold, 1);
   t_tool->hist      = NULL;

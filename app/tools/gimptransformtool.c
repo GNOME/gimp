@@ -46,13 +46,15 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
-
-#include "gui/info-dialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpprogress.h"
+
+#include "gui/dialogs.h"
+#include "gui/info-dialog.h"
 
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -1131,6 +1133,12 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                       NULL);
 
       GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
+
+      if (tr_tool->shell_identifier)
+        gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                         tr_tool->shell_identifier,
+                                         tr_tool->info_dialog->shell);
+
     }
 }
 

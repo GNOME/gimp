@@ -36,12 +36,14 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimptoolinfo.h"
 
-#include "display/gimpdisplay.h"
-
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "display/gimpdisplay.h"
+
+#include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 
 #include "gimpcolorpickeroptions.h"
@@ -555,6 +557,10 @@ gimp_color_picker_tool_info_create (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), color_area);
   gtk_widget_show (color_area);
   gtk_widget_show (frame);
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-color-picker-tool-dialog",
+                                   info_dialog->shell);
 
   return info_dialog;
 }
