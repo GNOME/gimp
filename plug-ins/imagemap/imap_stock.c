@@ -56,10 +56,9 @@ add_stock_icon (const gchar  *stock_id,
   GtkIconSource *source;
   GtkIconSet    *set;
   GdkPixbuf     *pixbuf;
-  
+
   source = gtk_icon_source_new ();
 
-  // gtk_icon_source_set_size (source, GTK_ICON_SIZE_BUTTON);
   gtk_icon_source_set_size (source, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_icon_source_set_size_wildcarded (source, TRUE);
 
