@@ -56,15 +56,16 @@
 #endif
 
 
-#define TAG_DESCRIPTION         "tEXt::Description"
-#define TAG_SOFTWARE            "tEXt::Software"
-#define TAG_THUMB_URI           "tEXt::Thumb::URI"
-#define TAG_THUMB_MTIME         "tEXt::Thumb::MTime"
-#define TAG_THUMB_FILESIZE      "tEXt::Thumb::Size"
-#define TAG_THUMB_IMAGE_WIDTH   "tEXt::Thumb::Image::Width"
-#define TAG_THUMB_IMAGE_HEIGHT  "tEXt::Thumb::Image::Height"
-#define TAG_THUMB_GIMP_TYPE     "tEXt::Thumb::X-GIMP::Type"
-#define TAG_THUMB_GIMP_LAYERS   "tEXt::Thumb::X-GIMP::Layers"
+#define TAG_DESCRIPTION           "tEXt::Description"
+#define TAG_SOFTWARE              "tEXt::Software"
+#define TAG_THUMB_URI             "tEXt::Thumb::URI"
+#define TAG_THUMB_MTIME           "tEXt::Thumb::MTime"
+#define TAG_THUMB_FILESIZE        "tEXt::Thumb::Size"
+#define TAG_THUMB_IMAGE_WIDTH     "tEXt::Thumb::Image::Width"
+#define TAG_THUMB_IMAGE_HEIGHT    "tEXt::Thumb::Image::Height"
+#define TAG_THUMB_IMAGE_MIMETYPE  "tEXt::Thumb::Image::Mimetype"
+#define TAG_THUMB_GIMP_TYPE       "tEXt::Thumb::X-GIMP::Type"
+#define TAG_THUMB_GIMP_LAYERS     "tEXt::Thumb::X-GIMP::Layers"
 
 
 enum
@@ -76,6 +77,7 @@ enum
   PROP_IMAGE_FILESIZE,
   PROP_IMAGE_WIDTH,
   PROP_IMAGE_HEIGHT,
+  PROP_IMAGE_MIMETYPE,
   PROP_IMAGE_TYPE,
   PROP_IMAGE_NUM_LAYERS,
   PROP_THUMB_STATE
@@ -186,6 +188,17 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                      "Height of the image in pixels",
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
+  /**
+   * GimpThumbnail::image-mimetype:
+   *
+   * Since: GIMP 2.2
+   **/
+  g_object_class_install_property (object_class,
+				   PROP_IMAGE_MIMETYPE,
+				   g_param_spec_string ("image-mimetype", NULL,
+                                                        "Image mimetype",
+                                                        NULL,
+                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_TYPE,
                                    g_param_spec_string ("image-type", NULL,
@@ -217,6 +230,7 @@ gimp_thumbnail_init (GimpThumbnail *thumbnail)
   thumbnail->image_filesize   = 0;
   thumbnail->image_width      = 0;
   thumbnail->image_height     = 0;
+  thumbnail->image_mimetype   = NULL;
   thumbnail->image_type       = 0;
   thumbnail->image_num_layers = 0;
 
@@ -247,6 +261,11 @@ gimp_thumbnail_finalize (GObject *object)
     {
       g_free (thumbnail->image_filename);
       thumbnail->image_filename = NULL;
+    }
+  if (thumbnail->image_mimetype)
+    {
+      g_free (thumbnail->image_mimetype);
+      thumbnail->image_mimetype = NULL;
     }
   if (thumbnail->image_type)
     {
@@ -290,6 +309,10 @@ gimp_thumbnail_set_property (GObject      *object,
       break;
     case PROP_IMAGE_HEIGHT:
       thumbnail->image_height = g_value_get_int (value);
+      break;
+    case PROP_IMAGE_MIMETYPE:
+      g_free (thumbnail->image_mimetype);
+      thumbnail->image_mimetype = g_value_dup_string (value);
       break;
     case PROP_IMAGE_TYPE:
       g_free (thumbnail->image_type);
@@ -335,6 +358,9 @@ gimp_thumbnail_get_property (GObject    *object,
       break;
     case PROP_IMAGE_HEIGHT:
       g_value_set_int (value, thumbnail->image_height);
+      break;
+    case PROP_IMAGE_MIMETYPE:
+      g_value_set_string (value, thumbnail->image_mimetype);
       break;
     case PROP_IMAGE_TYPE:
       g_value_set_string (value, thumbnail->image_type);
@@ -409,6 +435,7 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
                 "image-mtime",      (gint64) 0,
                 "image-width",      0,
                 "image-height",     0,
+                "image-mimetype",   NULL,
                 "image-type",       NULL,
                 "image-num-layers", 0,
                 "thumb-state",      GIMP_THUMB_STATE_UNKNOWN,
@@ -708,6 +735,9 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
   if (option && sscanf (option, "%d", &num) == 1)
     thumbnail->image_height = num;
 
+  thumbnail->image_mimetype =
+    g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_MIMETYPE));
+
   thumbnail->image_type =
     g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_TYPE));
 
@@ -845,13 +875,10 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
 {
   GimpThumbSize  size;
   gchar         *name;
-  gchar         *desc;
-  gchar         *time_str;
-  gchar         *size_str;
-  gchar         *width_str;
-  gchar         *height_str;
-  gchar         *num_str;
+  const gchar   *keys[12];
+  gchar         *values[12];
   gboolean       success;
+  gint           i = 0;
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
   g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
@@ -875,32 +902,73 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
       return FALSE;
     }
 
-  desc     = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
-  time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
-  size_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
+  keys[i]   = TAG_DESCRIPTION;
+  values[i] = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
+  i++;
 
-  width_str  = g_strdup_printf ("%d", thumbnail->image_width);
-  height_str = g_strdup_printf ("%d", thumbnail->image_height);
-  num_str    = g_strdup_printf ("%d", thumbnail->image_num_layers);
+  keys[i]   = TAG_SOFTWARE;
+  values[i] = g_strdup (software);
+  i++;
 
-  success =  gdk_pixbuf_save (pixbuf, name, "png", error,
-                              TAG_DESCRIPTION,        desc,
-                              TAG_SOFTWARE,           software,
-                              TAG_THUMB_URI,          thumbnail->image_uri,
-                              TAG_THUMB_MTIME,        time_str,
-                              TAG_THUMB_FILESIZE,     size_str,
-                              TAG_THUMB_IMAGE_WIDTH,  width_str,
-                              TAG_THUMB_IMAGE_HEIGHT, height_str,
+  keys[i]   = TAG_THUMB_URI;
+  values[i] = g_strdup (thumbnail->image_uri);
+  i++;
 
-                              thumbnail->image_type ?
-                              TAG_THUMB_GIMP_TYPE : NULL,
-                              thumbnail->image_type,
+  keys[i]   = TAG_THUMB_MTIME;
+  values[i] = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
+  i++;
 
-                              thumbnail->image_num_layers > 0 ?
-                              TAG_THUMB_GIMP_LAYERS : NULL,
-                              num_str,
+  keys[i]   = TAG_THUMB_FILESIZE;
+  values[i] = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
+  i++;
 
-                              NULL);
+  if (thumbnail->image_width > 0)
+    {
+      keys[i]   = TAG_THUMB_IMAGE_WIDTH;
+      values[i] = g_strdup_printf ("%d", thumbnail->image_width);
+      i++;
+    }
+
+  if (thumbnail->image_height > 0)
+    {
+      keys[i]   = TAG_THUMB_IMAGE_HEIGHT;
+      values[i] = g_strdup_printf ("%d", thumbnail->image_height);
+      i++;
+    }
+
+  if (thumbnail->image_mimetype)
+    {
+      keys[i]   = TAG_THUMB_IMAGE_MIMETYPE;
+      values[i] = g_strdup_printf (thumbnail->image_mimetype);
+      i++;
+    }
+
+  if (thumbnail->image_type)
+    {
+      keys[i]   = TAG_THUMB_GIMP_TYPE;
+      values[i] = g_strdup (thumbnail->image_type);
+      i++;
+    }
+
+  if (thumbnail->image_num_layers > 0)
+    {
+      keys[i]   = TAG_THUMB_GIMP_LAYERS;
+      values[i] = g_strdup_printf ("%d", thumbnail->image_num_layers);
+      i++;
+    }
+
+  keys[i]   = NULL;
+  values[i] = NULL;
+
+  success = gdk_pixbuf_savev (pixbuf, name, "png",
+                              (gchar **) keys, values,
+                              error);
+
+  for (i = 0; i < G_N_ELEMENTS (values); i++)
+    {
+      if (values[i])
+        g_free (values[i]);
+    }
 
   if (success)
     {
@@ -914,12 +982,6 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
                      thumbnail->image_uri, g_strerror (errno));
     }
 
-  g_free (num_str);
-  g_free (height_str);
-  g_free (width_str);
-  g_free (size_str);
-  g_free (time_str);
-  g_free (desc);
   g_free (name);
 
   return success;

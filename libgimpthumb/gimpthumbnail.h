@@ -60,13 +60,14 @@ struct _GimpThumbnail
   gint64          thumb_filesize;
   gint64          thumb_mtime;
 
-  gpointer        _reserved_1;
+  gchar          *image_mimetype;
+
   gpointer        _reserved_2;
 };
 
 struct _GimpThumbnailClass
 {
-  GObjectClass  parent_class;
+  GObjectClass    parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
