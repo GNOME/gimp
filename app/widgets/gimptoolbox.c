@@ -150,7 +150,7 @@ toolbox_check_device (GtkWidget *widget,
 		      GdkEvent  *event,
 		      gpointer   data)
 {
-  devices_check_change (event);
+  devices_check_change (GIMP (data), event);
 
   return FALSE;
 }
@@ -352,7 +352,7 @@ toolbox_create (Gimp *gimp)
     {
       g_signal_connect (G_OBJECT (window), "motion_notify_event",
 			G_CALLBACK (toolbox_check_device),
-			NULL);
+			gimp);
 
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);

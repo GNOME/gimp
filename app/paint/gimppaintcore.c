@@ -45,6 +45,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -56,6 +57,7 @@
 #include "gimpconvolvetool.h"
 #include "gimppainttool.h"
 
+#include "app_procs.h"
 #include "devices.h"
 #include "gimprc.h"
 #include "undo.h"
@@ -1318,7 +1320,7 @@ gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
 {
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (current_device == gdk_device_get_core_pointer ())
+  if (devices_get_current (the_gimp) == gdk_device_get_core_pointer ())
     {
       *width  = mask->width;
       *height = mask->height;
@@ -1636,9 +1638,12 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
 				BrushApplicationMode  brush_hardness,
 				gdouble               scale)
 {
-  MaskBuf *mask;
+  GimpTool *tool;
+  MaskBuf  *mask;
 
-  if (current_device == gdk_device_get_core_pointer ())
+  tool = GIMP_TOOL (paint_tool);
+
+  if (devices_get_current (tool->tool_info->gimp) == gdk_device_get_core_pointer ())
     mask = paint_tool->brush->mask;
   else
     mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);

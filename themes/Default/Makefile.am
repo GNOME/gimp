@@ -151,8 +151,8 @@ WILBER_VARIABLES = @STRIP_BEGIN@ \
 noinst_DATA = gimp-stock-pixbufs.h gimp-wilber-pixbufs.h
 CLEANFILES = $(noinst_DATA)
 
-gimp-stock-pixbufs.h: $(STOCK_IMAGES) $(STOCK_TOOL_IMAGES)
+gimp-stock-pixbufs.h: $(STOCK_IMAGES) $(STOCK_TOOL_IMAGES) Makefile.am
 	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) $(STOCK_TOOL_VARIABLES) >$(srcdir)/gimp-stock-pixbufs.h
 
-gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
+gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) >$(srcdir)/gimp-wilber-pixbufs.h

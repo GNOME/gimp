@@ -92,6 +92,8 @@ app_init (gint    gimp_argc,
                        no_interface,
                        stack_trace_mode);
 
+  gimp_object_set_name (GIMP_OBJECT (the_gimp), prog_name);
+
   /*  Check if the user's gimp_directory exists
    */
   gimp_dir = gimp_directory ();
@@ -165,9 +167,6 @@ app_init (gint    gimp_argc,
       if (! no_splash)
 	splash_destroy ();
 
-      /*  FIXME: This needs to go in preferences  */
-      message_handler = GIMP_MESSAGE_BOX;
-
       gui_restore (the_gimp, restore_session);
     }
 
@@ -223,8 +222,6 @@ app_init_update_status (const gchar *text1,
 static void
 app_exit_finish (void)
 {
-  message_handler = GIMP_CONSOLE;
-
   if (! no_interface)
     {
       gui_shutdown (the_gimp);

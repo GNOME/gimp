@@ -24,11 +24,13 @@
 #include "gimpimage-new.h"
 
 
-typedef void         (* GimpMainLoopFunc)      (Gimp      *gimp);
-typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage *gimage,
-                                                guint      scale);
-typedef void         (* GimpSetBusyFunc)       (Gimp      *gimp);
-typedef void         (* GimpUnsetBusyFunc)     (Gimp      *gimp);
+typedef void         (* GimpMainLoopFunc)      (Gimp        *gimp);
+typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage   *gimage,
+                                                guint        scale);
+typedef void         (* GimpSetBusyFunc)       (Gimp        *gimp);
+typedef void         (* GimpUnsetBusyFunc)     (Gimp        *gimp);
+typedef void         (* GimpMessageFunc)       (Gimp        *gimp,
+                                                const gchar *message);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -49,6 +51,7 @@ struct _Gimp
   gboolean               be_verbose;
   gboolean               no_data;
   gboolean               no_interface;
+  GimpMessageHandlerType message_handler;
   GimpStackTraceMode     stack_trace_mode;
 
   GList                 *main_loops;
@@ -58,6 +61,7 @@ struct _Gimp
   GimpCreateDisplayFunc  gui_create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
   GimpUnsetBusyFunc      gui_unset_busy_func;
+  GimpMessageFunc        gui_message_func;
 
   gint                   busy;
   guint                  busy_idle_id;
@@ -146,6 +150,9 @@ void          gimp_main_loop_quit       (Gimp               *gimp);
 void          gimp_set_busy             (Gimp               *gimp);
 void          gimp_set_busy_until_idle  (Gimp               *gimp);
 void          gimp_unset_busy           (Gimp               *gimp);
+
+void          gimp_message              (Gimp               *gimp,
+                                         const gchar        *message);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

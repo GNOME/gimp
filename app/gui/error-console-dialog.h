@@ -23,9 +23,10 @@
 #define __ERROR_CONSOLE_DIALOG_H__
 
 
-void        error_console_add    (const gchar *errormsg);
+GtkWidget * error_console_create (Gimp        *gimp);
 
-GtkWidget * error_console_create (void);
+void        error_console_add    (Gimp        *gimp,
+                                  const gchar *errormsg);
 
 
 #endif /* __ERROR_CONSOLE_DIALOG_H__ */

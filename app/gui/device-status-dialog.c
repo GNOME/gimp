@@ -141,10 +141,9 @@ static void     device_status_context_connect    (GimpContext  *context,
 						  GdkDevice    *device);
 
 
-/*  global data  */
-GdkDevice *current_device = NULL;
-
 /*  local data  */
+
+static GdkDevice        *current_device = NULL;
 static GList            *device_info_list = NULL;
 static DeviceInfoDialog *deviceD          = NULL;
 
@@ -191,9 +190,11 @@ device_info_get_by_name (gchar *name)
 /*  the gtk input dialog  */
 
 GtkWidget *
-input_dialog_create (void)
+input_dialog_create (Gimp *gimp)
 {
   static GtkWidget *inputd = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (inputd)
     return inputd;
@@ -309,8 +310,17 @@ devices_restore (Gimp *gimp)
   suppress_update = FALSE;
 }
 
+GdkDevice *
+devices_get_current (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return current_device;
+}
+
 void
-devices_rc_update (gchar        *name, 
+devices_rc_update (Gimp         *gimp,
+                   gchar        *name, 
 		   DeviceValues  values,
 		   GdkInputMode  mode, 
 		   gint          num_axes,
@@ -510,10 +520,14 @@ devices_rc_update (gchar        *name,
 }
 
 void
-select_device (GdkDevice *new_device)
+select_device (Gimp      *gimp,
+               GdkDevice *new_device)
 {
   DeviceInfo  *device_info;
   GimpContext *context;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GDK_IS_DEVICE (new_device));
 
   device_info = device_info_get_by_device (current_device);
 
@@ -537,9 +551,13 @@ select_device (GdkDevice *new_device)
 }
 
 gboolean
-devices_check_change (GdkEvent *event)
+devices_check_change (Gimp     *gimp,
+                      GdkEvent *event)
 {
   GdkDevice *device;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (event != NULL, FALSE);
 
   switch (event->type)
     {
@@ -570,7 +588,7 @@ devices_check_change (GdkEvent *event)
 
   if (device != current_device)
     {
-      select_device (device);
+      select_device (gimp, device);
       return TRUE;
     }
 
@@ -743,13 +761,15 @@ devices_write_rc (void)
 }
 
 GtkWidget *
-device_status_create (void)
+device_status_create (Gimp *gimp)
 {
   DeviceInfo *device_info;
   GtkWidget  *label;
   GimpRGB     color;
   GList      *list;
   gint        i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (deviceD)
     return deviceD->shell;
@@ -977,8 +997,10 @@ devices_close_callback (GtkWidget *widget,
 }
 
 void
-device_status_free (void)
-{                                     
+device_status_free (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   /* Save device status on exit */
   if (gimprc.save_device_status)
     devices_write_rc ();

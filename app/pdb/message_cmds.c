@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "appenv.h"
+#include "core/gimp.h"
 
 #include "libgimpbase/gimpbasetypes.h"
 
@@ -93,7 +93,7 @@ message_get_handler_invoker (Gimp     *gimp,
   Argument *return_args;
 
   return_args = procedural_db_return_args (&message_get_handler_proc, TRUE);
-  return_args[1].value.pdb_int = message_handler;
+  return_args[1].value.pdb_int = gimp->message_handler;
 
   return return_args;
 }
@@ -135,7 +135,7 @@ message_set_handler_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    message_handler = handler;
+    gimp->message_handler = handler;
 
   return procedural_db_return_args (&message_set_handler_proc, success);
 }

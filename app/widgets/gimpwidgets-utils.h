@@ -26,7 +26,7 @@
 typedef gpointer (* GimpGetAccelContextFunc) (gpointer data);
 
 
-void     gimp_message_box                  (gchar          *message,
+void     gimp_message_box                  (const gchar    *message,
 					    GtkCallback     callback,
 					    gpointer        data);
 

@@ -50,7 +50,9 @@
 
 #include "gui-types.h"
 
-#include "appenv.h"
+#include "core/gimp.h"
+
+#include "error-console-dialog.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -92,13 +94,15 @@ static GtkWidget *error_console = NULL;
 /*  public functions  */
 
 GtkWidget *
-error_console_create (void)
+error_console_create (Gimp *gimp)
 {
   GtkTextBuffer *text_buffer;
   GtkWidget     *text_view;
   GtkWidget     *scrolled_window;
   GtkWidget     *menu;
   GtkWidget     *menuitem;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (error_console)
     return error_console;
@@ -111,7 +115,7 @@ error_console_create (void)
 
   g_object_weak_ref (G_OBJECT (error_console),
 		     (GWeakNotify) error_console_destroy_callback,
-		     NULL);
+		     gimp);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -164,20 +168,22 @@ error_console_create (void)
 		    G_CALLBACK (text_clicked_callback),
 		    menu);
 
-  /* FIXME: interact with preferences */
-  message_handler = GIMP_ERROR_CONSOLE;
+  gimp->message_handler = GIMP_ERROR_CONSOLE;
 
   return error_console;
 }
 
 void
-error_console_add (const gchar *errormsg)
+error_console_add (Gimp        *gimp,
+                   const gchar *errormsg)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (! error_console)
     {
       g_warning ("%s: error_console widget is NULL", G_STRLOC);
 
-      message_handler = GIMP_MESSAGE_BOX;
+      gimp->message_handler = GIMP_MESSAGE_BOX;
       g_message (errormsg);
 
       return;
@@ -204,10 +210,13 @@ error_console_add (const gchar *errormsg)
 static void
 error_console_destroy_callback (gpointer data)
 {
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
   error_console = NULL;
 
-  /* FIXME: interact with preferences */
-  message_handler = GIMP_MESSAGE_BOX;
+  gimp->message_handler = GIMP_MESSAGE_BOX;
 }
 
 static gboolean

@@ -41,11 +41,13 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "brush-select.h"
 #include "color-select.h"
 #include "devices.h"
 #include "dialogs.h"
+#include "error-console-dialog.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
 #include "gradient-select.h"
@@ -71,6 +73,8 @@ static void         gui_main                        (Gimp        *gimp);
 static void         gui_main_quit                   (Gimp        *gimp);
 static void         gui_set_busy                    (Gimp        *gimp);
 static void         gui_unset_busy                  (Gimp        *gimp);
+static void         gui_message                     (Gimp        *gimp,
+                                                     const gchar *message);
 static GimpObject * gui_display_new                 (GimpImage   *gimage,
                                                      guint        scale);
 
@@ -216,9 +220,10 @@ gui_init (Gimp *gimp)
 
   gimp->gui_main_loop_func      = gui_main;
   gimp->gui_main_loop_quit_func = gui_main_quit;
-  gimp->gui_create_display_func = gui_display_new;
   gimp->gui_set_busy_func       = gui_set_busy;
   gimp->gui_unset_busy_func     = gui_unset_busy;
+  gimp->gui_message_func        = gui_message;
+  gimp->gui_create_display_func = gui_display_new;
 
   image_disconnect_handler_id =
     gimp_container_add_handler (gimp->images, "disconnect",
@@ -262,6 +267,8 @@ gui_restore (Gimp     *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->message_handler = GIMP_MESSAGE_BOX;
+
   file_open_dialog_menu_init (gimp);
   file_save_dialog_menu_init (gimp);
 
@@ -295,8 +302,10 @@ gui_shutdown (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->message_handler = GIMP_CONSOLE;
+
   session_save (gimp);
-  device_status_free ();
+  device_status_free (gimp);
 
   brush_dialog_free ();
   pattern_dialog_free ();
@@ -402,6 +411,45 @@ gui_main_quit (Gimp *gimp)
   gtk_main_quit ();
 }
 
+static void
+gui_set_busy (Gimp *gimp)
+{
+  gdisplays_set_busy ();
+  gimp_dialog_factories_idle ();
+
+  gdk_flush ();
+}
+
+static void
+gui_unset_busy (Gimp *gimp)
+{
+  gdisplays_unset_busy ();
+  gimp_dialog_factories_unidle ();
+
+  gdk_flush ();
+}
+
+static void
+gui_message (Gimp        *gimp,
+             const gchar *message)
+{
+  switch (gimp->message_handler)
+    {
+    case GIMP_MESSAGE_BOX:
+      gimp_message_box (message, NULL, NULL);
+      break;
+
+    case GIMP_ERROR_CONSOLE:
+      gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                        "gimp:error-console", -1);
+      error_console_add (gimp, message);
+      break;
+
+    default:
+      break;
+    }
+}
+
 gboolean double_speed = FALSE;
 
 static GimpObject *
@@ -426,24 +474,6 @@ gui_display_new (GimpImage *gimage,
     }
 
   return GIMP_OBJECT (gdisp);
-}
-
-static void
-gui_set_busy (Gimp *gimp)
-{
-  gdisplays_set_busy ();
-  gimp_dialog_factories_idle ();
-
-  gdk_flush ();
-}
-
-static void
-gui_unset_busy (Gimp *gimp)
-{
-  gdisplays_unset_busy ();
-  gimp_dialog_factories_unidle ();
-
-  gdk_flush ();
 }
 
 static gint

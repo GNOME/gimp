@@ -26,16 +26,13 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
-#include "widgets/widgets-types.h"
+#include "core/core-types.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "core/gimp.h"
 
-#include "gui/dialogs.h"
-#include "gui/error-console-dialog.h"
-
+#include "app_procs.h"
 #include "appenv.h"
 #include "errors.h"
 
@@ -44,35 +41,28 @@
 #endif
 
 
+
+/*  local function prototypes  */
+
+static void   gimp_eek (const gchar *reason,
+                        const gchar *message,
+                        gboolean     use_handler);
+
+
+/*  public functions  */
+
 void
 gimp_message_log_func (const gchar    *log_domain,
 		       GLogLevelFlags  flags,
 		       const gchar    *message,
 		       gpointer        data)
 {
-  if (console_messages == FALSE)
+  if (! console_messages && GIMP_IS_GIMP (the_gimp))
     {
-      switch (message_handler)
-	{
-	case GIMP_MESSAGE_BOX:
-	  gimp_message_box ((gchar *) message, NULL, NULL);
-	  break;
-
-	case GIMP_ERROR_CONSOLE:
-	  gimp_dialog_factory_dialog_raise (global_dock_factory,
-					    "gimp:error-console", -1);
-	  error_console_add ((gchar *) message);
-	  break;
-
-	default:
-	  g_printerr ("%s: %s\n", prog_name, (gchar *) message);
-	  break;
-	}
+      gimp_message (the_gimp, message);
     }
-  else
-    {
-      g_printerr ("%s: %s\n", prog_name, (gchar *) message);
-    }
+
+  g_printerr ("%s: %s\n", prog_name, message);
 }
 
 void
@@ -81,7 +71,7 @@ gimp_error_log_func (const gchar    *domain,
 		     const gchar    *message,
 		     gpointer        data)
 {
-  gimp_fatal_error ("%s", message);
+  gimp_fatal_error (message);
 }
 
 void
@@ -94,48 +84,7 @@ gimp_fatal_error (const gchar *fmt, ...)
   message = g_strdup_vprintf (fmt, args);
   va_end (args);
 
-#ifndef G_OS_WIN32
-
-  g_printerr ("%s: fatal error: %s\n", prog_name, message);
-
-  switch (stack_trace_mode)
-    {
-    case GIMP_STACK_TRACE_NEVER:
-      break;
-
-    case GIMP_STACK_TRACE_QUERY:
-      {
-	sigset_t sigset;
-
-	sigemptyset (&sigset);
-	sigprocmask (SIG_SETMASK, &sigset, NULL);
-	g_on_error_query (prog_name);
-      }
-      break;
-
-    case GIMP_STACK_TRACE_ALWAYS:
-      {
-	sigset_t sigset;
-
-	sigemptyset (&sigset);
-	sigprocmask (SIG_SETMASK, &sigset, NULL);
-	g_on_error_stack_trace (prog_name);
-      }
-      break;
-
-    default:
-      break;
-    }
-
-#else
-
-  /* g_on_error_* don't do anything reasonable on Win32. */
-
-  MessageBox (NULL, message, prog_name, MB_OK|MB_ICONERROR);
-
-#endif /* ! G_OS_WIN32 */
-
-  gtk_exit (1);
+  gimp_eek ("fatal error", message, TRUE);
 }
 
 void
@@ -148,11 +97,22 @@ gimp_terminate (const gchar *fmt, ...)
   message = g_strdup_vprintf (fmt, args);
   va_end (args);
 
+  gimp_eek ("terminated", message, use_debug_handler);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_eek (const gchar *reason,
+          const gchar *message,
+          gboolean     use_handler)
+{
 #ifndef G_OS_WIN32
 
-  g_printerr ("%s terminated: %s\n", prog_name, message);
+  g_printerr ("%s: %s: %s\n", prog_name, reason, message);
 
-  if (use_debug_handler)
+  if (use_handler)
     {
       switch (stack_trace_mode)
 	{
@@ -192,5 +152,5 @@ gimp_terminate (const gchar *fmt, ...)
 
 #endif /* ! G_OS_WIN32 */
 
-  gtk_exit (1);
+  exit (1);
 }

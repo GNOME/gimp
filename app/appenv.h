@@ -35,8 +35,7 @@ extern gchar               *alternate_system_gimprc;
 extern gchar              **batch_cmds;
 
 /*  other global variables  */
-extern gchar                  *prog_name;
-extern GimpMessageHandlerType  message_handler;
+extern gchar               *prog_name;
 
 
 #endif /*  __APPENV_H__  */

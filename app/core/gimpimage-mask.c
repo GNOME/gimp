@@ -21,7 +21,6 @@
 #include <glib-object.h>
 
 #include "core-types.h"
-#include "pdb/pdb-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"

@@ -19,17 +19,13 @@ scriptdata =
 bin_PROGRAMS = gimp-1.3
 
 ##
-## gui stuff that needs to go to libgimp/, gui/ or /dev/null
+## gui stuff for gui/, display/ or widgets/
 ##
 gui_sources = \
 	devices.c		\
 	devices.h		\
-	gimpprogress.c		\
-	gimpprogress.h		\
 	nav_window.c		\
 	nav_window.h		\
-	ops_buttons.c		\
-	ops_buttons.h		\
 	undo_history.c		\
 	undo_history.h
 
@@ -37,6 +33,8 @@ gui_sources = \
 ## stuff that needs to be split up in core / ui files
 ##
 core_ui_sources = \
+	gimpprogress.c		\
+	gimpprogress.h		\
 	image_map.c		\
 	image_map.h
 
@@ -51,7 +49,6 @@ core_sources = \
 ## config stuff
 ##
 config_sources = \
-	appenv.h		\
 	general.c		\
 	general.h		\
 	gimprc.c		\
@@ -61,6 +58,8 @@ config_sources = \
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
+	ops_buttons.c		\
+	ops_buttons.h		\
 	path.c			\
 	path.h			\
 	pathP.h			\
@@ -77,6 +76,7 @@ bye_sources = \
 ## stuff
 ##
 stuff_sources = \
+	appenv.h		\
 	app_procs.c		\
 	app_procs.h		\
 	main.c			\

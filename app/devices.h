@@ -33,47 +33,48 @@ typedef enum
   DEVICE_GRADIENT   = 1 << 8
 } DeviceValues;
 
+
 /*  Initialize the input devices  */
-void   devices_init         (Gimp *gimp);
+void        devices_init          (Gimp         *gimp);
 
 /*  Restores device settings from rc file  */
-void   devices_restore      (Gimp *gimp);
+void        devices_restore       (Gimp         *gimp);
 
-/*  Create device info dialog  */
-GtkWidget * input_dialog_create  (void);
-
-/*  Create the device status dialog  */
-GtkWidget * device_status_create (void);
+GdkDevice * devices_get_current   (Gimp         *gimp);
 
 /*  Returns TRUE, and makes necessary global changes
  *  if event is not for current_device
  */
-gboolean devices_check_change (GdkEvent     *event);
+gboolean    devices_check_change  (Gimp         *gimp,
+                                   GdkEvent     *event);
 
 /*  Loads stored device settings (tool, cursor, ...)  */
-void   select_device        (GdkDevice    *device);
+void        devices_select_device (Gimp         *gimp,
+                                   GdkDevice    *device);
+
+/*  The device info dialog  */
+GtkWidget * input_dialog_create   (Gimp         *gimp);
+void        input_dialog_free     (Gimp         *gimp);
+
+/*  The device status dialog  */
+GtkWidget * device_status_create  (Gimp         *gimp);
+void        device_status_free    (Gimp         *gimp);
 
 /* Add information about one tool from rc file */
-void   devices_rc_update    (gchar        *name,
-			     DeviceValues  values,
-			     GdkInputMode  mode,
-			     gint          num_axes,
-			     GdkAxisUse   *axes,
-			     gint          num_keys,
-			     GdkDeviceKey *keys,
-			     const gchar  *tool_name,
-			     GimpRGB      *foreground,
-			     GimpRGB      *background,
-			     const gchar  *brush_name,
-			     const gchar  *pattern_name,
-			     const gchar  *gradient_name);
-
-/*  Free device status (only for session-managment)  */
-void   device_status_free   (void);
-
-
-/*  Current device  */
-extern GdkDevice *current_device;
+void        devices_rc_update     (Gimp         *gimp,
+                                   gchar        *name,
+                                   DeviceValues  values,
+                                   GdkInputMode  mode,
+                                   gint          num_axes,
+                                   GdkAxisUse   *axes,
+                                   gint          num_keys,
+                                   GdkDeviceKey *keys,
+                                   const gchar  *tool_name,
+                                   GimpRGB      *foreground,
+                                   GimpRGB      *background,
+                                   const gchar  *brush_name,
+                                   const gchar  *pattern_name,
+                                   const gchar  *gradient_name);
 
 
 #endif /* __DEVICES_H__ */

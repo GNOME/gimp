@@ -278,7 +278,7 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
     {
       GdkDevice *device = (GdkDevice *) list->data;
 
-      if (device == current_device)
+      if (device == devices_get_current (shell->gdisp->gimage->gimp))
 	{
 	  shell->draw_cursor = ! device->has_cursor;
 	  break;
@@ -317,11 +317,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gimage = gdisp->gimage;
 
   /*  Find out what device the event occurred upon  */
-  if (! gimage->gimp->busy && devices_check_change (event))
-    gimp_display_shell_check_device_cursor (shell);
+  if (! gimage->gimp->busy && devices_check_change (gimage->gimp, event))
+    {
+      gimp_display_shell_check_device_cursor (shell);
+    }
 
-  gimp_display_shell_get_coords (shell, event, current_device, &display_coords);
-  gimp_display_shell_get_state (shell, event, current_device, &state);
+  gimp_display_shell_get_coords (shell, event,
+                                 devices_get_current (gimage->gimp),
+                                 &display_coords);
+  gimp_display_shell_get_state (shell, event,
+                                devices_get_current (gimage->gimp),
+                                &state);
   time = gdk_event_get_time (event);
 
   image_coords = display_coords;

@@ -77,8 +77,7 @@ gchar               *alternate_system_gimprc = NULL;
 gchar              **batch_cmds              = NULL;
 
 /*  other global variables  */
-gchar                  *prog_name       = NULL;  /* our executable name */
-GimpMessageHandlerType  message_handler = GIMP_CONSOLE;
+gchar *prog_name = NULL;  /* our executable name */
 
 
 /*

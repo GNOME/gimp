@@ -120,6 +120,7 @@ gimp_init (Gimp *gimp)
   gimp->be_verbose              = FALSE;
   gimp->no_data                 = FALSE;
   gimp->no_interface            = FALSE;
+  gimp->message_handler         = GIMP_CONSOLE;
   gimp->stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
 
   gimp->main_loops              = NULL;
@@ -129,6 +130,7 @@ gimp_init (Gimp *gimp)
   gimp->gui_create_display_func = NULL;
   gimp->gui_set_busy_func       = NULL;
   gimp->gui_unset_busy_func     = NULL;
+  gimp->gui_message_func        = NULL;
 
   gimp->busy                    = 0;
   gimp->busy_idle_id            = 0;
@@ -583,6 +585,30 @@ gimp_unset_busy (Gimp *gimp)
       if (gimp->gui_unset_busy_func)
         gimp->gui_unset_busy_func (gimp);
     }
+}
+
+void
+gimp_message (Gimp        *gimp,
+              const gchar *message)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  switch (gimp->message_handler)
+    {
+    case GIMP_MESSAGE_BOX:
+    case GIMP_ERROR_CONSOLE:
+      if (gimp->gui_message_func)
+        {
+          gimp->gui_message_func (gimp, message);
+          return;
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  g_printerr ("%s: %s\n", GIMP_OBJECT (gimp)->name, message);
 }
 
 GimpImage *

@@ -61,7 +61,7 @@ struct _MessageBox
 static GList *message_boxes = NULL;
 
 void
-gimp_message_box (gchar       *message,
+gimp_message_box (const gchar *message,
 		  GtkCallback  callback,
 		  gpointer     data)
 {

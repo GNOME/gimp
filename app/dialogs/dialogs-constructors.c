@@ -177,7 +177,7 @@ dialogs_device_status_get (GimpDialogFactory *factory,
 			   GimpContext       *context,
                            gint               preview_size)
 {
-  return device_status_create ();
+  return device_status_create (context->gimp);
 }
 
 GtkWidget *
@@ -225,7 +225,7 @@ dialogs_input_devices_get (GimpDialogFactory *factory,
 			   GimpContext       *context,
                            gint               preview_size)
 {
-  return input_dialog_create ();
+  return input_dialog_create (context->gimp);
 }
 
 GtkWidget *
@@ -806,7 +806,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
   if (view)
     return NULL;
 
-  view = error_console_create ();
+  view = error_console_create (context->gimp);
 
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 

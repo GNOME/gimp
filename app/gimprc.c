@@ -2313,7 +2313,8 @@ parse_device (gpointer val1p,
     goto error;
   token = get_next_token ();
 
-  devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
+  devices_rc_update (the_gimp,
+                     name, values, mode, num_axes, axes, num_keys, keys,
 		     tool_name,
 		     &foreground,
 		     &background,

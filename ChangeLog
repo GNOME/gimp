@@ -1,3 +1,45 @@
+2001-12-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c
+	* app/appenv.h: moved "message_handler" from here...
+
+	* app/core/gimp.[ch]: ...to here. Added gimp_message() and a
+	"gui_message_func" pointer...
+
+	* app/gui/gui.c: ...which gets set here to gui_message().
+
+	* app/errors.c: don't include any gui stuff but simply call
+	gimp_message().
+
+	* app/app_procs.c: don't set "message_handler" here, it's done in
+	gui.c now.
+
+	* app/gui/error-console-dialog.[ch]: use gimp->message_handler.
+
+	* app/gui/dialogs-constructors.c: pass a Gimp pointer to
+	error_console_create().
+
+	* app/widgets/gimpwidgets-utils.[ch]: made the "message" parameter
+	of gimp_message_box() a const gchar*, not just gchar*.
+
+	* tools/pdbgen/pdb/message.pdb: use gimp->message_handler, don't
+	include "appenv.h".
+
+	* app/pdb/message_cmds.c: regenerated.
+
+	* app/devices.[ch]: cleanup before chopping: removed global
+	variable "current_device", added devices_get_current(), pass lots
+	of Gimp pointers around.
+
+	* app/gimprc.c: pass a Gimp pointer to devices_rc_update().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/toolbox.c
+	* app/tools/gimppainttool.c: use devices_get_current(), pass Gimp
+	pointers to all devices_foo() functions.
+
+	* app/core/gimpimage-mask.c: no need to include "pdb/pdb-types.h".
+
 2001-12-01  Daniel Egger  <degger@fhm.edu>
 
 	* app/core/Makefile.am
@@ -36,7 +78,7 @@
 
 	* tools/pdbgen/enumcode.pl: added a general check to prevent
 	enums which are defined in libgimp* from being written to
-	"libgimp/gimpenums.c".
+	"libgimp/gimpenums.h".
 
 	* libgimp/gimpenums.h
 	* plug-ins/script-fu/script-fu-constants.c
