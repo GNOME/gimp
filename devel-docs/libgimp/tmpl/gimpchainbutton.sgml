@@ -23,7 +23,7 @@ necessary.
 <!-- ##### SECTION See_Also ##### -->
 <para>
 You may want to use the convenience function gimp_coordinates_new() to set 
-up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainbutton.
+up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 </para>
 
 <!-- ##### STRUCT GimpChainButton ##### -->
@@ -35,7 +35,7 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainbutton.
 <!-- ##### MACRO GIMP_CHAIN_BUTTON ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpChainButton and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.

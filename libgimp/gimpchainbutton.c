@@ -134,9 +134,10 @@ gimp_chain_button_get_type (void)
  * @position: The position you are going to use for the button
  *            with respect to the widgets you want to chain.
  * 
- * Creates a new #GimpChainButton widget. This returns a button
- * showing either a broken or a linked chain and small clamps
- * attached to both sides that visually group the two widgets 
+ * Creates a new #GimpChainButton widget.
+ *
+ * This returns a button showing either a broken or a linked chain and
+ * small clamps attached to both sides that visually group the two widgets 
  * you want to connect. This widget looks best when attached
  * to a table taking up two columns (or rows respectively) next
  * to the widgets that it is supposed to connect. It may work

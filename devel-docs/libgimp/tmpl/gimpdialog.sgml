@@ -2,7 +2,8 @@
 gimpdialog
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Constructors for #GtkDialog's and action_areas as well as other
+dialog-related stuff.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

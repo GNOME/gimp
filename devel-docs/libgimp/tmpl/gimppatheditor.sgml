@@ -39,7 +39,7 @@ the search path, the "path_changed" signal will be emitted.
 <!-- ##### MACRO GIMP_PATH_EDITOR ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpPathEditor and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.

@@ -1,0 +1,122 @@
+<!-- ##### FUNCTION gimp_matrix_yshear ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@amount: 
+
+<!-- ##### FUNCTION gimp_matrix_identity ##### -->
+<para>
+
+</para>
+
+@matrix: 
+
+<!-- ##### FUNCTION gimp_matrix_determinant ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@Returns: 
+
+<!-- ##### FUNCTION gimp_matrix_mult ##### -->
+<para>
+
+</para>
+
+@matrix1: 
+@matrix2: 
+
+<!-- ##### FUNCTION gimp_matrix_is_identity ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@Returns: 
+
+<!-- ##### FUNCTION gimp_matrix_translate ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@x: 
+@y: 
+
+<!-- ##### FUNCTION gimp_matrix_duplicate ##### -->
+<para>
+
+</para>
+
+@src: 
+@target: 
+
+<!-- ##### FUNCTION gimp_matrix_scale ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@x: 
+@y: 
+
+<!-- ##### FUNCTION gimp_matrix_invert ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@matrix_inv: 
+
+<!-- ##### FUNCTION gimp_matrix_is_simple ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@Returns: 
+
+<!-- ##### FUNCTION gimp_matrix_transform_point ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@x: 
+@y: 
+@newx: 
+@newy: 
+
+<!-- ##### FUNCTION gimp_matrix_xshear ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@amount: 
+
+<!-- ##### FUNCTION gimp_matrix_rotate ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@theta: 
+
+<!-- ##### TYPEDEF GimpMatrix[3][3] ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_matrix_is_diagonal ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@Returns: 
+

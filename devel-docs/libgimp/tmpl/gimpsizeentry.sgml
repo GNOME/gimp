@@ -48,7 +48,7 @@ real-world-unit.
 <!-- ##### MACRO GIMP_SIZE_ENTRY ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpSizeEntry and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.

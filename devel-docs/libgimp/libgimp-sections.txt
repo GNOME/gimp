@@ -433,21 +433,52 @@ wire_write_string
 
 <SECTION>
 <FILE>gimpmatrix</FILE>
-GimpMatrix[3][3]
-gimp_matrix_transform_point
-gimp_matrix_mult
-gimp_matrix_identity
-gimp_matrix_translate
-gimp_matrix_scale
-gimp_matrix_rotate
-gimp_matrix_xshear
-gimp_matrix_yshear
-gimp_matrix_determinant
-gimp_matrix_invert
-gimp_matrix_duplicate
-gimp_matrix_is_diagonal
-gimp_matrix_is_identity
-gimp_matrix_is_simple
+GimpMatrix3[3][3]
+GimpMatrix4[4][4]
+gimp_matrix3_transform_point
+gimp_matrix3_mult
+gimp_matrix3_identity
+gimp_matrix3_translate
+gimp_matrix3_scale
+gimp_matrix3_rotate
+gimp_matrix3_xshear
+gimp_matrix3_yshear
+gimp_matrix3_determinant
+gimp_matrix3_invert
+gimp_matrix3_duplicate
+gimp_matrix3_is_diagonal
+gimp_matrix3_is_identity
+gimp_matrix3_is_simple
+gimp_matrix4_to_deg
+</SECTION>
+
+<SECTION>
+<FILE>gimpvector</FILE>
+GimpVector2
+GimpVector3
+GimpVector4
+gimp_vector2_set
+gimp_vector2_add
+gimp_vector2_sub
+gimp_vector2_neg
+gimp_vector2_mul
+gimp_vector2_inner_product
+gimp_vector2_cross_product
+gimp_vector2_normalize
+gimp_vector2_length
+gimp_vector2_rotate
+gimp_vector3_set
+gimp_vector3_add
+gimp_vector3_sub
+gimp_vector3_neg
+gimp_vector3_mul
+gimp_vector3_inner_product
+gimp_vector3_cross_product
+gimp_vector3_normalize
+gimp_vector3_length
+gimp_vector3_rotate
+gimp_vector_3d_to_2d
+gimp_vector_2d_to_3d
 </SECTION>
 
 <SECTION>
@@ -514,6 +545,8 @@ ROUND
 SQR
 MAX255
 CLAMP0255
+gimp_deg_to_rad
+gimp_rad_to_deg
 </SECTION>
 
 <SECTION>
@@ -610,8 +643,6 @@ GIMP_HAVE_NEW_ENUMS
 GIMP_HAVE_EXPORT
 </SECTION>
 
-
-
 <SECTION>
 <FILE>gimpchainbutton</FILE>
 GimpChainButton
@@ -635,6 +666,7 @@ GimpColorButton
 GIMP_COLOR_BUTTON
 <TITLE>GimpColorButton</TITLE>
 gimp_color_button_new
+gimp_color_button_double_new
 gimp_color_button_update
 <SUBSECTION Standard>
 GIMP_TYPE_COLOR_BUTTON
@@ -673,6 +705,20 @@ GIMP_IS_PATH_EDITOR
 gimp_path_editor_get_type
 GIMP_PATH_EDITOR_CLASS
 GIMP_IS_PATH_EDITOR_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimppixmap</FILE>
+GimpPixmap
+GIMP_PIXMAP
+<TITLE>GimpPixmap</TITLE>
+gimp_pixmap_new
+<SUBSECTION Standard>
+GIMP_TYPE_PIXMAP
+GIMP_IS_PIXMAP
+gimp_pixmap_get_type
+GIMP_PIXMAP_CLASS
+GIMP_IS_PIXMAP_CLASS
 </SECTION>
 
 <SECTION>
@@ -818,8 +864,14 @@ gimp_radio_group_new
 gimp_radio_group_new2
 gimp_spin_button_new
 gimp_scale_entry_new
+GIMP_SCALE_ENTRY_LABEL
+GIMP_SCALE_ENTRY_SCALE
+GIMP_SCALE_ENTRY_SCALE_ADJ
+GIMP_SCALE_ENTRY_SPINBUTTON
+GIMP_SCALE_ENTRY_SPINBUTTON_ADJ
 gimp_random_seed_new
 gimp_coordinates_new
+gimp_pixmap_button_new
 gimp_toggle_button_update
 gimp_menu_item_update
 gimp_radio_button_update

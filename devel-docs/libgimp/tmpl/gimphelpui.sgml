@@ -2,7 +2,8 @@
 gimphelpui
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for setting #GtkTooltips and HTML links into the GIMP help
+system.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -20,8 +21,6 @@ gimphelpui
 </para>
 
 @help_data: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### FUNCTION gimp_help_init ##### -->

@@ -40,7 +40,7 @@ will be emitted.
 <!-- ##### MACRO GIMP_FILE_SELECTION ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpFileSelection and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.

@@ -1,0 +1,40 @@
+<!-- ##### SECTION Title ##### -->
+GimpPixmap
+
+<!-- ##### SECTION Short_Description ##### -->
+Widget which creates a #GtkPixmap from XPM data.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+gimp_pixmap_button_new()
+</para>
+
+<!-- ##### STRUCT GimpPixmap ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_PIXMAP ##### -->
+<para>
+Checks if the passed pointer is a pointer to a #GimpPixmap and
+performs the cast if valid.
+</para>
+
+@obj: The pointer to cast.
+
+
+<!-- ##### FUNCTION gimp_pixmap_new ##### -->
+<para>
+
+</para>
+
+@xpm_data: 
+@Returns: 
+
+

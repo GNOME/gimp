@@ -18,13 +18,19 @@ basic matrix manipulations and tests.
 
 </para>
 
-<!-- ##### TYPEDEF GimpMatrix[3][3] ##### -->
+<!-- ##### TYPEDEF GimpMatrix3[3][3] ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### FUNCTION gimp_matrix_transform_point ##### -->
+<!-- ##### TYPEDEF GimpMatrix4[4][4] ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
 <para>
 
 </para>
@@ -36,7 +42,7 @@ basic matrix manipulations and tests.
 @newy: 
 
 
-<!-- ##### FUNCTION gimp_matrix_mult ##### -->
+<!-- ##### FUNCTION gimp_matrix3_mult ##### -->
 <para>
 
 </para>
@@ -45,7 +51,7 @@ basic matrix manipulations and tests.
 @matrix2: 
 
 
-<!-- ##### FUNCTION gimp_matrix_identity ##### -->
+<!-- ##### FUNCTION gimp_matrix3_identity ##### -->
 <para>
 
 </para>
@@ -53,17 +59,7 @@ basic matrix manipulations and tests.
 @matrix: 
 
 
-<!-- ##### FUNCTION gimp_matrix_translate ##### -->
-<para>
-
-</para>
-
-@matrix: 
-@x: 
-@y: 
-
-
-<!-- ##### FUNCTION gimp_matrix_scale ##### -->
+<!-- ##### FUNCTION gimp_matrix3_translate ##### -->
 <para>
 
 </para>
@@ -73,7 +69,17 @@ basic matrix manipulations and tests.
 @y: 
 
 
-<!-- ##### FUNCTION gimp_matrix_rotate ##### -->
+<!-- ##### FUNCTION gimp_matrix3_scale ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_matrix3_rotate ##### -->
 <para>
 
 </para>
@@ -82,7 +88,7 @@ basic matrix manipulations and tests.
 @theta: 
 
 
-<!-- ##### FUNCTION gimp_matrix_xshear ##### -->
+<!-- ##### FUNCTION gimp_matrix3_xshear ##### -->
 <para>
 
 </para>
@@ -91,7 +97,7 @@ basic matrix manipulations and tests.
 @amount: 
 
 
-<!-- ##### FUNCTION gimp_matrix_yshear ##### -->
+<!-- ##### FUNCTION gimp_matrix3_yshear ##### -->
 <para>
 
 </para>
@@ -100,7 +106,7 @@ basic matrix manipulations and tests.
 @amount: 
 
 
-<!-- ##### FUNCTION gimp_matrix_determinant ##### -->
+<!-- ##### FUNCTION gimp_matrix3_determinant ##### -->
 <para>
 
 </para>
@@ -109,7 +115,7 @@ basic matrix manipulations and tests.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_matrix_invert ##### -->
+<!-- ##### FUNCTION gimp_matrix3_invert ##### -->
 <para>
 
 </para>
@@ -118,7 +124,7 @@ basic matrix manipulations and tests.
 @matrix_inv: 
 
 
-<!-- ##### FUNCTION gimp_matrix_duplicate ##### -->
+<!-- ##### FUNCTION gimp_matrix3_duplicate ##### -->
 <para>
 
 </para>
@@ -127,7 +133,7 @@ basic matrix manipulations and tests.
 @target: 
 
 
-<!-- ##### FUNCTION gimp_matrix_is_diagonal ##### -->
+<!-- ##### FUNCTION gimp_matrix3_is_diagonal ##### -->
 <para>
 
 </para>
@@ -136,7 +142,7 @@ basic matrix manipulations and tests.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_matrix_is_identity ##### -->
+<!-- ##### FUNCTION gimp_matrix3_is_identity ##### -->
 <para>
 
 </para>
@@ -145,12 +151,23 @@ basic matrix manipulations and tests.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_matrix_is_simple ##### -->
+<!-- ##### FUNCTION gimp_matrix3_is_simple ##### -->
 <para>
 
 </para>
 
 @matrix: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_matrix4_to_deg ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@a: 
+@b: 
+@c: 
 
 

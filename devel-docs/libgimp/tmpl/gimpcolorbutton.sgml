@@ -33,13 +33,26 @@ Note that the color is changed in place.
 <!-- ##### MACRO GIMP_COLOR_BUTTON ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpColorButton and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.
 
 
 <!-- ##### FUNCTION gimp_color_button_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@width: 
+@height: 
+@color: 
+@bpp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_button_double_new ##### -->
 <para>
 
 </para>

@@ -22,6 +22,7 @@
 <!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
 <!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
 <!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
+<!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
 <!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
 <!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
 <!entity libgimp-gimpdialog SYSTEM "sgml/gimpdialog.sgml">
@@ -29,6 +30,7 @@
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity libgimp-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
+<!entity libgimp-gimpvector SYSTEM "sgml/gimpvector.sgml">
 <!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
 ]>
 <book>
@@ -52,6 +54,7 @@
     &libgimp-gimpenv;
     &libgimp-gimpmatrix;
     &libgimp-gimpprotocol;
+    &libgimp-gimpvector;
     &libgimp-gimpwire;
     &libgimp-parasite;
     &libgimp-parasiteio;
@@ -65,6 +68,7 @@
     &GimpColorButton; 
     &GimpFileSelection;
     &GimpPathEditor;
+    &GimpPixmap;
     &GimpSizeEntry;
     &GimpUnitMenu;
     &libgimp-gimpdialog;
@@ -83,9 +87,3 @@
     &libgimp-color-selector;
   </chapter>
 </book>
-
-
-
-
-
-

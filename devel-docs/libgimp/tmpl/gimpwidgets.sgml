@@ -2,7 +2,8 @@
 gimpwidgets
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A collection of convenient widget constructors, standard callbacks and
+helper functions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -113,6 +114,46 @@ gimpwidgets
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_SCALE_ENTRY_LABEL ##### -->
+<para>
+
+</para>
+
+@adj: 
+
+
+<!-- ##### MACRO GIMP_SCALE_ENTRY_SCALE ##### -->
+<para>
+
+</para>
+
+@adj: 
+
+
+<!-- ##### MACRO GIMP_SCALE_ENTRY_SCALE_ADJ ##### -->
+<para>
+
+</para>
+
+@adj: 
+
+
+<!-- ##### MACRO GIMP_SCALE_ENTRY_SPINBUTTON ##### -->
+<para>
+
+</para>
+
+@adj: 
+
+
+<!-- ##### MACRO GIMP_SCALE_ENTRY_SPINBUTTON_ADJ ##### -->
+<para>
+
+</para>
+
+@adj: 
+
+
 <!-- ##### FUNCTION gimp_random_seed_new ##### -->
 <para>
 
@@ -155,6 +196,15 @@ gimpwidgets
 @upper_boundary_y: 
 @ysize_0: 
 @ysize_100: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pixmap_button_new ##### -->
+<para>
+
+</para>
+
+@xpm_data: 
 @Returns: 
 
 

@@ -1,0 +1,262 @@
+<!-- ##### SECTION Title ##### -->
+gimpvector
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpVector2 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+<!-- ##### STRUCT GimpVector3 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+
+<!-- ##### STRUCT GimpVector4 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+@w: 
+
+<!-- ##### FUNCTION gimp_vector2_set ##### -->
+<para>
+
+</para>
+
+@vector: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_vector2_add ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector2_sub ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector2_neg ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector2_mul ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_vector2_inner_product ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_cross_product ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_normalize ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector2_length ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector2_rotate ##### -->
+<para>
+
+</para>
+
+@vector: 
+@alpha: 
+
+
+<!-- ##### FUNCTION gimp_vector3_set ##### -->
+<para>
+
+</para>
+
+@vector: 
+@x: 
+@y: 
+@z: 
+
+
+<!-- ##### FUNCTION gimp_vector3_add ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector3_sub ##### -->
+<para>
+
+</para>
+
+@result: 
+@vector1: 
+@vector2: 
+
+
+<!-- ##### FUNCTION gimp_vector3_neg ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector3_mul ##### -->
+<para>
+
+</para>
+
+@vector: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_vector3_inner_product ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_cross_product ##### -->
+<para>
+
+</para>
+
+@vector1: 
+@vector2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_normalize ##### -->
+<para>
+
+</para>
+
+@vector: 
+
+
+<!-- ##### FUNCTION gimp_vector3_length ##### -->
+<para>
+
+</para>
+
+@vector: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vector3_rotate ##### -->
+<para>
+
+</para>
+
+@vector: 
+@alpha: 
+@beta: 
+@gamma: 
+
+
+<!-- ##### FUNCTION gimp_vector_3d_to_2d ##### -->
+<para>
+
+</para>
+
+@sx: 
+@sy: 
+@w: 
+@h: 
+@x: 
+@y: 
+@vp: 
+@p: 
+
+
+<!-- ##### FUNCTION gimp_vector_2d_to_3d ##### -->
+<para>
+
+</para>
+
+@sx: 
+@sy: 
+@w: 
+@h: 
+@x: 
+@y: 
+@vp: 
+@p: 
+
+

@@ -39,7 +39,7 @@ Whenever the user selects a unit from the menu or the dialog, the
 <!-- ##### MACRO GIMP_UNIT_MENU ##### -->
 <para>
 Checks if the passed pointer is a pointer to a #GimpUnitMenu and
-performes the cast if valid.
+performs the cast if valid.
 </para>
 
 @obj: The pointer to cast.

@@ -35,12 +35,14 @@ tmpl_sources = 				\
 	tmpl/gimpmenu.sgml		\
 	tmpl/gimpmodule.sgml		\
 	tmpl/gimppatheditor.sgml	\
+	tmpl/gimppixmap.sgml		\
 	tmpl/gimpprotocol.sgml		\
 	tmpl/gimpquerybox.sgml		\
 	tmpl/gimpsizeentry.sgml		\
 	tmpl/gimpui.sgml		\
 	tmpl/gimpunit.sgml		\
 	tmpl/gimpunitmenu.sgml		\
+	tmpl/gimpvector.sgml		\
 	tmpl/gimpwidgets.sgml		\
 	tmpl/gimpwire.sgml		\
 	tmpl/libgimp-unused.sgml	\
