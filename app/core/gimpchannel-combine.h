@@ -132,13 +132,13 @@ void            gimp_channel_sub_segment       (GimpChannel       *mask,
 						gint               width,
 						gint               value);
 void            gimp_channel_combine_rect      (GimpChannel       *mask,
-						ChannelOps         op,
+						GimpChannelOps     op,
 						gint               x,
 						gint               y,
 						gint               w,
 						gint               h);
 void            gimp_channel_combine_ellipse   (GimpChannel       *mask,
-						ChannelOps         op,
+						GimpChannelOps     op,
 						gint               x,
 						gint               y,
 						gint               w,
@@ -146,7 +146,7 @@ void            gimp_channel_combine_ellipse   (GimpChannel       *mask,
 						gboolean           antialias);
 void            gimp_channel_combine_mask      (GimpChannel       *mask,
 						GimpChannel       *add_on,
-						ChannelOps         op,
+						GimpChannelOps     op,
 						gint               off_x,
 						gint               off_y);
 

@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-types.h"
+#include "core/core-enums.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask.h"
@@ -1014,7 +1014,7 @@ selection_combine_invoker (Gimp     *gimp,
     success = FALSE;
 
   operation = args[1].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   if (success)
@@ -1051,7 +1051,7 @@ static ProcArg selection_combine_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   }
 };
 

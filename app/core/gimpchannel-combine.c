@@ -827,12 +827,12 @@ gimp_channel_sub_segment (GimpChannel *mask,
 }
 
 void
-gimp_channel_combine_rect (GimpChannel *mask,
-			   ChannelOps   op,
-			   gint         x,
-			   gint         y,
-			   gint         w,
-			   gint         h)
+gimp_channel_combine_rect (GimpChannel    *mask,
+			   GimpChannelOps  op,
+			   gint            x,
+			   gint            y,
+			   gint            w,
+			   gint            h)
 {
   gint        x2, y2;
   PixelRegion maskPR;
@@ -853,14 +853,16 @@ gimp_channel_combine_rect (GimpChannel *mask,
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     x, y, x2 - x, y2 - y, TRUE);
-  if (op == CHANNEL_OP_ADD  || op == CHANNEL_OP_REPLACE)
+
+  if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
     color = 255;
   else
     color = 0;
+
   color_region (&maskPR, &color);
 
   /*  Determine new boundary  */
-  if (mask->bounds_known && (op == CHANNEL_OP_ADD) && !mask->empty)
+  if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
 	mask->x1 = x;
@@ -871,7 +873,7 @@ gimp_channel_combine_rect (GimpChannel *mask,
       if ((y + h) > mask->y2)
 	mask->y2 = (y + h);
     }
-  else if (op == CHANNEL_OP_REPLACE || mask->empty)
+  else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
       mask->x1 = x;
@@ -889,13 +891,13 @@ gimp_channel_combine_rect (GimpChannel *mask,
 }
 
 void
-gimp_channel_combine_ellipse (GimpChannel *mask,
-			      ChannelOps   op,
-			      gint         x,
-			      gint         y,
-			      gint         w,
-			      gint         h,
-			      gboolean     antialias)
+gimp_channel_combine_ellipse (GimpChannel    *mask,
+			      GimpChannelOps  op,
+			      gint            x,
+			      gint            y,
+			      gint            w,
+			      gint            h,
+			      gboolean        antialias)
 {
   gint   i, j;
   gint   x0, x1, x2;
@@ -935,11 +937,11 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 
 	      switch (op)
 		{
-		case CHANNEL_OP_ADD:
-		case CHANNEL_OP_REPLACE:
+		case GIMP_CHANNEL_OP_ADD:
+		case GIMP_CHANNEL_OP_REPLACE:
 		  gimp_channel_add_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
-		case CHANNEL_OP_SUBTRACT:
+		case GIMP_CHANNEL_OP_SUBTRACT:
 		  gimp_channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
 		default:
@@ -979,11 +981,11 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 		    {
 		      switch (op)
 			{
-			case CHANNEL_OP_ADD:
-			case CHANNEL_OP_REPLACE:
+			case GIMP_CHANNEL_OP_ADD:
+			case GIMP_CHANNEL_OP_REPLACE:
 			  gimp_channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
-			case CHANNEL_OP_SUBTRACT:
+			case GIMP_CHANNEL_OP_SUBTRACT:
 			  gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
 			default:
@@ -1005,12 +1007,19 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 
 	      if (last)
 		{
-		  if (op == CHANNEL_OP_ADD || op == CHANNEL_OP_REPLACE)
-		    gimp_channel_add_segment (mask, x0, i, j - x0, last);
-		  else if (op == CHANNEL_OP_SUBTRACT)
-		    gimp_channel_sub_segment (mask, x0, i, j - x0, last);
-		  else
-		    g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
+                  switch (op)
+                    {
+                    case GIMP_CHANNEL_OP_ADD:
+                    case GIMP_CHANNEL_OP_REPLACE:
+                      gimp_channel_add_segment (mask, x0, i, j - x0, last);
+                      break;
+                    case GIMP_CHANNEL_OP_SUBTRACT:
+                      gimp_channel_sub_segment (mask, x0, i, j - x0, last);
+                      break;
+                    default:
+                      g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
+                      break;
+                    }
 		}
 	    }
 
@@ -1018,7 +1027,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
     }
 
   /*  Determine new boundary  */
-  if (mask->bounds_known && (op == CHANNEL_OP_ADD) && !mask->empty)
+  if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
 	mask->x1 = x;
@@ -1029,7 +1038,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
       if ((y + h) > mask->y2)
 	mask->y2 = (y + h);
     }
-  else if (op == CHANNEL_OP_REPLACE || mask->empty)
+  else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
       mask->empty = FALSE;
       mask->x1 = x;
@@ -1120,11 +1129,11 @@ gimp_channel_combine_sub_region_intersect (gpointer     unused,
 }
 
 void
-gimp_channel_combine_mask (GimpChannel *mask,
-			   GimpChannel *add_on,
-			   ChannelOps   op,
-			   gint         off_x,
-			   gint         off_y)
+gimp_channel_combine_mask (GimpChannel    *mask,
+			   GimpChannel    *add_on,
+			   GimpChannelOps  op,
+			   gint            off_x,
+			   gint            off_y)
 {
   PixelRegion srcPR, destPR;
   gint        x1, y1, x2, y2;
@@ -1149,18 +1158,18 @@ gimp_channel_combine_mask (GimpChannel *mask,
 
   switch (op)
     {
-    case CHANNEL_OP_ADD:
-    case CHANNEL_OP_REPLACE:
+    case GIMP_CHANNEL_OP_ADD:
+    case GIMP_CHANNEL_OP_REPLACE:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_add,
 				      NULL, 2, &srcPR, &destPR);
       break;
-    case CHANNEL_OP_SUBTRACT:
+    case GIMP_CHANNEL_OP_SUBTRACT:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_sub,
 				      NULL, 2, &srcPR, &destPR);
       break;
-    case CHANNEL_OP_INTERSECT:
+    case GIMP_CHANNEL_OP_INTERSECT:
       pixel_regions_process_parallel ((p_func)
 				      gimp_channel_combine_sub_region_intersect,
 				      NULL, 2, &srcPR, &destPR);

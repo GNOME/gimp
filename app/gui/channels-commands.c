@@ -133,9 +133,9 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
 }
 
 static void
-channels_channel_to_sel (GtkWidget  *widget,
-                         gpointer    data,
-                         ChannelOps  op)
+channels_channel_to_sel (GtkWidget      *widget,
+                         gpointer        data,
+                         GimpChannelOps  op)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -153,28 +153,28 @@ void
 channels_channel_to_sel_cmd_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  channels_channel_to_sel (widget, data, CHANNEL_OP_REPLACE);
+  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_REPLACE);
 }
 
 void
 channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 					  gpointer   data)
 {
-  channels_channel_to_sel (widget, data, CHANNEL_OP_ADD);
+  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_ADD);
 }
 
 void
 channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 					    gpointer   data)
 {
-  channels_channel_to_sel (widget, data, CHANNEL_OP_SUBTRACT);
+  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
 }
 
 void
 channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 						  gpointer   data)
 {
-  channels_channel_to_sel (widget, data, CHANNEL_OP_INTERSECT);
+  channels_channel_to_sel (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void

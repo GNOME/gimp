@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-types.h"
+#include "core/core-enums.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
@@ -77,7 +77,7 @@ by_color_select_invoker (Gimp     *gimp,
     success = FALSE;
 
   operation = args[3].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   antialias = args[4].value.pdb_int ? TRUE : FALSE;
@@ -127,7 +127,7 @@ static ProcArg by_color_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -199,7 +199,7 @@ ellipse_select_invoker (Gimp     *gimp,
     success = FALSE;
 
   operation = args[5].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   antialias = args[6].value.pdb_int ? TRUE : FALSE;
@@ -251,7 +251,7 @@ static ProcArg ellipse_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -312,7 +312,7 @@ free_select_invoker (Gimp     *gimp,
   segs = (gdouble *) args[2].value.pdb_pointer;
 
   operation = args[3].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   antialias = args[4].value.pdb_int ? TRUE : FALSE;
@@ -354,7 +354,7 @@ static ProcArg free_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -418,7 +418,7 @@ fuzzy_select_invoker (Gimp     *gimp,
     success = FALSE;
 
   operation = args[4].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   antialias = args[5].value.pdb_int ? TRUE : FALSE;
@@ -474,7 +474,7 @@ static ProcArg fuzzy_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -546,7 +546,7 @@ rect_select_invoker (Gimp     *gimp,
     success = FALSE;
 
   operation = args[5].value.pdb_int;
-  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+  if (operation < GIMP_CHANNEL_OP_ADD || operation > GIMP_CHANNEL_OP_INTERSECT)
     success = FALSE;
 
   feather = args[6].value.pdb_int ? TRUE : FALSE;
@@ -595,7 +595,7 @@ static ProcArg rect_select_inargs[] =
   {
     GIMP_PDB_INT32,
     "operation",
-    "The selection operation: { CHANNEL_OP_ADD (0), CHANNEL_OP_SUBTRACT (1), CHANNEL_OP_REPLACE (2), CHANNEL_OP_INTERSECT (3) }"
+    "The selection operation: { GIMP_CHANNEL_OP_ADD (0), GIMP_CHANNEL_OP_SUBTRACT (1), GIMP_CHANNEL_OP_REPLACE (2), GIMP_CHANNEL_OP_INTERSECT (3) }"
   },
   {
     GIMP_PDB_INT32,

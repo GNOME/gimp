@@ -137,9 +137,9 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
 }
 
 static void
-vectors_vectors_to_sel (GtkWidget  *widget,
-                        gpointer    data,
-                        ChannelOps  op)
+vectors_vectors_to_sel (GtkWidget      *widget,
+                        gpointer        data,
+                        GimpChannelOps  op)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -157,28 +157,28 @@ void
 vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, CHANNEL_OP_REPLACE);
+  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_REPLACE);
 }
 
 void
 vectors_add_vectors_to_sel_cmd_callback (GtkWidget *widget,
                                          gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, CHANNEL_OP_ADD);
+  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_ADD);
 }
 
 void
 vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
                                            gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, CHANNEL_OP_SUBTRACT);
+  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
 }
 
 void
 vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget *widget,
                                                  gpointer   data)
 {
-  vectors_vectors_to_sel (widget, data, CHANNEL_OP_INTERSECT);
+  vectors_vectors_to_sel (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void

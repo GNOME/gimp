@@ -165,6 +165,14 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_CHANNEL_OP_ADD,
+  GIMP_CHANNEL_OP_SUBTRACT,
+  GIMP_CHANNEL_OP_REPLACE,
+  GIMP_CHANNEL_OP_INTERSECT
+} GimpChannelOps;
+
+typedef enum  /*< skip >*/
+{
   GIMP_MAKE_PALETTE,
   GIMP_REUSE_PALETTE,
   GIMP_WEB_PALETTE,

@@ -33,14 +33,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_CHANNEL_OP_ADD,
-  GIMP_CHANNEL_OP_SUBTRACT,
-  GIMP_CHANNEL_OP_REPLACE,
-  GIMP_CHANNEL_OP_INTERSECT
-} GimpChannelOps;
-
-typedef enum
-{
   GIMP_IMAGE_CLONE,
   GIMP_PATTERN_CLONE
 } GimpCloneType;
@@ -92,6 +84,14 @@ typedef enum
   GIMP_BLUE_LUT,
   GIMP_ALPHA_LUT
 } GimpChannelLutType;
+
+typedef enum
+{
+  GIMP_CHANNEL_OP_ADD,
+  GIMP_CHANNEL_OP_SUBTRACT,
+  GIMP_CHANNEL_OP_REPLACE,
+  GIMP_CHANNEL_OP_INTERSECT
+} GimpChannelOps;
 
 typedef enum
 {

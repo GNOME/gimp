@@ -25,7 +25,7 @@ sub channel_arg () {{
 
 sub operation_arg () {{
     name => 'operation',
-    type => 'enum ChannelOps',
+    type => 'enum GimpChannelOps',
     desc => 'The selection operation: { %%desc%% }'
 }}
 

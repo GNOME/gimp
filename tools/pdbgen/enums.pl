@@ -169,16 +169,6 @@ package Gimp::CodeGen::enums;
 		       VERTICAL => '1',
 		       UNKNOWN => '2' }
 	},
-    ChannelOps =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(CHANNEL_OP_ADD CHANNEL_OP_SUBTRACT
-			  CHANNEL_OP_REPLACE CHANNEL_OP_INTERSECT) ],
-	  mapping => { CHANNEL_OP_ADD => '0',
-		       CHANNEL_OP_SUBTRACT => '1',
-		       CHANNEL_OP_REPLACE => '2',
-		       CHANNEL_OP_INTERSECT => '3' }
-	},
     GimpOffsetType =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
@@ -264,6 +254,16 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_FG_BUCKET_FILL => '0',
 		       GIMP_BG_BUCKET_FILL => '1',
 		       GIMP_PATTERN_BUCKET_FILL => '2' }
+	},
+    GimpChannelOps =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_CHANNEL_OP_ADD GIMP_CHANNEL_OP_SUBTRACT
+			  GIMP_CHANNEL_OP_REPLACE GIMP_CHANNEL_OP_INTERSECT) ],
+	  mapping => { GIMP_CHANNEL_OP_ADD => '0',
+		       GIMP_CHANNEL_OP_SUBTRACT => '1',
+		       GIMP_CHANNEL_OP_REPLACE => '2',
+		       GIMP_CHANNEL_OP_INTERSECT => '3' }
 	},
     GimpConvertPaletteType =>
 	{ contig => 1,

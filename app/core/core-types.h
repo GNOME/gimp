@@ -50,15 +50,6 @@ typedef enum /*< pdb-skip >*/
   ORIENTATION_VERTICAL
 } InternalOrientationType;
 
-/*  Selection Boolean operations  */
-typedef enum
-{
-  CHANNEL_OP_ADD,
-  CHANNEL_OP_SUBTRACT,
-  CHANNEL_OP_REPLACE,
-  CHANNEL_OP_INTERSECT
-} ChannelOps;
-
 typedef enum
 {
   OFFSET_BACKGROUND,

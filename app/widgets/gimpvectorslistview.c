@@ -60,7 +60,7 @@ static void   gimp_vectors_list_view_select_item    (GimpContainerView   *view,
 						     gpointer             insert_data);
 static void   gimp_vectors_list_view_to_selection   (GimpVectorsListView *view,
 						     GimpVectors         *vectors,
-						     ChannelOps           operation);
+						     GimpChannelOps       operation);
 static void   gimp_vectors_list_view_toselection_clicked
                                                     (GtkWidget           *widget,
 						     GimpVectorsListView *view);
@@ -189,7 +189,7 @@ gimp_vectors_list_view_select_item (GimpContainerView *view,
 static void
 gimp_vectors_list_view_to_selection (GimpVectorsListView *view,
 				     GimpVectors         *vectors,
-				     ChannelOps           operation)
+				     GimpChannelOps       operation)
 {
   if (vectors)
     {
@@ -224,18 +224,18 @@ gimp_vectors_list_view_toselection_extended_clicked (GtkWidget           *widget
 
   if (viewable)
     {
-      ChannelOps operation = CHANNEL_OP_REPLACE;
+      GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
 
       if (state & GDK_SHIFT_MASK)
 	{
 	  if (state & GDK_CONTROL_MASK)
-	    operation = CHANNEL_OP_INTERSECT;
+	    operation = GIMP_CHANNEL_OP_INTERSECT;
 	  else
-	    operation = CHANNEL_OP_ADD;
+	    operation = GIMP_CHANNEL_OP_ADD;
 	}
       else if (state & GDK_CONTROL_MASK)
 	{
-	  operation = CHANNEL_OP_SUBTRACT;
+	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
       gimp_vectors_list_view_to_selection (view, GIMP_VECTORS (viewable),

@@ -27,11 +27,6 @@ init_generated_constants (void)
   setvar (cintern ("SOFT"), flocons (1), NIL);
   setvar (cintern ("PRESSURE"), flocons (2), NIL);
 
-  setvar (cintern ("CHANNEL-OP-ADD"), flocons (0), NIL);
-  setvar (cintern ("CHANNEL-OP-SUBTRACT"), flocons (1), NIL);
-  setvar (cintern ("CHANNEL-OP-REPLACE"), flocons (2), NIL);
-  setvar (cintern ("CHANNEL-OP-INTERSECT"), flocons (3), NIL);
-
   setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
   setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
 
@@ -64,6 +59,11 @@ init_generated_constants (void)
   setvar (cintern ("GREEN-LUT"), flocons (2), NIL);
   setvar (cintern ("BLUE-LUT"), flocons (3), NIL);
   setvar (cintern ("ALPHA-LUT"), flocons (4), NIL);
+
+  setvar (cintern ("CHANNEL-OP-ADD"), flocons (0), NIL);
+  setvar (cintern ("CHANNEL-OP-SUBTRACT"), flocons (1), NIL);
+  setvar (cintern ("CHANNEL-OP-REPLACE"), flocons (2), NIL);
+  setvar (cintern ("CHANNEL-OP-INTERSECT"), flocons (3), NIL);
 
   setvar (cintern ("RED-CHANNEL"), flocons (0), NIL);
   setvar (cintern ("GREEN-CHANNEL"), flocons (1), NIL);

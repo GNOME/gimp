@@ -34,20 +34,20 @@
 
 
 void
-gimp_image_mask_select_rectangle (GimpImage  *gimage,
-                                  gint        x,
-                                  gint        y,
-                                  gint        w,
-                                  gint        h,
-                                  ChannelOps  op,
-                                  gboolean    feather,
-                                  gdouble     feather_radius_x,
-                                  gdouble     feather_radius_y)
+gimp_image_mask_select_rectangle (GimpImage      *gimage,
+                                  gint            x,
+                                  gint            y,
+                                  gint            w,
+                                  gint            h,
+                                  GimpChannelOps  op,
+                                  gboolean        feather,
+                                  gdouble         feather_radius_x,
+                                  gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  if applicable, replace the current selection  */
-  if (op == CHANNEL_OP_REPLACE)
+  if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
     gimp_image_mask_undo (gimage);
@@ -55,12 +55,12 @@ gimp_image_mask_select_rectangle (GimpImage  *gimage,
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == CHANNEL_OP_INTERSECT)
+  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {
       GimpChannel *mask;
 
       mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_rect (mask, CHANNEL_OP_ADD, x, y, w, h);
+      gimp_channel_combine_rect (mask, GIMP_CHANNEL_OP_ADD, x, y, w, h);
 
       if (feather)
         gimp_channel_feather (mask,
@@ -78,21 +78,21 @@ gimp_image_mask_select_rectangle (GimpImage  *gimage,
 }
 
 void
-gimp_image_mask_select_ellipse (GimpImage  *gimage,
-                                gint        x,
-                                gint        y,
-                                gint        w,
-                                gint        h,
-                                ChannelOps  op,
-                                gboolean    antialias,
-                                gboolean    feather,
-                                gdouble     feather_radius_x,
-                                gdouble     feather_radius_y)
+gimp_image_mask_select_ellipse (GimpImage      *gimage,
+                                gint            x,
+                                gint            y,
+                                gint            w,
+                                gint            h,
+                                GimpChannelOps  op,
+                                gboolean        antialias,
+                                gboolean        feather,
+                                gdouble         feather_radius_x,
+                                gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  if applicable, replace the current selection  */
-  if (op == CHANNEL_OP_REPLACE)
+  if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
     gimp_image_mask_undo (gimage);
@@ -100,12 +100,13 @@ gimp_image_mask_select_ellipse (GimpImage  *gimage,
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == CHANNEL_OP_INTERSECT)
+  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {
       GimpChannel *mask;
 
       mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_ellipse (mask, CHANNEL_OP_ADD, x, y, w, h, antialias);
+      gimp_channel_combine_ellipse (mask, GIMP_CHANNEL_OP_ADD, 
+                                    x, y, w, h, antialias);
 
       if (feather)
         gimp_channel_feather (mask,
@@ -124,14 +125,14 @@ gimp_image_mask_select_ellipse (GimpImage  *gimage,
 }
 
 void
-gimp_image_mask_select_polygon (GimpImage   *gimage,
-                                gint         n_points,
-                                GimpVector2 *points,
-                                ChannelOps   op,
-                                gboolean     antialias,
-                                gboolean     feather,
-                                gdouble      feather_radius_x,
-                                gdouble      feather_radius_y)
+gimp_image_mask_select_polygon (GimpImage       *gimage,
+                                gint             n_points,
+                                GimpVector2     *points,
+                                GimpChannelOps   op,
+                                gboolean         antialias,
+                                gboolean         feather,
+                                gdouble          feather_radius_x,
+                                gdouble          feather_radius_y)
 {
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
@@ -141,7 +142,7 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
   /*  if applicable, replace the current selection
    *  or insure that a floating selection is anchored down...
    */
-  if (op == CHANNEL_OP_REPLACE)
+  if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
     gimp_image_mask_undo (gimage);
@@ -173,13 +174,13 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
 }
 
 void
-gimp_image_mask_select_vectors (GimpImage     *gimage,
-                                GimpVectors   *vectors,
-                                ChannelOps     op,
-                                gboolean       antialias,
-                                gboolean       feather,
-                                gdouble        feather_radius_x,
-                                gdouble        feather_radius_y)
+gimp_image_mask_select_vectors (GimpImage      *gimage,
+                                GimpVectors    *vectors,
+                                GimpChannelOps  op,
+                                gboolean        antialias,
+                                gboolean        feather,
+                                gdouble         feather_radius_x,
+                                gdouble         feather_radius_y)
 {
   GimpStroke *stroke;
   GimpCoords *coords = NULL;
@@ -230,20 +231,20 @@ gimp_image_mask_select_vectors (GimpImage     *gimage,
 }
 
 void
-gimp_image_mask_select_channel (GimpImage    *gimage,
-                                GimpChannel  *channel,
-                                gint          offset_x,
-                                gint          offset_y,
-                                ChannelOps    op, 
-                                gboolean      feather,
-                                gdouble       feather_radius_x,
-                                gdouble       feather_radius_y)
+gimp_image_mask_select_channel (GimpImage      *gimage,
+                                GimpChannel    *channel,
+                                gint            offset_x,
+                                gint            offset_y,
+                                GimpChannelOps  op, 
+                                gboolean        feather,
+                                gdouble         feather_radius_x,
+                                gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   /*  if applicable, replace the current selection  */
-  if (op == CHANNEL_OP_REPLACE)
+  if (op == GIMP_CHANNEL_OP_REPLACE)
     gimp_image_mask_clear (gimage);
   else
     gimp_image_mask_undo (gimage);
@@ -259,18 +260,18 @@ gimp_image_mask_select_channel (GimpImage    *gimage,
 }
 
 void
-gimp_image_mask_select_fuzzy (GimpImage    *gimage,
-                              GimpDrawable *drawable,
-                              gboolean      sample_merged,
-                              gint          x,
-                              gint          y,
-                              gint          threshold,
-                              gboolean      select_transparent,
-                              ChannelOps    op,
-                              gboolean      antialias,
-                              gboolean      feather,
-                              gdouble       feather_radius_x,
-                              gdouble       feather_radius_y)
+gimp_image_mask_select_fuzzy (GimpImage      *gimage,
+                              GimpDrawable   *drawable,
+                              gboolean        sample_merged,
+                              gint            x,
+                              gint            y,
+                              gint            threshold,
+                              gboolean        select_transparent,
+                              GimpChannelOps  op,
+                              gboolean        antialias,
+                              gboolean        feather,
+                              gdouble         feather_radius_x,
+                              gdouble         feather_radius_y)
 {
   GimpChannel *mask;
   gint         mask_x;
@@ -309,17 +310,17 @@ gimp_image_mask_select_fuzzy (GimpImage    *gimage,
 }
 
 void
-gimp_image_mask_select_by_color (GimpImage     *gimage,
-                                 GimpDrawable  *drawable,
-                                 gboolean       sample_merged,
-                                 const GimpRGB *color,
-                                 gint           threshold,
-                                 gboolean       select_transparent,
-                                 ChannelOps     op,
-                                 gboolean       antialias,
-                                 gboolean       feather,
-                                 gdouble        feather_radius_x,
-                                 gdouble        feather_radius_y)
+gimp_image_mask_select_by_color (GimpImage      *gimage,
+                                 GimpDrawable   *drawable,
+                                 gboolean        sample_merged,
+                                 const GimpRGB  *color,
+                                 gint            threshold,
+                                 gboolean        select_transparent,
+                                 GimpChannelOps  op,
+                                 gboolean        antialias,
+                                 gboolean        feather,
+                                 gdouble         feather_radius_x,
+                                 gdouble         feather_radius_y)
 {
   GimpChannel *mask;
   gint         mask_x;

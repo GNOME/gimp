@@ -203,7 +203,7 @@ static gboolean   test_add_point_on_segment     (GimpBezierSelectTool  *bezier_s
 static void       bezier_to_sel_internal        (GimpBezierSelectTool     *bezier_sel,
 						 GimpTool         *tool,
 						 GimpDisplay      *gdisp,
-						 ChannelOps        op);
+						 GimpChannelOps    op);
 static void       bezier_stack_points_aux       (GdkPoint         *points,
 						 gint              start,
 						 gint              end,
@@ -658,19 +658,19 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 	{
 	  if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
             {
-              op = CHANNEL_OP_INTERSECT;
+              op = GIMP_CHANNEL_OP_INTERSECT;
             }
 	  else if (state & GDK_SHIFT_MASK)
             {
-              op = CHANNEL_OP_ADD;
+              op = GIMP_CHANNEL_OP_ADD;
             }
 	  else if (state & GDK_CONTROL_MASK)
             {
-              op = CHANNEL_OP_SUBTRACT;
+              op = GIMP_CHANNEL_OP_SUBTRACT;
             }
 	  else
             {
-              op = CHANNEL_OP_REPLACE;
+              op = GIMP_CHANNEL_OP_REPLACE;
             }
 
 	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op);
@@ -2889,7 +2889,7 @@ static void
 bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
                         GimpTool             *tool,
                         GimpDisplay          *gdisp,
-                        ChannelOps            op)
+                        GimpChannelOps        op)
 {
   SelectionOptions *sel_options;
 
@@ -3178,7 +3178,7 @@ bezier_to_selection (GimpBezierSelectTool *bezier_sel,
    */
   bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
   bezier_to_sel_internal (curSel, (GimpTool *) curTool, gdisp,
-                          CHANNEL_OP_REPLACE);
+                          GIMP_CHANNEL_OP_REPLACE);
 }
 
 /* check whether vectors (offx, offy), (l_offx, l_offy) have the same angle. */
