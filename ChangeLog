@@ -1,5 +1,9 @@
 2002-11-18  Sven Neumann  <neo@wintermute>
 
+	* app/config/gimpconfig-deserialize.c
+	(gimp_config_deserialize_properties): improved error message for
+	the special case of store_unknown_tokens == TRUE.
+
 	* app/config/gimpconfig.c (gimp_config_add_unknown_token): try to
 	substitute paths of the form ${foo} in the unknown token value.
 

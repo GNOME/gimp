@@ -183,6 +183,17 @@ gimp_config_deserialize_properties (GObject   *object,
 
   g_scanner_set_scope (scanner, old_scope_id);
 
+  /* If store_unknown_tokens is TRUE but the unknown token value couldn't
+     be parsed the default error message is rather confusing.
+     We try to produce something more meaningful here ... */
+  if ((store_unknown_tokens &&
+       token == G_TOKEN_STRING && next == G_TOKEN_IDENTIFIER))
+    {
+      g_scanner_unexp_token (scanner, G_TOKEN_SYMBOL, NULL, NULL, NULL,
+			     _("fatal parse error"), TRUE);
+      return FALSE;
+    }
+  
   return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
