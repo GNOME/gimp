@@ -1,5 +1,10 @@
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-dialog-utils.[ch]: renamed parameters and removed
+	useless #includes.
+
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpfiledialog.[ch]: new widget swallowing most

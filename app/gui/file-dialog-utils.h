@@ -20,9 +20,9 @@
 #define __FILE_DIALOG_UTILS_H__
 
 
-void        file_dialog_show        (GtkWidget         *filesel,
-                                     GtkWidget         *parent);
-void        file_dialog_hide        (GtkWidget         *filesel);
+void   file_dialog_show (GtkWidget *dialog,
+                         GtkWidget *parent);
+void   file_dialog_hide (GtkWidget *dialog);
 
 
 #endif /* __FILE_DIALOG_UTILS_H__ */

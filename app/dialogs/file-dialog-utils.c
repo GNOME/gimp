@@ -19,30 +19,17 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
-
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
-#include "core/gimp.h"
-
-#include "plug-in/plug-in-proc.h"
-
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpfiledialog.h"
 #include "widgets/gimpitemfactory.h"
-#include "widgets/gimpmenufactory.h"
 
 #include "file-dialog-utils.h"
 
-#include "gimp-intl.h"
-
 
 void
-file_dialog_show (GtkWidget *filesel,
+file_dialog_show (GtkWidget *dialog,
                   GtkWidget *parent)
 {
   gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", FALSE);
@@ -52,17 +39,17 @@ file_dialog_show (GtkWidget *filesel,
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
 
-  gtk_window_set_screen (GTK_WINDOW (filesel),
+  gtk_window_set_screen (GTK_WINDOW (dialog),
                          gtk_widget_get_screen (parent));
 
-  gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
-  gtk_window_present (GTK_WINDOW (filesel));
+  gtk_widget_grab_focus (GTK_FILE_SELECTION (dialog)->selection_entry);
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-file_dialog_hide (GtkWidget *filesel)
+file_dialog_hide (GtkWidget *dialog)
 {
-  gtk_widget_hide (filesel);
+  gtk_widget_hide (dialog);
 
   gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", TRUE);
 
