@@ -43,23 +43,8 @@ void
 d_save_line (Dobject *obj,
 	     FILE    *to)
 {
-  DobjPoints * spnt;
-
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* End-of-line */
-
   fprintf (to, "<LINE>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	      spnt->pnt.x,
-	      spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "</LINE>\n");
 }
 
@@ -214,20 +199,11 @@ d_new_line (gint x,
 	    gint y)
 {
   Dobject    *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = LINE;
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_line;
   nobj->loadfunc  = d_load_line;
   nobj->savefunc  = d_save_line;
@@ -261,12 +237,9 @@ d_pnt_add_line (Dobject *obj,
 		gint     y,
 		gint     pos)
 {
-  DobjPoints *npnts = g_new0 (DobjPoints, 1);
+  DobjPoints *npnts = new_dobjpoint (x, y);
 
   g_assert (obj != NULL);
-
-  npnts->pnt.x = x;
-  npnts->pnt.y = y;
 
   if (!pos)
     {
@@ -331,10 +304,7 @@ d_update_line (GdkPoint *pnt)
   /* Draw circle on point */
   draw_circle (pnt);
 
-  epnt = g_new0 (DobjPoints, 1);
-
-  epnt->pnt.x = pnt->x;
-  epnt->pnt.y = pnt->y;
+  epnt = new_dobjpoint (pnt->x, pnt->y);
 
   gdk_draw_line (gfig_preview->window,
 		 /*gfig_preview->style->bg_gc[GTK_STATE_NORMAL],*/
@@ -378,8 +348,8 @@ d_line_end (GdkPoint *pnt,
 
 	  if (need_to_scale)
 	    {
-	      tmp_pnt.x = (pnt->x * scale_x_factor);
-	      tmp_pnt.y = (pnt->y * scale_y_factor);
+	      tmp_pnt.x = pnt->x * scale_x_factor;
+	      tmp_pnt.y = pnt->y * scale_y_factor;
 	    }
 
 	  d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);
@@ -402,8 +372,8 @@ d_line_end (GdkPoint *pnt,
 
 	  if (need_to_scale)
 	    {
-	      tmp_pnt.x = (pnt->x * scale_x_factor);
-	      tmp_pnt.y = (pnt->y * scale_y_factor);
+	      tmp_pnt.x = pnt->x * scale_x_factor;
+	      tmp_pnt.y = pnt->y * scale_y_factor;
 	    }
 
 	  d_pnt_add_line (tmp_line, tmp_pnt.x, tmp_pnt.y, -1);

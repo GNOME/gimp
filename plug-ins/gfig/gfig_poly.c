@@ -60,23 +60,8 @@ poly_button_press (GtkWidget      *widget,
 static void
 d_save_poly (Dobject * obj, FILE *to)
 {
-  DobjPoints * spnt;
-  
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* End-of-line */
-
   fprintf (to, "<POLY>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	      spnt->pnt.x,
-	      spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "<EXTRA>\n");
   fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
   fprintf (to, "</POLY>\n");
@@ -103,14 +88,14 @@ d_load_poly (FILE *from)
 		{
 		  g_warning ("[%d] Internal load error while loading poly (extra area)",
 			    line_no);
-		  return (NULL);
+		  return NULL;
 		}
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
 	      if (sscanf (buf, "%d", &nsides) != 1)
 		{
 		  g_warning ("[%d] Internal load error while loading poly (extra area scanf)",
 			    line_no);
-		  return (NULL);
+		  return NULL;
 		}
 	      new_obj->type_data = nsides;
 	      get_line (buf, MAX_LOAD_LINE, from, 0);
@@ -118,7 +103,7 @@ d_load_poly (FILE *from)
 		{
 		  g_warning ("[%d] Internal load error while loading poly",
 			    line_no);
-		  return (NULL);
+		  return NULL;
 		} 
 	      /* Go around and read the last line */
 	      continue;
@@ -129,7 +114,7 @@ d_load_poly (FILE *from)
 			line_no);
 	      return (NULL);
 	    }
-	  return (new_obj);
+	  return new_obj;
 	}
       
       if (!new_obj)
@@ -137,7 +122,7 @@ d_load_poly (FILE *from)
       else
 	d_pnt_add_line (new_obj, xpnt, ypnt, -1);
     }
-  return (new_obj);
+  return new_obj;
 }
 
 static void
@@ -154,7 +139,7 @@ d_draw_poly (Dobject *obj)
   gint loop;
   GdkPoint start_pnt;
   GdkPoint first_pnt;
-  gint do_line = 0;
+  gboolean do_line = FALSE;
 
   center_pnt = obj->points;
 
@@ -236,12 +221,10 @@ d_draw_poly (Dobject *obj)
 	}
       else
 	{
-	  do_line = 1;
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
+	  do_line = TRUE;
+	  first_pnt = calc_pnt;
 	}
-      start_pnt.x = calc_pnt.x;
-      start_pnt.y = calc_pnt.y;
+      start_pnt = calc_pnt;
     }
 
   /* Join up */
@@ -283,7 +266,7 @@ d_paint_poly (Dobject *obj)
   gdouble offset_angle;
   gint loop;
   GdkPoint first_pnt, last_pnt;
-  gint first = 1;
+  gboolean first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -333,14 +316,14 @@ d_paint_poly (Dobject *obj)
 	    }
 	}
 
-      last_pnt.x = line_pnts[i++] = calc_pnt.x;
-      last_pnt.y = line_pnts[i++] = calc_pnt.y;
+      line_pnts[i++] = calc_pnt.x;
+      line_pnts[i++] = calc_pnt.y;
+      last_pnt = calc_pnt;
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
-	  first = 0;
+	  first_pnt = calc_pnt;
+	  first = FALSE;
 	}
     }
 
@@ -393,7 +376,7 @@ d_poly2lines (Dobject *obj)
   gdouble offset_angle;
   gint loop;
   GdkPoint first_pnt, last_pnt;
-  gint first = 1;
+  gboolean first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -448,14 +431,12 @@ d_poly2lines (Dobject *obj)
 
       d_pnt_add_line (obj, calc_pnt.x, calc_pnt.y, 0);
 
-      last_pnt.x = calc_pnt.x;
-      last_pnt.y = calc_pnt.y;
+      last_pnt = calc_pnt;
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
-	  first = 0;
+	  first_pnt = calc_pnt;
+	  first = FALSE;
 	}
     }
 
@@ -493,7 +474,7 @@ d_star2lines (Dobject *obj)
   gdouble offset_angle;
   gint loop;
   GdkPoint first_pnt, last_pnt;
-  gint first = 1;
+  gboolean first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -578,14 +559,12 @@ d_star2lines (Dobject *obj)
 
       d_pnt_add_line (obj, calc_pnt.x, calc_pnt.y, 0);
 
-      last_pnt.x = calc_pnt.x;
-      last_pnt.y = calc_pnt.y;
+      last_pnt = calc_pnt;
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
-	  first = 0;
+	  first_pnt = calc_pnt;
+	  first = FALSE;
 	}
     }
 
@@ -628,21 +607,12 @@ static Dobject *
 d_new_poly (gint x, gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = POLY;
   nobj->type_data = 3; /* Default to three sides */
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_poly;
   nobj->loadfunc  = d_load_poly;
   nobj->savefunc  = d_save_poly;
@@ -706,9 +676,7 @@ void
 d_poly_start (GdkPoint *pnt,
 	      gint      shift_down)
 {
-  gint16 x, y;
-  /* First is center point */
-  obj_creating = d_new_poly (x = pnt->x, y = pnt->y);
+  obj_creating = d_new_poly ((gint16) pnt->x, (gint16) pnt->y);
   obj_creating->type_data = poly_num_sides;
 }
 

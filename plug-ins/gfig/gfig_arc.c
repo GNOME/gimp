@@ -31,7 +31,6 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
@@ -39,7 +38,7 @@
 #include "gfig.h"
 #include "gfig_line.h"
 
-static Dobject  * d_new_arc               (gint x, gint y);
+static Dobject  *d_new_arc               (gint x, gint y);
 
 /* Distance between two lines */
 static gdouble
@@ -64,8 +63,8 @@ mid_point (gdouble x1,
 	   gdouble *mx,
 	   gdouble *my)
 {
-  *mx = ((double) (x1 - x2))/2.0 + (double)x2;
-  *my = ((double) (y1 - y2))/2.0 + (double)y2;
+  *mx = (x1 + x2) / 2.0;
+  *my = (y1 + y2) / 2.0;
 }
 
 /* Careful about infinite grads */
@@ -289,10 +288,6 @@ arc_details (GdkPoint *vert_a,
   if (!got_y)
     inter_y = /*rint*/((line1_grad * inter_x + line1_const));
 
-#ifdef DEBUG
-  printf ("Intersection point is (%f,%f)\n", inter_x, inter_y);
-#endif /* DEBUG */
-
   center_pnt->x = (gint16)inter_x;
   center_pnt->y = (gint16)inter_y;
 }
@@ -310,37 +305,18 @@ arc_angle (GdkPoint *pnt,
   shift_y = -pnt->y + center->y;
   offset_angle = atan2 (shift_y, shift_x);
 
-#ifdef DEBUG
-  printf ("offset_ang = %f\n", offset_angle);
-#endif /* DEBUG */
-
   if (offset_angle < 0)
     offset_angle += 2*G_PI;
 
-  return (offset_angle*360/(2*G_PI));
+  return offset_angle * 360 / (2*G_PI);
 }
 
 static void
 d_save_arc (Dobject *obj,
 	    FILE    *to)
 {
-  DobjPoints * spnt;
-
-  spnt = obj->points;
-
-  if (!spnt)
-    return;
-
   fprintf (to, "<ARC>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	      spnt->pnt.x,
-	      spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "</ARC>\n");
 }
 
@@ -353,10 +329,6 @@ d_load_arc (FILE *from)
   gchar buf[MAX_LOAD_LINE];
   gint num_pnts = 0;
 
-#ifdef DEBUG
-  printf ("Load arc called\n");
-#endif /* DEBUG */
-
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
       if (sscanf (buf, "%d %d", &xpnt, &ypnt) != 2)
@@ -366,9 +338,9 @@ d_load_arc (FILE *from)
 	    {
 	      g_warning ("[%d] Internal load error while loading arc",
 			line_no);
-	      return (NULL);
+	      return NULL;
 	    }
-	  return (new_obj);
+	  return new_obj;
 	}
       
       num_pnts++;
@@ -381,7 +353,7 @@ d_load_arc (FILE *from)
 	}
     }
   g_warning ("[%d] Not enough points for arc", line_no);
-  return (NULL);
+  return NULL;
 }
 
 static void
@@ -487,10 +459,6 @@ d_draw_arc (Dobject * obj)
     return;
 
   arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, TRUE, FALSE);
-  
-#ifdef DEBUG
-  printf ("Min ang = %f Arc ang = %f\n", minang, arcang);
-#endif /* DEBUG */
 
   if (drawing_pic)
     {
@@ -546,10 +514,6 @@ d_paint_arc (Dobject *obj)
 
   /* No cnt pnts & must scale */
   arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius, FALSE, TRUE);
-
-#ifdef DEBUG
-  printf ("Paint Min ang = %f Arc ang = %f\n", minang, arcang);
-#endif /* DEBUG */
 
   seg_count = 360; /* Should make a smoth-ish curve */
 
@@ -645,14 +609,6 @@ d_copy_arc (Dobject * obj)
 
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
-#if DEBUG
-  printf ("Arc (%x,%x), (%x,%x), (%x,%x)\n",
-	 nc->points->pnt.x, obj->points->pnt.y,
-	 nc->points->next->pnt.x, obj->points->next->pnt.y,
-	 nc->points->next->next->pnt.x, obj->points->next->next->pnt.y);
-  printf ("Done copy\n");
-#endif /* DEBUG */
-
   return nc;
 }
 
@@ -661,31 +617,18 @@ d_new_arc (gint x,
 	   gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-#if DEBUG
-  printf ("New arc start at (%x,%x)\n", x, y);
-#endif /* DEBUG */
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = ARC;
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_arc;
   nobj->loadfunc  = d_load_arc;
   nobj->savefunc  = d_save_arc;
   nobj->paintfunc = d_paint_arc;
   nobj->copyfunc  = d_copy_arc;
 
-  return (nobj);
+  return nobj;
 }
 
 void
@@ -732,12 +675,7 @@ d_arc_end (GdkPoint *pnt,
      !tmp_line->points ||
      !tmp_line->points->next)
     {
-      /* No arc created  - yet */
-      /* Must have three points */
-
-#ifdef DEBUG
-      printf ("No arc created yet\n");
-#endif /* DEBUG */
+      /* No arc created  - yet. Must have three points */
 
       d_line_end (pnt, TRUE);
     }

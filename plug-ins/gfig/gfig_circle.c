@@ -44,23 +44,8 @@ static void
 d_save_circle (Dobject *obj,
 	       FILE    *to)
 {
-  DobjPoints *spnt;
-
-  spnt = obj->points;
-
-  if (!spnt)
-    return;
-
   fprintf (to, "<CIRCLE>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	       spnt->pnt.x,
-	       spnt->pnt.y);
-      spnt = spnt->next;
-    }
-
+  do_save_obj (obj, to);
   fprintf (to, "</CIRCLE>\n");
 }
 
@@ -90,14 +75,7 @@ d_load_circle (FILE *from)
 	new_obj = d_new_circle (xpnt, ypnt);
       else
 	{
-	  DobjPoints *edge_pnt;
-	  /* Circles only have two points */
-	  edge_pnt = g_new0 (DobjPoints, 1);
-
-	  edge_pnt->pnt.x = xpnt;
-	  edge_pnt->pnt.y = ypnt;
-	  
-	  new_obj->points->next = edge_pnt;
+	  new_obj->points->next = new_dobjpoint (xpnt, ypnt);
 	}
     }
 
@@ -250,20 +228,11 @@ d_new_circle (gint x,
 	      gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type   = CIRCLE;
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_circle;
   nobj->loadfunc  = d_load_circle;
   nobj->savefunc  = d_save_circle;
@@ -307,10 +276,7 @@ d_update_circle (GdkPoint *pnt)
 
   draw_circle (pnt);
 
-  edge_pnt = g_new0 (DobjPoints, 1);
-
-  edge_pnt->pnt.x = pnt->x;
-  edge_pnt->pnt.y = pnt->y;
+  edge_pnt = new_dobjpoint (pnt->x, pnt->y);
 
   radius = sqrt (((center_pnt->pnt.x - edge_pnt->pnt.x) *
 		  (center_pnt->pnt.x - edge_pnt->pnt.x)) +

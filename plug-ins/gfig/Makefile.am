@@ -21,6 +21,8 @@ gfig_SOURCES = \
 	gfig_bezier.h	\
 	gfig_circle.c	\
 	gfig_circle.h	\
+	gfig_dobject.c	\
+	gfig_dobject.h	\
 	gfig_ellipse.c	\
 	gfig_ellipse.h	\
 	gfig_line.c	\

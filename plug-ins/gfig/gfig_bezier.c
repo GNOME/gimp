@@ -49,29 +49,12 @@ static void
 d_save_bezier (Dobject *obj,
 	       FILE    *to)
 {
-  DobjPoints *spnt;
-
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* End-of-line */
-
   fprintf (to, "<BEZIER>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	       spnt->pnt.x,
-	       spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "<EXTRA>\n");
   fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
   fprintf (to, "</BEZIER>\n");
 }
-
-/* Load a bezier from the specified stream */
 
 Dobject *
 d_load_bezier (FILE *from)
@@ -80,10 +63,6 @@ d_load_bezier (FILE *from)
   gint xpnt;
   gint ypnt;
   gchar buf[MAX_LOAD_LINE];
-
-#ifdef DEBUG
-  printf ("Load bezier called\n");
-#endif /* DEBUG */
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
@@ -183,7 +162,6 @@ d_bz_get_array (gint *sz)
   *sz = fp_pnt_cnt;
   return fp_pnt_pnts;
 }
-
 
 static void
 d_bz_line (void)
@@ -390,10 +368,6 @@ d_copy_bezier (Dobject * obj)
 {
   Dobject *np;
 
-#if DEBUG
-  printf ("Copy bezier\n");
-#endif /* DEBUG */
-
   if (!obj)
     return (NULL);
 
@@ -405,10 +379,6 @@ d_copy_bezier (Dobject * obj)
 
   np->type_data = obj->type_data;
 
-#if DEBUG
-  printf ("Done bezier copy\n");
-#endif /* DEBUG */
-
   return np;
 }
 
@@ -416,25 +386,12 @@ static Dobject *
 d_new_bezier (gint x, gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
  
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-#if DEBUG
-  printf ("New BEZIER start at (%x,%x)\n", x, y);
-#endif /* DEBUG */
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
-
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = BEZIER;
   nobj->type_data = 4; /* Default to four turns */
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_bezier;
   nobj->loadfunc  = d_load_bezier;
   nobj->savefunc  = d_save_bezier;

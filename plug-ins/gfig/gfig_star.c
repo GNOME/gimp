@@ -61,23 +61,8 @@ static void
 d_save_star (Dobject *obj,
 	     FILE    *to)
 {
-  DobjPoints *spnt;
-  
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* End-of-line */
-
   fprintf (to, "<STAR>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	      spnt->pnt.x,
-	      spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "<EXTRA>\n");
   fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
   fprintf (to, "</STAR>\n");
@@ -393,8 +378,9 @@ d_paint_star (Dobject *obj)
 	    }
 	}
 
-      last_pnt.x = line_pnts[i++] = calc_pnt.x;
-      last_pnt.y = line_pnts[i++] = calc_pnt.y;
+      line_pnts[i++] = calc_pnt.x;
+      line_pnts[i++] = calc_pnt.y;
+      last_pnt = calc_pnt;
 
       if (first)
 	{
@@ -460,21 +446,12 @@ d_new_star (gint x,
 	    gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = STAR;
   nobj->type_data = 3; /* Default to three sides 6 points*/
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_star;
   nobj->loadfunc  = d_load_star;
   nobj->savefunc  = d_save_star;

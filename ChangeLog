@@ -1,3 +1,13 @@
+2003-10-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gfig/Makefile.am
+	* plug-ins/gfig/gfig_dobject.c: new file. More code split from gfig.c
+	to a seperate file.
+	
+	* plug-ins/gfig/gfig_dobject.h 
+	* plug-ins/gfig/gfig_*.c
+	* plug-ins/gfig/gfig.[ch]: More clean-up
+
 2003-10-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcropoptions.c
@@ -20,7 +30,7 @@
 
 2003-10-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* Makefile.am
+	* plug-ins/gfig/Makefile.am
 	* plug-ins/gfig/gfig_*.[ch]: new files split from gfig.c
 	
 	* plug-ins/gfig/gfig.c: fix for #124158 (always show both the Paint 
@@ -39,7 +49,7 @@
 
 2003-10-18  Sven Neumann  <sven@gimp.org>
 
-	* app/widgets/gimpdockbook.c: removed the "Select Tab" menu and
+	* app/widgets/gimpdbockbook.c: removed the "Select Tab" menu and
 	all the evil hacks that were needed to make it work. Now that we
 	have an extra dockable menu, the standard menu from GTK+ is good
 	enough.

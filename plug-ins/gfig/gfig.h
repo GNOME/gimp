@@ -29,6 +29,7 @@
 #include "gfig_dobject.h"
 
 #define MAX_LOAD_LINE    256
+#define SQ_SIZE 8
 
 extern gint line_no;
 extern gint preview_width, preview_height;
@@ -42,6 +43,7 @@ extern gdouble scale_x_factor, scale_y_factor;
 extern GtkWidget    *gfig_preview;
 extern GtkWidget    *pic_preview;
 extern Dobject *tmp_line;
+extern gint obj_show_single;
 
 typedef enum
 {
@@ -152,12 +154,6 @@ typedef struct
   DobjType      otype;
 } SelectItVals;
 
-typedef struct DAllObjs
-{
-  struct DAllObjs *next; 
-  Dobject         *obj; /* Object on list */
-} DAllObjs;
-
 typedef struct DFigObj
 {
   gchar     *name;        /* Trailing name of file  */
@@ -209,5 +205,8 @@ void num_sides_dialog (gchar *d_title,
 		       gint  *which_way,
 		       gint   adj_min,
 		       gint   adj_max);
+void       setup_undo              (void);
+void      draw_grid_clear           (void);
+void       	prepend_to_all_obj      (GFigObj *fobj, DAllObjs *nobj);
 
 #endif /* __GFIG_H__ */

@@ -62,23 +62,8 @@ static void
 d_save_spiral (Dobject *obj,
 	       FILE    *to)
 {
-  DobjPoints * spnt;
-  
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* End-of-line */
-
   fprintf (to, "<SPIRAL>\n");
-
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	       spnt->pnt.x,
-	       spnt->pnt.y);
-      spnt = spnt->next;
-    }
-  
+  do_save_obj (obj, to);
   fprintf (to, "<EXTRA>\n");
   fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
   fprintf (to, "</SPIRAL>\n");
@@ -93,10 +78,6 @@ d_load_spiral (FILE *from)
   gint xpnt;
   gint ypnt;
   gchar buf[MAX_LOAD_LINE];
-
-#ifdef DEBUG
-  printf ("Load spiral called\n");
-#endif /* DEBUG */
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
@@ -379,12 +360,8 @@ d_copy_spiral (Dobject * obj)
 {
   Dobject *np;
 
-#if DEBUG
-  printf ("Copy spiral\n");
-#endif /* DEBUG */
-
   if (!obj)
-    return (NULL);
+    return NULL;
 
   g_assert (obj->type == SPIRAL);
 
@@ -394,11 +371,7 @@ d_copy_spiral (Dobject * obj)
 
   np->type_data = obj->type_data;
 
-#if DEBUG
-  printf ("Done spiral copy\n");
-#endif /* DEBUG */
-
-  return (np);
+  return np;
 }
 
 static Dobject *
@@ -406,25 +379,12 @@ d_new_spiral (gint x,
 	      gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-#if DEBUG
-  printf ("New SPIRAL start at (%x,%x)\n", x, y);
-#endif /* DEBUG */
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = SPIRAL;
   nobj->type_data = 4; /* Default to four turns */
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_spiral;
   nobj->loadfunc  = d_load_spiral;
   nobj->savefunc  = d_save_spiral;
@@ -483,17 +443,11 @@ d_update_spiral (GdkPoint *pnt)
   draw_circle (&edge_pnt->pnt);
 }
 
-/* first point is center 
- * next defines the radius
- */
-
 void
 d_spiral_start (GdkPoint *pnt,
 		gint      shift_down)
 {
-  gint16 x, y;
-  /* First is center point */
-  obj_creating = d_new_spiral (x = pnt->x, y = pnt->y);
+  obj_creating = d_new_spiral ((gint16) pnt->x, (gint16) pnt->y);
   obj_creating->type_data = spiral_num_turns * ((spiral_toggle == 0) ? 1 : -1);
 }
 

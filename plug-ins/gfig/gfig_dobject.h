@@ -70,6 +70,12 @@ typedef struct Dobject
   DobjSaveFunc  savefunc;  /* Save me out */
 } Dobject;
 
+typedef struct DAllObjs
+{
+  struct DAllObjs *next; 
+  Dobject         *obj; /* Object on list */
+} DAllObjs;
+
 /* States of the object */
 #define GFIG_OK       0x0
 #define GFIG_MODIFIED 0x1
@@ -82,9 +88,21 @@ void d_pnt_add_line (Dobject *obj,
 		     gint     y,
 		     gint     pos);
 
-DobjPoints *d_copy_dobjpoints (DobjPoints * pnts);
-void free_one_obj (Dobject *obj);
-void d_delete_dobjpoints (DobjPoints * pnts);
+DobjPoints     *new_dobjpoint		(gint x, gint y);
+void		do_save_obj 		(Dobject *obj, FILE *to);
+
+DobjPoints     *d_copy_dobjpoints 	(DobjPoints * pnts);
+void 		free_one_obj 		(Dobject *obj);
+void 		d_delete_dobjpoints	(DobjPoints * pnts);
+void 		object_update 		(GdkPoint *pnt);
+DAllObjs       *copy_all_objs           (DAllObjs *objs);
+void       	draw_objects            (DAllObjs *objs, gint show_single);
+
+void       object_start            (GdkPoint *pnt, gint);
+void       object_operation        (GdkPoint *pnt, gint);
+void       object_operation_start  (GdkPoint *pnt, gint shift_down);
+void       object_operation_end    (GdkPoint *pnt, gint);
+void       object_end              (GdkPoint *pnt, gint shift_down);
 
 #endif /* __GFIG_DOBJECT_H__ */
 

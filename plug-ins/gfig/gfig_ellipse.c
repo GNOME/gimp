@@ -45,18 +45,8 @@ static void
 d_save_ellipse (Dobject *obj,
 		FILE    *to)
 {
-  DobjPoints *spnt;
-
-  spnt = obj->points;
-
-  if (!spnt)
-    return;
-
   fprintf (to, "<ELLIPSE>\n");
-
-  for (; spnt; spnt = spnt->next)
-    fprintf (to, "%d %d\n", spnt->pnt.x, spnt->pnt.y);
-
+  do_save_obj (obj, to);
   fprintf (to, "</ELLIPSE>\n");
 }
 
@@ -67,10 +57,6 @@ d_load_ellipse (FILE *from)
   gint     xpnt;
   gint     ypnt;
   gchar    buf[MAX_LOAD_LINE];
-
-#ifdef DEBUG
-  printf ("Load ellipse called\n");
-#endif /* DEBUG */
 
   while (get_line (buf, MAX_LOAD_LINE, from, 0))
     {
@@ -90,14 +76,7 @@ d_load_ellipse (FILE *from)
 	new_obj = d_new_ellipse (xpnt, ypnt);
       else
 	{
-	  DobjPoints *edge_pnt;
-	  /* Circles only have two points */
-	  edge_pnt = g_new0 (DobjPoints, 1);
-
-	  edge_pnt->pnt.x = xpnt;
-	  edge_pnt->pnt.y = ypnt;
-
-	  new_obj->points->next = edge_pnt;
+	  new_obj->points->next = new_dobjpoint (xpnt, ypnt);
 	}
     }
 
@@ -389,31 +368,18 @@ static Dobject *
 d_new_ellipse (gint x, gint y)
 {
   Dobject *nobj;
-  DobjPoints *npnt;
- 
-  /* Get new object and starting point */
-
-  /* Start point */
-  npnt = g_new0 (DobjPoints, 1);
-
-#if DEBUG
-  printf ("New ellipse start at (%x,%x)\n", x, y);
-#endif /* DEBUG */
-
-  npnt->pnt.x = x;
-  npnt->pnt.y = y;
 
   nobj = g_new0 (Dobject, 1);
 
   nobj->type = ELLIPSE;
-  nobj->points = npnt;
+  nobj->points = new_dobjpoint (x, y);
   nobj->drawfunc  = d_draw_ellipse;
   nobj->loadfunc  = d_load_ellipse;
   nobj->savefunc  = d_save_ellipse;
   nobj->paintfunc = d_paint_ellipse;
   nobj->copyfunc  = d_copy_ellipse;
 
-  return (nobj);
+  return nobj;
 }
 
 void
@@ -463,10 +429,7 @@ d_update_ellipse (GdkPoint *pnt)
 
   draw_circle (pnt);
 
-  edge_pnt = g_new0 (DobjPoints, 1);
-
-  edge_pnt->pnt.x = pnt->x;
-  edge_pnt->pnt.y = pnt->y;
+  edge_pnt = new_dobjpoint (pnt->x, pnt->y);
 
   bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x)*2;
   bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y)*2;
