@@ -2279,6 +2279,7 @@ plug_in_callback (GtkWidget *widget,
 
     case PDB_TEMPORARY:
       args[0].value.pdb_int = RUN_INTERACTIVE;
+      argc = 1;
       if (proc_rec->num_args >= 3 &&
 	  proc_rec->args[1].arg_type == PDB_IMAGE &&
 	  proc_rec->args[2].arg_type == PDB_DRAWABLE)

@@ -1,3 +1,8 @@
+Sat Oct 24 14:53:19 EDT 1998  Adrian Likins <adrian@gimp.org>
+
+	* app/plug_in.c: fix from Tor Lillqvist <tml@iki.fi>
+	to make scriptfu work again (argc = 1; line 2281)
+
 Fri Oct 23 00:58:37 CEST 1998 Marc Lehmann <pcg@goof.com>
 
 	* configure.in: got rid of the ugly but harmless autoconf warning
