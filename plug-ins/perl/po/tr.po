@@ -1,13 +1,14 @@
 # -- gimp-perl tr.po --
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
+# Alper Ersoy <aersoy@tfz.net>, 2001.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.2.1\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2001-07-14 14:33+0300\n"
-"Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
+"PO-Revision-Date: 2001-07-16 07:19+0300\n"
+"Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-9\n"
@@ -20,14 +21,14 @@ msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
-"INT32 deðer bekleniyordu fakat '%s' alýndý. Eðer gerçekten yazý içinde "
+"INT32 deðer bekleniyordu fakat '%s' alýndý. Eðer gerçekten dizgi içinde "
 "geçirmek istiyorsanýz '*1' ekleyin"
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtreler/Að/GIF için hazýrla..."
 
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtreler/Animasyon/Hücreleri Oynat..."
+msgstr "<Image>/Filtreler/Animasyon/Hücreleri Anime Et..."
 
 msgid ""
 "       interface-arguments are\n"
@@ -57,7 +58,7 @@ msgid "Reset all values to their default"
 msgstr "Tüm deðerleri öntanýmlý deðerlere çevir"
 
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "UYARI: alýcý kilitlenmeden kiliti açmaya çalýþtý"
+msgstr "UYARI: alýcý kilitlenmeden kilidi açmaya çalýþtý"
 
 msgid "required callback 'run' not found\n"
 msgstr "gerekli geriçaðrý 'run' bulunamadý\n"
@@ -98,7 +99,7 @@ msgid "<Toolbox>/Xtns/Perl/Control Center..."
 msgstr "<Toolbox>/Xtns/Perl/Yönetim Merkezi..."
 
 msgid "illegal parasite specification, reference expected"
-msgstr "geçersiz parazit tanýmý, referans bekleniyordu"
+msgstr "geçersiz parazit tanýmý, dayanak bekleniyordu"
 
 msgid "Date/Version"
 msgstr "Tarih/Sürüm"
@@ -137,7 +138,7 @@ msgid "Plug-In Path"
 msgstr "Eklenti Yolu"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "Bu programý KATALOGLU bir resimle çalýþtýramazsýnýz!!"
+msgstr "Bu programý DÝZÝNLÝ bir resimle çalýþtýramazsýnýz!!"
 
 msgid "<Image>/Guides/Guide Grid..."
 msgstr "<Image>/Kýlavuzlar/Elek Kýlavuzlar..."
@@ -152,9 +153,7 @@ msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "\"$opt\" seçenekleriyle gimp'i çalýþtýrma deneniyor\n"
 
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
-"baðlantýnýn diðer ucunda perl-sunucusu soketi bekleniyordu, @r ile "
-"karþýlaþýldý\n"
+msgstr "soketin diðer ucunda perl-sunucusu bekleniyordu, @r ile karþýlaþýldý\n"
 
 msgid "pdl height != region height"
 msgstr "pdl yüksekliði != bölüm yüksekliði"
@@ -212,7 +211,7 @@ msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Filtreler/Logulatör/SOTA Krom"
 
 msgid "%s: procedural database execution failed"
-msgstr "%s: Ýþlemsel Veritabaný çalýþtýrýlýrken hata oluþtu"
+msgstr "%s: Ýþlemsel Veritabaný çalýþtýrýlýrken hata"
 
 msgid "authorization required for tcp connections"
 msgstr "tcp baðlantýlarý için yetki gerekiyor"
@@ -239,7 +238,7 @@ msgid "TYPE"
 msgstr "TÝP"
 
 msgid "Gradient Selection Dialog"
-msgstr "Dereceli Geçiþ Seçim Penceresi"
+msgstr "Gradyan Seçim Penceresi"
 
 msgid "<Image>/Filters/Map/Circular Shape..."
 msgstr "<Image>/Filtreler/Bindirme/Dairesel Þekil..."
@@ -279,7 +278,7 @@ msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data henüz desteklenmiyor\n"
 
 msgid "Visual Scriptor"
-msgstr "Görsel Programlayýcý"
+msgstr "Görsel Senaryolayici"
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr "Hiç yatay veya dikey kýlavuz bulunamadý. Ýptal edildi."
@@ -303,7 +302,7 @@ msgid "WARNING: shared locking requested but not implemented"
 msgstr "UYARI: paylaþýmlý kilitlenme istendi fakat desteklenmiyor"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "'$entry->[1]' parametresi isteðe baðlý deðil\n"
+msgstr "'$entry->[1]' parametresi seçimli deðil\n"
 
 msgid "$s: not an integer\n"
 msgstr "$s: tamsayý deðil\n"
@@ -339,7 +338,7 @@ msgid "Illegal default font description for $function: $val\n"
 msgstr "$function için gerersiz yazýtipi tanýmý: $val\n"
 
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Seçim/Yuvarlak Köþeli Dörtgen Seçim..."
+msgstr "<Image>/Seçim/Yuvarlatýlmýþ Dörtgen Seçim..."
 
 msgid ""
 "BLURB:\n"
@@ -362,7 +361,7 @@ msgid "Fileselector for $name"
 msgstr "$name icin dosyaismi"
 
 msgid "accepting connections on port $port"
-msgstr "$port portundan baðlantýlar kabul ediliyor"
+msgstr "$port iskelesinden baðlantýlar kabul ediliyor"
 
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Filtreler/Logulatör/Harman II..."
@@ -377,26 +376,26 @@ msgstr ""
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"mönüyolu _mutlaka_ <Image>, <Toolbox>, <Load>, <Save> veya <None> ile "
+"menüyolu _mutlaka_ <Image>, <Toolbox>, <Load>, <Save> veya <None> ile "
 "baþlamalý!"
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filtreler/Hesapla/Kenarlarý Parlat..."
+msgstr "<Image>/Filtreler/Hesapla/Parlayan Kenarlar..."
 
 msgid "Spin Layer DEST (250ms)"
 msgstr "Dönüþ Katmaný HEDEF (250ms)"
 
 msgid "register called with too many or wrong arguments\n"
-msgstr "kayýt çok fazla veya yanlýþ argümanlarla çaðrýldý\n"
+msgstr "kayýt çok fazla veya yanlýþ argümanla çaðrýldý\n"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "parametreler ve dönüþ deðerleri dizi referansý olmalý (boþ olsa bile)!"
+msgstr "parametreler ve dönüþ deðerleri dizi dayanak olmalý (boþ olsa bile)!"
 
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$pkg paketi için $_ geçerli bir ihraç etiketi deðil"
+msgstr "$pkg paketi için $_ geçerli bir içe aktarým etiketi deðil"
 
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filtreler/Renkler/Dereceliye Bindir..."
+msgstr "<Image>/Filtreler/Renkler/Gradyana Bindir..."
 
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
 msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ateþyazý..."
@@ -470,7 +469,7 @@ msgid "<Image>/Filters/Render/Add Dust..."
 msgstr "<Image>/Filtreler/Hesapla/Toz Ekle..."
 
 msgid "text string is empty"
-msgstr "metin boþ"
+msgstr "metin dizgisi boþ"
 
 msgid "server requests authorization, but no authorization available\n"
 msgstr "sunucu yetki istiyor, fakat yetki mevcut deðil\n"
@@ -485,7 +484,7 @@ msgid "Image Types"
 msgstr "Resim Tipleri"
 
 msgid "Menu Path"
-msgstr "Mönü Yolu"
+msgstr "Menü Yolu"
 
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "'%s' renk tanýmý olarak algýlanamýyor"
@@ -526,11 +525,11 @@ msgid "Description"
 msgstr "Tanýmlama"
 
 msgid "Unable to convert a reference to type '%s'"
-msgstr "Referans '%s' tipine dönüþtürülemiyor"
+msgstr "Dayanak '%s' tipine dönüþtürülemiyor"
 
 msgid ""
 "conversion from string to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "metinden $pf_type2string{$type} tipine dönüþ henüz desteklenmiyor\n"
+msgstr "dizgiden $pf_type2string{$type} tipine dönüþ henüz desteklenmiyor\n"
 
 msgid "argument incompatible with type IMAGE"
 msgstr "argüman IMAGE tipi ile uyumsuz"
@@ -563,7 +562,7 @@ msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/Filtreler/Perl Ýfadesi Uygula..."
 
 msgid "DESCRIPTION"
-msgstr "AÇIKLAMA"
+msgstr "TANIMLAMA"
 
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "'$filename' yazma için açýlamadý: $!\n"
@@ -593,7 +592,7 @@ msgid "Command"
 msgstr "Komut"
 
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-diziref gimp-dizisi için veritipi olarak gerekli"
+msgstr "perl-dizidayanak gimp-dizisi için veritipi olarak gerekli"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr "$Gimp::Net::default_tcp_port portundan baðlantýlar kabul ediliyor"
@@ -644,7 +643,7 @@ msgid "Background"
 msgstr "Arkaplan"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "gimp_pattern_select_widget'a son argüman skaler ref olmalý"
+msgstr "gimp_pattern_select_widget'a son argüman sayýl dayanak olmalý"
 
 msgid "<Toolbox>/Xtns/Render/Stamps..."
 msgstr "<Toolbox>/Xtns/Hesapla/Pullar..."
@@ -681,7 +680,7 @@ msgid "Bumpmap"
 msgstr "Kabartýharita"
 
 msgid "<Image>/Filters/Text/TeX String..."
-msgstr "<Image>/Filtreler/Metin/TeX Yazýsý..."
+msgstr "<Image>/Filtreler/Metin/TeX Dizgisi..."
 
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "Gimp::Drawable, Gimp::GimpDrawable olarak dönüþtürülemedi (id %d)"
@@ -806,7 +805,7 @@ msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Filtreler/Logulatör/Web baþlýðý"
 
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filtreler/Að/Webize..."
+msgstr "<Image>/Filtreler/Að/Að'laþtýr..."
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr "<Load> eklentisi 3 standart argüman olmadan çaðrýldý!\n"
@@ -847,7 +846,8 @@ msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: :oto ihraç etiketi olmadan $AUTOLOAD çaðrýmý artýk geçersiz!\n"
+"$function: :otomatik dýþa aktarým etiketi olmadan $AUTOLOAD çaðrýmý artýk "
+"geçersiz!\n"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
 msgstr "<Image>/Filtreler/Ýyileþtir/Silerek Keskinleþtir..."
@@ -865,7 +865,7 @@ msgid "Close"
 msgstr "Kapat"
 
 msgid "illegal parasite specification, arrayref expected"
-msgstr "geçersiz parazit tanýmý, diziref bekleniyordu"
+msgstr "geçersiz parazit tanýmý, dizidayanak bekleniyordu"
 
 msgid "<Image>/Filters/Misc/Border Average..."
 msgstr "<Image>/Filtreler/Çeþitli/Çerçeve Ortalamasý..."
@@ -901,7 +901,7 @@ msgid "Help for "
 msgstr ""
 
 msgid "export failed"
-msgstr "ihraç baþarýsýz"
+msgstr "dýþa aktarým baþarýsýz"
 
 msgid "<Image>/Filters/Text/Terral Text..."
 msgstr "<Image>/Filtreler/Hesapla/Yüzeysel Metin..."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "POT-Creation-Date: 2001-07-14 13:54+0300\n"
-"PO-Revision-Date: 2001-07-14 12:00+0300\n"
+"PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,43 +39,43 @@ msgstr "þeffaflýðý desteklemiyor"
 
 #: libgimp/gimpexport.c:205
 msgid "can only handle RGB images"
-msgstr "sadece RGB resimleri destekliyor"
+msgstr "sadece KYM resimleri destekliyor"
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Convert to RGB"
-msgstr "RGB'ye dönüþtür"
+msgstr "KYM'ye çevir"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
-msgstr "sadece gri ölçekte resimleri destekliyor"
+msgstr "sadece griölçekli resimleri destekliyor"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr "Gri ölçeðe dönüþtür"
+msgstr "Griölçekliye çevir"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
-msgstr "sadece kataloglu resimleri destekler"
+msgstr "sadece dizinli resimleri destekler"
 
 #: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Öntanýmlýlarý kullanarak kataloglu moda çevir\n"
+"Öntanýmlýlarý kullanarak dizinliye çevir\n"
 "(Sonuç üzerinde ince ayar için kendiniz çevirin)"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
-msgstr "sadece RGB veya gri ölçekli resimleri destekler"
+msgstr "sadece KYM veya griölçekli resimleri destekler"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
-msgstr "sadece RGB veya kataloglu resimleri destekler"
+msgstr "sadece KYM veya dizinli resimleri destekler"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle grayscale or indexed images"
-msgstr "sadece gri ölçekli veya kataloglu resimleri destekler"
+msgstr "sadece griölçekli veya dizinli resimleri destekler"
 
 #: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
@@ -92,11 +92,11 @@ msgstr "Alfa Kanalý Ekle"
 #. the dialog
 #: libgimp/gimpexport.c:333
 msgid "Export File"
-msgstr "Dosyayý Ýhraç Et"
+msgstr "Dosyayý Dýþarý Aktar"
 
 #: libgimp/gimpexport.c:338
 msgid "Export"
-msgstr "Ýhraç Et"
+msgstr "Dýþarý Aktar"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
@@ -112,12 +112,12 @@ msgstr "Iptal"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Resminiz þu sebepler nedeniyle kaydedilmeden önce ihraç edilmeli:"
+msgstr "Resminiz þu sebepler nedeniyle kaydedilmeden önce dýþarý aktarýlamadý:"
 
 #. the footline
 #: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
-msgstr "Ýhraç iþlemi orjinal resimde deðiþiklik yapmaz."
+msgstr "Dýþarý aktarma iþlemi orjinal resimde deðiþiklik yapmaz."
 
 #. pseudo unit
 #: libgimp/gimpunit.c:52
@@ -204,7 +204,9 @@ msgstr "Etken"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Eðer \"Zaman\" düðmesi basýlý deðilse, bu deðeri raslantýsal sayý üreticinin tohumu olarak kullan - bu \"raslantýsal\" bir iþlemi tekrarlamanýzý saðlar"
+msgstr ""
+"Eðer \"Zaman\" düðmesi basýlý deðilse, bu deðeri raslantýsal sayý üreticinin "
+"tohumu olarak kullan - bu \"raslantýsal\" bir iþlemi tekrarlamanýzý saðlar"
 
 #: libgimpwidgets/gimpwidgets.c:727
 msgid "Time"
@@ -214,7 +216,9 @@ msgstr "Zaman"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "Raslantýsal sayý üreticinin tohumu olarak þu anki zamaný kullan - bu makul bir raslantýsallýðý garantiler"
+msgstr ""
+"Raslantýsal sayý üreticinin tohumu olarak þu anki zamaný kullan - bu makul "
+"bir raslantýsallýðý garantiler"
 
 #: libgimpwidgets/gimpwidgets.c:1049
 msgid "Bytes"
@@ -227,3 +231,4 @@ msgstr "Kilobayt"
 #: libgimpwidgets/gimpwidgets.c:1051
 msgid "MegaBytes"
 msgstr "Megabayt"
+
