@@ -158,18 +158,6 @@ query (void)
   /*
    * Load/save procedures
    */
-  gimp_install_procedure ("file_fli_load_frames",
-			  "load FLI-movies",
-			  "This is an experimantal plug-in to handle FLI movies",
-			  "Jens Ch. Restemeier",
-			  "Jens Ch. Restemeier",
-			  "1997",
-			  "<Load>/FLI",
-			  NULL,
-			  PROC_PLUG_IN,
-			  nload_args, nload_return_vals,
-			  load_args, load_return_vals);
-
   gimp_install_procedure ("file_fli_load",
 			  "load FLI-movies",
 			  "This is an experimantal plug-in to handle FLI movies",
@@ -244,7 +232,7 @@ run (gchar   *name,
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
-  if (strncmp (name, "file_fli_load", strlen("file_fli_load")) == 0)
+  if (strcmp (name, "file_fli_load") == 0)
     {
       INIT_I18N_UI ();
 
