@@ -1,3 +1,26 @@
+Sun Nov  7 18:59:22 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/gimpcontextpreview.c: delay the showing of the full-size
+	    pattern, brush or gradient by 150ms as the brush and pattern
+	    selector dialogs currently do.  Also, only generate a "click"
+	    event if the user has clicked quickly, ie, the mouse up event
+	    came before the timeout caused the popup to be displayed).
+
+	* app/gimprc.c: default image size now 983x857, in an attempt to
+	    flush out problems to do with large images, images with
+	    incomplete tiles around the edges, and images with
+	    width != height.  Non-square pixels and other resolution stuff
+	    will come in at a later stage when we've got the first round
+	    of problems fixed.
+
+	* app/gradient.c: don't allow two gradients with the same name -
+	    replace the first.  Mainly this stops us having two "Default"
+	    gradients if you start up with --no-data.
+
+	* app/interface.c: can now create an indicator panel in the
+	    toolbox even if we have --no-data, since we have built-in
+	    defaults now.
+
 Sun Nov  7 15:41:07 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/module_db.c: fix button resize behaviour.  Closes Bug#3350.

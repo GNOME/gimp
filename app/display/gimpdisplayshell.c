@@ -600,7 +600,7 @@ create_toolbox (void)
 
   create_tools (wbox);
   create_color_area (wbox);
-  if (show_indicators && (!no_data) )
+  if (show_indicators)
     create_indicator_area (wbox);
   gtk_widget_show (window);
   toolbox_set_drag_dest (window);

@@ -138,8 +138,9 @@ int       confirm_on_close = TRUE;
 int       save_session_info = TRUE;
 int       save_device_status = FALSE;
 int       always_restore_session = FALSE;
-int       default_width = 256;
-int       default_height = 256;
+int       default_width = 983;
+int       default_height = 857;
+/* temporary default size increase to stress test stuff.  -- austin 7/11/99 */
 int       default_type = RGB;
 double    default_xresolution = 72.0;
 double    default_yresolution = 72.0;

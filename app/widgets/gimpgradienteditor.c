@@ -5980,6 +5980,7 @@ grad_insert_in_gradients_list (gradient_t *grad)
 
   n   = 0;
   tmp = gradients_list;
+  g   = NULL;
 
   while (tmp)
     {
@@ -5990,6 +5991,16 @@ grad_insert_in_gradients_list (gradient_t *grad)
 
       n++;
       tmp = g_slist_next (tmp);
+    }
+
+  /* is there a gradient with this name already? */
+  if (g && strcmp (grad->name, g->name) == 0)
+    {
+      gradients_list = g_slist_remove (gradients_list, g);
+      grad_free_gradient (g);
+      num_gradients--;
+      /* force refresh in case anyone had the gradient selected */
+      gimp_context_refresh_gradients ();
     }
 
   num_gradients++;

@@ -77,6 +77,9 @@ static unsigned char scale_pipe_indicator_bits[7][7][3] =
 };
 
 
+/* how long to wait after mouse-down before showing popup */
+#define POPUP_DELAY_MS      150
+
 /*  size of the gradient popup  */
 #define GRADIENT_POPUP_WIDTH  128
 #define GRADIENT_POPUP_HEIGHT 32
@@ -90,10 +93,13 @@ static unsigned char scale_pipe_indicator_bits[7][7][3] =
 				     GDK_LEAVE_NOTIFY_MASK)
 
 /*  shared widgets for the popups  */
+/* XXX: It is pretty dangerous making these variables statics,
+ * I'd feel safer if they were per-instance and private. -- austin */
 static GtkWidget *gcp_popup = NULL;
 static GtkWidget *gcp_popup_preview = NULL;
 static guint gcp_pipe_timer = 0;
 static guint gcp_pipe_index = 0;
+static guint gcp_popup_timer = 0;
 
 /*  dnd stuff  */
 static GtkTargetEntry context_preview_target_table[3][1] =
@@ -398,7 +404,6 @@ gimp_context_preview_button_press_event (GtkWidget      *widget,
 	  gimp_context_preview_popup_open (GIMP_CONTEXT_PREVIEW (widget), 
 					   bevent->x, bevent->y);
 	}
-      gtk_signal_emit_by_name (GTK_OBJECT (widget), "clicked");
     }
   return FALSE;
 }
@@ -407,25 +412,54 @@ static gint
 gimp_context_preview_button_release_event (GtkWidget      *widget,
 					   GdkEventButton *bevent)
 {
-  if (bevent->button == 1 && GIMP_CONTEXT_PREVIEW (widget)->show_popup)
+  gboolean fast_click = TRUE;
+
+  if (bevent->button == 1)
     {
-      gdk_pointer_ungrab (bevent->time);
-      gimp_context_preview_popup_close ();
+      if (GIMP_CONTEXT_PREVIEW (widget)->show_popup)
+        {
+	  gdk_pointer_ungrab (bevent->time);
+
+	  /* user clicked quickly if the timeout is still running */
+	  fast_click = gcp_popup_timer;
+
+	  gimp_context_preview_popup_close ();
+	}
+
+      if (fast_click)
+	gtk_signal_emit_by_name (GTK_OBJECT (widget), "clicked");
     }
   return FALSE;
 }
 
-static void
-gimp_context_preview_popup_open (GimpContextPreview *gcp,
-				 gint                x,
-				 gint                y)
+
+typedef struct {
+  GimpContextPreview *gcp;
+  gint		      x;
+  gint		      y;  
+} popup_timeout_args_t;
+
+
+static gboolean
+gimp_context_preview_popup_timeout (gpointer data)
 {
+  popup_timeout_args_t *popup_timeout_args = data;
+  GimpContextPreview *gcp;
+  gint x, y;
   gint x_org, y_org;
   gint scr_w, scr_h;
 
-  g_return_if_fail (gcp != NULL);
+  gcp_popup_timer = 0;
+
+  g_return_val_if_fail (popup_timeout_args != NULL, FALSE);
+
+  gcp = popup_timeout_args->gcp;
+  x   = popup_timeout_args->x;
+  y   = popup_timeout_args->y;
+
+  g_return_val_if_fail (gcp != NULL, FALSE);
   if (!gcp->data)
-    return;
+    return FALSE;
 
   switch (gcp->type)
     {
@@ -448,7 +482,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 	      }
 	  }
 	else if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
-	  return;
+	  return FALSE;
       }
       break;
     case GCP_PATTERN:
@@ -457,17 +491,17 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 	gcp->popup_width  = pattern->mask->width;
 	gcp->popup_height = pattern->mask->height;
 	if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
-	  return;      
+	  return FALSE;
       }
       break;
     case GCP_GRADIENT:
       gcp->popup_width  = GRADIENT_POPUP_WIDTH;
       gcp->popup_height = GRADIENT_POPUP_HEIGHT;
       if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
-	return;
+	return FALSE;
      break;
      default:
-      return;
+      return FALSE;
     }
 
   /* make sure the popup exists and is not visible */
@@ -527,7 +561,28 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
       break;
     }  
   gtk_widget_queue_draw (gcp_popup_preview);
+
+  return FALSE;
 }
+
+
+static void
+gimp_context_preview_popup_open (GimpContextPreview *gcp,
+				 gint                x,
+				 gint                y)
+{
+  static popup_timeout_args_t popup_timeout_args;
+
+  g_return_if_fail (gcp_popup_timer == 0);
+
+  popup_timeout_args.gcp = gcp;
+  popup_timeout_args.x   = x;
+  popup_timeout_args.y   = y;
+  gcp_popup_timer = gtk_timeout_add (POPUP_DELAY_MS,
+				     gimp_context_preview_popup_timeout,
+				     &popup_timeout_args);
+}
+
   
 static void
 gimp_context_preview_popup_close (void)
@@ -535,7 +590,11 @@ gimp_context_preview_popup_close (void)
   if (gcp_pipe_timer > 0)
     gtk_timeout_remove (gcp_pipe_timer);
   gcp_pipe_timer = 0;
-  
+
+  if (gcp_popup_timer)
+    gtk_timeout_remove (gcp_popup_timer);
+  gcp_popup_timer = 0;
+
   if (gcp_popup != NULL)
     gtk_widget_hide (gcp_popup);
 }
