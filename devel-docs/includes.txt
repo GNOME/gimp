@@ -48,4 +48,4 @@ The include order of all .c files of a module is as follows:
 #include "gimpimage.h"
 #include "gimpwhatever.h"
 
-#include "libgimp/gimpintl.h"   /* if needed, *must* be the last include     */
+#include "gimp-intl.h"          /* if needed, *must* be the last include     */
