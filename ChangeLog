@@ -1,5 +1,11 @@
 2004-06-18 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpscaletool.c: changed algorithm for scaling when
+	aspect ratio is constrained, to fix strange behavior described 
+	in bug # 68106.
+
+2004-06-18 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/jpeg.c:  redid save dialog along lines suggested
 	in bug # 138929
 

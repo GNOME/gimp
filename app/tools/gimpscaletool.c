@@ -261,12 +261,12 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
 		        GimpDisplay       *gdisp)
 {
   GimpTransformOptions *options;
-  gdouble               ratio;
   gdouble              *x1;
   gdouble              *y1;
   gdouble              *x2;
   gdouble              *y2;
-  gint                  w, h;
+  gdouble               mag;
+  gdouble               dot;
   gint                  dir_x, dir_y;
   gdouble               diff_x, diff_y;
 
@@ -337,6 +337,22 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
     {
       diff_y = 0;
     }
+  /*  if control and mod1 are both down, constrain the aspect ratio  */
+  else if (options->constrain_1 && options->constrain_2)
+    {
+      mag = hypot ((gdouble)(tr_tool->x2 - tr_tool->x1), 
+		  (gdouble)(tr_tool->y2 - tr_tool->y1));
+
+      dot = diff_x * (tr_tool->x2 - tr_tool->x1) + diff_y * (tr_tool->y2 - tr_tool->y1);
+
+      if (mag > 0.)
+	{
+	  diff_x = (tr_tool->x2 - tr_tool->x1) * dot / (mag*mag);
+	  diff_y = (tr_tool->y2 - tr_tool->y1) * dot / (mag*mag);
+	}
+      else
+	diff_x = diff_y = 0;
+    }
 
   *x1 += diff_x;
   *y1 += diff_y;
@@ -357,26 +373,6 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
   else
     {
       if (*y1 <= *y2) *y1 = *y2 + 1;
-    }
-
-  /*  if both the control key & mod1 keys are down,
-   *  keep the aspect ratio intact
-   */
-  if (options->constrain_1 && options->constrain_2)
-    {
-      ratio = ((gdouble) (tr_tool->x2 - tr_tool->x1) /
-               (gdouble) (tr_tool->y2 - tr_tool->y1));
-
-      w = ABS ((*x2 - *x1));
-      h = ABS ((*y2 - *y1));
-
-      if (w > h * ratio)
-        h = w / ratio;
-      else
-        w = h * ratio;
-
-      *y1 = *y2 - dir_y * h;
-      *x1 = *x2 - dir_x * w;
     }
 }
 
