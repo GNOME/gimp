@@ -1169,6 +1169,81 @@ undo_free_item_displace (GimpUndo     *undo,
 }
 
 
+/**********************/
+/*  Item linked Undo  */
+/**********************/
+
+typedef struct _ItemLinkedUndo ItemLinkedUndo;
+
+struct _ItemLinkedUndo
+{
+  gboolean old_linked;
+};
+
+static gboolean undo_pop_item_linked  (GimpUndo            *undo,
+                                       GimpUndoMode         undo_mode,
+                                       GimpUndoAccumulator *accum);
+static void     undo_free_item_linked (GimpUndo            *undo,
+                                       GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_item_linked (GimpImage   *gimage,
+                                  const gchar *undo_desc,
+                                  GimpItem    *item)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if ((new = gimp_image_undo_push_item (gimage, item,
+                                        sizeof (ItemLinkedUndo),
+                                        sizeof (ItemLinkedUndo),
+                                        GIMP_UNDO_ITEM_LINKED, undo_desc,
+                                        TRUE,
+                                        undo_pop_item_linked,
+                                        undo_free_item_linked)))
+    {
+      ItemLinkedUndo *ilu;
+
+      ilu = new->data;
+
+      ilu->old_linked = gimp_item_get_linked (item);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_item_linked (GimpUndo            *undo,
+                      GimpUndoMode         undo_mode,
+                      GimpUndoAccumulator *accum)
+{
+  ItemLinkedUndo *ilu;
+  GimpItem       *item;
+  gboolean        linked;
+
+  ilu = (ItemLinkedUndo *) undo->data;
+
+  item = GIMP_ITEM_UNDO (undo)->item;
+
+  linked = gimp_item_get_linked (item);
+  gimp_item_set_linked (item, ilu->old_linked, FALSE);
+  ilu->old_linked = linked;
+
+  return TRUE;
+}
+
+static void
+undo_free_item_linked (GimpUndo     *undo,
+                       GimpUndoMode  undo_mode)
+{
+  g_free (undo->data);
+}
+
+
 /******************************/
 /*  Drawable Visibility Undo  */
 /******************************/
@@ -1794,7 +1869,6 @@ struct _LayerPropertiesUndo
   GimpLayerModeEffects old_mode;
   gdouble              old_opacity;
   gboolean             old_preserve_trans;
-  gboolean             old_linked;
 };
 
 static gboolean undo_push_layer_properties (GimpImage           *gimage,
@@ -1834,15 +1908,6 @@ gimp_image_undo_push_layer_preserve_trans (GimpImage   *gimage,
                                      undo_desc, layer);
 }
 
-gboolean
-gimp_image_undo_push_layer_linked (GimpImage   *gimage,
-                                   const gchar *undo_desc,
-                                   GimpLayer   *layer)
-{
-  return undo_push_layer_properties (gimage, GIMP_UNDO_LAYER_LINKED,
-                                     undo_desc, layer);
-}
-
 static gboolean
 undo_push_layer_properties (GimpImage    *gimage,
                             GimpUndoType  undo_type,
@@ -1869,7 +1934,6 @@ undo_push_layer_properties (GimpImage    *gimage,
       lpu->old_mode           = gimp_layer_get_mode (layer);
       lpu->old_opacity        = gimp_layer_get_opacity (layer);
       lpu->old_preserve_trans = gimp_layer_get_preserve_trans (layer);
-      lpu->old_linked         = gimp_layer_get_linked (layer);
 
       return TRUE;
     }
@@ -1912,14 +1976,6 @@ undo_pop_layer_properties (GimpUndo            *undo,
       preserve_trans = gimp_layer_get_preserve_trans (layer);
       gimp_layer_set_preserve_trans (layer, lpu->old_preserve_trans, FALSE);
       lpu->old_preserve_trans = preserve_trans;
-    }
-  else if (undo->undo_type == GIMP_UNDO_LAYER_LINKED)
-    {
-      gboolean linked;
-
-      linked = gimp_layer_get_linked (layer);
-      gimp_layer_set_linked (layer, lpu->old_linked, FALSE);
-      lpu->old_linked = linked;
     }
 
   return TRUE;

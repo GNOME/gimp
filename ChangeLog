@@ -1,5 +1,28 @@
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.[ch]: removed "linked" member and API...
+
+	* app/core/gimpitem.[ch]: ...and added it here.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]: changed layer_linked undo
+	types and functions to be item_linked ones.
+
+	* app/tools/gimpeditselectiontool.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+	* app/widgets/gimplayertreeview.[ch]: removed "linked" icon and
+	functions...
+
+	* app/widgets/gimpitemtreeview.[ch]: and added them here. Setting
+	channels or vectors to "linked" does nothing yet.
+
+2003-05-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch]: added gimp_item_translate() and
 	virtual function GimpItem::translate().
 

@@ -669,7 +669,12 @@ xcf_load_layer_props (XcfInfo   *info,
 	  }
 	  break;
 	case PROP_LINKED:
-	  info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->linked, 1);
+          {
+            gboolean linked;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
+            gimp_item_set_linked (GIMP_ITEM (layer), linked, FALSE);
+          }
 	  break;
 	case PROP_PRESERVE_TRANSPARENCY:
 	  info->cp += 

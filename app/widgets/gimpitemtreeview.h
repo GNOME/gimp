@@ -79,6 +79,12 @@ struct _GimpItemTreeView
   GtkWidget             *duplicate_button;
   GtkWidget             *edit_button;
   GtkWidget             *delete_button;
+
+  gint                   model_column_linked;
+  GtkCellRenderer       *chain_cell;
+
+  /*< private >*/
+  GQuark                 linked_changed_handler_id;
 };
 
 struct _GimpItemTreeViewClass

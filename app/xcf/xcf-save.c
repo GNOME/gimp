@@ -440,7 +440,7 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
 		                  gimp_drawable_get_visible (GIMP_DRAWABLE (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, 
-                                  error, layer->linked));
+                                  error, GIMP_ITEM (layer)->linked));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY, 
                                   error, layer->preserve_trans));
 

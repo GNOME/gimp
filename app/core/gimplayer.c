@@ -54,7 +54,6 @@ enum
   OPACITY_CHANGED,
   MODE_CHANGED,
   PRESERVE_TRANS_CHANGED,
-  LINKED_CHANGED,
   MASK_CHANGED,
   LAST_SIGNAL
 };
@@ -172,15 +171,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  layer_signals[LINKED_CHANGED] =
-    g_signal_new ("linked_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpLayerClass, linked_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
   layer_signals[MASK_CHANGED] =
     g_signal_new ("mask_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -209,7 +199,6 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->opacity_changed             = NULL;
   klass->mode_changed                = NULL;
   klass->preserve_trans_changed      = NULL;
-  klass->linked_changed              = NULL;
   klass->mask_changed                = NULL;
 }
 
@@ -219,7 +208,6 @@ gimp_layer_init (GimpLayer *layer)
   layer->opacity        = GIMP_OPACITY_OPAQUE;
   layer->mode           = GIMP_NORMAL_MODE;
   layer->preserve_trans = FALSE;
-  layer->linked         = FALSE;
 
   layer->mask           = NULL;
 
@@ -316,11 +304,9 @@ gimp_layer_duplicate (GimpItem *item,
   layer     = GIMP_LAYER (item);
   new_layer = GIMP_LAYER (new_item);
 
-  new_layer->linked         = layer->linked;
-  new_layer->preserve_trans = layer->preserve_trans;
-
   new_layer->mode           = layer->mode;
   new_layer->opacity        = layer->opacity;
+  new_layer->preserve_trans = layer->preserve_trans;
 
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
@@ -1408,35 +1394,4 @@ gimp_layer_get_preserve_trans (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   return layer->preserve_trans;
-}
-
-void
-gimp_layer_set_linked (GimpLayer *layer,
-                       gboolean   linked,
-                       gboolean   push_undo)
-{
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (layer->linked != linked)
-    {
-      if (push_undo)
-        {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
-
-          if (gimage)
-            gimp_image_undo_push_layer_linked (gimage, NULL, layer);
-        }
-
-      layer->linked = linked ? TRUE : FALSE;
-
-      g_signal_emit (layer, layer_signals[LINKED_CHANGED], 0);
-    }
-}
-
-gboolean
-gimp_layer_get_linked (const GimpLayer *layer)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  return layer->linked;
 }

@@ -48,6 +48,7 @@
 enum
 {
   REMOVED,
+  LINKED_CHANGED,
   LAST_SIGNAL
 };
 
@@ -128,12 +129,22 @@ gimp_item_class_init (GimpItemClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_item_signals[LINKED_CHANGED] =
+    g_signal_new ("linked_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpItemClass, linked_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   object_class->finalize          = gimp_item_finalize;
 
   gimp_object_class->name_changed = gimp_item_name_changed;
   gimp_object_class->get_memsize  = gimp_item_get_memsize;
 
   klass->removed                  = NULL;
+  klass->linked_changed           = NULL;
   klass->duplicate                = gimp_item_real_duplicate;
   klass->rename                   = gimp_item_real_rename;
   klass->translate                = gimp_item_real_translate;
@@ -152,6 +163,7 @@ gimp_item_init (GimpItem *item)
   item->height    = 0;
   item->offset_x  = 0;
   item->offset_y  = 0;
+  item->linked    = FALSE;
 }
 
 static void
@@ -262,6 +274,8 @@ gimp_item_real_duplicate (GimpItem *item,
 
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
+
+  new_item->linked = item->linked;
 
   return new_item;
 }
@@ -778,4 +792,35 @@ gimp_item_parasite_list (const GimpItem *item,
 			      &cur);
 
   return list;
+}
+
+void
+gimp_item_set_linked (GimpItem *item,
+                      gboolean  linked,
+                      gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (item->linked != linked)
+    {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (item);
+
+          if (gimage)
+            gimp_image_undo_push_item_linked (gimage, NULL, item);
+        }
+
+      item->linked = linked ? TRUE : FALSE;
+
+      g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
+    }
+}
+
+gboolean
+gimp_item_get_linked (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->linked;
 }

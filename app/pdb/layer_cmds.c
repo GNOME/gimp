@@ -636,7 +636,7 @@ layer_translate_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_LINKED,
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
 				       _("Move Layer"));
     
 	  if (floating_layer)
@@ -648,8 +648,11 @@ layer_translate_invoker (Gimp     *gimp,
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
-	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
-		gimp_item_translate (GIMP_ITEM (tmp_layer), offx, offy, TRUE);
+	      if ((tmp_layer == layer) || gimp_item_get_linked (GIMP_ITEM (tmp_layer)))
+		gimp_item_translate (GIMP_ITEM (tmp_layer),
+				     offx,
+				     offy,
+				     TRUE);
 	    }
     
 	  if (floating_layer)
@@ -768,7 +771,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_LINKED,
+	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
 				       _("Move Layer"));
     
 	  if (floating_layer)
@@ -780,10 +783,11 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
-	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
+	      if ((tmp_layer == layer) || gimp_item_get_linked (GIMP_ITEM (tmp_layer)))
 		gimp_item_translate (GIMP_ITEM (tmp_layer),
-				(offx - GIMP_ITEM (layer)->offset_x),
-				(offy - GIMP_ITEM (layer)->offset_y), TRUE);
+				     offx - GIMP_ITEM (layer)->offset_x,
+				     offy - GIMP_ITEM (layer)->offset_y,
+				     TRUE);
 	    }
     
 	  if (floating_layer)
@@ -1863,7 +1867,7 @@ layer_get_linked_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&layer_get_linked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_linked (layer);
+    return_args[1].value.pdb_int = gimp_item_get_linked (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1917,7 +1921,7 @@ layer_set_linked_invoker (Gimp     *gimp,
   linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_linked (layer, linked, TRUE);
+    gimp_item_set_linked (GIMP_ITEM (layer), linked, TRUE);
 
   return procedural_db_return_args (&layer_set_linked_proc, success);
 }

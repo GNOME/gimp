@@ -400,7 +400,7 @@ HELP
 			desc => "Offset in $_ direction" }
     }
 
-    &layer_change_invoke('LAYER_LINKED', 'Move Layer', <<'CODE');
+    &layer_change_invoke('ITEM_DISPLACE', 'Move Layer', <<'CODE');
 {
   for (layer_list = GIMP_LIST (gimage->layers)->list;
        layer_list;
@@ -408,8 +408,11 @@ HELP
     {
       tmp_layer = (GimpLayer *) layer_list->data;
 
-      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
-	gimp_item_translate (GIMP_ITEM (tmp_layer), offx, offy, TRUE);
+      if ((tmp_layer == layer) || gimp_item_get_linked (GIMP_ITEM (tmp_layer)))
+	gimp_item_translate (GIMP_ITEM (tmp_layer),
+                             offx,
+                             offy,
+                             TRUE);
     }
 }
 CODE
@@ -449,7 +452,7 @@ HELP
 
     foreach (qw(x y)) {
 	$invoke{code} =~
-	    s/, (off$_)/,\n\t\t\t    ($1 - GIMP_ITEM (layer)->offset_$_)/;
+	    s/(off$_),/$1 - GIMP_ITEM (layer)->offset_$_,/;
     }
 }
 
@@ -586,7 +589,7 @@ CODE2
 &layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 0, 1);
 
 &layer_accessors('linked', 'boolean', 'linked state', 0, 1,
-		 <<'CODE');
+		 <<'CODE', 'item', 'GIMP_ITEM (layer)');
     $author = $copyright = 'Wolfgang Hofer';
     $date = '1998';
 

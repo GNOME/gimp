@@ -254,7 +254,7 @@ init_edit_selection (GimpTool    *tool,
   gimp_image_undo_group_start (gdisp->gimage,
                                edit_type == EDIT_MASK_TRANSLATE ?
                                GIMP_UNDO_GROUP_MASK :
-                               GIMP_UNDO_GROUP_LAYER_DISPLACE,
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                undo_desc);
 
   active_drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -329,10 +329,8 @@ init_edit_selection (GimpTool    *tool,
               layer = (GimpLayer *) layer_list->data;
 
               if ((layer != (GimpLayer *) active_drawable) &&
-                  gimp_layer_get_linked (layer))
+                  gimp_item_get_linked (GIMP_ITEM (layer)))
                 {
-                  g_print ("linked!\n");
-
                   gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
 
                   x4 = x3 + gimp_item_width  (GIMP_ITEM (layer));
@@ -541,9 +539,10 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 		layer = (GimpLayer *) layer_list->data;
 
 		if (layer == gdisp->gimage->active_layer || 
-		    gimp_layer_get_linked (layer))
+		    gimp_item_get_linked (GIMP_ITEM (layer)))
 		  {
-		    gimp_layer_translate (layer, xoffset, yoffset, TRUE);
+		    gimp_item_translate (GIMP_ITEM (layer), xoffset, yoffset,
+                                         TRUE);
 		  }
 	      }
 
@@ -589,7 +588,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    layer = gimp_image_get_active_layer (gdisp->gimage);
 
 	    floating_sel_relax (layer, TRUE);
-	    gimp_layer_translate (layer, xoffset, yoffset, TRUE);
+	    gimp_item_translate (GIMP_ITEM (layer), xoffset, yoffset, TRUE);
 	    floating_sel_rigor (layer, TRUE);
 
 	    if (edit_select->first_move)
@@ -734,7 +733,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
           layer = (GimpLayer *) layer_list->data;
 
           if ((layer != gdisp->gimage->active_layer) &&
-              gimp_layer_get_linked (layer))
+              gimp_item_get_linked (GIMP_ITEM (layer)))
             {
               gimp_item_offsets (GIMP_ITEM (layer), &x3, &y3);
 
@@ -1009,7 +1008,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   if (translate_mask)
     undo_type = GIMP_UNDO_GROUP_MASK;
   else
-    undo_type = GIMP_UNDO_GROUP_LAYER_DISPLACE;
+    undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
 
   undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 
@@ -1088,9 +1087,10 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	      layer = (GimpLayer *) layer_list->data;
 
 	      if ((layer == gdisp->gimage->active_layer) || 
-		  gimp_layer_get_linked (layer))
+		  gimp_item_get_linked (GIMP_ITEM (layer)))
 		{
-		  gimp_layer_translate (layer, inc_x, inc_y, push_undo);
+		  gimp_item_translate (GIMP_ITEM (layer), inc_x, inc_y,
+                                       push_undo);
 		}
 	    }
 
@@ -1100,7 +1100,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
 	case EDIT_FLOATING_SEL_TRANSLATE:
 	  floating_sel_relax (layer, push_undo);
-	  gimp_layer_translate (layer, inc_x, inc_y, push_undo);
+	  gimp_item_translate (GIMP_ITEM (layer), inc_x, inc_y, push_undo);
 	  floating_sel_rigor (layer, push_undo);
 	  break;
 	}

@@ -41,8 +41,6 @@ struct _GimpLayer
   GimpLayerModeEffects  mode;             /*  layer combination mode     */
   gboolean              preserve_trans;   /*  preserve transparency      */
 
-  gboolean              linked;           /*  control linkage            */
-
   GimpLayerMask        *mask;             /*  possible layer mask        */
 
   /*  Floating selections  */
@@ -65,7 +63,6 @@ struct _GimpLayerClass
   void (* opacity_changed)        (GimpLayer *layer);
   void (* mode_changed)           (GimpLayer *layer);
   void (* preserve_trans_changed) (GimpLayer *layer);
-  void (* linked_changed)         (GimpLayer *layer);
   void (* mask_changed)           (GimpLayer *layer);
 };
 
@@ -128,10 +125,6 @@ void            gimp_layer_set_preserve_trans  (GimpLayer            *layer,
                                                 gboolean              push_undo);
 gboolean        gimp_layer_get_preserve_trans  (const GimpLayer      *layer);
 
-void            gimp_layer_set_linked          (GimpLayer            *layer,
-                                                gboolean              linked,
-                                                gboolean              push_undo);
-gboolean        gimp_layer_get_linked          (const GimpLayer      *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */

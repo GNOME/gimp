@@ -47,11 +47,9 @@ struct _GimpLayerTreeView
 
   GtkWidget            *anchor_button;
 
-  gint                  model_column_linked;
   gint                  model_column_mask;
   gint                  model_column_mask_visible;
 
-  GtkCellRenderer      *chain_cell;
   GtkCellRenderer      *mask_cell;
 
   /*< private >*/
