@@ -1,3 +1,9 @@
+Sat Sep 25 19:14:27 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/unittest/Makefile.am: add parse_gimprc program.
+	* app/unittest/parse_gimprc.c : First unit test for parsing of
+ 	gimprc files. Planning to move it's parse_* functions into gimprc.c
+
 Fri Sep 24 18:36:14 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/main.c: moved the gtk_set_locale call to after it's

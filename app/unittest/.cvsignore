@@ -5,3 +5,4 @@ Makefile.in
 gimppath
 gimpparse
 plugdir
+parse_gimprc

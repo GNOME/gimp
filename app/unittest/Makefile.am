@@ -2,7 +2,7 @@
 
 scriptdata =
 INTLLIBS=-lintl
-bin_PROGRAMS = gimppath gimpparse plugdir
+bin_PROGRAMS = gimppath gimpparse plugdir parse_gimprc
 #bin_PROGRAMS = testplugin gimppath gimpparse plugshow plugdir
 
 OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
@@ -109,6 +109,12 @@ gimppath_LDADD = $(OFILES) ../plug_in.o \
 	$(INTLLIBS)
 
 gimpparse_LDADD = $(OFILES) ../plug_in.o\
+	../libgimpim.a \
+	$(top_builddir)/libgimp/libgimpi.a	\
+	$(GTK_LIBS)				\
+	$(GIMP_THREAD_LIBS)			\
+	$(INTLLIBS)
+parse_gimprc_LDADD = $(OFILES) ../plug_in.o\
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
