@@ -320,14 +320,14 @@ rotate_center_changed (GtkWidget *widget,
 {
   GimpTool          *tool;
   GimpTransformTool *transform_tool;
-  gint               cx;
-  gint               cy;
+  gdouble            cx;
+  gdouble            cy;
 
   tool           = GIMP_TOOL (data);
   transform_tool = GIMP_TRANSFORM_TOOL (data);
 
-  cx = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  cy = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
+  cx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  cy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
   if ((cx != transform_tool->trans_info[CENTER_X]) ||
       (cy != transform_tool->trans_info[CENTER_Y]))
@@ -369,7 +369,7 @@ rotate_tool_motion (GimpTransformTool *transform_tool,
   cx = transform_tool->trans_info[CENTER_X];
   cy = transform_tool->trans_info[CENTER_Y];
 
-  x1 = transform_tool->curx - cx;
+  x1 = transform_tool->curx  - cx;
   x2 = transform_tool->lastx - cx;
   y1 = cy - transform_tool->cury;
   y2 = cy - transform_tool->lasty;
@@ -422,12 +422,10 @@ rotate_tool_recalc (GimpTransformTool *transform_tool,
   transform_tool->cx = cx;
   transform_tool->cy = cy;
 
-  gimp_drawable_transform_matrix_rotate (transform_tool->cx,
-                                         transform_tool->cy,
-                                         transform_tool->cx,
-                                         transform_tool->cy,
-                                         transform_tool->trans_info[ANGLE],
-                                         transform_tool->transform);
+  gimp_drawable_transform_matrix_rotate_center (transform_tool->cx,
+                                                transform_tool->cy,
+                                                transform_tool->trans_info[ANGLE],
+                                                transform_tool->transform);
 
   /*  transform the bounding box  */
   gimp_transform_tool_transform_bounding_box (transform_tool);

@@ -207,19 +207,17 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gimp_matrix3_transform_point (matrix, x1, y2, &dx3, &dy3);
       gimp_matrix3_transform_point (matrix, x2, y2, &dx4, &dy4);
 
-      tx1 = MIN (dx1, dx2);
-      tx1 = MIN (tx1, dx3);
-      tx1 = MIN (tx1, dx4);
-      ty1 = MIN (dy1, dy2);
-      ty1 = MIN (ty1, dy3);
-      ty1 = MIN (ty1, dy4);
+#define MIN4(a,b,c,d) MIN(MIN(MIN(a,b),c),d)
+#define MAX4(a,b,c,d) MAX(MAX(MAX(a,b),c),d)
 
-      tx2 = MAX (dx1, dx2);
-      tx2 = MAX (tx2, dx3);
-      tx2 = MAX (tx2, dx4);
-      ty2 = MAX (dy1, dy2);
-      ty2 = MAX (ty2, dy3);
-      ty2 = MAX (ty2, dy4);
+      tx1 = ROUND (MIN4 (dx1, dx2, dx3, dx4));
+      ty1 = ROUND (MIN4 (dy1, dy2, dy3, dy4));
+
+      tx2 = ROUND (MAX4 (dx1, dx2, dx3, dx4));
+      ty2 = ROUND (MAX4 (dy1, dy2, dy3, dy4));
+
+#undef MIN2
+#undef MAX4
     }
 
   /*  Get the new temporary buffer for the transformed result  */
@@ -265,11 +263,12 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 	(* progress_callback) (ty1, ty2, y, progress_data);
 
       /* set up inverse transform steps */
-      tx = xinc * tx1 + m[0][1] * y + m[0][2];
-      ty = yinc * tx1 + m[1][1] * y + m[1][2];
-      tw = winc * tx1 + m[2][1] * y + m[2][2];
+      tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
+      ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
+      tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
 
       d = dest;
+
       for (x = tx1; x < tx2; x++)
 	{
 	  /*  normalize homogeneous coords  */
@@ -480,7 +479,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
               ity = floor (tty);
 
               if (itx >= x1 && itx < x2 &&
-                  ity >= y1 && ity < y2 )
+                  ity >= y1 && ity < y2)
                 {
                   /*  x, y coordinates into source tiles  */
                   sx = itx - x1;

@@ -1,3 +1,21 @@
+2002-02-19  Michael Natterer  <mitch@gimp.org>
+
+	Fixed #10466 (disappearing pixels when rotating by 90 deg):
+
+	* app/core/gimpdrawable-transform.c: when transforming backwards
+	to find the destination line's sub-pixel source coordinates, we
+	need to transform the pixels _center_, not it's upper left corner.
+
+	* app/core/gimpdrawable-transform-utils.[ch]: added
+	gimp_drawable_transform_matrix_rotate_center() which takes double
+	center coordinates instead of an integer pixel bounding box.
+
+	* app/tools/gimptransformtool.[ch]: use double instead of int for
+	all coordinates except the original bounding box.
+
+	* app/tools/gimprotatetool.c: use double whenever touching the
+	"center" value, so it can be sub-pixel positioned.
+
 2002-02-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pagecurl/pagecurl.c: code cleanup based on a patch from 

@@ -48,6 +48,18 @@ gimp_drawable_transform_matrix_rotate (gint        x1,
 }
 
 void
+gimp_drawable_transform_matrix_rotate_center (gdouble     cx,
+                                              gdouble     cy,
+                                              gdouble     angle,
+                                              GimpMatrix3 result)
+{
+  gimp_matrix3_identity  (result);
+  gimp_matrix3_translate (result, -cx, -cy);
+  gimp_matrix3_rotate    (result, angle);
+  gimp_matrix3_translate (result, +cx, +cy);
+}
+
+void
 gimp_drawable_transform_matrix_scale (gint        x1,
                                       gint        y1,
                                       gint        x2,

@@ -912,7 +912,6 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 {
   TileManager  *tiles;
   GimpDrawable *drawable;
-  gint          offset_x, offset_y;
 
   tiles    = tr_tool->original;
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -928,7 +927,10 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
     }
   else
     {
+      gint offset_x, offset_y;
+
       gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+
       gimp_drawable_mask_bounds (drawable,
 				 &tr_tool->x1, &tr_tool->y1,
 				 &tr_tool->x2, &tr_tool->y2);
@@ -938,8 +940,8 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       tr_tool->y2 += offset_y;
     }
 
-  tr_tool->cx = (tr_tool->x1 + tr_tool->x2) / 2;
-  tr_tool->cy = (tr_tool->y1 + tr_tool->y2) / 2;
+  tr_tool->cx = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
+  tr_tool->cy = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
 
   if (tr_tool->use_grid)
     {
@@ -1053,23 +1055,23 @@ gimp_transform_tool_setup_grid (GimpTransformTool *tr_tool,
 
   for (i = 1; i <= tr_tool->ngx; i++)
     {
-      coords[gci] = tr_tool->x1 +
-	((gdouble) i) / (tr_tool->ngx + 1) *
-	(tr_tool->x2 - tr_tool->x1);
-      coords[gci+1] = tr_tool->y1;
-      coords[gci+2] = coords[gci];
-      coords[gci+3] = tr_tool->y2;
+      coords[gci]     = tr_tool->x1 + (((gdouble) i) / (tr_tool->ngx + 1) *
+                                       (tr_tool->x2 - tr_tool->x1));
+      coords[gci + 1] = tr_tool->y1;
+      coords[gci + 2] = coords[gci];
+      coords[gci + 3] = tr_tool->y2;
+
       gci += 4;
     }
 
   for (i = 1; i <= tr_tool->ngy; i++)
     {
-      coords[gci] = tr_tool->x1;
-      coords[gci+1] = tr_tool->y1 +
-	((gdouble) i) / (tr_tool->ngy + 1) *
-	(tr_tool->y2 - tr_tool->y1);
-      coords[gci+2] = tr_tool->x2;
-      coords[gci+3] = coords[gci+1];
+      coords[gci]     = tr_tool->x1;
+      coords[gci + 1] = tr_tool->y1 + (((gdouble) i) / (tr_tool->ngy + 1) *
+                                       (tr_tool->y2 - tr_tool->y1));
+      coords[gci + 2] = tr_tool->x2;
+      coords[gci + 3] = coords[gci + 1];
+
       gci += 4;
     }
 }
