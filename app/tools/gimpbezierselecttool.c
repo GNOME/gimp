@@ -53,7 +53,6 @@
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "errors.h"
 #include "gimprc.h"
 #include "path.h"
 #include "pathP.h"
@@ -628,9 +627,8 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
       break;
 
     case BEZIER_EDIT:
-      if (!bezier_sel->closed)
-	gimp_fatal_error ("gimp_bezier_select_tool_button_press(): Tried to edit "
-			  "on open bezier curve in edit selection");
+      if (! bezier_sel->closed)
+	g_error ("Tried to edit on open bezier curve in edit selection");
 
       /* erase the handles */
       bezier_sel->draw_mode = BEZIER_DRAW_ALL; 
@@ -897,8 +895,7 @@ gimp_bezier_select_tool_motion (GimpTool        *tool,
 	    }
 
 	  if (! anchor)
-	    gimp_fatal_error ("bezier_select_motion(): Encountered orphaned "
-			      "bezier control point");
+	    g_error ("Encountered orphaned bezier control point");
 
 	  if (opposite_control)
 	    {
@@ -2404,8 +2401,8 @@ bezier_draw_segment (GimpBezierSelectTool     *bezier_sel,
 
   for (i = 0; i < 4; i++)
     {
-      if (!points)
-	gimp_fatal_error ("bezier_draw_segment(): Bad bezier segment");
+      if (! points)
+	g_error ("Bad bezier segment");
 
       switch (space)
 	{
@@ -2422,7 +2419,7 @@ bezier_draw_segment (GimpBezierSelectTool     *bezier_sel,
 	  geometry[i][1] = points->sy;
 	  break;
 	default:
-	  gimp_fatal_error ("bezier_draw_segment(): Unknown coordinate space: %d", space);
+	  g_error ("Unknown coordinate space: %d", space);
 	  break;
 	}
 
@@ -2568,8 +2565,8 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
   gint         x, x2, w;
   gint         i, j;
 
-  if (!bezier_sel->closed)
-    gimp_fatal_error ("bezier_convert(): tried to convert an open bezier curve");
+  if (! bezier_sel->closed)
+    g_error ("tried to convert an open bezier curve");
 
   /* destroy previous mask */
   if (bezier_sel->mask)
@@ -3074,7 +3071,7 @@ test_add_point_on_segment (GimpBezierSelectTool  *bezier_sel,
 	  geometry[i][1] = points->sy;
 	  break;
 	default:
-	  gimp_fatal_error ("test_add_point_on_segment(): Unknown coordinate space: %d", space);
+	  g_error ("Unknown coordinate space: %d", space);
 	  break;
 	}
 
@@ -3606,8 +3603,8 @@ bezier_draw_segment_for_distance (GimpBezierSelectTool     *bezier_sel,
 
   for (i = 0; i < 4; i++)
     {
-      if (!points)
-	gimp_fatal_error ("bezier_draw_segment_for_distance(): Bad bezier segment");
+      if (! points)
+	g_error ("Bad bezier segment");
 
       geometry[i][0] = points->x;
       geometry[i][1] = points->y;

@@ -37,6 +37,10 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-in.h"
+
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -44,14 +48,13 @@
 
 #include "tools/gimpbezierselecttool.h"
 
-#include "ops_buttons.h"
 #include "paths-dialog.h"
 
 #include "gimprc.h"
+#include "ops_buttons.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"
-#include "plug_in.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

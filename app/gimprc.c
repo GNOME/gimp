@@ -47,21 +47,20 @@
 #include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
-#include "tools/gimptool.h"
+#include "plug-in/plug-in.h"
 
 #include "widgets/gimpdialogfactory.h"
+
+#include "tools/gimptool.h"
 
 #include "gui/color-notebook.h"
 #include "gui/menus.h"
 
 #include "app_procs.h"
-#include "appenv.h"
 #include "devices.h"
-#include "errors.h"
 #include "general.h"
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -455,23 +454,25 @@ parse_add_directory_tokens (void)
 }
 
 void
-gimprc_parse (Gimp *gimp)
+gimprc_parse (Gimp        *gimp,
+              const gchar *cmdline_system_gimprc,
+              const gchar *cmdline_gimprc)
 {
   gchar *libfilename;
   gchar *filename;
 
   parse_add_directory_tokens ();
 
-  if (alternate_system_gimprc)
-    libfilename = g_strdup (alternate_system_gimprc);
+  if (cmdline_system_gimprc)
+    libfilename = g_strdup (cmdline_system_gimprc);
   else
     libfilename = g_strdup (gimp_system_rc_file ());
 
   if (! gimprc_parse_file (libfilename))
     g_message ("Can't open '%s' for reading.", libfilename);
 
-  if (alternate_gimprc != NULL) 
-    filename = g_strdup (alternate_gimprc);
+  if (cmdline_gimprc != NULL) 
+    filename = g_strdup (cmdline_gimprc);
   else 
     filename = gimp_personal_rc_file ("gimprc");
 
@@ -496,7 +497,7 @@ parse_absolute_gimprc_file (const gchar *filename)
   if (! parse_info.fp)
     return FALSE;
 
-  if (be_verbose)
+  if (the_gimp->be_verbose)
     g_print (_("parsing \"%s\"\n"), filename);
 
   cur_token  = -1;
@@ -1986,7 +1987,7 @@ transform_path (gchar    *path,
 		}
 	      else
 		{
-		  gimp_terminate ("transform_path(): gimprc token referenced but not defined: %s", token);
+		  g_error ("gimprc token referenced but not defined: %s", token);
 		}
 	    }
 	  tmp2 = transform_path ((gchar *) tmp2, FALSE);

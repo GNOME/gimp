@@ -24,6 +24,7 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "base/base-types.h"
+#include "pdb/pdb-types.h"
 #include "plug-in/plug-in-types.h"
 
 #include "undo_types.h"  /* EEK */

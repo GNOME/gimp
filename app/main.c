@@ -62,23 +62,23 @@ static void   gimp_sigchld_handler  (gint sig_num);
 
 
 /*  command line options  */
-gboolean         no_interface            = FALSE;
-gboolean         no_data                 = FALSE;
-gboolean         no_splash               = FALSE;
-gboolean         no_splash_image         = FALSE;
-gboolean         be_verbose              = FALSE;
-gboolean         use_shm                 = FALSE;
-gboolean         use_debug_handler       = FALSE;
-gboolean         console_messages        = FALSE;
-gboolean         restore_session         = FALSE;
-StackTraceMode   stack_trace_mode        = STACK_TRACE_QUERY;
-gchar           *alternate_gimprc        = NULL;
-gchar           *alternate_system_gimprc = NULL;
-gchar          **batch_cmds              = NULL;
+gboolean             no_interface            = FALSE;
+gboolean             no_data                 = FALSE;
+gboolean             no_splash               = FALSE;
+gboolean             no_splash_image         = FALSE;
+gboolean             be_verbose              = FALSE;
+gboolean             use_shm                 = FALSE;
+gboolean             use_debug_handler       = FALSE;
+gboolean             console_messages        = FALSE;
+gboolean             restore_session         = FALSE;
+GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
+gchar               *alternate_gimprc        = NULL;
+gchar               *alternate_system_gimprc = NULL;
+gchar              **batch_cmds              = NULL;
 
 /*  other global variables  */
-gchar              *prog_name       = NULL;  /* our executable name */
-MessageHandlerType  message_handler = CONSOLE;
+gchar                  *prog_name       = NULL;  /* our executable name */
+GimpMessageHandlerType  message_handler = GIMP_CONSOLE;
 
 
 /*
@@ -298,11 +298,11 @@ main (int    argc,
           else 
             {
 	      if (! strcmp (argv[i], "never"))
-		stack_trace_mode = STACK_TRACE_NEVER;
+		stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 	      else if (! strcmp (argv[i], "query"))
-		stack_trace_mode = STACK_TRACE_QUERY;
+		stack_trace_mode = GIMP_STACK_TRACE_QUERY;
 	      else if (! strcmp (argv[i], "always"))
-		stack_trace_mode = STACK_TRACE_ALWAYS;
+		stack_trace_mode = GIMP_STACK_TRACE_ALWAYS;
 	      else
 		show_help = TRUE;
 
@@ -403,6 +403,14 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
+  g_log_set_handler ("Gimp-PDB",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     NULL);
+  g_log_set_handler ("Gimp-Plug-In",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     NULL);
   g_log_set_handler ("Gimp-File",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
@@ -411,19 +419,15 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
-  g_log_set_handler ("Gimp-PDB",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
   g_log_set_handler ("Gimp-Widgets",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
-  g_log_set_handler ("Gimp-Tools",
+  g_log_set_handler ("Gimp-Display",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
-  g_log_set_handler ("Gimp-Display",
+  g_log_set_handler ("Gimp-Tools",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
@@ -498,7 +502,6 @@ WinMain (struct HINSTANCE__ *hInstance,
 
 
 #ifndef G_OS_WIN32
-
 
 /* gimp core signal handler for fatal signals */
 

@@ -36,8 +36,6 @@
 #include "gimpimage.h"
 #include "gimpgradient.h"
 
-#include "errors.h"
-
 #include "libgimp/gimpintl.h"
 
 

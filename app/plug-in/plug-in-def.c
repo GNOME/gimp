@@ -84,7 +84,7 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-#include "display/display-types.h"
+#include "plug-in-types.h"
 
 #include "base/tile.h"
 #include "base/tile-manager.h"
@@ -96,6 +96,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/widgets-types.h"
+
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -104,12 +106,11 @@
 #include "gui/gradient-select.h"
 #include "gui/pattern-select.h"
 
+#include "plug-in.h"
+
 #include "app_procs.h"
-#include "appenv.h"
-#include "errors.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
-#include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -382,7 +383,7 @@ plug_in_init (Gimp               *gimp,
 	{
 	  write_pluginrc = TRUE;
 
-	  if (be_verbose)
+	  if (gimp->be_verbose)
 	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
 
 	  plug_in_query (plug_in_def);
@@ -422,7 +423,7 @@ plug_in_init (Gimp               *gimp,
   /* write the pluginrc file if necessary */
   if (write_pluginrc)
     {
-      if (be_verbose)
+      if (gimp->be_verbose)
 	g_print (_("writing \"%s\"\n"), filename);
 
       plug_in_write_rc (filename);
@@ -440,7 +441,7 @@ plug_in_init (Gimp               *gimp,
     }
 
   /* run the available extensions */
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print (_("Starting extensions: "));
 
   (* status_callback) (_("Extensions"), "", 0);
@@ -457,7 +458,7 @@ plug_in_init (Gimp               *gimp,
 	  (proc_def->db_info.num_args == 0) &&
 	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
 	{
-	  if (be_verbose)
+	  if (gimp->be_verbose)
 	    g_print ("%s ", proc_def->db_info.name);
 
 	  (* status_callback) (NULL, proc_def->db_info.name, nth / nplugins);
@@ -466,7 +467,7 @@ plug_in_init (Gimp               *gimp,
 	}
     }
 
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print ("\n");
 
   /* create help path list and free up stuff */
@@ -1087,7 +1088,7 @@ plug_in_open (PlugIn *plug_in)
 	  plug_in->args[4] = g_strdup ("-run");
 	}
 
-      plug_in->args[5] = g_strdup_printf ("%d", (gint) stack_trace_mode);
+      plug_in->args[5] = g_strdup_printf ("%d", the_gimp->stack_trace_mode);
 
       /* Fork another process. We'll remember the process id
        *  so that we can later use it to kill the filter if

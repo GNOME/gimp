@@ -20,7 +20,8 @@
 #define __BATCH_H__
 
 
-void   batch_init (Gimp *gimp);
+void   batch_init (Gimp   *gimp,
+                   gchar **batch_cmds);
 
 
 #endif /* __BATCH_H__ */

@@ -28,7 +28,7 @@
 
 #include "core/gimp.h"
 
-#include "plug_in.h"
+#include "plug-in/plug-in.h"
 
 #include "procedural_db.h"
 

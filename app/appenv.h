@@ -20,38 +20,23 @@
 #define __APPENV_H__
 
 
-typedef enum
-{
-  MESSAGE_BOX,
-  CONSOLE,
-  ERROR_CONSOLE
-} MessageHandlerType;
-
-typedef enum
-{
-  STACK_TRACE_NEVER,
-  STACK_TRACE_QUERY,
-  STACK_TRACE_ALWAYS
-} StackTraceMode;
-
-
 /*  command line options  */
-extern gboolean         no_interface;
-extern gboolean         no_splash;
-extern gboolean         no_splash_image;
-extern gboolean         no_data;
-extern gboolean         be_verbose;
-extern gboolean         use_debug_handler;
-extern gboolean         console_messages;
-extern gboolean         restore_session;
-extern StackTraceMode   stack_trace_mode;
-extern gchar           *alternate_gimprc;
-extern gchar           *alternate_system_gimprc;
-extern gchar          **batch_cmds;
+extern gboolean             no_interface;
+extern gboolean             no_splash;
+extern gboolean             no_splash_image;
+extern gboolean             no_data;
+extern gboolean             be_verbose;
+extern gboolean             use_debug_handler;
+extern gboolean             console_messages;
+extern gboolean             restore_session;
+extern GimpStackTraceMode   stack_trace_mode;
+extern gchar               *alternate_gimprc;
+extern gchar               *alternate_system_gimprc;
+extern gchar              **batch_cmds;
 
 /*  other global variables  */
-extern gchar              *prog_name;
-extern MessageHandlerType  message_handler;
+extern gchar                  *prog_name;
+extern GimpMessageHandlerType  message_handler;
 
 
 #endif /*  __APPENV_H__  */

@@ -30,13 +30,15 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-in.h"
+
 #include "xcf.h"
 #include "xcf-private.h"
 #include "xcf-load.h"
 #include "xcf-read.h"
 #include "xcf-save.h"
-
-#include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
 

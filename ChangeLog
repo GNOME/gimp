@@ -1,5 +1,83 @@
 2001-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/plug_in.[ch]: removed...
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/plug-in.[ch]: ...and added here.
+
+	* app/appenv.h: removed StackTraceMode and MessageHandlerType...
+
+	* libgimpbase/gimpbasetypes.h: ...and added them here.
+
+	* tools/pdbgen/Makefile.am: don't scan "app/apptypes.h" for enums.
+
+	* tools/pdbgen/enumcode.pl: added a general check to prevent
+	enums which are defined in libgimp* from being written to
+	"libgimp/gimpenums.c".
+
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/core-types.h: include "pdb/pdb-types.h" so including
+	"core/core-types.h" gets the whole core type space.
+
+	* app/core/gimp.[ch]: added a "stack_trace_mode" parameter to the
+	constructor and store it in the Gimp struct because the value is
+	also passed to plug-ins and nobody should include "appenv.h".
+
+	* app/gimprc.[ch]: pass the alternate_system_gimprc and
+	alternate_gimprc filenames from the command line to gimprc_prase()
+	so we don't need to include "appenv.h".
+
+	* app/batch.[ch]: pass the "batch_cmds" as parameter, don't
+	include "append.h".
+
+	* app/app_procs.c: pass more parameters around.
+
+	* app/devices.c
+	* app/errors.c
+	* app/gimphelp.c
+	* app/main.c
+	* app/core/gimpgradient.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/file/file-utils.c
+	* app/gui/commands.c
+	* app/gui/error-console-dialog.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/paths-dialog.c
+	* app/gui/user-install-dialog.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/xinput_airbrush.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/message.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly:
+
+	- changed "plug-in.h" include where needed.
+	- don't call gimp_fatal_error() directly, it's called via the log
+	  handler when calling g_error().
+	- don't incude "errors.h" except from main.c.
+	- changed stack_trace and message_handler enum names.
+	- get "stack_trace_mode" from Gimp.
+	- removed many inclusions of "appenv.h".
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/help_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db.c: regenerated.
+
+2001-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/Makefile.am
 	* app/display/gximage.[ch]: removed. It was a wrapper around
 	nothing since we use GdkRGB.

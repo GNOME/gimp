@@ -120,6 +120,7 @@ gimp_init (Gimp *gimp)
   gimp->be_verbose              = FALSE;
   gimp->no_data                 = FALSE;
   gimp->no_interface            = FALSE;
+  gimp->stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
 
   gimp->main_loops              = NULL;
 
@@ -320,17 +321,19 @@ gimp_finalize (GObject *object)
 }
 
 Gimp *
-gimp_new (gboolean be_verbose,
-          gboolean no_data,
-          gboolean no_interface)
+gimp_new (gboolean           be_verbose,
+          gboolean           no_data,
+          gboolean           no_interface,
+          GimpStackTraceMode stack_trace_mode)
 {
   Gimp *gimp;
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
-  gimp->be_verbose   = be_verbose   ? TRUE : FALSE;
-  gimp->no_data      = no_data      ? TRUE : FALSE;
-  gimp->no_interface = no_interface ? TRUE : FALSE;
+  gimp->be_verbose       = be_verbose   ? TRUE : FALSE;
+  gimp->no_data          = no_data      ? TRUE : FALSE;
+  gimp->no_interface     = no_interface ? TRUE : FALSE;
+  gimp->stack_trace_mode = stack_trace_mode;
 
   return gimp;
 }

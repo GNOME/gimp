@@ -49,6 +49,7 @@ struct _Gimp
   gboolean               be_verbose;
   gboolean               no_data;
   gboolean               no_interface;
+  GimpStackTraceMode     stack_trace_mode;
 
   GList                 *main_loops;
 
@@ -128,7 +129,8 @@ GType         gimp_get_type             (void) G_GNUC_CONST;
 
 Gimp        * gimp_new                  (gboolean            be_verbose,
                                          gboolean            no_data,
-                                         gboolean            no_interface);
+                                         gboolean            no_interface,
+                                         GimpStackTraceMode  stack_trace_mode);
 
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);

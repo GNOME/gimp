@@ -54,11 +54,11 @@ gimp_message_log_func (const gchar    *log_domain,
     {
       switch (message_handler)
 	{
-	case MESSAGE_BOX:
+	case GIMP_MESSAGE_BOX:
 	  gimp_message_box ((gchar *) message, NULL, NULL);
 	  break;
 
-	case ERROR_CONSOLE:
+	case GIMP_ERROR_CONSOLE:
 	  gimp_dialog_factory_dialog_raise (global_dock_factory,
 					    "gimp:error-console", -1);
 	  error_console_add ((gchar *) message);
@@ -100,10 +100,10 @@ gimp_fatal_error (const gchar *fmt, ...)
 
   switch (stack_trace_mode)
     {
-    case STACK_TRACE_NEVER:
+    case GIMP_STACK_TRACE_NEVER:
       break;
 
-    case STACK_TRACE_QUERY:
+    case GIMP_STACK_TRACE_QUERY:
       {
 	sigset_t sigset;
 
@@ -113,7 +113,7 @@ gimp_fatal_error (const gchar *fmt, ...)
       }
       break;
 
-    case STACK_TRACE_ALWAYS:
+    case GIMP_STACK_TRACE_ALWAYS:
       {
 	sigset_t sigset;
 
@@ -156,10 +156,10 @@ gimp_terminate (const gchar *fmt, ...)
     {
       switch (stack_trace_mode)
 	{
-	case STACK_TRACE_NEVER:
+	case GIMP_STACK_TRACE_NEVER:
 	  break;
 
-	case STACK_TRACE_QUERY:
+	case GIMP_STACK_TRACE_QUERY:
 	  {
 	    sigset_t sigset;
 
@@ -169,7 +169,7 @@ gimp_terminate (const gchar *fmt, ...)
 	  }
 	  break;
 
-	case STACK_TRACE_ALWAYS:
+	case GIMP_STACK_TRACE_ALWAYS:
 	  {
 	    sigset_t sigset;
 

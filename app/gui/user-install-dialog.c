@@ -352,7 +352,7 @@ user_install_continue_callback (GtkWidget *widget,
 #endif
       gimprc_init (gimp);
       gimp_unitrc_load (gimp);
-      gimprc_parse (gimp);
+      gimprc_parse (gimp, alternate_system_gimprc, alternate_gimprc);
       user_install_tuning ();
       break;
 

@@ -21,7 +21,6 @@
 
 
 #include "core/core-types.h"
-#include "pdb/pdb-types.h"
 
 
 typedef enum

@@ -30,7 +30,7 @@
 #include "procedural_db.h"
 
 #include "gimphelp.h"
-#include "plug_in.h"
+#include "plug-in/plug-in.h"
 
 static ProcRecord help_proc;
 

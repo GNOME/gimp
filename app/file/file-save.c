@@ -43,10 +43,13 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-in.h"
+
 #include "file-save.h"
 #include "file-utils.h"
 
-#include "plug_in.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -247,13 +247,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_MESSAGE_BOX,
-  GIMP_CONSOLE,
-  GIMP_ERROR_CONSOLE
-} GimpMessageHandlerType;
-
-typedef enum
-{
   GIMP_HORIZONTAL,
   GIMP_VERTICAL,
   GIMP_UNKNOWN
@@ -284,13 +277,6 @@ typedef enum
   GIMP_PIXELS,
   GIMP_POINTS
 } GimpSizeType;
-
-typedef enum
-{
-  GIMP_STACK_TRACE_NEVER,
-  GIMP_STACK_TRACE_QUERY,
-  GIMP_STACK_TRACE_ALWAYS
-} GimpStackTraceMode;
 
 
 G_END_DECLS

@@ -44,7 +44,6 @@
 
 #include "gimprc.h"
 #include "nav_window.h"
-#include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
 

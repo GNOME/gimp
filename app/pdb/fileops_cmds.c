@@ -45,7 +45,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "file/file-utils.h"
-#include "plug_in.h"
+#include "plug-in/plug-in.h"
 
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;

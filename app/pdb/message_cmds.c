@@ -30,6 +30,8 @@
 
 #include "appenv.h"
 
+#include "libgimpbase/gimpbasetypes.h"
+
 static ProcRecord message_proc;
 static ProcRecord message_get_handler_proc;
 static ProcRecord message_set_handler_proc;
@@ -129,7 +131,7 @@ message_set_handler_invoker (Gimp     *gimp,
   gint32 handler;
 
   handler = args[0].value.pdb_int;
-  if (handler < MESSAGE_BOX || handler > ERROR_CONSOLE)
+  if (handler < GIMP_MESSAGE_BOX || handler > GIMP_ERROR_CONSOLE)
     success = FALSE;
 
   if (success)

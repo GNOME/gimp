@@ -58,13 +58,6 @@ config_sources = \
 	gimprc.h
 
 ##
-## stuff for plug-in/
-##
-plug_in_sources = \
-	plug_in.c		\
-	plug_in.h
-
-##
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
@@ -101,7 +94,6 @@ gimp_1_3_SOURCES = @STRIP_BEGIN@ \
 	$(core_ui_sources)	\
 	$(core_sources)		\
 	$(config_sources)	\
-	$(plug_in_sources)	\
 	$(bye_sources)		\
 	$(stuff_sources)	\
 @STRIP_END@

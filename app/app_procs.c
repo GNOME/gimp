@@ -41,6 +41,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpunit.h"
 
+#include "plug-in/plug-in.h"
+
 #include "file/file-open.h"
 
 #include "display/gimpdisplay-foreach.h"
@@ -54,14 +56,8 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "errors.h"
 #include "gimprc.h"
-#include "plug_in.h"
 #include "undo.h"
-
-#ifdef DISPLAY_FILTERS
-#include "gdisplay_color.h"
-#endif /* DISPLAY_FILTERS */
 
 #include "libgimp/gimpintl.h"
 
@@ -91,7 +87,10 @@ app_init (gint    gimp_argc,
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new (be_verbose, no_data, no_interface);
+  the_gimp = gimp_new (be_verbose,
+                       no_data,
+                       no_interface,
+                       stack_trace_mode);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -124,7 +123,7 @@ app_init (gint    gimp_argc,
       gimp_unitrc_load (the_gimp);
 
       /*  parse the local GIMP configuration file  */
-      gimprc_parse (the_gimp);
+      gimprc_parse (the_gimp, alternate_system_gimprc, alternate_gimprc);
     }
 
   /*  initialize lowlevel stuff  */
@@ -167,7 +166,7 @@ app_init (gint    gimp_argc,
 	splash_destroy ();
 
       /*  FIXME: This needs to go in preferences  */
-      message_handler = MESSAGE_BOX;
+      message_handler = GIMP_MESSAGE_BOX;
 
       gui_restore (the_gimp, restore_session);
     }
@@ -187,7 +186,7 @@ app_init (gint    gimp_argc,
         }
     }
 
-  batch_init (the_gimp);
+  batch_init (the_gimp, batch_cmds);
 
   if (! no_interface)
     {
@@ -224,7 +223,7 @@ app_init_update_status (const gchar *text1,
 static void
 app_exit_finish (void)
 {
-  message_handler = CONSOLE;
+  message_handler = GIMP_CONSOLE;
 
   if (! no_interface)
     {

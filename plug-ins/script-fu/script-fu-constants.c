@@ -103,6 +103,10 @@ init_generated_constants (void)
   setvar (cintern ("INDEXED-IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA-IMAGE"), flocons (5), NIL);
 
+  setvar (cintern ("MESSAGE-BOX"), flocons (0), NIL);
+  setvar (cintern ("CONSOLE"), flocons (1), NIL);
+  setvar (cintern ("ERROR-CONSOLE"), flocons (2), NIL);
+
   setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
   setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
 
@@ -140,6 +144,10 @@ init_generated_constants (void)
   setvar (cintern ("PDB-PASS-THROUGH"), flocons (2), NIL);
   setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
   setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
+
+  setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
+  setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
+  setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
 
   setvar (cintern ("SHADOWS"), flocons (0), NIL);
   setvar (cintern ("MIDTONES"), flocons (1), NIL);
@@ -211,10 +219,6 @@ init_generated_constants (void)
   setvar (cintern ("CLIP-TO-BOTTOM-LAYER"), flocons (2), NIL);
   setvar (cintern ("FLATTEN-IMAGE"), flocons (3), NIL);
 
-  setvar (cintern ("MESSAGE-BOX"), flocons (0), NIL);
-  setvar (cintern ("CONSOLE"), flocons (1), NIL);
-  setvar (cintern ("ERROR-CONSOLE"), flocons (2), NIL);
-
   setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
   setvar (cintern ("VERTICAL"), flocons (1), NIL);
   setvar (cintern ("UNKNOWN"), flocons (2), NIL);
@@ -232,10 +236,6 @@ init_generated_constants (void)
 
   setvar (cintern ("PIXELS"), flocons (0), NIL);
   setvar (cintern ("POINTS"), flocons (1), NIL);
-
-  setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
-  setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
-  setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
 
   return;
 }

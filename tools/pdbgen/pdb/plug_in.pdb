@@ -324,9 +324,6 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "plug_in.h" "regexrepl/regex.h"
-	      <string.h> <stdlib.h>);
-
 $extra{app}->{code} = <<'CODE';
 static int
 match_strings (regex_t *preg,
@@ -335,6 +332,9 @@ match_strings (regex_t *preg,
   return regexec (preg, a, 0, NULL, 0);
 }
 CODE
+
+@headers = qw(<string.h> <stdlib.h> "regexrepl/regex.h"
+              "core/gimp.h" "plug-in/plug-in.h");
 
 @procs = qw(progress_init progress_update temp_PDB_name plugins_query
 	    plugin_domain_register plugin_help_register);

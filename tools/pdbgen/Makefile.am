@@ -50,17 +50,16 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../libgimpbase/gimpbasetypes.h	\
-	../../app/appenv.h			\
-	../../app/paint-funcs/paint-funcs.h	\
-	../../app/base/base-types.h		\
-	../../app/core/core-types.h		\
-	../../app/plug-in/plug-in-types.h	\
-	../../app/tools/tools-types.h		\
-	../../app/tools/gimpclonetool.h		\
-	../../app/tools/gimpconvolvetool.h	\
-	../../app/tools/gimpdodgeburntool.h	\
-	../../app/tools/gimphuesaturationtool.h	\
+	../../libgimpbase/gimpbasetypes.h		\
+	../../app/paint-funcs/paint-funcs-types.h	\
+	../../app/base/base-types.h			\
+	../../app/core/core-types.h			\
+	../../app/plug-in/plug-in-types.h		\
+	../../app/tools/tools-types.h			\
+	../../app/tools/gimpclonetool.h			\
+	../../app/tools/gimpconvolvetool.h		\
+	../../app/tools/gimpdodgeburntool.h		\
+	../../app/tools/gimphuesaturationtool.h		\
 	../../app/tools/gimptexttool.h
 
 pdb_scripts = \

@@ -41,10 +41,13 @@
 #include "core/gimpimage.h"
 #include "core/gimpdocuments.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-in.h"
+
 #include "file-open.h"
 #include "file-utils.h"
 
-#include "plug_in.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

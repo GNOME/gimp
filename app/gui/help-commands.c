@@ -24,9 +24,9 @@
 
 #include "core/core-types.h"
 
-#include "commands.h"
+#include "plug-in/plug-in.h"
 
-#include "plug_in.h"
+#include "commands.h"
 
 
 /*****  Filters  *****/

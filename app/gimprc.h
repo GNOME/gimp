@@ -75,7 +75,9 @@ extern GimpRc gimprc;
  */
 gboolean      gimprc_init         (Gimp         *gimp);
 
-void          gimprc_parse        (Gimp         *gimp);
+void          gimprc_parse        (Gimp         *gimp,
+                                   const gchar  *cmdline_system_gimprc,
+                                   const gchar  *cmdline_gimprc);
 void          gimprc_save         (GList       **updated_options,
 				   GList       **conflicting_options);
 

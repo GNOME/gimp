@@ -128,22 +128,28 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_SUCCESS => 'PDB_SUCCESS',
 		       GIMP_PDB_CANCEL => 'PDB_CANCEL' }
 	},
-    MessageHandlerType =>
+    GimpMessageHandlerType =>
 	{ contig => 1,
-	  header => 'appenv.h',
-	  symbols => [ qw(MESSAGE_BOX CONSOLE ERROR_CONSOLE) ],
-	  mapping => { MESSAGE_BOX => '0',
-		       CONSOLE => '1',
-		       ERROR_CONSOLE => '2' }
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_MESSAGE_BOX GIMP_CONSOLE GIMP_ERROR_CONSOLE) ],
+	  mapping => { GIMP_MESSAGE_BOX => '0',
+		       GIMP_CONSOLE => '1',
+		       GIMP_ERROR_CONSOLE => '2' },
+	  nicks   => { GIMP_MESSAGE_BOX => 'MESSAGE_BOX',
+		       GIMP_CONSOLE => 'CONSOLE',
+		       GIMP_ERROR_CONSOLE => 'ERROR_CONSOLE' }
 	},
-    StackTraceMode =>
+    GimpStackTraceMode =>
 	{ contig => 1,
-	  header => 'appenv.h',
-	  symbols => [ qw(STACK_TRACE_NEVER STACK_TRACE_QUERY
-			  STACK_TRACE_ALWAYS) ],
-	  mapping => { STACK_TRACE_NEVER => '0',
-		       STACK_TRACE_QUERY => '1',
-		       STACK_TRACE_ALWAYS => '2' }
+	  header => 'libgimpbase/gimpbasetypes.h',
+	  symbols => [ qw(GIMP_STACK_TRACE_NEVER GIMP_STACK_TRACE_QUERY
+			  GIMP_STACK_TRACE_ALWAYS) ],
+	  mapping => { GIMP_STACK_TRACE_NEVER => '0',
+		       GIMP_STACK_TRACE_QUERY => '1',
+		       GIMP_STACK_TRACE_ALWAYS => '2' },
+	  nicks   => { GIMP_STACK_TRACE_NEVER => 'STACK_TRACE_NEVER',
+		       GIMP_STACK_TRACE_QUERY => 'STACK_TRACE_QUERY',
+		       GIMP_STACK_TRACE_ALWAYS => 'STACK_TRACE_ALWAYS' }
 	},
     LayerModeEffects =>
 	{ contig => 1,

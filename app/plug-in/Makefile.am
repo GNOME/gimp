@@ -4,9 +4,9 @@ noinst_LIBRARIES = libappplug-in.a
 
 libappplug_in_a_SOURCES = @STRIP_BEGIN@ \
 	plug-in-types.h \
+	plug-in.c	\
+	plug-in.h	\
 @STRIP_END@
-##	plug-in.c	\
-##	plug-in.h	\
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DG_LOG_DOMAIN=\"Gimp-Plug-In\"	\

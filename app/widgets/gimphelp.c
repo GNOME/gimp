@@ -34,10 +34,11 @@
 
 #include "core/core-types.h"
 
+#include "plug-in/plug-in.h"
+
 #include "app_procs.h"
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "plug_in.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -54,7 +55,9 @@ struct _GimpIdleHelp
   gchar *help_data;
 };
 
+
 /*  local function prototypes  */
+
 static gint      gimp_idle_help     (gpointer     data);
 static gboolean  gimp_help_internal (const gchar *help_path,
 				     const gchar *current_locale,
@@ -63,9 +66,8 @@ static void      gimp_help_netscape (const gchar *help_path,
 				     const gchar *current_locale,
 				     const gchar *help_data);
 
-/**********************/
+
 /*  public functions  */
-/**********************/
 
 /*  The standard help function  */
 void
@@ -95,9 +97,8 @@ gimp_help (const gchar *help_path,
     }
 }
 
-/*********************/
-/*  local functions  */
-/*********************/
+
+/*  private functions  */
 
 static gboolean
 gimp_idle_help (gpointer data)

@@ -38,6 +38,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "plug-in/plug-in.h"
+
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -47,7 +49,6 @@
 #include "file-save-dialog.h"
 
 #include "gimprc.h"
-#include "plug_in.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

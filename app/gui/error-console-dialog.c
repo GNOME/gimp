@@ -165,7 +165,7 @@ error_console_create (void)
 		    menu);
 
   /* FIXME: interact with preferences */
-  message_handler = ERROR_CONSOLE;
+  message_handler = GIMP_ERROR_CONSOLE;
 
   return error_console;
 }
@@ -177,7 +177,7 @@ error_console_add (const gchar *errormsg)
     {
       g_warning ("%s: error_console widget is NULL", G_STRLOC);
 
-      message_handler = MESSAGE_BOX;
+      message_handler = GIMP_MESSAGE_BOX;
       g_message (errormsg);
 
       return;
@@ -207,7 +207,7 @@ error_console_destroy_callback (gpointer data)
   error_console = NULL;
 
   /* FIXME: interact with preferences */
-  message_handler = MESSAGE_BOX;
+  message_handler = GIMP_MESSAGE_BOX;
 }
 
 static gboolean

@@ -25,7 +25,6 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
-#include "gui/gui-types.h" /* FIXME */
 
 #include "base/temp-buf.h"
 
@@ -40,11 +39,15 @@
 #include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 
+#include "plug-in/plug-in.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
+
+#include "gui/gui-types.h" /* FIXME */
 
 #include "gui/info-window.h"
 
@@ -63,7 +66,6 @@
 
 #include "gimprc.h"
 #include "nav_window.h"
-#include "plug_in.h"
 #include "undo.h"
 
 #ifdef DISPLAY_FILTERS

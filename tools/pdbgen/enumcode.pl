@@ -122,7 +122,7 @@ G_BEGIN_DECLS
 HEADER
 
 foreach (sort keys %enums) {
-    if (!/GimpPDB/ && !/GimpUnit/) {
+    if (! ($enums{$_}->{header} =~ /libgimp/)) {
 	print ENUMFILE "typedef enum\n{\n";
 	my $enum = $enums{$_}; my $body = "";
 	foreach $symbol (@{$enum->{symbols}}) {

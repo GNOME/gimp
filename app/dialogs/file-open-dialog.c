@@ -48,6 +48,8 @@
 #include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
 
+#include "plug-in/plug-in.h"
+
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
@@ -56,7 +58,6 @@
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
 
-#include "plug_in.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

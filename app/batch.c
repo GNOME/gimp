@@ -31,7 +31,6 @@
 
 #include "core/core-types.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
 
@@ -50,7 +49,8 @@ static ProcRecord *eval_proc;
 
 
 void
-batch_init (Gimp *gimp)
+batch_init (Gimp   *gimp,
+            gchar **batch_cmds)
 {
   gboolean read_from_stdin             = FALSE;
   gboolean perl_server_already_running = FALSE;

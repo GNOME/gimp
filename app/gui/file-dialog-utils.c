@@ -25,9 +25,11 @@
 
 #include "gui-types.h"
 
+#include "plug-in/plug-in.h"
+
 #include "widgets/gimpitemfactory.h"
 
-#include "plug_in.h"
+#include "file-dialog-utils.h"
 
 
 void

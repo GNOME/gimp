@@ -90,6 +90,20 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_PDB_CANCEL
 } GimpPDBStatusType;
 
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_MESSAGE_BOX,
+  GIMP_CONSOLE,
+  GIMP_ERROR_CONSOLE
+} GimpMessageHandlerType;
+
+typedef enum /*< chop=GIMP_ >*/
+{
+  GIMP_STACK_TRACE_NEVER,
+  GIMP_STACK_TRACE_QUERY,
+  GIMP_STACK_TRACE_ALWAYS
+} GimpStackTraceMode;
+
 
 G_END_DECLS
 

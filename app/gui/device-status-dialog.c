@@ -41,7 +41,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
-#include "appenv.h"
 #include "app_procs.h"
 #include "devices.h"
 #include "gimprc.h"
@@ -464,7 +463,7 @@ devices_rc_update (gchar        *name,
 	{
 	  gimp_context_set_brush (device_info->context, brush);
 	}
-      else if (no_data)
+      else if (the_gimp->no_data)
 	{
 	  g_free (device_info->context->brush_name);
 	  device_info->context->brush_name = g_strdup (brush_name);
@@ -483,7 +482,7 @@ devices_rc_update (gchar        *name,
 	{
 	  gimp_context_set_pattern (device_info->context, pattern);
 	}
-      else if (no_data)
+      else if (the_gimp->no_data)
 	{
 	  g_free (device_info->context->pattern_name);
 	  device_info->context->pattern_name = g_strdup (pattern_name);
@@ -502,7 +501,7 @@ devices_rc_update (gchar        *name,
 	{
 	  gimp_context_set_gradient (device_info->context, gradient);
 	}
-      else if (no_data)
+      else if (the_gimp->no_data)
 	{
 	  g_free (device_info->context->gradient_name);
 	  device_info->context->gradient_name = g_strdup (gradient_name);

@@ -31,7 +31,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "plug_in.h"
+#include "plug-in/plug-in.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>

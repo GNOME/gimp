@@ -50,9 +50,11 @@
 
 #include "core/gimpimage.h"
 
-#include "file-utils.h"
+#include "pdb/procedural_db.h"
 
-#include "plug_in.h"
+#include "plug-in/plug-in.h"
+
+#include "file-utils.h"
 
 
 static PlugInProcDef *

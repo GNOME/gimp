@@ -52,7 +52,7 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name => 'handler', type => 'enum MessageHandlerType',
+	{ name => 'handler', type => 'enum GimpMessageHandlerType',
 	  desc => 'The current handler type: { %%desc%% }',
 	  alias => 'message_handler', no_declare => 1 }
     );
@@ -69,7 +69,7 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'handler', type => 'enum MessageHandlerType',
+	{ name => 'handler', type => 'enum GimpMessageHandlerType',
 	  desc => 'The new handler type: { %%desc%% }' }
     );
 

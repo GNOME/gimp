@@ -21,8 +21,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "appenv.h"
-
 #include "airbrush_blob.h"
 #include "drawable.h"
 #include "draw_core.h"
