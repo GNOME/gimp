@@ -1,3 +1,8 @@
+2002-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/base/Makefile.am
+	* app/paint-funcs/Makefile.am: fixed my fix for automake-1.6 (#84514).
+
 2002-06-10  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: suggest to use the stable branches of gtk+ and friends.

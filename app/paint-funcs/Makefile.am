@@ -31,7 +31,7 @@ AM_ASFLAGS = \
 	-I$(top_srcdir)/app
 
 # for automake-1.6
-AM_CCASFLAGS = AM_ASFLAGS
+AM_CCASFLAGS = $(AM_ASFLAGS)
 
 INCLUDES = \
 	-I$(top_srcdir)		\
