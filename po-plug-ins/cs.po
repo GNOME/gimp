@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-02-11 06:09+0100\n"
+"POT-Creation-Date: 2004-03-11 03:43+0100\n"
+"PO-Revision-Date: 2004-03-11 10:28+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: plug-ins/common/AlienMap2.c:1152 plug-ins/gfig/gfig.c:2616
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:368
 msgid "About"
-msgstr "O programu"
+msgstr "O aplikaci"
 
 #. Preview
 #. Create the Preview
@@ -73,8 +73,10 @@ msgstr "O programu"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
 #: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
-#: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
+#: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Preview"
 msgstr "Náhled"
 
@@ -432,7 +434,7 @@ msgstr "_Fraktály"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -473,14 +475,13 @@ msgstr "Zapsat parametry fraktálu"
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
-#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
-#: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
+#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
+#: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
 #: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/helpbrowser/domain.c:256 plug-ins/xjt/xjt.c:2535
-#: plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
@@ -511,7 +512,7 @@ msgstr "Opravdu chcete odstranit \"%s\" ze seznamu a z disku?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:767
 msgid "Delete Fractal"
-msgstr "Smazat fraktál"
+msgstr "Odstranit fraktál"
 
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:844
@@ -554,7 +555,7 @@ msgstr "Výběr adresáře a aktualizace souhrnu"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1294
 msgid "Delete currently selected fractal"
-msgstr "Smazat právě zvolený fraktál"
+msgstr "Odstranit právě zvolený fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1345
 msgid "Rescan for Fractals"
@@ -701,7 +702,7 @@ msgstr "Poloha X světelného zdroje v prostoru XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
-#: plug-ins/common/svg.c:799 plug-ins/common/xbm.c:1241
+#: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y:"
@@ -4188,7 +4189,7 @@ msgid "Intersection"
 msgstr "Průnik"
 
 #. Width and Height
-#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:697
+#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
 #: plug-ins/print/gimp_main_window.c:1008
 #: plug-ins/print/gimp_main_window.c:1224
 msgid "Width:"
@@ -5767,7 +5768,7 @@ msgid "Rendering"
 msgstr "Vyobrazení"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:818
+#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1103
 msgid "Resolution:"
 msgstr "Rozlišení:"
@@ -6795,19 +6796,19 @@ msgstr "Zapsat jako SUNRAS"
 msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
 
-#: plug-ins/common/svg.c:243 plug-ins/common/svg.c:626
+#: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 msgid "Unknown reason"
 msgstr "Neznámý důvod"
 
-#: plug-ins/common/svg.c:247
+#: plug-ins/common/svg.c:249
 msgid "Rendering SVG..."
 msgstr "Vykresluji SVG..."
 
-#: plug-ins/common/svg.c:257
+#: plug-ins/common/svg.c:259
 msgid "Rendered SVG"
 msgstr "Vykreslené SVG"
 
-#: plug-ins/common/svg.c:422
+#: plug-ins/common/svg.c:424
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6815,51 +6816,51 @@ msgstr ""
 "Soubor SVG neurčuje\n"
 "velikost!"
 
-#: plug-ins/common/svg.c:428
+#: plug-ins/common/svg.c:430
 #, c-format
 msgid "%d x %d"
 msgstr "%d × %d"
 
-#: plug-ins/common/svg.c:632
+#: plug-ins/common/svg.c:634
 msgid "Open SVG"
 msgstr "Otevřít SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/svg.c:644
+#: plug-ins/common/svg.c:646
 msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
-#: plug-ins/common/svg.c:703 plug-ins/print/gimp_main_window.c:1025
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
 msgid "Height:"
 msgstr "Výška:"
 
-#: plug-ins/common/svg.c:777
+#: plug-ins/common/svg.c:779
 msgid "Ratio _X:"
 msgstr "Poměr _X:"
 
-#: plug-ins/common/svg.c:813
+#: plug-ins/common/svg.c:815
 msgid "Constrain aspect ratio"
 msgstr "Omezit poměr stran:"
 
-#: plug-ins/common/svg.c:824
+#: plug-ins/common/svg.c:826
 #, c-format
 msgid "pixels/%a"
 msgstr "pixely/%a"
 
 #. Path Import
-#: plug-ins/common/svg.c:844
+#: plug-ins/common/svg.c:846
 msgid "Import _Paths"
 msgstr "Importovat _cesty"
 
-#: plug-ins/common/svg.c:850
+#: plug-ins/common/svg.c:852
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
 
-#: plug-ins/common/svg.c:863
+#: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
 msgstr "Sloučit importované cesty"
 
@@ -7061,9 +7062,7 @@ msgstr "Zapsáno"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr ""
-"Definice jednotky bude zapsána před skončením programu GIMP pouze po "
-"zaškrtnutí tohoto sloupečku."
+msgstr "Definice jednotky bude zapsána před skončením GIMPu pouze po zaškrtnutí tohoto sloupečku."
 
 #: plug-ins/common/uniteditor.c:85
 msgid "ID"
@@ -7072,9 +7071,7 @@ msgstr "ID"
 #: plug-ins/common/uniteditor.c:85
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
-"Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
-"souboru programu GIMP."
+msgstr "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním souboru GIMPu."
 
 #: plug-ins/common/uniteditor.c:87
 msgid "Factor"
@@ -7380,7 +7377,7 @@ msgstr "Hlavní volby"
 msgid "Step Size:"
 msgstr "Velikost kroku:"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1290
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1293
 msgid "Iterations:"
 msgstr "Iterace:"
 
@@ -7739,7 +7736,7 @@ msgstr "Vykreslené WMF"
 
 #: plug-ins/common/xbm.c:240
 msgid "Created with The GIMP"
-msgstr "Vytvořeno v programu GIMP"
+msgstr "Vytvořeno v GIMPu"
 
 #: plug-ins/common/xbm.c:803
 #, c-format
@@ -8378,7 +8375,7 @@ msgstr "Kopírovat objekt"
 
 #: plug-ins/gfig/gfig.c:1524
 msgid "Delete an object"
-msgstr "Smazat objekt"
+msgstr "Odstranit objekt"
 
 #: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
 #: plug-ins/gfig/gfig.c:2978
@@ -8460,6 +8457,7 @@ msgstr "Popředí"
 
 #: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:127
 msgid "Copy"
 msgstr "Kopírovat"
@@ -8664,15 +8662,15 @@ msgstr "Objekt"
 
 #: plug-ins/gfig/gfig.c:2788
 msgid "Create a new Gfig object collection for editing"
-msgstr "Vytvořit nový souhrn Gfig objektů pro editaci"
+msgstr "Vytvořit nový souhrn objektů Gfig pro editaci"
 
 #: plug-ins/gfig/gfig.c:2798
 msgid "Load a single Gfig object collection"
-msgstr "Čtení jednotlivého souhrnu Gfig objektů"
+msgstr "Čtení jednotlivého souhrnu objektů Gfig"
 
 #: plug-ins/gfig/gfig.c:2806
 msgid "Edit Gfig object collection"
-msgstr "Úpravy souhrnu Gfig objektů"
+msgstr "Úpravy souhrnu objektů Gfig"
 
 #: plug-ins/gfig/gfig.c:2810
 msgid "_Merge"
@@ -8680,15 +8678,15 @@ msgstr "_Sloučit"
 
 #: plug-ins/gfig/gfig.c:2814
 msgid "Merge Gfig Object collection into the current edit session"
-msgstr "Vložení souhrnu Gfig objektů do současného sezení"
+msgstr "Vložení souhrnu objektů Gfig do současného sezení"
 
 #: plug-ins/gfig/gfig.c:2823
 msgid "Delete currently selected Gfig Object collection"
-msgstr "Smazat právě zvolený souhrn Gfig objektů"
+msgstr "Odstranit právě zvolený souhrn objektů Gfig"
 
 #: plug-ins/gfig/gfig.c:2833
 msgid "Select folder and rescan Gfig object collections"
-msgstr "Volba adresáře a aktualizace souhrnu Gfig objektů"
+msgstr "Volba adresáře a aktualizace souhrnu objektů Gfig"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:2860 plug-ins/gimpressionist/size.c:98
@@ -8716,16 +8714,16 @@ msgstr "%d neuložených objektů Gfig. Pokračovat s ukončením?"
 
 #: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
-msgstr "Zadejte jméno Gfig objektu"
+msgstr "Zadejte jméno objektu Gfig"
 
 #: plug-ins/gfig/gfig.c:3290
 msgid "Gfig Object Name:"
-msgstr "Jméno Gfig objektu:"
+msgstr "Jméno objektu Gfig:"
 
 #. the dialog
 #: plug-ins/gfig/gfig.c:3345
 msgid "Rescan for Gfig Objects"
-msgstr "Zaktualizovat Gfig objekty"
+msgstr "Aktualizovat objekty Gfig"
 
 #: plug-ins/gfig/gfig.c:3362
 msgid "Add Gfig Path"
@@ -8734,7 +8732,7 @@ msgstr "Přidat Gfig cestu"
 #. Load a single object
 #: plug-ins/gfig/gfig.c:3433
 msgid "Load Gfig object collection"
-msgstr "Načíst souhrn Gfig objektů"
+msgstr "Načíst souhrn objektů Gfig"
 
 #: plug-ins/gfig/gfig.c:3456
 msgid "Error in copy layer for onlayers"
@@ -8747,7 +8745,7 @@ msgstr "Gfig vrstva %d"
 
 #: plug-ins/gfig/gfig.c:3643
 msgid "About Gfig"
-msgstr "O programu Gfig"
+msgstr "O aplikaci Gfig"
 
 #: plug-ins/gfig/gfig.c:3670
 msgid "Gfig - GIMP plug-in"
@@ -8763,7 +8761,7 @@ msgstr "Nový objekt Gfig"
 
 #: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
-msgstr "Smazat gfig kresbu"
+msgstr "Odstranit kresbu gfig"
 
 #: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
@@ -8983,11 +8981,11 @@ msgstr "Jméno ,%s' je již použito!"
 
 #: plug-ins/gflare/gflare.c:3104
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Nelze smazat. Musí zde být alespoň jedna P-záře."
+msgstr "Nemohu odstranit!! Musí zde být alespoň jedna P-záře."
 
 #: plug-ins/gflare/gflare.c:3114
 msgid "Delete GFlare"
-msgstr "Smazat P-záři"
+msgstr "Odstranit P-záři"
 
 #: plug-ins/gflare/gflare.c:3171
 #, c-format
@@ -9306,7 +9304,7 @@ msgid "How much to blur the drop shadow"
 msgstr "Míra rozostření stínů"
 
 #: plug-ins/gimpressionist/general.c:210
-msgid "Deviation treshold:"
+msgid "Deviation threshold:"
 msgstr "Práh odchylky:"
 
 #: plug-ins/gimpressionist/general.c:214
@@ -9481,7 +9479,7 @@ msgstr "_Odstranit"
 
 #: plug-ins/gimpressionist/orientmap.c:541
 msgid "Delete selected vector"
-msgstr "Smazat vybraný vektor"
+msgstr "Odstranit vybraný vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:556
 msgid "_Normal"
@@ -9758,7 +9756,7 @@ msgstr "Přidat nový vektor mv"
 
 #: plug-ins/gimpressionist/sizemap.c:499
 msgid "Delete selected smvector"
-msgstr "Smazat zvolený vektor mv"
+msgstr "Odstranit zvolený vektor mv"
 
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Change the angle of the selected smvector"
@@ -9781,6 +9779,45 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr "Režim Voronoi bere v úvahu pouze vliv bodu nejbližšího vektor mv"
+
+#: plug-ins/help/domain.c:112
+#, c-format
+msgid ""
+"Failed to open help files:\n"
+"%s"
+msgstr ""
+"Nemohu otevřít soubory nápovědy:\n"
+"%s"
+
+#: plug-ins/help/domain.c:114
+#, c-format
+msgid ""
+"Parse error in help domain:\n"
+"%s\n"
+"\n"
+"(Added entires before error anyway)"
+msgstr ""
+"Chyba při zpracovávání domény nápovědy:\n"
+"%s\n"
+"\n"
+"(Přesto jsem přidal položky před chybou)"
+
+#: plug-ins/help/domain.c:129
+#, c-format
+msgid "Help ID '%s' unknown"
+msgstr "ID nápovědy '%s' není známo"
+
+#: plug-ins/help/domain.c:251
+msgid "The GIMP help files are not installed."
+msgstr "Soubory nápovědy GIMPu nejsou nainstalovány."
+
+#: plug-ins/help/domain.c:253
+msgid "The requested help files are not installed."
+msgstr "Požadované soubory nápovědy nejsou nainstalovány."
+
+#: plug-ins/help/domain.c:260
+msgid "Please check your installation."
+msgstr "Zkontrolujte prosím svou instalaci."
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -9810,45 +9847,6 @@ msgstr ""
 "To znamená, že toto téma nebylo ještě sepsáno, nebo vaše instalace není "
 "kompletní. Před nahlášením této chyby se ujistěte, že je vaše instalace "
 "kompletní."
-
-#: plug-ins/helpbrowser/domain.c:113
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Nemohu otevřít soubory nápovědy:\n"
-"%s"
-
-#: plug-ins/helpbrowser/domain.c:115
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(Added entires before error anyway)"
-msgstr ""
-"Chyba při zpracovávání domény nápovědy:\n"
-"%s\n"
-"\n"
-"(Přesto jsem přidal položky před chybou)"
-
-#: plug-ins/helpbrowser/domain.c:130
-#, c-format
-msgid "Help ID '%s' unknown"
-msgstr "ID nápovědy '%s' není známo"
-
-#: plug-ins/helpbrowser/domain.c:252
-msgid "The GIMP help files are not installed."
-msgstr "Soubory nápovědy GIMPu nejsou nainstalovány."
-
-#: plug-ins/helpbrowser/domain.c:254
-msgid "The requested help files are not installed."
-msgstr "Požadované soubory nápovědy nejsou nainstalovány."
-
-#: plug-ins/helpbrowser/domain.c:261
-msgid "Please check your installation."
-msgstr "Zkontrolujte prosím svou instalaci."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -9952,52 +9950,88 @@ msgstr "Barevná transformace"
 msgid "Relative Probability:"
 msgstr "Poměrná pravděpodobnost:"
 
-#: plug-ins/ifscompose/ifscompose.c:1255
+#: plug-ins/ifscompose/ifscompose.c:1191
+msgid "/Move"
+msgstr "/Posunout"
+
+#: plug-ins/ifscompose/ifscompose.c:1193
+msgid "/Rotate\\/Scale"
+msgstr "/Rotovat\\/zvětšit"
+
+#: plug-ins/ifscompose/ifscompose.c:1195
+msgid "/Stretch"
+msgstr "/Roztáhnout"
+
+#: plug-ins/ifscompose/ifscompose.c:1198
+msgid "/New"
+msgstr "/Nový"
+
+#: plug-ins/ifscompose/ifscompose.c:1200
+msgid "/Delete"
+msgstr "/Odstranit"
+
+#: plug-ins/ifscompose/ifscompose.c:1202
+msgid "/Undo"
+msgstr "/Zpět"
+
+#: plug-ins/ifscompose/ifscompose.c:1204
+msgid "/Redo"
+msgstr "/Znovu"
+
+#: plug-ins/ifscompose/ifscompose.c:1206
+msgid "/Select All"
+msgstr "/Vybrat vše"
+
+#: plug-ins/ifscompose/ifscompose.c:1208
+msgid "/Recompute Center"
+msgstr "/Přepočítat střed"
+
+#: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
 msgstr "Volby Ifs kompozice"
 
-#: plug-ins/ifscompose/ifscompose.c:1277
+#: plug-ins/ifscompose/ifscompose.c:1280
 msgid "Max. Memory:"
 msgstr "Limit paměti:"
 
-#: plug-ins/ifscompose/ifscompose.c:1304
+#: plug-ins/ifscompose/ifscompose.c:1307
 msgid "Subdivide:"
 msgstr "Poddělení:"
 
-#: plug-ins/ifscompose/ifscompose.c:1317
+#: plug-ins/ifscompose/ifscompose.c:1320
 msgid "Spot Radius:"
 msgstr "Poloměr tečky:"
 
-#: plug-ins/ifscompose/ifscompose.c:1390
+#: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Počítá se IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1409
+#: plug-ins/ifscompose/ifscompose.c:1412
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "IFS se kopíruje do obrázku (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1548
+#: plug-ins/ifscompose/ifscompose.c:1551
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformace %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2675 plug-ins/ifscompose/ifscompose.c:2687
+#: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
 msgid "Open failed"
 msgstr "Otevření selhalo"
 
-#: plug-ins/ifscompose/ifscompose.c:2682
+#: plug-ins/ifscompose/ifscompose.c:2685
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "Soubor '%s' zřejmě není soubor kompozice IFS."
 
-#: plug-ins/ifscompose/ifscompose.c:2718
+#: plug-ins/ifscompose/ifscompose.c:2721
 msgid "Save as IFS file"
 msgstr "Zapsat jako soubor IFS"
 
-#: plug-ins/ifscompose/ifscompose.c:2743
+#: plug-ins/ifscompose/ifscompose.c:2746
 msgid "Open IFS file"
 msgstr "Otevřít soubor IFS"
 
@@ -10050,6 +10084,7 @@ msgstr "Vytvořit"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
+#: plug-ins/imagemap/imap_object_popup.c:111
 #: plug-ins/imagemap/imap_toolbar.c:124
 msgid "Cut"
 msgstr "Vyříznout"
@@ -10057,12 +10092,12 @@ msgstr "Vyříznout"
 #: plug-ins/imagemap/imap_cmd_delete.c:57
 #: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
-msgstr "Smazat"
+msgstr "Odstranit"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:61
 #: plug-ins/imagemap/imap_polygon.c:725
 msgid "Delete Point"
-msgstr "Smazat bod"
+msgstr "Odstranit bod"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
@@ -10172,6 +10207,7 @@ msgstr "Vložit bod"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
+#: plug-ins/imagemap/imap_object_popup.c:109
 #: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
 msgstr "Přesunout dolů"
@@ -10191,6 +10227,7 @@ msgstr "Přesunout dopředu"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
+#: plug-ins/imagemap/imap_object_popup.c:107
 #: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Přesunout nahoru"
@@ -10445,7 +10482,7 @@ msgstr "Ú_pravy"
 msgid "Deselect _All"
 msgstr "Odvybrat _vše"
 
-#: plug-ins/imagemap/imap_menu.c:278
+#: plug-ins/imagemap/imap_menu.c:278 plug-ins/imagemap/imap_object_popup.c:103
 msgid "Edit Area Info..."
 msgstr "Úpravy informace o oblastech..."
 
@@ -10504,6 +10541,10 @@ msgstr "Nápo_věda"
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "O obrázkové mapě..."
+
+#: plug-ins/imagemap/imap_object_popup.c:105
+msgid "Delete Area"
+msgstr "Odstranit oblast"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -10673,7 +10714,7 @@ msgstr "Formát souboru mapy"
 msgid "View Source"
 msgstr "Zobrazit zdroj"
 
-#: plug-ins/imagemap/imap_stock.c:45
+#: plug-ins/imagemap/imap_stock.c:47
 msgid "Edit Map Info..."
 msgstr "Úpravy informace o mapování..."
 
@@ -10739,7 +10780,7 @@ msgstr "Upravit informaci o vybrané oblasti"
 
 #: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
-msgstr "Smazat vybranou oblast"
+msgstr "Odstranit vybranou oblast"
 
 #: plug-ins/maze/algorithms.c:287
 msgid "Constructing maze using Prim's Algorithm..."
@@ -11742,9 +11783,6 @@ msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
 
 #~ msgid "Snap to grid"
 #~ msgstr "Chytat na mříž"
-
-#~ msgid "GFlare: cannot operate on indexed color images"
-#~ msgstr "P-záře: neumí pracovat s indexovanými barevnými obrázky"
 
 #~ msgid "untitled"
 #~ msgstr "bez názvu"
