@@ -5,93 +5,85 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
+"POT-Creation-Date: 2001-09-17 11:52+0200\n"
 "PO-Revision-Date: 2000-12-22 13:29+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: libgimp/gimpcolorbutton.c:121
-msgid "/Use Foreground Color"
-msgstr "/ElıtÈrszÌn haszn·lata"
-
-#: libgimp/gimpcolorbutton.c:122
-msgid "/Use Background Color"
-msgstr "/H·ttÈrszÌn haszn·lata"
 
 #: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
 msgid "can't handle layers"
-msgstr "rÈtegeket nem kezeli"
+msgstr "r√©tegeket nem kezeli"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
-msgstr "L·thatÛ rÈtegek ˆsszefÈs¸lÈse"
+msgstr "L√°that√≥ r√©tegek √∂sszef√©s√ºl√©se"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
-msgstr "a rÈtegeket csak anim·ciÛ kÈpkock·jakÈnt kezeli"
+msgstr "a r√©tegeket csak anim√°ci√≥ k√©pkock√°jak√©nt kezeli"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
 msgid "Save as Animation"
-msgstr "MentÈs anim·ciÛkÈnt"
+msgstr "Ment√©s anim√°ci√≥k√©nt"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
-msgstr "KÈp lapÌt·sa"
+msgstr "K√©p lap√≠t√°sa"
 
 #: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
-msgstr "·tl·tszÛs·got nem kezeli"
+msgstr "√°tl√°tsz√≥s√°got nem kezeli"
 
 #: libgimp/gimpexport.c:205
 msgid "can only handle RGB images"
-msgstr "csak RGB kÈpeket kezel"
+msgstr "csak RGB k√©peket kezel"
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Convert to RGB"
-msgstr "¡talakÌt·s RGB-be"
+msgstr "√Åtalak√≠t√°s RGB-be"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
-msgstr "csak sz¸rke·rnyalatos kÈpeket kezel"
+msgstr "csak sz√ºrke√°rnyalatos k√©peket kezel"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr "¡talakÌt·s fekete-fehÈrbe"
+msgstr "√Åtalak√≠t√°s sz√ºrke√°rnyalatosba"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
-msgstr "csak indexelt kÈpeket kezel"
+msgstr "csak indexelt k√©peket kezel"
 
 #: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"¡talakÌt·s indexelttÈ az alapbe·llÌt·sok haszn·lat·val\n"
-"(A finomhangol·shoz v·laszd a kÈzi be·llÌt·st)"
+"√Åtalak√≠t√°s indexeltt√© az alapbe√°ll√≠t√°sok haszn√°lat√°val\n"
+"(A finomhangol√°shoz v√°laszd a k√©zi be√°ll√≠t√°st)"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
-msgstr "csak RGB vagy sz¸rke·rnyalatos kÈpeket kezel"
+msgstr "csak RGB vagy sz√ºrke√°rnyalatos k√©peket kezel"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
-msgstr "csak RGB vagy indexelt kÈpeket kezel"
+msgstr "csak RGB vagy indexelt k√©peket kezel"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle grayscale or indexed images"
-msgstr "csak sz¸rke·rnyalatos vagy indexelt kÈpeket kezel"
+msgstr "csak sz√ºrke√°rnyalatos vagy indexelt k√©peket kezel"
 
 #: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
-msgstr "sz¸ksÈges az alfa csatorna"
+msgstr "sz√ºks√©ges az alfa csatorna"
 
 #: libgimp/gimpexport.c:264
 msgid "Add Alpha Channel"
-msgstr "Alfa csatorna hozz·ad·sa"
+msgstr "Alfa csatorna hozz√°ad√°sa"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -100,136 +92,138 @@ msgstr "Alfa csatorna hozz·ad·sa"
 #. the dialog
 #: libgimp/gimpexport.c:333
 msgid "Export File"
-msgstr "F·jl export·l·sa"
+msgstr "F√°jl export√°l√°sa"
 
 #: libgimp/gimpexport.c:338
 msgid "Export"
-msgstr "Export·l·s"
+msgstr "Export√°l√°s"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr "Figyelmen kÌv¸l hagy"
-
-#: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
-#: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
-#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
-msgid "Cancel"
-msgstr "MÈgse"
+msgstr "Figyelmen k√≠v√ºl hagy"
 
 #: libgimp/gimpexport.c:357
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "A kÈpet export·lni kellene mentÈs elıtt a kˆvetkezı okbÛl:"
+msgstr "A k√©pet export√°lni kellene ment√©s el≈ëtt a k√∂vetkez≈ë okb√≥l:"
 
 #. the footline
-#: libgimp/gimpexport.c:420
+#: libgimp/gimpexport.c:422
 msgid "The export conversion won't modify your original image."
 msgstr ""
-"Az export·l·shoz sz¸ksÈges ·talakÌt·sok nem mÛdosÌtj·k az eredeti kÈpet."
-
-#: libgimp/gimpfileselection.c:388
-msgid "Select File"
-msgstr "F·jl kijelˆlÈse"
-
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:503
-msgid "OK"
-msgstr "OK"
-
-#: libgimp/gimpunitmenu.c:241
-msgid "More..."
-msgstr "EgyÈb..."
-
-#: libgimp/gimpunitmenu.c:498
-msgid "Unit Selection"
-msgstr "MÈrtÈkegysÈg v·laszt·sa"
-
-#: libgimp/gimpunitmenu.c:535
-msgid "Unit"
-msgstr "MÈrtÈkegysÈg"
-
-#: libgimp/gimpunitmenu.c:536
-msgid "Factor"
-msgstr "SzorzÛ"
+"Az export√°l√°shoz sz√ºks√©ges √°talak√≠t√°sok nem m√≥dos√≠tj√°k az eredeti k√©pet."
 
 #. pseudo unit
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:52
 msgid "pixel"
-msgstr "kÈppont"
+msgstr "k√©ppont"
 
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:52
 msgid "pixels"
-msgstr "kÈppont"
+msgstr "k√©ppont"
 
 #. standard units
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:55
 msgid "inch"
-msgstr "h¸velyk"
+msgstr "h√ºvelyk"
 
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:55
 msgid "inches"
-msgstr "h¸velyk"
+msgstr "h√ºvelyk"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:56
 msgid "millimeter"
-msgstr "millimÈter"
+msgstr "millim√©ter"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:56
 msgid "millimeters"
-msgstr "millimÈter"
+msgstr "millim√©ter"
 
 #. professional units
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:59
 msgid "point"
 msgstr "pont"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:59
 msgid "points"
 msgstr "pont"
 
-#: libgimp/gimpunit.c:57
+#: libgimp/gimpunit.c:60
 msgid "pica"
 msgstr "pica"
 
-#: libgimp/gimpunit.c:57
+#: libgimp/gimpunit.c:60
 msgid "picas"
 msgstr "pica"
 
-#: libgimp/gimpunit.c:64
+#: libgimp/gimpunit.c:67
 msgid "percent"
-msgstr "sz·zalÈk"
+msgstr "sz√°zal√©k"
 
-#: libgimp/gimpwidgets.c:715
+#: libgimpwidgets/gimpcolorbutton.c:71
+msgid "/Use Foreground Color"
+msgstr "/El≈ët√©rsz√≠n haszn√°lata"
+
+#: libgimpwidgets/gimpcolorbutton.c:72
+msgid "/Use Background Color"
+msgstr "/H√°tt√©rsz√≠n haszn√°lata"
+
+#: libgimpwidgets/gimpfileselection.c:361
+msgid "Select File"
+msgstr "F√°jl kijel√∂l√©se"
+
+#: libgimpwidgets/gimpunitmenu.c:255
+msgid "More..."
+msgstr "Egy√©b..."
+
+#: libgimpwidgets/gimpunitmenu.c:511
+msgid "Unit Selection"
+msgstr "M√©rt√©kegys√©g v√°laszt√°sa"
+
+#: libgimpwidgets/gimpunitmenu.c:548
+msgid "Unit"
+msgstr "M√©rt√©kegys√©g"
+
+#: libgimpwidgets/gimpunitmenu.c:549
+msgid "Factor"
+msgstr "Szorz√≥"
+
+#: libgimpwidgets/gimpwidgets.c:724
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Ha az \"Idı\" gomb nincs lenyomva, ezt a sz·mot haszn·lja a "
-"vÈletlensz·m-gener·l·s kiindulÛpontjakÈnt. Õgy az adott \"vÈletlen\" sorozat "
-"megismÈtelhetı."
+"Ha az \"Id≈ë\" gomb nincs lenyomva, ezt a sz√°mot haszn√°lja a v√©letlensz√°m-"
+"gener√°l√°s kiindul√≥pontjak√©nt. √çgy az adott \"v√©letlen\" sorozat "
+"megism√©telhet≈ë."
 
-#: libgimp/gimpwidgets.c:720
+#: libgimpwidgets/gimpwidgets.c:729
 msgid "Time"
-msgstr "Idı"
+msgstr "Id≈ë"
 
-#: libgimp/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:738
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"A vÈletlensz·m-gener·l·s kiindulÛpontja a pontos idı, ez garant·lja a "
-"megfelelı vÈletlensÈget."
+"A v√©letlensz√°m-gener√°l√°s kiindul√≥pontja a pontos id≈ë, ez garant√°lja a "
+"megfelel≈ë v√©letlens√©get."
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimpwidgets/gimpwidgets.c:1052
 msgid "Bytes"
-msgstr "b·jt"
+msgstr "b√°jt"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimpwidgets/gimpwidgets.c:1053
 msgid "KiloBytes"
-msgstr "kilob·jt"
+msgstr "kilob√°jt"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimpwidgets/gimpwidgets.c:1054
 msgid "MegaBytes"
-msgstr "megab·jt"
+msgstr "megab√°jt"
+
+#~ msgid "Cancel"
+#~ msgstr "M√©gse"
+
+#~ msgid "OK"
+#~ msgstr "OK"
