@@ -32,11 +32,14 @@
 #include "config/gimpconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimplist.h"
+#include "core/gimpcontext.h"
 #include "core/gimptemplate.h"
 
 #include "gimptemplateeditor.h"
-#include "widgets/gimpenummenu.h"
-#include "widgets/gimppropwidgets.h"
+#include "gimpenummenu.h"
+#include "gimppropwidgets.h"
+#include "gimpviewablebutton.h"
 
 #include "gimp-intl.h"
 
@@ -53,6 +56,9 @@ static void gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                                   GimpTemplateEditor *editor);
 static void gimp_template_editor_template_notify (GimpTemplate       *template,
                                                   GParamSpec         *param_spec,
+                                                  GimpTemplateEditor *editor);
+static void gimp_template_editor_icon_changed    (GimpContext        *context,
+                                                  GimpTemplate       *template,
                                                   GimpTemplateEditor *editor);
 
 
@@ -349,13 +355,79 @@ gimp_template_editor_finalize (GObject *object)
       editor->template = NULL;
     }
 
+  if (editor->stock_id_container)
+    {
+      g_object_unref (editor->stock_id_container);
+      editor->stock_id_container = NULL;
+    }
+
+  if (editor->stock_id_context)
+    {
+      g_object_unref (editor->stock_id_context);
+      editor->stock_id_context = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *
-gimp_template_editor_new (void)
+gimp_template_editor_new (Gimp     *gimp,
+                          gboolean  edit_stock_id)
 {
-  return g_object_new (GIMP_TYPE_TEMPLATE_EDITOR, NULL);
+  GimpTemplateEditor *editor;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  editor = g_object_new (GIMP_TYPE_TEMPLATE_EDITOR, NULL);
+
+  if (edit_stock_id)
+    {
+      GtkWidget *table;
+      GtkWidget *button;
+      GSList    *stock_list;
+      GSList    *list;
+
+      editor->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE,
+                                                  GIMP_CONTAINER_POLICY_STRONG);
+      editor->stock_id_context = gimp_context_new (gimp, "foo", NULL);
+
+      g_signal_connect (editor->stock_id_context, "template_changed",
+                        G_CALLBACK (gimp_template_editor_icon_changed),
+                        editor);
+
+      stock_list = gtk_stock_list_ids ();
+
+      for (list = stock_list; list; list = g_slist_next (list))
+        {
+          GimpObject *object = g_object_new (GIMP_TYPE_TEMPLATE,
+                                             "name",     list->data,
+                                             "stock-id", list->data,
+                                             NULL);
+
+          gimp_container_add (editor->stock_id_container, object);
+          g_object_unref (object);
+        }
+
+      g_slist_foreach (stock_list, (GFunc) g_free, NULL);
+      g_slist_free (stock_list);
+
+      table = gtk_table_new (1, 2, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (editor), table, 0);
+      gtk_widget_show (table);
+
+      button = gimp_viewable_button_new (editor->stock_id_container,
+                                         editor->stock_id_context,
+                                         GIMP_PREVIEW_SIZE_SMALL,
+                                         NULL, NULL, NULL, NULL);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("_Icon:"), 1.0, 0.5,
+                                 button, 1, TRUE);
+    }
+
+  return GTK_WIDGET (editor);
 }
 
 void
@@ -488,5 +560,29 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
                                GINT_TO_POINTER (aspect));
   editor->block_aspect = FALSE;
+
+  if (editor->stock_id_container)
+    {
+      GimpObject  *object;
+      const gchar *stock_id;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (editor->template));
+
+      object = gimp_container_get_child_by_name (editor->stock_id_container,
+                                                 stock_id);
+
+      gimp_context_set_template (editor->stock_id_context,
+                                 (GimpTemplate *) object);
+    }
+}
+
+static void
+gimp_template_editor_icon_changed (GimpContext        *context,
+                                   GimpTemplate       *template,
+                                   GimpTemplateEditor *editor)
+{
+  g_object_set (editor->template,
+                "stock-id", GIMP_OBJECT (template)->name,
+                NULL);
 }
 

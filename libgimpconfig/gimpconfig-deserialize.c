@@ -301,8 +301,8 @@ gimp_config_deserialize_property (GObject    *object,
   if (token == G_TOKEN_RIGHT_PAREN &&
       g_scanner_peek_next_token (scanner) == token)
     {
-      if (!G_VALUE_HOLDS_OBJECT (&value) ||
-          prop_spec->flags & G_PARAM_WRITABLE)
+      if (! (G_VALUE_HOLDS_OBJECT (&value) &&
+             (prop_spec->flags & GIMP_PARAM_AGGREGATE)))
         g_object_set_property (object, prop_spec->name, &value);
     }
 #if CONFIG_DEBUG

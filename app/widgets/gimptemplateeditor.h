@@ -43,6 +43,9 @@ struct _GimpTemplateEditor
   GimpTemplate    *template;
   gulong           memsize;
 
+  GimpContainer   *stock_id_container;
+  GimpContext     *stock_id_context;
+
   GtkWidget       *aspect_button;
   gboolean         block_aspect;
 
@@ -59,7 +62,8 @@ struct _GimpTemplateEditorClass
 
 GType          gimp_template_editor_get_type       (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_template_editor_new            (void);
+GtkWidget    * gimp_template_editor_new            (Gimp               *gimp,
+                                                    gboolean            edit_stock_id);
 
 void           gimp_template_editor_set_template   (GimpTemplateEditor *editor,
                                                     GimpTemplate       *template);

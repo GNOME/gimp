@@ -24,8 +24,9 @@
 
 
 #define GIMP_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
-#define GIMP_PARAM_RESTART      (1 << (1 + G_PARAM_USER_SHIFT))
-#define GIMP_PARAM_CONFIRM      (1 << (2 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_AGGREGATE    (1 << (1 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_RESTART      (1 << (2 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_CONFIRM      (1 << (3 + G_PARAM_USER_SHIFT))
 
 
 #define GIMP_CONFIG_PARAM_FLAGS (G_PARAM_READWRITE | \
@@ -175,7 +176,7 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
 
-/*  object properties are _not_ writeable by default  */
+/*  object properties are _not_ G_PARAM_CONSTRUCT  */
 
 #define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id,\
                                         name, blurb, object_type, flags)\
@@ -183,7 +184,7 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    g_param_spec_object (name, NULL, blurb,\
                                    object_type,\
                                    flags |\
-                                   G_PARAM_READABLE | GIMP_PARAM_SERIALIZE))
+                                   G_PARAM_READWRITE | GIMP_PARAM_SERIALIZE))
 
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */

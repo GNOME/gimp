@@ -57,17 +57,21 @@ enum
 static void  gimp_text_options_init       (GimpTextOptions      *options);
 static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
 
-static void  gimp_text_options_get_property (GObject     *object,
-                                             guint        property_id,
-                                             GValue      *value,
-                                             GParamSpec  *pspec);
+static void  gimp_text_options_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void  gimp_text_options_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
-static void  gimp_text_options_notify_font  (GimpContext *context,
-                                             GParamSpec  *pspec,
-                                             GimpText    *text);
-static void  gimp_text_notify_font          (GimpText    *text,
-                                             GParamSpec  *pspec,
-                                             GimpContext *context);
+static void  gimp_text_options_notify_font  (GimpContext  *context,
+                                             GParamSpec   *pspec,
+                                             GimpText     *text);
+static void  gimp_text_notify_font          (GimpText     *text,
+                                             GParamSpec   *pspec,
+                                             GimpContext  *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -110,12 +114,13 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
                                    "text", NULL,
                                    GIMP_TYPE_TEXT,
-                                   0);
+                                   GIMP_PARAM_AGGREGATE);
 }
 
 static void
@@ -134,6 +139,23 @@ gimp_text_options_init (GimpTextOptions *options)
   g_signal_connect_object (text, "notify::font",
                            G_CALLBACK (gimp_text_notify_font),
                            options, 0);
+}
+
+static void
+gimp_text_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_TEXT:
+      /* do nothing */
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void

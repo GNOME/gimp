@@ -179,21 +179,51 @@ gimp_config_copy_properties (GObject *src,
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec;
- 
+
       prop_spec = property_specs[i];
 
       if (prop_spec->flags & G_PARAM_READABLE &&
 	  prop_spec->flags & G_PARAM_WRITABLE)
 	{
-	  GValue value = { 0, };
+          if (G_IS_PARAM_SPEC_OBJECT (prop_spec) &&
+              (prop_spec->flags & GIMP_PARAM_AGGREGATE))
+            {
+              GValue   src_value  = { 0, };
+              GValue   dest_value = { 0, };
+              GObject *src_object;
+              GObject *dest_object;
 
-	  g_value_init (&value, prop_spec->value_type);
-      
-	  g_object_get_property (src,  prop_spec->name, &value);
-	  g_object_set_property (dest, prop_spec->name, &value);
-	  
-	  g_value_unset (&value);
-	}
+              g_value_init (&src_value,  prop_spec->value_type);
+              g_value_init (&dest_value, prop_spec->value_type);
+
+              g_object_get_property (src,  prop_spec->name, &src_value);
+              g_object_get_property (dest, prop_spec->name, &dest_value);
+
+              src_object  = g_value_get_object (&src_value);
+              dest_object = g_value_get_object (&dest_value);
+
+              if (src_object && dest_object &&
+                  G_TYPE_FROM_INSTANCE (src_object) ==
+                  G_TYPE_FROM_INSTANCE (dest_object))
+                {
+                  gimp_config_copy_properties (src_object, dest_object);
+                }
+
+              g_value_unset (&src_value);
+              g_value_unset (&dest_value);
+            }
+          else
+            {
+              GValue value = { 0, };
+
+              g_value_init (&value, prop_spec->value_type);
+
+              g_object_get_property (src,  prop_spec->name, &value);
+              g_object_set_property (dest, prop_spec->name, &value);
+
+              g_value_unset (&value);
+            }
+        }
     }
 
   g_free (property_specs);
@@ -234,30 +264,34 @@ gimp_config_reset_properties (GObject *object)
  
       prop_spec = property_specs[i];
 
-      if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
+      if (prop_spec->flags & G_PARAM_WRITABLE)
         {
-          if ((prop_spec->flags & GIMP_PARAM_SERIALIZE) &&
-              g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                     GIMP_TYPE_CONFIG_INTERFACE))
+          if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
+            {
+              if ((prop_spec->flags & GIMP_PARAM_SERIALIZE) &&
+                  (prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
+                  g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                         GIMP_TYPE_CONFIG_INTERFACE))
+                {
+                  g_value_init (&value, prop_spec->value_type);
+
+                  g_object_get_property (object, prop_spec->name, &value);
+
+                  gimp_config_reset (g_value_get_object (&value));
+
+                  g_value_unset (&value);
+                }
+            }
+          else
             {
               g_value_init (&value, prop_spec->value_type);
 
-              g_object_get_property (object, prop_spec->name, &value);
-
-              gimp_config_reset (g_value_get_object (&value));
+              g_param_value_set_default (prop_spec, &value);
+              g_object_set_property (object, prop_spec->name, &value);
 
               g_value_unset (&value);
             }
         }
-      else if (prop_spec->flags & G_PARAM_WRITABLE)
-	{
-	  g_value_init (&value, prop_spec->value_type);
-      
-	  g_param_value_set_default (prop_spec, &value);
-	  g_object_set_property (object, prop_spec->name, &value);
-	  
-	  g_value_unset (&value);
-	}
     }
 
   g_free (property_specs);

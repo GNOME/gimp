@@ -1,3 +1,42 @@
+2003-04-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-params.h: made object properties
+	G_PARAM_READWRITE by default. Added flag GIMP_PARAM_AGGREGATE
+	which indicates that an object property is not a reference but a
+	real part of its owner.
+
+	* app/config/gimpconfig-deserialize.c: g_object_set_property()
+	object properties only if they are not GIMP_PARAM_AGGREGATE.
+
+	* app/config/gimpconfig-utils.c (gimp_config_copy_properties,
+	gimp_config_reset_properties): copy and reset GIMP_PARAM_AGGREGATE
+	object properties correctly.
+
+	* app/config/gimpconfig-serialize.c: don't call
+	gimp_config_writer_open/close() for properties which are handled
+	by a GimpConfigIface::serialize_property() implementation.
+
+	* app/core/gimpcontext.c: removed exlicit G_PARAM_WRITABLE from
+	object properties since that's the default now. Call
+	gimp_config_writer_open/close() when serializing properties.
+
+	* app/core/gimpviewable.c (gimp_viewable_get_property): use
+	gimp_viewable_get_stock_id().
+	(gimp_viewable_set_stock_id): set stock_id to NULL if the new
+	stock_id is the same as viewable_class->default_stock_id.
+	Added serialize_property() which skips stock_id serialization
+	if it is NULL.
+
+	* app/tools/gimptextoptions.c: made the "text" property
+	GIMP_PARAM_AGGREGATE. Added gimp_text_options_set_property()
+	(which does nothing).
+
+	* app/widgets/gimptemplateeditor.[ch]: added an optional
+	GimpViewableButton to change the template's icon.
+
+	* app/gui/file-new-dialog.c: create it with the icon button so it
+	gets some testing.
+
 2003-04-12  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/png.c (save_image):

@@ -31,8 +31,13 @@
 
 #include "base/temp-buf.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 #include "config/gimpconfig-serialize.h"
+#include "config/gimpconfig-types.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpcoreconfig.h"
+#include "config/gimpscanner.h"
 
 #include "gimp.h"
 #include "gimpbrush.h"
@@ -50,12 +55,6 @@
 #include "gimptoolinfo.h"
 
 #include "text/gimpfont.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-types.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 #include "gimp-intl.h" 
 
@@ -583,7 +582,7 @@ gimp_context_class_init (GimpContextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL], NULL,
                                    GIMP_TYPE_TOOL_INFO,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
@@ -616,31 +615,31 @@ gimp_context_class_init (GimpContextClass *klass)
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
                                    NULL,
                                    GIMP_TYPE_BRUSH,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PATTERN],
                                    NULL,
                                    GIMP_TYPE_PATTERN,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_GRADIENT,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_GRADIENT],
                                    NULL,
                                    GIMP_TYPE_GRADIENT,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PALETTE,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PALETTE],
                                    NULL,
                                    GIMP_TYPE_PALETTE,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
                                    NULL,
                                    GIMP_TYPE_FONT,
-                                   G_PARAM_WRITABLE);
+                                   0);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
 				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],
@@ -1140,6 +1139,8 @@ gimp_context_serialize_property (GObject          *object,
       return FALSE;
     }
 
+  gimp_config_writer_open (writer, pspec->name);
+
   if (serialize_obj)
     {
       gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
@@ -1148,6 +1149,8 @@ gimp_context_serialize_property (GObject          *object,
     {
       gimp_config_writer_print (writer, "NULL", 4);
     }
+
+  gimp_config_writer_close (writer);
 
   return TRUE;
 }

@@ -145,7 +145,7 @@ file_new_dialog_create (Gimp      *gimp,
                     dialog);
 
   /*  Template editor  */
-  dialog->editor = gimp_template_editor_new ();
+  dialog->editor = gimp_template_editor_new (gimp, TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpviewable.h
+ * gimpviewable.c
  * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,13 +21,17 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
 
+#include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfigwriter.h"
 
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
@@ -47,8 +51,9 @@ enum
 };
 
 
-static void    gimp_viewable_class_init          (GimpViewableClass *klass);
-static void    gimp_viewable_init                (GimpViewable      *viewable);
+static void    gimp_viewable_class_init        (GimpViewableClass   *klass);
+static void    gimp_viewable_init              (GimpViewable        *viewable);
+static void    gimp_viewable_config_iface_init (GimpConfigInterface *config_iface);
 
 static void    gimp_viewable_finalize               (GObject        *object);
 static void    gimp_viewable_set_property           (GObject        *object,
@@ -72,6 +77,11 @@ static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
                                                       gint          *height);
 static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
                                                       gchar        **tooltip);
+static gboolean gimp_viewable_serialize_property     (GObject       *object,
+                                                      guint          property_id,
+                                                      const GValue  *value,
+                                                      GParamSpec    *pspec,
+                                                      GimpConfigWriter *writer);
 
 
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
@@ -101,10 +111,20 @@ gimp_viewable_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_viewable_init,
       };
+      static const GInterfaceInfo config_iface_info = 
+      {
+        (GInterfaceInitFunc) gimp_viewable_config_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       viewable_type = g_type_register_static (GIMP_TYPE_OBJECT,
 					      "GimpViewable",
 					      &viewable_info, 0);
+
+      g_type_add_interface_static (viewable_type,
+                                   GIMP_TYPE_CONFIG_INTERFACE,
+                                   &config_iface_info);
     }
 
   return viewable_type;
@@ -171,6 +191,12 @@ gimp_viewable_init (GimpViewable *viewable)
 }
 
 static void
+gimp_viewable_config_iface_init (GimpConfigInterface *config_iface)
+{
+  config_iface->serialize_property = gimp_viewable_serialize_property;
+}
+
+static void
 gimp_viewable_finalize (GObject *object)
 {
   GimpViewable *viewable;
@@ -213,7 +239,8 @@ gimp_viewable_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      g_value_set_string (value, GIMP_VIEWABLE (object)->stock_id);
+      g_value_set_string (value,
+                          gimp_viewable_get_stock_id (GIMP_VIEWABLE (object)));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -286,6 +313,33 @@ gimp_viewable_real_get_description (GimpViewable  *viewable,
     *tooltip = NULL;
 
   return g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
+}
+
+static gboolean
+gimp_viewable_serialize_property (GObject          *object,
+                                  guint             property_id,
+                                  const GValue     *value,
+                                  GParamSpec       *pspec,
+                                  GimpConfigWriter *writer)
+{
+  GimpViewable *viewable = GIMP_VIEWABLE (object);
+
+  switch (property_id)
+    {
+    case PROP_STOCK_ID:
+      if (viewable->stock_id)
+        {
+          gimp_config_writer_open (writer, pspec->name);
+          gimp_config_writer_string (writer, viewable->stock_id);
+          gimp_config_writer_close (writer);
+        }
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  return FALSE;
 }
 
 void
@@ -585,10 +639,21 @@ void
 gimp_viewable_set_stock_id (GimpViewable *viewable,
                             const gchar  *stock_id)
 {
+  GimpViewableClass *viewable_class;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   g_free (viewable->stock_id);
-  viewable->stock_id = g_strdup (stock_id);
+  viewable->stock_id = NULL;
+
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  if (stock_id)
+    {
+      if (viewable_class->default_stock_id == NULL ||
+          strcmp (stock_id, viewable_class->default_stock_id))
+        viewable->stock_id = g_strdup (stock_id);
+    }
 
   g_object_notify (G_OBJECT (viewable), "stock-id");
 }

@@ -205,8 +205,6 @@ gimp_config_serialize_property (GObject          *object,
   if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
     return FALSE;
 
-  gimp_config_writer_open (writer, param_spec->name);
-
   g_value_init (&value, param_spec->value_type);
   g_object_get_property (object, param_spec->name, &value);
 
@@ -253,7 +251,8 @@ gimp_config_serialize_property (GObject          *object,
 
   if (! success)
     {
-      if (G_VALUE_HOLDS_OBJECT (&value))
+      if (G_VALUE_HOLDS_OBJECT (&value) &&
+          (param_spec->flags & GIMP_PARAM_AGGREGATE))
         {
           GimpConfigInterface *gimp_config_iface = NULL;
           GObject             *prop_object;
@@ -266,41 +265,49 @@ gimp_config_serialize_property (GObject          *object,
             success = TRUE;
 
           if (gimp_config_iface)
-	    success = gimp_config_iface->serialize (prop_object, writer, NULL);
+            {
+              gimp_config_writer_open (writer, param_spec->name);
+
+              success = gimp_config_iface->serialize (prop_object, writer,
+                                                      NULL);
+
+              if (success)
+                gimp_config_writer_close (writer);
+              else
+                gimp_config_writer_revert (writer);
+            }
         }
-      else
+      else if (! G_VALUE_HOLDS_OBJECT (&value))
         {
 	  GString *str = g_string_new (NULL);
 
           success = gimp_config_serialize_value (&value, str, TRUE);
 
 	  if (success)
-	    gimp_config_writer_print (writer, str->str, str->len);
+            {
+              gimp_config_writer_open (writer, param_spec->name);
+              gimp_config_writer_print (writer, str->str, str->len);
+              gimp_config_writer_close (writer);
+            }
 
 	  g_string_free (str, TRUE);
 	}
-    }
 
-  if (success)
-    {
-      gimp_config_writer_close (writer);
-    }
-  else
-    {
-      gimp_config_writer_revert (writer);
-
-      /* don't warn for empty string properties */
-      if (G_VALUE_HOLDS_STRING (&value))
-	{
-	  success = TRUE;
-	}
-      else
-	{
-	  g_warning ("couldn't serialize property %s::%s of type %s",
-		     g_type_name (G_TYPE_FROM_INSTANCE (object)),
-		     param_spec->name, 
-		     g_type_name (param_spec->value_type));
-	}
+      if (! success)
+        {
+          /* don't warn for empty string properties */
+          if (G_VALUE_HOLDS_STRING (&value))
+            {
+              success = TRUE;
+            }
+          else
+            {
+              g_warning ("couldn't serialize property %s::%s of type %s",
+                         g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                         param_spec->name, 
+                         g_type_name (param_spec->value_type));
+            }
+        }
     }
 
   g_value_unset (&value);
