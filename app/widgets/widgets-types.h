@@ -172,6 +172,7 @@ typedef struct _GimpNavigationView           GimpNavigationView;
 
 typedef struct _GimpViewRenderer             GimpViewRenderer;
 typedef struct _GimpViewRendererBrush        GimpViewRendererBrush;
+typedef struct _GimpViewRendererBuffer       GimpViewRendererBuffer;
 typedef struct _GimpViewRendererDrawable     GimpViewRendererDrawable;
 typedef struct _GimpViewRendererGradient     GimpViewRendererGradient;
 typedef struct _GimpViewRendererLayer        GimpViewRendererLayer;

@@ -1,3 +1,15 @@
+2004-09-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpviewrendererbuffer.[ch]: added a view renderer
+	which knows how to preserve a GimpBuffer's aspect ratio if the
+	view's aspect ratio is different.
+
+	* app/widgets/gimpviewrenderer-utils.c
+	(gimp_view_renderer_type_from_viewable_type): use it for viewables
+	of type GimpBuffer. Fixes bug #152531
+
 2004-09-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c

@@ -26,6 +26,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimplayer.h"
@@ -34,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimpviewrendererbrush.h"
+#include "gimpviewrendererbuffer.h"
 #include "gimpviewrendererlayer.h"
 #include "gimpviewrenderergradient.h"
 #include "gimpviewrendererimage.h"
@@ -52,6 +54,10 @@ gimp_view_renderer_type_from_viewable_type (GType viewable_type)
   if (g_type_is_a (viewable_type, GIMP_TYPE_BRUSH))
     {
       type = GIMP_TYPE_VIEW_RENDERER_BRUSH;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
+    {
+      type = GIMP_TYPE_VIEW_RENDERER_BUFFER;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {

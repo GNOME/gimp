@@ -252,6 +252,8 @@ libappwidgets_a_sources = \
 	gimpviewrenderer-utils.h	\
 	gimpviewrendererbrush.c		\
 	gimpviewrendererbrush.h		\
+	gimpviewrendererbuffer.c	\
+	gimpviewrendererbuffer.h	\
 	gimpviewrendererdrawable.c	\
 	gimpviewrendererdrawable.h	\
 	gimpviewrenderergradient.c	\
