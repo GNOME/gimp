@@ -42,6 +42,8 @@ struct _GimpContainerGridView
 struct _GimpContainerGridViewClass
 {
   GimpContainerViewClass  parent_class;
+
+  GtkStyle *white_style;
 };
 
 

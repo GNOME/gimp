@@ -25,6 +25,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "colormaps.h"
 #include "gimpcontainer.h"
 #include "gimpcontainergridview.h"
 #include "gimppreview.h"
@@ -91,6 +92,12 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
   container_view_class->remove_item      = gimp_container_grid_view_remove_item;
   container_view_class->clear_items      = gimp_container_grid_view_clear_items;
   container_view_class->set_preview_size = gimp_container_grid_view_set_preview_size;
+
+  klass->white_style = gtk_style_copy (gtk_widget_get_default_style ());
+  klass->white_style->bg[GTK_STATE_NORMAL].red   = 0xffff;
+  klass->white_style->bg[GTK_STATE_NORMAL].green = 0xffff;
+  klass->white_style->bg[GTK_STATE_NORMAL].blue  = 0xffff;
+  klass->white_style->bg[GTK_STATE_NORMAL].pixel = g_white_pixel;
 }
 
 static void
@@ -105,8 +112,14 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   gtk_box_pack_start (GTK_BOX (grid_view), scrolled_win, TRUE, TRUE, 0);
 
   grid_view->wrapbox = gtk_hwrap_box_new (FALSE);
+  gtk_wrap_box_set_hspacing (GTK_WRAP_BOX (grid_view->wrapbox), 2);
+  gtk_wrap_box_set_vspacing (GTK_WRAP_BOX (grid_view->wrapbox), 2);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
                                          grid_view->wrapbox);
+
+  gtk_widget_set_style
+    (grid_view->wrapbox->parent,
+     GIMP_CONTAINER_GRID_VIEW_CLASS (GTK_OBJECT (grid_view)->klass)->white_style);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (grid_view->wrapbox),

@@ -1,5 +1,13 @@
 2001-02-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontainergridview.[ch]: add the spacing between the
+	previews here instead of expecting an already bordered preview.
+	Set the widget background to white.
+
+	* app/gimppattern.c: removed the white border hack.
+
+2001-02-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpcontainergridview.[ch]
 	* app/gimpcontainerlistview.[ch]
 	* app/gimpcontainerview.[ch]: implemented "set_preview_size".

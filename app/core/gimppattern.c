@@ -142,17 +142,13 @@ gimp_pattern_preview_new (GimpViewable *viewable,
 
   pattern = GIMP_PATTERN (viewable);
 
-  width  -= 2;
-  height -= 2;
-
   copy_width  = MIN (width,  pattern->mask->width);
   copy_height = MIN (height, pattern->mask->height);
 
-  x = ((copy_width  == width)  ? 0 : (width -  copy_width)  / 2) + 1;
-  y = ((copy_height == height) ? 0 : (height - copy_height) / 2) + 1;
+  x = (copy_width  == width)  ? 0 : (width -  copy_width)  / 2;
+  y = (copy_height == height) ? 0 : (height - copy_height) / 2;
 
-  temp_buf = temp_buf_new (width  + 2,
-			   height + 2,
+  temp_buf = temp_buf_new (width, height,
 			   pattern->mask->bytes,
 			   0, 0,
 			   white);
