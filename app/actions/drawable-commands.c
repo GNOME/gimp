@@ -31,9 +31,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
+#include "core/gimpdrawable-invert.h"
 #include "core/gimpimage.h"
-
-#include "pdb/procedural_db.h"
 
 #include "display/gimpdisplay-foreach.h"
 
@@ -86,8 +85,6 @@ drawable_invert_cmd_callback (GtkWidget *widget,
 {
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
-  Argument     *return_vals;
-  gint          nreturn_vals;
   return_if_no_drawable (gimage, active_drawable);
 
   if (gimp_drawable_is_indexed (active_drawable))
@@ -96,18 +93,7 @@ drawable_invert_cmd_callback (GtkWidget *widget,
       return;
     }
 
-  return_vals =
-    procedural_db_run_proc (gimage->gimp,
-			    "gimp_invert",
-			    &nreturn_vals,
-			    GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (active_drawable)),
-			    GIMP_PDB_END);
-
-  if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-    g_message (_("Invert operation failed."));
-
-  procedural_db_destroy_args (return_vals, nreturn_vals);
-
+  gimp_drawable_invert (active_drawable);
   gdisplays_flush ();
 }
 

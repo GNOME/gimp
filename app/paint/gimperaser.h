@@ -62,7 +62,11 @@ struct _GimpEraserOptions
 };
 
 
-GType               gimp_eraser_get_type    (void) G_GNUC_CONST;
+void    gimp_eraser_register (Gimp                      *gimp,
+                              GimpPaintRegisterCallback  callback);
+
+GType   gimp_eraser_get_type (void) G_GNUC_CONST;
+
 
 GimpEraserOptions * gimp_eraser_options_new (void);
 

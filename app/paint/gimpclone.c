@@ -89,6 +89,13 @@ static gint   first    = TRUE;
 static GimpPaintCoreClass *parent_class = NULL;
 
 
+void
+gimp_clone_register (Gimp                      *gimp,
+                     GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_CLONE);
+}
+
 GType
 gimp_clone_get_type (void)
 {

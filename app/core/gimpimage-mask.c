@@ -37,6 +37,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
+#include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
 
 #include "undo.h"
@@ -609,7 +610,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
   if (num_strokes == 0)
     return TRUE;
 
-  pdb_string = gimp_context_get_tool (context)->pdb_string;
+  pdb_string = gimp_context_get_tool (context)->paint_info->pdb_string;
 
   /*  find the drawable offsets  */
   gimp_drawable_offsets (drawable, &offx, &offy);

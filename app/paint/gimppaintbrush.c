@@ -62,6 +62,13 @@ static void   gimp_paintbrush_motion     (GimpPaintCore       *paint_core,
 static GimpPaintCoreClass *parent_class = NULL;
 
 
+void
+gimp_paintbrush_register (Gimp                      *gimp,
+                          GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_PAINTBRUSH);
+}
+
 GType
 gimp_paintbrush_get_type (void)
 {

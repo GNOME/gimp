@@ -74,6 +74,13 @@ static gfloat   gimp_dodgeburn_shadows_lut_func    (gpointer       user_data,
 static GimpPaintCoreClass *parent_class = NULL;
 
 
+void
+gimp_dodgeburn_register (Gimp                      *gimp,
+                         GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_DODGEBURN);
+}
+
 GType
 gimp_dodgeburn_get_type (void)
 {

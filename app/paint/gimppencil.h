@@ -48,6 +48,9 @@ struct _GimpPencilClass
 };
 
 
+void    gimp_pencil_register (Gimp                      *gimp,
+                              GimpPaintRegisterCallback  callback);
+
 GType   gimp_pencil_get_type (void) G_GNUC_CONST;
 
 

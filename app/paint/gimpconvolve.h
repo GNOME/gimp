@@ -62,7 +62,11 @@ struct _GimpConvolveOptions
 };
 
 
-GType                 gimp_convolve_get_type    (void) G_GNUC_CONST;
+void    gimp_convolve_register (Gimp                      *gimp,
+                                GimpPaintRegisterCallback  callback);
+
+GType   gimp_convolve_get_type (void) G_GNUC_CONST;
+
 
 GimpConvolveOptions * gimp_convolve_options_new (void);
 

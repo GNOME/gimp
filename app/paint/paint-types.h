@@ -29,6 +29,15 @@ typedef struct _GimpPaintCore    GimpPaintCore;
 typedef struct _GimpPaintOptions GimpPaintOptions;
 
 
+/*  functions  */
+
+typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
+                                            GType        tool_type);
+
+typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
+                                            GimpPaintRegisterCallback  callback);
+
+
 /*  enums  */
 
 /* Brush application types  */

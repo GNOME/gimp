@@ -71,6 +71,8 @@ struct _Gimp
 
   GimpParasiteList      *parasites;
 
+  GimpContainer         *paint_info_list;
+
   GimpContainer         *modules;
   gboolean               write_modulerc;
 

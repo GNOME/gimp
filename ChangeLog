@@ -1,3 +1,52 @@
+2002-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimppaintinfo.[ch]: new object for registering
+	GimpPaintCore subclasses, just like GimpToolInfo for tools.
+
+	* app/core/gimp.h: added gimp->paint_info_list to hold them.
+
+	* app/core/gimptoolinfo.[ch]: removed the "pdb_string" and
+	"paint_core_name" pointers and added a GimpPaintInfo pointer
+	instead.
+
+	* app/core/gimpimage-mask.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/tool_manager.c: changed accordingly.
+
+	* app/paint/paint-types.h
+	* app/paint/paint.c: added paint class registration stuff like
+	the tool_manager does.
+
+	* app/paint/gimpairbrush.[ch]
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintbrush.[ch]
+	* app/paint/gimppencil.[ch]
+	* app/paint/gimpsmudge.[ch]: added register functions which are
+	called from paint_init().
+
+	The core object system lives not only in "core/", but in
+	core, paint, vectors, file, plug-in and xcf, so I had to hack
+	a bit to keep the deps working:
+
+	* app/pdb/pdb-types.h: don't include "paint/paint-types.h"...
+
+	* app/core/core-types.h: ...because it's included here. Moved
+	the inclusions of the core's subsystems' "foo/foo-types.h"
+	files to the end of the file.
+
+	* app/paint/Makefile.am: Some slimy radioactive uglyness.
+
+	* app/gui/drawable-commands.c
+	* app/tools/gimpblendtool.c: removed calling core functions via
+	the PDB because it makes no sense to do it manually in only a few
+	places.  This needs to be done generically using generated
+	wrappers living in "app/commands/" or something...
+
 2002-02-27  Sven Neumann  <sven@gimp.org>
 
 	* config.guess

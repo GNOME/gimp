@@ -31,6 +31,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimplist.h"
+#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintcore.h"
@@ -287,7 +288,6 @@ vectors_stroke_vectors (GimpVectors *vectors)
     {
       GimpTool         *active_tool;
       GimpPaintCore    *core;
-      GType             core_type;
       GimpToolInfo     *tool_info;
       GimpPaintOptions *paint_options;
       GimpDisplay      *gdisp;
@@ -307,11 +307,7 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
       paint_options = (GimpPaintOptions *) tool_info->tool_options;
 
-      g_print ("core_name: %s\n", tool_info->paint_core_name);
-
-      core_type = g_type_from_name (tool_info->paint_core_name);
-
-      core = g_object_new (core_type, NULL);
+      core = g_object_new (tool_info->paint_info->paint_type, NULL);
 
       gdisp = gimp_context_get_display (gimp_get_current_context (gimage->gimp));
 

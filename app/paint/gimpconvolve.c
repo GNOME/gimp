@@ -113,6 +113,13 @@ static gfloat sharpen_matrix [25] =
 static GimpPaintCoreClass *parent_class;
 
 
+void
+gimp_convolve_register (Gimp                      *gimp,
+                        GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_CONVOLVE);
+}
+
 GType
 gimp_convolve_get_type (void)
 {

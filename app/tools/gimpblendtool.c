@@ -267,15 +267,10 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpBlendTool    *blend_tool;
-  BlendOptions     *options;
-  GimpImage        *gimage;
-#ifdef BLEND_UI_CALLS_VIA_PDB
-  Argument         *return_vals;
-  gint              nreturn_vals;
-#else
-  GimpProgress     *progress;
-#endif
+  GimpBlendTool *blend_tool;
+  BlendOptions  *options;
+  GimpImage     *gimage;
+  GimpProgress  *progress;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
 
@@ -294,37 +289,6 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       ((blend_tool->startx != blend_tool->endx) ||
        (blend_tool->starty != blend_tool->endy)))
     {
-      /* we can't do callbacks easily with the PDB, so this UI/backend
-       * separation (though good) is ignored for the moment */
-#ifdef BLEND_UI_CALLS_VIA_PDB
-      return_vals = 
-	procedural_db_run_proc ("gimp_blend",
-				&nreturn_vals,
-				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gimage)),
-				PDB_INT32, (gint32) options->blend_mode,
-				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (options),
-				PDB_INT32, (gint32) options->gradient_type,
-				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (options) * 100,
-				PDB_FLOAT, (gdouble) options->offset,
-				PDB_INT32, (gint32) options->repeat,
-				PDB_INT32, (gint32) options->supersample,
-				PDB_INT32, (gint32) options->max_depth,
-				PDB_FLOAT, (gdouble) options->threshold,
-				PDB_FLOAT, (gdouble) blend_tool->startx,
-				PDB_FLOAT, (gdouble) blend_tool->starty,
-				PDB_FLOAT, (gdouble) blend_tool->endx,
-				PDB_FLOAT, (gdouble) blend_tool->endy,
-				PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
-	gdisplays_flush ();
-      else
-	g_message (_("Blend operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-
-#else /* ! BLEND_UI_CALLS_VIA_PDB */
-
       progress = gimp_progress_start (gdisp, _("Blending..."), FALSE,
                                       NULL, NULL);
 
@@ -349,7 +313,6 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 	gimp_progress_end (progress);
 
       gdisplays_flush ();
-#endif /* ! BLEND_UI_CALLS_VIA_PDB */
     }
 }
 

@@ -87,7 +87,11 @@ struct _GimpCloneOptions
 };
 
 
-GType              gimp_clone_get_type    (void) G_GNUC_CONST;
+void    gimp_clone_register (Gimp                      *gimp,
+                             GimpPaintRegisterCallback  callback);
+
+GType   gimp_clone_get_type (void) G_GNUC_CONST;
+
 
 GimpCloneOptions * gimp_clone_options_new (void);
 

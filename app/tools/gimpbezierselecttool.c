@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -3420,7 +3421,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 
   bezier_gen_points (bezier_sel,open_path,rpnts);
 
-  pdb_string = gimp_context_get_tool (gimp_get_current_context (gdisp->gimage->gimp))->pdb_string;
+  pdb_string = gimp_context_get_tool (gimp_get_current_context (gdisp->gimage->gimp))->paint_info->pdb_string;
 
   do
     {

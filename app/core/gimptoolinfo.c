@@ -25,7 +25,9 @@
 #include "base/temp-buf.h"
 
 #include "gimp.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
 
 
@@ -100,15 +102,12 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->help_domain     = NULL;
   tool_info->help_data       = NULL;
 
-  tool_info->pdb_string      = NULL;
-  tool_info->paint_core_name = NULL;
-
   tool_info->stock_id        = NULL;
   tool_info->stock_pixbuf    = NULL;
 
   tool_info->context         = NULL;
-
   tool_info->tool_options    = NULL;
+  tool_info->paint_info      = NULL;
 }
 
 static void
@@ -246,12 +245,12 @@ gimp_tool_info_new (Gimp         *gimp,
 		    const gchar  *menu_accel,
 		    const gchar  *help_domain,
 		    const gchar  *help_data,
-		    const gchar  *pdb_string,
                     const gchar  *paint_core_name,
 		    const gchar  *stock_id,
 		    GdkPixbuf    *stock_pixbuf)
 {
-  GimpToolInfo *tool_info;
+  GimpPaintInfo *paint_info;
+  GimpToolInfo  *tool_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -259,14 +258,20 @@ gimp_tool_info_new (Gimp         *gimp,
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
   g_return_val_if_fail (menu_path != NULL, NULL);
-  g_return_val_if_fail (pdb_string != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (! stock_pixbuf || GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
+  paint_info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, paint_core_name);
+
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
+
   tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
                             "name", identifier,
                             NULL);
+
+  tool_info->paint_info = paint_info;
 
   if (tool_context)
     {
@@ -286,9 +291,6 @@ gimp_tool_info_new (Gimp         *gimp,
 
   tool_info->help_domain     = g_strdup (help_domain);
   tool_info->help_data       = g_strdup (help_data);
-
-  tool_info->pdb_string      = g_strdup (pdb_string);
-  tool_info->paint_core_name = g_strdup (paint_core_name);
 
   tool_info->stock_id        = stock_id;
   tool_info->stock_pixbuf    = stock_pixbuf;

@@ -24,9 +24,6 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "base/base-types.h"
-#include "pdb/pdb-types.h"
-#include "plug-in/plug-in-types.h"
-#include "vectors/vectors-types.h"
 
 #include "core/core-enums.h"
 
@@ -186,6 +183,7 @@ typedef struct _GimpItem            GimpItem;
 
 typedef struct _GimpBuffer          GimpBuffer;
 
+typedef struct _GimpPaintInfo       GimpPaintInfo;
 typedef struct _GimpToolInfo        GimpToolInfo;
 
 typedef struct _GimpImagefile       GimpImagefile;
@@ -276,6 +274,12 @@ struct _GimpCoords
   gdouble ytilt;
   gdouble wheel;
 };
+
+
+#include "paint/paint-types.h"
+#include "vectors/vectors-types.h"
+#include "pdb/pdb-types.h"
+#include "plug-in/plug-in-types.h"
 
 
 #endif /* __CORE_TYPES_H__ */

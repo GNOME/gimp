@@ -67,7 +67,11 @@ struct _GimpDodgeBurnOptions
 };
 
 
-GType                  gimp_dodgeburn_get_type    (void) G_GNUC_CONST;
+void    gimp_dodgeburn_register (Gimp                      *gimp,
+                                 GimpPaintRegisterCallback  callback);
+
+GType   gimp_dodgeburn_get_type (void) G_GNUC_CONST;
+
 
 GimpDodgeBurnOptions * gimp_dodgeburn_options_new (void);
 

@@ -72,6 +72,13 @@ static guchar      *accum_data = NULL;
 static GimpPaintCoreClass *parent_class = NULL;
 
 
+void
+gimp_smudge_register (Gimp                      *gimp,
+                      GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_SMUDGE);
+}
+
 GType
 gimp_smudge_get_type (void)
 {

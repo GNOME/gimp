@@ -52,15 +52,12 @@ struct _GimpToolInfo
   gchar            *help_domain;
   gchar            *help_data;
 
-  gchar            *pdb_string;
-  gchar            *paint_core_name;
-
   const gchar      *stock_id;
   GdkPixbuf        *stock_pixbuf;
 
   GimpContext      *context;
-
   GimpToolOptions  *tool_options;
+  GimpPaintInfo    *paint_info;
 };
 
 struct _GimpToolInfoClass
@@ -82,7 +79,6 @@ GimpToolInfo * gimp_tool_info_new          (Gimp         *gimp,
 					    const gchar  *menu_accel,
 					    const gchar  *help_domain,
 					    const gchar  *help_data,
-					    const gchar  *pdb_string,
                                             const gchar  *paint_core_name,
 					    const gchar  *stock_id,
 					    GdkPixbuf    *stock_pixbuf);

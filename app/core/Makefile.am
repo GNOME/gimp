@@ -130,6 +130,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpmodules.h			\
 	gimpobject.c			\
 	gimpobject.h			\
+	gimppaintinfo.c			\
+	gimppaintinfo.h			\
 	gimppattern.c			\
 	gimppattern.h			\
 	gimppattern-header.h		\

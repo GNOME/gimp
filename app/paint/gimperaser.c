@@ -52,6 +52,13 @@ static void   gimp_eraser_motion        (GimpPaintCore      *paint_core,
 static GimpPaintCoreClass *parent_class = NULL;
 
 
+void
+gimp_eraser_register (Gimp                      *gimp,
+                      GimpPaintRegisterCallback  callback)
+{
+  (* callback) (gimp, GIMP_TYPE_ERASER);
+}
+
 GType
 gimp_eraser_get_type (void)
 {

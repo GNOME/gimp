@@ -45,6 +45,9 @@ struct _GimpPaintbrushClass
 };
 
 
+void    gimp_paintbrush_register (Gimp                      *gimp,
+                                  GimpPaintRegisterCallback  callback);
+
 GType   gimp_paintbrush_get_type (void) G_GNUC_CONST;
 
 

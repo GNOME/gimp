@@ -58,7 +58,11 @@ struct _GimpSmudgeOptions
 };
 
 
-GType               gimp_smudge_get_type    (void) G_GNUC_CONST;
+void    gimp_smudge_register    (Gimp                      *gimp,
+                                 GimpPaintRegisterCallback  callback);
+
+GType   gimp_smudge_get_type    (void) G_GNUC_CONST;
+
 
 GimpSmudgeOptions * gimp_smudge_options_new (void);
 

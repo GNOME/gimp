@@ -22,6 +22,10 @@
 
 #include "paint-types.h"
 
+#include "core/gimp.h"
+#include "core/gimplist.h"
+#include "core/gimppaintinfo.h"
+
 #include "paint.h"
 #include "gimpairbrush.h"
 #include "gimpclone.h"
@@ -33,28 +37,108 @@
 #include "gimpsmudge.h"
 
 
+/*  local function prototypes  */
+
+static void   paint_register (Gimp  *gimp,
+                              GType  paint_type);
+
+
+/*  public functions  */
+
 void
 paint_init (Gimp *gimp)
 {
-  g_type_class_ref (GIMP_TYPE_AIRBRUSH);
-  g_type_class_ref (GIMP_TYPE_CLONE);
-  g_type_class_ref (GIMP_TYPE_CONVOLVE);
-  g_type_class_ref (GIMP_TYPE_DODGEBURN);
-  g_type_class_ref (GIMP_TYPE_ERASER);
-  g_type_class_ref (GIMP_TYPE_PAINTBRUSH);
-  g_type_class_ref (GIMP_TYPE_PENCIL);
-  g_type_class_ref (GIMP_TYPE_SMUDGE);
+  GimpPaintRegisterFunc register_funcs[] =
+  {
+    gimp_smudge_register,
+    gimp_dodgeburn_register,
+    gimp_convolve_register,
+    gimp_clone_register,
+    gimp_airbrush_register,
+    gimp_eraser_register,
+    gimp_paintbrush_register,
+    gimp_pencil_register,
+  };
+
+  gint i;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp->paint_info_list = gimp_list_new (GIMP_TYPE_PAINT_INFO,
+                                         GIMP_CONTAINER_POLICY_STRONG);
+  gimp_object_set_name (GIMP_OBJECT (gimp->paint_info_list), "paint infos");
+
+  for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
+    {
+      register_funcs[i] (gimp, paint_register);
+    }
 }
 
 void
 paint_exit (Gimp *gimp)
 {
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_AIRBRUSH));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CLONE));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONVOLVE));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_DODGEBURN));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_ERASER));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_PAINTBRUSH));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_PENCIL));
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_SMUDGE));
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->paint_info_list)
+    {
+      g_object_unref (G_OBJECT (gimp->paint_info_list));
+      gimp->paint_info_list = NULL;
+    }
+}
+
+
+/*  private functions  */
+
+static void
+paint_register (Gimp  *gimp,
+                GType  paint_type)
+{
+  GimpPaintInfo *paint_info;
+  const gchar   *pdb_string;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
+  
+  if (paint_type == GIMP_TYPE_PENCIL)
+    {
+      pdb_string = "gimp_pencil";
+    }
+  else if (paint_type == GIMP_TYPE_PAINTBRUSH)
+    {
+      pdb_string = "gimp_paintbrush_default";
+    }
+  else if (paint_type == GIMP_TYPE_ERASER)
+    {
+      pdb_string = "gimp_eraser_default";
+    }
+  else if (paint_type == GIMP_TYPE_AIRBRUSH)
+    {
+      pdb_string = "gimp_airbrush_default";
+    }
+  else if (paint_type == GIMP_TYPE_CLONE)
+    {
+      pdb_string = "gimp_clone_default";
+    }
+  else if (paint_type == GIMP_TYPE_CONVOLVE)
+    {
+      pdb_string = "gimp_convolve_default";
+    }
+  else if (paint_type == GIMP_TYPE_SMUDGE)
+    {
+      pdb_string = "gimp_smudge_default";
+    }
+  else if (paint_type == GIMP_TYPE_DODGEBURN)
+    {
+      pdb_string = "gimp_dodgeburn_default";
+    }
+  else
+    {
+      pdb_string = "gimp_paintbrush_default";
+    }
+
+  paint_info = gimp_paint_info_new (gimp,
+                                    paint_type,
+                                    pdb_string);
+
+  gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
 }
