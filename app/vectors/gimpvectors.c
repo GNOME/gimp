@@ -961,7 +961,7 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
  * Return value: Newly allocated ArtVpath.
  */
 ArtVpath *
-gimp_vectors_to_art_vpath (GimpVectors *vectors)
+gimp_vectors_to_art_vpath (const GimpVectors *vectors)
 {
   ArtVpath   *vec;          /* Libart path we're creating */
   GimpStroke *cur_stroke;
@@ -970,8 +970,6 @@ gimp_vectors_to_art_vpath (GimpVectors *vectors)
   num_points = g_list_length (vectors->strokes);
 
   vec = art_new (ArtVpath, num_points);
-
-  gimp_vectors_freeze (vectors);
 
   /* Get the list of Strokes in the vector, and create the equivalent
    * ArtVpath node */
@@ -984,9 +982,5 @@ gimp_vectors_to_art_vpath (GimpVectors *vectors)
       gimp_stroke_to_art_point (cur_stroke, vec);
     }
 
-  gimp_vectors_thaw (vectors);
-
-  /* That's it - nothing else to see here */
   return vec;
-
 }

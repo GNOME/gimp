@@ -1,8 +1,14 @@
+2003-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]: redid the fix for the compiler
+	warning: made gimp_vectors_to_art_vpath() take a const GimpVectors
+	again, but don't freeze/thaw it since it isn't changed anyway.
+
 2003-09-06  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c
-	  app/composite/gimp-composite-sse.c
-	  app/composite/gimp-composite-sse2.c:
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c:
 	  Convert "unsigned long" to guint32 in preparation for 64bit
 	  machinery.
 

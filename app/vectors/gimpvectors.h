@@ -166,7 +166,7 @@ GimpVectors   * gimp_vectors_make_bezier        (const GimpVectors  *vectors);
 
 
 /* Convert to libart vector path */
-ArtVpath      * gimp_vectors_to_art_vpath       (GimpVectors        *vectors);
+ArtVpath      * gimp_vectors_to_art_vpath       (const GimpVectors  *vectors);
 
 
 #endif /* __GIMP_VECTORS_H__ */
