@@ -1,4 +1,4 @@
-.TH GIMP 1 "31 May 1998" Version 1.0
+.TH GIMP 1 "13 June 2000" Version @GIMP_VERSION@
 .SH NAME
 Gimp - an image manipulation and paint program.
 .SH SYNOPSIS
@@ -101,121 +101,121 @@ to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
 .SH FILES
 
+Gimp's data files are stored in @gimpdatadir@, where ${prefix} 
+is set on install, but is typically /usr/local. 
 Most gimp configuration is read in from the users init file,
-\fB$HOME\fP/.gimp/gimprc. The system wide equivalent is in
-\fB$PREFIX\fP/share/gimp/gimprc. The system wide file is parsed first
-and the user gimprc can override the sytem
-settings. \fB$PREFIX\fP/share/gimp/gimprc_user is the default gimprc
+\fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
+@gimpdatadir@/gimprc. The system wide file is parsed 
+first and the user gimprc can override the sytem settings. 
+@gimpdatadir@/gimprc_user is the default gimprc
 placed in users home directories the first time gimp is ran.
 
-\fB$HOME\fP/.gimp/unitrc - user unit database. It contains convenient
-units a user may like to define. These units can be used just like the
-built-in units inches, millimeters, points and picas.
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
+config settings. Options such as widget color and fonts sizes 
+can be set here.
 
-\fB$PREFIX\fP/share/gimp/unitrc - default user unit database. It
-contains the unit definitions for centimeters, meters, feet, yards,
-typographic points and typographic picas and is placed in users home
-directories the first time the gimp is ran.
+@gimpdatadir@/gtkrc - sytem wide default set of gimp-specific 
+GTK config settings.
 
-\fB$HOME\fP/.gimp/gtkrc - users set of GTK config settings. Options
-such as widget color and fonts sizes can be set here.
+\fB$HOME\fP/@gimpdir@/ideas - lists all images that have been 
+opened or saved using Gimp.
 
-\fB$PREFIX\fP/share/gimp/gtkrc - sytem wide default set of GTK config settings.
+\fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
-\fB$HOME\fP/.gimp/menurc - user's set of keybindings.
+@gimpdatadir@/menurc - system wide set of keybindings.
 
-\fB$PREFIX\fP/share/menurc - system wide set of keybindings.
+\fB$HOME\fP/@gimpdir@/parasiterc - Description of all available 
+gimp parasites. This is file is recreated everytime gimp starts up.
 
-\fB$HOME\fP/.gimp/parasiterc - Description of all available gimp parasites.
-This is file is recreated everytime gimp starts up.
-
-\fB$HOME\fP/.gimp/sessionrc - This file takes session-specific info (that is info,
-you want to keep between two gimp-sessions). You are
+\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific info 
+(that is info, you want to keep between two gimp-sessions). You are
 not supposed to edit it manually, but of course you
 can do. This file will be entirely rewritten every time
 you quit the gimp. If this file isn't found, defaults are used.
 
-\fB$HOME\fP/.gimp/unitrc - This file contains your user unit database. You can
-modify this list with the unit editor. You are not
-supposed to edit it manually, but of course you can do.
+@gimpdatadir@/unitrc - default user unit database. It
+contains the unit definitions for centimeters, meters, feet, yards,
+typographic points and typographic picas and is placed in users home
+directories the first time the gimp is ran.
+
+\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit 
+database. You can modify this list with the unit editor. You are 
+not supposed to edit it manually, but of course you can do.
 This file will be entirely rewritten every time you
 quit the gimp.
 
+\fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plugins.
 
-\fB$HOME\fP/.gimp/plug-ins - location of user installed plugins.
-
-\fB$HOME\fP/.gimp/pluginrc - plugin initialization values are stored
+\fB$HOME\fP/@gimpdir@/pluginrc - plugin initialization values are stored
 here. This file is parsed on startup and regenerated if need be.
 
-\fB$HOME\fP/.gimp/modules - location of user installed modules.
+\fB$HOME\fP/@gimpdir@/modules - location of user installed modules.
 
-\fB$HOME\fP/.gimp/tmp - default location that gimp uses as temporary space.
+\fB$HOME\fP/@gimpdir@/tmp - default location that gimp uses as temporary 
+space.
 
-Gimp's data files are stored in \fB$PREFIX\fP/share/gimp where
-\fB$PREFIX\fP is set on install, but is typically /usr/local.
+@gimpdatadir@/brushes - system wide brush files.
 
-\fB$PREFIX\fP/share/gimp/brushes - system wide brush files.
-
-\fB$HOME\fP/.gimp/brushes - user created and installed brush
+\fB$HOME\fP/@gimpdir@/brushes - user created and installed brush
 files. These files are in the .gbr (gimp brush) format.
 
-\fB$HOME\fP/.gimp/generated_brushes - Brushes generated and saved
-from the brush dialog. These files are in the .vbr (gimp vector brush) format.
+\fB$HOME\fP/@gimpdir@/generated_brushes - Brushes generated and saved
+from the brush dialog. These files are in the .vbr (gimp vector brush) 
+format.
 
-\fB$HOME\fP/.gimp/curves - Curve profiles and presets as saved from the Curves tool.
+\fB$HOME\fP/@gimpdir@/curves - Curve profiles and presets as saved from 
+the Curves tool.
 
-\fB$HOME\fP/.gimp/levels - Level profiles and presets as saved from the Levels tool.
+\fB$HOME\fP/@gimpdir@/gimpressionist - Presets and user created brushes 
+and papers are stored here.
 
-\fB$HOME\fP/.gimp/gimpressionist - Presets and user created brushes and papers
-are stored here.
+\fB$HOME\fP/@gimpdir@/levels - Level profiles and presets as saved from 
+the Levels tool.
 
-\fB$PREFIX\fP/share/gimp/palettes - the system wide palette files. The 
+@gimpdatadir@/palettes - the system wide palette files. The 
 files are copied to the user palettes directory when gimp is first ran
 to allow the user to modify the palettes. This directory is not searched 
 for palettes by default.
 
-\fB$HOME\fP/.gimp/palettes - copies of the system palette files as well as
+\fB$HOME\fP/@gimpdir@/palettes - copies of the system palette files as well as
 user created and modified palette files.
 
-\fB$PREFIX\fP/share/gimp/patterns - basic set of patterns for use in
+@gimpdatadir@/patterns - basic set of patterns for use in 
 gimp.
 
-\fB$HOME\fP/.gimp/patterns - user created and installed gimp pattern
+\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp pattern
 files. This files are in the .pat format.
 
-\fB$PREFIX\fP/share/gimp/gradients - standard system wide set of
+@gimpdatadir@/gradients - standard system wide set of
 gradient files.
 
-\fB$HOME\fP/.gimp/gradients - user created and installed gradient
+\fB$HOME\fP/@gimpdir@/gradients - user created and installed gradient
 files.
 
-\fB$PREFIX\fP/share/gimp/palettes - system wide palette files.
-
-\fB$HOME\fP/.gimp/palettes - user created and installed palette files.
-
-\fB$PREFIX\fP/share/gimp/scripts - system wide directory of scripts
+@gimpdatadir@/scripts - system wide directory of scripts
 used in Script-Fu and other scripting extensions.
 
-\fB$HOME\fP/.gimp/scripts - user created and installed scripts.
+\fB$HOME\fP/@gimpdir@/scripts - user created and installed scripts.
 
-\fB$PREFIX\fP/share/gimp/gflares - system wide directory used by the gflare 
-plug-in.
+@gimpdatadir@/gflares - system wide directory used by the 
+gflare plug-in.
 
-\fB$HOME\fP/.gimp/gflares - user created and installed gflare files.
+\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare files.
 
-\fB$PREFIX\fP/share/gimp/gfig - system wide directory used by the gfig 
-plug-in.
+@gimpdatadir@/gfig - system wide directory used by the 
+gfig plug-in.
 
-\fB$HOME\fP/.gimp/gfig - user created and installed gfig files.
+\fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
 
-\fB$PREFIX\fP/share/gimp/gimp_splash.ppm - graphic file used for the
-gimp splash screen.
+@gimpdatadir@/gimp_splash.ppm - graphic file used for 
+the gimp splash screen.
 
-\fB$PREFIX\fP/share/gimp/gimp_logo.ppm - graphic file used in the gimp 
-about dialog.
+@gimpdatadir@/gimp_logo.ppm - graphic file used in the 
+Gimp about dialog.
 
-\fB$PREFIX\fP/share/gimp/gimp_tips.txt - list of tips displayed in the 
-"Tip of the Day" dialog box.
+@gimpdatadir@/tips/gimp_tips.txt - list of tips displayed 
+in the "Tip of the Day" dialog box. At the same place you will find files 
+with tips in other languages.
 
 .SH COPYRIGHT
 Copyright \(co  1995 Spencer Kimball and Peter Mattis

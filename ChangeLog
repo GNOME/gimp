@@ -1,10 +1,18 @@
 2000-06-13  Sven Neumann  <sven@gimp.org>
 
+	* gimp.1: removed
+	
+	* configure.in
+	* gimp.1.in: new file used to autogenerate gimp.1. The manpage
+	could need a little more work, but I'm tired now...
+
+2000-06-13  Sven Neumann  <sven@gimp.org>
+
 	* gimp.spec: removed
 	
 	* configure.in
-	* gimp.spec.in: new file to autogenerate gimpc.spec with the
-	proper version number
+	* gimp.spec.in: new file used to autogenerate gimpc.spec with 
+	the proper version number
 
 	* Makefile.am: bumped dependency to gtk+-1.2.8 and included
 	new cursor files

@@ -738,6 +738,7 @@ AC_SUBST(GIMP_MODULES)
 dnl Output the Makefiles
 
 AC_OUTPUT([
+gimp.1
 gimprc
 gimprc_user
 gimprc.5

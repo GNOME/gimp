@@ -5,6 +5,8 @@ config.log
 config.h
 config.cache
 stamp-h
+gimp.1
+gimp.spec
 gimprc
 gimprc.5
 config.status

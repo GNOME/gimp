@@ -1,0 +1,298 @@
+.TH GIMP 1 "13 June 2000" Version @GIMP_VERSION@
+.SH NAME
+Gimp - an image manipulation and paint program.
+.SH SYNOPSIS
+.B gimp
+[\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-n] [\-\-no\-interface] [\-r] 
+[\-\-restore\-session] [\-\-no\-data] [\-\-verbose] [\-\-no\-shm]
+[\-\-no\-xshm] [\-\-display \fIdisplay\fP] [\-\-no\-splash]
+[\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages] 
+[\-\-system\-gimprc \fI<gimprc>\fP] [\fIfilename\fP]...
+
+.SH DESCRIPTION
+.PP
+The \fIGIMP\fP is the GNU Image Manipulation Program. It is used to edit and
+manipulate images. It can load and save a variety of image formats and can
+be used to convert between formats. 
+.PP
+Gimp can also be used as a paint program. It features a set of drawing and 
+painting tools such as airbrush, clone, pencil, and paint brush. Painting 
+and drawing tools can be applied to an image with a variety of paint modes.
+It also offers an extensive array of selection tools like
+rectangle, ellipse, fuzzy select, bezier select,
+intelligent scissors, and select by color.  
+.PP
+Gimp offers a variety of plugins that perform a variety of image manipulations.
+Examples include bumpmap, edge detect, gaussian blur, and many others. 
+.PP
+In addition, Gimp has several scripting extension which allow for advanced
+non-interactive processing and creation of images. 
+.SH OPTIONS
+.l 
+The \fIgimp\fP accepts the following options:
+.TP 8
+.B  \-h, \-\-help
+Display a list of all commandline options.
+.TP 8
+.B \-v, \-\-version
+Output the version info.
+.TP 8
+.B \-b, \-\-batch \fI<commands>\fP
+Execute the set of \fI<commands>\fP non-interactively. The set
+of \fI<commands>\fP is typically in the form of a script that
+can be executed by one of the Gimp scripting extensions.
+.TP 8
+.B \-g, \-\-gimprc \fI<gimprc>\fP
+Use an alternative gimprc instead of the default one. Useful in
+cases where plugins paths or machine specs may be different.
+.TP 8
+.B \-n, \-\-no-interface
+Run without a user interface.
+.TP 8
+.B \-r, \-\-restore\-session
+Try to restore saved session.
+.TP 8
+.B \-\-no\-data
+Do not load patterns, gradients, palettes, or brushes. Often useful
+in non-interactive situations where startup time is to be minimized.
+.TP 8
+.B \-\-verbose
+Show startup messages.
+.TP 8 
+.B \-\-no\-shm
+Do not use shared memory between GIMP and its plugins. 
+Instead of using shared memory, GIMP will send the data via pipe. This
+will result in slower performance than using shared memory.
+.TP 8
+.B \-\-no\-xshm
+Do not use the X Shared Memory extension. If GIMP is being displayed
+on a remote X server, this probably needs to be enabled. Also useful
+for any X server that doesn't properly support the X shared memory extension.
+This will result in slower performance than with X shared memory enabled.
+.TP 8
+.B \-\-display \fIdisplay\fP
+Use the designated X display.
+.TP 8
+.B \-\-no\-splash
+Do not show the splash screen.
+.TP 8
+.B \-\-no\-splash\-image
+Do not show the splash screen image as part of the splash screen.
+.TP 8
+.B \-\-debug\-handlers
+Enable debugging signal handlers.
+.TP 8
+.B \-\-console\-messages
+Do not popup dialog boxes on errors or warnings. Print the messages on
+the console instead.
+.TP 8
+.B \-\-system\-gimprc \fI<gimprc>\fP
+Use an alternate system gimprc file.
+
+.SH ENVIRONMENT
+.PP
+.TP 8
+.B DISPLAY
+to get the default host and display number.
+.TP 8
+.B XENVIRONMENT
+to get the name of a resource file that overrides the global resources
+stored in the RESOURCE_MANAGER property.
+.SH FILES
+
+Gimp's data files are stored in @gimpdatadir@, where ${prefix} 
+is set on install, but is typically /usr/local. 
+Most gimp configuration is read in from the users init file,
+\fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
+@gimpdatadir@/gimprc. The system wide file is parsed 
+first and the user gimprc can override the sytem settings. 
+@gimpdatadir@/gimprc_user is the default gimprc
+placed in users home directories the first time gimp is ran.
+
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
+config settings. Options such as widget color and fonts sizes 
+can be set here.
+
+@gimpdatadir@/gtkrc - sytem wide default set of gimp-specific 
+GTK config settings.
+
+\fB$HOME\fP/@gimpdir@/ideas - lists all images that have been 
+opened or saved using Gimp.
+
+\fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
+
+@gimpdatadir@/menurc - system wide set of keybindings.
+
+\fB$HOME\fP/@gimpdir@/parasiterc - Description of all available 
+gimp parasites. This is file is recreated everytime gimp starts up.
+
+\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific info 
+(that is info, you want to keep between two gimp-sessions). You are
+not supposed to edit it manually, but of course you
+can do. This file will be entirely rewritten every time
+you quit the gimp. If this file isn't found, defaults are used.
+
+@gimpdatadir@/unitrc - default user unit database. It
+contains the unit definitions for centimeters, meters, feet, yards,
+typographic points and typographic picas and is placed in users home
+directories the first time the gimp is ran.
+
+\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit 
+database. You can modify this list with the unit editor. You are 
+not supposed to edit it manually, but of course you can do.
+This file will be entirely rewritten every time you
+quit the gimp.
+
+\fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plugins.
+
+\fB$HOME\fP/@gimpdir@/pluginrc - plugin initialization values are stored
+here. This file is parsed on startup and regenerated if need be.
+
+\fB$HOME\fP/@gimpdir@/modules - location of user installed modules.
+
+\fB$HOME\fP/@gimpdir@/tmp - default location that gimp uses as temporary 
+space.
+
+@gimpdatadir@/brushes - system wide brush files.
+
+\fB$HOME\fP/@gimpdir@/brushes - user created and installed brush
+files. These files are in the .gbr (gimp brush) format.
+
+\fB$HOME\fP/@gimpdir@/generated_brushes - Brushes generated and saved
+from the brush dialog. These files are in the .vbr (gimp vector brush) 
+format.
+
+\fB$HOME\fP/@gimpdir@/curves - Curve profiles and presets as saved from 
+the Curves tool.
+
+\fB$HOME\fP/@gimpdir@/gimpressionist - Presets and user created brushes 
+and papers are stored here.
+
+\fB$HOME\fP/@gimpdir@/levels - Level profiles and presets as saved from 
+the Levels tool.
+
+@gimpdatadir@/palettes - the system wide palette files. The 
+files are copied to the user palettes directory when gimp is first ran
+to allow the user to modify the palettes. This directory is not searched 
+for palettes by default.
+
+\fB$HOME\fP/@gimpdir@/palettes - copies of the system palette files as well as
+user created and modified palette files.
+
+@gimpdatadir@/patterns - basic set of patterns for use in 
+gimp.
+
+\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp pattern
+files. This files are in the .pat format.
+
+@gimpdatadir@/gradients - standard system wide set of
+gradient files.
+
+\fB$HOME\fP/@gimpdir@/gradients - user created and installed gradient
+files.
+
+@gimpdatadir@/scripts - system wide directory of scripts
+used in Script-Fu and other scripting extensions.
+
+\fB$HOME\fP/@gimpdir@/scripts - user created and installed scripts.
+
+@gimpdatadir@/gflares - system wide directory used by the 
+gflare plug-in.
+
+\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare files.
+
+@gimpdatadir@/gfig - system wide directory used by the 
+gfig plug-in.
+
+\fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
+
+@gimpdatadir@/gimp_splash.ppm - graphic file used for 
+the gimp splash screen.
+
+@gimpdatadir@/gimp_logo.ppm - graphic file used in the 
+Gimp about dialog.
+
+@gimpdatadir@/tips/gimp_tips.txt - list of tips displayed 
+in the "Tip of the Day" dialog box. At the same place you will find files 
+with tips in other languages.
+
+.SH COPYRIGHT
+Copyright \(co  1995 Spencer Kimball and Peter Mattis
+
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in
+supporting documentation. 
+
+.SH SUGGESTIONS AND BUG REPORTS
+Any bugs found should be reported to the Gimp Developer mailing list
+at gimp-developer@xcf.berkeley.edu or you may want to make use
+of the online bug-tracking system available on the web at
+http://bugs.gnome.org/db/pa/lgimp.html or submit a bug report
+to the system via http://www.xach.com/gimp/news/bugreport.html
+
+Before reporting bugs, please check to see if the bug is mentioned 
+in the FAQ's or the mailing list archive. See the section on Other 
+Info for locations of these.
+
+When reporting Gimp bugs, it is important to include a
+reliable way to reproduce the bug, version number of Gimp (and
+probably GTK), OS name and version, and any relevant hardware
+specs. It is also very important to include as much info as possible 
+about the Xserver the problem was found on including at least server 
+name, the visual, and the bit depth.
+
+If a bug is causing a crash, it is very useful if a stack trace 
+can be provided. And of course, patches to rectify the bug are even
+better.
+
+.SH OTHER INFO
+
+The canonical place to find GIMP info is at http://www.gimp.org/.
+Here you can find links to just about every other gimp site, tutorials, data 
+sets, mailing list archives, and more.
+
+There is also a Gimp User Manual available at 
+http://manual.gimp.org/ that goes into much more detail 
+about the interactive use of Gimp.
+
+The latest version of Gimp and the gtk libs is always available at 
+ftp://ftp.gimp.org/.
+
+.SH AUTHORS
+Spencer Kimball and Peter Mattis.
+
+With patches, fixes, plugins, extensions, scripts,
+translations, documentation, and more from lots 
+and lots of people including but not limited to 
+Lauri Alanko, Shawn Amundson, John Beale, Zach Beane,
+Tom Bech, Marc Bless, Edward Blevins, Roberto Boyd,
+Stanislav Brabec, Simon Budig, Seth Burgess, Brent Burton,
+Francisco Bustamante, Ed Connel, Jay Cox, Andreas Dilger,
+Kenneth Christiansen, Austin Donnelly, Scott Draves,
+Misha Dynin, Daniel Egger, Larry Ewing, Nick Fetchak,
+Valek Filippov, David Forsyth, Jim Geuther, Scott Goehring,
+Heiko Goller, Michael Hammel, Ville Hautamäki,
+James Henstridge, Christoph Hoegl, Wolfgang Hofer, 
+Jan Hubicka, Simon Janes, Ben Jackson, Tim Janik,
+Tuomas Kuosmanen, Peter Kirchgessner, Karin Kylander,
+Olof S Kylander, Karl LaRocca, CHris Lahey, Jens Lautenbacher,
+Laramie Leavitt, Elliot Lee, Marc Lehmann, Raph Levien,
+Wing Tung Leung, Adrian Likins, Tor lillqvist,
+Ingo Luetkebohle, Josh MacDonald, Ed Mackey, Daniele Medri,
+Vidar Madsen, Marcelo Malheiros, Ian Main, Kjartan Maraas,
+Torsten Martinsen, Federico Mena, David Monniaux,
+Adam D. Moss, Sung-Hyun Nam, Shuji Narazaki, Michael Natterer,
+Sven Neumann, Stephen Robert Norris, Erik Nygren,
+Tomas Ogren, Balazs Nagy,Miles O'Neal, Jay Painter,
+Asbjorn Pettersen,  Mike Phillips, Raphael Quinet, 
+Vincent Renardias, James Robinson, Mike Schaeffer,
+Tracy Scott, Aaron Sherman, Manish Singh, Nathan Summers,
+Mike Sweet, Eiichi Takamori, Tristan Tarrant,
+Owen Taylor, Ian Tester, Andy Thomas, James Wang,
+Kris Wehner,Matthew Wilson, Shirasaki Yasuhiro.
+
+.SH "SEE ALSO"
+.BR gimprc (5), gimptool (1), gtk-config (1)
