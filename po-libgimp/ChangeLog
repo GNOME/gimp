@@ -1,3 +1,9 @@
+2001-08-27  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po: Copied from 1.2 branch. Please warn me if this
+	file fails during compiling, since it is checked against gettext
+	0.10.38/39 only.
+
 2001-08-21  Pablo Saratxaga <pablo@mandrakesoft.com>
 
 	* ca.po: updated Catalan file
