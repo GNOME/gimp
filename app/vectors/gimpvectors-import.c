@@ -44,26 +44,19 @@
 #include "gimp-intl.h"
 
 
-typedef struct _SvgParser SvgParser;
-struct _SvgParser
-{
-  gboolean      merge;
-  GQueue       *stack;
-};
-
 typedef struct _SvgHandler SvgHandler;
+
 struct _SvgHandler
 {
   const gchar  *name;
   gdouble       width;
-  gdouble      height;
-  GList        *strokes;
+  gdouble       height;
+  GList        *paths;
   GimpMatrix3  *transform;
 
   void (* start) (SvgHandler   *handler,
                   const gchar **names,
-                  const gchar **values,
-                  SvgParser    *parser);
+                  const gchar **values);
 };
 
 
@@ -90,16 +83,13 @@ static const GMarkupParser markup_parser =
 
 static void  svg_handler_svg   (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
+                                const gchar **values);
 static void  svg_handler_group (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
+                                const gchar **values);
 static void  svg_handler_path  (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values,
-                                SvgParser    *parser);
+                                const gchar **values);
 
 static SvgHandler svg_handlers[] =
 {
@@ -139,7 +129,7 @@ gimp_vectors_import (GimpImage    *image,
 {
   GMarkupParseContext *context;
   FILE                *file;
-  SvgParser            parser;
+  GQueue              *stack;
   SvgHandler           base;
   gboolean             success = TRUE;
   gsize                bytes;
@@ -158,19 +148,18 @@ gimp_vectors_import (GimpImage    *image,
       return FALSE;
     }
 
-  parser.merge = merge;
-  parser.stack = g_queue_new ();
+  stack = g_queue_new ();
 
   /*  the base of the stack, defines the size of the view-port  */
   base.name      = "image";
   base.width     = image->width;
   base.height    = image->height;
-  base.strokes   = NULL;
+  base.paths     = NULL;
   base.transform = NULL;
 
-  g_queue_push_head (parser.stack, &base);
+  g_queue_push_head (stack, &base);
 
-  context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
+  context = g_markup_parse_context_new (&markup_parser, 0, stack, NULL);
 
   while (success &&
          (bytes = fread (buf, sizeof (gchar), sizeof (buf), file)) > 0)
@@ -182,19 +171,34 @@ gimp_vectors_import (GimpImage    *image,
   fclose (file);
   g_markup_parse_context_free (context);
 
-  g_queue_free (parser.stack);
+  g_queue_free (stack);
 
   if (success)
     {
-      if (base.strokes)
+      if (base.paths)
         {
           GimpVectors *vectors;
-          GList       *list;
+          GList       *paths;
+
+          base.paths = g_list_reverse (base.paths);
 
           vectors = gimp_vectors_new (image, _("Imported Path"));
 
-          for (list = base.strokes; list; list = list->next)
-            gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+          for (paths = base.paths; paths; paths = paths->next)
+            {
+              GList *list;
+
+              for (list = paths->data; list; list = list->next)
+                gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+
+              if (!merge)
+                {
+                  gimp_image_add_vectors (image, vectors, -1);
+                  vectors = gimp_vectors_new (image, _("Imported Path"));
+                }
+
+              g_list_free (paths->data);
+            }
 
           gimp_image_add_vectors (image, vectors, -1);
         }
@@ -205,7 +209,7 @@ gimp_vectors_import (GimpImage    *image,
         }
     }
 
-  g_list_free (base.strokes);
+  g_list_free (base.paths);
   g_free (base.transform);
 
   return success;
@@ -219,12 +223,12 @@ svg_parser_start_element (GMarkupParseContext *context,
                           gpointer             user_data,
                           GError             **error)
 {
-  SvgParser  *parser  = (SvgParser *) user_data;
+  GQueue     *stack = user_data;
   SvgHandler *base;
   SvgHandler *handler = NULL;
   gint        i;
 
-  base = g_queue_peek_head (parser->stack);
+  base = g_queue_peek_head (stack);
 
   for (i = 0; !handler && i < G_N_ELEMENTS (svg_handlers); i++)
     {
@@ -238,10 +242,10 @@ svg_parser_start_element (GMarkupParseContext *context,
   handler->width  = base->width;
   handler->height = base->height;
 
-  g_queue_push_head (parser->stack, handler);
+  g_queue_push_head (stack, handler);
 
   if (handler->start)
-    handler->start (handler, attribute_names, attribute_values, parser);
+    handler->start (handler, attribute_names, attribute_values);
 }
 
 static void
@@ -250,25 +254,31 @@ svg_parser_end_element (GMarkupParseContext *context,
                         gpointer             user_data,
                         GError             **error)
 {
-  SvgParser  *parser = (SvgParser *) user_data;
+  GQueue     *stack = user_data;
   SvgHandler *handler;
   SvgHandler *base;
-  GList      *list;
+  GList      *paths;
 
-  handler = g_queue_pop_head (parser->stack);
+  handler = g_queue_pop_head (stack);
 
-  if (handler->strokes)
+  if (handler->paths)
     {
       if (handler->transform)
         {
-          for (list = handler->strokes; list; list = list->next)
-            gimp_stroke_transform (GIMP_STROKE (list->data),
-                                   handler->transform);
+          for (paths = handler->paths; paths; paths = paths->next)
+            {
+              GList *list;
+
+              for (list = paths->data; list; list = list->next)
+                gimp_stroke_transform (GIMP_STROKE (list->data),
+                                       handler->transform);
+            }
+
           g_free (handler->transform);
         }
 
-      base = g_queue_peek_head (parser->stack);
-      base->strokes = g_list_concat (base->strokes, handler->strokes);
+      base = g_queue_peek_head (stack);
+      base->paths = g_list_concat (base->paths, handler->paths);
     }
 
   g_free (handler);
@@ -277,8 +287,7 @@ svg_parser_end_element (GMarkupParseContext *context,
 static void
 svg_handler_svg (SvgHandler   *handler,
                  const gchar **names,
-                 const gchar **values,
-                 SvgParser    *parser)
+                 const gchar **values)
 {
   while (*names)
     {
@@ -298,8 +307,7 @@ svg_handler_svg (SvgHandler   *handler,
 static void
 svg_handler_group (SvgHandler   *handler,
                    const gchar **names,
-                   const gchar **values,
-                   SvgParser    *parser)
+                   const gchar **values)
 {
   while (*names)
     {
@@ -319,15 +327,14 @@ svg_handler_group (SvgHandler   *handler,
 static void
 svg_handler_path (SvgHandler   *handler,
                   const gchar **names,
-                  const gchar **values,
-                  SvgParser    *parser)
+                  const gchar **values)
 {
   while (*names)
     {
       if (strcmp (*names, "d") == 0)
         {
-          handler->strokes = g_list_concat (handler->strokes,
-                                            parse_path_data (*values));
+          handler->paths = g_list_prepend (handler->paths,
+                                           parse_path_data (*values));
         }
       else if (strcmp (*names, "transform") == 0 && !handler->transform)
         {
@@ -707,7 +714,7 @@ parse_path_data (const gchar *data)
       /* else c _should_ be whitespace or , */
     }
 
-  return ctx.strokes;
+  return g_list_reverse (ctx.strokes);
 }
 
 /* supply defaults for missing parameters, assuming relative coordinates
@@ -756,7 +763,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
           coords.y = ctx->cpy = ctx->rpy = ctx->params[1];
 
           ctx->stroke = gimp_bezier_stroke_new_moveto (&coords);
-          ctx->strokes = g_list_append (ctx->strokes, ctx->stroke);
+          ctx->strokes = g_list_prepend (ctx->strokes, ctx->stroke);
 
 	  ctx->param = 0;
 	}

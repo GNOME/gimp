@@ -1,5 +1,10 @@
 2003-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-import.c: simplified the parser and
+	make it optionally create multiple vectors again.
+
+2003-09-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.def
 	* libgimpmath/gimpmath.def
 	* libgimpwidgets/gimpwidgets.def: used nm to regenerate these
