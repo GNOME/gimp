@@ -138,7 +138,7 @@
 #define PSD_DEBUG FALSE
 
 /* the max number of layers that this plugin should try to load */
-#define MAX_LAYERS 100
+#define MAX_LAYERS 300
 
 /* the max number of channels that this plugin should let a layer have */
 #define MAX_CHANNELS 30
@@ -674,8 +674,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 
 		  if (psd_image.num_aux_channels > MAX_CHANNELS)
 		    {
-		      printf("\nPSD: Sorry - this image has too many "
-			     "aux channels.  Tell Adam!\n");
+		      g_message(_("\nPSD: Sorry - this image has too many aux "
+				"channels.  Report it to GIMP's bugzilla!\n"));
 		      gimp_quit();
 		    }
 		}
@@ -817,8 +817,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	      IFDBG printf("\t\t\tNumber of guides is %ld\n", num_guides);
 	      if (num_guides > MAX_GUIDES)
 		{
-		  g_message ("Sorry, this image has too many Guides.  "
-			     "Tell Adam!\n");
+		  g_message (_("PSD: Sorry, this image has too many Guides.  "
+			       "Report it to GIMP's bugzilla!\n"));
 		  gimp_quit();
 		}
 	      psd_image.num_guides = num_guides;
@@ -967,7 +967,8 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
 
   if (psd_image.layer[layernum].num_channels > MAX_CHANNELS)
     {
-      g_message ("\nPSD: Sorry - this image has too many channels.  Tell Adam!\n");
+      g_message (_("\nPSD: Sorry - this image has too many channels.  "
+		   "Report it to GIMP's bugzilla!\n"));
       gimp_quit();
     }
   
@@ -996,7 +997,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   
   if (strncmp(sig, "8BIM", 4)!=0)
     {
-      g_message ("PSD: Error - layer blend signature is incorrect. :-(\n");
+      g_message (_("PSD: Error - layer blend signature is incorrect. :-(\n"));
       gimp_quit();
     }
 
@@ -1140,7 +1141,8 @@ do_layer_struct(FILE *fd, guint32 *offset)
 
   if (psd_image.num_layers > MAX_LAYERS)
     {
-      g_message ("\nPSD: Sorry - this image has too many layers.  Tell Adam!\n");
+      g_message (_("\nPSD: Sorry - this image has too many layers.  "
+		   "Report it to GIMP's bugzilla!\n"));
       gimp_quit();
     }
 
@@ -1284,7 +1286,7 @@ seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli)
       break;
     default: /* *unknown* */
       IFDBG {printf("\nEEP!\n");fflush(stdout);}
-      g_message ("*** Unknown compression type in channel.\n");
+      g_message ("PSD: Unknown compression type in channel.\n");
       gimp_quit();
       break;
     }
