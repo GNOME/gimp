@@ -1,3 +1,22 @@
+1999-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/brush_select.c
+	* app/gradient_select.c
+	* app/pattern_select.c: call the PDB callback from the context
+	callback because it gets called on every change.
+
+	* app/interface.c: the tool buttons had the wrong private tooltips
+	attached.
+
+	* app/gimphelp.c: call the help browser with plug_in_run() instead
+	of procedural_db_execute() to make it really ansynchronous.
+	Added a GtkTipsQuery tooltips inspector which gets invoked by
+	<Shift>+F1. Did some illegal juggling with the tips_query's
+	"parent" pointer which may cause problems, so I made the stuff
+	disable-able with #ifdef's.
+	Is there a proper way to create a tips_query widget without having
+	to show it somewhere??
+
 Thu Oct 28 23:22:34 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/gimpimage.c
@@ -9,7 +28,7 @@ Thu Oct 28 23:22:34 BST 1999 Andy Thomas <alt@gimp.org>
 	Fixed the way the plugin added layers. Preview stuff does not now
 	get corrupted.
 
-1999-10-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
+1999-10-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
 	* app/gradient_select.h
@@ -52,7 +71,7 @@ Thu Oct 28 23:22:34 BST 1999 Andy Thomas <alt@gimp.org>
 	* app/palette.c
 	* app/palette_entries.h
 	* app/palette_select.[ch]: removed the special
-	Palette[Entries|Entry]P poiner type.
+	Palette[Entries|Entry]P pointer type.
 
 	* app/devices.c: added gradients to the device status dialog.
 

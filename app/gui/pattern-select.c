@@ -425,7 +425,12 @@ pattern_select_pattern_changed (GimpContext   *context,
 				PatternSelect *psp)
 {
   if (pattern)
-    pattern_select_select (psp, pattern->index);
+    {
+      pattern_select_select (psp, pattern->index);
+
+      if (psp->callback_name)
+	pattern_change_callbacks (psp, FALSE);
+    }
 }
 
 static void
@@ -936,9 +941,6 @@ pattern_select_events (GtkWidget     *widget,
 
 	  /*  Close the brush popup window  */
 	  pattern_popup_close (psp);
-
-	  /* Call any callbacks registered */
-	  pattern_change_callbacks (psp, FALSE);
 	}
       break;
 

@@ -754,7 +754,12 @@ brush_select_brush_changed (GimpContext *context,
 			    BrushSelect *bsp)
 {
   if (brush)
-    brush_select_select (bsp, brush);
+    {
+      brush_select_select (bsp, brush);
+
+      if (bsp->callback_name)
+	brush_change_callbacks (bsp, FALSE);
+    }
 }
 
 static void
@@ -768,6 +773,9 @@ brush_select_opacity_changed (GimpContext *context,
 			    opacity * 100.0);
 
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (bsp->opacity_data), bsp);
+
+  if (bsp->callback_name)
+    brush_change_callbacks (bsp, FALSE);
 }
 
 static void
@@ -776,6 +784,9 @@ brush_select_paint_mode_changed (GimpContext      *context,
 				 BrushSelect      *bsp)
 {
   gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), paint_mode);
+
+  if (bsp->callback_name)
+    brush_change_callbacks (bsp, FALSE);
 }
 
 static void
@@ -1557,9 +1568,6 @@ brush_select_events (GtkWidget   *widget,
 
 	  /*  Close the brush popup window  */
 	  brush_popup_close (bsp);
-
-	  /*  Call any callbacks registered  */
-	  brush_change_callbacks (bsp, FALSE);
 	}
       break;
 
@@ -1641,11 +1649,6 @@ opacity_scale_update (GtkAdjustment *adjustment,
   bsp = (BrushSelect *) data;
 
   gimp_context_set_opacity (bsp->context, adjustment->value / 100.0);
-
-  if (bsp != brush_select_dialog)
-    {
-      brush_change_callbacks (bsp, FALSE); 
-    }
 }
 
 static void
@@ -1657,11 +1660,6 @@ paint_mode_menu_callback (GtkWidget *widget,
   bsp = (BrushSelect *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   gimp_context_set_paint_mode (bsp->context, (LayerModeEffects) data);
-
-  if (bsp != brush_select_dialog)
-    {
-      brush_change_callbacks (bsp, FALSE);
-    }
 }
 
 static void

@@ -384,7 +384,7 @@ create_tools (GtkWidget *parent)
 
 	  gtk_tooltips_set_tip (tool_tips, button,
 				gettext(tool_info[j].tool_desc),
-				tool_info[i].private_tip);
+				tool_info[j].private_tip);
 
 	  gtk_widget_show (pixmap);
 	  gtk_widget_show (alignment);

@@ -459,11 +459,6 @@ gradient_select_update_all (gint        row,
       gsp = (GradientSelect *) list->data;
 
       gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
-
-      /*  Are we updating one that is selected in a popup dialog?  */
-      if ((gradient == gimp_context_get_gradient (gsp->context)) &&
-	  (gsp != gradient_select_dialog))
-	gradient_change_callbacks (gsp, FALSE);
     }
 }
 
@@ -489,7 +484,12 @@ gradient_select_gradient_changed (GimpContext    *context,
 				  GradientSelect *gsp)
 {
   if (gradient)
-    gradient_select_select (gsp, gradient);
+    {
+      gradient_select_select (gsp, gradient);
+
+      if (gsp->callback_name)
+	gradient_change_callbacks (gsp, FALSE);
+    }
 }
 
 static void
@@ -529,11 +529,6 @@ gradient_select_list_item_update (GtkWidget      *widget,
   gimp_context_set_gradient (gsp->context, (gradient_t *) list->data);
 
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (gsp->context), gsp);
-
-  if (gsp != gradient_select_dialog)
-    {
-      gradient_change_callbacks (gsp, FALSE);
-    }
 }
 
 static void
