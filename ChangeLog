@@ -1,5 +1,14 @@
 2000-04-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gif.c: use GIMP_HAVE_PARASITES instead of
+	_PARASITES_H, which wasn't defined anymore. Makes comment
+	parasites work with GIFs again.
+
+	* app/measure.c: pressing ALT anywhere outside the handles allows
+	to move the measure lines.
+
+2000-04-12  Sven Neumann  <sven@gimp.org>
+
 	* docs/quick_reference.tar.gz: updated the tool icons and added
 	new ones. Removed the dvi and ps files from the tarball. Added 
 	a TODO which describes what needs to be done to update the

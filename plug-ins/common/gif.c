@@ -280,7 +280,7 @@
 
 /* Does the version of GIMP we're compiling for support
    data attachments to images?  ('Parasites') */
-#ifdef _PARASITE_H_
+#ifdef GIMP_HAVE_PARASITES
 #define FACEHUGGERS aieee
 #endif
 /* PS: I know that technically facehuggers aren't parasites,
