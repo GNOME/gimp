@@ -1,3 +1,15 @@
+2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
+
+	* app/undo.c: Fixed evil<tm> double casting of enum to glong to
+	gpointer for layer_mod undo by using a struct instead of an array
+	of gpointer (!!!) for storing layer_mod undo data.  Also moved
+	layer offset undo information out of the undo tile manager. 
+	* app/image_map.c: Moved layer offset undo information out of the
+	undo tile manager.
+
+	Above changes may break image_map and layer_mod undos, please test
+	as I haven't. :)
+
 2001-11-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

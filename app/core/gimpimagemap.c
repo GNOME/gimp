@@ -50,6 +50,8 @@ struct _ImageMap
   GimpDisplay         *gdisp;
   GimpDrawable        *drawable;
   TileManager         *undo_tiles;
+  gint		       undo_offset_x;
+  gint		       undo_offset_y;
   ImageMapApplyFunc    apply_func;
   gpointer             user_data;
   PixelRegion          srcPR;
@@ -81,6 +83,8 @@ image_map_create (GimpDisplay  *gdisp,
   image_map->gdisp      = gdisp;
   image_map->drawable   = drawable;
   image_map->undo_tiles = NULL;
+  image_map->undo_offset_x = 0;
+  image_map->undo_offset_y = 0;
   image_map->apply_func = NULL;
   image_map->user_data  = NULL;
   image_map->state      = IMAGE_MAP_WAITING;
@@ -131,7 +135,8 @@ image_map_apply (ImageMap          *image_map,
   /*  If undo tiles don't exist, or change size, (re)allocate  */
   if (image_map->undo_tiles)
     {
-      tile_manager_get_offsets (image_map->undo_tiles, &offset_x, &offset_y);
+      offset_x = image_map->undo_offset_x;
+      offset_y = image_map->undo_offset_y;
       width  = tile_manager_width (image_map->undo_tiles);
       height = tile_manager_height (image_map->undo_tiles);
     }
@@ -170,7 +175,8 @@ image_map_apply (ImageMap          *image_map,
       copy_region (&image_map->srcPR, &image_map->destPR);
 
       /*  Set the offsets  */
-      tile_manager_set_offsets (image_map->undo_tiles, x1, y1);
+      image_map->undo_offset_x = x1;
+      image_map->undo_offset_y = y1;
     }
   else /* image_map->undo_tiles exist AND drawable dimensions have not changed... */
     {
@@ -230,7 +236,8 @@ image_map_commit (ImageMap *image_map)
   /*  Register an undo step  */
   if (image_map->undo_tiles)
     {
-      tile_manager_get_offsets (image_map->undo_tiles, &x1, &y1);
+      x1 = image_map->undo_offset_x;
+      y1 = image_map->undo_offset_y;
       x2 = x1 + tile_manager_width (image_map->undo_tiles);
       y2 = y1 + tile_manager_height (image_map->undo_tiles);
 
@@ -272,7 +279,8 @@ image_map_clear (ImageMap *image_map)
       gint width;
       gint height;
 
-      tile_manager_get_offsets (image_map->undo_tiles, &offset_x, &offset_y);
+      offset_x = image_map->undo_offset_x;
+      offset_y = image_map->undo_offset_y;
       width  = tile_manager_width (image_map->undo_tiles);
       height = tile_manager_height (image_map->undo_tiles),
 

@@ -1573,36 +1573,46 @@ undo_free_layer (UndoState  state,
 /*********************************/
 /*  Layer Mod Undo               */
 
+typedef struct _LayerModUndo LayerModUndo;
+
+struct _LayerModUndo
+{
+  GimpLayer    *layer;
+  TileManager  *tiles;
+  GimpImageType type;
+  gint          offset_x;
+  gint		offset_y;
+};
+
 gboolean
 undo_push_layer_mod (GimpImage *gimage,
 		     gpointer   layer_ptr)
 {
-  GimpLayer   *layer;
-  Undo        *new;
-  TileManager *tiles;
-  gpointer    *data;
-  gint         size;
+  GimpLayer    *layer;
+  Undo         *new;
+  TileManager  *tiles;
+  LayerModUndo *data;
+  gint          size;
 
   layer = (GimpLayer *) layer_ptr;
 
   tiles = GIMP_DRAWABLE (layer)->tiles;
-  tile_manager_set_offsets (tiles,
-			    GIMP_DRAWABLE (layer)->offset_x, 
-			    GIMP_DRAWABLE (layer)->offset_y);
 
   size = (GIMP_DRAWABLE (layer)->width * GIMP_DRAWABLE (layer)->height * 
-	  GIMP_DRAWABLE (layer)->bytes + sizeof (gpointer) * 3);
+	  GIMP_DRAWABLE (layer)->bytes + sizeof (LayerModUndo));
 
   if ((new = undo_push (gimage, size, LAYER_MOD, TRUE)))
     {
-      data           = g_new (gpointer, 3);
+      data           = g_new (LayerModUndo, 1);
       new->data      = data;
       new->pop_func  = undo_pop_layer_mod;
       new->free_func = undo_free_layer_mod;
 
-      data[0] = layer_ptr;
-      data[1] = (gpointer) tiles;
-      data[2] = (gpointer) ((glong) GIMP_DRAWABLE (layer)->type);
+      data->layer     = layer;
+      data->tiles     = tiles;
+      data->type      = GIMP_DRAWABLE (layer)->type;
+      data->offset_x  = GIMP_DRAWABLE (layer)->offset_x;
+      data->offset_y  = GIMP_DRAWABLE (layer)->offset_y;
 
       return TRUE;
     }
@@ -1620,17 +1630,19 @@ undo_pop_layer_mod (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   data_ptr)
 {
-  gpointer    *data;
-  gint         layer_type;
-  TileManager *tiles;
-  TileManager *temp;
-  GimpLayer   *layer;
-  gboolean     old_has_alpha;
+  LayerModUndo *data;
+  gint          layer_type;
+  gint          offset_x, offset_y;
+  TileManager  *tiles;
+  TileManager  *temp;
+  GimpLayer    *layer;
+  gboolean      old_has_alpha;
 
-  data = (gpointer *) data_ptr;
-  layer = (GimpLayer *) data[0];
-
-  tiles = (TileManager *) data[1];
+  data = (LayerModUndo *) data_ptr;
+  layer = data->layer;
+  tiles = data->tiles;
+  offset_x = data->offset_x;
+  offset_y = data->offset_y;
 
   /*  Issue the first update  */
   gimp_image_update (gimage,
@@ -1641,11 +1653,12 @@ undo_pop_layer_mod (GimpImage *gimage,
 
   /*  Create a tile manager to store the current layer contents  */
   temp       = GIMP_DRAWABLE (layer)->tiles;
-  tile_manager_set_offsets (temp, 
-			    GIMP_DRAWABLE (layer)->offset_x,
-			    GIMP_DRAWABLE (layer)->offset_y);
-  layer_type = (glong) data[2];
-  data[2]    = (gpointer) ((glong) GIMP_DRAWABLE (layer)->type);
+  
+  data->offset_x = GIMP_DRAWABLE (layer)->offset_x;
+  data->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+
+  layer_type = data->type;
+  data->type = GIMP_DRAWABLE (layer)->type;
 
   old_has_alpha = GIMP_DRAWABLE (layer)->has_alpha;
 
@@ -1656,15 +1669,12 @@ undo_pop_layer_mod (GimpImage *gimage,
   GIMP_DRAWABLE (layer)->bytes     = tile_manager_bpp (tiles);
   GIMP_DRAWABLE (layer)->type      = layer_type;
   GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type);
-  tile_manager_get_offsets (tiles, 
-			    &(GIMP_DRAWABLE (layer)->offset_x),
-			    &(GIMP_DRAWABLE (layer)->offset_y));
-
+  GIMP_DRAWABLE (layer)->offset_x  = offset_x;
+  GIMP_DRAWABLE (layer)->offset_y  = offset_y;
   if (layer->mask) 
     {
-      tile_manager_get_offsets (tiles, 
-				&(GIMP_DRAWABLE (layer->mask)->offset_x),
-				&(GIMP_DRAWABLE (layer->mask)->offset_y));
+      GIMP_DRAWABLE(layer->mask)->offset_x = offset_x;
+      GIMP_DRAWABLE(layer->mask)->offset_y = offset_y;
     }
 
   if (GIMP_DRAWABLE (layer)->has_alpha != old_has_alpha &&
@@ -1674,7 +1684,7 @@ undo_pop_layer_mod (GimpImage *gimage,
     }
 
   /*  Set the new tile manager  */
-  data[1] = temp;
+  data->tiles = temp;
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
