@@ -41,8 +41,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define PLUG_IN_NAME "plug_in_colorify"
+#define PLUG_IN_NAME    "plug_in_colorify"
 #define PLUG_IN_VERSION "1.1"
+
+#define COLOR_SIZE 30
 
 static void      query (void);
 static void      run   (gchar     *name,
@@ -61,11 +63,7 @@ static gint colorify_dialog           (guchar     red,
 				       guchar     blue);
 static void colorify_ok_callback      (GtkWidget *widget,
 				       gpointer   data);
-static void custom_color_callback     (GtkWidget *widget,
-				       gpointer   data);
 static void predefined_color_callback (GtkWidget *widget,
-				       gpointer   data);
-static void color_changed             (GtkWidget *widget,
 				       gpointer   data);
 static void set_preview_color         (GtkWidget *preview,
 				       guchar     red,
@@ -87,9 +85,7 @@ typedef struct
   guchar red;
   guchar green;
   guchar blue;
-  GtkWidget *preview;
-  gint button_num;
-} ButtonInformation;
+} ButtonColor;
 
 static ColorifyInterface cint =
 {
@@ -101,16 +97,18 @@ static ColorifyVals cvals =
   { 255, 255, 255 }
 };
 
-static ButtonInformation button_info[] =
+static ButtonColor button_color[] =
 {
-  { 255,   0,   0, NULL, 0 },
-  { 255, 255,   0, NULL, 0 },
-  {   0, 255,   0, NULL, 0 },
-  {   0, 255, 255, NULL, 0 },
-  {   0,   0, 255, NULL, 0 },
-  { 255,   0, 255, NULL, 0 },
-  { 255, 255, 255, NULL, 0 },
+  { 255,   0,   0 },
+  { 255, 255,   0 },
+  {   0, 255,   0 },
+  {   0, 255, 255 },
+  {   0,   0, 255 },
+  { 255,   0, 255 },
+  { 255, 255, 255 },
 };
+
+GtkWidget *custum_color_button = NULL;
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -319,7 +317,6 @@ colorify_dialog (guchar red,
   gchar **argv;
   gint    argc;
   gint    i;
-  GSList *group = NULL;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -362,40 +359,27 @@ colorify_dialog (guchar red,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  button = gtk_radio_button_new (group);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_widget_set_usize (button, 35, 35);
-  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-		      (GtkSignalFunc) custom_color_callback,
-		      NULL);
-  gtk_table_attach (GTK_TABLE (table), button, 6, 7, 0, 1,
+  custum_color_button = gimp_color_button_new (_("Colorify Custom Color"),
+					       COLOR_SIZE, COLOR_SIZE,
+					       cvals.color, 3);
+  gtk_table_attach (GTK_TABLE (table), custum_color_button, 6, 7, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (button);
+  gtk_widget_show (custum_color_button);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 30, 30);
-  set_preview_color (preview, cvals.color[0], cvals.color[1], cvals.color[2]);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-  gtk_widget_show (preview);
-	
   for (i = 0; i < 7; i++)
     {
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      button = gtk_radio_button_new (group);
-      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-      button_info[i].preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (button_info[i].preview),
-			30, 30);
-      gtk_container_add (GTK_CONTAINER (button), button_info[i].preview);
-      set_preview_color (button_info[i].preview,
-			 button_info[i].red,
-			 button_info[i].green,
-			 button_info[i].blue);
-      button_info[i].button_num = i;
+      button = gtk_button_new ();
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      gtk_preview_size (GTK_PREVIEW (preview), COLOR_SIZE, COLOR_SIZE);
+      gtk_container_add (GTK_CONTAINER (button), preview);
+      set_preview_color (preview,
+			 button_color[i].red,
+			 button_color[i].green,
+			 button_color[i].blue);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) predefined_color_callback,
-			  &button_info[i].button_num);
-      gtk_widget_show (button_info[i].preview);
+			  &button_color[i]);
+      gtk_widget_show (preview);
 
       gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
 			GTK_FILL, GTK_FILL, 0, 0);
@@ -426,77 +410,35 @@ set_preview_color (GtkWidget *preview,
 		   guchar     blue)
 {
   gint i;
-  guchar buf[3 * 30];
+  guchar buf[3 * COLOR_SIZE];
 
-  for (i = 0; i < 30; i ++)
+  for (i = 0; i < COLOR_SIZE; i ++)
     {
       buf [3 * i] = red;
       buf [3 * i + 1] = green;
       buf [3 * i + 2] = blue;
     }
 
-  for (i = 0; i < 30; i ++) 
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, 30);
+  for (i = 0; i < COLOR_SIZE; i ++) 
+    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, COLOR_SIZE);
 
   gtk_widget_draw (preview, NULL);
-}
-
-static void
-custom_color_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  GtkColorSelectionDialog *csd;
-  gdouble colour[3];
-
-  c_dialog = gtk_color_selection_dialog_new (_("Colorify Custom Color"));
-  csd = GTK_COLOR_SELECTION_DIALOG (c_dialog);
-  gtk_color_selection_set_update_policy (GTK_COLOR_SELECTION(csd->colorsel), 
-					 GTK_UPDATE_DISCONTINUOUS); 
-
-  gtk_widget_destroy (csd->help_button);
-  gtk_widget_destroy (csd->cancel_button);
-
-  gtk_signal_connect (GTK_OBJECT (csd->ok_button), "clicked",
-		      (GtkSignalFunc) color_changed,
-		      NULL);
-
-  colour[0] = cvals.color[0] / 255.0;
-  colour[1] = cvals.color[1] / 255.0;
-  colour[2] = cvals.color[2] / 255.0;
-
-  gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel),
-				 colour);
-  gtk_window_set_position (GTK_WINDOW (c_dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (c_dialog);
 }
 
 static void
 predefined_color_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gint *num;
+  ButtonColor *color;
 
-  num = (gint *) data;
+  color = (ButtonColor *) data;
 
-  cvals.color[0] = button_info[*num].red;
-  cvals.color[1] = button_info[*num].green;
-  cvals.color[2] = button_info[*num].blue;
+  cvals.color[0] = color->red;
+  cvals.color[1] = color->green;
+  cvals.color[2] = color->blue;
+
+  gimp_color_button_update (GIMP_COLOR_BUTTON (custum_color_button));
 }
 
-static void
-color_changed (GtkWidget *widget,
-	       gpointer   data)
-{
-  gdouble color[3];
 
-  gtk_color_selection_get_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (c_dialog)->colorsel),
-				 color);
-
-  cvals.color[0] = (guchar) (color[0] * 255.0);
-  cvals.color[1] = (guchar) (color[1] * 255.0);
-  cvals.color[2] = (guchar) (color[2] * 255.0);
-	
-  set_preview_color (preview, cvals.color[0], cvals.color[1], cvals.color[2]);
-  gtk_widget_destroy (c_dialog);
-}
 

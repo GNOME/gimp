@@ -1,3 +1,9 @@
+Wed Jan 26 00:10:34 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/colorify.c: use a gimp_color_button
+
+	* plug-ins/common/spread.c: use gimp_size_entries
+
 2000-01-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenv.h: removed BOUNDS, MINIMUM and MAXIMUM. No need to
