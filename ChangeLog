@@ -17,7 +17,6 @@
 	* app/gui/file-new-dialog.c
 	* app/gui/layers-commands.c
 	* app/gui/menus.c
-	* app/paint-funcs/paint-funcs.c
 	* app/tools/gimpbucketfilltool.c
 	* tools/pdbgen/pdb/image.pdb
 	* tools/pdbgen/pdb/layer.pdb
@@ -35,6 +34,9 @@
 	* app/pdb/misc_tools_cmds.c
 	* libgimp/gimpenums.h
 	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+
+	* app/paint-funcs/paint-funcs.c: ifdef'ed out some debug output and
+	reindented.
 
 2002-03-18  Tuomas Kuosmanen  <tigert@ximian.com>
 
