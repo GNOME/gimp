@@ -47,10 +47,15 @@ enum
 static void       gimp_layer_mask_class_init  (GimpLayerMaskClass *klass);
 static void       gimp_layer_mask_init        (GimpLayerMask      *layer_mask);
 
-static gboolean   gimp_layer_mask_is_attached (GimpItem           *item);
-static GimpItem * gimp_layer_mask_duplicate   (GimpItem           *item,
-                                               GType               new_type,
-                                               gboolean            add_alpha);
+static void       gimp_layer_mask_name_changed (GimpObject        *object);
+
+static gboolean   gimp_layer_mask_is_attached  (GimpItem          *item);
+static GimpItem * gimp_layer_mask_duplicate    (GimpItem          *item,
+                                                GType              new_type,
+                                                gboolean           add_alpha);
+static gboolean   gimp_layer_mask_rename       (GimpItem          *item,
+                                                const gchar       *new_name,
+                                                const gchar       *undo_desc);
 
 
 static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
@@ -89,11 +94,13 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
-  GimpItemClass     *item_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
-  item_class     = GIMP_ITEM_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -124,10 +131,13 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_object_class->name_changed = gimp_layer_mask_name_changed;
+
   viewable_class->default_stock_id = "gimp-layer-mask";
 
   item_class->is_attached = gimp_layer_mask_is_attached;
   item_class->duplicate   = gimp_layer_mask_duplicate;
+  item_class->rename      = gimp_layer_mask_rename;
 }
 
 static void
@@ -137,6 +147,12 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
   layer_mask->apply_mask = TRUE;
   layer_mask->edit_mask  = TRUE;
   layer_mask->show_mask  = FALSE;
+}
+
+static void
+gimp_layer_mask_name_changed (GimpObject *object)
+{
+  /*  skip unique name logic by not chaining up  */
 }
 
 static gboolean
@@ -178,6 +194,16 @@ gimp_layer_mask_duplicate (GimpItem *item,
   return new_item;
 }
 
+static gboolean
+gimp_layer_mask_rename (GimpItem    *item,
+                        const gchar *new_name,
+                        const gchar *undo_desc)
+{
+  /* reject renaming, layer masks are always named "<layer name> mask"  */
+
+  return FALSE;
+}
+
 GimpLayerMask *
 gimp_layer_mask_new (GimpImage     *gimage,
 		     gint           width,
@@ -217,8 +243,15 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
 
   if (layer)
     {
+      gchar *mask_name;
+
       GIMP_ITEM (layer_mask)->offset_x = GIMP_ITEM (layer)->offset_x;
       GIMP_ITEM (layer_mask)->offset_y = GIMP_ITEM (layer)->offset_y;
+
+      mask_name = g_strdup_printf (_("%s mask"),
+                                   gimp_object_get_name (GIMP_OBJECT (layer)));
+      gimp_object_set_name (GIMP_OBJECT (layer_mask), mask_name);
+      g_free (mask_name);
     }
 }
 

@@ -75,7 +75,7 @@ static GimpItem * gimp_item_real_convert   (GimpItem      *item,
                                             GimpImage     *dest_image,
                                             GType          new_type,
                                             gboolean       add_alpha);
-static void       gimp_item_real_rename    (GimpItem      *item,
+static gboolean   gimp_item_real_rename    (GimpItem      *item,
                                             const gchar   *new_name,
                                             const gchar   *undo_desc);
 static void       gimp_item_real_translate (GimpItem      *item,
@@ -235,10 +235,8 @@ gimp_item_finalize (GObject *object)
 static void
 gimp_item_name_changed (GimpObject *object)
 {
-  GimpItem *item;
+  GimpItem *item = GIMP_ITEM (object);
   GimpList *list = NULL;
-
-  item = GIMP_ITEM (object);
 
   /*  if no other items to check name against  */
   if (item->gimage == NULL)
@@ -259,10 +257,8 @@ static gint64
 gimp_item_get_memsize (GimpObject *object,
                        gint64     *gui_size)
 {
-  GimpItem *item;
+  GimpItem *item    = GIMP_ITEM (object);
   gint64    memsize = 0;
-
-  item = GIMP_ITEM (object);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (item->parasites), gui_size);
 
@@ -337,15 +333,17 @@ gimp_item_real_convert (GimpItem  *item,
   return gimp_item_duplicate (item, new_type, add_alpha);
 }
 
-static void
+static gboolean
 gimp_item_real_rename (GimpItem    *item,
                        const gchar *new_name,
                        const gchar *undo_desc)
 {
-  if (item->gimage)
+  if (gimp_item_is_attached (item))
     gimp_image_undo_push_item_rename (item->gimage, undo_desc, item);
 
   gimp_object_set_name (GIMP_OBJECT (item), new_name);
+
+  return TRUE;
 }
 
 static void
@@ -492,13 +490,13 @@ gimp_item_convert (GimpItem  *item,
   return new_item;
 }
 
-void
+gboolean
 gimp_item_rename (GimpItem    *item,
                   const gchar *new_name)
 {
   GimpItemClass *item_class;
 
-  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
@@ -506,7 +504,9 @@ gimp_item_rename (GimpItem    *item,
     new_name = item_class->default_name;
 
   if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (item))))
-    item_class->rename (item, new_name, item_class->rename_desc);
+    return item_class->rename (item, new_name, item_class->rename_desc);
+
+  return TRUE;
 }
 
 gint

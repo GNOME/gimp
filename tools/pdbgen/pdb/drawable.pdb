@@ -415,7 +415,7 @@ sub drawable_is_channel {
 }
 
 &drawable_accessors('name', 'string', 'name', 0, [ undef, <<'CODE' ],
-$invoke{code} =~ s/gimp_object_set_name/gimp_item_rename/;
+$invoke{code} =~ s/gimp_object_set_name/success = gimp_item_rename/;
 $invoke{code} =~ s/GIMP_OBJECT/GIMP_ITEM/;
 CODE
                  'object', 'GIMP_OBJECT (drawable)');

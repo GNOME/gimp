@@ -1,5 +1,49 @@
 2004-02-01  Michael Natterer  <mitch@gimp.org>
 
+	Disallow to rename the layer mask. Instead, always name the mask
+	"<layer name> mask". Fixes bug #133112 along with some other
+	unreported ones.
+
+	* app/core/gimpitem.[ch]: added a boolean return value indicating
+	success to GimpItem::rename().
+
+	(gimp_item_real_rename): push an undo step only if the item is
+	attached.
+
+	* app/core/gimplayer.c (gimp_layer_rename): refuse renaming if
+	the layer is a floating selection floated from a channel
+	(renaming a layer's floating selection makes a new layer out
+	of the floating selection).
+
+	(gimp_layer_duplicate): use gimp_layer_add_mask() to attach the
+	mask's duplicate. Fixes mask refcount brokenness for duplicated
+	layer masks.
+
+	(gimp_layer_name_changed): new function. Automatically renames the
+	layer mask when the layer's name changes.
+
+	* app/core/gimplayermask.c (gimp_layer_mask_rename): new function
+	which refuses renaming.
+
+	(gimp_layer_mask_name_changed): skip the unique name voodoo
+	GimpItem does by not chaining up.
+
+	(gimp_layer_mask_set_layer): change the mask's name whenever it is
+	attached to a layer.
+
+	* app/text/gimptextlayer.c (gimp_text_layer_rename): fiddle with
+	text_layer->auto_rename only if renaming was successful.
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_name_edited):
+	restore the old name if renaming failed.
+
+	* tools/pdbgen/pdb/drawable.pdb (set_name): return an execution
+	error if renaming failed.
+
+	* app/pdb/drawable_cmds.c: regenerated.
+
+2004-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-load.c (xcf_load_layer): no need to set the layer
 	mask's offsets, gimp_layer_add_mask() does this for us. Simplified
 	mask property assignments.

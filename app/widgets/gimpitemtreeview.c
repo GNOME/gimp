@@ -1253,8 +1253,19 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      gimp_item_rename (item, new_text);
-      gimp_image_flush (gimp_item_get_image (item));
+      if (gimp_item_rename (item, new_text))
+        {
+          gimp_image_flush (gimp_item_get_image (item));
+        }
+      else
+        {
+          gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
+
+          gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+                              tree_view->model_column_name, name,
+                              -1);
+          g_free (name);
+        }
 
       g_object_unref (renderer);
     }

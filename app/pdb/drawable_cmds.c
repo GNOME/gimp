@@ -1054,7 +1054,7 @@ drawable_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_item_rename (GIMP_ITEM (drawable), name);
+    success = gimp_item_rename (GIMP_ITEM (drawable), name);
 
   return procedural_db_return_args (&drawable_set_name_proc, success);
 }

@@ -65,6 +65,7 @@ static void       gimp_layer_init               (GimpLayer          *layer);
 static void       gimp_layer_dispose            (GObject            *object);
 static void       gimp_layer_finalize           (GObject            *object);
 
+static void       gimp_layer_name_changed       (GimpObject         *object);
 static gint64     gimp_layer_get_memsize        (GimpObject         *object,
                                                  gint64             *gui_size);
 
@@ -78,7 +79,7 @@ static GimpItem * gimp_layer_convert            (GimpItem           *item,
                                                  GimpImage          *dest_image,
                                                  GType               new_type,
                                                  gboolean            add_alpha);
-static void       gimp_layer_rename             (GimpItem           *item,
+static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc);
 static void       gimp_layer_translate          (GimpItem           *item,
@@ -220,6 +221,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   object_class->dispose               = gimp_layer_dispose;
   object_class->finalize              = gimp_layer_finalize;
 
+  gimp_object_class->name_changed     = gimp_layer_name_changed;
   gimp_object_class->get_memsize      = gimp_layer_get_memsize;
 
   viewable_class->default_stock_id    = "gimp-layer";
@@ -306,14 +308,29 @@ gimp_layer_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_layer_name_changed (GimpObject *object)
+{
+  GimpLayer *layer = GIMP_LAYER (object);
+
+  GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
+
+  if (layer->mask)
+    {
+      gchar *mask_name;
+
+      mask_name = g_strdup_printf (_("%s mask"), gimp_object_get_name (object));
+      gimp_object_set_name (GIMP_OBJECT (layer->mask), mask_name);
+      g_free (mask_name);
+    }
+}
+
 static gint64
 gimp_layer_get_memsize (GimpObject *object,
                         gint64     *gui_size)
 {
-  GimpLayer *layer;
+  GimpLayer *layer   = GIMP_LAYER (object);
   gint64     memsize = 0;
-
-  layer = GIMP_LAYER (object);
 
   if (layer->mask)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
@@ -343,8 +360,8 @@ static void
 gimp_layer_get_active_components (const GimpDrawable *drawable,
                                   gboolean           *active)
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpLayer *layer  = GIMP_LAYER (drawable);
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   gint       i;
 
   /*  first copy the gimage active channels  */
@@ -389,12 +406,12 @@ gimp_layer_duplicate (GimpItem *item,
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
     {
-      new_layer->mask =
+      GimpLayerMask *layer_mask =
         GIMP_LAYER_MASK (gimp_item_duplicate (GIMP_ITEM (layer->mask),
                                               G_TYPE_FROM_INSTANCE (layer->mask),
                                               FALSE));
 
-      gimp_layer_mask_set_layer (new_layer->mask, new_layer);
+      gimp_layer_add_mask (new_layer, layer_mask, FALSE);
     }
 
   return new_item;
@@ -496,30 +513,42 @@ gimp_layer_convert (GimpItem  *item,
   return new_item;
 }
 
-static void
+static gboolean
 gimp_layer_rename (GimpItem    *item,
                    const gchar *new_name,
                    const gchar *undo_desc)
 {
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
-  gboolean   floating_sel = FALSE;
+  gboolean   attached;
+  gboolean   floating_sel;
 
   gimage = gimp_item_get_image (item);
-  floating_sel = gimp_layer_is_floating_sel (GIMP_LAYER (item));
 
-  if (gimage && floating_sel)
+  attached     = gimp_item_is_attached (item);
+  floating_sel = gimp_layer_is_floating_sel (layer);
+
+  if (floating_sel)
     {
-      gimp_image_undo_group_start (gimage,
-                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                   undo_desc);
+      if (GIMP_IS_CHANNEL (layer->fs.drawable))
+        return FALSE;
 
-      floating_sel_to_layer (GIMP_LAYER (item));
+      if (attached)
+        {
+          gimp_image_undo_group_start (gimage,
+                                       GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                       undo_desc);
+
+          floating_sel_to_layer (layer);
+        }
     }
 
   GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
 
-  if (gimage && floating_sel)
+  if (attached && floating_sel)
     gimp_image_undo_group_end (gimage);
+
+  return TRUE;
 }
 
 static void
@@ -528,9 +557,7 @@ gimp_layer_translate (GimpItem *item,
 		      gint      offset_y,
                       gboolean  push_undo)
 {
-  GimpLayer *layer;
-
-  layer = GIMP_LAYER (item);
+  GimpLayer *layer = GIMP_LAYER (item);
 
   if (push_undo)
     gimp_image_undo_push_item_displace (gimp_item_get_image (item),
@@ -567,10 +594,9 @@ gimp_layer_scale (GimpItem              *item,
                   gint                   new_offset_y,
                   GimpInterpolationType  interpolation_type)
 {
-  GimpLayer *layer;
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
 
-  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   if (layer->mask)
@@ -605,10 +631,9 @@ gimp_layer_resize (GimpItem *item,
 		   gint      offset_x,
 		   gint      offset_y)
 {
-  GimpLayer *layer;
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
 
-  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   if (layer->mask)
@@ -638,10 +663,9 @@ gimp_layer_flip (GimpItem            *item,
                  gdouble              axis,
                  gboolean             clip_result)
 {
-  GimpLayer *layer;
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
 
-  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
@@ -667,10 +691,9 @@ gimp_layer_rotate (GimpItem         *item,
                    gdouble           center_y,
                    gboolean          clip_result)
 {
-  GimpLayer *layer;
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
 
-  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
@@ -700,10 +723,9 @@ gimp_layer_transform (GimpItem               *item,
                       GimpProgressFunc        progress_callback,
                       gpointer                progress_data)
 {
-  GimpLayer *layer;
+  GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *gimage;
 
-  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
@@ -729,11 +751,9 @@ gimp_layer_transform (GimpItem               *item,
 static void
 gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpLayer   *layer;
+  GimpLayer   *layer = GIMP_LAYER (drawable);
   GimpImage   *gimage;
   GimpChannel *mask;
-
-  layer = GIMP_LAYER (drawable);
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;

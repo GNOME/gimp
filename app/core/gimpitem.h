@@ -71,7 +71,7 @@ struct _GimpItemClass
                               GimpImage              *dest_image,
                               GType                   new_type,
                               gboolean                add_alpha);
-  void       (* rename)      (GimpItem               *item,
+  gboolean   (* rename)      (GimpItem               *item,
                               const gchar            *new_name,
                               const gchar            *undo_desc);
   void       (* translate)   (GimpItem               *item,
@@ -139,7 +139,7 @@ GimpItem      * gimp_item_convert          (GimpItem       *item,
                                             GType           new_type,
                                             gboolean        add_alpha);
 
-void            gimp_item_rename           (GimpItem       *item,
+gboolean        gimp_item_rename           (GimpItem       *item,
                                             const gchar    *new_name);
 
 gint            gimp_item_width            (const GimpItem *item);

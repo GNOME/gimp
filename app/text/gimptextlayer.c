@@ -65,7 +65,7 @@ static gint64     gimp_text_layer_get_memsize   (GimpObject     *object,
 static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
                                                  GType           new_type,
                                                  gboolean        add_alpha);
-static void       gimp_text_layer_rename        (GimpItem       *item,
+static gboolean   gimp_text_layer_rename        (GimpItem       *item,
                                                  const gchar    *new_name,
                                                  const gchar    *undo_desc);
 
@@ -230,14 +230,19 @@ gimp_text_layer_duplicate (GimpItem *item,
   return new_item;
 }
 
-static void
+static gboolean
 gimp_text_layer_rename (GimpItem    *item,
                         const gchar *new_name,
                         const gchar *undo_desc)
 {
-  GIMP_TEXT_LAYER (item)->auto_rename = FALSE;
+  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc))
+    {
+      GIMP_TEXT_LAYER (item)->auto_rename = FALSE;
 
-  GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 /**
