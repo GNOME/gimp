@@ -1,5 +1,15 @@
 2004-07-05  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/Makefile.am (enum_headers): don't scan
+	app/paint-funcs/paint-funcs-types.h for enums.
+
+	* app/paint-funcs/paint-funcs-types.h: removed /*< pdb-skip >*/
+
+	* app/core/core-types.h: reordered opaque typedefs to somehow
+	match the categories in the comments.
+
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: removed enum SizeType.
 
 	* app/text/text-enums.h: added it as enum GimpSizeType and added

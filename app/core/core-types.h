@@ -53,29 +53,18 @@ typedef struct _GimpObject          GimpObject;
 
 typedef struct _Gimp                Gimp;
 
-typedef struct _GimpParasiteList    GimpParasiteList;
-
 typedef struct _GimpContainer       GimpContainer;
 typedef struct _GimpList            GimpList;
-
-typedef struct _GimpDataFactory     GimpDataFactory;
 
 typedef struct _GimpContext         GimpContext;
 
 typedef struct _GimpViewable        GimpViewable;
 typedef struct _GimpItem            GimpItem;
 
-typedef struct _GimpBuffer          GimpBuffer;
+typedef struct _GimpImage           GimpImage;
 
-typedef struct _GimpPaintInfo       GimpPaintInfo;
-typedef struct _GimpStrokeOptions   GimpStrokeOptions;
-typedef struct _GimpToolInfo        GimpToolInfo;
-typedef struct _GimpToolOptions     GimpToolOptions;
 
-typedef struct _GimpImagefile       GimpImagefile;
-typedef struct _GimpDocumentList    GimpDocumentList;
-
-/*  drawable objects  */
+/*  item objects  */
 
 typedef struct _GimpDrawable        GimpDrawable;
 
@@ -85,10 +74,10 @@ typedef struct _GimpSelection       GimpSelection;
 typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;
 
-typedef struct _GimpImage           GimpImage;
-
 
 /*  data objects  */
+
+typedef struct _GimpDataFactory     GimpDataFactory;
 
 typedef struct _GimpData            GimpData;
 
@@ -103,19 +92,31 @@ typedef struct _GimpPattern         GimpPattern;
 typedef struct _GimpPalette         GimpPalette;
 
 
-/*  misc objects  */
-
-typedef struct _GimpImageMap        GimpImageMap;
-
-typedef struct _GimpEnvironTable    GimpEnvironTable;
-
-
 /*  undo objects  */
 
 typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpItemUndo        GimpItemUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
+
+
+/*  info & option objects  */
+
+typedef struct _GimpPaintInfo       GimpPaintInfo;
+typedef struct _GimpToolInfo        GimpToolInfo;
+
+typedef struct _GimpStrokeOptions   GimpStrokeOptions;
+typedef struct _GimpToolOptions     GimpToolOptions;
+
+
+/*  misc objects  */
+
+typedef struct _GimpBuffer          GimpBuffer;
+typedef struct _GimpImagefile       GimpImagefile;
+typedef struct _GimpImageMap        GimpImageMap;
+typedef struct _GimpDocumentList    GimpDocumentList;
+typedef struct _GimpEnvironTable    GimpEnvironTable;
+typedef struct _GimpParasiteList    GimpParasiteList;
 
 
 /*  non-object types  */

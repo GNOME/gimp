@@ -56,12 +56,11 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../libgimpbase/gimpbasetypes.h		\
-	../../app/paint-funcs/paint-funcs-types.h	\
-	../../app/base/base-enums.h			\
-	../../app/core/core-enums.h			\
-	../../app/text/text-enums.h			\
-	../../app/paint/paint-enums.h			\
+	../../libgimpbase/gimpbasetypes.h	\
+	../../app/base/base-enums.h		\
+	../../app/core/core-enums.h		\
+	../../app/text/text-enums.h		\
+	../../app/paint/paint-enums.h		\
 	../../app/plug-in/plug-in-types.h
 
 pdb_scripts = \
