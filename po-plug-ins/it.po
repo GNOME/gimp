@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 1999-09-08 04:54+0200\n"
+"POT-Creation-Date: 1999-09-09 13:55-0700\n"
 "Content-Type: text/plain; charset=\n"
 "Date: mar ago  3 18:18:54 CEST 199\n"
 "From: Daniele Medri <madrid@linux.it>\n"
@@ -239,8 +239,8 @@ msgid ""
 "parameter file."
 msgstr ""
 "Crea una immagine in Lattice Coupled-Map (CML). CML è un tipo di Cellula "
-"Automata sul dominio di valori continui. In RUN_NONINTERACTIVE, il nome di un"
-"file di parametri è passato come quarto argomento. Potete controllare "
+"Automata sul dominio di valori continui. In RUN_NONINTERACTIVE, il nome di "
+"unfile di parametri è passato come quarto argomento. Potete controllare "
 "CML_explorer attraverso il file dei parametri."
 
 #: plug-ins/common/CML_explorer.c:1325
@@ -446,9 +446,10 @@ msgstr "Grafico delle attuali configurazioni"
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
 #: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
-#: plug-ins/sel2path/sel2path.c:350
+#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
+#: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
+#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
+#: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
 msgid "OK"
 msgstr "OK"
 
@@ -522,7 +523,8 @@ msgstr "Attenzione: è un file di parametri per una versione aggiornata."
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
 #: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
+#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
+#: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 #: plug-ins/sel2path/sel2path.c:359
@@ -658,7 +660,8 @@ msgstr "Soglia:"
 
 #: plug-ins/Lighting/lighting_ui.c:645
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Qualità Antialiasing. Valori alti sono migliori, ma rallentano le operazioni"
+msgstr ""
+"Qualità Antialiasing. Valori alti sono migliori, ma rallentano le operazioni"
 
 #: plug-ins/Lighting/lighting_ui.c:646
 msgid "Stop when pixel differences are smaller than this value"
@@ -742,11 +745,14 @@ msgstr "Diffusione:"
 
 #: plug-ins/Lighting/lighting_ui.c:797
 msgid "Amount of original color to show where no direct light falls"
-msgstr "Ammontare dei colori originali per visualizzare la provenienza della luce passiva"
+msgstr ""
+"Ammontare dei colori originali per visualizzare la provenienza della luce "
+"passiva"
 
 #: plug-ins/Lighting/lighting_ui.c:798
 msgid "Intensity of original color when lit by a light source"
-msgstr "Intensità dei colori originali quando illuminati da una sorgente di luce"
+msgstr ""
+"Intensità dei colori originali quando illuminati da una sorgente di luce"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Reflectivity"
@@ -864,7 +870,9 @@ msgstr "Applica un effetto lente"
 
 #: plug-ins/common/apply_lens.c:133
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
-msgstr "Questo plug-in utilizza la legge di Snell per disegnare una lente elissoidale sopra l'immagine"
+msgstr ""
+"Questo plug-in utilizza la legge di Snell per disegnare una lente "
+"elissoidale sopra l'immagine"
 
 #: plug-ins/common/apply_lens.c:137
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
@@ -886,7 +894,8 @@ msgstr "Effetti Lente"
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Configurazione parametri"
 
@@ -910,13 +919,27 @@ msgstr "Rendi l'ambiente trasparente"
 msgid "Lens refraction index: "
 msgstr "Indice di rifrazione delle lenti:"
 
-#: plug-ins/common/autostretch_hsv.c:82
+#: plug-ins/common/autocrop.c:62
+msgid "Automagically crops a picture."
+msgstr ""
+
+#: plug-ins/common/autocrop.c:67
+#, fuzzy
+msgid "<Image>/Image/Transforms/Autocrop"
+msgstr "<Image>/Immagine/Colori/Auto-Stretch HSV"
+
+#: plug-ins/common/autocrop.c:105
+#, fuzzy
+msgid "Cropping..."
+msgstr "Composizione in corso..."
+
+#: plug-ins/common/autostretch_hsv.c:82 plug-ins/common/c_astretch.c:78
 msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
-"Automaticamente aggiusta il contrasto della figura specificata per coprire"
-"tutti i possibili campi."
+"Automaticamente aggiusta il contrasto della figura specificata per "
+"copriretutti i possibili campi."
 
 #: plug-ins/common/autostretch_hsv.c:83
 msgid ""
@@ -927,12 +950,12 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
-"Questo semplice plugin compie un aggiustamente automatico del contrasto. Per"
-"ogni canale nelle immagini, esso trova il minimi e massimi valori... li utilizza"
-"per aggiustare gli istogrammi individuali ai campi di contrasto completi."
-"Per alcune immagini può fare quello che desiderate; per altre possono esserci limiti."
-"Questa versione differenzia da Constrast Autostrech perchè lavora nello spazio HSV"
-"e preserva i valori hue."
+"Questo semplice plugin compie un aggiustamente automatico del contrasto. "
+"Perogni canale nelle immagini, esso trova il minimi e massimi valori... li "
+"utilizzaper aggiustare gli istogrammi individuali ai campi di contrasto "
+"completi.Per alcune immagini può fare quello che desiderate; per altre "
+"possono esserci limiti.Questa versione differenzia da Constrast Autostrech "
+"perchè lavora nello spazio HSVe preserva i valori hue."
 
 #: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto-Stretch HSV"
@@ -952,9 +975,9 @@ msgid ""
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
-"Questo plugin sfoca casualmente le figure specificate, utilizando una sfocatura 3x3."
-"Controllare la percentuale di pixel che sono sfocati e il numero di volte applicate."
-"Immagini indicizzate non sono supportate."
+"Questo plugin sfoca casualmente le figure specificate, utilizando una "
+"sfocatura 3x3.Controllare la percentuale di pixel che sono sfocati e il "
+"numero di volte applicate.Immagini indicizzate non sono supportate."
 
 #: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur"
@@ -987,8 +1010,8 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Genere un seme di numeri casuali dall'ora corrente - questo garantisce"
-"una casualità ragionevole."
+"Genere un seme di numeri casuali dall'ora corrente - questo garantisceuna "
+"casualità ragionevole."
 
 #.
 #. *  User button
@@ -1002,8 +1025,8 @@ msgid ""
 "Enable user-entered value for random number generator seed - this allows you "
 "to repeat a given \"random\" operation"
 msgstr ""
-"Attiva i valuri-utente per la generazione di un seme di numeri casuali - questo"
-"vi permette di ripetere una operazione \"casuale\" data"
+"Attiva i valuri-utente per la generazione di un seme di numeri casuali - "
+"questovi permette di ripetere una operazione \"casuale\" data"
 
 #: plug-ins/common/blur.c:661
 msgid "Value for seeding the random number generator"
@@ -1152,7 +1175,8 @@ msgstr "Mappa Sinusoidale"
 
 #: plug-ins/common/bumpmap.c:341
 msgid "Create an embossing effect using an image as a bump map"
-msgstr "Creazione di un effetto di rilievo utilizzando una immagine come bump map"
+msgstr ""
+"Creazione di un effetto di rilievo utilizzando una immagine come bump map"
 
 #: plug-ins/common/bumpmap.c:349
 msgid "<Image>/Filters/Map/Bump Map"
@@ -1238,7 +1262,38 @@ msgstr "bz2: exec fallito: bunzip2: %s\n"
 
 #: plug-ins/common/bz2.c:443
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr "bz2: non è possibile aprire un file con compressione bz2 senza una sensibile estensione\n"
+msgstr ""
+"bz2: non è possibile aprire un file con compressione bz2 senza una sensibile "
+"estensione\n"
+
+#: plug-ins/common/c_astretch.c:79
+#, fuzzy
+msgid ""
+"This simple plug-in does an automatic contrast stretch.  For each channel in "
+"the image, it finds the minimum and maximum values... it uses those values "
+"to stretch the individual histograms to the full contrast range.  For some "
+"images it may do just what you want; for others it may be total crap :)"
+msgstr ""
+"Questo semplice plugin compie un aggiustamente automatico del contrasto. "
+"Perogni canale nelle immagini, esso trova il minimi e massimi valori... li "
+"utilizzaper aggiustare gli istogrammi individuali ai campi di contrasto "
+"completi.Per alcune immagini può fare quello che desiderate; per altre "
+"possono esserci limiti.Questa versione differenzia da Constrast Autostrech "
+"perchè lavora nello spazio HSVe preserva i valori hue."
+
+#: plug-ins/common/c_astretch.c:83
+#, fuzzy
+msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
+msgstr "<Image>/Immagine/Colori/Auto-Stretch HSV"
+
+#: plug-ins/common/c_astretch.c:115
+#, fuzzy
+msgid "Auto-Stretching Contrast..."
+msgstr "Auto-Stretch HSV in corso..."
+
+#: plug-ins/common/c_astretch.c:156
+msgid "c_astretch: cmap was NULL!  Quitting...\n"
+msgstr ""
 
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
@@ -1270,7 +1325,9 @@ msgstr "Simile alla modalità \"Colore\" per i livelli."
 
 #: plug-ins/common/colorify.c:123
 msgid "Makes an average of the RGB channels and uses it to set the color"
-msgstr "Creare una media dei canali RGB e utilizza quest'ultimi per configurare il colore"
+msgstr ""
+"Creare una media dei canali RGB e utilizza quest'ultimi per configurare il "
+"colore"
 
 #: plug-ins/common/colorify.c:126
 msgid "<Image>/Filters/Colors/Colorify"
@@ -1300,6 +1357,46 @@ msgstr "Scelta Colori: "
 #: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
 msgstr "Colorify con colori a scelta"
+
+#: plug-ins/common/color_enhance.c:84
+#, fuzzy
+msgid ""
+"Automatically stretch the saturation of the specified drawable to cover all "
+"possible ranges."
+msgstr ""
+"Automaticamente aggiusta il contrasto della figura specificata per "
+"copriretutti i possibili campi."
+
+#: plug-ins/common/color_enhance.c:85
+#, fuzzy
+msgid ""
+"This simple plug-in does an automatic saturation stretch.  For each channel "
+"in the image, it finds the minimum and maximum values... it uses those "
+"values to stretch the individual histograms to the full range.  For some "
+"images it may do just what you want; for others it may be total crap :).  "
+"This version differs from Contrast Autostretch in that it works in HSV "
+"space, and preserves hue."
+msgstr ""
+"Questo semplice plugin compie un aggiustamente automatico del contrasto. "
+"Perogni canale nelle immagini, esso trova il minimi e massimi valori... li "
+"utilizzaper aggiustare gli istogrammi individuali ai campi di contrasto "
+"completi.Per alcune immagini può fare quello che desiderate; per altre "
+"possono esserci limiti.Questa versione differenzia da Constrast Autostrech "
+"perchè lavora nello spazio HSVe preserva i valori hue."
+
+#: plug-ins/common/color_enhance.c:89
+#, fuzzy
+msgid "<Image>/Image/Colors/Color Enhance"
+msgstr "<Image>/Filtri/Colori/Colorify"
+
+#: plug-ins/common/color_enhance.c:121
+#, fuzzy
+msgid "Color Enhance..."
+msgstr "Colorify in corso..."
+
+#: plug-ins/common/color_enhance.c:163
+msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
+msgstr ""
 
 #: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
 msgid "RGB"
@@ -1661,8 +1758,8 @@ msgid ""
 "This function creates new gray images with different channel information in "
 "each of them"
 msgstr ""
-"Questa funzione crea nuove immagini grigie con differenti informazioni di canale"
-"per ognuna di loro"
+"Questa funzione crea nuove immagini grigie con differenti informazioni di "
+"canaleper ognuna di loro"
 
 #: plug-ins/common/decompose.c:222
 msgid "<Image>/Image/Channel Ops/Decompose"
@@ -1699,7 +1796,9 @@ msgstr "Estrazione canali:"
 
 #: plug-ins/common/depthmerge.c:194
 msgid "Combine two images using corresponding depth maps (z-buffers)"
-msgstr "Combina due immagini utilizzando mappe di definizione corrispondenti (z-buffer)"
+msgstr ""
+"Combina due immagini utilizzando mappe di definizione corrispondenti "
+"(z-buffer)"
 
 #: plug-ins/common/depthmerge.c:195
 msgid ""
@@ -2027,6 +2126,41 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr ""
 
+#: plug-ins/common/guillotine.c:76
+msgid ""
+"Slice up the image into subimages, cutting along the image's Guides.  Fooey "
+"to you and your broccoli, Pokey."
+msgstr ""
+
+#: plug-ins/common/guillotine.c:77
+#, fuzzy
+msgid "This function takes an image and blah blah.  Hooray!"
+msgstr ""
+"Questa funzione crea una nuova immagine da multiple immagini in scala di "
+"grigio"
+
+#: plug-ins/common/guillotine.c:81
+#, fuzzy
+msgid "<Image>/Image/Transforms/Guillotine"
+msgstr "<Image>/Immagine/Operazioni Canali/Composto"
+
+#: plug-ins/common/guillotine.c:114
+msgid "Guillotine..."
+msgstr ""
+
+#: plug-ins/common/guillotine.c:161
+msgid "Aie!  Aie!  Aie!\n"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:171
+#, c-format
+msgid "Yay... found %d horizontal guides and %d vertical guides.\n"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:176
+msgid "Poopy, no guides.\n"
+msgstr ""
+
 #: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
 msgid "loads files in the JPEG file format"
 msgstr "Carica file del formato JPEG"
@@ -2185,6 +2319,39 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:793
 msgid "mail: some sort of error with the file extension or lack thereof \n"
+msgstr ""
+
+#: plug-ins/common/normalize.c:78
+#, fuzzy
+msgid ""
+"Normalize the contrast of the specified drawable to cover all possible "
+"ranges."
+msgstr ""
+"Automaticamente aggiusta il contrasto della figura specificata per "
+"copriretutti i possibili campi."
+
+#: plug-ins/common/normalize.c:79
+msgid ""
+"This plugin performs almost the same operation as the 'contrast autostretch' "
+"plugin, except that it won't allow the colour channels to normalize "
+"independently.  This is actually what most people probably want instead of "
+"contrast-autostretch; use c-a only if you wish to remove an undesirable "
+"colour-tint from a source image which is supposed to contain pure-white and "
+"pure-black."
+msgstr ""
+
+#: plug-ins/common/normalize.c:83
+#, fuzzy
+msgid "<Image>/Image/Colors/Normalize"
+msgstr "<Image>/Immagine/Colori/Auto-Stretch HSV"
+
+#: plug-ins/common/normalize.c:115
+#, fuzzy
+msgid "Normalizing..."
+msgstr "Colorify in corso..."
+
+#: plug-ins/common/normalize.c:155
+msgid "normalize: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: plug-ins/common/oilify.c:122
@@ -2586,43 +2753,6 @@ msgstr "File PPD?"
 msgid "File"
 msgstr "File"
 
-#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
-msgid "Converts a selection to a path (with advanced user menu)"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
-msgid "Converts a selection to a path"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:158
-msgid "<Image>/Select/To Path"
-msgstr "<Image>/Selezione/A Tracciato"
-
-#: plug-ins/sel2path/sel2path.c:203
-msgid "No selection to convert"
-msgstr "Nessuna selezione da convertire"
-
-#: plug-ins/sel2path/sel2path.c:367
-msgid "Default Values"
-msgstr "Valori Base"
-
-#: plug-ins/sel2path/sel2path.c:556
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:564
-msgid "selection_to_path"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:590
-msgid "gimp_image_get_selection failed"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:598
-msgid "Internal error. Selection bpp > 1"
-msgstr "Errore interneo. Selezione bpp maggiore di 1"
-
 #: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
 msgid "load file of PostScript/PDF file format"
 msgstr "apri file in formato PostScript/PDF"
@@ -2802,6 +2932,149 @@ msgstr "Encapsulated PostScript"
 msgid "Preview size"
 msgstr "Dimensione anteprima"
 
+#: plug-ins/common/rotate.c:152
+msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
+msgstr ""
+
+#: plug-ins/common/rotate.c:153
+msgid ""
+"This plug-in does rotate the active layer or the whole image clockwise by "
+"multiples of 90 degrees. When the whole image is choosen, the image is "
+"resized if necessary."
+msgstr ""
+
+#: plug-ins/common/rotate.c:157
+#, fuzzy
+msgid "<Image>/Image/Transforms/Rotate"
+msgstr "<Image>/Immagine/Operazioni Canali/Composto"
+
+#: plug-ins/common/rotate.c:506
+msgid "You can not rotate the whole image if there's a selection."
+msgstr ""
+
+#: plug-ins/common/rotate.c:512
+msgid "You can not rotate the whole image if there's a floating selection."
+msgstr ""
+
+#: plug-ins/common/rotate.c:518
+#, fuzzy
+msgid "Rotating..."
+msgstr "Rotazione"
+
+#: plug-ins/common/rotate.c:599
+#, fuzzy
+msgid "Rotate"
+msgstr "Rotazione"
+
+#. parameter settings
+#: plug-ins/common/rotate.c:625
+msgid "Rotate clockwise by"
+msgstr ""
+
+#. label: degrees
+#: plug-ins/common/rotate.c:698
+#, fuzzy
+msgid "degrees"
+msgstr "verde"
+
+#. check button
+#: plug-ins/common/rotate.c:712
+#, fuzzy
+msgid "Rotate the whole image"
+msgstr "Crea nuova immagine"
+
+#: plug-ins/common/rotators.c:50
+#, fuzzy
+msgid "<Image>/Image/Transforms/Image"
+msgstr "<Image>/Immagine/Operazioni Canali/Composto"
+
+#: plug-ins/common/rotators.c:51
+#, fuzzy
+msgid "<Image>/Image/Transforms/Layer"
+msgstr "<Image>/Immagine/Operazioni Canali/Composto"
+
+#: plug-ins/common/rotators.c:70
+msgid "Rotates the given layer 90 degrees clockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:75
+msgid "<Image>/Image/Transforms/Layer/Rotate 90"
+msgstr ""
+
+#: plug-ins/common/rotators.c:82
+msgid "Rotates the given layer 90 degrees anticlockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:87
+msgid "<Image>/Image/Transforms/Layer/Rotate 270"
+msgstr ""
+
+#: plug-ins/common/rotators.c:94
+msgid "Rotates the given image 90 degrees clockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:99
+msgid "<Image>/Image/Transforms/Image/Rotate 90"
+msgstr ""
+
+#: plug-ins/common/rotators.c:106
+msgid "Rotates the current image 90 degrees anticlockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:111
+msgid "<Image>/Image/Transforms/Image/Rotate 270"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
+msgid "Converts a selection to a path (with advanced user menu)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
+msgid "Converts a selection to a path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:158
+msgid "<Image>/Select/To Path"
+msgstr "<Image>/Selezione/A Tracciato"
+
+#: plug-ins/sel2path/sel2path.c:203
+msgid "No selection to convert"
+msgstr "Nessuna selezione da convertire"
+
+#: plug-ins/sel2path/sel2path.c:367
+msgid "Default Values"
+msgstr "Valori Base"
+
+#: plug-ins/sel2path/sel2path.c:556
+#, c-format
+msgid "print_spline: strange degree (%d)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:564
+msgid "selection_to_path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:590
+msgid "gimp_image_get_selection failed"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:598
+msgid "Internal error. Selection bpp > 1"
+msgstr "Errore interneo. Selezione bpp maggiore di 1"
+
+#: plug-ins/common/threshold_alpha.c:196
+msgid "<Image>/Image/Alpha/Threshold Alpha"
+msgstr ""
+
+#: plug-ins/common/threshold_alpha.c:300
+msgid "threshold_alpha (0.13):coloring transparency..."
+msgstr ""
+
+#: plug-ins/common/threshold_alpha.c:354
+#, fuzzy
+msgid "Threshold"
+msgstr "Soglia:"
+
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
 msgstr "Apri una immagine bitmap nel formato X10/X11"
@@ -2971,6 +3244,24 @@ msgstr "Errore durante la scrittura Indicizzata/Scala di grigio dell'immagine"
 #: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
 msgstr "Errore durenate la scrittura dell'immagine rgb"
+
+#: plug-ins/common/zealouscrop.c:64
+msgid ""
+"Automagically crops unused space from the edges and middle of a picture."
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:69
+#, fuzzy
+msgid "<Image>/Image/Transforms/Zealous Crop"
+msgstr "<Image>/Immagine/Operazioni Canali/Composto"
+
+#: plug-ins/common/zealouscrop.c:105
+msgid "ZealousCropping(tm)..."
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:209
+msgid "ZealousCrop(tm): Nothing to be done.\n"
+msgstr ""
 
 #~ msgid "Made with GIMP"
 #~ msgstr "Creata con GIMP"

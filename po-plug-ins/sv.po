@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.7\n"
-"POT-Creation-Date: 1999-09-04 02:51+0200\n"
+"POT-Creation-Date: 1999-09-09 13:55-0700\n"
 "PO-Revision-Date: 1999-07-22 11:11+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -447,9 +447,10 @@ msgstr ""
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
 #: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
-#: plug-ins/sel2path/sel2path.c:350
+#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
+#: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
+#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
+#: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
 msgid "OK"
 msgstr "OK"
 
@@ -523,7 +524,8 @@ msgstr ""
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
 #: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
+#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
+#: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 #: plug-ins/sel2path/sel2path.c:359
@@ -887,7 +889,8 @@ msgstr ""
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Parameterinställningar"
 
@@ -911,7 +914,19 @@ msgstr ""
 msgid "Lens refraction index: "
 msgstr ""
 
-#: plug-ins/common/autostretch_hsv.c:82
+#: plug-ins/common/autocrop.c:62
+msgid "Automagically crops a picture."
+msgstr ""
+
+#: plug-ins/common/autocrop.c:67
+msgid "<Image>/Image/Transforms/Autocrop"
+msgstr ""
+
+#: plug-ins/common/autocrop.c:105
+msgid "Cropping..."
+msgstr ""
+
+#: plug-ins/common/autostretch_hsv.c:82 plug-ins/common/c_astretch.c:78
 msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
@@ -1226,6 +1241,26 @@ msgstr ""
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr ""
 
+#: plug-ins/common/c_astretch.c:79
+msgid ""
+"This simple plug-in does an automatic contrast stretch.  For each channel in "
+"the image, it finds the minimum and maximum values... it uses those values "
+"to stretch the individual histograms to the full contrast range.  For some "
+"images it may do just what you want; for others it may be total crap :)"
+msgstr ""
+
+#: plug-ins/common/c_astretch.c:83
+msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
+msgstr ""
+
+#: plug-ins/common/c_astretch.c:115
+msgid "Auto-Stretching Contrast..."
+msgstr ""
+
+#: plug-ins/common/c_astretch.c:156
+msgid "c_astretch: cmap was NULL!  Quitting...\n"
+msgstr ""
+
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
 msgstr ""
@@ -1285,6 +1320,34 @@ msgstr ""
 
 #: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
+msgstr ""
+
+#: plug-ins/common/color_enhance.c:84
+msgid ""
+"Automatically stretch the saturation of the specified drawable to cover all "
+"possible ranges."
+msgstr ""
+
+#: plug-ins/common/color_enhance.c:85
+msgid ""
+"This simple plug-in does an automatic saturation stretch.  For each channel "
+"in the image, it finds the minimum and maximum values... it uses those "
+"values to stretch the individual histograms to the full range.  For some "
+"images it may do just what you want; for others it may be total crap :).  "
+"This version differs from Contrast Autostretch in that it works in HSV "
+"space, and preserves hue."
+msgstr ""
+
+#: plug-ins/common/color_enhance.c:89
+msgid "<Image>/Image/Colors/Color Enhance"
+msgstr ""
+
+#: plug-ins/common/color_enhance.c:121
+msgid "Color Enhance..."
+msgstr ""
+
+#: plug-ins/common/color_enhance.c:163
+msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
@@ -2022,6 +2085,37 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr "GIF: för mycket indata, ignorerar extra-skräpet...\n"
 
+#: plug-ins/common/guillotine.c:76
+msgid ""
+"Slice up the image into subimages, cutting along the image's Guides.  Fooey "
+"to you and your broccoli, Pokey."
+msgstr ""
+
+#: plug-ins/common/guillotine.c:77
+msgid "This function takes an image and blah blah.  Hooray!"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:81
+msgid "<Image>/Image/Transforms/Guillotine"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:114
+msgid "Guillotine..."
+msgstr ""
+
+#: plug-ins/common/guillotine.c:161
+msgid "Aie!  Aie!  Aie!\n"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:171
+#, c-format
+msgid "Yay... found %d horizontal guides and %d vertical guides.\n"
+msgstr ""
+
+#: plug-ins/common/guillotine.c:176
+msgid "Poopy, no guides.\n"
+msgstr ""
+
 #: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
 msgid "loads files in the JPEG file format"
 msgstr "laddar filer i JPEG-formatet"
@@ -2184,6 +2278,34 @@ msgstr ""
 
 #: plug-ins/common/mail.c:793
 msgid "mail: some sort of error with the file extension or lack thereof \n"
+msgstr ""
+
+#: plug-ins/common/normalize.c:78
+msgid ""
+"Normalize the contrast of the specified drawable to cover all possible "
+"ranges."
+msgstr ""
+
+#: plug-ins/common/normalize.c:79
+msgid ""
+"This plugin performs almost the same operation as the 'contrast autostretch' "
+"plugin, except that it won't allow the colour channels to normalize "
+"independently.  This is actually what most people probably want instead of "
+"contrast-autostretch; use c-a only if you wish to remove an undesirable "
+"colour-tint from a source image which is supposed to contain pure-white and "
+"pure-black."
+msgstr ""
+
+#: plug-ins/common/normalize.c:83
+msgid "<Image>/Image/Colors/Normalize"
+msgstr ""
+
+#: plug-ins/common/normalize.c:115
+msgid "Normalizing..."
+msgstr ""
+
+#: plug-ins/common/normalize.c:155
+msgid "normalize: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: plug-ins/common/oilify.c:122
@@ -2585,43 +2707,6 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
-msgid "Converts a selection to a path (with advanced user menu)"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
-msgid "Converts a selection to a path"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:158
-msgid "<Image>/Select/To Path"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:203
-msgid "No selection to convert"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:367
-msgid "Default Values"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:556
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:564
-msgid "selection_to_path"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:590
-msgid "gimp_image_get_selection failed"
-msgstr ""
-
-#: plug-ins/sel2path/sel2path.c:598
-msgid "Internal error. Selection bpp > 1"
-msgstr ""
-
 #: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
 msgid "load file of PostScript/PDF file format"
 msgstr ""
@@ -2799,6 +2884,142 @@ msgstr ""
 msgid "Preview size"
 msgstr ""
 
+#: plug-ins/common/rotate.c:152
+msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
+msgstr ""
+
+#: plug-ins/common/rotate.c:153
+msgid ""
+"This plug-in does rotate the active layer or the whole image clockwise by "
+"multiples of 90 degrees. When the whole image is choosen, the image is "
+"resized if necessary."
+msgstr ""
+
+#: plug-ins/common/rotate.c:157
+msgid "<Image>/Image/Transforms/Rotate"
+msgstr ""
+
+#: plug-ins/common/rotate.c:506
+msgid "You can not rotate the whole image if there's a selection."
+msgstr ""
+
+#: plug-ins/common/rotate.c:512
+msgid "You can not rotate the whole image if there's a floating selection."
+msgstr ""
+
+#: plug-ins/common/rotate.c:518
+msgid "Rotating..."
+msgstr ""
+
+#: plug-ins/common/rotate.c:599
+msgid "Rotate"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/common/rotate.c:625
+msgid "Rotate clockwise by"
+msgstr ""
+
+#. label: degrees
+#: plug-ins/common/rotate.c:698
+#, fuzzy
+msgid "degrees"
+msgstr "grön"
+
+#. check button
+#: plug-ins/common/rotate.c:712
+msgid "Rotate the whole image"
+msgstr ""
+
+#: plug-ins/common/rotators.c:50
+msgid "<Image>/Image/Transforms/Image"
+msgstr ""
+
+#: plug-ins/common/rotators.c:51
+msgid "<Image>/Image/Transforms/Layer"
+msgstr ""
+
+#: plug-ins/common/rotators.c:70
+msgid "Rotates the given layer 90 degrees clockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:75
+msgid "<Image>/Image/Transforms/Layer/Rotate 90"
+msgstr ""
+
+#: plug-ins/common/rotators.c:82
+msgid "Rotates the given layer 90 degrees anticlockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:87
+msgid "<Image>/Image/Transforms/Layer/Rotate 270"
+msgstr ""
+
+#: plug-ins/common/rotators.c:94
+msgid "Rotates the given image 90 degrees clockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:99
+msgid "<Image>/Image/Transforms/Image/Rotate 90"
+msgstr ""
+
+#: plug-ins/common/rotators.c:106
+msgid "Rotates the current image 90 degrees anticlockwise."
+msgstr ""
+
+#: plug-ins/common/rotators.c:111
+msgid "<Image>/Image/Transforms/Image/Rotate 270"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
+msgid "Converts a selection to a path (with advanced user menu)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
+msgid "Converts a selection to a path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:158
+msgid "<Image>/Select/To Path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:203
+msgid "No selection to convert"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:367
+msgid "Default Values"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:556
+#, c-format
+msgid "print_spline: strange degree (%d)"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:564
+msgid "selection_to_path"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:590
+msgid "gimp_image_get_selection failed"
+msgstr ""
+
+#: plug-ins/sel2path/sel2path.c:598
+msgid "Internal error. Selection bpp > 1"
+msgstr ""
+
+#: plug-ins/common/threshold_alpha.c:196
+msgid "<Image>/Image/Alpha/Threshold Alpha"
+msgstr ""
+
+#: plug-ins/common/threshold_alpha.c:300
+msgid "threshold_alpha (0.13):coloring transparency..."
+msgstr ""
+
+#: plug-ins/common/threshold_alpha.c:354
+msgid "Threshold"
+msgstr ""
+
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
 msgstr ""
@@ -2966,4 +3187,21 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:64
+msgid ""
+"Automagically crops unused space from the edges and middle of a picture."
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:69
+msgid "<Image>/Image/Transforms/Zealous Crop"
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:105
+msgid "ZealousCropping(tm)..."
+msgstr ""
+
+#: plug-ins/common/zealouscrop.c:209
+msgid "ZealousCrop(tm): Nothing to be done.\n"
 msgstr ""

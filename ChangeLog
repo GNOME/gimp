@@ -1,3 +1,7 @@
+Thu Sep  9 21:29:16 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.9 release
+
 Fri Sep 10 00:18:17 EDT 1999 Adrian Likins <adrian@gimp.org>
 
 	* app/paintbrush.c:  Make gradient brushes work again.
