@@ -36,8 +36,10 @@ OBJECTS = \
 	gimpclonetool.obj \
 	gimpcolorbalancetool.obj \
 	gimpcolorizetool.obj \
+	gimpcoloroptions.obj \
 	gimpcolorpickeroptions.obj \
 	gimpcolorpickertool.obj \
+	gimpcolortool.obj \
 	gimpconvolvetool.obj \
 	gimpcropoptions.obj \
 	gimpcroptool.obj \

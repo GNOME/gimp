@@ -33,8 +33,8 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # The COMMON* ones are in the common subdirectory
 COMMON1 = AlienMap AlienMap2 CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate
+COMMON3 = gauss_iir gauss_rle gbr gee gee_zoom gicon gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psd_save psp randomize ripple rotate
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug wmf xbm xwd zealouscrop
 
@@ -42,7 +42,7 @@ COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug wmf xbm xwd
 DROPPED = gpb gdyntext 
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap xjt
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -543,6 +543,10 @@ OBJECTS = \
 
 !ENDIF
 
+!IFDEF EXTRA_helpbrowser
+OBJECTS = helpwin.obj
+!ENDIF
+
 !IFDEF EXTRA_guash
 HAVE_RESOURCE = YES
 !ENDIF
@@ -595,16 +599,25 @@ EXTRALIBS = shell32.lib
 
 !IFDEF EXTRA_winprint
 EXTRALIBS = user32.lib gdi32.lib comdlg32.lib
-!endif
+!ENDIF
 
 !IFDEF EXTRA_winclipboard
 EXTRALIBS = user32.lib
-!endif
+!ENDIF
 
 !IFDEF EXTRA_winsnap
 HAVE_RESOURCE = YES
 EXTRALIBS = user32.lib gdi32.lib
-!endif
+!ENDIF
+
+!IFDEF EXTRA_xjt
+OBJECTS = \
+	xjt.obj \
+	xjpeg.obj \
+	xpdb_calls.obj
+EXTRACFLAGS = $(JPEG_CFLAGS)
+EXTRALIBS = $(JPEG_LIBS)
+!ENDIF
 
 GIMP_VER = 1.3
 

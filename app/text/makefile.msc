@@ -24,9 +24,14 @@ OBJECTS = \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
+	-DUSE_PANGO_WIN32 \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
-	$(GLIB_CFLAGS) $(PANGO_CFLAGS) $(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \
+	$(GLIB_CFLAGS) \
+	$(FONTCONFIG_CFLAGS) \
+	$(PANGO_CFLAGS) $(GTK2_CFLAGS) \
+
+# $(FREETYPE2_CFLAGS) 
 
 all : \
 	$(PRJ_TOP)\config.h \

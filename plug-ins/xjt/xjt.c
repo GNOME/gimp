@@ -61,7 +61,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
@@ -70,7 +72,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
+#include <process.h> /* getpid() */
+#include <direct.h> /* _mkdir */
 #define mkdir(path,mode) _mkdir(path)
+#define mode_t int
 #endif
 
 /* XJT includes */

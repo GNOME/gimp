@@ -1,3 +1,13 @@
+2003-06-19  Hans Breuer  <hans@breuer.org>
+
+	* makefile.msc : replace the win9x specific cd ....
+	with the portable cd ..\..\..
+
+	* **/makefile.msc : updated
+
+	* plug-ins/xjt/xjt.c plug-ins/common/psd_save.c :
+	there is still no unistd.h with msvc build
+
 2003-06-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c: raise the brush selection dialog if there

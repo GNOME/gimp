@@ -56,6 +56,7 @@ OBJECTS = \
 	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
 	gimpenummenu.obj \
+	gimperrorconsole.obj \
 	gimpfontselection.obj \
 	gimpfontselection-dialog.obj \
 	gimpgradienteditor.obj \
@@ -87,6 +88,7 @@ OBJECTS = \
 	gimptemplateview.obj \
 	gimptexteditor.obj \
 	gimptoolbox.obj \
+	gimptoolbox-dnd.obj \
 	gimptoolbox-color-area.obj \
 	gimptoolbox-indicator-area.obj \
 	gimpundoeditor.obj \
@@ -104,11 +106,13 @@ INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	-I$(includedir)
 
+#$(FREETYPE2_CFLAGS) 
+
 DEFINES = \
-	-DG_LOG_DOMAIN=\"Gimp-Widgets\"
+	-DG_LOG_DOMAIN=\"Gimp-Widgets\" -DUSE_PANGO_WIN32
 
 all : \
 	$(PRJ_TOP)\config.h \

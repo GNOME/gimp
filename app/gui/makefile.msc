@@ -48,7 +48,8 @@ OBJECTS = \
 	documents-menu.obj \
 	drawable-commands.obj \
 	edit-commands.obj \
-	error-console-dialog.obj \
+	error-console-commands.obj \
+	error-console-menu.obj \
 	file-commands.obj \
 	file-dialog-utils.obj \
 	file-new-dialog.obj \
