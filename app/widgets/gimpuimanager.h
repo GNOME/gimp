@@ -87,11 +87,11 @@ GtkWidget     * gimp_ui_manager_ui_get      (GimpUIManager          *manager,
 
 void            gimp_ui_manager_ui_popup    (GimpUIManager          *manager,
                                              const gchar            *ui_path,
-                                             gpointer                popup_data,
                                              GtkWidget              *parent,
                                              GimpMenuPositionFunc    position_func,
                                              gpointer                position_data,
-                                             GtkDestroyNotify        popdown_func);
+                                             GtkDestroyNotify        popdown_func,
+                                             gpointer                popdown_data);
 
 
 #endif  /* __GIMP_UI_MANAGER_H__ */

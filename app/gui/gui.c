@@ -94,9 +94,12 @@ static void       gui_really_quit_callback      (GtkWidget          *button,
                                                  gboolean            quit,
                                                  gpointer            data);
 
-static void       gui_show_tooltips_notify      (GObject            *config,
-                                                 GParamSpec         *param_spec,
+static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
+                                                 GParamSpec         *pspec,
                                                  Gimp               *gimp);
+static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
+                                                 GParamSpec         *pspec,
+                                                 GtkUIManager       *manager);
 static void       gui_device_change_notify      (Gimp               *gimp);
 
 static void       gui_display_changed           (GimpContext        *context,
@@ -343,7 +346,12 @@ gui_restore_after_callback (Gimp               *gimp,
 
   image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
                                                     "<Image>",
-                                                    gimp, TRUE);
+                                                    gimp,
+                                                    gui_config->tearoff_menus);
+
+  g_signal_connect_object (gui_config, "notify::tearoff-menus",
+                           G_CALLBACK (gui_tearoff_menus_notify),
+                           image_ui_manager, 0);
 
   gimp_devices_restore (gimp);
 
@@ -475,20 +483,22 @@ gui_really_quit_callback (GtkWidget *button,
 }
 
 static void
-gui_show_tooltips_notify (GObject    *config,
-                          GParamSpec *param_spec,
-                          Gimp       *gimp)
+gui_show_tooltips_notify (GimpGuiConfig *gui_config,
+                          GParamSpec    *param_spec,
+                          Gimp          *gimp)
 {
-  gboolean show_tool_tips;
-
-  g_object_get (config,
-                "show-tool-tips", &show_tool_tips,
-                NULL);
-
-  if (show_tool_tips)
+  if (gui_config->show_tool_tips)
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();
+}
+
+static void
+gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
+                          GParamSpec    *pspec,
+                          GtkUIManager  *manager)
+{
+  gtk_ui_manager_set_add_tearoffs (manager, gui_config->tearoff_menus);
 }
 
 static void

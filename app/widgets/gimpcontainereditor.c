@@ -257,19 +257,7 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
 
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
-      GimpEditor *gimp_editor = GIMP_EDITOR (editor->view);
-
-      if (gimp_editor->ui_manager)
-        {
-          gimp_ui_manager_update (gimp_editor->ui_manager,
-                                  gimp_editor->popup_data);
-          gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                    gimp_editor->ui_path,
-                                    gimp_editor->popup_data,
-                                    GTK_WIDGET (editor),
-                                    NULL, NULL, NULL);
-          return;
-        }
+      gimp_editor_popup_menu (GIMP_EDITOR (editor->view), NULL, NULL);
     }
 }
 

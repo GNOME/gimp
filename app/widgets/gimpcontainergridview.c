@@ -37,7 +37,6 @@
 #include "gimpcontainerview.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gtkhwrapbox.h"
 
@@ -402,20 +401,12 @@ static gboolean
 gimp_container_grid_view_popup_menu (GtkWidget *widget)
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (widget);
-  GimpEditor            *editor    = GIMP_EDITOR (widget);
 
-  if (grid_view->selected_item && editor->ui_manager)
+  if (grid_view->selected_item)
     {
-      gimp_ui_manager_update (editor->ui_manager,
-                              editor->popup_data);
-      gimp_ui_manager_ui_popup (editor->ui_manager,
-                                editor->ui_path,
-                                editor->popup_data,
-                                GTK_WIDGET (editor),
-                                gimp_container_grid_view_menu_position,
-                                grid_view->selected_item,
-                                NULL);
-      return TRUE;
+      return gimp_editor_popup_menu (GIMP_EDITOR (grid_view),
+                                     gimp_container_grid_view_menu_position,
+                                     grid_view->selected_item);
     }
 
   return FALSE;

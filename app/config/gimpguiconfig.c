@@ -184,7 +184,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus", TEAROFF_MENUS_BLURB,
                                     TRUE,
-                                    GIMP_PARAM_RESTART);
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
                                     "can-change-accels", CAN_CHANGE_ACCELS_BLURB,
                                     FALSE,

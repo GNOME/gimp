@@ -245,15 +245,15 @@ gui_menus_create_entry (Gimp          *gimp,
         {
           if (! strncmp (path->data, "<Toolbox>", 9))
             {
-              plug_in_menus_add_proc (list->data, "/toolbox-menubar", proc_def,
-                                      path->data);
+              plug_in_menus_add_proc (list->data, "/toolbox-menubar",
+                                      proc_def, path->data);
             }
           else if (! strncmp (path->data, "<Image>", 7))
             {
-              plug_in_menus_add_proc (list->data, "/image-menubar", proc_def,
-                                      path->data);
-              plug_in_menus_add_proc (list->data, "/image-popup",   proc_def,
-                                      path->data);
+              plug_in_menus_add_proc (list->data, "/image-menubar",
+                                      proc_def, path->data);
+              plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
+                                      proc_def, path->data);
             }
         }
     }

@@ -936,8 +936,6 @@ gimp_dockable_show_menu (GimpDockable *dockable)
   if (! dockbook_ui_manager)
     return FALSE;
 
-  gimp_ui_manager_ui_get (dockbook_ui_manager, "/dockable-popup");
-
   dialog_ui_manager = gimp_dockable_get_menu (dockable,
                                               &dialog_ui_path,
                                               &dialog_popup_data);
@@ -958,8 +956,8 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                                    dialog_ui_path);
 
       parent_menu_widget =
-        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dockbook_ui_manager),
-                                   "/dockable-popup/dockable-menu");
+        gimp_ui_manager_ui_get (dockbook_ui_manager,
+                                "/dockable-popup/dockable-menu");
 
       parent_menu_action =
         gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
@@ -1019,10 +1017,9 @@ gimp_dockable_show_menu (GimpDockable *dockable)
 
   gimp_ui_manager_update (dockbook_ui_manager, dockable);
   gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
-                            dockable,
                             GTK_WIDGET (dockable),
                             gimp_dockable_menu_position, dockable,
-                            (GtkDestroyNotify) gimp_dockable_menu_end);
+                            (GtkDestroyNotify) gimp_dockable_menu_end, dockable);
 
   return TRUE;
 }

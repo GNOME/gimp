@@ -422,12 +422,11 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
   gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
                             shell->gdisp);
 
-  gimp_ui_manager_ui_popup (shell->popup_manager, "/image-popup",
-                            shell->gdisp,
+  gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
                             GTK_WIDGET (shell),
                             gimp_display_shell_origin_menu_position,
                             shell->origin,
-                            NULL);
+                            NULL, NULL);
 
   return TRUE;
 }
@@ -733,10 +732,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_ui_manager_ui_popup (shell->popup_manager, "/image-popup",
-                                      gdisp,
+            gimp_ui_manager_ui_popup (shell->popup_manager,
+                                      "/dummy-menubar/image-popup",
                                       GTK_WIDGET (shell),
-                                      NULL, NULL, NULL);
+                                      NULL, NULL, NULL, NULL);
             return_val = TRUE;
             break;
 
@@ -1512,9 +1511,8 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
       gimp_ui_manager_ui_popup (shell->menubar_manager, "/qmask-popup",
-                                shell,
                                 GTK_WIDGET (shell),
-                                NULL, NULL, NULL);
+                                NULL, NULL, NULL, NULL);
 
       return TRUE;
     }

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "menus-types.h"
@@ -31,6 +33,9 @@ void
 image_menu_setup (GimpUIManager *manager,
                   const gchar   *ui_path)
 {
+  if (! strcmp (ui_path, "/dummy-menubar"))
+    ui_path = "/dummy-menubar/image-popup";
+
   file_menu_setup (manager, ui_path);
   plug_in_menus_setup (manager, ui_path);
 }

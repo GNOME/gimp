@@ -55,7 +55,6 @@
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
@@ -766,14 +765,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
 
     case 3:
       gimp_colormap_editor_set_index (editor, col);
-
-      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                              GIMP_EDITOR (editor)->popup_data);
-      gimp_ui_manager_ui_popup (GIMP_EDITOR (editor)->ui_manager,
-                                GIMP_EDITOR (editor)->ui_path,
-                                GIMP_EDITOR (editor)->popup_data,
-                                GTK_WIDGET (editor),
-                                NULL, NULL, NULL);
+      gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
       return TRUE;
 
     default:

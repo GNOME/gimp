@@ -46,7 +46,6 @@
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
 #include "gimpsessioninfo.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
@@ -581,17 +580,9 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 				      GdkEventButton    *bevent,
 				      GimpPaletteEditor *editor)
 {
-  if (bevent->button == 3)
+  if (bevent->button == 3 && bevent->type == GDK_BUTTON_PRESS)
     {
-      GimpEditor *gimp_editor = GIMP_EDITOR (editor);
-
-      gimp_ui_manager_update (gimp_editor->ui_manager,
-                              gimp_editor->popup_data);
-      gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                gimp_editor->ui_path,
-                                gimp_editor->popup_data,
-                                GTK_WIDGET (editor),
-                                NULL, NULL, NULL);
+      return gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
     }
 
   return TRUE;

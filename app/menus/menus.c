@@ -96,7 +96,7 @@ menus_init (Gimp *gimp)
                                       "toolbox-menu.xml", toolbox_menu_setup,
                                       "/image-menubar",
                                       "image-menu.xml", image_menu_setup,
-                                      "/image-popup",
+                                      "/dummy-menubar",
                                       "image-menu.xml", image_menu_setup,
                                       "/qmask-popup",
                                       "qmask-menu.xml", NULL,

@@ -882,21 +882,10 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
                                   GimpViewable      *item,
                                   gpointer           insert_data)
 {
-  GimpEditor *editor = GIMP_EDITOR (view);
-
   if (parent_view_iface->context_item)
     parent_view_iface->context_item (view, item, insert_data);
 
-  if (editor->ui_manager)
-    {
-      gimp_ui_manager_update (editor->ui_manager,
-                              editor->popup_data);
-      gimp_ui_manager_ui_popup (editor->ui_manager,
-                                editor->ui_path,
-                                editor->popup_data,
-                                GTK_WIDGET (editor),
-                                NULL, NULL, NULL);
-    }
+  gimp_editor_popup_menu (GIMP_EDITOR (view), NULL, NULL);
 }
 
 static gboolean

@@ -40,7 +40,6 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimppreviewrenderer.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 
@@ -362,21 +361,12 @@ static gboolean
 gimp_container_tree_view_popup_menu (GtkWidget *widget)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
-  GimpEditor            *editor    = GIMP_EDITOR (widget);
 
-  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL) &&
-      editor->ui_manager)
+  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, NULL))
     {
-      gimp_ui_manager_update (editor->ui_manager,
-                              editor->popup_data);
-      gimp_ui_manager_ui_popup (editor->ui_manager,
-                                editor->ui_path,
-                                editor->popup_data,
-                                GTK_WIDGET (editor),
-                                gimp_container_tree_view_menu_position,
-                                editor,
-                                NULL);
-      return TRUE;
+      return gimp_editor_popup_menu (GIMP_EDITOR (tree_view),
+                                     gimp_container_tree_view_menu_position,
+                                     tree_view);
     }
 
   return FALSE;

@@ -86,7 +86,6 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
                                      gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkWidget          *menubar;
   GtkContainer       *vbox;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -95,14 +94,12 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-menubar", show, NULL);
 
-  menubar = gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
-                                       "/image-menubar");
-  vbox    = GTK_CONTAINER (shell->qmask->parent->parent);
+  vbox = GTK_CONTAINER (shell->qmask->parent->parent);
 
   if (show)
-    gtk_widget_show (menubar);
+    gtk_widget_show (shell->menubar);
   else
-    gtk_widget_hide (menubar);
+    gtk_widget_hide (shell->menubar);
 
   if (options->show_menubar || options->show_statusbar)
     gtk_container_set_border_width (vbox, 2);

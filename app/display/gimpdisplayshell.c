@@ -486,7 +486,8 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                         GimpUIManager   *popup_manager)
 {
   GimpDisplayShell  *shell;
-  GimpDisplayConfig *config;
+  GimpDisplayConfig *display_config;
+  GimpGuiConfig     *gui_config;
   GtkWidget         *main_vbox;
   GtkWidget         *disp_vbox;
   GtkWidget         *upper_hbox;
@@ -494,7 +495,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   GtkWidget         *lower_hbox;
   GtkWidget         *inner_table;
   GtkWidget         *image;
-  GtkWidget         *menubar;
   GdkScreen         *screen;
   gint               image_width, image_height;
   gint               n_width, n_height;
@@ -514,13 +514,14 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   image_width  = gdisp->gimage->width;
   image_height = gdisp->gimage->height;
 
-  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+  display_config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+  gui_config     = GIMP_GUI_CONFIG (display_config);
 
-  shell->dot_for_dot = config->default_dot_for_dot;
+  shell->dot_for_dot = display_config->default_dot_for_dot;
 
-  gimp_config_sync (GIMP_CONFIG (config->default_view),
+  gimp_config_sync (GIMP_CONFIG (display_config->default_view),
                     GIMP_CONFIG (shell->options), 0);
-  gimp_config_sync (GIMP_CONFIG (config->default_fullscreen_view),
+  gimp_config_sync (GIMP_CONFIG (display_config->default_fullscreen_view),
                     GIMP_CONFIG (shell->fullscreen_options), 0);
 
   /* adjust the initial scale -- so that window fits on screen the 75%
@@ -529,15 +530,15 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    */
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
 
-  if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
+  if (display_config->monitor_res_from_gdk)
     {
       gimp_get_screen_resolution (screen,
                                   &shell->monitor_xres, &shell->monitor_yres);
     }
   else
     {
-      shell->monitor_xres = GIMP_DISPLAY_CONFIG (config)->monitor_xres;
-      shell->monitor_yres = GIMP_DISPLAY_CONFIG (config)->monitor_yres;
+      shell->monitor_xres = display_config->monitor_xres;
+      shell->monitor_yres = display_config->monitor_yres;
     }
 
   s_width  = gdk_screen_get_width (screen)  * 0.75;
@@ -546,7 +547,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   n_width  = SCALEX (shell, image_width);
   n_height = SCALEY (shell, image_height);
 
-  if (config->initial_zoom_to_fit)
+  if (display_config->initial_zoom_to_fit)
     {
       /*  Limit to the size of the screen...  */
       if (n_width > s_width || n_height > s_height)
@@ -636,27 +637,28 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
-  menubar = gimp_ui_manager_ui_get (shell->menubar_manager, "/image-menubar");
-  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
+  shell->menubar = gimp_ui_manager_ui_get (shell->menubar_manager,
+                                           "/image-menubar");
+  gtk_box_pack_start (GTK_BOX (main_vbox), shell->menubar, FALSE, FALSE, 0);
 
   if (shell->options->show_menubar)
-    gtk_widget_show (menubar);
+    gtk_widget_show (shell->menubar);
 
   /*  make sure we can activate accels even if the menubar is invisible
    *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
    */
-  g_signal_connect (menubar, "can-activate-accel",
+  g_signal_connect (shell->menubar, "can-activate-accel",
                     G_CALLBACK (gtk_true),
                     NULL);
 
   /*  active display callback  */
-  g_signal_connect (menubar, "button_press_event",
+  g_signal_connect (shell->menubar, "button_press_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-  g_signal_connect (menubar, "button_release_event",
+  g_signal_connect (shell->menubar, "button_release_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-  g_signal_connect (menubar, "key_press_event",
+  g_signal_connect (shell->menubar, "key_press_event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
 

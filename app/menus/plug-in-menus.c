@@ -145,7 +145,7 @@ plug_in_menus_setup (GimpUIManager *manager,
                    ! strcmp (ui_path, "/toolbox-menubar")) ||
                   (! strncmp (path->data, "<Image>", 7) &&
                    (! strcmp (ui_path, "/image-menubar") ||
-                    ! strcmp (ui_path, "/image-popup"))))
+                    ! strcmp (ui_path, "/dummy-menubar/image-popup"))))
                 {
                   PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
                   const gchar     *progname;

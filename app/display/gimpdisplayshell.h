@@ -107,6 +107,7 @@ struct _GimpDisplayShell
   GtkWidget        *vrule;
   GtkWidget        *origin;            /*  origin button                      */
 
+  GtkWidget        *menubar;           /*  menubar                            */
   GtkWidget        *statusbar;         /*  statusbar                          */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */

@@ -60,6 +60,10 @@
 static void       gimp_toolbox_class_init       (GimpToolboxClass *klass);
 static void       gimp_toolbox_init             (GimpToolbox      *toolbox);
 
+static GObject  * gimp_toolbox_constructor      (GType           type,
+                                                 guint           n_params,
+                                                 GObjectConstructParam *params);
+
 static gboolean   gimp_toolbox_delete_event     (GtkWidget      *widget,
                                                  GdkEventAny    *event);
 static void       gimp_toolbox_size_allocate    (GtkWidget      *widget,
@@ -138,13 +142,13 @@ gimp_toolbox_get_type (void)
 static void
 gimp_toolbox_class_init (GimpToolboxClass *klass)
 {
-  GtkWidgetClass *widget_class;
-  GimpDockClass  *dock_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
-  dock_class   = GIMP_DOCK_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor   = gimp_toolbox_constructor;
 
   widget_class->delete_event  = gimp_toolbox_delete_event;
   widget_class->size_allocate = gimp_toolbox_size_allocate;
@@ -154,30 +158,52 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   dock_class->book_removed    = gimp_toolbox_book_removed;
 
   gtk_widget_class_install_style_property
-    (widget_class,
-     g_param_spec_enum ("tool_icon_size",
-                        NULL, NULL,
-                        GTK_TYPE_ICON_SIZE,
-                        DEFAULT_TOOL_ICON_SIZE,
-                        G_PARAM_READABLE));
+    (widget_class, g_param_spec_enum ("tool_icon_size",
+                                      NULL, NULL,
+                                      GTK_TYPE_ICON_SIZE,
+                                      DEFAULT_TOOL_ICON_SIZE,
+                                      G_PARAM_READABLE));
 
   gtk_widget_class_install_style_property
-    (widget_class,
-     g_param_spec_enum ("button_relief",
-                        NULL, NULL,
-                        GTK_TYPE_RELIEF_STYLE,
-                        DEFAULT_BUTTON_RELIEF,
-                        G_PARAM_READABLE));
+    (widget_class, g_param_spec_enum ("button_relief",
+                                      NULL, NULL,
+                                      GTK_TYPE_RELIEF_STYLE,
+                                      DEFAULT_BUTTON_RELIEF,
+                                      G_PARAM_READABLE));
 }
 
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
+  gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
+
+  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
+                     GIMP_HELP_TOOLBOX, NULL);
+}
+
+static GObject *
+gimp_toolbox_constructor (GType                  type,
+                          guint                  n_params,
+                          GObjectConstructParam *params)
+{
+  GObject       *object;
+  GimpToolbox   *toolbox;
+  GimpContext   *context;
+  GimpGuiConfig *config;
   GimpUIManager *manager;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
+  GdkDisplay    *display;
+  GList         *list;
 
-  gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  toolbox = GIMP_TOOLBOX (object);
+
+  context = GIMP_DOCK (toolbox)->context;
+  config  = GIMP_GUI_CONFIG (context->gimp->config);
+
+  gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
 
   main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
@@ -203,6 +229,46 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
+
+  /* We need to know when the current device changes, so we can update
+   * the correct tool - to do this we connect to motion events.
+   * We can't just use EXTENSION_EVENTS_CURSOR though, since that
+   * would get us extension events for the mouse pointer, and our
+   * device would change to that and not change back. So we check
+   * manually that all devices have a cursor, before establishing the check.
+   */
+  display = gtk_widget_get_display (GTK_WIDGET (toolbox));
+  for (list = gdk_display_list_devices (display); list; list = list->next)
+    {
+      if (! ((GdkDevice *) (list->data))->has_cursor)
+	break;
+    }
+
+  if (! list)  /* all devices have cursor */
+    {
+      g_signal_connect (toolbox, "motion_notify_event",
+			G_CALLBACK (toolbox_check_device),
+			context->gimp);
+
+      gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
+      gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
+                                       GDK_EXTENSION_EVENTS_CURSOR);
+    }
+
+  toolbox_create_tools (toolbox, context);
+  toolbox_create_color_area (toolbox, context);
+  toolbox_create_indicator_area (toolbox, context);
+
+  g_signal_connect_object (context, "tool_changed",
+			   G_CALLBACK (toolbox_tool_changed),
+			   toolbox->wbox,
+			   0);
+
+  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
+
+  gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
+
+  return object;
 }
 
 static gboolean
@@ -422,67 +488,16 @@ GtkWidget *
 gimp_toolbox_new (GimpDialogFactory *dialog_factory,
                   Gimp              *gimp)
 {
-  GimpContext   *context;
-  GimpToolbox   *toolbox;
-  GimpGuiConfig *config;
-  GdkDisplay    *display;
-  GList         *list;
+  GimpToolbox *toolbox;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  context = gimp_get_user_context (gimp);
-
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
                           "title",          _("The GIMP"),
-                          "context",        context,
+                          "context",        gimp_get_user_context (gimp),
                           "dialog-factory", dialog_factory,
                           NULL);
-
-  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
-                     GIMP_HELP_TOOLBOX, NULL);
-
-  config = GIMP_GUI_CONFIG (gimp->config);
-
-  gimp_window_set_hint (GTK_WINDOW (toolbox), config->toolbox_window_hint);
-
-  /* We need to know when the current device changes, so we can update
-   * the correct tool - to do this we connect to motion events.
-   * We can't just use EXTENSION_EVENTS_CURSOR though, since that
-   * would get us extension events for the mouse pointer, and our
-   * device would change to that and not change back. So we check
-   * manually that all devices have a cursor, before establishing the check.
-   */
-  display = gtk_widget_get_display (GTK_WIDGET (toolbox));
-  for (list = gdk_display_list_devices (display); list; list = list->next)
-    {
-      if (! ((GdkDevice *) (list->data))->has_cursor)
-	break;
-    }
-
-  if (! list)  /* all devices have cursor */
-    {
-      g_signal_connect (toolbox, "motion_notify_event",
-			G_CALLBACK (toolbox_check_device),
-			gimp);
-
-      gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
-      gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
-                                       GDK_EXTENSION_EVENTS_CURSOR);
-    }
-
-  toolbox_create_tools (toolbox, context);
-  toolbox_create_color_area (toolbox, context);
-  toolbox_create_indicator_area (toolbox, context);
-
-  g_signal_connect_object (context, "tool_changed",
-			   G_CALLBACK (toolbox_tool_changed),
-			   toolbox->wbox,
-			   0);
-
-  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
-
-  gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
 
   return GTK_WIDGET (toolbox);
 }
@@ -611,7 +626,6 @@ toolbox_create_tools (GimpToolbox *toolbox,
   GSList        *group = NULL;
 
   ui_manager = gimp_ui_managers_from_name ("<Image>")->data;
-  gimp_ui_manager_ui_get (ui_manager, "/image-popup");
 
   active_tool = gimp_context_get_tool (context);
 

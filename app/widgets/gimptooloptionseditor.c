@@ -326,10 +326,9 @@ static void
 gimp_tool_options_editor_menu_pos (GtkMenu  *menu,
                                    gint     *x,
                                    gint     *y,
-                                   gboolean *push_in,
-                                   gpointer  func_data)
+                                   gpointer  data)
 {
-  gimp_button_menu_position (GTK_WIDGET (func_data), menu, GTK_POS_RIGHT, x, y);
+  gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
 }
 
 static void
@@ -338,22 +337,14 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
                                      const gchar           *path)
 {
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
-  GtkWidget  *menu_item;
 
   gimp_ui_manager_ui_get (gimp_editor->ui_manager, gimp_editor->ui_path);
   gimp_ui_manager_update (gimp_editor->ui_manager, gimp_editor->popup_data);
 
-  menu_item =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor->ui_manager), path);
-
-  if (GTK_IS_MENU_ITEM (menu_item))
-    {
-      GtkWidget *menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu_item));
-
-      gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-                      gimp_tool_options_editor_menu_pos, button,
-                      0, GDK_CURRENT_TIME);
-    }
+  gimp_ui_manager_ui_popup (gimp_editor->ui_manager, path,
+                            button,
+                            gimp_tool_options_editor_menu_pos, button,
+                            NULL, NULL);
 }
 
 static void

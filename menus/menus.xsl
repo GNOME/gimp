@@ -25,10 +25,12 @@
       <xsl:attribute name="action"><xsl:value-of select="@action-name"/>-menubar</xsl:attribute>
       <xsl:apply-templates />
     </menubar>
-    <popup>
-      <xsl:attribute name="action"><xsl:value-of select="@action-name"/>-popup</xsl:attribute>
-      <xsl:apply-templates />
-    </popup>
+    <menubar name="dummy-menubar">
+      <menu>
+        <xsl:attribute name="action"><xsl:value-of select="@action-name"/>-popup</xsl:attribute>
+        <xsl:apply-templates />
+      </menu>
+    </menubar>
   </xsl:template>
 
   <xsl:template match="menuitems">

@@ -71,7 +71,6 @@
 #include "gimphelp-ids.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderergradient.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gui/color-notebook.h"
@@ -704,17 +703,7 @@ preview_events (GtkWidget          *widget,
 
 	case 3:
           if (GIMP_DATA_EDITOR (editor)->data_editable)
-            {
-              GimpEditor *gimp_editor = GIMP_EDITOR (editor);
-
-              gimp_ui_manager_update (gimp_editor->ui_manager,
-                                      gimp_editor->popup_data);
-              gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                        gimp_editor->ui_path,
-                                        gimp_editor->popup_data,
-                                        GTK_WIDGET (editor),
-                                        NULL, NULL, NULL);
-            }
+            gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
 	  break;
 
 	default:
@@ -1148,15 +1137,7 @@ control_button_press (GimpGradientEditor *editor,
 
   if (button == 3)
     {
-      GimpEditor *gimp_editor = GIMP_EDITOR (editor);
-
-      gimp_ui_manager_update (gimp_editor->ui_manager,
-                              gimp_editor->popup_data);
-      gimp_ui_manager_ui_popup (gimp_editor->ui_manager,
-                                gimp_editor->ui_path,
-                                gimp_editor->popup_data,
-                                GTK_WIDGET (editor),
-                                NULL, NULL, NULL);
+      gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
       return;
     }
 

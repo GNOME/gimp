@@ -390,6 +390,26 @@ gimp_editor_create_menu (GimpEditor      *editor,
   editor->popup_data = popup_data;
 }
 
+gboolean
+gimp_editor_popup_menu (GimpEditor           *editor,
+                        GimpMenuPositionFunc  position_func,
+                        gpointer              position_data)
+{
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+
+  if (editor->ui_manager && editor->ui_path)
+    {
+      gimp_ui_manager_update (editor->ui_manager, editor->popup_data);
+      gimp_ui_manager_ui_popup (editor->ui_manager, editor->ui_path,
+                                GTK_WIDGET (editor),
+                                position_func, position_data,
+                                NULL, NULL);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *stock_id,

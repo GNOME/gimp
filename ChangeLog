@@ -1,5 +1,57 @@
 2004-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* menus/menus.xsl: put the image popup menu into a dummy menubar
+	to work around the silly GtkUIManager restriction that popup menus
+	can't have tearoff items.
+
+	* app/menus/menus.c
+	* app/menus/image-menu.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.c: changed accordingly.
+
+	* app/gui/gui.c (gui_restore_after_callback): connect to
+	"notify::tearoff-menus" of GimpGuiConfig and reconfigure the
+	global image UI manager accordingly.
+
+	* app/config/gimpguiconfig.c: removed GIMP_PARAM_RESTART from the
+	"tearoff-menus" property because GtkUIManager can change this on
+	the fly.
+
+	* app/display/gimpdisplayshell.[ch]: added the menubar to the
+	GimpDisplayShell struct. Some cleanup in gimp_display_shell_new().
+
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_set_show_menubar): use shell->menubar instead
+	of asking the UI manager.
+
+	* app/widgets/gimpuimanager.[ch]: changed gimp_ui_manager_ui_get()
+	to transparently load the XML files even if a sub-widget was
+	requested. Reordered parameters of gimp_ui_manager_ui_popup().
+	Lots of internal cleanups.
+
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimptooloptionseditor.c: simplified accordingly.
+
+	* app/widgets/gimpeditor.[ch]: added new function
+	gimp_editor_popup_menu() which takes a GimpMenuPositionFunc and
+	updates/shows the editor's menu.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c: use gimp_editor_popup_menu().
+
+	* app/widgets/gimptoolbox.c: moved all code from
+	gimp_toolbox_new() to GObject::constructor().
+
+2004-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/tool-options-actions.c: added icons to the Save,
 	Load, Rename and Delete submenus.
 

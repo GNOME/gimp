@@ -59,7 +59,6 @@
 #include "gimperrorconsole.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -300,19 +299,9 @@ gimp_error_console_button_press (GtkWidget        *widget,
                                  GdkEventButton   *bevent,
                                  GimpErrorConsole *console)
 {
-  if (bevent->button == 3)
+  if (bevent->button == 3 && bevent->type == GDK_BUTTON_PRESS)
     {
-      GimpEditor *editor = GIMP_EDITOR (console);
-
-      gimp_ui_manager_update (editor->ui_manager,
-                              editor->popup_data);
-      gimp_ui_manager_ui_popup (editor->ui_manager,
-                                editor->ui_path,
-                                editor->popup_data,
-                                GTK_WIDGET (editor),
-                                NULL, NULL, NULL);
-
-      return TRUE;
+      return gimp_editor_popup_menu (GIMP_EDITOR (console), NULL, NULL);
     }
 
   return FALSE;
