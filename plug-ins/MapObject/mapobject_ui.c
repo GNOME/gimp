@@ -29,9 +29,6 @@
 #include "high1.xpm"
 #include "high2.xpm"
 
-#include "pixmaps/zoom_in.xpm"
-#include "pixmaps/zoom_out.xpm"
-
 
 GckVisualInfo *visinfo     = NULL;
 GdkGC         *gc          = NULL;
@@ -1407,6 +1404,7 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *button;
+  GtkWidget *image;
   GtkWidget *toggle;
 
   gimp_ui_init ("MapObject", FALSE);
@@ -1481,9 +1479,13 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
+  button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (zoomout_callback),
@@ -1491,9 +1493,13 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Zoom out (make image smaller)"), NULL);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
+  button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (zoomin_callback),

@@ -52,9 +52,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/zoom_in.xpm"
-#include "pixmaps/zoom_out.xpm"
-
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK        | \
                        GDK_BUTTON_PRESS_MASK    | \
@@ -1583,6 +1580,7 @@ nav_create_button_area (NavigationDialog *nav_dialog)
   GtkWidget  *hbox;  
   GtkWidget  *vbox;
   GtkWidget  *button;
+  GtkWidget  *image;
   GtkWidget  *hscale;
   gchar       scale_str[MAX_SCALE_BUF];
 
@@ -1592,10 +1590,14 @@ nav_create_button_area (NavigationDialog *nav_dialog)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
+  button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_OUT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (button), "clicked", 
                     G_CALLBACK (navwindow_zoomout),
@@ -1610,10 +1612,14 @@ nav_create_button_area (NavigationDialog *nav_dialog)
   gtk_box_pack_start (GTK_BOX (hbox), nav_dialog->zoom_label, TRUE, TRUE, 0);
   gtk_widget_show (nav_dialog->zoom_label);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
+  button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ZOOM_IN, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (button), "clicked", 
                     G_CALLBACK (navwindow_zoomin),

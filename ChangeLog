@@ -1,5 +1,16 @@
 2002-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* pixmaps/Makefile.am
+	* pixmaps/zoom_in.xpm
+	* pixmaps/zoom_out.xpm: removed.
+
+	* app/nav_window.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: use GTK_STOCK_ZOOM_[IN|OUT]
+	instead.
+
+2002-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/pagecurl/pagecurl.c: compile with GTK_DISABLE_DEPRECATED.
 
 2002-01-02  Michael Natterer  <mitch@gimp.org>

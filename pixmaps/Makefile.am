@@ -10,8 +10,6 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	raise.xpm		\
 	topath.xpm		\
 	toselection.xpm		\
-	zoom_in.xpm		\
-	zoom_out.xpm		\
 	\
 	default.xpm		\
 	eek.xpm			\
