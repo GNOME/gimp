@@ -13,7 +13,7 @@ endif
 
 # This is what I use as installation target, from where installer-builders
 # or zip file creating scripts will pick it up. 
-LOCALEDIR = /install/gimp/locale
+LOCALEDIR = /target/lib/locale
 
 LANGUAGES = $(subst .po,,$(wildcard *.po))
 LANGUAGES := $(subst .GB2312,,$(LANGUAGES))
