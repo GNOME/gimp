@@ -48,6 +48,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /************/
 /* Typedefs */
 /************/
@@ -114,7 +115,7 @@ static gint    border_x1, border_y1, border_x2, border_y2;
 static glong   maxcounter;
 static guchar *scalarfield;
 
-GtkWidget *dialog;
+static GtkWidget *dialog;
 
 /************************/
 /* Convenience routines */
@@ -1206,14 +1207,9 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_lic",
 			  "Creates a Van Gogh effect (Line Integral Convolution)",
@@ -1224,8 +1220,8 @@ query (void)
 			  N_("<Image>/Filters/Map/Van Gogh (LIC)..."),
 			  "RGB",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -1317,17 +1313,7 @@ GPlugInInfo PLUG_IN_INFO =
 static void
 lic_interactive (GDrawable *drawable)
 {
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("lic");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-
-  gdk_set_use_xshm (gimp_use_xshm());
+  gimp_ui_init ("lic", TRUE);
 
   /* Create application window */
   /* ========================= */
@@ -1354,4 +1340,4 @@ lic_noninteractive (GDrawable *drawable)
 }
 */
 
-MAIN()
+MAIN ()

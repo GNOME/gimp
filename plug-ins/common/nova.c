@@ -68,6 +68,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #ifdef RCSID
 static char rcsid[] = "$Id$";
 #endif
@@ -180,43 +181,40 @@ static NovaInterface pint =
 };
 
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-      { PARAM_IMAGE,    "image",     "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable",  "Input drawable" },
-      { PARAM_INT32,    "xcenter",   "X coordinates of the center of supernova" },
-      { PARAM_INT32,    "ycenter",   "Y coordinates of the center of supernova" },
-      { PARAM_COLOR,    "color",     "Color of supernova" },
-      { PARAM_INT32,    "radius",    "Radius of supernova" },
-      { PARAM_INT32,    "nspoke",    "Number of spokes" },
-      { PARAM_INT32,    "randomhue", "Random hue" }
-   };
-  static GParamDef *return_vals = NULL;
+  {
+    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",     "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
+    { PARAM_INT32,    "xcenter",   "X coordinates of the center of supernova" },
+    { PARAM_INT32,    "ycenter",   "Y coordinates of the center of supernova" },
+    { PARAM_COLOR,    "color",     "Color of supernova" },
+    { PARAM_INT32,    "radius",    "Radius of supernova" },
+    { PARAM_INT32,    "nspoke",    "Number of spokes" },
+    { PARAM_INT32,    "randomhue", "Random hue" }
+  };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_nova",
                           "Produce Supernova effect to the specified drawable",
-                          "This plug-in produces an effect like a supernova burst. The "
-			    "amount of the light effect is approximately in proportion to 1/r, "
-			    "where r is the distance from the center of the star. It works with "
-			    "RGB*, GRAY* image.",
+                          "This plug-in produces an effect like a supernova "
+			  "burst. The amount of the light effect is "
+			  "approximately in proportion to 1/r, where r is the "
+			  "distance from the center of the star. It works with "
+			  "RGB*, GRAY* image.",
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "1997",
                           N_("<Image>/Filters/Light Effects/SuperNova..."),
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
-                          nargs, nreturn_vals,
-                          args, return_vals);
+                          nargs, 0,
+                          args, NULL);
 }
 
 static void
@@ -330,31 +328,8 @@ nova_dialog (GDrawable *drawable)
   GtkWidget *button;
   GtkWidget *center_frame;
   GtkObject *adj;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("nova");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), 19); /* SIGSTOP */
-#endif
+  gimp_ui_init ("nova", TRUE);
 
   dlg = gimp_dialog_new (_("SuperNova"), "nova",
 			 gimp_plugin_help_func, "filters/nova.html",
@@ -1036,6 +1011,6 @@ nova (GDrawable *drawable)
    gimp_drawable_merge_shadow (drawable->id, TRUE);
    gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
  
-   g_free(spoke);
-   g_free(spokecolor);
+   g_free (spoke);
+   g_free (spokecolor);
 }

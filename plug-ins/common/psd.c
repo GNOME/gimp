@@ -154,8 +154,11 @@
 #include <string.h>
 
 #include <glib.h>
+
 #include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Local types etc
  */
@@ -307,35 +310,37 @@ GPlugInInfo PLUG_IN_INFO =
 static PSDimage psd_image;
 
 
-static struct {
-    gchar signature[4];
-    gushort version;
-    guchar reserved[6];
-    gushort channels;
-    gulong rows;
-    gulong columns;
-    gushort bpp;
-    gushort mode;
-    gulong imgreslen;
-    gulong miscsizelen;
-    gushort compression;
-    gushort * rowlength;
-    long  imgdatalen;
+static struct
+{
+  gchar    signature[4];
+  gushort  version;
+  guchar   reserved[6];
+  gushort  channels;
+  gulong   rows;
+  gulong   columns;
+  gushort  bpp;
+  gushort  mode;
+  gulong   imgreslen;
+  gulong   miscsizelen;
+  gushort  compression;
+  gushort *rowlength;
+  long     imgdatalen;
 } PSDheader;
 
 
-static gchar * modename[] = {
-    "Bitmap", 
-    "Grayscale", 
-    "Indexed Colour", 
-    "RGB Colour", 
-    "CMYK Colour", 
-    "<invalid>", 
-    "<invalid>", 
-    "Multichannel", 
-    "Duotone", 
-    "Lab Colour", 
-    "<invalid>"
+static gchar * modename[] =
+{
+  "Bitmap", 
+  "Grayscale", 
+  "Indexed Colour", 
+  "RGB Colour", 
+  "CMYK Colour", 
+  "<invalid>", 
+  "<invalid>", 
+  "Multichannel", 
+  "Duotone", 
+  "Lab Colour", 
+  "<invalid>"
 };
 
 
@@ -369,26 +374,25 @@ static void dumpchunk(size_t n, FILE * fd, gchar *why);
 static void seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli);
 
 
-MAIN()
+MAIN ()
 
 
 static void
-query ()
+query (void)
 {
   static GParamDef load_args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_STRING, "raw_filename", "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
-
-  INIT_I18N();
+  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static gint nload_return_vals = (sizeof (load_return_vals) /
+				   sizeof (load_return_vals[0]));
 
   gimp_install_procedure ("file_psd_load",
                           "loads files of the Photoshop(tm) PSD file format",
@@ -402,10 +406,11 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_psd_load", "psd", "",
+  gimp_register_magic_load_handler ("file_psd_load",
+				    "psd",
+				    "",
 				    "0,string,8BPS");
 }
-
 
 
 static void
@@ -561,7 +566,7 @@ psd_mode_to_gimp_base_type (gushort psdtype)
 
 
 static void
-reshuffle_cmap(guchar *map256)
+reshuffle_cmap (guchar *map256)
 {
   guchar *tmpmap;
   int i;

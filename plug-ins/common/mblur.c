@@ -47,7 +47,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -58,6 +57,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
@@ -153,28 +153,22 @@ query (void)
     { PARAM_INT32,     "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
     { PARAM_INT32,     "length",    "Length" },
     { PARAM_INT32,     "angle",     "Angle" }
-  }; /* args */
-
-  static GParamDef *return_vals  = NULL;
-  static int        nargs        = sizeof(args) / sizeof(args[0]);
-  static int        nreturn_vals = 0;
-
-  INIT_I18N();
+  };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Motion blur of image",
-			  "This plug-in simulates the effect seen when photographing a moving object "
-			  "at a slow shutter speed. Done by adding multiple displaced copies.",
+			  "This plug-in simulates the effect seen when "
+			  "photographing a moving object at a slow shutter "
+			  "speed. Done by adding multiple displaced copies.",
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",       
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Blur/Motion Blur..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -188,11 +182,6 @@ run (gchar   *name,
 
   GRunModeType run_mode;
   GStatusType  status;
-
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
 
   status   = STATUS_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -764,17 +753,7 @@ mblur_dialog (void)
   GtkWidget *table;
   GtkObject *adjustment;
 
-  gint 	  argc;
-  gchar	**argv;	
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("mblur");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
+  gimp_ui_init ("mblur", FALSE);
 
   dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
 			    gimp_plugin_help_func, "filters/mblur.html",

@@ -32,6 +32,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Replace them with the right ones */
 #define	PLUG_IN_NAME	     "plug_in_max_rgb"
 #define SHORT_NAME	     "max_rgb"
@@ -100,8 +101,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Return an image in which each pixel holds only "
 			  "the channel that has the maximum value in three "
@@ -248,15 +247,8 @@ dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  gchar	**argv;
-  gint	  argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("max_rgb", FALSE);
 
   dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
 			 gimp_plugin_help_func, "filters/max_rgb.html",

@@ -77,6 +77,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 struct Grgb
 {
   guint8 red;
@@ -151,11 +152,11 @@ struct
 #define SCALE	8192            /* scale factor: do floats with int math */
 #define MAXPIX	 255            /* white value */
 
-gint	tab[3][3][MAXPIX+1];   /* multiply lookup table */
-gdouble	chroma_lim;            /* chroma limit */
-gdouble	compos_lim;            /* composite amplitude limit */
-glong	ichroma_lim2;          /* chroma limit squared (scaled integer) */
-gint	icompos_lim;           /* composite amplitude limit (scaled integer) */
+static gint	tab[3][3][MAXPIX+1]; /* multiply lookup table */
+static gdouble	chroma_lim;          /* chroma limit */
+static gdouble	compos_lim;          /* composite amplitude limit */
+static glong	ichroma_lim2;        /* chroma limit squared (scaled integer) */
+static gint	icompos_lim;         /* composite amplitude limit (scaled integer) */
 
 static void query        (void);
 static void run          (gchar   *name,
@@ -197,10 +198,10 @@ static void build_tab    (int m);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init  */
-  NULL,  /* quit  */
-  query, /* query */
-  run,   /* run   */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 MAIN ()
@@ -215,26 +216,26 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "The Drawable" },
     { PARAM_INT32, "mode", "Mode -- NTSC/PAL" },
     { PARAM_INT32, "action", "The action to perform" },
-    { PARAM_INT32, "new_layerp", "Create a new layer iff True" },
+    { PARAM_INT32, "new_layerp", "Create a new layer iff True" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef *rets = NULL;
-  static int nrets = 0;
-
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_hot",
 			  "Look for hot NTSC or PAL pixels ",
-			  "hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken.",
+			  "hot scans an image for pixels that will give unsave "
+			  "values of chrominance or composite signale "
+			  "amplitude when encoded into an NTSC or PAL signal.  "
+			  "Three actions can be performed on these ``hot'' "
+			  "pixels. (0) reduce luminance, (1) reduce "
+			  "saturation, or (2) Blacken.",
 			  "Eric L. Hernes, Alan Wm Paeth",
 			  "Eric L. Hernes",
 			  "1997",
 			  N_("<Image>/Filters/Colors/Hot..."),
 			  "RGB",
 			  PROC_PLUG_IN,
-			  nargs, nrets,
-			  args, rets);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -330,7 +331,7 @@ pluginCore (struct piArgs *argp)
   gdouble pr, pg, pb;
   gdouble py;
   
-  drw = gimp_drawable_get(argp->drawable);
+  drw = gimp_drawable_get (argp->drawable);
 
   width = drw->width;
   height = drw->height;
@@ -577,15 +578,8 @@ pluginCoreIA (struct piArgs *argp)
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *frame;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("hot");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
+  gimp_ui_init ("hot", FALSE);
 
   dlg = gimp_dialog_new (_("Hot"), "hot",
 			 gimp_plugin_help_func, "filters/hot.html",

@@ -44,6 +44,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 struct Grgb
 {
   guint8 red;
@@ -139,15 +140,10 @@ query (void)
     { PARAM_DRAWABLE, "drw", "The Drawable" },
     { PARAM_FLOAT, "alpha", "The amount of the filter to apply" },
     { PARAM_FLOAT, "radius", "The filter radius" },
-    { PARAM_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" },
+    { PARAM_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
   };
-  static gint nargs = 6;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef *rets = NULL;
-  static gint nrets = 0;
-
-  INIT_I18N();
-  
   gimp_install_procedure ("plug_in_nlfilt",
 			  "Nonlinear swiss army knife filter",
 			  "This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details.",
@@ -157,8 +153,8 @@ query (void)
 			  N_("<Image>/Filters/Enhance/NL Filter..."),
 			  "RGB,GRAY",
 			  PROC_PLUG_IN,
-			  nargs, nrets,
-			  args, rets);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -341,15 +337,8 @@ pluginCoreIA (struct piArgs *argp)
   GtkWidget *table;
   GtkWidget *preview;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("nlfilt");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
+  gimp_ui_init ("nlfilt", TRUE);
 
   dlg = gimp_dialog_new (_("NL Filter"), "nlfilt",
 			 gimp_plugin_help_func, "filters/nlfilt.html",

@@ -48,12 +48,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -519,13 +521,12 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 
-
 /***** Functions *****/
 
 MAIN ()
 
 static void
-query(void)
+query (void)
 {
   static GParamDef args[]=
   {
@@ -552,11 +553,13 @@ query(void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_newsprint",
 			  "Re-sample the image to give a newspaper-like effect",
-			  "Halftone the image, trading off resolution to represent colors or grey levels using the process described both in the PostScript language definition, and also by Robert Ulichney, \"Digital halftoning\", MIT Press, 1987.",
+			  "Halftone the image, trading off resolution to "
+			  "represent colors or grey levels using the process "
+			  "described both in the PostScript language "
+			  "definition, and also by Robert Ulichney, \"Digital "
+			  "halftoning\", MIT Press, 1987.",
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
@@ -660,7 +663,7 @@ run (gchar   *name,
       if (gimp_drawable_is_rgb (drawable->id) ||
 	  gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init( _("Newsprintifing..."));
+	  gimp_progress_init (_("Newsprintifing..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -1173,32 +1176,10 @@ newsprint_dialog (GDrawable *drawable)
   GtkWidget *table;
   GtkObject *adj;
   GSList *group = NULL;
-  gchar	**argv;
-  gint    argc;
-  guchar *color_cube;
   gint    bpp;
   gint    i;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("newsprint");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-#if 0
-  g_print ("newsprint: waiting... (pid %d)\n", getpid ());
-  kill (getpid (), 19);
-#endif
+  gimp_ui_init ("newsprint", TRUE);
 
   /* flag values to say we haven't filled these channel
    * states in yet */

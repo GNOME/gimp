@@ -126,6 +126,7 @@
 				 * pretty obscure Win32 compilation issues.
 				 */
 #include <setjmp.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -142,7 +143,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include <signal.h>
 
 #define SCALE_WIDTH         125
 
@@ -229,7 +229,6 @@ static void   add_menu_item             (GtkWidget *menu,
 					 guint op_no,
 					 GtkSignalFunc callback);
 
-static void   init_gtk                   (void);
 static gint   save_dialog                (void);
 
 static void   save_close_callback        (GtkWidget *widget,
@@ -289,11 +288,11 @@ query (void)
   {
     { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
     { PARAM_STRING,   "filename",     "The name of the file to load" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to load" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,   "image",         "Output image" },
+    { PARAM_IMAGE,   "image",         "Output image" }
   };
   static gint nload_args        = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -317,8 +316,6 @@ query (void)
     { PARAM_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_jpeg_load",
                           "loads files in the JPEG file format",
@@ -409,7 +406,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("jpeg", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY));
@@ -1552,20 +1549,6 @@ add_menu_item (GtkWidget        *menu,
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      (GtkSignalFunc) callback, &op_no);
   gtk_widget_show (menu_item);
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("jpeg");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint

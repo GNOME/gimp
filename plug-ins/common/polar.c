@@ -71,6 +71,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
 
@@ -200,11 +201,9 @@ query (void)
     { PARAM_FLOAT,    "angle",     "Offset angle" },
     { PARAM_INT32,    "backwards",    "Map backwards?" },
     { PARAM_INT32,    "inverse",     "Map from top?" },
-    { PARAM_INT32,    "polrec",     "Polar to rectangular?" },
+    { PARAM_INT32,    "polrec",     "Polar to rectangular?" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Converts and image to and from polar coords",
@@ -245,14 +244,14 @@ run (gchar   *name,
 
   /* Get the active drawable info */
 
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width(drawable->id);
-  img_height    = gimp_drawable_height(drawable->id);
-  img_bpp       = gimp_drawable_bpp(drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width     = gimp_drawable_width (drawable->id);
+  img_height    = gimp_drawable_height (drawable->id);
+  img_bpp       = gimp_drawable_bpp (drawable->id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   /* Calculate scaling parameters */
 
@@ -285,17 +284,17 @@ run (gchar   *name,
 
   if (sel_width > sel_height)
     {
-      pwidth  = MIN(sel_width, PREVIEW_SIZE);
+      pwidth  = MIN (sel_width, PREVIEW_SIZE);
       pheight = sel_height * pwidth / sel_width;
     }
   else
     {
-      pheight = MIN(sel_height, PREVIEW_SIZE);
+      pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
 
-  preview_width  = MAX(pwidth, 2); /* Min size is 2 */
-  preview_height = MAX(pheight, 2);
+  preview_width  = MAX (pwidth, 2); /* Min size is 2 */
+  preview_height = MAX (pheight, 2);
 
   /* See how we will run */
 
@@ -305,10 +304,10 @@ run (gchar   *name,
       INIT_I18N_UI();
 
       /* Possibly retrieve data */
-      gimp_get_data(PLUG_IN_NAME, &pcvals);
+      gimp_get_data (PLUG_IN_NAME, &pcvals);
 
       /* Get information from the dialog */
-      if (!polarize_dialog())
+      if (!polarize_dialog ())
 	return;
 
       break;
@@ -335,7 +334,7 @@ run (gchar   *name,
       INIT_I18N();
 
       /* Possibly retrieve data */
-      gimp_get_data(PLUG_IN_NAME, &pcvals);
+      gimp_get_data (PLUG_IN_NAME, &pcvals);
       break;
 
     default:
@@ -344,52 +343,48 @@ run (gchar   *name,
 
   /* Distort the image */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_is_rgb(drawable->id) ||
-       gimp_drawable_is_gray(drawable->id)))
+      (gimp_drawable_is_rgb (drawable->id) ||
+       gimp_drawable_is_gray (drawable->id)))
     {
       /* Set the tile cache size */
-      gimp_tile_cache_ntiles(2 * (drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
+      gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
+			      gimp_tile_width ());
 
       /* Run! */
-      polarize();
+      polarize ();
 
       /* If run mode is interactive, flush displays */
       if (run_mode != RUN_NONINTERACTIVE)
-	gimp_displays_flush();
+	gimp_displays_flush ();
 
       /* Store data */
       if (run_mode == RUN_INTERACTIVE)
-	gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(polarize_vals_t));
+	gimp_set_data (PLUG_IN_NAME, &pcvals, sizeof (polarize_vals_t));
     }
   else if (status == STATUS_SUCCESS)
     status = STATUS_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 static void
 polarize (void)
 {
-  GPixelRgn        dest_rgn;
-  guchar           *dest, *d;
-  guchar           pixel[4][4];
-  guchar           pixel2[4];
-  guchar           values[4];
-  gint             progress, max_progress;
-  double           cx, cy;
-  guchar           bg_color[4];
-  gint    x1, y1, x2, y2;
-  gint    x, y, b;
-  gpointer pr;
+  GPixelRgn  dest_rgn;
+  guchar    *dest, *d;
+  guchar     pixel[4][4];
+  guchar     pixel2[4];
+  guchar     values[4];
+  gint       progress, max_progress;
+  double     cx, cy;
+  guchar     bg_color[4];
+  gint       x1, y1, x2, y2;
+  gint       x, y, b;
+  gpointer   pr;
   
   pixel_fetcher_t *pft;
-
-#if 0
-  printf("Waiting... (pid %d)\n", getpid());
-  kill(getpid(), SIGSTOP);
-#endif
 
   /* Get selection area */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -398,16 +393,16 @@ polarize (void)
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
   
-  pft = pixel_fetcher_new(drawable);
+  pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background(&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2],
-			     (img_has_alpha ? 0 : 255));
+  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
+  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
+			      (img_has_alpha ? 0 : 255));
 
   progress     = 0;
   max_progress = img_width * img_height;
 
-  gimp_progress_init( _("Polarizing..."));
+  gimp_progress_init (_("Polarizing..."));
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
@@ -421,12 +416,12 @@ polarize (void)
 
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
-	      if (calc_undistorted_coords(x, y, &cx, &cy))
+	      if (calc_undistorted_coords (x, y, &cx, &cy))
 		{
-		  pixel_fetcher_get_pixel(pft, cx, cy, pixel[0]);
-		  pixel_fetcher_get_pixel(pft, cx + 1, cy, pixel[1]);
-		  pixel_fetcher_get_pixel(pft, cx, cy + 1, pixel[2]);
-		  pixel_fetcher_get_pixel(pft, cx + 1, cy + 1, pixel[3]);
+		  pixel_fetcher_get_pixel (pft, cx, cy, pixel[0]);
+		  pixel_fetcher_get_pixel (pft, cx + 1, cy, pixel[1]);
+		  pixel_fetcher_get_pixel (pft, cx, cy + 1, pixel[2]);
+		  pixel_fetcher_get_pixel (pft, cx + 1, cy + 1, pixel[3]);
 
 		  for (b = 0; b < img_bpp; b++)
 		    {
@@ -435,12 +430,12 @@ polarize (void)
 		      values[2] = pixel[2][b];
 		      values[3] = pixel[3][b];
 	   
-		      d[b] = bilinear(cx, cy, values);
+		      d[b] = bilinear (cx, cy, values);
 		    }
 		}
 	      else
 		{
-		  pixel_fetcher_get_pixel(pft, x, y, pixel2);
+		  pixel_fetcher_get_pixel (pft, x, y, pixel2);
 		  for (b = 0; b < img_bpp; b++)
 		    {
 		      d[b] = 255;
@@ -453,32 +448,32 @@ polarize (void)
 	  dest += dest_rgn.rowstride;
 	}
       progress += dest_rgn.w *dest_rgn.h;
-    
-      gimp_progress_update((double) progress / max_progress);
+
+      gimp_progress_update ((double) progress / max_progress);
     }
   
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static gint
-calc_undistorted_coords (double  wx,
-			 double  wy,
-			 double *x,
-			 double *y)
+calc_undistorted_coords (gdouble  wx,
+			 gdouble  wy,
+			 gdouble *x,
+			 gdouble *y)
 {
-  int    inside;
-  double phi, phi2;
-  double xx, xm, ym, yy;
-  int xdiff, ydiff;
-  double r;
-  double m;
-  double xmax, ymax, rmax;
-  double x_calc, y_calc;
-  double xi, yi;
-  double circle, angl, t, angle;
-  int x1, x2, y1, y2;
+  gint    inside;
+  gdouble phi, phi2;
+  gdouble xx, xm, ym, yy;
+  gint    xdiff, ydiff;
+  gdouble r;
+  gdouble m;
+  gdouble xmax, ymax, rmax;
+  gdouble x_calc, y_calc;
+  gdouble xi, yi;
+  gdouble circle, angl, t, angle;
+  gint    x1, x2, y1, y2;
 
   /* initialize */
 
@@ -697,14 +692,14 @@ calc_undistorted_coords (double  wx,
 }
 
 static guchar
-bilinear (double  x,
-	  double  y,
+bilinear (gdouble  x,
+	  gdouble  y,
 	  guchar *values)
 {
-  double m0, m1;
+  gdouble m0, m1;
 
-  x = fmod(x, 1.0);
-  y = fmod(y, 1.0);
+  x = fmod (x, 1.0);
+  y = fmod (y, 1.0);
 
   if (x < 0.0)
     x += 1.0;
@@ -723,16 +718,16 @@ pixel_fetcher_new (GDrawable *drawable)
 {
   pixel_fetcher_t *pf;
 
-  pf = g_malloc(sizeof(pixel_fetcher_t));
+  pf = g_new (pixel_fetcher_t, 1);
 
   pf->col           = -1;
   pf->row           = -1;
-  pf->img_width     = gimp_drawable_width(drawable->id);
-  pf->img_height    = gimp_drawable_height(drawable->id);
-  pf->img_bpp       = gimp_drawable_bpp(drawable->id);
-  pf->img_has_alpha = gimp_drawable_has_alpha(drawable->id);
-  pf->tile_width    = gimp_tile_width();
-  pf->tile_height   = gimp_tile_height();
+  pf->img_width     = gimp_drawable_width (drawable->id);
+  pf->img_height    = gimp_drawable_height (drawable->id);
+  pf->img_bpp       = gimp_drawable_bpp (drawable->id);
+  pf->img_has_alpha = gimp_drawable_has_alpha (drawable->id);
+  pf->tile_width    = gimp_tile_width ();
+  pf->tile_height   = gimp_tile_height ();
   pf->bg_color[0]   = 0;
   pf->bg_color[1]   = 0;
   pf->bg_color[2]   = 0;
@@ -761,14 +756,14 @@ pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
 
 static void
 pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
-			 int              x,
-			 int              y,
+			 gint             x,
+			 gint             y,
 			 guchar          *pixel)
 {
   gint    col, row;
   gint    coloff, rowoff;
   guchar *p;
-  int     i;
+  gint    i;
 
   if ((x < sel_x1) || (x >= sel_x2) ||
       (y < sel_y1) || (y >= sel_y2))
@@ -791,8 +786,8 @@ pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
       if (pf->tile != NULL)
 	gimp_tile_unref(pf->tile, FALSE);
 
-      pf->tile = gimp_drawable_get_tile(pf->drawable, FALSE, row, col);
-      gimp_tile_ref(pf->tile);
+      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
+      gimp_tile_ref (pf->tile);
 
       pf->col = col;
       pf->row = row;
@@ -816,18 +811,18 @@ pixel_fetcher_destroy (pixel_fetcher_t *pf)
 static void
 build_preview_source_image (void)
 {
-  double           left, right, bottom, top;
-  double           px, py;
-  double           dx, dy;
-  int              x, y;
+  gdouble          left, right, bottom, top;
+  gdouble          px, py;
+  gdouble          dx, dy;
+  gint             x, y;
   guchar          *p;
   guchar           pixel[4];
   pixel_fetcher_t *pf;
 
-  pcint.check_row_0 = g_malloc(preview_width * sizeof(guchar));
-  pcint.check_row_1 = g_malloc(preview_width * sizeof(guchar));
-  pcint.image       = g_malloc(preview_width * preview_height * 4 * sizeof(guchar));
-  pcint.dimage      = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  pcint.check_row_0 = g_new (guchar, preview_width);
+  pcint.check_row_1 = g_new (guchar, preview_width);
+  pcint.image       = g_new (guchar, preview_width * preview_height * 4);
+  pcint.dimage      = g_new (guchar, preview_width * preview_height * 3);
 
   left   = sel_x1;
   right  = sel_x2 - 1;
@@ -864,7 +859,7 @@ build_preview_source_image (void)
 
 	  /* Thumbnail image */
 
-	  pixel_fetcher_get_pixel(pf, (int) px, (int) py, pixel);
+	  pixel_fetcher_get_pixel (pf, (int) px, (int) py, pixel);
 
 	  if (img_bpp < 3)
 	    {
@@ -890,7 +885,7 @@ build_preview_source_image (void)
       py += dy;
     }
 
-  pixel_fetcher_destroy(pf);
+  pixel_fetcher_destroy (pf);
 }
 
 static gint
@@ -906,32 +901,8 @@ polarize_dialog (void)
   GtkWidget *toggle;
   GtkWidget *hbox;
   GtkObject *adj;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
 
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("polarize");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("polar", TRUE);
 
   build_preview_source_image ();
 
@@ -1078,19 +1049,19 @@ polarize_dialog (void)
 static void
 dialog_update_preview (void)
 {
-  double  left, right, bottom, top;
-  double  dx, dy;
-  double  px, py;
-  double  cx = 0.0, cy = 0.0;
-  int     ix, iy;
-  int     x, y;
-  double  scale_x, scale_y;
-  guchar *p_ul, *i, *p;
-  guchar *check_ul;
-  int     check;
-  guchar  outside[4];
+  gdouble  left, right, bottom, top;
+  gdouble  dx, dy;
+  gdouble  px, py;
+  gdouble  cx = 0.0, cy = 0.0;
+  gint     ix, iy;
+  gint     x, y;
+  gdouble  scale_x, scale_y;
+  guchar  *p_ul, *i, *p;
+  guchar  *check_ul;
+  gint     check;
+  guchar   outside[4];
 
-  gimp_palette_get_background(&outside[0], &outside[1], &outside[2]);
+  gimp_palette_get_background (&outside[0], &outside[1], &outside[2]);
   outside[3] = (img_has_alpha ? 0 : 255);
 
   if (img_bpp < 3)
@@ -1126,7 +1097,7 @@ dialog_update_preview (void)
 
       for (x = 0; x < preview_width; x++)
 	{
-	  calc_undistorted_coords(px, py, &cx, &cy);
+	  calc_undistorted_coords (px, py, &cx, &cy);
 
 	  cx = (cx - left) * scale_x;
 	  cy = (cy - top) * scale_y;
@@ -1158,13 +1129,13 @@ dialog_update_preview (void)
 
   for (y = 0; y < img_height; y++)
     {
-      gtk_preview_draw_row(GTK_PREVIEW(pcint.preview), p, 0, y, preview_width);
+      gtk_preview_draw_row (GTK_PREVIEW (pcint.preview), p, 0, y, preview_width);
 
       p += preview_width * 3;
     }
 
-  gtk_widget_draw(pcint.preview, NULL);
-  gdk_flush();
+  gtk_widget_draw (pcint.preview, NULL);
+  gdk_flush ();
 }
 
 static void

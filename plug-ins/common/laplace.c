@@ -28,74 +28,78 @@
 /* update 03/10/97
    #ifdef MAX and MIN */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      laplace             (GDrawable  *drawable);
 static void      laplace_prepare_row (GPixelRgn  *pixel_rgn,
-				   guchar     *data,
-				   int         x,
-				   int         y,
-				   int         w);
+				      guchar     *data,
+				      gint        x,
+				      gint        y,
+				      gint        w);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_laplace",
 			  "Edge Detection with Laplace Operation",
-			  "This plugin creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best.",
+			  "This plugin creates one-pixel wide edges from the "
+			  "image, with the value proportional to the gradient. "
+			  "It uses the Laplace operator (a 3x3 kernel with -8 "
+			  "in the middle). The image has to be laplacered to "
+			  "get useful results, a gauss_iir with 1.5 - 5.0 "
+			  "depending on the noise in the image is best.",
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
 			  N_("<Image>/Filters/Edge-Detect/Laplace"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -111,7 +115,8 @@ run (char    *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       laplace (drawable);
@@ -136,12 +141,12 @@ run (char    *name,
 
 static void
 laplace_prepare_row (GPixelRgn *pixel_rgn,
-		  guchar    *data,
-		  int        x,
-		  int        y,
-		  int        w)
+		     guchar    *data,
+		     gint       x,
+		     gint       y,
+		     gint       w)
 {
-  int b;
+  gint b;
 
   if (y == 0)
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
@@ -160,29 +165,28 @@ laplace_prepare_row (GPixelRgn *pixel_rgn,
 
 #define SIGN(a) (((a) > 0) ? 1 : -1)
 #define RMS(a,b) (sqrt (pow ((a),2) + pow ((b), 2)))
-#ifndef MAX
-#define MAX(a,b) (((a) > (b)) ? (a) : (b))
-#endif
-#ifndef MIN
-#define MIN(a,b) (((a) < (b)) ? (a) : (b))
-#endif
 #define BLACK_REGION(val) ((val) > 128)
 #define WHITE_REGION(val) ((val) <= 128)
 
-
-static void minmax  (gint x1, gint x2, gint x3, gint x4, gint x5,
-		     gint* min_result, gint* max_result)
+static void
+minmax  (gint  x1,
+	 gint  x2,
+	 gint  x3,
+	 gint  x4,
+	 gint  x5,
+	 gint *min_result,
+	 gint *max_result)
 {
-  gint min1,min2,max1,max2;
-  if (x1>x2) {max1=x1; min1=x2;} else {max1=x2; min1=x1;}
-  if (x3>x4) {max2=x3; min2=x4;} else {max2=x4; min2=x3;}
-  if (min1<min2)
+  gint min1, min2, max1, max2;
+
+  if (x1 > x2) { max1=x1; min1=x2; } else { max1=x2; min1=x1; }
+  if (x3 > x4) { max2=x3; min2=x4; } else { max2=x4; min2=x3; }
+  if (min1 < min2)
     *min_result = MIN (min1, x5);
       else  *min_result = MIN (min2, x5);
-  if (max1>max2)
+  if (max1 > max2)
     *max_result = MAX (max1, x5);
       else  *max_result = MAX (max2, x5);
-
 }
 
 static void

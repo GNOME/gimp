@@ -33,21 +33,21 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.7 (Dec. 25 1997)"
 
-
 /******************************************************************************/
 
-static void query  (void);
-static void run    (gchar   *name,
-		    gint     nparam,
-		    GParam  *param,
-		    gint    *nreturn_vals,
-		    GParam **return_vals);
+static void      query  (void);
+static void      run    (gchar   *name,
+			 gint     nparam,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
-static void filter (GDrawable *drawable);
-static int  dialog (void);
+static void      filter (GDrawable *drawable);
+static gboolean  dialog (void);
 
 /******************************************************************************/
 
@@ -93,7 +93,6 @@ MAIN ()
 static void
 query (void)
 {
-  static int nargs = 4;
   static GParamDef args[] =
   {
     { PARAM_INT32,    "run_mode",  "interactive / non-interactive" },
@@ -101,10 +100,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable",  "input drawable" },
     { PARAM_INT32,    "division",  "the number of divisions" }
   };
-  static int nreturn_vals = 0;
-  static GParamDef *return_vals = NULL;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);;
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "produce illusion",
@@ -115,10 +111,8 @@ query (void)
 			  N_("<Image>/Filters/Map/Illusion..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 /******************************************************************************/
@@ -279,7 +273,7 @@ filter (GDrawable *drawable)
 
 /******************************************************************************/
 
-static int dialog_status = FALSE;
+static gboolean dialog_status = FALSE;
 
 static void
 dialog_ok_handler (GtkWidget *widget,
@@ -292,7 +286,7 @@ dialog_ok_handler (GtkWidget *widget,
 
 /******************************************************************************/
 
-static int
+static gboolean
 dialog (void)
 {
   GtkWidget *window;
@@ -301,15 +295,8 @@ dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
 
-  gint    argc = 1;
-  gchar **argv = g_new (gchar *, 1);
+  gimp_ui_init ("illusion", FALSE);
 
-  argv[0] = g_strdup ("illusion");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  /* dialog window */
   window = gimp_dialog_new (_("Illusion"), "illusion",
 			    gimp_plugin_help_func, "filters/illusion.html",
 			    GTK_WIN_POS_MOUSE,

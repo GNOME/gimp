@@ -61,6 +61,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 
 #define ENTRY_WIDTH      75
@@ -158,8 +159,6 @@ query (void)
     { PARAM_FLOAT, "turbulence", "Turbulence of plasma" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_plasma",
 			  "Create a plasma cloud like image to the specified drawable",
@@ -277,15 +276,8 @@ plasma_dialog (void)
   GtkWidget *table;
   GtkWidget *seed_hbox;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("plasma");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("plasma", FALSE);
 
   dlg = gimp_dialog_new (_("Plasma"), "plasma",
 			 gimp_plugin_help_func, "filters/plasma.html",
@@ -362,14 +354,14 @@ plasma_ok_callback (GtkWidget *widget,
  * Some glabals to save passing too many paramaters that don't change.
  */
 
-gint	ix1, iy1, ix2, iy2;	/* Selected image size. */
-GTile   *tile=NULL;
-gint    tile_row, tile_col;
-gint    tile_width, tile_height;
-gint    tile_dirty;
-gint	bpp, has_alpha, alpha;
-gdouble	turbulence;
-glong	max_progress, progress;
+static gint	ix1, iy1, ix2, iy2;	/* Selected image size. */
+static GTile   *tile=NULL;
+static gint     tile_row, tile_col;
+static gint     tile_width, tile_height;
+static gint     tile_dirty;
+static gint	bpp, has_alpha, alpha;
+static gdouble	turbulence;
+static glong	max_progress, progress;
 
 /*
  * The setup function.
@@ -388,7 +380,7 @@ plasma (GDrawable *drawable)
    * center of the image.
    */
 
-  do_plasma(drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0);
+  do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0);
 
   /*
    * Now we recurse through the images, going further each time.
@@ -407,10 +399,10 @@ init_plasma (GDrawable *drawable)
   if (pvals.timeseed)
     pvals.seed = time(NULL);
 
-  srand(pvals.seed);
+  srand (pvals.seed);
   turbulence = pvals.turbulence;
 
-  gimp_drawable_mask_bounds(drawable->id, &ix1, &iy1, &ix2, &iy2);
+  gimp_drawable_mask_bounds (drawable->id, &ix1, &iy1, &ix2, &iy2);
 
   max_progress = (ix2 - ix1) * (iy2 - iy1);
   progress = 0;
@@ -422,8 +414,8 @@ init_plasma (GDrawable *drawable)
   tile_row = 0; tile_col = 0;
 
   bpp = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->id);
-  if(has_alpha)
+  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  if (has_alpha)
     alpha = bpp-1;
   else
     alpha = bpp;
@@ -436,22 +428,22 @@ provide_tile (GDrawable *drawable,
 {
   if (col != tile_col || row != tile_row || !tile)
     {
-      if(tile)
-	gimp_tile_unref(tile, tile_dirty);
+      if (tile)
+	gimp_tile_unref (tile, tile_dirty);
       tile_col = col;
       tile_row = row;
-      tile = gimp_drawable_get_tile(drawable, TRUE, tile_row, tile_col);
+      tile = gimp_drawable_get_tile (drawable, TRUE, tile_row, tile_col);
       tile_dirty = FALSE;
-      gimp_tile_ref(tile);
+      gimp_tile_ref (tile);
     }
 }
 
 static void
 end_plasma (GDrawable *drawable)
 {
-  if(tile)
-    gimp_tile_unref(tile, tile_dirty);
-  tile=NULL;
+  if (tile)
+    gimp_tile_unref (tile, tile_dirty);
+  tile = NULL;
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
@@ -478,7 +470,7 @@ get_pixel (GDrawable *drawable,
   offx = x % tile_width;
   offy = y % tile_height;
 
-  provide_tile(drawable, col, row);
+  provide_tile (drawable, col, row);
 
   ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
   for(i = 0; i < alpha; i++)
@@ -505,12 +497,12 @@ put_pixel (GDrawable *drawable,
   offx = x % tile_width;
   offy = y % tile_height;
 
-  provide_tile(drawable, col, row);
+  provide_tile (drawable, col, row);
 
   ptr = tile->data + (offy * tile->ewidth + offx) * bpp;
   for(i = 0; i < alpha; i++)
     ptr[i] = pixel[i];
-  if(has_alpha)
+  if (has_alpha)
     ptr[alpha] = 255;
 
   tile_dirty = TRUE;
@@ -578,24 +570,24 @@ do_plasma (GDrawable *drawable,
 
   if (depth == -1)
     {
-      random_rgb(tl);
-      put_pixel(drawable, x1, y1, tl);
-      random_rgb(tr);
-      put_pixel(drawable, x2, y1, tr);
-      random_rgb(bl);
-      put_pixel(drawable, x1, y2, bl);
-      random_rgb(br);
-      put_pixel(drawable, x2, y2, br);
-      random_rgb(mm);
-      put_pixel(drawable, (x1 + x2) / 2, (y1 + y2) / 2, mm);
-      random_rgb(ml);
-      put_pixel(drawable, x1, (y1 + y2) / 2, ml);
-      random_rgb(mr);
-      put_pixel(drawable, x2, (y1 + y2) / 2, mr);
-      random_rgb(mt);
-      put_pixel(drawable, (x1 + x2) / 2, y1, mt);
-      random_rgb(ml);
-      put_pixel(drawable, (x1 + x2) / 2, y2, ml);
+      random_rgb (tl);
+      put_pixel (drawable, x1, y1, tl);
+      random_rgb (tr);
+      put_pixel (drawable, x2, y1, tr);
+      random_rgb (bl);
+      put_pixel (drawable, x1, y2, bl);
+      random_rgb (br);
+      put_pixel (drawable, x2, y2, br);
+      random_rgb (mm);
+      put_pixel (drawable, (x1 + x2) / 2, (y1 + y2) / 2, mm);
+      random_rgb (ml);
+      put_pixel (drawable, x1, (y1 + y2) / 2, ml);
+      random_rgb (mr);
+      put_pixel (drawable, x2, (y1 + y2) / 2, mr);
+      random_rgb (mt);
+      put_pixel (drawable, (x1 + x2) / 2, y1, mt);
+      random_rgb (ml);
+      put_pixel (drawable, (x1 + x2) / 2, y2, ml);
 
       return 0;
     }
@@ -609,10 +601,10 @@ do_plasma (GDrawable *drawable,
       gdouble	rnd;
       gint	xave, yave;
 
-      get_pixel(drawable, x1, y1, tl);
-      get_pixel(drawable, x1, y2, bl);
-      get_pixel(drawable, x2, y1, tr);
-      get_pixel(drawable, x2, y2, br);
+      get_pixel (drawable, x1, y1, tl);
+      get_pixel (drawable, x1, y2, bl);
+      get_pixel (drawable, x2, y1, tr);
+      get_pixel (drawable, x2, y2, br);
 
       rnd = (256.0 / (2.0 * (gdouble)scale_depth)) * turbulence;
       ran = rnd;
@@ -628,16 +620,16 @@ do_plasma (GDrawable *drawable,
       if (xave != x1 || xave != x2)
 	{
 	  /* Left. */
-	  AVE(ml, tl, bl);
-	  add_random(ml, ran);
-	  put_pixel(drawable, x1, yave, ml);
+	  AVE (ml, tl, bl);
+	  add_random (ml, ran);
+	  put_pixel (drawable, x1, yave, ml);
 
 	  if (x1 != x2)
 	    {
 				/* Right. */
-	      AVE(mr, tr, br);
-	      add_random(mr, ran);
-	      put_pixel(drawable, x2, yave, mr);
+	      AVE (mr, tr, br);
+	      add_random (mr, ran);
+	      put_pixel (drawable, x2, yave, mr);
 	    }
 	}
 
@@ -646,36 +638,36 @@ do_plasma (GDrawable *drawable,
 	  if (x1 != xave || yave != y2)
 	    {
 	      /* Bottom. */
-	      AVE(mb, bl, br);
-	      add_random(mb, ran);
-	      put_pixel(drawable, xave, y2, mb);
+	      AVE (mb, bl, br);
+	      add_random (mb, ran);
+	      put_pixel (drawable, xave, y2, mb);
 	    }
 
 	  if (y1 != y2)
 	    {
 	      /* Top. */
-	      AVE(mt, tl, tr);
-	      add_random(mt, ran);
-	      put_pixel(drawable, xave, y1, mt);
+	      AVE (mt, tl, tr);
+	      add_random (mt, ran);
+	      put_pixel (drawable, xave, y1, mt);
 	    }
 	}
 
       if (y1 != y2 || x1 != x2)
 	{
 	  /* Middle pixel. */
-	  AVE(mm, tl, br);
-	  AVE(tmp, bl, tr);
-	  AVE(mm, mm, tmp);
+	  AVE (mm, tl, br);
+	  AVE (tmp, bl, tr);
+	  AVE (mm, mm, tmp);
 
-	  add_random(mm, ran);
-	  put_pixel(drawable, xave, yave, mm);
+	  add_random (mm, ran);
+	  put_pixel (drawable, xave, yave, mm);
 	}
 
       count ++;
 
       if (!(count % 2000))
 	{
-	  gimp_progress_update((double) progress / (double) max_progress);
+	  gimp_progress_update ((double) progress / (double) max_progress);
 	}
 
       if ((x2 - x1) < 3 && (y2 - y1) < 3)
@@ -689,11 +681,11 @@ do_plasma (GDrawable *drawable,
   ym = (y1 + y2) >> 1;
 
   /* Top left. */
-  do_plasma(drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1);
+  do_plasma (drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1);
   /* Bottom left. */
-  do_plasma(drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1);
+  do_plasma (drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1);
   /* Top right. */
-  do_plasma(drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1);
+  do_plasma (drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1);
   /* Bottom right. */
-  return do_plasma(drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1);
+  return do_plasma (drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1);
 }

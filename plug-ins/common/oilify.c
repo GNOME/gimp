@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define SCALE_WIDTH  125
 #define HISTSIZE     256
 
@@ -46,7 +47,7 @@
 typedef struct
 {
   gdouble mask_size;
-  gint mode;
+  gint    mode;
 } OilifyVals;
 
 typedef struct
@@ -106,11 +107,12 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_oilify",
-			  "Modify the specified drawable to resemble an oil painting",
-			  "This function performs the well-known oil-paint effect on the specified drawable.  The size of the input mask is specified by 'mask_size'.",
+			  "Modify the specified drawable to resemble an oil "
+			  "painting",
+			  "This function performs the well-known oil-paint "
+			  "effect on the specified drawable.  The size of the "
+			  "input mask is specified by 'mask_size'.",
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",
@@ -186,7 +188,8 @@ run (gchar   *name,
 
   /*  Make sure that the drawable is gray or RGB color  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id)))
+      (gimp_drawable_is_rgb (drawable->id) ||
+       gimp_drawable_is_gray (drawable->id)))
     {
       gimp_progress_init (_("Oil Painting..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -444,15 +447,8 @@ oilify_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("oilify");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("oilify", FALSE);
 
   dlg = gimp_dialog_new (_("Oilify"), "oilify",
 			 gimp_plugin_help_func, "filters/oilify.html",

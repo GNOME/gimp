@@ -126,6 +126,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 static void   query (void);
 static void   run   (gchar   *name,
 		     gint     nparams,
@@ -206,13 +207,9 @@ query (void)
     { PARAM_STRING, "from", "The email address for the From: field" },
     { PARAM_STRING, "subject", "The subject" },
     { PARAM_STRING, "comment", "The Comment" },
-    { PARAM_INT32,  "encapsulation", "Uuencode, MIME" },
+    { PARAM_INT32,  "encapsulation", "Uuencode, MIME" }
   };
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static GParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_mail_image",
 			  "pipe files to uuencode then mail them",
@@ -223,8 +220,8 @@ query (void)
 			  N_("<Image>/File/Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -470,18 +467,11 @@ save_dialog (void)
   GtkWidget *text;
   GtkWidget *vscrollbar;
 
-  gint    argc;
-  gchar **argv;
   gchar   buffer[BUFFER_SIZE];
   gint    nreturn_vals;
   GParam *return_vals;
-  
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("mail");
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("mail", FALSE);
 
   /* check gimprc for a preffered "From:" address */
   return_vals = gimp_run_procedure ("gimp_gimprc_query",

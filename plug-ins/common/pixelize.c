@@ -68,6 +68,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #ifdef RCSID
 static char rcsid[] = "$Id$";
 #endif
@@ -119,10 +120,10 @@ static void	pixelize_sub    (gint pixelwidth, gint bpp);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
-  query,   /* query_proc */
-  run	   /* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run	 /* run_proc   */
 };
 
 static PixelizeValues pvals =
@@ -151,11 +152,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_pixelize",
 			  "Pixelize the contents of the specified drawable",
@@ -166,8 +163,8 @@ query (void)
 			  N_("<Image>/Filters/Blur/Pixelize..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -218,7 +215,7 @@ run (gchar   *name,
 	  pvals.pixelwidth = (gdouble) param[3].data.d_int32;
 	}
       if ((status == STATUS_SUCCESS) &&
-	  pvals.pixelwidth <= 0 )
+	  pvals.pixelwidth <= 0)
 	status = STATUS_CALLING_ERROR;
       break;
 
@@ -235,9 +232,10 @@ run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ( _("Pixelizing..."));
+	  gimp_progress_init (_("Pixelizing..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -254,7 +252,7 @@ run (gchar   *name,
 	}
       else
 	{
-	  /* gimp_message ("pixelize: cannot operate on indexed color images"); */
+	  /* g_message ("pixelize: cannot operate on indexed color images"); */
 	  status = STATUS_EXECUTION_ERROR;
 	}
     }
@@ -271,15 +269,8 @@ pixelize_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adjustment;
-  gchar **argv;
-  gint	  argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("pixelize");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("pixelize", FALSE);
 
   dlg = gimp_dialog_new (_("Pixelize"), "pixelize",
 			 gimp_plugin_help_func, "filters/pixelize.html",
@@ -357,10 +348,10 @@ pixelize (GDrawable *drawable)
   if (pixelwidth < 1)
     pixelwidth = 1;
 
-  if( pixelwidth >= tile_width )
-    pixelize_large( drawable, pixelwidth );
+  if (pixelwidth >= tile_width)
+    pixelize_large (drawable, pixelwidth);
   else
-    pixelize_small( drawable, pixelwidth, tile_width );
+    pixelize_small (drawable, pixelwidth, tile_width);
 }
 
 /*
@@ -384,28 +375,31 @@ pixelize_large (GDrawable *drawable,
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp( drawable->id );
-  average = g_new( gulong, bpp );
+  bpp = gimp_drawable_bpp(drawable->id);
+  average = g_new(gulong, bpp);
 
   /* Initialize progress */
   progress = 0;
   max_progress = 2 * (x2 - x1) * (y2 - y1);
 
-  for( y = y1; y < y2; y += pixelwidth - ( y % pixelwidth ) )
+  for (y = y1; y < y2; y += pixelwidth - (y % pixelwidth))
     {
-      for( x = x1; x < x2; x += pixelwidth - ( x % pixelwidth ) )
+      for (x = x1; x < x2; x += pixelwidth - (x % pixelwidth))
 	{
-	  x_step = pixelwidth - ( x % pixelwidth );
-	  y_step = pixelwidth - ( y % pixelwidth );
-	  x_step = MIN( x_step, x2-x );
-	  y_step = MIN( y_step, y2-y );
+	  x_step = pixelwidth - (x % pixelwidth);
+	  y_step = pixelwidth - (y % pixelwidth);
+	  x_step = MIN(x_step, x2-x);
+	  y_step = MIN(y_step, y2-y);
 
-	  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step, FALSE, FALSE);
-	  for( b = 0; b < bpp;	b++ )
+	  gimp_pixel_rgn_init (&src_rgn, drawable,
+			       x, y, x_step, y_step, FALSE, FALSE);
+	  for (b = 0; b < bpp;	b++)
 	    average[b] = 0;
 	  count = 0;
 
-	  for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+	  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+	       pr != NULL;
+	       pr = gimp_pixel_rgns_process (pr))
 	    {
 	      src_row = src_rgn.data;
 	      for (row = 0; row < src_rgn.h; row++)
@@ -413,7 +407,7 @@ pixelize_large (GDrawable *drawable,
 		  src = src_row;
 		  for (col = 0; col < src_rgn.w; col++)
 		    {
-		      for( b = 0; b < bpp; b++ )
+		      for(b = 0; b < bpp; b++)
 			average[b] += src[b];
 		      src += src_rgn.bpp;
 		      count += 1;
@@ -425,14 +419,17 @@ pixelize_large (GDrawable *drawable,
 	      gimp_progress_update ((double) progress / (double) max_progress);
 	    }
 
-	  if ( count > 0 )
+	  if (count > 0)
 	    {
-	      for ( b = 0; b < bpp; b++ )
-		average[b] = (guchar) ( average[b] / count );
+	      for (b = 0; b < bpp; b++)
+		average[b] = (guchar) (average[b] / count);
 	    }
 
-	  gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step, TRUE, TRUE);
-	  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+	  gimp_pixel_rgn_init (&dest_rgn, drawable,
+			       x, y, x_step, y_step, TRUE, TRUE);
+	  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+	       pr != NULL;
+	       pr = gimp_pixel_rgns_process (pr))
 	    {
 	      dest_row = dest_rgn.data;
 	      for (row = 0; row < dest_rgn.h; row++)
@@ -440,7 +437,7 @@ pixelize_large (GDrawable *drawable,
 		  dest = dest_row;
 		  for (col = 0; col < dest_rgn.w; col++)
 		    {
-		      for( b = 0; b < bpp; b++ )
+		      for (b = 0; b < bpp; b++)
 			dest[b] = average[b];
 		      dest += dest_rgn.bpp;
 		      count += 1;
@@ -454,7 +451,7 @@ pixelize_large (GDrawable *drawable,
 	}
     }
 
-  g_free( average );
+  g_free (average);
 
   /*  update the blurred region	 */
   gimp_drawable_flush (drawable);
@@ -469,13 +466,13 @@ pixelize_large (GDrawable *drawable,
    its speed).
 
    If any coordinates of mask boundary is not multiply of pixel width
-   ( e.g.  x1 % pixelwidth != 0 ), operates on the region whose width
+   (e.g.  x1 % pixelwidth != 0), operates on the region whose width
    or height is the remainder.
  */
 static void
 pixelize_small (GDrawable *drawable,
 		gint       pixelwidth,
-		gint       tile_width )
+		gint       tile_width)
 {
   GPixelRgn src_rgn, dest_rgn;
   gint bpp;
@@ -492,25 +489,27 @@ pixelize_small (GDrawable *drawable,
 
   bpp = drawable->bpp;
 
-  area.width = ( tile_width / pixelwidth ) * pixelwidth;
-  area.data= g_new( guchar, (glong) bpp * area.width * area.width  );
+  area.width = (tile_width / pixelwidth) * pixelwidth;
+  area.data= g_new(guchar, (glong) bpp * area.width * area.width );
 
-  for( area.y = y1; area.y < y2;
-       area.y += area.width - ( area.y % area.width ) )
+  for(area.y = y1; area.y < y2;
+       area.y += area.width - (area.y % area.width))
     {
-      area.h = area.width - ( area.y % area.width );
-      area.h = MIN( area.h, y2 - area.y );
-      for( area.x = x1; area.x < x2;
-	   area.x += area.width - ( area.x % area.width ) )
+      area.h = area.width - (area.y % area.width);
+      area.h = MIN(area.h, y2 - area.y);
+      for(area.x = x1; area.x < x2;
+	   area.x += area.width - (area.x % area.width))
 	{
-	  area.w = area.width - ( area.x % area.width );
-	  area.w = MIN( area.w, x2 - area.x );
+	  area.w = area.width - (area.x % area.width);
+	  area.w = MIN(area.w, x2 - area.x);
 
-	  gimp_pixel_rgn_get_rect( &src_rgn, area.data, area.x, area.y, area.w, area.h );
+	  gimp_pixel_rgn_get_rect (&src_rgn, area.data,
+				   area.x, area.y, area.w, area.h);
 
-	  pixelize_sub( pixelwidth, bpp );
+	  pixelize_sub(pixelwidth, bpp);
 
-	  gimp_pixel_rgn_set_rect( &dest_rgn, area.data, area.x, area.y, area.w, area.h );
+	  gimp_pixel_rgn_set_rect (&dest_rgn, area.data,
+				   area.x, area.y, area.w, area.h);
 
 	  /* Update progress */
 	  progress += area.w * area.h;
@@ -518,7 +517,7 @@ pixelize_small (GDrawable *drawable,
 	}
     }
 
-  g_free( area.data );
+  g_free(area.data);
 
   /*  update the pixelized region  */
   gimp_drawable_flush (drawable);
@@ -545,28 +544,28 @@ pixelize_sub (gint pixelwidth,
 
   rowstride = area.w * bpp;
 
-  for( y = area.y; y < area.y + area.h; y += pixelwidth - ( y % pixelwidth ) )
+  for (y = area.y; y < area.y + area.h; y += pixelwidth - (y % pixelwidth))
     {
-      h = pixelwidth - ( y % pixelwidth );
-      h = MIN( h, area.y + area.h - y );
-      for( x = area.x; x < area.x + area.w; x += pixelwidth - ( x % pixelwidth ) )
+      h = pixelwidth - (y % pixelwidth);
+      h = MIN(h, area.y + area.h - y);
+      for (x = area.x; x < area.x + area.w; x += pixelwidth - (x % pixelwidth))
 	{
-	  w = pixelwidth - ( x % pixelwidth );
-	  w = MIN( w, area.x + area.w - x );
+	  w = pixelwidth - (x % pixelwidth);
+	  w = MIN (w, area.x + area.w - x);
 
-	  for( i = 0; i < bpp; i++ )
+	  for (i = 0; i < bpp; i++)
 	    average[i] = 0;
 	  count = 0;
 
 	  /* Read */
 	  buf_row = area.data + (y-area.y)*rowstride + (x-area.x)*bpp;
 
-	  for( row = 0; row < h; row++ )
+	  for (row = 0; row < h; row++)
 	    {
 	      buf = buf_row;
-	      for( col = 0; col < w; col++ )
+	      for (col = 0; col < w; col++)
 		{
-		  for( i = 0; i < bpp; i++ )
+		  for (i = 0; i < bpp; i++)
 		    average[i] += buf[i];
 		  count++;
 		  buf += bpp;
@@ -575,21 +574,21 @@ pixelize_sub (gint pixelwidth,
 	    }
 
 	  /* Average */
-	  if ( count > 0 )
+	  if (count > 0)
 	    {
-	      for( i = 0; i < bpp; i++ )
+	      for (i = 0; i < bpp; i++)
 		average[i] /= count;
 	    }
 
 	  /* Write */
 	  buf_row = area.data + (y-area.y)*rowstride + (x-area.x)*bpp;
 
-	  for( row = 0; row < h; row++ )
+	  for (row = 0; row < h; row++)
 	    {
 	      buf = buf_row;
-	      for( col = 0; col < w; col++ )
+	      for (col = 0; col < w; col++)
 		{
-		  for( i = 0; i < bpp; i++ )
+		  for (i = 0; i < bpp; i++)
 		    buf[i] = average[i];
 		  count++;
 		  buf += bpp;

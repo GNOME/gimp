@@ -1,5 +1,11 @@
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/[h-p]*.c: use gimp_ui_init(). Minor cleanups like
+	reordering includes consistently and removing trailing commas from
+	enums and param defs.
+
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpsignal.[ch]
 	* libgimp/gimpui.c: don't panic, this is not another signal handling
 	change but only a namespace cleanup to make the html documentation

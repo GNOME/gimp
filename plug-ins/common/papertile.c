@@ -227,7 +227,7 @@ dialog_ok_clicked (GtkWidget *widget,
 }
 
 static void
-dialog_create (void)
+open_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *main_hbox;
@@ -239,6 +239,8 @@ dialog_create (void)
   GtkWidget *box;
   GtkWidget *color_button;
   GtkWidget *sep;
+
+  gimp_ui_init ("papertile", TRUE);
 
   dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
 			    gimp_plugin_help_func, "filters/papertile.html",
@@ -403,39 +405,9 @@ dialog_create (void)
   gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", color_button);
 
   gtk_widget_show (dialog);
-}
-
-static inline void
-open_dialog (void)
-{
-  gint    argc;
-  gchar **argv;
-  guchar *color_cube;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUGIN_PROCEDURE_NAME);
-
-  gtk_init (&argc, &argv);
-  gtk_set_locale ();
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  dialog_create ();
 
   gtk_main ();
   gdk_flush ();
-
-  g_free (argv[0]);
-  g_free (argv);
 }
 
 /*============================================================================*/
@@ -856,11 +828,7 @@ plugin_query (void)
     { PARAM_INT32,    "background_color", "background color (for bg-type 5)" },
     { PARAM_INT32,    "background_alpha", "opacity (for bg-type 5)"          }
   };
-  static GParamDef *return_vals       = NULL;
-  static gint       numof_args        = sizeof args / sizeof args[0];
-  static gint       numof_return_vals = 0;
-
-  INIT_I18N ();
+  static gint numof_args        = sizeof args / sizeof args[0];
 
   gimp_install_procedure (PLUGIN_PROCEDURE_NAME,
 			  "Cuts an image into paper tiles, and slides each paper tile.",
@@ -871,8 +839,8 @@ plugin_query (void)
 			  N_("<Image>/Filters/Map/Paper Tile..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  numof_args, numof_return_vals,
-			  args, return_vals);
+			  numof_args, 0,
+			  args, NULL);
 }
 
 static void
@@ -976,4 +944,4 @@ GPlugInInfo PLUG_IN_INFO =
   plugin_run
 };
 
-MAIN()
+MAIN ()

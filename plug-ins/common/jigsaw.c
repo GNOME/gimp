@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef enum {BEZIER_1, BEZIER_2} style_t;
 typedef enum {LEFT, RIGHT, UP, DOWN} bump_t;
 
@@ -138,7 +139,7 @@ static void check_config(gint width, gint height);
 
 			    
 
-#define PLUG_IN_NAME "jigsaw"
+#define PLUG_IN_NAME    "jigsaw"
 #define PLUG_IN_STORAGE "jigsaw-storage"
 
 #define XFACTOR2 0.0833
@@ -312,20 +313,16 @@ query (void)
 {
   static GParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, Non-interactive, Last-Vals"},
-    { PARAM_IMAGE, "image", "Input image"},
-    { PARAM_DRAWABLE, "drawable", "Input drawable"},
-    { PARAM_INT32, "x", "Number of tiles across > 0"},
-    { PARAM_INT32, "y", "Number of tiles down > 0"},
-    { PARAM_INT32, "style", "The style/shape of the jigsaw puzzle, 0 or 1"},
-    { PARAM_INT32, "blend_lines", "Number of lines for shading bevels >= 0"},
-    { PARAM_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5"}
+    { PARAM_INT32, "run_mode", "Interactive, Non-interactive, Last-Vals" },
+    { PARAM_IMAGE, "image", "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_INT32, "x", "Number of tiles across > 0" },
+    { PARAM_INT32, "y", "Number of tiles down > 0" },
+    { PARAM_INT32, "style", "The style/shape of the jigsaw puzzle, 0 or 1" },
+    { PARAM_INT32, "blend_lines", "Number of lines for shading bevels >= 0" },
+    { PARAM_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5" }
   };
-  static GParamDef *return_vals = NULL;
-  static gint nargs = sizeof(args) / sizeof(args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_jigsaw",
 			  "Renders a jigsaw puzzle look",
@@ -336,8 +333,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -2296,18 +2293,9 @@ dialog_box (void)
   GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
+  gimp_ui_init ("jigsaw", FALSE);
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  /* Create the dialog box */
-  
   dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
 			 gimp_plugin_help_func, "filters/jigsaw.html",
 			 GTK_WIN_POS_MOUSE,

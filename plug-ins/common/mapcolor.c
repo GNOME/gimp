@@ -37,27 +37,23 @@ static char ident[] = "@(#) GIMP mapcolor plug-in v1.02  19-Mar-00";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <time.h>
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 #define PRV_WIDTH  50
 #define PRV_HEIGHT 20
 
 typedef struct
 {
- guchar colors[4][3];
- gint32 map_mode;
+  guchar colors[4][3];
+  gint32 map_mode;
 } PluginValues;
 
 PluginValues plvals =
@@ -78,20 +74,20 @@ PluginValues plvals =
 
 typedef struct
 {
-  guint width, height;
+  guint   width, height;
   guchar *img;
 } IMG_PREVIEW;
 
 
 typedef struct
 {
- GtkWidget *preview;
+ GtkWidget   *preview;
  IMG_PREVIEW *img_preview;
  IMG_PREVIEW *map_preview;
 } PLInterface;
 
 
-gint run_flag = FALSE;
+static gboolean run_flag = FALSE;
 
 /* Declare some local functions.
  */
@@ -114,18 +110,18 @@ static IMG_PREVIEW   *img_preview_alloc (guint width, guint height);
 static void           img_preview_free (IMG_PREVIEW *ip);
 static void           img_preview_copy (IMG_PREVIEW *src, IMG_PREVIEW **dst);
 static IMG_PREVIEW   *img_preview_create_from_drawable (guint maxsize,
-                           gint32 drawable_ID);
+							gint32 drawable_ID);
 
 static void            update_img_preview (void);
 
-static gint   dialog                  (gint32 drawable_ID);
+static gboolean        dialog         (gint32 drawable_ID);
 static void   mapcolor_ok_callback    (GtkWidget *widget,
 				       gpointer   data);
 static void   get_mapping (guchar *src_col1, guchar *src_col2,
-                  guchar *dst_col1, guchar *dst_col2, gint32  map_mode,
-                  guchar *redmap, guchar *greenmap, guchar *bluemap);
+			   guchar *dst_col1, guchar *dst_col2, gint32  map_mode,
+			   guchar *redmap, guchar *greenmap, guchar *bluemap);
 static void   color_button_color_changed_callback (GtkWidget *widget,
-                  gpointer   data);
+						   gpointer   data);
 static void   add_color_button        (gint       csel_index,
 				       gint       left,
 				       gint       top,
@@ -333,8 +329,6 @@ query (void)
   };
   static gint nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
-  INIT_I18N ();
-
   gimp_install_procedure ("plug_in_color_adjust",
                           "Adjust color range given by foreground/background "
                           "color to black/white",
@@ -537,7 +531,7 @@ update_img_preview (void)
 }
 
 
-static gint
+static gboolean
 dialog (gint32 drawable_ID)
 {
   GtkWidget *dlg;
@@ -546,27 +540,9 @@ dialog (gint32 drawable_ID)
   GtkWidget *table;
   GtkWidget *preview;
   IMG_PREVIEW *ip;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc, j;
+  gint  j;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("mapcolor");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("mapcolor", TRUE);
 
   memset (&plinterface, 0, sizeof (plinterface));
 
@@ -589,54 +565,57 @@ dialog (gint32 drawable_ID)
   /* Preview */
   ip = img_preview_create_from_drawable (IMG_PRV_SIZE, drawable_ID);
   if (ip)
-  {
-    plinterface.img_preview = ip;
-    img_preview_copy (plinterface.img_preview, &(plinterface.map_preview));
+    {
+      plinterface.img_preview = ip;
+      img_preview_copy (plinterface.img_preview, &(plinterface.map_preview));
 
-    frame = gtk_frame_new (_("Preview"));
-    gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),frame,FALSE,FALSE,0);
+      frame = gtk_frame_new (_("Preview"));
+      gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
+			  FALSE, FALSE, 0);
 
-    abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-    gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-    gtk_container_add (GTK_CONTAINER (frame), abox);
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), abox);
 
-    pframe = gtk_frame_new (NULL);
-    gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-    gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
-    gtk_container_add (GTK_CONTAINER (abox), pframe);
+      pframe = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+      gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
+      gtk_container_add (GTK_CONTAINER (abox), pframe);
 
-    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-    plinterface.preview = preview;
-    gtk_preview_size (GTK_PREVIEW (preview), ip->width, ip->height);
-    gtk_container_add (GTK_CONTAINER (pframe), preview);
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      plinterface.preview = preview;
+      gtk_preview_size (GTK_PREVIEW (preview), ip->width, ip->height);
+      gtk_container_add (GTK_CONTAINER (pframe), preview);
 
-    gtk_widget_show (preview);
-    gtk_widget_show (pframe);
-    gtk_widget_show (abox);
-    gtk_widget_show (frame);
-  }
+      gtk_widget_show (preview);
+      gtk_widget_show (pframe);
+      gtk_widget_show (abox);
+      gtk_widget_show (frame);
+    }
 
   for (j = 0; j < 2; j++)
-  {
-    frame = gtk_frame_new ((j==0) ? _("Source color range")
-                                  : _("Destination color range"));
-    gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),frame,FALSE,FALSE,0);
-    gtk_widget_show (frame);
+    {
+      frame = gtk_frame_new ((j == 0) ?
+			     _("Source color range") :
+			     _("Destination color range"));
+      gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
-    /* The table keeps the color selections */
-    table = gtk_table_new (1, 4, FALSE);
-    gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-    gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-    gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-    gtk_container_add (GTK_CONTAINER (frame), table);
-    gtk_widget_show (table);
+      /* The table keeps the color selections */
+      table = gtk_table_new (1, 4, FALSE);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+      gtk_widget_show (table);
 
-    add_color_button (j*2, 0, 0, table);
-    add_color_button (j*2 + 1, 2, 0, table);
-  }
+      add_color_button (j * 2, 0, 0, table);
+      add_color_button (j * 2 + 1, 2, 0, table);
+    }
 
   update_img_preview ();
 

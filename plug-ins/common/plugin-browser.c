@@ -35,6 +35,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define DBL_LIST_WIDTH  250
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 300)
 #define DBL_HEIGHT      200
@@ -515,7 +516,7 @@ procedure_clist_select_callback (GtkWidget      *widget,
 
   pinfo = (PInfo *) gtk_clist_get_row_data (GTK_CLIST (widget), row);
 
-  if(!pinfo)
+  if (!pinfo)
     return FALSE;
 
   /* Must select the correct one in the ctree structure */
@@ -977,16 +978,9 @@ gimp_plugin_desc (void)
   GtkWidget  *button;
   GtkWidget  *hbox, *searchhbox, *vbox;
   GtkWidget  *label, *notebook, *swindow;
-  gchar     **argv;
-  gint        argc;
   gchar      *clabels[4];
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("plugindetails");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("plugindetails", FALSE);
 
   plugindesc = g_new0 (PDesc, 1);
 

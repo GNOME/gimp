@@ -27,6 +27,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Declare plug-in functions.  */
 
 static void query (void);
@@ -69,11 +70,11 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -85,11 +86,9 @@ query (void)
     { PARAM_IMAGE, "image", "Input image" },
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_pcx_load",
                           "Loads files in Zsoft PCX file format",
@@ -125,8 +124,6 @@ query (void)
 }
 
 /* Declare internal functions. */
-
-static void   init_gtk   (void);
 
 static gint32 load_image (gchar  *filename);
 static void   load_1     (FILE   *fp,
@@ -218,7 +215,7 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
-	  init_gtk ();
+	  gimp_ui_init ("pcx", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -268,20 +265,6 @@ run (gchar   *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static void
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("pcx");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 guchar mono[6]= { 0, 0, 0, 255, 255, 255 };

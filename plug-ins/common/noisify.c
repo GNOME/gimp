@@ -40,6 +40,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define SCALE_WIDTH     125
 #define TILE_CACHE_SIZE  16
 
@@ -113,8 +114,6 @@ query (void)
     { PARAM_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_noisify",
 			  "Adds random noise to a drawable's channels",
@@ -313,17 +312,10 @@ noisify_dialog (gint channels)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
-  gchar  *buffer;
-  gchar **argv;
-  gint    argc;
-  gint    i;
+  gchar *buffer;
+  gint   i;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("noisify");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("noisify", FALSE);
 
   dlg = gimp_dialog_new (_("Noisify"), "noisify",
 			 gimp_plugin_help_func, "filters/noisify.html",

@@ -27,71 +27,77 @@
  * contain pure-white and pure-black.
  */
 
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "libgimp/gimp.h"
 
-#include "config.h"
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
-			 GParam    *param,
-			 int       *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
-static void      norma (GDrawable * drawable);
-static void      indexed_norma (gint32 image_ID);
+static void      norma         (GDrawable *drawable);
+static void      indexed_norma (gint32     image_ID);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_normalize",
-			  "Normalize the contrast of the specified drawable to cover all possible ranges.",
-			  "This plugin performs almost the same operation as the 'contrast autostretch' plugin, except that it won't allow the color channels to normalize independently.  This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black.",
+			  "Normalize the contrast of the specified drawable to "
+			  "cover all possible ranges.",
+			  "This plugin performs almost the same operation as "
+			  "the 'contrast autostretch' plugin, except that it "
+			  "won't allow the color channels to normalize "
+			  "independently.  This is actually what most people "
+			  "probably want instead of contrast-autostretch; use "
+			  "c-a only if you wish to remove an undesirable "
+			  "color-tint from a source image which is supposed to "
+			  "contain pure-white and pure-black.",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
 			  N_("<Image>/Image/Colors/Auto/Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -142,7 +148,7 @@ run (char    *name,
 
 
 static void
-indexed_norma(gint32 image_ID)  /* a.d.m. */
+indexed_norma (gint32 image_ID)  /* a.d.m. */
 {
   guchar *cmap;
   gint ncols,i;
@@ -206,9 +212,12 @@ norma (GDrawable *drawable)
   min = 255;
   max = 0;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
 
@@ -252,10 +261,14 @@ norma (GDrawable *drawable)
 
 
   /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
       dest = dest_rgn.data;

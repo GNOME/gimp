@@ -52,7 +52,8 @@
 #include <libgimp/gimpui.h>
 #include <libgimp/parasiteio.h>
 
-#include <libgimp/stdplugins-intl.h>
+#include "libgimp/stdplugins-intl.h"
+
 
 /* Note that the upcoming PSP version 6 writes PSP file format version
  * 4.0, but the documentation for that apparently isn't publicly
@@ -330,7 +331,7 @@ static PSPSaveInterface psint =
 static guint16 major, minor;
 static guint tile_height;
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -339,11 +340,11 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_STRING, "raw_filename", "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -360,8 +361,6 @@ query (void)
 /*        "1 for RLE, and 2 for LZ77" } */
 /*    }; */
 /*    static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_psp_load",
                           "loads images from the Paint Shop Pro PSP file format",
@@ -413,20 +412,6 @@ save_ok_callback (GtkWidget *widget,
   psint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("psp");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint
@@ -1742,7 +1727,7 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
-	  init_gtk ();
+	  gimp_ui_init ("psp", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |

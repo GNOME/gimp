@@ -73,6 +73,7 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.10  15-Mar-2000";
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 
@@ -238,8 +239,6 @@ static void dither_grey     (guchar *grey,
 
 
 /* Dialog-handling */
-
-static void   init_gtk                  (void);
 
 static gint   load_dialog               (void);
 static void   load_ok_callback          (GtkWidget *widget,
@@ -550,8 +549,6 @@ query (void)
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("file_ps_load",
                           "load file of PostScript/PDF file format",
                           "load file of PostScript/PDF file format",
@@ -725,7 +722,7 @@ run (gchar   *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("ps", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PS",
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -2510,20 +2507,6 @@ save_rgb (FILE   *ofp,
 #undef GET_RGB_TILE
 }
 
-static void
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("ps");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-}
-
 /*  Load interface functions  */
 
 static gint
@@ -2540,7 +2523,7 @@ load_dialog (void)
   GtkWidget *pages_entry;
   GtkWidget *toggle;
 
-  init_gtk ();
+  gimp_ui_init ("ps", FALSE);
 
   dialog = gimp_dialog_new (_("Load PostScript"), "ps",
 			    gimp_plugin_help_func, "filters/ps.html",
