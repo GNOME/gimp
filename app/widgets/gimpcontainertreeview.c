@@ -448,10 +448,9 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
         {
           GimpViewable *selected_viewable;
 
-          gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list),
-                              &selected_iter,
+          gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list), &selected_iter,
                               COLUMN_VIEWABLE, &selected_viewable,
-                              NULL);
+                              -1);
 
           if (selected_viewable != viewable)
             selected = FALSE;

@@ -1,3 +1,9 @@
+2003-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): the gtk_tree_model_get()
+	argument list ends with -1, not NULL.
+
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: code cosmetics.
