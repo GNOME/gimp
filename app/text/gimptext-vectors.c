@@ -125,7 +125,7 @@ moveto (FT_Vector *to,
   RenderContext *context = (RenderContext *) data;
   GimpCoords     start;
 
-#if TEXT_DEBUG
+#if GIMP_TEXT_DEBUG
   g_printerr ("moveto  %f, %f\n", to->x / 64.0, to->y / 64.0);
 #endif
 
@@ -149,7 +149,7 @@ lineto (FT_Vector *to,
   RenderContext *context = (RenderContext *) data;
   GimpCoords     end;
 
-#if TEXT_DEBUG
+#if GIMP_TEXT_DEBUG
   g_printerr ("lineto  %f, %f\n", to->x / 64.0, to->y / 64.0);
 #endif
 
@@ -172,7 +172,7 @@ conicto (FT_Vector *ftcontrol,
   GimpCoords     control;
   GimpCoords     end;
 
-#if TEXT_DEBUG
+#if GIMP_TEXT_DEBUG
   g_printerr ("conicto %f, %f\n", to->x / 64.0, to->y / 64.0);
 #endif
 
@@ -198,7 +198,7 @@ cubicto (FT_Vector *ftcontrol1,
   GimpCoords     control2;
   GimpCoords     end;
 
-#if TEXT_DEBUG
+#if GIMP_TEXT_DEBUG
   g_printerr ("cubicto %f, %f\n", to->x / 64.0, to->y / 64.0);
 #endif
 

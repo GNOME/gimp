@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
  *
  * Some of this code was copied from Pango (pangox-fontmap.c)
  * and was originally written by Owen Taylor <otaylor@redhat.com>.
@@ -43,20 +43,20 @@
    e.g. -adobe-courier-bold-o-normal--25-180-100-100-m-150-iso8859-1 */
 enum
 {
-  XLFD_FOUNDRY		= 0,
-  XLFD_FAMILY		= 1,
-  XLFD_WEIGHT		= 2,
-  XLFD_SLANT		= 3,
-  XLFD_SET_WIDTH	= 4,
-  XLFD_ADD_STYLE	= 5,
-  XLFD_PIXELS		= 6,
-  XLFD_POINTS		= 7,
-  XLFD_RESOLUTION_X	= 8,
-  XLFD_RESOLUTION_Y	= 9,
-  XLFD_SPACING		= 10,
-  XLFD_AVERAGE_WIDTH	= 11,
-  XLFD_CHARSET		= 12,
-  XLFD_NUM_FIELDS     
+  XLFD_FOUNDRY       = 0,
+  XLFD_FAMILY        = 1,
+  XLFD_WEIGHT        = 2,
+  XLFD_SLANT         = 3,
+  XLFD_SET_WIDTH     = 4,
+  XLFD_ADD_STYLE     = 5,
+  XLFD_PIXELS        = 6,
+  XLFD_POINTS        = 7,
+  XLFD_RESOLUTION_X  = 8,
+  XLFD_RESOLUTION_Y  = 9,
+  XLFD_SPACING       = 10,
+  XLFD_AVERAGE_WIDTH = 11,
+  XLFD_CHARSET       = 12,
+  XLFD_NUM_FIELDS
 };
 
 static gchar * gimp_text_get_xlfd_field (const gchar *fontname,
@@ -67,11 +67,11 @@ static gchar * gimp_text_get_xlfd_field (const gchar *fontname,
 /**
  * gimp_text_font_name_from_xlfd:
  * @xlfd: X Logical Font Description
- * 
+ *
  * Attempts to extract a meaningful font name from the "family",
  * "weight", "slant" and "stretch" fields of an X Logical Font
  * Description.
- * 
+ *
  * Return value: a newly allocated string.
  **/
 gchar *
@@ -129,10 +129,10 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
  * @xlfd: X Logical Font Description
  * @size: return location for the font size
  * @size_unit: return location for the font size unit
- * 
+ *
  * Attempts to extract the font size from an X Logical Font
  * Description.
- * 
+ *
  * Return value: %TRUE on success, %FALSE otherwise.
  **/
 gboolean
@@ -157,7 +157,7 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
   field = gimp_text_get_xlfd_field (xlfd, XLFD_POINTS, buffer);
   if (field)
     {
-      *size      = atoi (field);
+      *size      = atoi (field) / 10.0;
       *size_unit = GIMP_UNIT_POINT;
       return TRUE;
     }
@@ -169,7 +169,7 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
  * gimp_text_set_font_from_xlfd:
  * @text: a #GimpText object
  * @xlfd: X Logical Font Description
- * 
+ *
  * Attempts to extract font name and font size from @xlfd and sets
  * them on the #GimpText object.
  **/
@@ -187,6 +187,10 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
     return;
 
   font = gimp_text_font_name_from_xlfd (xlfd);
+
+#if GIMP_TEXT_DEBUG
+  g_printerr ("XLFD: %s  font: %s\n", xlfd, font ? font : "(null)");
+#endif
 
   if (gimp_text_font_size_from_xlfd (xlfd, &size, &size_unit))
     {
@@ -229,30 +233,30 @@ gimp_text_get_xlfd_field (const gchar *fontname,
 {
   const gchar *t1, *t2;
   gchar       *p;
-  gint         countdown, len, num_dashes;
+  gint         countdown, num_dashes;
+  gsize        len;
 
   if (!fontname)
     return NULL;
-  
+
   /* we assume this is a valid fontname...that is, it has 14 fields */
 
-  countdown = field_num;
-  t1 = fontname;
-  while (*t1 && (countdown >= 0))
-    if (*t1++ == '-')
+  for (t1 = fontname, countdown = field_num; *t1 && (countdown >= 0); t1++)
+    if (*t1 == '-')
       countdown--;
-  
+
   num_dashes = (field_num == XLFD_CHARSET) ? 2 : 1;
+
   for (t2 = t1; *t2; t2++)
-    { 
+    {
       if (*t2 == '-' && --num_dashes == 0)
 	break;
     }
-  
-  if (t1 != t2)
+
+  if (t2 > t1)
     {
       /* Check we don't overflow the buffer */
-      len = (long) t2 - (long) t1;
+      len = (gsize) t2 - (gsize) t1;
       if (len > XLFD_MAX_FIELD_LEN - 1)
 	return NULL;
 
@@ -261,12 +265,15 @@ gimp_text_get_xlfd_field (const gchar *fontname,
 
       strncpy (buffer, t1, len);
       buffer[len] = 0;
+
       /* Convert to lower case. */
       for (p = buffer; *p; p++)
 	*p = g_ascii_tolower (*p);
     }
   else
-    return NULL;
+    {
+      return NULL;
+    }
 
   return buffer;
 }

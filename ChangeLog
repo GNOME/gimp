@@ -1,5 +1,12 @@
 2004-01-26  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext-xlfd.c (gimp_text_font_size_from_xlfd):
+	account for the fact that XLFD stores point sizes in decipoints.
+
+	* app/text/gimptext-vectors.c: s/TEXT_DEBUG/GIMP_TEXT_DEBUG/
+
+2004-01-26  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c
 	* app/widgets/gimphistogramview.c: use dark_gc instead of
 	text_aa_gc to draw the histogram and curves grid lines. dark_gc is
