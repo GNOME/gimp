@@ -275,16 +275,14 @@ gimp_action_set_proxy (GimpAction *action,
 
       if (! area)
         {
-          GdkScreen   *screen;
-          GtkSettings *settings;
+          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
+          GtkSettings *settings = gtk_settings_get_for_screen (screen);
           gint         width, height;
 
           area = gimp_color_area_new (action->color,
                                       GIMP_COLOR_AREA_SMALL_CHECKS, 0);
           gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
 
-          screen = gtk_widget_get_screen (area);
-          settings = gtk_settings_get_for_screen (screen);
           gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU,
                                              &width, &height);
 
@@ -311,20 +309,27 @@ gimp_action_set_proxy (GimpAction *action,
 
       if (! view)
         {
-          GdkScreen *screen;
-          gint       width, height;
-          gint       border_width;
+          GdkScreen   *screen   = gtk_widget_get_screen (proxy);
+          GtkSettings *settings = gtk_settings_get_for_screen (screen);
+          GtkIconSize  size;
+          gint         width, height;
+          gint         border_width;
 
-          screen = gtk_widget_get_screen (proxy);
-          gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
-                                             GTK_ICON_SIZE_MENU,
-                                             &width, &height);
+          if (GIMP_IS_IMAGEFILE (action->viewable))
+            {
+              size         = GTK_ICON_SIZE_LARGE_TOOLBAR;
+              border_width = 0;
+            }
+          else
+            {
+              size         = GTK_ICON_SIZE_MENU;
+              border_width = 1;
+            }
 
-          /*  FIXME: remove this hack  */
-          border_width = GIMP_IS_IMAGEFILE (action->viewable) ? 0 : 1;
+          gtk_icon_size_lookup_for_settings (settings, size, &width, &height);
 
           view = gimp_view_new_full (action->viewable,
-                                     width - 2, height - 2, border_width,
+                                     width, height, border_width,
                                      FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
           gtk_widget_show (view);

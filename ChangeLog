@@ -1,5 +1,15 @@
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): use a larger
+	icon size for GimpImagefile views.
+
+	* themes/Default/images/stock-frame-64.png: removed the 1 pixel
+	wide empty border around the frame.
+
+	* app/widgets/gimpviewrenderer-frame.c: adjusted the hardcoded values.
+
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am: defined DISTCHECK_CONFIGURE_FLAGS with the
 	configure options that are needed to run 'make dist'.
 

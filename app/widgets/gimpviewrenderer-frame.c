@@ -205,10 +205,10 @@ gimp_view_renderer_ensure_frame (GimpViewRenderer *renderer,
                                              GTK_ICON_SIZE_DIALOG, NULL);
 
       /*  FIXME: shouldn't be hardcoded  */
-      class->frame_left   = 3;
-      class->frame_top    = 3;
-      class->frame_right  = 5;
-      class->frame_bottom = 5;
+      class->frame_left   = 2;
+      class->frame_top    = 2;
+      class->frame_right  = 4;
+      class->frame_bottom = 4;
     }
 }
 
