@@ -234,8 +234,8 @@ gimp_layer_scale (gint32   layer_ID,
  * @layer_ID: The layer.
  * @new_width: New layer width.
  * @new_height: New layer height.
- * @offx: x offset between upper left corner of old and new layers: (new - old).
- * @offy: y offset between upper left corner of old and new layers: (new - old).
+ * @offx: x offset between upper left corner of old and new layers: (old - new).
+ * @offy: y offset between upper left corner of old and new layers: (old - new).
  *
  * Resize the layer to the specified extents.
  *

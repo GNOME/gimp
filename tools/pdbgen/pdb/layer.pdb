@@ -323,7 +323,7 @@ sub layer_resize {
     foreach (qw(x y)) {
 	push @args, { name => "off$_", type => 'int32',
 		      desc => "$_ offset between upper left corner of old and
-			       new layers: (new - old)" }
+			       new layers: (old - new)" }
     }
 
     &layer_dim_proc('resize', <<'HELP', @args);

@@ -1,8 +1,19 @@
 2004-05-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/autocrop.c: applied patch from Philip Lafleur
+	that makes Autocrop register a new procedure that autocrops a
+	single layer as requested in bug #142618.
+
+	* tools/pdbgen/pdb/layer.pdb
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: fixed documentation for gimp_resize_layer.
+	Patch provided by Philip Lafleur (bug #142618).
+
+2004-05-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptemplateeditor.c
 	(gimp_template_editor_constructor): add the spinbuttons to the
-	size entry in the correct order. Fixes bug 143347.
+	size entry in the correct order. Fixes bug #143347.
 
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 

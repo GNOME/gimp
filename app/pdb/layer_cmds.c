@@ -545,12 +545,12 @@ static ProcArg layer_resize_inargs[] =
   {
     GIMP_PDB_INT32,
     "offx",
-    "x offset between upper left corner of old and new layers: (new - old)"
+    "x offset between upper left corner of old and new layers: (old - new)"
   },
   {
     GIMP_PDB_INT32,
     "offy",
-    "y offset between upper left corner of old and new layers: (new - old)"
+    "y offset between upper left corner of old and new layers: (old - new)"
   }
 };
 

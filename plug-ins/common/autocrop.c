@@ -31,25 +31,26 @@
 
 
 /* Declare local functions. */
-static void query         (void);
-static void run           (const gchar      *name,
-                           gint              nparams,
-                           const GimpParam  *param,
-                           gint             *nreturn_vals,
-                           GimpParam       **return_vals);
+static void      query         (void);
+static void      run           (const gchar      *name,
+                                gint              nparams,
+                                const GimpParam  *param,
+                                gint             *nreturn_vals,
+                                GimpParam       **return_vals);
 
-static gboolean colors_equal  (const guchar *col1,
-			       const guchar *col2,
-			       gint          bytes);
-static gint guess_bgcolor (GimpPixelRgn *pr,
-                           gint          width,
-                           gint          height,
-                           gint          bytes,
-                           guchar       *color);
+static gboolean  colors_equal  (const guchar *col1,
+                                const guchar *col2,
+                                gint          bytes);
+static gint      guess_bgcolor (GimpPixelRgn *pr,
+                                gint          width,
+                                gint          height,
+                                gint          bytes,
+                                guchar       *color);
 
-static void doit          (GimpDrawable *drawable,
-                           gint32        image_id,
-                           gboolean      show_progress);
+static void      doit          (GimpDrawable *drawable,
+                                gint32        image_id,
+                                gboolean      show_progress,
+                                gboolean      layer_only);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -89,6 +90,22 @@ query (void)
 
   gimp_plugin_menu_register ("plug_in_autocrop",
                              N_("<Image>/Image/Crop"));
+
+  gimp_install_procedure ("plug_in_autocrop_layer",
+                          "Automagically crops a layer.",
+                          "",
+                          "Tim Newsome",
+                          "Tim Newsome",
+                          "1997",
+                          N_("_Autocrop"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_autocrop_layer",
+                             N_("<Image>/Layer/Crop"));
+
 }
 
 static void
@@ -133,7 +150,8 @@ run (const gchar      *name,
 
     gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
 
-    doit (drawable, image_id, interactive);
+    doit (drawable, image_id, interactive,
+          ! strcmp (name, "plug_in_autocrop_layer"));
 
     if (interactive)
       gimp_displays_flush ();
@@ -151,7 +169,8 @@ run (const gchar      *name,
 static void
 doit (GimpDrawable *drawable,
       gint32        image_id,
-      gboolean      show_progress)
+      gboolean      show_progress,
+      gboolean      layer_only)
 {
   GimpPixelRgn  srcPR;
   gint          width, height;
@@ -159,7 +178,8 @@ doit (GimpDrawable *drawable,
   gint32        nx, ny, nw, nh;
   guchar       *buffer;
   guchar        color[4] = {0, 0, 0, 0};
-
+  gint32        layer_id = 0;
+  
   width  = drawable->width;
   height = drawable->height;
   bytes  = drawable->bpp;
@@ -168,6 +188,16 @@ doit (GimpDrawable *drawable,
   ny = 0;
   nw = width;
   nh = height;
+
+  if (layer_only)
+    {
+      layer_id = gimp_image_get_active_layer (image_id);
+      if (layer_id == -1)
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
+    }
 
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -249,7 +279,12 @@ doit (GimpDrawable *drawable,
   gimp_drawable_detach (drawable);
 
   if (nw != width || nh != height)
-    gimp_image_crop (image_id, nw, nh, nx, ny);
+    {
+      if (layer_only)
+        gimp_layer_resize (layer_id, nw, nh, 0 - nx, 0 - ny);
+      else
+        gimp_image_crop (image_id, nw, nh, nx, ny);
+    }
 
   if (show_progress)
     gimp_progress_update (1.00);
