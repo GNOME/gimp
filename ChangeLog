@@ -1,3 +1,14 @@
+2004-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-open.c (file_open_with_proc_and_display): removed
+	the undo clearing/sanitizing code...
+
+	(file_open_image): ...and added it here so *all* newly opened
+	images start with a clean and sane undo state.
+
+	* app/gui/file-commands.c (file_revert_confirm_callback): removed
+	(incomplete) undo sanitizing here too.
+
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: use putenv(); setenv() isn't available

@@ -142,9 +142,17 @@ file_open_image (Gimp               *gimp,
     {
       if (gimage_id != -1)
         {
-          GimpImage *gimage;
+          GimpImage *gimage = gimp_image_get_by_ID (gimp, gimage_id);
 
-          gimage = gimp_image_get_by_ID (gimp, gimage_id);
+          /* clear all undo steps */
+          gimp_image_undo_free (gimage);
+
+          /* make sure that undo is enabled */
+          while (gimage->undo_freeze_count)
+            gimp_image_undo_thaw (gimage);
+
+          /* set the image to clean  */
+          gimp_image_clean_all (gimage);
 
           gimp_image_invalidate_layer_previews (gimage);
           gimp_image_invalidate_channel_previews (gimage);
@@ -204,19 +212,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
-      /* clear all undo steps */
-      gimp_image_undo_free (gimage);
-
-      /* make sure that undo is enabled */
-      while (gimage->undo_freeze_count)
-        gimp_image_undo_thaw (gimage);
-
-      /* set the image to clean  */
-      gimp_image_clean_all (gimage);
-
       gimp_create_display (gimage->gimp, gimage, 1.0);
-
-      g_object_unref (gimage);
 
       documents = GIMP_DOCUMENT_LIST (gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri);
@@ -229,6 +225,9 @@ file_open_with_proc_and_display (Gimp               *gimp,
           /* save a thumbnail of every opened image */
           gimp_imagefile_save_thumbnail (imagefile, gimage);
         }
+
+      /*  the display owns the image now  */
+      g_object_unref (gimage);
     }
 
   return gimage;

@@ -33,7 +33,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
 #include "core/gimptemplate.h"
 
 #include "file/file-open.h"
@@ -441,9 +440,7 @@ file_revert_confirm_callback (GtkWidget *widget,
                 contexts = g_list_prepend (contexts, list->data);
             }
 
-	  gimp_image_undo_free (new_gimage);
 	  gimp_displays_reconnect (gimp, old_gimage, new_gimage);
-	  gimp_image_clean_all (new_gimage);
           gimp_image_flush (new_gimage);
 
           /*  set the new_gimage on the remembered contexts (in reverse
