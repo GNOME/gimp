@@ -37,32 +37,27 @@
  *
  */
 
-#ifndef SOLO_COMPILE
 #include "config.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef MAZE_DEBUG
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#endif
 
-#include <gtk/gtk.h>
 #include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpui.h"
 
 #include "maze.h"
 
-extern gint      maze_dialog (void);
-static void      query  (void);
-static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
-static void      maze   (GimpDrawable     *drawable);
+#include "libgimp/stdplugins-intl.h"
+
+
+static void      query     (void);
+static void      run       (const gchar      *name,
+                            gint              nparams,
+                            const GimpParam  *param,
+                            gint             *nreturn_vals,
+                            GimpParam       **return_vals);
+
+static void      maze      (GimpDrawable     *drawable);
 
 static void      mask_maze (gint32  selection_ID,
 			    guchar *maz,
@@ -74,6 +69,9 @@ static void      mask_maze (gint32  selection_ID,
 			    gint    y2,
 			    gint    deadx,
 			    gint    deady);
+
+/* In maze_face.c */
+extern gint      maze_dialog      (void);
 
 /* In algorithms.c */
 extern void      mazegen          (gint    pos,
@@ -106,6 +104,7 @@ extern void      drawbox    (GimpPixelRgn *dest_rgn,
 			     guint         h,
 			     guint8        clr[4]);
 
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -116,22 +115,23 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 MazeValues mvals =
 {
-    /* Calling parameters */
-    5,      /* Passage width */
-    5,      /* Passage height */
-    0,     /* seed */
-    FALSE, /* Tileable? */
-    57,    /* multiple * These two had "Experiment with this?" comments */
-    1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
-    DEPTH_FIRST, /* Algorithm */
-    TRUE, /* random_seed */
+  5,           /* Passage width */
+  5,           /* Passage height */
+  0,           /* seed */
+  FALSE,       /* Tileable? */
+  57,          /* multiple * These two had "Experiment with this?" comments */
+  1,           /* offset   * in the maz.c source, so, lets expiriment.  :) */
+  DEPTH_FIRST, /* Algorithm */
+  TRUE,        /* random_seed */
 };
 
 GRand *gr;
 
 guint sel_w, sel_h;
 
-MAIN () /*;*/
+
+MAIN ()
+
 
 static void
 query ()
@@ -232,13 +232,13 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  mvals.width = (gint16)    param[3].data.d_int16;
-	  mvals.height = (gint16)   param[4].data.d_int16;
-	  mvals.tile = (gint8)      param[5].data.d_int8;
-          mvals.algorithm = (gint8) param[6].data.d_int8;
-	  mvals.seed = (guint32)    param[7].data.d_int32;
-	  mvals.multiple = (gint16) param[8].data.d_int16;
-	  mvals.offset = (gint16)   param[9].data.d_int16;
+	  mvals.width     = (gint16)  param[3].data.d_int16;
+	  mvals.height    = (gint16)  param[4].data.d_int16;
+	  mvals.tile      = (gint8)   param[5].data.d_int8;
+          mvals.algorithm = (gint8)   param[6].data.d_int8;
+	  mvals.seed      = (guint32) param[7].data.d_int32;
+	  mvals.multiple  = (gint16)  param[8].data.d_int16;
+	  mvals.offset    = (gint16)  param[9].data.d_int16;
 
           if (mvals.random_seed)
             mvals.seed = g_random_int ();

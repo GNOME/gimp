@@ -37,7 +37,7 @@
 
 
 #define BORDER_TOLERANCE 1.00 /* maximum ratio of (max % divs) to width */
-#define ENTRY_WIDTH 75
+#define ENTRY_WIDTH      75
 
 /* entscale stuff begin */
 /* FIXME: Entry-Scale stuff is probably in libgimpui by now.

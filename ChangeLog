@@ -1,5 +1,11 @@
 2004-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze_face.c: some irrelevant cleanups while doing
+	code review.
+
+2004-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/flame/flame.c: removed #undef GTK_DISABLE_DEPRECATED
 	because it's no longer needed. Cleaned up #defines and
 	declarations. Removed tabs and trailing whitespace.
