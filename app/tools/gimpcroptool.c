@@ -405,11 +405,28 @@ crop_motion (Tool           *tool,
       crop->function == RESIZING_LEFT || crop->function == RESIZING_RIGHT)
     {
       gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
-      g_snprintf (size, STATUSBAR_SIZE, _("Crop: %d x %d"), 
-		  (crop->tx2 - crop->tx1), (crop->ty2 - crop->ty1));
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, size);
+      if (gdisp->dot_for_dot)
+	{
+	  g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		      _("Crop: "), 
+		      (crop->tx2 - crop->tx1), " x ", (crop->ty2 - crop->ty1));
+	}
+      else /* show real world units */
+	{
+	  float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+	  
+	  g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		      _("Crop: "), 
+		      (float)(crop->tx2 - crop->tx1) * unit_factor /
+		      gdisp->gimage->xresolution,
+		      " x ",
+		      (float)(crop->ty2 - crop->ty1) * unit_factor /
+		      gdisp->gimage->yresolution);
+	}
+      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id,
+			  size);
     }
-
+  
   draw_core_resume (crop->core, tool);
 }
 

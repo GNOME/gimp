@@ -1,3 +1,19 @@
+Wed Mar  3 18:38:31 MET 1999 Sven Neumann <sven@gimp.org>
+
+	More unit/resolution stuff (most of it from Michael).
+	
+	* app/gimpimage.c: use defaults from gimprc
+
+	* app/gdisplay.c: a new format_string for coordinates
+
+	* blend.c
+	* crop.c
+	* edit_selection.c
+	* rect_select.c: use the new format when displaying sizes
+	in the statusbar
+
+	* file_new_dialog.c: cleaned up the advanced/simple cases
+
 Wed Mar  3 17:59:09 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* gimprc.5.in

@@ -345,9 +345,28 @@ edit_selection_motion (Tool           *tool,
 #endif
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
-  g_snprintf (offset, STATUSBAR_SIZE, _("Move: %d, %d"), 
-	   (edit_select.x - edit_select.origx), (edit_select.y - edit_select.origy));
-  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id, offset);
+  if (gdisp->dot_for_dot)
+    {
+      g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Move: "),
+		  (edit_select.x - edit_select.origx),
+		  ", ",
+		  (edit_select.y - edit_select.origy));
+    }
+  else /* show real world units */
+    {
+      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+      g_snprintf (offset, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Move: "), 
+		  (edit_select.x - edit_select.origx) * unit_factor /
+		  gdisp->gimage->xresolution,
+		  ", ",
+		  (edit_select.y - edit_select.origy) * unit_factor /
+		  gdisp->gimage->yresolution);
+    }
+  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id,
+		      offset);
 
   draw_core_resume (edit_select.core, tool);
 }

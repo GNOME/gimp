@@ -605,8 +605,25 @@ rect_select_motion (Tool           *tool,
     }
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
-  g_snprintf (size, STATUSBAR_SIZE, _("Selection: %d x %d"), abs(rect_sel->w), abs(rect_sel->h));
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, size);
+  if (gdisp->dot_for_dot)
+    {
+      g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Selection: "), abs(rect_sel->w), " x ", abs(rect_sel->h));
+    }
+  else /* show real world units */
+    {
+      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+      g_snprintf (size, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Selection: "),
+		  (float)abs(rect_sel->w) * unit_factor /
+		  gdisp->gimage->xresolution,
+		  " x ",
+		  (float)abs(rect_sel->h) * unit_factor /
+		  gdisp->gimage->yresolution);
+    }
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id,
+		      size);
 
   draw_core_resume (rect_sel->core, tool);
 }

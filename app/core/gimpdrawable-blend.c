@@ -711,10 +711,28 @@ blend_motion (Tool           *tool,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
-  g_snprintf (vector, STATUSBAR_SIZE, _("Blend: %d, %d"), 
-	      abs(blend_tool->endx - blend_tool->startx), 
-	      abs(blend_tool->endy - blend_tool->starty));
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, vector);
+  if (gdisp->dot_for_dot)
+    {
+      g_snprintf (vector, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Blend: "),
+		  abs(blend_tool->endx - blend_tool->startx),
+		  ", ",
+		  abs(blend_tool->endy - blend_tool->starty));
+    }
+  else /* show real world units */
+    {
+      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+      g_snprintf (vector, STATUSBAR_SIZE, gdisp->cursor_format_str,
+		  _("Blend: "),
+		  abs(blend_tool->endx - blend_tool->startx) * unit_factor /
+		  gdisp->gimage->xresolution,
+		  ", ",
+		  abs(blend_tool->endy - blend_tool->starty) * unit_factor /
+		  gdisp->gimage->yresolution);
+    }
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id,
+		      vector);
 
   /*  redraw the current tool  */
   draw_core_resume (blend_tool->core, tool);

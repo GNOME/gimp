@@ -264,7 +264,6 @@ file_new_cmd_callback (GtkWidget           *widget,
   GtkWidget *frame;
   GtkWidget *radio_box;
   gboolean   advanced_options = FALSE;
-  GtkWidget *advanced_button;
   GSList *group;
 
   if(!new_dialog_run)
@@ -312,7 +311,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->res_unit = last_res_unit;
     }
 
-  if (vals->xresolution != vals->yresolution)
+  if (ABS (vals->xresolution - vals->yresolution) > 1e-5)
     advanced_options = TRUE;
 
   if (vals->type == INDEXED)
@@ -419,8 +418,6 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_signal_connect (GTK_OBJECT (vals->simple_res), "value_changed",
 		      (GtkSignalFunc)file_new_resolution_callback, vals);
   gtk_box_pack_start (GTK_BOX (vbox2), vals->simple_res, TRUE, TRUE, 0);
-  if (!advanced_options)
-    gtk_widget_show (vals->simple_res);
 
   /* the advanced resolution stuff
      (not shown by default, but used to keep track of all the variables) */
@@ -444,7 +441,8 @@ file_new_cmd_callback (GtkWidget           *widget,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
 				_("pixels per "), 2, 3, 0.0);
   vals->couple_resolutions = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (vals->couple_resolutions), TRUE);
+  if (ABS (vals->xresolution - vals->yresolution) < 1e-5)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (vals->couple_resolutions), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (vals->resolution_sizeentry), 
 			     vals->couple_resolutions, 1, 3, 3, 4);
   gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "value_changed",
@@ -453,28 +451,19 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc)file_new_resolution_callback, vals);
   gtk_box_pack_start (GTK_BOX (vbox2), vals->resolution_sizeentry,
 		      TRUE, TRUE, 0);
-  if (advanced_options)
+  if (advanced_options != FALSE)
     {
       gtk_widget_show (vals->resolution_sizeentry);
       gtk_widget_show (vals->couple_resolutions);
+    } else {
+      gtk_widget_show (vals->simple_res);
+      button = gtk_button_new_with_label (_("Advanced options >>"));
+      gtk_box_pack_start (GTK_BOX (vbox2), button,
+			  FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			  (GtkSignalFunc)file_new_advanced_res_callback, vals);
+      gtk_widget_show (button);
     }
-
-  /* This code is commented out since it seems to be overkill...
-   * vals->change_size = gtk_check_button_new_with_label (_("Change image size with resolution changes"));
-   * gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vals->change_size), TRUE);
-   * gtk_box_pack_start (GTK_BOX (vbox2), vals->change_size, TRUE, TRUE, 0);
-   * gtk_widget_show (vals->change_size);
-  */
-
-  if (advanced_options)
-    advanced_button = gtk_button_new_with_label (_("Advanced options <<"));
-  else
-    advanced_button = gtk_button_new_with_label (_("Advanced options >>"));
-  gtk_box_pack_start (GTK_BOX (vbox2), advanced_button,
-		      FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (advanced_button), "clicked",
-		      (GtkSignalFunc)file_new_advanced_res_callback, vals);
-  gtk_widget_show (advanced_button);
 
   /* hbox containing the Image type and fill type frames */
   hbox = gtk_hbox_new(FALSE, 1);

@@ -31,6 +31,7 @@
 #include "undo.h"
 #include "gimpsignal.h"
 #include "gimpparasite.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -168,9 +169,9 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview = NULL;
   gimage->parasites = parasite_list_new();
   gimp_matrix_identity(gimage->transform);
-  gimage->xresolution = 72.0;  /* maybe should be rc-supplied default? */
-  gimage->yresolution = 72.0;
-  gimage->unit = UNIT_PIXEL;
+  gimage->xresolution = default_xresolution;
+  gimage->yresolution = default_yresolution;
+  gimage->unit = default_units;
   gimage->save_proc= NULL;
 }
 

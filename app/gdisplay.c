@@ -1015,7 +1015,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	  if (gdisp->dot_for_dot)
 	    {
 	      g_snprintf (buffer, CURSOR_STR_LENGTH, 
-			  gdisp->cursor_format_str, t_x, t_y);
+			  gdisp->cursor_format_str, "", t_x, ", ", t_y);
 	    }
 	  else /* show real world units */
 	    {
@@ -1023,9 +1023,10 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 
 	      g_snprintf (buffer, CURSOR_STR_LENGTH,
 			  gdisp->cursor_format_str,
+			  "",
 			  (float)t_x * unit_factor / gdisp->gimage->xresolution,
-			  (float)t_y * unit_factor / gdisp->gimage->yresolution,
-			  gimp_unit_get_symbol (gdisp->gimage->unit));
+			  ", ",
+			  (float)t_y * unit_factor / gdisp->gimage->yresolution);
 	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
 	}
@@ -1064,25 +1065,27 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   if (gdisp->dot_for_dot)
     {
       g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
-		  "%%d, %%d");
+		  "%%s%%d%%s%%d");
       g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
-		  gdisp->gimage->width, gdisp->gimage->height);
+		  "", gdisp->gimage->width, ", ", gdisp->gimage->height);
     }
   else /* show real world units */
     {
       float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
       g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
-		  "%%.%df, %%.%df %%s",
+		  "%%s%%.%df%%s%%.%df %s",
 		  gimp_unit_get_digits (gdisp->gimage->unit),
-		  gimp_unit_get_digits (gdisp->gimage->unit));
+		  gimp_unit_get_digits (gdisp->gimage->unit),
+		  gimp_unit_get_symbol (gdisp->gimage->unit));
 
       g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
+		  "",
 		  (float)gdisp->gimage->width * unit_factor /
 		  gdisp->gimage->xresolution,
+		  ", ",
 		  (float)gdisp->gimage->height * unit_factor /
-		  gdisp->gimage->yresolution,
-		  gimp_unit_get_symbol (gdisp->gimage->unit));
+		  gdisp->gimage->yresolution);
     }
   cursor_label_width = 
     gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
