@@ -1,3 +1,7 @@
+Sun Jan 25 00:12:15 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* added plug-ins/script-fu-scripts/chip-away.scm
+
 Sat Jan 24 18:16:35 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* applied Sven's menu patch
