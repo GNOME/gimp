@@ -1,3 +1,7 @@
+2000-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.c: define WAIT_ANY == -1 if it's undefined.
+
 2000-05-10  Michael Natterer  <mitch@gimp.org>
 
 	Another try to get the signal/dead child recovery stuff right.

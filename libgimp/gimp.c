@@ -26,18 +26,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #endif
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
+
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#ifndef WAIT_ANY
+#define WAIT_ANY -1
+#endif
+
 #ifndef G_OS_WIN32
 #include "gimpsignal.h"
 #else
