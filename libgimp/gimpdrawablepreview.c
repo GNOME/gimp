@@ -34,9 +34,16 @@
 
 #define SELECTION_BORDER  2
 
+typedef struct
+{
+  gint     x, y;
+  gboolean update;
+} PreviewSettings;
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
 static void  gimp_drawable_preview_init          (GimpDrawablePreview *preview);
+
+static void  gimp_drawable_preview_destroy       (GtkObject           *object);
 
 static void  gimp_drawable_preview_style_set     (GtkWidget           *widget,
                                                   GtkStyle            *prev_style);
@@ -85,10 +92,13 @@ gimp_drawable_preview_get_type (void)
 static void
 gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 {
+  GtkObjectClass   *object_class  = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->destroy      = gimp_drawable_preview_destroy;
 
   widget_class->style_set    = gimp_drawable_preview_style_set;
 
@@ -104,6 +114,23 @@ gimp_drawable_preview_init (GimpDrawablePreview *preview)
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
                 NULL);
+}
+
+static void
+gimp_drawable_preview_destroy (GtkObject *object)
+{
+  GimpPreview     *preview = GIMP_PREVIEW (object);
+  PreviewSettings  settings;
+  gchar           *data_name;
+
+  settings.x = preview->xoff + preview->xmin;
+  settings.y = preview->yoff + preview->ymin;
+
+  data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
+  gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
+  g_free (data_name);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -354,6 +381,8 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
                            gboolean     *toggle)
 {
   GimpDrawablePreview *preview;
+  gchar               *data_name;
+  PreviewSettings      settings;
 
   g_return_val_if_fail (drawable != NULL, NULL);
 
@@ -369,6 +398,14 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
     }
 
   gimp_drawable_preview_set_drawable (preview, drawable);
+
+  data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
+  if (gimp_get_data (data_name, &settings))
+    {
+      gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (preview),
+                                          settings.x, settings.y);
+    }
+  g_free (data_name);
 
   return GTK_WIDGET (preview);
 }

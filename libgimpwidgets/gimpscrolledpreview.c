@@ -247,6 +247,9 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       adj->page_size      = GIMP_PREVIEW (preview)->width;
       adj->step_increment = 1.0;
       adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
+      adj->value          = CLAMP (adj->value,
+                                   adj->lower,
+                                   adj->upper - adj->page_size);
 
       gtk_adjustment_changed (adj);
 
@@ -268,6 +271,10 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       adj->page_size      = GIMP_PREVIEW (preview)->height;
       adj->step_increment = 1.0;
       adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
+      adj->value          = CLAMP (adj->value,
+                                   adj->lower,
+                                   adj->upper - adj->page_size);
+
 
       gtk_adjustment_changed (adj);
 
@@ -629,4 +636,34 @@ gimp_scrolled_preview_set_cursor (GimpPreview *preview)
     {
       gdk_window_set_cursor (preview->area->window, preview->default_cursor);
     }
+}
+
+/**
+ * gimp_scrolled_preview_set_position:
+ * @scr: a #GimpScrolledPreview
+ * @x:
+ * @y:
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_scrolled_preview_set_position (GimpScrolledPreview *scr,
+                                    gint                 x,
+                                    gint                 y)
+{
+  GtkAdjustment *adj;
+  GimpPreview   *preview = GIMP_PREVIEW (scr);
+
+  preview->xoff = CLAMP (x - preview->xmin,
+                         0, preview->xmax - preview->xmin - preview->width);
+  preview->yoff = CLAMP (y - preview->ymin,
+                         0, preview->ymax - preview->ymin - preview->height);
+
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
+                                 preview->xoff, preview->yoff);
+
+  adj = gtk_range_get_adjustment (GTK_RANGE (scr->hscr));
+  adj->value = preview->xoff;
+  adj = gtk_range_get_adjustment (GTK_RANGE (scr->vscr));
+  adj->value = preview->yoff;
 }

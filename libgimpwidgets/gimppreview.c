@@ -571,10 +571,10 @@ gimp_preview_get_position (GimpPreview *preview,
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
 
   if (x)
-    *x = preview->xoff + GIMP_PREVIEW (preview)->xmin;
+    *x = preview->xoff + preview->xmin;
 
   if (y)
-    *y = preview->yoff + GIMP_PREVIEW (preview)->ymin;
+    *y = preview->yoff + preview->ymin;
 }
 
 /**

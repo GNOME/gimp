@@ -1,3 +1,22 @@
+2005-01-05  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.[ch]: new function:
+	gimp_scrolled_preview_set_position () to set the position of the
+	preview content wrt the drawable.  This function might be moved to a
+	virtual function of GimpPreview in a near future.
+
+	* libgimp/gimpdrawablepreview.c: use this function, so a preview
+	remembers its position from one invocation to the next.  This is done
+	using the current executable name as a key for gimp_set/get_data () so
+	each plug-in can have its preview on a different place.
+
+	More informations could be saved this way: the update toggle, the
+	checks, etc.
+
+	Addresses bug #162286.
+
+	* libgimpwidgets/gimppreview.c: smallish cleanup.
+
 2005-01-04  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* configure.in: add check for libexif version >= 0.6.0,
