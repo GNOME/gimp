@@ -1,5 +1,18 @@
 2000-03-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/iscissors.c: Iscissors was using rect_select_cursor_update
+	which is totally wrong since the oper_update_func tool method was
+	introduced (in fact it didn't even give correct feedback before).
+
+	Added oper_update_func, modifier_key_func, cursor_update_func for
+	Iscissors which give correct cursor_update feedback now. The only
+	remaining inconsistency occurs when a curve is closed: There's no
+	way to find out if the mouse is over a control point/line or
+	outside (without touching the Iscissors engine, which I didn't
+	want to do because I don't understand how it works ;-).
+
+2000-03-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/channel_ops.c: s/"Fill Options"/"Fill Type"/
 
 	* app/gimpparasite.c: removed _() around the parasiterc header.

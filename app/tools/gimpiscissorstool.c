@@ -36,9 +36,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "draw_core.h"
 #include "channel_pvt.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -47,7 +50,6 @@
 #include "iscissors.h"
 #include "edit_selection.h"
 #include "paint_funcs.h"
-#include "rect_select.h"
 #include "selection_options.h"
 #include "temp_buf.h"
 #include "tools.h"
@@ -77,7 +79,8 @@ struct _ICurve
 };
 
 /*  The possible states...  */
-typedef enum {
+typedef enum
+{
   NO_ACTION,
   SEED_PLACEMENT,
   SEED_ADJUSTMENT,
@@ -85,7 +88,8 @@ typedef enum {
 } Iscissors_state;
 
 /*  The possible drawing states...  */
-typedef enum {
+typedef enum
+{
   DRAW_NOTHING      = 0x0,
   DRAW_CURRENT_SEED = 0x1,
   DRAW_CURVE        = 0x2,
@@ -97,18 +101,20 @@ typedef struct _iscissors Iscissors;
 
 struct _iscissors
 {
-  DrawCore *      core;         /*  Core select object               */
+  DrawCore       *core;         /*  Core select object               */
 
-  int             x, y;         /*  upper left hand coordinate       */
-  int             ix, iy;       /*  initial coordinates              */
-  int             nx, ny;       /*  new coordinates                  */
+  SelectOps       op;
 
-  TempBuf *       dp_buf;       /*  dynamic programming buffer              */
+  gint            x, y;         /*  upper left hand coordinate       */
+  gint            ix, iy;       /*  initial coordinates              */
+  gint            nx, ny;       /*  new coordinates                  */
 
-  ICurve *        curve1;       /*  1st curve connected to current point    */
-  ICurve *        curve2;       /*  2nd curve connected to current point    */
+  TempBuf        *dp_buf;       /*  dynamic programming buffer              */
 
-  GSList *        curves;       /*  the list of curves                      */
+  ICurve         *curve1;       /*  1st curve connected to current point    */
+  ICurve         *curve2;       /*  2nd curve connected to current point    */
+
+  GSList         *curves;       /*  the list of curves                      */
 
   gboolean        first_point;  /*  is this the first point?                */
   gboolean        connected;    /*  is the region closed?                   */
@@ -117,8 +123,8 @@ struct _iscissors
   Iscissors_draw  draw;         /*  items to draw on a draw request         */
 
   /* XXX might be useful */
-  Channel *       mask;         /*  selection mask                   */
-  TileManager *   gradient_map; /*  lazily filled gradient map */
+  Channel        *mask;         /*  selection mask                   */
+  TileManager    *gradient_map; /*  lazily filled gradient map */
 };
 
 typedef struct _IScissorsOptions IScissorsOptions;
@@ -203,23 +209,23 @@ static GdkPoint    curve_points [MAX_POINTS];
 
 
 /*  temporary convolution buffers --  */
-D(static unsigned int sent0 = 0xd0d0d0d0);
-static unsigned char  maxgrad_conv0 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static unsigned int sent1 = 0xd1d1d1d1);
-static unsigned char  maxgrad_conv1 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static unsigned int sent2 = 0xd2d2d2d2);
-static unsigned char  maxgrad_conv2 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
-D(static unsigned int sent3 = 0xd3d3d3d3);
+D(static guint sent0 = 0xd0d0d0d0);
+static guchar  maxgrad_conv0 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static guint sent1 = 0xd1d1d1d1);
+static guchar  maxgrad_conv1 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static guint sent2 = 0xd2d2d2d2);
+static guchar  maxgrad_conv2 [TILE_WIDTH * TILE_HEIGHT * 4] = "";
+D(static guint sent3 = 0xd3d3d3d3);
 
 
-static int  horz_deriv [9] =
+static gint horz_deriv [9] =
 {
   1, 0, -1,
   2, 0, -2,
   1, 0, -1,
 };
 
-static int  vert_deriv [9] =
+static gint vert_deriv [9] =
 {
   1, 2, 1,
   0, 0, 0,
@@ -228,7 +234,7 @@ static int  vert_deriv [9] =
 
 
 #ifdef USE_LAPLACIAN
-static int  laplacian [9] = 
+static gint  laplacian [9] = 
 {
   -1, -1, -1,
   -1, 8, -1,
@@ -236,18 +242,18 @@ static int  laplacian [9] =
 };
 #endif
 
-static int blur_32 [9] = 
+static gint blur_32 [9] = 
 {
   1, 1, 1,
   1, 24, 1,
   1, 1, 1,
 };
 
-static float distance_weights [GRADIENT_SEARCH * GRADIENT_SEARCH];
+static gfloat    distance_weights [GRADIENT_SEARCH * GRADIENT_SEARCH];
 
-static int      diagonal_weight [256];
-static int      direction_value [256][4];
-static gboolean initialized = FALSE;
+static gint      diagonal_weight [256];
+static gint      direction_value [256][4];
+static gboolean  initialized = FALSE;
 static Tile     *cur_tile = NULL;
 
 
@@ -263,26 +269,46 @@ static IScissorsOptions *iscissors_options = NULL;
 static void   iscissors_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_button_release  (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_motion          (Tool *, GdkEventMotion *, gpointer);
+static void   iscissors_oper_update     (Tool *, GdkEventMotion *, gpointer);
+static void   iscissors_modifier_update (Tool *, GdkEventKey *,    gpointer);
+static void   iscissors_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 static void   iscissors_control         (Tool *, ToolAction, gpointer);
-static void   iscissors_reset           (Iscissors *);
-static void   iscissors_draw            (Tool *);
 
-static TileManager *gradient_map_new    (GImage *gimage);
+static void   iscissors_reset           (Iscissors *iscissors);
+static void   iscissors_draw            (Tool      *tool);
 
-static void   find_optimal_path         (TileManager *, TempBuf *, int, int,
-					 int, int, int, int);
-static void   find_max_gradient         (Iscissors *, GImage *, int *, int *);
-static void   calculate_curve           (Tool *, ICurve *);
-static void   iscissors_draw_curve      (GDisplay *, Iscissors *, ICurve *);
-static void   iscissors_free_icurves    (GSList *);
-static void   iscissors_free_buffers    (Iscissors *);
-static int    clicked_on_vertex         (Tool *);
-static int    clicked_on_curve          (Tool *);
-static void   precalculate_arrays       (void);
-static GPtrArray *plot_pixels              (Iscissors *, TempBuf *,
-					    int, int, int, int, int, int);
+static TileManager * gradient_map_new          (GImage      *gimage);
 
-
+static void          find_optimal_path         (TileManager *gradient_map,
+						TempBuf     *dp_buf,
+						gint         x1,
+						gint         y1,
+						gint         x2,
+						gint         y2,
+						gint         xs,
+						gint         ys);
+static void          find_max_gradient         (Iscissors   *iscissors,
+						GImage      *gimage,
+						gint        *x,
+						gint        *y);
+static void          calculate_curve           (Tool        *tool,
+						ICurve      *curve);
+static void          iscissors_draw_curve      (GDisplay    *gdisp,
+						Iscissors   *iscissors,
+						ICurve      *curve);
+static void          iscissors_free_icurves    (GSList      *list);
+static void          iscissors_free_buffers    (Iscissors   *iscissors);
+static gint          clicked_on_vertex         (Tool        *tool);
+static gint          clicked_on_curve          (Tool        *tool);
+static void          precalculate_arrays       (void);
+static GPtrArray   * plot_pixels               (Iscissors   *iscissors,
+						TempBuf     *dp_buf,
+						gint         x1,
+						gint         y1,
+						gint         xs,
+						gint         ys,
+						gint         xe,
+						gint         ye);
 
 static void
 iscissors_options_reset (void)
@@ -322,21 +348,24 @@ tools_new_iscissors (void)
   private = g_new (Iscissors, 1);
 
   private->core = draw_core_new (iscissors_draw);
-  private->curves = NULL;
-  private->dp_buf = NULL;
-  private->state = NO_ACTION;
-  private->mask = NULL;
+  private->op           = -1;
+  private->curves       = NULL;
+  private->dp_buf       = NULL;
+  private->state        = NO_ACTION;
+  private->mask         = NULL;
   private->gradient_map = NULL;
 
   tool->auto_snap_to = FALSE;   /*  Don't snap to guides   */
 
   tool->private = (void *) private;
   
-  tool->button_press_func   = iscissors_button_press;
-  tool->button_release_func = iscissors_button_release;
-  tool->motion_func         = iscissors_motion;
-  tool->cursor_update_func  = rect_select_cursor_update;
-  tool->control_func        = iscissors_control;
+  tool->button_press_func    = iscissors_button_press;
+  tool->button_release_func  = iscissors_button_release;
+  tool->motion_func          = iscissors_motion;
+  tool->oper_update_func     = iscissors_oper_update;
+  tool->modifier_key_func    = iscissors_modifier_update;
+  tool->cursor_update_func   = iscissors_cursor_update;
+  tool->control_func         = iscissors_control;
 
   iscissors_reset (private);
 
@@ -372,11 +401,10 @@ iscissors_button_press (Tool           *tool,
 			GdkEventButton *bevent,
 			gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
   GimpDrawable *drawable;
-  Iscissors *iscissors;
-  int grab_pointer = 0;
-  int replace, op;
+  Iscissors    *iscissors;
+  gboolean      grab_pointer = FALSE;
 
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
@@ -399,25 +427,28 @@ iscissors_button_press (Tool           *tool,
 
   switch (iscissors->state)
     {
-    case NO_ACTION :
+    case NO_ACTION:
 #if 0
       /* XXX what's this supposed to do? */
       if (!(bevent->state & GDK_SHIFT_MASK) &&
 	  !(bevent->state & GDK_CONTROL_MASK))
-	if (selection_point_inside (gdisp->select, gdisp_ptr, bevent->x, bevent->y))
+	if (selection_point_inside (gdisp->select, gdisp_ptr,
+				    bevent->x, bevent->y))
 	  {
-	    init_edit_selection (tool, gdisp->select, gdisp_ptr, bevent->x, bevent->y);
+	    init_edit_selection (tool, gdisp->select, gdisp_ptr,
+				 bevent->x, bevent->y);
 	    return;
 	  }
 #endif
 
       iscissors->state = SEED_PLACEMENT;
       iscissors->draw = DRAW_CURRENT_SEED;
-      grab_pointer = 1;
+      grab_pointer = TRUE;
 
       if (! (bevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
+
       iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
       iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
@@ -428,7 +459,7 @@ iscissors_button_press (Tool           *tool,
       draw_core_start (iscissors->core, gdisp->canvas->window, tool);
       break;
 
-    default :
+    default:
       /*  Check if the mouse click occured on a vertex or the curve itself  */
       if (clicked_on_vertex (tool))
 	{
@@ -437,31 +468,18 @@ iscissors_button_press (Tool           *tool,
 	  iscissors->state = SEED_ADJUSTMENT;
 	  iscissors->draw = DRAW_ACTIVE_CURVE;
 	  draw_core_resume (iscissors->core, tool);
-	  grab_pointer = 1;
+	  grab_pointer = TRUE;
 	}
-
       /*  If the iscissors is connected, check if the click was inside  */
       else if (iscissors->connected && iscissors->mask &&
 	       channel_value (iscissors->mask, iscissors->x, iscissors->y))
-	       
 	{
 	  /*  Undraw the curve  */
 	  tool->state = INACTIVE;
 	  iscissors->draw = DRAW_CURVE;
 	  draw_core_stop (iscissors->core, tool);
 
-	  replace = 0;
-	  if (bevent->state & GDK_SHIFT_MASK)
-	    op = ADD;
-	  else if (bevent->state & GDK_CONTROL_MASK)
-	    op = SUB;
-	  else
-	    {
-	      op = ADD;
-	      replace = 1;
-	    }
-
-	  if (replace)
+	  if (iscissors->op == SELECTION_REPLACE)
 	    gimage_mask_clear (gdisp->gimage);
 	  else
 	    gimage_mask_undo (gdisp->gimage);
@@ -471,28 +489,25 @@ iscissors_button_press (Tool           *tool,
 			     gimage_get_mask (gdisp->gimage),
 			     ((SelectionOptions *) iscissors_options)->feather_radius,
 			     ((SelectionOptions *) iscissors_options)->feather_radius,
-			     op, 0, 0);
+			     iscissors->op, 0, 0);
 	  else
 	    channel_combine_mask (gimage_get_mask (gdisp->gimage),
-				  iscissors->mask, op, 0, 0);
+				  iscissors->mask, iscissors->op, 0, 0);
 
 	  iscissors_reset (iscissors);
-	  
-	  selection_start (gdisp->select, TRUE);
 
+	  gdisplays_flush ();
 	}
-
       /*  if we're not connected, we're adding a new point  */
       else if (!iscissors->connected)
 	{
 	  iscissors->state = SEED_PLACEMENT;
 	  iscissors->draw = DRAW_CURRENT_SEED;
-	  grab_pointer = 1;
+	  grab_pointer = TRUE;
 	  
 	  draw_core_resume (iscissors->core, tool);
 	}
       break;
-
     }
 
   if (grab_pointer)
@@ -505,51 +520,51 @@ iscissors_button_press (Tool           *tool,
 
 
 static void
-iscissors_convert (Iscissors *iscissors, gpointer gdisp_ptr)
+iscissors_convert (Iscissors *iscissors,
+		   gpointer   gdisp_ptr)
 {
-    GDisplay *gdisp = (GDisplay *) gdisp_ptr;
-    ScanConverter *sc;
-    ScanConvertPoint *pts;
-    guint npts;
-    GSList *list;
-    ICurve *icurve;
-    guint packed;
-    int i;
-    int index;
+  GDisplay *gdisp = (GDisplay *) gdisp_ptr;
+  ScanConverter    *sc;
+  ScanConvertPoint *pts;
+  guint   npts;
+  GSList *list;
+  ICurve *icurve;
+  guint   packed;
+  gint    i;
+  gint    index;
 
-    sc = scan_converter_new (gdisp->gimage->width, gdisp->gimage->height, 1);
+  sc = scan_converter_new (gdisp->gimage->width, gdisp->gimage->height, 1);
 
-    /* go over the curves in reverse order, adding the points we have */
-    list = iscissors->curves;
-    index = g_slist_length (list);
-    while (index)
+  /* go over the curves in reverse order, adding the points we have */
+  list = iscissors->curves;
+  index = g_slist_length (list);
+  while (index)
     {
-	index--;
+      index--;
 
-	icurve = (ICurve *) g_slist_nth_data (list, index);
+      icurve = (ICurve *) g_slist_nth_data (list, index);
 
-	npts = icurve->points->len;
-	pts = g_new (ScanConvertPoint, npts);
+      npts = icurve->points->len;
+      pts = g_new (ScanConvertPoint, npts);
 
-	for (i=0; i < npts; i ++)
+      for (i = 0; i < npts; i ++)
 	{
-	    packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points, i));
-	    pts[i].x = packed & 0x0000ffff;
-	    pts[i].y = packed >> 16;
+	  packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points, i));
+	  pts[i].x = packed & 0x0000ffff;
+	  pts[i].y = packed >> 16;
 	}
 
-	scan_converter_add_points (sc, npts, pts);
-	g_free (pts);
+      scan_converter_add_points (sc, npts, pts);
+      g_free (pts);
     }
 
-    if (iscissors->mask)
-	channel_delete (iscissors->mask);
-    iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
-    scan_converter_free (sc);
+  if (iscissors->mask)
+    channel_delete (iscissors->mask);
+  iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
+  scan_converter_free (sc);
 
-    channel_invalidate_bounds (iscissors->mask);    
+  channel_invalidate_bounds (iscissors->mask);    
 }
-
 
 
 static void
@@ -558,8 +573,8 @@ iscissors_button_release (Tool           *tool,
 			  gpointer        gdisp_ptr)
 {
   Iscissors *iscissors;
-  GDisplay *gdisp;
-  ICurve *curve;
+  GDisplay  *gdisp;
+  ICurve    *curve;
 
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
@@ -577,15 +592,16 @@ iscissors_button_release (Tool           *tool,
   /*  Undraw everything  */
   switch (iscissors->state)
     {
-    case SEED_PLACEMENT :
+    case SEED_PLACEMENT:
       iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
       break;
-    case SEED_ADJUSTMENT :
+    case SEED_ADJUSTMENT:
       iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
       break;
     default:
       break;
     }
+
   draw_core_stop (iscissors->core, tool);
 
   /*  First take care of the case where the user "cancels" the action  */
@@ -594,7 +610,7 @@ iscissors_button_release (Tool           *tool,
       /*  Progress to the next stage of intelligent selection  */
       switch (iscissors->state)
 	{
-	case SEED_PLACEMENT :
+	case SEED_PLACEMENT:
 	  /*  Add a new icurve  */
 	  if (!iscissors->first_point)
 	    {
@@ -615,7 +631,7 @@ iscissors_button_release (Tool           *tool,
 	      if (iscissors->ix != iscissors->x ||
 		  iscissors->iy != iscissors->y)
 		{
-		  curve = g_malloc (sizeof (ICurve));
+		  curve = g_new (ICurve, 1);
 
 		  curve->x1 = iscissors->ix;
 		  curve->y1 = iscissors->iy;
@@ -635,7 +651,7 @@ iscissors_button_release (Tool           *tool,
 	    }
 	  break;
 
-	case SEED_ADJUSTMENT :
+	case SEED_ADJUSTMENT:
 	  /*  recalculate both curves  */
 	  if (iscissors->curve1)
 	    {
@@ -694,11 +710,12 @@ iscissors_motion (Tool           *tool,
   
   switch (iscissors->state)
     {
-    case SEED_PLACEMENT :
+    case SEED_PLACEMENT:
       /*  Hold the shift key down to disable the auto-edge snap feature  */
       if (! (mevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
+
       iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
       iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
@@ -709,11 +726,12 @@ iscissors_motion (Tool           *tool,
 	}
       break;
 
-    case SEED_ADJUSTMENT :
+    case SEED_ADJUSTMENT:
       /*  Move the current seed to the location of the cursor  */
       if (! (mevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
+
       iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
       iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
@@ -721,7 +739,7 @@ iscissors_motion (Tool           *tool,
       iscissors->ny = iscissors->y;
       break;
 
-    default :
+    default:
       break;
     }
 
@@ -750,8 +768,8 @@ iscissors_draw (Tool *tool)
   /*  Draw the crosshairs target if we're placing a seed  */
   if (iscissors->draw & DRAW_CURRENT_SEED)
     {
-      gdisplay_transform_coords(gdisp, iscissors->x, iscissors->y, &tx2, &ty2,
-				FALSE);
+      gdisplay_transform_coords (gdisp, iscissors->x, iscissors->y, &tx2, &ty2,
+				 FALSE);
 
       gdk_draw_line (iscissors->core->win, iscissors->core->gc, 
 		     tx2 - (TARGET_WIDTH >> 1), ty2,
@@ -819,7 +837,6 @@ iscissors_draw (Tool *tool)
       gdk_draw_arc (iscissors->core->win, iscissors->core->gc, 1,
 		    txn - POINT_HALFWIDTH, tyn - POINT_HALFWIDTH, 
 		    POINT_WIDTH, POINT_WIDTH, 0, 23040);
-
     }
 }
 
@@ -830,10 +847,10 @@ iscissors_draw_curve (GDisplay  *gdisp,
 		      ICurve    *curve)
 {
   gpointer *point;
-  guint len;
-  int tx, ty;
-  int npts;
-  guint32 coords;
+  guint     len;
+  gint      tx, ty;
+  gint      npts;
+  guint32   coords;
 
   /* Uh, this shouldn't happen, but it does.  So we ignore it.
    * Quality code, baby. */
@@ -844,7 +861,7 @@ iscissors_draw_curve (GDisplay  *gdisp,
   point = curve->points->pdata;
   len = curve->points->len;
   while (len--)
-  {
+    {
       coords = GPOINTER_TO_INT (*point);
       point++;
       gdisplay_transform_coords (gdisp, (coords & 0x0000ffff), 
@@ -861,12 +878,141 @@ iscissors_draw_curve (GDisplay  *gdisp,
 	  return;
 	}
     }
-  
+
   /*  draw the curve */
   gdk_draw_lines (iscissors->core->win, iscissors->core->gc,
 		  curve_points, npts);
 }
 
+static void
+iscissors_oper_update (Tool           *tool,
+		       GdkEventMotion *mevent,
+		       gpointer        gdisp_ptr)
+{
+  Iscissors *iscissors;
+  GDisplay  *gdisp;
+  gint       x, y;
+
+  iscissors = (Iscissors *) tool->private;
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &x, &y, FALSE, FALSE);
+
+  if (iscissors->connected && iscissors->mask &&
+      channel_value (iscissors->mask, x, y))
+    {
+      if (mevent->state & GDK_SHIFT_MASK &&
+	  mevent->state & GDK_CONTROL_MASK)
+	{
+	  iscissors->op = SELECTION_INTERSECT;
+	}
+      else if (mevent->state & GDK_SHIFT_MASK)
+	{
+	  iscissors->op = SELECTION_ADD;
+	}
+      else if (mevent->state & GDK_CONTROL_MASK)
+	{
+	  iscissors->op = SELECTION_SUB;
+	}
+      else
+	{
+	  iscissors->op = SELECTION_REPLACE;
+	}
+    }
+  else
+    {
+      iscissors->op = -1;
+    }
+}
+
+static void
+iscissors_modifier_update (Tool        *tool,
+			   GdkEventKey *kevent,
+			   gpointer     gdisp_ptr)
+{
+  Iscissors *iscissors;
+  SelectOps  op;
+
+  iscissors = (Iscissors *) tool->private;
+
+  op = iscissors->op;
+
+  if (op == -1)
+    return;
+
+  switch (kevent->keyval)
+    {
+    case GDK_Shift_L: case GDK_Shift_R:
+      if (op == SELECTION_REPLACE)
+	op = SELECTION_ADD;
+      else if (op == SELECTION_ADD)
+	op = SELECTION_REPLACE;
+      else if (op == SELECTION_SUB)
+	op = SELECTION_INTERSECT;
+      else
+	op = SELECTION_SUB;
+      break;
+
+    case GDK_Control_L: case GDK_Control_R:
+      if (op == SELECTION_REPLACE)
+	op = SELECTION_SUB;
+      else if (op == SELECTION_ADD)
+	op = SELECTION_INTERSECT;
+      else if (op == SELECTION_SUB)
+	op = SELECTION_REPLACE;
+      else
+	op = SELECTION_ADD;
+      break;
+    }
+
+  iscissors->op = op;
+}
+
+static void
+iscissors_cursor_update (Tool           *tool,
+			 GdkEventMotion *mevent,
+			 gpointer        gdisp_ptr)
+{
+  Iscissors *iscissors;
+  GDisplay *gdisp;
+
+  iscissors = (Iscissors *) tool->private;
+  gdisp = (GDisplay *) gdisp_ptr;
+
+  if (iscissors->op != -1)
+    {
+      switch (iscissors->op)
+	{
+	case SELECTION_ADD:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_ADD_CURSOR);
+	  break;
+	case SELECTION_SUB:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_SUBTRACT_CURSOR);
+	  break;
+	case SELECTION_INTERSECT:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_INTERSECT_CURSOR);
+	  break;
+	default:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_CURSOR);
+	  break;
+	}
+    }
+  else
+    {
+      switch (iscissors->state)
+	{
+	case WAITING:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
+	  break;
+	case SEED_PLACEMENT:
+	case SEED_ADJUSTMENT:
+	default:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
+	  break;
+	}
+    }
+}
 
 static void
 iscissors_control (Tool       *tool,
@@ -993,7 +1139,7 @@ iscissors_free_icurves (GSList *list)
 
 
 static void
-iscissors_free_buffers (Iscissors * iscissors)
+iscissors_free_buffers (Iscissors *iscissors)
 {
   if (iscissors->dp_buf)
     temp_buf_free (iscissors->dp_buf);
@@ -1004,8 +1150,7 @@ iscissors_free_buffers (Iscissors * iscissors)
 
 /* XXX need some scan-conversion routines from somewhere.  maybe. ? */
 
-
-static int
+static gboolean
 clicked_on_vertex (Tool *tool)
 {
   Iscissors * iscissors;
@@ -1033,14 +1178,14 @@ clicked_on_vertex (Tool *tool)
 	{
 	  iscissors->curve1 = curve;
 	  if (curves_found++)
-	    return 1;
+	    return TRUE;
 	}
       else if (abs (curve->x2 - iscissors->x) < POINT_HALFWIDTH &&
 	       abs (curve->y2 - iscissors->y) < POINT_HALFWIDTH)
 	{
 	  iscissors->curve2 = curve;
 	  if (curves_found++)
-	    return 1;
+	    return TRUE;
 	}
 
       list = g_slist_next (list);
@@ -1052,7 +1197,7 @@ clicked_on_vertex (Tool *tool)
    */
   if (curves_found == 1)
     {
-      return 0;
+      return FALSE;
     }
     
   /*  no vertices were found at the cursor click point.  Now check whether
@@ -1063,16 +1208,16 @@ clicked_on_vertex (Tool *tool)
 }
 
 
-static int
+static gboolean
 clicked_on_curve (Tool *tool)
 {
-  Iscissors * iscissors;
-  GSList *list, *new_link;
-  gpointer *pt;
-  int len;
-  ICurve * curve, * new_curve;
-  guint32 coords;
-  int tx, ty;
+  Iscissors *iscissors;
+  GSList    *list, *new_link;
+  gpointer  *pt;
+  gint       len;
+  ICurve    *curve, *new_curve;
+  guint32    coords;
+  gint       tx, ty;
 
   iscissors = (Iscissors *) tool->private;
 
@@ -1126,21 +1271,21 @@ clicked_on_curve (Tool *tool)
 	      /*  Redraw the curve  */
 	      draw_core_resume (iscissors->core, tool);
 	      
-	      return 1;
+	      return TRUE;
 	    }
 	}
 
       list = g_slist_next (list);
     }
 
-  return 0;
+  return FALSE;
 }
 
 
 static void
 precalculate_arrays (void)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 256; i++)
     {
@@ -1154,10 +1299,10 @@ precalculate_arrays (void)
       direction_value [i][3] = abs (63 - i) * 2;
 
       TRC (("i: %d, v0: %d, v1: %d, v2: %d, v3: %d\n", i,
-	      direction_value [i][0],
-	      direction_value [i][1],
-	      direction_value [i][2],
-	      direction_value [i][3]));
+	    direction_value [i][0],
+	    direction_value [i][1],
+	    direction_value [i][2],
+	    direction_value [i][3]));
     }
 
   /*  set the 256th index of the direction_values to the hightest cost  */
@@ -1168,17 +1313,17 @@ precalculate_arrays (void)
 }
 
 
-
 static void
-calculate_curve (Tool *tool, ICurve *curve)
+calculate_curve (Tool   *tool,
+		 ICurve *curve)
 {
-  GDisplay * gdisp;
-  Iscissors * iscissors;
-  int x, y, dir;
-  int xs, ys, xe, ye;
-  int x1, y1, x2, y2;
-  int width, height;
-  int ewidth, eheight;
+  GDisplay  *gdisp;
+  Iscissors *iscissors;
+  gint x, y, dir;
+  gint xs, ys, xe, ye;
+  gint x1, y1, x2, y2;
+  gint width, height;
+  gint ewidth, eheight;
 
   TRC (("calculate_curve(%p, %p)\n", tool, curve));
 
@@ -1226,11 +1371,11 @@ calculate_curve (Tool *tool, ICurve *curve)
 
   /* blow away any previous points list we might have */
   if (curve->points)
-  {
+    {
       TRC (("1229: g_ptr_array_free (curve->points);\n"));
       g_ptr_array_free (curve->points, TRUE);
       curve->points = NULL;
-  }
+    }
 
   /*  If the bounding box has width and height...  */
   if ((x2 - x1) && (y2 - y1))
@@ -1284,51 +1429,56 @@ calculate_curve (Tool *tool, ICurve *curve)
 	  x += dir;
 	}
     }
-
 }
-
 
 
 /* badly need to get a replacement - this is _way_ too expensive */
-static int
-gradient_map_value (TileManager *map, int x, int y,
-		    guint8 *grad, guint8 *dir)
+static gboolean
+gradient_map_value (TileManager *map,
+		    gint         x,
+		    gint         y,
+		    guint8      *grad,
+		    guint8      *dir)
 {
-    static int cur_tilex;
-    static int cur_tiley;
-    guint8 *p;
+  static int cur_tilex;
+  static int cur_tiley;
+  guint8 *p;
 
-    if (!cur_tile ||
-	x / TILE_WIDTH != cur_tilex ||
-	y / TILE_HEIGHT != cur_tiley)
+  if (!cur_tile ||
+      x / TILE_WIDTH != cur_tilex ||
+      y / TILE_HEIGHT != cur_tiley)
     {
-	if (cur_tile)
-	    tile_release (cur_tile, FALSE);
-	cur_tile = tile_manager_get_tile (map, x, y, TRUE, FALSE);
-	if (!cur_tile)
-	    return 0;
-	cur_tilex = x / TILE_WIDTH;
-	cur_tiley = y / TILE_HEIGHT;	
+      if (cur_tile)
+	tile_release (cur_tile, FALSE);
+      cur_tile = tile_manager_get_tile (map, x, y, TRUE, FALSE);
+      if (!cur_tile)
+	return FALSE;
+      cur_tilex = x / TILE_WIDTH;
+      cur_tiley = y / TILE_HEIGHT;	
     }
 
-    p = tile_data_pointer (cur_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-    *grad = p[0];
-    *dir  = p[1];
-    return 1;
+  p = tile_data_pointer (cur_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  *grad = p[0];
+  *dir  = p[1];
+
+  return TRUE;
 }
 
-static int
+static gint
 calculate_link (TileManager *gradient_map,
-		int x, int y, guint32 pixel, int link)
+		gint         x,
+		gint         y,
+		guint32      pixel,
+		gint         link)
 {
-  int value = 0;
+  gint value = 0;
   guint8 grad1, dir1, grad2, dir2;
 
   if (!gradient_map_value (gradient_map, x, y, &grad1, &dir1))
-  {
+    {
       grad1 = 0;
       dir1 = 255;
-  }
+    }
 
   /* Convert the gradient into a cost: large gradients are good, and
    * so have low cost. */
@@ -1344,10 +1494,10 @@ calculate_link (TileManager *gradient_map,
   x += (gint8)(pixel & 0xff);
   y += (gint8)((pixel & 0xff00) >> 8);
   if (!gradient_map_value (gradient_map, x, y, &grad2, &dir2))
-  {
+    {
       grad2 = 0;
       dir2 = 255;
-  }  
+    }  
   value += (direction_value [dir1][link] + direction_value [dir2][link]) *
     OMEGA_D;
 
@@ -1356,22 +1506,26 @@ calculate_link (TileManager *gradient_map,
 
 
 static GPtrArray *
-plot_pixels (Iscissors *iscissors, TempBuf *dp_buf,
-	     int x1, int y1,
-	     int xs, int ys,
-	     int xe, int ye)
+plot_pixels (Iscissors *iscissors,
+	     TempBuf   *dp_buf,
+	     gint       x1,
+	     gint       y1,
+	     gint       xs,
+	     gint       ys,
+	     gint       xe,
+	     gint       ye)
 {
-  int x, y;
-  guint32 coords;
-  int link;
-  int width;
-  unsigned int * data;
+  gint       x, y;
+  guint32    coords;
+  gint       link;
+  gint       width;
+  guint     *data;
   GPtrArray *list;
 
   width = dp_buf->width;
 
   /*  Start the data pointer at the correct location  */
-  data = (unsigned int *)temp_buf_data(dp_buf) + (ye - y1) * width + (xe - x1);
+  data = (guint *) temp_buf_data (dp_buf) + (ye - y1) * width + (xe - x1);
 
   x = xe;
   y = ye;
@@ -1397,28 +1551,32 @@ plot_pixels (Iscissors *iscissors, TempBuf *dp_buf,
 }
 
 
-
 #define PACK(x, y) ((((y) & 0xff) << 8) | ((x) & 0xff))
 #define OFFSET(pixel) ((gint8)((pixel) & 0xff) + \
   ((gint8)(((pixel) & 0xff00) >> 8)) * dp_buf->width)
 
 
 static void
-find_optimal_path (TileManager *gradient_map, TempBuf *dp_buf,
-		   int x1, int y1, int x2, int y2,
-		   int xs, int ys)
+find_optimal_path (TileManager *gradient_map,
+		   TempBuf     *dp_buf,
+		   gint         x1,
+		   gint         y1,
+		   gint         x2,
+		   gint         y2,
+		   gint         xs,
+		   gint         ys)
 {
-  int i, j, k;
-  int x, y;
-  int link;
-  int linkdir;
-  int dirx, diry;
-  int min_cost;
-  int new_cost;
-  int offset;
-  int cum_cost [8];
-  int link_cost [8];
-  int pixel_cost [8];
+  gint i, j, k;
+  gint x, y;
+  gint link;
+  gint linkdir;
+  gint dirx, diry;
+  gint min_cost;
+  gint new_cost;
+  gint offset;
+  gint cum_cost [8];
+  gint link_cost [8];
+  gint pixel_cost [8];
   guint32 pixel [8];
   guint32 * data, *d;
 
@@ -1543,23 +1701,23 @@ find_optimal_path (TileManager *gradient_map, TempBuf *dp_buf,
 }
 
 
-
 /* Called to fill in a newly referenced tile in the gradient map */
 static void
-gradmap_tile_validate (TileManager *tm, Tile *tile)
-{ 
+gradmap_tile_validate (TileManager *tm,
+		       Tile        *tile)
+{
   static gboolean first_gradient = TRUE;
-  int x, y;
-  int dw, dh;
-  int sw, sh;
-  int i, j;
-  int b;
-  float gradient;
+  gint    x, y;
+  gint    dw, dh;
+  gint    sw, sh;
+  gint    i, j;
+  gint    b;
+  gfloat  gradient;
   guint8 *gradmap;
   guint8 *tiledata;
   guint8 *datah, *datav;
-  gint8 hmax, vmax;
-  Tile *srctile;
+  gint8   hmax, vmax;
+  Tile   *srctile;
   PixelRegion srcPR, destPR;
   GImage *gimage;
 
@@ -1567,7 +1725,7 @@ gradmap_tile_validate (TileManager *tm, Tile *tile)
 
   if (first_gradient)
     {
-      int radius = GRADIENT_SEARCH >> 1;
+      gint radius = GRADIENT_SEARCH >> 1;
       /*  compute the distance weights  */
       for (i = 0; i < GRADIENT_SEARCH; i++)
 	for (j = 0; j < GRADIENT_SEARCH; j++)
@@ -1653,7 +1811,7 @@ gradmap_tile_validate (TileManager *tm, Tile *tile)
 	  /* then 1 byte direction */
 	  if (gradient > MIN_GRADIENT)
 	    {
-	      float direction;
+	      gfloat direction;
 	      if (!hmax)
 		direction = (vmax > 0) ? G_PI_2 : -G_PI_2;
 	      else
@@ -1692,7 +1850,7 @@ gradient_map_new (GImage *gimage)
   TileManager *tm;
 
   tm = tile_manager_new (gimage->width, gimage->height,
-			 sizeof(guint8) * COST_WIDTH);
+			 sizeof (guint8) * COST_WIDTH);
   tile_manager_set_user_data (tm, gimage);
   tile_manager_set_validate_proc (tm, gradmap_tile_validate);
 
@@ -1700,17 +1858,20 @@ gradient_map_new (GImage *gimage)
 }
 
 static void
-find_max_gradient (Iscissors *iscissors, GImage *gimage, int *x, int *y)
+find_max_gradient (Iscissors *iscissors,
+		   GImage    *gimage,
+		   gint      *x,
+		   gint      *y)
 {
   PixelRegion srcPR;
-  int radius;
-  int i, j;
-  int endx, endy;
-  int sx, sy, cx, cy;
-  int x1, y1, x2, y2;
-  void *pr;
+  gint    radius;
+  gint    i, j;
+  gint    endx, endy;
+  gint    sx, sy, cx, cy;
+  gint    x1, y1, x2, y2;
+  void   *pr;
   guint8 *gradient;
-  float g, max_gradient;
+  gfloat  g, max_gradient;
 
   TRC (("find_max_gradient(%d, %d)\n", *x, *y));
 
@@ -1767,6 +1928,5 @@ find_max_gradient (Iscissors *iscissors, GImage *gimage, int *x, int *y)
 
   TRC (("done: find_max_gradient(%d, %d)\n", *x, *y));
 }
-
 
 /* End of iscissors.c */
