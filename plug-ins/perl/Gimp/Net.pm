@@ -42,7 +42,7 @@ sub net2args($) {
 sub args2net {
    my($res,$v);
    for $v (@_) {
-      if(ref($v) eq "ARRAY" or ref($v) eq "Gimp::Color") {
+      if(ref($v) eq "ARRAY" or ref($v) eq "Gimp::Color" or ref($v) eq "Gimp::Parasite") {
          $res.="[".join(",",map { "qq[".quotemeta($_)."]" } @$v)."],";
       } elsif(ref($v)) {
          $res.="b(".$$v.",".ref($v)."),";

@@ -191,6 +191,7 @@ that are checked are shown as well (the null prefix "" is implicit).
 =item Parasite
 
  parasite_
+ gimp_
 
 =back
 

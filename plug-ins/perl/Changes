@@ -2,6 +2,13 @@ Revision history for Gimp-Perl extension.
 
 	- more errornous argument types are detected now, without
           just calling abort().
+        - fixed a MAJOR namespace-leak: for example, if one used
+          gimp_parasite_list once, Gimp::Image->parasite_list would call
+          gimp_parasite_list and NOT gimp_image_parasite_list, as would be
+          correct.
+        - Gimp::Net now works correctly with parasites.
+        - added examples/parasite_editor
+        - added gimp_ prefix to Parasite-class
 
 1.052 Tue Feb  9 18:16:15 CET 1999
 	- moved the xlfd_size function from Gimp::Fu into Gimp
@@ -416,9 +423,10 @@ Revision history for Gimp-Perl extension.
 
 0.80  Fri Feb 13 17:15:48 CET 1998
 	- version 1.0 is the first one generally usable.. we're getting
-	- close!  Gimp::Net and Gimp::Lib are only internal modules, there
-	  is not much of a distinction between networked modules and modules
-	  using libgimp!
+	  close!
+        - Gimp::Net and Gimp::Lib are only internal modules, there is not
+          much of a distinction between networked modules and modules
+          using libgimp!
 	- Gimp::OO usable over the network.
 
 0.07  Thu Feb 12 06:51:56 CET 1998

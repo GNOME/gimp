@@ -345,18 +345,19 @@ sub AUTOLOAD {
          goto &$AUTOLOAD;
       }
    }
+   # for performance reasons: supply a DESTROY method
+   if($name eq "DESTROY") {
+      *{$AUTOLOAD} = sub {};
+      return;
+   }
    croak "function/macro \"$name\" not found in $class";
-}
-
-# FIXME: why is this necessary? try to understand, hard!
-sub DESTROY {
 }
 
 sub _pseudoclass {
   my ($class, @prefixes)= @_;
   unshift(@prefixes,"");
+  *{"Gimp::${class}::AUTOLOAD"} = \&AUTOLOAD;
   push(@{"${class}::ISA"}		, "Gimp::${class}");
-  push(@{"Gimp::${class}::ISA"}		, 'Gimp');
   push(@{"Gimp::${class}::PREFIXES"}	, @prefixes); @prefixes=@{"Gimp::${class}::PREFIXES"};
   push(@{"${class}::PREFIXES"}		, @prefixes); @prefixes=@{"${class}::PREFIXES"};
 }
@@ -372,7 +373,7 @@ _pseudoclass qw(Gradients	gimp_gradients_);
 _pseudoclass qw(Edit		gimp_edit_);
 _pseudoclass qw(Progress	gimp_progress_);
 _pseudoclass qw(Region		);
-_pseudoclass qw(Parasite	parasite_);
+_pseudoclass qw(Parasite	parasite_ gimp_);
 
 # "C"-Classes
 _pseudoclass qw(GDrawable	gimp_drawable_);
@@ -415,7 +416,7 @@ sub DESTROY {
    my $self = shift;
    $self->{_drawable}->{_id}->update($self->{_x},$self->{_y},$self->{_w},$self->{_h})
      if $self->{_dirty};
-}
+};
 
 package Gimp::Parasite;
 
@@ -424,8 +425,6 @@ sub is_persistant($)	{ $_[0]->[1] & PARASITE_PERSISTANT }
 sub is_error($)		{ $_[0]->is_type("error") }
 sub error($)		{ ["error", 0, ""] }
 sub copy($)		{ [@{$_[0]}] }
-
-sub DESTROY		{}
 
 package Gimp; # for __DATA__
 

@@ -1,0 +1,198 @@
+#!/usr/app/bin/perl
+
+#BEGIN {$^W=1};
+
+require 5.005;
+
+use Gimp ();
+use Gimp::Fu;
+use Gtk;
+
+Gtk->init;
+
+$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
+
+#Gimp::set_trace(TRACE_ALL);
+
+my $window;	# the main window
+my $current;
+my $list_func, $find_func, $attach_func, $detach_func;
+my $clist;
+my $name, $flags, $data, $data2;
+
+sub escape {
+   join ("", map {
+      (ord($_) & 127) > 31 ? $_ : sprintf "\\x%02x",ord($_);
+   } split //, shift);
+}
+
+sub deserialize {
+   local $_ = shift;
+   my $res;
+   eval {
+      while (length ($_)) {
+         my $type = unpack ("C", substr $_,0,1,"");
+         if ($type == 0) {
+            $res.="END";
+            last;
+         } elsif ($type == 1) {
+            $res.="INT8 ".(unpack ("C", substr $_,0,1,""));
+         } elsif ($type == 2) {
+            $res.="INT16 ".(unpack ("n", substr $_,0,2,""));
+         } elsif ($type == 3) {
+            $res.="INT32 ".(unpack ("N", substr $_,0,4,""));
+         } elsif ($type == 101) {
+            $res.="INT32 ".(unpack ("N", substr $_,0,4,""));
+         } else {
+            die "unknown serialize type\n";
+         }
+         print "RES: $res\n";
+         print "Type = $type\n";
+      }
+   };
+   $@ ? $@ : $res;
+}
+
+sub refresh_names {
+   $clist->clear_items(0,99999);
+   my @list = &$list_func($current);
+   for my $parasite (@list) {
+      my $item = new Gtk::ListItem $parasite;
+      $item->signal_connect ("select" => sub {
+         my ($par) = &$find_func($current,$parasite);
+         $name->set_text ($par->[0]);
+         $flags->set_text (sprintf "0x%08x", $par->[1]);
+         $data->set_text (escape $par->[2]);
+         $data2->set_text (deserialize $par->[2]);
+      });
+      $clist->add($item);
+   }
+   $clist->show_all;
+}
+
+sub create_main {
+   my $b;
+   my $t;
+   
+   parse Gtk::Rc Gimp->gtkrc;
+   
+   $t = new Gtk::Tooltips;
+   my $w = new Gtk::Dialog;
+   $window = $w;
+   $w->set_usize (500,220);
+   
+   $w->set_title('Parasite Editor');
+   $w->signal_connect("destroy",sub {main_quit Gtk});
+   
+   $b = new Gtk::Button "Close";
+   $w->action_area->add($b);
+   $b->signal_connect("clicked",sub {main_quit Gtk});
+   
+   my $v = new Gtk::VBox (0,5);
+   $w->vbox->add ($v);
+
+   my $top = new Gtk::HBox (0,5);
+   $v->add($top);
+   my $bot = new Gtk::HBox (0,5);
+   $v->add($bot);
+
+   $clist = new Gtk::List;
+
+   my $cs = new Gtk::ScrolledWindow undef,undef;
+   $cs->set_policy(-automatic,-automatic);
+   $gtk_10 ? $cs->add ($clist) : $cs->add_with_viewport ($clist);
+   $bot->add ($cs);
+
+   my $parbox = new Gtk::VBox (0,5);
+   $bot->add ($parbox);
+   $parbox->add ($name  = new Gtk::Entry);
+   $parbox->add ($flags = new Gtk::Entry);
+   $parbox->add ($data  = new Gtk::Entry);
+   $parbox->add ($data2 = new Gtk::Entry);
+
+   {
+      my $menu = new Gtk::Menu;
+      my $item;
+      my $subtype = new Gtk::OptionMenu;
+
+      my $set_submenu = sub {
+         my $submenu = new Gtk::Menu;
+         for(@_) {
+            my $cur = $_->[0];
+            my $item = new Gtk::MenuItem $_->[1];
+            $item->signal_connect ("activate" => sub { $current = $cur; refresh_names });
+            $submenu->append ($item);
+         }
+         $subtype->set_menu($submenu);
+         $submenu->show_all;
+         if(@_) {
+            $submenu->get_active->signal_emit("activate");
+         } else {
+            undef $current;
+            refresh_names;
+         }
+      };
+
+      $item = new Gtk::MenuItem "Global";
+      my $act_global = sub {
+         $list_func   = sub { Gimp->parasite_list   };
+         $find_func   = sub { shift; Gimp->find_parasite   (shift) };
+         $attach_func = sub { shift; Gimp->attach_parasite (shift) };
+         $detach_func = sub { shift; Gimp->detach_parasite (shift) };
+         &$set_submenu();
+      };
+      $item->signal_connect("activate", $act_global);
+      $menu->append($item);
+
+      $item = new Gtk::MenuItem "Image";
+      $item->signal_connect("activate", sub {
+         $list_func   = sub { $_[0] ? shift->parasite_list : () };
+         $find_func   = sub { shift->find_parasite   (shift) };
+         $attach_func = sub { shift->attach_parasite (shift) };
+         $detach_func = sub { shift->detach_parasite (shift) };
+         &$set_submenu(map [$_,"$$_: ".$_->get_filename],Gimp->list_images);
+      });
+      $menu->append($item);
+
+      $item = new Gtk::MenuItem "Drawable";
+      $item->signal_connect("activate", sub {
+         $list_func   = sub { $_[0] ? shift->parasite_list : () };
+         $find_func   = sub { shift->find_parasite   (shift) };
+         $attach_func = sub { shift->attach_parasite (shift) };
+         $detach_func = sub { shift->detach_parasite (shift) };
+         &$set_submenu(map [$_,$_->image->get_filename." / "
+                               .($_->layer ? $_->layer_get_name : $_->channel_get_name)],
+                           map (($_->get_layers,$_->get_channels),Gimp->list_images));
+      });
+      $menu->append($item);
+
+      my $type = new Gtk::OptionMenu;
+      $type->set_menu ($menu);
+
+      $top->add($type);
+      $top->add($subtype);
+
+      &$act_global;
+   }
+   
+   show_all $w;
+}
+
+register "extension_parasite_editor",
+         "Parasite Editor",
+         "This plug-in can be used to view (and in a future version edit) existing parasites",
+         "Marc Lehmann",
+         "Marc Lehmann",
+         "0.1",
+         "<Toolbox>/Xtns/Parasite Editor",
+         "",
+         [],
+         sub {
+   
+   create_main;
+   main Gtk;
+   
+   ();
+};
+
+exit main;

@@ -294,7 +294,7 @@ sub interact($$$@) {
 #           signal_connect $c "clicked", sub {$res = 2; main_quit Gtk};
 ##           $g->attach($c,1,2,$res,$res+1,{},{},4,2);
 #           $a->pack_start ($c,1,1,0);
-#           set_tip $t $c,"Load an image into the Gimp (NYI)";
+#           set_tip $t $c,"Load an image into the Gimp";
            
         } elsif($type == PF_LAYER) {
            my $res;
@@ -589,10 +589,10 @@ sub query {
 =item function name
 
 The pdb name of the function, i.e. the name under which is will be
-registered in the Gimp database. If it doesn't start with "perl_fu_" it will
-be prepended. If you don't want this, prefix your fucntion name with a
-single "+". The idea here is that every Gimp::Fu plug-in will be found under
-the common C<perl_fu_>-prefix.
+registered in the Gimp database. If it doesn't start with "perl_fu_",
+"plug_in_" or "extension_", it will be prepended. If you don't want this,
+prefix your function name with a single "+". The idea here is that every
+Gimp::Fu plug-in will be found under the common C<perl_fu_>-prefix.
 
 =item blurb
 
@@ -740,7 +740,7 @@ sub register($$$$$$$$$;@) {
       int($p->[0]) eq $p->[0] or croak "Argument/return value '$p->[1]' has illegal type '$p->[0]'";
    }
    
-   $function="perl_fu_".$function unless $function=~/^perl_fu/ || $function=~s/^\+//;
+   $function="perl_fu_".$function unless $function=~/^(?:perl_fu|extension|plug_in)/ || $function=~s/^\+//;
    
    *$function = sub {
       $run_mode=shift;	# global!
@@ -931,7 +931,7 @@ sub print_switches {
       my $this=this_script;
       print <<EOF;
        interface-arguments are
-           -o | --output <filespec>   write image to disk, then delete (NYI)
+           -o | --output <filespec>   write image to disk, then delete
            -i | --interact            let the user edit the values first
        script-arguments are
 EOF

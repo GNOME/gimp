@@ -116,7 +116,7 @@ EOF
 
 @examples =
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
-      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl);
+      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor);
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server scm2perl scm2scm examples/example-net.pl));
 
