@@ -32,14 +32,8 @@
 
 char *strunescape(char *text);
 char *strescape(char *text);
-GArray *params_split(const char *text);
-GArray *text_split(const char *text);
 static void gdt_query(void);
-static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
-	GParam **return_vals);
-void gdt_get_values(GdtVals *data);
-void gdt_set_values(GdtVals *data);
-void gdt_render_text(GdtVals *data);
+static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
 
 
 #define GDT_MAGIC_REV(lname)	(atoi(lname + 3))
@@ -120,98 +114,6 @@ char *strescape(char *text)
 	}
 	strncpy(text, buff, sizeof(buff));
 	return text;
-}
-
-
-/* converts string to lower case */
-char *strtolower(char *text)
-{
-	char *c;
-
-	for (c = text; *c; c++)
-		*c = tolower(*c);
-	return text;
-}
-
-
-/* splits the layer name for retrieving the saved parameters
- *
- * GDT PARAMS FORMAT:
- *   {param0}{param1}{...}{paramn}
- */
-GArray *params_split(const char *text)
-{
-	GArray *params;
-	gchar *tok_begin, *tok_end, *text_copy, *str;
-	
-#ifdef GTK_HAVE_FEATURES_1_1_0
-	params = g_array_new(TRUE, TRUE, sizeof(char *));
-#else
-	params = g_array_new(TRUE);
-#endif
-	tok_begin = text_copy = g_strdup(text);
-	do {
-		do {
-	 		tok_begin = strstr(tok_begin + 1, "{");
-		} while (tok_begin && *(tok_begin - 1) == '\\');
-		if (!tok_begin) break;
-		tok_end = tok_begin;
-		do {
- 			tok_end = strstr(tok_end + 1, "}");
-		} while (tok_end && *(tok_end - 1) == '\\');
-		if (!tok_end) break;
-		*tok_end = 0;
-		tok_begin++;
-		str = g_strdup(tok_begin);
-#ifdef GTK_HAVE_FEATURES_1_1_0
-		g_array_append_val(params, str);
-#else
-		g_array_append_val(params, char *, str);
-#endif
-		tok_begin = tok_end;
-	} while (tok_end);
-	g_free(text_copy);
-	return params;
-}
-
-
-/* splits text into lines while looking for \n */
-GArray *text_split(const char *text)
-{
-	return strsplit(text, '\n');
-}
-
-
-GArray *strsplit(const char *text, const char sep)
-{
-	GArray *text_lines;
-	char *tok_begin, *tok_end, *text_copy, *str;
-
-#ifdef GTK_HAVE_FEATURES_1_1_0
-	text_lines = g_array_new(TRUE, TRUE, sizeof(char *));
-#else
-	text_lines = g_array_new(TRUE);
-#endif
-	tok_begin = tok_end = text_copy = g_strdup(text);
-	do {
-		if ((tok_end = strchr(tok_begin, sep)))
-			*tok_end = 0;
-		str = g_strdup(tok_begin);
-#ifdef GTK_HAVE_FEATURES_1_1_0
-		g_array_append_val(text_lines, str);
-#else
-		g_array_append_val(text_lines, char *, str);
-#endif
-		tok_begin = tok_end + 1;
-	} while (tok_end);
-	free(text_copy);
-	str = NULL;
-#ifdef GTK_HAVE_FEATURES_1_1_0
-	g_array_append_val(text_lines, str);
-#else
-	g_array_append_val(text_lines, char *, str);
-#endif
-	return text_lines;
 }
 
 
@@ -350,8 +252,7 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 
 void gdt_get_values(GdtVals *data)
 {
-	char *gdtparams = NULL;
-	GArray *params = NULL;
+	gchar *gdtparams = NULL, *gdtparams0, **params;
 
 #ifdef GIMP_HAVE_PARASITES
 	Parasite *parasite = NULL;
@@ -363,7 +264,7 @@ void gdt_get_values(GdtVals *data)
 		parasite_free(parasite);
 	} else if ((parasite = gimp_drawable_find_parasite(data->drawable_id,
 		GDYNTEXT_PARASITE_MAGIC)) != NULL) {
-		/* GDynText 1.3.0 uses too parasites!! */
+		/* GDynText 1.3.0 uses too parasites and no serialization!! */
 		parasite_free(parasite);
 		parasite = gimp_drawable_find_parasite(data->drawable_id,
 			GDYNTEXT_PARASITE_TEXT);
@@ -412,8 +313,7 @@ void gdt_get_values(GdtVals *data)
 	if (gdtparams == NULL)
 		gdtparams = gimp_layer_get_name(data->layer_id);
 
-	if (!gimp_drawable_has_alpha(data->drawable_id) ||
-		strncmp(gdtparams, "GDT", 3) != 0) {
+	if (!gimp_drawable_has_alpha(data->drawable_id) || strncmp(gdtparams, "GDT", 3) != 0) {
 		data->messages = g_list_append(data->messages,
 			_("Current layer isn't a GDynText layer or it has no alpha channel.\n"
 			"  Forcing new layer creation.\n"));
@@ -439,30 +339,26 @@ void gdt_get_values(GdtVals *data)
 		data->spacing = 0;
 		return;
 	}
-	params = params_split(gdtparams);
+	gdtparams0 = g_strndup(gdtparams + 6, strlen(gdtparams) - 7);
+	params = g_strsplit(gdtparams0, "}{", -1);
+	g_free(gdtparams0);
+
 	data->new_layer		= FALSE;
-	data->font_size		= atoi(g_array_index(params, char *, FONT_SIZE));
-	data->font_metric	= atoi(g_array_index(params, char *, FONT_SIZE_T));
-	data->font_color	= strtol(g_array_index(params, char *, FONT_COLOR),
-		(char **)NULL, 16);
-	data->antialias		= atoi(g_array_index(params, char *, ANTIALIAS));
+	data->font_size		= atoi(params[FONT_SIZE]);
+	data->font_metric	= atoi(params[FONT_SIZE_T]);
+	data->font_color	= strtol(params[FONT_COLOR], (char **)NULL, 16);
+	data->antialias		= atoi(params[ANTIALIAS]);
 	/* older GDT < 0.6 formats don't have alignment */
-	data->alignment = GDT_MAGIC_REV(gdtparams) < 6 ? LEFT :
-		atoi(g_array_index(params, char *, ALIGNMENT));
+	data->alignment = GDT_MAGIC_REV(gdtparams) < 6 ? LEFT : atoi(params[ALIGNMENT]);
 	/* older GDT < 0.7 formats don't have rotation */
-	data->rotation = GDT_MAGIC_REV(gdtparams) < 7 ? 0 :
-		atoi(g_array_index(params, char *, ROTATION));
-	strncpy(data->text, g_array_index(params, char *, TEXT), sizeof(data->text));
+	data->rotation = GDT_MAGIC_REV(gdtparams) < 7 ? 0 : atoi(params[ROTATION]);
+	strncpy(data->text, params[TEXT], sizeof(data->text));
 	strunescape(data->text);
-	strncpy(data->font_family, strtolower(g_array_index(params, char *,
-		FONT_FAMILY)), sizeof(data->font_family));
+	strncpy(data->font_family, params[FONT_FAMILY], sizeof(data->font_family));
 	/* older GDT < 0.8 formats don't have font style */
-	strncpy(data->font_style, (GDT_MAGIC_REV(gdtparams) < 8 ? "" :
-		strtolower(g_array_index(params, char *, FONT_STYLE))),
-		sizeof(data->font_style));
+	strncpy(data->font_style, (GDT_MAGIC_REV(gdtparams) < 8 ? "" : params[FONT_STYLE]), sizeof(data->font_style));
 	/* older GDT < 0.9 formats don't have spacing */
-	data->spacing = GDT_MAGIC_REV(gdtparams) < 9 ? 0 :
-		atoi(g_array_index(params, char *, SPACING));
+	data->spacing = GDT_MAGIC_REV(gdtparams) < 9 ? 0 : atoi(params[SPACING]);
 
 	if (GDT_MAGIC_REV(gdtparams) < GDT_MAGIC_REV(GDYNTEXT_MAGIC))
 		data->messages = g_list_append(data->messages,
@@ -496,9 +392,11 @@ void gdt_set_values(GdtVals *data)
 		data->spacing);
 
 #ifdef GIMP_HAVE_PARASITES
-	parasite = parasite_new(GDYNTEXT_PARASITE,
-				PARASITE_PERSISTENT | PARASITE_UNDOABLE,
-				strlen(lname), lname);
+	parasite = parasite_new(GDYNTEXT_PARASITE, PARASITE_PERSISTENT
+#ifdef GIMP_HAVE_FEATURES_1_1_5
+				| PARASITE_UNDOABLE
+#endif
+				, strlen(lname), lname);
 	gimp_drawable_attach_parasite(data->drawable_id, parasite);
 	parasite_free(parasite);
 
@@ -534,7 +432,8 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
   gint32 text_ascent, text_descent;
   gint32 layer_width, layer_height;
 	gint32 space_width;
-	GArray *text_lines, *text_lines_w, *text_style;
+	gchar **text_style, **text_lines;
+	gint32 *text_lines_w;
 	GParam *ret_vals;
 	GParamColor old_color, text_color;
 
@@ -560,7 +459,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		gimp_destroy_params(ret_vals, nret_vals);
 	}
 
-	text_style = strsplit(data->font_style, '-');
+	text_style = g_strsplit(data->font_style, "-", 3);
 
 	/* retrieve space char width */
 	ret_vals = gimp_run_procedure("gimp_text_get_extents", &nret_vals,
@@ -569,9 +468,9 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		PARAM_INT32, 0,
 		PARAM_STRING, "*",																	/* foundry */
 		PARAM_STRING, data->font_family,
-		PARAM_STRING, g_array_index(text_style, char *, 0),	/* weight */
-		PARAM_STRING, g_array_index(text_style, char *, 1),	/* slant */
-		PARAM_STRING, g_array_index(text_style, char *, 2),	/* set_width */
+		PARAM_STRING, text_style[0],												/* weight */
+		PARAM_STRING, text_style[1],												/* slant */
+		PARAM_STRING, text_style[2],												/* set_width */
 		PARAM_STRING, "*",																	/* spacing */
 #ifdef GIMP_HAVE_FEATURES_1_1_5
 		PARAM_STRING, "*",																	/* registry */
@@ -586,9 +485,9 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		PARAM_INT32, 0,
 		PARAM_STRING, "*",																	/* foundry */
 		PARAM_STRING, data->font_family,
-		PARAM_STRING, g_array_index(text_style, char *, 0),	/* weight */
-		PARAM_STRING, g_array_index(text_style, char *, 1),	/* slant */
-		PARAM_STRING, g_array_index(text_style, char *, 2),	/* set_width */
+		PARAM_STRING, text_style[0],												/* weight */
+		PARAM_STRING, text_style[1],												/* slant */
+		PARAM_STRING, text_style[2],												/* set_width */
 		PARAM_STRING, "*",																	/* spacing */
 #ifdef GIMP_HAVE_FEATURES_1_1_5
 		PARAM_STRING, "*",																	/* registry */
@@ -602,28 +501,24 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 #endif
 	
 	/* setup text and compute layer size */
-	text_lines = text_split(data->text);
-#ifdef GTK_HAVE_FEATURES_1_1_0
-	text_lines_w = g_array_new(TRUE, TRUE, sizeof(int));
-#else
-	text_lines_w = g_array_new(TRUE);
-#endif
+	text_lines = g_strsplit(data->text, "\n", -1);
+	for (i = 0; text_lines[i]; i++);
+	text_lines_w = g_new0(gint32, i);
 	layer_width = layer_height = 0;
-	for (i = 0; g_array_index(text_lines, char *, i); i++) {
+	for (i = 0; text_lines[i]; i++) {
 		ret_vals = gimp_run_procedure("gimp_text_get_extents", &nret_vals,
-			PARAM_STRING, strlen(g_array_index(text_lines, char *, i)) > 0 ?
-				g_array_index(text_lines, char *, i) : " ",
+			PARAM_STRING, strlen(text_lines[i]) > 0 ? text_lines[i] : " ",
 			PARAM_FLOAT, (float)data->font_size,
 			PARAM_INT32, 0,
 			PARAM_STRING, "*",																	/* foundry */
 			PARAM_STRING, data->font_family,
-			PARAM_STRING, g_array_index(text_style, char *, 0),	/* weight */
-			PARAM_STRING, g_array_index(text_style, char *, 1),	/* slant */
-			PARAM_STRING, g_array_index(text_style, char *, 2),	/* set_width */
+			PARAM_STRING, text_style[0],												/* weight */
+			PARAM_STRING, text_style[1],												/* slant */
+			PARAM_STRING, text_style[2],												/* set_width */
 			PARAM_STRING, "*",																	/* spacing */
 #ifdef GIMP_HAVE_FEATURES_1_1_5
-		PARAM_STRING, "*",																	/* registry */
-		PARAM_STRING, "*",																	/* encoding */
+			PARAM_STRING, "*",																	/* registry */
+			PARAM_STRING, "*",																	/* encoding */
 #endif
 			PARAM_END);
 		text_width = ret_vals[1].data.d_int32;
@@ -631,20 +526,18 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		text_ascent = ret_vals[3].data.d_int32;
 		text_descent = ret_vals[4].data.d_int32;
 #ifdef DEBUG
-    printf("GDT: %4dx%4d A:%3d D:%3d [%s]\n", text_width, text_height, text_ascent, text_descent, g_array_index(text_lines, char *, i));
+    printf("GDT: %4dx%4d A:%3d D:%3d [%s]\n", text_width, text_height, text_ascent, text_descent, text_lines[i]);
 #endif
 		gimp_destroy_params(ret_vals, nret_vals);
-#ifdef GTK_HAVE_FEATURES_1_1_0
-		g_array_append_val(text_lines_w, text_width);
-#else
-		g_array_append_val(text_lines_w, int, text_width);
-#endif
+		text_lines_w[i] = text_width;
 		if (layer_width < text_width)
 			layer_width = text_width;
 		layer_height += text_height + data->spacing;
 	}
 	layer_height -= data->spacing;
 
+	if (layer_height == 0) layer_height = 10;
+	if (layer_width == 0) layer_width = 10;
 	if (!data->new_layer) {
 		/* resize the old layer */
 		gimp_layer_resize(data->layer_id, layer_width, layer_height, 0, 0);
@@ -688,16 +581,16 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	gimp_destroy_params(ret_vals, nret_vals);
 
 	/* write text */
-	for (i = 0; g_array_index(text_lines, char *, i); i++) {
+	for (i = 0; text_lines[i]; i++) {
 		switch (data->alignment) {
 			case LEFT:
 				xoffs = 0;
 				break;
 			case RIGHT:
-				xoffs = layer_width - g_array_index(text_lines_w, int, i);
+				xoffs = layer_width - text_lines_w[i];
 				break;
 			case CENTER:
-				xoffs = (layer_width - g_array_index(text_lines_w, int, i)) / 2;
+				xoffs = (layer_width - text_lines_w[i]) / 2;
 				break;
 			default:
 				xoffs = 0;
@@ -706,23 +599,22 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 			PARAM_IMAGE, data->image_id,
 			PARAM_DRAWABLE, data->drawable_id,
 			PARAM_FLOAT, (gdouble)layer_ox + 
-				strspn(g_array_index(text_lines, char *, i), " ") * space_width +
-				xoffs,																						/* x */
+				strspn(text_lines[i], " ") * space_width + xoffs,	/* x */
 			PARAM_FLOAT, (gdouble)layer_oy + i * (text_height + data->spacing),		/* y */
-			PARAM_STRING, g_array_index(text_lines, char *, i),
+			PARAM_STRING, text_lines[i],
 			PARAM_INT32, 0,																			/* border */
 			PARAM_INT32, data->antialias,
 			PARAM_FLOAT, (float)data->font_size,
 			PARAM_INT32, data->font_metric,
 			PARAM_STRING, "*",																	/* foundry */
 			PARAM_STRING, data->font_family,
-			PARAM_STRING, g_array_index(text_style, char *, 0),	/* weight */
-			PARAM_STRING, g_array_index(text_style, char *, 1),	/* slant */
-			PARAM_STRING, g_array_index(text_style, char *, 2),	/* set_width */
+			PARAM_STRING, text_style[0],												/* weight */
+			PARAM_STRING, text_style[1],												/* slant */
+			PARAM_STRING, text_style[2],												/* set_width */
 			PARAM_STRING, "*",																	/* spacing */
 #ifdef GIMP_HAVE_FEATURES_1_1_5
-		PARAM_STRING, "*",																	/* registry */
-		PARAM_STRING, "*",																	/* encoding */
+			PARAM_STRING, "*",																	/* registry */
+			PARAM_STRING, "*",																	/* encoding */
 #endif
 			PARAM_END);
 		layer_f = ret_vals[1].data.d_layer;
@@ -741,8 +633,9 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 			gimp_progress_update((double)(i + 2) * 100.0 * (double)text_height /
 				(double)layer_height);
 	}
-	g_array_free(text_lines_w, TRUE);
-	g_array_free(text_style, TRUE);
+	g_strfreev(text_lines);
+	g_strfreev(text_style);
+	g_free(text_lines_w);
 
 	/* set foreground color to the old one */
 	ret_vals = gimp_run_procedure("gimp_palette_set_foreground", &nret_vals,

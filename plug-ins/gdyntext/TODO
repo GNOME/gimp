@@ -1,6 +1,9 @@
 The GIMP Dynamic Text plug-in "todo"-list:
 ==========================================
 
+* an apply button
+* layer alignment when text alignment changes
+
 * fix the problem with the ascent value while rendering text
 * allow only valid sizes for non scalable fonts (use gtkfontselection)
 * add customizable tab expansion

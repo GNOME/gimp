@@ -1102,6 +1102,8 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   if (label_frame_size_difference) /* don't resize if this is a new display */
     gtk_widget_set_usize (gdisp->cursor_label->parent,
 			  cursor_label_width + label_frame_size_difference, -1);
+
+  gdisplay_update_cursor (gdisp, gdisp->cursor_x, gdisp->cursor_y);
 }
 
 void
@@ -1761,7 +1763,7 @@ gdisplays_resize_cursor_label (GimpImage *gimage)
     {
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage)
-	  gdisplay_resize_cursor_label(gdisp);
+	gdisplay_resize_cursor_label (gdisp);
 
       list = g_slist_next (list);
     }

@@ -37,6 +37,33 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.17  1999/05/04 17:20:05  mitch
+ *   1999-05-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+ *
+ *   	* app/commands.c: call gdisplays_resize_cursor_label(gimage)
+ *   	after changing the image's unit.
+ *
+ *   	* app/gdisplay.c: update the cursor label after resizing it's
+ *   	frame, so the old (wrong) value gets overwritten.
+ *
+ *   	* app/resize.c: it makes more sense to take the image's unit from
+ *   	the "print size" frame rather than from "pixel dimensions".
+ *   	Set reasonable boundaries to avoid over/underflows with crazy
+ *   	resolutions. Code and gui cleanup.
+ *   	The constants for min/max image size/resolution should probably go
+ *   	to a central place.
+ *
+ *   	* app/text_tool.c: set the resolution in the X font spec only if
+ *   	the size is specified in points (reported by Austin).
+ *
+ *   	* libgimp/gimpsizeentry.c: fixed a bad bug in the boundary and
+ *   	resolution setting code (was not noticable before the new
+ *   	resize/scale ui).
+ *
+ *   	* plug-ins/gdyntext/*: version 1.4.3
+ *
+ *   	* plug-ins/png/png.c: gcc suggested parentheses.
+ *
  *   Revision 1.16  1999/04/23 06:33:13  asbjoer
  *   use MAIN macro
  *
@@ -638,14 +665,16 @@ load_image(char *filename)	/* I - File to load */
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   if (info->valid & PNG_INFO_pHYs)
-    if (info->phys_unit_type == PNG_RESOLUTION_METER)
-      gimp_image_set_resolution(image,
-				((float) info->x_pixels_per_unit) * 0.0254,
-				((float) info->y_pixels_per_unit) * 0.0254);
-    else  /*  set aspect ratio as resolution  */
-      gimp_image_set_resolution(image,
-				((float) info->x_pixels_per_unit),
-				((float) info->y_pixels_per_unit));
+    {
+      if (info->phys_unit_type == PNG_RESOLUTION_METER)
+	gimp_image_set_resolution(image,
+				  ((float) info->x_pixels_per_unit) * 0.0254,
+				  ((float) info->y_pixels_per_unit) * 0.0254);
+      else  /*  set aspect ratio as resolution  */
+	gimp_image_set_resolution(image,
+				  ((float) info->x_pixels_per_unit),
+				  ((float) info->y_pixels_per_unit));
+    }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   gimp_image_set_filename(image, filename);

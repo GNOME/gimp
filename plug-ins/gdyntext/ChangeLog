@@ -1,3 +1,14 @@
+Mar 02 1999
+  * MADE 1.4.3 RELEASE
+  * Fixed the "run with last val" behaviour with the Apply button.
+  * The CharMap window now shows also ascii values from 0 to 32.
+  * Optimized a bit the font_selector widget. However gtk+ 1.2.1 seems to have
+    problems in displaying huge number of items (>= 3000) into gtk_lists and
+    consequently in gtk_combos used by font_selector.
+  * Code cleaned, removed some internal functions, bugs and memory leaks.
+  * gtk+ 1.0 and glib 1.0 compatibility is probably broken, now gimp >= 1.0.4
+    is required for running GDynText.
+  * Applied a patch for upcoming gimp 1.1.5.
 Apr 25 1999
   * MADE 1.4.2 RELEASE
   * Added the "Apply" button.

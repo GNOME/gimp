@@ -869,7 +869,8 @@ text_field_edges(char  *fontname,
 /* Multiply the point and pixel sizes in *fontname by "mul", which
  * must be positive.  If either point or pixel sizes are "*" then they
  * are left untouched.  The memory *fontname is g_free()d, and
- * *fontname is replaced by a fresh allocation of the correct size. */
+ * *fontname is replaced by a fresh allocation of the correct size.
+ */
 static void
 text_size_multiply(char **fontname,
 		   int    mul)
@@ -915,12 +916,20 @@ text_set_resolution (char **fontname,
 		     int    xres,
 		     int    yres)
 {
+  char *point_str;
   char *xres_str;
   char *yres_str;
   char *newfont;
   char *end;
   char new_xres[16];
   char new_yres[16];
+
+  /* get the point size string */
+  text_field_edges(*fontname, POINT_SIZE, &point_str, &end);
+
+  /* don't set the resolution if the point size is unspecified */
+  if (*point_str == '*')
+    return;
 
   /* slice the font spec around the resolution fields */
   text_field_edges (*fontname, XRESOLUTION, &xres_str, &end);

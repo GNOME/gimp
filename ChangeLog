@@ -1,3 +1,29 @@
+1999-05-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c: call gdisplays_resize_cursor_label(gimage)
+	after changing the image's unit.
+
+	* app/gdisplay.c: update the cursor label after resizing it's
+	frame, so the old (wrong) value gets overwritten.
+
+	* app/resize.c: it makes more sense to take the image's unit from
+	the "print size" frame rather than from "pixel dimensions".
+	Set reasonable boundaries to avoid over/underflows with crazy
+	resolutions. Code and gui cleanup.
+	The constants for min/max image size/resolution should probably go
+	to a central place.
+
+	* app/text_tool.c: set the resolution in the X font spec only if
+	the size is specified in points (reported by Austin).
+
+	* libgimp/gimpsizeentry.c: fixed a bad bug in the boundary and
+	resolution setting code (was not noticable before the new
+	resize/scale ui).
+
+	* plug-ins/gdyntext/*: version 1.4.3
+
+	* plug-ins/png/png.c: gcc suggested parentheses.
+
 Mon May  3 15:38:54 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.5 release

@@ -645,8 +645,12 @@ void on_main_window_apply_clicked(GtkWidget *widget, gpointer data0)
 	set_gdt_vals(data);
 	gdt_render_text_p(data, FALSE);
 	gdt_set_values(data);
-	if (data->new_layer)
+	gimp_set_data("plug_in_gdyntext", data, sizeof(GdtVals));
+	if (data->new_layer) {
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(main_window->new_layer_toggle), FALSE); 
+		if (!GTK_WIDGET_SENSITIVE(main_window->new_layer_toggle))
+			gtk_widget_set_sensitive(main_window->new_layer_toggle, TRUE);
+	}
 }
 
 

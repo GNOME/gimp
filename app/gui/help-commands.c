@@ -1142,14 +1142,18 @@ image_scale_callback (GtkWidget *w,
   if ((gimage = image_scale->gimage) != NULL)
     {
       if (image_scale->resize->resolution_x != gimage->xresolution ||
-	  image_scale->resize->resolution_y != gimage->yresolution ||
-	  image_scale->resize->unit != gimage->unit)
+	  image_scale->resize->resolution_y != gimage->yresolution)
 	{
 	  gimage_set_resolution (gimage,
 				 image_scale->resize->resolution_x,
 				 image_scale->resize->resolution_y);
-	  gimage_set_unit (gimage, image_scale->resize->unit);
 	  flush = TRUE;
+	}
+
+      if (image_scale->resize->unit != gimage->unit)
+	{
+	  gimage_set_unit (gimage, image_scale->resize->unit);
+	  gdisplays_resize_cursor_label (gimage);
 	}
 
       if (image_scale->resize->width != gimage->width ||

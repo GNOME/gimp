@@ -1,7 +1,7 @@
 GIMP Dynamic Text -- image filter plug-in for The GIMP program
 ==============================================================
 
-GDynText  1.4.2 
+GDynText  1.4.3 
 Copyright (C) 1998,1999 Marco Lamberto
 E-mail:   lm@geocities.com
 Web page: http://www.geocities.com/Tokyo/1474/gimp/
@@ -31,7 +31,7 @@ as you want (text/font/font size/color/...).
 However I hope that a feature like this will be available on GIMP 1.2 as a
 standard tool.
 
-GIMP version required:    1.0 or 1.1 (see compiling for GIMP 1.1 below)
+GIMP version required:    1.0.4 or 1.1 (see compiling for GIMP 1.1 below)
 Plug-in menu path:        <Image>/Filters/Render/Dynamic Text
 PDB function:             plug-in-dynamic-text
 Suggested hotkey:         Alt+T
@@ -47,6 +47,11 @@ Compiling for GIMP 1.0
 
 Simply run 'make install'. Optionally if something goes wrong you could edit
 the shipped Makefile.
+
+NOTE:
+  Since GDynText 1.4.3 the gtk+ 1.0 and glib 1.0 compatibility was probably
+  broken, now gimp >= 1.0.4 with gtk+ 1.2 and glib 1.2 are required for running
+  GDynText.
 
 Compiling for GIMP 1.1
 ======================
