@@ -14,10 +14,12 @@ libexec_PROGRAMS = gimpressionist
 
 gimpressionist_SOURCES =\
 	brush.c			\
+	color.c			\
 	general.c		\
 	gimp.c			\
 	gimpressionist.c	\
 	gimpressionist.h	\
+	logo-pixbuf.h		\
 	orientation.c		\
 	orientmap.c		\
 	paper.c			\
@@ -29,11 +31,17 @@ gimpressionist_SOURCES =\
 	preview.c		\
 	repaint.c		\
 	size.c			\
-	sizemap.c		\
-	color.c			\
-	logo.xpm
+	sizemap.c
 
-EXTRA_DIST = README
+$(srcdir)/logo-pixbuf.h: logo.png
+	gdk-pixbuf-csource --raw --name=logo_data $< > $(@F)
+
+EXTRA_DIST = \
+	README	\
+	logo.png
+
+CLEANFILES = logo-pixbuf.h
+
 
 AM_CPPFLAGS = \
 	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"

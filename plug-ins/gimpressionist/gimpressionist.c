@@ -1,13 +1,9 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
 
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -18,9 +14,10 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
-#include "logo.xpm"
+#include "logo-pixbuf.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 static GtkWidget *dlg = NULL;
 
@@ -57,13 +54,13 @@ GList * parsepath (void)
 	    {
 	      /* No gimpressionist-path parameter,
                  and the default doesn't exist */
-              gchar *path = g_strconcat ("${gimp_dir}", 
+              gchar *path = g_strconcat ("${gimp_dir}",
                                          G_DIR_SEPARATOR_S,
                                          "gimpressionist",
                                          G_SEARCHPATH_SEPARATOR_S,
                                          "${gimp_data_dir}",
                                          G_DIR_SEPARATOR_S,
-                                         "gimpressionist", 
+                                         "gimpressionist",
                                          NULL);
 
               /* don't translate the gimprc entry */
@@ -90,7 +87,7 @@ findfile (const gchar *fn)
   GList        *thispath;
   gchar        *filename;
 
-  if (!rcpath) 
+  if (!rcpath)
     rcpath = parsepath ();
 
   thispath = rcpath;
@@ -161,7 +158,7 @@ void restorevals(void)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(placecenter), pcvals.placecenter);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
 
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON(generalcolbutton), 
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON(generalcolbutton),
 			       &pcvals.color);
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
@@ -198,7 +195,7 @@ void reselect(GtkWidget *view, char *fname)
 
   tmpfile = strrchr(fname, '/');
   if (tmpfile)
-    fname = ++tmpfile;  
+    fname = ++tmpfile;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
@@ -219,7 +216,7 @@ void reselect(GtkWidget *view, char *fname)
   }
 }
 
-static void readdirintolist_real(char *subdir, GtkWidget *view, 
+static void readdirintolist_real(char *subdir, GtkWidget *view,
 				 char *selected)
 {
   gchar *fpath;
@@ -247,7 +244,7 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
   if (!dir)
     return;
 
-  for(;;) 
+  for(;;)
     {
       gboolean file_exists;
 
@@ -261,15 +258,15 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
 
       if (!file_exists)
         continue;
-      
-      flist = g_list_insert_sorted(flist, g_strdup(de), 
+
+      flist = g_list_insert_sorted(flist, g_strdup(de),
 				   (GCompareFunc)g_ascii_strcasecmp);
     }
   g_dir_close(dir);
-	      
+
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  while (flist) 
+  while (flist)
     {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter, 0, flist->data, -1);
@@ -280,7 +277,7 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
 	    {
 	      gtk_tree_selection_select_iter (selection, &iter);
 	    }
-	} 
+	}
       g_free (flist->data);
       flist = g_list_remove (flist, flist->data);
     }
@@ -297,7 +294,7 @@ void readdirintolist(char *subdir, GtkWidget *view, char *selected)
   char *tmpdir;
   GList *thispath = parsepath();
 
-  while (thispath) 
+  while (thispath)
     {
       tmpdir = g_build_filename ((gchar *) thispath->data, subdir, NULL);
       readdirintolist_real (tmpdir, view, selected);
@@ -306,7 +303,7 @@ void readdirintolist(char *subdir, GtkWidget *view, char *selected)
     }
 }
 
-GtkWidget *createonecolumnlist(GtkWidget *parent, 
+GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
 			       (GtkTreeSelection *selection, gpointer data))
 {
@@ -318,7 +315,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
-				  GTK_POLICY_AUTOMATIC, 
+				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
 				       GTK_SHADOW_IN);
@@ -343,7 +340,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb), 
+  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb),
 		    NULL);
 
   return view;
@@ -374,33 +371,35 @@ static void showabout(void)
 
 		     NULL);
 
+  gtk_container_set_border_width (GTK_CONTAINER (window), 6);
+
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
 
   tmphbox = gtk_hbox_new(TRUE, 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox, 
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox,
 		     TRUE, TRUE, 0);
   gtk_widget_show(tmphbox);
-  
+
   logobox = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (tmphbox), logobox, FALSE, FALSE, 0);
   gtk_widget_show(logobox);
-  
+
   tmpframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (tmpframe), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (logobox), tmpframe, TRUE, TRUE, 0);
   gtk_widget_show(tmpframe);
 
-  pixbuf = gdk_pixbuf_new_from_xpm_data ((const char**) logo_xpm);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, logo_data, FALSE, NULL);
   logo = gtk_image_new_from_pixbuf (pixbuf);
   g_object_unref (pixbuf);
 
   gtk_container_add (GTK_CONTAINER (tmpframe), logo);
   gtk_widget_show (logo);
-    
+
   tmphbox = gtk_hbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox, 
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox,
 		     TRUE, TRUE, 0);
 
   tmpw = gtk_label_new("(C) 1999 Vidar Madsen\n"
@@ -409,7 +408,7 @@ static void showabout(void)
 		       PLUG_IN_VERSION);
   gtk_box_pack_start(GTK_BOX(tmphbox), tmpw, TRUE, FALSE, 0);
   gtk_widget_show(tmpw);
-  
+
   gtk_widget_show(tmphbox);
   gtk_widget_show(window);
 }
@@ -438,20 +437,20 @@ static int create_dialog(void)
     }
 
   dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
-			 gimp_standard_help_func, 
+			 gimp_standard_help_func,
 			 "filters/gimpressionist.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
 			 _("A_bout"), showabout,
 			 NULL, NULL, NULL, FALSE, FALSE,
-			    
+
 			 GTK_STOCK_CANCEL, dialog_cancel_callback,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 GTK_STOCK_OK, dialog_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			    
+
 			 NULL);
 
   g_signal_connect (dlg, "destroy",
