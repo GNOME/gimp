@@ -4,7 +4,15 @@ INCLUDES = $(PYTHON_INCLUDES) $(GLIB_CFLAGS) -I$(top_srcdir)
 
 pyexec_LTLIBRARIES = gimpmodule.la
 
-gimpmodule_la_SOURCES = gimpmodule.c
+gimpmodule_la_SOURCES = \
+  gimpmodule.c \
+  pygimp-image.c \
+  pygimp-drawable.c \
+  pygimp-tile.c \
+  pygimp-display.c \
+  pygimp-parasite.c \
+  pygimp-pdb.c \
+  pygimp.h
 gimpmodule_la_LDFLAGS = -module -avoid-version \
   -export-symbols-regex 'initgimp|PLUG_IN_INFO'
 gimpmodule_la_LIBADD = \

@@ -1,5 +1,9 @@
 2002-08-28  James Henstridge  <james@daa.com.au>
 
+	* *.c, pygimp.h: split module into multiple files, and convert
+	types to Python 2.2 style types.  Still need to fix some of the
+	getattr routines.
+
 	* gimpmodule.c: various updates to get it to compile with latest
 	gimp.  Still need to merge in changes to toplevel configure.in.
 
