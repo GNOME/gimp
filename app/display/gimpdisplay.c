@@ -54,16 +54,6 @@
 GSList *               display_list = NULL;
 static int             display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
-static GimpImage* idlerender_gimage;
-static int idlerender_width;
-static int idlerender_height;
-static int idlerender_x;
-static int idlerender_y;
-static int idlerender_basex;
-static int idlerender_basey;
-static guint idlerender_idleid = 0;
-static guint idlerender_handlerid = 0;
-static gboolean idle_active = 0;
 
 /*  Local functions  */
 static void       gdisplay_format_title     (GimpImage *, char *);
@@ -252,6 +242,10 @@ gdisplay_free_area_list (GSList *list)
 }
 
 
+/*
+ * As far as I can tell, this function takes a GArea and unifies it with
+ *  an existing list of GAreas, trying to avoid overdraw.  [adam]
+ */
 static GSList *
 gdisplay_process_area_list (GSList *list,
 			    GArea  *ga1)
@@ -300,7 +294,9 @@ gdisplay_flush (GDisplay *gdisp)
   GArea  *ga;
   GSList *list;
 
-  /*  Flush the items in the displays and updates lists--
+  printf(" FLUSH! ");fflush(stdout);
+
+  /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
    */
   if (!gdisp->select)
@@ -312,8 +308,21 @@ gdisplay_flush (GDisplay *gdisp)
     {
       /*  Paint the area specified by the GArea  */
       ga = (GArea *) list->data;
-      gdisplay_paint_area (gdisp, ga->x1, ga->y1,
-			   (ga->x2 - ga->x1), (ga->y2 - ga->y1));
+
+      if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
+	{
+	  gdisplay_paint_area (gdisp, ga->x1, ga->y1,
+			       (ga->x2 - ga->x1), (ga->y2 - ga->y1));
+	  /*gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
+			       ga->y1+random()%(ga->y2 - ga->y1),
+			       100,100);
+	  gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
+			       ga->y1+random()%(ga->y2 - ga->y1),
+			       100,100);
+	  gdisplay_paint_area (gdisp, ga->x1+random()%(ga->x2 - ga->x1),
+			       ga->y1+random()%(ga->y2 - ga->y1),
+			       100,100);*/
+	}
 
       list = g_slist_next (list);
     }
@@ -1534,7 +1543,10 @@ gdisplays_flush ()
 
   /*  this prevents multiple recursive calls to this procedure  */
   if (flushing == TRUE)
-    return;
+    {
+      g_warning ("gdisplays_flush() called recursively.");
+      return;
+    }
 
   flushing = TRUE;
 
@@ -1560,7 +1572,7 @@ gdisplay_hash (GDisplay *display)
 }
 
 
-
+#if 0
 static void
 idlerender_gimage_destroy_handler (GimpImage *gimage)
 {
@@ -1755,3 +1767,5 @@ reinit_gimage_idlerender (GimpImage* gimage)
 {
   unify_and_start_idlerender (gimage, 0, 0, gimage->width, gimage->height);
 }
+
+#endif

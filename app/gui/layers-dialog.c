@@ -1447,7 +1447,10 @@ paint_mode_menu_callback (GtkWidget *w,
 	{
 	  layer->mode = mode;
 
-	  reinit_layer_idlerender(gimage, layer);
+	  /*	  reinit_layer_idlerender(gimage, layer);*/
+
+	  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+	  gdisplays_flush ();
 	}
     }
 }
@@ -1485,7 +1488,9 @@ opacity_scale_update (GtkAdjustment *adjustment,
     {
       layer->opacity = opacity;
 
-      reinit_layer_idlerender (gimage, layer);
+      /*reinit_layer_idlerender (gimage, layer);*/
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      gdisplays_flush ();
     }
 }
 
@@ -2212,14 +2217,23 @@ layer_widget_button_events (GtkWidget *widget,
        	    {
 	      /*printf("Case 1, kick-ass!\n");fflush(stdout);*/
 	      gimage_invalidate_preview (layer_widget->gimage);
-	      reinit_gimage_idlerender (layer_widget->gimage);
+	      /*reinit_gimage_idlerender (layer_widget->gimage);*/
+	      gdisplays_update_area (layer_widget->gimage, 0, 0,
+				     layer_widget->gimage->width,
+				     layer_widget->gimage->height);
+	      gdisplays_flush ();
 	    }
 	  else if (old_state != GIMP_DRAWABLE(layer_widget->layer)->visible)
 	    {
+	      /*  Invalidate the gimage preview  */
 	      /*printf("Case 2, what incredible irony!\n");fflush(stdout);*/
 	      gimage_invalidate_preview (layer_widget->gimage);
-	      reinit_layer_idlerender (layer_widget->gimage,
-				       layer_widget->layer);
+	      /*reinit_layer_idlerender (layer_widget->gimage,
+		layer_widget->layer);*/
+	      drawable_update (GIMP_DRAWABLE(layer_widget->layer), 0, 0,
+			       GIMP_DRAWABLE(layer_widget->layer)->width,
+			       GIMP_DRAWABLE(layer_widget->layer)->height);
+	      gdisplays_flush (); 
 	    }
 	}
       else if ((widget == layer_widget->linked_widget) &&

@@ -2104,7 +2104,6 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
   gimp_image_set_active_layer (gimage, float_layer);
 
   /*  update the new layer's area  */
-  printf(" gimp_image_add_layer ");fflush(stdout);
   drawable_update (GIMP_DRAWABLE(float_layer), 0, 0, drawable_width (GIMP_DRAWABLE(float_layer)), drawable_height (GIMP_DRAWABLE(float_layer)));
 
   /*  invalidate the composite preview  */

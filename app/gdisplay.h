@@ -40,6 +40,22 @@
 /* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
 
 
+typedef struct _IdleRenderStruct
+{
+  GimpImage* gimage;
+  int width;
+  int height;
+  int x;
+  int y;
+  int basex;
+  int basey;
+  guint idleid;
+  guint handlerid;
+  gboolean active;
+
+} IdleRenderStruct;
+
+
 struct _GDisplay
 {
   int ID;                         /*  unique identifier for this gdisplay     */
@@ -50,7 +66,7 @@ struct _GDisplay
   GtkWidget *hrule, *vrule;       /*  widgets for rulers                      */
   GtkWidget *origin;              /*  widgets for rulers                      */
   GtkWidget *popup;               /*  widget for popup menu                   */
-  GtkWidget *statusarea;          /*  hbox holding the statusbar and stuff    */ 
+  GtkWidget *statusarea;          /*  hbox holding the statusbar and stuff    */
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */
   GtkWidget *cursor_label;        /*  widget for cursor position              */
@@ -81,18 +97,20 @@ struct _GDisplay
 
   Selection *select;              /*  Selection object                        */
 
-  GdkGC *scroll_gc;               /*  GC for scrolling */
+  GdkGC *scroll_gc;               /*  GC for scrolling                        */
 
   GSList *update_areas;           /*  Update areas list                       */
   GSList *display_areas;          /*  Display areas list                      */
 
   GdkCursorType current_cursor;   /*  Currently installed cursor              */
 
-  short draw_cursor;		  /* should we draw software cursor ? */
-  int cursor_x;			  /* software cursor X value */
-  int cursor_y;			  /* software cursor Y value */
-  short proximity;		  /* is a device in proximity of gdisplay ? */
-  short have_cursor;		  /* is cursor currently drawn ? */
+  short draw_cursor;		  /* should we draw software cursor ?         */
+  int cursor_x;			  /* software cursor X value                  */
+  int cursor_y;			  /* software cursor Y value                  */
+  short proximity;		  /* is a device in proximity of gdisplay ?   */
+  short have_cursor;		  /* is cursor currently drawn ?              */
+
+  IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
 };
 
 
