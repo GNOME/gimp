@@ -51,11 +51,12 @@ binding "gimp-help-binding"
 # class "GtkWidget" binding "gimp-help-binding"
 
 
-# The dock separator is configurable using it's name:
+# The dock separator is configurable using it's name.
+# Note that it uses the bg color of the selected state.
 
-style "gimp-blue-separator-style"
+style "gimp-red-separator-style"
 {
-  bg[NORMAL] = "#8888aa"
+  bg[SELECTED] = "#aa2448"
 }
 
-# widget "*dock-separator*" style "gimp-blue-separator-style"
+# widget "*dock-separator*" style "gimp-red-separator-style"

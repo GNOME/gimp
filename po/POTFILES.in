@@ -239,6 +239,7 @@ app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c
+app/widgets/gimpdock.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdnd.c
 app/widgets/gimpdrawablelistview.c

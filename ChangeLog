@@ -1,5 +1,12 @@
 2003-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c: fiddle with the color of the dock
+	separator to make the drop area stand out. Added a tooltip.
+
+	* etc/gtkrc_user: document how the color can be customized.
+
+2003-03-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.[ch]: let GimpColorArea optionally
 	draw a thin border around itself.
 
