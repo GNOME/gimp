@@ -366,27 +366,27 @@ wire_read_double (GIOChannel *channel,
 		  gint        count,
                   gpointer    user_data)
 {
-  gdouble *t;
-  guint32  tmp[2];
-  gint     i;
+  union {
+    gdouble d;
+    guint32 p[2];
+  } d;
+  gint    i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-  guint32  swap;
+  guint32 swap;
 #endif
-
-  t = (gdouble *) tmp;
 
   for (i = 0; i < count; i++)
     {
-      if (! wire_read_int8 (channel, (guint8 *) tmp, 8, user_data))
+      if (! wire_read_int8 (channel, (guint8 *) &d.d, 8, user_data))
 	return FALSE;
 
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-      swap   = g_ntohl (tmp[1]);
-      tmp[1] = g_ntohl (tmp[0]);
-      tmp[0] = swap;
+      swap   = g_ntohl (d.p[1]);
+      d.p[1] = g_ntohl (d.p[0]);
+      d.p[0] = swap;
 #endif
 
-      data[i] = *t;
+      data[i] = d.d;
     }
 
   return TRUE;
@@ -483,26 +483,26 @@ wire_write_double (GIOChannel *channel,
 		   gint        count,
                    gpointer    user_data)
 {
-  gdouble *t;
-  guint32  tmp[2];
+  union {
+    gdouble d;
+    guint32 p[2];
+  } d;
   gint     i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
   guint32  swap;
 #endif
 
-  t = (gdouble *) tmp;
-
   for (i = 0; i < count; i++)
     {
-      *t = data[i];
+      d.d = data[i];
 
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-      swap   = g_htonl (tmp[1]);
-      tmp[1] = g_htonl (tmp[0]);
-      tmp[0] = swap;
+      swap   = g_htonl (d.p[1]);
+      d.p[1] = g_htonl (d.p[0]);
+      d.p[0] = swap;
 #endif
 
-      if (! wire_write_int8 (channel, (guint8 *) tmp, 8, user_data))
+      if (! wire_write_int8 (channel, (guint8 *) &d.d, 8, user_data))
 	return FALSE;
 
 #if 0

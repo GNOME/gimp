@@ -1,4 +1,10 @@
-2002-11-24  Manish Singh <yosh@gimp.org>
+2002-11-25  Manish Singh  <yosh@gimp.org>
+
+	* libgimpbase/gimpwire.c: use a union instead of separate types to 
+	read/write doubles so we don't violate C's aliasing rules. Fixes
+	bug #85249.
+
+2002-11-24  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: moved FINITE definition to $extra
 	code. Changed to use #elif, much cleaner.
