@@ -1614,17 +1614,22 @@ lstrbreakup (LISP str, LISP lmarker)
   char *start, *end, *marker;
   size_t k;
   LISP result = NIL;
-  start = get_c_string (str);
+  start = end = get_c_string (str);
   marker = get_c_string (lmarker);
   k = strlen (marker);
-  while (*start)
+  if (*marker)
     {
-      if (!(end = strstr (start, marker)))
-	end = &start[strlen (start)];
-      result = cons (strcons (end - start, start), result);
-      start = (*end) ? end + k : end;
+      while (*end)
+        {
+          if (!(end = strstr (start, marker)))
+            end = &start[strlen (start)];
+          result = cons (strcons (end - start, start), result);
+          start = (*end) ? end + k : end;
+        }
+      return (nreverse (result));
     }
-  return (nreverse (result));
+  else
+    return (strcons (strlen (start), start));
 }
 
 LISP
