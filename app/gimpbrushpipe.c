@@ -394,11 +394,16 @@ gimp_brush_pipe_load (gchar *filename)
   pipe->current = pipe->brushes[0];
 
   /*  just to satisfy the code that relies on this crap  */
-
-  GIMP_BRUSH (pipe)->mask   = pipe->brushes[0]->mask;
-  GIMP_BRUSH (pipe)->pixmap = pipe->brushes[0]->pixmap;
+  GIMP_BRUSH (pipe)->filename = g_strdup (filename);
+  GIMP_BRUSH (pipe)->spacing  = pipe->current->spacing;
+  GIMP_BRUSH (pipe)->x_axis   = pipe->current->x_axis;
+  GIMP_BRUSH (pipe)->y_axis   = pipe->current->y_axis;
+  GIMP_BRUSH (pipe)->mask     = pipe->current->mask;
+  GIMP_BRUSH (pipe)->pixmap   = pipe->current->pixmap;
 
   close (fd);
 
   return GIMP_BRUSH (pipe);
 }
+
+

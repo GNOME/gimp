@@ -1,4 +1,9 @@
 2000-12-19  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpbrushpipe.c (gimp_brush_pipe_load): set the spacing and
+	other info from the first brush just as the old code used to do.
+
+2000-12-19  Sven Neumann  <sven@gimp.org>
             Michael Natterer  <mitch@gimp.org>
 
 	* TODO: reviewed
