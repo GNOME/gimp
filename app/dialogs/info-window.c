@@ -153,13 +153,13 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  iwd->pixel_labels[0] = gtk_label_new (_("N/A"));
+  iwd->pixel_labels[0] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[0]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("X:"), 1.0, 0.5,
                              iwd->pixel_labels[0], 1, FALSE);
 
-  iwd->pixel_labels[1] = gtk_label_new (_("N/A"));
+  iwd->pixel_labels[1] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->pixel_labels[1]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y:"), 1.0, 0.5,
@@ -176,13 +176,13 @@ info_window_create_extended (InfoDialog *info_win,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  iwd->unit_labels[0] = gtk_label_new (_("N/A"));
+  iwd->unit_labels[0] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[0]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("X:"), 1.0, 0.5,
                              iwd->unit_labels[0], 1, FALSE);
 
-  iwd->unit_labels[1] = gtk_label_new (_("N/A"));
+  iwd->unit_labels[1] = gtk_label_new (_("n/a"));
   gtk_misc_set_alignment (GTK_MISC (iwd->unit_labels[1]), 0.0, 0.5);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Y:"), 1.0, 0.5,
@@ -366,10 +366,10 @@ info_window_update_extended (GimpDisplay *gdisp,
 
   if (tx < 0.0 && ty < 0.0)
     {
-      gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[0]), _("N/A"));
-      gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[1]), _("N/A"));
-      gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]),  _("N/A"));
-      gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]),  _("N/A"));
+      gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[0]), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (iwd->pixel_labels[1]), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (iwd->unit_labels[0]),  _("n/a"));
+      gtk_label_set_text (GTK_LABEL (iwd->unit_labels[1]),  _("n/a"));
     }
   else
     {

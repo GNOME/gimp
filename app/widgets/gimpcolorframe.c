@@ -195,7 +195,7 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
  * @frame: The #GimpColorFrame.
  *
  * Tells the #GimpColorFrame that the current sample is invalid. All labels
- * visible for the current color space will show "N/A" (not available).
+ * visible for the current color space will show "n/a" (not available).
  *
  * There is no special API for setting the frame to "valid" again because
  * this happens automatically when calling gimp_color_frame_set_color().
@@ -340,7 +340,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
           if (frame->sample_valid)
             gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), values[i]);
           else
-            gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), _("N/A"));
+            gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), _("n/a"));
         }
       else
         {

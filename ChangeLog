@@ -1,5 +1,12 @@
 2003-10-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbase.def: added gimp_any_to_utf8.
+
+	* app/gui/info-window.c
+	* app/widgets/gimpcolorframe.c: use "n/a" instead of "N/A".
+
+2003-10-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/xpm.c (load_image): check the return value of
 	XpmReadFileToXpmImage(). Fixes bug #124766.
 
