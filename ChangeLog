@@ -1,3 +1,8 @@
+Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/gimage_cmds.c (duplicate): Fixed a bug in duplicate that was
+	entirely my fault. :)
+
 Sun Jan 25 16:51:56 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* added the gtk_window_set_wmclass to most of the gimp 

@@ -3253,7 +3253,7 @@ duplicate (GImage *gimage)
       list = next_item (list);
 
       new_layer = layer_copy (layer, FALSE);
-      GIMP_DRAWABLE(new_layer)->ID = new_gimage->ID;
+      GIMP_DRAWABLE(new_layer)->gimage_ID = new_gimage->ID;
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       g_free (drawable_name (GIMP_DRAWABLE(new_layer)));
