@@ -6296,7 +6296,9 @@ msgstr ""
 
 #: app/user_install.c:929
 msgid "Aborting Installation..."
-msgstr "Installation wird abgebrochen..."
+msgstr ""
+"Die Existenz wie Sie sie kennen\n"
+"ist beendet!"
 
 #: app/user_install.c:956
 #, c-format
