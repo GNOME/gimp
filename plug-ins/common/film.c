@@ -83,7 +83,6 @@ typedef struct
 /* Data to use for the dialog */
 typedef struct
 {
-  GtkWidget *font_entry;
   GtkObject *advanced_adj[7];
   GtkWidget *image_list_all;
   GtkWidget *image_list_film;
@@ -162,11 +161,14 @@ static GtkWidget * add_image_list         (gboolean   add_box_flag,
 					   gint32    *image_id,
 					   GtkWidget *hbox);
 
-static gint        film_dialog            (gint32     image_ID);
-static void        film_ok_callback       (GtkWidget *widget,
-					   gpointer   data);
-static void        film_reset_callback    (GtkWidget *widget,
-					   gpointer   data);
+static gint        film_dialog               (gint32     image_ID);
+static void        film_ok_callback          (GtkWidget *widget,
+                                              gpointer   data);
+static void        film_reset_callback       (GtkWidget *widget,
+                                              gpointer   data);
+static void        film_font_select_callback (gchar     *name,
+                                              gboolean   closing,
+                                              gpointer   data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -201,7 +203,7 @@ static FilmVals filmvals =
   0.052,           /* Image number height */
   1,               /* Start index of numbering */
   { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
-  "courier",       /* Font family for numbering */
+  "Courier",       /* Font family for numbering */
   { TRUE, TRUE },  /* Numbering on top and bottom */
   0,               /* Dont keep max. image height */
   0,               /* Number of images */
@@ -211,7 +213,6 @@ static FilmVals filmvals =
 
 static FilmInterface filmint =
 {
-  NULL,       /* font entry */
   { NULL },   /* advanced adjustments */
   NULL, NULL, /* image list widgets */
   FALSE       /* run */
@@ -1151,7 +1152,7 @@ create_selection_tab (GtkWidget *notebook,
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *button;
-  GtkWidget *entry;
+  GtkWidget *font_sel;
   gint32    *image_id_list;
   gint       nimages, j;
 
@@ -1250,12 +1251,13 @@ create_selection_tab (GtkWidget *notebook,
                     &filmvals.number_start);
 
   /* Fontfamily for numbering */
-  filmint.font_entry = entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 60, -1);
-  gtk_entry_set_text (GTK_ENTRY (entry), filmvals.number_fontf);
+  font_sel = gimp_font_select_widget (NULL,
+                                      filmvals.number_fontf,
+                                      film_font_select_callback,
+                                      &filmvals);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Font:"), 1.0, 0.5,
-			     entry, 1, FALSE);
+			     font_sel, 1, FALSE);
 
   /* Numbering color */
   button = gimp_color_button_new (_("Select Number Color"),
@@ -1491,18 +1493,9 @@ film_ok_callback (GtkWidget *widget,
                   gpointer   data)
 {
   gint         num_images;
-  const gchar *s;
   GtkWidget   *label;
   GList       *tmp_list;
   gint32       image_ID;
-
-  /* Read font family */
-  s = gtk_entry_get_text (GTK_ENTRY (filmint.font_entry));
-  if (strlen (s) > 0)
-    {
-      strncpy (filmvals.number_fontf, s, sizeof (filmvals.number_fontf));
-      filmvals.number_fontf[sizeof (filmvals.number_fontf)-1] = '\0';
-    }
 
   /* Read image list */
   num_images = 0;
@@ -1537,4 +1530,15 @@ film_reset_callback (GtkWidget *widget,
   for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (filmint.advanced_adj[i]),
 			      advanced_defaults[i]);
+}
+
+static void
+film_font_select_callback (gchar    *name,
+                           gboolean  closing,
+                           gpointer  data)
+{
+  FilmVals *vals = (FilmVals *) data;
+
+  strncpy (vals->number_fontf, name, sizeof (vals->number_fontf));
+  vals->number_fontf[sizeof (vals->number_fontf) - 1] = '\0';
 }
