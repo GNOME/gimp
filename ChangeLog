@@ -1,3 +1,15 @@
+2005-01-18  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/core/gimpparasitelist.c (parasite_serialize): use
+	gimp_config_writer_data() to write the parasite data because
+	it's binary and can contain '\0'.
+
+	(gimp_parasite_list_deserialize): use gimp_scanner_parse_data() to
+	read it. Still accepts the old file format for backward
+	compatibility. Fixes bug #163131.
+
 2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch:
