@@ -253,28 +253,34 @@ sub marshal_inargs {
 	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
 	    $result .= ";\n";
 
-	    if ($pdbtype eq 'string') {
-		my ($reverse, $test);
+	    if ($pdbtype eq 'string' || $pdbtype eq 'parasite') {
+		my ($reverse, $test, $utf8, $utf8testvar);
 
-		if ($_->{utf8}) {
-		    $reverse = sub { ${$_[0]} =~ s/!//;
-				     ${$_[0]} =~ s/||/&&/;
-				     ${$_[0]} =~ s/==/!=/ };
-		    $test = "$var == NULL || " .
-                            "!g_utf8_validate ($var, -1, NULL)"
+		$test = "$var == NULL";
+
+		if ($pdbtype eq 'parasite') {
+		    $test .= " || $var->name == NULL";
+
+                    $utf8 = 1;
+		    $utf8testvar = "$var->name";
 		}
 		else {
-		    $reverse = sub { ${$_[0]} =~ s/==/!=/ };
-		    $test = "$var == NULL";
+                    $utf8 = exists $_->{utf8} && $_->{utf8};
+		    $utf8testvar = "$var";
+		}
+
+		if ($utf8) {
+		    $reverse = sub { ${$_[0]} =~ s/!//;
+				     ${$_[0]} =~ s/||/&&/g;
+				     ${$_[0]} =~ s/==/!=/g };
+                    $test .= " || !g_utf8_validate ($utf8testvar, -1, NULL)";
+		}
+		else {
+		    $reverse = sub { ${$_[0]} =~ s/||/&&/g;
+				     ${$_[0]} =~ s/==/!=/g };
 		}
 
 		$result .= &make_arg_test($_, $reverse, $test);
-	    }
-	    elsif ($pdbtype eq 'parasite') {
-		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
-					  "$var == NULL || " .
-					  "$var->name == NULL || " .
-					  "!g_utf8_validate ($var->name, -1, NULL)");
 	    }
 	    elsif ($pdbtype eq 'tattoo') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
