@@ -1,40 +1,36 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# gimp-libgimp sk.po
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Zdenko Podobný <zdpo@mailbox.sk>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp VERSION\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
-"PO-Revision-Date: 2000-12-18 23:30-0800\n"
-"Last-Translator: Nobody\n"
-"Language-Team: Slovak\n"
+"Project-Id-Version: gimp-libgimp\n"
+"POT-Creation-Date: 2001-12-19 07:28-0500\n"
+"PO-Revision-Date: 2002-01-26 15:15GMT+0100\n"
+"Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
+"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 0.9.5\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-#, fuzzy
 msgid "can't handle layers"
-msgstr "Veµkos» vrstvy"
+msgstr "nie je mo¾né manipulova» s vrstvami"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
-#, fuzzy
 msgid "Merge Visible Layers"
 msgstr "Zlúèi» viditeµné vrstvy"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "Veµkos» vrstvy"
+msgstr "nie je mo¾né spracova» posun, veµkos» alebo krytie vrstvy"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-#, fuzzy
 msgid "can only handle layers as animation frames"
 msgstr "vrstvy mô¾u by» len políèkami animácie"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
-#, fuzzy
 msgid "Save as Animation"
 msgstr "Ulo¾i» ako animáciu"
 
@@ -43,12 +39,10 @@ msgid "Flatten Image"
 msgstr "Do jednej vrstvy"
 
 #: libgimp/gimpexport.c:215
-#, fuzzy
 msgid "can't handle transparency"
 msgstr "transparentnos» nie je podporovaná"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy
 msgid "can only handle RGB images"
 msgstr "funguje len pre RGB obrázky"
 
@@ -57,22 +51,18 @@ msgid "Convert to RGB"
 msgstr "Konverzia do RGB"
 
 #: libgimp/gimpexport.c:233
-#, fuzzy
 msgid "can only handle grayscale images"
 msgstr "funguje len pre obrázky v odtieòoch ¹edej"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
-#, fuzzy
 msgid "Convert to Grayscale"
 msgstr "Konverzia do odtieòov ¹edej"
 
 #: libgimp/gimpexport.c:242
-#, fuzzy
 msgid "can only handle indexed images"
 msgstr "funguje len pre indexované obrázky"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -81,29 +71,24 @@ msgstr ""
 "(Pou¾ite manuálne nastavenie pre vylep¹enie výsledku)"
 
 #: libgimp/gimpexport.c:252
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
 msgstr "funguje len pre RGB/¹edé obrázky"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "can only handle RGB or indexed images"
 msgstr "funguje len pre RGB/indexované obrázky"
 
 #: libgimp/gimpexport.c:271
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
 msgstr "funguje len pre indexované/¹edé obrázky"
 
 #: libgimp/gimpexport.c:282
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "Alfa kanál vrstvy"
+msgstr "potrebuje Alfa kanál"
 
 #: libgimp/gimpexport.c:283
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "/Prida» alfa kanál"
+msgstr "Prida» alfa kanál"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -112,15 +97,15 @@ msgstr "/Prida» alfa kanál"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Potvrdi» ukladanie"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdi»"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "Zru¹i»"
+msgstr "Storno"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -128,6 +113,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Idete ulo¾i» %s ako %s.\n"
+"Viditeµné vrstvy nebudú ulo¾ené."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -150,8 +137,7 @@ msgstr "Ignorova»"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
-"Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovnýchdôvodov:"
+msgstr "Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
@@ -160,20 +146,20 @@ msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "maska vrstvy"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "kanál (ulo¾ený výber)"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:52
 msgid "pixel"
-msgstr "pixlov"
+msgstr "pixelov"
 
 #: libgimp/gimpunit.c:52
 msgid "pixels"
-msgstr "pixlov"
+msgstr "pixelov"
 
 #. standard units
 #: libgimp/gimpunit.c:55
@@ -203,36 +189,35 @@ msgstr "body"
 
 #: libgimp/gimpunit.c:60
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:60
 msgid "picas"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "percent"
 
-#: libgimpwidgets/gimpcolorbutton.c:85
+#: libgimpwidgets/gimpcolorbutton.c:81
 msgid "/Foreground Color"
-msgstr ""
+msgstr "/Farba popredia"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:83
 msgid "/Background Color"
-msgstr ""
+msgstr "/Farba pozadia"
 
-#: libgimpwidgets/gimpcolorbutton.c:90
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Black"
-msgstr ""
+msgstr "/Èierna"
 
-#: libgimpwidgets/gimpcolorbutton.c:92
+#: libgimpwidgets/gimpcolorbutton.c:88
 msgid "/White"
-msgstr ""
+msgstr "/Biela"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Directory"
-msgstr "Výber súboru"
+msgstr "Zvoµte prieèinok"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -247,9 +232,8 @@ msgid "Unit Selection"
 msgstr "Výber jednotiek"
 
 #: libgimpwidgets/gimpunitmenu.c:571
-#, fuzzy
 msgid "Unit"
-msgstr "Jednotka:"
+msgstr "Jednotka"
 
 #: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
@@ -260,34 +244,30 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
+"Ak nie je stlaèené tlaèítko \"Èas\", pou¾ije sa táto hodnota pre hniezdo "
+"náhodného generátoru - umo¾òuje to zopakova» zadanú \"náhodnú\" operáciu"
 
 #: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
-msgstr ""
+msgstr "Èas"
 
 #: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+"Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje "
+"primeranú náhodnos»"
 
 #: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
-msgstr ""
+msgstr "v bytoch"
 
 #: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
-msgstr ""
+msgstr "v kilobytoch"
 
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
-msgstr ""
+msgstr "v megabytoch"
 
-#~ msgid "Select"
-#~ msgstr "/Selekcia"
-
-#~ msgid "Close"
-#~ msgstr "Zatvori»"
-
-#~ msgid "warning: no home directory."
-#~ msgstr "warovanie: chýba domáci adresár."
