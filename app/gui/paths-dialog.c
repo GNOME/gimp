@@ -776,8 +776,9 @@ clear_pixmap_preview (PathWidget *pwidget)
 }
 
 /* insrow == -1 -> append else insert at insrow */
-void paths_add_path (PATHP bzp,
-		     gint  insrow)
+void 
+paths_add_path (PATHP bzp,
+		gint  insrow)
 {
   /* Create a new entry in the list */
   PathWidget *pwidget;
@@ -1416,6 +1417,8 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
       beziersel_free (bsel);
 
       paths_dialog->current_path_list = NULL;
+
+      paths_dialog_set_menu_sensitivity ();
     }
 
   if (!new_sz)
