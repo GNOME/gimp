@@ -650,12 +650,12 @@ crop_modifier_key_func (Tool        *tool,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), !crop_options->allow_enlarge);
       break;
     case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
       if (crop_options->type == CROP_CROP)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
       else
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
-      break;
-    case GDK_Control_L: case GDK_Control_R:
       break;
     }
 }

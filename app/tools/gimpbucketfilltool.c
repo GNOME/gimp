@@ -291,14 +291,16 @@ bucket_fill_cursor_update (Tool           *tool,
 
 static void
 bucket_fill_modifier_key_func (Tool        *tool,
-			     GdkEventKey *kevent,
-			     gpointer     gdisp_ptr)
+			       GdkEventKey *kevent,
+			       gpointer     gdisp_ptr)
 {
   switch (kevent->keyval)
     {
     case GDK_Alt_L: case GDK_Alt_R:
       break;
     case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
       switch (bucket_options->fill_mode)
 	{
 	case FG_BUCKET_FILL:
@@ -310,8 +312,6 @@ bucket_fill_modifier_key_func (Tool        *tool,
 	default:
 	  break;
 	}
-      break;
-    case GDK_Control_L: case GDK_Control_R:
       break;
     }
 }

@@ -191,14 +191,16 @@ convolve_paint_func (PaintCore    *paint_core,
 
 static void
 convolve_modifier_key_func (Tool        *tool,
-			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+			    GdkEventKey *kevent,
+			    gpointer     gdisp_ptr)
 {
   switch (kevent->keyval)
     {
     case GDK_Alt_L: case GDK_Alt_R:
       break;
     case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
       switch (convolve_options->type)
 	{
 	case BLUR_CONVOLVE:
@@ -210,8 +212,6 @@ convolve_modifier_key_func (Tool        *tool,
 	default:
 	  break;
 	}
-      break;
-    case GDK_Control_L: case GDK_Control_R:
       break; 
     }
 }

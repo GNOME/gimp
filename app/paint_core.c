@@ -226,6 +226,7 @@ paint_core_button_press (Tool           *tool,
   (* paint_core->paint_func) (paint_core, drawable, INIT_PAINT);
 
   if (paint_core->pick_colors
+      && !(bevent->state & GDK_SHIFT_MASK) 
       && (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
   {
     paint_core_sample_color (drawable, x, y, bevent->state);
@@ -337,26 +338,19 @@ paint_core_cursor_update (Tool           *tool,
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
 
-  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
-			       &x, &y, TRUE, FALSE);
- 
   if ((layer = gimage_get_active_layer (gdisp->gimage)))
     {
-      /* If Ctrl or Mod1 is pressed, pick colors */ 
-      if (paint_core->pick_colors
-	  && (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-        {
-	  ctype = GIMP_COLOR_PICKER_CURSOR;
-	}
-
       /* If shift is down and this is not the first paint stroke, draw a line */
-      else if (gdisp_ptr == tool->gdisp_ptr && 
+      if (gdisp_ptr == tool->gdisp_ptr && 
 	       (mevent->state & COMMON_MODIFIERS_MASK) == GDK_SHIFT_MASK)
 	{
 	  ctype = GDK_PENCIL;
-	  /*  Get the current coordinates  */
-	  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
-					 &paint_core->curx, &paint_core->cury, TRUE);
+	  /*  Get the current coordinates */ 
+	  gdisplay_untransform_coords_f (gdisp, 
+					 (double) mevent->x, 
+					 (double) mevent->y,
+					 &paint_core->curx, 
+					 &paint_core->cury, TRUE);
 
 	  if (paint_core->core->gc == NULL)
 	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
@@ -367,12 +361,22 @@ paint_core_cursor_update (Tool           *tool,
 	      draw_core_resume (paint_core->core, tool);
 	    }
 	} 
+      /* If Ctrl or Mod1 is pressed, pick colors */ 
+      else if (paint_core->pick_colors
+	  && !(mevent->state & GDK_SHIFT_MASK) 
+	  && (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+        {
+	  ctype = GIMP_COLOR_PICKER_CURSOR;
+	}
       /* Normal operation -- no modifier pressed or first stroke */
       else 
 	{
 	  int off_x, off_y;
-	  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
+	  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+	  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
+				       &x, &y, TRUE, FALSE);
+ 
 	  if (x >= off_x && y >= off_y &&
 	       x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
 	       y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
@@ -386,8 +390,8 @@ paint_core_cursor_update (Tool           *tool,
 		ctype = GDK_PENCIL;
 	    }
 	}
+      gdisplay_install_tool_cursor (gdisp, ctype);
     }
-  gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
 void
@@ -406,10 +410,8 @@ paint_core_control (Tool    *tool,
   switch (action)
     {
     case PAUSE :
-      draw_core_pause (paint_core->core, tool);
       break;
     case RESUME :
-      draw_core_resume (paint_core->core, tool);
       break;
     case HALT :
       (* paint_core->paint_func) (paint_core, drawable, FINISH_PAINT);
@@ -429,7 +431,8 @@ paint_core_draw (Tool *tool)
 
   paint_core = (PaintCore *) tool->private;
 
-  /* if shift was never used, we don't care about a redraw */
+  /* if shift was never used, paint_core->core->gc is NULL 
+     and we don't care about a redraw                       */
   if (paint_core->core->gc != NULL)
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
@@ -600,7 +603,7 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
   /* if were past the first chunk... */
   if ((y/gradient_length) > 1.0)
     {
-      /* if this is an "odd" chunk..." */
+      /* if this is an "odd" chunk... */
       if ((int)(y/gradient_length) & 1)
 	{
 	  /* draw it "normally" */

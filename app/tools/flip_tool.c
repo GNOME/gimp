@@ -96,20 +96,20 @@ flip_options_new (void)
 
 static void
 flip_modifier_key_func (Tool        *tool,
-		      GdkEventKey *kevent,
-		      gpointer     gdisp_ptr)
+			GdkEventKey *kevent,
+			gpointer     gdisp_ptr)
 {
   switch (kevent->keyval)
     {
     case GDK_Alt_L: case GDK_Alt_R:
       break;
     case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
       if (flip_options->type == FLIP_HORZ)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_VERT]), TRUE);
       else
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_HORZ]), TRUE);
-      break;
-    case GDK_Control_L: case GDK_Control_R:
       break;
     }
 }
