@@ -74,10 +74,10 @@ gimp_image_duplicate (GimpImage *gimage)
                              gimp_image_get_colormap_size (gimage),
                              FALSE);
 
-  /*  Copy resolution and unit information  */
-  new_gimage->xresolution = gimage->xresolution;
-  new_gimage->yresolution = gimage->yresolution;
-  new_gimage->unit        = gimage->unit;
+  /*  Copy resolution information  */
+  new_gimage->xresolution     = gimage->xresolution;
+  new_gimage->yresolution     = gimage->yresolution;
+  new_gimage->resolution_unit = gimage->resolution_unit;
 
   /*  Copy floating layer  */
   floating_layer = gimp_image_floating_sel (gimage);

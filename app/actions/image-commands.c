@@ -614,10 +614,10 @@ image_scale_implement (ImageResizeOptions *options)
 {
   GimpImage *gimage = options->gimage;
 
-  if (options->dialog->resolution_x == gimage->xresolution &&
-      options->dialog->resolution_y == gimage->yresolution &&
-      options->dialog->unit         == gimage->unit        &&
-      options->dialog->width        == gimage->width       &&
+  if (options->dialog->resolution_x == gimage->xresolution     &&
+      options->dialog->resolution_y == gimage->yresolution     &&
+      options->dialog->unit         == gimage->resolution_unit &&
+      options->dialog->width        == gimage->width           &&
       options->dialog->height       == gimage->height)
     return;
 

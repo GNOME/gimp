@@ -221,9 +221,9 @@ typedef struct _ResolutionUndo ResolutionUndo;
 
 struct _ResolutionUndo
 {
-  gdouble  xres;
-  gdouble  yres;
-  GimpUnit unit;
+  gdouble   xres;
+  gdouble   yres;
+  GimpUnit  unit;
 };
 
 static gboolean undo_pop_image_resolution  (GimpUndo            *undo,
@@ -253,7 +253,7 @@ gimp_image_undo_push_image_resolution (GimpImage   *gimage,
 
       ru->xres = gimage->xresolution;
       ru->yres = gimage->yresolution;
-      ru->unit = gimage->unit;
+      ru->unit = gimage->resolution_unit;
 
       return TRUE;
     }
@@ -286,12 +286,12 @@ undo_pop_image_resolution (GimpUndo            *undo,
       accum->resolution_changed = TRUE;
     }
 
-  if (ru->unit != undo->gimage->unit)
+  if (ru->unit != undo->gimage->resolution_unit)
     {
       GimpUnit unit;
 
-      unit = undo->gimage->unit;
-      undo->gimage->unit = ru->unit;
+      unit = undo->gimage->resolution_unit;
+      undo->gimage->resolution_unit = ru->unit;
       ru->unit = unit;
 
       accum->unit_changed = TRUE;

@@ -31,7 +31,6 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
-#include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -383,10 +382,9 @@ gimp_template_set_from_image (GimpTemplate *template,
   g_object_set (template,
                 "width",           gimp_image_get_width (gimage),
                 "height",          gimp_image_get_height (gimage),
-                "unit",            gimp_image_get_unit (gimage),
                 "xresolution",     xresolution,
                 "yresolution",     yresolution,
-                "resolution-unit", gimage->gimp->config->default_image->resolution_unit,
+                "resolution-unit", gimp_image_get_unit (gimage),
                 "image-type",      image_type,
                 "comment",         comment,
                 NULL);

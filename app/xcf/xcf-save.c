@@ -414,6 +414,7 @@ xcf_save_image_props (XcfInfo   *info,
 		      GError   **error)
 {
   GimpParasite *parasite = NULL;
+  GimpUnit      unit     = gimp_image_get_unit (gimage);
 
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
@@ -438,9 +439,8 @@ xcf_save_image_props (XcfInfo   *info,
     xcf_check_error (xcf_save_prop (info, gimage, PROP_PARASITES,
                                     error, gimage->parasites));
 
-  if (gimage->unit < _gimp_unit_get_number_of_built_in_units (gimage->gimp))
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT,
-                                    error, gimage->unit));
+  if (unit < _gimp_unit_get_number_of_built_in_units (gimage->gimp))
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT, error, unit));
 
   if (gimp_container_num_children (gimage->vectors) > 0)
     {
@@ -450,9 +450,8 @@ xcf_save_image_props (XcfInfo   *info,
         xcf_check_error (xcf_save_prop (info, gimage, PROP_VECTORS, error));
     }
 
-  if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT,
-                                    error, gimage->unit));
+  if (unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT, error, unit));
 
   if (GIMP_IS_GRID (gimage->grid))
     {

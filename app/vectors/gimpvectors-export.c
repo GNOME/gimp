@@ -172,7 +172,7 @@ gimp_vectors_export_image_size (const GimpImage *image,
   h = (gdouble) image->height / image->yresolution;
 
   /*  FIXME: should probably use the display unit here  */
-  unit = image->unit;
+  unit = gimp_image_get_unit (image);
   switch (unit)
     {
     case GIMP_UNIT_INCH:  abbrev = "in";  break;

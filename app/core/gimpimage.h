@@ -108,7 +108,7 @@ struct _GimpImage
   gint               width, height;         /*  width and height attributes  */
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
-  GimpUnit           unit;                  /*  resolution unit              */
+  GimpUnit           resolution_unit;       /*  resolution unit              */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
 
   guchar            *cmap;                  /*  colormap--for indexed        */

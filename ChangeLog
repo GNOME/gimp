@@ -1,3 +1,23 @@
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.[ch]: renamed struct member "unit" to
+	"resolution_unit".
+
+	* app/actions/image-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-undo-push.c
+	* app/dialogs/info-window.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimptoolbox-dnd.c:
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: changed accordingly. Use gimp_image_get_unit()
+	where appropriate.
+
+	* app/core/gimptemplate.c (gimp_template_set_from_image): fixed
+	unit handling. Don't touch the template unit, it is used as the
+	initial display unit. This will need further changes...
+
 2004-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.c (gimp_enum_radio_frame_add):

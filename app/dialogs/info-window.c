@@ -426,7 +426,7 @@ info_window_update_cursor (GimpDisplay *gdisp,
       gchar        buf[32];
 
       if (unit == GIMP_UNIT_PIXEL)
-        unit = image->unit;
+        unit = gimp_image_get_unit (image);
 
       unit_factor = _gimp_unit_get_factor (image->gimp, unit);
       unit_digits = _gimp_unit_get_digits (image->gimp, unit);
@@ -544,7 +544,7 @@ info_window_update (GimpDisplay *gdisp)
   unit = GIMP_DISPLAY_SHELL (gdisp->shell)->unit;
 
   if (unit == GIMP_UNIT_PIXEL)
-    unit = image->unit;
+    unit = gimp_image_get_unit (image);
 
   unit_factor = _gimp_unit_get_factor (image->gimp, unit);
   unit_digits = _gimp_unit_get_digits (image->gimp, unit);
@@ -557,7 +557,7 @@ info_window_update (GimpDisplay *gdisp)
               image->height * unit_factor / image->yresolution);
 
   /*  resolution  */
-  unit = image->unit;
+  unit = gimp_image_get_unit (image);
   unit_factor = _gimp_unit_get_factor (image->gimp, unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),

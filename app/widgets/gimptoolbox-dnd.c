@@ -166,7 +166,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_image_set_resolution (new_image,
 			     gimage->xresolution, gimage->yresolution);
-  gimp_image_set_unit (new_image, gimage->unit);
+  gimp_image_set_unit (new_image,
+                       gimp_image_get_unit (gimage));
 
   if (GIMP_IS_LAYER (drawable))
     new_type = G_TYPE_FROM_INSTANCE (drawable);
