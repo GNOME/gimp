@@ -1,3 +1,8 @@
+2001-11-10  Tor Lillqvist  <tml@iki.fi>
+
+	* app/user_install.c (user_install_run): Retract change from
+	yesterday. Don't use popen on Windows, it really doesn't work.
+
 2001-11-09  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimp.rc

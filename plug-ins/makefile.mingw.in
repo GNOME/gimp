@@ -208,6 +208,7 @@ UNOFFICIAL = 			\
 	sel_gauss		\
 	magiceye		\
 	mathmap			\
+	plasma2			\
 	psd_save		\
 	resynthesizer		\
 	u7shp			\
@@ -474,7 +475,6 @@ endif
 ifdef EXTRA_homogenizer
 OBJECTS = \
 	homogenize.o
-EXTRALIBS = -lstdc++
 endif
 
 ifdef EXTRA_ifscompose
@@ -601,7 +601,6 @@ endif
 ifdef EXTRA_resynthesizer
 OBJECTS = \
 	resynth.o
-EXTRALIBS = -lstdc++
 endif
 
 ifdef EXTRA_script_fu
@@ -792,8 +791,8 @@ else
 # this will have to be changed.
 RESOURCE = wilber.o
 
-wilber.o : ../app/wilber.ico
-	cp ../app/wilber.ico .
+wilber.o : $(GIMPTOP)/app/wilber.ico
+	cp $(GIMPTOP)/app/wilber.ico .
 	echo 'wilber ICON "wilber.ico"' >wilber.rc
 	$(GIMPTOP)/build/win32/compile-resource wilber.rc wilber.o
 	rm wilber.ico wilber.rc
@@ -851,7 +850,7 @@ OBJECTS = $(MODULE).o
 endif
 
 $(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
-	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(GLIB_LIBS)
+	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp -lgimpui $(GTK_LIBS) $(GLIB_LIBS)
 endif
 
 endif # ifndef FROMPLUGINSDIR
