@@ -46,8 +46,6 @@
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
 
-#define COMMON_MODIFIERS_MASK (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)
-
 /*  global variables--for use in the various paint tools  */
 PaintCore  non_gui_paint_core;
 
