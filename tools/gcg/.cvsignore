@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+.deps
+lexer.c
+parser.c
+parser.h
+y.output
+gcg
