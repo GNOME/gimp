@@ -51,7 +51,7 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint DeinterlaceValue = 1; 
+static gint DeinterlaceValue = 1;
 
 MAIN ()
 
@@ -112,13 +112,13 @@ run (char    *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	DeinterlaceValue = param[3].data.d_int32;
-      
+
       break;
-      
+
     case RUN_WITH_LAST_VALS:
       gimp_get_data("plug_in_deinterlace", &DeinterlaceValue);
       break;
-      
+
     default:
       break;
     }
@@ -131,7 +131,7 @@ run (char    *name,
 	  gimp_progress_init ("deinterlace");
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  deinterlace (drawable);
-	  
+
 	  if (run_mode != RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	  if (run_mode == RUN_INTERACTIVE)
@@ -184,7 +184,7 @@ deinterlace (GDrawable *drawable)
   dest = (guchar *) malloc ((x2 - x1) * bytes);
   upper = (guchar *) malloc ((x2 - x1) * bytes);
   lower = (guchar *) malloc ((x2 - x1) * bytes);
-  
+
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
@@ -203,11 +203,11 @@ deinterlace (GDrawable *drawable)
     if (!((row % 2 == DeinterlaceValue) || (row - 1 < 0) || (row + 1 >= height))) {
       gimp_pixel_rgn_get_row (&srcPR, upper, x1, row-1, (x2-x1));
       gimp_pixel_rgn_get_row (&srcPR, lower, x1, row+1, (x2-x1));
-      for (col=(x1*bytes); col < (x2*bytes); col++)
+      for (col=0; col < ((x2-x1)*bytes); col++)
 	dest[col]=(upper[col]+lower[col])>>1;
     }
     gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2-x1));
-    
+
     if ((row % 5) == 0)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }
@@ -261,9 +261,3 @@ static gint deinterlace_dialog()
   else
     return 0;
 }
-
-
-
-
-
-
