@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.13\n"
-"POT-Creation-Date: 1999-11-30 16:09+0100\n"
-"PO-Revision-Date: 1999-11-30 17:18+01:00\n"
+"POT-Creation-Date: 1999-12-03 14:12+0100\n"
+"PO-Revision-Date: 1999-12-03 15:50+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,11 +15,11 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
-msgstr "Modul barevných transformací \"Vetøelá mapa\""
+msgstr "Modul barevných transformací \"Cizí mapa\""
 
 #: plug-ins/AlienMap/AlienMap.c:190 plug-ins/AlienMap2/AlienMap2.c:213
 msgid "No help yet. Just try it and you'll see!"
-msgstr "Zatím není nápovìda. Zkuste a uvidíte!"
+msgstr "Zatím není nápovìda. Vyzkou¹ejte a uvidíte!"
 
 #: plug-ins/AlienMap/AlienMap.c:193
 msgid "1th May 1997"
@@ -27,15 +27,15 @@ msgstr "1. kvìtna 1997"
 
 #: plug-ins/AlienMap/AlienMap.c:194
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Vetøelá mapa..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Cizí mapa..."
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
-msgstr "Vetøelá mapa: Transformuje se..."
+msgstr "Cizí mapa: Transformuje se..."
 
 #: plug-ins/AlienMap/AlienMap.c:666
 msgid "AlienMap"
-msgstr "Vetøelá mapa"
+msgstr "Cizí mapa"
 
 #: plug-ins/AlienMap/AlienMap.c:710
 msgid "Change intensity of the red channel"
@@ -133,7 +133,7 @@ msgstr "Modrý kanál: pou¾ít lineární mapování namísto trigonometrické funkce"
 #: plug-ins/common/cubism.c:337 plug-ins/common/decompose.c:993
 #: plug-ins/common/depthmerge.c:752 plug-ins/common/destripe.c:696
 #: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1296
-#: plug-ins/common/grid.c:461 plug-ins/common/jpeg.c:1569
+#: plug-ins/common/grid.c:491 plug-ins/common/jpeg.c:1569
 #: plug-ins/common/lic.c:1251 plug-ins/common/mail.c:502
 #: plug-ins/common/mapcolor.c:340 plug-ins/common/nova.c:410
 #: plug-ins/common/oilify.c:468 plug-ins/common/papertile.c:517
@@ -171,7 +171,7 @@ msgstr "Pøijmout nastavení a pou¾ít filtr na obrázek"
 #: plug-ins/common/cubism.c:346 plug-ins/common/decompose.c:1002
 #: plug-ins/common/depthmerge.c:761 plug-ins/common/destripe.c:705
 #: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1202
-#: plug-ins/common/gif.c:1305 plug-ins/common/grid.c:470
+#: plug-ins/common/gif.c:1305 plug-ins/common/grid.c:500
 #: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1260
 #: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:349
 #: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
@@ -211,11 +211,11 @@ msgstr "Zobrazí informace o modulu a autorovi"
 
 #: plug-ins/AlienMap/AlienMap.c:1151
 msgid "About Alien Map"
-msgstr ""
+msgstr "O cizí mapì"
 
 #: plug-ins/AlienMap/AlienMap.c:1172 plug-ins/AlienMap2/AlienMap2.c:1077
 msgid "This closes the information box"
-msgstr ""
+msgstr "Tínto lze zavøít informaèní okno"
 
 #: plug-ins/AlienMap/AlienMap.c:1214
 msgid ""
@@ -238,12 +238,12 @@ msgstr ""
 "cotting@mygale.org\n"
 "http://www.mygale.org/~cotting\n"
 "\n"
-"Modul Vetøelá mapa (AlienMap) pro GIMP\n"
+"Modul Cizí mapa (AlienMap) pro GIMP\n"
 "Verze 1.01\n"
 
 #: plug-ins/AlienMap2/AlienMap2.c:212
 msgid "AlienMap2 Color Transformation Plug-In"
-msgstr "Modul barevných transformací \\\"Vetøelá mapa 2\\\""
+msgstr "Modul barevných transformací \\\"Cizí mapa 2\\\""
 
 #: plug-ins/AlienMap2/AlienMap2.c:216
 msgid "24th April 1998"
@@ -251,15 +251,15 @@ msgstr "24. dubna 1998"
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Vetøelá mapa 2..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Cizí mapa 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
-msgstr "Vetøelá mapa 2: Transformuje se..."
+msgstr "Cizí mapa 2: Transformuje se..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:658
 msgid "AlienMap2"
-msgstr "Vetøelá mapa 2"
+msgstr "Cizí mapa 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:703
 msgid "R/H-Frequency:"
@@ -1330,7 +1330,7 @@ msgid "Animation Playback: "
 msgstr "Pøehrátí animace: "
 
 #. Action area
-#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:517
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:525
 #: plug-ins/common/animationplay.c:681 plug-ins/gdyntext/charmap_window.c:140
 #: plug-ins/helpbrowser/helpbrowser.c:787
 #: plug-ins/ifscompose/ifscompose.c:1249
@@ -1852,66 +1852,59 @@ msgstr "Alfa:"
 
 #: plug-ins/common/compose.c:128
 msgid "rgba-compose"
-msgstr ""
+msgstr "rgba-kompozice"
 
 #: plug-ins/common/compose.c:129 plug-ins/common/decompose.c:133
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: plug-ins/common/compose.c:129
-#, fuzzy
 msgid "Hue:"
-msgstr "Odstín"
+msgstr "Odstín:"
 
 #: plug-ins/common/compose.c:129
-#, fuzzy
 msgid "Saturation:"
-msgstr "Sytost"
+msgstr "Sytost:"
 
 #: plug-ins/common/compose.c:129
-#, fuzzy
 msgid "Value:"
-msgstr "Jas"
+msgstr "Jas:"
 
 #: plug-ins/common/compose.c:130
 msgid "hsv-compose"
-msgstr ""
+msgstr "hsv-kompozice"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/decompose.c:138
 msgid "CMY"
-msgstr ""
+msgstr "CMY"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
-#, fuzzy
 msgid "Cyan:"
-msgstr "Azurová"
+msgstr "Azurová:"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
-#, fuzzy
 msgid "Magenta:"
-msgstr "Purpurová"
+msgstr "Purpurová:"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
-#, fuzzy
 msgid "Yellow:"
-msgstr "®lutá"
+msgstr "®lutá:"
 
 #: plug-ins/common/compose.c:132
 msgid "cmy-compose"
-msgstr ""
+msgstr "cmy-kompozice"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:143
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: plug-ins/common/compose.c:133
-#, fuzzy
 msgid "Black:"
-msgstr "Èerná"
+msgstr "Èerná:"
 
 #: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
-msgstr ""
+msgstr "cmyk-kompozice"
 
 #: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
@@ -1940,9 +1933,8 @@ msgid "compose: Could not get layers for image %d"
 msgstr ""
 
 #: plug-ins/common/compose.c:354
-#, fuzzy
 msgid "Composing..."
-msgstr "Rotuje se..."
+msgstr "Komponuje se..."
 
 #: plug-ins/common/compose.c:421
 msgid "compose: drawables have different size"
@@ -2106,59 +2098,48 @@ msgid "Use Background Color"
 msgstr "Pozadí"
 
 #: plug-ins/common/cubism.c:371 plug-ins/mosaic/mosaic.c:713
-#, fuzzy
 msgid "Tile Size"
-msgstr "Velikost vyrovnávací pamìti dla¾dic:"
+msgstr "Velikost dla¾dice"
 
 #: plug-ins/common/cubism.c:387
-#, fuzzy
 msgid "Tile Saturation"
-msgstr "Sytost"
+msgstr "Sytost dla¾dice"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
-#, fuzzy
 msgid "red"
-msgstr "Èervená"
+msgstr "èervená"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:131
-#, fuzzy
 msgid "green"
-msgstr "Zelená"
+msgstr "zelená"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
-#, fuzzy
 msgid "blue"
-msgstr "Modrá"
+msgstr "modrá"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:135
-#, fuzzy
 msgid "hue"
-msgstr "Odstín"
+msgstr "odstín"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:136
-#, fuzzy
 msgid "saturation"
-msgstr "Sytost"
+msgstr "sytost"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
-#, fuzzy
 msgid "value"
-msgstr "Jas"
+msgstr "jas"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:140
-#, fuzzy
 msgid "cyan"
-msgstr "Azurová"
+msgstr "azurová"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
-#, fuzzy
 msgid "magenta"
-msgstr "Purpurová"
+msgstr "purpurová"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
-#, fuzzy
 msgid "yellow"
-msgstr "®lutá"
+msgstr "¾lutá"
 
 #: plug-ins/common/decompose.c:140
 msgid "Cyan"
@@ -2173,44 +2154,36 @@ msgid "Yellow"
 msgstr "®lutá"
 
 #: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:145
-#, fuzzy
 msgid "cyan_k"
-msgstr "Azurová"
+msgstr "azurová_k"
 
 #: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:146
-#, fuzzy
 msgid "magenta_k"
-msgstr "Purpurová"
+msgstr "purpurová_k"
 
 #: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:147
-#, fuzzy
 msgid "yellow_k"
-msgstr "®lutá"
+msgstr "¾lutá_k"
 
 #: plug-ins/common/decompose.c:144
-#, fuzzy
 msgid "black"
-msgstr "Èerná"
+msgstr "èerná"
 
 #: plug-ins/common/decompose.c:145
-#, fuzzy
 msgid "Cyan_K"
-msgstr "Azurová"
+msgstr "Azurová_K"
 
 #: plug-ins/common/decompose.c:146
-#, fuzzy
 msgid "Magenta_K"
-msgstr "Purpurová"
+msgstr "Purpurová_K"
 
 #: plug-ins/common/decompose.c:147
-#, fuzzy
 msgid "Yellow_K"
-msgstr "®lutá"
+msgstr "®lutá_K"
 
 #: plug-ins/common/decompose.c:148
-#, fuzzy
 msgid "alpha"
-msgstr "Alfa"
+msgstr "alfa"
 
 #: plug-ins/common/decompose.c:216
 msgid "Decompose an image into different types of channels"
@@ -2232,7 +2205,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:309
 msgid "Decomposing..."
-msgstr ""
+msgstr "Dekomponuje se..."
 
 #: plug-ins/common/decompose.c:373
 msgid "decompose: not an RGB image"
@@ -2708,73 +2681,68 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr ""
 
-#: plug-ins/common/grid.c:123
+#: plug-ins/common/grid.c:126
 msgid "Draws a grid."
 msgstr ""
 
-#: plug-ins/common/grid.c:124
+#: plug-ins/common/grid.c:127
 msgid "no help available"
 msgstr ""
 
-#: plug-ins/common/grid.c:128
+#: plug-ins/common/grid.c:131
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/Filtry/Výpoèty/Vzorek/Møí¾..."
 
-#: plug-ins/common/grid.c:214
+#: plug-ins/common/grid.c:217
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:444 plug-ins/imagemap/imap_toolbar.c:164
+#: plug-ins/common/grid.c:474 plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr ""
 
 #. attach labels
-#: plug-ins/common/grid.c:512
+#: plug-ins/common/grid.c:545
 msgid "Horizontal"
 msgstr ""
 
-#: plug-ins/common/grid.c:513
+#: plug-ins/common/grid.c:546
 #, fuzzy
 msgid "Vertical"
 msgstr "Kulový"
 
-#: plug-ins/common/grid.c:514
+#: plug-ins/common/grid.c:547
 #, fuzzy
 msgid "Intersection"
 msgstr "Operace"
 
-#: plug-ins/common/grid.c:515
+#: plug-ins/common/grid.c:548
 #, fuzzy
 msgid "Width: "
 msgstr "©íøka:"
 
 #. attach labels
-#: plug-ins/common/grid.c:569
+#: plug-ins/common/grid.c:605
 #, fuzzy
 msgid "Spacing: "
 msgstr "Zmìna velikosti"
 
 #. attach labels
-#: plug-ins/common/grid.c:623
+#: plug-ins/common/grid.c:662
 #, fuzzy
 msgid "Offset: "
 msgstr "Posun:"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:626
-#, fuzzy
-msgid "Color: "
-msgstr "Barva"
-
-#: plug-ins/common/grid.c:628
+#: plug-ins/common/grid.c:692
 msgid "Horizontal Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:637
+#: plug-ins/common/grid.c:702
 msgid "Vertical Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:646
+#: plug-ins/common/grid.c:712
 msgid "Intersection Color"
 msgstr ""
 
@@ -3060,11 +3028,11 @@ msgstr "Zvìt¹ení:"
 #. Encapsulation radiobutton
 #: plug-ins/common/mail.c:695
 msgid "Uuencode"
-msgstr ""
+msgstr "Uu-kódování"
 
 #: plug-ins/common/mail.c:697
 msgid "MIME"
-msgstr ""
+msgstr "MIME"
 
 #: plug-ins/common/mail.c:810
 msgid "mail: some sort of error with the file extension or lack thereof \n"
@@ -3556,7 +3524,7 @@ msgid "keep aspect ratio"
 msgstr "Pevná velikost / pomìr stran"
 
 #. Unit
-#: plug-ins/common/ps.c:2468
+#: libgimp/gimpunitmenu.c:489 plug-ins/common/ps.c:2468
 #, fuzzy
 msgid "Unit"
 msgstr "Jednotky:"
@@ -4148,7 +4116,7 @@ msgstr ""
 msgid "Press Button"
 msgstr "Tlak"
 
-#: libgimp/gimpfileselection.c:355 libgimp/gimpunitmenu.c:509
+#: libgimp/gimpfileselection.c:355 libgimp/gimpunitmenu.c:517
 #: plug-ins/gap/gap_arr_dialog.c:1226 plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr "Výbìr"
@@ -8550,21 +8518,24 @@ msgstr "piky"
 msgid "percent"
 msgstr "procenta"
 
-#: libgimp/gimpunitmenu.c:207
+#: libgimp/gimpunitmenu.c:214
 msgid "More..."
 msgstr "Více..."
 
-#: libgimp/gimpunitmenu.c:452
+#: libgimp/gimpunitmenu.c:462
 msgid "Unit Selection"
 msgstr "Výbìr jednotek"
 
-#: libgimp/gimpunitmenu.c:478
-msgid "Unit "
-msgstr "Jednotka "
-
-#: libgimp/gimpunitmenu.c:480
+#: libgimp/gimpunitmenu.c:490
 msgid "Factor"
 msgstr "Faktor"
+
+#, fuzzy
+#~ msgid "Color: "
+#~ msgstr "Barva"
+
+#~ msgid "Unit "
+#~ msgstr "Jednotka "
 
 #~ msgid "<Image>/Video/Encode/MPEG1..."
 #~ msgstr "<Image>/Video/Kódování/MPEG1..."
