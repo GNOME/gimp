@@ -1,5 +1,10 @@
 2004-10-30  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/newsprint.c: Moved the preview to the left, as
+	suggested by Joao S. O. Bueno.
+
+2004-10-30  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.c
 	* plug-ins/gfig/gfig-line.c
 	* plug-ins/gfig/gfig-line.h

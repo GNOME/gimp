@@ -262,7 +262,6 @@ struct _channel_st
  * callback functions */
 typedef struct
 {
-  GtkWidget  *dlg;             /* main dialog itself */
   GtkWidget  *pull_table;
   GtkObject  *pull;            /* black pullout percentage */
   GtkObject  *input_spi;
@@ -1159,6 +1158,10 @@ newsprint_dialog (GimpDrawable *drawable)
 {
   /* widgets we need from callbacks stored here */
   NewsprintDialog_st st;
+  GtkWidget *dialog;
+  GtkWidget *paned;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *frame;
@@ -1194,7 +1197,7 @@ newsprint_dialog (GimpDrawable *drawable)
         pvals.colourspace = CS_RGB;
     }
 
-  st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
+  dialog = gimp_dialog_new (_("Newsprint"), "newsprint",
                             NULL, 0,
                             gimp_standard_help_func, "plug-in-newsprint",
 
@@ -1203,22 +1206,43 @@ newsprint_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  paned = gtk_hpaned_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (paned), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), paned);
+  gtk_widget_show (paned);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_paned_pack1 (GTK_PANED (paned), hbox, TRUE, FALSE);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   preview = gimp_drawable_preview_new (drawable, &pvals_ui.preview);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_box_pack_start_defaults (GTK_BOX (hbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (newsprint),
                             drawable);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_paned_pack2 (GTK_PANED (paned), hbox, FALSE, FALSE);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_widget_show (vbox);
+
   /* resolution settings  */
   frame = gimp_frame_new (_("Resolution"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -1277,7 +1301,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* screen settings */
   frame = gimp_frame_new (_("Screen"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   st.vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), st.vbox);
@@ -1420,7 +1444,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   /* anti-alias control */
   frame = gimp_frame_new (_("Antialiasing"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -1442,13 +1466,13 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  gtk_widget_show (st.dlg);
+  gtk_widget_show (dialog);
 
   preview_update(st.chst[pvals.colourspace][0]);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (st.dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (st.dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
