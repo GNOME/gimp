@@ -31,7 +31,7 @@
 
 
 #define GIMP_TYPE_PARAM_COLOR             (gimp_param_color_get_type ())
-#define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_COLOR))
+#define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
 
 GType        gimp_param_color_get_type    (void) G_GNUC_CONST;
 
@@ -43,7 +43,7 @@ GParamSpec * gimp_param_spec_color        (const gchar    *name,
 
 
 #define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
-#define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_MEMSIZE))
+#define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MEMSIZE))
 
 GType        gimp_param_memsize_get_type  (void) G_GNUC_CONST;
 
@@ -57,7 +57,7 @@ GParamSpec * gimp_param_spec_memsize      (const gchar    *name,
 
 
 #define GIMP_TYPE_PARAM_PATH              (gimp_param_path_get_type ())
-#define GIMP_IS_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_PATH))
+#define GIMP_IS_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATH))
 
 GType        gimp_param_path_get_type     (void) G_GNUC_CONST;
 
@@ -69,7 +69,7 @@ GParamSpec * gimp_param_spec_path         (const gchar    *name,
 
 
 #define GIMP_TYPE_PARAM_UNIT              (gimp_param_unit_get_type ())
-#define GIMP_IS_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_UNIT))
+#define GIMP_IS_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
 
 GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
 

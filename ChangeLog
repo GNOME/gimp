@@ -1,3 +1,11 @@
+2002-09-21  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-params.h: fixed some macros that were never used.
+
+	* data/images/gimp_splash.png: flattened the splash image. The alpha channel
+	crashed servers with buggy XRender extension (#93841) (and should have never
+	been there anyway).
+
 2002-09-18  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: Allow activation of the
