@@ -1,24 +1,23 @@
 #!/usr/bin/perl
 
-# -r	print raw format (i.e. suitable for troff -man)
-
 use Gimp qw(:consts spawn_options=no-data);
 use Getopt::Std;
 #use Config '%Config';
 
 $VERSION=$Gimp::VERSION;
 
-getopts('r');
+getopts('rw:');
 
 if (@ARGV<1) {
    my $me = $0;
    $me =~ s,.*[/\\],,;
    print STDERR <<EOF;
 
-Usage: $me [-r] function...
+Usage: $me [-r] [-w dir] function...
 
 Options:
-     -r  print raw tbl|nroff source.
+     -r      print raw tbl|nroff source.
+     -w dir  create html (use prefix dir when wriign out files)
 
 EOF
    exit(1);
@@ -33,15 +32,6 @@ for (@ARGV) {
 @matches or die "No matching function found\n";
 
 @matches = sort @matches;
-
-$filter = "| tbl | nroff -man | ( '$ENV{PAGER}' 2>/dev/null || less || pg || more )";
-$filter = ">&STDOUT" if $opt_r;
-
-open PAGER,$filter or die "unable to open pipe to the pager ($filter)\n";
-
-if(@matches>1) {
-   print PAGER ".TH gimpdoc gimpdoc\n.SH MATCHING FUNCTIONS\n",join("\n.br\n",@matches),"\n";
-}
 
 %pf_type2string = (
          &PARAM_INT8		=> 'INT8',
@@ -75,8 +65,68 @@ sub type2str {
   : "UNKNOWN($_[0])";
 }
 
-my $version = "gimp-".Gimp->major_version.".".Gimp->minor_version;
-my $theader = <<EOF;
+sub format_html {
+   $created_by = "<br><hr><font size=-1>This page was created by <tt>gimpdoc</tt>, written by".
+                 "<a href=\"mailto:pcg\@goof.com\">Marc Lehmann &lt;pcg\@goof.com&gt;</a></font>";
+   $nbsp = "&nbsp;";
+   ($b1,$b0)=('<b>','</b>');
+   ($sh1,$sh0)=('<dt>',"<dd>");
+   ($tt1,$tt0)=('<tt>','</tt>');
+   $br = "<br>";
+   $theader = <<EOF;
+<table><tr align=left><th>TYPE<th>NAME<th>DESCRIPTION
+EOF
+   $tr = "<tr>";
+   $tend = "</table>";
+   $body = '<body text="#000000" link="#1010c0" vlink="#101080" alink="#ff0000" bgcolor="#ffffff">';
+   $header = <<'EOF';
+<html><head><title>Gimp PDB documentation - $name</title>$body
+<a href=\"$prev_fun.html\">$prev_fun</a> &lt;&lt; <a href=index.html>INDEX</a> &gt;&gt;
+<a href=\"$next_fun.html\">$next_fun</a>
+<h1><b>$name</b> ($date)</h1>
+<dl>
+<dt>NAME<dd><b>$name - $blurb</b>
+<dt>SYNOPSIS<dd><tt>$vals<b>$name</b>$args</tt>
+<dt>DESCRIPTION<dd>$help
+EOF
+   $trailer = <<'EOF';
+<dt>AUTHOR<dd>$author<br>(c)$date $copyright
+</dl>
+$created_by
+</html>
+EOF
+   *escape = sub {
+      $_[0] =~ s/&/&amp;/;
+      $_[0] =~ s/</&lt;/;
+      $_[0] =~ s/>/&gt;/;
+
+      $_[0] =~ s/{/_lbr/;
+      $_[0] =~ s/}/_rbr/;
+
+      # do a best effort to replace function names by links
+      $_[0] =~ s{\b([a-z_]+_[a-z_]+)\b}{
+         my $proc = $1;
+         if (grep $_ eq $proc, @matches) {
+            "<a href=$proc.html>$proc</a>";
+         } else {
+            $proc;
+         }
+      }ge;
+   };
+   *table_line = sub {
+      my ($a,$b,$c) = @_;
+      for ($a,$b,$c) { escape($_) };
+      "<tr><td>$a<td>$b<td>$c";
+   };
+}
+
+sub format_roff {
+   $nbsp = "\\ ";
+   ($b1,$b0)=("\\fB","\\fR");
+   ($sh1,$sh0)=('.SH ',"\n");
+   ($tt1,$tt0)=('','');
+   $br = "\n.br\n";
+   $theader = <<EOF;
 .TS H
 expand ;
 l l l
@@ -84,7 +134,31 @@ ___
 lw20 lw20 lw60.
 TYPE	NAME	DESCRIPTION
 EOF
+   $tend = "\n.TE\n";
+   $header = <<'EOF';
+.TH \"$name\" \"gimpdoc\" \"$date\" \"$version\"
+.SH NAME
+\\fB$name\\fR \- $blurb
+.SH SYNOPSIS
+$vals\\fB$name\\fR$args
+.SH DESCRIPTION
+$help
+EOF
+   $trailer = <<'EOF';
+.SH AUTHOR
+$author
+.br
+(c)$date $copyright
+EOF
+   *escape = sub {};
+   *table_line = sub {
+      join("	",$_[0]." ",$_[1]." ","T{\n".$_[1]."\nT}")."\n"; 
+   }
+}
 
+format_roff;
+
+my $version = "gimp-".Gimp->major_version.".".Gimp->minor_version;
 sub gen_va(\@\@) {
    my @vals = @{+shift};
    my @args = @{+shift};
@@ -93,15 +167,15 @@ sub gen_va(\@\@) {
    if (@vals == 0) {
       $vals = "";
    } elsif (@vals == 1) {
-      $vals = "$vals[0][1]\\ =\\ ";
+      $vals = "$vals[0][1]$nbsp=$nbsp";
    } else {
-      $vals = "(".join(",",map $_->[1],@vals).")\\ =\\ ";
+      $vals = "(".join(",",map $_->[1],@vals).")$nbsp=$nbsp";
    }
 
    if (@args == 0) {
       $args = "";
    } else {
-      $args = "\\ (".join(",",map $_->[1],@args).")";
+      $args = "$nbsp(".join(",",map $_->[1],@args).")";
    }
 
    ($vals,$args);
@@ -169,8 +243,10 @@ sub gen_alternatives(\@$\@) {
                         push @new, [\@vals,"\$channel->$n2",[@args[1..$#args]]];
                      } elsif ($class eq "Image" && @args && $args[0][0] == &PARAM_IMAGE) {
                         push @new, [\@vals,"\$image->$n2",[@args[1..$#args]]];
+                     } elsif ($class =~ /Gimp|Gradient|Palette|Edit|Patterns|Parasite|PixelRgn/) {
+                        push @new, [\@vals,"${class}->$n2",\@args];
                      } else {
-                        push @new, [\@vals,"$n2\\ $class",\@args];
+                        push @new, [\@vals,"$n2$nbsp$class",\@args];
                      }
                   }
                }
@@ -187,55 +263,123 @@ sub gen_alternatives(\@$\@) {
    } while @new;
    map {
       my($vals,$args)=gen_va(@{$_->[0]},@{$_->[2]});
-      "$vals\\fB$_->[1]\\fR$args";
+      "${tt1}$vals${b1}$_->[1]$b0$args$tt0";
    } map $_->[1], sort {
       $a->[0] <=> $b->[0]
    } map [weight($_),$_], @res;
 }
 
-for $name (@matches) {
-    my ($blurb, $help, $author, $copyright, $date, $type, $nargs, $nvals) =
-       Gimp->procedural_db_proc_info ($name);
-    my @args = map [Gimp->procedural_db_proc_arg ($name, $_)],0..($nargs-1);
-    my @vals = map [Gimp->procedural_db_proc_val ($name, $_)],0..($nvals-1);
-    
-    my($vals,$args)=gen_va(@vals,@args);
+sub gen_desc {
+   my $name = shift;
+   my ($blurb, $help, $author, $copyright, $date, $type, $nargs, $nvals) =
+      Gimp->procedural_db_proc_info ($name);
+   my @args = map [Gimp->procedural_db_proc_arg ($name, $_)],0..($nargs-1);
+   my @vals = map [Gimp->procedural_db_proc_val ($name, $_)],0..($nvals-1);
+   my $r;
+   
+   my($vals,$args)=gen_va(@vals,@args);
 
-    print PAGER <<EOF;
-.TH "$name" "gimpdoc" "$date" "$version"
-.SH NAME
-\\fB$name\\fR \- $blurb
-.SH SYNOPSIS
-$vals\\fB$name\\fR$args
-.SH DESCRIPTION
-$help
-EOF
-    if ($nargs) {
-       print PAGER ".SH INPUT ARGUMENTS\n$theader";
-       for (@args) {
-          print PAGER join("	",type2str($_->[0])." ",$_->[1]." ","T{\n".$_->[2]."\nT}"),"\n"; 
-       }
-       print PAGER ".TE\n";
-    }
+   for ($blurb, $help, $author, $copyright, $date) {
+      escape($_);
+   }
 
-    if ($nvals) {
-       print PAGER ".SH RETURN VALUES\n$theader";
-       for (@vals) {
-          print PAGER join("	",type2str($_->[0])." ",$_->[1]." ","T{\n".$_->[2]."\nT}"),"\n"; 
-       }
-       print PAGER ".TE\n";
-    }
-    my @alts = gen_alternatives @vals,$name,@args;
-    if (@alts) {
-       @alts = @alts[0..5] if @alts > 6;
-       print PAGER ".SH SOME SYNTAX ALTERNATIVES\n", join("\n.br\n", @alts), "\n";
-    }
-    print PAGER <<EOF;
-.SH AUTHOR
-$author
-.br
-(c)$date $copyright
+   $r = eval "\"$header\"";
+   if ($nargs) {
+      $r .= "${sh1}INPUT ARGUMENTS$sh0$theader";
+      for (@args) {
+         $r .= table_line(type2str($_->[0]),$_->[1],$_->[2]);
+      }
+      $r .= $tend;
+   }
+
+   if ($nvals) {
+      $r .= "${sh1}RETURN VALUES$sh0$theader";
+      for (@vals) {
+         $r .= table_line(type2str($_->[0]),$_->[1],$_->[2]);
+      }
+      $r .= $tend;
+   }
+   my @alts = gen_alternatives @vals,$name,@args;
+   if (@alts) {
+      @alts = @alts[0..5] if @alts > 6;
+      $r .= "${sh1}SOME SYNTAX ALTERNATIVES$sh0". join($br, @alts). "\n";
+   }
+   $r .= eval "\"$trailer\"";
+   $r;
+}
+
+if ($opt_w) {
+   format_html;
+   $|=1;
+   use POSIX 'strftime';
+   my $today = strftime ("%Y-%m-%d %H:%M:%SZ", gmtime time);
+   open HTML,">$opt_w/index.html" or die "Unable to create '$opt_w/index.html': $!\n";
+   print "$opt_w/index.html";
+   my %done;
+   print HTML <<EOF;
+<html><head><title>Gimp PDB Documentation, created on $today by gimpdoc</title>$body
+<h1>Gimp PDB Documentation</h1>
+
+The following pages contain a htmlified version of the <a
+href="http://ww.gimp.org/"><b>Gimp</b></a> PDB documentation</b>. They
+were automatically generated on $today from gimp version $version, using
+the program <tt>gimpdoc</tt> (part of the $version distribution). If
+you have any questions please ask <a href=\"mailto:pcg\@goof.com\">Marc
+Lehmann &lt;pcg\@goof.com&gt;</a>
+
 EOF
+   my($listing,$head);
+   for $group (qw(
+         script-fu- file_ extension_ plug_in_ perl_fu_ gimp_drawable_ gimp_channel_ gimp_layer_ gimp_image_ gimp_
+      ),'.') {
+      my $some;
+      my $glisting;
+      for (grep /^$group/, @matches) {
+         next if $done{$_};
+         $done{$_}++;
+         my $blurb = (Gimp->procedural_db_proc_info($_))[0];
+         $blurb = substr($blurb,0,47)."..." if length($blurb)>50;
+         escape($blurb);
+         $some=1;
+         $glisting .= "<tr><td><a href=$_.html>$_</a><td>$blurb";
+      }
+      if ($some) {
+         my $xgroup = $group;
+         $xgroup =~ y/-_/ /;
+         $xgroup =~ s/\b(.)/uc($1)/ge;
+         $xgroup = "Ungrouped Functions" if $xgroup eq ".";
+         $head = "<h2><a href=\"#$group\">$xgroup</a></h2>".$head;
+         $listing = "<h2><a name=\"$group\">$xgroup</a></h2>".
+                    "<table><tr align=left><th>Function<th>Description".
+                    $glisting.
+                    "</table>".
+                    $listing;
+      }
+   }
+   print HTML "$head$listing$created_by</html>";
+   close HTML;
+   print "\n";
+   for $_ (0..$#matches) {
+      $prev_fun = $matches[$_-1];
+      $next_fun = $matches[$_+1-@matches];
+      $name = $matches[$_];
+      open HTML,">$opt_w/$name.html" or die "Unable to create '$opt_w/$name.html': $!\n";
+      print "$opt_w/$name.html";
+      print HTML gen_desc($name);
+      close HTML;
+      print "\n";
+   }
+} else {
+   format_roff;
+   $filter = "| tbl | nroff -man | ( '$ENV{PAGER}' 2>/dev/null || less || pg || more )";
+   $filter = ">&STDOUT" if $opt_r;
+   open PAGER,$filter or die "unable to open pipe to the pager ($filter)\n";
+   if(@matches>1) {
+      print PAGER ".TH gimpdoc gimpdoc\n.SH MATCHING FUNCTIONS\n",join("\n.br\n",@matches),"\n";
+   }
+   for $name (@matches) {
+      print PAGER gen_desc($name);
+   }
 }
 
 Gimp::end;
