@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:05+0200\n"
+"POT-Creation-Date: 2004-10-05 01:53+0200\n"
 "PO-Revision-Date: 2004-01-22 10:37+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -21,123 +21,119 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:134
+#: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Konsola Script-Fu może być uruchamiana tylko w trybie interaktywnym"
 
-#: plug-ins/script-fu/script-fu-console.c:161
+#: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu Console"
 msgstr "Konsola Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:188
+#: plug-ins/script-fu/script-fu-console.c:183
 msgid "SIOD Output"
 msgstr "Wyjście SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:254
+#: plug-ins/script-fu/script-fu-console.c:249
 msgid "Current Command"
 msgstr "Bieżące polecenie"
 
-#: plug-ins/script-fu/script-fu-console.c:272
-msgid "Browse..."
+#: plug-ins/script-fu/script-fu-console.c:267
+#, fuzzy
+msgid "_Browse..."
 msgstr "Przeglądaj..."
 
-#: plug-ins/script-fu/script-fu-console.c:555
+#: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Tryb obliczeniowy Script-Fu pozwala tylko na uruchamianie nieinteraktywne"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:192
-#: plug-ins/script-fu/script-fu-interface.c:194
+#: plug-ins/script-fu/script-fu-interface.c:191
+#: plug-ins/script-fu/script-fu-interface.c:193
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:206
+#: plug-ins/script-fu/script-fu-interface.c:207
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-interface.c:213
-#, fuzzy
-msgid "_About"
-msgstr "Info"
-
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:238
+#: plug-ins/script-fu/script-fu-interface.c:244
 msgid "Script Arguments"
 msgstr "Argumenty skryptu"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:269
+#: plug-ins/script-fu/script-fu-interface.c:275
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:313
+#: plug-ins/script-fu/script-fu-interface.c:320
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu: Wybór koloru"
 
-#: plug-ins/script-fu/script-fu-interface.c:395
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu: Wybór pliku"
 
-#: plug-ins/script-fu/script-fu-interface.c:399
+#: plug-ins/script-fu/script-fu-interface.c:430
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu: Wybór folderu"
 
-#: plug-ins/script-fu/script-fu-interface.c:411
+#: plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu: Wybór czcionki"
 
-#: plug-ins/script-fu/script-fu-interface.c:418
+#: plug-ins/script-fu/script-fu-interface.c:449
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu: Wybór desenia"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu: Wybór desenia"
 
-#: plug-ins/script-fu/script-fu-interface.c:433
+#: plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu: Wybór gradientu"
 
-#: plug-ins/script-fu/script-fu-interface.c:441
+#: plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu: Wybór pędzla"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:495
+#: plug-ins/script-fu/script-fu-interface.c:531
 #, fuzzy
 msgid "Script Progress"
 msgstr "Argumenty skryptu"
 
-#: plug-ins/script-fu/script-fu-interface.c:503
+#: plug-ins/script-fu/script-fu-interface.c:539
 msgid "(none)"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:986
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:992
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:998
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1006
+#: plug-ins/script-fu/script-fu-interface.c:1082
 msgid "Image Types:"
 msgstr "Typy obrazu:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:549
+#: plug-ins/script-fu/script-fu-scripts.c:550
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -148,15 +144,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:642
 msgid "Script-Fu Server Options"
 msgstr "Ustawienia serwera Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:630
+#: plug-ins/script-fu/script-fu-server.c:670
 msgid "Server Port:"
 msgstr "Port serwera:"
 
-#: plug-ins/script-fu/script-fu-server.c:636
+#: plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Logfile:"
 msgstr "Dziennik serwera:"
 
@@ -165,77 +161,91 @@ msgstr "Dziennik serwera:"
 msgid "Script-Fu _Console"
 msgstr "Konsola Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Dodatki/Script-Fu/Loga/Ne_on..."
 
-#: plug-ins/script-fu/script-fu.c:153
+#: plug-ins/script-fu/script-fu.c:152
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
 msgid "Re-read all available scripts"
 msgstr "Ponownie odczytuje wszystkie dostępne skrypty"
 
-#: plug-ins/script-fu/script-fu.c:287
+#: plug-ins/script-fu/script-fu.c:283
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Dodatki/Script-Fu/_Odśwież skrypty"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-msgid "DB Browser"
-msgstr "Przeglądarka DB"
+#: plug-ins/dbbrowser/gimpprocbrowser.c:123
+#: plug-ins/dbbrowser/gimpprocbrowser.c:137
+msgid "Procedure Browser"
+msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:122
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/gimpprocbrowser.c:127
+#: plug-ins/dbbrowser/gimpprocbrowser.c:141
 msgid "Search by _Name"
 msgstr "Znajdź wg _nazwy"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Search by _Blurb"
 msgstr "Znajdź wg _opisu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:206
+#: plug-ins/dbbrowser/gimpprocbrowser.c:219
 msgid "_Search:"
 msgstr "_Wyszukiwanie:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
-msgid "Name:"
-msgstr "Nazwa:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
-msgid "Blurb:"
-msgstr "Opis:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
-msgid "In:"
-msgstr "Wejście:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
-msgid "Out:"
-msgstr "Wyjście:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
-msgid "Help:"
-msgstr "Pomoc:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:582
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
 msgid "Searching by name - please wait"
 msgstr "Wyszukiwanie według nazwy - poczekaj chwilę"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr "Wyszukiwanie według opisu - poczekaj chwilę"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:616
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr "Wyszukiwanie - poczekaj chwilę"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:653
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr "Brak dopasowań"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+#, fuzzy
+msgid "Parameters"
+msgstr "Średnica"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -300,7 +310,7 @@ msgstr "Czcionka"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -422,6 +432,7 @@ msgstr "<Toolbox>/Dodatki/Script-Fu/Desenie/Truchet _3D..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -647,7 +658,7 @@ msgid "Padding"
 msgstr "Wyściółka"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -722,38 +733,28 @@ msgstr "<Image>/Script-Fu/Narzędzia/_Tekst ASCII do warstwy..."
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Dodatki/Script-Fu/Narzędzia/_Tekst ASCII do obrazu..."
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-msgid "Background Color"
-msgstr "Kolor tła"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer Amount (% Height of Text)"
+#, fuzzy, no-c-format
+msgid "Buffer amount (% height of text)"
 msgstr "Rozmiar bufora (% wysokości tekstu)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #, fuzzy
 msgid "File name"
 msgstr "Nazwa pliku"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Filename"
 msgstr "Nazwa pliku"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
-msgid "Font Size (pixels)"
-msgstr "Rozmiar czcionki (piksele)"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:11
-msgid "Text Color"
-msgstr "Kolor tekstu"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "Transparent Background"
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
 msgstr "Przezroczyste tło"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
@@ -811,13 +812,6 @@ msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseń z fazą/_Kropka..."
 msgid "Diameter"
 msgstr "Średnica"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "Przezroczyste tło"
-
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Deseń z fazą/_Przycisk..."
@@ -834,14 +828,14 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:16
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Wysokość"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:18
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "Szerokość"
@@ -924,6 +918,11 @@ msgstr "<Image>/Script-Fu/Alfa na logo/Ła_ciate..."
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Dodatki/Script-Fu/Loga/Ła_ciate..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "Kolor tła"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -1921,67 +1920,35 @@ msgstr "Losowość"
 msgid "Sharpness (degrees)"
 msgstr "Ostrość (stopnie)"
 
-# zostawiam (cyba)
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-
-# zostawiam (cyba)
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-
-# zostawiam (cyba)
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr ""
 "<Toolbox>/Dodatki/Script-Fu/Tworzenie pędzla/E_liptyczny, zmiękczony..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr ""
 "<Toolbox>/Dodatki/Script-Fu/Tworzenie pędzla/P_rostokątny, zmiękczony..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr "<Toolbox>/Dodatki/Script-Fu/Tworzenie pędzla/_Eliptyczny..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr "<Toolbox>/Dodatki/Script-Fu/Tworzenie pędzla/_Prostokątny..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:14
-msgid "Description"
-msgstr "Opis"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:15
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Feathering"
 msgstr "Wygładzanie"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:17
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#, fuzzy
+msgid "Name"
+msgstr "Nazwa:"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "Odstęp"
 
@@ -2193,22 +2160,11 @@ msgstr "Dodaj cień"
 msgid "Edge radius"
 msgstr "Promień krawędzi"
 
-# zostawiam (cyba)
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-msgstr ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Script-Fu/Zaznaczenie/_Do pędzla..."
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 #, fuzzy
 msgid "Brush name"
 msgstr "Nazwa pędzla"
@@ -2217,22 +2173,11 @@ msgstr "Nazwa pędzla"
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Zaznaczenie/Do o_brazu"
 
-# zostawiam (cyba)
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-msgstr ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "<Image>/Script-Fu/Zaznaczenie/D_o desenia..."
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
 msgid "Pattern name"
 msgstr "Nazwa desenia"
@@ -2736,6 +2681,87 @@ msgstr "Przesunięcie Y podświetlenia"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Krycie podświetlenia"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "Info"
+
+#~ msgid "DB Browser"
+#~ msgstr "Przeglądarka DB"
+
+#~ msgid "Blurb:"
+#~ msgstr "Opis:"
+
+#~ msgid "In:"
+#~ msgstr "Wejście:"
+
+#~ msgid "Out:"
+#~ msgstr "Wyjście:"
+
+#~ msgid "Help:"
+#~ msgstr "Pomoc:"
+
+#~ msgid "Font Size (pixels)"
+#~ msgstr "Rozmiar czcionki (piksele)"
+
+#~ msgid "Text Color"
+#~ msgstr "Kolor tekstu"
+
+#~ msgid "Transparent Background"
+#~ msgstr "Przezroczyste tło"
+
+# zostawiam (cyba)
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+
+# zostawiam (cyba)
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+
+# zostawiam (cyba)
+#~ msgid ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+# zostawiam (cyba)
+#~ msgid ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+
+# zostawiam (cyba)
+#~ msgid ""
+#~ ")))\n"
+#~ "  (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t "
+#~ msgstr ""
+#~ ")))\n"
+#~ "  (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t "
 
 #~ msgid "Unable to open a stream on the SIOD output pipe"
 #~ msgstr "Nie można otworzyć strumienia z wyjścia SIOD"

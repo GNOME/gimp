@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:05+0200\n"
+"POT-Creation-Date: 2004-10-05 01:53+0200\n"
 "PO-Revision-Date: 2004-07-15 00:10+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -20,122 +20,118 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: plug-ins/script-fu/script-fu-console.c:134
+#: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Консольный режим Скрипт-Фу позволяет только интерактивную работу"
 
-#: plug-ins/script-fu/script-fu-console.c:161
+#: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu Console"
 msgstr "Консоль Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-console.c:188
+#: plug-ins/script-fu/script-fu-console.c:183
 msgid "SIOD Output"
 msgstr "Вывод SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:254
+#: plug-ins/script-fu/script-fu-console.c:249
 msgid "Current Command"
 msgstr "Текущая команда"
 
-#: plug-ins/script-fu/script-fu-console.c:272
-msgid "Browse..."
+#: plug-ins/script-fu/script-fu-console.c:267
+#, fuzzy
+msgid "_Browse..."
 msgstr "Просмотр..."
 
-#: plug-ins/script-fu/script-fu-console.c:555
+#: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:192
-#: plug-ins/script-fu/script-fu-interface.c:194
+#: plug-ins/script-fu/script-fu-interface.c:191
+#: plug-ins/script-fu/script-fu-interface.c:193
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-interface.c:206
+#: plug-ins/script-fu/script-fu-interface.c:207
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
-#: plug-ins/script-fu/script-fu-interface.c:213
-#, fuzzy
-msgid "_About"
-msgstr "О программе"
-
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:238
+#: plug-ins/script-fu/script-fu-interface.c:244
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:269
+#: plug-ins/script-fu/script-fu-interface.c:275
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:313
+#: plug-ins/script-fu/script-fu-interface.c:320
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-interface.c:395
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-interface.c:399
+#: plug-ins/script-fu/script-fu-interface.c:430
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу: Выбор каталога"
 
-#: plug-ins/script-fu/script-fu-interface.c:411
+#: plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-interface.c:418
+#: plug-ins/script-fu/script-fu-interface.c:449
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-interface.c:433
+#: plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-interface.c:441
+#: plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:495
+#: plug-ins/script-fu/script-fu-interface.c:531
 #, fuzzy
 msgid "Script Progress"
 msgstr "Аргументы скрипта"
 
-#: plug-ins/script-fu/script-fu-interface.c:503
+#: plug-ins/script-fu/script-fu-interface.c:539
 msgid "(none)"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:986
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-interface.c:992
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-interface.c:998
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1006
+#: plug-ins/script-fu/script-fu-interface.c:1082
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:549
+#: plug-ins/script-fu/script-fu-scripts.c:550
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -146,15 +142,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:642
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу: Параметры сервера"
 
-#: plug-ins/script-fu/script-fu-server.c:630
+#: plug-ins/script-fu/script-fu-server.c:670
 msgid "Server Port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/script-fu-server.c:636
+#: plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Logfile:"
 msgstr "Регистрационный файл сервера:"
 
@@ -163,77 +159,91 @@ msgstr "Регистрационный файл сервера:"
 msgid "Script-Fu _Console"
 msgstr "Консоль Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Неон..."
 
-#: plug-ins/script-fu/script-fu.c:153
+#: plug-ins/script-fu/script-fu.c:152
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
 msgid "Re-read all available scripts"
 msgstr "Перечитать все доступные скрипты"
 
-#: plug-ins/script-fu/script-fu.c:287
+#: plug-ins/script-fu/script-fu.c:283
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить сценарии"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-msgid "DB Browser"
-msgstr "Просмотр базы данных"
+#: plug-ins/dbbrowser/gimpprocbrowser.c:123
+#: plug-ins/dbbrowser/gimpprocbrowser.c:137
+msgid "Procedure Browser"
+msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:122
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/gimpprocbrowser.c:127
+#: plug-ins/dbbrowser/gimpprocbrowser.c:141
 msgid "Search by _Name"
 msgstr "Поиск по названию"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Search by _Blurb"
 msgstr "Поиск по аннотации"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:206
+#: plug-ins/dbbrowser/gimpprocbrowser.c:219
 msgid "_Search:"
 msgstr "Поиск:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
-msgid "Name:"
-msgstr "Название:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
-msgid "Blurb:"
-msgstr "Аннотация:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
-msgid "In:"
-msgstr "В:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
-msgid "Out:"
-msgstr "Из:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
-msgid "Help:"
-msgstr "Справка:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:582
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
 msgid "Searching by name - please wait"
 msgstr "Поиск по имени -- подождите пожалуйста"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr "Поиск по аннотации -- подождите пожалуйста"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:616
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr "Поиск - подождите пожалуйста"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:653
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr "Не найдено"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+#, fuzzy
+msgid "Parameters"
+msgstr "Диаметр"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -298,7 +308,7 @@ msgstr "Шрифт"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -420,6 +430,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/3D Truchet..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -638,7 +649,7 @@ msgid "Padding"
 msgstr "Заполнение"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -712,38 +723,28 @@ msgstr "<Image>/Скрипт-Фу/Утилиты/ASCII -> Слой изобра�
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Изображение..."
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-msgid "Background Color"
-msgstr "Цвет фона"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer Amount (% Height of Text)"
+#, fuzzy, no-c-format
+msgid "Buffer amount (% height of text)"
 msgstr "Размер отступа (% высоты текста)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #, fuzzy
 msgid "File name"
 msgstr "Имя файла"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Filename"
 msgstr "Имя файла"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
-msgid "Font Size (pixels)"
-msgstr "Размер шрифта (точек)"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:11
-msgid "Text Color"
-msgstr "Цвет текста"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "Transparent Background"
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
 msgstr "Прозрачный фон"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
@@ -801,13 +802,6 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Вып
 msgid "Diameter"
 msgstr "Диаметр"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "Прозрачный фон"
-
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Кнопка..."
@@ -825,14 +819,14 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:16
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Высота"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:18
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "Ширина"
@@ -915,6 +909,11 @@ msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Пятнистая 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Пятнистая корова..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "Цвет фона"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -1904,61 +1903,32 @@ msgid "Sharpness (degrees)"
 msgstr "Резкость (градусы)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый эллипс..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый прямоугольник..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:14
-msgid "Description"
-msgstr "Описание"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:15
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Feathering"
 msgstr "Размывание"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:17
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#, fuzzy
+msgid "Name"
+msgstr "Название:"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "Интервал"
 
@@ -2171,20 +2141,10 @@ msgid "Edge radius"
 msgstr "Радиус края"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-msgstr ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Скрипт-Фу/Выделение/В кисть..."
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 #, fuzzy
 msgid "Brush name"
 msgstr "Название кисти"
@@ -2194,20 +2154,10 @@ msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-msgstr ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "<Image>/Скрипт-Фу/Выделение/В шаблон..."
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
 msgid "Pattern name"
 msgstr "Шаблон"
@@ -2711,6 +2661,82 @@ msgstr "Смещение бликов по Y"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Непрозрачность бликов"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "О программе"
+
+#~ msgid "DB Browser"
+#~ msgstr "Просмотр базы данных"
+
+#~ msgid "Blurb:"
+#~ msgstr "Аннотация:"
+
+#~ msgid "In:"
+#~ msgstr "В:"
+
+#~ msgid "Out:"
+#~ msgstr "Из:"
+
+#~ msgid "Help:"
+#~ msgstr "Справка:"
+
+#~ msgid "Font Size (pixels)"
+#~ msgstr "Размер шрифта (точек)"
+
+#~ msgid "Text Color"
+#~ msgstr "Цвет текста"
+
+#~ msgid "Transparent Background"
+#~ msgstr "Прозрачный фон"
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "  (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
 
 #~ msgid "Unable to open a stream on the SIOD output pipe"
 #~ msgstr "Не удалось открыть поток в канал вывода SIOD"

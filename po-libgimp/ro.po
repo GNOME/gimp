@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Din selecţie"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Selectie Gradient"
 
@@ -529,7 +529,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 #, fuzzy
 msgid "_Preview"
 msgstr "Previzualizare"
@@ -586,26 +586,26 @@ msgstr "Salvare de fişiere"
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2004-09-05 01:20+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
@@ -503,7 +503,7 @@ msgid "Check Style"
 msgstr "Schachbrett Muster"
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 msgid "_Preview"
 msgstr "_Vorschau"
 
@@ -551,23 +551,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Shear"
 msgstr "_Scheren"
 

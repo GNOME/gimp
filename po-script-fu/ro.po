@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:05+0200\n"
+"POT-Creation-Date: 2004-10-05 01:53+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -14,132 +14,128 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:134
+#: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:161
+#: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu Console"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:188
+#: plug-ins/script-fu/script-fu-console.c:183
 msgid "SIOD Output"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:254
+#: plug-ins/script-fu/script-fu-console.c:249
 #, fuzzy
 msgid "Current Command"
 msgstr "Lăţimea curentă:"
 
-#: plug-ins/script-fu/script-fu-console.c:272
-msgid "Browse..."
-msgstr ""
+#: plug-ins/script-fu/script-fu-console.c:267
+#, fuzzy
+msgid "_Browse..."
+msgstr "Afişare informaţii de ajutor"
 
-#: plug-ins/script-fu/script-fu-console.c:555
+#: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:192
-#: plug-ins/script-fu/script-fu-interface.c:194
+#: plug-ins/script-fu/script-fu-interface.c:191
+#: plug-ins/script-fu/script-fu-interface.c:193
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:206
+#: plug-ins/script-fu/script-fu-interface.c:207
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:213
-#, fuzzy
-msgid "_About"
-msgstr "Automat"
-
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:238
+#: plug-ins/script-fu/script-fu-interface.c:244
 msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:269
+#: plug-ins/script-fu/script-fu-interface.c:275
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:313
+#: plug-ins/script-fu/script-fu-interface.c:320
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecţie culoare"
 
-#: plug-ins/script-fu/script-fu-interface.c:395
+#: plug-ins/script-fu/script-fu-interface.c:426
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-interface.c:399
+#: plug-ins/script-fu/script-fu-interface.c:430
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-interface.c:411
+#: plug-ins/script-fu/script-fu-interface.c:442
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu-interface.c:418
+#: plug-ins/script-fu/script-fu-interface.c:449
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Selecţie model"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:457
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecţie model"
 
-#: plug-ins/script-fu/script-fu-interface.c:433
+#: plug-ins/script-fu/script-fu-interface.c:464
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-interface.c:441
+#: plug-ins/script-fu/script-fu-interface.c:472
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecţie pensulă"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:495
+#: plug-ins/script-fu/script-fu-interface.c:531
 #, fuzzy
 msgid "Script Progress"
 msgstr "Progres"
 
-#: plug-ins/script-fu/script-fu-interface.c:503
+#: plug-ins/script-fu/script-fu-interface.c:539
 #, fuzzy
 msgid "(none)"
 msgstr "nimic"
 
-#: plug-ins/script-fu/script-fu-interface.c:986
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:992
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:998
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1006
+#: plug-ins/script-fu/script-fu-interface.c:1082
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:549
+#: plug-ins/script-fu/script-fu-scripts.c:550
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -147,16 +143,16 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:642
 #, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Opţiuni pentru simularea de nuanţe"
 
-#: plug-ins/script-fu/script-fu-server.c:630
+#: plug-ins/script-fu/script-fu-server.c:670
 msgid "Server Port:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:636
+#: plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Logfile:"
 msgstr ""
 
@@ -165,84 +161,95 @@ msgstr ""
 msgid "Script-Fu _Console"
 msgstr "Selecţie culoare"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/script-fu.c:153
+#: plug-ins/script-fu/script-fu.c:152
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:287
+#: plug-ins/script-fu/script-fu.c:283
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Micşorează selecţia"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/gimpprocbrowser.c:123
+#: plug-ins/dbbrowser/gimpprocbrowser.c:137
 #, fuzzy
-msgid "DB Browser"
-msgstr "Afişare informaţii de ajutor"
+msgid "Procedure Browser"
+msgstr "Baza de date procedurală"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:122
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/gimpprocbrowser.c:127
+#: plug-ins/dbbrowser/gimpprocbrowser.c:141
 msgid "Search by _Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:206
+#: plug-ins/dbbrowser/gimpprocbrowser.c:219
 #, fuzzy
 msgid "_Search:"
 msgstr "Decupare"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
-msgid "Name:"
-msgstr "Nume:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
-#, fuzzy
-msgid "Blurb:"
-msgstr "Claritate"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
-#, fuzzy
-msgid "In:"
-msgstr "Index:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
-#, fuzzy
-msgid "Out:"
-msgstr "Numar:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
-#, fuzzy
-msgid "Help:"
-msgstr "/_Ajutor"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:582
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:616
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:653
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#, fuzzy, c-format
+msgid "%d Procedures"
+msgstr "Proceduri de modificare"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+#, fuzzy
+msgid "Parameters"
+msgstr "Paraziţi"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+#, fuzzy
+msgid "Additional Information"
+msgstr "Informaţii despre rotaţie"
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr "Procedură internă GIMP"
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr "Modul inserabil GIMP"
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr "Extensie GIMP"
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr "Procedură temporară"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 #, fuzzy
@@ -309,7 +316,7 @@ msgstr "punct"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -433,6 +440,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -651,7 +659,7 @@ msgid "Padding"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -726,42 +734,29 @@ msgstr "Micşorează selecţia"
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-#, fuzzy
-msgid "Background Color"
-msgstr "Fundal"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
-msgid "Buffer Amount (% Height of Text)"
+msgid "Buffer amount (% height of text)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #, fuzzy
 msgid "File name"
 msgstr "/Fişier/Salvează"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 #, fuzzy
 msgid "Filename"
 msgstr "/Fişier/Salvează"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
-msgid "Font Size (pixels)"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:11
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 #, fuzzy
-msgid "Text Color"
-msgstr "Culoare adevărată"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-#, fuzzy
-msgid "Transparent Background"
+msgid "Transparent background"
 msgstr "Transparent"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
@@ -825,13 +820,6 @@ msgstr ""
 msgid "Diameter"
 msgstr "milimetru"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "Transparent"
-
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr ""
@@ -847,14 +835,14 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:16
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Înălţime"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:18
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "Lăţime"
@@ -946,6 +934,12 @@ msgstr "Micşorează selecţia"
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "Micşorează selecţia"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#, fuzzy
+msgid "Background Color"
+msgstr "Fundal"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -1976,54 +1970,33 @@ msgid "Sharpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:14
-#, fuzzy
-msgid "Description"
-msgstr "Selecţie"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:15
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 #, fuzzy
 msgid "Feathering"
 msgstr "Pană"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:17
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#, fuzzy
+msgid "Name"
+msgstr "Nume:"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 #, fuzzy
 msgid "Spacing"
 msgstr "Spaţiere:"
@@ -2250,18 +2223,11 @@ msgid "Edge radius"
 msgstr "Rază:"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 #, fuzzy
 msgid "Brush name"
 msgstr "Interfaţă utilizator pentru Pensule"
@@ -2272,18 +2238,11 @@ msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "Micşorează selecţia"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "Micşorează selecţia"
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
 msgid "Pattern name"
 msgstr "Modele"
@@ -2814,6 +2773,38 @@ msgid "Highlight opacity"
 msgstr "Opacitate umplere:"
 
 #, fuzzy
+#~ msgid "_About"
+#~ msgstr "Automat"
+
+#, fuzzy
+#~ msgid "Blurb:"
+#~ msgstr "Claritate"
+
+#, fuzzy
+#~ msgid "In:"
+#~ msgstr "Index:"
+
+#, fuzzy
+#~ msgid "Out:"
+#~ msgstr "Numar:"
+
+#, fuzzy
+#~ msgid "Help:"
+#~ msgstr "/_Ajutor"
+
+#, fuzzy
+#~ msgid "Text Color"
+#~ msgstr "Culoare adevărată"
+
+#, fuzzy
+#~ msgid "Transparent Background"
+#~ msgstr "Transparent"
+
+#, fuzzy
+#~ msgid "Description"
+#~ msgstr "Selecţie"
+
+#, fuzzy
 #~ msgid "Unable to open the SIOD output pipe"
 #~ msgstr "Nu am putut deschide fişierul %s"
 
@@ -2898,9 +2889,6 @@ msgstr "Opacitate umplere:"
 
 #~ msgid "Looking for data files"
 #~ msgstr "Caut fişierele de date"
-
-#~ msgid "Parasites"
-#~ msgstr "Paraziţi"
 
 #~ msgid "Palettes"
 #~ msgstr "Palete"
@@ -5993,9 +5981,6 @@ msgstr "Opacitate umplere:"
 #~ msgid "GDisplay procedures"
 #~ msgstr "Proceduri GDisplay"
 
-#~ msgid "Edit procedures"
-#~ msgstr "Proceduri de modificare"
-
 #~ msgid "File Operations"
 #~ msgstr "Operaţii pe fişiere"
 
@@ -6020,9 +6005,6 @@ msgstr "Opacitate umplere:"
 #~ msgid "Plug-in"
 #~ msgstr "Modul inserabil"
 
-#~ msgid "Procedural database"
-#~ msgstr "Baza de date procedurală"
-
 #~ msgid "Image mask"
 #~ msgstr "Mască imagine"
 
@@ -6044,18 +6026,6 @@ msgstr "Opacitate umplere:"
 #~ msgstr ""
 #~ "Au fost trimise argumente incorecte către procedural_db_run_proc:\n"
 #~ "Argumentul %d catre '%s' trebuie să fie un %s, dar s-a trimis un %s"
-
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "Procedură internă GIMP"
-
-#~ msgid "GIMP Plug-In"
-#~ msgstr "Modul inserabil GIMP"
-
-#~ msgid "GIMP Extension"
-#~ msgstr "Extensie GIMP"
-
-#~ msgid "Temporary Procedure"
-#~ msgstr "Procedură temporară"
 
 #~ msgid "Pressure:"
 #~ msgstr "Presiune:"
@@ -6438,9 +6408,6 @@ msgstr "Opacitate umplere:"
 
 #~ msgid "Selection: "
 #~ msgstr "Selecţie: "
-
-#~ msgid "Rotation Information"
-#~ msgstr "Informaţii despre rotaţie"
 
 #~ msgid "Center X:"
 #~ msgstr "Centru X:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2004-04-22 00:59+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Skrifttypevalg"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Graderingsvalg"
 
@@ -506,7 +506,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 msgid "_Preview"
 msgstr ""
 
@@ -554,23 +554,23 @@ msgstr "Mellomrom mellom l_injer"
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Shear"
 msgstr "_Klipp"
 

@@ -283,9 +283,9 @@ when working with large images.  Possible values are yes and no.
 .TP
 (layer-preview-size medium)
 
-Sets the default preview size for layers and channels.  Possible values are
-tiny, extra-small, small, medium, large, extra-large, huge, enormous and
-gigantic.
+Sets the preview size used for layers and channel previews in newly created
+dialogs.  Possible values are tiny, extra-small, small, medium, large,
+extra-large, huge, enormous and gigantic.
 
 .TP
 (thumbnail-size normal)
@@ -708,6 +708,13 @@ The name of the theme to use.  This is a string value.
 
 When enabled, pressing F1 will open the help browser.  Possible values are yes
 and no.
+
+.TP
+(show-help-button yes)
+
+When enabled, dialogs will show a help button that gives access to the related
+help page.  Without this button, the help page can still be reached by
+pressing F1.  Possible values are yes and no.
 
 .TP
 (help-locales "")

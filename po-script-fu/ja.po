@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:05+0200\n"
+"POT-Creation-Date: 2004-10-05 01:53+0200\n"
 "PO-Revision-Date: 2003-09-12 18:36+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -17,122 +17,118 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:134
+#: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
 
-#: plug-ins/script-fu/script-fu-console.c:161
+#: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
-#: plug-ins/script-fu/script-fu-console.c:188
+#: plug-ins/script-fu/script-fu-console.c:183
 msgid "SIOD Output"
 msgstr "SIOD 出力"
 
-#: plug-ins/script-fu/script-fu-console.c:254
+#: plug-ins/script-fu/script-fu-console.c:249
 msgid "Current Command"
 msgstr "現在実行しているコマンド"
 
-#: plug-ins/script-fu/script-fu-console.c:272
-msgid "Browse..."
+#: plug-ins/script-fu/script-fu-console.c:267
+#, fuzzy
+msgid "_Browse..."
 msgstr "参照..."
 
-#: plug-ins/script-fu/script-fu-console.c:555
+#: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:192
-#: plug-ins/script-fu/script-fu-interface.c:194
+#: plug-ins/script-fu/script-fu-interface.c:191
+#: plug-ins/script-fu/script-fu-interface.c:193
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:206
+#: plug-ins/script-fu/script-fu-interface.c:207
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-interface.c:213
-#, fuzzy
-msgid "_About"
-msgstr "このプラグインについて"
-
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:238
+#: plug-ins/script-fu/script-fu-interface.c:244
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:269
+#: plug-ins/script-fu/script-fu-interface.c:275
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:313
+#: plug-ins/script-fu/script-fu-interface.c:320
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:395
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:399
+#: plug-ins/script-fu/script-fu-interface.c:430
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu フォルダ選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:411
+#: plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:418
+#: plug-ins/script-fu/script-fu-interface.c:449
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:433
+#: plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:441
+#: plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:495
+#: plug-ins/script-fu/script-fu-interface.c:531
 #, fuzzy
 msgid "Script Progress"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-interface.c:503
+#: plug-ins/script-fu/script-fu-interface.c:539
 msgid "(none)"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:986
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-interface.c:992
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-interface.c:998
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1006
+#: plug-ins/script-fu/script-fu-interface.c:1082
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:549
+#: plug-ins/script-fu/script-fu-scripts.c:550
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -143,15 +139,15 @@ msgstr ""
 "実行中に Script-Fu エラー発生\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:642
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu サーバオプション"
 
-#: plug-ins/script-fu/script-fu-server.c:630
+#: plug-ins/script-fu/script-fu-server.c:670
 msgid "Server Port:"
 msgstr "サーバポート:"
 
-#: plug-ins/script-fu/script-fu-server.c:636
+#: plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
@@ -160,78 +156,92 @@ msgstr "サーバログファイル:"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu コンソール"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ネオン(_E)..."
 
-#: plug-ins/script-fu/script-fu.c:153
+#: plug-ins/script-fu/script-fu.c:152
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
 msgid "Re-read all available scripts"
 msgstr "全てのスクリプトを再読み込み"
 
-#: plug-ins/script-fu/script-fu.c:287
+#: plug-ins/script-fu/script-fu.c:283
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み(_R)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-msgid "DB Browser"
-msgstr "DB ブラウザ"
+#: plug-ins/dbbrowser/gimpprocbrowser.c:123
+#: plug-ins/dbbrowser/gimpprocbrowser.c:137
+msgid "Procedure Browser"
+msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:122
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/gimpprocbrowser.c:127
+#: plug-ins/dbbrowser/gimpprocbrowser.c:141
 msgid "Search by _Name"
 msgstr "名前で検索(_N)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Search by _Blurb"
 msgstr "説明で検索(_B)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:206
+#: plug-ins/dbbrowser/gimpprocbrowser.c:219
 msgid "_Search:"
 msgstr "検索(_S):"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
-msgid "Name:"
-msgstr "名称:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
-msgid "Blurb:"
-msgstr "説明:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
-msgid "In:"
-msgstr "入力:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
-msgid "Out:"
-msgstr "出力:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
-msgid "Help:"
-msgstr "ヘルプ:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:582
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
 msgid "Searching by name - please wait"
 msgstr "名前で検索中 - お待ち下さい"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr "説明で検索中 - お待ち下さい"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:616
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr "検索中 - お待ちください"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:653
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr "該当なし"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+#, fuzzy
+msgid "Parameters"
+msgstr "直径"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -296,7 +306,7 @@ msgstr "フォント"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -418,6 +428,7 @@ msgstr "<Toolbox>/拡張/Script-Fu/パターン/立体曲線タイル(_D)..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -635,7 +646,7 @@ msgid "Padding"
 msgstr "空間"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -710,38 +721,28 @@ msgstr "<Image>/Script-Fu/ユーティリティ/ASCII を画像レイヤーに..
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/ASCII を画像に(_A)..."
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-msgid "Background Color"
-msgstr "背景色"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer Amount (% Height of Text)"
+#, fuzzy, no-c-format
+msgid "Buffer amount (% height of text)"
 msgstr "バッファ量 (% 文字の高さ)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #, fuzzy
 msgid "File name"
 msgstr "ファイル名"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "Filename"
 msgstr "ファイル名"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
-msgid "Font Size (pixels)"
-msgstr "フォントサイズ (ピクセル)"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:11
-msgid "Text Color"
-msgstr "文字色"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "Transparent Background"
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
 msgstr "透過背景"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
@@ -799,13 +800,6 @@ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/
 msgid "Diameter"
 msgstr "直径"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
-msgid "Transparent background"
-msgstr "透過背景"
-
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/ボタン(_U)..."
@@ -821,14 +815,14 @@ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:16
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "高さ"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:18
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
 msgstr "幅"
@@ -911,6 +905,11 @@ msgstr "<Image>/Script-Fu/透明度をロゴに/牛模様(_V)..."
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/牛模様(_V)..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "背景色"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -1904,61 +1903,32 @@ msgid "Sharpness (degrees)"
 msgstr "鋭さ (角度)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-msgstr ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた楕円形(_P)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた矩形(_C)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/楕円形(_E)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/矩形(_R)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:14
-msgid "Description"
-msgstr "説明"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:15
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Feathering"
 msgstr "ぼかし"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:17
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#, fuzzy
+msgid "Name"
+msgstr "名称:"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "間隔"
 
@@ -2171,20 +2141,10 @@ msgid "Edge radius"
 msgstr "縁どり半径"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-msgstr ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Script-Fu/選択/ブラシ化(_B)..."
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 #, fuzzy
 msgid "Brush name"
 msgstr "ブラシの名前"
@@ -2195,21 +2155,10 @@ msgstr "<Image>/Script-Fu/選択/画像化(_I)"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 #, fuzzy
-msgid ""
-")))\n"
-"  (set! filename2 (string-append data-dir\n"
-"\t\t\t\t "
-msgstr ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
-
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
 msgstr "<Image>/Script-Fu/選択/ブラシ化(_B)..."
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 #, fuzzy
 msgid "Pattern name"
 msgstr "パターン"
@@ -2714,6 +2663,83 @@ msgstr "ハイライト Y オフセット"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "ハイライト不透明度"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "このプラグインについて"
+
+#~ msgid "DB Browser"
+#~ msgstr "DB ブラウザ"
+
+#~ msgid "Blurb:"
+#~ msgstr "説明:"
+
+#~ msgid "In:"
+#~ msgstr "入力:"
+
+#~ msgid "Out:"
+#~ msgstr "出力:"
+
+#~ msgid "Help:"
+#~ msgstr "ヘルプ:"
+
+#~ msgid "Font Size (pixels)"
+#~ msgstr "フォントサイズ (ピクセル)"
+
+#~ msgid "Text Color"
+#~ msgstr "文字色"
+
+#~ msgid "Transparent Background"
+#~ msgstr "透過背景"
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid "Description"
+#~ msgstr "説明"
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+
+#, fuzzy
+#~ msgid ""
+#~ ")))\n"
+#~ "  (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
 
 #~ msgid "Unable to open a stream on the SIOD output pipe"
 #~ msgstr "SIOD 出力パイプ上のストリームが開けません"

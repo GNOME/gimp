@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2004-08-08 14:26+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Избор фонта"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Селекција нагиба"
 
@@ -508,7 +508,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 #, fuzzy
 msgid "_Preview"
 msgstr "Изглед"
@@ -557,23 +557,23 @@ msgstr "Размак редова"
 msgid "_Resize"
 msgstr "_Промени величину"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
 msgstr "_Скала"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr "Исеци"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Transform"
 msgstr "_Трансформиши"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Shear"
 msgstr "_Дели"
 

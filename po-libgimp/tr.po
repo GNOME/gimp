@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Birim Seçimi"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Birim Seçimi"
@@ -506,7 +506,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 msgid "_Preview"
 msgstr ""
 
@@ -556,23 +556,23 @@ msgstr ""
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Shear"
 msgstr ""
 

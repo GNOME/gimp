@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-19 21:03+0200\n"
+"POT-Creation-Date: 2004-10-05 01:52+0200\n"
 "PO-Revision-Date: 2004-05-28 20:07+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Betűkészlet kiválasztása"
 
-#: libgimp/gimpgradientmenu.c:98
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
@@ -507,7 +507,7 @@ msgid "Check Style"
 msgstr ""
 
 #. toggle button to (des)activate the instant preview
-#: libgimpwidgets/gimppreview.c:302
+#: libgimpwidgets/gimppreview.c:238
 msgid "_Preview"
 msgstr ""
 
@@ -555,23 +555,23 @@ msgstr "S_orköz"
 msgid "_Resize"
 msgstr "Mé_ret módosítása"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
 msgstr "Átmére_tezés"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
 msgstr "Kivágás"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Transform"
 msgstr "Á_talakítás"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Rotate"
 msgstr "_Forgatás"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Shear"
 msgstr "_Nyírás"
 

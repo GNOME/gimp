@@ -224,9 +224,9 @@
 # 
 # (layer-previews yes)
 
-# Sets the default preview size for layers and channels.  Possible values are
-# tiny, extra-small, small, medium, large, extra-large, huge, enormous and
-# gigantic.
+# Sets the preview size used for layers and channel previews in newly created
+# dialogs.  Possible values are tiny, extra-small, small, medium, large,
+# extra-large, huge, enormous and gigantic.
 # 
 # (layer-preview-size medium)
 
@@ -552,6 +552,12 @@
 # yes and no.
 # 
 # (use-help yes)
+
+# When enabled, dialogs will show a help button that gives access to the
+# related help page.  Without this button, the help page can still be reached
+# by pressing F1.  Possible values are yes and no.
+# 
+# (show-help-button yes)
 
 # Specifies the language preferences used by the help system. This is a
 # colon-separated list of language identifiers with decreasing priority. If

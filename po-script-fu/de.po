@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-01 16:39+0200\n"
+"POT-Creation-Date: 2004-10-05 01:53+0200\n"
 "PO-Revision-Date: 2004-10-01 16:46+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -42,89 +42,85 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:190
-#: plug-ins/script-fu/script-fu-interface.c:192
+#: plug-ins/script-fu/script-fu-interface.c:191
+#: plug-ins/script-fu/script-fu-interface.c:193
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:204
+#: plug-ins/script-fu/script-fu-interface.c:207
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-interface.c:211
-msgid "_About"
-msgstr "_Über"
-
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:236
+#: plug-ins/script-fu/script-fu-interface.c:244
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:267
+#: plug-ins/script-fu/script-fu-interface.c:275
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:311
+#: plug-ins/script-fu/script-fu-interface.c:320
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:417
+#: plug-ins/script-fu/script-fu-interface.c:426
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:421
+#: plug-ins/script-fu/script-fu-interface.c:430
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu Verzeichnisauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:433
+#: plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:440
+#: plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu Palettenauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:448
+#: plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:455
+#: plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:463
+#: plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:517
+#: plug-ins/script-fu/script-fu-interface.c:531
 msgid "Script Progress"
 msgstr "Skript-Fortschritt"
 
-#: plug-ins/script-fu/script-fu-interface.c:525
+#: plug-ins/script-fu/script-fu-interface.c:539
 msgid "(none)"
 msgstr "(kein)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1040
+#: plug-ins/script-fu/script-fu-interface.c:1059
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1046
+#: plug-ins/script-fu/script-fu-interface.c:1066
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1052
+#: plug-ins/script-fu/script-fu-interface.c:1073
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1060
+#: plug-ins/script-fu/script-fu-interface.c:1082
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
@@ -300,7 +296,7 @@ msgstr "Schrift"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
@@ -417,6 +413,7 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3_D-Truchet..."
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
@@ -615,7 +612,7 @@ msgid "Padding"
 msgstr "Füllung"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/asc2img.scm.h:12
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
@@ -681,15 +678,9 @@ msgstr "<Image>/Skript-Fu/Hilfsmittel/_ASCII zu Bildebene..."
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/_ASCII zu Bild..."
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-msgid "Background Color"
-msgstr "Hintergrundfarbe"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, no-c-format
-msgid "Buffer Amount (% Height of Text)"
+#, fuzzy, no-c-format
+msgid "Buffer amount (% height of text)"
 msgstr "Puffer-Grösse (in % der Höhe d. Textes)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
@@ -702,16 +693,11 @@ msgstr "Dateiname"
 msgid "Filename"
 msgstr "Dateiname"
 
-#: plug-ins/script-fu/scripts/asc2img.scm.h:9
-msgid "Font Size (pixels)"
-msgstr "Schriftgröße (Pixel)"
-
 #: plug-ins/script-fu/scripts/asc2img.scm.h:11
-msgid "Text Color"
-msgstr "Textfarbe"
-
-#: plug-ins/script-fu/scripts/asc2img.scm.h:13
-msgid "Transparent Background"
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
 msgstr "Transparenter Hintergrund"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
@@ -765,12 +751,6 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Kugel..."
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Durchmesser"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-msgid "Transparent background"
-msgstr "Transparenter Hintergrund"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
@@ -876,6 +856,11 @@ msgstr "<Image>/Script-Fu/Alpha als Logo/Ku_hflecken..."
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Ku_hflecken..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "Hintergrundfarbe"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -2445,6 +2430,18 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+
+#~ msgid "_About"
+#~ msgstr "_Über"
+
+#~ msgid "Font Size (pixels)"
+#~ msgstr "Schriftgröße (Pixel)"
+
+#~ msgid "Text Color"
+#~ msgstr "Textfarbe"
+
+#~ msgid "Transparent Background"
+#~ msgstr "Transparenter Hintergrund"
 
 #~ msgid "DB Browser"
 #~ msgstr "DB Browser"
