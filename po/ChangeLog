@@ -1,3 +1,7 @@
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fixed spelling of filename, added missing file.
+
 2005-04-05  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: updated after adding new dialogs and removing the
