@@ -1,3 +1,17 @@
+2000-02-05  Garry R. Osgood <gosgood@idt.net>
+
+        * gimp/plug-ins/sample_colorize.c
+
+        Sample Colorize was not colorizing. Author
+        misused gimp_selection_bounds(); assumed that
+        "selection is empty" indicator was this
+        function's return value [p_init_gdrw() line 2597]
+        Caused the plugin to assume an active selection
+        was in progress even when there wasn't. Usually,
+        this precluded any kind of colorization.
+        Sanity-checked the existence of widgets before
+        their passage to GTK.
+
 Sun Feb  7 00:14:26 CET 2000 Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpenv.[ch]: use g* types and moved the documentation

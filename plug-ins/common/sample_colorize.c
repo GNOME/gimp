@@ -497,8 +497,10 @@ p_gradient_callback(GtkWidget *w, gint32 id)
       p_get_gradient(id); 
       p_smp_get_colors_callback(NULL, NULL);
       if(g_di.sample_preview) p_clear_preview(g_di.sample_preview);
-      gtk_widget_set_sensitive(g_di.apply_button,TRUE);	      
-      gtk_widget_set_sensitive(g_di.get_smp_colors_button,FALSE);	      
+      if(g_di.apply_button != NULL)
+        gtk_widget_set_sensitive(g_di.apply_button,TRUE);
+      if(g_di.get_smp_colors_button != NULL)	      
+        gtk_widget_set_sensitive(g_di.get_smp_colors_button,FALSE);	      
    }
 } /* end p_gradient_callback */
 
@@ -513,7 +515,8 @@ p_smp_menu_callback(gint32 id, gpointer data)
    {
       *id_ptr = id;
       p_update_preview(id_ptr);
-      gtk_widget_set_sensitive(g_di.get_smp_colors_button,TRUE);	      
+      if(g_di.get_smp_colors_button != NULL)
+        gtk_widget_set_sensitive(g_di.get_smp_colors_button,TRUE);	      
    }
 } /* end p_smp_menu_callback */
 
@@ -913,7 +916,8 @@ p_smp_get_colors_callback (GdkWindow *window,
   {
      if (p_main_colorize(MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
      {
-       gtk_widget_set_sensitive(g_di.apply_button,TRUE);	      
+       if(g_di.apply_button != NULL)
+         gtk_widget_set_sensitive(g_di.apply_button,TRUE);	      
      }
   }
   for (i = 0; i < GRADIENT_HEIGHT; i++)
@@ -2594,8 +2598,8 @@ p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow)
      printf("p_init_gdrw: OFFS       x: %d y: %d\n", (int)l_offsetx, (int)l_offsety );
   }
 
-  if (gimp_selection_bounds (l_image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2)
-      && (l_sel_channel_id >= 0))
+  gimp_selection_bounds (l_image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2);
+  if (non_empty && (l_sel_channel_id >= 0))
   {
       /* selection is TRUE */
       l_sel_gdrw = (t_GDRW *) calloc(1, sizeof(t_GDRW));
