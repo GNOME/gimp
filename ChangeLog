@@ -1,3 +1,8 @@
+2000-07-04  Seth Burgess  <sjburges@gimp.org>
+	* app/levels.c: changed reset behavior to reset all channels, not just
+	currently active one.  This fixes #15042, except the problems with 
+	the kissing gourami and litigating tetras.
+
 2000-07-05  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: since there really seems to be a "build"

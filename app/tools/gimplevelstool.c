@@ -938,17 +938,28 @@ levels_reset_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   LevelsDialog *ld;
+  int channel;
+  int maxChannels;
 
   ld = (LevelsDialog *) data;
 
-  ld->low_input[ld->channel]   = 0;
-  ld->gamma[ld->channel]       = 1.0;
-  ld->high_input[ld->channel]  = 255;
-  ld->low_output[ld->channel]  = 0;
-  ld->high_output[ld->channel] = 255;
-
+  if (ld->color)
+    maxChannels = 4;
+  else
+    maxChannels = 1;
+  
+  for (channel = 0; channel < maxChannels; channel++)
+    {
+      ld->low_input[channel]   = 0;
+      ld->gamma[channel]       = 1.0;
+      ld->high_input[channel]  = 255;
+      ld->low_output[channel]  = 0;
+      ld->high_output[channel] = 255;
+      
+      levels_adjust_channel (ld, ld->hist, channel + 1);
+    }
   levels_update (ld, ALL);
-
+  
   if (ld->preview)
     levels_preview (ld);
 }
