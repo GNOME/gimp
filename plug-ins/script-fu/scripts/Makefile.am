@@ -79,7 +79,6 @@ scriptdata_DATA = \
 	truchet.scm				\
 	waves-anim.scm				\
 	weave.scm				\
-	web-browser.scm				\
 	xach-effect.scm
 
 EXTRA_DATA =

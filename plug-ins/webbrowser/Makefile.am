@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+scriptdatadir = $(gimpdatadir)/scripts
+
+scriptdata_DATA = web-browser.scm
+
 pluginlibdir = $(gimpplugindir)/plug-ins
 
 pluginlib_PROGRAMS = webbrowser
@@ -24,6 +28,9 @@ DEPS = \
 	$(top_builddir)/libgimp/libgimp.la
 
 webbrowser_DEPENDENCIES = $(DEPS)
+
+EXTRA_DATA = 
+EXTRA_DIST = $(scriptdata_DATA)
 
 .PHONY: files
 
