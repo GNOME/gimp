@@ -1,3 +1,8 @@
+2003-05-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-server.c (server_log): plugged a
+	memleak (fix merged from HEAD branch).
+
 2003-05-21  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint_funcs.c (shrink_line): Ported back fix for bug #104693
