@@ -1,3 +1,8 @@
+Tue Aug 18 15:42:44 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gfig/gfig.c: kludged around the use of the disappearing
+	gtk private functions (through the magic of cut and paste ;)
+
 Sun Aug 16 18:48:17 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/ink.c (ink_paste): Make sure we check that

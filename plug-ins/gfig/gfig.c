@@ -186,9 +186,6 @@ static void      find_grid_pos(GdkPoint *p,GdkPoint *gp, guint state);
 static gint      brush_list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
 static gint      calculate_point_to_line_distance(GdkPoint *p, GdkPoint *A, GdkPoint *B, GdkPoint *I);
 
-/* gtk private function forward declaration */
-gchar * gdk_pixmap_extract_color (gchar *buffer);
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
@@ -1663,6 +1660,108 @@ typedef struct
 } _GdkPixmapColor;
 
 
+static gchar*
+my_gdk_pixmap_skip_whitespaces (gchar *buffer)
+{
+  gint32 index = 0;
+
+  while (buffer[index] != 0 && (buffer[index] == 0x20 || buffer[index] == 0x09))
+    index++;
+
+  return &buffer[index];
+}
+
+static gchar*
+my_gdk_pixmap_skip_string (gchar *buffer)
+{
+  gint32 index = 0;
+
+  while (buffer[index] != 0 && buffer[index] != 0x20 && buffer[index] != 0x09)
+    index++;
+
+  return &buffer[index];
+}
+
+/* Xlib crashed ince at a color name lengths around 125 */
+#define MAX_COLOR_LEN 120
+
+static gchar*
+my_gdk_pixmap_extract_color (gchar *buffer)
+{
+  gint counter, numnames;
+  gchar *ptr = NULL, ch, temp[128];
+  gchar color[MAX_COLOR_LEN], *retcol;
+  gint space;
+
+  counter = 0;
+  while (ptr == NULL)
+    {
+      if (buffer[counter] == 'c')
+        {
+          ch = buffer[counter + 1];
+          if (ch == 0x20 || ch == 0x09)
+            ptr = &buffer[counter + 1];
+        }
+      else if (buffer[counter] == 0)
+        return NULL;
+
+      counter++;
+    }
+
+  ptr = my_gdk_pixmap_skip_whitespaces (ptr);
+
+  if (ptr[0] == 0)
+    return NULL;
+  else if (ptr[0] == '#')
+    {
+      counter = 1;
+      while (ptr[counter] != 0 && 
+             ((ptr[counter] >= '0' && ptr[counter] <= '9') ||
+              (ptr[counter] >= 'a' && ptr[counter] <= 'f') ||
+              (ptr[counter] >= 'A' && ptr[counter] <= 'F')))
+        counter++;
+
+      retcol = g_new (gchar, counter+1);
+      strncpy (retcol, ptr, counter);
+
+      retcol[counter] = 0;
+      
+      return retcol;
+    }
+
+  color[0] = 0;
+  numnames = 0;
+
+  space = MAX_COLOR_LEN - 1;
+  while (space > 0)
+    {
+      sscanf (ptr, "%127s", temp);
+
+      if (((gint)ptr[0] == 0) ||
+          (strcmp ("s", temp) == 0) || (strcmp ("m", temp) == 0) ||
+          (strcmp ("g", temp) == 0) || (strcmp ("g4", temp) == 0))
+        {
+          break;
+        }
+      else
+        {
+          if (numnames > 0)
+            {
+              space -= 1;
+              strcat (color, " ");
+            }
+          strncat (color, temp, space);
+          space -= MIN (space, strlen (temp));
+          ptr = my_gdk_pixmap_skip_string (ptr);
+          ptr = my_gdk_pixmap_skip_whitespaces (ptr);
+          numnames++;
+        }
+    }
+
+  retcol = g_strdup (color);
+  return retcol;
+}
+
 GdkPixmap*
 my_gdk_pixmap_create_from_xpm_d (GdkWindow  *window,
 			      GdkBitmap **mask,
@@ -1705,7 +1804,7 @@ my_gdk_pixmap_create_from_xpm_d (GdkWindow  *window,
       if (color_name != NULL)
 	g_free (color_name);
 
-      color_name = (gchar *)gdk_pixmap_extract_color (&buffer[cpp]);
+      color_name = (gchar *)my_gdk_pixmap_extract_color (&buffer[cpp]);
 
       if (color_name != NULL)
 	{
