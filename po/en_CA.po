@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 14:49-0400\n"
-"PO-Revision-Date: 2004-10-17 14:29-0400\n"
+"POT-Creation-Date: 2004-10-19 10:50-0400\n"
+"PO-Revision-Date: 2004-10-19 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -377,8 +377,8 @@ msgid "Brushes Menu"
 msgstr "Brushes Menu"
 
 #: app/actions/brushes-actions.c:47
-msgid "New Brush"
-msgstr "New Brush"
+msgid "_New Brush"
+msgstr "_New Brush"
 
 #: app/actions/brushes-actions.c:48
 msgid "New brush"
@@ -416,201 +416,197 @@ msgstr "_Edit Brush..."
 msgid "Edit brush"
 msgstr "Edit brush"
 
-#: app/actions/buffers-actions.c:41
+#: app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
 msgstr "Buffers Menu"
 
-#: app/actions/buffers-actions.c:45
+#: app/actions/buffers-actions.c:46
 msgid "_Paste Buffer"
 msgstr "_Paste Buffer"
 
-#: app/actions/buffers-actions.c:46
+#: app/actions/buffers-actions.c:47
 msgid "Paste the selected buffer"
 msgstr "Paste the selected buffer"
 
-#: app/actions/buffers-actions.c:51
+#: app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
 msgstr "Paste Buffer _Into"
 
-#: app/actions/buffers-actions.c:52
+#: app/actions/buffers-actions.c:53
 msgid "Paste the selected buffer into the selection"
 msgstr "Paste the selected buffer into the selection"
 
-#: app/actions/buffers-actions.c:57
+#: app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
 msgstr "Paste Buffer as _New"
 
-#: app/actions/buffers-actions.c:58
+#: app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
 msgstr "Paste the selected buffer as new image"
 
-#: app/actions/buffers-actions.c:63
+#: app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
 msgstr "_Delete Buffer"
 
-#: app/actions/buffers-actions.c:64
+#: app/actions/buffers-actions.c:65
 msgid "Delete the selected buffer"
 msgstr "Delete the selected buffer"
 
-#: app/actions/channels-actions.c:43
+#: app/actions/channels-actions.c:44
 msgid "Channels Menu"
 msgstr "Channels Menu"
 
-#: app/actions/channels-actions.c:47
+#: app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
 msgstr "_Edit Channel Attributes..."
 
-#: app/actions/channels-actions.c:48
+#: app/actions/channels-actions.c:49
 msgid "Edit channel attributes"
 msgstr "Edit channel attributes"
 
-#: app/actions/channels-actions.c:53
+#: app/actions/channels-actions.c:54
 msgid "_New Channel..."
 msgstr "_New Channel..."
 
-#: app/actions/channels-actions.c:54
+#: app/actions/channels-actions.c:55
 msgid "New channel dialog"
 msgstr "New channel dialogue"
 
-#: app/actions/channels-actions.c:59
+#: app/actions/channels-actions.c:60
 msgid "_New Channel"
 msgstr "_New Channel"
 
-#: app/actions/channels-actions.c:60 app/core/core-enums.c:634
+#: app/actions/channels-actions.c:61 app/core/core-enums.c:634
 msgid "New channel"
 msgstr "New channel"
 
-#: app/actions/channels-actions.c:65
+#: app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
 msgstr "D_uplicate Channel"
 
-#: app/actions/channels-actions.c:66
+#: app/actions/channels-actions.c:67
 msgid "Duplicate channel"
 msgstr "Duplicate channel"
 
-#: app/actions/channels-actions.c:71
+#: app/actions/channels-actions.c:72
 msgid "_Delete Channel"
 msgstr "_Delete Channel"
 
-#: app/actions/channels-actions.c:72 app/core/core-enums.c:635
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:635
 msgid "Delete channel"
 msgstr "Delete channel"
 
-#: app/actions/channels-actions.c:77
+#: app/actions/channels-actions.c:78
 msgid "_Raise Channel"
 msgstr "_Raise Channel"
 
-#: app/actions/channels-actions.c:78
+#: app/actions/channels-actions.c:79
 msgid "Raise channel"
 msgstr "Raise channel"
 
-#: app/actions/channels-actions.c:83
+#: app/actions/channels-actions.c:84
 msgid "Raise Channel to _Top"
 msgstr "Raise Channel to _Top"
 
-#: app/actions/channels-actions.c:84
+#: app/actions/channels-actions.c:85
 msgid "Raise channel to top"
 msgstr "Raise channel to top"
 
-#: app/actions/channels-actions.c:89
+#: app/actions/channels-actions.c:90
 msgid "_Lower Channel"
 msgstr "_Lower Channel"
 
-#: app/actions/channels-actions.c:90
+#: app/actions/channels-actions.c:91
 msgid "Lower channel"
 msgstr "Lower channel"
 
-#: app/actions/channels-actions.c:95
+#: app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
 msgstr "Lower Channel to _Bottom"
 
-#: app/actions/channels-actions.c:96
+#: app/actions/channels-actions.c:97
 msgid "Lower channel to bottom"
 msgstr "Lower channel to bottom"
 
-#: app/actions/channels-actions.c:104
+#: app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
 msgstr "Channel to Sele_ction"
 
-#: app/actions/channels-actions.c:105
+#: app/actions/channels-actions.c:106
 msgid "Channel to selection"
 msgstr "Channel to selection"
 
-#: app/actions/channels-actions.c:110 app/actions/layers-actions.c:225
-#: app/actions/vectors-actions.c:166
+#: app/actions/channels-actions.c:111 app/actions/layers-actions.c:226
+#: app/actions/vectors-actions.c:167
 msgid "_Add to Selection"
 msgstr "_Add to Selection"
 
-#: app/actions/channels-actions.c:111 app/actions/vectors-actions.c:167
+#: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:168
 msgid "Add"
 msgstr "Add"
 
-#: app/actions/channels-actions.c:116 app/actions/layers-actions.c:230
-#: app/actions/layers-actions.c:253 app/actions/vectors-actions.c:172
+#: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
+#: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:173
 msgid "_Subtract from Selection"
 msgstr "_Subtract from Selection"
 
-#: app/actions/channels-actions.c:117 app/actions/vectors-actions.c:173
+#: app/actions/channels-actions.c:118 app/actions/vectors-actions.c:174
 #: app/widgets/gimpwidgets-constructors.c:69
 #: app/widgets/gimpwidgets-constructors.c:102
 msgid "Subtract"
 msgstr "Subtract"
 
-#: app/actions/channels-actions.c:122 app/actions/layers-actions.c:235
-#: app/actions/layers-actions.c:258 app/actions/vectors-actions.c:178
+#: app/actions/channels-actions.c:123 app/actions/layers-actions.c:236
+#: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:179
 msgid "_Intersect with Selection"
 msgstr "_Intersect with Selection"
 
-#: app/actions/channels-actions.c:123 app/actions/vectors-actions.c:179
+#: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:180
 msgid "Intersect"
 msgstr "Intersect"
 
-#: app/actions/channels-commands.c:147 app/actions/channels-commands.c:362
-#: app/actions/channels-commands.c:406 app/widgets/gimpchanneltreeview.c:232
+#: app/actions/channels-commands.c:85 app/actions/channels-commands.c:384
+msgid "Channel Attributes"
+msgstr "Channel Attributes"
+
+#: app/actions/channels-commands.c:88
+msgid "Edit Channel Attributes"
+msgstr "Edit Channel Attributes"
+
+#: app/actions/channels-commands.c:90
+msgid "Edit Channel Color"
+msgstr "Edit Channel Colour"
+
+#: app/actions/channels-commands.c:91 app/actions/channels-commands.c:123
+msgid "Fill Opacity:"
+msgstr "Fill Opacity:"
+
+#: app/actions/channels-commands.c:116 app/actions/channels-commands.c:117
+#: app/actions/channels-commands.c:158 app/widgets/gimpchanneltreeview.c:232
 msgid "New Channel"
 msgstr "New Channel"
 
-#: app/actions/channels-commands.c:150 app/widgets/gimpchanneltreeview.c:237
+#: app/actions/channels-commands.c:120
+msgid "New Channel Options"
+msgstr "New Channel Options"
+
+#: app/actions/channels-commands.c:122
+msgid "New Channel Color"
+msgstr "New Channel Colour"
+
+#: app/actions/channels-commands.c:161 app/widgets/gimpchanneltreeview.c:237
 msgid "Empty Channel"
 msgstr "Empty Channel"
 
-#: app/actions/channels-commands.c:235
+#: app/actions/channels-commands.c:246
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s Channel Copy"
 
-#: app/actions/channels-commands.c:301 app/core/gimpselection.c:599
+#: app/actions/channels-commands.c:312 app/core/gimpselection.c:599
 #: app/pdb/selection_cmds.c:968 app/pdb/selection_cmds.c:1092
 msgid "Channel to Selection"
 msgstr "Channel to Selection"
-
-#: app/actions/channels-commands.c:334
-msgid "Edit Channel Color"
-msgstr "Edit Channel Colour"
-
-#: app/actions/channels-commands.c:335
-msgid "New Channel Color"
-msgstr "New Channel Colour"
-
-#: app/actions/channels-commands.c:346 app/actions/channels-commands.c:527
-msgid "Channel Attributes"
-msgstr "Channel Attributes"
-
-#: app/actions/channels-commands.c:348
-msgid "Edit Channel Attributes"
-msgstr "Edit Channel Attributes"
-
-#: app/actions/channels-commands.c:364
-msgid "New Channel Options"
-msgstr "New Channel Options"
-
-#: app/actions/channels-commands.c:398
-msgid "Channel Name:"
-msgstr "Channel Name:"
-
-#: app/actions/channels-commands.c:409
-msgid "Fill Opacity:"
-msgstr "Fill Opacity:"
 
 #: app/actions/colormap-editor-actions.c:43
 msgid "Indexed Palette Menu"
@@ -641,12 +637,12 @@ msgstr "Add colour from BG"
 msgid "_Context"
 msgstr "_Context"
 
-#: app/actions/context-actions.c:47 app/actions/layers-actions.c:52
+#: app/actions/context-actions.c:47 app/actions/layers-actions.c:53
 #: app/actions/plug-in-actions.c:64
 msgid "_Colors"
 msgstr "_Colours"
 
-#: app/actions/context-actions.c:48 app/actions/layers-actions.c:58
+#: app/actions/context-actions.c:48 app/actions/layers-actions.c:59
 msgid "_Opacity"
 msgstr "_Opacity"
 
@@ -654,57 +650,61 @@ msgstr "_Opacity"
 msgid "Paint _Mode"
 msgstr "Paint _Mode"
 
-#: app/actions/context-actions.c:50 app/dialogs/preferences-dialog.c:1582
+#: app/actions/context-actions.c:50
+msgid "_Tool"
+msgstr "_Tool"
+
+#: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1582
 msgid "_Brush"
 msgstr "_Brush"
 
-#: app/actions/context-actions.c:51 app/actions/plug-in-actions.c:78
+#: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:78
 #: app/dialogs/preferences-dialog.c:1585
 msgid "_Pattern"
 msgstr "_Pattern"
 
-#: app/actions/context-actions.c:52
+#: app/actions/context-actions.c:53
 msgid "_Palette"
 msgstr "_Palette"
 
-#: app/actions/context-actions.c:53 app/dialogs/palette-import-dialog.c:219
+#: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:219
 #: app/dialogs/preferences-dialog.c:1588
 msgid "_Gradient"
 msgstr "_Gradient"
 
-#: app/actions/context-actions.c:54
+#: app/actions/context-actions.c:55
 msgid "_Font"
 msgstr "_Font"
 
-#: app/actions/context-actions.c:56
+#: app/actions/context-actions.c:57
 msgid "_Shape"
 msgstr "_Shape"
 
-#: app/actions/context-actions.c:57
+#: app/actions/context-actions.c:58
 msgid "_Radius"
 msgstr "_Radius"
 
-#: app/actions/context-actions.c:58
+#: app/actions/context-actions.c:59
 msgid "S_pikes"
 msgstr "S_pikes"
 
-#: app/actions/context-actions.c:59
+#: app/actions/context-actions.c:60
 msgid "_Hardness"
 msgstr "_Hardness"
 
-#: app/actions/context-actions.c:60
+#: app/actions/context-actions.c:61
 msgid "_Aspect"
 msgstr "_Aspect"
 
-#: app/actions/context-actions.c:61
+#: app/actions/context-actions.c:62
 msgid "A_ngle"
 msgstr "A_ngle"
 
-#: app/actions/context-actions.c:64
+#: app/actions/context-actions.c:65
 msgid "_Default Colors"
 msgstr "_Default Colours"
 
-#: app/actions/context-actions.c:69
+#: app/actions/context-actions.c:70
 msgid "S_wap Colors"
 msgstr "S_wap Colours"
 
@@ -785,16 +785,16 @@ msgid "Na_vigation"
 msgstr "Na_vigation"
 
 #: app/actions/dialogs-actions.c:110
-msgid "_Undo History"
-msgstr "_Undo History"
+msgid "Undo _History"
+msgstr "Undo _History"
 
 #: app/actions/dialogs-actions.c:115
 msgid "Colo_rs"
 msgstr "Colou_rs"
 
 #: app/actions/dialogs-actions.c:120
-msgid "Brus_hes"
-msgstr "Brus_hes"
+msgid "_Brushes"
+msgstr "_Brushes"
 
 #: app/actions/dialogs-actions.c:125
 msgid "P_atterns"
@@ -813,8 +813,8 @@ msgid "_Fonts"
 msgstr "_Fonts"
 
 #: app/actions/dialogs-actions.c:145
-msgid "_Buffers"
-msgstr "_Buffers"
+msgid "B_uffers"
+msgstr "B_uffers"
 
 #: app/actions/dialogs-actions.c:150
 msgid "_Images"
@@ -852,167 +852,167 @@ msgstr "_Tip of the Day"
 msgid "_About"
 msgstr "_About"
 
-#: app/actions/dockable-actions.c:48
+#: app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
 msgstr "Dialogues Menu"
 
-#: app/actions/dockable-actions.c:52
+#: app/actions/dockable-actions.c:53
 msgid "_Add Tab"
 msgstr "_Add Tab"
 
-#: app/actions/dockable-actions.c:53
-msgid "Preview Si_ze"
-msgstr "Preview Si_ze"
-
 #: app/actions/dockable-actions.c:54
+msgid "_Preview Size"
+msgstr "_Preview Size"
+
+#: app/actions/dockable-actions.c:55
 msgid "_Tab Style"
 msgstr "_Tab Style"
 
-#: app/actions/dockable-actions.c:57
+#: app/actions/dockable-actions.c:58
 msgid "_Close Tab"
 msgstr "_Close Tab"
 
-#: app/actions/dockable-actions.c:62
+#: app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
 msgstr "_Detach Tab"
 
-#: app/actions/dockable-actions.c:67 app/actions/view-actions.c:111
-msgid "Move to Screen..."
-msgstr "Move to Screen..."
+#: app/actions/dockable-actions.c:68
+msgid "M_ove to Screen..."
+msgstr "M_ove to Screen..."
 
-#: app/actions/dockable-actions.c:75
-msgid "Show Image _Menu"
-msgstr "Show Image _Menu"
+#: app/actions/dockable-actions.c:76
+msgid "_Show Image Menu"
+msgstr "_Show Image Menu"
 
-#: app/actions/dockable-actions.c:81
-msgid "Auto Follow Active _Image"
-msgstr "Auto Follow Active _Image"
+#: app/actions/dockable-actions.c:82
+msgid "Auto _Follow Active Image"
+msgstr "Auto _Follow Active Image"
 
-#: app/actions/dockable-actions.c:100
+#: app/actions/dockable-actions.c:101
 msgid "_Tiny"
 msgstr "_Tiny"
 
-#: app/actions/dockable-actions.c:101
+#: app/actions/dockable-actions.c:102
 msgid "E_xtra Small"
 msgstr "E_xtra Small"
 
-#: app/actions/dockable-actions.c:102
+#: app/actions/dockable-actions.c:103
 msgid "_Small"
 msgstr "_Small"
 
-#: app/actions/dockable-actions.c:103
+#: app/actions/dockable-actions.c:104
 msgid "_Medium"
 msgstr "_Medium"
 
-#: app/actions/dockable-actions.c:104
+#: app/actions/dockable-actions.c:105
 msgid "_Large"
 msgstr "_Large"
 
-#: app/actions/dockable-actions.c:105
+#: app/actions/dockable-actions.c:106
 msgid "Ex_tra Large"
 msgstr "Ex_tra Large"
 
-#: app/actions/dockable-actions.c:106
+#: app/actions/dockable-actions.c:107
 msgid "_Huge"
 msgstr "_Huge"
 
-#: app/actions/dockable-actions.c:107
+#: app/actions/dockable-actions.c:108
 msgid "_Enormous"
 msgstr "_Enormous"
 
-#: app/actions/dockable-actions.c:108
+#: app/actions/dockable-actions.c:109
 msgid "_Gigantic"
 msgstr "_Gigantic"
 
-#: app/actions/dockable-actions.c:113
+#: app/actions/dockable-actions.c:114
 msgid "_Icon"
 msgstr "_Icon"
 
-#: app/actions/dockable-actions.c:114
+#: app/actions/dockable-actions.c:115
 msgid "Current _Status"
 msgstr "Current _Status"
 
-#: app/actions/dockable-actions.c:115
+#: app/actions/dockable-actions.c:116
 msgid "_Text"
 msgstr "_Text"
 
-#: app/actions/dockable-actions.c:116
+#: app/actions/dockable-actions.c:117
 msgid "I_con & Text"
 msgstr "I_con & Text"
 
-#: app/actions/dockable-actions.c:117
+#: app/actions/dockable-actions.c:118
 msgid "St_atus & Text"
 msgstr "St_atus & Text"
 
-#: app/actions/dockable-actions.c:126
+#: app/actions/dockable-actions.c:127
 msgid "View as _List"
 msgstr "View as _List"
 
-#: app/actions/dockable-actions.c:131
+#: app/actions/dockable-actions.c:132
 msgid "View as _Grid"
 msgstr "View as _Grid"
 
-#: app/actions/documents-actions.c:41
+#: app/actions/documents-actions.c:42
 msgid "Documents Menu"
 msgstr "Documents Menu"
 
-#: app/actions/documents-actions.c:45
+#: app/actions/documents-actions.c:46
 msgid "_Open Image"
 msgstr "_Open Image"
 
-#: app/actions/documents-actions.c:46
+#: app/actions/documents-actions.c:47
 msgid "Open the selected entry"
 msgstr "Open the selected entry"
 
-#: app/actions/documents-actions.c:51
+#: app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
 msgstr "_Raise or Open Image"
 
-#: app/actions/documents-actions.c:52
+#: app/actions/documents-actions.c:53
 msgid "Raise window if already open"
 msgstr "Raise window if already open"
 
-#: app/actions/documents-actions.c:57
+#: app/actions/documents-actions.c:58
 msgid "File Open _Dialog"
 msgstr "File Open _Dialogue"
 
-#: app/actions/documents-actions.c:58
+#: app/actions/documents-actions.c:59
 msgid "Open image dialog"
 msgstr "Open image dialogue"
 
-#: app/actions/documents-actions.c:63
+#: app/actions/documents-actions.c:64
 msgid "Remove _Entry"
 msgstr "Remove _Entry"
 
-#: app/actions/documents-actions.c:64
+#: app/actions/documents-actions.c:65
 msgid "Remove the selected entry"
 msgstr "Remove the selected entry"
 
-#: app/actions/documents-actions.c:69
+#: app/actions/documents-actions.c:70
 msgid "Recreate _Preview"
 msgstr "Recreate _Preview"
 
-#: app/actions/documents-actions.c:70
+#: app/actions/documents-actions.c:71
 msgid "Recreate preview"
 msgstr "Recreate preview"
 
-#: app/actions/documents-actions.c:75
+#: app/actions/documents-actions.c:76
 msgid "Reload _all Previews"
 msgstr "Reload _all Previews"
 
-#: app/actions/documents-actions.c:76
+#: app/actions/documents-actions.c:77
 msgid "Reload all previews"
 msgstr "Reload all previews"
 
-#: app/actions/documents-actions.c:81
+#: app/actions/documents-actions.c:82
 msgid "Remove Dangling E_ntries"
 msgstr "Remove Dangling E_ntries"
 
-#: app/actions/documents-actions.c:82
+#: app/actions/documents-actions.c:83
 msgid "Remove dangling entries"
 msgstr "Remove dangling entries"
 
-#: app/actions/documents-commands.c:272 app/actions/file-commands.c:164
+#: app/actions/documents-commands.c:258 app/actions/file-commands.c:164
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:332 app/widgets/gimplayertreeview.c:802
@@ -1027,48 +1027,48 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/drawable-actions.c:46
+#: app/actions/drawable-actions.c:45
 msgid "_Desaturate"
 msgstr "_Desaturate"
 
-#: app/actions/drawable-actions.c:51
+#: app/actions/drawable-actions.c:50
 msgid "In_vert"
 msgstr "In_vert"
 
-#: app/actions/drawable-actions.c:56
+#: app/actions/drawable-actions.c:55
 msgid "_Equalize"
 msgstr "_Equalize"
 
-#: app/actions/drawable-actions.c:61
+#: app/actions/drawable-actions.c:60
 msgid "_Offset..."
 msgstr "_Offset..."
 
-#: app/actions/drawable-actions.c:69 app/actions/vectors-actions.c:140
+#: app/actions/drawable-actions.c:68 app/actions/vectors-actions.c:141
 msgid "_Visible"
 msgstr "_Visible"
 
-#: app/actions/drawable-actions.c:75 app/actions/vectors-actions.c:146
+#: app/actions/drawable-actions.c:74 app/actions/vectors-actions.c:147
 msgid "_Linked"
 msgstr "_Linked"
 
-#: app/actions/drawable-actions.c:84 app/actions/image-actions.c:133
+#: app/actions/drawable-actions.c:83 app/actions/image-actions.c:136
 msgid "Flip _Horizontally"
 msgstr "Flip _Horizontally"
 
-#: app/actions/drawable-actions.c:89 app/actions/image-actions.c:138
+#: app/actions/drawable-actions.c:88 app/actions/image-actions.c:141
 msgid "Flip _Vertically"
 msgstr "Flip _Vertically"
 
 #. please use the degree symbol in the translation
-#: app/actions/drawable-actions.c:97 app/actions/image-actions.c:147
+#: app/actions/drawable-actions.c:96 app/actions/image-actions.c:150
 msgid "Rotate 90 degrees _CW"
 msgstr "Rotate 90 degrees _CW"
 
-#: app/actions/drawable-actions.c:102 app/actions/image-actions.c:152
+#: app/actions/drawable-actions.c:101 app/actions/image-actions.c:155
 msgid "Rotate _180 degrees"
 msgstr "Rotate _180 degrees"
 
-#: app/actions/drawable-actions.c:107 app/actions/image-actions.c:157
+#: app/actions/drawable-actions.c:106 app/actions/image-actions.c:160
 msgid "Rotate 90 degrees CC_W"
 msgstr "Rotate 90 degrees CC_W"
 
@@ -1089,8 +1089,8 @@ msgid "_Edit"
 msgstr "_Edit"
 
 #: app/actions/edit-actions.c:62
-msgid "Buffer"
-msgstr "Buffer"
+msgid "_Buffer"
+msgstr "_Buffer"
 
 #: app/actions/edit-actions.c:65 app/actions/edit-actions.c:225
 msgid "_Undo"
@@ -1207,7 +1207,7 @@ msgstr "(Unnamed Buffer)"
 msgid "There is no active layer or channel to copy from."
 msgstr "There is no active layer or channel to copy from."
 
-#: app/actions/error-console-actions.c:39
+#: app/actions/error-console-actions.c:40
 msgid "Error Console Menu"
 msgstr "Error Console Menu"
 
@@ -1342,19 +1342,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/fonts-actions.c:43
+#: app/actions/fonts-actions.c:44
 msgid "Fonts Menu"
 msgstr "Fonts Menu"
 
-#: app/actions/fonts-actions.c:47
+#: app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
 msgstr "_Rescan Font List"
 
-#: app/actions/fonts-actions.c:48
+#: app/actions/fonts-actions.c:49
 msgid "Rescan font list"
 msgstr "Rescan font list"
 
-#: app/actions/gradient-editor-actions.c:45
+#: app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
 msgstr "Gradient Editor Menu"
 
@@ -1441,7 +1441,7 @@ msgstr "Spherical (_decreasing)"
 msgid "(Varies)"
 msgstr "(Varies)"
 
-#: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:115
+#: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:118
 msgid "_RGB"
 msgstr "_RGB"
 
@@ -1453,75 +1453,75 @@ msgstr "HSV (_counter-clockwise hue)"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (clockwise _hue)"
 
-#: app/actions/gradient-editor-actions.c:478
+#: app/actions/gradient-editor-actions.c:476
 msgid "_Blending Function for Segment"
 msgstr "_Blending Function for Segment"
 
-#: app/actions/gradient-editor-actions.c:480
+#: app/actions/gradient-editor-actions.c:478
 msgid "Coloring _Type for Segment"
 msgstr "Colouring _Type for Segment"
 
-#: app/actions/gradient-editor-actions.c:483
+#: app/actions/gradient-editor-actions.c:481
 msgid "_Flip Segment"
 msgstr "_Flip Segment"
 
-#: app/actions/gradient-editor-actions.c:485
+#: app/actions/gradient-editor-actions.c:483
 msgid "_Replicate Segment..."
 msgstr "_Replicate Segment..."
 
-#: app/actions/gradient-editor-actions.c:487
+#: app/actions/gradient-editor-actions.c:485
 msgid "Split Segment at _Midpoint"
 msgstr "Split Segment at _Midpoint"
 
-#: app/actions/gradient-editor-actions.c:489
+#: app/actions/gradient-editor-actions.c:487
 msgid "Split Segment _Uniformly..."
 msgstr "Split Segment _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:491
+#: app/actions/gradient-editor-actions.c:489
 msgid "_Delete Segment"
 msgstr "_Delete Segment"
 
-#: app/actions/gradient-editor-actions.c:493
+#: app/actions/gradient-editor-actions.c:491
 msgid "Re-_center Segment's Midpoint"
 msgstr "Re-_centre Segment's Midpoint"
 
-#: app/actions/gradient-editor-actions.c:495
+#: app/actions/gradient-editor-actions.c:493
 msgid "Re-distribute _Handles in Segment"
 msgstr "Re-distribute _Handles in Segment"
 
-#: app/actions/gradient-editor-actions.c:500
+#: app/actions/gradient-editor-actions.c:498
 msgid "_Blending Function for Selection"
 msgstr "_Blending Function for Selection"
 
-#: app/actions/gradient-editor-actions.c:502
+#: app/actions/gradient-editor-actions.c:500
 msgid "Coloring _Type for Selection"
 msgstr "Colouring _Type for Selection"
 
-#: app/actions/gradient-editor-actions.c:505
+#: app/actions/gradient-editor-actions.c:503
 msgid "_Flip Selection"
 msgstr "_Flip Selection"
 
-#: app/actions/gradient-editor-actions.c:507
+#: app/actions/gradient-editor-actions.c:505
 msgid "_Replicate Selection..."
 msgstr "_Replicate Selection..."
 
-#: app/actions/gradient-editor-actions.c:509
+#: app/actions/gradient-editor-actions.c:507
 msgid "Split Segments at _Midpoints"
 msgstr "Split Segments at _Midpoints"
 
-#: app/actions/gradient-editor-actions.c:511
+#: app/actions/gradient-editor-actions.c:509
 msgid "Split Segments _Uniformly..."
 msgstr "Split Segments _Uniformly..."
 
-#: app/actions/gradient-editor-actions.c:513
+#: app/actions/gradient-editor-actions.c:511
 msgid "_Delete Selection"
 msgstr "_Delete Selection"
 
-#: app/actions/gradient-editor-actions.c:515
+#: app/actions/gradient-editor-actions.c:513
 msgid "Re-_center Midpoints in Selection"
 msgstr "Re-_centre Midpoints in Selection"
 
-#: app/actions/gradient-editor-actions.c:517
+#: app/actions/gradient-editor-actions.c:515
 msgid "Re-distribute _Handles in Selection"
 msgstr "Re-distribute _Handles in Selection"
 
@@ -1613,7 +1613,7 @@ msgstr ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 
-#: app/actions/gradients-actions.c:43
+#: app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
 msgstr "Gradients Menu"
 
@@ -1665,7 +1665,7 @@ msgstr "_Edit Gradient..."
 msgid "Edit gradient"
 msgstr "Edit gradient"
 
-#: app/actions/gradients-commands.c:76
+#: app/actions/gradients-commands.c:65
 #, c-format
 msgid "Save '%s' as POV-Ray"
 msgstr "Save '%s' as POV-Ray"
@@ -1678,79 +1678,79 @@ msgstr "_Help"
 msgid "_Context Help"
 msgstr "_Context Help"
 
-#: app/actions/image-actions.c:46
+#: app/actions/image-actions.c:47
 msgid "Toolbox Menu"
 msgstr "Toolbox Menu"
 
-#: app/actions/image-actions.c:49 app/actions/image-actions.c:52
+#: app/actions/image-actions.c:51 app/actions/image-actions.c:55
 msgid "Image Menu"
 msgstr "Image Menu"
 
-#: app/actions/image-actions.c:55
+#: app/actions/image-actions.c:58
 msgid "_Xtns"
 msgstr "_Xtns"
 
-#: app/actions/image-actions.c:56
+#: app/actions/image-actions.c:59
 msgid "_Image"
 msgstr "_Image"
 
-#: app/actions/image-actions.c:57
+#: app/actions/image-actions.c:60
 msgid "_Mode"
 msgstr "_Mode"
 
-#: app/actions/image-actions.c:58 app/actions/layers-actions.c:56
+#: app/actions/image-actions.c:61 app/actions/layers-actions.c:57
 msgid "_Transform"
 msgstr "_Transform"
 
-#: app/actions/image-actions.c:59
+#: app/actions/image-actions.c:62
 msgid "_Guides"
 msgstr "_Guides"
 
-#: app/actions/image-actions.c:62 app/actions/image-actions.c:67
+#: app/actions/image-actions.c:65 app/actions/image-actions.c:70
 msgid "_New..."
 msgstr "_New..."
 
-#: app/actions/image-actions.c:72
+#: app/actions/image-actions.c:75
 msgid "Can_vas Size..."
 msgstr "Can_vas Size..."
 
-#: app/actions/image-actions.c:77
+#: app/actions/image-actions.c:80
 msgid "F_it Canvas to Layers"
 msgstr "F_it Canvas to Layers"
 
-#: app/actions/image-actions.c:82
+#: app/actions/image-actions.c:85
 msgid "_Scale Image..."
 msgstr "_Scale Image..."
 
-#: app/actions/image-actions.c:87
+#: app/actions/image-actions.c:90
 msgid "_Crop Image"
 msgstr "_Crop Image"
 
-#: app/actions/image-actions.c:92
+#: app/actions/image-actions.c:95
 msgid "_Duplicate"
 msgstr "_Duplicate"
 
-#: app/actions/image-actions.c:97
+#: app/actions/image-actions.c:100
 msgid "Merge Visible _Layers..."
 msgstr "Merge Visible _Layers..."
 
-#: app/actions/image-actions.c:102 app/actions/layers-actions.c:137
+#: app/actions/image-actions.c:105 app/actions/layers-actions.c:138
 msgid "_Flatten Image"
 msgstr "_Flatten Image"
 
-#: app/actions/image-actions.c:107
+#: app/actions/image-actions.c:110
 msgid "Configure G_rid..."
 msgstr "Configure G_rid..."
 
-#: app/actions/image-actions.c:120
+#: app/actions/image-actions.c:123
 msgid "_Grayscale"
 msgstr "_Grayscale"
 
-#: app/actions/image-actions.c:125
+#: app/actions/image-actions.c:128
 msgid "_Indexed..."
 msgstr "_Indexed..."
 
-#: app/actions/image-commands.c:232 app/actions/image-commands.c:482
+#: app/actions/image-commands.c:232 app/actions/image-commands.c:480
 msgid "Resizing..."
 msgstr "Resizing..."
 
@@ -1763,48 +1763,48 @@ msgstr "Flipping..."
 msgid "Rotating..."
 msgstr "Rotating..."
 
-#: app/actions/image-commands.c:337 app/actions/layers-commands.c:466
+#: app/actions/image-commands.c:337 app/actions/layers-commands.c:562
 msgid "Cannot crop because the current selection is empty."
 msgstr "Cannot crop because the current selection is empty."
 
-#: app/actions/image-commands.c:387
+#: app/actions/image-commands.c:385
 msgid "Merge Layers"
 msgstr "Merge Layers"
 
-#: app/actions/image-commands.c:390
+#: app/actions/image-commands.c:388
 msgid "Layers Merge Options"
 msgstr "Layers Merge Options"
 
-#: app/actions/image-commands.c:404
+#: app/actions/image-commands.c:402
 msgid "Final, Merged Layer should be:"
 msgstr "Final, Merged Layer should be:"
 
-#: app/actions/image-commands.c:408
+#: app/actions/image-commands.c:406
 msgid "Expanded as necessary"
 msgstr "Expanded as necessary"
 
-#: app/actions/image-commands.c:411
+#: app/actions/image-commands.c:409
 msgid "Clipped to image"
 msgstr "Clipped to image"
 
-#: app/actions/image-commands.c:414
+#: app/actions/image-commands.c:412
 msgid "Clipped to bottom layer"
 msgstr "Clipped to bottom layer"
 
-#: app/actions/image-commands.c:499
+#: app/actions/image-commands.c:497
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Resize Error: Both width and height must be greater than zero."
 
-#: app/actions/image-commands.c:548
+#: app/actions/image-commands.c:546
 msgid "Confirm Scaling"
 msgstr "Confirm Scaling"
 
-#: app/actions/image-commands.c:577 app/dialogs/image-new-dialog.c:283
+#: app/actions/image-commands.c:575 app/dialogs/image-new-dialog.c:283
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "You are trying to create an image with a size of %s."
 
-#: app/actions/image-commands.c:583
+#: app/actions/image-commands.c:581
 #, c-format
 msgid ""
 "Scaling the image to the choosen size will make it use more memory than what "
@@ -1812,354 +1812,355 @@ msgid ""
 "%s)."
 msgstr ""
 "Scaling the image to the choosen size will make it use more memory than what "
-"is configured as \"Maximum Image Size\" in the Preferences dialogue (currently "
-"%s)."
+"is configured as \"Maximum Image Size\" in the Preferences dialogue "
+"(currently %s)."
 
-#: app/actions/image-commands.c:598
+#: app/actions/image-commands.c:596
 msgid ""
 "Scaling the image to the choosen size will shrink some layers completely "
 "away."
 msgstr ""
-"Scaling the image to the choosen size will shrink away some layers completely."
+"Scaling the image to the choosen size will shrink away some layers "
+"completely."
 
-#: app/actions/image-commands.c:602
+#: app/actions/image-commands.c:600
 msgid "Is this what you want to do?"
 msgstr "Is this what you want to do?"
 
-#: app/actions/image-commands.c:638 app/core/gimpimage-scale.c:71
+#: app/actions/image-commands.c:636 app/core/gimpimage-scale.c:71
 #: app/dialogs/resize-dialog.c:212
 msgid "Scale Image"
 msgstr "Scale Image"
 
-#: app/actions/image-commands.c:654 app/actions/layers-commands.c:1240
+#: app/actions/image-commands.c:652 app/actions/layers-commands.c:1269
 #: app/pdb/transform_tools_cmds.c:454 app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Scaling..."
 
-#: app/actions/image-commands.c:667
+#: app/actions/image-commands.c:665
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Scale Error: Both width and height must be greater than zero."
 
-#: app/actions/images-actions.c:42
+#: app/actions/images-actions.c:43
 msgid "Images Menu"
 msgstr "Images Menu"
 
-#: app/actions/images-actions.c:46
+#: app/actions/images-actions.c:47
 msgid "_Raise Views"
 msgstr "_Raise Views"
 
-#: app/actions/images-actions.c:47
+#: app/actions/images-actions.c:48
 msgid "Raise this image's displays"
 msgstr "Raise this image's displays"
 
-#: app/actions/images-actions.c:52 app/actions/view-actions.c:68
+#: app/actions/images-actions.c:53 app/actions/view-actions.c:68
 msgid "_New View"
 msgstr "_New View"
 
-#: app/actions/images-actions.c:53
+#: app/actions/images-actions.c:54
 msgid "Create a new display for this image"
 msgstr "Create a new display for this image"
 
-#: app/actions/images-actions.c:58
+#: app/actions/images-actions.c:59
 msgid "_Delete Image"
 msgstr "_Delete Image"
 
-#: app/actions/images-actions.c:59
+#: app/actions/images-actions.c:60
 msgid "Delete this image"
 msgstr "Delete this image"
 
-#: app/actions/layers-actions.c:47
+#: app/actions/layers-actions.c:48
 msgid "Layers Menu"
 msgstr "Layers Menu"
 
-#: app/actions/layers-actions.c:50
+#: app/actions/layers-actions.c:51
 msgid "_Layer"
 msgstr "_Layer"
 
-#: app/actions/layers-actions.c:51
+#: app/actions/layers-actions.c:52
 msgid "Stac_k"
 msgstr "Stac_k"
 
-#: app/actions/layers-actions.c:53 app/tools/gimplevelstool.c:667
+#: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:667
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/actions/layers-actions.c:54
+#: app/actions/layers-actions.c:55
 msgid "_Mask"
 msgstr "_Mask"
 
-#: app/actions/layers-actions.c:55
+#: app/actions/layers-actions.c:56
 msgid "Tr_ansparency"
 msgstr "Tr_ansparency"
 
-#: app/actions/layers-actions.c:57
+#: app/actions/layers-actions.c:58
 msgid "_Properties"
 msgstr "_Properties"
 
-#: app/actions/layers-actions.c:59
+#: app/actions/layers-actions.c:60
 msgid "Layer _Mode"
 msgstr "Layer _Mode"
 
-#: app/actions/layers-actions.c:62
+#: app/actions/layers-actions.c:63
 msgid "Te_xt Tool"
 msgstr "Te_xt Tool"
 
-#: app/actions/layers-actions.c:67
+#: app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
 msgstr "_Edit Layer Attributes..."
 
-#: app/actions/layers-actions.c:68
+#: app/actions/layers-actions.c:69
 msgid "Edit layer attributes"
 msgstr "Edit layer attributes"
 
-#: app/actions/layers-actions.c:73
+#: app/actions/layers-actions.c:74
 msgid "_New Layer..."
 msgstr "_New Layer..."
 
-#: app/actions/layers-actions.c:74
+#: app/actions/layers-actions.c:75
 msgid "New layer dialog"
 msgstr "New layer dialogue"
 
-#: app/actions/layers-actions.c:79
+#: app/actions/layers-actions.c:80
 msgid "_New Layer"
 msgstr "_New Layer"
 
-#: app/actions/layers-actions.c:80 app/core/core-enums.c:624
+#: app/actions/layers-actions.c:81 app/core/core-enums.c:624
 msgid "New layer"
 msgstr "New layer"
 
-#: app/actions/layers-actions.c:85
+#: app/actions/layers-actions.c:86
 msgid "D_uplicate Layer"
 msgstr "D_uplicate Layer"
 
-#: app/actions/layers-actions.c:86
+#: app/actions/layers-actions.c:87
 msgid "Duplicate layer"
 msgstr "Duplicate layer"
 
-#: app/actions/layers-actions.c:91
+#: app/actions/layers-actions.c:92
 msgid "_Delete Layer"
 msgstr "_Delete Layer"
 
-#: app/actions/layers-actions.c:92 app/core/core-enums.c:625
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:625
 msgid "Delete layer"
 msgstr "Delete layer"
 
-#: app/actions/layers-actions.c:97
+#: app/actions/layers-actions.c:98
 msgid "_Raise Layer"
 msgstr "_Raise Layer"
 
-#: app/actions/layers-actions.c:98
+#: app/actions/layers-actions.c:99
 msgid "Raise layer"
 msgstr "Raise layer"
 
-#: app/actions/layers-actions.c:103
+#: app/actions/layers-actions.c:104
 msgid "Layer to _Top"
 msgstr "Layer to _Top"
 
-#: app/actions/layers-actions.c:104
+#: app/actions/layers-actions.c:105
 msgid "Raise layer to top"
 msgstr "Raise layer to top"
 
-#: app/actions/layers-actions.c:109
+#: app/actions/layers-actions.c:110
 msgid "_Lower Layer"
 msgstr "_Lower Layer"
 
-#: app/actions/layers-actions.c:110
+#: app/actions/layers-actions.c:111
 msgid "Lower layer"
 msgstr "Lower layer"
 
-#: app/actions/layers-actions.c:115
+#: app/actions/layers-actions.c:116
 msgid "Layer to _Bottom"
 msgstr "Layer to _Bottom"
 
-#: app/actions/layers-actions.c:116
+#: app/actions/layers-actions.c:117
 msgid "Lower layer to bottom"
 msgstr "Lower layer to bottom"
 
-#: app/actions/layers-actions.c:121
+#: app/actions/layers-actions.c:122
 msgid "_Anchor Layer"
 msgstr "_Anchor Layer"
 
-#: app/actions/layers-actions.c:122
+#: app/actions/layers-actions.c:123
 msgid "Anchor floating layer"
 msgstr "Anchor floating layer"
 
-#: app/actions/layers-actions.c:127
+#: app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
 msgstr "Merge Do_wn"
 
-#: app/actions/layers-actions.c:132
+#: app/actions/layers-actions.c:133
 msgid "Merge _Visible Layers..."
 msgstr "Merge _Visible Layers..."
 
-#: app/actions/layers-actions.c:142
+#: app/actions/layers-actions.c:143
 msgid "_Discard Text Information"
 msgstr "_Discard Text Information"
 
-#: app/actions/layers-actions.c:147
+#: app/actions/layers-actions.c:148
 msgid "Layer B_oundary Size..."
 msgstr "Layer B_oundary Size..."
 
-#: app/actions/layers-actions.c:152
+#: app/actions/layers-actions.c:153
 msgid "Layer to _Image Size"
 msgstr "Layer to _Image Size"
 
-#: app/actions/layers-actions.c:157
+#: app/actions/layers-actions.c:158
 msgid "_Scale Layer..."
 msgstr "_Scale Layer..."
 
-#: app/actions/layers-actions.c:162
+#: app/actions/layers-actions.c:163
 msgid "Cr_op Layer"
 msgstr "Cr_op Layer"
 
-#: app/actions/layers-actions.c:167
+#: app/actions/layers-actions.c:168
 msgid "Add La_yer Mask..."
 msgstr "Add La_yer Mask..."
 
-#: app/actions/layers-actions.c:172
+#: app/actions/layers-actions.c:173
 msgid "Add Alpha C_hannel"
 msgstr "Add Alpha C_hannel"
 
-#: app/actions/layers-actions.c:180
+#: app/actions/layers-actions.c:181
 msgid "Keep Transparency"
 msgstr "Keep Transparency"
 
-#: app/actions/layers-actions.c:186
+#: app/actions/layers-actions.c:187
 msgid "Edit Layer Mask"
 msgstr "Edit Layer Mask"
 
-#: app/actions/layers-actions.c:192
+#: app/actions/layers-actions.c:193
 msgid "Show Layer Mask"
 msgstr "Show Layer Mask"
 
-#: app/actions/layers-actions.c:198
+#: app/actions/layers-actions.c:199
 msgid "Disable Layer Mask"
 msgstr "Disable Layer Mask"
 
-#: app/actions/layers-actions.c:207
+#: app/actions/layers-actions.c:208
 msgid "Apply Layer _Mask"
 msgstr "Apply Layer _Mask"
 
-#: app/actions/layers-actions.c:212
+#: app/actions/layers-actions.c:213
 msgid "Delete Layer Mas_k"
 msgstr "Delete Layer Mas_k"
 
-#: app/actions/layers-actions.c:220
+#: app/actions/layers-actions.c:221
 msgid "_Mask to Selection"
 msgstr "_Mask to Selection"
 
-#: app/actions/layers-actions.c:243
+#: app/actions/layers-actions.c:244
 msgid "Al_pha to Selection"
 msgstr "Al_pha to Selection"
 
-#: app/actions/layers-actions.c:248
+#: app/actions/layers-actions.c:249
 msgid "A_dd to Selection"
 msgstr "A_dd to Selection"
 
-#: app/actions/layers-actions.c:266
+#: app/actions/layers-actions.c:267
 msgid "Select _Top Layer"
 msgstr "Select _Top Layer"
 
-#: app/actions/layers-actions.c:271
+#: app/actions/layers-actions.c:272
 msgid "Select _Bottom Layer"
 msgstr "Select _Bottom Layer"
 
-#: app/actions/layers-actions.c:276
+#: app/actions/layers-actions.c:277
 msgid "Select _Previous Layer"
 msgstr "Select _Previous Layer"
 
-#: app/actions/layers-actions.c:281
+#: app/actions/layers-actions.c:282
 msgid "Select _Next Layer"
 msgstr "Select _Next Layer"
 
-#: app/actions/layers-actions.c:289
+#: app/actions/layers-actions.c:290
 msgid "Set Opacity"
 msgstr "Set Opacity"
 
-#: app/actions/layers-commands.c:249 app/actions/layers-commands.c:821
-#: app/actions/layers-commands.c:856 app/widgets/gimpdrawabletreeview.c:238
+#: app/actions/layers-commands.c:307 app/actions/layers-commands.c:908
+#: app/actions/layers-commands.c:943 app/widgets/gimpdrawabletreeview.c:238
 #: app/widgets/gimplayertreeview.c:840
 msgid "New Layer"
 msgstr "New Layer"
 
-#: app/actions/layers-commands.c:253 app/widgets/gimplayertreeview.c:846
+#: app/actions/layers-commands.c:311 app/widgets/gimplayertreeview.c:846
 msgid "Empty Layer"
 msgstr "Empty Layer"
 
-#: app/actions/layers-commands.c:476
-msgid "Crop Layer"
-msgstr "Crop Layer"
-
-#: app/actions/layers-commands.c:606
-msgid "Layer Mask to Selection"
-msgstr "Layer Mask to Selection"
-
-#: app/actions/layers-commands.c:823
-msgid "Create a New Layer"
-msgstr "Create a New Layer"
-
-#: app/actions/layers-commands.c:858
-msgid "Layer _Name:"
-msgstr "Layer _Name:"
-
-#. The size labels
-#: app/actions/layers-commands.c:862 app/tools/gimpcroptool.c:1017
-#: app/tools/gimpselectionoptions.c:524
-msgid "Width:"
-msgstr "Width:"
-
-#: app/actions/layers-commands.c:868 app/tools/gimpcroptool.c:1021
-#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
-msgid "Height:"
-msgstr "Height:"
-
-#: app/actions/layers-commands.c:925
-msgid "Layer Fill Type"
-msgstr "Layer Fill Type"
-
-#: app/actions/layers-commands.c:1025
-msgid "Layer Attributes"
-msgstr "Layer Attributes"
-
-#: app/actions/layers-commands.c:1027
-msgid "Edit Layer Attributes"
-msgstr "Edit Layer Attributes"
-
-#: app/actions/layers-commands.c:1062
-msgid "Layer _Name"
-msgstr "Layer _Name"
-
-#: app/actions/layers-commands.c:1069
-msgid "Set Name from _Text"
-msgstr "Set Name from _Text"
-
-#: app/actions/layers-commands.c:1115 app/actions/layers-commands.c:1154
-#: app/core/gimplayer.c:1099
-msgid "Add Layer Mask"
-msgstr "Add Layer Mask"
-
-#: app/actions/layers-commands.c:1156
-msgid "Add a Mask to the Layer"
-msgstr "Add a Mask to the Layer"
-
-#: app/actions/layers-commands.c:1181
-msgid "Initialize Layer Mask to:"
-msgstr "Initialize Layer Mask to:"
-
-#: app/actions/layers-commands.c:1191
-msgid "In_vert Mask"
-msgstr "In_vert Mask"
-
-#: app/actions/layers-commands.c:1256 app/actions/layers-commands.c:1321
-msgid "Invalid width or height. Both must be positive."
-msgstr "Invalid width or height. Both must be positive."
-
-#: app/actions/layers-commands.c:1272 app/core/gimplayer.c:255
+#: app/actions/layers-commands.c:539 app/core/gimplayer.c:255
 #: app/dialogs/resize-dialog.c:204
 msgid "Scale Layer"
 msgstr "Scale Layer"
 
-#: app/actions/palette-editor-actions.c:42
+#: app/actions/layers-commands.c:572
+msgid "Crop Layer"
+msgstr "Crop Layer"
+
+#: app/actions/layers-commands.c:604 app/actions/layers-commands.c:1219
+#: app/core/gimplayer.c:1099
+msgid "Add Layer Mask"
+msgstr "Add Layer Mask"
+
+#: app/actions/layers-commands.c:606
+msgid "Add a Mask to the Layer"
+msgstr "Add a Mask to the Layer"
+
+#: app/actions/layers-commands.c:631
+msgid "Initialize Layer Mask to:"
+msgstr "Initialize Layer Mask to:"
+
+#: app/actions/layers-commands.c:641
+msgid "In_vert Mask"
+msgstr "In_vert Mask"
+
+#: app/actions/layers-commands.c:760
+msgid "Layer Mask to Selection"
+msgstr "Layer Mask to Selection"
+
+#: app/actions/layers-commands.c:910
+msgid "Create a New Layer"
+msgstr "Create a New Layer"
+
+#: app/actions/layers-commands.c:945
+msgid "Layer _Name:"
+msgstr "Layer _Name:"
+
+#. The size labels
+#: app/actions/layers-commands.c:949 app/tools/gimpcroptool.c:1017
+#: app/tools/gimpselectionoptions.c:524
+msgid "Width:"
+msgstr "Width:"
+
+#: app/actions/layers-commands.c:955 app/tools/gimpcroptool.c:1021
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:532
+msgid "Height:"
+msgstr "Height:"
+
+#: app/actions/layers-commands.c:1012
+msgid "Layer Fill Type"
+msgstr "Layer Fill Type"
+
+#: app/actions/layers-commands.c:1113
+msgid "Layer Attributes"
+msgstr "Layer Attributes"
+
+#: app/actions/layers-commands.c:1115
+msgid "Edit Layer Attributes"
+msgstr "Edit Layer Attributes"
+
+#: app/actions/layers-commands.c:1150
+msgid "Layer _Name"
+msgstr "Layer _Name"
+
+#: app/actions/layers-commands.c:1157
+msgid "Set Name from _Text"
+msgstr "Set Name from _Text"
+
+#: app/actions/layers-commands.c:1285 app/actions/layers-commands.c:1314
+msgid "Invalid width or height. Both must be positive."
+msgstr "Invalid width or height. Both must be positive."
+
+#: app/actions/palette-editor-actions.c:43
 msgid "Palette Editor Menu"
 msgstr "Palette Editor Menu"
 
@@ -2187,115 +2188,115 @@ msgstr "Zoom _In"
 msgid "Zoom _All"
 msgstr "Zoom _All"
 
-#: app/actions/palettes-actions.c:43
+#: app/actions/palettes-actions.c:44
 msgid "Palettes Menu"
 msgstr "Palettes Menu"
 
-#: app/actions/palettes-actions.c:47
+#: app/actions/palettes-actions.c:48
 msgid "_New Palette"
 msgstr "_New Palette"
 
-#: app/actions/palettes-actions.c:48
+#: app/actions/palettes-actions.c:49
 msgid "New palette"
 msgstr "New palette"
 
-#: app/actions/palettes-actions.c:53
+#: app/actions/palettes-actions.c:54
 msgid "_Import Palette..."
 msgstr "_Import Palette..."
 
-#: app/actions/palettes-actions.c:54
+#: app/actions/palettes-actions.c:55
 msgid "Import palette"
 msgstr "Import palette"
 
-#: app/actions/palettes-actions.c:59
+#: app/actions/palettes-actions.c:60
 msgid "D_uplicate Palette"
 msgstr "D_uplicate Palette"
 
-#: app/actions/palettes-actions.c:60
+#: app/actions/palettes-actions.c:61
 msgid "Duplicate palette"
 msgstr "Duplicate palette"
 
-#: app/actions/palettes-actions.c:65
+#: app/actions/palettes-actions.c:66
 msgid "_Merge Palettes..."
 msgstr "_Merge Palettes..."
 
-#: app/actions/palettes-actions.c:66
+#: app/actions/palettes-actions.c:67
 msgid "Merge palettes"
 msgstr "Merge palettes"
 
-#: app/actions/palettes-actions.c:71
+#: app/actions/palettes-actions.c:72
 msgid "_Delete Palette"
 msgstr "_Delete Palette"
 
-#: app/actions/palettes-actions.c:72
+#: app/actions/palettes-actions.c:73
 msgid "Delete palette"
 msgstr "Delete palette"
 
-#: app/actions/palettes-actions.c:77
+#: app/actions/palettes-actions.c:78
 msgid "_Refresh Palettes"
 msgstr "_Refresh Palettes"
 
-#: app/actions/palettes-actions.c:78
+#: app/actions/palettes-actions.c:79
 msgid "Refresh palettes"
 msgstr "Refresh palettes"
 
-#: app/actions/palettes-actions.c:86
+#: app/actions/palettes-actions.c:87
 msgid "_Edit Palette..."
 msgstr "_Edit Palette..."
 
-#: app/actions/palettes-actions.c:87
+#: app/actions/palettes-actions.c:88
 msgid "Edit palette"
 msgstr "Edit palette"
 
-#: app/actions/palettes-commands.c:83
+#: app/actions/palettes-commands.c:72
 msgid "Merge Palette"
 msgstr "Merge Palette"
 
-#: app/actions/palettes-commands.c:87
+#: app/actions/palettes-commands.c:76
 msgid "Enter a name for the merged palette"
 msgstr "Enter a name for the merged palette"
 
-#: app/actions/patterns-actions.c:42
+#: app/actions/patterns-actions.c:43
 msgid "Patterns Menu"
 msgstr "Patterns Menu"
 
-#: app/actions/patterns-actions.c:46
+#: app/actions/patterns-actions.c:47
 msgid "_New Pattern"
 msgstr "_New Pattern"
 
-#: app/actions/patterns-actions.c:47
+#: app/actions/patterns-actions.c:48
 msgid "New pattern"
 msgstr "New pattern"
 
-#: app/actions/patterns-actions.c:52
+#: app/actions/patterns-actions.c:53
 msgid "D_uplicate Pattern"
 msgstr "D_uplicate Pattern"
 
-#: app/actions/patterns-actions.c:53
+#: app/actions/patterns-actions.c:54
 msgid "Duplicate pattern"
 msgstr "Duplicate pattern"
 
-#: app/actions/patterns-actions.c:58
+#: app/actions/patterns-actions.c:59
 msgid "_Delete Pattern..."
 msgstr "_Delete Pattern..."
 
-#: app/actions/patterns-actions.c:59
+#: app/actions/patterns-actions.c:60
 msgid "Delete pattern"
 msgstr "Delete pattern"
 
-#: app/actions/patterns-actions.c:64
+#: app/actions/patterns-actions.c:65
 msgid "_Refresh Patterns"
 msgstr "_Refresh Patterns"
 
-#: app/actions/patterns-actions.c:65
+#: app/actions/patterns-actions.c:66
 msgid "Refresh patterns"
 msgstr "Refresh patterns"
 
-#: app/actions/patterns-actions.c:73
+#: app/actions/patterns-actions.c:74
 msgid "_Edit Pattern..."
 msgstr "_Edit Pattern..."
 
-#: app/actions/patterns-actions.c:74
+#: app/actions/patterns-actions.c:75
 msgid "Edit pattern"
 msgstr "Edit pattern"
 
@@ -2379,20 +2380,20 @@ msgstr "To_ys"
 msgid "Reset all Filters..."
 msgstr "Reset all Filters..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:337
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:335
 msgid "Repeat Last"
 msgstr "Repeat Last"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:339
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:337
 msgid "Re-Show Last"
 msgstr "Re-Show Last"
 
-#: app/actions/plug-in-actions.c:323
+#: app/actions/plug-in-actions.c:321
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peat \"%s\""
 
-#: app/actions/plug-in-actions.c:324
+#: app/actions/plug-in-actions.c:322
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "R_e-show \"%s\""
@@ -2405,43 +2406,43 @@ msgstr "Reset all Filters"
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Do you really want to reset all filters to default values?"
 
-#: app/actions/qmask-actions.c:41
+#: app/actions/qmask-actions.c:42
 msgid "Quick Mask Menu"
 msgstr "Quick Mask Menu"
 
-#: app/actions/qmask-actions.c:45
+#: app/actions/qmask-actions.c:46
 msgid "_Configure Color and Opacity..."
 msgstr "_Configure Colour and Opacity..."
 
-#: app/actions/qmask-actions.c:53
+#: app/actions/qmask-actions.c:54
 msgid "_Quick Mask Active"
 msgstr "_Quick Mask Active"
 
-#: app/actions/qmask-actions.c:59
+#: app/actions/qmask-actions.c:60
 msgid "Toggle _Quick Mask"
 msgstr "Toggle _Quick Mask"
 
-#: app/actions/qmask-actions.c:69
+#: app/actions/qmask-actions.c:70
 msgid "Mask _Selected Areas"
 msgstr "Mask _Selected Areas"
 
-#: app/actions/qmask-actions.c:74
+#: app/actions/qmask-actions.c:75
 msgid "Mask _Unselected Areas"
 msgstr "Mask _Unselected Areas"
 
-#: app/actions/qmask-commands.c:137
-msgid "Edit Quick Mask Color"
-msgstr "Edit Quick Mask Colour"
-
-#: app/actions/qmask-commands.c:147
+#: app/actions/qmask-commands.c:106
 msgid "Quick Mask Attributes"
 msgstr "Quick Mask Attributes"
 
-#: app/actions/qmask-commands.c:149
+#: app/actions/qmask-commands.c:109
 msgid "Edit Quick Mask Attributes"
 msgstr "Edit Quick Mask Attributes"
 
-#: app/actions/qmask-commands.c:192
+#: app/actions/qmask-commands.c:111
+msgid "Edit Quick Mask Color"
+msgstr "Edit Quick Mask Colour"
+
+#: app/actions/qmask-commands.c:112
 msgid "Mask Opacity:"
 msgstr "Mask Opacity:"
 
@@ -2517,48 +2518,48 @@ msgstr "_Stroke Selection..."
 msgid "Stroke selection"
 msgstr "Stroke selection"
 
-#: app/actions/select-commands.c:132 app/core/gimpselection.c:201
+#: app/actions/select-commands.c:134 app/core/gimpselection.c:201
 msgid "Feather Selection"
 msgstr "Feather Selection"
 
-#: app/actions/select-commands.c:136
+#: app/actions/select-commands.c:138
 msgid "Feather selection by"
 msgstr "Feather selection by"
 
-#: app/actions/select-commands.c:168 app/core/gimpselection.c:208
+#: app/actions/select-commands.c:169 app/core/gimpselection.c:208
 msgid "Shrink Selection"
 msgstr "Shrink Selection"
 
-#: app/actions/select-commands.c:172
+#: app/actions/select-commands.c:173
 msgid "Shrink selection by"
 msgstr "Shrink selection by"
 
-#: app/actions/select-commands.c:181
+#: app/actions/select-commands.c:182
 msgid "Shrink from image border"
 msgstr "Shrink from image border"
 
-#: app/actions/select-commands.c:202 app/core/gimpselection.c:207
+#: app/actions/select-commands.c:203 app/core/gimpselection.c:207
 msgid "Grow Selection"
 msgstr "Grow Selection"
 
-#: app/actions/select-commands.c:206
+#: app/actions/select-commands.c:207
 msgid "Grow selection by"
 msgstr "Grow selection by"
 
-#: app/actions/select-commands.c:225 app/core/gimpselection.c:206
+#: app/actions/select-commands.c:226 app/core/gimpselection.c:206
 msgid "Border Selection"
 msgstr "Border Selection"
 
-#: app/actions/select-commands.c:229
+#: app/actions/select-commands.c:230
 msgid "Border selection by"
 msgstr "Border selection by"
 
-#: app/actions/select-commands.c:272 app/actions/vectors-commands.c:354
-#: app/dialogs/stroke-dialog.c:291
+#: app/actions/select-commands.c:273 app/actions/select-commands.c:300
+#: app/actions/vectors-commands.c:358 app/dialogs/stroke-dialog.c:291
 msgid "There is no active layer or channel to stroke to."
 msgstr "There is no active layer or channel to stroke to."
 
-#: app/actions/templates-actions.c:41
+#: app/actions/templates-actions.c:42
 msgid "Templates Menu"
 msgstr "Templates Menu"
 
@@ -2631,7 +2632,7 @@ msgstr "Unnamed"
 msgid "Edit Template"
 msgstr "Edit Template"
 
-#: app/actions/tool-options-actions.c:55
+#: app/actions/tool-options-actions.c:56
 msgid "Tool Options Menu"
 msgstr "Tool Options Menu"
 
@@ -2639,35 +2640,35 @@ msgstr "Tool Options Menu"
 msgid "_Save Options to"
 msgstr "_Save Options to"
 
-#: app/actions/tool-options-actions.c:62
+#: app/actions/tool-options-actions.c:64
 msgid "_Restore Options from"
 msgstr "_Restore Options from"
 
-#: app/actions/tool-options-actions.c:64
+#: app/actions/tool-options-actions.c:68
 msgid "Re_name Saved Options"
 msgstr "Re_name Saved Options"
 
-#: app/actions/tool-options-actions.c:66
+#: app/actions/tool-options-actions.c:72
 msgid "_Delete Saved Options"
 msgstr "_Delete Saved Options"
 
-#: app/actions/tool-options-actions.c:69
+#: app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
 msgstr "_New Entry..."
 
-#: app/actions/tool-options-actions.c:74
+#: app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
 msgstr "R_eset Tool Options"
 
-#: app/actions/tool-options-actions.c:75
+#: app/actions/tool-options-actions.c:82
 msgid "Reset to default values"
 msgstr "Reset to default values"
 
-#: app/actions/tool-options-actions.c:80
+#: app/actions/tool-options-actions.c:87
 msgid "Reset _all Tool Options..."
 msgstr "Reset _all Tool Options..."
 
-#: app/actions/tool-options-actions.c:81
+#: app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
 msgstr "Reset all tool options"
 
@@ -2701,231 +2702,227 @@ msgstr "Reset Tool Options"
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Do you really want to reset all tool options to default values?"
 
-#: app/actions/tools-actions.c:46
+#: app/actions/tools-actions.c:47
 msgid "Tools Menu"
 msgstr "Tools Menu"
 
-#: app/actions/tools-actions.c:49
+#: app/actions/tools-actions.c:50
 msgid "_Tools"
 msgstr "_Tools"
 
-#: app/actions/tools-actions.c:50
+#: app/actions/tools-actions.c:51
 msgid "_Selection Tools"
 msgstr "_Selection Tools"
 
-#: app/actions/tools-actions.c:51
+#: app/actions/tools-actions.c:52
 msgid "_Paint Tools"
 msgstr "_Paint Tools"
 
-#: app/actions/tools-actions.c:52
+#: app/actions/tools-actions.c:53
 msgid "_Transform Tools"
 msgstr "_Transform Tools"
 
-#: app/actions/tools-actions.c:53
+#: app/actions/tools-actions.c:54
 msgid "_Color Tools"
 msgstr "_Colour Tools"
 
-#: app/actions/tools-actions.c:56
+#: app/actions/tools-actions.c:57
 msgid "_Reset Order & Visibility"
 msgstr "_Reset Order & Visibility"
 
-#: app/actions/tools-actions.c:57
+#: app/actions/tools-actions.c:58
 msgid "Reset tool order and visibility"
 msgstr "Reset tool order and visibility"
 
-#: app/actions/tools-actions.c:65
-msgid "Show in Toolbox"
-msgstr "Show in Toolbox"
+#: app/actions/tools-actions.c:66
+msgid "_Show in Toolbox"
+msgstr "_Show in Toolbox"
 
-#: app/actions/tools-actions.c:74
+#: app/actions/tools-actions.c:75
 msgid "_By Color"
 msgstr "_By Colour"
 
-#: app/actions/tools-actions.c:79
+#: app/actions/tools-actions.c:80
 msgid "_Arbitrary Rotation..."
 msgstr "_Arbitrary Rotation..."
 
-#: app/actions/vectors-actions.c:43
+#: app/actions/vectors-actions.c:44
 msgid "Paths Menu"
 msgstr "Paths Menu"
 
-#: app/actions/vectors-actions.c:47
+#: app/actions/vectors-actions.c:48
 msgid "Path _Tool"
 msgstr "Path _Tool"
 
-#: app/actions/vectors-actions.c:52
+#: app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
 msgstr "_Edit Path Attributes..."
 
-#: app/actions/vectors-actions.c:53
+#: app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
 msgstr "Edit path attributes"
 
-#: app/actions/vectors-actions.c:58
+#: app/actions/vectors-actions.c:59
 msgid "_New Path..."
 msgstr "_New Path..."
 
-#: app/actions/vectors-actions.c:59
+#: app/actions/vectors-actions.c:60
 msgid "New path dialog"
 msgstr "New path dialogue"
 
-#: app/actions/vectors-actions.c:64
+#: app/actions/vectors-actions.c:65
 msgid "_New Path"
 msgstr "_New Path"
 
-#: app/actions/vectors-actions.c:65
+#: app/actions/vectors-actions.c:66
 msgid "New path"
 msgstr "New path"
 
-#: app/actions/vectors-actions.c:70
+#: app/actions/vectors-actions.c:71
 msgid "D_uplicate Path"
 msgstr "D_uplicate Path"
 
-#: app/actions/vectors-actions.c:71
+#: app/actions/vectors-actions.c:72
 msgid "Duplicate path"
 msgstr "Duplicate path"
 
-#: app/actions/vectors-actions.c:76
+#: app/actions/vectors-actions.c:77
 msgid "_Delete Path"
 msgstr "_Delete Path"
 
-#: app/actions/vectors-actions.c:77
+#: app/actions/vectors-actions.c:78
 msgid "Delete path"
 msgstr "Delete path"
 
-#: app/actions/vectors-actions.c:82
+#: app/actions/vectors-actions.c:83
 msgid "Merge _Visible Paths"
 msgstr "Merge _Visible Paths"
 
-#: app/actions/vectors-actions.c:87
+#: app/actions/vectors-actions.c:88
 msgid "_Raise Path"
 msgstr "_Raise Path"
 
-#: app/actions/vectors-actions.c:88
+#: app/actions/vectors-actions.c:89
 msgid "Raise path"
 msgstr "Raise path"
 
-#: app/actions/vectors-actions.c:93
+#: app/actions/vectors-actions.c:94
 msgid "Raise Path to _Top"
 msgstr "Raise Path to _Top"
 
-#: app/actions/vectors-actions.c:94
+#: app/actions/vectors-actions.c:95
 msgid "Raise path to top"
 msgstr "Raise path to top"
 
-#: app/actions/vectors-actions.c:99
+#: app/actions/vectors-actions.c:100
 msgid "_Lower Path"
 msgstr "_Lower Path"
 
-#: app/actions/vectors-actions.c:100
+#: app/actions/vectors-actions.c:101
 msgid "Lower path"
 msgstr "Lower path"
 
-#: app/actions/vectors-actions.c:105
+#: app/actions/vectors-actions.c:106
 msgid "Lower Path to _Bottom"
 msgstr "Lower Path to _Bottom"
 
-#: app/actions/vectors-actions.c:106
+#: app/actions/vectors-actions.c:107
 msgid "Lower path to bottom"
 msgstr "Lower path to bottom"
 
-#: app/actions/vectors-actions.c:111
+#: app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
 msgstr "Stro_ke Path..."
 
-#: app/actions/vectors-actions.c:112 app/tools/gimpvectoroptions.c:207
+#: app/actions/vectors-actions.c:113 app/tools/gimpvectoroptions.c:207
 msgid "Stroke path"
 msgstr "Stroke path"
 
-#: app/actions/vectors-actions.c:117
+#: app/actions/vectors-actions.c:118
 msgid "Co_py Path"
 msgstr "Co_py Path"
 
-#: app/actions/vectors-actions.c:122
+#: app/actions/vectors-actions.c:123
 msgid "Paste Pat_h"
 msgstr "Paste Pat_h"
 
-#: app/actions/vectors-actions.c:127
+#: app/actions/vectors-actions.c:128
 msgid "I_mport Path..."
 msgstr "I_mport Path..."
 
-#: app/actions/vectors-actions.c:132
+#: app/actions/vectors-actions.c:133
 msgid "E_xport Path..."
 msgstr "E_xport Path..."
 
-#: app/actions/vectors-actions.c:155
+#: app/actions/vectors-actions.c:156
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: app/actions/vectors-actions.c:156 app/tools/gimpvectortool.c:1883
+#: app/actions/vectors-actions.c:157 app/tools/gimpvectortool.c:1883
 msgid "Path to selection"
 msgstr "Path to selection"
 
-#: app/actions/vectors-actions.c:161
+#: app/actions/vectors-actions.c:162
 msgid "Fr_om Path"
 msgstr "Fr_om Path"
 
-#: app/actions/vectors-actions.c:187
+#: app/actions/vectors-actions.c:188
 msgid "Selecti_on to Path"
 msgstr "Selecti_on to Path"
 
-#: app/actions/vectors-actions.c:188
+#: app/actions/vectors-actions.c:189
 msgid "Selection to path"
 msgstr "Selection to path"
 
-#: app/actions/vectors-actions.c:193
+#: app/actions/vectors-actions.c:194
 msgid "To _Path"
 msgstr "To _Path"
 
-#: app/actions/vectors-actions.c:198
+#: app/actions/vectors-actions.c:199
 msgid "Selection to Path (_Advanced)"
 msgstr "Selection to Path (_Advanced)"
 
-#: app/actions/vectors-actions.c:199
+#: app/actions/vectors-actions.c:200
 msgid "Advanced options"
 msgstr "Advanced options"
 
-#: app/actions/vectors-commands.c:179 app/widgets/gimpvectorstreeview.c:285
-msgid "Empty Path"
-msgstr "Empty Path"
-
-#: app/actions/vectors-commands.c:288 app/pdb/paths_cmds.c:1210
-msgid "Path to Selection"
-msgstr "Path to Selection"
-
-#: app/actions/vectors-commands.c:492
+#: app/actions/vectors-commands.c:134
 msgid "Path Attributes"
 msgstr "Path Attributes"
 
-#: app/actions/vectors-commands.c:494
+#: app/actions/vectors-commands.c:137
 msgid "Edit Path Attributes"
 msgstr "Edit Path Attributes"
 
-#: app/actions/vectors-commands.c:508 app/actions/vectors-commands.c:553
+#: app/actions/vectors-commands.c:161 app/actions/vectors-commands.c:162
 msgid "New Path"
 msgstr "New Path"
 
-#: app/actions/vectors-commands.c:510
+#: app/actions/vectors-commands.c:165
 msgid "New Path Options"
 msgstr "New Path Options"
 
-#: app/actions/vectors-commands.c:545
-msgid "Path Name:"
-msgstr "Path Name:"
+#: app/actions/vectors-commands.c:183 app/widgets/gimpvectorstreeview.c:285
+msgid "Empty Path"
+msgstr "Empty Path"
 
-#: app/actions/vectors-commands.c:644
+#: app/actions/vectors-commands.c:292 app/pdb/paths_cmds.c:1210
+msgid "Path to Selection"
+msgstr "Path to Selection"
+
+#: app/actions/vectors-commands.c:405
 msgid "Import Paths from SVG"
 msgstr "Import Paths from SVG"
 
-#: app/actions/vectors-commands.c:668
+#: app/actions/vectors-commands.c:429
 msgid "All Files (*.*)"
 msgstr "All Files (*.*)"
 
-#: app/actions/vectors-commands.c:673
+#: app/actions/vectors-commands.c:434
 msgid "Scalable SVG image (*.svg)"
 msgstr "Scalable SVG image (*.svg)"
 
-#: app/actions/vectors-commands.c:720
+#: app/actions/vectors-commands.c:457
 msgid "Export Path to SVG"
 msgstr "Export Path to SVG"
 
@@ -2980,6 +2977,10 @@ msgstr "Shrink _Wrap"
 #: app/actions/view-actions.c:106
 msgid "Shrink wrap"
 msgstr "Shrink wrap"
+
+#: app/actions/view-actions.c:111
+msgid "Move to Screen..."
+msgstr "Move to Screen..."
 
 #: app/actions/view-actions.c:119
 msgid "_Dot for Dot"
@@ -3103,12 +3104,12 @@ msgstr "Select _Custom Colour..."
 msgid "As in _Preferences"
 msgstr "As in _Preferences"
 
-#: app/actions/view-actions.c:594
+#: app/actions/view-actions.c:592
 #, c-format
 msgid "Other (%s) ..."
 msgstr "Other (%s) ..."
 
-#: app/actions/view-actions.c:603
+#: app/actions/view-actions.c:601
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -5455,6 +5456,10 @@ msgstr "Contributions by"
 msgid "About The GIMP"
 msgstr "About The GIMP"
 
+#: app/dialogs/channel-options-dialog.c:138
+msgid "Channel Name:"
+msgstr "Channel Name:"
+
 #: app/dialogs/convert-dialog.c:122
 msgid "Indexed Color Conversion"
 msgstr "Indexed Colour Conversion"
@@ -7157,6 +7162,10 @@ msgstr ""
 msgid "Select swap dir"
 msgstr "Select swap dir"
 
+#: app/dialogs/vectors-options-dialog.c:113
+msgid "Path Name:"
+msgstr "Path Name:"
+
 #: app/display/display-enums.c:15
 msgid "Tool icon"
 msgstr "Tool icon"
@@ -8517,8 +8526,8 @@ msgid "Select shapes from image"
 msgstr "Select shapes from image"
 
 #: app/tools/gimpiscissorstool.c:279
-msgid "_Intelligent Scissors"
-msgstr "_Intelligent Scissors"
+msgid "Intelligent _Scissors"
+msgstr "Intelligent _Scissors"
 
 #: app/tools/gimplevelstool.c:161
 msgid "Adjust color levels"
@@ -10590,3 +10599,12 @@ msgstr "Create and edit images or photographs"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Image Editor"
+
+#~ msgid "_Undo History"
+#~ msgstr "_Undo History"
+
+#~ msgid "Brus_hes"
+#~ msgstr "Brus_hes"
+
+#~ msgid "Buffer"
+#~ msgstr "Buffer"

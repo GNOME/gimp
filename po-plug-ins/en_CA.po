@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 14:56-0400\n"
-"PO-Revision-Date: 2004-10-17 14:31-0400\n"
+"POT-Creation-Date: 2004-10-19 10:51-0400\n"
+"PO-Revision-Date: 2004-10-19 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -382,7 +382,7 @@ msgstr "_Fractals"
 #: plug-ins/common/pat.c:437 plug-ins/common/pcx.c:589
 #: plug-ins/common/pix.c:519 plug-ins/common/png.c:1180
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1059
-#: plug-ins/common/psd_save.c:1558 plug-ins/common/spheredesigner.c:2088
+#: plug-ins/common/psd_save.c:1589 plug-ins/common/spheredesigner.c:2088
 #: plug-ins/common/sunras.c:516 plug-ins/common/tga.c:1032
 #: plug-ins/common/tiff.c:1809 plug-ins/common/xbm.c:1000
 #: plug-ins/common/xwd.c:581 plug-ins/fits/fits.c:454
@@ -1244,7 +1244,7 @@ msgstr "Cannot operate on unknown image types."
 #: plug-ins/common/jpeg.c:1315 plug-ins/common/pat.c:442
 #: plug-ins/common/pcx.c:549 plug-ins/common/pix.c:525
 #: plug-ins/common/png.c:1187 plug-ins/common/pnm.c:781
-#: plug-ins/common/postscript.c:1064 plug-ins/common/psd_save.c:1563
+#: plug-ins/common/postscript.c:1064 plug-ins/common/psd_save.c:1594
 #: plug-ins/common/sunras.c:521 plug-ins/common/tga.c:1037
 #: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1005
 #: plug-ins/common/xpm.c:636 plug-ins/common/xwd.c:586
@@ -5875,6 +5875,24 @@ msgstr "Invalid UTF-8 string in PSD file"
 msgid "Photoshop image"
 msgstr "Photoshop image"
 
+#: plug-ins/common/psd_save.c:1565
+#, c-format
+msgid ""
+"Unable to save '%s'.  The psd file format does not support images that are "
+"more than 30000 pixels wide or tall."
+msgstr ""
+"Unable to save '%s'.  The PSD file format does not support images that are "
+"more than 30000 pixels wide or tall."
+
+#: plug-ins/common/psd_save.c:1577
+#, c-format
+msgid ""
+"Unable to save '%s'.  The psd file format does not support images with "
+"layers that are more than 30000 pixels wide or tall."
+msgstr ""
+"Unable to save '%s'.  The PSD file format does not support images with "
+"layers that are more than 30000 pixels wide or tall."
+
 #: plug-ins/common/psp.c:362
 msgid "Paint Shop Pro image"
 msgstr "Paint Shop Pro image"
@@ -6142,19 +6160,19 @@ msgstr "Grab"
 msgid "a _Single Window"
 msgstr "a _Single Window"
 
-#: plug-ins/common/screenshot.c:696
+#: plug-ins/common/screenshot.c:698
 msgid "S_elect Window After"
 msgstr "S_elect Window After"
 
-#: plug-ins/common/screenshot.c:709 plug-ins/common/screenshot.c:749
+#: plug-ins/common/screenshot.c:713 plug-ins/common/screenshot.c:755
 msgid "Seconds Delay"
 msgstr "Seconds Delay"
 
-#: plug-ins/common/screenshot.c:717
+#: plug-ins/common/screenshot.c:719
 msgid "the _Whole Screen"
 msgstr "the _Whole Screen"
 
-#: plug-ins/common/screenshot.c:736
+#: plug-ins/common/screenshot.c:740
 msgid "Grab _After"
 msgstr "Grab _After"
 

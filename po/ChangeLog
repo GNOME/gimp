@@ -1,3 +1,7 @@
+2004-10-19  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2004-10-19  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added app/dialogs/vectors-options-dialog.c
