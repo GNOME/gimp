@@ -1,3 +1,8 @@
+2003-03-31  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-list-16.png:
+	* themes/Default/images/stock-grid-16.png: make more aparent
+
 2003-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpenummenu.[ch]: added "icon_size" parameters
