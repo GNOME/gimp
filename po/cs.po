@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.24.
+# Czech translation of GIMP 1.1.25.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-07-20 20:57+02:00\n"
+"Project-Id-Version: GIMP 1.1.25\n"
+"POT-Creation-Date: 2000-08-22 23:19+0200\n"
+"PO-Revision-Date: 2000-08-23 09:27+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2857,102 +2857,107 @@ msgstr "Pøiblí¾it"
 msgid "Zoom out"
 msgstr "Vzdálit"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr "\nNeplatná volba.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMP verze"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Platné pøepínaèe jsou:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Vypí¹e informace o verzi.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr "\nU¾ití: %s [volba ... ] [soubor ... ]\n\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
+msgid "Options:\n"
+msgstr "Volby:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b, --batch <pøíkazy>    Spustí se v dávkovém re¾imu.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
-msgstr "  --no-data                Neète vzorky, pøechody, palety, stopy.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
+msgstr "  -c, --console-messages   Zobrazí varování na konzoli namísto dialogového okna.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr "  -d, --no-data            Neète stopy, pøechody, palety, vzorky.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i, --no-interface       Spustí se bez u¾ivatelského rozhraní.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>    Pou¾ije alternativní gimprc soubor.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help               Vypí¹e tuto nápovìdu.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session    Pokusí se obnovit zapsané sezení.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash          Neuká¾e okno spou¹tìní.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Nepøidá obrázek do okna spou¹tìní.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version            Vypí¹e informace o verzi.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
-"zásuvnými moduly.\n"
+msgstr "  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a zásuvnými moduly.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Zobrazí varování na konzoli namísto dialogového "
-"okna.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr "  --debug-handlers         Povolí ladicí obsluhu nefatálních signálù.\n"
 
-#: app/main.c:315
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
-msgstr ""
-"  --debug-handlers         Povolí ladicí obsluhu nefatálních signálù.\n"
-
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr "                           Ladicí re¾im fatálních signálù.\n"
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <displej>      Pou¾ije zvolený X displej.\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr "                           Ladicí re¾im fatálních signálù.\n\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
@@ -3936,9 +3941,9 @@ msgstr ""
 "Hodnota RGB mimo rozsah"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "nelze zapsat paletu \"%s\"\n"
+msgstr "Nelze zapsat paletu \"%s\"\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -6387,6 +6392,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#~ msgid "  --enable-stack-trace {never|query|always}\n"
-#~ msgstr "  --enable-stack-trace {never|query|always} {nikdy|na dotaz|v¾dy}\n"
