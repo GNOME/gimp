@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp14-std-plug-ins 1.3.15\n"
-"POT-Creation-Date: 2003-06-09 16:03+0200\n"
+"POT-Creation-Date: 2003-06-10 10:51+0800\n"
 "PO-Revision-Date: 2003-06-05 15:01+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1101,8 +1101,8 @@ msgstr "%s：損壤的 colormap"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:256
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:300
-#: plug-ins/common/gih.c:623 plug-ins/common/hrz.c:331
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:623
+#: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:331
 #: plug-ins/common/jpeg.c:738 plug-ins/common/pat.c:262
 #: plug-ins/common/pcx.c:297 plug-ins/common/pix.c:327
 #: plug-ins/common/png.c:480 plug-ins/common/png.c:482
@@ -1324,7 +1324,7 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1203
 msgid "Change angle of the red/hue channel"
-msgstr "更改紅色/色相色版的角度"
+msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1210
 msgid "G/S-Fr_equency:"
@@ -1375,7 +1375,7 @@ msgstr "_HSL 色系"
 
 #: plug-ins/common/AlienMap2.c:1268
 msgid "_Modify Red/Hue Channel"
-msgstr "修改紅色色版或色相(_N)"
+msgstr "修改紅色色版或色相(_M)"
 
 #: plug-ins/common/AlienMap2.c:1273
 msgid "Use function for red/hue component"
@@ -1968,16 +1968,16 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:464
 msgid "Left Edge"
-msgstr ""
+msgstr "左邊邊界"
 
 #: plug-ins/common/align_layers.c:465 plug-ins/common/align_layers.c:498
 #: plug-ins/gflare/gflare.c:2636
 msgid "Center"
-msgstr "中心點"
+msgstr "中心"
 
 #: plug-ins/common/align_layers.c:466
 msgid "Right Edge"
-msgstr ""
+msgstr "右邊邊界"
 
 #: plug-ins/common/align_layers.c:470
 msgid "Ho_rizontal Base:"
@@ -1997,11 +1997,11 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:497
 msgid "Top Edge"
-msgstr ""
+msgstr "頂部邊界"
 
 #: plug-ins/common/align_layers.c:499
 msgid "Bottom Edge"
-msgstr ""
+msgstr "底部邊界"
 
 #: plug-ins/common/align_layers.c:503
 msgid "Ver_tical Base:"
@@ -2051,39 +2051,39 @@ msgstr "畫格 %2$d 之 %1$d"
 
 #: plug-ins/common/animoptimize.c:176
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/濾鏡/動畫/動畫最優化"
+msgstr "<Image>/濾鏡/動畫/動畫優化"
 
 #: plug-ins/common/animoptimize.c:193
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr "<Image>/濾鏡/動畫/取消動畫最優化"
+msgstr "<Image>/濾鏡/動畫/取消動畫優化"
 
 #: plug-ins/common/animoptimize.c:208
 msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
-msgstr ""
+msgstr "<Image>/濾鏡/動畫/移除動畫背景"
 
 #: plug-ins/common/animoptimize.c:224
 msgid "<Image>/Filters/Animation/Animation: Find Backdrop"
-msgstr ""
+msgstr "<Image>/濾鏡/動畫/尋找動畫背景"
 
 #: plug-ins/common/animoptimize.c:423
 msgid "UnOptimizing Animation..."
-msgstr "正在取消動畫最優化..."
+msgstr "正在取消動畫優化..."
 
 #: plug-ins/common/animoptimize.c:426
 msgid "Removing Animation Background..."
-msgstr ""
+msgstr "正在移除動畫背景..."
 
 #: plug-ins/common/animoptimize.c:429
 msgid "Finding Animation Background..."
-msgstr ""
+msgstr "正在尋找動畫背景..."
 
 #: plug-ins/common/animoptimize.c:433
 msgid "Optimizing Animation..."
-msgstr "正在進行動畫最優化..."
+msgstr "正在進行動畫優化..."
 
 #: plug-ins/common/animoptimize.c:470
 msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr "無法分配足夠記憶體來進行最優化程序。\n"
+msgstr "無法分配足夠記憶體來進行優化程序。\n"
 
 #: plug-ins/common/apply_lens.c:131
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
@@ -2189,7 +2189,7 @@ msgstr "模糊化..."
 #: plug-ins/common/blur.c:628 plug-ins/common/randomize.c:736
 #: plug-ins/common/snoise.c:533
 msgid "_Random Seed:"
-msgstr "隨機來源數字："
+msgstr "隨機來源數字(_R)："
 
 #: plug-ins/common/blur.c:637
 msgid "R_andomization %:"
@@ -2441,12 +2441,12 @@ msgstr "CMY"
 #: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:281
 msgid "Cyan:"
-msgstr "青："
+msgstr "氰藍："
 
 #: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:300
 msgid "Magenta:"
-msgstr "紫紅："
+msgstr "洋紅："
 
 #: plug-ins/common/compose.c:158 plug-ins/common/compose.c:165
 #: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:319
@@ -2870,11 +2870,11 @@ msgstr "亮度"
 
 #: plug-ins/common/decompose.c:134 plug-ins/common/decompose.c:137
 msgid "cyan"
-msgstr "青"
+msgstr "氰藍"
 
 #: plug-ins/common/decompose.c:135 plug-ins/common/decompose.c:138
 msgid "magenta"
-msgstr "紫紅"
+msgstr "洋紅"
 
 #: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:139
 msgid "yellow"
@@ -2882,11 +2882,11 @@ msgstr "黃"
 
 #: plug-ins/common/decompose.c:137
 msgid "Cyan"
-msgstr "青"
+msgstr "氰藍"
 
 #: plug-ins/common/decompose.c:138
 msgid "Magenta"
-msgstr "紫紅"
+msgstr "洋紅"
 
 #: plug-ins/common/decompose.c:139
 msgid "Yellow"
@@ -3179,7 +3179,7 @@ msgstr ""
 
 #: plug-ins/common/diffraction.c:741
 msgid "O_ther options"
-msgstr "其它選項(_O)"
+msgstr "其它選項(_T)"
 
 #: plug-ins/common/displace.c:163
 msgid "<Image>/Filters/Map/Displace..."
@@ -3397,9 +3397,8 @@ msgid "Numbering"
 msgstr "編號"
 
 #: plug-ins/common/film.c:1246
-#, fuzzy
 msgid "Start _Index:"
-msgstr "開始編號(_A)："
+msgstr "開始編號(_I)："
 
 #: plug-ins/common/film.c:1259
 msgid "_Font:"
@@ -3424,14 +3423,12 @@ msgid "Image Selection"
 msgstr "選取圖像"
 
 #: plug-ins/common/film.c:1321
-#, fuzzy
 msgid "All Values are Fractions of the Film Heigh"
-msgstr "進階設定(所有數值都是根據膠片高度計算的比例)"
+msgstr "所有數值都是根據膠片高度計算的比例"
 
 #: plug-ins/common/film.c:1324
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "進階"
+msgstr "進階(_V)"
 
 #: plug-ins/common/film.c:1342
 msgid "Image _Height:"
@@ -4196,7 +4193,7 @@ msgstr "移除(_V)"
 
 #: plug-ins/common/iwarp.c:1082
 msgid "S_hrink"
-msgstr "收縮(_V)"
+msgstr "收縮(_H)"
 
 #: plug-ins/common/iwarp.c:1085
 msgid "Sw_irl CW"
@@ -4265,9 +4262,8 @@ msgid "Degree of slope of each piece's edge"
 msgstr "每塊拼圖邊緣的斜度"
 
 #: plug-ins/common/jigsaw.c:2638
-#, fuzzy
 msgid "H_ighlight:"
-msgstr "高亮度區："
+msgstr "加強顯示(_I)："
 
 #: plug-ins/common/jigsaw.c:2642
 msgid "The amount of highlighting on the edges of each piece"
@@ -4346,7 +4342,7 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:883
 msgid "Optimize"
-msgstr "最優化"
+msgstr "優化"
 
 #: plug-ins/common/jpeg.c:1772
 msgid "Progressive"
@@ -4529,7 +4525,7 @@ msgstr "<Image>/濾鏡/色彩/映射/調整前景背景"
 
 #: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/濾鏡/色彩/映射/色彩範圍映射..."
+msgstr "<Image>/濾鏡/色彩/映射/映射色彩範圍..."
 
 #: plug-ins/common/mapcolor.c:416 plug-ins/common/mapcolor.c:753
 msgid ""
@@ -4545,7 +4541,7 @@ msgstr "調整前景/背景顏色"
 
 #: plug-ins/common/mapcolor.c:481
 msgid "Mapping colors"
-msgstr ""
+msgstr "正在進行色彩映射..."
 
 #: plug-ins/common/mapcolor.c:555
 msgid "Map Color Range"
@@ -4723,11 +4719,11 @@ msgstr "紅(_E)"
 
 #: plug-ins/common/newsprint.c:411
 msgid "C_yan"
-msgstr "青(_Y)"
+msgstr "氰藍(_Y)"
 
 #: plug-ins/common/newsprint.c:419
 msgid "Magen_ta"
-msgstr "紫紅(_T)"
+msgstr "洋紅(_T)"
 
 #: plug-ins/common/newsprint.c:427
 msgid "_Yellow"
@@ -6111,7 +6107,7 @@ msgstr "是否產生反相效果？"
 
 #: plug-ins/common/sparkle.c:509
 msgid "A_dd Border"
-msgstr "加上邊框(_A)"
+msgstr "加上邊框(_D)"
 
 #: plug-ins/common/sparkle.c:515
 msgid "Draw a Border of Spikes around the Image"
@@ -7754,7 +7750,7 @@ msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:1063
 msgid "Smoothness of Aliasing"
-msgstr "反鋸齒的平滑程度"
+msgstr "平滑化的程度"
 
 #. ****************** MISC OPTIONS **************************
 #: plug-ins/fp/fp_gtk.c:1152
@@ -7778,11 +7774,13 @@ msgid "First Gfig"
 msgstr "第一個 Gfig"
 
 #: plug-ins/gfig/gfig.c:1355
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error opening file '%s':\n"
 "%s"
-msgstr "開啟檔案發生錯誤"
+msgstr ""
+"開啟檔案‘%s’發生錯誤：\n"
+"%s"
 
 #: plug-ins/gfig/gfig.c:1451
 msgid "Save Gfig drawing"
@@ -7790,23 +7788,23 @@ msgstr "儲存 Gfig 圖像"
 
 #: plug-ins/gfig/gfig.c:1701
 msgid "Show previous object"
-msgstr ""
+msgstr "顯示上一個物件"
 
 #: plug-ins/gfig/gfig.c:1714
 msgid "Show next object"
-msgstr ""
+msgstr "顯示下一個物件"
 
 #: plug-ins/gfig/gfig.c:1726
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: plug-ins/gfig/gfig.c:1727
 msgid "Show all objects"
-msgstr ""
+msgstr "顯示所有物件"
 
 #: plug-ins/gfig/gfig.c:1769
 msgid "Prev"
-msgstr ""
+msgstr "上個"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1798 plug-ins/gfig/gfig.c:5179
@@ -7953,7 +7951,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2665 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
-msgstr ""
+msgstr "原來"
 
 #: plug-ins/gfig/gfig.c:2666 plug-ins/webbrowser/webbrowser.c:321
 msgid "New"
@@ -7975,7 +7973,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2686 plug-ins/imagemap/imap_selection.c:364
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
-msgstr ""
+msgstr "選擇區域"
 
 #: plug-ins/gfig/gfig.c:2688
 msgid "Selection+Fill"
@@ -10423,7 +10421,7 @@ msgstr "頁面捲曲..."
 
 #: plug-ins/print/gimp_color_window.c:194
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "列印色彩調整"
 
 #: plug-ins/print/gimp_color_window.c:242
 msgid "Brightness:"
@@ -10434,6 +10432,8 @@ msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
+"指定列印時的亮度。\n"
+"0 表示全黑，2 表示全白"
 
 #: plug-ins/print/gimp_color_window.c:262
 msgid "Contrast:"
@@ -10441,19 +10441,19 @@ msgstr "反差："
 
 #: plug-ins/print/gimp_color_window.c:270
 msgid "Set the contrast of the print"
-msgstr ""
+msgstr "指定列印時的反差度"
 
 #: plug-ins/print/gimp_color_window.c:289
 msgid "Adjust the cyan balance of the print"
-msgstr ""
+msgstr "調整列印時的氰藍色色彩平衡"
 
 #: plug-ins/print/gimp_color_window.c:308
 msgid "Adjust the magenta balance of the print"
-msgstr ""
+msgstr "調整列印時的洋紅色色彩平衡"
 
 #: plug-ins/print/gimp_color_window.c:327
 msgid "Adjust the yellow balance of the print"
-msgstr ""
+msgstr "調整列印時的黃色色彩平衡"
 
 #: plug-ins/print/gimp_color_window.c:346
 msgid ""
@@ -10478,6 +10478,9 @@ msgid ""
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
+"調整列印時的 gamma 值。數值較大時，一般會令列印出來的圖像較光亮；相反地，數值"
+"較小時，列印出來的圖像則較暗。和亮度調整不一樣，本設定不會更改黑色和白色這兩"
+"種顏色。"
 
 #: plug-ins/print/gimp_color_window.c:405
 msgid "Dither Algorithm:"
@@ -10492,6 +10495,11 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
+"選取擬色時使用的運算方式。\n"
+"Adaptive Hybrid 通常會產生最好的效果。\n"
+"Ordered 比較快，而且在相片中的效果會差不多一樣好。\n"
+"Fast 及 Very Fast 更快，適用於文字及簡單線條圖案。\n"
+"Hybrid Floyd-Steinberg 的效果一般來說比較差。"
 
 #.
 #. * Create the main dialog
@@ -10530,28 +10538,36 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"請在頁面中指定圖像位置。\n"
+"點選圖像後，按定滑鼠第一個按鈕來拖曳圖像可以更改圖像位置。\n"
+"點選圖像後，按定滑鼠第二個按鈕來拖曳圖像可以精確地更改圖像位置；每次移動的單"
+"位為一點 (1/72 英吋)。\n"
+"點選圖像後，按定滑鼠第三個(中央)按鈕來拖曳圖像，每次移動的單位則是圖像尺寸本"
+"身。\n"
+"拖曳圖像時按下 shift 鍵，會限制圖像只向水平或垂直方向移動。\n"
+"如果拖曳的時候再按多一個滑鼠按鈕，圖像會還原至原來位置。"
 
 #: plug-ins/print/gimp_main_window.c:482
 msgid "Portrait"
-msgstr "直式"
+msgstr "直向"
 
 #: plug-ins/print/gimp_main_window.c:484
 msgid "Landscape"
-msgstr "橫式"
+msgstr "橫向"
 
 #: plug-ins/print/gimp_main_window.c:486
 msgid "Upside down"
-msgstr "直式反向"
+msgstr "直向倒置"
 
 #: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
-msgstr "橫式反向"
+msgstr "橫向倒置"
 
 #: plug-ins/print/gimp_main_window.c:492
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
-msgstr ""
+msgstr "指定列印時的方向：直向、橫向、直向倒置、橫向倒置"
 
 #: plug-ins/print/gimp_main_window.c:515
 msgid "Distance from the left of the paper to the image"
@@ -10637,7 +10653,7 @@ msgstr "PPD 檔："
 
 #: plug-ins/print/gimp_main_window.c:744
 msgid "Enter the correct PPD filename for your printer"
-msgstr "請輸入適用於您的印表機的 PPD 檔案名稱"
+msgstr "請輸入適用於印表機的 PPD 檔案名稱"
 
 #: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
@@ -10645,7 +10661,7 @@ msgstr "瀏覽"
 
 #: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
-msgstr "請選取適用於您的印表機的 PPD 檔案名稱"
+msgstr "請選取適用於印表機的 PPD 檔案名稱"
 
 #.
 #. * Print command.
@@ -10660,6 +10676,8 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
+"請輸入列印所需的正確指令。注意：請不要從指定字串中移除‘-l’或‘-oraw’，否則可能"
+"會無法列印！"
 
 #.
 #. * Output file selection dialog.
@@ -10741,7 +10759,7 @@ msgstr "印表機設定"
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
-msgstr ""
+msgstr "指定印表機名稱 (不是印表機類型或者型號)"
 
 #.
 #. * Setup printer button
@@ -10833,13 +10851,13 @@ msgstr "縮放："
 
 #: plug-ins/print/gimp_main_window.c:1137
 msgid "Set the scale (size) of the image"
-msgstr ""
+msgstr "指定圖像的縮放比例 (尺寸)"
 
 #: plug-ins/print/gimp_main_window.c:1170
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr ""
+msgstr "指定放大縮小圖像時的單位，是頁面尺寸的百分比，還是每英吋有多少點"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid "Percent"
@@ -10847,7 +10865,7 @@ msgstr "百分比"
 
 #: plug-ins/print/gimp_main_window.c:1182
 msgid "Scale the print to the size of the page"
-msgstr ""
+msgstr "指定列印時的圖像尺寸為頁面尺寸的某個百分比"
 
 #: plug-ins/print/gimp_main_window.c:1188
 msgid "PPI"
@@ -10855,15 +10873,15 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1194
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "列印時，透過指定每英吋有多少點來放大縮小圖像"
 
 #: plug-ins/print/gimp_main_window.c:1220
 msgid "Set the width of the print"
-msgstr ""
+msgstr "指定列印時的圖像寬度"
 
 #: plug-ins/print/gimp_main_window.c:1233
 msgid "Set the height of the print"
-msgstr ""
+msgstr "指定列印時的圖像高度"
 
 #: plug-ins/print/gimp_main_window.c:1253
 msgid "Units:"
@@ -10871,7 +10889,7 @@ msgstr "單位："
 
 #: plug-ins/print/gimp_main_window.c:1258
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "指定列印時的基本長度單位"
 
 #: plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
@@ -10914,15 +10932,15 @@ msgstr "圖像類型："
 
 #: plug-ins/print/gimp_main_window.c:1337
 msgid "Optimize the output for the type of image being printed"
-msgstr ""
+msgstr "根據圖像類型優化輸出結果"
 
 #: plug-ins/print/gimp_main_window.c:1341
 msgid "Line Art"
-msgstr ""
+msgstr "簡單線條圖案"
 
 #: plug-ins/print/gimp_main_window.c:1348
 msgid "Fastest and brightest color for text and line art"
-msgstr ""
+msgstr "對於文字及簡單線條圖案來說，這種方式是最快，顏色最鮮明的"
 
 #: plug-ins/print/gimp_main_window.c:1355
 msgid "Solid Colors"
@@ -10971,7 +10989,7 @@ msgstr "以黑白模式列印 (沒有色彩，也不使用任何灰階)"
 #.
 #: plug-ins/print/gimp_main_window.c:1455
 msgid "Adjust Output..."
-msgstr ""
+msgstr "調整輸出結果..."
 
 #: plug-ins/print/gimp_main_window.c:1462
 msgid ""
@@ -10997,19 +11015,19 @@ msgstr ""
 
 #: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 msgid "Switch to clockwise"
-msgstr ""
+msgstr "切換為順時針旋轉"
 
 #: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 msgid "Switch to c/clockwise"
-msgstr ""
+msgstr "切換為逆時針旋轉"
 
 #: plug-ins/rcm/rcm_dialog.c:127
 msgid "Rotated"
-msgstr ""
+msgstr "旋轉後"
 
 #: plug-ins/rcm/rcm_dialog.c:286
 msgid "Change order of arrows"
-msgstr ""
+msgstr "更改箭頭次序"
 
 #: plug-ins/rcm/rcm_dialog.c:293
 msgid "Select all"
@@ -11023,7 +11041,7 @@ msgstr "從"
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:328 plug-ins/rcm/rcm_dialog.c:381
 msgid "To"
-msgstr "而"
+msgstr "至"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:510
@@ -11063,7 +11081,7 @@ msgstr "連續更新"
 
 #: plug-ins/rcm/rcm_dialog.c:693
 msgid "Area:"
-msgstr ""
+msgstr "區域："
 
 #: plug-ins/rcm/rcm_dialog.c:700
 msgid "Entire Layer"
@@ -11080,7 +11098,7 @@ msgstr ""
 
 #: plug-ins/rcm/rcm_dialog.c:823
 msgid "Main"
-msgstr ""
+msgstr "主要設定"
 
 #: plug-ins/rcm/rcm_dialog.c:826
 msgid "Misc"
