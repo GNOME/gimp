@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.1\n"
-"POT-Creation-Date: 1999-07-24 12:04-0700\n"
-"PO-Revision-Date: 1999-07-11 19:55+0200\n"
+"POT-Creation-Date: 1999-08-14 00:08+0200\n"
+"PO-Revision-Date: 1999-08-14 01:09+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -334,6 +334,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"\"Fiks startverdi\" knappen er et alias for meg.\n"
+"Den samme startverdien produserer det samme bildet hvis (1), bredden på "
+"bildenen er den samme (dette er grunnen til at bilde på tegnet objekt er "
+"forskjellig fra forhåndsvisning), og (2), alle muteringsrater er lik null."
 
 #: plug-ins/common/CML_explorer.c:1532
 msgid "Others"
@@ -381,19 +385,19 @@ msgstr "Komposisjon"
 
 #: plug-ins/common/CML_explorer.c:1658
 msgid "Misc arrange"
-msgstr ""
+msgstr "Forskjellige arrangeringer"
 
 #: plug-ins/common/CML_explorer.c:1665
 msgid "Use cyclic range"
-msgstr ""
+msgstr "Bruk syklisk område"
 
 #: plug-ins/common/CML_explorer.c:1670
 msgid "Mod. rate"
-msgstr ""
+msgstr "Mod. rate"
 
 #: plug-ins/common/CML_explorer.c:1677
 msgid "Env. sensitivity"
-msgstr ""
+msgstr "Miljø sensitivitet"
 
 #: plug-ins/common/CML_explorer.c:1684
 msgid "Diffusion dist."
@@ -413,31 +417,31 @@ msgstr "Parameter k"
 
 #: plug-ins/common/CML_explorer.c:1712
 msgid "Range low"
-msgstr ""
+msgstr "Område lavt"
 
 #: plug-ins/common/CML_explorer.c:1719
 msgid "Range high"
-msgstr ""
+msgstr "Område høyt"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Plot the graph of the settings"
-msgstr ""
+msgstr "Plott grafen av instillingene"
 
 #: plug-ins/common/CML_explorer.c:1772
 msgid "Ch. sensitivity"
-msgstr ""
+msgstr "Sensitivitet for kanal"
 
 #: plug-ins/common/CML_explorer.c:1779
 msgid "Mutation rate"
-msgstr ""
+msgstr "Mutasjonsrate"
 
 #: plug-ins/common/CML_explorer.c:1786
 msgid "Mutation dist."
-msgstr ""
+msgstr "Mutasjons dist."
 
 #: plug-ins/common/CML_explorer.c:1815
 msgid "Graph of the current settings"
-msgstr ""
+msgstr "Graf av aktive instillinger"
 
 #. Action Area
 #: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1820
@@ -500,19 +504,19 @@ msgstr "Last parametere fra"
 
 #: plug-ins/common/CML_explorer.c:2225
 msgid "Selective load from"
-msgstr ""
+msgstr "Selektiv last fra"
 
 #: plug-ins/common/CML_explorer.c:2324
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "Feil: dette er ikke en CML-parameter fil."
 
 #: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "Advarsel: det er en fil i gammelt format."
 
 #: plug-ins/common/CML_explorer.c:2333
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer enn meg."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
@@ -533,7 +537,7 @@ msgstr "Avbryt"
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
-msgstr ""
+msgstr "Bruk forskjellige lyseffekter på et bilde"
 
 #: plug-ins/Lighting/lighting_main.c:173
 msgid "No help yet"
@@ -541,19 +545,19 @@ msgstr "Ingen hjelp ennå"
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects"
-msgstr ""
+msgstr "<Bilde>/Filtre/Lyseffekter/Lyseffekter"
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
-msgstr ""
+msgstr "Punktlys"
 
 #: plug-ins/Lighting/lighting_ui.c:35
 msgid "Directional light"
-msgstr ""
+msgstr "Retningsbestemt lys"
 
 #: plug-ins/Lighting/lighting_ui.c:36
 msgid "Spot light"
-msgstr ""
+msgstr "Spotlys"
 
 #: plug-ins/Lighting/lighting_ui.c:37
 msgid "No light"
@@ -589,150 +593,150 @@ msgstr "Generelle alternativer"
 
 #: plug-ins/Lighting/lighting_ui.c:572
 msgid "Use bump mapping"
-msgstr ""
+msgstr "Bruk \"bump mapping\""
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Use environment mapping"
-msgstr ""
+msgstr "Bruk \"environment mapping\""
 
 #. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
 #. (GtkSignalFunc)togglerefraction_update);
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Transparent background"
-msgstr ""
+msgstr "Gjennomsiktig bakgrunn"
 
 #: plug-ins/Lighting/lighting_ui.c:580
 msgid "Create new image"
-msgstr ""
+msgstr "Lag nytt bilde"
 
 #: plug-ins/Lighting/lighting_ui.c:582
 msgid "High preview quality"
-msgstr ""
+msgstr "Høy kvalitet på forhåndsvisning"
 
 #: plug-ins/Lighting/lighting_ui.c:584
 msgid "Enable tooltips"
-msgstr ""
+msgstr "Slå på verktøytips"
 
 #: plug-ins/Lighting/lighting_ui.c:587
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr ""
+msgstr "Slå på/av \"bump-mapping\" (bildedybde)"
 
 #: plug-ins/Lighting/lighting_ui.c:588
 msgid "Enable/disable environment mapping (reflection)"
-msgstr ""
+msgstr "Slå på/av \"environment mapping\" (refleksjon)"
 
 #. gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer");
 #: plug-ins/Lighting/lighting_ui.c:590
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
+msgstr "Gjør målbildet gjennomsiktig når \"bump\"-høyden er null"
 
 #: plug-ins/Lighting/lighting_ui.c:591
 msgid "Create a new image when applying filter"
-msgstr ""
+msgstr "Opprett et nytt bilde ved bruk av filter"
 
 #: plug-ins/Lighting/lighting_ui.c:592
 msgid "Enable/disable high quality previews"
-msgstr ""
+msgstr "Slå på/av høykvalitets forhåndsvisning"
 
 #: plug-ins/Lighting/lighting_ui.c:593
 msgid "Enable/disable tooltip messages"
-msgstr ""
+msgstr "Slå på/av verktøytips meldinger"
 
 #: plug-ins/Lighting/lighting_ui.c:612
 msgid "Antialiasing options"
-msgstr ""
+msgstr "Alternativer for antialiasing"
 
 #: plug-ins/Lighting/lighting_ui.c:615
 msgid "Enable antialiasing"
-msgstr ""
+msgstr "Slå på antialiasing"
 
 #: plug-ins/Lighting/lighting_ui.c:618
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
+msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
 
 #: plug-ins/Lighting/lighting_ui.c:628
 msgid "Depth:"
-msgstr ""
+msgstr "Dybde:"
 
 #: plug-ins/Lighting/lighting_ui.c:633
 msgid "Threshold:"
-msgstr ""
+msgstr "Terskel:"
 
 #: plug-ins/Lighting/lighting_ui.c:645
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
+msgstr "Kvalitet for antialiasing. Høyere er bedre, men tregere"
 
 #: plug-ins/Lighting/lighting_ui.c:646
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
+msgstr "Stopp når pikselforskjellene er mindre enn denne verdien"
 
 #: plug-ins/Lighting/lighting_ui.c:669
 msgid "Light settings"
-msgstr ""
+msgstr "Lyssetting"
 
 #: plug-ins/Lighting/lighting_ui.c:673
 msgid "Lightsource type:"
-msgstr ""
+msgstr "Type lyskilde:"
 
 #: plug-ins/Lighting/lighting_ui.c:678
 msgid "Lightsource color"
-msgstr ""
+msgstr "Lyskildens farge"
 
 #: plug-ins/Lighting/lighting_ui.c:685
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "Type lyskilde som skal brukes"
 
 #: plug-ins/Lighting/lighting_ui.c:686
 msgid "Set light source color (white is default)"
-msgstr ""
+msgstr "Sett lyskildens farge (hvitt er forvalgt)"
 
 #: plug-ins/Lighting/lighting_ui.c:688
 msgid "Position"
-msgstr ""
+msgstr "Posisjon"
 
 #: plug-ins/Lighting/lighting_ui.c:691 plug-ins/Lighting/lighting_ui.c:713
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:692 plug-ins/Lighting/lighting_ui.c:714
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:693 plug-ins/Lighting/lighting_ui.c:715
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:699
 msgid "Light source X position in XYZ space"
-msgstr ""
+msgstr "Lyskildens X-posisjon i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:700
 msgid "Light source Y position in XYZ space"
-msgstr ""
+msgstr "Lyskildens Y-posisjon i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:701
 msgid "Light source Z position in XYZ space"
-msgstr ""
+msgstr "Lyskildens Z-posisjon i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:710
 msgid "Direction vector"
-msgstr ""
+msgstr "Retningsvektor"
 
 #: plug-ins/Lighting/lighting_ui.c:717
 msgid "Light source X direction in XYZ space"
-msgstr ""
+msgstr "Lyskildens X-retning i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:718
 msgid "Light source Y direction in XYZ space"
-msgstr ""
+msgstr "Lyskildens Y-retning i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:719
 msgid "Light source Z direction in XYZ space"
-msgstr ""
+msgstr "Lyskildens Z-retning i XYZ-rommet"
 
 #: plug-ins/Lighting/lighting_ui.c:751
 msgid "Intensity levels"
-msgstr ""
+msgstr "Intensitetsnivå"
 
 #: plug-ins/Lighting/lighting_ui.c:756
 msgid "Ambient:"
@@ -744,15 +748,15 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:797
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "Mengden opprinnelig farge som skal vises hvor det ikke faller direkte lys"
 
 #: plug-ins/Lighting/lighting_ui.c:798
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Reflectivity"
-msgstr ""
+msgstr "Refleksjonsevne"
 
 #: plug-ins/Lighting/lighting_ui.c:809
 msgid "Specular:"
@@ -764,121 +768,121 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:824
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "Høyere verdier gjør at objektet reflekterer mer lys (ser lysere ut)"
 
 #: plug-ins/Lighting/lighting_ui.c:825
 msgid "Controls how intense the highlights will be"
-msgstr ""
+msgstr "Kontrollerer hvor intenst høylysene vil være"
 
 #: plug-ins/Lighting/lighting_ui.c:826
 msgid "Higher values makes the highlights more focused"
-msgstr ""
+msgstr "Høyere verdier gjør høylysene mer fokusert"
 
 #: plug-ins/Lighting/lighting_ui.c:888
 msgid "Bumpmap settings"
-msgstr ""
+msgstr "Instillinger for \"bumpmap\""
 
 #: plug-ins/Lighting/lighting_ui.c:894
 msgid "Bumpmap image:"
-msgstr ""
+msgstr "\"Bumpmap\" bilde:"
 
 #: plug-ins/Lighting/lighting_ui.c:913
 msgid "Minimum height:"
-msgstr ""
+msgstr "Minimal høyde:"
 
 #: plug-ins/Lighting/lighting_ui.c:915
 msgid "Maximum height:"
-msgstr ""
+msgstr "Makimal høyde:"
 
 #: plug-ins/Lighting/lighting_ui.c:923
 msgid "Autostretch to fit value range"
-msgstr ""
+msgstr "Autostrekk til å passe i verdiområdet"
 
 #: plug-ins/Lighting/lighting_ui.c:946
 msgid "Environment settings"
-msgstr ""
+msgstr "Innstillinger for miljø"
 
 #: plug-ins/Lighting/lighting_ui.c:953
 msgid "Environment image:"
-msgstr ""
+msgstr "Bilde for miljø:"
 
 #: plug-ins/Lighting/lighting_ui.c:987
 msgid "Options"
-msgstr ""
+msgstr "Alternativer"
 
 #: plug-ins/Lighting/lighting_ui.c:993
 msgid "Light"
-msgstr ""
+msgstr "Lys"
 
 #: plug-ins/Lighting/lighting_ui.c:999
 msgid "Material"
-msgstr ""
+msgstr "Materiale"
 
 #: plug-ins/Lighting/lighting_ui.c:1007
 msgid "Bump"
-msgstr ""
+msgstr "\"Bump\""
 
 #: plug-ins/Lighting/lighting_ui.c:1016
 msgid "Env"
-msgstr ""
+msgstr "Miljø"
 
 #: plug-ins/Lighting/lighting_ui.c:1037
 msgid "Lighting effects"
-msgstr ""
+msgstr "Lyseffekter"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
 #: plug-ins/Lighting/lighting_ui.c:1061
 msgid "Apply"
-msgstr ""
+msgstr "Bruk"
 
 #: plug-ins/Lighting/lighting_ui.c:1063
 msgid "Help"
-msgstr ""
+msgstr "Hjelp"
 
 #: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Apply filter with current settings"
-msgstr ""
+msgstr "Bruk filter med nåværende innstillinger"
 
 #: plug-ins/Lighting/lighting_ui.c:1073
 msgid "Close filter without doing anything"
-msgstr ""
+msgstr "Lukk filter uten å gjøre noe"
 
 #: plug-ins/Lighting/lighting_ui.c:1093
 msgid "  Preview!  "
-msgstr ""
+msgstr "  Forhåndsvis!  "
 
 #: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Recompute preview image"
-msgstr ""
+msgstr "Beregn forhåndsvisningsbildet på nytt"
 
 #: plug-ins/Lighting/lighting_ui.c:1097
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "Zoom inn (gjør bildet større)"
 
 #: plug-ins/Lighting/lighting_ui.c:1099
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "Zoom ut (gjør bildet mindre)"
 
 #: plug-ins/common/apply_lens.c:136
 msgid "Apply a lens effect"
-msgstr ""
+msgstr "Bruk en linseeffekt"
 
 #: plug-ins/common/apply_lens.c:137
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
-msgstr ""
+msgstr "Dette tillegget bruker Snells lov til å tegne en elipseformet linse over bildet"
 
 #: plug-ins/common/apply_lens.c:141
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
-msgstr ""
+msgstr "<Image>/Filtre/Glass-effekter/Påfør linse"
 
 #: plug-ins/common/apply_lens.c:200
 msgid "Applying lens..."
-msgstr ""
+msgstr "Legger på linse..."
 
 #: plug-ins/common/apply_lens.c:414
 msgid "Lens effect"
-msgstr ""
+msgstr "Linseeffekt"
 
 #.
 #. *  Parameter settings
@@ -890,23 +894,23 @@ msgstr ""
 #: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
 #: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
-msgstr ""
+msgstr "Innstillinger for parametere"
 
 #: plug-ins/common/apply_lens.c:448
 msgid "Keep original surroundings"
-msgstr ""
+msgstr "Behold originalomgivelsene"
 
 #: plug-ins/common/apply_lens.c:461
 msgid "Set surroundings to index 0"
-msgstr ""
+msgstr "Sett omgivelsene til indeks 0"
 
 #: plug-ins/common/apply_lens.c:462
 msgid "Set surroundings to background color"
-msgstr ""
+msgstr "Sett omgivelsene til bakgrunnsfargen"
 
 #: plug-ins/common/apply_lens.c:475
 msgid "Make surroundings transparent"
-msgstr ""
+msgstr "Gjør omgivelsene gjennomsiktige"
 
 #: plug-ins/common/apply_lens.c:490
 msgid "Lens refraction index: "
@@ -917,6 +921,8 @@ msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
+"Strekk kontrasten automatisk for spesifisert tegnet objekt til å omfatte alle "
+"mulige områder."
 
 #: plug-ins/common/autostretch_hsv.c:83
 msgid ""
@@ -2494,7 +2500,7 @@ msgstr "Skriv ut til fil?"
 msgid "PPD File?"
 msgstr "PPD/Fil?"
 
-#: plug-ins/print/print.c:2112
+#: plug-ins/print/print.c:2111
 msgid "File"
 msgstr "Fil"
 
