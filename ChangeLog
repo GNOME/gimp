@@ -1,3 +1,14 @@
+2005-01-10  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.3, interface_age 3.
+
+	Merged from HEAD branch:
+
+	* tools/pdbgen/pdb/text_tool.pdb: explicitely mention the encoding.
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
+
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.2 release.

@@ -31,7 +31,7 @@
  * @drawable_ID: The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
- * @text: The text to generate.
+ * @text: The text to generate (in UTF-8 encoding).
  * @border: The size of the border.
  * @antialias: Antialiasing.
  * @size: The size of text in either pixels or points.
@@ -94,7 +94,7 @@ gimp_text_fontname (gint32        image_ID,
 
 /**
  * gimp_text_get_extents_fontname:
- * @text: The text to generate.
+ * @text: The text to generate (in UTF-8 encoding).
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
  * @fontname: The name of the font.
@@ -159,7 +159,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
  * @drawable_ID: The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
- * @text: The text to generate.
+ * @text: The text to generate (in UTF-8 encoding).
  * @border: The size of the border.
  * @antialias: Antialiasing.
  * @size: The size of text in either pixels or points.
@@ -231,7 +231,7 @@ gimp_text (gint32        image_ID,
 
 /**
  * gimp_text_get_extents:
- * @text: The text to generate.
+ * @text: The text to generate (in UTF-8 encoding).
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
  * @foundry: The font foundry.
