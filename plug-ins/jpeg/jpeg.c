@@ -139,6 +139,14 @@
  * currently possible.
  */
 
+/*
+ * 15-NOV-04 - add support for EXIF JPEG thumbnail reading and writing
+ * - S. Mukund <muks@mukund.org>
+ *
+ * Digital cameras store a TIFF APP1 marker that contains various
+ * parameters of the shot along with a thumbnail image.
+ */
+
 #include "config.h"   /* configure cares about HAVE_PROGRESSIVE_JPEG */
 
 #include <glib.h>     /* We want glib.h first because of some
@@ -185,6 +193,7 @@
 #define DEFAULT_DCT         0
 #define DEFAULT_PREVIEW     FALSE
 #define DEFAULT_EXIF        TRUE
+#define DEFAULT_THUMBNAIL   FALSE
 
 /* sg - these should not be global... */
 static gint32 volatile  image_ID_global       = -1;
@@ -207,6 +216,7 @@ typedef struct
   gint     dct;
   gboolean preview;
   gboolean save_exif;
+  gboolean save_thumbnail;
 } JpegSaveVals;
 
 typedef struct
@@ -239,6 +249,18 @@ static void      run                 (const gchar      *name,
 static gint32    load_image          (const gchar      *filename,
                                       GimpRunMode       runmode,
                                       gboolean          preview);
+#ifdef HAVE_EXIF
+
+static gint32    load_thumbnail_image(const gchar      *filename,
+                                      gint             *width,
+                                      gint             *height);
+
+static gint      create_thumbnail    (gint32            image_ID,
+                                      gint32            drawable_ID,
+                                      gchar           **thumbnail_buffer);
+
+#endif /* HAVE_EXIF */
+
 static gboolean  save_image          (const gchar      *filename,
                                       gint32            image_ID,
                                       gint32            drawable_ID,
@@ -273,7 +295,8 @@ static JpegSaveVals jsvals =
   DEFAULT_RESTART,
   DEFAULT_DCT,
   DEFAULT_PREVIEW,
-  DEFAULT_EXIF
+  DEFAULT_EXIF,
+  DEFAULT_THUMBNAIL
 };
 
 
@@ -285,7 +308,9 @@ static GtkWidget *restart_markers_label = NULL;
 static ExifData  *exif_data             = NULL;
 #endif /* HAVE_EXIF */
 
+
 MAIN ()
+
 
 static void
 query (void)
@@ -300,6 +325,22 @@ query (void)
   {
     { GIMP_PDB_IMAGE,   "image",         "Output image" }
   };
+
+#ifdef HAVE_EXIF
+
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+  };
+  static GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
+    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+  };
+
+#endif /* HAVE_EXIF */
 
   static GimpParamDef save_args[] =
   {
@@ -337,6 +378,25 @@ query (void)
                                     "jpg,jpeg,jpe",
                                     "",
                                     "6,string,JFIF,6,string,Exif");
+
+#ifdef HAVE_EXIF
+
+  gimp_install_procedure ("file_jpeg_load_thumb",
+                          "Loads a thumbnail from a JPEG image",
+                          "Loads a thumbnail from a JPEG image (only if it exists)",
+                          "S. Mukund <muks@mukund.org>, Sven Neumann <sven@gimp.org>",
+                          "S. Mukund <muks@mukund.org>, Sven Neumann <sven@gimp.org>",
+                          "November 15, 2004",
+                          N_("JPEG image"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
+  gimp_register_thumbnail_loader ("file_jpeg_load", "file_jpeg_load_thumb");
+
+#endif /* HAVE_EXIF */
 
   gimp_install_procedure ("file_jpeg_save",
                           "saves files in the JPEG file format",
@@ -396,6 +456,43 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
+
+#ifdef HAVE_EXIF
+
+  else if (strcmp (name, "file_jpeg_load_thumb") == 0)
+    {
+      if (nparams < 2)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+      else
+        {
+          const gchar *filename = param[0].data.d_string;
+          gint         width    = 0;
+          gint         height   = 0;
+          gint32       image_ID;
+
+          image_ID = load_thumbnail_image (filename, &width, &height);
+
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 4;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+              values[2].type         = GIMP_PDB_INT32;
+              values[2].data.d_int32 = width;
+              values[3].type         = GIMP_PDB_INT32;
+              values[3].data.d_int32 = height;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
+    }
+
+#endif /* HAVE_EXIF */
+
   else if (strcmp (name, "file_jpeg_save") == 0)
     {
       image_ID = orig_image_ID = param[1].data.d_int32;
@@ -454,24 +551,34 @@ run (const gchar      *name,
         }
 
 #ifdef HAVE_EXIF
+
       parasite = gimp_image_parasite_find (orig_image_ID, "exif-data");
       if (parasite)
         {
           exif_data = exif_data_new_from_data (parasite->data, parasite->size);
           gimp_parasite_free (parasite);
         }
+
 #endif /* HAVE_EXIF */
 
-      jsvals.quality     = DEFAULT_QUALITY;
-      jsvals.smoothing   = DEFAULT_SMOOTHING;
-      jsvals.optimize    = DEFAULT_OPTIMIZE;
-      jsvals.progressive = DEFAULT_PROGRESSIVE;
-      jsvals.baseline    = DEFAULT_BASELINE;
-      jsvals.subsmp      = DEFAULT_SUBSMP;
-      jsvals.restart     = DEFAULT_RESTART;
-      jsvals.dct         = DEFAULT_DCT;
-      jsvals.preview     = DEFAULT_PREVIEW;
-      jsvals.save_exif   = DEFAULT_EXIF;
+      jsvals.quality        = DEFAULT_QUALITY;
+      jsvals.smoothing      = DEFAULT_SMOOTHING;
+      jsvals.optimize       = DEFAULT_OPTIMIZE;
+      jsvals.progressive    = DEFAULT_PROGRESSIVE;
+      jsvals.baseline       = DEFAULT_BASELINE;
+      jsvals.subsmp         = DEFAULT_SUBSMP;
+      jsvals.restart        = DEFAULT_RESTART;
+      jsvals.dct            = DEFAULT_DCT;
+      jsvals.preview        = DEFAULT_PREVIEW;
+      jsvals.save_exif      = DEFAULT_EXIF;
+      jsvals.save_thumbnail = DEFAULT_THUMBNAIL;
+
+#ifdef HAVE_EXIF
+
+      if (exif_data && (exif_data->data))
+        jsvals.save_thumbnail = TRUE;
+
+#endif /* HAVE_EXIF */
 
       switch (run_mode)
         {
@@ -484,16 +591,20 @@ run (const gchar      *name,
                                                "jpeg-save-options");
           if (parasite)
             {
-              jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
-              jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
-              jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
-              jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
-              jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
-              jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
-              jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
-              jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
-              jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
-              jsvals.save_exif   = ((JpegSaveVals *)parasite->data)->save_exif;
+              const JpegSaveVals *save_vals = gimp_parasite_data (parasite);
+
+              jsvals.quality        = save_vals->quality;
+              jsvals.smoothing      = save_vals->smoothing;
+              jsvals.optimize       = save_vals->optimize;
+              jsvals.progressive    = save_vals->progressive;
+              jsvals.baseline       = save_vals->baseline;
+              jsvals.subsmp         = save_vals->subsmp;
+              jsvals.restart        = save_vals->restart;
+              jsvals.dct            = save_vals->dct;
+              jsvals.preview        = save_vals->preview;
+              jsvals.save_exif      = save_vals->save_exif;
+              jsvals.save_thumbnail = save_vals->save_thumbnail;
+
               gimp_parasite_free (parasite);
             }
 
@@ -576,15 +687,18 @@ run (const gchar      *name,
                                                "jpeg-save-options");
           if (parasite)
             {
-              jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
-              jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
-              jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
-              jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
-              jsvals.baseline    = ((JpegSaveVals *)parasite->data)->baseline;
-              jsvals.subsmp      = ((JpegSaveVals *)parasite->data)->subsmp;
-              jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
-              jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
+              const JpegSaveVals *save_vals = gimp_parasite_data (parasite);
+
+              jsvals.quality     = save_vals->quality;
+              jsvals.smoothing   = save_vals->smoothing;
+              jsvals.optimize    = save_vals->optimize;
+              jsvals.progressive = save_vals->progressive;
+              jsvals.baseline    = save_vals->baseline;
+              jsvals.subsmp      = save_vals->subsmp;
+              jsvals.restart     = save_vals->restart;
+              jsvals.dct         = save_vals->dct;
               jsvals.preview     = FALSE;
+
               gimp_parasite_free (parasite);
             }
           break;
@@ -1309,11 +1423,23 @@ save_image (const gchar *filename,
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
+  gchar    *thumbnail_buffer        = NULL;
+  gint      thumbnail_buffer_length = 0;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
+
+#ifdef HAVE_EXIF
+
+  /* Create the thumbnail JPEG in a buffer */
+
+  if (jsvals.save_thumbnail)
+    thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
+                                                &thumbnail_buffer);
+
+#endif /* HAVE_EXIF */
 
   if (!preview)
     {
@@ -1516,20 +1642,22 @@ save_image (const gchar *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
 #ifdef HAVE_EXIF
-  if (jsvals.save_exif)
-  {
-    if (exif_data)
-      {
-        guchar *exif_buf;
-        guint   exif_buf_len;
+  if (jsvals.save_exif || jsvals.save_thumbnail)
+    {
+      guchar *exif_buf;
+      guint   exif_buf_len;
 
-        exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-        jpeg_write_marker (&cinfo, 0xe1,
-                           exif_buf, exif_buf_len);
-        free (exif_buf);
-      }
-  }
-#endif
+      if ( (! jsvals.save_exif) || (! exif_data))
+        exif_data = exif_data_new ();
+
+      exif_data->data = thumbnail_buffer;
+      exif_data->size = thumbnail_buffer_length;
+
+      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+      jpeg_write_marker (&cinfo, 0xe1, exif_buf, exif_buf_len);
+      free (exif_buf);
+    }
+#endif /* HAVE_EXIF */
 
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
@@ -1714,13 +1842,15 @@ save_dialog (void)
   GtkWidget     *spinbutton;
   GtkObject     *scale_data;
   GtkWidget     *label;
-#ifdef HAVE_EXIF
-  GtkWidget     *exif_toggle;
-#endif
 
   GtkWidget     *progressive;
   GtkWidget     *baseline;
   GtkWidget     *restart;
+
+#ifdef HAVE_EXIF
+  GtkWidget     *exif_toggle;
+  GtkWidget     *thumbnail_toggle;
+#endif /* HAVE_EXIF */
 
   GtkWidget     *preview;
   GtkWidget     *combo;
@@ -1922,7 +2052,19 @@ save_dialog (void)
                                 jsvals.save_exif && exif_data);
 
   gtk_widget_set_sensitive (exif_toggle, exif_data != NULL);
-#endif
+
+  thumbnail_toggle = gtk_check_button_new_with_label (_("Save thumbnail"));
+  gtk_table_attach (GTK_TABLE (table), thumbnail_toggle, 0, 1, 4, 5,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (thumbnail_toggle);
+
+  g_signal_connect (thumbnail_toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_thumbnail);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (thumbnail_toggle),
+                                jsvals.save_thumbnail);
+#endif /* HAVE_EXIF */
 
   /* Subsampling */
   label = gtk_label_new (_("Subsampling:"));
@@ -2038,3 +2180,653 @@ save_restart_update (GtkAdjustment *adjustment,
 
   make_preview ();
 }
+
+#ifdef HAVE_EXIF
+
+typedef struct
+{
+  struct jpeg_source_mgr pub;   /* public fields */
+
+  gchar   *buffer;
+  gint     size;
+  JOCTET   terminal[2];
+} my_source_mgr;
+
+typedef my_source_mgr * my_src_ptr;
+
+static void
+init_source (j_decompress_ptr cinfo)
+{
+}
+
+
+static boolean
+fill_input_buffer (j_decompress_ptr cinfo)
+{
+  my_src_ptr src = (my_src_ptr) cinfo->src;
+
+  /* Since we have given all we have got already
+   * we simply fake an end of file
+   */
+
+  src->pub.next_input_byte = src->terminal;
+  src->pub.bytes_in_buffer = 2;
+  src->terminal[0]         = (JOCTET) 0xFF;
+  src->terminal[1]         = (JOCTET) JPEG_EOI;
+
+  return TRUE;
+}
+
+static void
+skip_input_data (j_decompress_ptr cinfo,
+                 long             num_bytes)
+{
+  my_src_ptr src = (my_src_ptr) cinfo->src;
+
+  src->pub.next_input_byte = src->pub.next_input_byte + num_bytes;
+}
+
+static void
+term_source (j_decompress_ptr cinfo)
+{
+}
+
+static gint32
+load_thumbnail_image (const gchar *filename,
+                      gint        *width,
+                      gint        *height)
+{
+  gint32 volatile  image_ID;
+  ExifData        *exif_data;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
+  gint32           layer_ID;
+  struct jpeg_decompress_struct cinfo;
+  struct my_error_mgr           jerr;
+  guchar     *buf;
+  guchar  * volatile padded_buf = NULL;
+  guchar    **rowbuf;
+  gint        image_type;
+  gint        layer_type;
+  gint        tile_height;
+  gint        scanlines;
+  gint        i, start, end;
+  my_src_ptr  src;
+  FILE       *infile;
+
+  image_ID = -1;
+  exif_data = exif_data_new_from_file (filename);
+
+  if (! ((exif_data) && (exif_data->data) && (exif_data->size > 0)))
+    return -1;
+
+  cinfo.err = jpeg_std_error (&jerr.pub);
+  jerr.pub.error_exit = my_error_exit;
+
+  cinfo.client_data = GINT_TO_POINTER (FALSE);
+
+  jerr.pub.emit_message   = my_emit_message;
+  jerr.pub.output_message = my_output_message;
+
+  {
+    gchar *name = g_strdup_printf (_("Opening thumbnail for '%s'..."),
+                                   gimp_filename_to_utf8 (filename));
+    gimp_progress_init (name);
+    g_free (name);
+  }
+
+  /* Establish the setjmp return context for my_error_exit to use. */
+  if (setjmp (jerr.setjmp_buffer))
+    {
+      /* If we get here, the JPEG code has signaled an error.  We
+       * need to clean up the JPEG object, close the input file,
+       * and return.
+       */
+      jpeg_destroy_decompress (&cinfo);
+
+      if (image_ID != -1)
+        gimp_image_delete (image_ID);
+
+      if (exif_data)
+        {
+          exif_data_unref (exif_data);
+          exif_data = NULL;
+        }
+
+      return -1;
+    }
+
+  /* Now we can initialize the JPEG decompression object. */
+  jpeg_create_decompress (&cinfo);
+
+  /* Step 2: specify data source (eg, a file) */
+
+  if (cinfo.src == NULL)
+    cinfo.src = (struct jpeg_source_mgr *)(*cinfo.mem->alloc_small)
+      ((j_common_ptr) &cinfo, JPOOL_PERMANENT,
+       sizeof (my_source_mgr));
+
+  src = (my_src_ptr) cinfo.src;
+
+  src->pub.init_source       = init_source;
+  src->pub.fill_input_buffer = fill_input_buffer;
+  src->pub.skip_input_data   = skip_input_data;
+  src->pub.resync_to_restart = jpeg_resync_to_restart;
+  src->pub.term_source       = term_source;
+
+  src->pub.bytes_in_buffer   = exif_data->size;
+  src->pub.next_input_byte   = exif_data->data;
+
+  src->buffer = exif_data->data;
+  src->size = exif_data->size;
+
+  /* Step 3: read file parameters with jpeg_read_header() */
+
+  jpeg_read_header (&cinfo, TRUE);
+
+  /* Step 4: set parameters for decompression */
+
+  /* In this example, we don't need to change any of the defaults set by
+   * jpeg_read_header(), so we do nothing here.
+   */
+
+  /* Step 5: Start decompressor */
+
+  jpeg_start_decompress (&cinfo);
+
+  /* We may need to do some setup of our own at this point before
+   * reading the data.  After jpeg_start_decompress() we have the
+   * correct scaled output image dimensions available, as well as
+   * the output colormap if we asked for color quantization.  In
+   * this example, we need to make an output work buffer of the
+   * right size.
+   */
+
+  /* temporary buffer */
+  tile_height = gimp_tile_height ();
+  buf = g_new (guchar,
+               tile_height * cinfo.output_width * cinfo.output_components);
+
+  rowbuf = g_new (guchar *, tile_height);
+
+  for (i = 0; i < tile_height; i++)
+    rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
+
+  /* Create a new image of the proper size and associate the
+   * filename with it.
+   *
+   * Preview layers, not being on the bottom of a layer stack,
+   * MUST HAVE AN ALPHA CHANNEL!
+   */
+  switch (cinfo.output_components)
+    {
+    case 1:
+      image_type = GIMP_GRAY;
+      layer_type = GIMP_GRAY_IMAGE;
+      break;
+
+    case 3:
+      image_type = GIMP_RGB;
+      layer_type = GIMP_RGB_IMAGE;
+      break;
+
+    case 4:
+      if (cinfo.out_color_space == JCS_CMYK)
+        {
+          image_type = GIMP_RGB;
+          layer_type = GIMP_RGB_IMAGE;
+          break;
+        }
+      /*fallthrough*/
+
+    default:
+      g_message ("Don't know how to load JPEGs\n"
+                 "with %d color channels\n"
+                 "using colorspace %d (%d)",
+                 cinfo.output_components, cinfo.out_color_space,
+                 cinfo.jpeg_color_space);
+
+      if (exif_data)
+        {
+          exif_data_unref (exif_data);
+          exif_data = NULL;
+        }
+
+      return -1;
+      break;
+    }
+
+  if (cinfo.out_color_space == JCS_CMYK)
+    padded_buf = g_new (guchar, tile_height * cinfo.output_width * 3);
+  else
+    padded_buf = NULL;
+
+  image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
+                             image_type);
+  gimp_image_set_filename (image_ID, filename);
+
+  layer_ID = gimp_layer_new (image_ID, _("Background"),
+                             cinfo.output_width,
+                             cinfo.output_height,
+                             layer_type, 100, GIMP_NORMAL_MODE);
+
+  drawable_global = drawable = gimp_drawable_get (layer_ID);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, TRUE, FALSE);
+
+  /* Step 5.1: if the file had resolution information, set it on the image */
+  if (cinfo.saw_JFIF_marker)
+    {
+      gdouble xresolution;
+      gdouble yresolution;
+      gdouble asymmetry;
+
+      xresolution = cinfo.X_density;
+      yresolution = cinfo.Y_density;
+
+      switch (cinfo.density_unit)
+        {
+        case 0: /* unknown -> set the aspect ratio but use the default
+                 *  image resolution
+                 */
+          if (cinfo.Y_density != 0)
+            asymmetry = xresolution / yresolution;
+          else
+            asymmetry = 1.0;
+
+          gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+          xresolution *= asymmetry;
+          break;
+
+        case 1: /* dots per inch */
+          break;
+
+        case 2: /* dots per cm */
+          xresolution *= 2.54;
+          yresolution *= 2.54;
+          gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
+          break;
+
+        default:
+          g_message ("Unknown density unit %d\nassuming dots per inch",
+                     cinfo.density_unit);
+          break;
+        }
+
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
+
+  /* Step 6: while (scan lines remain to be read) */
+  /*           jpeg_read_scanlines(...); */
+
+  /* Here we use the library's state variable cinfo.output_scanline as the
+   * loop counter, so that we don't have to keep track ourselves.
+   */
+  while (cinfo.output_scanline < cinfo.output_height)
+    {
+      start = cinfo.output_scanline;
+      end   = cinfo.output_scanline + tile_height;
+      end   = MIN (end, cinfo.output_height);
+      scanlines = end - start;
+
+      for (i = 0; i < scanlines; i++)
+        jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
+
+      if (cinfo.out_color_space == JCS_CMYK) /* buf-> RGB in padded_buf */
+        {
+          guchar *dest = padded_buf;
+          guchar *src  = buf;
+          gint    num  = drawable->width * scanlines;
+
+          for (i = 0; i < num; i++)
+            {
+              guint r_c, g_m, b_y, a_k;
+
+              r_c = *(src++);
+              g_m = *(src++);
+              b_y = *(src++);
+              a_k = *(src++);
+              *(dest++) = (r_c * a_k) / 255;
+              *(dest++) = (g_m * a_k) / 255;
+              *(dest++) = (b_y * a_k) / 255;
+            }
+        }
+
+      gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
+                               0, start, drawable->width, scanlines);
+
+      gimp_progress_update ((gdouble) cinfo.output_scanline /
+                            (gdouble) cinfo.output_height);
+    }
+
+  /* Step 7: Finish decompression */
+
+  jpeg_finish_decompress (&cinfo);
+  /* We can ignore the return value since suspension is not possible
+   * with the stdio data source.
+   */
+
+  /* Step 8: Release JPEG decompression object */
+
+  /* This is an important step since it will release a good deal
+   * of memory.
+   */
+  jpeg_destroy_decompress (&cinfo);
+
+  /* free up the temporary buffers */
+  g_free (rowbuf);
+  g_free (buf);
+  g_free (padded_buf);
+
+  /* At this point you may want to check to see whether any
+   * corrupt-data warnings occurred (test whether
+   * jerr.num_warnings is nonzero).
+   */
+  gimp_image_add_layer (image_ID, layer_ID, 0);
+
+
+  /* NOW to get the dimensions of the actual image to return the
+   * calling app
+   */
+  cinfo.err = jpeg_std_error (&jerr.pub);
+  jerr.pub.error_exit = my_error_exit;
+
+  cinfo.client_data = GINT_TO_POINTER (FALSE);
+
+  jerr.pub.emit_message   = my_emit_message;
+  jerr.pub.output_message = my_output_message;
+
+  if ((infile = fopen (filename, "rb")) == NULL)
+    {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+
+      if (exif_data)
+        {
+          exif_data_unref (exif_data);
+          exif_data = NULL;
+        }
+
+      return -1;
+    }
+
+  /* Establish the setjmp return context for my_error_exit to use. */
+  if (setjmp (jerr.setjmp_buffer))
+    {
+      /* If we get here, the JPEG code has signaled an error.  We
+       * need to clean up the JPEG object, close the input file,
+       * and return.
+       */
+      jpeg_destroy_decompress (&cinfo);
+
+      if (image_ID != -1)
+        gimp_image_delete (image_ID);
+
+      if (exif_data)
+        {
+          exif_data_unref (exif_data);
+          exif_data = NULL;
+        }
+
+      return -1;
+    }
+
+  /* Now we can initialize the JPEG decompression object. */
+  jpeg_create_decompress (&cinfo);
+
+  /* Step 2: specify data source (eg, a file) */
+
+  jpeg_stdio_src (&cinfo, infile);
+
+  /* Step 3: read file parameters with jpeg_read_header() */
+
+  jpeg_read_header (&cinfo, TRUE);
+
+  jpeg_start_decompress (&cinfo);
+
+  *width  = cinfo.output_width;
+  *height = cinfo.output_height;
+
+  /* Step 4: Release JPEG decompression object */
+
+  /* This is an important step since it will release a good deal
+   * of memory.
+   */
+  jpeg_destroy_decompress (&cinfo);
+
+  if (exif_data)
+    {
+      exif_data_unref (exif_data);
+      exif_data = NULL;
+    }
+
+  return image_ID;
+}
+
+gchar *tbuffer = NULL;
+gchar *tbuffer2 = NULL;
+
+gint tbuffer_count = 0;
+
+typedef struct
+{
+  struct jpeg_destination_mgr  pub;   /* public fields */
+  gchar                       *buffer;
+  gint                         size;
+} my_destination_mgr;
+
+typedef my_destination_mgr *my_dest_ptr;
+
+void
+init_destination (j_compress_ptr cinfo)
+{
+}
+
+gboolean
+empty_output_buffer (j_compress_ptr cinfo)
+{
+  my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+
+  tbuffer_count = tbuffer_count + 16384;
+  tbuffer = (gchar *) g_realloc(tbuffer, tbuffer_count);
+  g_memmove (tbuffer + tbuffer_count - 16384, tbuffer2, 16384);
+
+  dest->pub.next_output_byte = tbuffer2;
+  dest->pub.free_in_buffer   = 16384;
+
+  return TRUE;
+}
+
+void
+term_destination (j_compress_ptr cinfo)
+{
+  my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
+
+  tbuffer_count = (tbuffer_count + 16384) - (dest->pub.free_in_buffer);
+
+  tbuffer = (gchar *) g_realloc (tbuffer, tbuffer_count);
+  g_memmove(tbuffer + tbuffer_count - (16384 - dest->pub.free_in_buffer), tbuffer2, 16384 - dest->pub.free_in_buffer);
+}
+
+static gint
+create_thumbnail (gint32   image_ID,
+                  gint32   drawable_ID,
+                  gchar  **thumbnail_buffer)
+{
+  GimpDrawable  *drawable;
+  gint           req_width, req_height, bpp, rbpp;
+  guchar        *thumbnail_data = NULL;
+  struct jpeg_compress_struct cinfo;
+  struct my_error_mgr         jerr;
+  my_dest_ptr dest;
+  gboolean  alpha = FALSE;
+  JSAMPROW  scanline[1];
+  guchar   *buf = NULL;
+  gint      i;
+
+  drawable = gimp_drawable_get (drawable_ID);
+
+  req_width  = 196;
+  req_height = 196;
+
+  if (MIN(drawable->width, drawable->height) < 196)
+    req_width = req_height = MIN(drawable->width, drawable->height);
+
+  thumbnail_data = gimp_drawable_get_thumbnail_data (drawable_ID,
+                                                     &req_width, &req_height,
+                                                     &bpp);
+
+  if (! thumbnail_data)
+    return 0;
+
+  rbpp = bpp;
+
+  if ((bpp == 2) || (bpp == 4))
+    {
+      alpha = TRUE;
+      rbpp = bpp - 1;
+    }
+
+  buf = (gchar *) g_malloc (req_width * bpp);
+
+  if (!buf)
+    return 0;
+
+  tbuffer2 = (gchar *) g_malloc(16384);
+
+  if (!tbuffer2)
+    {
+      g_free (buf);
+      return 0;
+    }
+
+  tbuffer_count = 0;
+
+  cinfo.err = jpeg_std_error (&jerr.pub);
+  jerr.pub.error_exit = my_error_exit;
+
+  /* Establish the setjmp return context for my_error_exit to use. */
+  if (setjmp (jerr.setjmp_buffer))
+    {
+      /* If we get here, the JPEG code has signaled an error.
+       * We need to clean up the JPEG object, free memory, and return.
+       */
+      jpeg_destroy_compress (&cinfo);
+
+      if (thumbnail_data)
+        {
+          g_free (thumbnail_data);
+          thumbnail_data = NULL;
+        }
+
+      if (buf)
+        {
+          g_free (buf);
+          buf = NULL;
+        }
+
+      if (tbuffer2)
+        {
+          g_free (tbuffer2);
+          tbuffer2 = NULL;
+        }
+
+      if (drawable)
+        gimp_drawable_detach (drawable);
+
+      return 0;
+    }
+
+  /* Now we can initialize the JPEG compression object. */
+  jpeg_create_compress (&cinfo);
+
+  if (cinfo.dest == NULL)
+    cinfo.dest = (struct jpeg_destination_mgr *)
+      (*cinfo.mem->alloc_small) ((j_common_ptr) &cinfo, JPOOL_PERMANENT,
+                                 sizeof(my_destination_mgr));
+
+  dest = (my_dest_ptr) cinfo.dest;
+  dest->pub.init_destination    = init_destination;
+  dest->pub.empty_output_buffer = empty_output_buffer;
+  dest->pub.term_destination    = term_destination;
+
+  dest->pub.next_output_byte = tbuffer2;
+  dest->pub.free_in_buffer   = 16384;
+
+  dest->buffer = tbuffer2;
+  dest->size   = 16384;
+
+  cinfo.input_components = rbpp;
+  cinfo.image_width      = req_width;
+  cinfo.image_height     = req_height;
+
+  /* colorspace of input image */
+  cinfo.in_color_space = (rbpp == 3) ? JCS_RGB : JCS_GRAYSCALE;
+
+  /* Now use the library's routine to set default compression parameters.
+   * (You must set at least cinfo.in_color_space before calling this,
+   * since the defaults depend on the source color space.)
+   */
+  jpeg_set_defaults (&cinfo);
+
+  jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5),
+                    jsvals.baseline);
+
+  /* Step 4: Start compressor */
+
+  /* TRUE ensures that we will write a complete interchange-JPEG file.
+   * Pass TRUE unless you are very sure of what you're doing.
+   */
+  jpeg_start_compress (&cinfo, TRUE);
+
+  while (cinfo.next_scanline < (unsigned int) req_height)
+    {
+      for (i = 0; i < req_width; i++)
+        {
+          buf[(i * rbpp) + 0] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 0];
+
+          if (rbpp == 3)
+            {
+              buf[(i * rbpp) + 1] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 1];
+              buf[(i * rbpp) + 2] = thumbnail_data[(cinfo.next_scanline * req_width * bpp) + (i * bpp) + 2];
+            }
+        }
+
+      scanline[0] = buf;
+      jpeg_write_scanlines (&cinfo, scanline, 1);
+  }
+
+  /* Step 6: Finish compression */
+  jpeg_finish_compress (&cinfo);
+
+  /* Step 7: release JPEG compression object */
+
+  /* This is an important step since it will release a good deal of memory. */
+  jpeg_destroy_compress (&cinfo);
+
+  /* And we're done! */
+
+  if (thumbnail_data)
+    {
+      g_free (thumbnail_data);
+      thumbnail_data = NULL;
+    }
+
+  if (buf)
+    {
+      g_free (buf);
+      buf = NULL;
+    }
+
+  if (drawable)
+    {
+      gimp_drawable_detach (drawable);
+      drawable = NULL;
+    }
+
+  *thumbnail_buffer = tbuffer;
+
+  return tbuffer_count;
+}
+
+#endif /* HAVE_EXIF */

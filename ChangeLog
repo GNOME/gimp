@@ -1,3 +1,9 @@
+2004-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/jpeg.c: applied (modified) patch from S. Mukund
+	which adds EXIF thumbnail loading and saving.
+	Fixes bugs #155761 and #158190.
+
 2004-11-16  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-arc.c
