@@ -1,5 +1,13 @@
 2002-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimpunits.c: improved parser error messages. Relies on a
+	fix in glib (see bug #81850). However it doesn't hurt if you don't
+	have the fix.
+
+2002-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig.[ch]: added user_data pointer to serialize
 	and deserialize methods.
 

@@ -46,6 +46,9 @@ static gboolean gimp_document_list_deserialize       (GObject  *list,
                                                       gpointer  data);
 
 
+static const gchar *document_symbol = "document";
+
+
 GType 
 gimp_document_list_get_type (void)
 {
@@ -109,7 +112,7 @@ gimp_document_list_serialize (GObject *document_list,
       gchar *escaped;
 
       escaped = g_strescape (GIMP_OBJECT (list->data)->name, NULL);
-      g_string_printf (str, "(document \"%s\")\n", escaped); 
+      g_string_printf (str, "(%s \"%s\")\n", document_symbol, escaped); 
       g_free (escaped);
 
       if (write (fd, str->str, str->len) == -1)
@@ -131,7 +134,8 @@ gimp_document_list_deserialize (GObject  *document_list,
 
   size = GPOINTER_TO_INT (data);
 
-  g_scanner_scope_add_symbol (scanner, 0, "document", GINT_TO_POINTER (1));
+  g_scanner_scope_add_symbol (scanner, 0,
+                              document_symbol, (gpointer) document_symbol);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -150,7 +154,7 @@ gimp_document_list_deserialize (GObject  *document_list,
 
         case G_TOKEN_SYMBOL:
           token = G_TOKEN_RIGHT_PAREN;
-          if (scanner->value.v_symbol == GINT_TO_POINTER (1))
+          if (scanner->value.v_symbol == document_symbol)
             {
               gchar         *uri;
               GimpImagefile *imagefile;
@@ -189,7 +193,7 @@ gimp_document_list_deserialize (GObject  *document_list,
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, "`document_list'", NULL,
+      g_scanner_unexp_token (scanner, token, NULL, NULL, document_symbol,
                              _("fatal parse error"), TRUE);
       return FALSE;
     }

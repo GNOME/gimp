@@ -77,6 +77,8 @@ static guint parasite_list_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
+static const gchar     *parasite_symbol = "parasite";
+
 
 GType
 gimp_parasite_list_get_type (void)
@@ -215,8 +217,8 @@ gimp_parasite_list_get_memsize (GimpObject *object)
 
   if (list->table)
     {
-      memsize += (g_hash_table_size (list->table) *
-                  3 * sizeof (gpointer)); /* FIXME */
+      /* FIXME */
+      memsize += (g_hash_table_size (list->table) * 3 * sizeof (gpointer));
 
       g_hash_table_foreach (list->table,
                             gimp_parasite_list_get_memsize_foreach,
@@ -245,7 +247,8 @@ gimp_parasite_list_deserialize (GObject  *list,
 {
   GTokenType token;
 
-  g_scanner_scope_add_symbol (scanner, 0, "parasite", GINT_TO_POINTER (1));
+  g_scanner_scope_add_symbol (scanner, 0,
+                              parasite_symbol, (gpointer) parasite_symbol);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -263,7 +266,7 @@ gimp_parasite_list_deserialize (GObject  *list,
           break;
 
         case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == GINT_TO_POINTER (1))
+          if (scanner->value.v_symbol == parasite_symbol)
             {
               gchar        *parasite_name  = NULL;
               gint          parasite_flags = 0;
@@ -319,7 +322,7 @@ gimp_parasite_list_deserialize (GObject  *list,
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, "`parasite'", NULL, 
+      g_scanner_unexp_token (scanner, token, NULL, NULL, parasite_symbol,
                              _("fatal parse error"), TRUE);
       return FALSE;
     }
@@ -466,7 +469,8 @@ parasite_serialize (const gchar  *key,
 
   str = g_string_sized_new (64);
       
-  g_string_printf (str, "(parasite \"%s\" %lu \"",
+  g_string_printf (str, "(%s \"%s\" %lu \"",
+                   parasite_symbol,
                    gimp_parasite_name (parasite),
                    gimp_parasite_flags (parasite));
 

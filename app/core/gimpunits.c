@@ -138,7 +138,9 @@ gimp_unitrc_load (Gimp *gimp)
             {
               g_scanner_set_scope (scanner, UNIT_INFO);
               token = gimp_unitrc_unit_info_deserialize (scanner, gimp);
-              g_scanner_set_scope (scanner, 0);
+              
+              if (token == G_TOKEN_LEFT_PAREN)
+                g_scanner_set_scope (scanner, 0);
             }
           break;
 
@@ -155,7 +157,8 @@ gimp_unitrc_load (Gimp *gimp)
   if (token != G_TOKEN_LEFT_PAREN)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+      g_scanner_unexp_token (scanner, token, NULL, NULL,
+                             scanner->scope_id == 0 ? "unit-info" : NULL,
                              _("fatal parse error"), TRUE);
     }
 
@@ -179,7 +182,8 @@ gimp_unitrc_save (Gimp *gimp)
     return;
 
   fprintf (fp,
-	   "# GIMP unitrc\n" 
+	   "# GIMP unitrc\n"
+           "#\n"
 	   "# This file contains your user unit database. You can\n"
 	   "# modify this list with the unit editor. You are not\n"
 	   "# supposed to edit it manually, but of course you can do.\n"
@@ -214,6 +218,8 @@ gimp_unitrc_save (Gimp *gimp)
         }
     }
 
+  fprintf (fp, "# end of unitrc\n");
+  
   fclose (fp);
 }
 
