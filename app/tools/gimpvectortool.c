@@ -1910,6 +1910,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
+                              _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,
                               button);

@@ -23,6 +23,7 @@
 
 
 GtkWidget * stroke_dialog_new (GimpItem    *item,
+                               const gchar *title,
                                const gchar *stock_id,
                                const gchar *help_id,
                                GtkWidget   *parent);

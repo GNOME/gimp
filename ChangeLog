@@ -1,5 +1,23 @@
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpstock.c: added labels ("_Stroke") to the
+	SLEECTION_STROKE and PATH_STROKE stock items so they can be used
+	in action areas.
+
+	* app/widgets/gimpstrokeeditor.c: changed mnemonic to no clash
+	with "_Stroke" and reordered some code.
+
+	* app/dialogs/stroke-dialog.[ch]: use the passed stock_id instead
+	of GTK_STOCK_OK. Added parameters to specify the dialog's title
+	so it doesn't say "Stroke Options".
+
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/tools/gimpvectortool.c: pass "Stroke Selection" and "Stroke
+	Path" as dialog titles.
+
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
 	When there are variants of actions with and without dialog, let
 	the dialog-less actions try to use the values from the last dialog
 	invocation:

@@ -362,6 +362,7 @@ vectors_stroke_cmd_callback (GtkAction *action,
     }
 
   dialog = stroke_dialog_new (GIMP_ITEM (vectors),
+                              _("Stroke Path"),
                               GIMP_STOCK_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,
                               widget);

@@ -206,7 +206,7 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
   gtk_widget_show (size);
 
-  expander = gtk_expander_new_with_mnemonic (_("Line _Style"));
+  expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
   gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
   gtk_widget_show (expander);
 
@@ -240,48 +240,54 @@ gimp_stroke_editor_constructor (GType                   type,
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Dash pattern:"), 0.0, 0.5,
+                             frame, 2, FALSE);
+
   box = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box);
+  gtk_widget_show (box);
+
   dash_editor = gimp_dash_editor_new (editor->options);
-  gtk_widget_show (dash_editor);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
+  gtk_widget_show (button);
+
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_left),
                            dash_editor, G_CONNECT_SWAPPED);
   g_signal_connect_after (button, "expose-event",
                           G_CALLBACK (gimp_stroke_editor_paint_button),
                           button);
-  gtk_widget_show (button);
 
   gtk_box_pack_start (GTK_BOX (box), dash_editor, TRUE, TRUE, 0);
-
   gtk_widget_show (dash_editor);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
                          NULL);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, TRUE, 0);
+  gtk_widget_show (button);
+
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_right),
                            dash_editor, G_CONNECT_SWAPPED);
   g_signal_connect_after (button, "expose-event",
                           G_CALLBACK (gimp_stroke_editor_paint_button),
                           NULL);
-  gtk_widget_show (button);
-  gtk_widget_show (box);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), box);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash pattern:"), 0.0, 0.5, frame, 2, FALSE);
 
   box = gimp_enum_combo_box_new (GIMP_TYPE_DASH_PRESET);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Dash preset:"), 0.0, 0.5,
+                             box, 2, TRUE);
+
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
@@ -289,10 +295,6 @@ gimp_stroke_editor_constructor (GType                   type,
                            G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash preset:"), 0.0, 0.5, box, 2, TRUE);
-
-  gtk_widget_show (box);
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
                                        _("_Antialiasing"));

@@ -66,6 +66,7 @@ static void  stroke_dialog_paint_info_selected (GimpContainerView *view,
 
 GtkWidget *
 stroke_dialog_new (GimpItem    *item,
+                   const gchar *title,
                    const gchar *stock_id,
                    const gchar *help_id,
                    GtkWidget   *parent)
@@ -97,21 +98,19 @@ stroke_dialog_new (GimpItem    *item,
   if (saved_desc)
     gimp_config_sync (GIMP_CONFIG (saved_desc), GIMP_CONFIG (desc), 0);
 
-  /* the dialog */
-  dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
-                              _("Stroke Options"), "gimp-stroke-options",
-                              stock_id,
-                              _("Choose Stroke Style"),
-                              parent,
-                              gimp_standard_help_func,
-                              help_id,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
+                                     title, "gimp-stroke-options",
+                                     stock_id,
+                                     _("Choose Stroke Style"),
+                                     parent,
+                                     gimp_standard_help_func,
+                                     help_id,
 
-                              GIMP_STOCK_RESET, RESPONSE_RESET,
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     GIMP_STOCK_RESET, RESPONSE_RESET,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     stock_id,         GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (stroke_dialog_response),
