@@ -1,3 +1,9 @@
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_run): changed handling of the 'gimp -b -'
+	command-line. It used to spawn three instances of Script-Fu, two
+	should be more than enough.
+
 2004-12-12  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpdataeditor.c: make Revert button insensitive

@@ -25,6 +25,8 @@
 
 #include "core/core-types.h"
 
+#include "base/base.h"
+
 #include "core/gimp.h"
 
 #include "batch.h"
@@ -42,6 +44,7 @@ static gboolean  batch_exit_after_callback (Gimp        *gimp,
 static void      batch_run_cmd             (Gimp        *gimp,
                                             const gchar *proc_name,
                                             ProcRecord  *proc,
+                                            GimpRunMode  run_mode,
                                             const gchar *cmd);
 
 
@@ -50,12 +53,9 @@ batch_run (Gimp         *gimp,
            const gchar  *batch_interpreter,
            const gchar **batch_commands)
 {
-  ProcRecord *eval_proc;
-  gulong      exit_id;
-  gint        i;
+  gulong  exit_id;
 
-  if (! batch_commands ||
-      ! batch_commands[0])
+  if (! batch_commands || ! batch_commands[0])
     return;
 
   exit_id = g_signal_connect_after (gimp, "exit",
@@ -75,20 +75,33 @@ batch_run (Gimp         *gimp,
   if (strcmp (batch_interpreter, "plug_in_script_fu_eval") == 0 &&
       strcmp (batch_commands[0], "-") == 0)
     {
-      batch_commands[0] = "(plug-in-script-fu-text-console RUN-INTERACTIVE)";
-      batch_commands[1] = NULL;
-    }
+      const gchar *proc_name = "plug_in_script_fu_text_console";
+      ProcRecord  *proc      = procedural_db_lookup (gimp, proc_name);
 
-  eval_proc = procedural_db_lookup (gimp, batch_interpreter);
-  if (! eval_proc)
+      if (proc)
+        batch_run_cmd (gimp, proc_name, proc, GIMP_RUN_INTERACTIVE, NULL);
+      else
+        g_message (_("The batch interpreter '%s' is not available, "
+                     "batch mode disabled."), proc_name);
+    }
+  else
     {
-      g_message (_("The batch interpreter '%s' is not available, "
-                   "batch mode disabled."), batch_interpreter);
-      return;
-    }
+      ProcRecord *eval_proc = procedural_db_lookup (gimp, batch_interpreter);
 
-  for (i = 0; batch_commands[i]; i++)
-    batch_run_cmd (gimp, batch_interpreter, eval_proc, batch_commands[i]);
+      if (eval_proc)
+        {
+          gint i;
+
+          for (i = 0; batch_commands[i]; i++)
+            batch_run_cmd (gimp, batch_interpreter, eval_proc,
+                           GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+        }
+      else
+        {
+          g_message (_("The batch interpreter '%s' is not available, "
+                       "batch mode disabled."), batch_interpreter);
+        }
+    }
 
   g_signal_handler_disconnect (gimp, exit_id);
 }
@@ -101,6 +114,8 @@ batch_exit_after_callback (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRLOC);
 
+  /*  make sure that the swap file is removed before we quit */
+  base_exit ();
   exit (EXIT_SUCCESS);
 
   return TRUE;
@@ -110,6 +125,7 @@ static void
 batch_run_cmd (Gimp        *gimp,
                const gchar *proc_name,
                ProcRecord  *proc,
+               GimpRunMode  run_mode,
 	       const gchar *cmd)
 {
   Argument *args;
@@ -120,8 +136,10 @@ batch_run_cmd (Gimp        *gimp,
   for (i = 0; i < proc->num_args; i++)
     args[i].arg_type = proc->args[i].arg_type;
 
-  args[0].value.pdb_int     = GIMP_RUN_NONINTERACTIVE;
-  args[1].value.pdb_pointer = (gpointer) cmd;
+  args[0].value.pdb_int = run_mode;
+
+  if (proc->num_args > 1)
+    args[1].value.pdb_pointer = (gpointer) cmd;
 
   vals = procedural_db_execute (gimp,
                                 gimp_get_user_context (gimp), NULL,
