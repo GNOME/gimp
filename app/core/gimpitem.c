@@ -921,9 +921,7 @@ gimp_item_stroke (GimpItem      *item,
 
       if (use_default_values)
         {
-          paint_options =
-            gimp_paint_options_new (gimage->gimp,
-                                    paint_info->paint_options_type);
+          paint_options = gimp_paint_options_new (paint_info);
 
           /*  undefine the paint-relevant context properties and get them
            *  from the passed context
@@ -965,7 +963,7 @@ gimp_item_stroke (GimpItem      *item,
 
   g_object_unref (stroke_desc);
 
-  return FALSE;
+  return retval;
 }
 
 gint
