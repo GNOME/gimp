@@ -4308,15 +4308,15 @@ msgstr "C 源代码头文件"
 
 #: plug-ins/common/hot.c:217
 msgid "_Hot..."
-msgstr "Hot(_H)..."
+msgstr "坏点(_H)..."
 
 #: plug-ins/common/hot.c:379
 msgid "Hot..."
-msgstr "Hot..."
+msgstr "坏点..."
 
 #: plug-ins/common/hot.c:570
 msgid "Hot"
-msgstr "Hot"
+msgstr "坏点"
 
 #: plug-ins/common/hot.c:600
 msgid "Create _New layer"
