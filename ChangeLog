@@ -1,3 +1,9 @@
+2002-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpimagedock.c: removed #warning and inclusion of
+	"display/*" stuff because we use GimpDisplays as GimpObjects in
+	this file.
+
 2002-10-24  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/display_cmds.c

@@ -32,12 +32,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-#include "display/gimpdisplay.h"
-
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
 #include "gimpcontainermenuimpl.h"
