@@ -79,8 +79,8 @@ The `configure' script examines your system, and adapts the GIMP to
 run on it. The script has many options, some of which are described in
 the generic instructions included at the end of this file. All of the
 options can be listed using the command `./configure --help'. There
-are five commands special options the GIMP `configure' script
-recognizes. These are:
+are several special options the GIMP `configure' script recognizes.
+These are:
 
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
@@ -122,8 +122,9 @@ recognizes. These are:
 
   --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
      algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
-     patent, you can go for simple run-length encoding or even configure
-     the plug-in to create uncompressed GIFs.
+     patent (which should have expired in most countries by now), you
+     can go for simple run-length encoding or even configure the plug-in
+     to create uncompressed GIFs.
 
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
@@ -221,7 +222,14 @@ several reasons why this might fail:
   binary package of GTK+ was previously installed on your system,
   and you later compiled GTK+ from source.
 
-  Fix: remove the old libraries and include files.
+  Fix: Remove the old libraries and include files.  If you are afraid
+  that removing the old libraries may break other packages supplied by
+  your distributor, you can try installing GLib, GTK+ and other
+  libraries in a different prefix after setting the environment
+  variable PKG_CONFIG_LIBDIR to point to lib/pkgconfig/ in that new
+  prefix so that it does not try to read the *.pc files from the
+  default directory (/usr/lib/pkgconfig).  However, removing the old
+  packages is often the easier solution.
 
 A detailed log of the ./configure output is written to the file
 config.log. This may help diagnose problems.

@@ -1,3 +1,10 @@
+2004-07-25  Raphaël Quinet  <quinet@gamers.org>
+
+	* INSTALL: Minor fixes and improvements.  Suggest using a
+	different prefix and setting PKG_CONFIG_LIBDIR if old versions of
+	GTK+ libs are found and cannot be removed without breaking other
+	packages.
+
 2004-07-23  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/: created a header "orientation.h"
