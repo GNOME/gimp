@@ -19,7 +19,7 @@ by running:
 
 Basically this does the following for you:
 
-        cvsroot/gimp# aclocal; automake; autoconf
+        cvsroot/gimp# aclocal-1.4; automake-1.4; autoconf
 
         The above commands create the "configure" script.  Now you
         can run the configure script in cvsroot/gimp to create all

@@ -1,5 +1,12 @@
 2003-05-22  Sven Neumann  <sven@gimp.org>
 
+	* HACKING
+	* autogen.sh: explicitely call automake-1.4 and aclocal-1.4. You
+	will need a recent version of automake-1.4 that installs versioned
+	binaries.
+
+2003-05-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c (server_log): plugged a
 	memleak (fix merged from HEAD branch).
 

@@ -20,9 +20,9 @@ DIE=0
 	DIE=1
 }
 
-(automake --version) < /dev/null > /dev/null 2>&1 || {
+(automake-1.4 --version) < /dev/null > /dev/null 2>&1 || {
 	echo
-	echo "You must have automake installed to compile $PROJECT."
+	echo "You must have automake-1.4 installed to compile $PROJECT."
 	echo "Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.4-p6.tar.gz"
 	echo "(or a newer version if it is available)"
 	DIE=1
@@ -43,7 +43,7 @@ else
 fi
 
 echo "Testing automake... "
-VER=`automake --version | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+VER=`automake-1.4 --version | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 1.4 >/dev/null; then
 	echo "looks OK."
 else
@@ -82,7 +82,7 @@ esac
 
 if test -z "$ACLOCAL_FLAGS"; then
 
-        acdir=`aclocal --print-ac-dir`
+        acdir=`aclocal-1.4 --print-ac-dir`
         m4list="gtk.m4 gettext.m4"
 
         for file in $m4list
@@ -114,7 +114,7 @@ for i in $autogen_dirs; do
 	echo "Processing $i..."
 
 	cd $i
-	aclocal $ACLOCAL_FLAGS
+	aclocal-1.4 $ACLOCAL_FLAGS
 
 	# call libtoolize explicitely since newer versions of automake
 	# don't do it for us
@@ -125,7 +125,7 @@ for i in $autogen_dirs; do
 		(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
 	fi
 
-	automake --add-missing $am_opt
+	automake-1.4 --add-missing $am_opt
 	autoconf
 done
 
