@@ -324,12 +324,15 @@ print_size_dialog_size_changed (GtkWidget       *widget,
   gdouble    height;
   gdouble    xres;
   gdouble    yres;
+  gdouble    scale;
+
+  scale = gimp_unit_get_factor (gimp_size_entry_get_unit (private->size_entry));
 
   width  = gimp_size_entry_get_value (private->size_entry, 0);
   height = gimp_size_entry_get_value (private->size_entry, 1);
 
-  xres = image->width  / MAX (0.001, width);
-  yres = image->height / MAX (0.001, height);
+  xres = scale * image->width  / MAX (0.001, width);
+  yres = scale * image->height / MAX (0.001, height);
 
   xres = CLAMP (xres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   yres = CLAMP (yres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
