@@ -1,3 +1,10 @@
+2003-06-25  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-xlfd.[ch]: added convenience function
+	gimp_text_set_font_from_xlfd(). Improved and documented XLFD parsing.
+
+	* app/text/gimptext-parasite.c: use the new function.
+
 2003-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* modules/cdisplay_colorblind.c (cdisplay_colorblind_load_state)

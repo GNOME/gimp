@@ -130,12 +130,9 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   GimpTextJustification   justify;
   const gchar            *str;
   gchar                  *text = NULL;
-  gchar                  *font = NULL;
   gchar                 **params;
   gboolean                antialias;
   gdouble                 spacing;
-  gdouble                 size;
-  GimpUnit                unit;
   GimpRGB                 rgb;
   glong                   color;
   gint                    i;
@@ -182,27 +179,17 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
   color	= strtol (params[COLOR], NULL, 16);
   gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
 
-  font = gimp_text_font_name_from_xlfd (params[XLFD]);
-
   retval = g_object_new (GIMP_TYPE_TEXT,
                          "text",         text,
                          "antialias",    antialias,
                          "justify",      justify,
                          "line-spacing", spacing,
                          "color",        &rgb,
-                         "font",         font,
                          NULL);
 
-  if (gimp_text_font_size_from_xlfd (params[XLFD], &size, &unit))
-    {
-      g_object_set (retval,
-                    "font-size",      size,
-                    "font-size-unit", unit,
-                    NULL);
-    }
+  gimp_text_set_font_from_xlfd (GIMP_TEXT (retval), params[XLFD]);
 
  cleanup:
-  g_free (font);
   g_free (text);
   g_strfreev (params);
 
