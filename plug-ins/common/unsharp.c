@@ -1,9 +1,4 @@
-/* $Id$
- *
- * unsharp.c 0.10 -- This is a plug-in for the GIMP 1.0
- *  http://www.stdout.org/~winston/gimp/unsharp.html
- *  (now out of date)
- *
+/*
  * Copyright (C) 1999 Winston Chang
  *                    <winstonc@cs.wisc.edu>
  *                    <winston@stdout.org>
@@ -287,17 +282,21 @@ blur_line (const gdouble *ctable,
               /* if the index is in bounds, add it to the scale counter */
               if (j + cmatrix_middle - row >= 0 &&
                   j + cmatrix_middle - row < cmatrix_length)
-                scale += cmatrix[j + cmatrix_middle - row];
+                scale += cmatrix[j];
             }
 
+          src_p = src;
           for (i = 0; i < bytes; i++)
             {
-              src_p1 = src_p;
+              src_p1 = src_p++;
               sum = 0;
               for (j = 0; j < len; j++)
                 {
-                  if (j >= row - cmatrix_middle && j <= row + cmatrix_middle)
-                    sum += src[j * bytes + i] * cmatrix[j];
+                  if (j + cmatrix_middle - row >= 0 &&
+                      j + cmatrix_middle - row < cmatrix_length)
+                    sum += *src_p1 * cmatrix[j];
+
+                  src_p1 += bytes;
                 }
 
               *dest++ = (guchar) ROUND (sum / scale);
@@ -314,11 +313,16 @@ blur_line (const gdouble *ctable,
           for (j = cmatrix_middle - row; j < cmatrix_length; j++)
             scale += cmatrix[j];
 
+          src_p = src;
           for (i = 0; i < bytes; i++)
             {
+              src_p1 = src_p++;
               sum = 0;
               for (j = cmatrix_middle - row; j < cmatrix_length; j++)
-                sum += src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
+                {
+                  sum += *src_p1 * cmatrix[j];
+                  src_p1 += bytes;
+                }
 
               *dest++ = ROUND (sum / scale);
             }
@@ -354,11 +358,16 @@ blur_line (const gdouble *ctable,
           for (j = 0; j < len - row + cmatrix_middle; j++)
             scale += cmatrix[j];
 
+          src_p = src + (row - cmatrix_middle) * bytes;
           for (i = 0; i < bytes; i++)
             {
               sum = 0;
+              src_p1 = src_p++;
               for (j = 0; j < len - row + cmatrix_middle; j++)
-                sum += src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
+                {
+                  sum += *src_p1 * cmatrix[j];
+                  src_p1 += bytes;
+                }
 
               *dest++ = ROUND (sum / scale);
             }

@@ -1,5 +1,11 @@
 2004-12-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp.c (blur_line): fixed the degenerate case
+	where the source image is smaller than the blurred area. This used
+	to give artefacts at the borders.
+
+2004-12-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/unsharp.c: more code cleanup and micro
 	optimizations.
 
