@@ -164,7 +164,7 @@ extern void          gimp_composite_context_print      (GimpCompositeContext *ct
 extern const gchar * gimp_composite_mode_astext        (GimpCompositeOperation op);
 extern const gchar * gimp_composite_pixelformat_astext (GimpPixelFormat format);
 
-extern gchar *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
+extern const gchar *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
 #endif  /* __GIMP_COMPOSITE_H__  */

@@ -185,7 +185,7 @@ struct GimpCompositeOptions gimp_composite_options =
     GIMP_COMPOSITE_OPTION_USE
   };
 
-gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
+const gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
 /**
@@ -208,10 +208,10 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
       if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE)
         {
           printf ("%s %s %s %s = %p\n",
-                  gimp_composite_mode_astext(ctx->op),
-                  gimp_composite_pixelformat_astext(ctx->pixelformat_A),
-                  gimp_composite_pixelformat_astext(ctx->pixelformat_B),
-                  gimp_composite_pixelformat_astext(ctx->pixelformat_D),
+                  gimp_composite_mode_astext (ctx->op),
+                  gimp_composite_pixelformat_astext (ctx->pixelformat_A),
+                  gimp_composite_pixelformat_astext (ctx->pixelformat_B),
+                  gimp_composite_pixelformat_astext (ctx->pixelformat_D),
                   function);
         }
 
@@ -220,10 +220,10 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
   else
     {
       printf ("gimp_composite: unsupported operation: %s %s %s %s\n",
-              gimp_composite_mode_astext(ctx->op),
-              gimp_composite_pixelformat_astext(ctx->pixelformat_A),
-              gimp_composite_pixelformat_astext(ctx->pixelformat_B),
-              gimp_composite_pixelformat_astext(ctx->pixelformat_D));
+              gimp_composite_mode_astext (ctx->op),
+              gimp_composite_pixelformat_astext (ctx->pixelformat_A),
+              gimp_composite_pixelformat_astext (ctx->pixelformat_B),
+              gimp_composite_pixelformat_astext (ctx->pixelformat_D));
     }
 }
 
@@ -238,11 +238,15 @@ gimp_composite_context_print (GimpCompositeContext *ctx)
 {
   printf ("%p: op=%s\n  A=%s(%d):%p\n  B=%s(%d):%p\n  D=%s(%d):%p\n  M=%s(%d):%p\n  n_pixels=%lu\n",
           ctx,
-          gimp_composite_mode_astext(ctx->op),
-          gimp_composite_pixelformat_astext(ctx->pixelformat_A), ctx->pixelformat_A, ctx->A,
-          gimp_composite_pixelformat_astext(ctx->pixelformat_B), ctx->pixelformat_B, ctx->B,
-          gimp_composite_pixelformat_astext(ctx->pixelformat_D), ctx->pixelformat_D, ctx->D,
-          gimp_composite_pixelformat_astext(ctx->pixelformat_M), ctx->pixelformat_M, ctx->M,
+          gimp_composite_mode_astext (ctx->op),
+          gimp_composite_pixelformat_astext (ctx->pixelformat_A),
+          ctx->pixelformat_A, ctx->A,
+          gimp_composite_pixelformat_astext (ctx->pixelformat_B),
+          ctx->pixelformat_B, ctx->B,
+          gimp_composite_pixelformat_astext (ctx->pixelformat_D),
+          ctx->pixelformat_D, ctx->D,
+          gimp_composite_pixelformat_astext (ctx->pixelformat_M),
+          ctx->pixelformat_M, ctx->M,
           ctx->n_pixels);
 }
 
@@ -312,23 +316,23 @@ const gchar *
 gimp_composite_pixelformat_astext (GimpPixelFormat format)
 {
   switch (format) {
-  case GIMP_PIXELFORMAT_V8: return ("V8");
-  case GIMP_PIXELFORMAT_VA8: return ("VA8");
-  case GIMP_PIXELFORMAT_RGB8: return ("RGB8");
-  case GIMP_PIXELFORMAT_RGBA8: return ("RGBA8");
+  case GIMP_PIXELFORMAT_V8:     return ("V8");
+  case GIMP_PIXELFORMAT_VA8:    return ("VA8");
+  case GIMP_PIXELFORMAT_RGB8:   return ("RGB8");
+  case GIMP_PIXELFORMAT_RGBA8:  return ("RGBA8");
 #if GIMP_COMPOSITE_16BIT
-  case GIMP_PIXELFORMAT_V16: return ("V16");
-  case GIMP_PIXELFORMAT_VA16: return ("VA16");
-  case GIMP_PIXELFORMAT_RGB16: return ("RGB16");
+  case GIMP_PIXELFORMAT_V16:    return ("V16");
+  case GIMP_PIXELFORMAT_VA16:   return ("VA16");
+  case GIMP_PIXELFORMAT_RGB16:  return ("RGB16");
   case GIMP_PIXELFORMAT_RGBA16: return ("RGBA16");
 #endif
 #if GIMP_COMPOSITE_32BIT
-  case GIMP_PIXELFORMAT_V32: return ("V32");
-  case GIMP_PIXELFORMAT_VA32: return ("VA32");
-  case GIMP_PIXELFORMAT_RGB32: return ("RGB32");
+  case GIMP_PIXELFORMAT_V32:    return ("V32");
+  case GIMP_PIXELFORMAT_VA32:   return ("VA32");
+  case GIMP_PIXELFORMAT_RGB32:  return ("RGB32");
   case GIMP_PIXELFORMAT_RGBA32: return ("RGBA32");
 #endif
-  case GIMP_PIXELFORMAT_ANY: return ("ANY");
+  case GIMP_PIXELFORMAT_ANY:    return ("ANY");
   default:
     break;
   }
@@ -351,14 +355,13 @@ gimp_composite_init (gboolean use_cpu_accel)
 {
   const gchar *p;
 
-  if (!use_cpu_accel) {
-    gimp_composite_options.bits |=  GIMP_COMPOSITE_OPTION_NOEXTENSIONS;
-  }
-
   if ((p = g_getenv ("GIMP_COMPOSITE")))
     {
       gimp_composite_options.bits = strtoul(p, NULL, 16);
     }
+
+  if (!use_cpu_accel)
+    gimp_composite_options.bits |=  GIMP_COMPOSITE_OPTION_NOEXTENSIONS;
 
 #ifdef GIMP_UNSTABLE
   g_printerr ("gimp_composite: use=%s, verbose=%s\n",
@@ -380,34 +383,29 @@ gimp_composite_init (gboolean use_cpu_accel)
    */
   if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_NOEXTENSIONS))
     {
-      extern gboolean gimp_composite_mmx_install ();
-      extern gboolean gimp_composite_sse_install ();
-      extern gboolean gimp_composite_sse2_install ();
-      extern gboolean gimp_composite_3dnow_install ();
-      extern gboolean gimp_composite_altivec_install ();
-      extern gboolean gimp_composite_vis_install ();
-      gboolean can_use_mmx;
-      gboolean can_use_sse;
-      gboolean can_use_sse2;
-      gboolean can_use_3dnow;
-      gboolean can_use_altivec;
-      gboolean can_use_vis;
+      extern gboolean gimp_composite_mmx_install (void);
+      extern gboolean gimp_composite_sse_install (void);
+      extern gboolean gimp_composite_sse2_install (void);
+      extern gboolean gimp_composite_3dnow_install (void);
+      extern gboolean gimp_composite_altivec_install (void);
+      extern gboolean gimp_composite_vis_install (void);
 
-      can_use_mmx = gimp_composite_mmx_install ();
-      can_use_sse = gimp_composite_sse_install ();
-      can_use_sse2 = gimp_composite_sse2_install ();
-      can_use_3dnow = gimp_composite_3dnow_install ();
-      can_use_altivec = gimp_composite_altivec_install ();
-      can_use_vis = gimp_composite_vis_install ();
+      gboolean can_use_mmx     = gimp_composite_mmx_install ();
+      gboolean can_use_sse     = gimp_composite_sse_install ();
+      gboolean can_use_sse2    = gimp_composite_sse2_install ();
+      gboolean can_use_3dnow   = gimp_composite_3dnow_install ();
+      gboolean can_use_altivec = gimp_composite_altivec_install ();
+      gboolean can_use_vis     = gimp_composite_vis_install ();
 
 #ifdef GIMP_UNSTABLE
-      g_printerr ("supported by gimp_composite: %cmmx %csse %csse2 %c3dnow %caltivec %cvis\n",
-                  can_use_mmx ? '+' : '-',
-                  can_use_sse ? '+' : '-',
-                  can_use_sse2 ? '+' : '-',
-                  can_use_3dnow ? '+' : '-',
+      g_printerr ("supported by gimp_composite: "
+                  "%cmmx %csse %csse2 %c3dnow %caltivec %cvis\n",
+                  can_use_mmx     ? '+' : '-',
+                  can_use_sse     ? '+' : '-',
+                  can_use_sse2    ? '+' : '-',
+                  can_use_3dnow   ? '+' : '-',
                   can_use_altivec ? '+' : '-',
-                  can_use_vis ? '+' : '-');
+                  can_use_vis     ? '+' : '-');
 #endif
     }
 }
