@@ -48,6 +48,7 @@
 #include "gimpdnd.h"
 #include "gimpview.h"
 #include "gimpselectiondata.h"
+#include "gimpviewrendererimage.h"
 
 #include "gimp-intl.h"
 
@@ -101,6 +102,9 @@ struct _GimpDndDataDef
 static GtkWidget * gimp_dnd_get_viewable_icon  (GtkWidget        *widget,
                                                 GCallback         get_viewable_func,
                                                 gpointer          get_viewable_data);
+static GtkWidget * gimp_dnd_get_component_icon (GtkWidget        *widget,
+                                                GCallback         get_comp_func,
+                                                gpointer          get_comp_data);
 static GtkWidget * gimp_dnd_get_color_icon     (GtkWidget        *widget,
                                                 GCallback         get_color_func,
                                                 gpointer          get_color_data);
@@ -374,7 +378,7 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp-dnd-set-component-func",
     "gimp-dnd-set-component-data",
 
-    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_component_icon,
     gimp_dnd_get_component_data,
     gimp_dnd_set_component_data,
   },
@@ -1269,6 +1273,28 @@ gimp_dnd_svg_dest_remove (GtkWidget *widget)
 /*****************************/
 /*  component dnd functions  */
 /*****************************/
+
+static GtkWidget *
+gimp_dnd_get_component_icon (GtkWidget *widget,
+                             GCallback  get_comp_func,
+                             gpointer   get_comp_data)
+{
+  GtkWidget       *view;
+  GimpImage       *image;
+  GimpChannelType  channel;
+
+  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &channel,
+                                                        get_comp_data);
+
+  if (! image)
+    return NULL;
+
+  view = gimp_view_new (GIMP_VIEWABLE (image), DRAG_PREVIEW_SIZE, 0, TRUE);
+
+  GIMP_VIEW_RENDERER_IMAGE (GIMP_VIEW (view)->renderer)->channel = channel;
+
+  return view;
+}
 
 static void
 gimp_dnd_get_component_data (GtkWidget        *widget,

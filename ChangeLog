@@ -1,3 +1,10 @@
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.c: added gimp_dnd_get_component_icon().
+
+	* app/widgets/gimpcomponenteditor.c: allow to drag
+	components. They can't be dropped anywhere yet.
+
 2005-01-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimptile.c (gimp_tile_put)

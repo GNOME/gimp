@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcomponenteditor.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 
 #include "gimpcellrendererviewable.h"
 #include "gimpcomponenteditor.h"
+#include "gimpdnd.h"
 #include "gimpmenufactory.h"
 #include "gimpviewrendererimage.h"
 #include "gimpwidgets-utils.h"
@@ -84,6 +85,9 @@ static void gimp_component_editor_visibility_changed(GimpImage           *gimage
 static void gimp_component_editor_active_changed    (GimpImage           *gimage,
                                                      GimpChannelType      channel,
                                                      GimpComponentEditor *editor);
+static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget,
+                                                         GimpChannelType *channel,
+                                                         gpointer         data);
 
 
 static GimpImageEditorClass *parent_class = NULL;
@@ -193,6 +197,10 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_tree_selection_set_select_function (editor->selection,
                                           gimp_component_editor_select,
                                           editor, NULL);
+
+  gimp_dnd_component_source_add (GTK_WIDGET (editor->view),
+                                 gimp_component_editor_drag_component,
+                                 editor);
 }
 
 static void
@@ -625,4 +633,23 @@ gimp_component_editor_active_changed (GimpImage           *gimage,
             gtk_tree_selection_unselect_iter (editor->selection, &iter);
         }
     }
+}
+
+static GimpImage *
+gimp_component_editor_drag_component (GtkWidget       *widget,
+                                      GimpChannelType *channel,
+                                      gpointer         data)
+{
+  GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (data);
+
+  if (GIMP_IMAGE_EDITOR (editor)->gimage &&
+      editor->clicked_component != -1)
+    {
+      if (channel)
+        *channel = editor->clicked_component;
+
+      return GIMP_IMAGE_EDITOR (editor)->gimage;
+    }
+
+  return NULL;
 }
