@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.4\n"
 "POT-Creation-Date: 2002-05-08 11:05+0200\n"
-"PO-Revision-Date: 2002-05-08 11:25+0200\n"
+"PO-Revision-Date: 2002-05-08 15:53+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1285,15 +1285,15 @@ msgstr "Skalierung X:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1181
 msgid "X scale (size)"
-msgstr "X Skalierung (Größe)"
+msgstr "X Skalierung (Grösse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1192
 msgid "Y scale (size)"
-msgstr "Y Skalierung (Größe)"
+msgstr "Y Skalierung (Grösse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1203
 msgid "Z scale (size)"
-msgstr "Z Skalierung (Größe)"
+msgstr "Z Skalierung (Grösse)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1231
 msgid "Images for the Cap Faces"
@@ -1344,7 +1344,7 @@ msgstr "Herauszoomen (Bild kleiner machen)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1445
 msgid "Zoom in (make image bigger)"
-msgstr "Hineinzoomen (Bild größer machen)"
+msgstr "Hineinzoomen (Bild grösser machen)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1447
 msgid "Show Preview Wireframe"
@@ -2737,11 +2737,11 @@ msgstr "Setze Kanäle zusammen..."
 
 #: plug-ins/common/compose.c:414
 msgid "Compose: Drawables have different size"
-msgstr "Zusammensetzen: Ebenen haben unterschiedliche Größen"
+msgstr "Zusammensetzen: Ebenen haben unterschiedliche Grössen"
 
 #: plug-ins/common/compose.c:431
 msgid "Compose: Images have different size"
-msgstr "Zusammensetzen: Bilder haben unterschiedliche Größen"
+msgstr "Zusammensetzen: Bilder haben unterschiedliche Grössen"
 
 #: plug-ins/common/compose.c:445
 msgid "Compose: Error in getting layer IDs"
@@ -4323,7 +4323,7 @@ msgstr "Bewegen"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
-msgstr "Vergrößern"
+msgstr "Vergrössern"
 
 #: plug-ins/common/iwarp.c:1036
 msgid "Swirl CCW"
@@ -5457,9 +5457,7 @@ msgstr "Seitenverhältnis beibehalten"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
-"Skaliert das Bild auf die gewählte Papiergröße ohne das Seitenverhältnis zu "
-"ändern."
+msgstr "Skaliert das Bild auf die gewählte Papiergrösse ohne das Seitenverhältnis zu ändern."
 
 #. Unit
 #: plug-ins/common/ps.c:2891
@@ -6329,7 +6327,7 @@ msgstr "Kacheln"
 #. parameter settings
 #: plug-ins/common/tile.c:417
 msgid "Tile to New Size"
-msgstr "Auf neue Größe kacheln"
+msgstr "Auf neue Grösse kacheln"
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
@@ -6780,7 +6778,7 @@ msgstr "Gradienten-Map Auswahl-Menü"
 
 #: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
-msgstr "Vektorvergrößerung:"
+msgstr "Vektorvergrösserung:"
 
 #: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
@@ -6902,7 +6900,7 @@ msgstr "Berchne Wind..."
 
 #: plug-ins/common/wind.c:962
 msgid "Wind Strength must be greater than 0."
-msgstr "Windstärke muß größer als 0 sein."
+msgstr "Windstärke muß grösser als 0 sein."
 
 #: plug-ins/common/wind.c:1007 plug-ins/common/wind.c:1074
 msgid "Wind"
@@ -8246,7 +8244,7 @@ msgstr "<Image>/Video/Frames konvertieren..."
 
 #: plug-ins/gap/gap_main.c:709
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Video/Frame-Größe verändern..."
+msgstr "<Image>/Video/Frame-Grösse verändern..."
 
 #: plug-ins/gap/gap_main.c:721
 msgid "<Image>/Video/Frames Crop..."
@@ -8763,7 +8761,7 @@ msgstr "Vorschau skalieren"
 
 #: plug-ins/gap/gap_mov_dialog.c:842
 msgid "Scale down size of the generated animated preview (in %)"
-msgstr "Größe der generierten animierten Vorschau skalieren (in %)"
+msgstr "Grösse der generierten animierten Vorschau skalieren (in %)"
 
 #: plug-ins/gap/gap_mov_dialog.c:850
 msgid "Framerate"
@@ -9126,7 +9124,7 @@ msgid ""
 msgstr ""
 "\n"
 "Fehler: Nummer des Keyframes %d an Punkt [%d] ist\n"
-"größer oder gleich als der des letzten Frames"
+"grösser oder gleich als der des letzten Frames"
 
 #: plug-ins/gap/gap_mov_exec.c:1384
 #, c-format
@@ -9137,7 +9135,7 @@ msgid ""
 msgstr ""
 "\n"
 "Fehler: Nummer des Keyframes %d an Punkt [%d] ist\n"
-"größer oder gleich der des letzten Frames"
+"grösser oder gleich der des letzten Frames"
 
 #: plug-ins/gap/gap_mov_exec.c:1394
 #, c-format
@@ -10261,7 +10259,7 @@ msgstr "GDynText: Text laden"
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
 msgstr ""
-"Warnung Datei \"%s\" ist größer als die maximale erlaubte Länge (%d).\n"
+"Warnung Datei \"%s\" ist grösser als die maximale erlaubte Länge (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
 #, c-format
@@ -10548,7 +10546,7 @@ msgstr "Auf Bild skalieren"
 
 #: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
-msgstr "Skaliere die Zeichnung auf Bildgröße"
+msgstr "Skaliere die Zeichnung auf Bildgrösse"
 
 #: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
@@ -11740,7 +11738,7 @@ msgstr "Max. Grösse:"
 
 #: plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
-msgstr "Die Anzahl der benutzten Pinselgrößen"
+msgstr "Die Anzahl der benutzten Pinselgrössen"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
@@ -12158,7 +12156,7 @@ msgstr "Basis-URL:"
 #: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr "Bildgröße: %d x %d"
+msgstr "Bildgrösse: %d x %d"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
@@ -12412,7 +12410,7 @@ msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
-"Bildgröße hat sich geändert.\n"
+"Bildgrösse hat sich geändert.\n"
 "Bereich anpassen?"
 
 #: plug-ins/imagemap/imap_main.c:938
@@ -12905,6 +12903,8 @@ msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
+"Regelt die Helligkeit des Ausdruckes.\n"
+"0 bedeutet Schwarz, 2 steht für Weiss"
 
 #: plug-ins/print/gimp_color_window.c:267
 msgid "Set the contrast of the print"
@@ -12930,7 +12930,6 @@ msgstr ""
 "Die Sättigung (Farb-Balance) des Ausdrucks einstellen.\n"
 "Setzen Sie die Sättigung auf Null für einen Schwarz-Weiss-Ausdruck."
 
-# (Pinsel-)~ ?
 #: plug-ins/print/gimp_color_window.c:356
 msgid "Density:"
 msgstr "Dichte:"
@@ -12940,14 +12939,14 @@ msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
-msgstr ""
+msgstr "Die Dichte (Menge an Tinte) des Ausdrucks. Reduzieren Sie die Dichte when die Tinte verschmiert; erhöhen Sie sie wenn schwarze Regionen nicht deckend sind."
 
 #: plug-ins/print/gimp_color_window.c:386
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
-msgstr ""
+msgstr "Der Gamma-Wert des Ausdrucks. Grosse Werte erzeugen einen helleren Ausdruck, kleine Werte einen dunkleren. Anders als bei der Helligkeitseinstellung bleiben Schwarz und Weiß davon unberührt."
 
 #: plug-ins/print/gimp_color_window.c:402
 msgid "Dither Algorithm:"
@@ -12962,6 +12961,11 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
+"Der Raster-Algorithmus für den Ausdruck.\n"
+"Adaptive Hybrid ergibt meist die beste Qualität.\n"
+"Ordered ist schneller und für Fotos vergleichbar gut geignet.\n"
+"Schnell und Sehr Schnell sind wesentlich schneller und eignen sich für Text und Linien.\n"
+"Hybrid Floyd-Steinberg erzeugt meist schlechte Ausdrucke."
 
 #.
 #. * Create the main dialog
@@ -12969,7 +12973,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:322
 #, c-format
 msgid "%s -- Print v%s"
-msgstr "%s -- Print v%s"
+msgstr "%s -- Druck v%s"
 
 #: plug-ins/print/gimp_main_window.c:333
 msgid ""
@@ -13004,6 +13008,10 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"Das Bild auf dem Papier positionieren.\n"
+"Klicken und Ziehen mit der ersten Maustaste verschiebt das Bild.\n"
+"Die anderen Maustasten erlauben eine genauere Positionierung.\n"
+"Wird dabei die Shift-Taste gedrückt, ist die Bewegung auf eine Richtung (horizontal oder vertikal) beschränkt."
 
 #: plug-ins/print/gimp_main_window.c:449
 msgid "Portrait"
@@ -13025,7 +13033,7 @@ msgstr "Landschaft kopfüber"
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
-msgstr ""
+msgstr "Die Orientierung des Bildes festlegen"
 
 #: plug-ins/print/gimp_main_window.c:482
 msgid "Distance from the left of the paper to the image"
@@ -13085,7 +13093,7 @@ msgstr "Zentriert das Bild horizontal auf dem Papier"
 
 #: plug-ins/print/gimp_main_window.c:615
 msgid "Setup Printer"
-msgstr "Drucker-Setup:"
+msgstr "Drucker Einstellungen:"
 
 # TODO ??
 #.
@@ -13097,7 +13105,7 @@ msgstr "Drucker-Modell:"
 
 #: plug-ins/print/gimp_main_window.c:655
 msgid "Select your printer model"
-msgstr ""
+msgstr "Wählen Sie Ihren Drucker aus"
 
 #.
 #. * PPD file.
@@ -13108,7 +13116,7 @@ msgstr "PPD-Datei:"
 
 #: plug-ins/print/gimp_main_window.c:709
 msgid "Enter the correct PPD filename for your printer"
-msgstr ""
+msgstr "Geben Sie den Namen der PPD-Datei für Ihren Drucker an"
 
 #: plug-ins/print/gimp_main_window.c:712
 msgid "Browse"
@@ -13116,7 +13124,7 @@ msgstr "Durchsuchen"
 
 #: plug-ins/print/gimp_main_window.c:718
 msgid "Choose the correct PPD filename for your printer"
-msgstr ""
+msgstr "Wählen Sie die PPD-Datei für Ihren Drucker aus"
 
 #.
 #. * Print command.
@@ -13130,7 +13138,7 @@ msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
-msgstr ""
+msgstr "Geben Sie das Kommando an, um auf Ihren Drucker zu drucken. Bitte entfernen sie nicht die Optionen -l oder -oraw."
 
 #.
 #. * Output file selection dialog.
@@ -13156,15 +13164,15 @@ msgstr "Drucker-Name:"
 
 #: plug-ins/print/gimp_main_window.c:809
 msgid "Enter the name you wish to give this logical printer"
-msgstr ""
+msgstr "Geben Sie den Namen an, den Sie diesem Drucker zuordnen wollen"
 
 #: plug-ins/print/gimp_main_window.c:821
 msgid "About Gimp-Print "
-msgstr ""
+msgstr "Über Gimp-Print "
 
 #: plug-ins/print/gimp_main_window.c:831
 msgid "Gimp-Print Version "
-msgstr ""
+msgstr "Gimp-Print Version"
 
 #: plug-ins/print/gimp_main_window.c:831
 msgid ""
@@ -13198,7 +13206,7 @@ msgstr "Drucker Einstellungen"
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
-msgstr ""
+msgstr "Geben Sie den Namen (nicht den Typen oder die Modellbezeichnung) des Druckers an, den Sie benutzen wollen"
 
 #.
 #. * Setup printer button
@@ -13211,7 +13219,7 @@ msgstr "Drucker Einstellungen..."
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
-msgstr ""
+msgstr "Wählen Sie das Modell, die PPD-Datei und das Druck-Kommando des Druckers"
 
 #.
 #. * New printer button
@@ -13224,11 +13232,11 @@ msgstr "Neuer Drucker..."
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
-msgstr ""
+msgstr "Einen neuen logischen Drucker erstellen. Dies kann nützlich sein, um bestimmte Einstellungen für spätere Nutzung zu speichern."
 
 #: plug-ins/print/gimp_main_window.c:952
 msgid "Size of paper that you wish to print to"
-msgstr ""
+msgstr "Die Grösse des Papiers auf das Sie drucken möchten"
 
 #: plug-ins/print/gimp_main_window.c:955
 msgid "Media Size:"
@@ -13240,15 +13248,15 @@ msgstr "Abmessungen:"
 
 #: plug-ins/print/gimp_main_window.c:978
 msgid "Width of the paper that you wish to print to"
-msgstr ""
+msgstr "Breite des Papiers, auf das Sie drucken möchten"
 
 #: plug-ins/print/gimp_main_window.c:995
 msgid "Height of the paper that you wish to print to"
-msgstr ""
+msgstr "Höhe des Papiers, auf das Sie drucken möchten"
 
 #: plug-ins/print/gimp_main_window.c:1011
 msgid "Type of media you're printing to"
-msgstr ""
+msgstr "Die Art des Mediums, auf das Sie drucken möchten"
 
 #: plug-ins/print/gimp_main_window.c:1014
 msgid "Media Type:"
@@ -13256,7 +13264,7 @@ msgstr "Medientyp:"
 
 #: plug-ins/print/gimp_main_window.c:1027
 msgid "Source (input slot) of media you're printing to"
-msgstr ""
+msgstr "Das Eingabefach des Mediums, auf das Sie drucken möchten"
 
 #: plug-ins/print/gimp_main_window.c:1030
 msgid "Media Source:"
@@ -13264,7 +13272,7 @@ msgstr "Medienquelle:"
 
 #: plug-ins/print/gimp_main_window.c:1043
 msgid "Type of ink in the printer"
-msgstr ""
+msgstr "Die Art der Drucker-Tinte"
 
 #: plug-ins/print/gimp_main_window.c:1046
 msgid "Ink Type:"
@@ -13272,7 +13280,7 @@ msgstr "Tintensorte:"
 
 #: plug-ins/print/gimp_main_window.c:1059
 msgid "Resolution and quality of the print"
-msgstr ""
+msgstr "Auflösung und Qualität des Ausdrucks"
 
 #: plug-ins/print/gimp_main_window.c:1098
 msgid "Scaling:"
@@ -13286,7 +13294,7 @@ msgstr "Die Skalierung (Grösse) des Bildes einstellen"
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr ""
+msgstr "Wählen Sie, ob die Skalierung in Prozent der verfügbaren Papiergrösse oder in Punkten pro Inch festgelegt werden soll"
 
 #: plug-ins/print/gimp_main_window.c:1142
 msgid "Percent"
@@ -13294,7 +13302,7 @@ msgstr "Prozent"
 
 #: plug-ins/print/gimp_main_window.c:1149
 msgid "Scale the print to the size of the page"
-msgstr "Das Bild auf Papiergrösse skalieren"
+msgstr "Den Ausdruck relativ zur Papiergrösse skalieren"
 
 #: plug-ins/print/gimp_main_window.c:1155
 msgid "PPI"
@@ -13302,7 +13310,7 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1161
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "Den Ausdruck auf Punkte pro Inch skalieren"
 
 #: plug-ins/print/gimp_main_window.c:1187
 msgid "Set the width of the print"
@@ -13318,11 +13326,11 @@ msgstr "Einheiten:"
 
 #: plug-ins/print/gimp_main_window.c:1225
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "Die Basis-Einheit für Grössenangaben auswählen"
 
 #: plug-ins/print/gimp_main_window.c:1235
 msgid "Set the base unit of measurement to inches"
-msgstr ""
+msgstr "Die Basis-Einheit auf Inch einstellen"
 
 #: plug-ins/print/gimp_main_window.c:1241
 msgid "cm"
@@ -13330,7 +13338,7 @@ msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:1247
 msgid "Set the base unit of measurement to centimetres"
-msgstr ""
+msgstr "Die Basis-Einheit auf Zentimeter einstellen"
 
 #.
 #. * The "image size" button
@@ -13357,7 +13365,7 @@ msgstr "Bildtypen:"
 
 #: plug-ins/print/gimp_main_window.c:1305
 msgid "Optimize the output for the type of image being printed"
-msgstr ""
+msgstr "Den Ausdruck für den Bildtyp optimieren"
 
 #: plug-ins/print/gimp_main_window.c:1309
 msgid "Line Art"
@@ -13365,7 +13373,7 @@ msgstr "Linien"
 
 #: plug-ins/print/gimp_main_window.c:1316
 msgid "Fastest and brightest color for text and line art"
-msgstr ""
+msgstr "Schnell mit leuchtenden Farben für Text und Linien"
 
 #: plug-ins/print/gimp_main_window.c:1323
 msgid "Solid Colors"
@@ -13373,17 +13381,17 @@ msgstr "Farbflächen"
 
 #: plug-ins/print/gimp_main_window.c:1330
 msgid "Best for images dominated by regions of solid color"
-msgstr ""
+msgstr "Für Bilder, die von großen Flächen einheitlicher Farbe dominiert sind"
 
 #: plug-ins/print/gimp_main_window.c:1338
 msgid "Photograph"
-msgstr "Foto"
+msgstr "Fotografie"
 
 #: plug-ins/print/gimp_main_window.c:1346
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
-msgstr ""
+msgstr "Langsam aber die beste Qualität für Fotos und Bilder mit Farbverläufen"
 
 #: plug-ins/print/gimp_main_window.c:1372
 msgid "Output Type:"
@@ -13391,7 +13399,7 @@ msgstr "Ausgabetyp:"
 
 #: plug-ins/print/gimp_main_window.c:1377
 msgid "Select the desired output type"
-msgstr ""
+msgstr "Wählen sie den gewünschten Ausgabetyp"
 
 #: plug-ins/print/gimp_main_window.c:1386
 msgid "Color output"
@@ -13399,7 +13407,7 @@ msgstr "Farbe"
 
 #: plug-ins/print/gimp_main_window.c:1398
 msgid "Print in shades of gray using black ink"
-msgstr ""
+msgstr "Mit schwarzer Tinte In Graustufen drucken"
 
 #: plug-ins/print/gimp_main_window.c:1405
 msgid "Black and White"
@@ -13407,19 +13415,19 @@ msgstr "Schwarz-Weiss"
 
 #: plug-ins/print/gimp_main_window.c:1412
 msgid "Print in black and white (no color, and no shades of gray)"
-msgstr ""
+msgstr "Nur Schwarz und Weiss (keine Farben, keine Graustufen) drucken"
 
 #.
 #. *  Color adjust button
 #.
 #: plug-ins/print/gimp_main_window.c:1423
 msgid "Adjust Output..."
-msgstr ""
+msgstr "Ausgabe einstellen..."
 
 #: plug-ins/print/gimp_main_window.c:1430
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr ""
+msgstr "Farb-Balance, Helligkeit, Kontrast, Sättigung und Raster-Algorithmus einstellen"
 
 #: plug-ins/print/print.c:167
 msgid "<Image>/File/Print..."
@@ -13699,36 +13707,3 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
-
-#~ msgid "Center Image"
-#~ msgstr "Bild zentrieren"
-
-#~ msgid "Scaling"
-#~ msgstr "Skalierung"
-
-#~ msgid "Set Image Scale"
-#~ msgstr "Bildauflösung nutzen"
-
-#~ msgid "Monochrome"
-#~ msgstr "Einfarbig"
-
-#~ msgid "Adjust Color"
-#~ msgstr "Farbe einstellen"
-
-#~ msgid "B&W"
-#~ msgstr "S/W"
-
-#~ msgid "Setup"
-#~ msgstr "Einstellungen"
-
-#~ msgid "<Image>/File/Print (Gtk)..."
-#~ msgstr "<Image>/Datei/Drucken (GTK)..."
-
-#~ msgid "<Image>/File/Print (Gimp)..."
-#~ msgstr "<Image>/Datei/Drucken (Gimp)..."
-
-#~ msgid "Sinusodial"
-#~ msgstr "Sinusförmig"
-
-#~ msgid "Force baseline JPEG (Readable by all decoders)"
-#~ msgstr "Erzwinge \"Baseline JPEG\" (alle Decoder können das lesen)"
