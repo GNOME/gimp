@@ -1,3 +1,28 @@
+Thu Feb 10 17:40:13 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* app/channels_dialog.c: Static variables in fuctions keep
+	their last value even after leaving a function. Thus the
+	button_down value toggled when the function was interrupted
+	by a dnd event. Using a nonstatic button_down fixes bug #2518.
+
+Thu Feb 10 12:25:10 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* app/gimpimage.c: Use the already available function
+	for changing the active layer and do not set it manually.
+	This function will also redraw the borders correctly 
+	which the old code didn't -> removed. Simplifies code
+	and fixes bug #2513.
+
+Thu Feb 7 12:20:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+        * plug-ins/common/randomize.c: Minor i18n fixes.
+
 Sat Feb 12 20:33:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gfli/gfli.c: Made FLI saving actually work, it was 
