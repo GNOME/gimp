@@ -320,6 +320,11 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
       fuzzy_sel->segs     = NULL;
       fuzzy_sel->num_segs = 0;
     }
+
+  /*  Restore the original threshold  */
+  g_object_set (options,
+                "threshold", fuzzy_sel->first_threshold,
+                NULL);
 }
 
 static void
@@ -355,7 +360,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
   diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2.0;
 
   g_object_set (options,
-                "threshold", fuzzy_sel->first_threshold + diff,
+                "threshold", CLAMP (fuzzy_sel->first_threshold + diff, 0, 255),
                 NULL);
 
   /*  calculate the new fuzzy boundary  */

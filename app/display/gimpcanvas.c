@@ -244,8 +244,10 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       /*  fallthrough  */
 
     case GIMP_CANVAS_STYLE_XOR:
-      mask |= GDK_GC_FUNCTION;
-      values.function = GDK_INVERT;
+      mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
+      values.function   = GDK_INVERT;
+      values.cap_style  = GDK_CAP_NOT_LAST;
+      values.join_style = GDK_JOIN_MITER;
       break;
 
     case GIMP_CANVAS_STYLE_SELECTION_IN:

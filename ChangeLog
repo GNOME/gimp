@@ -1,3 +1,17 @@
+2003-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.c (gimp_canvas_gc_new): restore the
+	cap_style and join_style properties for the XOR GdkGC to the
+	values GimpDrawTool's GC used to have. Fixes the result of
+	gdk_draw_segments().
+
+	* app/tools/gimpfuzzyselecttool.c (gimp_fuzzy_select_tool_motion):
+	CLAMP the threshold to its possible values when setting it in the
+	selection options.
+
+	(gimp_fuzzy_select_tool_button_release): restore the original
+	threshold after selecting.
+
 2003-12-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore): free
