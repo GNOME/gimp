@@ -1,3 +1,7 @@
+2004-10-08  Nikos Charonitakis  <charosn@her.forthnet.gr>
+
+	* el.po: Updated Greek translation and fix bug [Bug 154234] - Broken GIMP translation (Greek)
+
 2004-10-05  David Lodge <dave@cirt.net>
                                                                                 
         * en_GB.po: Updated British English translation.
