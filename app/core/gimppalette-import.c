@@ -78,7 +78,7 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
   for (loop = 0, cur_x = 0; loop < n_colors; loop++, cur_x += dx)
     {
       gimp_gradient_get_color_at (gradient, cur_x, reverse, &color);
-      gimp_palette_add_entry (palette, NULL, &color);
+      gimp_palette_add_entry (palette, -1, NULL, &color);
     }
 
   return palette;
@@ -226,7 +226,7 @@ gimp_palette_import_create_image_palette (gpointer data,
      (guchar) color_tab->b + (color_tab->b_adj / color_tab->count),
      255);
 
-  gimp_palette_add_entry (palette, lab, &color);
+  gimp_palette_add_entry (palette, -1, lab, &color);
 
   g_free (lab);
 }
@@ -364,7 +364,7 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
 			   gimage->cmap[count * 3 + 2],
 			   255);
 
-      gimp_palette_add_entry (palette, NULL, &color);
+      gimp_palette_add_entry (palette, -1, NULL, &color);
     }
 
   return palette;
@@ -464,7 +464,7 @@ gimp_palette_import_from_file (const gchar  *filename,
                                color_bytes[1],
                                color_bytes[2],
                                255);
-          gimp_palette_add_entry (palette, NULL, &color);
+          gimp_palette_add_entry (palette, -1, NULL, &color);
         }
       break;
 
@@ -480,7 +480,7 @@ gimp_palette_import_from_file (const gchar  *filename,
                                color_bytes[1],
                                color_bytes[2],
                                255);
-          gimp_palette_add_entry (palette, NULL, &color);
+          gimp_palette_add_entry (palette, -1, NULL, &color);
         }
       break;
 

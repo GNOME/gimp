@@ -1,5 +1,19 @@
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppalette.[ch]: removed the just added
+	gimp_palette_insert_entry() and added a "gint position" parameter
+	to gimp_palette_add_entry() instead (no need to have two almost
+	identical functions).
+
+	* app/actions/palette-editor-commands.c
+	* app/core/gimppalette-import.c
+	* app/widgets/gimppaletteeditor.c
+	* tools/pdbgen/pdb/palette.pdb: changed accordingly.
+
+	* app/pdb/palette_cmds.c: regenerated.
+
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfgbgeditor.[ch]: use the coordinates passed in
 	the color drop callback instead of remembering them in the
 	drag_motion handler.

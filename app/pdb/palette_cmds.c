@@ -517,7 +517,7 @@ palette_add_entry_invoker (Gimp         *gimp,
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
-        entry = gimp_palette_add_entry (palette, entry_name, &color);
+        entry = gimp_palette_add_entry (palette, -1, entry_name, &color);
       else
         success = FALSE;
     }

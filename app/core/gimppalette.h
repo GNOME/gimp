@@ -72,9 +72,6 @@ GList            * gimp_palette_load           (const gchar      *filename,
                                                 GError          **error);
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
-                                                const gchar      *name,
-                                                const GimpRGB    *color);
-GimpPaletteEntry * gimp_palette_insert_entry   (GimpPalette      *palette,
                                                 gint              position,
                                                 const gchar      *name,
                                                 const GimpRGB    *color);

@@ -502,7 +502,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
       switch (pick_state)
         {
         case GIMP_COLOR_PICK_STATE_NEW:
-          editor->color = gimp_palette_add_entry (GIMP_PALETTE (data),
+          editor->color = gimp_palette_add_entry (GIMP_PALETTE (data), -1,
                                                   NULL, color);
           break;
 
@@ -1088,10 +1088,9 @@ palette_editor_drop_color (GtkWidget     *widget,
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
-      editor->color =
-	gimp_palette_add_entry (GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data),
-                                NULL,
-				(GimpRGB *) color);
+      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+
+      editor->color = gimp_palette_add_entry (palette, -1, NULL, color);
     }
 }
 
@@ -1103,40 +1102,25 @@ palette_editor_color_area_drop_color (GtkWidget     *widget,
                                       gpointer       data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
-  gint               entry_width;
-  gint               entry_height;
-  gint               row, col;
-  gint               pos;
-
-  /* calc drop pos */
-  entry_width  = editor->col_width + SPACING;
-  entry_height = (ENTRY_HEIGHT * editor->zoom_factor) +  SPACING;
-  col = (x - 1) / entry_width;
-  row = (y - 1) / entry_height;
-  pos = row * editor->columns + col;
 
   if (GIMP_DATA_EDITOR (editor)->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      gint         entry_width;
+      gint         entry_height;
+      gint         row, col;
+      gint         pos;
 
-      /* on an existing entry? */
-      if (pos >= 0 && pos < palette->n_colors)
-        {
-          /* yep - insert it */
-          editor->color = gimp_palette_insert_entry (palette,
-                                                     pos,
-                                                     NULL,
-                                                     color);
-        }
-      else
-        {
-          /* nope - add it on the end */
-          editor->color = gimp_palette_add_entry (palette,
-                                                  NULL,
-                                                  color);
-        }
+      /* calc drop pos */
+      entry_width  = editor->col_width + SPACING;
+      entry_height = (ENTRY_HEIGHT * editor->zoom_factor) + SPACING;
+      col          = (x - 1) / entry_width;
+      row          = (y - 1) / entry_height;
+      pos          = row * editor->columns + col;
+
+      /* adding at a negative or non-existing pos will automatically append */
+      editor->color = gimp_palette_add_entry (palette, pos, NULL, color);
     }
-
 }
 
 static void

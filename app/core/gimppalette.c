@@ -611,16 +611,17 @@ gimp_palette_duplicate (GimpData *data,
     {
       GimpPaletteEntry *entry = list->data;
 
-      gimp_palette_add_entry (new, entry->name, &entry->color);
+      gimp_palette_add_entry (new, -1, entry->name, &entry->color);
     }
 
   return GIMP_DATA (new);
 }
 
 GimpPaletteEntry *
-gimp_palette_add_entry (GimpPalette   *palette,
-                        const gchar   *name,
-                        const GimpRGB *color)
+gimp_palette_add_entry (GimpPalette      *palette,
+                        gint              position,
+                        const gchar      *name,
+                        const GimpRGB    *color)
 {
   GimpPaletteEntry *entry;
 
@@ -631,49 +632,30 @@ gimp_palette_add_entry (GimpPalette   *palette,
 
   entry->color    = *color;
   entry->name     = g_strdup (name ? name : _("Untitled"));
-  entry->position = palette->n_colors;
-
-  palette->colors    = g_list_append (palette->colors, entry);
-  palette->n_colors += 1;
-
-  /*  will make the palette dirty too  */
-  gimp_object_name_changed (GIMP_OBJECT (palette));
-
-  return entry;
-}
-
-GimpPaletteEntry *
-gimp_palette_insert_entry (GimpPalette      *palette,
-                           gint              position,
-                           const gchar      *name,
-                           const GimpRGB    *color)
-{
-  GimpPaletteEntry *entry;
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
 
   if (position < 0 || position >= palette->n_colors)
-    return gimp_palette_add_entry (palette, name, color);
-
-  entry = g_new0 (GimpPaletteEntry, 1);
-
-  entry->color    = *color;
-  entry->name     = g_strdup (name ? name : _("Untitled"));
-  entry->position = position;
-
-  palette->colors    = g_list_insert (palette->colors, entry, position);
-  palette->n_colors += 1;
-
-  /* renumber the displaced entries */
-  for (list = g_list_nth (palette->colors, position + 1);
-       list;
-       list = g_list_next (list))
     {
-      entry = (GimpPaletteEntry *) list->data;
-      entry->position += 1;
+      entry->position = palette->n_colors;
+      palette->colors = g_list_append (palette->colors, entry);
     }
+  else
+    {
+      GList *list;
+
+      entry->position = position;
+      palette->colors = g_list_insert (palette->colors, entry, position);
+
+      /* renumber the displaced entries */
+      for (list = g_list_nth (palette->colors, position + 1);
+           list;
+           list = g_list_next (list))
+        {
+          entry = (GimpPaletteEntry *) list->data;
+          entry->position += 1;
+        }
+    }
+
+  palette->n_colors += 1;
 
   /*  will make the palette dirty too  */
   gimp_object_name_changed (GIMP_OBJECT (palette));

@@ -114,7 +114,7 @@ palette_editor_new_color_cmd_callback (GtkAction *action,
       else
         gimp_context_get_foreground (context, &color);
 
-      editor->color = gimp_palette_add_entry (palette, NULL, &color);
+      editor->color = gimp_palette_add_entry (palette, -1, NULL, &color);
     }
 }
 
