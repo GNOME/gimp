@@ -75,7 +75,6 @@
 #include "color-notebook.h"
 #include "gradient-editor.h"
 
-#include "app_procs.h"
 #include "errors.h"
 #include "gimprc.h"
 
@@ -517,7 +516,7 @@ static void      seg_get_closest_handle           (GimpGradient         *grad,
 /***** Public gradient editor functions *****/
 
 GradientEditor *
-gradient_editor_new (void)
+gradient_editor_new (Gimp *gimp)
 {
   GradientEditor *gradient_editor;
   GtkWidget      *main_vbox;
@@ -530,7 +529,7 @@ gradient_editor_new (void)
 
   gradient_editor = g_new (GradientEditor, 1);
 
-  gradient_editor->context = gimp_create_context (the_gimp, NULL, NULL);
+  gradient_editor->context = gimp_create_context (gimp, NULL, NULL);
 
   gtk_signal_connect (GTK_OBJECT (gradient_editor->context), "gradient_changed",
                       GTK_SIGNAL_FUNC (gradient_editor_gradient_changed),
@@ -768,10 +767,10 @@ gradient_editor_new (void)
   ed_initialize_saved_colors (gradient_editor);
   cpopup_create_main_menu (gradient_editor);
 
-  if (gimp_container_num_children (the_gimp->gradient_factory->container))
+  if (gimp_container_num_children (gimp->gradient_factory->container))
     {
       gimp_context_set_gradient (gradient_editor->context,
-				 GIMP_GRADIENT (gimp_container_get_child_by_index (the_gimp->gradient_factory->container, 0)));
+				 GIMP_GRADIENT (gimp_container_get_child_by_index (gimp->gradient_factory->container, 0)));
     }
   else
     {
@@ -779,7 +778,7 @@ gradient_editor_new (void)
 
       gradient = GIMP_GRADIENT (gimp_gradient_new (_("Default")));
 
-      gimp_container_add (the_gimp->gradient_factory->container,
+      gimp_container_add (gimp->gradient_factory->container,
 			  GIMP_OBJECT (gradient));
     }
 

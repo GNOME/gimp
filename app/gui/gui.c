@@ -86,6 +86,8 @@ static void   gui_display_changed                 (GimpContext *context,
 
 static void   gui_image_destroy                   (GimpImage   *gimage,
 						   gpointer     data);
+static void   gui_image_mode_changed              (GimpImage   *gimage,
+						   gpointer     data);
 static void   gui_image_colormap_changed          (GimpImage   *gimage,
 						   gint         ncol,
 						   gpointer     data);
@@ -111,6 +113,7 @@ extern GSList *display_list;  /*  from gdisplay.c  */
 /*  private variables  */
 
 static GQuark image_destroy_handler_id          = 0;
+static GQuark image_mode_changed_handler_id     = 0;
 static GQuark image_colormap_changed_handler_id = 0;
 static GQuark image_name_changed_handler_id     = 0;
 static GQuark image_size_changed_handler_id     = 0;
@@ -133,6 +136,11 @@ gui_init (Gimp *gimp)
   image_destroy_handler_id =
     gimp_container_add_handler (gimp->images, "destroy",
 				GTK_SIGNAL_FUNC (gui_image_destroy),
+				gimp);
+
+  image_mode_changed_handler_id =
+    gimp_container_add_handler (gimp->images, "mode_changed",
+				GTK_SIGNAL_FUNC (gui_image_mode_changed),
 				gimp);
 
   image_colormap_changed_handler_id =
@@ -273,6 +281,7 @@ gui_exit (Gimp *gimp)
   gimp_help_free ();
 
   gimp_container_remove_handler (gimp->images, image_destroy_handler_id);
+  gimp_container_remove_handler (gimp->images, image_mode_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_colormap_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_name_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_size_changed_handler_id);
@@ -280,6 +289,7 @@ gui_exit (Gimp *gimp)
   gimp_container_remove_handler (gimp->images, image_update_handler_id);
 
   image_destroy_handler_id          = 0;
+  image_mode_changed_handler_id     = 0;
   image_colormap_changed_handler_id = 0;
   image_name_changed_handler_id     = 0;
   image_size_changed_handler_id     = 0;
@@ -454,6 +464,20 @@ gui_image_destroy (GimpImage *gimage,
     {
       dialog_show_toolbox ();
     }
+}
+
+static void
+gui_image_mode_changed (GimpImage *gimage,
+			gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gimp_image_invalidate_layer_previews (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+  gdisplays_update_title (gimage);
+  gdisplays_update_full (gimage);
 }
 
 static void

@@ -26,7 +26,7 @@
 typedef struct _GradientEditor GradientEditor;
 
 
-GradientEditor * gradient_editor_new (void);
+GradientEditor * gradient_editor_new (Gimp           *gimp);
 
 void   gradient_editor_set_gradient  (GradientEditor *gradient_editor,
 				      GimpGradient   *gradient);

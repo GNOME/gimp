@@ -46,8 +46,6 @@ GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
 					    GimpContext       *context);
-GtkWidget * dialogs_indexed_palette_get    (GimpDialogFactory *factory,
-					    GimpContext       *context);
 GtkWidget * dialogs_undo_history_get       (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory,
@@ -55,6 +53,13 @@ GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory,
 GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
+					    GimpContext       *context);
+
+GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
 					    GimpContext       *context);
 
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
@@ -95,6 +100,8 @@ GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
 GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
 					    GimpContext       *context);
 
 void        dialogs_edit_brush_func        (GimpData          *data);

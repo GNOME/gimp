@@ -49,6 +49,22 @@ dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
 }
 
 void
+dialogs_create_dockable_cmd_callback (GtkWidget *widget,
+				      gpointer   data,
+				      guint      action)
+{
+  if (action)
+    {
+      gchar *identifier;
+
+      identifier = g_quark_to_string ((GQuark) action);
+
+      if (identifier)
+	gimp_dialog_factory_dialog_raise (global_dock_factory, identifier);
+    }
+}
+
+void
 dialogs_add_tab_cmd_callback (GtkWidget *widget,
 			      gpointer   data,
 			      guint      action)

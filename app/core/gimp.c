@@ -412,7 +412,7 @@ gimp_set_busy (Gimp *gimp)
   gimp->busy = TRUE;
 
   if (gimp->gui_set_busy_func)
-    gimp->gui_set_busy_func (the_gimp);
+    gimp->gui_set_busy_func (gimp);
 }
 
 static gboolean
@@ -452,7 +452,7 @@ gimp_unset_busy (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->gui_unset_busy_func)
-    gimp->gui_unset_busy_func (the_gimp);
+    gimp->gui_unset_busy_func (gimp);
 
   /* FIXME: gimp_busy HACK */
   gimp->busy = FALSE;

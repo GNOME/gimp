@@ -43,8 +43,6 @@
 #include "palette-editor.h"
 #include "palette-select.h"
 
-#include "app_procs.h"
-#include "dialog_handler.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -70,6 +68,8 @@
 struct _PaletteEditor
 {
   GtkWidget        *shell;
+
+  GtkWidget        *name;
 
   GtkWidget        *color_area;
   GtkWidget        *scrolled_window;
@@ -100,6 +100,12 @@ struct _PaletteEditor
 
 
 /*  local function prototypes  */
+static void   palette_editor_name_activate         (GtkWidget      *widget,
+						    PaletteEditor  *palette_editor);
+static void   palette_editor_name_focus_out        (GtkWidget      *widget,
+						    GdkEvent       *event,
+						    PaletteEditor  *palette_editor);
+
 static void   palette_editor_create_popup_menu     (PaletteEditor  *palette_editor);
 static void   palette_editor_new_entry_callback    (GtkWidget      *widget,
 						    gpointer        data);
@@ -142,6 +148,9 @@ static void   palette_editor_drag_color         (GtkWidget      *widget,
 static void   palette_editor_drop_color         (GtkWidget      *widget,
 						 const GimpRGB  *color,
 						 gpointer        data);
+static void   palette_editor_drop_palette       (GtkWidget      *widget,
+						 GimpViewable   *viewable,
+						 gpointer        data);
 static void   palette_editor_invalidate_preview (GimpPalette    *palette,
 						 PaletteEditor  *palette_editor);
 
@@ -149,7 +158,8 @@ static void   palette_editor_invalidate_preview (GimpPalette    *palette,
 /*  dnd stuff  */
 static GtkTargetEntry color_palette_target_table[] =
 {
-  GIMP_TARGET_COLOR
+  GIMP_TARGET_COLOR,
+  GIMP_TARGET_PALETTE
 };
 static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
 					sizeof (color_palette_target_table[0]));
@@ -224,7 +234,7 @@ palette_editor_set_palette (PaletteEditor *palette_editor,
 /*  the palette & palette edit dialog constructor  ***************************/
 
 PaletteEditor *
-palette_editor_new (void)
+palette_editor_new (Gimp *gimp)
 {
   PaletteEditor *palette_editor;
   GtkWidget     *main_vbox;
@@ -238,7 +248,7 @@ palette_editor_new (void)
 
   palette_editor = g_new0 (PaletteEditor, 1);
 
-  palette_editor->context = gimp_create_context (the_gimp, NULL, NULL);
+  palette_editor->context = gimp_create_context (gimp, NULL, NULL);
 
   palette_editor->zoom_factor   = 1.0;
   palette_editor->columns       = COLUMNS;
@@ -261,14 +271,28 @@ palette_editor_new (void)
 
   gtk_widget_hide (GTK_DIALOG (palette_editor->shell)->action_area);
 
-  main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
+  main_vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (palette_editor->shell)->vbox),
 		     main_vbox);
   gtk_widget_show (main_vbox);
 
-  palette_editor->scrolled_window =
-    scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+  /* Palette's name */
+  palette_editor->name = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), palette_editor->name,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (palette_editor->name);
+
+  gtk_signal_connect (GTK_OBJECT (palette_editor->name), "activate",
+		      GTK_SIGNAL_FUNC (palette_editor_name_activate),
+		      palette_editor);
+  gtk_signal_connect (GTK_OBJECT (palette_editor->name), "focus_out_event",
+		      GTK_SIGNAL_FUNC (palette_editor_name_focus_out),
+		      palette_editor);
+
+  palette_editor->scrolled_window = scrolledwindow =
+    gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_usize (scrolledwindow, -1, PREVIEW_HEIGHT);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
@@ -309,13 +333,15 @@ palette_editor_new (void)
   gimp_dnd_color_source_set (palette_region, palette_editor_drag_color,
 			     palette_editor);
 
-  gtk_drag_dest_set (alignment,
+  gtk_drag_dest_set (eventbox,
                      GTK_DEST_DEFAULT_HIGHLIGHT |
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP,
                      color_palette_target_table, n_color_palette_targets,
                      GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (alignment, palette_editor_drop_color, palette_editor);
+  gimp_dnd_color_dest_set (eventbox, palette_editor_drop_color, palette_editor);
+  gimp_dnd_viewable_dest_set (eventbox, GIMP_TYPE_PALETTE,
+			      palette_editor_drop_palette, palette_editor);
 
   /*  The color name entry  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -352,7 +378,7 @@ palette_editor_new (void)
 		      palette_editor);
 
   palette_editor->invalidate_preview_handler_id =
-    gimp_container_add_handler (the_gimp->palette_factory->container,
+    gimp_container_add_handler (gimp->palette_factory->container,
 				"invalidate_preview",
 				GTK_SIGNAL_FUNC (palette_editor_invalidate_preview),
 				palette_editor);
@@ -365,6 +391,28 @@ palette_editor_new (void)
 }
 
 /*  private functions  */
+
+static void
+palette_editor_name_activate (GtkWidget     *widget,
+			      PaletteEditor *palette_editor)
+{
+  GimpPalette *palette;
+  gchar       *entry_text;
+
+  palette = gimp_context_get_palette (palette_editor->context);
+
+  entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
+
+  gimp_object_set_name (GIMP_OBJECT (palette), entry_text);
+}
+
+static void
+palette_editor_name_focus_out (GtkWidget     *widget,
+			       GdkEvent      *event,
+			       PaletteEditor *palette_editor)
+{
+  palette_editor_name_activate (widget, palette_editor);
+}
 
 /*  the palette dialog popup menu & callbacks  *******************************/
 
@@ -408,6 +456,7 @@ palette_editor_new_entry_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   PaletteEditor *palette_editor;
+  GimpContext   *user_context;
   GimpRGB        color;
 
   palette_editor = (PaletteEditor *) data;
@@ -415,10 +464,12 @@ palette_editor_new_entry_callback (GtkWidget *widget,
   if (! (palette_editor && gimp_context_get_palette (palette_editor->context)))
     return;
 
+  user_context = gimp_get_user_context (palette_editor->context->gimp);
+
   if (active_color == FOREGROUND)
-    gimp_context_get_foreground (gimp_get_user_context (the_gimp), &color);
+    gimp_context_get_foreground (user_context, &color);
   else if (active_color == BACKGROUND)
-    gimp_context_get_background (gimp_get_user_context (the_gimp), &color);
+    gimp_context_get_background (user_context, &color);
 
   palette_editor->color =
     gimp_palette_add_entry (gimp_context_get_palette (palette_editor->context),
@@ -485,11 +536,14 @@ palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
 					gpointer            data)
 {
   PaletteEditor *palette_editor;
+  GimpContext   *user_context;
   GimpPalette   *palette;
 
   palette_editor = data;
 
   palette = gimp_context_get_palette (palette_editor->context);
+
+  user_context = gimp_get_user_context (palette_editor->context->gimp);
 
   switch (state)
     {
@@ -503,11 +557,9 @@ palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
 
 	  /*  Update either foreground or background colors  */
 	  if (active_color == FOREGROUND)
-	    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
-					 color);
+	    gimp_context_set_foreground (user_context, color);
 	  else if (active_color == BACKGROUND)
-	    gimp_context_set_background (gimp_get_user_context (the_gimp),
-					 color);
+	    gimp_context_set_background (user_context, color);
 
 	  gimp_data_dirty (GIMP_DATA (palette));
 	}
@@ -553,12 +605,15 @@ palette_editor_color_area_events (GtkWidget     *widget,
 				  GdkEvent      *event,
 				  PaletteEditor *palette_editor)
 {
+  GimpContext    *user_context;
   GdkEventButton *bevent;
   GList          *list;
   gint            entry_width;
   gint            entry_height;
   gint            row, col;
   gint            pos;
+
+  user_context = gimp_get_user_context (palette_editor->context->gimp);
 
   switch (event->type)
     {
@@ -600,19 +655,19 @@ palette_editor_color_area_events (GtkWidget     *widget,
 	      if (active_color == FOREGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_background (gimp_get_user_context (the_gimp),
+		    gimp_context_set_background (user_context,
 						 &palette_editor->color->color);
 		  else
-		    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
+		    gimp_context_set_foreground (user_context,
 						 &palette_editor->color->color);
 		}
 	      else if (active_color == BACKGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
+		    gimp_context_set_foreground (user_context,
 						 &palette_editor->color->color);
 		  else
-		    gimp_context_set_background (gimp_get_user_context (the_gimp),
+		    gimp_context_set_background (user_context,
 						 &palette_editor->color->color);
 		}
 
@@ -993,6 +1048,9 @@ palette_editor_palette_changed (GimpContext *context,
   if (! palette)
     return;
 
+  gtk_entry_set_text (GTK_ENTRY (palette_editor->name),
+		      gimp_object_get_name (GIMP_OBJECT (palette)));
+
   if (palette_editor->color_notebook_active)
     {
       color_notebook_hide (palette_editor->color_notebook);
@@ -1148,6 +1206,23 @@ palette_editor_drop_color (GtkWidget     *widget,
 	gimp_palette_add_entry (gimp_context_get_palette (palette_editor->context),
 				NULL,
 				(GimpRGB *) color);
+    }
+}
+
+static void
+palette_editor_drop_palette (GtkWidget    *widget,
+			     GimpViewable *viewable,
+			     gpointer      data)
+{
+  PaletteEditor *palette_editor;
+  GimpPalette   *palette;
+
+  palette_editor = (PaletteEditor *) data;
+  palette        = GIMP_PALETTE (viewable);
+
+  if (palette_editor)
+    {
+      gimp_context_set_palette (palette_editor->context, palette);
     }
 }
 

@@ -20,24 +20,10 @@
 #define __TEST_COMMANDS_H__
 
 
-void test_image_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void test_image_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-
-void test_brush_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void test_pattern_container_list_view_cmd_callback  (GtkWidget *, gpointer);
-void test_gradient_container_list_view_cmd_callback (GtkWidget *, gpointer);
-void test_palette_container_list_view_cmd_callback  (GtkWidget *, gpointer);
-
-void test_brush_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-void test_pattern_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
-void test_gradient_container_grid_view_cmd_callback (GtkWidget *, gpointer);
-void test_palette_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
-
-void test_multi_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void test_multi_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-
-void test_list_dock_cmd_callback                    (GtkWidget *, gpointer);
-void test_grid_dock_cmd_callback                    (GtkWidget *, gpointer);
+void   test_multi_container_list_view_cmd_callback (GtkWidget *widget,
+						    gpointer   data);
+void   test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
+						    gpointer   data);
 
 
 #endif /* __TEST_COMMANDS_H__ */

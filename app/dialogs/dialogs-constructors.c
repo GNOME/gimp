@@ -91,7 +91,7 @@
 
 
 static void dialogs_indexed_palette_selected     (GimpColormapDialog *dialog,
-						  GimpContext        *context);
+						  GimpDockable       *dockable);
 
 static GtkWidget * dialogs_brush_tab_func        (GimpDockable       *dockable,
 						  GimpDockbook       *dockbook,
@@ -117,6 +117,8 @@ static void   dialogs_set_drawable_context_func  (GimpDockable       *dockable,
 						  GimpContext        *context);
 static void   dialogs_set_path_context_func      (GimpDockable       *dockable,
 						  GimpContext        *context);
+static void   dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
+							GimpContext  *context);
 
 static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 const gchar                *name,
@@ -130,6 +132,9 @@ static void dialogs_drawable_view_image_changed (GimpContext          *context,
 static void dialogs_path_view_image_changed     (GimpContext          *context,
 						 GimpImage            *gimage,
 						 GtkWidget            *view);
+static void dialogs_indexed_palette_image_changed (GimpContext        *context,
+						   GimpImage          *gimage,
+						   GimpColormapDialog *ipal);
 
 
 /*  public functions  */
@@ -219,21 +224,6 @@ dialogs_module_browser_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_indexed_palette_get (GimpDialogFactory *factory,
-			     GimpContext       *context)
-{
-  GimpColormapDialog *cmap_dlg;
-
-  cmap_dlg = gimp_colormap_dialog_create (context->gimp->images);
-
-  gtk_signal_connect (GTK_OBJECT (cmap_dlg), "selected",
-		      GTK_SIGNAL_FUNC (dialogs_indexed_palette_selected),
-		      factory->context);
-
-  return GTK_WIDGET (cmap_dlg);
-}
-
-GtkWidget *
 dialogs_undo_history_get (GimpDialogFactory *factory,
 			  GimpContext       *context)
 {
@@ -288,6 +278,29 @@ dialogs_about_get (GimpDialogFactory *factory,
   return about_dialog_create ();
 }
 
+GtkWidget *
+dialogs_brush_editor_get (GimpDialogFactory *factory,
+			  GimpContext       *context)
+{
+  return NULL;
+}
+
+GtkWidget *
+dialogs_gradient_editor_get (GimpDialogFactory *factory,
+			     GimpContext       *context)
+{
+  return NULL;
+}
+
+GtkWidget *
+dialogs_palette_editor_get (GimpDialogFactory *factory,
+			    GimpContext       *context)
+{
+  return NULL;
+}
+
+
+/*  docks  */
 
 GtkWidget *
 dialogs_dock_new (GimpDialogFactory *factory,
@@ -672,6 +685,32 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
   return dockable;
 }
 
+GtkWidget *
+dialogs_indexed_palette_new (GimpDialogFactory *factory,
+			     GimpContext       *context)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  view = gimp_colormap_dialog_new (gimage);
+
+  dockable = dialogs_dockable_new (view,
+				   "Indexed Palette", "Colormap",
+				   NULL,
+				   dialogs_set_indexed_palette_context_func);
+
+  dialogs_set_indexed_palette_context_func (GIMP_DOCKABLE (dockable), context);
+
+  gtk_signal_connect (GTK_OBJECT (view), "selected",
+		      GTK_SIGNAL_FUNC (dialogs_indexed_palette_selected),
+		      dockable);
+
+  return dockable;
+}
+
 
 /*  editor dialogs  */
 
@@ -688,7 +727,7 @@ dialogs_edit_brush_func (GimpData *data)
     {
       if (! brush_editor_dialog)
 	{
-	  brush_editor_dialog = brush_editor_new ();
+	  brush_editor_dialog = brush_editor_new (the_gimp);
 	}
 
       brush_editor_set_brush (brush_editor_dialog, brush);
@@ -710,7 +749,7 @@ dialogs_edit_gradient_func (GimpData *data)
 
   if (! gradient_editor_dialog)
     {
-      gradient_editor_dialog = gradient_editor_new ();
+      gradient_editor_dialog = gradient_editor_new (the_gimp);
     }
 
   gradient_editor_set_gradient (gradient_editor_dialog, gradient);
@@ -727,7 +766,7 @@ dialogs_edit_palette_func (GimpData *data)
 
   if (! palette_editor_dialog)
     {
-      palette_editor_dialog = palette_editor_new ();
+      palette_editor_dialog = palette_editor_new (the_gimp);
     }
 
   palette_editor_set_palette (palette_editor_dialog, palette);
@@ -738,25 +777,33 @@ dialogs_edit_palette_func (GimpData *data)
 
 static void
 dialogs_indexed_palette_selected (GimpColormapDialog *dialog,
-				  GimpContext        *context)
+				  GimpDockable       *dockable)
 {
-  GimpImage *gimage;
-  GimpRGB    color;
-  gint       index;
+  GimpContext *context;
 
-  gimage = gimp_colormap_dialog_image (dialog);
-  index  = gimp_colormap_dialog_col_index (dialog);
+  context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (dialog),
+						 "gimp-dialogs-context");
 
-  gimp_rgba_set_uchar (&color,
-		       gimage->cmap[index * 3],
-		       gimage->cmap[index * 3 + 1],
-		       gimage->cmap[index * 3 + 2],
-		       255);
+  if (context)
+    {
+      GimpImage   *gimage;
+      GimpRGB      color;
+      gint         index;
 
-  if (active_color == FOREGROUND)
-    gimp_context_set_foreground (context, &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_set_background (context, &color);
+      gimage = gimp_colormap_dialog_get_image (dialog);
+      index  = gimp_colormap_dialog_col_index (dialog);
+
+      gimp_rgba_set_uchar (&color,
+			   gimage->cmap[index * 3],
+			   gimage->cmap[index * 3 + 1],
+			   gimage->cmap[index * 3 + 2],
+			   255);
+
+      if (active_color == FOREGROUND)
+	gimp_context_set_foreground (context, &color);
+      else if (active_color == BACKGROUND)
+	gimp_context_set_background (context, &color);
+    }
 }
 
 static GtkWidget *
@@ -989,6 +1036,48 @@ dialogs_set_path_context_func (GimpDockable *dockable,
     }
 }
 
+static void
+dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
+					  GimpContext  *context)
+{
+  GimpColormapDialog *view;
+
+  view = (GimpColormapDialog *) gtk_object_get_data (GTK_OBJECT (dockable),
+						     "gimp-dialogs-view");
+
+  if (view)
+    {
+      GimpContext *old_context;
+
+      old_context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (view),
+							 "gimp-dialogs-context");
+
+      if (old_context)
+	{
+	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
+					 GTK_SIGNAL_FUNC (dialogs_indexed_palette_image_changed),
+					 view);
+	}
+
+      if (context)
+	{
+	  gtk_signal_connect (GTK_OBJECT (context), "image_changed",
+			      GTK_SIGNAL_FUNC (dialogs_indexed_palette_image_changed),
+			      view);
+
+	  dialogs_indexed_palette_image_changed (context,
+						 gimp_context_get_image (context),
+						 view);
+	}
+      else
+	{
+	  dialogs_indexed_palette_image_changed (NULL, NULL, view);
+	}
+
+      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
+    }
+}
+
 static GtkWidget *
 dialogs_dockable_new (GtkWidget                  *widget,
 		      const gchar                *name,
@@ -1024,4 +1113,12 @@ dialogs_path_view_image_changed (GimpContext *context,
 				 GtkWidget   *widget)
 {
   paths_dialog_update (gimage);
+}
+
+static void
+dialogs_indexed_palette_image_changed (GimpContext        *context,
+				       GimpImage          *gimage,
+				       GimpColormapDialog *ipal)
+{
+  gimp_colormap_dialog_set_image (ipal, gimage);
 }

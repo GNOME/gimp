@@ -50,36 +50,40 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE },
   { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE, FALSE },
   { "gimp:module-browser-dialog",  dialogs_module_browser_get,  TRUE,  FALSE, FALSE },
-  { "gimp:indexed-palette-dialog", dialogs_indexed_palette_get, TRUE,  FALSE, FALSE },
   { "gimp:undo-history-dialog",    dialogs_undo_history_get,    FALSE, FALSE, FALSE },
   { "gimp:display-filters-dialog", dialogs_display_filters_get, FALSE, FALSE, FALSE },
   { "gimp:tips-dialog",            dialogs_tips_get,            TRUE,  FALSE, FALSE },
-  { "gimp:about-dialog",           dialogs_about_get,           TRUE,  FALSE, FALSE }
+  { "gimp:about-dialog",           dialogs_about_get,           TRUE,  FALSE, FALSE },
+
+  { "gimp:brush-editor",           dialogs_brush_editor_get,    TRUE,  TRUE,  TRUE  },
+  { "gimp:gradient-editor",        dialogs_gradient_editor_get, TRUE,  TRUE,  TRUE  },
+  { "gimp:palette-editor",         dialogs_palette_editor_get,  TRUE,  TRUE,  TRUE  }
 };
 static const gint n_toplevel_entries = (sizeof (toplevel_entries) /
 					sizeof (toplevel_entries[0]));
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
-  { "gimp:image-list",    dialogs_image_list_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:brush-list",    dialogs_brush_list_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:pattern-list",  dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE },
-  { "gimp:gradient-list", dialogs_gradient_list_view_new, FALSE, FALSE, FALSE },
-  { "gimp:palette-list",  dialogs_palette_list_view_new,  FALSE, FALSE, FALSE },
-  { "gimp:tool-list",     dialogs_tool_list_view_new,     FALSE, FALSE, FALSE },
-  { "gimp:buffer-list",   dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE },
+  { "gimp:image-list",      dialogs_image_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:brush-list",      dialogs_brush_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:pattern-list",    dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:gradient-list",   dialogs_gradient_list_view_new, FALSE, FALSE, FALSE },
+  { "gimp:palette-list",    dialogs_palette_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:tool-list",       dialogs_tool_list_view_new,     FALSE, FALSE, FALSE },
+  { "gimp:buffer-list",     dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE },
 
-  { "gimp:image-grid",    dialogs_image_grid_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:brush-grid",    dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE },
-  { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE },
-  { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE },
-  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE },
-  { "gimp:buffer-grid",   dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE },
+  { "gimp:image-grid",      dialogs_image_grid_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:brush-grid",      dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:pattern-grid",    dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:gradient-grid",   dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE },
+  { "gimp:palette-grid",    dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:tool-grid",       dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE },
+  { "gimp:buffer-grid",     dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE },
 
-  { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE, FALSE },
-  { "gimp:path-list",     dialogs_path_list_view_new,     TRUE,  FALSE, FALSE }
+  { "gimp:layer-list",      dialogs_layer_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:channel-list",    dialogs_channel_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:path-list",       dialogs_path_list_view_new,     TRUE,  FALSE, FALSE },
+  { "gimp:indexed-palette", dialogs_indexed_palette_new,    FALSE, FALSE, FALSE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));

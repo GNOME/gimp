@@ -117,7 +117,6 @@
 #include "gimppalette.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "undo.h"
 
 
@@ -757,10 +756,10 @@ gimp_image_convert (GimpImage          *gimage,
 	}
 
        if (
-         (old_type == RGB) &&
-         (!needs_quantize) &&
-         (palette_type == MAKE_PALETTE)
-         )
+	   (old_type == RGB) &&
+	   (!needs_quantize) &&
+	   (palette_type == MAKE_PALETTE)
+	   )
 
 	{
          /* If this is an RGB image, and the user wanted a custom-built
@@ -935,14 +934,6 @@ gimp_image_convert (GimpImage          *gimage,
     floating_sel_rigor (floating_layer, TRUE);
 
   undo_push_group_end (gimage);
-
-  /*  shrink wrap and update all views  */
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-  gdisplays_update_title (gimage);
-  gdisplays_update_full (gimage);
-
-  gimp_image_colormap_changed (gimage, -1);
 
   gimp_image_mode_changed (gimage);
 

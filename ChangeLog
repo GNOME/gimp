@@ -1,3 +1,34 @@
+2001-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.c: don't use the global "the_gimp" variable.
+
+	* app/core/gimpimage-convert.c: don't update the display here.
+
+	* app/gui/gui.c: connect to the images' "mode_changed" signal
+	and update here.
+
+	* app/gui/brush-editor.[ch]
+	* app/gui/gradient-editor.[ch]
+	* app/gui/palette-editor.[ch]: pass a "Gimp" pointer to all
+	editors. Added an palette_name entry to the palette editor.
+
+	* app/gui/colormap-dialog.[ch]: removed all the dialog stuff and
+	made the constructor return a vbox so it can be integrated in a
+	dockable. Lots of cleanup and removal of anqiuqe aretfacts.
+
+	* app/gui/dialogs-constructors.[ch]: wrap the colormap dialog in
+	a dockable.
+
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c: integrate the new dockable, made the "Brushes.."
+	etc. menu entries create dockbles. Moved the old dialogs and the
+	test menu entries to "Old + Testing" and removed N_() so the .po
+	files stay cruft-free.
+
+	* app/gui/test-commands.[ch]: removed lots of stuff which is not
+	"testing" any more.
+
 2001-07-14  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/display_cmds.c

@@ -26,7 +26,7 @@
 typedef struct _BrushEditor BrushEditor;
 
 
-BrushEditor * brush_editor_new       (void);
+BrushEditor * brush_editor_new       (Gimp        *gimp);
 
 void          brush_editor_set_brush (BrushEditor *brush_editor,
 				      GimpBrush   *brush);

@@ -29,7 +29,7 @@
 typedef struct _PaletteEditor PaletteEditor;
 
 
-PaletteEditor * palette_editor_new         (void);
+PaletteEditor * palette_editor_new         (Gimp          *gimp);
 
 void            palette_editor_set_palette (PaletteEditor *palette_editor,
 					    GimpPalette   *palette);

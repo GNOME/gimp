@@ -82,7 +82,7 @@ static void       brush_editor_brush_name_changed (GtkWidget     *widget,
 /*  public functions  */
 
 BrushEditor *
-brush_editor_new (void)
+brush_editor_new (Gimp *gimp)
 {
   BrushEditor *brush_editor;
   GtkWidget   *vbox;
