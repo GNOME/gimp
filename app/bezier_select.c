@@ -3057,7 +3057,7 @@ bezier_gen_points(BezierSelect     *bezier_sel,
 	  return(TRUE);
 	do {
 	  bezier_draw_segment (bezier_sel, points,
-			       SUBDIVIDE, IMAGE_COORDS,
+			       SUBDIVIDE, AA_IMAGE_COORDS,
 			       bezier_stack_points,
 			       (gpointer)next_rpnts);
 	  
@@ -3137,21 +3137,19 @@ bezier_stroke (BezierSelect *bezier_sel,
     {
       GimpDrawable *drawable;
       int offset_x, offset_y;
+      gdouble *ptr;
     
       drawable = gimage_active_drawable (gdisp->gimage);
       gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
-      if ((offset_x != 0) || (offset_y != 0))
-       {
-         gdouble *ptr;
-
-         ptr = rpnts->stroke_points;
-         while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
-           {
-             *ptr++ -= offset_x;
-             *ptr++ -= offset_y;
-           }
-       }
+      ptr = rpnts->stroke_points;
+      while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
+	{
+	  *ptr /= SUPERSAMPLE;
+	  *ptr++ -= offset_x;
+	  *ptr /= SUPERSAMPLE;
+	  *ptr++ -= offset_y;
+	}
 
       /* Stroke with the correct tool */
       return_vals = procedural_db_run_proc (active_tool_PDB_string(),

@@ -1,3 +1,30 @@
+
+Fri Jul 23 00:01:05 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* ./app/clone.c
+	* ./app/airbrush.c
+	* ./app/bezier_select.c
+	* ./app/paintbrush.c
+	* ./app/eraser.c
+	* ./app/convolve.c
+	* ./app/smudge.c
+	* ./app/dodgeburn.c
+	* ./app/pencil.c
+	* ./app/paint_core.c
+
+	Better stroking of paths. 
+	First point in stroke path is now correctly painted (try stroking
+	with a brush spacing of > 100.0 in gimp 1.0.x). 
+	Fixed problem in paint_core_interpolate() where points were 
+	missed in some cases.
+	(BTW for those who do not know the brush spacing means as follows:-
+	A spacing of 100.0 means brush strokes are placed next to each other
+	exactly with no gaps or overlaps. A spacing of 200.0 means only
+	alternate spaces are filled with the brush paint. A setting of 50.0
+	means the brush paints positions overlap by 50% of the brush width.
+	So 100.0 corresponds to exactly the brush width! It took me 
+	ages to figure this simple thing out!) 
+	 
 1999-07-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/brightness_contrast.c: same cleanups as in my previous

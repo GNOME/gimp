@@ -744,8 +744,7 @@ clone_non_gui (GimpDrawable *drawable,
       non_gui_offset_x = (int) (src_x - non_gui_paint_core.startx);
       non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
 
-      if (num_strokes == 1)
-	clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+      clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{

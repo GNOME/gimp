@@ -485,8 +485,7 @@ convolve_non_gui (GimpDrawable *drawable,
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
-      if (num_strokes == 1)
-	convolve_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+      convolve_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{

@@ -702,7 +702,7 @@ void
 paint_core_interpolate (PaintCore    *paint_core, 
 			GimpDrawable *drawable)
 {
-  int n;
+  double n;
   vector2d delta;
   double dpressure, dxtilt, dytilt;
   double left;
@@ -720,6 +720,7 @@ paint_core_interpolate (PaintCore    *paint_core,
 
   if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
     return;
+
   mag = vector2d_magnitude (&(paint_core->brush->x_axis));
   xd = vector2d_dot_product(&delta, &(paint_core->brush->x_axis)) / (mag*mag);
 
@@ -727,7 +728,7 @@ paint_core_interpolate (PaintCore    *paint_core,
   yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) /
     SQR(vector2d_magnitude(&(paint_core->brush->y_axis)));
 
-  dist = .5 * sqrt (xd*xd + yd*yd);
+  dist = .5 * sqrt (xd*xd + yd*yd); 
 
   total = dist + paint_core->distance;
   initial = paint_core->distance;
@@ -736,9 +737,10 @@ paint_core_interpolate (PaintCore    *paint_core,
     {
       n = (int) (paint_core->distance / paint_core->spacing + 1.0 + EPSILON);
       left = n * paint_core->spacing - paint_core->distance;
+
       paint_core->distance += left;
 
-      if (paint_core->distance <= total)
+      if (paint_core->distance <= (total+EPSILON))
 	{
 	  t = (paint_core->distance - initial) / dist;
 
