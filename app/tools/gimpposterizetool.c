@@ -220,7 +220,7 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (table);
 
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("Posterize _Levels:"), SLIDER_WIDTH, -1,
+                               _("Posterize _levels:"), SLIDER_WIDTH, -1,
                                posterize_tool->levels,
                                2.0, 256.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,

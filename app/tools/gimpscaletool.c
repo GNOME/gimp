@@ -156,7 +156,7 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 
-  tr_tool->shell_desc    = _("Scaling Information");
+  tr_tool->shell_desc    = _("Scaling information");
   tr_tool->progress_text = _("Scaling...");
 }
 
@@ -173,11 +173,11 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                          orig_height_buf);
 
   spinbutton = info_dialog_add_spinbutton (tr_tool->info_dialog,
-                                           _("Current Width:"),
+                                           _("Current width:"),
                                            NULL, -1, 1, 1, 10, 1, 1, 2,
                                            NULL, NULL);
   sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
-                                         _("Current Height:"),
+                                         _("Current height:"),
                                          size_vals, 1,
                                          GIMP_UNIT_PIXEL, "%a",
                                          TRUE, TRUE, FALSE,
@@ -192,10 +192,10 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                              GTK_SPIN_BUTTON (spinbutton), NULL);
 
   info_dialog_add_label (tr_tool->info_dialog,
-                         _("Scale Ratio X:"),
+                         _("Scale ratio X:"),
                          x_ratio_buf);
   info_dialog_add_label (tr_tool->info_dialog,
-                         _("Scale Ratio Y:"),
+                         _("Scale ratio Y:"),
                          y_ratio_buf);
 
   gtk_table_set_row_spacing (GTK_TABLE (tr_tool->info_dialog->info_table),

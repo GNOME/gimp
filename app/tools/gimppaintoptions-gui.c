@@ -233,7 +233,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      button = gimp_prop_check_button_new (config, "hard", _("Hard Edge"));
+      button = gimp_prop_check_button_new (config, "hard", _("Hard edge"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
@@ -290,7 +290,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
     {
       GtkWidget *inner_frame;
 
-      frame = gtk_expander_new (_("Pressure Sensitivity"));
+      frame = gtk_expander_new (_("Pressure sensitivity"));
       gtk_expander_set_expanded (GTK_EXPANDER (frame), FALSE);
 
       inner_frame = gimp_frame_new ("<expander>");
@@ -396,7 +396,7 @@ fade_options_gui (GimpFadeOptions  *fade,
       gtk_widget_show (table);
 
       button = gimp_prop_check_button_new (config, "use-fade",
-                                           _("Fade Out"));
+                                           _("Fade out"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
@@ -452,7 +452,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
       gtk_widget_show (table);
 
       button = gimp_prop_check_button_new (config, "use-gradient",
-                                           _("Use Color from Gradient"));
+                                           _("Use color from gradient"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 

@@ -1865,7 +1865,7 @@ gimp_vector_tool_to_selection_extended (GimpVectorTool *vector_tool,
     }
 
   gimp_channel_select_vectors (gimp_image_get_mask (gimage),
-                               _("Path to Selection"),
+                               _("Path to selection"),
                                vector_tool->vectors,
                                operation,
                                TRUE, FALSE, 0, 0);

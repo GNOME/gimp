@@ -182,7 +182,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   button = gimp_prop_check_button_new (config, "sample-average",
-                                       _("Sample Average"));
+                                       _("Sample average"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 

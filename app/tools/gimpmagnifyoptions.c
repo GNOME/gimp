@@ -222,7 +222,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
 
   /*  the auto_resize toggle button  */
   button = gimp_prop_check_button_new (config, "auto-resize",
-                                       _("Auto-Resize Window"));
+                                       _("Auto-resize window"));
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

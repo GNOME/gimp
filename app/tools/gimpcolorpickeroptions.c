@@ -167,7 +167,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample Merged"));
+                                       _("Sample merged"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

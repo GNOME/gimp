@@ -298,7 +298,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  supersampling toggle  */
   button = gimp_prop_check_button_new (config, "supersample",
-                                       _("Adaptive Supersampling"));
+                                       _("Adaptive supersampling"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 

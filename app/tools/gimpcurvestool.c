@@ -489,7 +489,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->channel_menu = menu;
 
-  button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
+  button = gtk_button_new_with_mnemonic (_("R_eset channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

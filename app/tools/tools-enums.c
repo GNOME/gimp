@@ -11,9 +11,9 @@
 
 static const GEnumValue gimp_color_pick_mode_enum_values[] =
 {
-  { GIMP_COLOR_PICK_MODE_NONE, N_("Pick Only"), "none" },
-  { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Set Foreground Color"), "foreground" },
-  { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Set Background Color"), "background" },
+  { GIMP_COLOR_PICK_MODE_NONE, N_("Pick only"), "none" },
+  { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Set foreground color"), "foreground" },
+  { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Set background color"), "background" },
   { 0, NULL, NULL }
 };
 
@@ -50,9 +50,9 @@ gimp_crop_mode_get_type (void)
 
 static const GEnumValue gimp_rect_select_mode_enum_values[] =
 {
-  { GIMP_RECT_SELECT_MODE_FREE, N_("Free Select"), "free" },
-  { GIMP_RECT_SELECT_MODE_FIXED_SIZE, N_("Fixed Size"), "fixed-size" },
-  { GIMP_RECT_SELECT_MODE_FIXED_RATIO, N_("Fixed Aspect Ratio"), "fixed-ratio" },
+  { GIMP_RECT_SELECT_MODE_FREE, N_("Free select"), "free" },
+  { GIMP_RECT_SELECT_MODE_FIXED_SIZE, N_("Fixed size"), "fixed-size" },
+  { GIMP_RECT_SELECT_MODE_FIXED_RATIO, N_("Fixed aspect ratio"), "fixed-ratio" },
   { 0, NULL, NULL }
 };
 
@@ -70,9 +70,9 @@ gimp_rect_select_mode_get_type (void)
 
 static const GEnumValue gimp_transform_type_enum_values[] =
 {
-  { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform Layer"), "layer" },
-  { GIMP_TRANSFORM_TYPE_SELECTION, N_("Transform Selection"), "selection" },
-  { GIMP_TRANSFORM_TYPE_PATH, N_("Transform Path"), "path" },
+  { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform layer"), "layer" },
+  { GIMP_TRANSFORM_TYPE_SELECTION, N_("Transform selection"), "selection" },
+  { GIMP_TRANSFORM_TYPE_PATH, N_("Transform path"), "path" },
   { 0, NULL, NULL }
 };
 
@@ -110,9 +110,9 @@ gimp_vector_mode_get_type (void)
 
 static const GEnumValue gimp_transform_grid_type_enum_values[] =
 {
-  { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't Show Grid"), "none" },
-  { GIMP_TRANSFORM_GRID_TYPE_N_LINES, N_("Number of Grid Lines"), "n-lines" },
-  { GIMP_TRANSFORM_GRID_TYPE_SPACING, N_("Grid Line Spacing"), "spacing" },
+  { GIMP_TRANSFORM_GRID_TYPE_NONE, N_("Don't show grid"), "none" },
+  { GIMP_TRANSFORM_GRID_TYPE_N_LINES, N_("Number of grid lines"), "n-lines" },
+  { GIMP_TRANSFORM_GRID_TYPE_SPACING, N_("Grid line spacing"), "spacing" },
   { 0, NULL, NULL }
 };
 

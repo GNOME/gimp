@@ -457,7 +457,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   row++;
 
   auto_button = gimp_prop_check_button_new (config, "autohint",
-					    _("Force Auto-Hinter"));
+					    _("Force auto-hinter"));
   gtk_table_attach (GTK_TABLE (table), auto_button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (auto_button);
@@ -494,10 +494,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           _("Line\nSpacing:"), 0.0,
+                           _("Line\nspacing:"), 0.0,
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
-  button = gtk_button_new_with_label (_("Create Path from Text"));
+  button = gtk_button_new_with_label (_("Create path from text"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);

@@ -206,12 +206,12 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
 
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only",
-                                       _("Current Layer only"));
+                                       _("Current layer only"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  enlarge toggle  */
-  str = g_strdup_printf (_("Allow Enlarging  %s"), gimp_get_mod_name_alt ());
+  str = g_strdup_printf (_("Allow enlarging  %s"), gimp_get_mod_name_alt ());
 
   button = gimp_prop_check_button_new (config, "allow-enlarge", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -220,7 +220,7 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   g_free (str);
 
   /*  layer toggle  */
-  str = g_strdup_printf (_("Keep Aspect ratio  %s"), gimp_get_mod_name_shift());
+  str = g_strdup_printf (_("Keep aspect ratio  %s"), gimp_get_mod_name_shift());
   button = gimp_prop_check_button_new (config, "keep-aspect", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

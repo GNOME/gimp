@@ -1032,7 +1032,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_table_set_row_spacing (GTK_TABLE (crop->crop_info->info_table), 2, 0);
 
   widget =
-      info_dialog_add_spinbutton (crop->crop_info, _("Aspect Ratio:"),
+      info_dialog_add_spinbutton (crop->crop_info, _("Aspect ratio:"),
                                   &(crop->aspect_ratio),
                                   0, 65536, 0.01, 0.1, 1, 1, 2,
                                   G_CALLBACK (crop_aspect_changed),
@@ -1045,7 +1045,7 @@ crop_info_create (GimpCropTool *crop)
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_SPREAD);
   gtk_box_set_spacing (GTK_BOX (bbox), 4);
 
-  button = gtk_button_new_with_label (_("From Selection"));
+  button = gtk_button_new_with_label (_("From selection"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1053,7 +1053,7 @@ crop_info_create (GimpCropTool *crop)
                     G_CALLBACK (crop_selection_callback),
                     crop);
 
-  button = gtk_button_new_with_label (_("Auto Shrink"));
+  button = gtk_button_new_with_label (_("Auto shrink"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 

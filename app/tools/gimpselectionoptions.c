@@ -423,7 +423,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_widget_show (table);
 
     button = gimp_prop_check_button_new (config, "feather",
-                                         _("Feather Edges"));
+                                         _("Feather edges"));
     gtk_frame_set_label_widget (GTK_FRAME (frame), button);
     gtk_widget_show (button);
 
@@ -458,7 +458,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
       button = gimp_prop_check_button_new (config, "interactive",
-                                           _("Show Interactive Boundary"));
+                                           _("Show interactive boundary"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
@@ -482,13 +482,13 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
       /*  the select transparent areas toggle  */
       button = gimp_prop_check_button_new (config, "select-transparent",
-                                           _("Select Transparent Areas"));
+                                           _("Select transparent areas"));
       gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
       /*  the sample merged toggle  */
       button = gimp_prop_check_button_new (config, "sample-merged",
-                                           _("Sample Merged"));
+                                           _("Sample merged"));
       gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -527,7 +527,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (vbox2);
 
       button = gimp_prop_check_button_new (config, "auto-shrink",
-                                           _("Auto Shrink Selection"));
+                                           _("Auto shrink selection"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), button);
       gtk_widget_show (button);
 
@@ -535,7 +535,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       g_object_set_data (G_OBJECT (button), "set_sensitive", vbox2);
 
       button = gimp_prop_check_button_new (config, "shrink-merged",
-                                           _("Sample Merged"));
+                                           _("Sample merged"));
       gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 

@@ -348,15 +348,15 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
     {
     case LOW_INPUT:
       stock_id = GIMP_STOCK_COLOR_PICKER_BLACK;
-      help     = _("Pick Black Point");
+      help     = _("Pick black point");
       break;
     case GAMMA:
       stock_id = GIMP_STOCK_COLOR_PICKER_GRAY;
-      help     = _("Pick Gray Point");
+      help     = _("Pick gray point");
       break;
     case HIGH_INPUT:
       stock_id = GIMP_STOCK_COLOR_PICKER_WHITE;
-      help     = _("Pick White Point");
+      help     = _("Pick white point");
       break;
     default:
       return NULL;
@@ -423,7 +423,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->channel_menu = menu;
 
-  button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
+  button = gtk_button_new_with_mnemonic (_("R_eset channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

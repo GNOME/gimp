@@ -266,8 +266,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   str = g_strdup_printf (_("Affected Area  %s"), gimp_get_mod_name_shift ());
   frame = gimp_prop_boolean_radio_frame_new (config, "fill-selection",
                                              str,
-                                             _("Fill Whole Selection"),
-                                             _("Fill Similar Colors"));
+                                             _("Fill whole selection"),
+                                             _("Fill similar colors"));
   g_free (str);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -289,13 +289,13 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   /*  the fill transparent areas toggle  */
   button = gimp_prop_check_button_new (config, "fill-transparent",
-                                       _("Fill Transparent Areas"));
+                                       _("Fill transparent areas"));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  the sample merged toggle  */
   button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample Merged"));
+                                       _("Sample merged"));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
