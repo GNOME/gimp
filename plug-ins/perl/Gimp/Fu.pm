@@ -837,7 +837,7 @@ sub save_image($$) {
    my($interlace,$flatten,$quality,$type,$smooth,$compress,$loop,$dispose);
 
    $interlace=0;
-   $quality=75;
+   $quality=0.75;
    $smooth=0;
    $compress=7;
    $loop=0;
