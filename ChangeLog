@@ -1,5 +1,10 @@
 2003-02-21  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: oops, put back in perl binary location stuff for
+	pdbgen.
+
+2003-02-21  Manish Singh  <yosh@gimp.org>
+
 	* Makefile.am
 	* plug-ins/Makefile.am: perl remnants here too
 

@@ -857,6 +857,20 @@ AC_SUBST(PRINT_LIBS)
 AC_SUBST(PRINT_CFLAGS)
 
 
+################
+# Check for perl
+################
+
+AC_ARG_WITH(pdbgen, [  --with-pdbgen           use 'pdbgen' code generation tool],,with_pdbgen=$enable_maintainer_mode)
+
+if test "x$with_pdbgen" = xyes ; then
+   AC_PATH_PROGS(PERL,perl5 perl perl5.005 perl5.004,perl)
+fi
+
+AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
+AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
+
+
 ##################
 # Check for python
 ##################
