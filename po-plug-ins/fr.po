@@ -1,12 +1,12 @@
 # gimp plug-in's fr.po
-# Copyright (C) 1998 Free Software Foundation, Inc.
+# Copyright (C) 1998,1999 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
-# Copyright (C) 1999 David Monniaux <David.Monniaux@ens.fr>
+# David Monniaux <David.Monniaux@ens.fr>, 1999.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-07-17 11:11-0700\n"
+"POT-Creation-Date: 1999-07-21 12:51+0200\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"

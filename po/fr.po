@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-07-17 11:23-0700\n"
+"POT-Creation-Date: 1999-07-21 12:35+0200\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -38,16 +38,16 @@ msgstr "Spencer Kimball et Peter Mattis"
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Visitez http://www.gimp.org/ pour plus d'informations"
 
-#: app/airbrush.c:124
+#: app/airbrush.c:127
 msgid "Rate:"
 msgstr "Taux:"
 
 #. the pressure scale
-#: app/airbrush.c:142 app/convolve.c:147
+#: app/airbrush.c:145 app/convolve.c:153
 msgid "Pressure:"
 msgstr "Pression:"
 
-#: app/airbrush.c:203
+#: app/airbrush.c:206
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr ""
 "Erreur Interne. Veuillez signaler \"killing stray timer\" à lewing@gimp.org."
@@ -109,12 +109,14 @@ msgid "No"
 msgstr "Non"
 
 #: app/app_procs.c:776
-#, fuzzy
 msgid ""
 "Some files unsaved.\n"
 "\n"
 "Quit the GIMP?"
-msgstr "Certains fichiers n'ont pas été sauvés. Quitter The GIMP?"
+msgstr ""
+"Certains fichiers n'ont pas été enregistrés.\n"
+"\n"
+"Quitter The GIMP?"
 
 #: app/batch.c:65
 msgid "script-fu not available: batch mode disabled\n"
@@ -170,7 +172,7 @@ msgstr ""
 msgid "Encountered orphaned bezier control point"
 msgstr "Point de contrôle orphelin trouvé"
 
-#: app/bezier_select.c:1975 app/bezier_select.c:3176
+#: app/bezier_select.c:1975 app/bezier_select.c:3221
 msgid "bad bezier segment"
 msgstr "mauvais segment de Bézier"
 
@@ -183,7 +185,7 @@ msgstr "espace de coordonnées inconnu: %d"
 msgid "tried to convert an open bezier curve"
 msgstr "tentative de convertir une courbe de Bézier ouverte"
 
-#: app/bezier_select.c:3132
+#: app/bezier_select.c:3177
 msgid "Paintbrush operation failed."
 msgstr "Échec de l'opération pinceau."
 
@@ -398,7 +400,7 @@ msgstr "Prévisualisation"
 #: app/gdisplay_ops.c:348 app/gradient.c:646 app/gradient_select.c:76
 #: app/histogram_tool.c:262 app/info_window.c:121 app/lc_dialog.c:196
 #: app/palette.c:2235 app/palette_select.c:59 app/pattern_select.c:90
-#: app/tips_dialog.c:146 app/tools.c:874 libgimp/gimpfileselection.c:356
+#: app/tips_dialog.c:150 app/tools.c:874 libgimp/gimpfileselection.c:356
 #: libgimp/gimpunitmenu.c:518
 msgid "Close"
 msgstr "Fermer"
@@ -466,7 +468,7 @@ msgstr "Espacement:"
 msgid "failed to run brush callback function"
 msgstr "échec de l'appel de la fonction de rappel de brosse"
 
-#: app/brush_select.c:1192
+#: app/brush_select.c:1193
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
@@ -709,37 +711,37 @@ msgstr "Nom du Canal:"
 msgid "Fill Opacity"
 msgstr "Opacité de remplissage"
 
-#: app/clone.c:137
+#: app/clone.c:141
 msgid "Image Source"
 msgstr "Image source"
 
-#: app/clone.c:138
+#: app/clone.c:142
 msgid "Pattern Source"
 msgstr "Source du Motif"
 
-#: app/clone.c:144
+#: app/clone.c:148
 msgid "Non Aligned"
 msgstr "Non Aligné"
 
-#: app/clone.c:145
+#: app/clone.c:149
 msgid "Aligned"
 msgstr "Aligné"
 
-#: app/clone.c:146
+#: app/clone.c:150
 msgid "Registered"
 msgstr "Enregistré"
 
 #. the radio frame and box
-#: app/clone.c:162
+#: app/clone.c:166
 msgid "Source"
 msgstr "Source"
 
 #. the radio frame and box
-#: app/clone.c:187
+#: app/clone.c:191
 msgid "Alignment"
 msgstr "Alignement"
 
-#: app/clone.c:314
+#: app/clone.c:318
 msgid "No patterns available for this operation."
 msgstr "Pas de motif disponible pour cette opération."
 
@@ -957,15 +959,15 @@ msgstr "Tramage de Floyd-Steinberg"
 msgid " [ Warning ] "
 msgstr " [ Avertissement ] "
 
-#: app/convolve.c:129
+#: app/convolve.c:135
 msgid "Blur"
 msgstr "Flou"
 
-#: app/convolve.c:129
+#: app/convolve.c:135
 msgid "Sharpen"
 msgstr "Faire ressortir les formes"
 
-#: app/convolve.c:164
+#: app/convolve.c:170
 msgid "Convolve Type"
 msgstr "Type de convolution"
 
@@ -1037,7 +1039,7 @@ msgstr "D'après la sélection"
 
 #: app/crop.c:1083
 msgid "Auto Shrink"
-msgstr ""
+msgstr "Réduction automatique"
 
 #: app/curves.c:368
 msgid "Curves Options"
@@ -1180,12 +1182,12 @@ msgid "Equalize does not operate on indexed drawables."
 msgstr "L'égalisation ne peux opérer sur des images indexées."
 
 #. the hard toggle
-#: app/eraser.c:98
+#: app/eraser.c:102
 msgid "Hard edge"
 msgstr "Contour dur"
 
 #. the incremental toggle
-#: app/eraser.c:108 app/paintbrush.c:257
+#: app/eraser.c:112 app/paintbrush.c:269
 msgid "Incremental"
 msgstr "Incrémental"
 
@@ -1371,11 +1373,11 @@ msgstr "Échec de l'enregistrement: "
 msgid "/File/Open"
 msgstr "/Fichier/Ouvrir"
 
-#: app/fileops.c:1548 app/fileops.c:1564 app/menus.c:91
+#: app/fileops.c:1548 app/fileops.c:1564 app/gdisplay.c:1588 app/menus.c:91
 msgid "/File/Save"
 msgstr "/Fichier/Enregistrer"
 
-#: app/fileops.c:1549 app/fileops.c:1565 app/menus.c:92
+#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1589 app/menus.c:92
 msgid "/File/Save as"
 msgstr "/Fichier/Enregistrer sous"
 
@@ -1445,14 +1447,242 @@ msgstr "indexé-vide"
 msgid "indexed"
 msgstr "indexé"
 
+#: app/gdisplay.c:1590 app/menus.c:93
+msgid "/File/Revert"
+msgstr "/Fichier/Revenir au fichier"
+
+#: app/gdisplay.c:1591 app/gdisplay_ops.c:305 app/gdisplay_ops.c:320
+#: app/gdisplay_ops.c:330 app/gdisplay_ops.c:366 app/menus.c:97
+msgid "/File/Close"
+msgstr "/Fichier/Fermer"
+
+#: app/gdisplay.c:1593
+msgid "/Edit"
+msgstr "/Édition"
+
+#: app/gdisplay.c:1596 app/menus.c:102
+msgid "/Edit/Cut"
+msgstr "/Édition/Couper"
+
+#: app/gdisplay.c:1597 app/menus.c:103
+msgid "/Edit/Copy"
+msgstr "/Édition/Copier"
+
+#: app/gdisplay.c:1598 app/menus.c:104
+msgid "/Edit/Paste"
+msgstr "/Édition/Coller"
+
+#: app/gdisplay.c:1599 app/menus.c:105
+msgid "/Edit/Paste Into"
+msgstr "/Édition/Coller dans"
+
+#: app/gdisplay.c:1600 app/menus.c:106
+msgid "/Edit/Paste As New"
+msgstr "/Édition/Coller dans un nouveau"
+
+#: app/gdisplay.c:1601 app/menus.c:108
+msgid "/Edit/Clear"
+msgstr "/Édition/Effacer"
+
+#: app/gdisplay.c:1602 app/menus.c:109
+msgid "/Edit/Fill"
+msgstr "/Édition/Remplir"
+
+#: app/gdisplay.c:1603 app/menus.c:110
+msgid "/Edit/Stroke"
+msgstr "/Édition/Coup de Pinceau"
+
+#: app/gdisplay.c:1604 app/menus.c:114
+msgid "/Edit/Cut Named"
+msgstr "/Édition/Couper Nommé"
+
+#: app/gdisplay.c:1605 app/menus.c:115
+msgid "/Edit/Copy Named"
+msgstr "/Édition/Copier Nommé"
+
+#: app/gdisplay.c:1606 app/menus.c:116
+msgid "/Edit/Paste Named"
+msgstr "/Édition/Coller Nommé"
+
+#: app/gdisplay.c:1609
+msgid "/Select"
+msgstr "/Sélection"
+
+#: app/gdisplay.c:1610 app/menus.c:129
+msgid "/Select/Save To Channel"
+msgstr "/Sélection/Enregistrer dans Canal"
+
+#: app/gdisplay.c:1612
+msgid "/View"
+msgstr "/Vue"
+
+#: app/gdisplay.c:1615 app/menus.c:147
+msgid "/View/Toggle Selection"
+msgstr "/Vue/(Dés)activer Sélection"
+
+#: app/gdisplay.c:1616 app/menus.c:148
+msgid "/View/Toggle Rulers"
+msgstr "/Vue/(Dés)activer les Règles"
+
+#: app/gdisplay.c:1618 app/menus.c:150
+msgid "/View/Toggle Guides"
+msgstr "/Vue/(Dés)activer les Guides"
+
+#: app/gdisplay.c:1619 app/menus.c:151
+msgid "/View/Snap To Guides"
+msgstr "/Vue/Aligner sur les Guides"
+
+#: app/gdisplay.c:1620 app/menus.c:149
+msgid "/View/Toggle Statusbar"
+msgstr "/Vue/(Dés)activer la Barre d'État"
+
+#: app/gdisplay.c:1622 app/menus.c:143
+msgid "/View/Dot for dot"
+msgstr "/Vue/Point pour point"
+
+#: app/gdisplay.c:1625
+msgid "/Image"
+msgstr "/Image"
+
+#: app/gdisplay.c:1626 app/gdisplay.c:1636
+msgid "/Image/Colors"
+msgstr "/Image/Couleurs"
+
+#: app/gdisplay.c:1627
+msgid "/Image/Channel Ops"
+msgstr "/Image/Canaux"
+
+#: app/gdisplay.c:1628
+msgid "/Image/Alpha"
+msgstr "/Image/Alpha"
+
+#: app/gdisplay.c:1631 app/menus.c:170
+msgid "/Image/RGB"
+msgstr "/Image/RVB"
+
+#: app/gdisplay.c:1632 app/menus.c:171
+msgid "/Image/Grayscale"
+msgstr "/Image/Niveaux de Gris"
+
+#: app/gdisplay.c:1633 app/menus.c:172
+msgid "/Image/Indexed"
+msgstr "/Image/Indexée"
+
+#: app/gdisplay.c:1634 app/tools.c:609
+msgid "/Image/Histogram"
+msgstr "/Image/Histogramme"
+
+#: app/gdisplay.c:1637 app/tools.c:564
+msgid "/Image/Colors/Threshold"
+msgstr "/Image/Couleurs/Seuil"
+
+#: app/gdisplay.c:1638 app/tools.c:549
+msgid "/Image/Colors/Posterize"
+msgstr "/Image/Couleurs/Postériser"
+
+#: app/gdisplay.c:1639 app/menus.c:159
+msgid "/Image/Colors/Equalize"
+msgstr "/Image/Couleurs/Égaliser"
+
+#: app/gdisplay.c:1640 app/menus.c:160
+msgid "/Image/Colors/Invert"
+msgstr "/Image/Couleurs/Inverser"
+
+#: app/gdisplay.c:1641 app/tools.c:504
+msgid "/Image/Colors/Color Balance"
+msgstr "/Image/Couleurs/Balance des couleurs"
+
+#: app/gdisplay.c:1642 app/tools.c:519
+msgid "/Image/Colors/Brightness-Contrast"
+msgstr "/Image/Couleurs/Luminosité-Contraste"
+
+#: app/gdisplay.c:1644 app/tools.c:534
+msgid "/Image/Colors/Hue-Saturation"
+msgstr "/Image/Couleurs/Teinte-Saturation"
+
+#: app/gdisplay.c:1645 app/tools.c:579
+msgid "/Image/Colors/Curves"
+msgstr "/Image/Couleurs/Courbes"
+
+#: app/gdisplay.c:1646 app/tools.c:594
+msgid "/Image/Colors/Levels"
+msgstr "/Image/Couleurs/Niveaux"
+
+#: app/gdisplay.c:1647 app/menus.c:162
+msgid "/Image/Colors/Desaturate"
+msgstr "/Image/Couleurs/Désaturer"
+
+#: app/gdisplay.c:1649 app/menus.c:167
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr "/Image/Alpha/Ajouter Canal Alpha"
+
+#: app/gdisplay.c:1652 app/menus.c:165
+msgid "/Image/Channel Ops/Offset"
+msgstr "/Image/Canaux/Décalage"
+
+#: app/gdisplay.c:1655
+msgid "/Layers/Stack"
+msgstr "/Calques/Pile"
+
+#: app/gdisplay.c:1658 app/menus.c:181
+msgid "/Layers/Stack/Previous Layer"
+msgstr "/Calques/Pile/Calque précédent"
+
+#: app/gdisplay.c:1660 app/menus.c:182
+msgid "/Layers/Stack/Next Layer"
+msgstr "/Calques/Pile/Calque suivant"
+
+#: app/gdisplay.c:1662 app/menus.c:183
+msgid "/Layers/Stack/Raise Layer"
+msgstr "/Calques/Pile/Remonter calque"
+
+#: app/gdisplay.c:1664 app/menus.c:184
+msgid "/Layers/Stack/Lower Layer"
+msgstr "/Calques/Pile/Descendre calque"
+
+#: app/gdisplay.c:1666 app/menus.c:185
+msgid "/Layers/Stack/Layer to Top"
+msgstr "/Calques/Pile/Calque vers le sommet"
+
+#: app/gdisplay.c:1668 app/menus.c:186
+msgid "/Layers/Stack/Layer to Bottom"
+msgstr "/Calques/Pile/Calque vers le fond"
+
+#: app/gdisplay.c:1672 app/menus.c:188
+msgid "/Layers/Anchor Layer"
+msgstr "/Calques/Ancrer Calque"
+
+#: app/gdisplay.c:1673 app/menus.c:189
+msgid "/Layers/Merge Visible Layers"
+msgstr "/Calques/Fusionner les Calques Visibles"
+
+#: app/gdisplay.c:1674 app/menus.c:190
+msgid "/Layers/Flatten Image"
+msgstr "/Calques/Aplatir Image"
+
+#: app/gdisplay.c:1675 app/menus.c:191
+msgid "/Layers/Alpha To Selection"
+msgstr "/Calques/Alpha vers Sélection"
+
+#: app/gdisplay.c:1676 app/menus.c:192
+msgid "/Layers/Mask To Selection"
+msgstr "/Calques/Masque vers Sélection"
+
+#: app/gdisplay.c:1677 app/menus.c:193
+msgid "/Layers/Add Alpha Channel"
+msgstr "/Calques/Ajouter Canal Alpha"
+
+#: app/gdisplay.c:1680
+msgid "/Filters"
+msgstr "/Filtres"
+
+#: app/gdisplay.c:1682
+msgid "/Script-Fu"
+msgstr "/Script-Fu"
+
 #: app/gdisplay.c:2102
 msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() appelé récursivement."
-
-#: app/gdisplay_ops.c:305 app/gdisplay_ops.c:320 app/gdisplay_ops.c:330
-#: app/gdisplay_ops.c:366 app/menus.c:97
-msgid "/File/Close"
-msgstr "/Fichier/Fermer"
 
 #: app/gdisplay_ops.c:388
 #, c-format
@@ -1528,11 +1758,11 @@ msgstr "sansnom"
 msgid "Layer type %d not supported."
 msgstr "Type de calque %d non supporté."
 
-#: app/gimpimage.c:642 app/gimpimage.c:740
+#: app/gimpimage.c:649 app/gimpimage.c:747
 msgid "gimp_image_apply_image sent illegal parameters"
 msgstr "gimp_image_apply_image a envoyé des paramètres illégaux"
 
-#: app/gimpimage.c:1172
+#: app/gimpimage.c:1178
 msgid "Unable to project indexed image."
 msgstr "Impossible de projeter une image indexée."
 
@@ -1708,13 +1938,12 @@ msgid "Paste"
 msgstr "Coller"
 
 #: app/global_edit.c:699
-#, fuzzy
 msgid "Paste Into"
-msgstr "/Édition/Coller dans"
+msgstr "Coller dans"
 
 #: app/global_edit.c:700
 msgid "Paste As New"
-msgstr ""
+msgstr "Coller dans un nouveau"
 
 #. Buttons
 #: app/global_edit.c:704 app/gradient.c:1477 app/palette.c:1429
@@ -1793,7 +2022,7 @@ msgstr "Editeur de Dégradé"
 msgid "Gradients: "
 msgstr "Dégradé: "
 
-#: app/gradient.c:680 app/gradient_select.c:476 app/paintbrush.c:204
+#: app/gradient.c:680 app/gradient_select.c:476 app/paintbrush.c:216
 #: app/palette.c:2833
 msgid "Gradient"
 msgstr "Dégradé"
@@ -3516,10 +3745,6 @@ msgstr "/Fichier/---"
 msgid "/tearoff1"
 msgstr "/tearoff1"
 
-#: app/menus.c:93
-msgid "/File/Revert"
-msgstr "/Fichier/Revenir au fichier"
-
 #: app/menus.c:99
 msgid "/File/---moved"
 msgstr "/Fichier/---déplacé"
@@ -3528,42 +3753,9 @@ msgstr "/Fichier/---déplacé"
 msgid "/Edit/tearoff1"
 msgstr "/Édition/tearoff1"
 
-#: app/menus.c:102
-msgid "/Edit/Cut"
-msgstr "/Édition/Couper"
-
-#: app/menus.c:103
-msgid "/Edit/Copy"
-msgstr "/Édition/Copier"
-
-#: app/menus.c:104
-msgid "/Edit/Paste"
-msgstr "/Édition/Coller"
-
-#: app/menus.c:105
-msgid "/Edit/Paste Into"
-msgstr "/Édition/Coller dans"
-
-#: app/menus.c:106
-#, fuzzy
-msgid "/Edit/Paste As New"
-msgstr "/Édition/Coller Nommé"
-
 #: app/menus.c:107 app/menus.c:113 app/menus.c:117
 msgid "/Edit/---"
 msgstr "/Édition/---"
-
-#: app/menus.c:108
-msgid "/Edit/Clear"
-msgstr "/Édition/Effacer"
-
-#: app/menus.c:109
-msgid "/Edit/Fill"
-msgstr "/Édition/Remplir"
-
-#: app/menus.c:110
-msgid "/Edit/Stroke"
-msgstr "/Édition/Coup de Pinceau"
 
 #: app/menus.c:111
 msgid "/Edit/Undo"
@@ -3572,18 +3764,6 @@ msgstr "/Édition/Défaire"
 #: app/menus.c:112
 msgid "/Edit/Redo"
 msgstr "/Édition/Refaire"
-
-#: app/menus.c:114
-msgid "/Edit/Cut Named"
-msgstr "/Édition/Couper Nommé"
-
-#: app/menus.c:115
-msgid "/Edit/Copy Named"
-msgstr "/Édition/Copier Nommé"
-
-#: app/menus.c:116
-msgid "/Edit/Paste Named"
-msgstr "/Édition/Coller Nommé"
 
 #: app/menus.c:119
 msgid "/Select/tearoff1"
@@ -3624,10 +3804,6 @@ msgstr "/Sélection/Agrandir"
 #: app/menus.c:128
 msgid "/Select/Shrink"
 msgstr "/Sélection/Rapetisser"
-
-#: app/menus.c:129
-msgid "/Select/Save To Channel"
-msgstr "/Sélection/Enregistrer dans Canal"
 
 #: app/menus.c:131
 msgid "/View/tearoff1"
@@ -3677,10 +3853,6 @@ msgstr "/Vue/Zoom/1:8"
 msgid "/View/Zoom/1:16"
 msgstr "/Vue/Zoom/1:16"
 
-#: app/menus.c:143
-msgid "/View/Dot for dot"
-msgstr "/Vue/Point pour point"
-
 #: app/menus.c:144
 msgid "/View/Window Info..."
 msgstr "/Vue/Information sur la Fenêtre..."
@@ -3688,26 +3860,6 @@ msgstr "/Vue/Information sur la Fenêtre..."
 #: app/menus.c:146 app/menus.c:152
 msgid "/View/---"
 msgstr "/Vue/---"
-
-#: app/menus.c:147
-msgid "/View/Toggle Selection"
-msgstr "/Vue/(Dés)activer Sélection"
-
-#: app/menus.c:148
-msgid "/View/Toggle Rulers"
-msgstr "/Vue/(Dés)activer les Règles"
-
-#: app/menus.c:149
-msgid "/View/Toggle Statusbar"
-msgstr "/Vue/(Dés)activer la Barre d'État"
-
-#: app/menus.c:150
-msgid "/View/Toggle Guides"
-msgstr "/Vue/(Dés)activer les Guides"
-
-#: app/menus.c:151
-msgid "/View/Snap To Guides"
-msgstr "/Vue/Aligner sur les Guides"
 
 #: app/menus.c:154
 msgid "/View/New View"
@@ -3725,21 +3877,9 @@ msgstr "/Image/tearoff1"
 msgid "/Image/Colors/tearoff1"
 msgstr "/Image/Couleurs/tearoff1"
 
-#: app/menus.c:159
-msgid "/Image/Colors/Equalize"
-msgstr "/Image/Couleurs/Égaliser"
-
-#: app/menus.c:160
-msgid "/Image/Colors/Invert"
-msgstr "/Image/Couleurs/Inverser"
-
 #: app/menus.c:161
 msgid "/Image/Colors/---"
 msgstr "/Image/Couleurs/---"
-
-#: app/menus.c:162
-msgid "/Image/Colors/Desaturate"
-msgstr "/Image/Couleurs/Désaturer"
 
 #: app/menus.c:163
 msgid "/Image/Channel Ops/tearoff1"
@@ -3749,33 +3889,13 @@ msgstr "/Image/Canaux/tearoff1"
 msgid "/Image/Channel Ops/Duplicate"
 msgstr "/Image/Canaux/Dupliquer"
 
-#: app/menus.c:165
-msgid "/Image/Channel Ops/Offset"
-msgstr "/Image/Canaux/Décalage"
-
 #: app/menus.c:166
 msgid "/Image/Alpha/tearoff1"
 msgstr "/Image/Alpha/tearoff1"
 
-#: app/menus.c:167
-msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Image/Alpha/Ajouter Canal Alpha"
-
 #: app/menus.c:169 app/menus.c:173 app/menus.c:176
 msgid "/Image/---"
 msgstr "/Image/---"
-
-#: app/menus.c:170
-msgid "/Image/RGB"
-msgstr "/Image/RVB"
-
-#: app/menus.c:171
-msgid "/Image/Grayscale"
-msgstr "/Image/Niveaux de Gris"
-
-#: app/menus.c:172
-msgid "/Image/Indexed"
-msgstr "/Image/Indexée"
 
 #: app/menus.c:174
 msgid "/Image/Resize"
@@ -3797,57 +3917,9 @@ msgstr "/Calques/Calques & Canaux..."
 msgid "/Layers/Stack/tearoff1"
 msgstr "/Calques/Pile/tearoff1"
 
-#: app/menus.c:181
-msgid "/Layers/Stack/Previous Layer"
-msgstr "/Calques/Pile/Calque précédent"
-
-#: app/menus.c:182
-msgid "/Layers/Stack/Next Layer"
-msgstr "/Calques/Pile/Calque suivant"
-
-#: app/menus.c:183
-msgid "/Layers/Stack/Raise Layer"
-msgstr "/Calques/Pile/Remonter calque"
-
-#: app/menus.c:184
-msgid "/Layers/Stack/Lower Layer"
-msgstr "/Calques/Pile/Descendre calque"
-
-#: app/menus.c:185
-msgid "/Layers/Stack/Layer to Top"
-msgstr "/Calques/Pile/Calque vers le sommet"
-
-#: app/menus.c:186
-msgid "/Layers/Stack/Layer to Bottom"
-msgstr "/Calques/Pile/Calque vers le fond"
-
 #: app/menus.c:187 app/menus.c:194
 msgid "/Layers/---"
 msgstr "/Calques/---"
-
-#: app/menus.c:188
-msgid "/Layers/Anchor Layer"
-msgstr "/Calques/Ancrer Calque"
-
-#: app/menus.c:189
-msgid "/Layers/Merge Visible Layers"
-msgstr "/Calques/Fusionner les Calques Visibles"
-
-#: app/menus.c:190
-msgid "/Layers/Flatten Image"
-msgstr "/Calques/Aplatir Image"
-
-#: app/menus.c:191
-msgid "/Layers/Alpha To Selection"
-msgstr "/Calques/Alpha vers Sélection"
-
-#: app/menus.c:192
-msgid "/Layers/Mask To Selection"
-msgstr "/Calques/Masque vers Sélection"
-
-#: app/menus.c:193
-msgid "/Layers/Add Alpha Channel"
-msgstr "/Calques/Ajouter Canal Alpha"
 
 #: app/menus.c:196
 msgid "/Tools/tearoff1"
@@ -4096,35 +4168,34 @@ msgstr "Soustraction"
 msgid "Erase"
 msgstr "Effacer"
 
-#: app/paintbrush.c:153
+#: app/paintbrush.c:160
 msgid "Once Forward"
 msgstr "1 fois en Avant"
 
-#: app/paintbrush.c:155
+#: app/paintbrush.c:162
 msgid "Once Backward"
 msgstr "1 fois en Arrière"
 
-#: app/paintbrush.c:157
+#: app/paintbrush.c:164
 msgid "Loop Sawtooth"
 msgstr "Boucle Dents de scie"
 
-#: app/paintbrush.c:159
+#: app/paintbrush.c:166
 msgid "Loop Triangle"
 msgstr "Boucle Triangle"
 
-#: app/paintbrush.c:185
+#: app/paintbrush.c:197
 msgid "Fade Out:"
 msgstr "Estompement:"
 
-#: app/paintbrush.c:212
+#: app/paintbrush.c:224
 msgid "Length:"
 msgstr "Longueur:"
 
 #. the gradient type
-#: app/paintbrush.c:237
-#, fuzzy
+#: app/paintbrush.c:249
 msgid "Type:"
-msgstr "Type"
+msgstr "Type:"
 
 #: app/palette.c:484
 #, c-format
@@ -5128,27 +5199,27 @@ msgstr "lecture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
 msgid "unable to write tile data to disk: %d ( %d ) bytes written"
 msgstr "écriture de données d'un fichier impossible : %d/%d ( %d ) octets lus"
 
-#: app/tips_dialog.c:57
+#: app/tips_dialog.c:61
 msgid "gimp_tips.txt"
 msgstr "gimp_conseils.fr.txt"
 
-#: app/tips_dialog.c:69
+#: app/tips_dialog.c:73
 msgid "GIMP Tip of the day"
 msgstr "Conseil du jour GIMP"
 
-#: app/tips_dialog.c:130
+#: app/tips_dialog.c:134
 msgid "Previous Tip"
 msgstr "Conseil précédent"
 
-#: app/tips_dialog.c:138
+#: app/tips_dialog.c:142
 msgid "Next Tip"
 msgstr "Conseil suivant"
 
-#: app/tips_dialog.c:158
+#: app/tips_dialog.c:162
 msgid "Show tip next time"
 msgstr "Afficher un conseil la prochaine fois"
 
-#: app/tips_dialog.c:256
+#: app/tips_dialog.c:260
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in the\n"
@@ -5423,21 +5494,19 @@ msgstr "Dessine à l'encre"
 
 #: app/tools.c:456 app/tools.c:461
 msgid "Dodge or Burn"
-msgstr ""
+msgstr "Multiplier ou diviser"
 
 #: app/tools.c:458
-#, fuzzy
 msgid "/Tools/DodgeBurn"
-msgstr "/Outils/Déplacer"
+msgstr "/Outils/MultiplierDiviser"
 
 #: app/tools.c:471 app/tools.c:476
 msgid "Smudge"
-msgstr ""
+msgstr "Barbouiller"
 
 #: app/tools.c:473
-#, fuzzy
 msgid "/Tools/Smudge"
-msgstr "/Outils/Déplacer"
+msgstr "/Outils/Barbouiller"
 
 #: app/tools.c:487
 msgid "By Color Select"
@@ -5446,38 +5515,6 @@ msgstr "Sélection par Couleur"
 #: app/tools.c:489
 msgid "/Select/By Color..."
 msgstr "/Sélection/Par Couleur..."
-
-#: app/tools.c:504
-msgid "/Image/Colors/Color Balance"
-msgstr "/Image/Couleurs/Balance des couleurs"
-
-#: app/tools.c:519
-msgid "/Image/Colors/Brightness-Contrast"
-msgstr "/Image/Couleurs/Luminosité-Contraste"
-
-#: app/tools.c:534
-msgid "/Image/Colors/Hue-Saturation"
-msgstr "/Image/Couleurs/Teinte-Saturation"
-
-#: app/tools.c:549
-msgid "/Image/Colors/Posterize"
-msgstr "/Image/Couleurs/Postériser"
-
-#: app/tools.c:564
-msgid "/Image/Colors/Threshold"
-msgstr "/Image/Couleurs/Seuil"
-
-#: app/tools.c:579
-msgid "/Image/Colors/Curves"
-msgstr "/Image/Couleurs/Courbes"
-
-#: app/tools.c:594
-msgid "/Image/Colors/Levels"
-msgstr "/Image/Couleurs/Niveaux"
-
-#: app/tools.c:609
-msgid "/Image/Histogram"
-msgstr "/Image/Histogramme"
 
 #: app/tool_options.c:206 app/tool_options.c:688
 msgid "This tool has no options."
@@ -5560,14 +5597,12 @@ msgid "Ink Options"
 msgstr "Options de Dessin à l'Encre"
 
 #: app/tool_options.c:570
-#, fuzzy
 msgid "Dodge or Burn Options"
-msgstr "Options de la Balance des Couleurs"
+msgstr "Options de Multiplication/Division"
 
 #: app/tool_options.c:572
-#, fuzzy
 msgid "Smudge Options"
-msgstr "Options d'enregistrement"
+msgstr "Options du barbouillage"
 
 #: app/tool_options.c:573
 msgid "ERROR: Unknown Paint Type"
