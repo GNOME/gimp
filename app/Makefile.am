@@ -73,8 +73,8 @@ gimp_1_3_LDADD = \
 	core/libappcore.a						\
 	pdb/libapppdb.a							\
 	paint/libapppaint.a						\
-	text/libapptext.a						\
 	xcf/libappxcf.a							\
+	text/libapptext.a						\
 	vectors/libappvectors.a						\
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\

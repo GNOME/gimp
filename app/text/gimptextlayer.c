@@ -57,7 +57,8 @@ static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
 static void       gimp_text_layer_rename        (GimpItem       *item,
                                                  const gchar    *new_name,
                                                  const gchar    *undo_desc);
-
+static void       gimp_text_layer_set_text      (GimpTextLayer  *layer,
+                                                 GimpText       *text);
 static void       gimp_text_layer_notify_text   (GimpTextLayer  *layer);
 static gboolean   gimp_text_layer_idle_render   (GimpTextLayer  *layer);
 static gboolean   gimp_text_layer_render        (GimpTextLayer  *layer);
@@ -224,7 +225,7 @@ GimpLayer *
 gimp_text_layer_new (GimpImage *image,
 		     GimpText  *text)
 {
-  GimpTextLayer  *layer;
+  GimpTextLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -240,7 +241,7 @@ gimp_text_layer_new (GimpImage *image,
                            gimp_image_base_type_with_alpha (image),
                            NULL);
 
-  layer->text = g_object_ref (text);
+  gimp_text_layer_set_text (layer, text);
 
   if (! gimp_text_layer_render (layer))
     {
@@ -248,11 +249,90 @@ gimp_text_layer_new (GimpImage *image,
       return NULL;
     }
 
+  return GIMP_LAYER (layer);
+}
+
+/**
+ * gimp_text_layer_from_layer:
+ * @layer: a #GimpLayer object
+ * @text: a #GimpText object
+ * 
+ * Converts a standard #GimpLayer and a #GimpText object into a
+ * #GimpTextLayer. The new text layer takes ownership of the @text and
+ * @layer objects.  The @layer object is rendered unusable by this
+ * function. Don't even try to use if afterwards!
+ *
+ * This is a gross hack that is needed in order to load text layers
+ * from XCF files in a backwards-compatible way. Please don't use it
+ * for anything else!
+ * 
+ * Return value: a newly allocated #GimpTextLayer object
+ **/
+GimpLayer *
+gimp_text_layer_from_layer (GimpLayer *layer,
+                            GimpText  *text)
+{
+  GimpTextLayer *text_layer;
+  GimpItem      *item;
+  GimpDrawable  *drawable;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
+
+  text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
+
+  item = GIMP_ITEM (text_layer);
+  drawable = GIMP_DRAWABLE (text_layer);
+
+  gimp_object_set_name (GIMP_OBJECT (text_layer),
+                        gimp_object_get_name (GIMP_OBJECT (layer)));
+
+  item->ID        = gimp_item_get_ID (GIMP_ITEM (layer));
+  item->tattoo    = gimp_item_get_tattoo (GIMP_ITEM (layer));
+  item->gimage    = gimp_item_get_image (GIMP_ITEM (layer));
+
+  item->parasites = GIMP_ITEM (layer)->parasites;
+  GIMP_ITEM (layer)->parasites = NULL;
+
+  item->width     = gimp_item_width (GIMP_ITEM (layer));
+  item->height    = gimp_item_height (GIMP_ITEM (layer));
+
+  gimp_item_offsets (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
+
+  item->linked    = gimp_item_get_linked (GIMP_ITEM (layer));
+
+  drawable->tiles     = GIMP_DRAWABLE (layer)->tiles;
+  GIMP_DRAWABLE (layer)->tiles = NULL;
+
+  drawable->visible   = gimp_drawable_get_visible (GIMP_DRAWABLE (layer));
+  drawable->bytes     = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
+  drawable->type      = gimp_drawable_type (GIMP_DRAWABLE (layer));
+  drawable->has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
+  GIMP_LAYER (text_layer)->opacity        = gimp_layer_get_opacity (layer);
+  GIMP_LAYER (text_layer)->mode           = gimp_layer_get_mode (layer);
+  GIMP_LAYER (text_layer)->preserve_trans = gimp_layer_get_preserve_trans (layer);
+
+  gimp_text_layer_set_text (text_layer, text);
+
+  g_object_unref (layer);
+  g_object_unref (text);
+
+  return GIMP_LAYER (text_layer);
+}
+
+static void
+gimp_text_layer_set_text (GimpTextLayer *layer,
+                          GimpText      *text)
+{
+  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
+  g_return_if_fail (GIMP_IS_TEXT (text));
+  g_return_if_fail (layer->text == NULL);
+
+  layer->text = g_object_ref (text);
   g_signal_connect_object (text, "notify",
                            G_CALLBACK (gimp_text_layer_notify_text),
                            layer, G_CONNECT_SWAPPED);
-
-  return GIMP_LAYER (layer);
 }
 
 GimpText *

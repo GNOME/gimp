@@ -1,5 +1,33 @@
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
+        Added persistent storage of text layers in XCF files. We use a 
+	parasite in order to keep the file format backwards compatible.
+	Fixes bug #111781.
+
+	* app/text/Makefile.am
+	* app/text/gimptext-parasite.[ch]: new files that hold functions
+	to convert a GimpText object to a GimpParasite and back.
+	
+	* app/text/gimptextlayer.[ch]: added an ugly hack that allows to
+	convert a normal layer to a text layer.
+
+	* app/xcf/xcf-save.c: when saving a text layer, store an extra
+	parasite that holds all information about the text. 
+
+	* app/xcf/xcf-load.c: if a "gimp-text-layer" parasite is found and
+	it can be successfully deserialized to a GimpText object, convert
+	the layer to a text layer and remove the parasite.
+
+	* app/Makefile.am: had to change linkage order.
+
+	* devel-docs/parasites.txt: documented the new "gimp-text-layer"
+	parasite.
+
+	* app/text/gimptext-parasite.[ch]
+	* app/gui/session.c (session_save): plugged minor memory leaks.
+
+2003-06-24  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpscanner.c: store file descriptor and filename in
 	a private struct instead of using internals of GScanner. Should
 	fix problems on Win32 reported by Hans Breuer.

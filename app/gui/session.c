@@ -218,6 +218,7 @@ session_save (Gimp *gimp)
 				 "every time you quit the gimp. If this "
 				 "file isn't found, defaults are used.",
 				 NULL);
+  g_free (filename);
 
   if (!writer)
     return;
