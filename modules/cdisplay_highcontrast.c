@@ -260,7 +260,10 @@ cdisplay_contrast_load_state (GimpColorDisplay *display,
   memcpy (&contrast->contrast, gimp_parasite_data (state), sizeof (gdouble));
 #else
   {
-    guint32 buf[2], *data = gimp_parasite_data (state);
+    guint32        buf[2];
+    const guint32 *data;
+
+    data = gimp_parasite_data (state);
 
     buf[0] = g_ntohl (data[1]);
     buf[1] = g_ntohl (data[0]);

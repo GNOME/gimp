@@ -1,3 +1,10 @@
+2003-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* modules/cdisplay_colorblind.c (cdisplay_colorblind_load_state)
+	* modules/cdisplay_gamma.c (cdisplay_gamma_load_state)
+	* modules/cdisplay_highcontrast.c (cdisplay_contrast_load_state):
+	gimp_parasite_data() returns a pointer to const data now.
+
 2003-06-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: removed "id" from ALL_LINGUAS until all required

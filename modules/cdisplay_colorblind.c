@@ -418,7 +418,7 @@ cdisplay_colorblind_load_state (GimpColorDisplay *display,
                                 GimpParasite     *state)
 {
   CdisplayColorblind *colorblind;
-  gchar              *str;
+  const gchar        *str;
 
   colorblind = CDISPLAY_COLORBLIND (display);
 
