@@ -1,3 +1,11 @@
+Tue Sep  1 19:19:57 BST 1998  Adam D. Moss <adam@gimp.org>
+
+	* app/gimage_cmds.c app/gimage_cmds.h app/gimpimage.c
+	app/gimpimage.h libgimp/gimp.h libgimp/gimpenums.h
+	libgimp/gimpimage.c: Moved the guide PDB functions into
+	a more sensible place, made them accessible to plugins
+	through libgimp.
+
 Tue Sep  1 01:15:06 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/layers_dialog.c (paint_mode_menu_get_position): added this

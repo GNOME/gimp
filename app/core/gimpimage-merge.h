@@ -199,13 +199,4 @@ void            gimp_image_invalidate_preview     (GimpImage *);
 
 void            gimp_image_invalidate_previews    (void);
 
-
-/* Exported for PDB */
-extern ProcRecord gimp_image_add_hguide_proc;
-extern ProcRecord gimp_image_add_vguide_proc;
-extern ProcRecord gimp_image_delete_guide_proc;
-extern ProcRecord gimp_image_findnext_guide_proc;
-extern ProcRecord gimp_image_get_guide_orientation_proc;
-extern ProcRecord gimp_image_get_guide_position_proc;
-
 #endif

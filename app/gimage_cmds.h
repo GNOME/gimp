@@ -68,4 +68,11 @@ extern ProcRecord gimage_clean_all_proc;
 extern ProcRecord gimage_floating_sel_proc;
 extern ProcRecord channel_ops_duplicate_proc;
 
+extern ProcRecord gimp_image_add_hguide_proc;
+extern ProcRecord gimp_image_add_vguide_proc;
+extern ProcRecord gimp_image_delete_guide_proc;
+extern ProcRecord gimp_image_findnext_guide_proc;
+extern ProcRecord gimp_image_get_guide_orientation_proc;
+extern ProcRecord gimp_image_get_guide_position_proc;
+
 #endif  /*  __GIMAGE_CMDS_H__  */

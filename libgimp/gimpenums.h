@@ -29,6 +29,13 @@ typedef enum
 
 typedef enum
 {
+  ORIENTATION_UNKNOWN    = -1,
+  ORIENTATION_VERTICAL   = 0,
+  ORIENTATION_HORIZONTAL = 1
+} GOrientation;
+
+typedef enum
+{
   RGB_IMAGE      = 0,
   RGBA_IMAGE     = 1,
   GRAY_IMAGE     = 2,

@@ -428,6 +428,24 @@ void       gimp_image_set_filename          (gint32     image_ID,
 
 
 /****************************************
+ *              Guides                  *
+ ****************************************/
+
+gint32       gimp_image_add_hguide              (gint32     image_ID,
+						 gint32     yposition);
+gint32       gimp_image_add_vguide              (gint32     image_ID,
+						 gint32     yposition);
+void         gimp_image_delete_guide            (gint32     image_ID,
+						 gint32     guide_ID);
+gint32       gimp_image_findnext_guide          (gint32     image_ID,
+						 gint32     guide_ID);
+GOrientation gimp_image_get_guide_orientation   (gint32     image_ID,
+					         gint32     guide_ID);
+gint32       gimp_image_get_guide_position      (gint32     image_ID,
+						 gint32     guide_ID);
+
+
+/****************************************
  *             Displays                 *
  ****************************************/
 
