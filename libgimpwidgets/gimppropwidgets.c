@@ -380,15 +380,98 @@ gimp_prop_enum_combo_box_notify (GObject    *config,
 }
 
 
-/******************/
-/*  option menus  */
-/******************/
+/************************/
+/*  boolean combo box   */
+/************************/
 
-static void   gimp_prop_option_menu_callback (GtkWidget   *widget,
-                                              GObject     *config);
-static void   gimp_prop_option_menu_notify   (GObject     *config,
-                                              GParamSpec  *param_spec,
-                                              GtkWidget   *menu);
+static void   gimp_prop_boolean_combo_box_callback (GtkWidget   *widget,
+                                                    GObject     *config);
+static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
+                                                    GParamSpec  *param_spec,
+                                                    GtkWidget   *widget);
+
+
+GtkWidget *
+gimp_prop_boolean_combo_box_new (GObject     *config,
+                                 const gchar *property_name,
+                                 const gchar *true_text,
+                                 const gchar *false_text)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  gboolean    value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  combo_box = gtk_combo_box_new_text ();
+
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), true_text);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), false_text);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_boolean_combo_box_callback),
+                    config);
+
+  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_boolean_combo_box_notify),
+                  combo_box);
+
+  return combo_box;
+}
+
+static void
+gimp_prop_boolean_combo_box_callback (GtkWidget *widget,
+                                      GObject   *config)
+{
+  GParamSpec  *param_spec;
+  gint         value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  value =  gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+
+  g_object_set (config,
+                param_spec->name, value ? FALSE : TRUE,
+                NULL);
+}
+
+static void
+gimp_prop_boolean_combo_box_notify (GObject    *config,
+                                    GParamSpec *param_spec,
+                                    GtkWidget  *combo_box)
+{
+  gint value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
+}
+
+
+/****************/
+/*  paint menu  */
+/****************/
+
+static void   gimp_prop_paint_menu_callback (GtkWidget   *widget,
+                                             GObject     *config);
+static void   gimp_prop_paint_menu_notify   (GObject     *config,
+                                             GParamSpec  *param_spec,
+                                             GtkWidget   *menu);
 
 GtkWidget *
 gimp_prop_paint_mode_menu_new (GObject     *config,
@@ -408,7 +491,7 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_option_menu_callback),
+  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_paint_menu_callback),
                                    config,
                                    with_behind_mode,
                                    value);
@@ -416,54 +499,15 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_option_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-
-GtkWidget *
-gimp_prop_boolean_option_menu_new (GObject     *config,
-                                   const gchar *property_name,
-                                   const gchar *true_text,
-                                   const gchar *false_text)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  gboolean    value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  menu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (gimp_prop_option_menu_callback),
-                              config, value,
-
-                              true_text,  TRUE,  NULL,
-                              false_text, FALSE, NULL,
-
-                              NULL);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_option_menu_notify),
+                  G_CALLBACK (gimp_prop_paint_menu_notify),
                   menu);
 
   return menu;
 }
 
 static void
-gimp_prop_option_menu_callback (GtkWidget *widget,
-                                GObject   *config)
+gimp_prop_paint_menu_callback (GtkWidget *widget,
+                               GObject   *config)
 {
   if (GTK_IS_MENU (widget->parent))
     {
@@ -491,9 +535,9 @@ gimp_prop_option_menu_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_option_menu_notify (GObject    *config,
-                              GParamSpec *param_spec,
-                              GtkWidget  *menu)
+gimp_prop_paint_menu_notify (GObject    *config,
+                             GParamSpec *param_spec,
+                             GtkWidget  *menu)
 {
   gint value;
 

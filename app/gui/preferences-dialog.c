@@ -805,18 +805,18 @@ prefs_enum_combo_box_add (GObject     *config,
 }
 
 static GtkWidget *
-prefs_boolean_option_menu_add (GObject     *config,
-                               const gchar *property_name,
-                               const gchar *true_text,
-                               const gchar *false_text,
-                               const gchar *label,
-                               GtkTable    *table,
-                               gint         table_row)
+prefs_boolean_combo_box_add (GObject     *config,
+                             const gchar *property_name,
+                             const gchar *true_text,
+                             const gchar *false_text,
+                             const gchar *label,
+                             GtkTable    *table,
+                             gint         table_row)
 {
   GtkWidget *menu;
 
-  menu = gimp_prop_boolean_option_menu_new (config, property_name,
-                                            true_text, false_text);
+  menu = gimp_prop_boolean_combo_box_new (config, property_name,
+                                          true_text, false_text);
 
   if (menu)
     gimp_table_attach_aligned (table, 0, table_row,
@@ -1506,11 +1506,11 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_boolean_option_menu_add (object, "initial-zoom-to-fit",
-                                 _("Fit to Window"),
-                                 "1:1",
-                                 _("Inital Zoom Ratio:"),
-                                 GTK_TABLE (table), 0);
+  prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
+                               _("Fit to Window"),
+                               "1:1",
+                               _("Inital Zoom Ratio:"),
+                               GTK_TABLE (table), 0);
 
   /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
@@ -1931,11 +1931,11 @@ prefs_dialog_new (Gimp       *gimp,
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
 
-  prefs_boolean_option_menu_add (object, "trust-dirty-flag",
-                                 _("Only when Modified"),
-                                 _("Always"),
-                                 _("\"File -> Save\" Saves the Image:"),
-                                 GTK_TABLE (table), 0);
+  prefs_boolean_combo_box_add (object, "trust-dirty-flag",
+                               _("Only when Modified"),
+                               _("Always"),
+                               _("\"File -> Save\" Saves the Image:"),
+                               GTK_TABLE (table), 0);
   prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
                             _("Size of Thumbnail Files:"),
                             GTK_TABLE (table), 1);
