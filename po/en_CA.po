@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-06 12:26-0400\n"
-"PO-Revision-Date: 2004-09-06 14:29-0400\n"
+"POT-Creation-Date: 2004-09-23 12:46-0400\n"
+"PO-Revision-Date: 2004-09-23 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -1974,7 +1974,7 @@ msgstr "Enable QuickMask"
 msgid "Disable QuickMask"
 msgstr "Disable QuickMask"
 
-#: app/core/gimpimage-undo-push.c:2937
+#: app/core/gimpimage-undo-push.c:2940
 #, c-format
 msgid "Can't undo %s"
 msgstr "Can't undo %s"
@@ -2263,6 +2263,7 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
+#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -4075,6 +4076,10 @@ msgstr "/View/Zoom/1:8  (12.5%)"
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/View/Zoom/1:16  (6.25%)"
+
+#: app/gui/image-menu.c:427
+msgid "/View/Zoom/O_ther..."
+msgstr "/View/Zoom/O_ther..."
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -9372,11 +9377,11 @@ msgstr "Width"
 msgid "Height"
 msgstr "Height"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "Could not find GIMP Help Browser"
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9384,15 +9389,15 @@ msgstr ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 
-#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
+#: app/widgets/gimphelp.c:202 app/widgets/gimphelp.c:235
 msgid "Use web browser instead"
 msgstr "Use web browser instead"
 
-#: app/widgets/gimphelp.c:234
+#: app/widgets/gimphelp.c:232
 msgid "Could not start GIMP Help Browser"
 msgstr "Could not start GIMP Help Browser"
 
-#: app/widgets/gimphelp.c:236
+#: app/widgets/gimphelp.c:234
 msgid "Could not start the GIMP Help Browser."
 msgstr "Could not start the GIMP Help Browser."
 
