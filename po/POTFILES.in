@@ -16,6 +16,7 @@ app/config/gimpscanner.c
 
 app/core/core-enums.c
 app/core/gimp.c
+app/core/gimp-gradients.c
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
@@ -164,6 +165,7 @@ app/tools/gimptool.c
 app/tools/gimptransformtool.c
 app/tools/gimpvectortool.c
 app/tools/paint_options.c
+app/tools/path_tool.c
 app/tools/selection_options.c
 app/tools/tool_options.c
 app/tools/transform_options.c
