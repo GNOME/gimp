@@ -533,6 +533,15 @@ gimpimage
 @name: 
 
 
+<!-- ##### FUNCTION gimp_image_get_name ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_get_resolution ##### -->
 <para>
 
