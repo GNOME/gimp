@@ -1,5 +1,16 @@
 2004-08-11  DindinX  <david@dindinx.org>
 
+	Bad DindinX! Don't break the build!
+
+	* configure.in
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl: removed libgimpoldpreview from
+	here too.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2004-08-11  DindinX  <david@dindinx.org>
+
 	Removed the GimpOldPreview stuff. Die, crap, die!
 
 	* plug-ins/libgimpoldpreview/*: removed.

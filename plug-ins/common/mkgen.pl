@@ -60,7 +60,6 @@ EXTRA_DIST = \\
 
 INCLUDES = \\
 	-I\$(top_srcdir)					\\
-	-I\$(top_srcdir)/plug-ins/libgimpoldpreview	\\
 	\$(GTK_CFLAGS)					\\
 	\$(EXIF_CFLAGS)					\\
 	\$(SVG_CFLAGS)					\\
