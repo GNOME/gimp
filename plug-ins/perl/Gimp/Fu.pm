@@ -78,6 +78,7 @@ sub PF_GRADIENT	() { Gimp::PARAM_END+8	};
 sub PF_RADIO	() { Gimp::PARAM_END+9	};
 sub PF_CUSTOM	() { Gimp::PARAM_END+10	};
 sub PF_FILE	() { Gimp::PARAM_END+11	};
+sub PF_TEXT	() { Gimp::PARAM_END+12	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
@@ -103,6 +104,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_RADIO	=> 'string',
          &PF_CUSTOM	=> 'string',
          &PF_FILE	=> 'string',
+         &PF_TEXT	=> 'string',
          &PF_IMAGE	=> 'NYI',
          &PF_LAYER	=> 'NYI',
          &PF_CHANNEL	=> 'NYI',
@@ -112,7 +114,8 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
 @_params=qw(PF_INT8 PF_INT16 PF_INT32 PF_FLOAT PF_VALUE PF_STRING PF_COLOR
             PF_COLOUR PF_TOGGLE PF_IMAGE PF_DRAWABLE PF_FONT PF_LAYER
             PF_CHANNEL PF_BOOL PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
-            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM PF_FILE);
+            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM PF_FILE
+            PF_TEXT);
 
 #@EXPORT_OK = qw(interact $run_mode save_image);
 
@@ -462,6 +465,20 @@ sub interact($$$$@) {
            $f->ok_button    ->signal_connect (clicked => sub { $f->hide; $s->set_text ($f->get_filename) });
            $f->cancel_button->signal_connect (clicked => sub { $f->hide });
            
+        } elsif($type == PF_TEXT) {
+           $a = new Gtk::HBox 0,5;
+           my $e = new Gtk::Text;
+           $a->add ($e);
+           $e->set_editable (1);
+
+           push @setvals, sub { 
+              $e->delete_text(0,-1);
+              $e->insert_text($_[0],0);
+           };
+           push @getvals, sub {
+              $e->get_chars(0,-1);
+           };
+
         } else {
            $label="Unsupported argumenttype $type";
            push(@setvals,sub{});
@@ -566,6 +583,7 @@ sub string2pf($$) {
       || $type==PF_BRUSH
       || $type==PF_CUSTOM
       || $type==PF_FILE
+      || $type==PF_TEXT
       || $type==PF_RADIO	# for now! #d#
       || $type==PF_GRADIENT) {
       $s;
@@ -694,6 +712,7 @@ sub query {
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_GRADIENT;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
                                       $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
+                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_TEXT;
                                       $_;
                                    } @$params],
                                    $results);
@@ -906,6 +925,11 @@ commandline or via the PDB.
 
 This represents a file system object. It usually is a file, but can be
 anything (directory, link). It might not even exist at all.
+
+=item PF_TEXT
+
+Similar to PF_STRING, but the entry widget is much larger and has Load and
+Save buttons.
 
 =back
 

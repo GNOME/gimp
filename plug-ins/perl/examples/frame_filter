@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+
+use Gimp qw(:auto);
+use Gimp::Fu;
+
+register	"layer_apply",
+		"Apply a perl expression to every layer of the image",
+		"=pod",
+		"Marc Lehmann <pcg\@goof.com>",
+		"Marc Lehmann <pcg\@goof.com>",
+		"19990708",
+		"<Image>/Filters/Animation/Apply Expression",
+		"*",
+		[
+                 [PF_TEXT,	"expr",	"the perl expression to run for each layer",
+                                '$d->gauss_rle($P*100,1,1)'],
+		],
+                [],
+                ['gimp-1.1'],
+	sub {
+		my($image,$_drawable,$function) = @_;
+
+                my($d,$i,$I,$n,$p,$P);
+
+                my @layers = $image->get_layers;
+                $n = @layers;
+
+                my $func = eval "sub{\n#line 0 \"expression\"\n$function\n}";
+                die "syntax error in expression '$function': $@\n" if $@;
+
+                # now apply the function
+                eval { $image->undo_push_group_start };
+                Gimp->progress_init("Applying Expression...");
+                for my $index (0..$n-1) {
+                   $i = $index;
+                   $I = $n-$i-1;
+                   $p = $i/$#layers;
+                   $P = $I/$#layers;
+                   $d = $layers[$i];
+
+                   eval { &$func };
+                   die "evaluation error in frame $i: $@\n" if $@;
+
+                   Gimp->progress_update(($i+1)/$n);
+                }
+                Gimp->displays_flush;
+                eval { $image->undo_push_group_end };
+	};
+
+exit main;
+
+=head1 DESCRIPTION
+
+This function runs a perl expression for each layer of an image. The perl expression
+can use the following variables:
+
+=over 4
+
+=item $image
+
+The image.
+
+=item $d ("drawable")
+
+The current drawable (currently always a layer)
+
+=item $i, $I ("index")
+
+The index of the current layer. C<$i> counts from 0 to $n-1, i.e. from top
+to the bottom of the stack with layer #0 being the top of the stack.
+
+C<$I> counts "backwards", i.e. from $n-1 to 0, so layer 0 is at the
+bottom.
+
+=item $p, $P ("percent")
+
+Similar to $i, but counts from 0 to 1 (inclusive). $p is equivalent to
+C<$i/($n-1)> and $P is equivalent to C<$I/($n-1)>.
+
+=item $n ("number of frames")
+
+The number of layers in the image.
+
+=back
+

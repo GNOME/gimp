@@ -103,4 +103,5 @@ examples/pixelmap
 embedxpm
 logo.xpm
 examples/frame_reshuffle
+examples/frame_filter
 

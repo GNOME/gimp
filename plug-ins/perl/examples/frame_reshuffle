@@ -8,7 +8,7 @@ register	"layer_reorder",
 		"=pod",
 		"Marc Lehmann <pcg\@goof.com>",
 		"Marc Lehmann <pcg\@goof.com>",
-		"19990707",
+		"19990708",
 		"<Image>/Layers/Stack/Reorder Layers",
 		"*",
 		[
@@ -32,7 +32,7 @@ register	"layer_reorder",
                 $custom =~ s/\bn\b/scalar@layers/ge;
                 $custom =~ s/\bi\b/\$i/g;
 
-                $function = eval "sub { my \$i = shift;\n#line 0\n$custom\n}";
+                $function = eval "sub { my \$i = shift;\n#line 0 \"expression\"\n$custom\n}";
                 die "syntax error in expression '$custom': $@\n" if $@;
 
                 # calculcate new order

@@ -1,8 +1,9 @@
 Revision history for Gimp-Perl extension.
 
-
+1.096
 	- fix around PDL-2.002 exporting its own ppport.h.
-        - new script examples/frame_reshuffle.
+        - new scripts examples/frame_reshuffle and examples/frame_filter.
+        - added Gimp::Fu::PF_TEXT.
 
 1.095 Tue Jun 29 01:22:01 CEST 1999
 	- finally cut support for gimp-1.0.2 and gtk-1.0,
