@@ -1,3 +1,8 @@
+2001-12-06  Rebecca Walter <bex@gimp.org>
+
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c: More of my proofing.
+
 2001-12-06  Dindinx  <David@dindinx.org>
 
 	* plug-ins/*/*.c: use the G_N_ELEMENTS macro where appropriate,

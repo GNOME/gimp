@@ -348,7 +348,8 @@ browser_info_remove (GimpContainer     *container,
     }
   while (gtk_tree_model_iter_next (GTK_TREE_MODEL (st->list), &iter));
 
-  g_warning ("tried to remove module that wasn't in brower's list");
+  g_warning ("%s: Tried to remove a module not in the browser's list.", 
+	     G_STRLOC);
 }
 
 static void
@@ -389,7 +390,7 @@ browser_info_update (GimpModuleInfoObj *mod,
       text[2] = mod->info->version;
       text[3] = mod->info->copyright;
       text[4] = mod->info->date;
-      text[5] = mod->on_disk ? _("on disk") : _("only in memory");
+      text[5] = mod->on_disk ? _("On disk") : _("Only in memory");
     }
   else
     {
@@ -398,12 +399,12 @@ browser_info_update (GimpModuleInfoObj *mod,
       text[2] = "--";
       text[3] = "--";
       text[4] = "--";
-      text[5] = mod->on_disk ? _("on disk") : _("nowhere (click 'refresh')");
+      text[5] = mod->on_disk ? _("On disk") : _("No longer available");
     }
 
   if (mod->state == GIMP_MODULE_STATE_ERROR && mod->last_module_error)
     {
-      status = g_strdup_printf ("%s (%s)", gettext (statename[mod->state]),
+      status = g_strdup_printf ("%s\n(%s)", gettext (statename[mod->state]),
                                 mod->last_module_error);
     }
   else
@@ -481,7 +482,7 @@ browser_info_init (BrowserState *st,
     }
 
   st->load_inhibit_check =
-    gtk_check_button_new_with_label (_("Autoload during startup"));
+    gtk_check_button_new_with_label (_("Autoload during start-up"));
   gtk_widget_show (st->load_inhibit_check);
   gtk_table_attach (GTK_TABLE (table), st->load_inhibit_check,
 		    0, 2, i, i+1,

@@ -83,7 +83,7 @@ offset_dialog_create (GimpDrawable *drawable)
   off_d->fill_type   = gimp_drawable_has_alpha (drawable);
   off_d->gimage      = gimp_drawable_gimage (drawable);
 
-  off_d->dlg = gimp_dialog_new (_("Offset"), "offset",
+  off_d->dlg = gimp_dialog_new (_("Offset Layer"), "offset",
 				gimp_standard_help_func,
 				"dialogs/offset.html",
 				GTK_WIN_POS_NONE,
@@ -163,7 +163,7 @@ offset_dialog_create (GimpDrawable *drawable)
   gtk_widget_show (table);
 
   /*  The wrap around option  */
-  check = gtk_check_button_new_with_label (_("Wrap Around"));
+  check = gtk_check_button_new_with_label (_("Wrap"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
@@ -188,6 +188,7 @@ offset_dialog_create (GimpDrawable *drawable)
     gtk_widget_set_sensitive (radio_button, FALSE);
 
   /*  The by half height and half width option */
+#warning FIXME move button
   push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
   gtk_container_set_border_width (GTK_CONTAINER (push), 2);
   gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE, 0);
