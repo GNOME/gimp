@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.0\n"
-"POT-Creation-Date: 2001-01-04 17:00+0100\n"
+"POT-Creation-Date: 2001-01-09 18:25+0100\n"
 "PO-Revision-Date: 2001-01-04 16:52+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -7588,19 +7588,19 @@ msgstr "Appliquer un filtre sur une animation"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/Vidéo/Scinder vidéo en images"
+msgstr "<Image>/Vidéo/Scinder la vidéo en images"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Exts/Scinder vidéo en images"
+msgstr "<Toolbox>/Exts/Scinder la vidéo en images"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/Vidéo/Scinder vidéo en images/MPEG1"
+msgstr "<Image>/Vidéo/Scinder la vidéo en images/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Xtns/Scinder vidéo en images/MPEG1"
+msgstr "<Toolbox>/Xtns/Scinder la vidéo en images/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
@@ -7633,8 +7633,8 @@ msgid ""
 "Audiotracks in the videofile are ignored."
 msgstr ""
 "Nom du fichier MPEG1 à lire.\n"
-"Les images sont extraites du fichier vidéo\n"
-"et écrites dans des fichiers séparés sur\n"
+"La séquence est extraite du fichier vidéo\n"
+"et écrite dans des fichiers séparés sur\n"
 "disque. Les pistes audio sont ignorées."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
@@ -7654,8 +7654,8 @@ msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and .xcf is added)"
 msgstr ""
-"Base des noms de fichiers des étapes d'animation sur le\n"
-"disque (le numéro de l'image et .xcf seront ajoutés)."
+"Base des noms de fichiers des images animées à écrire sur\n"
+"le disque (le numéro de l'image et .xcf seront ajoutés)."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
 #: plug-ins/imagemap/imap_toolbar.c:110
@@ -7679,7 +7679,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689
 msgid "Split MPEG1 Video to Frames"
-msgstr "Scinder la vidéo MPEG1 en images"
+msgstr "Scinder la vidéo MPEG1 en séquence"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
 #: plug-ins/gap/gap_range_ops.c:1462
@@ -7715,7 +7715,7 @@ msgstr "    vous devrez affecter à la variable d'environnement GAP_XANIM_PROG"
 
 #: plug-ins/gap/gap_decode_xanim.c:154
 msgid "    to your xanim exporting program and restart gimp"
-msgstr "   le chemin vers votre programme et redémarrer gimp"
+msgstr "   le chemin vers votre programme xanim et redémarrer GIMP"
 
 #: plug-ins/gap/gap_decode_xanim.c:162
 msgid "An ERROR occured while trying to call xanim:"
@@ -7736,9 +7736,9 @@ msgid ""
 "and written to seprate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
-"Nom du fichier vidéo à LIRE par xanim.\n"
-"Les images sont extraites du fichier vidéo\n"
-"et écrites dans des fichiers séparés sur\n"
+"Nom du fichier vidéo à LIRE par XAnim.\n"
+"La séquence est extraite du fichier vidéo\n"
+"et écrite dans des fichiers séparés sur\n"
 "disque. La version d'XAnim comportant\n"
 "l'exportation est requise."
 
@@ -7766,11 +7766,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:260
 msgid "Extract Frames"
-msgstr "Extraire les images"
+msgstr "Extraire la séquence"
 
 #: plug-ins/gap/gap_decode_xanim.c:261
 msgid "Enable extraction of Frames"
-msgstr "Active l'extraction des images"
+msgstr "Active l'extraction de séquence"
 
 #: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Extract Audio"
@@ -7823,7 +7823,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:297
 msgid "Split any Xanim readable Video to Frames"
-msgstr "Scinder n'importe quelle vidéo lisible par XAnim en images"
+msgstr "Scinder n'importe quelle vidéo lisible par XAnim en séquence"
 
 #: plug-ins/gap/gap_decode_xanim.c:540
 #, c-format
@@ -7832,7 +7832,7 @@ msgid ""
 "%s\n"
 "maybe xanim has failed or was cancelled"
 msgstr ""
-"Ne peut trouver d'images extraites,\n"
+"Ne peut trouver de séquence extraites,\n"
 "%s\n"
 "peut être qu'XAnim a échoué ou a été\n"
 "interrompu"
@@ -7899,7 +7899,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1089
 msgid "extracting frames..."
-msgstr "Extraction des images en cours..."
+msgstr "Extraction de la séquence en cours..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1114
 #, c-format
@@ -7915,16 +7915,16 @@ msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
 msgstr ""
-"Ne peut trouver aucune trame extraite.\n"
+"Ne peut trouver aucune séquence extraite.\n"
 "XAnim a échoué ou a été interrompu."
 
 #: plug-ins/gap/gap_decode_xanim.c:1154
 msgid "renaming frames..."
-msgstr "renommage des images en cours..."
+msgstr "renommage de la séquence en cours..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1159
 msgid "converting frames..."
-msgstr "conversion des images en cours..."
+msgstr "conversion de la séquence en cours..."
 
 #: plug-ins/gap/gap_filter_foreach.c:126
 msgid "backup to file"
@@ -7979,11 +7979,11 @@ msgstr "<Image>/Filtres/Filtrer tous les calques..."
 
 #: plug-ins/gap/gap_frontends_main.c:128
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/Vidéo/Scinder vidéo en images/Lisible par XAnim..."
+msgstr "<Image>/Vidéo/Scinder la vidéo en images/Lisible par XAnim..."
 
 #: plug-ins/gap/gap_frontends_main.c:140
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Exts/Scinder vidéo en images/Lisible par XAnim..."
+msgstr "<Toolbox>/Exts/Scinder la vidéo en images/Lisible par XAnim..."
 
 #: plug-ins/gap/gap_frontends_main.c:152
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -8045,7 +8045,7 @@ msgstr "Erreur : impossible de renommer l'image %ld en %ld"
 
 #: plug-ins/gap/gap_lib.c:1611
 msgid "Duplicating frames..."
-msgstr "Duplication d'images..."
+msgstr "Duplication de la séquence..."
 
 #: plug-ins/gap/gap_lib.c:1787
 msgid "Renumber Framesequence..."
@@ -8141,7 +8141,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2314
 msgid "Framesequence shift"
-msgstr "Décalage de séquence d'images (%ld/%ld)"
+msgstr "Décalage de la séquence (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2922
 #, c-format
@@ -8176,15 +8176,15 @@ msgstr "<Image>/Vidéo/Aller à/Image n°xx..."
 
 #: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/Vidéo/Effacer les images..."
+msgstr "<Image>/Vidéo/Effacer la séquence..."
 
 #: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/Vidéo/Dupliquer les images..."
+msgstr "<Image>/Vidéo/Dupliquer la séquence..."
 
 #: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/Vidéo/Échanger les images..."
+msgstr "<Image>/Vidéo/Échanger l'image..."
 
 # ok ?
 #: plug-ins/gap/gap_main.c:578
@@ -8193,43 +8193,43 @@ msgstr "<Image>/Vidéo/Déplacer selon un chemin..."
 
 #: plug-ins/gap/gap_main.c:649
 msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/Vidéo/Images vers image..."
+msgstr "<Image>/Vidéo/Séquence vers image..."
 
 #: plug-ins/gap/gap_main.c:661
 msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/Vidéo/Aplatir images..."
+msgstr "<Image>/Vidéo/Aplatir la séquence..."
 
 #: plug-ins/gap/gap_main.c:673
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/Vidéo/Effacer calques dans images"
+msgstr "<Image>/Vidéo/Effacer calques dans la séquence..."
 
 #: plug-ins/gap/gap_main.c:697
 msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/Vidéo/Convertir images..."
+msgstr "<Image>/Vidéo/Convertir la séquence..."
 
 #: plug-ins/gap/gap_main.c:709
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Vidéo/Redimensionner images..."
+msgstr "<Image>/Vidéo/Redimensionner la séquence..."
 
 #: plug-ins/gap/gap_main.c:721
 msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/Vidéo/Rogner images..."
+msgstr "<Image>/Vidéo/Rogner la séquence..."
 
 #: plug-ins/gap/gap_main.c:733
 msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/Vidéo/Mettre images à l'échelle..."
+msgstr "<Image>/Vidéo/Mettre la séquence à l'échelle..."
 
 #: plug-ins/gap/gap_main.c:745
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/Vidéo/Scinder l'image en images..."
+msgstr "<Image>/Vidéo/Scinder l'image en séquence..."
 
 #: plug-ins/gap/gap_main.c:758
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/Vidéo/Décaler la séquence d'images..."
+msgstr "<Image>/Vidéo/Décaler la séquence..."
 
 #: plug-ins/gap/gap_main.c:770
 msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/Vidéo/Modifier les images..."
+msgstr "<Image>/Vidéo/Modifier la séquence..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
@@ -8344,15 +8344,15 @@ msgstr "Appliquer le filtre au(x) calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:112
 msgid "Duplicate Layer(s)"
-msgstr "Dupliquer le(s) Calque(s)"
+msgstr "Dupliquer le(s) calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:113
 msgid "Delete Layer(s)"
-msgstr "Effacer le(s) Calque(s)"
+msgstr "Effacer le(s) calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:114
 msgid "Rename Layer(s)"
-msgstr "Renommer le(s) Calque(s)"
+msgstr "Renommer le(s) calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:153
 msgid ""
@@ -8360,7 +8360,7 @@ msgid ""
 "in all frames of the selected frame range\n"
 msgstr ""
 "Appliquer la fonction sur un ou plusieurs\n"
-"Claques dans toutes les images de l'intervalle\n"
+"calque(s) dans toutes les images de l'intervalle\n"
 "sélectionné\n"
 
 #: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
@@ -8446,7 +8446,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:221
 msgid "Frames Modify"
-msgstr "Modifier images"
+msgstr "Modifier la séquence"
 
 #: plug-ins/gap/gap_mod_layer.c:285
 #, c-format
@@ -8590,12 +8590,12 @@ msgstr "Aperçu de l'animation"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Generate Animated Preview as multilayer image"
-msgstr "Générer un aperçu animé comme une imge multicouche"
+msgstr "Générer un aperçu animé comme une image multicouche"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:538
 msgid "Copy moving source-layer(s) into frames"
-msgstr "Copier le(s) calque(s) sources dans les images"
+msgstr "Copier le(s) calque(s) sources animés dans la séquence"
 
 #. the start frame scale_entry
 #. table col, row
@@ -9073,7 +9073,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:455
 msgid "Copying Layers into Frames..."
-msgstr "Copier calques dans images..."
+msgstr "Copie les calques dans la séquence..."
 
 #: plug-ins/gap/gap_mov_exec.c:459
 msgid "Generating Animated Preview..."
@@ -9098,7 +9098,7 @@ msgid ""
 msgstr ""
 "\n"
 "Erreur : l'image clé %d au point [%d] ne laisse pas assez d'espace\n"
-"(trames) pour les points de contrôle précédents"
+"(séquences) pour les points de contrôle précédents"
 
 #: plug-ins/gap/gap_mov_exec.c:1394
 #, c-format
@@ -9177,11 +9177,11 @@ msgstr "    simple), toutes au format PPM (ou YUV)"
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr "    (utilisez au besoin « Convertir images »"
+msgstr "    (utilisez au besoin « Convertir la séquence »"
 
 #: plug-ins/gap/gap_mpege.c:164
 msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr "    ou « Scinder image vers images »)"
+msgstr "    ou « Scinder image vers séquence »)"
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
@@ -9194,7 +9194,8 @@ msgstr "    et leurs largeur et hauteur doivent être multiples de 16"
 #: plug-ins/gap/gap_mpege.c:179
 msgid "    (use Scale or Crop from the Video Menu)"
 msgstr ""
-"    (au besoin, utilisez « Mettre images à l'échelle » ou « Rogner images »)."
+"    (au besoin, utilisez « Mettre la séquence à l'échelle » ou « Rogner la "
+"séquences »)."
 
 #: plug-ins/gap/gap_mpege.c:194
 msgid "MPEG_ENCODE Information"
@@ -9394,7 +9395,7 @@ msgid ""
 "WARNING: mpeg_encode does not support Fileformat "
 msgstr ""
 "\n"
-"ATTENTION : mpeg_encode ne support pas le format de fichier "
+"Avertissement : mpeg_encode ne support pas le format de fichier "
 
 #: plug-ins/gap/gap_mpege.c:981
 msgid ""
@@ -9402,7 +9403,7 @@ msgid ""
 "ERROR: width not a multiple of 16"
 msgstr ""
 "\n"
-"ERREUR : la longueur n'est pas un multiple de 16"
+"Erreur : la longueur n'est pas un multiple de 16"
 
 #: plug-ins/gap/gap_mpege.c:982
 msgid ""
@@ -9410,7 +9411,7 @@ msgid ""
 "ERROR: height not a multiple of 16"
 msgstr ""
 "\n"
-"ERREUR : la hauteur n'est pas un multiple de 16"
+"Erreur : la hauteur n'est pas un multiple de 16"
 
 #: plug-ins/gap/gap_mpege.c:988
 msgid ""
@@ -9583,7 +9584,7 @@ msgstr "Palette WEB"
 
 #: plug-ins/gap/gap_range_ops.c:310
 msgid "Use Custom Palette"
-msgstr "Utiliser une palette personniallisée"
+msgstr "Utiliser une palette personnalisée"
 
 #: plug-ins/gap/gap_range_ops.c:311
 msgid "Use Black/White (1-Bit) Palette"
@@ -9696,7 +9697,7 @@ msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
 msgstr ""
-"nom de base de l'image résultante\t\n"
+"nom de base de la séquence résultante\t\n"
 "(0001.ext est ajouté)"
 
 #: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
@@ -9708,7 +9709,7 @@ msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
 msgstr ""
-"extension de l'image résultante\n"
+"extension de la séquence résultante\n"
 "(aussi utilisé pour déterminer le format de fichier)"
 
 #: plug-ins/gap/gap_range_ops.c:474
@@ -9732,7 +9733,7 @@ msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
 msgstr ""
-"Aplatir toutes les images résultantes     \n"
+"Aplatir toutes la séquence résultantes     \n"
 "(la plupart des formats de fichier en ont besoin)"
 
 #: plug-ins/gap/gap_range_ops.c:487
@@ -9757,7 +9758,7 @@ msgstr "Rogner aux dimensions du calque du bas"
 
 #: plug-ins/gap/gap_range_ops.c:568
 msgid "Flattened image"
-msgstr "Image aplatie (1 calque)"
+msgstr "Image aplatie"
 
 #: plug-ins/gap/gap_range_ops.c:569
 msgid ""
@@ -9856,7 +9857,7 @@ msgid ""
 msgstr ""
 "Exclure les calques d'arrière-plan\n"
 "dans toutes les images gérées\n"
-"indépendement de la sélection"
+"indépendemment de la sélection"
 
 #: plug-ins/gap/gap_range_ops.c:674
 msgid "Use all unselected Layers"
@@ -9868,19 +9869,19 @@ msgstr "Création d'une image de calque animés..."
 
 #: plug-ins/gap/gap_range_ops.c:970
 msgid "Frames to Image"
-msgstr "Images vers image"
+msgstr "Séquence vers image"
 
 #: plug-ins/gap/gap_range_ops.c:971
 msgid "Create Multilayer-Image from Frames"
-msgstr "Création d'une image multicalques depuis images"
+msgstr "Création d'une image multicalques depuis la séquence"
 
 #: plug-ins/gap/gap_range_ops.c:1112
 msgid "Flattening Frames..."
-msgstr "Écrasement des images en cours..."
+msgstr "Écrasement de la séquence en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1113
 msgid "Converting Frames..."
-msgstr "Conversion des images en cours..."
+msgstr "Conversion de la séquence en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1261
 msgid ""
@@ -9888,7 +9889,7 @@ msgid ""
 "Desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
-"Convertir images : l'opération d'enregistrement a ÉCHOUÉ\n"
+"Convertir la séquence : l'opération d'ENREGISTREMENT a ÉCHOUÉ\n"
 "Le greffon d'enregistrement ne gère pas ce type\n"
 "ou alors le greffon d'enregistrement n'est pas disponible."
 
@@ -9906,16 +9907,16 @@ msgstr "Mise à l'échelle de toutes les images de l'animation..."
 
 #: plug-ins/gap/gap_range_ops.c:1461
 msgid "Flatten Frames"
-msgstr "Aplatir les images"
+msgstr "Aplatir la séquence"
 
 #: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "Suppression du calque (pos :%ld) des images en cours..."
+msgstr "Suppression du calque (pos :%ld) de la séquence en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
-msgstr "Effacer les calques dans les images"
+msgstr "Effacer les calques dans la séquence"
 
 #: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
@@ -9931,9 +9932,8 @@ msgid ""
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
-"Scission des images : L'opération d'ENREGISTREMENT\n"
-"à échoué.\n"
-"le greffon d'enregistrement désiré ne supporte pas le type\n"
+"Scission en images : L'opération d'ENREGISTREMENT a ÉCHOUÉ.\n"
+"Le greffon d'enregistrement désiré ne supporte pas ce type\n"
 "ou le greffon d'enregistrement désiré n'est pas disponible."
 
 #: plug-ins/gap/gap_split.c:226
@@ -9958,7 +9958,7 @@ msgstr "les images sont nommées : base_no.extension"
 #: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
-"extension de l'image résultante\n"
+"extension de la séquence résultante\n"
 "(aussi utilisé pour déterminer le format de fichier)"
 
 #: plug-ins/gap/gap_split.c:241
@@ -9974,16 +9974,16 @@ msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
-"Supprimer les canaux Alpha dans les images résultantes. Les parties "
+"Supprimer les canaux Alpha dans la séquence résultante. Les parties "
 "transparentes sont remplies avec la couleur d'arrière-plan."
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
-msgstr "Scinder l'image en images"
+msgstr "Scinder l'image en séquence"
 
 #: plug-ins/gap/gap_split.c:251
 msgid "Split Settings"
-msgstr "Scinder les paramètres"
+msgstr "Paramètres de scission"
 
 #: plug-ins/gap/gap_split.c:298
 msgid ""
@@ -9998,11 +9998,11 @@ msgstr ""
 
 #: plug-ins/gap/resize.c:107
 msgid "Scale"
-msgstr "Mettre à l'Échelle"
+msgstr "Mettre à l'échelle"
 
 #: plug-ins/gap/resize.c:111
 msgid "Resize"
-msgstr "Redimensioner"
+msgstr "Redimensionner"
 
 #: plug-ins/gap/resize.c:127
 msgid "New width:"
@@ -10023,7 +10023,7 @@ msgstr "Facteur Y :"
 #. the constrain toggle button
 #: plug-ins/gap/resize.c:231
 msgid "Constrain Ratio"
-msgstr "Conserver les Proportions"
+msgstr "Conserver les proportions"
 
 #: plug-ins/gdyntext/charmap.c:121
 #, c-format
