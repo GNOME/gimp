@@ -1,3 +1,7 @@
+2002-10-13  Manish Singh  <yosh@gimp.org>
+
+	* app/tools/gimptexttool.c: #include <stdio.h>
+
 2002-10-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.[ch]: allow to load text from a file.
