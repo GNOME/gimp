@@ -1794,7 +1794,7 @@ gdisplay_expose_full (GDisplay *gdisp)
 /**************************************************/
 
 GDisplay *
-gdisplay_active ()
+gdisplay_active (void)
 {
   GdkEvent *event;
 

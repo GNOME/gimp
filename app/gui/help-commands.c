@@ -1212,7 +1212,7 @@ void
 dialogs_display_filters_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
-  GDisplay * gdisp;
+  GDisplay *gdisp;
 
   gdisp = gdisplay_active ();
   if (!gdisp)

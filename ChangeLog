@@ -1,3 +1,8 @@
+Tue Jan 11 14:36:55 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimpcompat.h: let's not be redundant redundant. Made
+	a real compat #define for gimp_image_find_parasite
+
 2000-01-11  Garry R. Osgood <gosgood@idt.net>
 
 	* app/disp_callbacks.c
