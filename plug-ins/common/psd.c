@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.4
+ * PSD Plugin version 2.0.5
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -34,6 +34,9 @@
 
 /*
  * Revision history:
+ *
+ *  1999.11.14 / v2.0.5 / Adam D. Moss
+ *       Applied patch by Andy Hefner to load 1-bit images.
  *
  *  1999.08.13 / v2.0.4 / Adam D. Moss
  *       Allowed NULL layer names again, whee.
@@ -103,11 +106,12 @@
 /*
  * TODO:
  *
- *      Crush 16bpp channels (Wait until GIMP 2.0, probably)
- *	CMYK -> RGB
- *	Load BITMAP mode
+ *      Crush 16bpp channels *
+ *	CMYK -> RGB *
+ *      * I don't think these should be done lossily -- wait for
+ *        GIMP to be able to support them natively.
  *
- *      File saving
+ *      File saving (accepting sponsors!)
  */
 
 /*
@@ -160,7 +164,8 @@ typedef enum
   PSD_GRAY_IMAGE,
   PSD_GRAYA_IMAGE,
   PSD_INDEXED_IMAGE,
-  PSD_INDEXEDA_IMAGE
+  PSD_INDEXEDA_IMAGE,
+  PSD_BITMAP_IMAGE
 } psd_imagetype;
 
 
@@ -322,6 +327,7 @@ static void cmyk2rgb(guchar *src, guchar *destp,
 static void cmykp2rgb(guchar *src, guchar *destp,
 		      long width, long height, int alpha);
 static void cmyk_to_rgb(int *c, int *m, int *y, int *k);
+static void bitmap2gray(guchar *src,guchar *dest,long w,long h);
 static guchar getguchar(FILE *fd, gchar *why);
 static gshort getgshort(FILE *fd, gchar *why);
 static glong getglong(FILE *fd, gchar *why);
@@ -423,6 +429,7 @@ psd_type_to_gimp_type (psd_imagetype psdtype)
     case PSD_GRAY_IMAGE: return(GRAY_IMAGE);
     case PSD_INDEXEDA_IMAGE: return(INDEXEDA_IMAGE);
     case PSD_INDEXED_IMAGE: return(INDEXED_IMAGE);
+    case PSD_BITMAP_IMAGE: return(GRAY_IMAGE);
     default: return(RGB_IMAGE);
     }
 }
@@ -473,6 +480,7 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
     {
     case PSD_RGBA_IMAGE:
     case PSD_RGB_IMAGE: return(RGB);
+    case PSD_BITMAP_IMAGE:
     case PSD_GRAYA_IMAGE:
     case PSD_GRAY_IMAGE: return(GRAY);
     case PSD_INDEXEDA_IMAGE:
@@ -1930,9 +1938,10 @@ load_image(char *name)
       step = PSDheader.channels;
     
       imagetype = PSD_UNKNOWN_IMAGE;
-      switch (PSDheader.mode)
+     switch (PSDheader.mode)
 	{
 	case 0:		/* Bitmap */
+	  imagetype = PSD_BITMAP_IMAGE;
 	  break;
 	case 1:		/* Grayscale */
 	  imagetype = PSD_GRAY_IMAGE;
@@ -1978,9 +1987,9 @@ load_image(char *name)
 	  return(-1);
 	}
 
-      if (PSDheader.bpp != 8)
+      if ((PSDheader.bpp != 8) && (PSDheader.bpp != 1))
 	{
-	  printf("%s: The GIMP only supports 8-bit deep PSD images "
+	  printf("%s: The GIMP only supports 8-bit or 1-bit deep PSD images "
 		 "at this time.\n",
 		 prog_name);
 	  return(-1);
@@ -2073,7 +2082,17 @@ load_image(char *name)
 	  if (!cmyk)
 	    {
 	      gimp_progress_update ((double)1.00);
-	      decode(PSDheader.imgdatalen, nguchars, temp, dest, step);
+	      if(imagetype==PSD_BITMAP_IMAGE) /* convert bitmap to grayscale */
+		{
+		  guchar *monobuf=(guchar *)xmalloc(PSDheader.columns*PSDheader.rows>>3);
+		  decode(PSDheader.imgdatalen,nguchars>>3,temp,monobuf,step);
+		  bitmap2gray(monobuf,dest,PSDheader.columns,PSDheader.rows);
+		  g_free((gpointer)monobuf);		  		  
+		}
+	      else
+		{
+		  decode(PSDheader.imgdatalen, nguchars, temp, dest, step);
+		}
 	    }
 	  else
 	    {
@@ -2411,6 +2430,28 @@ cmyk_to_rgb(gint *c, gint *m, gint *y, gint *k)
     if (*m < 0) *m = 0; else if (*m > 255) *m = 255;
     if (*y < 0) *y = 0; else if (*y > 255) *y = 255;
 #endif
+}
+
+
+static void
+bitmap2gray(guchar *src,guchar *dest,long w,long h)
+{
+  int i,j;
+  for(i=0;i<h;i++)
+    {
+      int mask=0x80;
+      for(j=0;j<w;j++)
+	{
+	  *dest++=(*src&mask)?0:255;
+	  mask>>=1;
+	  if(!mask)
+	    {
+	      src++;
+	      mask=0x80;
+	    }
+	}
+      if(mask!=0x80) src++;
+    }
 }
 
 

@@ -1,3 +1,8 @@
+Sun Nov 14 16:38:21 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c: Patch from Andy Hefner
+	<vector7@crosswinds.net> to load mono bitmap files.
+
 1999-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.c: special handling of a dropped "Standard"
@@ -129,7 +134,7 @@ Fri Nov 12 01:52:49 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/nlfilt.c: rename ROUND => SROUND to avoid clash.
 
-Thu Nov 11 21:19:39 GMT 1999 Adam D. Moss <adam@gimp.org>
+Thu Nov 11 21:19:39 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: Fixed the oldest inherited
 	bug in the long long ancestry of this plugin.  =)
