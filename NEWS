@@ -23,6 +23,7 @@ Overview of Changes in GIMP 1.3.4
 - Factored out paint code from the paint tools [Mitch]
 - New vectors infrastructure [Simon]
 - First draft of a new vectors tool [Simon, Mitch]
+- Scanline conversion (Path to selection etc.) changed to use libart [Simon]
 - Undo cleanups [Mitch]
 - Changed tips file format to XML [Sven]
 - Added desktop file for GNOME-2 [Sven]
