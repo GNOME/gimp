@@ -124,6 +124,7 @@ gimpui_OBJECTS = \
 	gimpmenu.obj \
 	gimppatternmenu.obj \
 	gimpexport.obj \
+	gimpmiscui.obj \
 #	gimppatheditor.obj \
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def

@@ -25,9 +25,8 @@ PKG_LINK = \
 OBJECTS = \
 	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
-	gimpbrushpreview.obj \
-	gimpbufferpreview.obj \
 	gimpbufferview.obj \
+	gimpcellrendererviewable.obj \
 	gimpchannellistitem.obj \
 	gimpchannellistview.obj \
 	gimpcoloreditor.obj \
@@ -39,14 +38,15 @@ OBJECTS = \
 	gimpcontainerlistview.obj \
 	gimpcontainermenu.obj \
 	gimpcontainermenuimpl.obj \
+	gimpcontainertreeview.obj \
 	gimpcontainerview.obj \
 	gimpcontainerview-utils.obj \
 	gimpcursor.obj \
 	gimpdataeditor.obj \
 	gimpdatafactoryview.obj \
-	gimpdialogfactory.obj \
 	gimpdeviceinfo.obj \
 	gimpdevices.obj \
+	gimpdialogfactory.obj \
 	gimpdnd.obj \
 	gimpdock.obj \
 	gimpdockable.obj \
@@ -54,19 +54,16 @@ OBJECTS = \
 	gimpdocumentview.obj \
 	gimpdrawablelistitem.obj \
 	gimpdrawablelistview.obj \
-	gimpdrawablepreview.obj \
 	gimpeditor.obj \
 	gimpenummenu.obj \
 	gimpfontselection.obj \
 	gimpfontselection-dialog.obj \
 	gimpgradienteditor.obj \
-	gimpgradientpreview.obj \
 	gimphelp.obj \
 	gimphistogrambox.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
-	gimpimagefilepreview.obj \
-	gimpimagepreview.obj \
+	gimpimageeditor.obj \
 	gimpimageview.obj \
 	gimpitemfactory.obj \
 	gimpitemlistitem.obj \
@@ -74,28 +71,32 @@ OBJECTS = \
 	gimplayerlistitem.obj \
 	gimplayerlistview.obj \
 	gimplistitem.obj \
+	gimpmenufactory.obj \
 	gimpmenuitem.obj \
 	gimpnavigationpreview.obj \
 	gimppaletteeditor.obj \
-	gimppalettepreview.obj \
-	gimppatternpreview.obj \
 	gimppreview.obj \
-	gimppreview-utils.obj \
+	gimppreview-popup.obj \
+	gimppreviewrenderer.obj \
+	gimppreviewrendererbrush.obj \
+	gimppreviewrendererdrawable.obj \
+	gimppreviewrendererimage.obj \
+	gimppreviewrenderer-utils.obj \
 	gimppropwidgets.obj \
 	gimpselectioneditor.obj \
+	gimptexteditor.obj \
 	gimptoolbox.obj \
 	gimptoolbox-color-area.obj \
 	gimptoolbox-indicator-area.obj \
-	gimptoolinfopreview.obj \
+	gimpundoeditor.obj \
 	gimpvectorslistview.obj \
 	gimpviewabledialog.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \
-	gtkwrapbox.obj \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
+	gtkwrapbox.obj \
 	widgets-enums.obj \
-#	gimpconstrainedhwrapbox.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

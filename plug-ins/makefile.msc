@@ -297,6 +297,47 @@ OBJECTS = \
 	gfli.obj
 !ENDIF
 
+!IFDEF EXTRA_gfig
+STOCK_VARS = \
+	stock_bezier images/stock-bezier.png	\
+	stock_circle images/stock-circle.png	\
+	stock_copy_object images/stock-copy-object.png	\
+	stock_curve images/stock-curve.png		\
+	stock_delete_object images/stock-delete-object.png	\
+	stock_ellipse images/stock-ellipse.png	\
+	stock_line images/stock-line.png		\
+	stock_move_object images/stock-move-object.png	\
+	stock_move_point images/stock-move-point.png	\
+	stock_polygon images/stock-polygon.png	\
+	stock_spiral images/stock-spiral.png	\
+	stock_star images/stock-star.png		\
+	stock_logo images/stock-logo.png
+
+STOCK_IMAGES = \
+	images/stock-bezier.png	\
+	images/stock-circle.png	\
+	images/stock-copy-object.png	\
+	images/stock-curve.png		\
+	images/stock-delete-object.png	\
+	images/stock-ellipse.png	\
+	images/stock-line.png		\
+	images/stock-move-object.png	\
+	images/stock-move-point.png	\
+	images/stock-polygon.png	\
+	images/stock-spiral.png	\
+	images/stock-star.png		\
+	images/stock-logo.png
+
+images/gfig-stock-pixbufs.h: $(STOCK_IMAGES)
+	gdk-pixbuf-csource --rle --build-list $(STOCK_VARS) > images/gfig-stock-pixbufs.h
+
+EXTRA_DEPS = images/gfig-stock-pixbufs.h
+
+OBJECTS = \
+	gfig.obj \
+	gfig-stock.obj
+!ENDIF
+
 !IFDEF EXTRA_ifscompose
 OBJECTS = \
 	ifscompose.obj \
@@ -612,7 +653,7 @@ RESOURCE = $(PLUGIN).res
 RESOURCE = ..\..\app\gimp.res
 !ENDIF
 
-$(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
+$(PLUGIN).exe :  $(EXTRA_DEPS) $(OBJECTS) $(RESOURCE)
 	$(CC) $(CFLAGS) -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) \
 	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
 	..\..\libgimpbase\gimpbase-$(GIMP_VER).lib \

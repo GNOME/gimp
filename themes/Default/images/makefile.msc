@@ -50,6 +50,14 @@ STOCK_VARIABLES = \
 	stock_edit_16		stock-edit-16.png	\
 	stock_error_64		stock-error-64.png	\
 	stock_eye_20		stock-eye-20.png	\
+	stock_gravity_east_24	stock-gravity-east-24.png		\
+	stock_gravity_north_24	stock-gravity-north-24.png		\
+	stock_gravity_north_east_24	stock-gravity-north-east-24.png		\
+	stock_gravity_north_west_24	stock-gravity-north-west-24.png		\
+	stock_gravity_south_24	stock-gravity-south-24.png		\
+	stock_gravity_south_east_24	stock-gravity-south-east-24.png		\
+	stock_gravity_south_west_24	stock-gravity-south-west-24.png		\
+	stock_gravity_west_24	stock-gravity-west-24.png		\
 	stock_grow_16		stock-grow-16.png \
 	stock_hchain_24		stock-hchain-24.png	\
 	stock_hchain_broken_24		stock-hchain-broken-24.png	\
@@ -98,8 +106,12 @@ STOCK_VARIABLES = \
 	stock_rotate_90_16		stock-rotate-90-16.png	\
 	stock_scale_16		stock-scale-16.png	\
 	stock_selection_add_16		stock-selection-add-16.png	\
+	stock_selection_all_16		stock-selection-all-16.png	\
+	stock_selection_grow_16		stock-selection-grow-16.png	\
 	stock_selection_intersect_16		stock-selection-intersect-16.png	\
+	stock_selection_none_16		stock-selection-none-16.png	\
 	stock_selection_replace_16		stock-selection-replace-16.png	\
+	stock_selection_shrink_16		stock-selection-shrink-16.png	\
 	stock_selection_stroke_16		stock-selection-stroke-16.png	\
 	stock_selection_subtract_16		stock-selection-subtract-16.png	\
 	stock_selection_to_channel_16		stock-selection-to-channel-16.png	\
@@ -113,6 +125,7 @@ STOCK_VARIABLES = \
 	stock_warning_24		stock-warning-24.png	\
 	stock_warning_64		stock-warning-64.png	\
 	stock_wilber_eek_64		stock-wilber-eek-64.png	\
+	stock_wilber_64		stock-wilber-64.png	\
 	stock_wilber_16		stock-wilber-16.png	\
 
 STOCK_TOOL_VARIABLES = \

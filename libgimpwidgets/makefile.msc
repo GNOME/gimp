@@ -50,6 +50,7 @@ OBJECTS = \
 	gimpdialog.obj \
 	gimpfileselection.obj \
 	gimphelpui.obj \
+	gimpmemsizeentry.obj \
 	gimpoffsetarea.obj \
 	gimppatheditor.obj \
 	gimppickbutton.obj \

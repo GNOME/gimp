@@ -329,7 +329,7 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
    GimpParam          *return_vals;
    int              nreturn_vals;
 
-   if (orientation == GIMP_VERTICAL)
+   if (orientation == GIMP_ORIENTATION_VERTICAL)
    {
      l_add_guide_proc = "gimp_image_add_vguide";
    }

@@ -24,16 +24,23 @@ PKG_LINK = \
 
 OBJECTS = \
 	gimpairbrush.obj \
+	gimpairbrushoptions.obj \
 	gimpclone.obj \
+	gimpcloneoptions.obj \
 	gimpconvolve.obj \
+	gimpconvolveoptions.obj \
 	gimpdodgeburn.obj \
+	gimpdodgeburnoptions.obj \
 	gimperaser.obj \
+	gimperaseroptions.obj \
 	gimppaintbrush.obj \
 	gimppaintcore.obj \
 	gimppaintcore-stroke.obj \
+	gimppaintcore-undo.obj \
 	gimppaintoptions.obj \
 	gimppencil.obj \
 	gimpsmudge.obj \
+	gimpsmudgeoptions.obj \
 	paint.obj \
 	paint-enums.obj \
 

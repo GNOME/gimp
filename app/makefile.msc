@@ -11,7 +11,7 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base config xcf core file \
+SUBDIRS = paint-funcs base config xcf core file text \
 	display paint vectors pdb plug-in tools widgets gui
 
 sub-all: 
@@ -31,6 +31,7 @@ PKG_LINK = \
 	plug-in/appplug-in.lib \
 	pdb/apppdb.lib \
 	tools/apptools.lib \
+	text/apptext.lib \
 	gui/appgui.lib \
 	widgets/appwidgets.lib \
 	core/appcore.lib \
@@ -75,11 +76,7 @@ mmx_sources = \
 
 OBJECTS = \
 	ops_buttons.obj \
-	undo_history.obj \
 	path.obj \
-	path_curves.obj \
-	path_bezier.obj \
-	undo.obj \
 	app_procs.obj \
 	main.obj \
 	batch.obj \

@@ -266,7 +266,9 @@ EXPORTS
 	gimp_pixel_fetcher_get_pixel
 	gimp_pixel_fetcher_get_pixel2
 	gimp_pixel_fetcher_new
+	gimp_pixel_fetcher_put_pixel
 	gimp_pixel_fetcher_set_bg_color
+	gimp_pixel_fetcher_set_shadow
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect

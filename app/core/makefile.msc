@@ -76,8 +76,8 @@ OBJECTS = \
 	gimpimage-qmask.obj \
 	gimpimage-resize.obj \
 	gimpimage-scale.obj \
-	gimpimage-text.obj \
 	gimpimage-undo.obj \
+	gimpimage-undo-push.obj \
 	gimpimagefile.obj \
 	gimpitem.obj \
 	gimplayer.obj \
@@ -95,7 +95,6 @@ OBJECTS = \
 	gimppattern.obj \
 	gimppreviewcache.obj \
 	gimpscanconvert.obj \
-	gimptext.obj \
 	gimptoolinfo.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
@@ -119,7 +118,7 @@ INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
-	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	$(LIBART_CFLAGS) \
 
 DEFINES = \

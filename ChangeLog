@@ -1,3 +1,21 @@
+2003-03-03  Hans Breuer  <hans@breuer.org>
+
+	* app/text/makefile.msc (new file)
+	  */makefile.msc */*/makefile.msc : updated
+
+	* app/core/gimpdata.c : define access() constants
+	for G_OS_WIN32 case
+
+	* app/text/gimptext.c : <stdlib.h> for getenv()
+
+	* libgimp/gimp.def libgimp/gimpui.def : updated externals
+
+	* libgimpwidgets/libgimp-glue.c : make dynamic_resolve
+	actually work again for 'my' DLL naming convention
+
+	* plug-ins/gap/gap_pdb_calls.c : reflect renaming
+	of GIMP_VERTICAL to GIMP_ORIENTATION_VERTICAL
+
 2003-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderer.[ch]: made the default buffer

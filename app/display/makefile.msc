@@ -27,6 +27,7 @@ OBJECTS = \
 	gimpdisplay-handlers.obj \
 	gimpdisplayshell.obj \
 	gimpdisplayshell-callbacks.obj \
+	gimpdisplayshell-cursor.obj \
 	gimpdisplayshell-dnd.obj \
 	gimpdisplayshell-filter.obj \
 	gimpdisplayshell-filter-dialog.obj \
@@ -36,6 +37,8 @@ OBJECTS = \
 	gimpdisplayshell-scale.obj \
 	gimpdisplayshell-scroll.obj \
 	gimpdisplayshell-selection.obj \
+	gimpdisplayshell-title.obj \
+	gimpdisplayshell-transform.obj \
 	gimpnavigationview.obj \
 	gimpprogress.obj \
 	gimpstatusbar.obj \

@@ -83,7 +83,7 @@ dynamic_resolve (const gchar* name, HMODULE* hMod)
       *hMod = LoadLibrary ("libgimp-" LT_RELEASE "-" LT_CURRENT_MINUS_AGE ".dll");
 #endif
       /* If that didn't work, try the name style used by Hans Breuer */
-      if (!hMod)
+      if (!*hMod)
 	*hMod = LoadLibrary ("gimp-1.3.dll");
       fn = GetProcAddress (*hMod, name); 
     }

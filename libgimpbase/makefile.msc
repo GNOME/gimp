@@ -34,6 +34,7 @@ OBJECTS = \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \
+	gimputils.obj \
 	gimpwire.obj \
 
 lib_LTLIBRARIES = \

@@ -31,6 +31,15 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#define F_OK 0
+#define W_OK 2
+#define R_OK 4
+#define X_OK 0 /* not really */
+#define access(f,p) _access(f,p)
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"

@@ -27,14 +27,18 @@ OBJECTS = \
 	tools.obj \
 	gimpairbrushtool.obj \
 	gimpbezierselecttool.obj \
+	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \
+	gimpbucketfilloptions.obj \
 	gimpbucketfilltool.obj \
 	gimpbycolorselecttool.obj \
 	gimpclonetool.obj \
 	gimpcolorbalancetool.obj \
+	gimpcolorpickeroptions.obj \
 	gimpcolorpickertool.obj \
 	gimpconvolvetool.obj \
+	gimpcropoptions.obj \
 	gimpcroptool.obj \
 	gimpcurvestool.obj \
 	gimpdodgeburntool.obj \
@@ -42,44 +46,50 @@ OBJECTS = \
 	gimpeditselectiontool.obj \
 	gimpellipseselecttool.obj \
 	gimperasertool.obj \
+	gimpflipoptions.obj \
 	gimpfliptool.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
 	gimphistogramtool.obj \
 	gimphuesaturationtool.obj \
 	gimpimagemaptool.obj \
+	gimpinkoptions.obj \
 	gimpinktool.obj \
 	gimpinktool-blob.obj \
 	gimpiscissorstool.obj \
 	gimplevelstool.obj \
+	gimpmagnifyoptions.obj \
 	gimpmagnifytool.obj \
+	gimpmeasureoptions.obj \
 	gimpmeasuretool.obj \
+	gimpmoveoptions.obj \
 	gimpmovetool.obj \
 	gimppaintbrushtool.obj \
 	gimppainttool.obj \
-	gimppathtool.obj \
 	gimppenciltool.obj \
 	gimpperspectivetool.obj \
 	gimpposterizetool.obj \
 	gimprectselecttool.obj \
 	gimprotatetool.obj \
 	gimpscaletool.obj \
+	gimpselectionoptions.obj \
 	gimpselectiontool.obj \
 	gimpsheartool.obj \
 	gimpsmudgetool.obj \
+	gimptextoptions.obj \
 	gimptexttool.obj \
 	gimpthresholdtool.obj \
 	gimptool.obj \
 	gimptoolcontrol.obj \
 	gimptoolmodule.obj \
+	gimptransformoptions.obj \
 	gimptransformtool.obj \
+	gimptransformtool-undo.obj \
+	gimpvectoroptions.obj \
 	gimpvectortool.obj \
-	transform_options.obj \
 	paint_options.obj \
-	selection_options.obj \
 	tool_options.obj \
 	tool_manager.obj \
-	path_tool.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
