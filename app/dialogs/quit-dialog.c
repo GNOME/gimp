@@ -29,8 +29,9 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
+#include "core/gimplist.h"
 
+#include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpcontainertreeview.h"
@@ -43,13 +44,19 @@
 #include "gimp-intl.h"
 
 
-static void  quit_dialog_response          (GtkWidget      *dialog,
-                                            gint            response_id,
-                                            Gimp           *gimp);
-static void  quit_dialog_container_changed (GimpContainer  *images,
-                                            GimpObject     *image,
-                                            GimpMessageBox *box);
+static void  quit_dialog_response          (GtkWidget         *dialog,
+                                            gint               response_id,
+                                            Gimp              *gimp);
+static void  quit_dialog_container_changed (GimpContainer     *images,
+                                            GimpObject        *image,
+                                            GimpMessageBox    *box);
+static void  quit_dialog_image_activated   (GimpContainerView *view,
+                                            GimpImage         *image,
+                                            gpointer           insert_data,
+                                            Gimp              *gimp);
 
+
+/*  public functions  */
 
 GtkWidget *
 quit_dialog_new (Gimp *gimp)
@@ -82,6 +89,9 @@ quit_dialog_new (Gimp *gimp)
 
                              NULL);
 
+  g_object_set_data_full (G_OBJECT (dialog), "dirty-images",
+                          images, (GDestroyNotify) g_object_unref);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (quit_dialog_response),
                     gimp);
@@ -96,15 +106,18 @@ quit_dialog_new (Gimp *gimp)
                            box, 0);
 
   preview_size = gimp->config->layer_preview_size;
+  rows         = CLAMP (gimp_container_num_children (images), 3, 6);
 
   view = gimp_container_tree_view_new (images, NULL, preview_size, 1);
-  gtk_box_pack_start (GTK_BOX (box), view, TRUE, TRUE, 0);
-  gtk_widget_show (view);
-
-  rows = CLAMP (gimp_container_num_children (images), 3, 6);
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (view),
                                        -1,
                                        rows * (preview_size + 2));
+  gtk_box_pack_start (GTK_BOX (box), view, TRUE, TRUE, 0);
+  gtk_widget_show (view);
+
+  g_signal_connect (view, "activate-item",
+                    G_CALLBACK (quit_dialog_image_activated),
+                    gimp);
 
   label = gtk_label_new (_("If you quit GIMP now, "
                            "these changes will be lost."));
@@ -152,4 +165,23 @@ quit_dialog_container_changed (GimpContainer  *images,
     gtk_widget_hide (label);
   else
     gtk_widget_show (label);
+}
+
+static void
+quit_dialog_image_activated (GimpContainerView *view,
+                             GimpImage         *image,
+                             gpointer           insert_data,
+                             Gimp              *gimp)
+{
+  GList *list;
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDisplay *display = list->data;
+
+      if (display->gimage == image)
+        gtk_window_present (GTK_WINDOW (display->shell));
+    }
 }

@@ -1,5 +1,10 @@
 2004-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/quit-dialog.c: raise the image's displays on
+	double-click in the dirty image list.
+
+2004-10-15  Michael Natterer  <mitch@gimp.org>
+
 	Fixed bug #155328:
 
 	* app/actions/vectors-actions.c (vectors_actions_update): don't
