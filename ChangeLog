@@ -1,3 +1,12 @@
+2003-06-16  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gif.c: Attempt to use the palette colour
+	closest to that of the GIMP's current brush background colour
+	for the GIF file's background index hint for non-transparency-aware
+	image viewers.  NOTE that this is merely a hint and may be
+	ignored by this plugin for various (rare) reasons that
+	would usually entail writing a somewhat larger image file.
+
 2003-06-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c: Applied a patch from S. Mukund
