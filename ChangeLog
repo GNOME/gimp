@@ -1,3 +1,10 @@
+2002-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste):
+	the transformed tile_manager has always an alpha channel, so use
+	gimp_drawable_type_with_alpha() when creating a layer from it
+	using gimp_layer_new_from_tiles(). Fixes bug #98053.
+
 2002-11-09  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimppreview.[ch]: use a low priority idle handler to
