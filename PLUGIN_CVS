@@ -28,8 +28,11 @@ C The "default" mode is mirroring of the main tree
 M /
 
 C The plug-in ChangeLog file
-U ChangeLog.plug-ins
+#U ChangeLog.plug-ins
 
 C Kevin.Turner@oberlin.edu / Acapnotic
-U plug-ins/maze/
+#U plug-ins/maze/
+
+C Robert L Krawitz <rlk@alum.mit.edu> / rlk
+#U plug-ins/print/
 

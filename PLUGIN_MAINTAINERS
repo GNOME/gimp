@@ -549,7 +549,7 @@ NAME       : maze
 AUTHOR     : Kevin Turner <kevint@poboxes.com>
 MAINTAINER : 
 SIZE       :  71.0 kB  in  4 files (only C files counted)
-COMMENT    : 
+COMMENT    : sourceforge
 -----------
 NAME       : mblur
 AUTHOR     : Torsten Martinsen, Federico Mena Quintero and Daniel Skarda
@@ -687,7 +687,7 @@ NAME       : print
 AUTHOR     : Michael Sweet <mike@easysw.com> and Robert Krawitz <rlk@alum.mit.edu>
 MAINTAINER : 
 SIZE       : 273.8 kB  in  5 files (only C files counted)
-COMMENT    : 
+COMMENT    : sourceforge
 -----------
 NAME       : ps
 AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>

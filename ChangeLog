@@ -1,3 +1,9 @@
+Fri Jan 28 17:38:36 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * PLUGIN_MAINTAINERS, PLUGIN_CVS: mark Robert Krawitz with write
+        access to plug-ins/print, but comment all update commands out due
+        to Sven's concerns.
+
 2000-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c: bind the "gimp-libgimp" textdomain to get the
