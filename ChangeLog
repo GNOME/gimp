@@ -47,7 +47,7 @@ Thu Jan  6 18:39:05 GMT 2000  Adam D. Moss <adam@gimp.org>
 	* app/[all files using the dialog or action area constructors]
 	* libgimp/gimpdialog.[ch]: added a "slot_object" argument to the
 	constructors' va_args lists to allow the action area buttons to be
-	connected wich gtk_signal_connect_object().
+	connected with gtk_signal_connect_object().
 
 	* libgimp/gimphelp.c: show the correct help page for plugins.
 
