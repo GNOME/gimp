@@ -2895,7 +2895,7 @@ plug_in_temp_run (ProcRecord *proc_rec,
 	  goto done;
 	}
 
-/*       plug_in_pop (); */
+      plug_in_pop ();
 
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
