@@ -32,10 +32,13 @@ intelligent scissors, and select by color.
 .PP
 GIMP offers a variety of plugins that perform a variety of image
 manipulations.  Examples include bumpmap, edge detect, gaussian blur,
-and many others.
+and many others. In addition, GIMP has several scripting extension
+which allow for advanced non-interactive processing and creation of
+images.
 .PP
-In addition, GIMP has several scripting extension which allow for
-advanced non-interactive processing and creation of images.
+GIMP ships with a second binary called \fIgimp-console\fP. This binary
+is a console-only version and behaves as if \fIgimp\fP was called with
+the \-\-no\-interface command\-line option.
 
 
 .SH OPTIONS
@@ -43,13 +46,13 @@ advanced non-interactive processing and creation of images.
 The \fIgimp\fP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
-Show GIMP commandline options.
+Show GIMP command\-line options.
 .TP 8
 .B  \-\-help\-all
-Show all commandline options.
+Show all command\-line options.
 .TP 8
 .B  \-\-help-gtk
-Show GTK+ commandline options.
+Show GTK+ command\-line options.
 .TP 8
 .B \-v, \-\-version
 Output the version info.

@@ -1,5 +1,12 @@
 2005-04-06  Sven Neumann  <sven@gimp.org>
 
+	* docs/Makefile.am: install a link to the gimp(1) man-page for
+	gimp-console(1).
+
+	* docs/gimp.1.in: mention gimp-console.
+
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: improved "--help" output.
 
 	* docs/gimp.1.in: updated.
