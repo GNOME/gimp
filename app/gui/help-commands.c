@@ -77,6 +77,8 @@
 
 #include "brushes.h"
 #include "patterns.h"
+#include "gimpcontainerlistview.h"
+#include "gimpcontainergridview.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
@@ -1314,14 +1316,28 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
   gtk_widget_show (module_browser);
 }
 
-void
-dialogs_test_image_container_list_view_cmd_callback (GtkWidget *widget,
-						     gpointer   client_data)
+static void
+container_view_scale_callback (GtkAdjustment     *adj,
+			       GimpContainerView *view)
+{
+  gimp_container_view_set_preview_size (view,
+					ROUND (adj->value),
+					ROUND (adj->value));
+}
+
+static void
+container_view_new (gboolean       list,
+		    gchar         *title,
+		    GimpContainer *container,
+		    gint           preview_width,
+		    gint           preview_height)
 {
   GtkWidget *dialog;
   GtkWidget *view;
+  GtkObject *adjustment;
+  GtkWidget *scale;
 
-  dialog = gimp_dialog_new ("Image List", "test",
+  dialog = gimp_dialog_new (title, "test",
 			    gimp_standard_help_func,
 			    NULL,
 			    GTK_WIN_POS_MOUSE,
@@ -1332,136 +1348,71 @@ dialogs_test_image_container_list_view_cmd_callback (GtkWidget *widget,
 
 			    NULL);
 
-  view = gimp_container_list_view_new (image_context, 64, 64);
+  if (list)
+    view = gimp_container_list_view_new (container,
+					 preview_width,
+					 preview_height);
+  else
+    view = gimp_container_grid_view_new (container,
+					 preview_width,
+					 preview_height);
+
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);
 
+  adjustment = gtk_adjustment_new (preview_width, 16, 257, 16, 16, 16);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), scale,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (container_view_scale_callback),
+		      view);
+
   gtk_widget_show (dialog);
+}
+
+void
+dialogs_test_image_container_list_view_cmd_callback (GtkWidget *widget,
+						     gpointer   client_data)
+{
+  container_view_new (TRUE, "Image List", image_context, 64, 64);
 }
 
 void
 dialogs_test_pattern_container_list_view_cmd_callback (GtkWidget *widget,
 						       gpointer   client_data)
 {
-  GtkWidget *dialog;
-  GtkWidget *view;
-
-  dialog = gimp_dialog_new ("Pattern List", "test",
-			    gimp_standard_help_func,
-			    NULL,
-			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
-
-			    _("Close"), gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  view = gimp_container_list_view_new (global_pattern_list, 24, 24);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
-  gtk_widget_show (view);
-
-  gtk_widget_show (dialog);
+  container_view_new (TRUE, "Pattern List", global_pattern_list, 24, 24);
 }
 
 void
 dialogs_test_brush_container_list_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  GtkWidget *dialog;
-  GtkWidget *view;
-
-  dialog = gimp_dialog_new ("Brush List", "test",
-			    gimp_standard_help_func,
-			    NULL,
-			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
-
-			    _("Close"), gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  view = gimp_container_list_view_new (global_brush_list, 24, 24);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
-  gtk_widget_show (view);
-
-  gtk_widget_show (dialog);
+  container_view_new (TRUE, "Brush List", global_brush_list, 24, 24);
 }
 
 void
 dialogs_test_image_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  GtkWidget *dialog;
-  GtkWidget *view;
-
-  dialog = gimp_dialog_new ("Image Grid", "test",
-			    gimp_standard_help_func,
-			    NULL,
-			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
-
-			    _("Close"), gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  view = gimp_container_grid_view_new (image_context, 64, 64);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
-  gtk_widget_show (view);
-
-  gtk_widget_show (dialog);
+  container_view_new (FALSE, "Image Grid", image_context, 64, 64);
 }
 
 void
 dialogs_test_pattern_container_grid_view_cmd_callback (GtkWidget *widget,
 						       gpointer   client_data)
 {
-  GtkWidget *dialog;
-  GtkWidget *view;
-
-  dialog = gimp_dialog_new ("Pattern Grid", "test",
-			    gimp_standard_help_func,
-			    NULL,
-			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
-
-			    _("Close"), gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  view = gimp_container_grid_view_new (global_pattern_list, 32, 32);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
-  gtk_widget_show (view);
-
-  gtk_widget_show (dialog);
+  container_view_new (FALSE, "Pattern Grid", global_pattern_list, 24, 24);
 }
 
 void
 dialogs_test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  GtkWidget *dialog;
-  GtkWidget *view;
-
-  dialog = gimp_dialog_new ("Brush Grid", "test",
-			    gimp_standard_help_func,
-			    NULL,
-			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
-
-			    _("Close"), gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
-
-			    NULL);
-
-  view = gimp_container_grid_view_new (global_brush_list, 32, 32);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
-  gtk_widget_show (view);
-
-  gtk_widget_show (dialog);
+  container_view_new (FALSE, "Brush Grid", global_brush_list, 24, 24);
 }
 
 /*****  Help  *****/

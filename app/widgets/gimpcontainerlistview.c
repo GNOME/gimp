@@ -42,6 +42,7 @@ static void     gimp_container_list_view_remove_item  (GimpContainerView      *v
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
 static void     gimp_container_list_view_clear_items  (GimpContainerView      *view);
+static void     gimp_container_list_view_set_preview_size (GimpContainerView  *view);
 
 static void     gimp_container_list_view_name_changed (GimpContainerListView  *list_view,
 						       GimpViewable           *viewable);
@@ -89,9 +90,10 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
 
   object_class->destroy = gimp_container_list_view_destroy;
 
-  container_view_class->insert_item  = gimp_container_list_view_insert_item;
-  container_view_class->remove_item  = gimp_container_list_view_remove_item;
-  container_view_class->clear_items   = gimp_container_list_view_clear_items;
+  container_view_class->insert_item      = gimp_container_list_view_insert_item;
+  container_view_class->remove_item      = gimp_container_list_view_remove_item;
+  container_view_class->clear_items      = gimp_container_list_view_clear_items;
+  container_view_class->set_preview_size = gimp_container_list_view_set_preview_size;
 }
 
 static void
@@ -146,10 +148,10 @@ gimp_container_list_view_new (GimpContainer *container,
 
   list_view = gtk_type_new (GIMP_TYPE_CONTAINER_LIST_VIEW);
 
-  list_view->preview_width  = preview_width;
-  list_view->preview_height = preview_height;
-
   view = GIMP_CONTAINER_VIEW (list_view);
+
+  view->preview_width  = preview_width;
+  view->preview_height = preview_height;
 
   gimp_container_view_set_container (view, container);
 
@@ -172,17 +174,18 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 
   list_item = gtk_list_item_new ();
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (viewable), "name_changed",
-					 GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
-					 GTK_OBJECT (list_view));
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (viewable), "name_changed",
+     GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
+     GTK_OBJECT (list_view));
 
   hbox = gtk_hbox_new (FALSE, 8);
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
   preview = gimp_preview_new (viewable,
-			      list_view->preview_width,
-			      list_view->preview_height);
+			      view->preview_width,
+			      view->preview_height);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
@@ -235,6 +238,30 @@ gimp_container_list_view_clear_items (GimpContainerView *view)
   list_view = GIMP_CONTAINER_LIST_VIEW (view);
 
   gtk_list_clear_items (GTK_LIST (list_view->gtk_list), 0, -1);
+}
+
+static void
+gimp_container_list_view_set_preview_size (GimpContainerView  *view)
+{
+  GimpContainerListView *list_view;
+  GList                 *list;
+
+  list_view = GIMP_CONTAINER_LIST_VIEW (view);
+
+  for (list = GTK_LIST (list_view->gtk_list)->children;
+       list;
+       list = g_list_next (list))
+    {
+      GimpPreview *preview;
+
+      preview = gtk_object_get_data (GTK_OBJECT (list->data), "preview");
+
+      gtk_preview_size (GTK_PREVIEW (preview),
+			view->preview_width,
+			view->preview_height);
+    }
+
+  gtk_widget_queue_resize (list_view->gtk_list);
 }
 
 static void

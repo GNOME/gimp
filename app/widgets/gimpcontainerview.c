@@ -32,6 +32,7 @@ enum
   INSERT_ITEM,
   REMOVE_ITEM,
   CLEAR_ITEMS,
+  SET_PREVIEW_SIZE,
   LAST_SIGNAL
 };
 
@@ -122,6 +123,15 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
+  view_signals[SET_PREVIEW_SIZE] =
+    gtk_signal_new ("set_preview_size",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerViewClass,
+                                       set_preview_size),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gtk_object_class_add_signals (object_class, view_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_container_view_destroy;
@@ -132,6 +142,9 @@ gimp_container_view_init (GimpContainerView *view)
 {
   view->container  = NULL;
   view->hash_table = NULL;
+
+  view->preview_width  = 0;
+  view->preview_height = 0;
 }
 
 static void
@@ -190,6 +203,22 @@ gimp_container_view_set_container (GimpContainerView *view,
 	 GTK_SIGNAL_FUNC (gimp_container_view_remove),
 	 GTK_OBJECT (view));
     }
+}
+
+void
+gimp_container_view_set_preview_size (GimpContainerView *view,
+				      gint               width,
+				      gint               height)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (width  > 0 && width  <= 256 /* FIXME: 64 */);
+  g_return_if_fail (height > 0 && height <= 256 /* FIXME: 64 */);
+
+  view->preview_width  = width;
+  view->preview_height = height;
+
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_PREVIEW_SIZE]);
 }
 
 static void

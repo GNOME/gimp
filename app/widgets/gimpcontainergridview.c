@@ -42,6 +42,7 @@ static void     gimp_container_grid_view_remove_item  (GimpContainerView      *v
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
+static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -86,9 +87,10 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 
   object_class->destroy = gimp_container_grid_view_destroy;
 
-  container_view_class->insert_item  = gimp_container_grid_view_insert_item;
-  container_view_class->remove_item  = gimp_container_grid_view_remove_item;
-  container_view_class->clear_items   = gimp_container_grid_view_clear_items;
+  container_view_class->insert_item      = gimp_container_grid_view_insert_item;
+  container_view_class->remove_item      = gimp_container_grid_view_remove_item;
+  container_view_class->clear_items      = gimp_container_grid_view_clear_items;
+  container_view_class->set_preview_size = gimp_container_grid_view_set_preview_size;
 }
 
 static void
@@ -142,10 +144,10 @@ gimp_container_grid_view_new (GimpContainer *container,
 
   grid_view = gtk_type_new (GIMP_TYPE_CONTAINER_GRID_VIEW);
 
-  grid_view->preview_width  = preview_width;
-  grid_view->preview_height = preview_height;
-
   view = GIMP_CONTAINER_VIEW (grid_view);
+
+  view->preview_width  = preview_width;
+  view->preview_height = preview_height;
 
   gimp_container_view_set_container (view, container);
 
@@ -163,17 +165,15 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
   preview = gimp_preview_new (viewable,
-			      grid_view->preview_width,
-			      grid_view->preview_height);
+			      view->preview_width,
+			      view->preview_height);
   gtk_container_add (GTK_CONTAINER (grid_view->wrapbox), preview);
-  gtk_widget_show (preview);
 
-  /*
-  if (index == -1)
-    gtk_grid_append_items (GTK_GRID (grid_view->gtk_grid), grid);
-  else
-    gtk_grid_insert_items (GTK_GRID (grid_view->gtk_grid), grid, index);
-  */
+  if (index != -1)
+    gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrapbox),
+				preview, index);
+
+  gtk_widget_show (preview);
 
   return (gpointer) preview;
 }
@@ -202,12 +202,27 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  /*
-  while (GTK_CONTAINER (grid_view->wrapbox)->children)
+  while (GTK_WRAP_BOX (grid_view->wrapbox)->children)
+    gtk_container_remove (GTK_CONTAINER (grid_view->wrapbox),
+			  GTK_WRAP_BOX (grid_view->wrapbox)->children->widget);
+}
+
+static void
+gimp_container_grid_view_set_preview_size (GimpContainerView *view)
+{
+  GimpContainerGridView *grid_view;
+  GtkWrapBoxChild       *child;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+
+  for (child = GTK_WRAP_BOX (grid_view->wrapbox)->children;
+       child;
+       child = child->next)
     {
-      gtk_container_remove
-	(GTK_CONTAINER (grid_view->wrapbox),
-	 GTK_WIDGET (GTK_CONTAINER (grid_view->wrapbox)->children->data));
+      gtk_preview_size (GTK_PREVIEW (child->widget),
+			view->preview_width,
+			view->preview_height);
     }
-  */
+
+  gtk_widget_queue_resize (grid_view->wrapbox);
 }

@@ -37,9 +37,6 @@ struct _GimpContainerListView
   GimpContainerView  parent_instance;
 
   GtkWidget         *gtk_list;
-
-  gint               preview_width;
-  gint               preview_height;
 };
 
 struct _GimpContainerListViewClass

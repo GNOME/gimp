@@ -37,9 +37,6 @@ struct _GimpContainerGridView
   GimpContainerView  parent_instance;
 
   GtkWidget         *wrapbox;
-
-  gint               preview_width;
-  gint               preview_height;
 };
 
 struct _GimpContainerGridViewClass
