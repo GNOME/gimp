@@ -1,3 +1,8 @@
+2003-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.c (parse_svg_viewbox): return a
+	transformation matrix in preparation for nested transforms.
+
 2003-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpdrawtool.[ch]: added new functions

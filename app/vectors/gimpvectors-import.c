@@ -54,19 +54,13 @@ typedef enum
 
 typedef struct
 {
-  gint x, y;
-  gint w, h;
-} Rectangle;
-
-typedef struct
-{
   ParserState   state;
   ParserState   last_known_state;
   gint          unknown_depth;
   GimpImage    *image;
   gboolean      merge;
   GimpVectors  *vectors;
-  Rectangle     viewbox;
+  GimpMatrix3   matrix;
 } VectorsParser;
 
 
@@ -85,7 +79,9 @@ static void  parser_start_unknown (VectorsParser        *parser);
 static void  parser_end_unknown   (VectorsParser        *parser);
 
 static gboolean  parse_svg_viewbox   (const gchar       *value,
-                                      Rectangle         *rect);
+                                      gint               width,
+                                      gint               height,
+                                      GimpMatrix3       *matrix);
 static gboolean  parse_svg_transform (const gchar       *value,
                                       GimpMatrix3       *matrix);
 static void      parse_path_data     (GimpVectors       *vectors,
@@ -205,10 +201,13 @@ parser_start_element (GMarkupParseContext *context,
         {
           if (strcmp (*attribute_names, "viewBox") == 0)
             {
-              Rectangle  rect;
+              GimpMatrix3  matrix;
 
-              if (parse_svg_viewbox (*attribute_values, &rect))
-                parser->viewbox = rect;
+              if (parse_svg_viewbox (*attribute_values,
+                                     parser->image->width,
+                                     parser->image->height,
+                                     &matrix))
+                parser->matrix = matrix;
             }
 
           attribute_names++;
@@ -303,22 +302,13 @@ static void
 parser_add_vectors (VectorsParser *parser,
                     GimpVectors   *vectors)
 {
-  if (parser->viewbox.w && parser->viewbox.h)
+  GList *list;
+
+  for (list = vectors->strokes; list; list = list->next)
     {
-      GList   *list;
-      gdouble  scale_x, scale_y;
+      GimpStroke *stroke = list->data;
 
-      scale_x = (gdouble) parser->image->width  / (gdouble) parser->viewbox.w;
-      scale_y = (gdouble) parser->image->height / (gdouble) parser->viewbox.h;
-
-      for (list = vectors->strokes; list; list = list->next)
-        {
-          GimpStroke *stroke = list->data;
-
-          gimp_stroke_translate (stroke,
-                                 parser->viewbox.x, parser->viewbox.y);
-          gimp_stroke_scale (stroke, scale_x, scale_y);
-        }
+      gimp_stroke_transform (stroke, &parser->matrix);
     }
 
   gimp_image_add_vectors (parser->image, vectors, -1);
@@ -326,29 +316,36 @@ parser_add_vectors (VectorsParser *parser,
 
 
 static gboolean
-parse_svg_viewbox (const gchar *value,
-                   Rectangle   *rect)
+parse_svg_viewbox (const gchar     *value,
+                   gint             width,
+                   gint             height,
+                   GimpMatrix3     *matrix)
 {
+  gdouble   x, y, w, h;
   gchar    *tok;
   gchar    *str     = g_strdup (value);
   gboolean  success = FALSE;
 
+  x = y = w = h = 0;
+
+  gimp_matrix3_identity (matrix);
+
   tok = strtok (str, ", \t");
   if (tok)
     {
-      rect->x = g_ascii_strtod (tok, NULL);
+      x = g_ascii_strtod (tok, NULL);
       tok = strtok (NULL, ", \t");
       if (tok)
         {
-          rect->y = g_ascii_strtod (tok, NULL);
+          y = g_ascii_strtod (tok, NULL);
           tok = strtok (NULL, ", \t");
           if (tok != NULL)
             {
-              rect->w = g_ascii_strtod (tok, NULL);
+              w = g_ascii_strtod (tok, NULL);
               tok = strtok (NULL, ", \t");
               if (tok)
                 {
-                  rect->h = g_ascii_strtod (tok, NULL);
+                  h = g_ascii_strtod (tok, NULL);
                   success = TRUE;
                 }
             }
@@ -357,7 +354,16 @@ parse_svg_viewbox (const gchar *value,
 
   g_free (str);
 
-  return success;
+  if (!success)
+    return FALSE;
+
+  if (x || y)
+    gimp_matrix3_translate (matrix, x, y);
+
+  if (w && h)
+    gimp_matrix3_scale (matrix, (gdouble) width / w, (gdouble) height / h);
+
+  return TRUE;
 }
 
 gboolean
