@@ -391,18 +391,18 @@ gradient_options_gui (GimpGradientOptions *gradient,
                       GType                tool_type,
                       GtkWidget           *incremental_toggle)
 {
-  GObject   *config;
-  GtkWidget *frame = NULL;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkWidget *button;
-  GtkWidget *unitmenu;
-  GtkWidget *combo;
+  GObject           *config;
+  GtkWidget         *frame = NULL;
+  GtkWidget         *table;
+  GtkWidget         *spinbutton;
+  GtkWidget         *button;
+  GtkWidget         *unitmenu;
+  GtkWidget         *combo;
   GimpContext       *context;
   GimpDialogFactory *dialog_factory;
-  GtkWidget *hbox;
-  GtkWidget *gradient_button;
-  GtkWidget *preview;
+  GtkWidget         *hbox;
+  GtkWidget         *gradient_button;
+  GtkWidget         *preview;
 
   config = G_OBJECT (paint_options);
   context = GIMP_CONTEXT (paint_options);

@@ -1,3 +1,8 @@
+2004-09-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimppaintoptions-gui.c: clean up ugliness introduced
+	by my previous commit -- no functional change.
+
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
 	Improved undo memory calculation for paint operations (bug #153035):
