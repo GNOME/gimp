@@ -1080,7 +1080,7 @@ build_list_items (GtkWidget *list)
       list_item =
         fractalexplorer_list_item_new_with_label_and_pixmap
                                              (g, g->draw_name, list_pix);
-      g_object_set_data (G_OBJECT (list_item), "factralexplorer", g);
+      g_object_set_data (G_OBJECT (list_item), "fractalexplorer", g);
       gtk_list_append_items (GTK_LIST (list), g_list_append (NULL, list_item));
 
       g_signal_connect (list_item, "button_press_event",

@@ -1,3 +1,10 @@
+2005-04-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: fixed typo that
+	caused a crash when deleting a fractal from the list (bug #172347).
+
 2005-04-01  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
