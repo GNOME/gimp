@@ -1,3 +1,8 @@
+2003-05-07  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint_funcs.c (initial_sub_region, combine_sub_region):
+	merged Michael Natterer's fix for bug #26072 from HEAD branch.
+
 2003-05-07  Sven Neumann  <sven@gimp.org>
 
 	* gimprc-1.2.5.in: fixed the documentation of the

@@ -5251,7 +5251,8 @@ initial_sub_region(struct initial_regions_struct *st,
 {
   int h;
   unsigned char * s, * d, * m;
-  unsigned char    buf[512];
+  unsigned char    buf[MAX (src->w * (src->bytes + 1),
+                            dest->w * dest->bytes)];
   unsigned char   *data;
   int              opacity;
   LayerModeEffects mode;
@@ -5264,8 +5265,8 @@ initial_sub_region(struct initial_regions_struct *st,
   affect = st->affect;
   type = st->type;
 
-  if (src->w * (src->bytes + 1) > 512)
-    fprintf(stderr, "initial_sub_region:: error :: src->w * (src->bytes + 1) > 512\n");
+  if (src->w * (src->bytes + 1) > sizeof (buf))
+    g_error ("initial_sub_region:: error :: src->w * (src->bytes + 1) > sizeof (buf)\n");
 
   s = src->data;
   d = dest->data;
@@ -5373,7 +5374,9 @@ combine_sub_region(struct combine_regions_struct *st,
   int mode_affect;
   unsigned char * s, * s1, * s2;
   unsigned char * d, * m;
-  unsigned char buf[512];
+  unsigned char buf[MAX (MAX (src1->w * src1->bytes,
+                              src2->w * src2->bytes),
+                         dest->w * dest->bytes)];
   gboolean opacity_quickskip_possible;
   gboolean transparency_quickskip_possible;
   TileRowHint hint;
@@ -5396,8 +5399,8 @@ combine_sub_region(struct combine_regions_struct *st,
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
-  if (src1->w > 128)
-    g_error("combine_sub_region::src1->w = %d\n", src1->w);
+  if (src1->w * src1->bytes > sizeof (buf))
+    g_error ("combine_sub_region::src1->w * src1->bytes > sizeof (buf)\n");
 
   if (transparency_quickskip_possible || opacity_quickskip_possible)
     {
