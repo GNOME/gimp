@@ -153,7 +153,7 @@ tile_lock (Tile *tile)
 
   /* Call 'tile_manager_validate' if the tile was invalid.
    */
-  if (!tile->valid)
+  if (! tile->valid)
     {
       /* an invalid tile should never be shared, so this should work */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
@@ -299,7 +299,7 @@ tile_bpp (Tile *tile)
   return tile->bpp;
 }
 
-gint
+gboolean
 tile_is_valid (Tile *tile)
 {
   return tile->valid;
@@ -309,7 +309,9 @@ void
 tile_mark_valid (Tile *tile)
 {
   TILE_MUTEX_LOCK (tile);
+
   tile->valid = TRUE;
+
   TILE_MUTEX_UNLOCK (tile);
 }
 
@@ -320,7 +322,7 @@ tile_attach (Tile *tile,
 {
   TileLink *tmp;
 
-  if ((tile->share_count > 0) && (!tile->valid))
+  if ((tile->share_count > 0) && (! tile->valid))
     {
       /* trying to share invalid tiles is problematic, not to mention silly */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
@@ -330,7 +332,8 @@ tile_attach (Tile *tile,
   tile_share_count++;
 
 #ifdef TILE_DEBUG
-  g_print("tile_attach: %p -> (%p,%d) *%d\n", tile, tm, tile_num, tile->share_count);
+  g_printerr ("tile_attach: %p -> (%p,%d) *%d\n",
+              tile, tm, tile_num, tile->share_count);
 #endif
 
   /* link this tile into the tile's tilelink chain */
@@ -351,8 +354,8 @@ tile_detach (Tile *tile,
   TileLink  *tmp;
 
 #ifdef TILE_DEBUG
-  g_print("tile_detach: %p ~> (%p,%d) r%d *%d\n", tile, tm, tile_num,
-	  tile->ref_count, tile->share_count);
+  g_printerr ("tile_detach: %p ~> (%p,%d) r%d *%d\n",
+              tile, tm, tile_num, tile->ref_count, tile->share_count);
 #endif
 
   for (link = &tile->tlink;
@@ -389,9 +392,7 @@ tile_data_pointer (Tile *tile,
 		   gint  xoff,
 		   gint  yoff)
 {
-  gint offset;
-
-  offset = yoff * tile->ewidth + xoff;
+  gint offset = yoff * tile->ewidth + xoff;
 
   return (gpointer) (tile->data + offset * tile->bpp);
 }

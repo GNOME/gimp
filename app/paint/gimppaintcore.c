@@ -512,7 +512,7 @@ gimp_paint_core_copy_valid_tiles (TileManager *src_tiles,
           src_tile = tile_manager_get_tile (src_tiles,
                                             j, i, FALSE, FALSE);
 
-          if (tile_is_valid (src_tile) == TRUE)
+          if (tile_is_valid (src_tile))
             {
               src_tile = tile_manager_get_tile (src_tiles,
                                                 j, i, TRUE, FALSE);
@@ -1022,13 +1022,14 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
       undo_tile = tile_manager_get_tile (core->undo_tiles,
                                          srcPR.x, srcPR.y,
 					 FALSE, FALSE);
-      if (tile_is_valid (undo_tile) == TRUE)
+
+      if (tile_is_valid (undo_tile))
 	{
 	  refd = 1;
 	  undo_tile = tile_manager_get_tile (core->undo_tiles,
                                              srcPR.x, srcPR.y,
 					     TRUE, FALSE);
-	  s = (unsigned char*)tile_data_pointer (undo_tile, 0, 0) +
+	  s = (guchar *) tile_data_pointer (undo_tile, 0, 0) +
 	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
 	}
@@ -1943,7 +1944,7 @@ set_undo_tiles (GimpPaintCore *core,
 	  dest_tile = tile_manager_get_tile (core->undo_tiles, j, i,
                                              FALSE, FALSE);
 
-	  if (tile_is_valid (dest_tile) == FALSE)
+	  if (! tile_is_valid (dest_tile))
 	    {
 	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
 						j, i, TRUE, FALSE);
@@ -1972,7 +1973,7 @@ set_canvas_tiles (GimpPaintCore *core,
 	  tile = tile_manager_get_tile (core->canvas_tiles, j, i,
                                         FALSE, FALSE);
 
-	  if (tile_is_valid (tile) == FALSE)
+	  if (! tile_is_valid (tile))
 	    {
 	      tile = tile_manager_get_tile (core->canvas_tiles, j, i,
                                             TRUE, TRUE);

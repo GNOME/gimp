@@ -70,7 +70,7 @@ gint          tile_ewidth            (Tile        *tile);
 gint          tile_eheight           (Tile        *tile);
 gint          tile_bpp               (Tile        *tile);
 
-gint          tile_is_valid          (Tile        *tile);
+gboolean      tile_is_valid          (Tile        *tile);
 
 void          tile_mark_valid        (Tile        *tile);
 

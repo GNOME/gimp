@@ -1095,7 +1095,8 @@ ink_set_undo_tiles (GimpDrawable *drawable,
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
-	  if (tile_is_valid (dest_tile) == FALSE)
+
+	  if (! tile_is_valid (dest_tile))
 	    {
 	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
 						j, i, TRUE, FALSE);
@@ -1113,15 +1114,16 @@ ink_set_canvas_tiles (gint x,
 		      gint w,
 		      gint h)
 {
-  gint  i, j;
   Tile *tile;
+  gint  i, j;
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
-	  if (tile_is_valid (tile) == FALSE)
+
+	  if (! tile_is_valid (tile))
 	    {
 	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
 	      memset (tile_data_pointer (tile, 0, 0),

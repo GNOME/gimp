@@ -37,64 +37,67 @@ struct _TileLink
   TileLink    *next;
   gint         tile_num; /* the number of this tile within the drawable */
   TileManager *tm;       /* A pointer to the tile manager for this tile.
-			  *  We need this in order to call the tile managers 
-			  *  validate proc whenever the tile is referenced 
+			  *  We need this in order to call the tile managers
+			  *  validate proc whenever the tile is referenced
 			  *  yet invalid.
 			  */
 };
 
 struct _Tile
 {
-  gshort  ref_count;   /* reference count. when the reference count is
- 		        *  non-zero then the "data" for this tile must
-		        *  be valid. when the reference count for a tile
-		        *  is 0 then the "data" for this tile must be
-		        *  NULL.
-		        */
-  gshort  write_count; /* write count: number of references that are
-			  for write access */ 
-  gshort  share_count; /* share count: number of tile managers that
-			  hold this tile */
-  guint   dirty : 1;   /* is the tile dirty? has it been modified? */
-  guint   valid : 1;   /* is the tile valid? */
+  gshort  ref_count;    /* reference count. when the reference count is
+ 		         *  non-zero then the "data" for this tile must
+		         *  be valid. when the reference count for a tile
+		         *  is 0 then the "data" for this tile must be
+		         *  NULL.
+		         */
+  gshort  write_count;  /* write count: number of references that are
+                           for write access */
+  gshort  share_count;  /* share count: number of tile managers that
+                           hold this tile */
+  guint   dirty : 1;    /* is the tile dirty? has it been modified? */
+  guint   valid : 1;    /* is the tile valid? */
 
-  guchar  bpp;         /* the bytes per pixel (1, 2, 3 or 4) */
-  gushort ewidth;      /* the effective width of the tile */
-  gushort eheight;     /* the effective height of the tile
-		        *  a tile's effective width and height may be smaller
-		        *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
-		        *  this is to handle edge tiles of a drawable.
-		        */
+  guchar  bpp;          /* the bytes per pixel (1, 2, 3 or 4) */
+  gushort ewidth;       /* the effective width of the tile */
+  gushort eheight;      /* the effective height of the tile
+		         *  a tile's effective width and height may be smaller
+		         *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
+		         *  this is to handle edge tiles of a drawable.
+		         */
 
-  TileRowHint *rowhint;   /* An array of hints for rendering purposes */
+  TileRowHint *rowhint; /* An array of hints for rendering purposes */
 
-  guchar *data;       /* the data for the tile. this may be NULL in which
-		       *  case the tile data is on disk.
-		       */
+  guchar *data;         /* the data for the tile. this may be NULL in which
+                         *  case the tile data is on disk.
+                         */
 
-  gint swap_num;      /* the index into the file table of the file to be used
-		       * for swapping. swap_num 1 is always the global
-		       * swap file.
-		       */
-  off_t swap_offset;  /* the offset within the swap file of the tile data.
-		       * if the tile data is in memory this will be set to -1.
-		       */
+  gint    swap_num;     /* the index into the file table of the file to be used
+                         * for swapping. swap_num 1 is always the global
+                         * swap file.
+                         */
+  off_t   swap_offset;  /* the offset within the swap file of the tile data.
+		         * if the tile data is in memory this will be set
+                         * to -1.
+                         */
+
   TileLink *tlink;
 
   Tile     *next;
-  Tile     *prev;     /* List pointers for the tile cache lists */
-  gpointer  listhead; /* Pointer to the head of the list this tile is on */
+  Tile     *prev;       /* List pointers for the tile cache lists */
+  gpointer  listhead;   /* Pointer to the head of the list this tile is on */
 
 #ifdef USE_PTHREADS
   pthread_mutex_t mutex;
 #endif
 };
 
+
 #ifdef USE_PTHREADS
 #define TILE_MUTEX_LOCK(tile)   pthread_mutex_lock(&((tile)->mutex))
 #define TILE_MUTEX_UNLOCK(tile) pthread_mutex_unlock(&((tile)->mutex))
 #else
-#define TILE_MUTEX_LOCK(tile) /* nothing */
+#define TILE_MUTEX_LOCK(tile)   /* nothing */
 #define TILE_MUTEX_UNLOCK(tile) /* nothing */
 #endif
 
