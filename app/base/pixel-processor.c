@@ -38,7 +38,6 @@
 #define TILES_PER_THREAD  8
 #define PROGRESS_TIMEOUT  64
 
-
 static GThreadPool *pool       = NULL;
 static GMutex      *pool_mutex = NULL;
 static GCond       *pool_cond  = NULL;
@@ -68,8 +67,9 @@ struct _PixelProcessor
   gpointer             data;
 
 #ifdef ENABLE_MP
-  GStaticMutex         mutex;
+  GMutex               *mutex;
   gint                 threads;
+  gboolean             first;
 #endif
 
   PixelRegionIterator *PRI;
@@ -87,21 +87,15 @@ do_parallel_regions (PixelProcessor *processor)
   PixelRegion tr[4];
   gint        i;
 
-  g_static_mutex_lock (&processor->mutex);
+  g_mutex_lock (processor->mutex);
 
   /*  the first thread getting here must not call pixel_regions_process()  */
-  if (processor->threads && processor->PRI)
+  if (!processor->first && processor->PRI)
     processor->PRI = pixel_regions_process (processor->PRI);
+  else
+    processor->first = FALSE;
 
-  if (processor->PRI == NULL)
-    {
-      g_static_mutex_unlock (&processor->mutex);
-      return;
-    }
-
-  processor->threads++;
-
-  do
+  while (processor->PRI)
     {
       guint pixels = (processor->PRI->portion_width *
                       processor->PRI->portion_height);
@@ -114,7 +108,7 @@ do_parallel_regions (PixelProcessor *processor)
 	      tile_lock (tr[i].curtile);
 	  }
 
-      g_static_mutex_unlock (&processor->mutex);
+      g_mutex_unlock (processor->mutex);
 
       switch(processor->num_regions)
 	{
@@ -150,7 +144,7 @@ do_parallel_regions (PixelProcessor *processor)
           break;
         }
 
-      g_static_mutex_lock (&processor->mutex);
+      g_mutex_lock (processor->mutex);
 
       for (i = 0; i < processor->num_regions; i++)
         if (processor->regions[i])
@@ -160,24 +154,25 @@ do_parallel_regions (PixelProcessor *processor)
           }
 
       processor->progress += pixels;
+      if (processor->PRI)
+	processor->PRI = pixel_regions_process (processor->PRI);
     }
-  while (processor->PRI &&
-	 (processor->PRI = pixel_regions_process (processor->PRI)));
 
+  g_mutex_lock   (pool_mutex);
   processor->threads--;
 
   if (processor->threads == 0)
     {
-      g_static_mutex_unlock (&processor->mutex);
-
-      g_mutex_lock (pool_mutex);
-      g_cond_signal (pool_cond);
       g_mutex_unlock (pool_mutex);
+      g_mutex_unlock (processor->mutex);
+      g_cond_signal  (pool_cond);
     }
   else
     {
-      g_static_mutex_unlock (&processor->mutex);
+      g_mutex_unlock (pool_mutex);
+      g_mutex_unlock (processor->mutex);
     }
+
 }
 #endif
 
@@ -283,6 +278,10 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
 
       g_mutex_lock (pool_mutex);
 
+      processor->first = TRUE;
+      processor->threads = tasks;
+      processor->mutex = g_mutex_new();
+
       while (tasks--)
         {
           g_thread_pool_push (pool, processor, &error);
@@ -291,38 +290,44 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
             {
               g_warning ("thread creation failed: %s", error->message);
               g_clear_error (&error);
+	      processor->threads--;
             }
         }
 
       if (progress_func)
         {
-          GTimeVal timeout;
 
-          g_get_current_time (&timeout);
-          g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
-
-          while (! g_cond_timed_wait (pool_cond, pool_mutex, &timeout))
+          while (processor->threads != 0)
             {
               gulong  progress;
+	      GTimeVal timeout;
 
-              g_static_mutex_lock (&processor->mutex);
+	      g_get_current_time (&timeout);
+	      g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
+
+	      g_cond_timed_wait (pool_cond, pool_mutex, &timeout);
+
+              g_mutex_lock (processor->mutex);
               progress = processor->progress;
-              g_static_mutex_unlock (&processor->mutex);
+              g_mutex_unlock (processor->mutex);
 
               progress_func (progress_data,
                              (gdouble) progress / (gdouble) pixels);
 
-              g_get_current_time (&timeout);
-              g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
             }
 
         }
       else
         {
-          g_cond_wait (pool_cond, pool_mutex);
+          while (processor->threads != 0)
+	  {
+	    g_cond_wait (pool_cond, pool_mutex);
+	  }
         }
 
       g_mutex_unlock (pool_mutex);
+
+      g_mutex_free (processor->mutex);
     }
   else
 #endif
