@@ -309,7 +309,7 @@ msgstr "<Image>/Скрипт-Фу/Stencil Ops/Chrome-It..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:9
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Слой изображения..."
+msgstr "<Image>/Скрипт-Фу/Утилиты/ASCII -> Слой изображения..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -558,8 +558,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:13
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
-"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/General Tube Labels..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:12
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -575,16 +574,13 @@ msgstr ""
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Button "
-"Label..."
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Button Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:9
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr ""
-"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Sub-Button "
-"Label..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Sub-Button Label..."
 
 #: plug-ins/webbrowser/web-browser.scm:12
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
