@@ -390,7 +390,7 @@ typedef struct
 static const chan_tmpl grey_tmpl[] =
 {
   {
-    N_("Grey"),
+    N_("_Grey"),
     &pvals.gry_ang,
     &pvals.gry_spotfn,
     &factory_defaults.gry_ang,
@@ -403,7 +403,7 @@ static const chan_tmpl grey_tmpl[] =
 static const chan_tmpl rgb_tmpl[] =
 {
   {
-    N_("Red"),
+    N_("R_ed"),
     &pvals.red_ang,
     &pvals.red_spotfn,
     &factory_defaults.red_ang,
@@ -411,7 +411,7 @@ static const chan_tmpl rgb_tmpl[] =
   },
 
   {
-    N_("Green"),
+    N_("_Green"),
     &pvals.grn_ang,
     &pvals.grn_spotfn,
     &factory_defaults.grn_ang,
@@ -419,7 +419,7 @@ static const chan_tmpl rgb_tmpl[] =
   },
 
   {
-    N_("Blue"),
+    N_("_Blue"),
     &pvals.blu_ang,
     &pvals.blu_spotfn,
     &factory_defaults.blu_ang,
@@ -432,7 +432,7 @@ static const chan_tmpl rgb_tmpl[] =
 static const chan_tmpl cmyk_tmpl[] =
 {
   {
-    N_("Cyan"),
+    N_("C_yan"),
     &pvals.red_ang,
     &pvals.red_spotfn,
     &factory_defaults.red_ang,
@@ -440,7 +440,7 @@ static const chan_tmpl cmyk_tmpl[] =
   },
 
   {
-    N_("Magenta"),
+    N_("Magen_ta"),
     &pvals.grn_ang,
     &pvals.grn_spotfn,
     &factory_defaults.grn_ang,
@@ -448,7 +448,7 @@ static const chan_tmpl cmyk_tmpl[] =
   },
 
   {
-    N_("Yellow"),
+    N_("_Yellow"),
     &pvals.blu_ang,
     &pvals.blu_spotfn,
     &factory_defaults.blu_ang,
@@ -456,7 +456,7 @@ static const chan_tmpl cmyk_tmpl[] =
   },
 
   {
-    N_("Black"),
+    N_("_Black"),
     &pvals.gry_ang,
     &pvals.gry_spotfn,
     &factory_defaults.gry_ang,
@@ -1056,7 +1056,7 @@ new_channel (const chan_tmpl *ct)
 
   /* angle slider */
   chst->angle_adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("Angle:"), SCALE_WIDTH, 0,
+					  _("_Angle:"), SCALE_WIDTH, 0,
 					  *ct->angle,
 					  -90, 90, 1, 15, 1,
 					  TRUE, 0, 0,
@@ -1080,7 +1080,7 @@ new_channel (const chan_tmpl *ct)
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
   gtk_widget_show (hbox2);
 
-  label = gtk_label_new( _("Spot Function:"));
+  label = gtk_label_new_with_mnemonic( _("_Spot Function:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1189,7 +1189,7 @@ gen_channels (NewsprintDialog_st *st,
 
       gtk_notebook_append_page (GTK_NOTEBOOK (st->channel_notebook[colourspace]),
 				chst[i]->vbox,
-				gtk_label_new (gettext (ct->name)));
+				gtk_label_new_with_mnemonic (gettext (ct->name)));
       gtk_widget_show (chst[i]->vbox);
 
       i++;
@@ -1281,7 +1281,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   st.input_spi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Input SPI:"), SCALE_WIDTH, 0,
+			  _("_Input SPI:"), SCALE_WIDTH, 0,
 			  pvals_ui.input_spi,
 			  1.0, 1200.0, 1.0, 10.0, 0,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
@@ -1292,7 +1292,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   st.output_lpi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("Output LPI:"), SCALE_WIDTH, 0,
+			  _("O_utput LPI:"), SCALE_WIDTH, 0,
 			  pvals_ui.output_lpi,
 			  1.0, 1200.0, 1.0, 10.0, 1,
 			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
@@ -1302,7 +1302,7 @@ newsprint_dialog (GimpDrawable *drawable)
                     &st);
 
   st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				      _("Cell Size:"), SCALE_WIDTH, 0,
+				      _("C_ell Size:"), SCALE_WIDTH, 0,
 				      pvals.cell_width,
 				      3.0, 100.0, 1.0, 5.0, 0,
 				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
@@ -1338,7 +1338,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       /* black pullout */
       st.pull = gimp_scale_entry_new (GTK_TABLE (st.pull_table), 0, 0,
-				      _("Black Pullout (%):"), SCALE_WIDTH, 0,
+				      _("B_lack Pullout (%):"), SCALE_WIDTH, 0,
 				      pvals.k_pullout,
 				      0, 100, 1, 10, 0,
 				      TRUE, 0, 0,
@@ -1365,7 +1365,7 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show(label);
 
-      toggle = gtk_radio_button_new_with_label(group, _("RGB"));
+      toggle = gtk_radio_button_new_with_mnemonic(group, _("_RGB"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -1378,7 +1378,7 @@ newsprint_dialog (GimpDrawable *drawable)
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_RGB));
 
-      toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
+      toggle = gtk_radio_button_new_with_mnemonic (group, _("C_MYK"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -1391,7 +1391,7 @@ newsprint_dialog (GimpDrawable *drawable)
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_CMYK));
 
-      toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
+      toggle = gtk_radio_button_new_with_mnemonic (group, _("I_ntensity"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -1412,7 +1412,7 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      toggle = gtk_check_button_new_with_label (_("Lock Channels"));
+      toggle = gtk_check_button_new_with_mnemonic (_("_Lock Channels"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    pvals_ui.lock_channels);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
@@ -1422,7 +1422,7 @@ newsprint_dialog (GimpDrawable *drawable)
 			  G_CALLBACK (gimp_toggle_button_update),
 			  &pvals_ui.lock_channels);
 
-      button = gtk_button_new_with_label (_("Factory Defaults"));
+      button = gtk_button_new_with_mnemonic (_("_Factory Defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -1455,7 +1455,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Oversample:"), SCALE_WIDTH, 0,
+			      _("O_versample:"), SCALE_WIDTH, 0,
 			      pvals.oversample,
 			      1.0, 15.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,

@@ -949,9 +949,9 @@ bumpmap_dialog (void)
 			   G_CALLBACK (dialog_map_type_callback),
 			   &bmvals.type, (gpointer) bmvals.type,
 
-			   _("Linear Map"),     (gpointer) LINEAR, NULL,
-			   _("Spherical Map"),  (gpointer) SPHERICAL, NULL,
-			   _("Sinuosidal Map"), (gpointer) SINUOSIDAL, NULL,
+			   _("_Linear Map"),     (gpointer) LINEAR, NULL,
+			   _("_Spherical Map"),  (gpointer) SPHERICAL, NULL,
+			   _("S_inuosidal Map"), (gpointer) SINUOSIDAL, NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
@@ -964,7 +964,7 @@ bumpmap_dialog (void)
   gtk_widget_show (sep);
 
   /* Compensate darkening */
-  button = gtk_check_button_new_with_label (_("Compensate for Darkening"));
+  button = gtk_check_button_new_with_mnemonic (_("Co_mpensate for Darkening"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.compensate ? TRUE : FALSE);
@@ -975,7 +975,7 @@ bumpmap_dialog (void)
                     NULL);
 
   /* Invert bumpmap */
-  button = gtk_check_button_new_with_label (_("Invert Bumpmap"));
+  button = gtk_check_button_new_with_mnemonic (_("I_nvert Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.invert ? TRUE : FALSE);
@@ -986,7 +986,7 @@ bumpmap_dialog (void)
                     NULL);
 
   /* Tile bumpmap */
-  button = gtk_check_button_new_with_label (_("Tile Bumpmap"));
+  button = gtk_check_button_new_with_mnemonic (_("_Tile Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.tiled ? TRUE : FALSE);
@@ -1018,7 +1018,7 @@ bumpmap_dialog (void)
 				 bmvals.bumpmap_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Bump Map:"), 1.0, 0.5,
+			     _("_Bump Map:"), 1.0, 0.5,
 			     option_menu, 2, TRUE);
 
   sep = gtk_hseparator_new ();
@@ -1037,7 +1037,7 @@ bumpmap_dialog (void)
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Azimuth:"), SCALE_WIDTH, 0,
+			      _("_Azimuth:"), SCALE_WIDTH, 0,
 			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1046,7 +1046,7 @@ bumpmap_dialog (void)
                     &bmvals.azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Elevation:"), SCALE_WIDTH, 0,
+			      _("_Elevation:"), SCALE_WIDTH, 0,
 			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1055,7 +1055,7 @@ bumpmap_dialog (void)
                     &bmvals.elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row,
-			      _("Depth:"), SCALE_WIDTH, 0,
+			      _("_Depth:"), SCALE_WIDTH, 0,
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1066,7 +1066,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_x = adj = 
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("X Offset:"), SCALE_WIDTH, 0,
+			  _("_X Offset:"), SCALE_WIDTH, 0,
 			  bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
@@ -1076,7 +1076,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_y = adj = 
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
-			  _("Y Offset:"), SCALE_WIDTH, 0,
+			  _("_Y Offset:"), SCALE_WIDTH, 0,
 			  bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
@@ -1086,7 +1086,7 @@ bumpmap_dialog (void)
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Waterlevel:"), SCALE_WIDTH, 0,
+			      _("_Waterlevel:"), SCALE_WIDTH, 0,
 			      bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1095,7 +1095,7 @@ bumpmap_dialog (void)
                     &bmvals.waterlevel);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Ambient:"), SCALE_WIDTH, 0,
+			      _("A_mbient:"), SCALE_WIDTH, 0,
 			      bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1367,9 +1367,7 @@ dialog_new_bumpmap (gboolean init_offsets)
 
   for (i = 0; i < (bmint.preview_height + 2); i++)
     {
-      if (bmint.bm_rows[i])
-	g_free (bmint.bm_rows[i]);
-
+      g_free (bmint.bm_rows[i]);
       bmint.bm_rows[i] = g_new (guchar, bmint.bm_width * bmint.bm_bpp);
     }
 

@@ -1,3 +1,11 @@
+2002-06-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/shift.c (shift_dialog)
+	* plug-ins/common/newsprint.c (newsprint_dialog)
+	* plug-ins/common/bumpmap.c (bumpmap_dialog)
+	* plug-ins/common/polar.c (polarize_dialog)
+	* plug-ins/common/cubism.c (cubism_dialog): enable mnemonics
+
 2002-06-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptoolbox-color-area.[ch]: use stock pixbufs to

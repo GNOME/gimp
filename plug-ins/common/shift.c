@@ -311,8 +311,7 @@ shift (GimpDrawable *drawable)
 		  dest += dest_rgn.rowstride;
                 }
 
-	      for (k = 0; k < bytes; k++)
-		destline++;
+	      destline += bytes;
             }
 
 	  progress += dest_rgn.w * dest_rgn.h;
@@ -389,10 +388,10 @@ shift_dialog (void)
                                  &shvals.orientation,
                                  GINT_TO_POINTER (shvals.orientation),
 
-                                 _("Shift Horizontally"),
+                                 _("Shift _Horizontally"),
                                  GINT_TO_POINTER (HORIZONTAL), NULL,
 
-                                 _("Shift Vertically"),
+                                 _("Shift _Vertically"),
                                  GINT_TO_POINTER (VERTICAL), NULL,
 
                                  NULL);
@@ -413,7 +412,7 @@ shift_dialog (void)
   gtk_widget_show (table);
 
   amount_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				      _("Shift Amount:"), SCALE_WIDTH, 0,
+				      _("Shift _Amount:"), SCALE_WIDTH, 0,
 				      shvals.shift_amount, 0, 200, 1, 10, 0,
 				      TRUE, 0, 0,
 				      NULL, NULL);

@@ -341,7 +341,7 @@ cubism_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Use Background Color"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use Background Color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
@@ -354,7 +354,7 @@ cubism_dialog (void)
 				(cvals.bg_color == BG));
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Tile Size:"), SCALE_WIDTH, 0,
+				     _("_Tile Size:"), SCALE_WIDTH, 0,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -364,7 +364,7 @@ cubism_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("Tile Saturation:"), SCALE_WIDTH, 0,
+			  _("T_ile Saturation:"), SCALE_WIDTH, 0,
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
 			  NULL, NULL);

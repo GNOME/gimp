@@ -976,7 +976,7 @@ polarize_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Circle Depth in Percent:"), SCALE_WIDTH, 0,
+			      _("Circle _Depth in Percent:"), SCALE_WIDTH, 0,
 			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -985,7 +985,7 @@ polarize_dialog (void)
                     &pcvals.circle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Offset Angle:"), SCALE_WIDTH, 0,
+			      _("Offset _Angle:"), SCALE_WIDTH, 0,
 			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -997,7 +997,7 @@ polarize_dialog (void)
   hbox = gtk_hbox_new (TRUE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  toggle = gtk_check_button_new_with_label (_("Map Backwards"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Map Backwards"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
@@ -1011,7 +1011,7 @@ polarize_dialog (void)
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.backwards);
 
-  toggle = gtk_check_button_new_with_label (_("Map from Top"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Map from _Top"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.inverse);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
@@ -1026,7 +1026,7 @@ polarize_dialog (void)
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.inverse);
 
-  toggle = gtk_check_button_new_with_label (_("To Polar"));
+  toggle = gtk_check_button_new_with_mnemonic (_("To _Polar"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.polrec);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
