@@ -1,19 +1,35 @@
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_png_thumb_path): use
+	proper defines to specify the permissions when calling mkdir().
+
+	* app/file/file-utils.c: removed redeclaration of mkdir() for
+	Win32 since we don't call mkdir() here.
+
+	* app/gui/user-install-dialog.c (user_install_run): rewrote
+	copy_file() to use GError for error reporting. Use the same code
+	for the user installation on all platforms. Also fixes bug #102015.
+
+	* data/misc/Makefile.am
+	* data/misc/user_install
+	* data/misc/user_install.bat: removed obsoleted scripts.
+
 2002-12-30  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpanchor.h
-	* app/vectors/vectors-types.h: Anchors now have an enum as type and
+	* app/vectors/vectors-types.h: anchors now have an enum as type and
 	have the "selected" property.
 
 	* app/vectors/gimpstroke.[ch]
-	* app/vectors/gimpbezierstroke.c
-	* app/vectors/gimpvectors-preview.c: Additional functions to get
-	information about the graphical representation of the stroke and be
-	able to select anchors.
+	* app/vectors/gimpbezierstroke.c	
+	* app/vectors/gimpvectors-preview.c: additional functions to get
+	information about the graphical representation of the stroke and
+	to be able to select anchors.
 
-	* app/tools/gimpvectortool.c: semi-usable interface, better graphical
-	representation of what is going on. Also make use of the "selected"
-	property of the anhors to just display a subset of the control
-	handles.
+	* app/tools/gimpvectortool.c: semi-usable interface, better
+	graphical representation of what is going on. Make use of the
+	"selected" property of the anchors to just display a subset of the
+	control handles.
 
 2002-12-30  Sven Neumann  <sven@gimp.org>
 

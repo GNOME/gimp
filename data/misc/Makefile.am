@@ -2,17 +2,11 @@
 
 miscdatadir = $(gimpdatadir)/misc
 
-miscdata_SCRIPTS = \
-	user_install
-
 miscdata_in_files = gimp.desktop.in.in
 
 miscdata_DATA = $(miscdata_in_files:.desktop.in.in=.desktop)
 
-EXTRA_DIST = \
-	$(miscdata_SCRIPTS)	\
-	gimp.desktop.in.in	\
-	user_install.bat
+EXTRA_DIST = gimp.desktop.in.in
 
 gen_sources = desktop-foo
 CLEANFILES = $(gen_sources)

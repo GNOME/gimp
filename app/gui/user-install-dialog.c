@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -47,17 +48,11 @@
 #include "libgimp/gimpintl.h"
 
 
-#ifndef G_OS_WIN32
-#  ifndef __EMX__
-#  define USER_INSTALL "user_install"
-#  else
-#  include <process.h>
-#  define USER_INSTALL "user_install.cmd"
-#  endif
-#else
+#ifdef G_OS_WIN32
 #  include <io.h>
 #  define mkdir(path, mode) _mkdir(path)
 #endif
+
 
 #define NUM_PAGES    6
 #define EEK_PAGE     (NUM_PAGES - 1)
@@ -65,7 +60,9 @@
 #define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
 
-enum {
+
+enum
+{
   DIRENT_COLUMN,
   PIXBUF_COLUMN,
   DESC_COLUMN,
@@ -933,203 +930,85 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 /*********************/
 /*  Local functions  */
 
-#ifdef G_OS_WIN32
-
-static gchar *install_error_message;
-
-static int
-copy_file (gchar *source,
-	   gchar *dest)
+static gboolean
+copy_file (gchar   *source,
+	   gchar   *dest,
+           GError **error)
 {
-  char buffer[4096];
-  FILE *sfile, *dfile;
-  int nbytes;
+  FILE  *sfile;
+  FILE  *dfile;
+  gchar  buffer[4096];
+  gsize  nbytes;
 
   sfile = fopen (source, "rb");
   if (sfile == NULL)
     {
-      install_error_message = g_strdup_printf (_("Cannot open %s for reading"),
-					       source);
-      return -1;
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot open '%s' for reading: %s"),
+                   source, g_strerror (errno));
+
+      return FALSE;
     }
 
   dfile = fopen (dest, "wb");
   if (dfile == NULL)
     {
-      install_error_message = g_strdup_printf (_("Cannot open %s for writing"),
-					       dest);
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot open '%s' for writing: %s"),
+                   dest, g_strerror (errno));
       fclose (sfile);
-      return -1;
+
+      return FALSE;
     }
 
   while ((nbytes = fread (buffer, 1, sizeof (buffer), sfile)) > 0)
     {
       if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
 	{
-	  install_error_message = g_strdup_printf (_("Error while writing %s"),
-						   dest);
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Error writing to '%s': %s"),
+                       dest, g_strerror (errno));
 	  fclose (sfile);
 	  fclose (dfile);
-	  return -1;
+
+	  return FALSE;
 	}
     }
 
   if (ferror (sfile))
     {
-      install_error_message = g_strdup_printf (_("Error while reading %s"),
-					       source);
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading from '%s': %s"),
+                   source, g_strerror (errno));
       fclose (sfile);
       fclose (dfile);
-      return -1;
+
+      return FALSE;
     }
 
   fclose (sfile);
   fclose (dfile);
-  return 0;
-}
 
-#endif
+  return TRUE;
+}
 
 static gboolean
 user_install_run (void)
 {
-#ifndef G_OS_WIN32
-  FILE        *pfp;
-  gchar       *filename = NULL;
-  gchar       *command  = NULL;
-  struct stat  stat_buf;
-  gint         err;
-  gboolean     executable = TRUE;
-
-  filename = g_build_filename (gimp_data_directory (), "misc",
-                               USER_INSTALL, NULL);
-
-  if ((err = stat (filename, &stat_buf)) != 0)
-    {
-      gchar *str;
-
-      str = g_strdup_printf ("%s\n%s", filename,
-			     _("does not exist.  Cannot install."));
-      add_label (GTK_BOX (log_page), str);
-      g_free (str);
-
-      executable = FALSE;
-    }
-#ifdef S_IXUSR
-  else if (! (S_IXUSR & stat_buf.st_mode) || ! (S_IRUSR & stat_buf.st_mode))
-    {
-      gchar *str;
-
-      str = g_strdup_printf ("%s\n%s", filename,
-			     _("has invalid permissions.  Cannot install."));
-      add_label (GTK_BOX (log_page), str);
-      g_free (str);
-
-      executable = FALSE;
-    }
-#endif
-
-  if (executable)
-    {
-#ifdef __EMX__
-      command = g_strdup_printf ("cmd.exe /c %s %s %s %s",
-                                 filename,
-                                 gimp_data_directory (),
-                                 gimp_directory (),
-                                 gimp_sysconf_directory());
-      {
-	gchar *s = buffer + 11;
-
-	while (*s)
-	  {
-	    if (*s == '/') *s = '\\';
-	    s++;
-	  }
-      }
-#else
-      command = g_strdup_printf ("%s 2>&1 %s %s %s",
-                                 filename,
-                                 gimp_data_directory (),
-                                 gimp_directory (),
-                                 gimp_sysconf_directory ());
-#endif
-
-      g_free (filename);
-
-      /*  urk - should really use something better than popen(), since
-       *  we can't tell if the installation script failed --austin
-       */
-      if ((pfp = popen (command, "r")) != NULL)
-	{
-	  GtkWidget     *scrolled_window;
-	  GtkWidget     *log_view;
-	  GtkTextBuffer *log_buffer;
-          static gchar   buffer[2048];
-
-	  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-	  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-					  GTK_POLICY_AUTOMATIC,
-					  GTK_POLICY_AUTOMATIC);
-	  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window,
-			      TRUE, TRUE, 0);
-	  gtk_widget_show (scrolled_window);
-
-	  log_buffer = gtk_text_buffer_new (NULL);
-	  log_view = gtk_text_view_new_with_buffer (log_buffer);
-	  g_object_unref (log_buffer);
-
-	  PAGE_STYLE (log_view);
-	  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
-
-	  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
-	  gtk_widget_show (log_view);
-
-	  while (fgets (buffer, sizeof (buffer), pfp))
-	    {
-	      gtk_text_buffer_insert_at_cursor (log_buffer, buffer, -1);
-	    }
-	  pclose (pfp);
-
-	  add_label (GTK_BOX (log_page),
-		     _("Did you notice any error messages in the lines above?\n"
-		       "If not, installation was successful!\n"
-		       "Otherwise, quit and investigate the possible reason..."));
-	}
-      else
-        {
-          executable = FALSE;
-        }
-    }
-
-  g_free (command);
-
-  if (executable)
-    {
-      g_object_set_data (G_OBJECT (log_page), "footer",
-                         _("Click \"Continue\" to complete GIMP installation."));
-    }
-  else
-    {
-      add_label (GTK_BOX (log_page),
-		 _("Installation failed.  Contact your system administrator."));
-    }
-
-  return executable;
-#else
-  GtkWidget *scrolled_window;
+  GtkWidget     *scrolled_window;
   GtkTextBuffer *log_buffer;
-  GtkWidget *log_view;
-  gchar dest[1000];
-  gchar source[1000];
-  gchar log_line[1000];
-  gint i;
+  GtkWidget     *log_view;
+  GError        *error = NULL;
+  gchar          dest[1000];
+  gchar          source[1000];
+  gchar          log_line[1000];
+  gint           i;
   
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (log_page), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   log_buffer = gtk_text_buffer_new (NULL);
@@ -1147,32 +1026,45 @@ user_install_run (void)
     {
       if (i == 0)
 	{
-	  g_snprintf (log_line, sizeof (log_line), _("Creating folder %s\n"),
-		      gimp_directory ());
+	  g_snprintf (log_line, sizeof (log_line),
+                      _("Creating folder %s\n"), gimp_directory ());
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-	  if (mkdir (gimp_directory (), 0666) == -1)
+
+	  if (mkdir (gimp_directory (),
+                     S_IRUSR | S_IWUSR | S_IXUSR |
+                     S_IRGRP | S_IXGRP |
+                     S_IROTH | S_IXOTH) == -1)
 	    {
-	      install_error_message = g_strdup_printf (_("Cannot create folder: %s"),
-						       g_strerror (errno));
+              g_set_error (&error,
+                           G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Cannot create folder: %s"), g_strerror (errno));
 	      goto break_out_of_loop;
 	    }
+
 	  gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
 	}
+
       g_snprintf (dest, sizeof (dest), "%s%c%s",
 		  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].text);
+
       switch (tree_items[i].type)
 	{
 	case TREE_ITEM_DONT:
 	  break;
 
 	case TREE_ITEM_MKDIR_ONLY:
-	  g_snprintf (log_line, sizeof (log_line), _("Creating folder %s\n"),
-		      dest);
+	  g_snprintf (log_line, sizeof (log_line),
+                      _("Creating folder %s\n"), dest);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-	  if (mkdir (dest, 0666) == -1)
+
+	  if (mkdir (dest,
+                     S_IRUSR | S_IWUSR | S_IXUSR |
+                     S_IRGRP | S_IXGRP |
+                     S_IROTH | S_IXOTH) == -1)
 	    {
-	      install_error_message = g_strdup_printf (_("Cannot create folder: %s"),
-						       g_strerror (errno));
+              g_set_error (&error,
+                           G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Cannot create folder: %s"), g_strerror (errno));
 	      goto break_out_of_loop;
 	    }
 	  break;
@@ -1191,35 +1083,41 @@ user_install_run (void)
 		      tree_items[i].source_filename : tree_items[i].text);
 	do_copy:
 	  g_assert (!tree_items[i].directory);
-	  g_snprintf (log_line, sizeof (log_line), _("Copying file %s from %s\n"),
-		      dest, source);
+	  g_snprintf (log_line, sizeof (log_line),
+                      _("Copying file %s from %s\n"), dest, source);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-	  if (copy_file (source, dest) == -1)
+
+	  if (!copy_file (source, dest, &error))
 	    goto break_out_of_loop;
 
 	  break;
 
 	default:
 	  g_assert_not_reached ();
+          break;
 	}
+
       if (tree_items[i].type != TREE_ITEM_DONT)
 	gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
     }
 
  break_out_of_loop:
 
-  if (i < num_tree_items)
+  if (error)
     {
       g_snprintf (log_line, sizeof (log_line), _("  Failure: %s\n"),
-		  install_error_message);
+                  error->message);
       gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+
       add_label (GTK_BOX (log_page),
 		 _("Installation failed.  Contact system administrator."));
+
+      g_error_free (error);
+
       return FALSE;
     }
 
   return TRUE;
-#endif
 }
 
 static void

@@ -1046,12 +1046,12 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
   if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
     {
       if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) || 
-          (mkdir (thumb_dir, 0700) == 0))
+          (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
         {
           if (i == 0)
-            mkdir (thumb_fail_subdir, 0700);
+            mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
 
-          mkdir (thumb_subdirs[i], 0700);
+          mkdir (thumb_subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR);
         }
 
       if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))

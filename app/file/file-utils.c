@@ -31,13 +31,6 @@
 #include <unistd.h>
 #endif
 
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <direct.h>		/* For _mkdir() */
-#define mkdir(path,mode) _mkdir(path)
-#endif
-
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -488,8 +481,9 @@ file_check_single_magic (gchar  *offset,
       if (!g_ascii_isdigit (value[0])) return (0);
 
       /* 
-       * to anybody reading this: is strtol's parsing behaviour (e.g. "0x" prefix)
-       * broken on some systems or why do we do the base detection ourselves?
+       * to anybody reading this: is strtol's parsing behaviour
+       * (e.g. "0x" prefix) broken on some systems or why do we
+       * do the base detection ourselves?
        * */
       if (value[0] != '0')      /* decimal */
         num_testval = strtol(value, NULL, 10);
@@ -579,6 +573,7 @@ file_check_magic_list (GSList *magics_list,
       if ((type = (gchar *)magics_list->data) == NULL) break;
       if ((magics_list = magics_list->next) == NULL) break;
       if ((value = (gchar *)magics_list->data) == NULL) break;
+
       magics_list = magics_list->next;
 
       match_val = file_check_single_magic (offset, type, value,
@@ -606,13 +601,13 @@ readXVThumb (const gchar  *fnam,
 	     gint         *h,
 	     gchar       **imginfo /* caller frees if != NULL */)
 {
-  FILE *fp;
+  FILE        *fp;
   const gchar *P7_332 = "P7 332";
-  gchar P7_buf[7];
-  gchar linebuf[200];
-  guchar *buf;
-  gint twofivefive;
-  void *ptr;
+  gchar        P7_buf[7];
+  gchar        linebuf[200];
+  guchar      *buf;
+  gint         twofivefive;
+  void        *ptr;
 
   *w = *h = 0;
   *imginfo = NULL;
@@ -623,7 +618,7 @@ readXVThumb (const gchar  *fnam,
 
   fread (P7_buf, 6, 1, fp);
 
-  if (strncmp(P7_buf, P7_332, 6)!=0)
+  if (strncmp (P7_buf, P7_332, 6)!=0)
     {
       g_warning ("Thumbnail does not have the 'P7 332' header.");
       fclose (fp);
@@ -635,8 +630,8 @@ readXVThumb (const gchar  *fnam,
 
   do
     {
-      ptr = fgets(linebuf, 199, fp);
-      if ((strncmp(linebuf, "#IMGINFO:", 9) == 0) &&
+      ptr = fgets (linebuf, 199, fp);
+      if ((strncmp (linebuf, "#IMGINFO:", 9) == 0) &&
 	  (linebuf[9] != '\0') &&
 	  (linebuf[9] != '\n'))
 	{
@@ -646,7 +641,7 @@ readXVThumb (const gchar  *fnam,
 	  if (linebuf[9] != '\0')
 	    {
 	      if (*imginfo)
-		g_free(*imginfo);
+		g_free (*imginfo);
 	      *imginfo = g_strdup (&linebuf[9]);
 	    }
 	}
@@ -660,7 +655,7 @@ readXVThumb (const gchar  *fnam,
       return NULL;
     }
 
-  sscanf(linebuf, "%d %d %d\n", w, h, &twofivefive);
+  sscanf (linebuf, "%d %d %d\n", w, h, &twofivefive);
 
   if (twofivefive!=255)
     {
