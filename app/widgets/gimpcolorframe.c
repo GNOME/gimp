@@ -115,6 +115,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
       gtk_widget_show (frame->name_labels[i]);
 
       frame->value_labels[i] = gtk_label_new (" ");
+      gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
       gtk_misc_set_alignment (GTK_MISC (frame->value_labels[i]), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), frame->value_labels[i],
                         1, 2, i, i + 1,

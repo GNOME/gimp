@@ -1,5 +1,11 @@
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_init): make the
+	value labels selectable as suggested by Mariano Suárez-Alvarez in
+	bug #133958.
+
+2004-02-10  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 1.3.27 (interface_age 1,
 	binary_age 1). Added GIMP_DESKTOP_ICON variable and set it
 	depending on GIMP_UNSTABLE.
