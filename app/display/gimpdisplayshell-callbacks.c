@@ -32,6 +32,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-qmask.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
@@ -42,11 +43,12 @@
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "gui/dialogs.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-layer-select.h"
@@ -244,14 +246,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 }
 
 static void
-gimp_display_shell_get_device_state (GimpDisplayShell *shell,
-                                     GdkDevice        *device,
-                                     GdkModifierType  *state)
-{
-  gdk_device_get_state (device, shell->canvas->window, NULL, state);
-}
-
-static void
 gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
                                       GdkDevice        *device,
                                       GimpCoords       *coords)
@@ -299,6 +293,14 @@ gimp_display_shell_get_coords (GimpDisplayShell *shell,
   return FALSE;
 }
 
+static void
+gimp_display_shell_get_device_state (GimpDisplayShell *shell,
+                                     GdkDevice        *device,
+                                     GdkModifierType  *state)
+{
+  gdk_device_get_state (device, shell->canvas->window, NULL, state);
+}
+
 static gboolean
 gimp_display_shell_get_state (GimpDisplayShell *shell,
                               GdkEvent         *event,
@@ -321,6 +323,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                                   GimpDisplayShell *shell)
 {
   GimpDisplay     *gdisp;
+  GimpImage       *gimage;
   GimpCoords       display_coords;
   GimpCoords       image_coords;
   GdkModifierType  state;
@@ -328,21 +331,24 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
   gboolean         return_val    = FALSE;
   gboolean         update_cursor = FALSE;
 
+  static GdkModifierType  press_state;
+
   static gboolean  scrolling      = FALSE;
   static gint      scroll_start_x = 0;
   static gint      scroll_start_y = 0;
-  static guint     key_signal_id  = 0;
 
   if (! canvas->window)
     {
-      g_warning ("gimp_display_shell_canvas_events(): called unrealized");
+      g_warning ("%s: called unrealized", G_STRLOC);
       return FALSE;
     }
 
   gdisp = shell->gdisp;
 
+  gimage = gdisp->gimage;
+
   /*  Find out what device the event occurred upon  */
-  if (! gdisp->gimage->gimp->busy && devices_check_change (event))
+  if (! gimage->gimp->busy && devices_check_change (event))
     gimp_display_shell_check_device_cursor (shell);
 
   gimp_display_shell_get_coords (shell, event, current_device, &display_coords);
@@ -414,19 +420,19 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         if (state)
           {
             if (state & GDK_SHIFT_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_SHIFT_MASK, TRUE, state,
                                                 gdisp);
             if (state & GDK_CONTROL_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_CONTROL_MASK, TRUE, state,
                                                 gdisp);
             if (state & GDK_MOD1_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_MOD1_MASK, TRUE, state,
                                                 gdisp);
 
-            tool_manager_oper_update_active (gdisp->gimage->gimp,
+            tool_manager_oper_update_active (gimage->gimp,
                                              &image_coords, state,
                                              gdisp);
           }
@@ -450,19 +456,19 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         if (state)
           {
             if (state & GDK_MOD1_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_MOD1_MASK, FALSE, 0,
                                                 gdisp);
             if (state & GDK_CONTROL_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_CONTROL_MASK, FALSE, 0,
                                                 gdisp);
             if (state & GDK_SHIFT_MASK)
-              tool_manager_modifier_key_active (gdisp->gimage->gimp,
+              tool_manager_modifier_key_active (gimage->gimp,
                                                 GDK_SHIFT_MASK, FALSE, 0,
                                                 gdisp);
 
-            tool_manager_oper_update_active (gdisp->gimage->gimp,
+            tool_manager_oper_update_active (gimage->gimp,
                                              &image_coords, 0,
                                              gdisp);
           }
@@ -484,10 +490,10 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         bevent = (GdkEventButton *) event;
 
         /*  ignore new mouse events  */
-        if (gdisp->gimage->gimp->busy)
+        if (gimage->gimp->busy)
           return TRUE;
 
-        active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+        active_tool = tool_manager_get_active (gimage->gimp);
 
         switch (bevent->button)
           {
@@ -496,23 +502,12 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
             gtk_grab_add (canvas);
 
-            /* This is a hack to prevent other stuff being run in the middle of
-             * a tool operation (like changing image types.... brrrr). We just
-             * block all the keypress event. A better solution is to implement
-             * some sort of locking for images.
-             * Note that this is dependent on specific GTK behavior, and isn't
-             * guaranteed to work in future versions of GTK.
-             * -Yosh
+            /*  save the current modifier state because tools don't get
+             *  key events while BUTTON1 is down
              */
-            if (key_signal_id == 0)
-              key_signal_id = g_signal_connect (G_OBJECT (canvas),
-                                                "key_press_event",
-                                                G_CALLBACK (gtk_true),
-                                                NULL);
+            press_state = state;
 
-            /* FIXME!!! This code is ugly */
-
-            if (active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
+            if (active_tool && (! gimp_image_is_empty (gimage) ||
                                 active_tool->handle_empty_image))
               {
                 if (active_tool->auto_snap_to)
@@ -534,20 +529,20 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                  */
                 if (! active_tool->drawable)
                   {
-                    tool_manager_initialize_active (gdisp->gimage->gimp, gdisp);
+                    tool_manager_initialize_active (gimage->gimp, gdisp);
                   }
                 else if ((active_tool->drawable !=
-                          gimp_image_active_drawable (gdisp->gimage)) &&
+                          gimp_image_active_drawable (gimage)) &&
                          ! active_tool->preserve)
                   {
                     /*  create a new one, deleting the current
                      */
-                    gimp_context_tool_changed (gimp_get_user_context (gdisp->gimage->gimp));
+                    gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
 
-                    tool_manager_initialize_active (gdisp->gimage->gimp, gdisp);
+                    tool_manager_initialize_active (gimage->gimp, gdisp);
                   }
 
-                tool_manager_button_press_active (gdisp->gimage->gimp,
+                tool_manager_button_press_active (gimage->gimp,
                                                   &image_coords, time, state,
                                                   gdisp);
               }
@@ -568,7 +563,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_item_factory_popup_with_data (shell->ifactory, gdisp->gimage);
+            gimp_item_factory_popup_with_data (shell->ifactory,
+                                               gimage,
+                                               NULL);
             return_val = TRUE;
             break;
 
@@ -585,9 +582,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
         bevent = (GdkEventButton *) event;
 
-        active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+        active_tool = tool_manager_get_active (gimage->gimp);
 
-        if (gdisp->gimage->gimp->busy)
+        if (gimage->gimp->busy)
           return TRUE;
 
         switch (bevent->button)
@@ -595,16 +592,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
-            /* Lame hack. See above */
-            if (key_signal_id)
-              {
-                g_signal_handler_disconnect (G_OBJECT (canvas), key_signal_id);
-                key_signal_id = 0;
-              }
-
             gtk_grab_remove (canvas);
 
-            if (active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
+            if (active_tool && (! gimp_image_is_empty (gimage) ||
                                 active_tool->handle_empty_image))
               {
                 if (active_tool->state == ACTIVE)
@@ -624,15 +614,48 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                         update_cursor = TRUE;
                       }
 
-                    tool_manager_button_release_active (gdisp->gimage->gimp,
+                    tool_manager_button_release_active (gimage->gimp,
                                                         &image_coords, time, state,
                                                         gdisp);
-
-                    tool_manager_oper_update_active (gdisp->gimage->gimp,
-                                                     &image_coords, state,
-                                                     gdisp);
                   }
               }
+
+            /*  restore the tool's modifier state because it didn't get
+             *  key events while BUTTON1 was down
+             */
+            if ((press_state & GDK_SHIFT_MASK) != (state & GDK_SHIFT_MASK))
+              {
+                tool_manager_modifier_key_active (gimage->gimp,
+                                                  GDK_SHIFT_MASK,
+                                                  (state & GDK_SHIFT_MASK) ?
+                                                  TRUE : FALSE,
+                                                  state,
+                                                  gdisp);
+              }
+
+            if ((press_state & GDK_CONTROL_MASK) != (state & GDK_CONTROL_MASK))
+              {
+                tool_manager_modifier_key_active (gimage->gimp,
+                                                  GDK_CONTROL_MASK,
+                                                  (state & GDK_CONTROL_MASK) ?
+                                                  TRUE : FALSE,
+                                                  state,
+                                                  gdisp);
+              }
+
+            if ((press_state & GDK_MOD1_MASK) != (state & GDK_MOD1_MASK))
+              {
+                tool_manager_modifier_key_active (gimage->gimp,
+                                                  GDK_MOD1_MASK,
+                                                  (state & GDK_MOD1_MASK) ?
+                                                  TRUE : FALSE,
+                                                  state,
+                                                  gdisp);
+              }
+
+            tool_manager_oper_update_active (gimage->gimp,
+                                             &image_coords, state,
+                                             gdisp);
             break;
 
           case 2:
@@ -693,7 +716,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                                                &display_coords,
                                                &image_coords);
 
-        tool_manager_oper_update_active (gdisp->gimage->gimp,
+        tool_manager_oper_update_active (gimage->gimp,
                                          &image_coords, state,
                                          gdisp);
 
@@ -708,7 +731,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
         mevent = (GdkEventMotion *) event;
 
-        if (gdisp->gimage->gimp->busy)
+        if (gimage->gimp->busy)
           return TRUE;
 
         /* Ask for the pointer position, but ignore it except for cursor
@@ -729,10 +752,10 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             gimp_display_shell_check_device_cursor (shell);
           }
 
-        active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+        active_tool = tool_manager_get_active (gimage->gimp);
 
         if ((state & GDK_BUTTON1_MASK) &&
-            active_tool && (! gimp_image_is_empty (gdisp->gimage) ||
+            active_tool && (! gimp_image_is_empty (gimage) ||
                             active_tool->handle_empty_image))
           {
             if (active_tool->state == ACTIVE)
@@ -795,7 +818,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
                     update_cursor = TRUE;
                   }
 
-                tool_manager_motion_active (gdisp->gimage->gimp,
+                tool_manager_motion_active (gimage->gimp,
                                             &image_coords, time, state,
                                             gdisp);
               }
@@ -811,7 +834,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
         if (! (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
           {
-            tool_manager_oper_update_active (gdisp->gimage->gimp,
+            tool_manager_oper_update_active (gimage->gimp,
                                              &image_coords, state,
                                              gdisp);
           }
@@ -825,7 +848,14 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         kevent = (GdkEventKey *) event;
 
         /*  ignore any key presses  */
-        if (gdisp->gimage->gimp->busy)
+        if (gimage->gimp->busy)
+          return TRUE;
+
+        /*  do not process any key event while BUTTON1 is down. We do this
+         *  so tools keep the modifier state they were in when BUTTON1 was
+         *  pressed and to prevent accelerators from being invoked.
+         */
+        if (state & GDK_BUTTON1_MASK)
           return TRUE;
 
         switch (kevent->keyval)
@@ -834,9 +864,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
           case GDK_Left: case GDK_Right:
           case GDK_Up: case GDK_Down:
-            if (! gimp_image_is_empty (gdisp->gimage))
+            if (! gimp_image_is_empty (gimage))
               {
-                tool_manager_arrow_key_active (gdisp->gimage->gimp,
+                tool_manager_arrow_key_active (gimage->gimp,
                                                kevent,
                                                gdisp);
               }
@@ -845,17 +875,18 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
             break;
 
           case GDK_Tab:
-            if ((state & GDK_MOD1_MASK) &&
-                ! gimp_image_is_empty (gdisp->gimage))
+            if (! gimp_image_is_empty (gimage))
               {
-                gimp_display_shell_layer_select_init (gdisp->gimage,
-                                                      1, kevent->time);
-              }
-            else if ((state & GDK_CONTROL_MASK) &&
-                     ! gimp_image_is_empty (gdisp->gimage))
-              {
-                gimp_display_shell_layer_select_init (gdisp->gimage,
-                                                      -1, kevent->time);
+                if (state & GDK_MOD1_MASK)
+                  {
+                    gimp_display_shell_layer_select_init (gdisp->gimage,
+                                                          1, kevent->time);
+                  }
+                else if (state & GDK_CONTROL_MASK)
+                  {
+                    gimp_display_shell_layer_select_init (gdisp->gimage,
+                                                          -1, kevent->time);
+                  }
               }
             else if (! state)
               {
@@ -879,18 +910,16 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
              *  oper_update method so tools can choose if they are interested
              *  in the release itself or only in the resulting state
              */
-            if (! gimp_image_is_empty (gdisp->gimage))
+            if (! gimp_image_is_empty (gimage))
               {
-                tool_manager_modifier_key_active (gdisp->gimage->gimp,
+                tool_manager_modifier_key_active (gimage->gimp,
                                                   key, TRUE, state,
                                                   gdisp);
-
-                return_val = TRUE;
               }
             break;
           }
 
-        tool_manager_oper_update_active (gdisp->gimage->gimp,
+        tool_manager_oper_update_active (gimage->gimp,
                                          &image_coords, state,
                                          gdisp);
       }
@@ -903,7 +932,14 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         kevent = (GdkEventKey *) event;
 
         /*  ignore any key releases  */
-        if (gdisp->gimage->gimp->busy)
+        if (gimage->gimp->busy)
+          return TRUE;
+
+        /*  do not process any key event while BUTTON1 is down. We do this
+         *  so tools keep the modifier state they were in when BUTTON1 was
+         *  pressed and to prevent accelerators from being invoked.
+         */
+        if (state & GDK_BUTTON1_MASK)
           return TRUE;
 
         switch (kevent->keyval)
@@ -921,9 +957,9 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
              *  oper_update method so tools can choose if they are interested
              *  in the press itself or only in the resulting state
              */
-            if (! gimp_image_is_empty (gdisp->gimage))
+            if (! gimp_image_is_empty (gimage))
               {
-                tool_manager_modifier_key_active (gdisp->gimage->gimp,
+                tool_manager_modifier_key_active (gimage->gimp,
                                                   key, FALSE, state,
                                                   gdisp);
               }
@@ -933,8 +969,6 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
         tool_manager_oper_update_active (gdisp->gimage->gimp,
                                          &image_coords, state,
                                          gdisp);
-
-        return_val = TRUE;
       }
       break;
 
@@ -943,7 +977,7 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
     }
 
   /*  if we reached this point in gimp_busy mode, return now  */
-  if (gdisp->gimage->gimp->busy)
+  if (gimage->gimp->busy)
     return TRUE;
 
   /*  cursor update support  */
@@ -952,21 +986,21 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
     {
       GimpTool *active_tool;
 
-      active_tool = tool_manager_get_active (gdisp->gimage->gimp);
+      active_tool = tool_manager_get_active (gimage->gimp);
 
       if (active_tool)
         {
-          if ((! gimp_image_is_empty (gdisp->gimage) ||
+          if ((! gimp_image_is_empty (gimage) ||
                active_tool->handle_empty_image) &&
               ! (state & (GDK_BUTTON1_MASK |
                           GDK_BUTTON2_MASK |
                           GDK_BUTTON3_MASK)))
             {
-              tool_manager_cursor_update_active (gdisp->gimage->gimp,
+              tool_manager_cursor_update_active (gimage->gimp,
                                                  &image_coords, state,
                                                  gdisp);
             }
-          else if (gimp_image_is_empty (gdisp->gimage))
+          else if (gimp_image_is_empty (gimage))
             {
               gimp_display_shell_install_tool_cursor (shell,
                                                       GIMP_BAD_CURSOR,
@@ -1112,7 +1146,8 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                                &x, &y, widget);
 
       gtk_item_factory_popup_with_data (shell->ifactory,
-					gdisp->gimage, NULL,
+					gdisp->gimage,
+                                        NULL,
 					x, y,
 					1, event->time);
     }
@@ -1143,4 +1178,37 @@ gimp_display_shell_color_changed (GtkWidget        *widget,
 
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_flush (shell);
+}
+
+gboolean
+gimp_display_shell_qmask_button_press (GtkWidget        *widget,
+                                       GdkEventButton   *event,
+                                       GimpDisplayShell *shell)
+{
+  GimpDisplay *gdisp;
+
+  gdisp = shell->gdisp;
+
+  if ((event->type == GDK_BUTTON_PRESS) && (event->button == 3))
+    {
+      GtkItemFactory *factory;
+
+      factory = gtk_item_factory_from_path ("<QMask>");
+
+      gimp_item_factory_popup_with_data (factory, shell, NULL);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_display_shell_qmask_toggled (GtkWidget        *widget,
+                                  GimpDisplayShell *shell)
+{
+  gimp_image_set_qmask_state (shell->gdisp->gimage,
+                              GTK_TOGGLE_BUTTON (widget)->active);
+
+  gdisplays_flush ();
 }

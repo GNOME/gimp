@@ -23,8 +23,6 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
 	gimpdisplayshell-marching-ants.h	\
-	gimpdisplayshell-qmask.c		\
-	gimpdisplayshell-qmask.h		\
 	gimpdisplayshell-render.c		\
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-scale.c		\

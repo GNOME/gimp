@@ -95,6 +95,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	patterns-commands.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
+	qmask-commands.c		\
+	qmask-commands.h		\
 	resize-dialog.c			\
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\

@@ -50,7 +50,6 @@
 #include "color-area.h"
 #include "devices.h"
 #include "dialogs.h"
-#include "dialogs-commands.h"
 #include "indicator-area.h"
 
 #include "app_procs.h"

@@ -26,9 +26,6 @@
 #include <gtk/gtkvbox.h>
 
 
-typedef void (* GimpContainerContextFunc) (GimpContainerEditor *editor);
-
-
 #define GIMP_TYPE_CONTAINER_EDITOR            (gimp_container_editor_get_type ())
 #define GIMP_CONTAINER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditor))
 #define GIMP_CONTAINER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
@@ -41,11 +38,11 @@ typedef struct _GimpContainerEditorClass  GimpContainerEditorClass;
 
 struct _GimpContainerEditor
 {
-  GtkVBox                   parent_instance;
+  GtkVBox            parent_instance;
 
-  GimpContainerContextFunc  context_func;
+  gchar             *item_factory;
 
-  GimpContainerView        *view;
+  GimpContainerView *view;
 };
 
 struct _GimpContainerEditorClass
@@ -66,15 +63,15 @@ GType       gimp_container_editor_get_type   (void) G_GNUC_CONST;
 
 /*  protected  */
 
-gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
-					      GimpViewType          view_type,
-					      GimpContainer        *container,
-					      GimpContext          *context,
-					      gint                  preview_size,
-                                              gboolean              reorderable,
-					      gint                  min_items_x,
-					      gint                  min_items_y,
-					      GimpContainerContextFunc  context_func);
+gboolean    gimp_container_editor_construct  (GimpContainerEditor *editor,
+					      GimpViewType         view_type,
+					      GimpContainer       *container,
+					      GimpContext         *context,
+					      gint                 preview_size,
+                                              gboolean             reorderable,
+					      gint                 min_items_x,
+					      gint                 min_items_y,
+					      const gchar         *item_factory);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

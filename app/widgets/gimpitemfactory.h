@@ -22,6 +22,10 @@
 G_BEGIN_DECLS
 
 
+typedef void (* GimpItemFactoryUpdateFunc) (GtkItemFactory *factory,
+                                            gpointer        data);
+
+
 typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
 
 struct _GimpItemFactoryEntry
@@ -35,13 +39,18 @@ struct _GimpItemFactoryEntry
 };
 
 
-GtkItemFactory * gimp_item_factory_new (GType                  container_type,
-                                        const gchar           *path,
-                                        const gchar           *factory_path,
-                                        guint                  n_entries,
-                                        GimpItemFactoryEntry  *entries,
-                                        gpointer               callback_data,
-                                        gboolean               create_tearoff);
+GtkItemFactory * gimp_item_factory_new (GType                      container_type,
+                                        const gchar               *path,
+                                        const gchar               *factory_path,
+                                        GimpItemFactoryUpdateFunc  update_func,
+                                        guint                      n_entries,
+                                        GimpItemFactoryEntry      *entries,
+                                        gpointer                   callback_data,
+                                        gboolean                   create_tearoff);
+
+void   gimp_item_factory_popup_with_data (GtkItemFactory   *item_factory,
+                                          gpointer          data,
+                                          GtkDestroyNotify  popdown_func);
 
 void   gimp_item_factory_create_item   (GtkItemFactory        *item_factory,
                                         GimpItemFactoryEntry  *entry,

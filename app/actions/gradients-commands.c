@@ -41,7 +41,6 @@
 
 /*  local function prototypes  */
 
-static void   gradients_menu_set_sensitivity    (GimpContainerEditor *editor);
 static void   gradients_save_as_pov_query       (GimpContainerEditor *editor);
 static void   gradients_save_as_pov_ok_callback (GtkWidget           *widget,
 						 GimpGradient        *gradient);
@@ -64,41 +63,33 @@ gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
 }
 
 void
-gradients_show_context_menu (GimpContainerEditor *editor)
+gradients_menu_update (GtkItemFactory *factory,
+                       gpointer        data)
 {
-  GtkItemFactory *item_factory;
+  GimpContainerEditor *editor;
+  GimpGradient        *gradient;
 
-  gradients_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<Gradients>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-gradients_menu_set_sensitivity (GimpContainerEditor *editor)
-{
-  GimpGradient *gradient;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   gradient = gimp_context_get_gradient (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Gradients>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("Duplicate Gradient",
+  SET_SENSITIVE ("/Duplicate Gradient",
 		 gradient && GIMP_DATA_GET_CLASS (gradient)->duplicate);
-  SET_SENSITIVE ("Edit Gradient...",
+  SET_SENSITIVE ("/Edit Gradient...",
 		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("Delete Gradient...",
+  SET_SENSITIVE ("/Delete Gradient...",
 		 gradient);
-  SET_SENSITIVE ("Save as POV-Ray...",
+  SET_SENSITIVE ("/Save as POV-Ray...",
 		 gradient);
 
 #undef SET_SENSITIVE
 }
+
+
+/*  private functions  */
 
 static void
 gradients_save_as_pov_query (GimpContainerEditor *editor)

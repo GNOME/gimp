@@ -62,27 +62,27 @@ struct _GimpDataFactoryViewClass
 
 GType       gimp_data_factory_view_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_data_factory_view_new       (GimpViewType              view_type,
-					      GimpDataFactory          *factory,
-					      GimpDataEditFunc          edit_func,
-					      GimpContext              *context,
-					      gint                      preview_size,
-					      gint                      min_items_x,
-					      gint                      min_items_y,
-					      GimpContainerContextFunc  context_func);
+GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
+					      GimpDataFactory  *factory,
+					      GimpDataEditFunc  edit_func,
+					      GimpContext      *context,
+					      gint              preview_size,
+					      gint              min_items_x,
+					      gint              min_items_y,
+					      const gchar      *item_factory);
 
 
 /*  protected  */
 
-gboolean    gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
-					      GimpViewType              view_type,
-					      GimpDataFactory          *factory,
-					      GimpDataEditFunc          edit_func,
-					      GimpContext              *context,
-					      gint                      preview_size,
-					      gint                      min_items_x,
-					      gint                      min_items_y,
-					      GimpContainerContextFunc  context_func);
+gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
+					      GimpViewType         view_type,
+					      GimpDataFactory     *factory,
+					      GimpDataEditFunc     edit_func,
+					      GimpContext         *context,
+					      gint                 preview_size,
+					      gint                 min_items_x,
+					      gint                 min_items_y,
+					      const gchar         *item_factory);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

@@ -97,6 +97,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpimage-new.h			\
 	gimpimage-projection.c		\
 	gimpimage-projection.h		\
+	gimpimage-qmask.c		\
+	gimpimage-qmask.h		\
 	gimpimage-resize.c		\
 	gimpimage-resize.h		\
 	gimpimage-scale.c		\

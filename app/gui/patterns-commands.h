@@ -20,7 +20,8 @@
 #define __PATTERNS_COMMANDS_H__
 
 
-void   patterns_show_context_menu (GimpContainerEditor *editor);
+void   patterns_menu_update (GtkItemFactory *factory,
+                             gpointer        data);
 
 
 #endif /* __PATTERNS_COMMANDS_H__ */

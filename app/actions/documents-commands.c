@@ -38,11 +38,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
-
-static void   documents_menu_set_sensitivity (GimpContainerEditor *editor);
-
-
 /*  public functionss */
 
 void
@@ -119,35 +114,24 @@ documents_refresh_documents_cmd_callback (GtkWidget *widget,
 }
 
 void
-documents_show_context_menu (GimpContainerEditor *editor)
+documents_menu_update (GtkItemFactory *factory,
+                       gpointer        data)
 {
-  GtkItemFactory *item_factory;
+  GimpContainerEditor *editor;
+  GimpImagefile       *imagefile;
 
-  documents_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<Documents>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-documents_menu_set_sensitivity (GimpContainerEditor *editor)
-{
-  GimpImagefile *imagefile;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   imagefile = gimp_context_get_imagefile (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Documents>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("Open Image",          imagefile);
-  SET_SENSITIVE ("Raise or Open Image", imagefile);
-  SET_SENSITIVE ("File Open Dialog...", TRUE);
-  SET_SENSITIVE ("Remove Entry",        imagefile);
-  SET_SENSITIVE ("Refresh History",     TRUE);
+  SET_SENSITIVE ("/Open Image",          imagefile);
+  SET_SENSITIVE ("/Raise or Open Image", imagefile);
+  SET_SENSITIVE ("/File Open Dialog...", TRUE);
+  SET_SENSITIVE ("/Remove Entry",        imagefile);
+  SET_SENSITIVE ("/Refresh History",     TRUE);
 
 #undef SET_SENSITIVE
 }

@@ -34,10 +34,13 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
 #include "gimpdnd.h"
+#include "gimpitemfactory.h"
 
 
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
+
+static void   gimp_container_editor_finalize         (GObject             *object);
 
 static void   gimp_container_editor_select_item      (GtkWidget           *widget,
 						      GimpViewable        *viewable,
@@ -89,30 +92,49 @@ gimp_container_editor_get_type (void)
 static void
 gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
-  klass->select_item    = NULL;
-  klass->activate_item  = NULL;
-  klass->context_item   = gimp_container_editor_real_context_item;
+  object_class->finalize = gimp_container_editor_finalize;
+
+  klass->select_item     = NULL;
+  klass->activate_item   = NULL;
+  klass->context_item    = gimp_container_editor_real_context_item;
 }
 
 static void
 gimp_container_editor_init (GimpContainerEditor *view)
 {
-  view->context_func = NULL;
+  view->item_factory = NULL;
   view->view         = NULL;
 }
 
+static void
+gimp_container_editor_finalize (GObject *object)
+{
+  GimpContainerEditor *editor;
+
+  editor = GIMP_CONTAINER_EDITOR (object);
+
+  g_free (editor->item_factory);
+  editor->item_factory = NULL;
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 gboolean
-gimp_container_editor_construct (GimpContainerEditor      *editor,
-				 GimpViewType              view_type,
-				 GimpContainer            *container,
-				 GimpContext              *context,
-				 gint                      preview_size,
-                                 gboolean                  reorderable,
-				 gint                      min_items_x,
-				 gint                      min_items_y,
-				 GimpContainerContextFunc  context_func)
+gimp_container_editor_construct (GimpContainerEditor *editor,
+				 GimpViewType         view_type,
+				 GimpContainer       *container,
+				 GimpContext         *context,
+				 gint                 preview_size,
+                                 gboolean             reorderable,
+				 gint                 min_items_x,
+				 gint                 min_items_y,
+				 const gchar         *item_factory)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
@@ -122,7 +144,7 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
-  editor->context_func = context_func;
+  editor->item_factory = g_strdup (item_factory);
 
   switch (view_type)
     {
@@ -225,7 +247,16 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (editor->view->container,
 				       GIMP_OBJECT (viewable)))
     {
-      if (editor->context_func)
-	editor->context_func (editor);
+      if (editor->item_factory)
+        {
+          GtkItemFactory *factory;
+
+          factory = gtk_item_factory_from_path (editor->item_factory);
+
+          if (factory)
+            {
+              gimp_item_factory_popup_with_data (factory, editor, NULL);
+            }
+        }
     }
 }

@@ -52,13 +52,16 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+
 static void   layers_add_mask_query       (GimpLayer *layer);
 static void   layers_scale_layer_query    (GimpImage *gimage,
 					   GimpLayer *layer);
 static void   layers_resize_layer_query   (GimpImage *gimage,
 					   GimpLayer *layer);
-static void   layers_menu_set_sensitivity (GimpImage *gimage);
 
+
+/*  public functions  */
 
 void
 layers_previous_cmd_callback (GtkWidget *widget,
@@ -1219,20 +1222,10 @@ layers_layer_merge_query (GimpImage   *gimage,
 }
 
 void
-layers_show_context_menu (GimpImage *gimage)
+layers_menu_update (GtkItemFactory *factory,
+                    gpointer        data)
 {
-  GtkItemFactory *item_factory;
-
-  layers_menu_set_sensitivity (gimage);
-
-  item_factory = gtk_item_factory_from_path ("<Layers>");
-
-  gimp_item_factory_popup_with_data (item_factory, gimage);
-}
-
-static void
-layers_menu_set_sensitivity (GimpImage *gimage)
-{
+  GimpImage *gimage;
   GimpLayer *layer;
   gboolean   fs         = FALSE;    /*  floating sel           */
   gboolean   ac         = FALSE;    /*  active channel         */
@@ -1245,8 +1238,7 @@ layers_menu_set_sensitivity (GimpImage *gimage)
   GList     *next       = NULL;
   GList     *prev       = NULL;
 
-  g_return_if_fail (gimage != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  gimage = GIMP_IMAGE (data);
 
   layer = gimp_image_get_active_layer (gimage);
 
@@ -1279,43 +1271,43 @@ layers_menu_set_sensitivity (GimpImage *gimage)
     next_alpha = FALSE;
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Layers>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("New Layer...", gimage);
+  SET_SENSITIVE ("/New Layer...", gimage);
 
-  SET_SENSITIVE ("Stack/Raise Layer",
+  SET_SENSITIVE ("/Stack/Raise Layer",
 		 !fs && !ac && gimage && lp && alpha && prev);
 
-  SET_SENSITIVE ("Stack/Lower Layer",
+  SET_SENSITIVE ("/Stack/Lower Layer",
 		 !fs && !ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE ("Stack/Layer to Top",
+  SET_SENSITIVE ("/Stack/Layer to Top",
 		 !fs && !ac && gimage && lp && alpha && prev);
-  SET_SENSITIVE ("Stack/Layer to Bottom",
+  SET_SENSITIVE ("/Stack/Layer to Bottom",
 		 !fs && !ac && gimage && lp && next && next_alpha);
 
-  SET_SENSITIVE ("Duplicate Layer", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("Anchor Layer", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("Delete Layer", !ac && gimage && lp);
+  SET_SENSITIVE ("/Duplicate Layer", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Anchor Layer", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Delete Layer", !ac && gimage && lp);
 
-  SET_SENSITIVE ("Layer Boundary Size...", !ac && gimage && lp);
-  SET_SENSITIVE ("Layer to Imagesize", !ac && gimage && lp);
-  SET_SENSITIVE ("Scale Layer...", !ac && gimage && lp);
+  SET_SENSITIVE ("/Layer Boundary Size...", !ac && gimage && lp);
+  SET_SENSITIVE ("/Layer to Imagesize", !ac && gimage && lp);
+  SET_SENSITIVE ("/Scale Layer...", !ac && gimage && lp);
 
-  SET_SENSITIVE ("Merge Visible Layers...", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("Merge Down", !fs && !ac && gimage && lp && next);
-  SET_SENSITIVE ("Flatten Image", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Merge Visible Layers...", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Merge Down", !fs && !ac && gimage && lp && next);
+  SET_SENSITIVE ("/Flatten Image", !fs && !ac && gimage && lp);
 
-  SET_SENSITIVE ("Add Layer Mask...", 
+  SET_SENSITIVE ("/Add Layer Mask...", 
 		 !fs && !ac && gimage && !lm && lp && alpha && !indexed);
-  SET_SENSITIVE ("Apply Layer Mask", !fs && !ac && gimage && lm && lp);
-  SET_SENSITIVE ("Delete Layer Mask", !fs && !ac && gimage && lm && lp);
-  SET_SENSITIVE ("Mask to Selection", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("/Apply Layer Mask", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("/Delete Layer Mask", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("/Mask to Selection", !fs && !ac && gimage && lm && lp);
 
-  SET_SENSITIVE ("Add Alpha Channel", !fs && !alpha);
-  SET_SENSITIVE ("Alpha to Selection", !fs && !ac && gimage && lp && alpha);
+  SET_SENSITIVE ("/Add Alpha Channel", !fs && !alpha);
+  SET_SENSITIVE ("/Alpha to Selection", !fs && !ac && gimage && lp && alpha);
 
-  SET_SENSITIVE ("Edit Layer Attributes...", !fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Edit Layer Attributes...", !fs && !ac && gimage && lp);
 
 #undef SET_SENSITIVE
 }

@@ -29,6 +29,7 @@
 #include "widgets-types.h"
 
 #include "gimpitemfactory.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -210,13 +211,14 @@ gimp_menu_item_set_visible (gchar    *path,
 
 
 GtkItemFactory *
-gimp_item_factory_new (GType                 container_type,
-                       const gchar          *path,
-                       const gchar          *factory_path,
-                       guint                 n_entries,
-                       GimpItemFactoryEntry *entries,
-                       gpointer              callback_data,
-                       gboolean              create_tearoff)
+gimp_item_factory_new (GType                      container_type,
+                       const gchar               *path,
+                       const gchar               *factory_path,
+                       GimpItemFactoryUpdateFunc  update_func,
+                       guint                      n_entries,
+                       GimpItemFactoryEntry      *entries,
+                       gpointer                   callback_data,
+                       gboolean                   create_tearoff)
 {
   GtkItemFactory *factory;
 
@@ -230,6 +232,9 @@ gimp_item_factory_new (GType                 container_type,
   g_object_set_data (G_OBJECT (factory), "factory_path",
                      (gpointer) factory_path);
 
+  g_object_set_data (G_OBJECT (factory), "gimp-item-factory-update-func",
+                     update_func);
+
   gimp_item_factory_create_items (factory,
                                   n_entries,
                                   entries,
@@ -239,6 +244,37 @@ gimp_item_factory_new (GType                 container_type,
                                   TRUE);
 
   return factory;
+}
+
+void
+gimp_item_factory_popup_with_data (GtkItemFactory   *item_factory,
+				   gpointer          data,
+                                   GtkDestroyNotify  popdown_func)
+{
+  GimpItemFactoryUpdateFunc  update_func;
+  gint                       x, y;
+  guint                      button;
+  guint32                    activate_time;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (item_factory));
+
+  update_func = g_object_get_data (G_OBJECT (item_factory),
+                                   "gimp-item-factory-update-func");
+
+  if (update_func)
+    (* update_func) (item_factory, data);
+
+  gimp_menu_position (GTK_MENU (item_factory->widget),
+		      &x, &y,
+		      &button,
+		      &activate_time);
+
+  gtk_item_factory_popup_with_data (item_factory,
+				    data,
+				    popdown_func,
+				    x, y,
+				    button,
+				    activate_time);
 }
 
 void

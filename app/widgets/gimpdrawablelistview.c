@@ -40,6 +40,7 @@
 #include "gimpchannellistview.h"
 #include "gimpdnd.h"
 #include "gimpdrawablelistview.h"
+#include "gimpitemfactory.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
@@ -256,6 +257,12 @@ gimp_drawable_list_view_destroy (GtkObject *object)
       view->signal_name = NULL;
     }
 
+  if (view->item_factory)
+    {
+      g_free (view->item_factory);
+      view->item_factory = NULL;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -274,7 +281,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
 			     GimpCopyDrawableFunc     copy_drawable_func,
 			     GimpNewDrawableFunc      new_drawable_func,
 			     GimpEditDrawableFunc     edit_drawable_func,
-			     GimpDrawableContextFunc  drawable_context_func)
+			     const gchar             *item_factory)
 {
   GimpDrawableListView *list_view;
   GimpContainerView    *view;
@@ -291,7 +298,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
   g_return_val_if_fail (copy_drawable_func != NULL, NULL);
   g_return_val_if_fail (new_drawable_func != NULL, NULL);
   g_return_val_if_fail (edit_drawable_func != NULL, NULL);
-  g_return_val_if_fail (drawable_context_func != NULL, NULL);
+  g_return_val_if_fail (item_factory != NULL, NULL);
 
   if (drawable_type == GIMP_TYPE_LAYER)
     {
@@ -322,7 +329,8 @@ gimp_drawable_list_view_new (gint                     preview_size,
   list_view->copy_drawable_func    = copy_drawable_func;
   list_view->new_drawable_func     = new_drawable_func;
   list_view->edit_drawable_func    = edit_drawable_func;
-  list_view->drawable_context_func = drawable_context_func;
+
+  list_view->item_factory = g_strdup (item_factory);
 
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
@@ -495,13 +503,21 @@ gimp_drawable_list_view_context_item (GimpContainerView *view,
 				      GimpViewable      *item,
 				      gpointer           insert_data)
 {
+  GtkItemFactory *factory;
+
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item (view,
 							    item,
 							    insert_data);
 
-  GIMP_DRAWABLE_LIST_VIEW (view)->drawable_context_func
-    (gimp_drawable_gimage (GIMP_DRAWABLE (item)));
+  factory = gtk_item_factory_from_path (GIMP_DRAWABLE_LIST_VIEW (view)->item_factory);
+
+  if (factory)
+    {
+      gimp_item_factory_popup_with_data (factory,
+                                         gimp_drawable_gimage (GIMP_DRAWABLE (item)),
+                                         NULL);
+    }
 }
 
 

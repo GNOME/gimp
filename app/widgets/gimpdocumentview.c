@@ -121,13 +121,13 @@ gimp_document_view_init (GimpDocumentView *view)
 }
 
 GtkWidget *
-gimp_document_view_new (GimpViewType              view_type,
-                        GimpContainer            *container,
-                        GimpContext              *context,
-                        gint                      preview_size,
-                        gint                      min_items_x,
-                        gint                      min_items_y,
-                        GimpContainerContextFunc  context_func)
+gimp_document_view_new (GimpViewType   view_type,
+                        GimpContainer *container,
+                        GimpContext   *context,
+                        gint           preview_size,
+                        gint           min_items_x,
+                        gint           min_items_y,
+                        const gchar   *item_factory)
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
@@ -135,14 +135,14 @@ gimp_document_view_new (GimpViewType              view_type,
   document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (document_view),
-					 view_type,
-					 container,
-					 context,
-					 preview_size,
+                                         view_type,
+                                         container,
+                                         context,
+                                         preview_size,
                                          TRUE, /* reorderable */
-					 min_items_x,
-					 min_items_y,
-					 context_func))
+                                         min_items_x,
+                                         min_items_y,
+                                         item_factory))
     {
       g_object_unref (G_OBJECT (document_view));
       return NULL;

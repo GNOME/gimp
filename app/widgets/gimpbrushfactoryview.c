@@ -148,15 +148,15 @@ gimp_brush_factory_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_brush_factory_view_new (GimpViewType              view_type,
-			     GimpDataFactory          *factory,
-			     GimpDataEditFunc          edit_func,
-			     GimpContext              *context,
-			     gboolean                  change_brush_spacing,
-			     gint                      preview_size,
-			     gint                      min_items_x,
-			     gint                      min_items_y,
-			     GimpContainerContextFunc  context_func)
+gimp_brush_factory_view_new (GimpViewType      view_type,
+			     GimpDataFactory  *factory,
+			     GimpDataEditFunc  edit_func,
+			     GimpContext      *context,
+			     gboolean          change_brush_spacing,
+			     gint              preview_size,
+			     gint              min_items_x,
+			     gint              min_items_y,
+			     const gchar      *item_factory)
 {
   GimpBrushFactoryView *factory_view;
   GimpContainerEditor  *editor;
@@ -178,7 +178,7 @@ gimp_brush_factory_view_new (GimpViewType              view_type,
 					  preview_size,
 					  min_items_x,
 					  min_items_y,
-					  context_func))
+					  item_factory))
     {
       g_object_unref (G_OBJECT (factory_view));
       return NULL;

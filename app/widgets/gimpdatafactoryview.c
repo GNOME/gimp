@@ -122,14 +122,14 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 }
 
 GtkWidget *
-gimp_data_factory_view_new (GimpViewType              view_type,
-			    GimpDataFactory          *factory,
-			    GimpDataEditFunc          edit_func,
-			    GimpContext              *context,
-			    gint                      preview_size,
-			    gint                      min_items_x,
-			    gint                      min_items_y,
-			    GimpContainerContextFunc  context_func)
+gimp_data_factory_view_new (GimpViewType      view_type,
+			    GimpDataFactory  *factory,
+			    GimpDataEditFunc  edit_func,
+			    GimpContext      *context,
+			    gint              preview_size,
+			    gint              min_items_x,
+			    gint              min_items_y,
+			    const gchar      *item_factory)
 {
   GimpDataFactoryView *factory_view;
 
@@ -143,7 +143,7 @@ gimp_data_factory_view_new (GimpViewType              view_type,
 					  preview_size,
 					  min_items_x,
 					  min_items_y,
-					  context_func))
+					  item_factory))
     {
       g_object_unref (G_OBJECT (factory_view));
       return NULL;
@@ -153,15 +153,15 @@ gimp_data_factory_view_new (GimpViewType              view_type,
 }
 
 gboolean
-gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
-				  GimpViewType              view_type,
-				  GimpDataFactory          *factory,
-				  GimpDataEditFunc          edit_func,
-				  GimpContext              *context,
-				  gint                      preview_size,
-				  gint                      min_items_x,
-				  gint                      min_items_y,
-				  GimpContainerContextFunc  context_func)
+gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
+				  GimpViewType         view_type,
+				  GimpDataFactory     *factory,
+				  GimpDataEditFunc     edit_func,
+				  GimpContext         *context,
+				  gint                 preview_size,
+				  gint                 min_items_x,
+				  gint                 min_items_y,
+				  const gchar         *item_factory)
 {
   GimpContainerEditor *editor;
 
@@ -182,7 +182,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
                                          FALSE, /* reorderable */
 					 min_items_x,
 					 min_items_y,
-					 context_func))
+					 item_factory))
     {
       return FALSE;
     }

@@ -47,6 +47,7 @@
 #include "tools/gimpthresholdtool.h"
 #include "tools/tool_manager.h"
 
+#include "brushes-commands.h"
 #include "buffers-commands.h"
 #include "channels-commands.h"
 #include "commands.h"
@@ -62,6 +63,8 @@
 #include "menus.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"
+#include "patterns-commands.h"
+#include "qmask-commands.h"
 #include "select-commands.h"
 #include "test-commands.h"
 #include "tools-commands.h"
@@ -696,11 +699,6 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Layers/---"),
 
-  { { N_("/Layers/Layer to Imagesize"), NULL,
-      layers_resize_to_image_cmd_callback, 0 },
-    NULL,
-    "layers/layer_to_image_size.html", NULL },
-
   /*  <Image>/Layers/Stack  */
 
   { { N_("/Layers/Stack/Previous Layer"), "Prior",
@@ -745,10 +743,24 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GIMP_STOCK_ANCHOR },
     NULL,
     "layers/anchor_layer.html", NULL },
+
+  SEPARATOR ("/Layers/---"),
+
+  { { N_("/Layers/Layer to Imagesize"), NULL,
+      layers_resize_to_image_cmd_callback, 0 },
+    NULL,
+    "layers/layer_to_image_size.html", NULL },
+
+  SEPARATOR ("/Layers/---"),
+
   { { N_("/Layers/Merge Visible Layers..."), "<control>M",
       layers_merge_layers_cmd_callback, 0 },
     NULL,
     "layers/dialogs/merge_visible_layers.html", NULL },
+  { { N_("/Layers/Merge Down"), "<control><shift>M",
+      layers_merge_down_cmd_callback, 0 },
+    NULL,
+    "layers/merge_visible_layers.html", NULL },
   { { N_("/Layers/Flatten Image"), NULL,
       layers_flatten_image_cmd_callback, 0 },
     NULL,
@@ -805,7 +817,7 @@ static GimpItemFactoryEntry image_entries[] =
       dialogs_create_lc_cmd_callback, 0 },
     NULL,
     "dialogs/layers_and_channels.html", NULL },
-  { { N_("/File/Dialogs/Brushes, Patterns & Stuff..."), NULL,
+  { { N_("/Dialogs/Brushes, Patterns & Stuff..."), NULL,
       dialogs_create_stuff_cmd_callback, 0 },
     NULL,
     NULL, NULL },
@@ -973,12 +985,12 @@ static GimpItemFactoryEntry layers_entries[] =
       "<StockItem>", GIMP_STOCK_LOWER },
     NULL,
     "stack/stack.html#lower_layer", NULL },
-  { { N_("/Stack/Layer to Top"), "<shift><control>F",
+  { { N_("/Stack/Layer to Top"), "<control><shift>F",
       layers_raise_to_top_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_RAISE },
     NULL,
     "stack/stack.html#later_to_top", NULL },
-  { { N_("/Stack/Layer to Bottom"), "<shift><control>B",
+  { { N_("/Stack/Layer to Bottom"), "<control><shift>B",
       layers_lower_to_bottom_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_LOWER },
     NULL,
@@ -1729,6 +1741,31 @@ static GimpItemFactoryEntry documents_entries[] =
 };
 
 
+/*****  <QMask>  *****/
+
+static GimpItemFactoryEntry qmask_entries[] =
+{
+  { { N_("/QMask Active"), NULL,
+      qmask_toggle_cmd_callback, 0, "<ToggleItem>" },
+    NULL, NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Mask Selected Areas"), NULL,
+      qmask_invert_cmd_callback, FALSE, "<RadioItem>" },
+    NULL, NULL, NULL },
+  { { N_("/Mask Unselected Areas"), NULL,
+      qmask_invert_cmd_callback, TRUE, "/Mask Selected Areas" },
+    NULL, NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Configure Color and Opacity..."), NULL,
+      qmask_configure_cmd_callback, 0 },
+    NULL, NULL, NULL }
+};
+
+
 static gboolean menus_initialized = FALSE;
 
 
@@ -1747,6 +1784,7 @@ static GtkItemFactory *gradients_factory       = NULL;
 static GtkItemFactory *palettes_factory        = NULL;
 static GtkItemFactory *buffers_factory         = NULL;
 static GtkItemFactory *documents_factory       = NULL;
+static GtkItemFactory *qmask_factory           = NULL;
 
 
 /*  public functions  */
@@ -1771,6 +1809,7 @@ menus_init (Gimp *gimp)
 
     toolbox_factory = gimp_item_factory_new (GTK_TYPE_MENU_BAR,
                                              "<Toolbox>", "toolbox",
+                                             NULL,
                                              G_N_ELEMENTS (toolbox_entries),
                                              toolbox_entries,
                                              gimp,
@@ -1825,6 +1864,7 @@ menus_init (Gimp *gimp)
 
   image_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                          "<Image>", "image",
+                                         NULL,
                                          G_N_ELEMENTS (image_entries),
                                          image_entries,
                                          gimp,
@@ -1832,6 +1872,7 @@ menus_init (Gimp *gimp)
 
   load_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                         "<Load>", "open",
+                                        NULL,
                                         G_N_ELEMENTS (load_entries),
                                         load_entries,
                                         gimp,
@@ -1839,6 +1880,7 @@ menus_init (Gimp *gimp)
 
   save_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                         "<Save>", "save",
+                                        NULL,
                                         G_N_ELEMENTS (save_entries),
                                         save_entries,
                                         gimp,
@@ -1846,6 +1888,7 @@ menus_init (Gimp *gimp)
 
   layers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                           "<Layers>", "layers",
+                                          layers_menu_update,
                                           G_N_ELEMENTS (layers_entries),
                                           layers_entries,
                                           gimp,
@@ -1853,6 +1896,7 @@ menus_init (Gimp *gimp)
 
   channels_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                             "<Channels>", "channels",
+                                            channels_menu_update,
                                             G_N_ELEMENTS (channels_entries),
                                             channels_entries,
                                             gimp,
@@ -1860,6 +1904,7 @@ menus_init (Gimp *gimp)
 
   paths_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                          "<Paths>", "paths",
+                                         NULL,
                                          G_N_ELEMENTS (paths_entries),
                                          paths_entries,
                                          gimp,
@@ -1867,6 +1912,7 @@ menus_init (Gimp *gimp)
 
   dialogs_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                            "<Dialogs>", "dialogs",
+                                           dialogs_menu_update,
                                            G_N_ELEMENTS (dialogs_entries),
                                            dialogs_entries,
                                            gimp,
@@ -1874,6 +1920,7 @@ menus_init (Gimp *gimp)
 
   brushes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                            "<Brushes>", "brushes",
+                                           brushes_menu_update,
                                            G_N_ELEMENTS (brushes_entries),
                                            brushes_entries,
                                            gimp,
@@ -1881,6 +1928,7 @@ menus_init (Gimp *gimp)
 
   patterns_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                             "<Patterns>", "patterns",
+                                            patterns_menu_update,
                                             G_N_ELEMENTS (patterns_entries),
                                             patterns_entries,
                                             gimp,
@@ -1888,6 +1936,7 @@ menus_init (Gimp *gimp)
 
   gradient_editor_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                                    "<GradientEditor>", "gradient_editor",
+                                                   gradient_editor_menu_update,
                                                    G_N_ELEMENTS (gradient_editor_entries),
                                                    gradient_editor_entries,
                                                    gimp,
@@ -1895,6 +1944,7 @@ menus_init (Gimp *gimp)
 
   gradients_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                              "<Gradients>", "gradients",
+                                             gradients_menu_update,
                                              G_N_ELEMENTS (gradients_entries),
                                              gradients_entries,
                                              gimp,
@@ -1902,6 +1952,7 @@ menus_init (Gimp *gimp)
 
   palettes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                             "<Palettes>", "palettes",
+                                            palettes_menu_update,
                                             G_N_ELEMENTS (palettes_entries),
                                             palettes_entries,
                                             gimp,
@@ -1909,6 +1960,7 @@ menus_init (Gimp *gimp)
 
   buffers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                            "<Buffers>", "buffers",
+                                           buffers_menu_update,
                                            G_N_ELEMENTS (buffers_entries),
                                            buffers_entries,
                                            gimp,
@@ -1916,10 +1968,19 @@ menus_init (Gimp *gimp)
 
   documents_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                              "<Documents>", "documents",
+                                             documents_menu_update,
                                              G_N_ELEMENTS (documents_entries),
                                              documents_entries,
                                              gimp,
                                              FALSE);
+
+  qmask_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                         "<QMask>", "qmask",
+                                         qmask_menu_update,
+                                         G_N_ELEMENTS (qmask_entries),
+                                         qmask_entries,
+                                         gimp,
+                                         FALSE);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -2103,6 +2164,12 @@ menus_exit (Gimp *gimp)
     {
       g_object_unref (G_OBJECT (documents_factory));
       documents_factory = NULL;
+    }
+
+  if (qmask_factory)
+    {
+      g_object_unref (G_OBJECT (qmask_factory));
+      qmask_factory = NULL;
     }
 }
 

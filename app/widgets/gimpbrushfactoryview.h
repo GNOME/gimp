@@ -54,16 +54,15 @@ struct _GimpBrushFactoryViewClass
 
 GType       gimp_brush_factory_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_brush_factory_view_new      (GimpViewType              view_type,
-					      GimpDataFactory          *factory,
-					      GimpDataEditFunc          edit_func,
-					      GimpContext              *context,
-					      gboolean                  change_brush_spacing,
-					      gint                      preview_size,
-					      gint                      min_items_x,
-					      gint                      min_items_y,
-					      GimpContainerContextFunc  context_func);
-
+GtkWidget * gimp_brush_factory_view_new      (GimpViewType      view_type,
+					      GimpDataFactory  *factory,
+					      GimpDataEditFunc  edit_func,
+					      GimpContext      *context,
+					      gboolean          change_brush_spacing,
+					      gint              preview_size,
+					      gint              min_items_x,
+					      gint              min_items_y,
+					      const gchar      *item_factory);
 
 
 #endif  /*  __GIMP_BRUSH_FACTORY_VIEW_H__  */

@@ -30,6 +30,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "dialogs.h"
 #include "dialogs-commands.h"
@@ -286,8 +287,8 @@ dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
 
 void
 dialogs_create_lc_cmd_callback (GtkWidget *widget,
-				 gpointer   data,
-				 guint      action)
+                                gpointer   data,
+                                guint      action)
 {
   GtkWidget *dock;
   GtkWidget *dockbook;
@@ -357,4 +358,100 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
     }
 
   gtk_widget_show (dock);
+}
+
+void
+dialogs_menu_update (GtkItemFactory *factory,
+                     gpointer        data)
+{
+  GimpDockbook *dockbook;
+
+  dockbook = GIMP_DOCKBOOK (data);
+
+  if (dockbook)
+    {
+      GimpDockable           *dockable;
+      gint                    page_num;
+      GimpDialogFactoryEntry *entry;
+      GimpContainerView      *view;
+      gboolean                is_grid      = FALSE;
+      GimpPreviewSize         preview_size = GIMP_PREVIEW_SIZE_NONE;
+
+      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+      dockable = (GimpDockable *)
+	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+      entry = g_object_get_data (G_OBJECT (dockable),
+                                 "gimp-dialog-factory-entry");
+
+      if (entry)
+        {
+          if (strstr (entry->identifier, "grid"))
+            is_grid = TRUE;
+        }
+
+      view = gimp_container_view_get_by_dockable (dockable);
+
+      if (view)
+        {
+          preview_size = view->preview_size;
+        }
+
+#define SET_ACTIVE(path,active) \
+        gimp_item_factory_set_active (factory, (path), (active))
+
+      if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
+        {
+          SET_ACTIVE ("/Preview Size/Gigantic", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
+        {
+          SET_ACTIVE ("/Preview Size/Enormous", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
+        {
+          SET_ACTIVE ("/Preview Size/Huge", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
+        {
+          SET_ACTIVE ("/Preview Size/Extra Large", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
+        {
+          SET_ACTIVE ("/Preview Size/Large", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
+        {
+          SET_ACTIVE ("/Preview Size/Medium", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
+        {
+          SET_ACTIVE ("/Preview Size/Small", TRUE);
+        }
+      else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
+        {
+          SET_ACTIVE ("/Preview Size/Extra Small", TRUE);
+        }
+      else
+        {
+          SET_ACTIVE ("/Preview Size/Tiny", TRUE);
+        }
+
+      if (is_grid)
+        {
+          SET_ACTIVE ("/View as Grid", TRUE);
+        }
+      else
+        {
+          SET_ACTIVE ("/View as List", TRUE);
+        }
+
+      SET_ACTIVE ("/Show Image Menu",
+                  GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+      SET_ACTIVE ("/Auto Follow Active Image",
+                  GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+
+#undef SET_ACTIVE
+    }
 }

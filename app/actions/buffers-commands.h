@@ -29,8 +29,8 @@ void   buffers_paste_buffer_as_new_cmd_callback (GtkWidget *widget,
 void   buffers_delete_buffer_cmd_callback       (GtkWidget *widget,
                                                  gpointer   data);
 
-
-void   buffers_show_context_menu (GimpContainerEditor *editor);
+void   buffers_menu_update                      (GtkItemFactory *factory,
+                                                 gpointer        data);
 
 
 #endif /* __BUFFERS_COMMANDS_H__ */

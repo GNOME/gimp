@@ -35,8 +35,6 @@ void     gimp_menu_position                (GtkMenu        *menu,
 					    gint           *y,
 					    guint          *button,
 					    guint32        *activate_time);
-void     gimp_item_factory_popup_with_data (GtkItemFactory *item_factory,
-					    gpointer        data);
 
 void     gimp_window_add_accel_group       (GtkWindow      *window,
 					    GtkItemFactory *item_factory,

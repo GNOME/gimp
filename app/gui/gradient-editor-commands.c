@@ -40,7 +40,6 @@
 
 /*  local function prototypes  */
 
-static void   gradient_editor_menu_set_sensitivity   (GradientEditor    *editor);
 static void   gradient_editor_left_color_changed     (ColorNotebook     *cnb,
                                                       const GimpRGB     *color,
                                                       ColorNotebookState state,
@@ -915,23 +914,10 @@ gradient_editor_blend_opacity_cmd_callback (GtkWidget *widget,
 }
 
 void
-gradient_editor_show_context_menu (GradientEditor *editor)
+gradient_editor_menu_update (GtkItemFactory *factory,
+                             gpointer        data)
 {
-  GtkItemFactory *item_factory;
-
-  gradient_editor_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<GradientEditor>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-gradient_editor_menu_set_sensitivity (GradientEditor *editor)
-{
+  GradientEditor      *editor;
   GimpGradientSegment *left_seg;
   GimpGradientSegment *right_seg;
   GimpRGB              fg;
@@ -940,6 +926,8 @@ gradient_editor_menu_set_sensitivity (GradientEditor *editor)
   gboolean             coloring_equal = TRUE;
   gboolean             selection;
   gboolean             delete;
+
+  editor = (GradientEditor *) data;
 
   if (editor->control_sel_l->prev)
     left_seg = editor->control_sel_l->prev;
@@ -981,161 +969,161 @@ gradient_editor_menu_set_sensitivity (GradientEditor *editor)
   delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
 
 #define SET_ACTIVE(menu,active) \
-        gimp_menu_item_set_active ("<GradientEditor>/" menu, (active))
+        gimp_item_factory_set_active (factory, menu, (active))
 #define SET_COLOR(menu,color,set_label) \
-        gimp_menu_item_set_color ("<GradientEditor>/" menu, (color), (set_label))
+        gimp_item_factory_set_color (factory, menu, (color), (set_label))
 #define SET_LABEL(menu,label) \
-        gimp_menu_item_set_label ("<GradientEditor>/" menu, (label))
+        gimp_item_factory_set_label (factory, menu, (label))
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<GradientEditor>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 #define SET_VISIBLE(menu,condition) \
-        gimp_menu_item_set_visible ("<GradientEditor>/" menu, (condition) != 0)
+        gimp_item_factory_set_visible (factory, menu, (condition) != 0)
 
-  SET_COLOR ("Left Endpoint's Color...",
+  SET_COLOR ("/Left Endpoint's Color...",
              &editor->control_sel_l->left_color, FALSE);
-  SET_COLOR ("Load Left Color From/Left Neighbor's Right Endpoint",
+  SET_COLOR ("/Load Left Color From/Left Neighbor's Right Endpoint",
              &left_seg->right_color, FALSE);
-  SET_COLOR ("Load Left Color From/Right Endpoint",
+  SET_COLOR ("/Load Left Color From/Right Endpoint",
              &editor->control_sel_r->right_color, FALSE);
-  SET_COLOR ("Load Left Color From/FG Color", &fg, FALSE);
-  SET_COLOR ("Load Left Color From/BG Color", &bg, FALSE);
+  SET_COLOR ("/Load Left Color From/FG Color", &fg, FALSE);
+  SET_COLOR ("/Load Left Color From/BG Color", &bg, FALSE);
 
-  SET_COLOR ("Load Left Color From/01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("Load Left Color From/02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("Load Left Color From/03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("Load Left Color From/04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("Load Left Color From/05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("Load Left Color From/06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("Load Left Color From/07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("Load Left Color From/08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("Load Left Color From/09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("Load Left Color From/10", &editor->saved_colors[9], TRUE);
+  SET_COLOR ("/Load Left Color From/01", &editor->saved_colors[0], TRUE);
+  SET_COLOR ("/Load Left Color From/02", &editor->saved_colors[1], TRUE);
+  SET_COLOR ("/Load Left Color From/03", &editor->saved_colors[2], TRUE);
+  SET_COLOR ("/Load Left Color From/04", &editor->saved_colors[3], TRUE);
+  SET_COLOR ("/Load Left Color From/05", &editor->saved_colors[4], TRUE);
+  SET_COLOR ("/Load Left Color From/06", &editor->saved_colors[5], TRUE);
+  SET_COLOR ("/Load Left Color From/07", &editor->saved_colors[6], TRUE);
+  SET_COLOR ("/Load Left Color From/08", &editor->saved_colors[7], TRUE);
+  SET_COLOR ("/Load Left Color From/09", &editor->saved_colors[8], TRUE);
+  SET_COLOR ("/Load Left Color From/10", &editor->saved_colors[9], TRUE);
 
-  SET_COLOR ("Save Left Color To/01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("Save Left Color To/02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("Save Left Color To/03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("Save Left Color To/04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("Save Left Color To/05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("Save Left Color To/06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("Save Left Color To/07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("Save Left Color To/08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("Save Left Color To/09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("Save Left Color To/10", &editor->saved_colors[9], TRUE);
+  SET_COLOR ("/Save Left Color To/01", &editor->saved_colors[0], TRUE);
+  SET_COLOR ("/Save Left Color To/02", &editor->saved_colors[1], TRUE);
+  SET_COLOR ("/Save Left Color To/03", &editor->saved_colors[2], TRUE);
+  SET_COLOR ("/Save Left Color To/04", &editor->saved_colors[3], TRUE);
+  SET_COLOR ("/Save Left Color To/05", &editor->saved_colors[4], TRUE);
+  SET_COLOR ("/Save Left Color To/06", &editor->saved_colors[5], TRUE);
+  SET_COLOR ("/Save Left Color To/07", &editor->saved_colors[6], TRUE);
+  SET_COLOR ("/Save Left Color To/08", &editor->saved_colors[7], TRUE);
+  SET_COLOR ("/Save Left Color To/09", &editor->saved_colors[8], TRUE);
+  SET_COLOR ("/Save Left Color To/10", &editor->saved_colors[9], TRUE);
 
-  SET_COLOR ("Right Endpoint's Color...",
+  SET_COLOR ("/Right Endpoint's Color...",
              &editor->control_sel_r->right_color, FALSE);
-  SET_COLOR ("Load Right Color From/Right Neighbor's Left Endpoint",
+  SET_COLOR ("/Load Right Color From/Right Neighbor's Left Endpoint",
              &right_seg->left_color, FALSE);
-  SET_COLOR ("Load Right Color From/Left Endpoint",
+  SET_COLOR ("/Load Right Color From/Left Endpoint",
              &editor->control_sel_l->left_color, FALSE);
-  SET_COLOR ("Load Right Color From/FG Color", &fg, FALSE);
-  SET_COLOR ("Load Right Color From/BG Color", &bg, FALSE);
+  SET_COLOR ("/Load Right Color From/FG Color", &fg, FALSE);
+  SET_COLOR ("/Load Right Color From/BG Color", &bg, FALSE);
 
-  SET_COLOR ("Load Right Color From/01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("Load Right Color From/02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("Load Right Color From/03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("Load Right Color From/04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("Load Right Color From/05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("Load Right Color From/06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("Load Right Color From/07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("Load Right Color From/08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("Load Right Color From/09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("Load Right Color From/10", &editor->saved_colors[9], TRUE);
+  SET_COLOR ("/Load Right Color From/01", &editor->saved_colors[0], TRUE);
+  SET_COLOR ("/Load Right Color From/02", &editor->saved_colors[1], TRUE);
+  SET_COLOR ("/Load Right Color From/03", &editor->saved_colors[2], TRUE);
+  SET_COLOR ("/Load Right Color From/04", &editor->saved_colors[3], TRUE);
+  SET_COLOR ("/Load Right Color From/05", &editor->saved_colors[4], TRUE);
+  SET_COLOR ("/Load Right Color From/06", &editor->saved_colors[5], TRUE);
+  SET_COLOR ("/Load Right Color From/07", &editor->saved_colors[6], TRUE);
+  SET_COLOR ("/Load Right Color From/08", &editor->saved_colors[7], TRUE);
+  SET_COLOR ("/Load Right Color From/09", &editor->saved_colors[8], TRUE);
+  SET_COLOR ("/Load Right Color From/10", &editor->saved_colors[9], TRUE);
 
-  SET_COLOR ("Save Right Color To/01", &editor->saved_colors[0], TRUE);
-  SET_COLOR ("Save Right Color To/02", &editor->saved_colors[1], TRUE);
-  SET_COLOR ("Save Right Color To/03", &editor->saved_colors[2], TRUE);
-  SET_COLOR ("Save Right Color To/04", &editor->saved_colors[3], TRUE);
-  SET_COLOR ("Save Right Color To/05", &editor->saved_colors[4], TRUE);
-  SET_COLOR ("Save Right Color To/06", &editor->saved_colors[5], TRUE);
-  SET_COLOR ("Save Right Color To/07", &editor->saved_colors[6], TRUE);
-  SET_COLOR ("Save Right Color To/08", &editor->saved_colors[7], TRUE);
-  SET_COLOR ("Save Right Color To/09", &editor->saved_colors[8], TRUE);
-  SET_COLOR ("Save Right Color To/10", &editor->saved_colors[9], TRUE);
+  SET_COLOR ("/Save Right Color To/01", &editor->saved_colors[0], TRUE);
+  SET_COLOR ("/Save Right Color To/02", &editor->saved_colors[1], TRUE);
+  SET_COLOR ("/Save Right Color To/03", &editor->saved_colors[2], TRUE);
+  SET_COLOR ("/Save Right Color To/04", &editor->saved_colors[3], TRUE);
+  SET_COLOR ("/Save Right Color To/05", &editor->saved_colors[4], TRUE);
+  SET_COLOR ("/Save Right Color To/06", &editor->saved_colors[5], TRUE);
+  SET_COLOR ("/Save Right Color To/07", &editor->saved_colors[6], TRUE);
+  SET_COLOR ("/Save Right Color To/08", &editor->saved_colors[7], TRUE);
+  SET_COLOR ("/Save Right Color To/09", &editor->saved_colors[8], TRUE);
+  SET_COLOR ("/Save Right Color To/10", &editor->saved_colors[9], TRUE);
 
   if (! selection)
     {
-      SET_LABEL ("flip",             _("Flip Segment"));
-      SET_LABEL ("replicate",        _("Replicate Segment"));
-      SET_LABEL ("blendingfunction", _("Blending Function for Segment"));
-      SET_LABEL ("coloringtype",     _("Coloring Type for Segment"));
-      SET_LABEL ("splitmidpoint",    _("Split Segment at Midpoint"));
-      SET_LABEL ("splituniformly",   _("Split Segment Uniformly"));
-      SET_LABEL ("delete",           _("Delete Segment"));
-      SET_LABEL ("recenter",         _("Re-center Segment's Midpoint"));
-      SET_LABEL ("redistribute",     _("Re-distribute Handles in Segment"));
+      SET_LABEL ("/flip",             _("Flip Segment"));
+      SET_LABEL ("/replicate",        _("Replicate Segment"));
+      SET_LABEL ("/blendingfunction", _("Blending Function for Segment"));
+      SET_LABEL ("/coloringtype",     _("Coloring Type for Segment"));
+      SET_LABEL ("/splitmidpoint",    _("Split Segment at Midpoint"));
+      SET_LABEL ("/splituniformly",   _("Split Segment Uniformly"));
+      SET_LABEL ("/delete",           _("Delete Segment"));
+      SET_LABEL ("/recenter",         _("Re-center Segment's Midpoint"));
+      SET_LABEL ("/redistribute",     _("Re-distribute Handles in Segment"));
     }
   else
     {
-      SET_LABEL ("flip",             _("Flip Selection"));
-      SET_LABEL ("replicate",        _("Replicate Selection"));
-      SET_LABEL ("blendingfunction", _("Blending Function for Selection"));
-      SET_LABEL ("coloringtype",     _("Coloring Type for Selection"));
-      SET_LABEL ("splitmidpoint",    _("Split Segments at Midpoints"));
-      SET_LABEL ("splituniformly",   _("Split Segments Uniformly"));
-      SET_LABEL ("delete",           _("Delete Selection"));
-      SET_LABEL ("recenter",         _("Re-center Midpoints in Selection"));
-      SET_LABEL ("redistribute",     _("Re-distribute Handles in Selection"));
+      SET_LABEL ("/flip",             _("Flip Selection"));
+      SET_LABEL ("/replicate",        _("Replicate Selection"));
+      SET_LABEL ("/blendingfunction", _("Blending Function for Selection"));
+      SET_LABEL ("/coloringtype",     _("Coloring Type for Selection"));
+      SET_LABEL ("/splitmidpoint",    _("Split Segments at Midpoints"));
+      SET_LABEL ("/splituniformly",   _("Split Segments Uniformly"));
+      SET_LABEL ("/delete",           _("Delete Selection"));
+      SET_LABEL ("/recenter",         _("Re-center Midpoints in Selection"));
+      SET_LABEL ("/redistribute",     _("Re-distribute Handles in Selection"));
     }
 
-  SET_SENSITIVE ("blendingfunction/(Varies)", FALSE);
-  SET_SENSITIVE ("coloringtype/(Varies)",     FALSE);
+  SET_SENSITIVE ("/blendingfunction/(Varies)", FALSE);
+  SET_SENSITIVE ("/coloringtype/(Varies)",     FALSE);
 
   if (blending_equal)
     {
-      SET_VISIBLE ("blendingfunction/(Varies)", FALSE);
+      SET_VISIBLE ("/blendingfunction/(Varies)", FALSE);
 
       switch (editor->control_sel_l->type)
         {
         case GRAD_LINEAR:
-          SET_ACTIVE ("blendingfunction/Linear", TRUE);
+          SET_ACTIVE ("/blendingfunction/Linear", TRUE);
           break;
         case GRAD_CURVED:
-          SET_ACTIVE ("blendingfunction/Curved", TRUE);
+          SET_ACTIVE ("/blendingfunction/Curved", TRUE);
           break;
         case GRAD_SINE:
-          SET_ACTIVE ("blendingfunction/Sinusodial", TRUE);
+          SET_ACTIVE ("/blendingfunction/Sinusodial", TRUE);
           break;
         case GRAD_SPHERE_INCREASING:
-          SET_ACTIVE ("blendingfunction/Spherical (increasing)", TRUE);
+          SET_ACTIVE ("/blendingfunction/Spherical (increasing)", TRUE);
           break;
         case GRAD_SPHERE_DECREASING:
-          SET_ACTIVE ("blendingfunction/Spherical (decreasing)", TRUE);
+          SET_ACTIVE ("/blendingfunction/Spherical (decreasing)", TRUE);
           break;
         }
     }
   else
     {
-      SET_VISIBLE ("blendingfunction/(Varies)", TRUE);
-      SET_ACTIVE ("blendingfunction/(Varies)", TRUE);
+      SET_VISIBLE ("/blendingfunction/(Varies)", TRUE);
+      SET_ACTIVE ("/blendingfunction/(Varies)", TRUE);
     }
 
   if (coloring_equal)
     {
-      SET_VISIBLE ("coloringtype/(Varies)", FALSE);
+      SET_VISIBLE ("/coloringtype/(Varies)", FALSE);
 
       switch (editor->control_sel_l->color)
         {
         case GRAD_RGB:
-          SET_ACTIVE ("coloringtype/RGB", TRUE);
+          SET_ACTIVE ("/coloringtype/RGB", TRUE);
           break;
         case GRAD_HSV_CCW:
-          SET_ACTIVE ("coloringtype/HSV (counter-clockwise hue)", TRUE);
+          SET_ACTIVE ("/coloringtype/HSV (counter-clockwise hue)", TRUE);
           break;
         case GRAD_HSV_CW:
-          SET_ACTIVE ("coloringtype/HSV (clockwise hue)", TRUE);
+          SET_ACTIVE ("/coloringtype/HSV (clockwise hue)", TRUE);
           break;
         }
     }
   else
     {
-      SET_VISIBLE ("coloringtype/(Varies)", TRUE);
-      SET_ACTIVE ("coloringtype/(Varies)", TRUE);
+      SET_VISIBLE ("/coloringtype/(Varies)", TRUE);
+      SET_ACTIVE ("/coloringtype/(Varies)", TRUE);
     }
 
-  SET_SENSITIVE ("Blend Endpoints' Colors",  selection);
-  SET_SENSITIVE ("Blend Endpoints' Opacity", selection);
-  SET_SENSITIVE ("delete", delete);
+  SET_SENSITIVE ("/Blend Endpoints' Colors",  selection);
+  SET_SENSITIVE ("/Blend Endpoints' Opacity", selection);
+  SET_SENSITIVE ("/delete", delete);
 
 #undef SET_ACTIVE
 #undef SET_COLOR

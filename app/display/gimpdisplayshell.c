@@ -58,7 +58,6 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-qmask.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-selection.h"
 #include "gximage.h"

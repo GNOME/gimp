@@ -28,8 +28,8 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-handlers.h"
-#include "gimpdisplayshell-qmask.h"
 #include "gimpdisplayshell-scale.h"
 
 #include "gimprc.h"

@@ -71,9 +71,9 @@
 #include "core/gimpgradient.h"
 
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "gradient-editor.h"
-#include "gradient-editor-commands.h"
 
 #include "gimprc.h"
 
@@ -810,7 +810,13 @@ preview_events (GtkWidget      *widget,
 	  break;
 
 	case 3:
-          gradient_editor_show_context_menu (editor);
+          {
+            GtkItemFactory *factory;
+
+            factory = gtk_item_factory_from_path ("<GradientEditor>");
+
+            gimp_item_factory_popup_with_data (factory, editor, NULL);
+          }
 	  break;
 
 	default:
@@ -1291,7 +1297,13 @@ control_button_press (GradientEditor *editor,
       break;
 
     case 3:
-      gradient_editor_show_context_menu (editor);
+      {
+        GtkItemFactory *factory;
+
+        factory = gtk_item_factory_from_path ("<GradientEditor>");
+
+        gimp_item_factory_popup_with_data (factory, editor, NULL);
+      }
       return;
 
       /*  wheelmouse support  */

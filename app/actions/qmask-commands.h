@@ -16,15 +16,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_QMASK_H__
-#define __GIMP_DISPLAY_SHELL_QMASK_H__
+#ifndef __QMASK_COMMANDS_H__
+#define __QMASK_COMMANDS_H__
 
 
-gboolean   gimp_display_shell_qmask_button_press (GtkWidget        *widget,
-                                                  GdkEventButton   *event,
-                                                  GimpDisplayShell *shell);
-void       gimp_display_shell_qmask_toggled      (GtkWidget        *widget,
-                                                  GimpDisplayShell *shell);
+void   qmask_toggle_cmd_callback    (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
+void   qmask_invert_cmd_callback    (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
+void   qmask_configure_cmd_callback (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
+
+void   qmask_menu_update            (GtkItemFactory *factory,
+                                     gpointer        data);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_QMASK_H__ */
+#endif /* __QMASK_COMMANDS_H__ */

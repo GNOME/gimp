@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENTS_COMMANDS_H__
-#define __GRADIENTS_COMMANDS_H__
+#ifndef __GIMP_IMAGE_QMASK_H__
+#define __GIMP_IMAGE_QMASK_H__
 
 
-void   gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
-					       gpointer   data);
+void       gimp_image_set_qmask_state (GimpImage       *gimage,
+                                       gboolean         qmask_state);
+gboolean   gimp_image_get_qmask_state (const GimpImage *gimage);
 
-void   gradients_menu_update                  (GtkItemFactory *factory,
-                                               gpointer        data);
+void       gimp_image_qmask_invert    (GimpImage       *gimage);
 
 
-#endif /* __GRADIENTS_COMMANDS_H__ */
+#endif /* __GIMP_IMAGE_QMASK_H__ */

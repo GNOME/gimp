@@ -106,6 +106,7 @@ struct _GimpImage
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
 
   gboolean           qmask_state;           /*  TRUE if qmask is on          */
+  gboolean           qmask_inverted;        /*  TRUE if qmask is inverted    */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
   /*  Old undo apparatus  */
@@ -201,11 +202,6 @@ void            gimp_image_set_unit              (GimpImage          *gimage,
 GimpUnit        gimp_image_get_unit              (const GimpImage    *gimage);
 void            gimp_image_unit_changed          (GimpImage          *gimage);
 
-void            gimp_image_set_qmask_state       (GimpImage          *gimage,
-                                                  gboolean            qmask_state);
-gboolean        gimp_image_get_qmask_state       (const GimpImage    *gimage);
-void            gimp_image_qmask_changed         (GimpImage          *gimage);
-
 gint		gimp_image_get_width             (const GimpImage    *gimage);
 gint		gimp_image_get_height            (const GimpImage    *gimage);
 
@@ -247,6 +243,7 @@ void            gimp_image_update_guide          (GimpImage          *gimage,
                                                   GimpGuide          *guide);
 void            gimp_image_selection_control     (GimpImage          *gimage,
                                                   GimpSelectionControl  control);
+void            gimp_image_qmask_changed         (GimpImage          *gimage);
 
 
 /*  undo  */

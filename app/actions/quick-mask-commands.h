@@ -16,15 +16,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENTS_COMMANDS_H__
-#define __GRADIENTS_COMMANDS_H__
+#ifndef __QMASK_COMMANDS_H__
+#define __QMASK_COMMANDS_H__
 
 
-void   gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
-					       gpointer   data);
+void   qmask_toggle_cmd_callback    (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
+void   qmask_invert_cmd_callback    (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
+void   qmask_configure_cmd_callback (GtkWidget *widget,
+                                     gpointer   data,
+                                     guint      action);
 
-void   gradients_menu_update                  (GtkItemFactory *factory,
-                                               gpointer        data);
+void   qmask_menu_update            (GtkItemFactory *factory,
+                                     gpointer        data);
 
 
-#endif /* __GRADIENTS_COMMANDS_H__ */
+#endif /* __QMASK_COMMANDS_H__ */

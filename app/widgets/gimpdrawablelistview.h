@@ -44,7 +44,6 @@ typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
 
 typedef void            (* GimpNewDrawableFunc)     (GimpImage       *gimage);
 typedef void            (* GimpEditDrawableFunc)    (GimpDrawable    *drawable);
-typedef void            (* GimpDrawableContextFunc) (GimpImage       *gimage);
 
 
 #define GIMP_TYPE_DRAWABLE_LIST_VIEW            (gimp_drawable_list_view_get_type ())
@@ -76,7 +75,8 @@ struct _GimpDrawableListView
 
   GimpNewDrawableFunc      new_drawable_func;
   GimpEditDrawableFunc     edit_drawable_func;
-  GimpDrawableContextFunc  drawable_context_func;
+
+  gchar                   *item_factory;
 
   GtkWidget               *new_button;
   GtkWidget               *raise_button;
@@ -110,7 +110,7 @@ GtkWidget * gimp_drawable_list_view_new      (gint                     preview_s
 					      GimpCopyDrawableFunc     copy_drawable_func,
 					      GimpNewDrawableFunc      new_drawable_func,
 					      GimpEditDrawableFunc     edit_drawable_func,
-					      GimpDrawableContextFunc  drawable_context_func);
+					      const gchar             *item_factory);
 
 void       gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 					      GimpImage            *gimage);

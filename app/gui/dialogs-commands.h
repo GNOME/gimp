@@ -55,5 +55,8 @@ void   dialogs_create_stuff_cmd_callback      (GtkWidget *widget,
 					       gpointer   data,
 					       guint      action);
 
+void   dialogs_menu_update                    (GtkItemFactory *factory,
+                                               gpointer        data);
+
 
 #endif /* __DIALOGS_COMMANDS_H__ */

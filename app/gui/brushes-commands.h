@@ -20,7 +20,8 @@
 #define __BRUSHES_COMMANDS_H__
 
 
-void   brushes_show_context_menu (GimpContainerEditor *editor);
+void   brushes_menu_update (GtkItemFactory *factory,
+                            gpointer        data);
 
 
 #endif /* __BRUSHES_COMMANDS_H__ */

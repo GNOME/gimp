@@ -464,93 +464,10 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
     {
       GtkItemFactory *ifactory;
       GtkWidget      *add_widget;
-      gint            origin_x;
-      gint            origin_y;
-      gint            x, y;
 
       ifactory = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
 
       add_widget = gtk_item_factory_get_widget (ifactory, "/Select Tab");
-
-      /*  update the menu items  */
-      {
-        GimpDialogFactoryEntry *entry;
-        GimpContainerView      *view;
-        gboolean                is_grid      = FALSE;
-        GimpPreviewSize         preview_size = GIMP_PREVIEW_SIZE_NONE;
-
-        entry = g_object_get_data (G_OBJECT (dockable),
-                                   "gimp-dialog-factory-entry");
-
-        if (entry)
-          {
-            if (strstr (entry->identifier, "grid"))
-              is_grid = TRUE;
-          }
-
-        view = gimp_container_view_get_by_dockable (dockable);
-
-        if (view)
-          {
-            preview_size = view->preview_size;
-          }
-
-#define SET_ACTIVE(path,active) \
-        gimp_item_factory_set_active (ifactory, (path), (active))
-
-        if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
-          {
-            SET_ACTIVE ("/Preview Size/Gigantic", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
-          {
-            SET_ACTIVE ("/Preview Size/Enormous", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
-          {
-            SET_ACTIVE ("/Preview Size/Huge", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
-          {
-            SET_ACTIVE ("/Preview Size/Extra Large", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
-          {
-            SET_ACTIVE ("/Preview Size/Large", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
-          {
-            SET_ACTIVE ("/Preview Size/Medium", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
-          {
-            SET_ACTIVE ("/Preview Size/Small", TRUE);
-          }
-        else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
-          {
-            SET_ACTIVE ("/Preview Size/Extra Small", TRUE);
-          }
-        else
-          {
-            SET_ACTIVE ("/Preview Size/Tiny", TRUE);
-          }
-
-        if (is_grid)
-          {
-            SET_ACTIVE ("/View as Grid", TRUE);
-          }
-        else
-          {
-            SET_ACTIVE ("/View as List", TRUE);
-          }
-
-        SET_ACTIVE ("/Show Image Menu",
-                    GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
-        SET_ACTIVE ("/Auto Follow Active Image",
-                    GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
-
-#undef SET_ACTIVE
-      }
 
       /*  do evil things  */
       {
@@ -568,27 +485,14 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
         g_object_unref (G_OBJECT (notebook_menu));
       }
 
-      gdk_window_get_origin (widget->window, &origin_x, &origin_y);
-
-      x = bevent->x + origin_x;
-      y = bevent->y + origin_y;
-
-      if (x + ifactory->widget->requisition.width > gdk_screen_width ())
-	x -= ifactory->widget->requisition.width;
-
-      if (y + ifactory->widget->requisition.height > gdk_screen_height ())
-	y -= ifactory->widget->requisition.height;
-
       /*  an item factory callback may destroy the dockbook, so reference
        *  if for gimp_dockbook_menu_end()
        */
       g_object_ref (G_OBJECT (dockbook));
 
-      gtk_item_factory_popup_with_data (ifactory,
-					dockbook,
-					(GtkDestroyNotify) gimp_dockbook_menu_end,
-					x, y,
-					3, bevent->time);
+      gimp_item_factory_popup_with_data (ifactory,
+                                         dockbook,
+                                         (GtkDestroyNotify) gimp_dockbook_menu_end);
     }
 
   return TRUE;

@@ -43,7 +43,6 @@
 
 /*  local function prototypes  */
 
-static void   palettes_menu_set_sensitivity    (GimpContainerEditor *editor);
 static void   palettes_merge_palettes_query    (GimpContainerEditor *editor);
 static void   palettes_merge_palettes_callback (GtkWidget           *widget,
 						gchar               *palette_name,
@@ -81,41 +80,33 @@ palettes_merge_palettes_cmd_callback (GtkWidget *widget,
 }
 
 void
-palettes_show_context_menu (GimpContainerEditor *editor)
+palettes_menu_update (GtkItemFactory *factory,
+                      gpointer        data)
 {
-  GtkItemFactory *item_factory;
+  GimpContainerEditor *editor;
+  GimpPalette         *palette;
 
-  palettes_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<Palettes>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-palettes_menu_set_sensitivity (GimpContainerEditor *editor)
-{
-  GimpPalette *palette;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   palette = gimp_context_get_palette (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Palettes>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("Duplicate Palette",
+  SET_SENSITIVE ("/Duplicate Palette",
 		 palette && GIMP_DATA_GET_CLASS (palette)->duplicate);
-  SET_SENSITIVE ("Edit Palette...",
+  SET_SENSITIVE ("/Edit Palette...",
 		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("Delete Palette...",
+  SET_SENSITIVE ("/Delete Palette...",
 		 palette);
-  SET_SENSITIVE ("Merge Palettes...",
+  SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
 
 #undef SET_SENSITIVE
 }
+
+
+/*  private functions  */
 
 static void
 palettes_merge_palettes_query (GimpContainerEditor *editor)

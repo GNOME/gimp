@@ -1,3 +1,86 @@
+2001-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-qmask.[ch]: new files: the QMask stuff
+	stripped from GUI code. Added gimp_image_qmask_invert().
+
+	* app/core/gimpimage.[ch]: removed the QMask functions.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-qmask.[ch]: removed.
+
+	* app/gui/Makefile.am
+	* app/gui/qmask-commands.[ch]: new files for the new QMask item
+	factory callbacks and the qmask query dialog.
+
+	* app/gui/menus.c: added a context menu for the QMask button.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-handlers.c: don't include the qmask
+	stuff.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: Moved the 2 qmask
+	callbacks here. Don't popup the dialog on double_click. Show
+	the contect menu on right-click.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]:
+	gimp_display_shell_canvas_events(): removed the hack of
+	conntecting "key_press_event" to gtk_true() while a tool is
+	active. Instead, check for (event & GDK_BUTTON1_MASK) in the
+	key_press and key_release handlers and stop signal emission. Save
+	the modifier state on "button_press" and restore it after
+	"button_release".
+
+	Changed the way context menus are updated/shown:
+
+	- removed GimpContainerContextFunc.
+	- pass around item factory identifiers (e.g. "<Brushes>")
+	- added voodoo to update the menus before showing them.
+
+	* app/widgets/gimpitemfactory.[ch]: gimp_item_factory_new(): take
+	a GimpItemFactoryUpdateFunc parameter, attach it as data to the
+	factory and use it to update the menu in
+	gimp_item_factory_popup_with_date().
+
+	* app/widgets/gimpwidgets-utils.[ch]: removed
+	gimp_item_factory_popup_with_data() here.
+
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimpdrawablelistview.[ch]: use item_factory
+	identifier strings all over the place.
+
+	* app/widgets/gimpdockbook.c: removed the menu update code, it's
+	now in gui/dialogs-commands.c.
+
+	* app/gui/brushes-commands.[ch]
+	* app/gui/buffers-commands.[c]
+	* app/gui/channels-commands.[ch]
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/documents-commands.[ch]
+	* app/gui/gradient-editor-commands.[ch]
+	* app/gui/gradients-commands.[ch]
+	* app/gui/layers-commands.[ch]
+	* app/gui/palettes-commands.[ch]
+	* app/gui/patterns-commands.[ch]: removed all show_context_menu()
+	functions and made the update functions public. Changed all
+	update functions to use the gimp_item_factory_set_foo() methods
+	instead of gimp_menu_item_set_foo().
+
+	* app/gui/menus.c: pass the update functions to the
+	gimp_item_factory_new().
+
+	* app/gui/dialogs-constructors.c: pass item factory identifiers to
+	all view constructors.
+
+	* app/gui/gradient-editor.c: show the context menu using the new
+	method.
+
+	* app/gui/toolbox.c: no need to include "dialogs-commands.h".
+
 2001-11-29  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.c (gimp_config_serialize): ooops.
@@ -28,7 +111,7 @@
 2001-11-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: replaced the QMask radio
-	buttons ba a single check button. Still needs some tuning.
+	buttons by a single check button. Still needs some tuning.
 
 	* app/display/gimpdisplayshell-handlers.c
 	* app/display/gimpdisplayshell-qmask.[ch]: changed accordingly.
@@ -43,7 +126,7 @@
 	display manually (we have the pointer grabbed anyway).
 
 	* app/display/gimpdisplayshell-callbacks.c: don't check for
-	GIMP_IS_MODE_TOOL(active_tool) but look at
+	GIMP_IS_MOVE_TOOL(active_tool) but look at
 	active_tool->handle_empty_image. Removed the checks for
 	GIMP_IS_FUZZY_SELECT_TOOL(active_tool) because fuzzy_select
 	doesn't set GIMP busy while it's active any more.

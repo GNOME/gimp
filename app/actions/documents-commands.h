@@ -31,8 +31,8 @@ void   documents_delete_document_cmd_callback        (GtkWidget *widget,
 void   documents_refresh_documents_cmd_callback      (GtkWidget *widget,
                                                       gpointer   data);
 
-
-void   documents_show_context_menu (GimpContainerEditor *editor);
+void   documents_menu_update                         (GtkItemFactory *factory,
+                                                      gpointer        data);
 
 
 #endif /* __DOCUMENTS_COMMANDS_H__ */

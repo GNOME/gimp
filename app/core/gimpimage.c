@@ -429,6 +429,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->paths                 = NULL;
 
   gimage->qmask_state           = FALSE;
+  gimage->qmask_inverted        = FALSE;
   gimage->qmask_color.r         = 1.0;
   gimage->qmask_color.g         = 0.0;
   gimage->qmask_color.b         = 0.0;
@@ -1040,36 +1041,6 @@ gimp_image_unit_changed (GimpImage *gimage)
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNIT_CHANGED], 0);
 }
 
-void
-gimp_image_set_qmask_state (GimpImage *gimage,
-                            gboolean   qmask_state)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  if (qmask_state != gimage->qmask_state)
-    {
-      gimage->qmask_state = qmask_state ? TRUE : FALSE;
-
-      gimp_image_qmask_changed (gimage);
-    }
-}
-
-gboolean
-gimp_image_get_qmask_state (const GimpImage *gimage)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  return gimage->qmask_state;
-}
-
-void
-gimp_image_qmask_changed (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[QMASK_CHANGED], 0);
-}
-
 gint
 gimp_image_get_width (const GimpImage *gimage)
 {
@@ -1369,6 +1340,14 @@ gimp_image_selection_control (GimpImage            *gimage,
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[SELECTION_CONTROL], 0,
                  control);
+}
+
+void
+gimp_image_qmask_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[QMASK_CHANGED], 0);
 }
 
 

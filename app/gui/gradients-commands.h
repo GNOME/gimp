@@ -23,8 +23,8 @@
 void   gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
 					       gpointer   data);
 
-
-void   gradients_show_context_menu (GimpContainerEditor *editor);
+void   gradients_menu_update                  (GtkItemFactory *factory,
+                                               gpointer        data);
 
 
 #endif /* __GRADIENTS_COMMANDS_H__ */

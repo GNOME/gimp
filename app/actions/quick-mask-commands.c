@@ -18,30 +18,26 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "display-types.h"
+#include "gui-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
+#include "core/gimpimage-qmask.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-qmask.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
-#include "floating_sel.h"
-#include "undo.h"
+#include "qmask-commands.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -60,149 +56,105 @@ struct _EditQmaskOptions
 
 /*  local function prototypes  */
 
-static void edit_qmask_channel_query         (GimpDisplay     *gdisp);
-static void edit_qmask_query_ok_callback     (GtkWidget       *widget, 
-                                              gpointer         client_data);
-static void edit_qmask_query_cancel_callback (GtkWidget       *widget, 
-                                              gpointer         client_data);
-static void qmask_query_scale_update         (GtkAdjustment   *adjustment,
-                                              gpointer         data);
-static void qmask_color_changed              (GimpColorButton *button,
-					      gpointer         data);
-static void qmask_removed_callback           (GtkObject       *qmask, 
-					      gpointer         data);
+static void   qmask_channel_query         (GimpDisplayShell *shell);
+static void   qmask_query_ok_callback     (GtkWidget        *widget, 
+                                           gpointer          client_data);
+static void   qmask_query_cancel_callback (GtkWidget        *widget, 
+                                           gpointer          client_data);
+static void   qmask_query_scale_update    (GtkAdjustment    *adjustment,
+                                           gpointer          data);
+static void   qmask_query_color_changed   (GimpColorButton  *button,
+                                           gpointer          data);
 
-/*  public functions  */
 
-gboolean
-gimp_display_shell_qmask_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *event,
-                                       GimpDisplayShell *shell)
+/*  public functionss */
+
+void
+qmask_toggle_cmd_callback (GtkWidget *widget,
+                           gpointer   data,
+                           guint      action)
 {
-  GimpDisplay *gdisp;
+  GimpDisplayShell *shell;
 
-  gdisp = shell->gdisp;
+  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
 
-  if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
-    {
-      edit_qmask_channel_query (gdisp); 
+  if (! shell)
+    return;
 
-      return TRUE;
-    }
+  gimp_image_set_qmask_state (shell->gdisp->gimage,
+                              GTK_CHECK_MENU_ITEM (widget)->active);
 
-  return FALSE;
+  gdisplays_flush ();
 }
 
 void
-gimp_display_shell_qmask_toggled (GtkWidget        *widget,
-                                  GimpDisplayShell *shell)
+qmask_invert_cmd_callback (GtkWidget *widget,
+                           gpointer   data,
+                           guint      action)
 {
-  GimpDisplay *gdisp;
-  GimpImage   *gimage;
-  GimpChannel *mask;
-  GimpLayer   *layer;
-  GimpRGB      color;
+  GimpDisplayShell *shell;
 
-  gdisp = shell->gdisp;
+  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
 
-  gimage = gdisp->gimage;
+  if (! shell)
+    return;
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (gimp_image_get_qmask_state (gimage))
-	return; /* if already set, do nothing */
-  
-      /* Set the defaults */
-      color = gimage->qmask_color;
+      gimp_image_qmask_invert (shell->gdisp->gimage);
 
-      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
-
-      if (mask)
-	{
-	  /* if the user was clever and created his own */
-
-	  gimp_image_set_qmask_state (gimage, TRUE);
-
-	  return; 
-	}
-
-      undo_push_group_start (gimage, QMASK_UNDO);
-
-      if (gimp_image_mask_is_empty (gimage))
-	{ 
-	  /* if no selection */
-
-	  if ((layer = gimp_image_floating_sel (gimage)))
-	    {
-	      floating_sel_to_layer (layer);
-	    }
-
-	  mask = gimp_channel_new (gimage, 
-                                   gimage->width, 
-                                   gimage->height,
-                                   "Qmask",
-                                   &color);
-	  gimp_image_add_channel (gimage, mask, 0);
-
-	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (mask),
-				      gimp_get_user_context (gimage->gimp),
-				      TRANSPARENT_FILL);
-	}
-      else /* if selection */
-	{
-	  mask = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
-	  gimp_image_add_channel (gimage, mask, 0);
-	  gimp_channel_set_color (mask, &color);
-	  gimp_object_set_name (GIMP_OBJECT (mask), "Qmask");
-	  gimp_image_mask_none (gimage);           /* Clear the selection */
-	}
-
-      undo_push_qmask (gimage);
-      undo_push_group_end (gimage);
-
-      gimp_image_set_qmask_state (gimage, TRUE);
-
-      gdisplays_flush ();
-
-      /* connect to the removed signal, so the buttons get updated */
-      g_signal_connect (G_OBJECT (mask), "removed", 
-			G_CALLBACK (qmask_removed_callback),
-			gdisp);
+      if (shell->gdisp->gimage->qmask_state)
+        gdisplays_flush ();
     }
+}
+
+void
+qmask_configure_cmd_callback (GtkWidget *widget,
+                              gpointer   data,
+                              guint      action)
+{
+  GimpDisplayShell *shell;
+
+  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
+
+  if (! shell)
+    return;
+
+  qmask_channel_query (shell);
+}
+
+void
+qmask_menu_update (GtkItemFactory *factory,
+                   gpointer        data)
+{
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (data);
+
+#define SET_ACTIVE(menu,active) \
+        gimp_item_factory_set_active (factory, "/" menu, (active))
+#define SET_COLOR(menu,color) \
+        gimp_item_factory_set_color (factory, "/" menu, (color), FALSE)
+
+  SET_ACTIVE ("QMask Active", shell->gdisp->gimage->qmask_state);
+
+  if (shell->gdisp->gimage->qmask_inverted)
+    SET_ACTIVE ("Mask Selected Areas", TRUE);
   else
-    {
-      gimage = gdisp->gimage;
+    SET_ACTIVE ("Mask Unselected Areas", TRUE);
 
-      if (! gimp_image_get_qmask_state (gimage))
-        return; /* if already set do nothing */
+  SET_COLOR ("Configure Color and Opacity...",
+             &shell->gdisp->gimage->qmask_color);
 
-      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
-
-      if (mask)
-  	{ 
-	  undo_push_group_start (gimage, QMASK_UNDO);
-	  /*  push the undo here since removing the mask will
-	   *  call the qmask_removed_callback() which will set
-	   *  the qmask_state to FALSE
-           */
-	  undo_push_qmask (gimage);
-	  gimp_image_mask_load (gimage, mask);
-	  gimp_image_remove_channel (gimage, mask);
-	  undo_push_group_end (gimage);
-	}
-
-      gimp_image_set_qmask_state (gdisp->gimage, FALSE);
-
-      if (mask)
-	gdisplays_flush ();
-    }
+#undef SET_SENSITIVE
+#undef SET_COLOR
 }
 
 
 /*  private functions  */
 
 static void
-edit_qmask_channel_query (GimpDisplay *gdisp)
+qmask_channel_query (GimpDisplayShell *shell)
 {
   EditQmaskOptions *options;
   GtkWidget        *hbox;
@@ -214,7 +166,7 @@ edit_qmask_channel_query (GimpDisplay *gdisp)
   /*  the new options structure  */
   options = g_new0 (EditQmaskOptions, 1);
 
-  options->gimage      = gdisp->gimage;
+  options->gimage      = shell->gdisp->gimage;
   options->color_panel = gimp_color_panel_new (_("Edit Qmask Color"),
 					       &options->gimage->qmask_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS, 
@@ -228,10 +180,10 @@ edit_qmask_channel_query (GimpDisplay *gdisp)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, edit_qmask_query_cancel_callback,
+		     GTK_STOCK_CANCEL, qmask_query_cancel_callback,
 		     options, NULL, NULL, FALSE, TRUE,
 
-		     GTK_STOCK_OK, edit_qmask_query_ok_callback,
+		     GTK_STOCK_OK, qmask_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
 
 		     NULL);
@@ -276,15 +228,15 @@ edit_qmask_channel_query (GimpDisplay *gdisp)
   gtk_widget_show (options->color_panel);
 
   g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
-		    G_CALLBACK (qmask_color_changed),
+		    G_CALLBACK (qmask_query_color_changed),
 		    opacity_scale_data);		      
 
   gtk_widget_show (options->query_box);
 }
 
 static void 
-edit_qmask_query_ok_callback (GtkWidget *widget, 
-			      gpointer   data) 
+qmask_query_ok_callback (GtkWidget *widget, 
+                         gpointer   data) 
 {
   EditQmaskOptions *options;
   GimpChannel      *channel;
@@ -315,7 +267,7 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
 }
 
 static void
-edit_qmask_query_cancel_callback (GtkWidget *widget,
+qmask_query_cancel_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   EditQmaskOptions *options;
@@ -338,24 +290,12 @@ qmask_query_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-qmask_color_changed (GimpColorButton *button,
-		     gpointer         data)
+qmask_query_color_changed (GimpColorButton *button,
+                           gpointer         data)
 {
   GtkAdjustment *adj = GTK_ADJUSTMENT (data);
   GimpRGB        color;
 
   gimp_color_button_get_color (button, &color);
   gtk_adjustment_set_value (adj, color.a * 100.0);
-}
-
-static void
-qmask_removed_callback (GtkObject *qmask,
-			gpointer   data)
-{
-  GimpDisplay *gdisp = (GimpDisplay *) data;
-  
-  if (!gdisp->gimage)
-    return;
-
-  gimp_image_set_qmask_state (gdisp->gimage, FALSE);
 }

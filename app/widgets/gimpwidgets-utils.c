@@ -188,7 +188,7 @@ gimp_menu_position (GtkMenu *menu,
   gint            screen_width;
   gint            screen_height;
 
-  g_return_if_fail (menu != NULL);
+  g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
   g_return_if_fail (button != NULL);
@@ -226,29 +226,6 @@ gimp_menu_position (GtkMenu *menu,
       *button        = 0;
       *activate_time = 0;
     }
-}
-
-void
-gimp_item_factory_popup_with_data (GtkItemFactory *item_factory,
-				   gpointer        data)
-{
-  gint    x, y;
-  guint   button;
-  guint32 activate_time;
-
-  g_return_if_fail (GTK_IS_ITEM_FACTORY (item_factory));
-
-  gimp_menu_position (GTK_MENU (item_factory->widget),
-		      &x, &y,
-		      &button,
-		      &activate_time);
-
-  gtk_item_factory_popup_with_data (item_factory,
-				    data,
-				    NULL,
-				    x, y,
-				    button,
-				    activate_time);
 }
 
 

@@ -42,11 +42,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
-
-static void   channels_menu_set_sensitivity (GimpImage *gimage);
-
-
 /*  public functions  */
 
 void
@@ -592,29 +587,17 @@ channels_edit_channel_query (GimpChannel *channel)
 }
 
 void
-channels_show_context_menu (GimpImage *gimage)
+channels_menu_update (GtkItemFactory *factory,
+                      gpointer        data)
 {
-  GtkItemFactory *item_factory;
-
-  channels_menu_set_sensitivity (gimage);
-
-  item_factory = gtk_item_factory_from_path ("<Channels>");
-
-  gimp_item_factory_popup_with_data (item_factory, gimage);
-}
-
-
-static void
-channels_menu_set_sensitivity (GimpImage *gimage)
-{
+  GimpImage   *gimage;
   GimpChannel *channel;
   gboolean     fs;
   GList       *list;
   GList       *next = NULL;
   GList       *prev = NULL;
 
-  g_return_if_fail (gimage != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  gimage = GIMP_IMAGE (data);
 
   channel = gimp_image_get_active_channel (gimage);
 
@@ -633,18 +616,18 @@ channels_menu_set_sensitivity (GimpImage *gimage)
     }
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Channels>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("New Channel...",             !fs);
-  SET_SENSITIVE ("Raise Channel",              !fs && channel && prev);
-  SET_SENSITIVE ("Lower Channel",              !fs && channel && next);
-  SET_SENSITIVE ("Duplicate Channel",          !fs && channel);
-  SET_SENSITIVE ("Channel to Selection",       !fs && channel);
-  SET_SENSITIVE ("Add to Selection",           !fs && channel);
-  SET_SENSITIVE ("Subtract from Selection",    !fs && channel);
-  SET_SENSITIVE ("Intersect with Selection",   !fs && channel);
-  SET_SENSITIVE ("Delete Channel",             !fs && channel);
-  SET_SENSITIVE ("Edit Channel Attributes...", !fs && channel);
+  SET_SENSITIVE ("/New Channel...",             !fs);
+  SET_SENSITIVE ("/Raise Channel",              !fs && channel && prev);
+  SET_SENSITIVE ("/Lower Channel",              !fs && channel && next);
+  SET_SENSITIVE ("/Duplicate Channel",          !fs && channel);
+  SET_SENSITIVE ("/Channel to Selection",       !fs && channel);
+  SET_SENSITIVE ("/Add to Selection",           !fs && channel);
+  SET_SENSITIVE ("/Subtract from Selection",    !fs && channel);
+  SET_SENSITIVE ("/Intersect with Selection",   !fs && channel);
+  SET_SENSITIVE ("/Delete Channel",             !fs && channel);
+  SET_SENSITIVE ("/Edit Channel Attributes...", !fs && channel);
 
 #undef SET_OPS_SENSITIVE
 }

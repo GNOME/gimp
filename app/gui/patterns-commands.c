@@ -35,43 +35,27 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
-
-static void   patterns_menu_set_sensitivity (GimpContainerEditor *editor);
-
-
 /*  public functions  */
 
 void
-patterns_show_context_menu (GimpContainerEditor *editor)
+patterns_menu_update (GtkItemFactory *factory,
+                      gpointer        data)
 {
-  GtkItemFactory *item_factory;
+  GimpContainerEditor *editor;
+  GimpPattern         *pattern;
 
-  patterns_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<Patterns>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-patterns_menu_set_sensitivity (GimpContainerEditor *editor)
-{
-  GimpPattern *pattern;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   pattern = gimp_context_get_pattern (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Patterns>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("Duplicate Pattern",
+  SET_SENSITIVE ("/Duplicate Pattern",
 		 pattern && GIMP_DATA_GET_CLASS (pattern)->duplicate);
-  SET_SENSITIVE ("Edit Pattern...",
+  SET_SENSITIVE ("/Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("Delete Pattern...",
+  SET_SENSITIVE ("/Delete Pattern...",
 		 pattern);
 
 #undef SET_SENSITIVE

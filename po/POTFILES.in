@@ -36,7 +36,6 @@ app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-layer-select.c
-app/display/gimpdisplayshell-qmask.c
 
 app/file/file-open.c
 app/file/file-save.c
@@ -75,6 +74,7 @@ app/gui/palettes-commands.c
 app/gui/paths-dialog.c
 app/gui/pattern-select.c
 app/gui/preferences-dialog.c
+app/gui/qmask-commands.c
 app/gui/resize-dialog.c
 app/gui/resolution-calibrate-dialog.c
 app/gui/select-commands.c

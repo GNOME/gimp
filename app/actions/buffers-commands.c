@@ -40,11 +40,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  local function prototypes  */
-
-static void   buffers_menu_set_sensitivity (GimpContainerEditor *editor);
-
-
 /*  public functionss */
 
 void
@@ -104,34 +99,23 @@ buffers_delete_buffer_cmd_callback (GtkWidget *widget,
 }
 
 void
-buffers_show_context_menu (GimpContainerEditor *editor)
+buffers_menu_update (GtkItemFactory *factory,
+                     gpointer        data)
 {
-  GtkItemFactory *item_factory;
+  GimpContainerEditor *editor;
+  GimpBuffer          *buffer;
 
-  buffers_menu_set_sensitivity (editor);
-
-  item_factory = gtk_item_factory_from_path ("<Buffers>");
-
-  gimp_item_factory_popup_with_data (item_factory, editor);
-}
-
-
-/*  private functions  */
-
-static void
-buffers_menu_set_sensitivity (GimpContainerEditor *editor)
-{
-  GimpBuffer *buffer;
+  editor = GIMP_CONTAINER_EDITOR (data);
 
   buffer = gimp_context_get_buffer (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Buffers>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("Paste Buffer",        buffer);
-  SET_SENSITIVE ("Paste Buffer Into",   buffer);
-  SET_SENSITIVE ("Paste Buffer as New", buffer);
-  SET_SENSITIVE ("Delete Buffer",       buffer);
+  SET_SENSITIVE ("/Paste Buffer",        buffer);
+  SET_SENSITIVE ("/Paste Buffer Into",   buffer);
+  SET_SENSITIVE ("/Paste Buffer as New", buffer);
+  SET_SENSITIVE ("/Delete Buffer",       buffer);
 
 #undef SET_SENSITIVE
 }
