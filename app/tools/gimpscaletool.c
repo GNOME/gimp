@@ -321,8 +321,6 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       tr_tool->trans_info[X3] += diff_x;
       tr_tool->trans_info[Y3] += diff_y;
 
-      gimp_transform_tool_expose_preview (tr_tool);
-      
       return;
 
     default:
@@ -380,8 +378,6 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       *y1 = *y2 - dir_y * h;
       *x1 = *x2 - dir_x * w;
     }
-
-  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void

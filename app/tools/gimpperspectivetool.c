@@ -98,18 +98,18 @@ gimp_perspective_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpPerspectiveToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_perspective_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPerspectiveTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_perspective_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_perspective_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPerspectiveTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_perspective_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpPerspectiveTool",
+                                          "GimpPerspectiveTool",
                                           &tool_info, 0);
     }
 
@@ -119,9 +119,7 @@ gimp_perspective_tool_get_type (void)
 static void
 gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 {
-  GimpTransformToolClass *trans_class;
-
-  trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -209,8 +207,6 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool,
     default:
       break;
     }
-
-  gimp_transform_tool_expose_preview (transform_tool);
 }
 
 static void

@@ -1,5 +1,17 @@
 2004-06-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: removed calls to
+	gimp_transform_tool_expose_preview() from all
+	GimpTransformTool::motion() implementations...
+
+	* app/tools/gimptransformtool.c: ...and call it after calling
+	tr_tool_class->preview().
+
+2004-06-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: remember the last used
 	GimpCursorFormat so changing the format in prefs applies
 	instantly, and not after the next tool change.

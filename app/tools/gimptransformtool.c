@@ -497,6 +497,8 @@ gimp_transform_tool_motion (GimpTool        *tool,
     {
       tr_tool_class->motion (tr_tool, gdisp);
 
+      gimp_transform_tool_expose_preview (tr_tool);
+
       if (tr_tool_class->recalc)
         tr_tool_class->recalc (tr_tool, gdisp);
     }
@@ -963,18 +965,18 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   if (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
     {
       GimpDisplayShell *shell;
-  
+
       shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
       if (gimp_display_shell_get_show_transform (shell))
         {
           gimp_display_shell_set_show_transform (shell, FALSE);
-    
+
           /* get rid of preview artifacts left outside the drawable's area */
           gimp_transform_tool_expose_preview (tr_tool);
         }
     }
-  
+
   gimp_set_busy (gdisp->gimage->gimp);
 
   /* undraw the tool before we muck around with the transform matrix */
@@ -1143,12 +1145,12 @@ gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
   gint                  i;
 
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
-  
+
   options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
-  
+
   if (! (tr_tool->use_grid && options->show_preview))
     return;
-  
+
   g_return_if_fail (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp));
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
@@ -1165,23 +1167,23 @@ gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
   /* find bounding box around preview */
   area_x = area_w = (gint) dx [0];
   area_y = area_h = (gint) dy [0];
-    
+
   for (i = 1; i < 4; i++)
     {
       if (dx [i] < area_x)
         area_x = (gint) dx [i];
       else if (dx [i] > area_w)
         area_w = (gint) dx [i];
-    
+
       if (dy [i] < area_y)
         area_y = (gint) dy [i];
       else if (dy [i] > area_h)
         area_h = (gint) dy [i];
     }
-      
+
   area_w -= area_x;
   area_h -= area_y;
-          
+
   gimp_display_shell_expose_area (shell,
                                   MIN (area_x, last_x),
                                   MIN (area_y, last_y),
@@ -1203,13 +1205,13 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
   if (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
     {
       GimpDisplayShell *shell;
-    
+
       shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
       if (gimp_display_shell_get_show_transform (shell))
         {
           gimp_display_shell_set_show_transform (shell, FALSE);
-      
+
           /* get rid of preview artifacts left outside the drawable's area */
           gimp_transform_tool_expose_preview (tr_tool);
         }
@@ -1434,8 +1436,10 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *gdisp)
 {
   GimpTransformOptions *options;
-  
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+
+  options =
+    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+
   gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
                                          options->show_preview);
 
@@ -1546,18 +1550,17 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
   gboolean          show_preview;
 
   if (! GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
-      return;
-  
+    return;
+
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
-  
+
   gimp_display_shell_set_show_transform (shell, options->show_preview);
 
   /* expose area to clean up if preview is being turned off */
   show_preview = options->show_preview;
   options->show_preview = TRUE;
-  
+
   gimp_transform_tool_expose_preview (tr_tool);
 
   options->show_preview = show_preview;
 }
-
