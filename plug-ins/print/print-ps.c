@@ -32,6 +32,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.13  1999/05/27 19:11:33  asbjoer
+ *   use g_strncasecmp()
+ *
  *   Revision 1.12  1999/05/01 17:54:09  asbjoer
  *   os2 printing
  *
@@ -317,7 +320,7 @@ ps_parameters(int  model,	/* I - Printer model */
     if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0)
+    if (g_strcasecmp(lname, name) == 0)
     {
       valptrs[*count] = g_strdup(loption);
       (*count) ++;
@@ -981,7 +984,7 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     if (line[0] != '*')
       continue;
 
-    if (strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
+    if (g_strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
     {
       sscanf(line, "%*s%d", order);
       continue;
@@ -989,8 +992,8 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     else if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0 &&
-        strcasecmp(loption, option) == 0)
+    if (g_strcasecmp(lname, name) == 0 &&
+        g_strcasecmp(loption, option) == 0)
     {
       opt = strchr(line, ':') + 1;
       while (*opt == ' ' || *opt == '\t')

@@ -1,3 +1,8 @@
+Thu May 27 21:10:31 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/print/print-ps.c (ppd_find): use g_strncasecmp() instead
+	of strncasecmp().
+
 Thu May 27 12:10:46 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/sel-to-anim-img.scm: bugfix as provided by Wolfgang
