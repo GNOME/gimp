@@ -175,7 +175,7 @@
 /* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
-#define DEFAULT_QUALITY     0.85
+#define DEFAULT_QUALITY     85
 #define DEFAULT_SMOOTHING   0.0
 #define DEFAULT_OPTIMIZE    1
 #define DEFAULT_PROGRESSIVE 0
@@ -539,7 +539,7 @@ run (const gchar      *name,
 	      /* Once the PDB gets default parameters, remove this hack */
 	      if (param[5].data.d_float > 0.05)
 		{
-		  jsvals.quality     = param[5].data.d_float;
+		  jsvals.quality     = 100.0 * param[5].data.d_float;
 		  jsvals.smoothing   = param[6].data.d_float;
 		  jsvals.optimize    = param[7].data.d_int32;
 #ifdef HAVE_PROGRESSIVE_JPEG
@@ -557,7 +557,7 @@ run (const gchar      *name,
 
 	      jsvals.preview = FALSE;
 
-	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
+	      if (jsvals.quality < 0.0 || jsvals.quality > 100.0)
 		status = GIMP_PDB_CALLING_ERROR;
 	      else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
 		status = GIMP_PDB_CALLING_ERROR;
@@ -1366,7 +1366,7 @@ save_image (const gchar *filename,
    */
   jpeg_set_defaults (&cinfo);
 
-  jpeg_set_quality (&cinfo, (gint) ((jsvals.quality + 0.005) * 100),
+  jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5),
 		    jsvals.baseline);
   cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
@@ -1657,7 +1657,6 @@ save_dialog (void)
   GtkWidget     *main_vbox;
   GtkWidget     *hbox;
   GtkWidget     *hbox2;
-  GtkWidget     *vbox;
   GtkObject     *entry;
   GtkWidget     *table;
   GtkWidget     *table2;
@@ -1700,27 +1699,19 @@ save_dialog (void)
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
   hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox2, FALSE, FALSE, 6);
   gtk_widget_show (hbox2);
 
   table = gtk_table_new (1, 5, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (hbox2), table, FALSE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (hbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   entry = gimp_scale_entry_new (GTK_TABLE (table), 0, 0, _("_Quality:"),
 				SCALE_WIDTH, 0, jsvals.quality,
-				0., 1., 0.01, 0.1, 2,
+				0., 100., 1., 10., 0,
 				TRUE, 0., 0., 
 				_("JPEG quality parameter"),
 				"file-jpeg-save-quality");
@@ -1735,7 +1726,7 @@ save_dialog (void)
 
   
   hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
   preview = gtk_check_button_new_with_mnemonic (_("Show _Preview"));
@@ -1752,7 +1743,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
 
   hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox2, FALSE, FALSE, 6);
   gtk_widget_show (hbox2);
 
   preview_size = gtk_label_new (_("File size: unknown"));
@@ -1762,33 +1753,8 @@ save_dialog (void)
 
   make_preview ();
 
-  com_frame = gimp_frame_new (_("Comment"));
-  gtk_box_pack_start (GTK_BOX (hbox), com_frame, TRUE, TRUE, 0);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_widget_set_size_request (scrolled_window, 250, 100);
-  gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
-
-  text_buffer = gtk_text_buffer_new (NULL);
-  if (image_comment)
-    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
-
-  text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_unref (text_buffer);
-
-  gtk_widget_show (com_frame);
-
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   expander = gtk_expander_new_with_mnemonic (_("_Advanced Options"));
@@ -1845,11 +1811,6 @@ save_dialog (void)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (save_restart_update),
                     restart);
-
-  gtk_widget_set_sensitive (restart_markers_label,
-			    jsvals.restart ? TRUE : FALSE);
-  gtk_widget_set_sensitive (spinbutton,
-			    jsvals.restart ? TRUE : FALSE);
 
   toggle = gtk_check_button_new_with_label (_("Optimize"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
@@ -1954,6 +1915,32 @@ save_dialog (void)
   g_signal_connect (combo, "changed",
                     G_CALLBACK (combo_changed_callback),
                     &jsvals.dct);
+
+  com_frame = gimp_frame_new (_("Comment"));
+  gtk_table_attach (GTK_TABLE (table), com_frame, 0, 6, 4, 5,
+		    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_widget_set_size_request (scrolled_window, 250, 50);
+  gtk_container_add (GTK_CONTAINER (com_frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  text_buffer = gtk_text_buffer_new (NULL);
+  if (image_comment)
+    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (text_buffer);
+
+  gtk_widget_show (com_frame);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);

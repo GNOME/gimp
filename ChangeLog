@@ -1,5 +1,13 @@
 2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/jpeg.c: more changes to save dialog.  Moved
+	comment field to Advanced area.  Don't set restart marker
+	frequency stuff insensitive.  Changed range for quality
+	scale from 0-1 to 0-100 to follow the jpeg spec (but left
+	allowable range for pdb at 0-1 to avoid breaking anything).
+
+2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimpscaletool.c: fixed my fix for bug # 68106, which 
 	worked incorrectly for two of the control points.
 
