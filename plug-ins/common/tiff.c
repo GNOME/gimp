@@ -151,8 +151,6 @@ static void   save_ok_callback       (GtkWidget *widget,
 static void   comment_entry_callback (GtkWidget *widget,
 				      gpointer   data);
 
-#define DEFAULT_COMMENT "Created with The GIMP"
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -286,7 +284,7 @@ run (gchar   *name,
       drawable = param[2].data.d_int32;
 
       /* Do this right this time, if POSSIBLE query for parasites, otherwise
-	 or if there isn't one, choose the DEFAULT_COMMENT */
+	 or if there isn't one, set the comment to an empty string */
 
       /*  eventually export the image */ 
       switch (run_mode)
@@ -316,9 +314,6 @@ run (gchar   *name,
         image_comment = g_strdup (parasite->data);
       gimp_parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
-
-      if (!image_comment)
-	image_comment = g_strdup (DEFAULT_COMMENT);	  
 
       switch (run_mode)
 	{
@@ -777,6 +772,7 @@ load_tiles (TIFF *tif, channel_data *channel,
       cols= MIN(imageWidth - x, tileWidth);
       rows= MIN(imageLength - y, tileLength);
       if (bps == 16) {
+        g_message("WARNING: The GIMP does not support 16 bits per channel. Truncating data to 8 bits per channel.");
         read_16bit(buffer, channel, photomet, y, x, rows, cols, alpha,
                    extra, tileWidth - cols);
       } else if (bps == 8) {
@@ -824,6 +820,7 @@ load_lines (TIFF *tif, channel_data *channel,
       for (i = 0; i < rows; ++i)
 	TIFFReadScanline(tif, buffer + i * lineSize, y + i, 0);
       if (bps == 16) {
+          g_message("WARNING: The GIMP does not support 16 bits per channel. Truncating data to 8 bits per channel.");
 	read_16bit(buffer, channel, photomet, y, 0, rows, cols,
                    alpha, extra, 0);
       } else if (bps == 8) {

@@ -1,3 +1,15 @@
+2003-05-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/csource.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/tiff.c: If no comment is set on a
+	GimpImage when it arrives to be saved, don't attach one.
+	Fixes bug #98490 and bug #98485
+
+	* plug-ins/common/tiff.c: Alert user to loss of precision
+	when opening a 16 bit tiff. Backport of Maurits Rijk's
+	fix for bug #95737
+
 2003-05-12  Sven Neumann  <sven@gimp.org>
 
 	* app/layers_dialog.c (layers_dialog_drag_new_layer_callback):

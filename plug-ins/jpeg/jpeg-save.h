@@ -161,8 +161,6 @@
 #define DEFAULT_DCT         0
 #define DEFAULT_PREVIEW     1
 
-#define DEFAULT_COMMENT     "Created with The GIMP"
-
 /* sg - these should not be global... */
 static gint32 volatile  image_ID_global       = -1;
 static gint32           orig_image_ID_global  = -1;
@@ -436,8 +434,6 @@ run (gchar      *name,
 	  gimp_parasite_free (parasite);
 	}
 #endif /* GIMP_HAVE_PARASITES */
-      if (!image_comment) 
-	image_comment = g_strdup (DEFAULT_COMMENT);
 
       jsvals.quality     = DEFAULT_QUALITY;
       jsvals.smoothing   = DEFAULT_SMOOTHING;
