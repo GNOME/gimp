@@ -999,6 +999,7 @@ tga_SOURCES = \
 	tga.c
 
 tga_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1131,6 +1132,7 @@ xpm_SOURCES = \
 	xpm.c
 
 xpm_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBXPM)				\
 	$(GTK_LIBS)				\

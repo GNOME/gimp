@@ -1,3 +1,27 @@
+1999-10-04  Sven Neumann <sven@gimp.org>
+
+	* app/tool_options.c: backed out a change from last weekend that was
+	never supposed to get into CVS
+
+	* libgimp/gimpexport.[ch]: added a third button.
+	Now "Export" performs the conversion, "Ignore" skips it and continues 
+	and "Cancel" cancels the save.
+
+	* plug-ins/bmp/bmp.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/tiff.c 
+	* plug-ins/print/print.c: sync with the new interface.
+
+	* plug-ins/common/Makefile.am 
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/tga.c
+	* plug-ins/common/xpm.c: two more save plug-ins that know about export.
+
+	* plug-ins/script-fu/script-fu.c: include script-fu-constants.h
+
 1999-10-03 Olof S Kylander <olof@frozenriver.com>
 	
 	* app/airbrush_blob.c

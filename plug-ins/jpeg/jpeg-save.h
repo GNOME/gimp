@@ -357,7 +357,7 @@ run (char    *name,
   Parasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   int err;
-  gboolean export = FALSE;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -399,10 +399,19 @@ run (char    *name,
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
-	  if (export) 
+	  switch (export)
 	    {
+	    case EXPORT_EXPORT: 
 	      display_ID = gimp_display_new (image_ID);
 	      gimp_displays_flush ();
+	      break;
+	    case EXPORT_IGNORE:
+	      break;
+	    case EXPORT_CANCEL:
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	      break;
 	    }
 	  break;
 	default:
@@ -475,7 +484,7 @@ run (char    *name,
 	  /*  First acquire information with a dialog  */
 	  err = save_dialog ();
  
-	  if (!export)
+	  if (export != EXPORT_EXPORT)
 	    {
 	      /* thaw undo saving and end the undo_group. */
 	      gimp_image_thaw_undo (image_ID);
@@ -565,10 +574,10 @@ run (char    *name,
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
-      if (export)
+      if (export == EXPORT_EXPORT)
 	{
-	  /* if the image was exported, delete the new display */
-	  /* according to the documentation, this should also delete the image */
+	  /* If the image was exported, delete the new display. */
+	  /* This also deletes the image.                       */
 	  
 	  if (display_ID > -1)
 	    gimp_display_delete (display_ID);
@@ -591,7 +600,7 @@ run (char    *name,
 				   image_comment);
 	  gimp_image_attach_parasite (orig_image_ID, parasite);
 	  parasite_free (parasite);
-      }
+	}
       gimp_image_detach_parasite (orig_image_ID, "jpeg-save-options");
       
       parasite = parasite_new ("jpeg-save-options", 0, sizeof (jsvals), &jsvals);

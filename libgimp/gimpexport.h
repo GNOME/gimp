@@ -29,13 +29,17 @@
 #define CAN_HANDLE_LAYERS               1 << 4
 #define CAN_HANDLE_LAYERS_AS_ANIMATION  1 << 5
 
+typedef enum
+{
+  EXPORT_CANCEL,
+  EXPORT_IGNORE,
+  EXPORT_EXPORT
+} GimpExportReturnType;
 
-gboolean gimp_export_image (gint32*,  /* image_ID             */
-			    gint32*,  /* drawable_ID          */
-			    gchar*,   /* format name          */
-			    gint);    /* plug_in_capabilities */
-	      
-
+GimpExportReturnType gimp_export_image (gint32*,  /* image_ID             */
+					gint32*,  /* drawable_ID          */
+					gchar*,   /* format name          */
+					gint);    /* plug_in_capabilities */
 
 #endif
 

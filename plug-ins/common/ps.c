@@ -42,9 +42,9 @@
  *                        Ghostview may hang when displaying the files.
  * V 1.07, PK, 14-Sep-99: Add resolution to image
  */
-#define VERSIO                                               1.07
-static char dversio[] =                                    "v1.07  14-Sep-99";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
+#define VERSIO 1.07
+static char dversio[] = "v1.07  14-Sep-99";
+static char ident[]   = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 
 #include "config.h"
 #include <stdio.h>
@@ -409,7 +409,7 @@ run (char    *name,
   gint32 image_ID = -1;
   gint32 drawable_ID = -1;
   gint32 orig_image_ID = -1;
-  gboolean export = FALSE;
+  GimpExportReturnType export = EXPORT_CANCEL;
   int k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
@@ -481,6 +481,12 @@ run (char    *name,
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PS", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }	  
 	  break;
 	default:
 	  break;
@@ -543,17 +549,17 @@ run (char    *name,
 #endif
         check_save_vals ();
         if (save_image (param[3].data.d_string, image_ID, drawable_ID))
-        {
-          /*  Store psvals data  */
-          gimp_set_data ("file_ps_save", &psvals, sizeof (PSSaveVals));
-        }
+	  {
+	    /*  Store psvals data  */
+	    gimp_set_data ("file_ps_save", &psvals, sizeof (PSSaveVals));
+	  }
         else
         {
           status = STATUS_EXECUTION_ERROR;
         }
       }
 
-      if (export)
+      if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
       
       values[0].data.d_status = status;

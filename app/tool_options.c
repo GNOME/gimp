@@ -846,7 +846,7 @@ paint_pressure_options_new (ToolType tool_type)
     case DODGEBURN:
     case SMUDGE:
     case ERASER:
-      /*    case PAINTBRUSH: */
+    case PAINTBRUSH:
       pressure->pressure_w =
 	gtk_check_button_new_with_label (_("Pressure"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->pressure_w);

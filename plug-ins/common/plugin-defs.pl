@@ -101,7 +101,7 @@
     'spheredesigner' => { libdep => 'gtk' },
     'spread' => { libdep => 'gtk' },
     'sunras' => { libdep => 'gtk' },
-    'tga' => { libdep => 'gtk' },
+    'tga' => { libdep => 'gtk', ui => 1 },
     'threshold_alpha' => { libdep => 'gtk' },
     'tiff' => { libdep => 'gtk', ui => 1, optional => 1 },
     'tile' => { libdep => 'gtk' },
@@ -117,7 +117,7 @@
     'wind' => { libdep => 'gtk' },
     'wmf' => { libdep => 'gtk' },
     'xbm' => { libdep => 'gtk' },
-    'xpm' => { libdep => 'gtk', optional => 1 },
+    'xpm' => { libdep => 'gtk', ui => 1, optional => 1 },
     'xwd' => { libdep => 'glib' },
     'zealouscrop' => { libdep => 'glib' }
 );

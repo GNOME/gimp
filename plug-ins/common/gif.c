@@ -420,7 +420,7 @@ run (char    *name,
   gint32 image_ID;
   gint32 drawable_ID;
   gint32 orig_image_ID;
-  gboolean export = FALSE;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -445,6 +445,12 @@ run (char    *name,
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF", 
 				      (CAN_HANDLE_INDEXED | CAN_HANDLE_GRAY | 
 				       CAN_HANDLE_ALPHA | CAN_HANDLE_LAYERS_AS_ANIMATION));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
 	  break;
 	default:
 	  break;
@@ -527,7 +533,7 @@ run (char    *name,
 	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
 
-      if (export)
+      if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
 }

@@ -394,7 +394,7 @@ run(char   *name,		/* I - Name of print program. */
 #endif
   gint32         image_ID;      /* image ID */
   gint32         drawable_ID;   /* drawable ID */
-  gboolean       export;        /* have we exported the image ? */
+  GimpExportReturnType export = EXPORT_CANCEL;    /* return value of gimp_export_image() */
 
   INIT_I18N_UI();
 
@@ -424,6 +424,12 @@ run(char   *name,		/* I - Name of print program. */
       export = gimp_export_image (&image_ID, &drawable_ID, "Print", 
 				  (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED |
 				   CAN_HANDLE_ALPHA));
+      if (export == EXPORT_CANCEL)
+	{
+	  *nreturn_vals = 1;
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  return;
+	}
       break;
     default:
       break;
@@ -643,7 +649,7 @@ run(char   *name,		/* I - Name of print program. */
 
   gimp_drawable_detach(drawable);
 
-  if (export)
+  if (export == EXPORT_EXPORT)
     gimp_image_delete (image_ID);
 }
 

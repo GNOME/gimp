@@ -38,6 +38,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #include <X11/xpm.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 static const char linenoise [] =
@@ -60,9 +61,9 @@ typedef struct
 
 typedef struct
 {
-	guchar r;
-	guchar g;
-	guchar b;
+  guchar r;
+  guchar g;
+  guchar b;
 } rgbkey;
 
 /* whether the image is color or not.  global so I only have to pass one user value
@@ -73,46 +74,31 @@ to the GHFunc */
   int        cpp;
 
 /* Declare local functions */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
+static void   query               (void);
+static void   run                 (char          *name,
+				   int            nparams,
+				   GParam        *param,
+				   int           *nreturn_vals,
+				   GParam       **return_vals);
 
-static gint32
-load_image   (char   *filename);
+static gint32 load_image          (char          *filename);
+static void   parse_colors        (XpmImage      *xpm_image,
+				   guchar       **cmap);
+static void   parse_image         (gint32         image_ID,
+				   XpmImage      *xpm_image,
+				   guchar        *cmap);
+static gint   save_image          (char          *filename,
+				   gint32         image_ID,
+				   gint32         drawable_ID);
 
-static void
-parse_colors (XpmImage  *xpm_image,
-              guchar   **cmap);
-
-static void
-parse_image  (gint32    image_ID,
-              XpmImage *xpm_image,
-              guchar   *cmap);
-
-static gint
-save_image   (char   *filename,
-              gint32  image_ID,
-              gint32  drawable_ID);
-
-
-static gint
-save_dialog ();
-
-static void
-save_close_callback  (GtkWidget *widget,
-                      gpointer   data);
-
-static void
-save_ok_callback     (GtkWidget *widget,
-                      gpointer   data);
-
-static void
-save_scale_update    (GtkAdjustment *adjustment,
-                      double        *scale_val);
-
+static void   init_gtk            (void);
+static gint   save_dialog         (void);
+static void   save_close_callback (GtkWidget     *widget,
+				   gpointer       data);
+static void   save_ok_callback    (GtkWidget     *widget,
+				   gpointer       data);
+static void   save_scale_update   (GtkAdjustment *adjustment,
+				   double        *scale_val);
 
 
 
@@ -143,24 +129,24 @@ query ()
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_INT32,     "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,    "filename",     "The name of the file to load" },
+    { PARAM_STRING,    "raw_filename", "The name entered" },
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,    "image",         "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
+  static int nload_args        = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING,   "filename", "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { PARAM_INT32,    "run_mode",      "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",         "Input image" },
+    { PARAM_DRAWABLE, "drawable",      "Drawable to save" },
+    { PARAM_STRING,   "filename",      "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename",  "The name of the file to save the image in" },
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -191,8 +177,8 @@ query ()
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_xpm_load", "xpm", "<Load>/Xpm",
-		  "0,string,/* XPM */");
-  gimp_register_save_handler ("file_xpm_save", "xpm", "<Save>/Xpm");
+				    "0, string, /* XPM */");
+  gimp_register_save_handler       ("file_xpm_save", "xpm", "<Save>/Xpm");
 }
 
 static void
@@ -205,6 +191,8 @@ run (char    *name,
   static GParam values[2];
   GRunModeType run_mode;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
   GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -235,6 +223,30 @@ run (char    *name,
     }
   else if (strcmp (name, "file_xpm_save") == 0)
     {
+      init_gtk ();
+
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[1].data.d_int32;
+      
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  export = gimp_export_image (&image_ID, &drawable_ID, "XPM", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
+				       CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -242,9 +254,9 @@ run (char    *name,
 	  gimp_get_data ("file_xpm_save", &xpmvals);
 
 	  /*  First acquire information with a dialog  */
-	  if (gimp_drawable_has_alpha(param[2].data.d_int32))
-		  if (! save_dialog ())
-		    return;
+	  if (gimp_drawable_has_alpha (drawable_ID))
+	    if (! save_dialog ())
+	      return;
 	  break;
 
 	case RUN_NONINTERACTIVE:
@@ -269,14 +281,17 @@ run (char    *name,
 	}
       *nreturn_vals = 1;
       if (save_image (param[3].data.d_string,
-                      param[1].data.d_int32,
-                      param[2].data.d_int32))
+                      image_ID,
+                      drawable_ID))
 	{
 	  gimp_set_data ("file_xpm_save", &xpmvals, sizeof (XpmSaveVals));
 	  values[0].data.d_status = STATUS_SUCCESS;
 	}
       else
         values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
   else
     g_assert (FALSE);
@@ -330,7 +345,8 @@ load_image (char *filename)
 
 
 static void
-parse_colors (XpmImage *xpm_image, guchar **cmap)
+parse_colors (XpmImage  *xpm_image, 
+	      guchar   **cmap)
 {
   Display  *display;
   Colormap  colormap;
@@ -388,7 +404,9 @@ parse_colors (XpmImage *xpm_image, guchar **cmap)
 
 
 static void
-parse_image(gint32 image_ID, XpmImage *xpm_image, guchar *cmap)
+parse_image (gint32    image_ID, 
+	     XpmImage *xpm_image, 
+	     guchar   *cmap)
 {
   int        tile_height;
   int        scanlines;
@@ -464,13 +482,16 @@ guint rgbhash (rgbkey *c)
 	  return ((guint)c->r) ^ ((guint)c->g) ^ ((guint)c->b);
 }
 
-guint compare (rgbkey *c1, rgbkey *c2)
+guint compare (rgbkey *c1, 
+	       rgbkey *c2)
 {
 	return (c1->r == c2->r)&&(c1->g == c2->g)&&(c1->b == c2->b);
 }
 	
 
-void set_XpmImage(XpmColor *array, guint index, char *colorstring)
+void set_XpmImage (XpmColor *array, 
+		   guint     index, 
+		   char     *colorstring)
 {
 	char *p;
 	int i, charnum, indtemp;
@@ -503,8 +524,9 @@ void set_XpmImage(XpmColor *array, guint index, char *colorstring)
 	}
 }
 
-void create_colormap_from_hash (gpointer gkey, gpointer value, gpointer
-		user_data)
+void create_colormap_from_hash (gpointer gkey, 
+				gpointer value, 
+				gpointer user_data)
 {
 	rgbkey *key = gkey;
 	char *string = g_new(char, 8);
@@ -543,55 +565,58 @@ save_image (char   *filename,
   gint      rc = FALSE;
 
   /* get some basic stats about the image */
-  switch (gimp_drawable_type (drawable_ID)) {
-  case RGBA_IMAGE:
-  case INDEXEDA_IMAGE:
-  case GRAYA_IMAGE:
-    alpha = 1;
-    break;
-  case RGB_IMAGE:
-  case INDEXED_IMAGE:
-  case GRAY_IMAGE:
-    alpha = 0;
-    break;
-  default:
-    return FALSE;
-  }
+  switch (gimp_drawable_type (drawable_ID)) 
+    {
+    case RGBA_IMAGE:
+    case INDEXEDA_IMAGE:
+    case GRAYA_IMAGE:
+      alpha = 1;
+      break;
+    case RGB_IMAGE:
+    case INDEXED_IMAGE:
+    case GRAY_IMAGE:
+      alpha = 0;
+      break;
+    default:
+      return FALSE;
+    }
 
-  switch (gimp_drawable_type (drawable_ID)) {
-  case GRAYA_IMAGE:
-  case GRAY_IMAGE:
-    color = 0;
-    break;
-  case RGBA_IMAGE:
-  case RGB_IMAGE:
-  case INDEXED_IMAGE:
-  case INDEXEDA_IMAGE:	  	  
+  switch (gimp_drawable_type (drawable_ID)) 
+    {
+    case GRAYA_IMAGE:
+    case GRAY_IMAGE:
+      color = 0;
+      break;
+    case RGBA_IMAGE:
+    case RGB_IMAGE:
+    case INDEXED_IMAGE:
+    case INDEXEDA_IMAGE:	  	  
     color = 1;
     break;
-  default:
-    return FALSE;
-  }
-
-  switch (gimp_drawable_type (drawable_ID)) {
-  case GRAYA_IMAGE:
-  case GRAY_IMAGE:
-  case RGBA_IMAGE:
-  case RGB_IMAGE:
-    indexed = 0;
-    break;
-  case INDEXED_IMAGE:
-  case INDEXEDA_IMAGE:	  	  
-    indexed = 1;
-    break;
-  default:
-    return FALSE;
-  }
-
+    default:
+      return FALSE;
+    }
+  
+  switch (gimp_drawable_type (drawable_ID)) 
+    {
+    case GRAYA_IMAGE:
+    case GRAY_IMAGE:
+    case RGBA_IMAGE:
+    case RGB_IMAGE:
+      indexed = 0;
+      break;
+    case INDEXED_IMAGE:
+    case INDEXEDA_IMAGE:	  	  
+      indexed = 1;
+      break;
+    default:
+      return FALSE;
+    }
+  
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
   height   = drawable->height;
-
+  
   /* allocate buffers making the assumption that ibuff and mbuff
      are 32 bit aligned... */
   if ((ibuff = g_new(guint, width*height)) == NULL)
@@ -672,37 +697,38 @@ save_image (char   *filename,
           gimp_progress_update ((double) (i+j) / (double) height);
         }
     
-  } 
+    } 
   g_free(buffer);
 
   if (indexed)
-  {
-	  guchar *cmap;
-	  cmap = gimp_image_get_cmap(image_ID, &ncolors);
-	  ncolors++; /* for transparency */
-  	  colormap = g_new(XpmColor, ncolors);
-	  cpp=(double)1.0+(double)log(ncolors)/(double)log(sizeof(linenoise)-1.0);
-	  set_XpmImage(colormap, 0, "None");
-	  for (i=0; i<ncolors-1; i++)
-	  {
-		  char *string;
-		  guchar r, g, b;
-		  r = *(cmap++);
-		  g = *(cmap++);
-		  b = *(cmap++);
-		  string = g_new(char, 8);
-	          sprintf(string, "#%02X%02X%02X", (int)r, (int)g, (int)b);
-		  set_XpmImage(colormap, i+1, string);
-	  } 
-  }else
-  {
-	  colormap = g_new(XpmColor, ncolors);
-	  
-	  cpp=(double)1.0+(double)log(ncolors)/(double)log(sizeof(linenoise)-1.0);
-	  set_XpmImage(colormap, 0, "None");
-
-	  g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
-  }
+    {
+      guchar *cmap;
+      cmap = gimp_image_get_cmap(image_ID, &ncolors);
+      ncolors++; /* for transparency */
+      colormap = g_new(XpmColor, ncolors);
+      cpp=(double)1.0+(double)log(ncolors)/(double)log(sizeof(linenoise)-1.0);
+      set_XpmImage(colormap, 0, "None");
+      for (i=0; i<ncolors-1; i++)
+	{
+	  char *string;
+	  guchar r, g, b;
+	  r = *(cmap++);
+	  g = *(cmap++);
+	  b = *(cmap++);
+	  string = g_new(char, 8);
+	  sprintf(string, "#%02X%02X%02X", (int)r, (int)g, (int)b);
+	  set_XpmImage(colormap, i+1, string);
+	} 
+    }
+  else
+    {
+      colormap = g_new(XpmColor, ncolors);
+      
+      cpp = (double)1.0 + (double)log (ncolors) / (double)log (sizeof (linenoise) - 1.0);
+      set_XpmImage (colormap, 0, "None");
+      
+      g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
+    }
     
   image = g_new(XpmImage, 1);
   
@@ -713,16 +739,13 @@ save_image (char   *filename,
   image->colorTable=colormap;	    
   image->data = ibuff;
   
-      /* do the save */
-      XpmWriteFileFromXpmImage(filename, image, NULL);
-      rc = TRUE;
-
+  /* do the save */
+  XpmWriteFileFromXpmImage(filename, image, NULL);
+  rc = TRUE;
   
  cleanup:
-
   /* clean up resources */  
   gimp_drawable_detach (drawable);
-  
   
   if (ibuff) g_free(ibuff);
   /*if (mbuff) g_free(mbuff);*/
@@ -731,6 +754,19 @@ save_image (char   *filename,
   return rc;
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("xpm");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 static gint
 save_dialog ()
@@ -742,15 +778,6 @@ save_dialog ()
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Save as Xpm"));

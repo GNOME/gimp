@@ -143,7 +143,7 @@ run (char    *name,
   GRunModeType run_mode;
   gint32 image_ID;
   gint32 drawable_ID;
-  gboolean export = FALSE;
+  GimpExportReturnType export = EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
 
@@ -202,6 +202,12 @@ run (char    *name,
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
 	  break;
 	default:
 	  break;
@@ -236,7 +242,7 @@ run (char    *name,
       else
         values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
-      if (export)
+      if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
 }

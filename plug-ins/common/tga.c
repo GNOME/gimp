@@ -82,6 +82,7 @@
 #endif
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 /* Round up a division to the nearest integer. */
 #define ROUNDUP_DIVIDE(n,d) (((n) + (d - 1)) / (d))
@@ -112,12 +113,12 @@ struct tga_header
   guint8 colorMapType;
 
   /* The image type. */
-#define TGA_TYPE_MAPPED 1
-#define TGA_TYPE_COLOR 2
-#define TGA_TYPE_GRAY 3
-#define TGA_TYPE_MAPPED_RLE 9
-#define TGA_TYPE_COLOR_RLE 10
-#define TGA_TYPE_GRAY_RLE 11
+#define TGA_TYPE_MAPPED      1
+#define TGA_TYPE_COLOR       2
+#define TGA_TYPE_GRAY        3
+#define TGA_TYPE_MAPPED_RLE  9
+#define TGA_TYPE_COLOR_RLE  10
+#define TGA_TYPE_GRAY_RLE   11
   guint8 imageType;
 
   /* Color Map Specification. */
@@ -142,9 +143,9 @@ struct tga_header
      5:   top-to-bottom ordering
      7-6: zero
      */
-#define TGA_DESC_ABITS 0x0f
+#define TGA_DESC_ABITS      0x0f
 #define TGA_DESC_HORIZONTAL 0x10
-#define TGA_DESC_VERTICAL 0x20
+#define TGA_DESC_VERTICAL   0x20
   guint8 descriptor;
 };
 
@@ -161,19 +162,20 @@ static struct
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char   *filename);
-static gint   save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static void   query               (void);
+static void   run                 (char    *name,
+				   int      nparams,
+				   GParam  *param,
+				   int     *nreturn_vals,
+				   GParam **return_vals);
 
-static gint   save_dialog ();
+static gint32 load_image           (char   *filename);
+static gint   save_image           (char   *filename,
+				    gint32  image_ID,
+				    gint32  drawable_ID);
 
+static void   init_gtk             (void);
+static gint   save_dialog          (void);
 static void   save_close_callback  (GtkWidget *widget,
 				    gpointer   data);
 static void   save_ok_callback     (GtkWidget *widget,
@@ -266,6 +268,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
 #ifdef PROFILE
   struct tms tbuf1, tbuf2;
@@ -304,6 +308,30 @@ run (char    *name,
     }
   else if (strcmp (name, "file_tga_save") == 0)
     {
+      init_gtk ();
+      
+      image_ID     = param[1].data.d_int32;
+      drawable_ID  = param[1].data.d_int32;
+      
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
+				       CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -339,7 +367,7 @@ run (char    *name,
       times (&tbuf1);
 #endif
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  /*  Store psvals data  */
 	  gimp_set_data ("file_tga_save", &tsvals, sizeof (tsvals));
@@ -348,6 +376,9 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 
 #ifdef PROFILE
@@ -424,7 +455,10 @@ static int totbytes = 0;
 #endif
 
 static int
-std_fread (guchar *buf, int datasize, int nelems, FILE *fp)
+std_fread (guchar *buf, 
+	   int     datasize, 
+	   int     nelems, 
+	   FILE   *fp)
 {
 #ifdef VERBOSE
   if (verbose > 1)
@@ -439,7 +473,10 @@ std_fread (guchar *buf, int datasize, int nelems, FILE *fp)
 }
 
 static int
-std_fwrite (guchar *buf, int datasize, int nelems, FILE *fp)
+std_fwrite (guchar *buf, 
+	    int     datasize, 
+	    int     nelems, 
+	    FILE   *fp)
 {
 #ifdef VERBOSE
   if (verbose > 1)
@@ -457,7 +494,10 @@ std_fwrite (guchar *buf, int datasize, int nelems, FILE *fp)
 
 /* Decode a bufferful of file. */
 static int
-rle_fread (guchar *buf, int datasize, int nelems, FILE *fp)
+rle_fread (guchar *buf, 
+	   int     datasize, 
+	   int     nelems, 
+	   FILE   *fp)
 {
   static guchar *statebuf = 0;
   static int statelen = 0;
@@ -597,7 +637,10 @@ rle_fread (guchar *buf, int datasize, int nelems, FILE *fp)
    loading performance than whole-stream images. */
 /* RunLength Encode a bufferful of file. */
 static int
-rle_fwrite (guchar *buf, int datasize, int nelems, FILE *fp)
+rle_fwrite (guchar *buf, 
+	    int     datasize, 
+	    int     nelems, 
+	    FILE   *fp)
 {
   /* Now runlength-encode the whole buffer. */
   int count, j, buflen;
@@ -713,7 +756,9 @@ rle_fwrite (guchar *buf, int datasize, int nelems, FILE *fp)
 
 
 static gint32
-ReadImage (FILE *fp, struct tga_header *hdr, char *filename)
+ReadImage (FILE              *fp, 
+	   struct tga_header *hdr, 
+	   char              *filename)
 {
   static gint32 image_ID;
   gint32 layer_ID;
@@ -1367,6 +1412,19 @@ save_image (char   *filename,
   return status;
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("tga");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 static gint
 save_dialog ()
@@ -1376,15 +1434,6 @@ save_dialog ()
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as Tga");

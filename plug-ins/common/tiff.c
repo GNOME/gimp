@@ -210,7 +210,7 @@ run (char    *name,
   gint32 image;
   gint32 drawable;
   gint32 orig_image;
-  gboolean export = FALSE;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -250,7 +250,14 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
+				       CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
 	  break;
 	default:
 	  break;
@@ -332,7 +339,7 @@ run (char    *name,
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
-      if (export)
+      if (export == EXPORT_EXPORT)
 	gimp_image_delete (image);
     }
 }

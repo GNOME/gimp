@@ -167,22 +167,30 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 
 /* dialog functions */
 
-static GtkWidget *dialog = NULL;
-static gboolean dialog_return = FALSE;
+static GtkWidget            *dialog = NULL;
+static GimpExportReturnType  dialog_return = EXPORT_CANCEL;
 
 static void
 export_export_callback (GtkWidget *widget,
 			gpointer   data)
 {
   gtk_widget_destroy (dialog);
-  dialog_return = TRUE;
+  dialog_return = EXPORT_EXPORT;
+}
+
+static void
+export_skip_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  gtk_widget_destroy (dialog);
+  dialog_return = EXPORT_IGNORE;
 }
 
 static void
 export_cancel_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  dialog_return = FALSE;
+  dialog_return = EXPORT_CANCEL;
   dialog = NULL;
   gtk_main_quit ();
 }
@@ -212,8 +220,8 @@ export_dialog (GList *actions,
   gchar     *text;
   ExportAction *action;
 
-  dialog_return = FALSE;
-  g_return_val_if_fail (actions != NULL && format != NULL, FALSE);
+  dialog_return = EXPORT_CANCEL;
+  g_return_val_if_fail (actions != NULL && format != NULL, dialog_return);
 
   /*
    *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -244,6 +252,13 @@ export_dialog (GList *actions,
                       (GtkSignalFunc) export_export_callback, NULL);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Ignore"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) export_skip_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Cancel"));
@@ -314,7 +329,7 @@ export_dialog (GList *actions,
     }
 
   /* the footline */
-  label = gtk_label_new (_("The export conversion won't modify your image."));
+  label = gtk_label_new (_("The export conversion won't modify your original image."));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 4);
   gtk_widget_show (label);
   
@@ -325,7 +340,7 @@ export_dialog (GList *actions,
 }
 
 
-gboolean
+GimpExportReturnType
 gimp_export_image (gint32 *image_ID_ptr,
 		   gint32 *drawable_ID_ptr,
 		   gchar  *format,
@@ -403,7 +418,7 @@ gimp_export_image (gint32 *image_ID_ptr,
   if (actions)
     dialog_return = export_dialog (actions, format);
 
-  if (dialog_return)
+  if (dialog_return == EXPORT_EXPORT)
     {
       *image_ID_ptr = gimp_image_duplicate (*image_ID_ptr);
       *drawable_ID_ptr = gimp_image_get_active_layer (*image_ID_ptr);
@@ -416,10 +431,9 @@ gimp_export_image (gint32 *image_ID_ptr,
 	  else if (action->choice == 1 && action->alt_action)
 	    action->alt_action (*image_ID_ptr, drawable_ID_ptr);
 	}
-      return (TRUE);
     }
 
-  return (FALSE);
+  return (dialog_return);
 }
 
 
