@@ -1,4 +1,4 @@
-# Czech translation of GIMP perl 1.1.16.
+# Czech translation of GIMP perl 1.1.17.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #

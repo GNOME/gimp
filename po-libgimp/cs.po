@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.16.
+# Czech translation of GIMP plugins 1.1.17.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.16\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-02-11 11:18+01:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.17\n"
+"POT-Creation-Date: 2000-02-14 11:19+0100\n"
+"PO-Revision-Date: 2000-02-14 11:56+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -110,9 +110,9 @@ msgstr "Exportovat"
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
-#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
-#: libgimp/gimpquerybox.c:275
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:175
+#: libgimp/gimpquerybox.c:229 libgimp/gimpquerybox.c:285
+#: libgimp/gimpquerybox.c:348
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -127,20 +127,20 @@ msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpfileselection.c:394
+#: libgimp/gimpfileselection.c:377
 msgid "Select File"
 msgstr "Výbìr souboru"
 
-#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
+#: libgimp/gimpfileselection.c:387 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "Výbìr"
 
-#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
+#: libgimp/gimpfileselection.c:388 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Zavøít"
 
-#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
-#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+#: libgimp/gimpquerybox.c:175 libgimp/gimpquerybox.c:229
+#: libgimp/gimpquerybox.c:285 libgimp/gimpquerybox.c:348
 msgid "OK"
 msgstr "OK"
 
@@ -206,3 +206,19 @@ msgstr "Jednotka"
 #: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Faktor"
+
+#: libgimp/gimpwidgets.c:594
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
+
+#: libgimp/gimpwidgets.c:599
+msgid "Time"
+msgstr "Èas"
+
+#: libgimp/gimpwidgets.c:611
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr "Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
