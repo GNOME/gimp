@@ -192,7 +192,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Алх╕м╕я/Полотно..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
@@ -288,7 +288,7 @@ msgstr "<Image>/Скрипт-Фу/Альфа у емблему/Вибух зор╕..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Альфа у емблему/Зоряне тло..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
@@ -492,7 +492,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Град╕╓нтна фаска..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
@@ -500,11 +500,11 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Неон..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Газетний текст..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Сл╕д частинки..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
@@ -520,7 +520,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Вибух зор╕..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Зоряне тло..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
@@ -552,7 +552,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Зробити пензель/Примокутний..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Р╕зне/Сфера..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."

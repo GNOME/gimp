@@ -1228,7 +1228,7 @@ msgstr "Завантажити зображення"
 #. format-chooser frame
 #: app/fileops.c:310
 msgid "Determine File Type"
-msgstr "Визначити тип файлу"
+msgstr "Визначення типу файлу"
 
 #: app/fileops.c:383
 msgid ""
