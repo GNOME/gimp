@@ -1,3 +1,10 @@
+Fri Jul 17 01:28:30 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: Made usage printout more verbose, added
+	--quiet and -n options
+
+	* gimp.m4: set NOUI stuff if available
+
 Thu Jul 16 16:20:47 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: Added --cflags-noui and --libs-noui flags and

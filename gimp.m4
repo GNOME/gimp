@@ -38,6 +38,16 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest       Do not try to compile and ru
   else
     GIMP_CFLAGS=`$GIMPTOOL $gimptool_args --cflags`
     GIMP_LIBS=`$GIMPTOOL $gimptool_args --libs`
+
+    GIMP_CFLAGS_NOUI=`$GIMPTOOL $gimptool_args --cflags-noui`
+    noui_test=`echo $GIMP_CFLAGS_NOUI | sed 's/^\(Usage\).*/\1/'`
+    if test "$noui_test" = "Usage" ; then
+       GIMP_CFLAGS_NOUI=$GIMP_CFLAGS
+       GIMP_LIBS_NOUI=$GIMP_LIBS
+    else
+       GIMP_LIBS_NOUI=`$GIMPTOOL $gimptool_args --libs-noui`
+    fi
+
     gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
     gimptool_minor_version=`$GIMPTOOL $gimptool_args --version | \
@@ -144,9 +154,13 @@ int main ()
      fi
      GIMP_CFLAGS=""
      GIMP_LIBS=""
+     GIMP_CFLAGS_NOUI=""
+     GIMP_LIBS_NOUI=""
      ifelse([$3], , :, [$3])
   fi
   AC_SUBST(GIMP_CFLAGS)
   AC_SUBST(GIMP_LIBS)
+  AC_SUBST(GIMP_CFLAGS_NOUI)
+  AC_SUBST(GIMP_LIBS_NOUI)
   rm -f conf.gimptest
 ])
