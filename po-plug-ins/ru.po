@@ -2783,14 +2783,14 @@ msgstr "Обрезать"
 
 #: plug-ins/common/convmatrix.c:195
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr "<Image>/Фильтры/Общие/Свертка матрицы..."
+msgstr "<Image>/Фильтры/Общие/Матрица свёртки..."
 
 #: plug-ins/common/convmatrix.c:229
 msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
-"Свертка матрицы не работает\n"
+"Матрица свёртки не работает\n"
 "на слоях меньших трех точек растра."
 
 #: plug-ins/common/convmatrix.c:292
@@ -2799,7 +2799,7 @@ msgstr "Применение свертки"
 
 #: plug-ins/common/convmatrix.c:851
 msgid "Convolution Matrix"
-msgstr "Свертка матрицы"
+msgstr "Матрица свёртки"
 
 #: plug-ins/common/convmatrix.c:877
 msgid "Matrix"
