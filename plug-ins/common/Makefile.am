@@ -76,7 +76,6 @@ libexec_PROGRAMS = \
 	iwarp \
 	jigsaw \
 	$(JPEG) \
-	kaleidoscope \
 	laplace \
 	lic \
 	mail \
@@ -682,15 +681,6 @@ jpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBJPEG)				\
 	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
-kaleidoscope_SOURCES = \
-	kaleidoscope.c
-
-kaleidoscope_LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)				\
 	$(INTLLIBS)
 
 laplace_SOURCES = \

@@ -1,5 +1,0 @@
-* fix 'make install'
-* Add preview
-* Merge with Alex on Glace_Output, add switch for how to handle out-of-gamut
-	colors (either preserve-luma or preserve-chroma)
-
