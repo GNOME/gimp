@@ -1,7 +1,6 @@
 /* Watercolor color_select_module, Raph Levien <raph@acm.org>, February 1998
  *
- * Ported to loadable color-selector interface, May 1999
- * by Sven Neumann <sven@gimp.org>
+ * Ported to loadable color-selector, Sven Neumann <sven@gimp.org>, May 1999
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,14 +31,33 @@
 #endif /* M_PI */
 
 /* prototypes */
-static GtkWidget * colorsel_water_new      (int, int, int,
-				            GimpColorSelector_Callback, 
-				            void *,
-				            void **);
-static void        colorsel_water_free     (void *);
-static void        colorsel_water_setcolor (void *, int, int, int, int);
-static void        colorsel_water_update   ();
-
+static GtkWidget * colorsel_water_new         (int, int, int,
+				               GimpColorSelector_Callback, 
+				               void *,
+				               void **);
+static void        colorsel_water_free        (void *);
+static void        colorsel_water_setcolor    (void *, int, int, int, int);
+static void        colorsel_water_update      ();
+static void        colorsel_water_drag_begin  (GtkWidget          *widget,
+					       GdkDragContext     *context,
+					       gpointer            data);
+static void        colorsel_water_drag_end    (GtkWidget          *widget,
+					       GdkDragContext     *context,
+					       gpointer            data);
+static void        colorsel_water_drop_handle (GtkWidget          *widget, 
+					       GdkDragContext     *context,
+					       gint                x,
+					       gint                y,
+					       GtkSelectionData   *selection_data,
+					       guint               info,
+					       guint               time,
+					       gpointer            data);
+static void        colorsel_water_drag_handle (GtkWidget        *widget, 
+					       GdkDragContext   *context,
+					       GtkSelectionData *selection_data,
+					       guint             info,
+					       guint             time,
+					       gpointer          data);
 
 /* local methods */
 static GimpColorSelectorMethods methods = 
@@ -59,6 +77,10 @@ static GimpModuleInfo info = {
     "May, 10 1999"
 };
 
+
+static const GtkTargetEntry targets[] = {
+  { "application/x-color", 0 }
+};
 
 /*************************************************************/
 
@@ -561,6 +583,32 @@ colorsel_water_new (int r, int g, int b,
   gtk_box_pack_start (GTK_BOX (hbox3), frame, TRUE, FALSE, 0); 
   color_preview[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (color_preview[0]), PREVIEW_SIZE, PREVIEW_SIZE);
+  gtk_drag_dest_set (color_preview[0],
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     targets, 1,
+		     GDK_ACTION_COPY);
+  gtk_drag_source_set (color_preview[0], 
+		       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+		       targets, 1,
+		       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
+		      "drag_begin",
+		      GTK_SIGNAL_FUNC (colorsel_water_drag_begin),
+		      bucket[0]);
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
+		      "drag_end",
+		      GTK_SIGNAL_FUNC (colorsel_water_drag_end),
+		      bucket[0]);
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
+		      "drag_data_get",
+		      GTK_SIGNAL_FUNC (colorsel_water_drag_handle),
+		      bucket[0]);
+  gtk_signal_connect (GTK_OBJECT (color_preview[0]),
+		      "drag_data_received",
+		      GTK_SIGNAL_FUNC (colorsel_water_drop_handle),
+		      bucket[0]);
   gtk_container_add (GTK_CONTAINER (frame), color_preview[0]);
 
   bbox = gtk_vbutton_box_new ();
@@ -568,12 +616,12 @@ colorsel_water_new (int r, int g, int b,
 
   button = gtk_button_new_with_label ("New");
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_signal_connect (GTK_OBJECT (button), "pressed",
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) new_color_callback,
 		      NULL);
   button = gtk_button_new_with_label ("Reset");
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_signal_connect (GTK_OBJECT (button), "pressed",
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) reset_color_callback,
 		      NULL);
 
@@ -587,10 +635,35 @@ colorsel_water_new (int r, int g, int b,
   for (i = 0; i < N_BUCKETS; i++)
     {
       button = gtk_button_new ();
-      gtk_signal_connect (GTK_OBJECT (button), "pressed",
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  GTK_SIGNAL_FUNC (pick_up_bucket_callback), 
-			  (gpointer) GUINT_TO_POINTER (i+1));
-		  
+			  (gpointer) GUINT_TO_POINTER (i+1));	  
+      gtk_drag_dest_set (button,
+			 GTK_DEST_DEFAULT_HIGHLIGHT |
+			 GTK_DEST_DEFAULT_MOTION |
+			 GTK_DEST_DEFAULT_DROP,
+			 targets, 1,
+			 GDK_ACTION_COPY);
+      gtk_drag_source_set (button, 
+			   GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+			   targets, 1,
+			   GDK_ACTION_COPY | GDK_ACTION_MOVE);
+      gtk_signal_connect (GTK_OBJECT (button),
+			  "drag_begin",
+			  GTK_SIGNAL_FUNC (colorsel_water_drag_begin),
+			  bucket[i+1]);
+      gtk_signal_connect (GTK_OBJECT (button),
+			  "drag_end",
+			  GTK_SIGNAL_FUNC (colorsel_water_drag_end),
+			  bucket[i+1]);
+      gtk_signal_connect (GTK_OBJECT (button),
+			  "drag_data_get",
+			  GTK_SIGNAL_FUNC (colorsel_water_drag_handle),
+			  bucket[i+1]);
+      gtk_signal_connect (GTK_OBJECT (button),
+			  "drag_data_received",
+			  GTK_SIGNAL_FUNC (colorsel_water_drop_handle),
+			  bucket[i+1]);
       gtk_table_attach_defaults (GTK_TABLE (table),
 				 button, 
 				 i % 5, (i % 5) + 1,
@@ -618,7 +691,7 @@ colorsel_water_new (int r, int g, int b,
   colorsel_water_setcolor (coldata, r, g, b, 0);
   draw_all_buckets ();
   
-  return (vbox);
+   return (vbox);
 }
 
 
@@ -653,6 +726,104 @@ colorsel_water_update ()
   draw_bucket (0);
 
   coldata->callback (coldata->data, r, g, b);
+}
+
+static void        
+colorsel_water_drag_begin (GtkWidget      *widget,
+			   GdkDragContext *context,
+			   gpointer        data)
+{
+  GtkWidget *window;
+  gdouble *colors;
+  GdkColor bg;
+
+  colors = (gdouble *)data;
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
+  gtk_widget_set_usize (window, 32, 32);
+  gtk_widget_realize (window);
+  gtk_object_set_data_full (GTK_OBJECT (widget),
+			    "gimp-color-drag-window",
+			    window,
+			    (GtkDestroyNotify) gtk_widget_destroy);
+
+  bg.red = 0xffff * colors[0];
+  bg.green = 0xffff * colors[1];
+  bg.blue = 0xffff * colors[2];
+
+  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
+  gdk_window_set_background (window->window, &bg);
+
+  gtk_drag_set_icon_widget (context, window, -2, -2);
+}
+
+
+static void        
+colorsel_water_drag_end (GtkWidget      *widget,
+			 GdkDragContext *context,
+			 gpointer        data)
+{
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       "gimp-color-drag-window", NULL);
+}
+
+static void        
+colorsel_water_drop_handle (GtkWidget        *widget, 
+			    GdkDragContext   *context,
+			    gint              x,
+			    gint              y,
+			    GtkSelectionData *selection_data,
+			    guint             info,
+			    guint             time,
+			    gpointer          data)
+{
+  guint16 *vals;
+  gdouble *colors;
+
+  colors = (gdouble*) data;
+
+  if (selection_data->length < 0)
+    return;
+
+  if ((selection_data->format != 16) || 
+      (selection_data->length != 8))
+    {
+      g_warning ("Received invalid color data\n");
+      return;
+    }
+  
+  vals = (guint16 *)selection_data->data;
+
+  colors[0] = (gdouble)vals[0] / 0xffff;
+  colors[1] = (gdouble)vals[1] / 0xffff;
+  colors[2] = (gdouble)vals[2] / 0xffff;
+  
+  draw_all_buckets ();
+  colorsel_water_update ();
+}
+
+static void        
+colorsel_water_drag_handle (GtkWidget        *widget, 
+			    GdkDragContext   *context,
+			    GtkSelectionData *selection_data,
+			    guint             info,
+			    guint             time,
+			    gpointer          data)
+{
+  guint16 vals[4];
+  gdouble *colors;
+
+  colors = (gdouble*) data;
+
+  vals[0] = colors[0] * 0xffff;
+  vals[1] = colors[1] * 0xffff;
+  vals[2] = colors[2] * 0xffff;
+  vals[3] = 0xffff;
+
+  gtk_selection_data_set (selection_data,
+			  gdk_atom_intern ("application/x-color", FALSE),
+			  16, (guchar *)vals, 8);
 }
 
 /* End of colorsel_gtk.c */

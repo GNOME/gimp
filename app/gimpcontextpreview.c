@@ -77,7 +77,12 @@ static GtkTargetEntry context_preview_target_table[3][1] =
 };
 static guint n_targets = 1;
 
-
+static gchar* context_preview_drag_window_name[3] =
+{
+  "gimp-brush-drag-window",
+  "gimp-pattern-drag-window",
+  "gimp-gradient-drag-window"
+};
 
 /*  signals  */
 enum {
@@ -461,16 +466,18 @@ gimp_context_preview_drag_begin (GtkWidget      *widget,
   if (!gcp_drag_window)
     {
       gcp_drag_window = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_widget_set_app_paintable (GTK_WIDGET (gcp_drag_window), TRUE);
       gtk_window_set_policy (GTK_WINDOW (gcp_drag_window), FALSE, FALSE, TRUE);
-      gtk_signal_connect (GTK_OBJECT (gcp_drag_window), "destroy", 
-			  gtk_widget_destroyed, &gcp_drag_window);
-
+      gtk_widget_realize (gcp_drag_window);
+      gtk_object_set_data_full (GTK_OBJECT (gcp_drag_window),
+				context_preview_drag_window_name[gcp->type],
+				gcp_drag_window,
+				(GtkDestroyNotify) gtk_widget_destroy);
       gcp_drag_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_signal_connect (GTK_OBJECT (gcp_drag_preview), "destroy", 
 			  gtk_widget_destroyed, &gcp_drag_preview);
       gtk_container_add (GTK_CONTAINER (gcp_drag_window), gcp_drag_preview);
       gtk_widget_show (gcp_drag_preview);
-      gtk_widget_realize (gcp_drag_window);
     }
 
   switch (gcp->type)
@@ -488,7 +495,7 @@ gimp_context_preview_drag_begin (GtkWidget      *widget,
       break;
     }  
   gtk_widget_queue_draw (gcp_drag_preview);
-  gtk_drag_set_icon_widget (context, gcp_drag_window, 0, 0);
+  gtk_drag_set_icon_widget (context, gcp_drag_window, -2, -2);
 }
 
 
@@ -823,9 +830,9 @@ gimp_context_preview_draw_gradient_drag (GimpContextPreview *gcp)
   
   gradient = (gradient_t*)(gcp->data);
   gtk_preview_size (GTK_PREVIEW (gcp_drag_preview), 
-		    GRADIENT_POPUP_WIDTH / 4, GRADIENT_POPUP_HEIGHT / 4);      
+		    DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);      
   draw_gradient (GTK_PREVIEW (gcp_drag_preview), gradient, 
-		 GRADIENT_POPUP_WIDTH / 4, GRADIENT_POPUP_HEIGHT / 4);
+		 DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);
 }
 
 static void

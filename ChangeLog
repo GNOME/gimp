@@ -1,3 +1,8 @@
+Sun Sep  5 14:48:30 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.c: small cosmetic change
+	* modules/colorsel_water.c: color dnd for the watercolor selector.
+
 Sun Sep  5 12:44:21 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c
