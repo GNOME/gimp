@@ -1,5 +1,15 @@
 2003-03-04  Sven Neumann  <sven@gimp.org>
 
+        Based on suggestions by Michael J. Hammel <mjhammel@graphics-muse.org>:
+
+	* app/gui/preferences-dialog.c: use US english spelling, fixed a
+	typo.
+
+	* app/config/gimprc-blurbs.h: rephrased some blurbs so they fit
+	better as tooltips.
+
+2003-03-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.[ch]: set the active color from
 	GimpColormapEditor::selected so you can pick colors from an
 	indexed palette again.

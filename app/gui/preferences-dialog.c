@@ -1105,7 +1105,7 @@ prefs_dialog_new (Gimp    *gimp,
                          _("_Recent Documents List Size:"),
                          GTK_TABLE (table), 3);
 
-  /* Dialog Bahaviour */
+  /* Dialog Bahavior */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "info-window-per-display",
@@ -1338,8 +1338,8 @@ prefs_dialog_new (Gimp    *gimp,
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
 
-  /*  Zoom & Resize Behaviour  */
-  vbox2 = prefs_frame_new (_("Zoom & Resize Behaviour"),
+  /*  Zoom & Resize Behavior  */
+  vbox2 = prefs_frame_new (_("Zoom & Resize Behavior"),
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "resize-windows-on-zoom",
@@ -1709,7 +1709,7 @@ prefs_dialog_new (Gimp    *gimp,
                                  _("\"File -> Save\" Saves the Image:"),
                                  GTK_TABLE (table), 0);
   prefs_enum_option_menu_add (config, "thumbnail-size", 0, 0,
-                              _("Size of Thumbnails Files:"),
+                              _("Size of Thumbnail Files:"),
                               GTK_TABLE (table), 1);
 
 

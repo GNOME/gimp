@@ -42,7 +42,7 @@ N_("Context-dependent cursors are cool.  They are enabled by default. " \
 "Sets the default comment."
 
 #define DEFAULT_DOT_FOR_DOT_BLURB \
-N_("When set to yes, this will ensure that each pixel of an image gets " \
+N_("When enabled, this will ensure that each pixel of an image gets " \
    "mapped to a pixel on the screen.")
 
 #define DEFAULT_GRADIENT_BLURB \
@@ -50,13 +50,13 @@ N_("When set to yes, this will ensure that each pixel of an image gets " \
 "specified gradient path."
 
 #define DEFAULT_IMAGE_WIDTH_BLURB \
-"Sets the default image width in the File/New dialog."
+"Sets the default image width in the \"File/New\" dialog."
 
 #define DEFAULT_IMAGE_HEIGHT_BLURB \
-"Sets the default image height in the File/New dialog."
+"Sets the default image height in the \"File/New\" dialog."
 
 #define DEFAULT_IMAGE_TYPE_BLURB \
-"Sets the default image type in the File/New dialog."
+"Sets the default image type in the \"File/New\" dialog."
 
 #define DEFAULT_PATTERN_BLURB \
 "Specify a default pattern. The pattern is searched for in the " \
@@ -68,7 +68,7 @@ N_("When set to yes, this will ensure that each pixel of an image gets " \
 
 #define DEFAULT_RESOLUTION_UNIT_BLURB \
 "Sets the units for the display of the default resolution in the " \
-"File/New dialog."
+"\"File/New\" dialog."
 
 #define DEFAULT_THRESHOLD_BLURB \
 N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
@@ -78,17 +78,17 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
    "This value represents the default threshold.")
 
 #define DEFAULT_UNIT_BLURB \
-"Sets the default unit for new images and for the File/New dialog. " \
+"Sets the default unit for new images and for the \"File/New\" dialog. " \
 "This units will be used for coordinate display when not in dot-for-dot " \
 "mode."
 
 #define DEFAULT_XRESOLUTION_BLURB \
 "Sets the default horizontal resolution for new images and for the " \
-"File/New dialog. This value is always in dpi (dots per inch)."
+"\"File/New\" dialog. This value is always in dpi (dots per inch)."
 
 #define DEFAULT_YRESOLUTION_BLURB \
 "Sets the default vertical resolution for new images and for the " \
-"File/New dialog. This value is always in dpi (dots per inch)."
+"\"File/New\" dialog. This value is always in dpi (dots per inch)."
 
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
@@ -130,12 +130,11 @@ N_("Sets the text to appear in image window status bars.")
 N_("Sets the text to appear in image window titles.")
 
 #define INFO_WINDOW_PER_DISPLAY_BLURB \
-N_("When set to yes, the GIMP will use a different info window per image " \
-   "view.")
+N_("When enabled, the GIMP will use a different info window per image view.")
 
 #define INITIAL_ZOOM_TO_FIT_BLURB \
-N_("When set to yes, this will ensure that the full image is visible after " \
-   "a file is opened, otherwise it will be displayed with a scale of 1:1.")
+N_("When enabled, this will ensure that the full image is visible after a " \
+   "file is opened, otherwise it will be displayed with a scale of 1:1.")
 
 #define INSTALL_COLORMAP_BLURB \
 N_("Install a private colormap; might be useful on pseudocolor visuals.")
@@ -166,8 +165,8 @@ N_("Generally only a concern for 8-bit displays, this sets the minimum " \
 "To inhibit loading of a module, add its name here."
 
 #define MONITOR_RES_FROM_GDK_BLURB \
-"Set to yes if the GIMP should use the monitor resolution from " \
-"the windowing system."
+"When enabled, the GIMP will use the monitor resolution from the " \
+"windowing system."
 
 #define MONITOR_XRESOLUTION_BLURB \
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to " \
@@ -194,11 +193,11 @@ N_("On multiprocessor machines, if GIMP has been compiled with --enable-mp " \
 "Sets the pattern search path."
 
 #define PERFECT_MOUSE_BLURB \
-N_("When set to yes, the X server is queried for the mouse's current " \
-   "position on each motion event, rather than relying on the position " \
-   "hint.  This means painting with large brushes should be more accurate, " \
-   "but it may be slower.  Perversely, on some X servers turning on this " \
-   "option results in faster painting.")
+N_("When enabled, the X server is queried for the mouse's current position " \
+   "on each motion event, rather than relying on the position hint.  This " \
+   "means painting with large brushes should be more accurate, but it may " \
+   "be slower.  Perversely, on some X servers enabling this option results " \
+   "in faster painting.")
 
 #define PLUG_IN_PATH_BLURB \
 "Sets the plug-in search path."
@@ -210,12 +209,12 @@ N_("When set to yes, the X server is queried for the mouse's current " \
 N_("Sets the default preview size.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
-N_("When the physical image size changes, setting this option to yes " \
-   "enables the automatic resizing of windows.")
+N_("When enabled, the image window will automatically resize itself, " \
+   "whenever the physical image size changes.")
 
 #define RESIZE_WINDOWS_ON_ZOOM_BLURB \
-N_("When zooming into and out of images, setting this option to yes " \
-   "enables the automatic resizing of windows.")
+N_("When enabled, the image window will automatically resize itself, " \
+   "when zooming into and out of images.")
 
 #define RESTORE_SESSION_BLURB \
 N_("Let GIMP try to restore your last saved session on each startup.")
@@ -232,21 +231,21 @@ N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 
 #define SHOW_MENUBAR_BLURB \
 N_("Sets the default menubar visibility. This can also be toggled with the "\
-   "View->Toggle Menubar command.")
+   "\"View->Toggle\" Menubar command.")
 
 #define SHOW_RULERS_BLURB \
 N_("Sets the default ruler visibility. This can also be toggled with the " \
-   "View->Toggle Rulers command.")
+   "\"View->Toggle Rulers\" command.")
 
 #define SHOW_STATUSBAR_BLURB \
-N_("Set to yes to make the statusbar visible by default. This can also be " \
-   "toggled with the View->Toggle Statusbar command.")
+N_("When enabled, the statusbar is visible by default. This can also be " \
+   "toggled with the \"View->Toggle Statusbar\" command.")
 
 #define SHOW_TIPS_BLURB \
-N_("To display a handy GIMP tip on startup, set to yes.")
+N_("Enable to display a handy GIMP tip on startup.")
 
 #define SHOW_TOOL_TIPS_BLURB \
-N_("To display tooltips, set to yes.")
+N_("Enable to display tooltips.")
 
 #define STINGY_MEMORY_USE_BLURB \
 N_("There is always a tradeoff between memory usage and speed.  In most " \
@@ -263,7 +262,7 @@ N_("Sets the swap file location. The gimp uses a tile based memory " \
    "be desirable to put your swap file in \"/tmp\".")
 
 #define TEAROFF_MENUS_BLURB  \
-N_("When set to yes, enables tear off menus.")
+N_("When enabled, menus can be torn off.")
 
 #define TEMP_PATH_BLURB \
 N_("Sets the temporary storage directory. Files will appear here " \
@@ -297,7 +296,7 @@ N_("Sets the manner in which transparency is displayed in images.")
 N_("Sets the size of the checkerboard used to display transparency.")
 
 #define TRUST_DIRTY_FLAG_BLURB \
-N_("When set to yes, the GIMP will not save if the image is unchanged since " \
+N_("When enabled, the GIMP will not save if the image is unchanged since " \
    "opening it.")
 
 #define UNDO_LEVELS_BLURB \
@@ -309,7 +308,7 @@ N_("Sets an upper limit to the memory that is used per image to keep " \
    "operations on the undo stack.")
 
 #define USE_HELP_BLURB  \
-N_("When set to no the F1 help binding will be disabled.")
+N_("When enabled, pressing F1 will open the help browser.")
 
 
 #endif  /* __GIMP_RC_BLURBS_H__ */
