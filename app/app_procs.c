@@ -741,7 +741,7 @@ really_quit_dialog (void)
 		      (GtkSignalFunc) really_quit_delete_callback,
 		      dialog);
 
-  button = gtk_button_new_with_label (_("Yes"));
+  button = gtk_button_new_with_label (_("Quit"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) really_quit_callback,
@@ -750,7 +750,7 @@ really_quit_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("No"));
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) really_quit_cancel_callback,

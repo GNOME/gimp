@@ -1,3 +1,8 @@
+Mon Aug  2 03:42:03 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * app/app_procs.c: Improve the gimp_quit dialog to use "Quit" and
+        "Cancel "instead of "Yes" and "No".
+
 1999-08-02  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/winprint: New (Win32) print plug-in.
