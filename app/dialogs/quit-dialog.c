@@ -65,6 +65,7 @@ quit_dialog_new (Gimp *gimp)
   GimpMessageBox *box;
   GtkWidget      *dialog;
   GtkWidget      *label;
+  GtkWidget      *button;
   GtkWidget      *view;
   gint            rows;
   gint            preview_size;
@@ -84,19 +85,22 @@ quit_dialog_new (Gimp *gimp)
                              NULL, 0,
                              gimp_standard_help_func, NULL,
 
-                             GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                             _("_Discard Changes"), GTK_RESPONSE_OK,
+                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 
                              NULL);
 
   g_object_set_data_full (G_OBJECT (dialog), "dirty-images",
                           images, (GDestroyNotify) g_object_unref);
 
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog), "", GTK_RESPONSE_OK);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (quit_dialog_response),
                     gimp);
 
   box = GIMP_MESSAGE_DIALOG (dialog)->box;
+
+  g_object_set_data (G_OBJECT (box), "ok-button", button);
 
   g_signal_connect_object (images, "add",
                            G_CALLBACK (quit_dialog_container_changed),
@@ -152,6 +156,7 @@ quit_dialog_container_changed (GimpContainer  *images,
 {
   gint       num_images = gimp_container_num_children (images);
   GtkWidget *label      = g_object_get_data (G_OBJECT (box), "lost-label");
+  GtkWidget *button     = g_object_get_data (G_OBJECT (box), "ok-button");
 
   if (num_images == 1)
     gimp_message_box_set_primary_text (box,
@@ -162,9 +167,21 @@ quit_dialog_container_changed (GimpContainer  *images,
                                        num_images);
 
   if (num_images == 0)
-    gtk_widget_hide (label);
+    {
+      gtk_widget_hide (label);
+      g_object_set (button,
+                    "label",     GTK_STOCK_QUIT,
+                    "use-stock", TRUE,
+                    NULL);
+    }
   else
-    gtk_widget_show (label);
+    {
+      gtk_widget_show (label);
+      g_object_set (button,
+                    "label",     "_Discard Changes",
+                    "use-stock", FALSE,
+                    NULL);
+    }
 }
 
 static void

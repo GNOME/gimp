@@ -1,3 +1,8 @@
+2004-10-25  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/quit-dialog.c: change the action button's label to
+	"Quit" if there are no images with unsaved changes.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]: register some missing enums.
