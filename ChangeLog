@@ -1,5 +1,10 @@
 2004-06-10  Philip Lafleur  <plafleur@cvs.gnome.org>
 
+	* app/gui/preferences-dialog.c: restored the 'Show Paint Tool
+    Cursor' option that was removed during clean-up.
+
+2004-06-10  Philip Lafleur  <plafleur@cvs.gnome.org>
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_pressurize_mask):
 	avoided some redundant calculations.
 

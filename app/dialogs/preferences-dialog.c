@@ -1460,7 +1460,10 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "show-brush-outline",
                           _("Show _Brush Outline"),
                           GTK_BOX (vbox2));
-
+  prefs_check_button_add (object, "show-paint-tool-cursor", 	 
+                          _("Show Paint _Tool Cursor"), 	 
+                          GTK_BOX (vbox2));
+   
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
