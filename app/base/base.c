@@ -88,7 +88,7 @@ base_init (GimpBaseConfig *config,
 
   /* Add the swap file */
   if (! config->swap_path)
-    g_object_set (G_OBJECT (config), "swap_path", "${gimp_dir}");
+    g_object_set (G_OBJECT (config), "swap_path", "${gimp_dir}", NULL);
 
   swapdir  = gimp_config_path_expand (config->swap_path, TRUE, NULL);
   swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
