@@ -1,3 +1,8 @@
+2002-03-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gap/gap_decode_xanim.c: applied a patch from Wolfgang Hofer
+	<hof@gimp.org> that fixes a problem when calling xanim.
+
 2002-03-14  Manish Singh  <yosh@gimp.org>
 
 	* app/fuzzy_select.c: add missing support for anchoring a selection

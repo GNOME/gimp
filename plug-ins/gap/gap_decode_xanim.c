@@ -48,6 +48,8 @@
  */
 
 /* revision history
+ * 1.2.2c;   2002/03/19  hof: bugfix  xanim call fails if . not in PATH or no write permission for current dir
+ *                           (reported by Guido Socher)
  * 1.1.29b;  2000/11/30  hof: used g_snprintf
  * 1.1.17b;  2000/02/26  hof: bugfixes
  * 1.1.14a;  1999/11/22  hof: fixed gcc warning (too many arguments for format)
@@ -86,7 +88,8 @@
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
 
-static char *global_xanim_input_dir    = "input";
+static char *global_xanim_input_dir = NULL;
+static char *global_xanim_working_dir = NULL;
 
 gchar global_xanim_prog[500];
 gchar *global_errlist = NULL;
@@ -359,8 +362,9 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
 static void
 p_build_xanim_framename(char *framename, gint32 sizeof_framename, gint32 frame_nr, char *ext)
 {
-   g_snprintf(framename, sizeof_framename, "%s/frame%d.%s",
+   g_snprintf(framename, sizeof_framename, "%s%sframe%d.%s",
                 global_xanim_input_dir,
+                G_DIR_SEPARATOR_S,
                 (int)frame_nr,
                 ext);
 }
@@ -413,8 +417,31 @@ static void
 p_init_xanim_global_name()
 {
   char *l_env;
+  char *l_ptr;
   
   l_env = g_getenv("GAP_XANIM_PROG");
+
+  /* use gimp_temp_name to find a writeable tempdir (used as xanim workingdir) */
+  if(global_xanim_working_dir)
+    g_free(global_xanim_working_dir);
+    
+  /* cut off the filenamepart */
+  global_xanim_working_dir = gimp_temp_name(".txt");
+  for(l_ptr = global_xanim_working_dir + strlen(global_xanim_working_dir);
+      l_ptr >= global_xanim_working_dir;
+      l_ptr--)
+  {
+    if(*l_ptr == G_DIR_SEPARATOR) 
+    { 
+      *l_ptr = '\0';
+      break;
+    }
+  }
+
+  if(global_xanim_input_dir)
+    g_free(global_xanim_input_dir);
+  
+  global_xanim_input_dir = g_strdup_printf("%s%sinput", global_xanim_working_dir, G_DIR_SEPARATOR_S);
   
   if(l_env != NULL)
   {
@@ -696,13 +723,14 @@ p_check_xanim()
   gint l_grep_counter2;
   gint l_grep_counter3;
   gchar *l_cmd;
-  static char *l_xanim_help_output = "tmp_xanim_help.output";
+  gchar *l_xanim_help_output;
   FILE *l_fp;
 
+  l_xanim_help_output = gimp_temp_name(".xanim_help.stdout");
   l_fp = fopen(l_xanim_help_output, "w+");
   if (l_fp == NULL)
   {
-    global_errlist = g_strdup_printf("no write permission for current directory");
+    global_errlist = g_strdup_printf("no write permission for tempfile %s", l_xanim_help_output);
     return(10);
   }
   fprintf(l_fp, "dummy");
@@ -748,6 +776,7 @@ p_check_xanim()
   l_grep_counter3 += p_grep("Write video to input/frameN.EXT", l_xanim_help_output);
 
   remove(l_xanim_help_output);
+  g_free(l_xanim_help_output);
 
   if(l_grep_counter2 != 0)
   {
@@ -781,13 +810,11 @@ p_start_xanim_process(gint32 first_frame, gint32 last_frame,
    pid_t l_xanim_pid;
    int   l_rc;
    FILE  *l_fp;
-   static char *l_xanim_startscript = "tmp_xanim_startscript.sh";
-   static char *l_xanim_pidfile = "tmp_xanim_pidfile";
    
    l_xanim_pid = -1;
    
    /* allocate and prepare args for the xanim call */
-   g_snprintf(l_cmd, sizeof(l_cmd), "%s +f ", global_xanim_prog);  /* programname */
+   g_snprintf(l_cmd, sizeof(l_cmd), "cd %s;%s +f ", global_xanim_working_dir, global_xanim_prog);  /* programname */
    
    if (extract_audio)
    {
@@ -828,6 +855,12 @@ p_start_xanim_process(gint32 first_frame, gint32 last_frame,
 
    if (run_xanim_asynchron)
    {
+     gchar *l_xanim_startscript;
+     gchar *l_xanim_pidfile;
+
+     l_xanim_startscript = gimp_temp_name(".xanim_start.sh");
+     l_xanim_pidfile = gimp_temp_name(".xanim_pidfile.txt");
+
      /* asynchron start */
      remove(l_xanim_pidfile);   
      /* generate a shelscript */
@@ -866,7 +899,8 @@ p_start_xanim_process(gint32 first_frame, gint32 last_frame,
 
      remove(l_xanim_startscript);
      remove(l_xanim_pidfile);
-
+     g_free(l_xanim_startscript);
+     g_free(l_xanim_pidfile);
 
      if(gap_debug) printf("ASYNCHRON CALL: %s\nl_xanim_pid:%d\n", l_cmd, (int)l_xanim_pid);
    }
@@ -877,7 +911,7 @@ p_start_xanim_process(gint32 first_frame, gint32 last_frame,
      if ((l_rc & 0xff) == 0) l_xanim_pid = 0;
      else                    l_xanim_pid = -1;
 
-     if(gap_debug) printf("ASYNCHRON CALL: %s\nretcode:%d (%d)\n", l_cmd, (int)l_rc, (int)l_xanim_pid);
+     if(gap_debug) printf("SYNCHRON CALL: %s\nretcode:%d (%d)\n", l_cmd, (int)l_rc, (int)l_xanim_pid);
    }
   
    return(l_xanim_pid);   
@@ -1060,7 +1094,7 @@ gap_xanim_decode(GimpRunModeType run_mode)
            /* the input directory already exists,
             * remove frames
             */
-           g_snprintf(l_cmd, sizeof(l_cmd), "rm -f %s/*.%s", global_xanim_input_dir, extension);
+           g_snprintf(l_cmd, sizeof(l_cmd), "rm -f %s%s*.%s", global_xanim_input_dir, G_DIR_SEPARATOR_S, extension);
            system(l_cmd);
          }
          else
