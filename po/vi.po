@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP for Gnome v.2.1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-01-27 22:22+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -3362,7 +3362,7 @@ msgstr ""
 "Đưa trở về '%s' không được:\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Xác định Loại Tập Tin:"
@@ -9393,6 +9393,47 @@ msgstr ""
 "%s Trừ\n"
 "%s%s%s Giao nhau"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Trình Lọc Hiện Có"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Thêm trình lọc được chọn vào danh sách các trình lọc hoạt động."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Bỏ trình lọc được chọn ra khỏi danh sách các trình lọc hoạt động."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Chuyển trình lọc được chọn lên."
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Chuyển trình lọc được chọn xuống"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Trình lọc hoạt động"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Đặt lại trình lọc được chọn về các giá trị mặc định"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Cấu hình trình lọc được chọn: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Không Có Trình Lọc Được Chọn"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Cấu hình trình lọc được chọn"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -10457,36 +10498,6 @@ msgstr "GIMP (không ổn định)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Lỗi trong tập tin mẫu của GIMP '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Trình Lọc Hiện Có"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Thêm trình lọc được chọn vào danh sách các trình lọc hoạt động."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Bỏ trình lọc được chọn ra khỏi danh sách các trình lọc hoạt động."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Chuyển trình lọc được chọn lên."
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Chuyển trình lọc được chọn xuống"
-
-#~ msgid "Active Filters"
-#~ msgstr "Trình lọc hoạt động"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Đặt lại trình lọc được chọn về các giá trị mặc định"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Cấu hình trình lọc được chọn: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Không Có Trình Lọc Được Chọn"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Cấu hình trình lọc được chọn"
 
 #~ msgid "Current:"
 #~ msgstr "Hiện thời:"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-02-24 15:09--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -3299,7 +3299,7 @@ msgstr ""
 "Відновлення до '%s' не вдалось.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Визначити тип файлу:"
@@ -9496,6 +9496,51 @@ msgstr ""
 "Канал у виділення \n"
 "<Shift> Додати       <Ctrl> Відняти       <Shift><Ctrl> Перетнути"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Доступні фільтри"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Додати вибраний фільтр до списку активних фільтрів."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Вилучити вибраний філтр з списку активних фільтрів."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Вилучити вибраний елемент з покажчику"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Переміщення шарів та виділень"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Активні фільтри"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Встановити вибраному фільтру типові значення"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Налаштувати вибраний фільтр"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Виділення Безьє"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Налаштувати вибраний фільтр"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10550,41 +10595,6 @@ msgstr "GIMP (нестабільна версія)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Помилка у файлі візерунка GIMP \"%s\"."
-
-#~ msgid "Available Filters"
-#~ msgstr "Доступні фільтри"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Додати вибраний фільтр до списку активних фільтрів."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Вилучити вибраний філтр з списку активних фільтрів."
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Вилучити вибраний елемент з покажчику"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Переміщення шарів та виділень"
-
-#~ msgid "Active Filters"
-#~ msgstr "Активні фільтри"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Встановити вибраному фільтру типові значення"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Налаштувати вибраний фільтр"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Виділення Безьє"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Налаштувати вибраний фільтр"
 
 #, fuzzy
 #~ msgid "Current:"

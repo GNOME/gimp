@@ -1,3 +1,10 @@
+2003-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added app/widgets/gimpcolordisplayeditor.c
+
+	* *.po: ran "make update-po" so all existing (but commented out)
+	translations for the display filter dialog get merged back.
+
 2003-11-24  Marco Ciampa  <ciampix@libero.it>
 
 	*  it.po: Updated italian translation.

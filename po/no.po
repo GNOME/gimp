@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-08-18 22:43+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -3211,7 +3211,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Bestem filtype:"
@@ -9292,6 +9292,47 @@ msgstr ""
 "%s Trekk fra\n"
 "%s%s%s Kryss"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Tilgjengelige filtre"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Legg til valgt filter i listen over aktive filtre."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Fjern valgt filter fra listen over aktive filtre."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Flytt valgt filter opp"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Flytt valgt filter ned"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Aktive filtre"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Nullstill valgt filter til forvalgte verdier"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Konfigurer valgt filter: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Ingen filtre valgt"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Konfigurer valgt filter"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -10337,36 +10378,6 @@ msgstr "The GIMP (ustabil)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Feil i GIMP mønsterfil «%s»."
-
-#~ msgid "Available Filters"
-#~ msgstr "Tilgjengelige filtre"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Legg til valgt filter i listen over aktive filtre."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Fjern valgt filter fra listen over aktive filtre."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Flytt valgt filter opp"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Flytt valgt filter ned"
-
-#~ msgid "Active Filters"
-#~ msgstr "Aktive filtre"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Nullstill valgt filter til forvalgte verdier"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Konfigurer valgt filter: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Ingen filtre valgt"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Konfigurer valgt filter"
 
 #~ msgid "Current:"
 #~ msgstr "Aktiv:"

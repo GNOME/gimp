@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2000-06-24 21:46+0000\n"
 "Last-Translator: Piers Cornwell <piers.cornwell@usa.net>\n"
 "Language-Team: English, British\n"
@@ -3190,7 +3190,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr ""
 
@@ -9068,6 +9068,52 @@ msgid ""
 "%s%s%s  Intersect"
 msgstr ""
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "/Tools/Default Colours"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "/Tools/Default Colours"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+#, fuzzy
+msgid "Active Filters"
+msgstr "/Filters/Colours"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "/Select/By Colour..."
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Selection"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "/Select/By Colour..."
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr ""
@@ -10028,14 +10074,6 @@ msgstr ""
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr ""
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Selection"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "/Select/By Colour..."
 
 #, fuzzy
 #~ msgid "Revert to old color"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-09-03 03:48+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -3311,7 +3311,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Bestandstype bepalen:"
 
@@ -9084,6 +9084,47 @@ msgstr ""
 "Kanaal naar Selectie \n"
 "%s Tel op       %s Trek af       %s%s%s Snij"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Beschikbare Filters"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Voeg het geselecteerde filter toe aan de lijst van actieve filters."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Verwijder het geselecteerde filter uit de lijst van actieve filters."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Geselecteerd filter naar boven"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Geselecteerd filter naar beneden"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Actieve filters"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Geselecteerde filter naar beginwaarden"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Geselecteerd filter %s configureren"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Geen filter geselecteerd"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Geselecteerd filter configureren"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "VG"
@@ -10129,37 +10170,6 @@ msgstr "De GIMP (instabiele versie)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Fout in GIMP-patroonbestand '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Beschikbare Filters"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Voeg het geselecteerde filter toe aan de lijst van actieve filters."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr ""
-#~ "Verwijder het geselecteerde filter uit de lijst van actieve filters."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Geselecteerd filter naar boven"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Geselecteerd filter naar beneden"
-
-#~ msgid "Active Filters"
-#~ msgstr "Actieve filters"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Geselecteerde filter naar beginwaarden"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Geselecteerd filter %s configureren"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Geen filter geselecteerd"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Geselecteerd filter configureren"
 
 #~ msgid "Current:"
 #~ msgstr "Huidig:"

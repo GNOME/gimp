@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-09-24 13:40+0200\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -3132,7 +3132,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "קביעת סוג הקובץ:"
@@ -8787,6 +8787,49 @@ msgid ""
 "%s%s%s  Intersect"
 msgstr ""
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "מסננים זמינים"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "איפוס המסנן הנבחר לערכי ברירת מחדל"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "איפוס המסנן הנבחר לערכי ברירת מחדל"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "העלאת המסנן הנבחר"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "הנמכת המסנן הנבחר"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "מסננים פעילים"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "איפוס המסנן הנבחר לערכי ברירת מחדל"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "הגדרת מסנן נבחר"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "לא נבחר מסנן"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "הגדרת מסנן נבחר"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "קדמה"
@@ -9733,27 +9776,6 @@ msgstr "יצירה או עריכת תמונות או צילומים"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "ה GIMP (לא יציב)"
-
-#~ msgid "Available Filters"
-#~ msgstr "מסננים זמינים"
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "העלאת המסנן הנבחר"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "הנמכת המסנן הנבחר"
-
-#~ msgid "Active Filters"
-#~ msgstr "מסננים פעילים"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "איפוס המסנן הנבחר לערכי ברירת מחדל"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "לא נבחר מסנן"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "הגדרת מסנן נבחר"
 
 #~ msgid "Current:"
 #~ msgstr "נוכחי:"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-10 18:57+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -3423,7 +3423,7 @@ msgstr ""
 "Greška u Povratu.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "_Određivanje vrste datoteke:"
 
@@ -9534,6 +9534,52 @@ msgstr ""
 "%s  Oduzmi\n"
 "%s%s%s  Presijeci"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Postojeći Filteri"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Dodaj odabrani filter na listu aktivnih filtera."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Makni odabrani filter iz liste aktivnih lista filtera."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Ukloni odabrani dio iz indeksa"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Pomakni slojeve & odabire"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Aktivni Filteri"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Ukloni odabrani dio iz indeksa"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Podešavanje odabranog filtra: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Bezier Odabir"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Ukloni odabrani dio iz indeksa"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10614,42 +10660,6 @@ msgstr "GIMP (Nestabilan)"
 #, fuzzy
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Greška u datoteci GIMP uzorka '%s'"
-
-#~ msgid "Available Filters"
-#~ msgstr "Postojeći Filteri"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Dodaj odabrani filter na listu aktivnih filtera."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Makni odabrani filter iz liste aktivnih lista filtera."
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Ukloni odabrani dio iz indeksa"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Pomakni slojeve & odabire"
-
-#~ msgid "Active Filters"
-#~ msgstr "Aktivni Filteri"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Ukloni odabrani dio iz indeksa"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Podešavanje odabranog filtra: %s"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Bezier Odabir"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Ukloni odabrani dio iz indeksa"
 
 #~ msgid "Current:"
 #~ msgstr "Trenutno:"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-08-28 00:18+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -3242,7 +3242,7 @@ msgstr ""
 " \n"
 " %s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "파일 유형 결정(_T):"
 
@@ -8969,6 +8969,47 @@ msgstr ""
 "%s  빼기\n"
 "%s%s%s  교차하기"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "가용한 필터"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "선택한 필터를 활성 필터 목록에 더하기"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "선택한 필터를 현재 필터 목록에서 지우기"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "선택한 필터를 위로 이동"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "선택한 필터를 아래로 이동"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "활성 필터"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "선택한 필터를 기본값으로 복원"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "선택한 필터 설정: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "선택한 필터 없음"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "선택한 필터 설정"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -9995,36 +10036,6 @@ msgstr "김프 (개발버전)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "김프 무늬 화일 '%s'에 오류가 있습니다."
-
-#~ msgid "Available Filters"
-#~ msgstr "가용한 필터"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "선택한 필터를 활성 필터 목록에 더하기"
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "선택한 필터를 현재 필터 목록에서 지우기"
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "선택한 필터를 위로 이동"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "선택한 필터를 아래로 이동"
-
-#~ msgid "Active Filters"
-#~ msgstr "활성 필터"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "선택한 필터를 기본값으로 복원"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "선택한 필터 설정: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "선택한 필터 없음"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "선택한 필터 설정"
 
 #~ msgid "Current:"
 #~ msgstr "현재:"

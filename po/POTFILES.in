@@ -261,6 +261,7 @@ app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
+app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
 app/widgets/gimpcolormapeditor.c

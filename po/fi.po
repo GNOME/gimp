@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2002-01-29 00:50+0200\n"
 "Last-Translator: Jarkko Ranta <jjranta@cc.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
@@ -3436,7 +3436,7 @@ msgid ""
 "%s"
 msgstr "'%s':n palauttaminen epäonnistui."
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Päättele tiedoston tyyppi:"
@@ -9767,6 +9767,56 @@ msgstr ""
 "<Ctrl> Vähennä\n"
 "<Shift><Ctrl> Leikkaus"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+#, fuzzy
+msgid "Available Filters"
+msgstr "Täyttötyppi"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "Poista valittu"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Poista valittu"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Poista valittu"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Siirrä tasoja ja valintoja"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+#, fuzzy
+msgid "Active Filters"
+msgstr "/Suotimet/Webbi"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Poista valittu"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Poista valittu"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Bezier-valinta"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Poista valittu"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10873,30 +10923,6 @@ msgstr ""
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Virhe GIMPin kuviotiedostossa '%s'."
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Poista valittu"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Siirrä tasoja ja valintoja"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Poista valittu"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Poista valittu"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Bezier-valinta"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Poista valittu"
 
 #~ msgid "Current:"
 #~ msgstr "Nykyinen:"

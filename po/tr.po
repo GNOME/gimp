@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-08-25 16:09+0300\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -3374,7 +3374,7 @@ msgstr ""
 "Geri alma başarısız oldu.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Dosya Türünü Belirle:"
@@ -9447,6 +9447,55 @@ msgstr ""
 "Kanaldan Seçime\n"
 "<Shift> Ekle          <Ctrl> Çıkar       <Shift><Ctrl> Kesiştir"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Mevcut Filtreler"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "Seçili girişi dizinden çıkar"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Seçili girişi dizinden çıkar"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Seçili girişi dizinden çıkar"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Katmanları & seçimleri taşı"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+#, fuzzy
+msgid "Active Filters"
+msgstr "Mevcut Filtreler"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Seçili girişi dizinden çıkar"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Seçili girişi dizinden çıkar"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Bezier Seçim:"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Seçili girişi dizinden çıkar"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10545,33 +10594,6 @@ msgstr "The GIMP"
 #, fuzzy
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "\"%s\" GIMP desen dosyasında hata."
-
-#~ msgid "Available Filters"
-#~ msgstr "Mevcut Filtreler"
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Seçili girişi dizinden çıkar"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Katmanları & seçimleri taşı"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Seçili girişi dizinden çıkar"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Seçili girişi dizinden çıkar"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Bezier Seçim:"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Seçili girişi dizinden çıkar"
 
 #, fuzzy
 #~ msgid "Current:"

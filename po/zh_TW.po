@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-05 13:31+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -3171,7 +3171,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "決定檔案類型(_T)："
 
@@ -8739,6 +8739,50 @@ msgstr ""
 "%s  刪減\n"
 "%s%s%s  交集"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "可使用的濾鏡"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "刪除指定的範本"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "刪除指定的範本"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "使用中的濾鏡"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "回復為已儲存的預設值"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "設定指定的濾鏡：%s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "未指定濾鏡"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "設定指定的濾鏡"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "前景"
@@ -9741,21 +9785,6 @@ msgstr "The GIMP (不穩定版本)"
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "GIMP 圖樣檔案‘%s’中出現錯誤。"
 
-#~ msgid "Available Filters"
-#~ msgstr "可使用的濾鏡"
-
-#~ msgid "Active Filters"
-#~ msgstr "使用中的濾鏡"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "設定指定的濾鏡：%s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "未指定濾鏡"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "設定指定的濾鏡"
-
 #~ msgid "Current:"
 #~ msgstr "新："
 
@@ -9995,9 +10024,6 @@ msgstr "The GIMP (不穩定版本)"
 
 #~ msgid "Save current settings as default values"
 #~ msgstr "將目前的設定儲存為預設值"
-
-#~ msgid "Restore saved default values"
-#~ msgstr "回復為已儲存的預設值"
 
 #~ msgid "Reset to factory defaults"
 #~ msgstr "回復為程式提供的預設值"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -3431,7 +3431,7 @@ msgstr ""
 "Fallo ó revertir.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Determinar Tipo de Ficheiro"
@@ -9799,6 +9799,54 @@ msgstr ""
 "Canle a selección \n"
 "<Shift>Engadir       <Ctrl> Sustraer      <Shift><Ctrl> intersecar"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Filtros dispoñibles"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "Eliminar a entrada seleccionada do indice"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Eliminar a entrada seleccionada do indice"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Eliminar a entrada seleccionada do indice"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Mover capas e seleccións"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Filtros activos"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Eliminar a entrada seleccionada do indice"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Eliminar a entrada seleccionada do indice"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Selección Bezier"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Eliminar a entrada seleccionada do indice"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10901,36 +10949,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Erro en ficheiro de patrón \"%s\" do GIMP"
-
-#~ msgid "Available Filters"
-#~ msgstr "Filtros dispoñibles"
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Eliminar a entrada seleccionada do indice"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Mover capas e seleccións"
-
-#~ msgid "Active Filters"
-#~ msgstr "Filtros activos"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Eliminar a entrada seleccionada do indice"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Eliminar a entrada seleccionada do indice"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Selección Bezier"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Eliminar a entrada seleccionada do indice"
 
 #, fuzzy
 #~ msgid "Current:"

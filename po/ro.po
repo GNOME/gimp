@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -3413,7 +3413,7 @@ msgstr ""
 "Refacerea a eşuat.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Determină tipul fişierului:"
@@ -9789,6 +9789,56 @@ msgstr ""
 "Canal -> Selecţie \n"
 "<Shift> Adaugă       <Ctrl> Scade        <Shift><Ctrl> Intersectează"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+#, fuzzy
+msgid "Available Filters"
+msgstr "Tip umplere"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "Elimină obiectul selectat din index"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Elimină obiectul selectat din index"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Elimină obiectul selectat din index"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Deplasează straturi şi selecţii"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+#, fuzzy
+msgid "Active Filters"
+msgstr "/Filtre/Web"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Elimină obiectul selectat din index"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Elimină obiectul selectat din index"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Selectie Strat"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Elimină obiectul selectat din index"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10875,30 +10925,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Elimină obiectul selectat din index"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Deplasează straturi şi selecţii"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Elimină obiectul selectat din index"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Elimină obiectul selectat din index"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Selectie Strat"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Elimină obiectul selectat din index"
 
 #, fuzzy
 #~ msgid "Current:"

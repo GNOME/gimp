@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-18 13:44+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -3188,7 +3188,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Určení _typu souboru:"
 
@@ -8774,6 +8774,47 @@ msgstr ""
 "%s  Rozdíl\n"
 "%s%s%s  Průnik"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Dostupné filtry"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Přidat vybraný filtr do seznamu aktivních filtrů."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Odstranit vybraný filtr ze seznamu aktivních filtrů."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Posunout vybraný filtr výše"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Posunout vybraný filtr níže"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Aktivní filtry"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Přenastavit vybraný filtr na výchozí hodnoty"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Nastavit vybraný filtr: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Žádný filtr není vybraný"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Nastavit vybraný filtr"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -9735,36 +9776,6 @@ msgstr "Vytváření a úpravy obrázků a fotografií"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
-
-#~ msgid "Available Filters"
-#~ msgstr "Dostupné filtry"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Přidat vybraný filtr do seznamu aktivních filtrů."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Odstranit vybraný filtr ze seznamu aktivních filtrů."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Posunout vybraný filtr výše"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Posunout vybraný filtr níže"
-
-#~ msgid "Active Filters"
-#~ msgstr "Aktivní filtry"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Přenastavit vybraný filtr na výchozí hodnoty"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Nastavit vybraný filtr: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Žádný filtr není vybraný"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Nastavit vybraný filtr"
 
 #~ msgid "  -r, --restore-session    Try to restore saved session.\n"
 #~ msgstr "  -r, --restore-session    Pokusí se obnovit zapsané sezení.\n"

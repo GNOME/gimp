@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp1 1.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2001-09-07 17:29+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -3424,7 +3424,7 @@ msgstr ""
 "No s'ha pogut tornar endarrera.\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Determina el tipus de fitxer:"
@@ -9796,6 +9796,54 @@ msgstr ""
 "Canal per seleccionar \n"
 "<Shift> Afegeix         <Ctrl> Resta        <Shift><Ctrl> Interseca"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Filtres disponibles"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+#, fuzzy
+msgid "Add the selected filter to the list of active filters."
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+#, fuzzy
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Filtres actius"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+#, fuzzy
+msgid "No Filter Selected"
+msgstr "Selecciona Bezier"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+#, fuzzy
+msgid "Configure Selected Filter"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10897,40 +10945,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Error en el fitxer de patrons del GIMP \"%s\"."
-
-#~ msgid "Available Filters"
-#~ msgstr "Filtres disponibles"
-
-#, fuzzy
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
-
-#, fuzzy
-#~ msgid "Move the selected filter up"
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
-
-#, fuzzy
-#~ msgid "Move the selected filter down"
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
-
-#~ msgid "Active Filters"
-#~ msgstr "Filtres actius"
-
-#, fuzzy
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
-
-#, fuzzy
-#~ msgid "No Filter Selected"
-#~ msgstr "Selecciona Bezier"
-
-#, fuzzy
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Suprimeix les entrades seleccionades de l'índex"
 
 #, fuzzy
 #~ msgid "Current:"

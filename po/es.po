@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-20 17:50-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -3293,7 +3293,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Determinar el _tipo de archivo:"
 
@@ -8930,6 +8930,47 @@ msgstr ""
 "%s  Extraer\n"
 "%s%s%s  Intersectar"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Filtros disponibles"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Añadir el filtro seleccionado a la lista de filtros activos"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Quitar el filtro seleccionado de la lista de filtros activos."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Mover el filtro seleccionado hacia arriba"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Mover el filtro seleccionado hacia abajo"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Filtros activos"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Configurar el filtro seleccionado: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "No ha seleccionado ningún filtro"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Configurar el filtro seleccionado"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FR"
@@ -9900,36 +9941,6 @@ msgstr "Cree y edite imágenes o fotografías"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "El GIMP (inestable)"
-
-#~ msgid "Available Filters"
-#~ msgstr "Filtros disponibles"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Añadir el filtro seleccionado a la lista de filtros activos"
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Quitar el filtro seleccionado de la lista de filtros activos."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Mover el filtro seleccionado hacia arriba"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Mover el filtro seleccionado hacia abajo"
-
-#~ msgid "Active Filters"
-#~ msgstr "Filtros activos"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Configurar el filtro seleccionado: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "No ha seleccionado ningún filtro"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Configurar el filtro seleccionado"
 
 #~ msgid "  -r, --restore-session    Try to restore saved session.\n"
 #~ msgstr "  -r, --restore-session    Intenta restaurar una sesión guardada.\n"

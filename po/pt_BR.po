@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-02-21 01:45-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -3356,7 +3356,7 @@ msgstr ""
 "Reversão para '%s' falhou:\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 #, fuzzy
 msgid "Determine File _Type:"
 msgstr "Determinar tipo de arquivo:"
@@ -9513,6 +9513,50 @@ msgstr ""
 "Seleção de Canal \n"
 "<Shift> Adicionar          <Ctrl> Remover      <Shift><Ctrl> Interceptar"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Filtros Disponíveis"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr ""
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+#, fuzzy
+msgid "Move the selected filter up"
+msgstr "Remover canal"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+#, fuzzy
+msgid "Move the selected filter down"
+msgstr "Remover canal"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Filtros Ativos"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+#, fuzzy
+msgid "Reset the selected filter to default values"
+msgstr "Restaurar configurações salvas"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, fuzzy, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Configurar o Filtro Selecionado"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Nenhum Filtro Selecionado"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Configurar o Filtro Selecionado"
+
 #: app/widgets/gimpcoloreditor.c:244
 #, fuzzy
 msgid "FG"
@@ -10589,18 +10633,6 @@ msgstr "O GIMP (instável)"
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Erro no arquivo de texturas do GIMP '%s'."
 
-#~ msgid "Available Filters"
-#~ msgstr "Filtros Disponíveis"
-
-#~ msgid "Active Filters"
-#~ msgstr "Filtros Ativos"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Nenhum Filtro Selecionado"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Configurar o Filtro Selecionado"
-
 #~ msgid "Current:"
 #~ msgstr "Atual:"
 
@@ -10846,10 +10878,6 @@ msgstr "O GIMP (instável)"
 #, fuzzy
 #~ msgid "Save current settings as default values"
 #~ msgstr "Salvar configurações atuais em disco"
-
-#, fuzzy
-#~ msgid "Restore saved default values"
-#~ msgstr "Restaurar configurações salvas"
 
 #, fuzzy
 #~ msgid "Reset to factory defaults"

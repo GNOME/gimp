@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-04 09:00+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -3256,7 +3256,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Tentukan _Jenis Fail"
 
@@ -8898,6 +8898,47 @@ msgstr ""
 "%s  Tolak\n"
 "%s%s%s  Bersilang"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Penapis yang Ada"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Tambahkan penapis yang dipilih ke senarai penapis aktif"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Alihkan penapis yang dipilih dari senarai penapis aktif"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Alihkan penapis yang dipilih ke atas"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Alihkan penapis yang dipilih ke bawah"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Penapis Aktif"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Setkan semula penapis yang dipilih ke nilai piawai"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Buat konfigurasi Penapis yang Dipilih: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Tiada Penapis yang Dipilih"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Buat konfigurasi Penapis yang Dipilih"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -9928,36 +9969,6 @@ msgstr "GIMP (tak stabil)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Ralat dalam fail corak GIMP '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Penapis yang Ada"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Tambahkan penapis yang dipilih ke senarai penapis aktif"
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Alihkan penapis yang dipilih dari senarai penapis aktif"
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Alihkan penapis yang dipilih ke atas"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Alihkan penapis yang dipilih ke bawah"
-
-#~ msgid "Active Filters"
-#~ msgstr "Penapis Aktif"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Setkan semula penapis yang dipilih ke nilai piawai"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Buat konfigurasi Penapis yang Dipilih: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Tiada Penapis yang Dipilih"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Buat konfigurasi Penapis yang Dipilih"
 
 #~ msgid "Current:"
 #~ msgstr "Semasa:"

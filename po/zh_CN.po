@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-09-13 23:31+0800\n"
 "Last-Translator: Xie Yuheng <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -3218,7 +3218,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "确定文件类型(_T)："
 
@@ -8939,6 +8939,47 @@ msgstr ""
 "%s 减去\n"
 "%s%s%s 相交"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "可用的虑镜"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "将选中的滤镜添加到活动滤镜列表。"
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "从活动滤镜列表中删除选中的滤镜。"
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "选中的滤镜上移"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "选中的滤镜下移"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "活动滤镜"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "将选中的滤镜重置到默认值"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "配置选中的滤镜：%s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "未选择滤镜"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "配置选中的滤镜"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "前景"
@@ -9970,36 +10011,6 @@ msgstr "The GIMP (不稳定)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "GIMP 图案文件“%s”中有错。"
-
-#~ msgid "Available Filters"
-#~ msgstr "可用的虑镜"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "将选中的滤镜添加到活动滤镜列表。"
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "从活动滤镜列表中删除选中的滤镜。"
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "选中的滤镜上移"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "选中的滤镜下移"
-
-#~ msgid "Active Filters"
-#~ msgstr "活动滤镜"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "将选中的滤镜重置到默认值"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "配置选中的滤镜：%s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "未选择滤镜"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "配置选中的滤镜"
 
 #~ msgid "Current:"
 #~ msgstr "当前："

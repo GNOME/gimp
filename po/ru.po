@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-11-10 00:28+0300\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -3236,7 +3236,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Определить тип файла:"
 
@@ -8875,6 +8875,47 @@ msgstr ""
 "%s  Вычесть\n"
 "%s%s%s  Пересечь"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Доступные фильтры"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Добавить выбранный фильтр в список активных фильтров."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Удалить выбранный фильтр из списка активных фильтров."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Переместить выбранный фильтр вверх"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Переместить выбранный фильтр вниз"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Активные фильтры"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Восстановить для выбранного фильтра настройки по умолчанию."
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Настроить выбранный фильтр: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Фильтр не выбран"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Настроить выбранный фильтр "
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
@@ -9892,36 +9933,6 @@ msgstr "GIMP (нестабильный)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Ошибка в файле шаблона GIMP '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Доступные фильтры"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Добавить выбранный фильтр в список активных фильтров."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Удалить выбранный фильтр из списка активных фильтров."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Переместить выбранный фильтр вверх"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Переместить выбранный фильтр вниз"
-
-#~ msgid "Active Filters"
-#~ msgstr "Активные фильтры"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Восстановить для выбранного фильтра настройки по умолчанию."
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Настроить выбранный фильтр: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Фильтр не выбран"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Настроить выбранный фильтр "
 
 #~ msgid "Current:"
 #~ msgstr "Текущий:"

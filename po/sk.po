@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.sk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 14:58+0100\n"
 "PO-Revision-Date: 2003-09-28 22:00+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -3285,7 +3285,7 @@ msgstr ""
 "Návrat k '%s' sa zlyhal:\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:113
+#: app/gui/file-dialog-utils.c:112
 msgid "Determine File _Type:"
 msgstr "Určenie _typu súbora:"
 
@@ -9016,6 +9016,47 @@ msgstr ""
 "%s Ubrať\n"
 "%s%s%s Prienik"
 
+#: app/widgets/gimpcolordisplayeditor.c:178
+msgid "Available Filters"
+msgstr "Dostupné filtre"
+
+#: app/widgets/gimpcolordisplayeditor.c:205
+msgid "Add the selected filter to the list of active filters."
+msgstr "Pridať označené filtre do zoznamu aktívnych filtrov."
+
+#: app/widgets/gimpcolordisplayeditor.c:222
+msgid "Remove the selected filter from the list of active filters."
+msgstr "Odstrániť označené filtre zo zoznamu aktívnych filtrov."
+
+#: app/widgets/gimpcolordisplayeditor.c:236
+msgid "Move the selected filter up"
+msgstr "Posunúť označený filter vyššie"
+
+#: app/widgets/gimpcolordisplayeditor.c:245
+msgid "Move the selected filter down"
+msgstr "Posunúť označený filter nižšie"
+
+#: app/widgets/gimpcolordisplayeditor.c:290
+msgid "Active Filters"
+msgstr "Aktívne filtre"
+
+#: app/widgets/gimpcolordisplayeditor.c:324
+msgid "Reset the selected filter to default values"
+msgstr "Nastaviť zvolený filter na štandardné hodnoty"
+
+#: app/widgets/gimpcolordisplayeditor.c:545
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Nastaviť zvolený filter: %s"
+
+#: app/widgets/gimpcolordisplayeditor.c:552
+msgid "No Filter Selected"
+msgstr "Žiadny filter nie je zvolený"
+
+#: app/widgets/gimpcolordisplayeditor.c:556
+msgid "Configure Selected Filter"
+msgstr "Nastaviť zvolený filter"
+
 #: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "Popredie"
@@ -10045,36 +10086,6 @@ msgstr "GIMP (nestabilný)"
 
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Chyba v súbore so vzorkou GIMP '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Dostupné filtre"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Pridať označené filtre do zoznamu aktívnych filtrov."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Odstrániť označené filtre zo zoznamu aktívnych filtrov."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Posunúť označený filter vyššie"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Posunúť označený filter nižšie"
-
-#~ msgid "Active Filters"
-#~ msgstr "Aktívne filtre"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Nastaviť zvolený filter na štandardné hodnoty"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Nastaviť zvolený filter: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Žiadny filter nie je zvolený"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Nastaviť zvolený filter"
 
 #~ msgid "Current:"
 #~ msgstr "Aktuálna:"
