@@ -18,11 +18,11 @@
 #ifndef __GDISPLAYP_H__
 #define __GDISPLAYP_H__
 
-typedef struct _GArea GArea;
+typedef struct _GimpArea GimpArea;
 
-struct _GArea
+struct _GimpArea
 {
-  int x1, y1, x2, y2;   /*  area bounds  */
+  gint x1, y1, x2, y2;   /*  area bounds  */
 };
 
 #endif  /*  __GDISPLAYP_H__  */

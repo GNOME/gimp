@@ -32,6 +32,7 @@
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
@@ -40,12 +41,12 @@
 typedef struct _EditSelection EditSelection;
 struct _EditSelection
 {
-  int                 origx, origy;      /*  last x and y coords             */
-  int                 cumlx, cumly;      /*  cumulative changes to x and yed */
-  int                 x, y;              /*  current x and y coords          */
+  gint                origx, origy;      /*  last x and y coords             */
+  gint                cumlx, cumly;      /*  cumulative changes to x and yed */
+  gint                x, y;              /*  current x and y coords          */
 
-  int                 x1, y1;            /*  bounding box of selection mask  */
-  int                 x2, y2;
+  gint                x1, y1;            /*  bounding box of selection mask  */
+  gint                x2, y2;
 
   EditType            edit_type;         /*  translate the mask or layer?    */
 
@@ -70,31 +71,38 @@ static EditSelection edit_select;
 
 static void
 edit_selection_snap (GDisplay *gdisp,
-		     int       x,
-		     int       y)
+		     gdouble   x,
+		     gdouble   y)
 {
-  int x1, y1;
-  int x2, y2;
-  int dx, dy;
+  gdouble x1, y1;
+  gdouble x2, y2;
+  gdouble dx, dy;
 
-  gdisplay_untransform_coords (gdisp, x, y, &x, &y, FALSE, TRUE);
+  gdisplay_untransform_coords_f (gdisp, x, y, &x, &y, TRUE);
 
   dx = x - edit_select.origx;
   dy = y - edit_select.origy;
-
+  
   x1 = edit_select.x1 + dx;
   y1 = edit_select.y1 + dy;
-  x2 = edit_select.x2 + dx;
-  y2 = edit_select.y2 + dy;
 
-  gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, TRUE);
-  gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, TRUE);
-  gdisplay_snap_rectangle (gdisp, x1, y1, x2, y2, &x1, &y1);
-
-  gdisplay_untransform_coords (gdisp, x1, y1, &x1, &y1, FALSE, TRUE);
-
-  edit_select.x = x1 - (edit_select.x1 - edit_select.origx);
-  edit_select.y = y1 - (edit_select.y1 - edit_select.origy);
+  if (gdisp->draw_guides &&
+      gdisp->snap_to_guides &&
+      gdisp->gimage->guides)
+    {
+      x2 = edit_select.x2 + dx;
+      y2 = edit_select.y2 + dy;
+  
+      gdisplay_transform_coords_f (gdisp, x1, y1, &x1, &y1, TRUE);
+      gdisplay_transform_coords_f (gdisp, x2, y2, &x2, &y2, TRUE);
+      
+      gdisplay_snap_rectangle (gdisp, x1, y1, x2, y2, &x1, &y1);
+      
+      gdisplay_untransform_coords_f (gdisp, x1, y1, &x1, &y1, TRUE);
+    }
+  
+  edit_select.x = (int)x1 - (edit_select.x1 - edit_select.origx);
+  edit_select.y = (int)y1 - (edit_select.y1 - edit_select.origy);
 }
 
 void
@@ -105,7 +113,7 @@ init_edit_selection (Tool           *tool,
 {
   GDisplay *gdisp;
   Layer *layer;
-  int x, y;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -181,7 +189,7 @@ edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       gpointer        gdisp_ptr)
 {
-  int x, y;
+  gint x, y;
   GDisplay * gdisp;
   Layer *layer;
 
@@ -193,7 +201,7 @@ edit_selection_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id);
 
   /*  Stop and free the selection core  */
   draw_core_stop (edit_select.core, tool);
@@ -212,24 +220,24 @@ edit_selection_button_release (Tool           *tool,
    *  the other translation types.
    */
   if (edit_select.edit_type == MaskTranslate)
-  {
-    edit_selection_snap (gdisp, bevent->x, bevent->y);
-    x = edit_select.x;
-    y = edit_select.y;
-    
-    /* move the selection -- whether there has been net movement or not!
-     * (to ensure that there's something on the undo stack)
-     */
-    gimage_mask_translate (gdisp->gimage, 
-			   edit_select.cumlx,
-			   edit_select.cumly);
-
-    if (edit_select.first_move)
-      {
-	gimp_image_undo_freeze (gdisp->gimage);
-	edit_select.first_move = FALSE;
-      }
-  }
+    {
+      edit_selection_snap (gdisp, bevent->x, bevent->y);
+      x = edit_select.x;
+      y = edit_select.y;
+      
+      /* move the selection -- whether there has been net movement or not!
+       * (to ensure that there's something on the undo stack)
+       */
+      gimage_mask_translate (gdisp->gimage, 
+			     edit_select.cumlx,
+			     edit_select.cumly);
+      
+      if (edit_select.first_move)
+	{
+	  gimp_image_undo_freeze (gdisp->gimage);
+	  edit_select.first_move = FALSE;
+	}
+    }
   
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
@@ -239,12 +247,10 @@ edit_selection_button_release (Tool           *tool,
       /* The user either didn't actually move the selection,
 	 or moved it around and eventually just put it back in
 	 exactly the same spot. */
-      if ((edit_select.edit_type == MaskTranslate) ||
-	  (edit_select.edit_type == MaskToLayerTranslate))
-	gimage_mask_clear (gdisp->gimage);
-      /*  if no movement occured and the type is LayerTranslate,
+
+     /*  If no movement occured and the type is FloatingSelTranslate,
 	  check if the layer is a floating selection.  If so, anchor. */
-      else if (edit_select.edit_type == FloatingSelTranslate)
+      if (edit_select.edit_type == FloatingSelTranslate)
 	{
 	  layer = gimage_get_active_layer (gdisp->gimage);
 	  if (layer_is_floating_sel (layer))
@@ -253,7 +259,7 @@ edit_selection_button_release (Tool           *tool,
     }
   else
     {
-      paths_transform_xy(gdisp->gimage,edit_select.cumlx,edit_select.cumly);
+      paths_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
     }
     
   undo_push_group_end (gdisp->gimage);
@@ -293,12 +299,11 @@ edit_selection_motion (Tool           *tool,
   /**********************************************adam hack*************/
   /********************************************************************/
   {
-    gint x,y;
+    gint x, y;
     Layer *layer;
     Layer *floating_layer;
     GSList *layer_list;
 
-    edit_selection_snap (gdisp, mevent->x, mevent->y);
     x = edit_select.x;
     y = edit_select.y;
 
@@ -349,17 +354,22 @@ edit_selection_motion (Tool           *tool,
 	    break;
 	
 	  case MaskToLayerTranslate:
-	    gimage_mask_float (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+	    gimage_mask_float (gdisp->gimage, 
+			       gimage_active_drawable (gdisp->gimage),
 			       0, 0);
-	    if (edit_select.first_move)
-	      {
-		gimp_image_undo_freeze (gdisp->gimage);
-		edit_select.first_move = FALSE;
-	      }
-	    edit_select.edit_type = FloatingSelTranslate;
+
+	    /* this is always the first move, since we switch to FloatingSelTranslate */
+	    gimp_image_undo_freeze (gdisp->gimage);
+	    edit_select.first_move = FALSE; 
 
 	    edit_select.origx -= edit_select.x1;
 	    edit_select.origy -= edit_select.y1;
+	    edit_select.x2 -= edit_select.x1;
+	    edit_select.y2 -= edit_select.y1;
+	    edit_select.x1 = 0;
+	    edit_select.y1 = 0;
+
+	    edit_select.edit_type = FloatingSelTranslate;
 	    break;
       
 	  case FloatingSelTranslate:
@@ -418,17 +428,17 @@ edit_selection_motion (Tool           *tool,
 void
 edit_selection_draw (Tool *tool)
 {
-  int i;
-  int diff_x, diff_y;
+  gint i;
+  gint diff_x, diff_y;
   GDisplay * gdisp;
   GdkSegment * seg;
   Selection * select;
   Layer *layer;
   GSList *layer_list;
-  int floating_sel;
-  int x1, y1, x2, y2;
-  int x3, y3, x4, y4;
-  int off_x, off_y;
+  gint floating_sel;
+  gint x1, y1, x2, y2;
+  gint x3, y3, x4, y4;
+  gint off_x, off_y;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
@@ -438,11 +448,6 @@ edit_selection_draw (Tool *tool)
     {
       diff_x = SCALEX (gdisp, edit_select.cumlx);
       diff_y = SCALEY (gdisp, edit_select.cumly);
-    }
-  else
-    {
-      diff_x = 0;
-      diff_y = 0; 
     }
 
   switch (edit_select.edit_type)
@@ -504,8 +509,8 @@ edit_selection_draw (Tool *tool)
       gdisplay_transform_coords (gdisp, edit_select.x2, edit_select.y2, &x2, &y2, TRUE);
       gdk_draw_rectangle (edit_select.core->win,
 			  edit_select.core->gc, 0,
-			  x1 + diff_x, y1 + diff_y,
-			  x2 - x1, y2 - y1);
+			  x1, y1,
+			  x2 - x1 + 1, y2 - y1 + 1);
       break;
 
     case LayerTranslate:
@@ -542,7 +547,7 @@ edit_selection_draw (Tool *tool)
 
       gdk_draw_rectangle (edit_select.core->win,
 			  edit_select.core->gc, 0,
-			  x1 + diff_x, y1 + diff_y,
+			  x1, y1,
 			  x2 - x1, y2 - y1);
       break;
 
@@ -613,7 +618,7 @@ edit_selection_cursor_update (Tool           *tool,
   gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
 }
 
-static int
+static gint
 process_event_queue_keys (GdkEventKey *kevent, ...)
 /* GdkKeyType, GdkModifierType, value ... 0 
  * could move this function to a more central location so it can be used
@@ -625,8 +630,8 @@ process_event_queue_keys (GdkEventKey *kevent, ...)
   GList *list = NULL;
   guint keys[FILTER_MAX_KEYS];
   GdkModifierType modifiers[FILTER_MAX_KEYS];
-  int values[FILTER_MAX_KEYS];
-  int i = 0, nkeys = 0, value = 0, done = 0, discard_event;
+  gint values[FILTER_MAX_KEYS];
+  gint i = 0, nkeys = 0, value = 0, done = 0, discard_event;
   GtkWidget *orig_widget;
 
   va_start(argp, kevent);
@@ -693,7 +698,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  gpointer     gdisp_ptr)
 {
-  int inc_x, inc_y, mask_inc_x, mask_inc_y;
+  gint inc_x, inc_y, mask_inc_x, mask_inc_y;
   GDisplay *gdisp;
   Layer *layer;
   Layer *floating_layer;

@@ -1,3 +1,17 @@
+Thu Feb 10 15:20:13 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/edit_selection.c: Finally moved selections snap to the 
+	guides again. Layer moves are slightly faster than before, if no 
+	guides are present.
+	
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/gdisplayP.h: Use doubles for snap_to_point. Less rounding
+	makes the result much better on low resolution. If it snaps, the
+	result should be exactly the guide in almost all cases now. Only
+	at very low resolutions, you may end up with an error of 1 pixel.
+	Some code cleanup while I was on it... Fixes bug #2353.
+
 Thu Feb 9 20:21:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 
 	(applied by pcg@goof.com)
@@ -14,9 +28,9 @@ Thu Feb 10 02:55:53 CET 2000  Sven Neumann <sven@gimp.org>
 	* app/gimpprogress.c
 	* app/menus.c
 	* plug-ins/twain/twain.c
-	* plug-ins/winsnap/winsnap.c: I18n fixes. Marked hardcoded fonts for 
-	translation and moved translatable strings out of defines into places 
-	where xgettext can parse them.
+	* plug-ins/winsnap/winsnap.c: I18n fixes. Marked hardcoded fonts 
+	for translation and moved translatable strings out of defines into 
+	places where xgettext can parse them.
 
 2000-02-10  Michael Natterer  <mitch@gimp.org>
 

@@ -61,14 +61,14 @@
 
 /* variable declarations */
 GSList *               display_list = NULL;
-static int             display_num  = 1;
+static gint            display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 /*  Local functions  */
 static void       gdisplay_format_title     (GDisplay *, char *, int);
 static void       gdisplay_delete           (GDisplay *);
 static GSList *   gdisplay_free_area_list   (GSList *);
-static GSList *   gdisplay_process_area_list(GSList *, GArea *);
+static GSList *   gdisplay_process_area_list(GSList *, GimpArea *);
 static void       gdisplay_add_update_area  (GDisplay *, int, int, int, int);
 static void       gdisplay_add_display_area (GDisplay *, int, int, int, int);
 static void       gdisplay_paint_area       (GDisplay *, int, int, int, int);
@@ -83,11 +83,11 @@ static GHashTable *display_ht = NULL;
 /* FIXME: GDisplays really need to be GtkObjects */
 
 GDisplay*
-gdisplay_new (GimpImage    *gimage,
-	      unsigned int  scale)
+gdisplay_new (GimpImage *gimage,
+	      guint      scale)
 {
   GDisplay *gdisp;
-  char title [MAX_TITLE_BUF];
+  gchar title [MAX_TITLE_BUF];
 
   /*  If there isn't an interface, never create a gdisplay  */
   if (no_interface)
@@ -198,8 +198,8 @@ print (char *buf, int len, int start, const char *fmt, ...)
 
 static void
 gdisplay_format_title (GDisplay *gdisp,
-		       char     *title,
-		       int       title_len)
+		       gchar    *title,
+		       gint      title_len)
 {
   GimpImage *gimage;
   char *image_type_str;
@@ -382,12 +382,12 @@ static GSList *
 gdisplay_free_area_list (GSList *list)
 {
   GSList *l = list;
-  GArea *ga;
+  GimpArea *ga;
 
   while (l)
     {
       /*  free the data  */
-      ga = (GArea *) l->data;
+      ga = (GimpArea *) l->data;
       g_free (ga);
 
       l = g_slist_next (l);
@@ -401,24 +401,24 @@ gdisplay_free_area_list (GSList *list)
 
 
 /*
- * As far as I can tell, this function takes a GArea and unifies it with
- *  an existing list of GAreas, trying to avoid overdraw.  [adam]
+ * As far as I can tell, this function takes a GimpArea and unifies it with
+ *  an existing list of GimpAreas, trying to avoid overdraw.  [adam]
  */
 static GSList *
 gdisplay_process_area_list (GSList *list,
-			    GArea  *ga1)
+			    GimpArea  *ga1)
 {
   GSList *new_list;
   GSList *l = list;
-  int area1, area2, area3;
-  GArea *ga2;
+  gint area1, area2, area3;
+  GimpArea *ga2;
 
   /*  start new list off  */
   new_list = g_slist_prepend (NULL, ga1);
   while (l)
     {
       /*  process the data  */
-      ga2 = (GArea *) l->data;
+      ga2 = (GimpArea *) l->data;
       area1 = (ga1->x2 - ga1->x1) * (ga1->y2 - ga1->y1) + OVERHEAD;
       area2 = (ga2->x2 - ga2->x1) * (ga2->y2 - ga2->y1) + OVERHEAD;
       area3 = (MAX (ga2->x2, ga1->x2) - MIN (ga2->x1, ga1->x1)) *
@@ -449,7 +449,7 @@ gdisplay_process_area_list (GSList *list,
 static int
 idle_render_next_area (GDisplay *gdisp)
 {
-  GArea  *ga;
+  GimpArea  *ga;
   GSList *list;
   
   list = gdisp->idle_render.update_areas;
@@ -459,7 +459,7 @@ idle_render_next_area (GDisplay *gdisp)
       return (-1);
     }
 
-  ga = (GArea*) list->data;
+  ga = (GimpArea*) list->data;
 
   gdisp->idle_render.update_areas =
     g_slist_remove (gdisp->idle_render.update_areas, ga);
@@ -483,9 +483,9 @@ idle_render_next_area (GDisplay *gdisp)
 static int
 idlerender_callback (gpointer data)
 {
-  const int CHUNK_WIDTH = 256;
-  const int CHUNK_HEIGHT = 128;
-  int workx, worky, workw, workh;
+  const gint CHUNK_WIDTH = 256;
+  const gint CHUNK_HEIGHT = 128;
+  gint workx, worky, workw, workh;
   GDisplay* gdisp = data;
 
   workw = CHUNK_WIDTH;
@@ -534,7 +534,7 @@ static void
 gdisplay_idlerender_init (GDisplay *gdisp)
 {
   GSList *list;
-  GArea  *ga, *new_ga;
+  GimpArea  *ga, *new_ga;
 
 /*  gdisplay_install_override_cursor(gdisp, GDK_CIRCLE); */
 
@@ -544,9 +544,9 @@ gdisplay_idlerender_init (GDisplay *gdisp)
   list = gdisp->update_areas;
   while (list)
     {
-      ga = (GArea *) list->data;
-      new_ga = g_malloc (sizeof(GArea));
-      memcpy (new_ga, ga, sizeof(GArea));
+      ga = (GimpArea *) list->data;
+      new_ga = g_malloc (sizeof(GimpArea));
+      memcpy (new_ga, ga, sizeof(GimpArea));
 
       gdisp->idle_render.update_areas =
 	gdisplay_process_area_list (gdisp->idle_render.update_areas, new_ga);
@@ -559,7 +559,7 @@ gdisplay_idlerender_init (GDisplay *gdisp)
      on the next unrendered area in the list. */
   if (gdisp->idle_render.active)
     {
-      new_ga = g_malloc (sizeof(GArea));
+      new_ga = g_malloc (sizeof(GimpArea));
       new_ga->x1 = gdisp->idle_render.basex;
       new_ga->y1 = gdisp->idle_render.y;
       new_ga->x2 = gdisp->idle_render.basex + gdisp->idle_render.width;
@@ -598,7 +598,7 @@ void
 gdisplay_flush_displays_only (GDisplay *gdisp)
 {
   GSList *list;
-  GArea  *ga;
+  GimpArea  *ga;
 
   list = gdisp->display_areas;
 
@@ -609,8 +609,8 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
 
       while (list)
 	{
-	  /*  Paint the area specified by the GArea  */
-	  ga = (GArea *) list->data;
+	  /*  Paint the area specified by the GimpArea  */
+	  ga = (GimpArea *) list->data;
 	  gdisplay_display_area (gdisp, ga->x1, ga->y1,
 				 (ga->x2 - ga->x1), (ga->y2 - ga->y1));
 
@@ -640,7 +640,7 @@ gdisplay_flush_whenever (GDisplay *gdisp,
 			 gboolean  now)
 {
   GSList *list;
-  GArea  *ga;
+  GimpArea  *ga;
 
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
@@ -654,8 +654,8 @@ gdisplay_flush_whenever (GDisplay *gdisp,
       list = gdisp->update_areas;
       while (list)
 	{
-	  /*  Paint the area specified by the GArea  */
-	  ga = (GArea *) list->data;
+	  /*  Paint the area specified by the GimpArea  */
+	  ga = (GimpArea *) list->data;
 	  
 	  if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
 	    {
@@ -743,17 +743,17 @@ gdisplay_draw_guides (GDisplay *gdisp)
 void
 gdisplay_draw_guide (GDisplay *gdisp,
 		     Guide    *guide,
-		     int       active)
+		     gboolean  active)
 {
   static GdkGC *normal_hgc = NULL;
   static GdkGC *active_hgc = NULL;
   static GdkGC *normal_vgc = NULL;
   static GdkGC *active_vgc = NULL;
   static int initialize = TRUE;
-  int x1, x2;
-  int y1, y2;
-  int w, h;
-  int x, y;
+  gint x1, x2;
+  gint y1, y2;
+  gint w, h;
+  gint x, y;
 
   if (guide->position < 0)
     return;
@@ -845,14 +845,14 @@ gdisplay_draw_guide (GDisplay *gdisp,
 
 Guide*
 gdisplay_find_guide (GDisplay *gdisp,
-		     int       x,
-		     int       y)
+		     gdouble   x,
+		     gdouble   y)
 {
   GList *tmp_list;
   Guide *guide;
-  double scalex, scaley;
-  int offset_x, offset_y;
-  int pos;
+  gint offset_x, offset_y;
+  gdouble scalex, scaley;
+  gdouble pos;
 
   if (gdisp->draw_guides)
     {
@@ -870,14 +870,14 @@ gdisplay_find_guide (GDisplay *gdisp,
 	  switch (guide->orientation)
 	    {
 	    case ORIENTATION_HORIZONTAL:
-	      pos = (int) (scaley * guide->position - offset_y);
+	      pos = scaley * guide->position - offset_y;
 	      if ((guide->position != -1) &&
 		  (pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
 	    case ORIENTATION_VERTICAL:
-	      pos = (int) (scalex * guide->position - offset_x);
+	      pos = scalex * guide->position - offset_x;
 	      if ((guide->position != -1) &&
 		  (pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
@@ -890,19 +890,21 @@ gdisplay_find_guide (GDisplay *gdisp,
   return NULL;
 }
 
-void
+gboolean
 gdisplay_snap_point (GDisplay *gdisp,
-		     gdouble   x ,
+		     gdouble   x,
 		     gdouble   y,
-		     gdouble   *tx,
-		     gdouble   *ty)
+		     gdouble  *tx,
+		     gdouble  *ty)
 {
   GList *tmp_list;
   Guide *guide;
-  double scalex, scaley;
-  int offset_x, offset_y;
-  int minhdist, minvdist;
-  int pos, dist;
+  gdouble scalex, scaley;
+  gdouble pos;
+  gint offset_x, offset_y;
+  gint minhdist, minvdist;
+  gint dist;
+  gboolean snapped = FALSE;
 
   *tx = x;
   *ty = y;
@@ -928,70 +930,74 @@ gdisplay_snap_point (GDisplay *gdisp,
 	  switch (guide->orientation)
 	    {
 	    case ORIENTATION_HORIZONTAL:
-	      pos = (int) (scaley * guide->position - offset_y);
+	      pos = scaley * guide->position - offset_y;
+
 	      if ((pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		{
-		  dist = pos - y;
+		  dist = (int) pos - y;
 		  dist = ABS (dist);
 
 		  if (dist < minhdist)
 		    {
 		      minhdist = dist;
 		      *ty = pos;
+		      snapped = TRUE;
 		    }
 		}
 	      break;
 	    case ORIENTATION_VERTICAL:
-	      pos = (int) (scalex * guide->position - offset_x);
+	      pos = scalex * guide->position - offset_x;
+
 	      if ((pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
 		{
-		  dist = pos - x;
+		  dist = (int) pos - x;
 		  dist = ABS (dist);
 
 		  if (dist < minvdist)
 		    {
 		      minvdist = dist;
-		      *tx = pos;
+		      *tx = pos; 
+		      snapped = TRUE;
 		    }
 		}
 	      break;
 	    }
 	}
     }
+  return snapped;
 }
 
 void
 gdisplay_snap_rectangle (GDisplay *gdisp,
-			 int       x1,
-			 int       y1,
-			 int       x2,
-			 int       y2,
-			 int      *tx1,
-			 int      *ty1)
+			 gdouble   x1,
+			 gdouble   y1,
+			 gdouble   x2,
+			 gdouble   y2,
+			 gdouble  *tx1,
+			 gdouble  *ty1)
 {
-  double nx1, ny1;
-  double nx2, ny2;
+  gdouble nx1, ny1;
+  gdouble nx2, ny2;
+  gboolean snap1, snap2;
 
   *tx1 = x1;
   *ty1 = y1;
 
-  if (gdisp->draw_guides &&
-      gdisp->snap_to_guides &&
-      gdisp->gimage->guides)
+  snap1 = gdisplay_snap_point (gdisp, x1, y1, &nx1, &ny1);
+  snap2 = gdisplay_snap_point (gdisp, x2, y2, &nx2, &ny2);
+  
+  if (snap1 || snap2)
     {
-      gdisplay_snap_point (gdisp, x1, y1, &nx1, &ny1);
-      gdisplay_snap_point (gdisp, x2, y2, &nx2, &ny2);
-
-      if (x1 != (int)nx1)
+      if (x1 != nx1)
 	*tx1 = nx1;
-      else if (x2 != (int)nx2)
+      else if (x2 != nx2)
 	*tx1 = x1 + (nx2 - x2);
-
-      if (y1 != (int)ny1)
+  
+      if (y1 != ny1)
 	*ty1 = ny1;
-      else if (y2 != (int)ny2)
+      else if (y2 != ny2)
 	*ty1 = y1 + (ny2 - y2);
     }
 }
@@ -1024,13 +1030,12 @@ gdisplay_draw_cursor (GDisplay *gdisp)
 
 void
 gdisplay_update_cursor (GDisplay *gdisp, 
-			int       x, 
-			int       y)
+			gint      x, 
+			gint      y)
 {
-  int new_cursor;
-  char buffer[CURSOR_STR_LENGTH];
-  int t_x, t_y;
-  GimpDrawable *active_drawable;  
+  gint new_cursor;
+  gchar buffer[CURSOR_STR_LENGTH];
+  gint t_x, t_y;
 
   new_cursor = gdisp->draw_cursor && gdisp->proximity;
   
@@ -1049,41 +1054,36 @@ gdisplay_update_cursor (GDisplay *gdisp,
 	}
     }
 
-  gdisplay_untransform_coords(gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
 
-  active_drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  if (active_drawable)
+  if (t_x < 0 ||
+      t_y < 0 ||
+      t_x >= gdisp->gimage->width ||
+      t_y >= gdisp->gimage->height)
     {
-      if (t_x < 0 ||
-	  t_y < 0 ||
-	  t_x >= active_drawable->width ||
-	  t_y >= active_drawable->height)
+      gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
+      info_window_update_RGB (gdisp, -1, -1);
+    } 
+  else 
+    {
+      if (gdisp->dot_for_dot)
 	{
-	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
-	  info_window_update_RGB (gdisp, -1, -1);
-	} 
-      else 
-	{
-	  if (gdisp->dot_for_dot)
-	    {
-	      g_snprintf (buffer, CURSOR_STR_LENGTH, 
-			  gdisp->cursor_format_str, "", t_x, ", ", t_y);
-	    }
-	  else /* show real world units */
-	    {
-	      double unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-
-	      g_snprintf
-		(buffer, CURSOR_STR_LENGTH, gdisp->cursor_format_str,
-		 "",
-		 (double) t_x * unit_factor / gdisp->gimage->xresolution,
-		 ", ",
-		 (double) t_y * unit_factor / gdisp->gimage->yresolution);
-	    }
-	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
-	  info_window_update_RGB (gdisp, t_x, t_y);
+	  g_snprintf (buffer, CURSOR_STR_LENGTH, 
+		      gdisp->cursor_format_str, "", t_x, ", ", t_y);
 	}
+      else /* show real world units */
+	{
+	  gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+	  
+	  g_snprintf
+	    (buffer, CURSOR_STR_LENGTH, gdisp->cursor_format_str,
+	     "",
+	     (gdouble) t_x * unit_factor / gdisp->gimage->xresolution,
+	     ", ",
+	     (gdouble) t_y * unit_factor / gdisp->gimage->yresolution);
+	}
+      gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
+      info_window_update_RGB (gdisp, t_x, t_y);
     }
 
   gdisp->have_cursor = new_cursor;
@@ -1092,13 +1092,12 @@ gdisplay_update_cursor (GDisplay *gdisp,
   
   if (new_cursor)
     gdisplay_flush (gdisp);
-
 }
 
 
 void
 gdisplay_set_dot_for_dot (GDisplay *gdisp, 
-			  int       value)
+			  gboolean  value)
 {
   if (value != gdisp->dot_for_dot)
     {
@@ -1114,9 +1113,9 @@ void
 gdisplay_resize_cursor_label (GDisplay *gdisp)
 {
   /* Set a proper size for the coordinates display in the statusbar. */
-  char buffer[CURSOR_STR_LENGTH];
-  int cursor_label_width;
-  int label_frame_size_difference;
+  gchar buffer[CURSOR_STR_LENGTH];
+  gint cursor_label_width;
+  gint label_frame_size_difference;
 
   if (gdisp->dot_for_dot)
     {
@@ -1172,14 +1171,14 @@ gdisplay_remove_and_delete (GDisplay *gdisp)
 
 static void
 gdisplay_add_update_area (GDisplay *gdisp,
-			  int       x,
-			  int       y,
-			  int       w,
-			  int       h)
+			  gint      x,
+			  gint      y,
+			  gint      w,
+			  gint      h)
 {
-  GArea * ga;
+  GimpArea * ga;
 
-  ga = (GArea *) g_malloc (sizeof (GArea));
+  ga = (GimpArea *) g_malloc (sizeof (GimpArea));
   ga->x1 = CLAMP (x, 0, gdisp->gimage->width);
   ga->y1 = CLAMP (y, 0, gdisp->gimage->height);
   ga->x2 = CLAMP (x + w, 0, gdisp->gimage->width);
@@ -1191,14 +1190,14 @@ gdisplay_add_update_area (GDisplay *gdisp,
 
 static void
 gdisplay_add_display_area (GDisplay *gdisp,
-			   int       x,
-			   int       y,
-			   int       w,
-			   int       h)
+			   gint      x,
+			   gint      y,
+			   gint      w,
+			   gint      h)
 {
-  GArea * ga;
+  GimpArea * ga;
 
-  ga = (GArea *) g_malloc (sizeof (GArea));
+  ga = (GimpArea *) g_malloc (sizeof (GimpArea));
 
   ga->x1 = CLAMP (x, 0, gdisp->disp_width);
   ga->y1 = CLAMP (y, 0, gdisp->disp_height);
@@ -1211,12 +1210,12 @@ gdisplay_add_display_area (GDisplay *gdisp,
 
 static void
 gdisplay_paint_area (GDisplay *gdisp,
-		     int       x,
-		     int       y,
-		     int       w,
-		     int       h)
+		     gint      x,
+		     gint      y,
+		     gint      w,
+		     gint      h)
 {
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   /*  Bounds check  */
   x1 = CLAMP (x, 0, gdisp->gimage->width);
@@ -1245,19 +1244,19 @@ gdisplay_paint_area (GDisplay *gdisp,
 
 static void
 gdisplay_display_area (GDisplay *gdisp,
-		       int       x,
-		       int       y,
-		       int       w,
-		       int       h)
+		       gint      x,
+		       gint      y,
+		       gint      w,
+		       gint      h)
 {
-  int sx, sy;
-  int x1, y1;
-  int x2, y2;
-  int dx, dy;
-  int i, j;
+  gint sx, sy;
+  gint x1, y1;
+  gint x2, y2;
+  gint dx, dy;
+  gint i, j;
   GList *list;
   guchar *buf;
-  int bpp, bpl;
+  gint bpp, bpl;
 
   buf = gximage_get_data ();
   bpp = gximage_get_bpp ();
@@ -1356,10 +1355,10 @@ gdisplay_display_area (GDisplay *gdisp,
 }
 
 
-int
+gint
 gdisplay_mask_value (GDisplay *gdisp,
-		     int       x,
-		     int       y)
+		     gint      x,
+		     gint      y)
 {
   /*  move the coordinates from screen space to image space  */
   gdisplay_untransform_coords (gdisp, x, y, &x, &y, FALSE, 0);
@@ -1368,15 +1367,15 @@ gdisplay_mask_value (GDisplay *gdisp,
 }
 
 
-int
+gint
 gdisplay_mask_bounds (GDisplay *gdisp,
-		      int      *x1,
-		      int      *y1,
-		      int      *x2,
-		      int      *y2)
+		      gint     *x1,
+		      gint     *y1,
+		      gint     *x2,
+		      gint     *y2)
 {
   Layer *layer;
-  int off_x, off_y;
+  gint off_x, off_y;
 
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimage_floating_sel (gdisp->gimage)))
@@ -1415,15 +1414,15 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 
 void
 gdisplay_transform_coords (GDisplay *gdisp,
-			   int       x,
-			   int       y,
-			   int      *nx,
-			   int      *ny,
-			   int       use_offsets)
+			   gint      x,
+			   gint      y,
+			   gint     *nx,
+			   gint     *ny,
+			   gboolean  use_offsets)
 {
-  double scalex;
-  double scaley;
-  int offset_x, offset_y;
+  gdouble scalex;
+  gdouble scaley;
+  gint offset_x, offset_y;
 
   /*  transform from image coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1446,16 +1445,16 @@ gdisplay_transform_coords (GDisplay *gdisp,
 
 void
 gdisplay_untransform_coords (GDisplay *gdisp,
-			     int       x,
-			     int       y,
-			     int      *nx,
-			     int      *ny,
-			     int       round,
-			     int       use_offsets)
+			     gint       x,
+			     gint       y,
+			     gint      *nx,
+			     gint      *ny,
+			     gboolean   round,
+			     gboolean   use_offsets)
 {
-  double scalex;
-  double scaley;
-  int offset_x, offset_y;
+  gdouble scalex;
+  gdouble scaley;
+  gint offset_x, offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1486,19 +1485,19 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 
 void
 gdisplay_transform_coords_f (GDisplay *gdisp,
-			     double    x,
-			     double    y,
-			     double   *nx,
-			     double   *ny,
-			     int       use_offsets)
+			     gdouble   x,
+			     gdouble   y,
+			     gdouble  *nx,
+			     gdouble  *ny,
+			     gboolean  use_offsets)
 {
-  double scalex;
-  double scaley;
-  int offset_x, offset_y;
+  gdouble scalex;
+  gdouble scaley;
+  gint offset_x, offset_y;
 
   /*  transform from gimp coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X(gdisp);
-  scaley = SCALEFACTOR_Y(gdisp);
+  scalex = SCALEFACTOR_X (gdisp);
+  scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1517,22 +1516,22 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
 
 void
 gdisplay_untransform_coords_f (GDisplay *gdisp,
-			       double    x,
-			       double    y,
-			       double   *nx,
-			       double   *ny,
-			       int       use_offsets)
+			       gdouble    x,
+			       gdouble    y,
+			       gdouble   *nx,
+			       gdouble   *ny,
+			       gboolean   use_offsets)
 {
-  double scalex;
-  double scaley;
-  int offset_x, offset_y;
+  gdouble scalex;
+  gdouble scaley;
+  gint offset_x, offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
 
   /*  transform from screen coordinates to gimp coordinates  */
-  scalex = SCALEFACTOR_X(gdisp);
-  scaley = SCALEFACTOR_Y(gdisp);
+  scalex = SCALEFACTOR_X (gdisp);
+  scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
     drawable_offsets (gimage_active_drawable (gdisp->gimage), &offset_x, &offset_y);
@@ -1752,10 +1751,10 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
 void
 gdisplay_expose_area (GDisplay *gdisp,
-		      int       x,
-		      int       y,
-		      int       w,
-		      int       h)
+		      gint      x,
+		      gint      y,
+		      gint      w,
+		      gint      h)
 {
   gdisplay_add_display_area (gdisp, x, y, w, h);
 }
@@ -1764,7 +1763,7 @@ void
 gdisplay_expose_guide (GDisplay *gdisp,
 		       Guide    *guide)
 {
-  int x, y;
+  gint x, y;
 
   if (guide->position < 0)
     return;
@@ -1811,7 +1810,7 @@ gdisplay_active (void)
 
 
 GDisplay *
-gdisplay_get_ID (int ID)
+gdisplay_get_ID (gint ID)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -1834,7 +1833,7 @@ gdisplay_get_ID (int ID)
 void
 gdisplay_update_title (GDisplay *gdisp)
 {
-  char title [MAX_TITLE_BUF];
+  gchar title [MAX_TITLE_BUF];
   guint context_id;
 
   /* format the title */
@@ -1902,10 +1901,10 @@ gdisplays_setup_scale (GimpImage *gimage)
 
 void
 gdisplays_update_area (GimpImage *gimage,
-		       int        x,
-		       int        y,
-		       int        w,
-		       int        h)
+		       gint       x,
+		       gint       y,
+		       gint       w,
+		       gint       h)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
@@ -2005,7 +2004,7 @@ gdisplays_update_full (GimpImage* gimage)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  int count = 0;
+  gint count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -2090,7 +2089,7 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  int count = 0;
+  gint count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -2124,17 +2123,17 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 }
 
 
-int
+gboolean
 gdisplays_dirty (void)
 {
-  int dirty = 0;
+  gboolean dirty = FALSE;
   GSList *list = display_list;
 
   /*  traverse the linked list of displays  */
   while (list)
     {
       if (((GDisplay *) list->data)->gimage->dirty != 0)
-	dirty = 1;
+	dirty = TRUE;
       list = g_slist_next (list);
     }
 
@@ -2192,7 +2191,7 @@ gdisplays_check_valid (GDisplay  *gtest,
 static void
 gdisplays_flush_whenever (gboolean now)
 {
-  static int flushing = FALSE;
+  static gboolean flushing = FALSE;
   GSList *list = display_list;
 
   /*  no flushing necessary without an interface  */
@@ -2243,7 +2242,7 @@ void
 gdisplay_reconnect (GDisplay  *gdisp, 
 		    GimpImage *gimage)
 {
-  int instance;
+  gint instance;
 
   if (gdisp->idle_render.active)
     {
@@ -2286,7 +2285,8 @@ gdisplay_cleandirty_handler (GimpImage *gimage,
 }
 
 void
-gdisplays_foreach (GFunc func, gpointer user_data)
+gdisplays_foreach (GFunc    func, 
+		   gpointer user_data)
 {
   g_slist_foreach (display_list, func, user_data);
 }

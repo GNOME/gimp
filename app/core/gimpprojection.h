@@ -74,12 +74,12 @@
 
 typedef struct _IdleRenderStruct
 {
-  int width;
-  int height;
-  int x;
-  int y;
-  int basex;
-  int basey;
+  gint width;
+  gint height;
+  gint x;
+  gint y;
+  gint basex;
+  gint basey;
   guint idleid;
   /*guint handlerid;*/
   gboolean active;
@@ -90,7 +90,7 @@ typedef struct _IdleRenderStruct
 
 struct _GDisplay
 {
-  int ID;                         /*  unique identifier for this gdisplay     */
+  gint ID;                        /*  unique identifier for this gdisplay     */
 
   GtkWidget *shell;               /*  shell widget for this gdisplay          */
   GtkWidget *canvas;              /*  canvas widget for this gdisplay         */
@@ -103,10 +103,10 @@ struct _GDisplay
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */
   GtkWidget *cursor_label;        /*  widget for cursor position              */
-  char cursor_format_str [CURSOR_FORMAT_LENGTH]; /* we need a variable format
-						  * string because different
-						  * units have different number
-						  * of decimals               */
+  gchar cursor_format_str [CURSOR_FORMAT_LENGTH]; /* we need a variable format
+						   * string because different
+						   * units have different number
+						   * of decimals              */
   GtkWidget *cancelbutton;        /*  widget for cancel button                */
   guint progressid;               /*  id of statusbar message for progress    */
 
@@ -114,26 +114,27 @@ struct _GDisplay
   InfoDialog *window_nav_dialog;  /*  dialog box for image navigation         */
   GtkWidget  *nav_popup;          /*  widget for the popup navigation window  */
 
-  int color_type;                 /*  is this an RGB or GRAY colormap         */
+  gint color_type;                /*  is this an RGB or GRAY colormap         */
 
   GtkAdjustment *hsbdata;         /*  horizontal data information             */
   GtkAdjustment *vsbdata;         /*  vertical data information               */
 
   GimpImage *gimage;	          /*  pointer to the associated gimage struct */
-  int instance;                   /*  the instance # of this gdisplay as      */
+  gint instance;                  /*  the instance # of this gdisplay as      */
                                   /*  taken from the gimage at creation       */
 
-  int depth;   		          /*  depth of our drawables                  */
-  int disp_width;                 /*  width of drawing area in the window     */
-  int disp_height;                /*  height of drawing area in the window    */
-  int disp_xoffset;
-  int disp_yoffset;
+  gint depth;                     /*  depth of our drawables                  */
+  gint disp_width;                /*  width of drawing area in the window     */
+  gint disp_height;               /*  height of drawing area in the window    */
+  gint disp_xoffset;
+  gint disp_yoffset;
 
-  int offset_x, offset_y;         /*  offset of display image into raw image  */
-  int scale;        	          /*  scale factor from original raw image    */
-  int dot_for_dot;		  /*  is monitor resolution being ignored?    */
-  short draw_guides;              /*  should the guides be drawn?             */
-  short snap_to_guides;           /*  should the guides be snapped to?        */
+  gint offset_x;                  /*  offset of display image into raw image  */
+  gint offset_y;        
+  gint scale;        	          /*  scale factor from original raw image    */
+  gboolean dot_for_dot;		  /*  is monitor resolution being ignored?    */
+  gboolean draw_guides;           /*  should the guides be drawn?             */
+  gboolean snap_to_guides;        /*  should the guides be snapped to?        */
 
   Selection *select;              /*  Selection object                        */
 
@@ -142,16 +143,16 @@ struct _GDisplay
   GSList *update_areas;           /*  Update areas list                       */
   GSList *display_areas;          /*  Display areas list                      */
 
-  int           current_cursor;   /*  Currently installed cursor              */
+  gint current_cursor;            /*  Currently installed cursor              */
 
   GdkCursorType override_cursor;  /*  Overriding cursor (ie. hourglass)       */
 
-  short draw_cursor;	          /* should we draw software cursor ?         */
-  short using_override_cursor;    /* is the cursor overridden? (ie. hourglass)*/
-  int cursor_x;			  /* software cursor X value                  */
-  int cursor_y;			  /* software cursor Y value                  */
-  short proximity;                /* is a device in proximity of gdisplay ?   */
-  short have_cursor;		  /* is cursor currently drawn ?              */
+  gboolean draw_cursor;	          /* should we draw software cursor ?         */
+  gboolean using_override_cursor; /* is the cursor overridden? (ie. hourglass)*/
+  gint cursor_x;                  /* software cursor X value                  */
+  gint cursor_y;                  /* software cursor Y value                  */
+  gboolean proximity;             /* is a device in proximity of gdisplay ?   */
+  gboolean have_cursor;		  /* is cursor currently drawn ?              */
   
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
   
@@ -163,56 +164,58 @@ struct _GDisplay
 
 /* member function declarations */
 
-GDisplay * gdisplay_new                    (GimpImage *, unsigned int);
+GDisplay * gdisplay_new                    (GimpImage *, guint);
 void       gdisplay_reconnect              (GDisplay *, GimpImage *);
 void       gdisplay_remove_and_delete      (GDisplay *);
-int        gdisplay_mask_value             (GDisplay *, int, int);
-int        gdisplay_mask_bounds            (GDisplay *, int *, int *, int *, int *);
-void       gdisplay_transform_coords       (GDisplay *, int, int, int *, int *, int);
-void       gdisplay_untransform_coords     (GDisplay *, int, int, int *,
-					    int *, int, int);
-void       gdisplay_transform_coords_f     (GDisplay *, double, double, double *,
-					    double *, int);
-void       gdisplay_untransform_coords_f   (GDisplay *, double, double, double *,
-					    double *, int);
+int        gdisplay_mask_value             (GDisplay *, gint, gint);
+int        gdisplay_mask_bounds            (GDisplay *, gint *, gint *, gint *, gint *);
+void       gdisplay_transform_coords       (GDisplay *, gint, gint, gint *, gint *, gint);
+void       gdisplay_untransform_coords     (GDisplay *, gint, gint, gint *, gint *, 
+					                gboolean, gboolean);
+void       gdisplay_transform_coords_f     (GDisplay *, gdouble, gdouble, 
+					                gdouble *, gdouble *, gboolean);
+void       gdisplay_untransform_coords_f   (GDisplay *, gdouble, gdouble, 
+					                gdouble *, gdouble *, gboolean);
 void       gdisplay_install_tool_cursor    (GDisplay *, GdkCursorType);
-void       gdisplay_install_gimp_tool_cursor (GDisplay *, int);
+void       gdisplay_install_gimp_tool_cursor (GDisplay *, gint);
 void       gdisplay_remove_tool_cursor     (GDisplay *);
 void       gdisplay_install_override_cursor(GDisplay *, GdkCursorType);
 void       gdisplay_remove_override_cursor (GDisplay *);
 void       gdisplay_set_menu_sensitivity   (GDisplay *);
-void       gdisplay_expose_area            (GDisplay *, int, int, int, int);
+void       gdisplay_expose_area            (GDisplay *, gint, gint, gint, gint);
 void       gdisplay_expose_guide           (GDisplay *, Guide *);
 void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_flush_now              (GDisplay *);
 void       gdisplays_finish_draw           (void);
 void       gdisplay_draw_guides            (GDisplay *);
-void       gdisplay_draw_guide             (GDisplay *, Guide *, int);
-Guide*     gdisplay_find_guide             (GDisplay *, int, int);
-void       gdisplay_snap_point             (GDisplay *, double , double, double *, double *);
-void       gdisplay_snap_rectangle         (GDisplay *, int, int, int, int, int *, int *);
-void	   gdisplay_update_cursor	   (GDisplay *, int, int);
-void	   gdisplay_set_dot_for_dot	   (GDisplay *, int);
+void       gdisplay_draw_guide             (GDisplay *, Guide *, gboolean);
+Guide*     gdisplay_find_guide             (GDisplay *, gdouble, double);
+gboolean   gdisplay_snap_point             (GDisplay *, gdouble, gdouble, 
+					                gdouble *, gdouble *);
+void       gdisplay_snap_rectangle         (GDisplay *, gdouble, gdouble, gdouble, gdouble,
+					                gdouble *, gdouble *);
+void	   gdisplay_update_cursor	   (GDisplay *, gint, gint);
+void	   gdisplay_set_dot_for_dot	   (GDisplay *, gboolean);
 void       gdisplay_resize_cursor_label    (GDisplay *);
 GDisplay * gdisplays_check_valid           (GDisplay *, GimpImage *);
 
 /*  function declarations  */
 
 GDisplay * gdisplay_active                 (void);
-GDisplay * gdisplay_get_ID                 (int);
+GDisplay * gdisplay_get_ID                 (gint);
 void       gdisplay_update_title           (GDisplay*);
 void       gdisplays_update_title          (GimpImage*);
 void       gdisplays_resize_cursor_label   (GimpImage*);
 void       gdisplays_setup_scale           (GimpImage*);
-void       gdisplays_update_area           (GimpImage*, int, int, int, int);
+void       gdisplays_update_area           (GimpImage*, gint, gint, gint, gint);
 void       gdisplays_expose_guides         (GimpImage*);
 void       gdisplays_expose_guide          (GimpImage*, Guide *);
 void       gdisplays_update_full           (GimpImage*);
 void       gdisplays_shrink_wrap           (GimpImage*);
 void       gdisplays_expose_full           (void);
 void       gdisplays_selection_visibility  (GimpImage*, SelectionControl);
-int        gdisplays_dirty                 (void);
+gboolean   gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
 void       gdisplays_flush_now             (void);
