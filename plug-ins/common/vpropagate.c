@@ -41,8 +41,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define	PLUG_IN_NAME	"plug_in_vpropagate"
+#define	DEFAULT_PLUG_IN_NAME	"plug_in_vpropagate"
+#define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define SHORT_NAME	"vpropagate"
+#define ERODE_PLUG_IN_NAME "plug_in_erode"
+#define DILATE_PLUG_IN_NAME "plug_in_dilate"
 
 
 #define	VP_RGB	        (1 << 0)
@@ -208,14 +211,38 @@ query (void)
     { GIMP_PDB_INT32, "upper-limit", "0 <= upper-limit <= 255" }
   };
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure (DEFAULT_PLUG_IN_NAME,
 			  "Propagate values of the layer",
 			  "Propagate values of the layer",
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
 			  N_("<Image>/Filters/Distorts/Value Propagate..."),
-			  "RGB*,GRAY*",
+			  PLUG_IN_IMAGE_TYPES,
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (args), 0,
+			  args, NULL);
+
+  gimp_install_procedure (ERODE_PLUG_IN_NAME,
+			  "Erode image",
+			  "Erode image",
+			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
+			  "Shuji Narazaki",
+			  "1996-1997",
+			  N_("<Image>/Filters/Generic/Erode..."),
+			  PLUG_IN_IMAGE_TYPES,
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (args), 0,
+			  args, NULL);
+
+  gimp_install_procedure (DILATE_PLUG_IN_NAME,
+			  "Dilate image",
+			  "Dilate image",
+			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
+			  "Shuji Narazaki",
+			  "1996-1997",
+			  N_("<Image>/Filters/Generic/Dilate..."),
+			  PLUG_IN_IMAGE_TYPES,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
@@ -244,43 +271,82 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
-      gimp_get_data (PLUG_IN_NAME, &vpvals);
-      /* building the values of dialog variables from vpvals. */
-      propagate_alpha =
-	(vpvals.propagating_channel & PROPAGATING_ALPHA) ? TRUE : FALSE;
-      propagate_value =
-	(vpvals.propagating_channel & PROPAGATING_VALUE) ? TRUE : FALSE;
-      {
-	int	i;
-	for (i = 0; i < 4; i++)
-	  direction_mask_vec[i] = (vpvals.direction_mask & (1 << i))
-	    ? TRUE : FALSE;
-      }
-      if (! vpropagate_dialog (gimp_drawable_type(drawable_id)))
-	return;
+      if (strcmp (name, DEFAULT_PLUG_IN_NAME) == 0)
+	{
+	  INIT_I18N_UI();
+	  gimp_get_data (DEFAULT_PLUG_IN_NAME, &vpvals);
+	  /* building the values of dialog variables from vpvals. */
+	  propagate_alpha =
+	    (vpvals.propagating_channel & PROPAGATING_ALPHA) ? TRUE : FALSE;
+	  propagate_value =
+	    (vpvals.propagating_channel & PROPAGATING_VALUE) ? TRUE : FALSE;
+	  {
+	    int	i;
+	    for (i = 0; i < 4; i++)
+	      direction_mask_vec[i] = (vpvals.direction_mask & (1 << i))
+		? TRUE : FALSE;
+	  }
+	  if (! vpropagate_dialog (gimp_drawable_type(drawable_id)))
+	    return;
+	}
+      else if (strcmp (name, ERODE_PLUG_IN_NAME) == 0 || 
+	       strcmp (name, DILATE_PLUG_IN_NAME) == 0)
+	{
+	  INIT_I18N();
+	  vpvals.propagating_channel = PROPAGATING_VALUE;
+	  vpvals.propagating_rate = 1.0;
+	  vpvals.direction_mask = 15;
+	  vpvals.lower_limit = 0;
+	  vpvals.upper_limit = 255;
+
+	  if(strcmp(name, ERODE_PLUG_IN_NAME) == 0)
+	    vpvals.propagate_mode = 0;
+	  else if(strcmp(name, DILATE_PLUG_IN_NAME) == 0)
+	    vpvals.propagate_mode = 1;
+	}
       break;
     case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
-      vpvals.propagate_mode = param[3].data.d_int32;
-      vpvals.propagating_channel = param[4].data.d_int32;
-      vpvals.propagating_rate = param[5].data.d_float;
-      vpvals.direction_mask = param[6].data.d_int32;
-      vpvals.lower_limit = param[7].data.d_int32;
-      vpvals.upper_limit = param[8].data.d_int32;
+
+      if (strcmp (name, DEFAULT_PLUG_IN_NAME) == 0)
+	{
+	  vpvals.propagate_mode = param[3].data.d_int32;
+	  vpvals.propagating_channel = param[4].data.d_int32;
+	  vpvals.propagating_rate = param[5].data.d_float;
+	  vpvals.direction_mask = param[6].data.d_int32;
+	  vpvals.lower_limit = param[7].data.d_int32;
+	  vpvals.upper_limit = param[8].data.d_int32;
+	}
+      else if (strcmp (name, ERODE_PLUG_IN_NAME) == 0 || 
+	       strcmp (name, DILATE_PLUG_IN_NAME) == 0)
+	{
+	  INIT_I18N();
+	  vpvals.propagating_channel = PROPAGATING_VALUE;
+	  vpvals.propagating_rate = 1.0;
+	  vpvals.direction_mask = 15;
+	  vpvals.lower_limit = 0;
+	  vpvals.upper_limit = 255;
+
+	  if(strcmp(name, ERODE_PLUG_IN_NAME) == 0)
+	    vpvals.propagate_mode = 0;
+	  else if(strcmp(name, DILATE_PLUG_IN_NAME) == 0)
+	    vpvals.propagate_mode = 1;
+	}
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
-      gimp_get_data (PLUG_IN_NAME, &vpvals);
+      gimp_get_data (DEFAULT_PLUG_IN_NAME, &vpvals);
       break;
     }
   
   status = value_propagate (drawable_id);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE || 
+      strcmp(name, DEFAULT_PLUG_IN_NAME) != 0)
     gimp_displays_flush();
-  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
-    gimp_set_data (PLUG_IN_NAME, &vpvals, sizeof (VPValueType));
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS 
+      && strcmp(name, DEFAULT_PLUG_IN_NAME) != 0)
+    gimp_set_data (DEFAULT_PLUG_IN_NAME, &vpvals, sizeof (VPValueType));
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;

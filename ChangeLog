@@ -1,3 +1,9 @@
+2001-12-06  David Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/vpropagate.c: Create Erode and Dilate
+		filter menu entries with reasonable defaults for 
+		this plug-in.
+
 2001-12-06  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/offset-dialog.c: some GUI fiddling.
