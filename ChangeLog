@@ -1,3 +1,11 @@
+2000-11-11  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/gpb.c: Implement the noninteractive run mode for
+	file_gih_save. Whew, it took some trial-and-error iterations to
+	figure out how to call this from script-fu, for testing, because
+	of the int8 and string array args. Include script-fu snippet in
+	comment for reference.
+
 2000-11-11 Garry R. Osgood <gosgood>@idt.net
 
 	* app/gimpbrushpipe.c

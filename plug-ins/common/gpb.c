@@ -103,38 +103,68 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-
 MAIN ()
+
+static GimpParamDef gpb_save_args[] =
+{
+  { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE,    "image",        "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+  { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush in" },
+  { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush in" },
+  { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
+  { GIMP_PDB_STRING,   "description",  "Short description of the brush" }
+};
+static const gint ngpb_save_args = (sizeof (gpb_save_args) /
+				    sizeof (gpb_save_args[0]));
+
+/* Example of how to call file_gih_save from script-fu:
+
+  (let ((ranks (cons-array 1 'byte)))
+    (aset ranks 0 12)
+    (file-gih-save 1
+		   img
+		   drawable
+		   "foo.gih"
+		   "foo.gih"
+		   100
+		   "test brush"
+		   125
+		   125
+		   3
+		   4
+		   1
+		   ranks
+		   1
+		   '("random")))
+*/
+
+static GimpParamDef gih_save_args[] =
+{
+  { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE,    "image",        "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+  { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush pipe in" },
+  { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
+  { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
+  { GIMP_PDB_STRING,   "description",  "Short description of the brush pipe" },
+  { GIMP_PDB_INT32,    "cell_width",	 "Width of the brush cells" },
+  { GIMP_PDB_INT32,    "cell_height",	 "Width of the brush cells" },
+  { GIMP_PDB_INT8,     "display_cols",   "Display column number" },
+  { GIMP_PDB_INT8,     "display_rows",   "Display row number" },
+  { GIMP_PDB_INT32,     "dimension",	 "Dimension of the brush pipe" },
+  /* The number of rank and sel args depend on the dimension */ 
+  { GIMP_PDB_INT8ARRAY,"rank",		 "Ranks of the dimensions" },
+  { GIMP_PDB_INT32,     "dimension",	 "Dimension (again)" },
+  { GIMP_PDB_STRINGARRAY, "sel",	 "Selection modes" }
+};
+
+static const gint ngih_save_args = (sizeof (gih_save_args) /
+				    sizeof (gih_save_args[0]));
 
 static void
 query (void)
 {
-  static GimpParamDef gpb_save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush in" },
-    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
-    { GIMP_PDB_STRING,   "description",  "Short description of the brush" }
-  };
-  static gint ngpb_save_args = (sizeof (gpb_save_args) /
-				sizeof (gpb_save_args[0]));
-
-  static GimpParamDef gih_save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush pipe in" },
-    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
-    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
-    { GIMP_PDB_STRING,   "description",  "Short description of the brush pipe" }
-  };
-  static gint ngih_save_args = (sizeof (gih_save_args) /
-				sizeof (gih_save_args[0]));
-
   gimp_install_procedure ("file_gpb_save",
                           "saves images in GIMP pixmap brush format", 
                           "This plug-in saves a layer of an image in the GIMP pixmap brush format. The image must have an alpha channel.",
@@ -905,6 +935,7 @@ run (char    *name,
   gint32       *layer_ID;
   gint          nlayers, layer;
   gchar        *layer_name;
+  gint          i;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -958,7 +989,7 @@ run (char    *name,
 	  break;
 	  
 	case GIMP_RUN_NONINTERACTIVE:  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
-	  if (nparams != 7)
+	  if (nparams != ngpb_save_args)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	    }
@@ -1045,8 +1076,9 @@ run (char    *name,
 	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case GIMP_RUN_NONINTERACTIVE:  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
-	  if (nparams != 7)
+	case GIMP_RUN_NONINTERACTIVE:
+	  /* We must have at least one dimension */
+	  if (nparams != ngih_save_args)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	    }
@@ -1055,6 +1087,26 @@ run (char    *name,
 	      info.spacing = param[5].data.d_int32;
 	      strncpy (info.description, param[6].data.d_string, MAXDESCLEN);
 	      info.description[MAXDESCLEN] = 0;
+	      gimp_pixpipe_params_init (&gihparms);
+	      gihparms.cellwidth = param[7].data.d_int32;
+	      gihparms.cellheight = param[8].data.d_int32;
+	      gihparms.cols = param[9].data.d_int8;
+	      gihparms.rows = param[10].data.d_int8;
+	      gihparms.dim = param[11].data.d_int32;
+	      gihparms.ncells = 1;
+	      if (param[13].data.d_int32 != gihparms.dim)
+		{
+		  status = GIMP_PDB_CALLING_ERROR;
+		}
+	      else
+		{
+		  for (i = 0; i < gihparms.dim; i++)
+		    {
+		      gihparms.rank[i] = param[12].data.d_int8array[i];
+		      gihparms.selection[i] = g_strdup (param[14].data.d_stringarray[i]);
+		      gihparms.ncells *= gihparms.rank[i];
+		    }
+		}
 	    }
 	  break;
 	  
