@@ -1,3 +1,14 @@
+Fri Jan 14 20:54:31 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/module_db.c
+	* modules/cdisplay_gamma.c
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c
+	* po/POTFILES.in: added gettext support
+
+	* plug-ins/common/pnm.c: smooth the progressbar update (bug #5148)
+
 Fri Jan 14 11:43:09 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in

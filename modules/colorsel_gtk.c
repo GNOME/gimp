@@ -17,10 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <libgimp/color_selector.h>
+#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include "modregister.h"
 
@@ -43,7 +45,7 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    "GTK colour selector as a pluggable colour selector",
+    N_("GTK colour selector as a pluggable colour selector"),
     "Austin Donnelly <austin@gimp.org>",
     "v0.02",
     "(c) 1999, released under the GPL",

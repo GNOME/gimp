@@ -124,3 +124,6 @@ app/undo.c
 app/xcf.c
 app/xinput_airbrush.c
 modules/cdisplay_gamma.c
+modules/colorsel_gtk.c
+modules/colorsel_triangle.c
+modules/colorsel_water.c

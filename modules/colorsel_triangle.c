@@ -20,12 +20,14 @@
  * <austin@gimp.org>
  *
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
 #include <libgimp/color_selector.h>
+#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
 #include "modregister.h"
@@ -74,7 +76,7 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    "Painter-style colour selector as a pluggable colour selector",
+    N_("Painter-style colour selector as a pluggable colour selector"),
     "Simon Budig <Simon.Budig@unix-ag.org>",
     "v0.01",
     "(c) 1999, released under the GPL",
@@ -143,9 +145,9 @@ module_init (GimpModuleInfo **inforet)
   GimpColorSelectorID id;
 
 #ifndef __EMX__
-  id = gimp_color_selector_register ("Triangle", "triangle.html", &methods);
+  id = gimp_color_selector_register (_("Triangle"), "triangle.html", &methods);
 #else
-  id = mod_color_selector_register  ("Triangle", "triangle.html", &methods);
+  id = mod_color_selector_register  (_("Triangle"), "triangle.html", &methods);
 #endif
   if (id)
   {

@@ -21,14 +21,14 @@
 #include <string.h>
 
 #include <libgimp/color_display.h>
+#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
-#include <libgimp/stdplugins-intl.h>
 
 #include <gtk/gtk.h>
 #include "modregister.h"
 
-#define COLOR_DISPLAY_NAME "Gamma"
+#define COLOR_DISPLAY_NAME _("Gamma")
 
 typedef struct _GammaContext GammaContext;
 
@@ -88,7 +88,7 @@ static GimpColorDisplayMethods methods = {
 
 static GimpModuleInfo info = {
   NULL,
-  "Gamma color display filter",
+  N_("Gamma color display filter"),
   "Manish Singh <yosh@gimp.org>",
   "v0.1",
   "(c) 1999, released under the GPL",

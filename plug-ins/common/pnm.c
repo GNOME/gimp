@@ -556,8 +556,7 @@ pnm_load_ascii (PNMScanner *scan,
 	    d += np;
 	  }
 
-      if ((y % 20) == 0)
-	gimp_progress_update ((double) y / (double) info->yres);
+      gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
       y += scanlines;
     }
@@ -602,8 +601,7 @@ pnm_load_raw (PNMScanner *scan,
 	  d += info->xres * info->np;
 	}
 
-      if ((y % 20) == 0)
-	gimp_progress_update ((double) y / (double) info->yres);
+      gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
       y += scanlines;
     }
@@ -655,8 +653,7 @@ pnm_load_rawpbm (PNMScanner *scan,
 	  d += info->xres;
 	}
 
-      if ((y % 20) == 0)
-	gimp_progress_update ((double) y / (double) info->yres);
+      gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
       y += scanlines;
     }

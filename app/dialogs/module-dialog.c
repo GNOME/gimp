@@ -810,7 +810,7 @@ browser_info_update (module_info *mod,
 
   for (i=0; i < NUM_INFO_LINES - 1; i++)
   {
-    gtk_label_set_text (GTK_LABEL (st->label[i]), text[i]);
+    gtk_label_set_text (GTK_LABEL (st->label[i]), gettext (text[i]));
   }
 
   gtk_label_set_text (GTK_LABEL (st->label[NUM_INFO_LINES-1]), status);

@@ -18,6 +18,7 @@
  */
 
 /* #define VERBOSE 1 */
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -25,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/color_selector.h>
 #include <libgimp/gimpmodule.h>
+#include <libgimp/gimpintl.h>
 #include "modregister.h"
 
 #ifndef M_PI
@@ -71,7 +73,7 @@ static GimpColorSelectorMethods methods =
 
 static GimpModuleInfo info = {
     NULL,
-    "Watercolor style color selector as a pluggable module",
+    N_("Watercolor style color selector as a pluggable module"),
     "Raph Levien <raph@acm.org>, Sven Neumann <sven@gimp.org>",
     "v0.3",
     "(c) 1998-1999, released under the GPL",
@@ -92,10 +94,10 @@ module_init (GimpModuleInfo **inforet)
   GimpColorSelectorID id;
 
 #ifndef __EMX__
-  id = gimp_color_selector_register ("Watercolor", "watercolor.html",
+  id = gimp_color_selector_register (_("Watercolor"), "watercolor.html",
 				     &methods);
 #else
-   id = mod_color_selector_register ("Watercolor", "watercolor.html",
+   id = mod_color_selector_register (_("Watercolor"), "watercolor.html",
 				     &methods);
 #endif
   if (id)
@@ -624,18 +626,18 @@ colorsel_water_new (int r, int g, int b,
   bbox = gtk_vbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox2), bbox, FALSE, FALSE, 0);
 
-  button = gtk_button_new_with_label ("New");
+  button = gtk_button_new_with_label (_("New"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) new_color_callback,
 		      NULL);
-  button = gtk_button_new_with_label ("Reset");
+  button = gtk_button_new_with_label (_("Reset"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) reset_color_callback,
 		      NULL);
 
-  frame = gtk_frame_new ("Color history");
+  frame = gtk_frame_new (_("Color History"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0); 
 
   table = gtk_table_new (2, 5, TRUE);
@@ -686,7 +688,7 @@ colorsel_water_new (int r, int g, int b,
 
   hbox2 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, FALSE, 0);  
-  label = gtk_label_new ("Pressure:");
+  label = gtk_label_new (_("Pressure:"));
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
 
   adj = gtk_adjustment_new (100.0, 0.0, 200.0, 1.0, 1.0, 0.0);
