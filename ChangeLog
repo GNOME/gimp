@@ -1,3 +1,18 @@
+Wed Sep  1 02:12:09 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpbrushpreview.[ch]
+	* app/gimppatternprewiew.[ch]: removed
+
+	* app/gimpcontextpreview.[ch]: new files.
+	Merged the preview_widgets into one more generic widget. I'm 
+	calling this context_preview since I hope the widgets will
+	become useful for the context_manager. I'll add a gradient
+	preview soon.
+
+	* app/Makefile.am
+	* app/devices.c
+	* app/inidicator_area.c: Use the new gimp_context_preview.
+
 Tue Sep 1  00:19:30 CEST 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/spheredesigner.c: Various fixes and enhancements.

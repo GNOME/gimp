@@ -19,11 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "indicator_area.h"
-#include "interface.h"
 #include "gimpbrushlist.h"
-#include "gimpbrushpreview.h"
-#include "gimppatternpreview.h"
+#include "gimpcontextpreview.h"
+#include "indicator_area.h"
+#include "interface.h"       /*  for tool_tips  */
+#include "libgimp/gimpintl.h"
 
 #define CELL_SIZE 23 /* The size of the previews */
 #define CELL_PADDING 2 /* How much between brush and pattern cells */
@@ -49,17 +49,17 @@ brush_area_update ()
   brush = get_active_brush();
   if (!brush) 
     {
-      g_warning("No gimp brush found\n");
+      g_warning ("No gimp brush found\n");
       return;
     }
-  gimp_brush_preview_update (GIMP_BRUSH_PREVIEW (brush_preview), brush);
+  gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (brush_preview), brush);
 }
 
 static gint
 brush_preview_clicked (GtkWidget *widget, 
 		       gpointer   data)
 {
-  create_brush_dialog();
+  create_brush_dialog ();
   return TRUE;
 }
 
@@ -74,10 +74,10 @@ pattern_area_update ()
   
   if (!pattern) 
     {
-      g_warning("No gimp pattern found\n");
+      g_warning ("No gimp pattern found\n");
       return;
     }
-  gimp_pattern_preview_update (GIMP_PATTERN_PREVIEW (pattern_preview), pattern);
+  gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (pattern_preview), pattern);
 }
 
 static gint
@@ -94,15 +94,23 @@ indicator_area_create (int width,
 {
   indicator_table = gtk_table_new (1, 3, FALSE);
   
-  brush_preview = gimp_brush_preview_new (CELL_SIZE, CELL_SIZE);
-  gimp_brush_preview_set_tooltips (GIMP_BRUSH_PREVIEW (brush_preview), tool_tips);
+  brush_preview = gimp_context_preview_new (GCP_BRUSH, 
+					    CELL_SIZE, CELL_SIZE, 
+					    FALSE);
+  gtk_tooltips_set_tip (tool_tips, brush_preview, 
+			_("The active brush.\nClick to open the Brushes Dialog."), 
+			NULL);
   gtk_signal_connect (GTK_OBJECT (brush_preview), "clicked",
                      (GtkSignalFunc) brush_preview_clicked, NULL);
   gtk_table_attach_defaults (GTK_TABLE(indicator_table), brush_preview,
                             0, 1, 0, 1);
                             
-  pattern_preview = gimp_pattern_preview_new (CELL_SIZE, CELL_SIZE);
-  gimp_pattern_preview_set_tooltips (GIMP_PATTERN_PREVIEW (pattern_preview), tool_tips);
+  pattern_preview = gimp_context_preview_new (GCP_PATTERN, 
+					      CELL_SIZE, CELL_SIZE, 
+					      FALSE);
+  gtk_tooltips_set_tip (tool_tips, pattern_preview, 
+			_("The active pattern.\nClick to open the Patterns Dialog."), 
+			NULL);
   gtk_signal_connect (GTK_OBJECT (pattern_preview), "clicked",
                      (GtkSignalFunc) pattern_preview_clicked, NULL);
   gtk_table_attach_defaults (GTK_TABLE(indicator_table), pattern_preview,

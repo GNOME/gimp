@@ -23,8 +23,7 @@
 
 #include "appenv.h"
 #include "actionarea.h"
-#include "gimpbrushpreview.h"
-#include "gimppatternpreview.h"
+#include "gimpcontextpreview.h"
 #include "devices.h"
 #include "interface.h"
 #include "gimprc.h"
@@ -749,17 +748,17 @@ create_device_status (void)
 			    2, 3, i, i+1,
 			    0, 0, 2, 2);
 
-	  deviceD->brushes[i] = gimp_brush_preview_new (CELL_SIZE, CELL_SIZE);
-	  gimp_brush_preview_set_tooltips (GIMP_BRUSH_PREVIEW (deviceD->brushes[i]),
-					   tool_tips);
+	  deviceD->brushes[i] = gimp_context_preview_new (GCP_BRUSH, 
+							  CELL_SIZE, CELL_SIZE,
+							  TRUE);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->brushes[i],
 			    3, 4, i, i+1,
 			    0, 0, 2, 2);
 
 
-	  deviceD->patterns[i] = gimp_pattern_preview_new (CELL_SIZE, CELL_SIZE);
-	  gimp_pattern_preview_set_tooltips (GIMP_PATTERN_PREVIEW (deviceD->patterns[i]),
-					     tool_tips);
+	  deviceD->patterns[i] = gimp_context_preview_new (GCP_PATTERN,
+							   CELL_SIZE, CELL_SIZE, 
+							   TRUE);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
 			    4, 5, i, i+1,
 			    0, 0, 2, 2);
@@ -954,13 +953,13 @@ device_status_update (guint32 deviceid)
 
 	  if (device_info->brush)
 	    {
-	      gimp_brush_preview_update (GIMP_BRUSH_PREVIEW (deviceD->brushes[i]), 
-					 device_info->brush);
+	      gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (deviceD->brushes[i]), 
+					   device_info->brush);
 	      gtk_widget_show (deviceD->brushes[i]);
 	    }
 	  if (device_info->pattern)
 	    {
-	      gimp_pattern_preview_update (GIMP_PATTERN_PREVIEW (deviceD->patterns[i]), 
+	      gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (deviceD->patterns[i]), 
 					   device_info->pattern);
 	      gtk_widget_show (deviceD->patterns[i]);
 	    }
@@ -973,3 +972,4 @@ device_status_update (guint32 deviceid)
       pattern_area_update();
     }
 }
+
