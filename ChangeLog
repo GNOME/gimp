@@ -1,3 +1,11 @@
+Tue Apr 28 00:16:31 1998  Tim Janik  <timj@gtk.org>
+
+	* app/channels_dialog.c (channels_dialog_create): adjust the scrolled
+	window to always show the currently focused channel item.
+
+	* app/layers_dialog.c (layers_dialog_create): adjust the scrolled
+	window to always show the currently focused layer item.
+
 Mon Apr 27 23:29:10 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* updated despeckle and sharpen plug-ins

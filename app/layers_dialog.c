@@ -699,7 +699,10 @@ layers_dialog_create ()
       gtk_signal_connect (GTK_OBJECT (layersD->layer_list), "event",
 			  (GtkSignalFunc) layer_list_events,
 			  layersD);
-
+      gtk_container_set_focus_vadjustment (GTK_CONTAINER (layersD->layer_list),
+					   gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
+      GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar, GTK_CAN_FOCUS);
+      
       gtk_widget_show (layersD->layer_list);
       gtk_widget_show (listbox);
 
