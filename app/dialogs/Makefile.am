@@ -30,6 +30,8 @@ libappdialogs_a_SOURCES = \
 	info-dialog.h			\
 	info-window.c			\
 	info-window.h			\
+	layer-options-dialog.c		\
+	layer-options-dialog.h		\
 	module-dialog.c			\
 	module-dialog.h			\
 	offset-dialog.c			\

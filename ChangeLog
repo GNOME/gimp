@@ -1,3 +1,10 @@
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/layer-options-dialog.[ch]: the new/edit layer dialog.
+
+	* app/actions/layers-commands.c: use it here.
+
 2004-10-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpimagemaptool.[ch]
