@@ -79,7 +79,7 @@ GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
 				 gboolean                   menu_show_pixels,
 				 gboolean                   menu_show_percent,
 				 gboolean                   show_refval,
-				 gint                       spinbutton_usize,
+				 gint                       spinbutton_width,
 				 GimpSizeEntryUpdatePolicy  update_policy);
 
 void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,

@@ -247,7 +247,7 @@ gimp_color_button_new (const gchar       *title,
 
   gcb->title = g_strdup (title);
   
-  gtk_widget_set_usize (GTK_WIDGET (gcb->color_area), width, height);
+  gtk_widget_set_size_request (GTK_WIDGET (gcb->color_area), width, height);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (gcb->color_area), color);
   gimp_color_area_set_type (GIMP_COLOR_AREA (gcb->color_area), type);

@@ -207,7 +207,7 @@ new_unit (GimpUnit template)
 				     gimp_unit_get_factor (template) : 1.0,
 				     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
 				     0.01, 0.1, 0.0, 0.01, 5);
-  gtk_widget_set_usize (spinbutton, 100, -1);
+  gtk_widget_set_size_request (spinbutton, 100, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Factor:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -218,7 +218,7 @@ new_unit (GimpUnit template)
 				     (template != GIMP_UNIT_PIXEL) ?
 				     gimp_unit_get_digits (template) : 2.0,
 				     0, 5, 1, 1, 0, 1, 0);
-  gtk_widget_set_usize (spinbutton, 50, -1);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Digits:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -614,7 +614,7 @@ unit_editor_dialog (void)
 
   clist_init ();
 
-  gtk_widget_set_usize (clist, -1, 200);
+  gtk_widget_set_size_request (clist, -1, 200);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), clist);
   gtk_widget_show (clist);

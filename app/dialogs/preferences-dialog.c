@@ -1392,6 +1392,8 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
 				 g_value_get_int (&val));
+
+  g_value_unset (&val);
 }
 
 /*  create a frame with title and a vbox  */

@@ -8,7 +8,7 @@ AC_INIT(gimprc.in)
 #   GIMP_BINARY_AGE += 1;
 # if any functions have been added, set GIMP_INTERFACE_AGE to 0.
 # if backwards compatibility has been broken,
-# set GIMP_BINARY_AGE _and_ GIMP_INTERFACE_AGE to 0.
+# set GIMP_BINARY_AGE and GIMP_INTERFACE_AGE to 0.
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
@@ -37,6 +37,12 @@ AM_CONFIG_HEADER(config.h)
 
 dnl Initialize libtool
 AM_PROG_LIBTOOL
+
+dnl Set AS and ASFLAGS so that automake 1.5 will be happy
+AS="\${CC}"
+ASFLAGS="\$(DEFS) \$(DEFAULT_INCLUDES) \$(INCLUDES) \$(AM_CPPFLAGS) \$(CPPFLAGS) \$(AM_CFLAGS) \$(CFLAGS)"
+AC_SUBST(AS)
+AC_SUBST(ASFLAGS)
 
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE

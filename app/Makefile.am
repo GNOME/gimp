@@ -6,10 +6,10 @@ scriptdata =
 
 bin_PROGRAMS = gimp
 
-gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## gui stuff that needs to go to libgimp/, gui/ or /dev/null
 ##
+gui_sources = \
 	colormaps.c		\
 	colormaps.h		\
 	devices.c		\
@@ -21,33 +21,43 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	ops_buttons.c		\
 	ops_buttons.h		\
 	undo_history.c		\
-	undo_history.h		\
+	undo_history.h
+
 ##
 ## stuff that needs to be split up in core / ui files
 ##
+core_ui_sources = \
 	image_map.c		\
-	image_map.h		\
+	image_map.h
+
 ##
 ## stuff for core/
 ##
+core_sources = \
 	floating_sel.c		\
-	floating_sel.h		\
+	floating_sel.h
+
 ##
 ## config stuff
 ##
+config_sources = \
 	appenv.h		\
 	general.c		\
 	general.h		\
 	gimprc.c		\
-	gimprc.h		\
+	gimprc.h
+
 ##
 ## stuff for plug-in/
 ##
+plug_in_sources = \
 	plug_in.c		\
-	plug_in.h		\
+	plug_in.h
+
 ##
 ## stuff which is about to be replaced by new subsystems
 ##
+bye_sources = \
 	path.c			\
 	path.h			\
 	pathP.h			\
@@ -58,14 +68,15 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	path_bezier.c		\
 	undo.c			\
 	undo.h			\
-	undo_types.h		\
+	undo_types.h
+
 ##
 ## stuff
 ##
+stuff_sources = \
 	app_procs.c		\
 	app_procs.h		\
 	main.c			\
-	\
 	batch.c			\
 	batch.h			\
 	errors.c		\
@@ -73,7 +84,16 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	gimphelp.c		\
 	gimphelp.h		\
 	libgimp_glue.c		\
-	libgimp_glue.h		\
+	libgimp_glue.h
+
+gimp_SOURCES = @STRIP_BEGIN@ \
+	$(gui_sources)		\
+	$(core_ui_sources)	\
+	$(core_sources)		\
+	$(config_sources)	\
+	$(plug_in_sources)	\
+	$(bye_sources)		\
+	$(stuff_sources)	\
 @STRIP_END@
 
 EXTRA_DIST = \

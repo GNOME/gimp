@@ -1279,7 +1279,7 @@ film_dialog (gint32 image_ID)
 
   /* Fontfamily for numbering */
   filmint.font_entry = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 60, 0);
+  gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), filmvals.number_fontf);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Font:"), 1.0, 0.5,

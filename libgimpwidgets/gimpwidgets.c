@@ -511,7 +511,7 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
 				    climb_rate, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_widget_set_size_request (spinbutton, 75, -1);
 
   return spinbutton;
 }
@@ -538,8 +538,8 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
  * @row:                 The row to attach the widgets.
  * @text:                The text for the #GtkLabel which will appear
  *                       left of the #GtkHScale.
- * @scale_usize:         The minimum horizontal size of the #GtkHScale.
- * @spinbutton_usize:    The minimum horizontal size of the #GtkSpinButton.
+ * @scale_width:         The minimum horizontal size of the #GtkHScale.
+ * @spinbutton_width:    The minimum horizontal size of the #GtkSpinButton.
  * @value:               The initial value.
  * @lower:               The lower boundary.
  * @upper:               The upper boundary.
@@ -568,8 +568,8 @@ gimp_scale_entry_new (GtkTable    *table,
 		      gint         column,
 		      gint         row,
 		      const gchar *text,
-		      gint         scale_usize,
-		      gint         spinbutton_usize,
+		      gint         scale_width,
+		      gint         spinbutton_width,
 		      gfloat       value,
 		      gfloat       lower,
 		      gfloat       upper,
@@ -634,12 +634,12 @@ gimp_scale_entry_new (GtkTable    *table,
       return_adj = adjustment;
     }
     
-  if (spinbutton_usize > 0)
-    gtk_widget_set_usize (spinbutton, spinbutton_usize, -1);
+  if (spinbutton_width > 0)
+    gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
 
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  if (scale_usize > 0)
-    gtk_widget_set_usize (scale, scale_usize, -1);
+  if (scale_width > 0)
+    gtk_widget_set_size_request (scale, scale_width, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), digits);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_table_attach (GTK_TABLE (table), scale,
@@ -835,7 +835,7 @@ gimp_coordinates_callback (GtkWidget *widget,
  *                          GIMP_UNIT_PIXEL.
  * @menu_show_percent:      #TRUE if the #GimpUnitMenu should contain an item for
  *                          GIMP_UNIT_PERCENT.
- * @spinbutton_usize:       The horizontal usize of the #GimpSizeEntry's
+ * @spinbutton_width:       The horizontal size of the #GimpSizeEntry's
  *                           #GtkSpinButton's.
  * @update_policy:          The update policy for the #GimpSizeEntry.
  * @chainbutton_active:     #TRUE if the attached #GimpChainButton should be
@@ -867,7 +867,7 @@ gimp_coordinates_new (GimpUnit         unit,
 		      const gchar     *unit_format,
 		      gboolean         menu_show_pixels,
 		      gboolean         menu_show_percent,
-		      gint             spinbutton_usize,
+		      gint             spinbutton_width,
 		      GimpSizeEntryUpdatePolicy  update_policy,
 
 		      gboolean         chainbutton_active,
@@ -900,7 +900,7 @@ gimp_coordinates_new (GimpUnit         unit,
 				   menu_show_pixels,
 				   menu_show_percent,
 				   FALSE,
-				   spinbutton_usize,
+				   spinbutton_width,
 				   update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);  
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 2, 4);  

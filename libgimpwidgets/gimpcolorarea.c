@@ -477,7 +477,8 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
 			 GIMP_COLOR_AREA (widget)->type,
 			 0);
 
-  gtk_widget_set_usize (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+  gtk_widget_set_size_request (color_area,
+			       DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), color_area);
   gtk_widget_show (color_area);
   gtk_widget_show (frame);

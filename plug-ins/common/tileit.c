@@ -523,7 +523,7 @@ tileit_dialog (void)
   gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", label);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
-  gtk_widget_set_usize (spinbutton, ENTRY_WIDTH, -1);
+  gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -545,7 +545,7 @@ tileit_dialog (void)
   gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", label);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
-  gtk_widget_set_usize (spinbutton, ENTRY_WIDTH, -1);
+  gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

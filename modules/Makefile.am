@@ -23,9 +23,9 @@ EXTRA_DIST = \
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
 	libcolorsel_triangle.la		\
+@STRIP_END@
 ##	libcolorsel_gtk.la		\
 ##	libcolorsel_water.la		\
-@STRIP_END@
 
 EXTRA_LTLIBRARIES +=
 

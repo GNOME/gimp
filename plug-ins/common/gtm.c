@@ -496,7 +496,7 @@ save_dialog (image_ID)
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3,
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (gtm_caption_callback),
 		      NULL);
@@ -508,7 +508,7 @@ save_dialog (image_ID)
   gtk_widget_set_sensitive (entry, gtmvals.caption);
 
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Cell Content:"), 1.0, 0.5,
 			     entry, 1, FALSE);
@@ -546,7 +546,7 @@ save_dialog (image_ID)
 			   NULL);
 
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 60, 0);
+  gtk_widget_set_size_request (entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Width:"), 1.0, 0.5,
 			     entry, 1, TRUE);
@@ -560,7 +560,7 @@ save_dialog (image_ID)
 			   NULL);
 
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 60, 0);
+  gtk_widget_set_size_request (entry, 60, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Height:"), 1.0, 0.5,
 			     entry, 1, TRUE);

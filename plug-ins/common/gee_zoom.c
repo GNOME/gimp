@@ -256,7 +256,7 @@ build_dialog (GimpImageBaseType  basetype,
 
 #ifdef RAPH_IS_HOME
   drawing_area = gtk_drawing_area_new ();
-  gtk_widget_set_usize (drawing_area, width, height);
+  gtk_widget_set_size_request (drawing_area, width, height);
   gtk_container_add (GTK_CONTAINER (eventbox), drawing_area);
   gtk_widget_show (drawing_area);
 #else

@@ -2237,7 +2237,7 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "drawarea", drawarea);
   gtk_widget_show (drawarea);
   gtk_container_add (GTK_CONTAINER (frame2), drawarea);
-  gtk_widget_set_usize (drawarea, PREVIEWSIZE, PREVIEWSIZE);
+  gtk_widget_set_size_request (drawarea, PREVIEWSIZE, PREVIEWSIZE);
   gtk_signal_connect (GTK_OBJECT (drawarea), "expose_event",
                       (GtkSignalFunc) expose_event, NULL);
 
@@ -2258,7 +2258,7 @@ GtkWidget* makewindow (void)
 
   viewport2 = gtk_viewport_new (NULL, NULL);
   gtk_object_set_data (GTK_OBJECT (window), "viewport2", viewport2);
-  gtk_widget_set_usize (viewport2, 150, -1);
+  gtk_widget_set_size_request (viewport2, 150, -1);
   gtk_widget_show (viewport2);
   gtk_container_add (GTK_CONTAINER (frame3), viewport2);
 
@@ -2389,7 +2389,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label5), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalescale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table2), _scalescale, 1, 2, 3, 4,
@@ -2406,7 +2406,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label5), 1.0, 1.0);
 
   _turbulencescale = gtk_hscale_new (GTK_ADJUSTMENT (turbulencescale = gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_turbulencescale, 100, -1);
+  gtk_widget_set_size_request (_turbulencescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_turbulencescale", _turbulencescale);
   gtk_widget_show (_turbulencescale);
   gtk_table_attach (GTK_TABLE (table2), _turbulencescale, 1, 2, 4, 5,
@@ -2423,7 +2423,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalexscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2440,7 +2440,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scaleyscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2457,7 +2457,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalezscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2475,7 +2475,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotxscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_rotscale, 100, -1);
+  gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2492,7 +2492,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotyscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_rotscale, 100, -1);
+  gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2509,7 +2509,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotzscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_rotscale, 100, -1);
+  gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2526,7 +2526,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posxscale = gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2543,7 +2543,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posyscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2560,7 +2560,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 1.0, 1.0);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (poszscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2614,7 +2614,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label7), 1.0, 1.0);
 
   _amountscale = gtk_hscale_new (GTK_ADJUSTMENT (amountscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
-  gtk_widget_set_usize(_amountscale, 100, -1);
+  gtk_widget_set_size_request (_amountscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_amountscale", _amountscale);
   gtk_widget_show (_amountscale);
   gtk_table_attach (GTK_TABLE (table2), _amountscale, 1, 2, 5, 6,
@@ -2631,7 +2631,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label8), 1.0, 1.0);
 
   _expscale = gtk_hscale_new (GTK_ADJUSTMENT (expscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
-  gtk_widget_set_usize(_expscale, 100, -1);
+  gtk_widget_set_size_request (_expscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_expscale", _expscale);
   gtk_widget_show (_expscale);
   gtk_table_attach (GTK_TABLE (table2), _expscale, 1, 2, 6, 7,

@@ -53,7 +53,7 @@ struct _GimpUnitMenu
 
   /* private */
   GtkWidget     *selection;
-  GtkWidget     *clist;
+  GtkWidget     *tv;
 };
 
 struct _GimpUnitMenuClass

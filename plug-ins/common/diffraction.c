@@ -568,7 +568,7 @@ diffraction_dialog (void)
   gtk_widget_show (dint.preview);
 
   dint.progress = gtk_progress_bar_new ();
-  gtk_widget_set_usize (dint.progress, PROGRESS_WIDTH, PROGRESS_HEIGHT);
+  gtk_widget_set_size_request (dint.progress, PROGRESS_WIDTH, PROGRESS_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), dint.progress, TRUE, FALSE, 0);
   gtk_widget_show (dint.progress);
 

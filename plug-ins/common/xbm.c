@@ -1201,7 +1201,7 @@ save_dialog (gint32 drawable_ID)
 
   /* comment string. */
   entry = gtk_entry_new_with_max_length (MAX_COMMENT);
-  gtk_widget_set_usize (entry, 240, 0);
+  gtk_widget_set_size_request (entry, 240, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Comment:"), 1.0, 0.5,

@@ -459,7 +459,7 @@ save_dialog (void)
 
 
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Icon Name:"), 1.0, 0.5,
 			     entry, 1, FALSE);

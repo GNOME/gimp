@@ -1,3 +1,46 @@
+2001-11-11  Manish Singh  <yosh@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/plug-in/Makefile.am
+	* plug-ins/Makefile.am
+	* modules/Makefile.am: fixes to build with automake 1.5 (just hacks
+	to get it to work, real fixes to come later)
+ 
+	* app/gui/preferences-dialog.c: unset GValue from tree model when
+	we're done with it.
+
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpsizeentry.[ch]
+	* libgimpwidgets/gimpwidgets.[ch]
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/film.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/xbm.c: gtk_widget_set_usize is deprecated. Use
+	gtk_widget_set_size_request instead.
+
+	* libgimpwidgets/gimpunitmenu.[ch]: changed to use GtkTreeView.
+
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay-marching-ants.h

@@ -758,7 +758,7 @@ build_dialog (GimpImageBaseType  basetype,
 	      {
 #ifdef RAPH_IS_HOME
 		drawing_area = gtk_drawing_area_new ();
-                gtk_widget_set_usize (drawing_area, width, height);
+                gtk_widget_set_size_request (drawing_area, width, height);
                 gtk_container_add (GTK_CONTAINER (eventbox),
                                    GTK_WIDGET (drawing_area));
                 gtk_widget_show (drawing_area);
@@ -789,7 +789,7 @@ build_dialog (GimpImageBaseType  basetype,
 	    gtk_progress_set_format_string (GTK_PROGRESS (progress),
 					    _("Frame %v of %u"));
 	    gtk_progress_set_show_text (GTK_PROGRESS (progress), TRUE);
-	    /*	  gtk_widget_set_usize (GTK_WIDGET (progress), 150, 15);*/
+	    /* gtk_widget_set_size_request (GTK_WIDGET (progress), 150, 15); */
 	    gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
 				TRUE, TRUE, 0);
 	  }
@@ -814,7 +814,7 @@ build_dialog (GimpImageBaseType  basetype,
 #ifdef RAPH_IS_HOME
     shape_drawing_area = gtk_drawing_area_new ();
     {
-      gtk_widget_set_usize (shape_drawing_area, width, height);
+      gtk_widget_set_size_request (shape_drawing_area, width, height);
       gtk_container_add (GTK_CONTAINER (shape_window), shape_drawing_area);
     }
     gtk_widget_show (shape_drawing_area);
@@ -824,7 +824,7 @@ build_dialog (GimpImageBaseType  basetype,
 #else
     shape_fixed = gtk_fixed_new ();
     {
-      gtk_widget_set_usize (shape_fixed, width,height);
+      gtk_widget_set_size_request (shape_fixed, width, height);
       gtk_container_add (GTK_CONTAINER (shape_window), shape_fixed);
 
       shape_preview =

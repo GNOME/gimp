@@ -486,7 +486,7 @@ save_dialog (void)
 
   /* to: dialog */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -498,7 +498,7 @@ save_dialog (void)
 
   /* From entry */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -510,7 +510,7 @@ save_dialog (void)
 
   /* Subject entry */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.subject);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -522,7 +522,7 @@ save_dialog (void)
 
   /* Comment entry */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.comment);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
@@ -534,7 +534,7 @@ save_dialog (void)
 
   /* Filename entry */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.filename);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,

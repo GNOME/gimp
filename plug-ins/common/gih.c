@@ -886,7 +886,7 @@ gih_save_dialog (gint32 image_ID)
    * Description: ___________
    */
   entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 200, 0);
+  gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Description:"), 1.0, 0.5,

@@ -2672,7 +2672,7 @@ load_dialog (void)
 		      &plvals.height);
 
   pages_entry = gtk_entry_new ();
-  gtk_widget_set_usize (pages_entry, 80, 0);
+  gtk_widget_set_size_request (pages_entry, 80, -1);
   gtk_entry_set_text (GTK_ENTRY (pages_entry), plvals.pages);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Pages:"), 1.0, 0.5,

@@ -1644,7 +1644,7 @@ save_dialog (void)
 
   scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1666,7 +1666,7 @@ save_dialog (void)
 
   scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
+  gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_table_attach (GTK_TABLE (table), scale, 1, 3, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1704,7 +1704,7 @@ save_dialog (void)
 		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (abox);
 
-  gtk_widget_set_usize (restart_markers_scale, SCALE_WIDTH, 0);
+  gtk_widget_set_size_request (restart_markers_scale, SCALE_WIDTH, -1);
   gtk_container_add (GTK_CONTAINER (abox), restart_markers_scale);
   gtk_scale_set_value_pos (GTK_SCALE (restart_markers_scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (restart_markers_scale), 0);

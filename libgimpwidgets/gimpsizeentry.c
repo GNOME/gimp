@@ -211,7 +211,7 @@ gimp_size_entry_finalize (GObject *object)
  *                     GIMP_UNIT_PERCENT.
  * @show_refval:       #TRUE if you want an extra "refenence value"
  *                     spinbutton per input field.
- * @spinbutton_usize:  The minimal horizontal size of the #GtkSpinButton's.
+ * @spinbutton_width:  The minimal horizontal size of the #GtkSpinButton's.
  * @update_policy:     How the automatic pixel <-> real-world-unit calculations
  *                     should be performed.
  *
@@ -250,7 +250,7 @@ gimp_size_entry_new (gint                       number_of_fields,
 		     gboolean                   menu_show_pixels,
 		     gboolean                   menu_show_percent,
 		     gboolean                   show_refval,
-		     gint                       spinbutton_usize,
+		     gint                       spinbutton_width,
 		     GimpSizeEntryUpdatePolicy  update_policy)
 {
   GimpSizeEntry *gse;
@@ -318,7 +318,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 			     (unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
 			     (unit == GIMP_UNIT_PERCENT) ? 2 :
 			     GIMP_SIZE_ENTRY_DIGITS (unit));
-      gtk_widget_set_usize (gsef->value_spinbutton, spinbutton_usize, 0);
+      gtk_widget_set_size_request (gsef->value_spinbutton,
+				   spinbutton_width, -1);
       gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
 				 i+1, i+2,
 				 gse->show_refval+1, gse->show_refval+2);
@@ -338,7 +339,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 	    gtk_spin_button_new (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				 1.0,
 				 gsef->refval_digits);
-	  gtk_widget_set_usize (gsef->refval_spinbutton, spinbutton_usize, 0);
+	  gtk_widget_set_size_request (gsef->refval_spinbutton,
+				       spinbutton_width, -1);
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
 				     i + 1, i + 2, 1, 2);
 	  g_signal_connect (G_OBJECT (gsef->refval_adjustment),

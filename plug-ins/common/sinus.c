@@ -1805,7 +1805,7 @@ sinus_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, svals.seed,
 				     -10000000000.0, 1000000000.0, 1.0, 10.0,
 				     0.0, 0.0, 0);
-  gtk_widget_set_usize (spinbutton, 100, -1);
+  gtk_widget_set_size_request (spinbutton, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (sinus_int_adjustment_update),

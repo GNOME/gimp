@@ -355,7 +355,8 @@ colorify_dialog (GimpRGB *color)
       color_area = gimp_color_area_new (&button_color[i], 
 					GIMP_COLOR_AREA_FLAT, 
 					GDK_BUTTON2_MASK);
-      gtk_widget_set_usize (GTK_WIDGET (color_area), COLOR_SIZE, COLOR_SIZE);
+      gtk_widget_set_size_request (GTK_WIDGET (color_area),
+				   COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) predefined_color_callback,

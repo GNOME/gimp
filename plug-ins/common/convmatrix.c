@@ -891,7 +891,7 @@ dialog (void)
     for (x = 0; x < 5; x++)
       {
 	my_widgets.matrix[x][y] = entry = gtk_entry_new ();
-	gtk_widget_set_usize (entry, 40, 0);
+	gtk_widget_set_size_request (entry, 40, -1);
 	gtk_table_attach (GTK_TABLE (table), entry, x, x+1, y, y+1,
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 	gtk_entry_set_text (GTK_ENTRY (entry), buffer);
@@ -916,7 +916,7 @@ dialog (void)
   gtk_widget_show (label);
 
   my_widgets.divisor = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 40, 0);
+  gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (entry_callback),
@@ -935,7 +935,7 @@ dialog (void)
   gtk_widget_show (label);
 
   my_widgets.offset = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, 40, 0);
+  gtk_widget_set_size_request (entry, 40, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 0, 1);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) entry_callback,

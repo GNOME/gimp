@@ -32,7 +32,6 @@ SUBDIRS = 			\
 	libgck			\
 	dbbrowser		\
 	script-fu		\
-##	$(GIMP_PERL)		\
 	FractalExplorer		\
 	Lighting		\
 	MapObject		\
@@ -41,8 +40,6 @@ SUBDIRS = 			\
 	fits			\
 	flame			\
 	fp			\
-##	gap			\
-##	gdyntext		\
 	gfig			\
 	gflare			\
 	gfli			\
@@ -61,6 +58,10 @@ SUBDIRS = 			\
 	$(XJT)			\
 	plugin-helper		\
 	common
+
+##	$(GIMP_PERL)		\
+##	gap			\
+##	gdyntext		\
 
 .PHONY: files
 

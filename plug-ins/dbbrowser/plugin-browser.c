@@ -205,7 +205,8 @@ details_callback (GtkWidget *widget,
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (pdesc->descr_scroll),
 				      GTK_POLICY_ALWAYS, 
 				      GTK_POLICY_ALWAYS);
-      gtk_widget_set_usize (pdesc->descr_scroll, DBL_WIDTH - DBL_LIST_WIDTH, -1);
+      gtk_widget_set_size_request (pdesc->descr_scroll,
+				   DBL_WIDTH - DBL_LIST_WIDTH, -1);
       gtk_paned_pack2 (GTK_PANED (pdesc->paned), pdesc->descr_scroll,
 		       FALSE, TRUE);
       gtk_clist_select_row (GTK_CLIST(pdesc->clist), pdesc->clist_row, -1);
@@ -417,7 +418,7 @@ procedure_general_select_callback (PDesc *pdesc,
       gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
 
-      gtk_widget_set_usize (text_view, -1, 60);
+      gtk_widget_set_size_request (text_view, -1, 60);
       gtk_table_attach (GTK_TABLE (help), text_view, 0, 1, 0, 1,
 			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -1047,7 +1048,7 @@ gimp_plugin_desc (void)
   gtk_clist_set_selection_mode (GTK_CLIST (plugindesc->clist),
 			        GTK_SELECTION_BROWSE);
 
-  gtk_widget_set_usize (plugindesc->clist, DBL_LIST_WIDTH, DBL_HEIGHT);
+  gtk_widget_set_size_request (plugindesc->clist, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "select_row",
 		      GTK_SIGNAL_FUNC (procedure_clist_select_callback),
 		      plugindesc);
@@ -1067,7 +1068,7 @@ gimp_plugin_desc (void)
     swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_widget_set_usize (plugindesc->ctree, DBL_LIST_WIDTH, DBL_HEIGHT);
+  gtk_widget_set_size_request (plugindesc->ctree, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_signal_connect (GTK_OBJECT (plugindesc->ctree), "tree_select_row",
 		      GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
 		      plugindesc);
