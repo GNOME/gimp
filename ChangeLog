@@ -1,5 +1,9 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/Makefile.am (EXTRA_DIST): removed pix-data.h.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: changed gimp_version to 2.2-pre1, to match the
 	naming scheme of the 2.0 pre-releases.
 
