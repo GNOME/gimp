@@ -1,3 +1,7 @@
+Sun Jan 10 20:44:07 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/paint_funcs.c: Disabled debug output of [.!..!!] for COW
+
 Sun Jan 10 20:13:13 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/psd/psd.c: 

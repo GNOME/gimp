@@ -2712,7 +2712,9 @@ copy_region (PixelRegion *src,
   unsigned char * s, * d;
   void * pr;
 
+#ifdef COWSHOW
   fputc('[',stderr);
+#endif
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -2726,12 +2728,16 @@ copy_region (PixelRegion *src,
 	  src->h == tile_eheight(src->curtile) && 
 	  dest->h == tile_eheight(dest->curtile)) 
 	{
+#ifdef COWSHOW
 	  fputc('!',stderr);
+#endif
 	  tile_manager_map_over_tile (dest->tiles, dest->curtile, src->curtile);
 	}
       else 
 	{
+#ifdef COWSHOW
 	  fputc('.',stderr);
+#endif
 	  pixelwidth = src->w * src->bytes;
 	  s = src->data;
 	  d = dest->data;
@@ -2745,8 +2751,10 @@ copy_region (PixelRegion *src,
 	    }
 	}
     }
+#ifdef COWSHOW
   fputc(']',stderr);
   fputc('\n',stderr);
+#endif
 }
 
 
