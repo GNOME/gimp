@@ -1,3 +1,6 @@
+Mon Jul 19 20:57:10 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/Makefile.am: added dodgeburn.h for enum parsing
 
 Tue Jul 20 00:29:41 BST 1999 Andy Thomas <alt@gimp.org>
 

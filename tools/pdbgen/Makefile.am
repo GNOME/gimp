@@ -56,6 +56,7 @@ enum_headers = \
 	../../app/color_balance.h	\
 	../../app/convert.h		\
 	../../app/convolve.h		\
+	../../app/dodgeburn.h		\
 	../../app/eraser.h		\
 	../../app/gimpdrawable.h	\
 	../../app/gimpimage.h		\
