@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.29b; 2000/11/25  hof: NONINTEACTIV PDB interface for Movepath
  * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview
  * 0.96.00; 1998/06/27   hof: added gap animation sizechange plugins
  *                            (moved range_ops to seperate .h file)
@@ -38,8 +39,16 @@
 #include "libgimp/gimp.h"
 #include "gap_mov_dialog.h"
 
-int gap_move(GimpRunModeType run_mode, gint32 image_id);
-gint32 p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint preview_frame_nr);
+int     gap_move_path(GimpRunModeType run_mode, gint32 image_id, t_mov_values *pvals, gchar *pointfile, gint rotation_follow, gint32 startangle);
+gint32  p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint preview_frame_nr);
+
+gchar  *p_gap_chk_keyframes(t_mov_values *pvals);
+gint    p_conv_keyframe_to_rel(gint abs_keyframe, t_mov_values *pvals);
+gint    p_conv_keyframe_to_abs(gint rel_keyframe, t_mov_values *pvals);
+gint    p_gap_save_pointfile(char *filename, t_mov_values *pvals);
+gint    p_gap_load_pointfile(char *filename, t_mov_values *pvals);
+void    p_calculate_rotate_follow(t_mov_values *pvals, gint32 startangle);
+
 
 #endif
 

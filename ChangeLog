@@ -1,3 +1,40 @@
+2000-12-03  Sven Neumann  <sven@gimp.org>
+
+	* PLUGIN_MAINTAINERS: changed email address of Wolfgang Hofer
+	
+	* plug-ins/gap/README
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_filter_codegen.c
+	* plug-ins/gap/gap_filter_foreach.c
+	* plug-ins/gap/gap_filter_main.c
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/gap/gap_lib.c
+	* plug-ins/gap/gap_lib.h
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_match.c
+	* plug-ins/gap/gap_mod_layer.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_mov_dialog.h
+	* plug-ins/gap/gap_mov_exec.c
+	* plug-ins/gap/gap_mov_exec.h
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gap/resize.c
+	* plug-ins/gap/sel-to-anim-img.scm: 
+	applied patches provided by Wolfgang Hofer <hof@gimp.org>
+	
+	- Bugfix: replaced MovePath's intern Algorithm for calculating 
+	  Values between controlpoints (the old Algorithm fails sometimes
+	  especially if only 1 controlpoint is used, or if you have n 
+	  frames and n-1 controlpoints)
+	- new e-mail adress
+	- replaced sprintf (used g_strdup_printf g_snprintf)
+	- procedures for gap locks, check for locking processes pid
+	- NONINTERACTIVE PDB Interface(s) for MovePath 
+	  plug_in_gap_get_animinfo, plug_in_gap_set_framerate    
+	- FRAME based Stepmodes for MovePath
+	- increased controlpoint limit GAP_MOV_MAX_POINT (256 -> 1024)
+
 2000-12-02  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/README

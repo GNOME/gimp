@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.29a; 2000/11/23   hof: gap locking (changed to procedures and placed here)
  * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_vid_edit_clear
  * 1.1.17b; 2000/02/27   hof: bug/style fixes
@@ -63,6 +64,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <signal.h>           /* for kill */
 #ifdef HAVE_SYS_TIMES_H
 #include <sys/times.h>
 #endif
@@ -96,6 +98,10 @@
 #define mkdir(path,mode) _mkdir(path)
 #endif
 
+#ifdef G_OS_WIN32
+#include <process.h>		/* For _getpid() */
+#endif
+
 /* GAP includes */
 #include "gap_layer_copy.h"
 #include "gap_lib.h"
@@ -126,6 +132,7 @@ char *
 p_alloc_fname_thumbnail(char *name)
 {
   int   l_len;
+  int   l_len2;
   int   l_idx;
   char *l_str;
   
@@ -135,7 +142,8 @@ p_alloc_fname_thumbnail(char *name)
   }
 
   l_len = strlen(name);
-  l_str = g_malloc(l_len+10);
+  l_len2 = l_len + 10;
+  l_str = g_malloc(l_len2);
   strcpy(l_str, name);
   if(l_len > 0)
   {
@@ -147,7 +155,7 @@ p_alloc_fname_thumbnail(char *name)
 	   break;
 	}
      }
-     sprintf(&l_str[l_idx], ".xvpics%s%s", G_DIR_SEPARATOR_S, &name[l_idx]);      
+     g_snprintf(&l_str[l_idx], l_len2 - l_idx, ".xvpics%s%s", G_DIR_SEPARATOR_S, &name[l_idx]);      
   }
   if(gap_debug) printf("p_alloc_fname_thumbnail: thumbname=%s:\n", l_str );
   return(l_str);
@@ -2847,3 +2855,108 @@ gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode)
   
   return(rc);
 }	/* end gap_vid_edit_paste */
+
+
+gint32
+p_getpid(void)
+{
+#ifndef G_OS_WIN32
+  /* for UNIX */
+  return ((gint32)getpid());
+#else
+  /* hof: dont know how to getpid on windows */
+  return 0;
+#endif
+}
+
+gint 
+p_pid_is_alive(gint32 pid)
+{
+#ifndef G_OS_WIN32
+  /* for UNIX */
+
+  /* kill  with signal 0 checks only if the process is alive (no signal is sent)
+   *       returns 0 if alive, 1 if no process with given pid found.
+   */
+  if (0 == kill(pid, 0))
+  {
+    return(TRUE);
+  }
+  return (FALSE);
+#else
+  /* hof: dont know how to check on Windows
+   *      assume that process is always alive
+   *      (therefore on Windows locks will not be cleared 
+   *       automatically after crashes of the locking process)
+   */
+  return(TRUE);
+#endif
+}
+
+static void
+p_gap_lock_build_lockkey(t_gap_lockdata *lock,  gint32 image_id)
+{
+  g_snprintf(lock->key, sizeof(lock->key), "plug_in_gap_plugins_LOCK_%d", (int)image_id);
+}
+
+gint
+p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode)
+{
+  gint32          l_pid;
+  t_gap_lockdata  l_lock;
+  
+  /* check for locks */
+  l_pid = p_getpid();
+  l_lock.lock = 0;
+  p_gap_lock_build_lockkey(&l_lock, image_id);  
+  gimp_get_data (l_lock.key, &l_lock);
+
+  if((l_lock.lock != 0) && (l_lock.image_id == image_id))
+  {
+     if(p_pid_is_alive(l_lock.pid))
+     {
+       if(run_mode == GIMP_RUN_INTERACTIVE)
+       {
+          gchar *l_lockmsg;
+       
+          l_lockmsg = g_strdup_printf(_("Cant execute more than 1 Video Function\n"
+                                        "on the same AnimFrame Image at the same time\n"
+                                        "LOCK ID:%s\n")
+                                   , l_lock.key);
+          gimp_message(l_lockmsg);
+          g_free(l_lockmsg);
+       }
+       printf("GAP plugin is LOCKED  ID:%s PID:%d\n", l_lock.key, (int)l_lock.pid);
+       
+       return(TRUE);
+     }
+  }
+  return(FALSE);
+}
+
+void
+p_gap_lock_set(gint32 image_id)
+{
+  t_gap_lockdata  l_lock;
+  
+  p_gap_lock_build_lockkey(&l_lock, image_id);  
+
+  /* set LOCK on image (for all gap_plugins) */
+  l_lock.lock = 1;
+  l_lock.image_id = image_id;
+  l_lock.pid = p_getpid();
+  gimp_set_data (l_lock.key, &l_lock, sizeof(l_lock));
+}
+
+void
+p_gap_lock_remove(gint32 image_id)
+{
+  t_gap_lockdata  l_lock;
+  
+  p_gap_lock_build_lockkey(&l_lock, image_id);  
+
+  /* remove LOCK on this image for all gap_plugins */
+  l_lock.lock = 0;
+  l_lock.image_id = -1;
+  gimp_set_data (l_lock.key, &l_lock, sizeof(l_lock));
+}

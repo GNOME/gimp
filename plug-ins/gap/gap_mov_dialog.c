@@ -30,6 +30,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.29b; 2000/11/30  hof: new feature: FRAME based Stepmodes, changes for NONINTERACTIVE mode
  * gimp    1.1.23a; 2000/06/04  hof: new button: rotation follow path
  * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview (suggested by jakub steiner)
  * gimp    1.1.17b; 2000/02/23  hof: bugfix: dont flatten the preview, just merge visible layers
@@ -195,8 +196,6 @@ GtkWidget       *  p_buildmenu (MenuItem *);
 
        long        p_move_dialog            (t_mov_data *mov_ptr);
 static void        p_update_point_labels    (t_mov_path_preview *path_ptr);
-static gint        p_conv_keyframe_to_rel   (gint abs_keframe);
-static gint        p_conv_keyframe_to_abs   (gint rel_keframe);
 static void        p_points_from_tab        (t_mov_path_preview *path_ptr);
 static void        p_points_to_tab          (t_mov_path_preview *path_ptr);
 static void        p_point_refresh          (t_mov_path_preview *path_ptr);
@@ -224,7 +223,6 @@ static void	   mov_path_prevw_cursor_update ( t_mov_path_preview *path_ptr );
 static gint	   mov_path_prevw_preview_expose ( GtkWidget *widget, GdkEvent *event );
 static gint	   mov_path_prevw_preview_events ( GtkWidget *widget, GdkEvent *event );
 static gint        p_chk_keyframes(t_mov_path_preview *path_ptr);
-static gdouble     p_calc_angle(gint p1x, gint p1y, gint p2x, gint p2y);
 
 static void     button_pressed_callback (GtkWidget *widget, GdkEventButton *bevent, gpointer client_data);
 static void	mov_padd_callback        (GtkWidget *widget,gpointer data);
@@ -299,6 +297,12 @@ static MenuItem option_step_items[] =
   { N_("OnceReverse"),  0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_ONCE_REV, NULL, NULL },
   { N_("PingPong"),     0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_PING_PONG, NULL, NULL },
   { N_("None"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_NONE, NULL, NULL },
+  { N_("Frame Loop"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_LOOP, NULL, NULL },
+  { N_("Frame Loop Reverse"), 0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_LOOP_REV, NULL, NULL },
+  { N_("Frame Once"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_ONCE, NULL, NULL },
+  { N_("Frame OnceReverse"),  0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_ONCE_REV, NULL, NULL },
+  { N_("Frame PingPong"),     0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_PING_PONG, NULL, NULL },
+  { N_("Frame None"),         0, 0, mov_stepmode_menu_callback, (gpointer) GAP_STEP_FRAME_NONE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -312,6 +316,7 @@ static t_mov_interface mov_int =
 };
 
 OpsButtonModifier global_key_modifier = OPS_BUTTON_MODIFIER_NONE;
+
 
 /* ============================================================================
  **********************
@@ -370,6 +375,12 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   pvals->apv_gap_paste_buff  = NULL;
   pvals->apv_scalex  = 40.0;
   pvals->apv_scaley  = 40.0;
+
+  pvals->cache_src_image_id  = -1;  
+  pvals->cache_tmp_image_id  = -1;
+  pvals->cache_tmp_layer_id  = -1;
+  pvals->cache_frame_number  = -1;
+  pvals->cache_ainfo_ptr = NULL;
 
   p_reset_points();
   
@@ -914,6 +925,7 @@ mov_apv_callback (GtkWidget *widget,
 				 GIMP_PDB_DRAWABLE, -1,  /* dummy */
                                  GIMP_PDB_END);
       }
+      pvals->apv_mlayer_image = -1;
   }
 
   apv_locked = FALSE;
@@ -932,49 +944,6 @@ p_copy_point(gint to_idx, gint from_idx)
     /* do not copy keyframe */
     pvals->point[to_idx].keyframe_abs = 0;
     pvals->point[to_idx].keyframe = 0;
-}
-
-static gdouble
-p_calc_angle(gint p1x, gint p1y, gint p2x, gint p2y)
-{
-  /* calculate angle in degree
-   * how to rotate an object that follows the line between p1 and p2
-   */
-  gdouble l_a;
-  gdouble l_b;
-  gdouble l_angle_rad;
-  gdouble l_angle;
-  
-  l_a = p2x - p1x;
-  l_b = (p2y - p1y) * (-1.0);
-  
-  if(l_a == 0)
-  {
-    if(l_b < 0)  { l_angle = 90.0; }
-    else         { l_angle = 270.0; }
-  }
-  else
-  {
-    l_angle_rad = atan(l_b/l_a);
-    l_angle = (l_angle_rad * 180.0) / 3.14159;
-
-    if(l_a < 0)
-    {
-      l_angle = 180 - l_angle;
-    }
-    else
-    {
-      l_angle = l_angle * (-1.0);
-    }
-  }  
-
-  if(gap_debug)
-  {
-     printf("p_calc_angle: p1(%d/%d) p2(%d/%d)  a=%f, b=%f, angle=%f\n"
-         , (int)p1x, (int)p1y, (int)p2x, (int)p2y
-         , (float)l_a, (float)l_b, (float)l_angle);
-  }
-  return(l_angle);
 }
 
 
@@ -1185,61 +1154,12 @@ mov_pclr_all_callback (GtkWidget *widget,
   p_point_refresh(path_ptr);
 }
 
-static gdouble
-p_rotatate_less_than_180(gdouble angle, gdouble angle_new, gint *turns)
-{
-  /* if an object  follows a circular path and does more than one turn
-   * there comes a point where it flips from say 265 degree to -85 degree.
-   *
-   * if there are more (say 3) frames between the controlpoints,
-   * the object performs an unexpected rotation effect because the iteration
-   * from 265 to -85  is done  in a sequence like this: 265.0, 148.6, 32.3, -85.0
-   *
-   * we can avoid this by preventing angle changes of more than 180 degree.
-   * in such a case this procedure adjusts the new_angle from -85 to 275
-   * that results in oterations like this: 265.0, 268.3, 271.6, 275.0
-   */
-  gint l_diff;
-  gint l_turns;
-
-  l_diff = angle - (angle_new + (*turns * 360));
-  if((l_diff >= -180) && (l_diff < 180))
-  {
-      return(angle_new + (*turns * 360));
-  }
-
-  l_diff = (angle - angle_new);
-  if(l_diff < 0)
-  {
-     l_turns = (l_diff / 360) -1;
-  }
-  else
-  {
-     l_turns = (l_diff / 360) +1;
-  }
-
-  *turns = l_turns;
-
-  if(gap_debug)
-  {
-     printf("p_rotatate_less_than_180: turns %d angle_new:%f\n"
-             , (int)l_turns, (float)angle_new);
-  }
-
-  return( angle_new + (l_turns * 360));
-}
 
 static void
 mov_prot_follow_callback (GtkWidget *widget,
 		      gpointer	 data)
 {
-  gint l_idx;
-  gdouble l_startangle;
-  gdouble l_angle_1;
-  gdouble l_angle_2;
-  gdouble l_angle_new;
-  gdouble l_angle;
-  gint    l_turns;
+  gint32  l_startangle;
   
   t_mov_path_preview *path_ptr = data;
   
@@ -1248,75 +1168,12 @@ mov_prot_follow_callback (GtkWidget *widget,
   if( pvals->point_idx_max > 1)
   {
     l_startangle = 0.0;
-    l_angle = 0.0;
-    l_turns = 0;
     if(global_key_modifier == OPS_BUTTON_MODIFIER_SHIFT)
     {
       p_points_to_tab(path_ptr);
       l_startangle = pvals->point[0].rotation;
     }
- 
-    for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
-    {
-      if(l_idx == 0)
-      {
-        l_angle = p_calc_angle(pvals->point[l_idx].p_x,
-	                       pvals->point[l_idx].p_y,
-	                       pvals->point[l_idx +1].p_x,
-	                       pvals->point[l_idx +1].p_y);
-      }
-      else
-      {
-        if(l_idx == pvals->point_idx_max)
-	{
-          l_angle_new = p_calc_angle(pvals->point[l_idx -1].p_x,
-	                	 pvals->point[l_idx -1].p_y,
-	                	 pvals->point[l_idx].p_x,
-	                	 pvals->point[l_idx].p_y);
-	}
-	else
-	{
-           l_angle_1 = p_calc_angle(pvals->point[l_idx -1].p_x,
-	                	  pvals->point[l_idx -1].p_y,
-	                	  pvals->point[l_idx].p_x,
-	                	  pvals->point[l_idx].p_y);
-				  
-           l_angle_2 = p_calc_angle(pvals->point[l_idx].p_x,
-	                          pvals->point[l_idx].p_y,
-	                          pvals->point[l_idx +1].p_x,
-	                          pvals->point[l_idx +1].p_y);
-
-           if((l_angle_1 == 0) && (l_angle_2 == 180))
-	   {
-               l_angle_new = 270;
-	   }
-	   else
-	   {
-             if((l_angle_1 == 90) && (l_angle_2 == 270))
-	     {
-               l_angle_new = 0;
-	     }
-	     else
-	     {
-               l_angle_new = (l_angle_1 + l_angle_2) / 2;
-	     }
-	   }
-	   if(((l_angle_1 < 0) && (l_angle_2 >= 180))
-	   || ((l_angle_2 < 0) && (l_angle_1 >= 180)))
-	   {
-	      l_angle_new += 180;
-	   }
-	}
-	l_angle = p_rotatate_less_than_180(l_angle, l_angle_new, &l_turns);
-      }
-
-      if(gap_debug)
-      {
-        printf("ROT Follow [%03d] angle = %f\n", (int)l_idx, (float)l_angle);
-      }
-
-      pvals->point[l_idx].rotation = l_startangle + l_angle;
-    }
+    p_calculate_rotate_follow(pvals, l_startangle);
   }
 
   global_key_modifier = OPS_BUTTON_MODIFIER_NONE;
@@ -1632,25 +1489,6 @@ mov_show_path_callback(GtkWidget *widget, gpointer   client_data)
  * procedures to handle POINTS - TABLE
  * ============================================================================
  */
-static gint
-p_conv_keyframe_to_rel(gint abs_keyframe)
-{
-    if(pvals->dst_range_start <= pvals->dst_range_end)
-    {
-       return (abs_keyframe -  pvals->dst_range_start);
-    }
-    return (pvals->dst_range_start - abs_keyframe);
-}
-
-static gint
-p_conv_keyframe_to_abs(gint rel_keyframe)
-{
-    if(pvals->dst_range_start <= pvals->dst_range_end)
-    {
-      return(rel_keyframe + pvals->dst_range_start);
-    }
-    return(pvals->dst_range_start - rel_keyframe);
-}
  
  
 static void
@@ -1701,6 +1539,8 @@ p_points_from_tab(t_mov_path_preview *path_ptr)
 static void
 p_points_to_tab(t_mov_path_preview *path_ptr)
 {
+  if(gap_debug) printf("p_points_to_tab: idx=%d, rotation=%d\n", (int)pvals->point_idx ,(int) path_ptr->rotation);
+  
   pvals->point[pvals->point_idx].p_x       = path_ptr->p_x;
   pvals->point[pvals->point_idx].p_y       = path_ptr->p_y;
   pvals->point[pvals->point_idx].opacity   = path_ptr->opacity;
@@ -1712,7 +1552,7 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
   && (pvals->point_idx != 0)
   && (pvals->point_idx != pvals->point_idx_max))
   {
-    pvals->point[pvals->point_idx].keyframe = p_conv_keyframe_to_rel(path_ptr->keyframe_abs);
+    pvals->point[pvals->point_idx].keyframe = p_conv_keyframe_to_rel(path_ptr->keyframe_abs, pvals);
   }
   else
   {
@@ -1774,72 +1614,9 @@ void p_reset_points()
 
 void p_load_points(char *filename)
 {
-#define POINT_REC_MAX 128
-
-  FILE *l_fp;
-  gint   l_idx;
-  char  l_buff[POINT_REC_MAX +1 ];
-  char *l_ptr;
-  gint   l_cnt;
-  gint   l_v1, l_v2, l_v3, l_v4, l_v5, l_v6, l_v7;
-
-  if(filename == NULL) return;
-  
-  l_fp = fopen(filename, "r");
-  if(l_fp != NULL)
+  if (p_gap_load_pointfile(filename, pvals) < -1)
   {
-    l_idx = -1;
-    while (NULL != fgets (l_buff, POINT_REC_MAX, l_fp))
-    {
-       /* skip leading blanks */
-       l_ptr = l_buff;
-       while(*l_ptr == ' ') { l_ptr++; }
-       
-       /* check if line empty or comment only (starts with '#') */
-       if((*l_ptr != '#') && (*l_ptr != '\n') && (*l_ptr != '\0'))
-       {
-         l_cnt = sscanf(l_ptr, "%d%d%d%d%d%d%d", &l_v1, &l_v2, &l_v3, &l_v4, &l_v5, &l_v6, &l_v7);
-         if(l_idx == -1)
-         {
-           if((l_cnt < 2) || (l_v2 > GAP_MOV_MAX_POINT) || (l_v1 > l_v2))
-           {
-             break;
-            }
-           pvals->point_idx     = l_v1;
-           pvals->point_idx_max = l_v2 -1;
-           l_idx = 0;
-         }
-         else
-         {
-           if((l_cnt != 6) && (l_cnt != 7))
-           {
-             p_reset_points();
-             break;
-           }
-           pvals->point[l_idx].p_x      = l_v1;
-           pvals->point[l_idx].p_y      = l_v2;
-           pvals->point[l_idx].w_resize = l_v3;
-           pvals->point[l_idx].h_resize = l_v4;
-           pvals->point[l_idx].opacity  = l_v5;
-           pvals->point[l_idx].rotation = l_v6;
-           if((l_cnt == 7) && (l_idx > 0))
-	   {
-             pvals->point[l_idx].keyframe = l_v7;
-             pvals->point[l_idx].keyframe_abs = p_conv_keyframe_to_abs(l_v7);
-	   }
-	   else
-	   {
-             pvals->point[l_idx].keyframe_abs = 0;
-             pvals->point[l_idx].keyframe = 0;
-	   }
-           l_idx ++;
-         }
-
-         if(l_idx > pvals->point_idx_max) break;
-       }
-    }
-     
-    fclose(l_fp);
+    p_reset_points();
   }
 }
 
@@ -1848,54 +1625,11 @@ void p_load_points(char *filename)
  *   save point table (from global pvals into named file)
  * ============================================================================
  */
-void p_save_points(char *filename)
+static void 
+p_save_points(char *filename)
 {
-  FILE *l_fp;
-  gint l_idx;
-  
-  if(filename == NULL) return;
-  
-  l_fp = fopen(filename, "w+");
-  if(l_fp != NULL)
-  {
-    fprintf(l_fp, "# GAP file contains saved Move Path Point Table\n");
-    fprintf(l_fp, "%d  %d  # current_point  points\n",
-                  (int)pvals->point_idx,
-                  (int)pvals->point_idx_max + 1);
-    fprintf(l_fp, "# x  y   width height opacity rotation\n");
-    for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
-    {
-      if((l_idx > 0) 
-      && (l_idx < pvals->point_idx_max)
-      && ((int)pvals->point[l_idx].keyframe > 0))
-      {
-	fprintf(l_fp, "%04d %04d  %03d %03d  %03d %d %d\n",
-                     (int)pvals->point[l_idx].p_x,
-                     (int)pvals->point[l_idx].p_y,
-                     (int)pvals->point[l_idx].w_resize,
-                     (int)pvals->point[l_idx].h_resize,
-                     (int)pvals->point[l_idx].opacity,
-                     (int)pvals->point[l_idx].rotation,
-                     (int)p_conv_keyframe_to_rel(pvals->point[l_idx].keyframe_abs));
-      }
-      else
-      {
-	fprintf(l_fp, "%04d %04d  %03d %03d  %03d %d\n",
-                     (int)pvals->point[l_idx].p_x,
-                     (int)pvals->point[l_idx].p_y,
-                     (int)pvals->point[l_idx].w_resize,
-                     (int)pvals->point[l_idx].h_resize,
-                     (int)pvals->point[l_idx].opacity,
-                     (int)pvals->point[l_idx].rotation);
-      }
-    }
-     
-    fclose(l_fp);
-  }
+  p_gap_save_pointfile(filename, pvals);
 }	/* end p_save_points */
-
-
-
 
 
 /* ============================================================================
@@ -2201,8 +1935,7 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &path_ptr->rotation);
   path_ptr->rotation_adj = GTK_ADJUSTMENT(adj);
-  gtk_widget_show( table );
-
+ 
   
   /* Keyframe */ 
   adj = gimp_scale_entry_new( GTK_TABLE (table), 3, 3,        /* table col, row */
@@ -2220,7 +1953,7 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &path_ptr->keyframe_abs);
   path_ptr->keyframe_adj = GTK_ADJUSTMENT(adj);
-
+ 
 
   gtk_widget_show( table );
 
@@ -2920,90 +2653,14 @@ p_chk_keyframes(t_mov_path_preview *path_ptr)
 #define ARGC_ERRWINDOW 2
 
   static t_arr_arg  argv[ARGC_APV];
-  gint   l_affected_frames;
   gint   l_idx;
-  gint   l_errcount;
-  gint   l_prev_keyframe;
-  gint   l_prev_frame;
-  gchar *l_err;
   gchar *l_err_lbltext;
   static t_but_arg  b_argv[2];
   static gint  keychk_locked = FALSE;
 
   p_points_to_tab(path_ptr);
 
-  l_affected_frames = 1 + MAX(pvals->dst_range_start, pvals->dst_range_end)
-                    - MIN(pvals->dst_range_start, pvals->dst_range_end);
-  
-  l_errcount = 0;
-  l_prev_keyframe = 0;
-  l_prev_frame = 0;
-  l_err_lbltext = g_strdup("\0");
-  
-  for(l_idx = 0; l_idx < pvals->point_idx_max; l_idx++ )
-  {
-     if(pvals->point[l_idx].keyframe_abs != 0)
-     {
-         pvals->point[l_idx].keyframe = p_conv_keyframe_to_rel(pvals->point[l_idx].keyframe_abs);
-
-         if(pvals->point[l_idx].keyframe > l_affected_frames - 2)
-	 {
-	    l_err = g_strdup_printf(_("\nError: Keyframe %d at point [%d] higher or equal than last handled frame")
-	                              , pvals->point[l_idx].keyframe_abs,  l_idx+1);
-	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
-	    g_free(l_err);
-	    l_errcount++;
-	 }
-         if(pvals->point[l_idx].keyframe < l_prev_frame)
-	 {
-	    l_err = g_strdup_printf(_("\nError: Keyframe %d at point [%d] leaves not enough space (frames)"
-	                              "\nfor the previous controlpoints")
-				      , pvals->point[l_idx].keyframe_abs, l_idx+1);
-	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
-	    g_free(l_err);
-	    l_errcount++;
-	 }
-	 
-         if(pvals->point[l_idx].keyframe <= l_prev_keyframe)
-	 {
-	    l_err = g_strdup_printf(_("\nError: Keyframe %d is not in sequence at point [%d]")
-	                             , pvals->point[l_idx].keyframe_abs, l_idx+1);
-	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
-	    g_free(l_err);
-	    l_errcount++;
-	 }
-
-         l_prev_keyframe = pvals->point[l_idx].keyframe;
-	 if(l_prev_keyframe > l_prev_frame)
-	 {
-	   l_prev_frame = l_prev_keyframe +1;
-	 }
-     }
-     else
-     {
-	l_prev_frame++;
-	if(l_prev_frame +1 > l_affected_frames)
-	{
-	    l_err = g_strdup_printf(_("\nError: controlpoint [%d] is out of handled framerange"), l_idx+1);
-	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
-	    g_free(l_err);
-	    l_errcount++;
-	}
-     }
-     if(l_errcount > 10)
-     {
-       break;
-     }
-  }
-
-  if(pvals->point_idx_max + 1 > l_affected_frames)
-  {
-	l_err = g_strdup_printf(_("\nError: more controlpoints (%d) than handled frames (%d)"
-	                          "\nplease reduce controlpoints or select more frames"),
-	                          (int)pvals->point_idx_max+1, (int)l_affected_frames);
-	l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
-	g_free(l_err);
-  }
+  l_err_lbltext = p_gap_chk_keyframes(pvals);
 
   if(*l_err_lbltext != '\0')
   {
@@ -3047,17 +2704,15 @@ p_chk_keyframes(t_mov_path_preview *path_ptr)
   return(TRUE);
 }	/* end p_chk_keyframes */
 
-
 /* ============================================================================
- * p_get_flattened_drawable
+ * p_get_flattened_layer
  *   flatten the given image and return pointer to the
  *   (only) remaining drawable. 
  * ============================================================================
  */
-GimpDrawable *
-p_get_flattened_drawable(gint32 image_id)
+gint32
+p_get_flattened_layer(gint32 image_id, GimpMergeType mergemode)
 {
-  GimpDrawable *l_drawable_ptr ;
   GimpImageBaseType l_type;
   guint   l_width, l_height;
   gint32  l_layer_id;
@@ -3085,7 +2740,21 @@ p_get_flattened_drawable(gint32 image_id)
                                  0);        /* NORMAL */
   gimp_image_add_layer(image_id, l_layer_id, 0);
 
-  l_drawable_ptr = gimp_drawable_get (gimp_image_merge_visible_layers (image_id, GIMP_CLIP_TO_IMAGE));
+  return gimp_image_merge_visible_layers (image_id, mergemode);
+}	/* end p_get_flattened_layer */
+
+/* ============================================================================
+ * p_get_flattened_drawable
+ *   flatten the given image and return pointer to the
+ *   (only) remaining drawable. 
+ * ============================================================================
+ */
+GimpDrawable *
+p_get_flattened_drawable(gint32 image_id)
+{
+  GimpDrawable *l_drawable_ptr ;
+
+  l_drawable_ptr = gimp_drawable_get (p_get_flattened_layer(image_id, GIMP_CLIP_TO_IMAGE));
   return l_drawable_ptr;
 }	/* end p_get_flattened_drawable */
 
@@ -3113,13 +2782,6 @@ p_get_prevw_drawable (t_mov_path_preview *path_ptr)
     
     /* calculate current settings */
     l_curr.dst_frame_nr    = 0;
-    l_curr.deltaX          = 0.0;
-    l_curr.deltaY          = 0.0;
-    l_curr.deltaOpacity    = 0.0;
-    l_curr.deltaWidth      = 0.0;
-    l_curr.deltaHeight     = 0.0;
-    l_curr.deltaRotation   = 0.0;
-
 
     l_curr.currX         = (gdouble)path_ptr->p_x;
     l_curr.currY         = (gdouble)path_ptr->p_y;
@@ -3141,8 +2803,13 @@ p_get_prevw_drawable (t_mov_path_preview *path_ptr)
          if(l_curr.src_layers[l_curr.src_layer_idx] == pvals->src_layer_id)
             break;
       }
-      
     }
+    if(pvals->src_stepmode >= GAP_STEP_FRAME)
+    {
+      p_fetch_src_frame (pvals, -1);  /* negative value fetches the selected frame number */
+    }  
+
+    
     /* set offsets (in cur_ptr) 
      *  according to handle_mode and src_img dimension (pvals) 
      */
@@ -3152,6 +2819,7 @@ p_get_prevw_drawable (t_mov_path_preview *path_ptr)
     p_mov_render(pvals->tmp_image_id, pvals, &l_curr);
 
     if(l_curr.src_layers != NULL) g_free(l_curr.src_layers);
+    l_curr.src_layers = NULL;    
   }
 
   /* flatten image, and get the (only) resulting drawable */
@@ -3170,8 +2838,18 @@ void p_set_handle_offsets(t_mov_values *val_ptr, t_mov_current *cur_ptr)
   guint    l_src_width, l_src_height;         /* dimensions of the source image */
 
    /* get dimensions of source image */
-   l_src_width  = gimp_image_width(val_ptr->src_image_id);
-   l_src_height = gimp_image_height(val_ptr->src_image_id);
+   if((val_ptr->src_stepmode < GAP_STEP_FRAME)
+   || (val_ptr->cache_tmp_image_id < 0))
+   {
+     l_src_width  = gimp_image_width(val_ptr->src_image_id);
+     l_src_height = gimp_image_height(val_ptr->src_image_id);
+   }
+   else
+   {
+     /* for Frame Based Modes use the cached tmp image */
+     l_src_width  = gimp_image_width(val_ptr->cache_tmp_image_id);
+     l_src_height = gimp_image_height(val_ptr->cache_tmp_image_id);
+   }
 
    cur_ptr->l_handleX = 0.0;
    cur_ptr->l_handleY = 0.0;
@@ -3232,7 +2910,8 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
  
   if(gap_debug) printf("p_mov_render: frame/layer: %ld/%ld  X=%f, Y=%f\n"
                 "       Width=%f Height=%f\n"
-                "       Opacity=%f  Rotate=%f  clip_to_img = %d force_visibility = %d\n",
+                "       Opacity=%f  Rotate=%f  clip_to_img = %d force_visibility = %d\n"
+                "       src_stepmode = %d\n",
                      cur_ptr->dst_frame_nr, cur_ptr->src_layer_idx,
                      cur_ptr->currX, cur_ptr->currY,
                      cur_ptr->currWidth,
@@ -3240,25 +2919,42 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
                      cur_ptr->currOpacity,
                      cur_ptr->currRotation,
                      val_ptr->clip_to_img,
-                     val_ptr->src_force_visible);
+                     val_ptr->src_force_visible,
+		     val_ptr->src_stepmode);
 
-
-  if(gap_debug) 
+  if(val_ptr->src_stepmode < GAP_STEP_FRAME)
   {
-    printf("p_mov_render: Before p_my_layer_copy image_id:%d src_layer_id:%d\n"
-            ,(int)image_id, (int)cur_ptr->src_layers[cur_ptr->src_layer_idx]);
-  }
-
-
-  /* make a copy of the current source layer
-   * (using current opacity  & paintmode values)
-   */
-   l_cp_layer_id = p_my_layer_copy(image_id,
+    if(gap_debug) 
+    {
+      printf("p_mov_render: Before p_my_layer_copy image_id:%d src_layer_id:%d\n"
+              ,(int)image_id, (int)cur_ptr->src_layers[cur_ptr->src_layer_idx]);
+    }
+    /* make a copy of the current source layer
+     * (using current opacity  & paintmode values)
+     */
+     l_cp_layer_id = p_my_layer_copy(image_id,
                                    cur_ptr->src_layers[cur_ptr->src_layer_idx],
                                    cur_ptr->currOpacity,
                                    val_ptr->src_paintmode,
                                    &l_src_offset_x,
                                    &l_src_offset_y);
+  }
+  else
+  {
+    if(gap_debug) 
+    {
+      printf("p_mov_render: Before p_my_layer_copy image_id:%d cache_tmp_layer_id:%d\n"
+              ,(int)image_id, (int)val_ptr->cache_tmp_layer_id);
+    }
+     /* for FRAME based stepmodes use the flattened layer in the cahed frame image */
+     l_cp_layer_id = p_my_layer_copy(image_id,
+                                   val_ptr->cache_tmp_layer_id,
+                                   cur_ptr->currOpacity,
+                                   val_ptr->src_paintmode,
+                                   &l_src_offset_x,
+                                   &l_src_offset_y);
+  }
+
 
   /* add the copied layer to current destination image */
   if(gap_debug) printf("p_mov_render: after layer copy layer_id=%d\n", (int)l_cp_layer_id);
@@ -3425,3 +3121,150 @@ p_buildmenu (MenuItem            *items)
 
   return menu;
 }	/* end p_buildmenu */
+
+/* ============================================================================
+ * p_fetch_src_frame
+ *   fetch the requested AnimFrame SourceImage into cache_tmp_image_id
+ *   and
+ *    - reduce all visible layer to one layer (cache_tmp_layer_id)
+ *    - (scale to animated preview size if called for AnimPreview )
+ *    - reuse cached image (for subsequent calls for the same framenumber
+ *      of the same source image -- for  GAP_STEP_FRAME_NONE
+ *    - never load current frame number from diskfile (use duplicate of the src_image)
+ *  returns 0 (OK) or -1 (on Errors)
+ * ============================================================================
+ */
+gint
+p_fetch_src_frame(t_mov_values *pvals,  gint32 wanted_frame_nr)
+{  
+  t_anim_info  *l_ainfo_ptr;
+  t_anim_info  *l_old_ainfo_ptr;
+
+  if(gap_debug)
+  {
+     printf("p_fetch_src_frame: START src_image_id: %d wanted_frame_nr:%d"
+            " cache_src_image_id:%d cache_frame_number:%d\n"
+            , (int)pvals->src_image_id
+            , (int)wanted_frame_nr
+            , (int)pvals->cache_src_image_id
+            , (int)pvals->cache_frame_number
+            );
+  }
+  
+  if(pvals->src_image_id < 0)
+  {
+     return -1;  
+  }
+ 
+  if((pvals->src_image_id != pvals->cache_src_image_id)
+  || (wanted_frame_nr != pvals->cache_frame_number))
+  {
+     if(pvals->cache_tmp_image_id >= 0)
+     {
+        if(gap_debug)
+	{
+	   printf("p_fetch_src_frame: DELETE cache_tmp_image_id:%d\n",
+	            (int)pvals->cache_tmp_image_id);
+        }
+        /* destroy the cached frame image */
+        gimp_image_delete(pvals->cache_tmp_image_id);
+	pvals->cache_tmp_image_id = -1;
+     }
+
+     l_ainfo_ptr =  p_alloc_ainfo(pvals->src_image_id, GIMP_RUN_NONINTERACTIVE);
+
+     if(pvals->cache_ainfo_ptr == NULL)
+     {
+       pvals->cache_ainfo_ptr =  l_ainfo_ptr;
+     }
+     else
+     {
+        if ((pvals->src_image_id == pvals->cache_src_image_id)
+	&&  (strcmp(pvals->cache_ainfo_ptr->basename, l_ainfo_ptr->basename) == 0))
+	{
+           pvals->cache_ainfo_ptr->curr_frame_nr =  l_ainfo_ptr->curr_frame_nr;
+           p_free_ainfo(&l_ainfo_ptr);
+	}
+	else
+	{           
+           /* update cached ainfo  if source image has changed
+	    * (either by id or by its basename)
+	    */
+           l_old_ainfo_ptr = pvals->cache_ainfo_ptr;
+           pvals->cache_ainfo_ptr = l_ainfo_ptr;
+           p_free_ainfo(&l_old_ainfo_ptr);
+	}
+     }
+     
+     if ((wanted_frame_nr == pvals->cache_ainfo_ptr->curr_frame_nr)
+     ||  (wanted_frame_nr < 0))
+     {
+        /* always take the current source frame from the already opened image
+	 * not only for speedup reasons. (the diskfile may contain non actual imagedata)
+	 */
+        pvals->cache_tmp_image_id = p_gimp_channel_ops_duplicate(pvals->src_image_id);
+        wanted_frame_nr = pvals->cache_ainfo_ptr->curr_frame_nr;
+     }
+     else
+     {
+       /* build the source framename */
+       if(pvals->cache_ainfo_ptr->new_filename != NULL)
+       {
+         g_free(pvals->cache_ainfo_ptr->new_filename);
+       }
+       pvals->cache_ainfo_ptr->new_filename = p_alloc_fname(pvals->cache_ainfo_ptr->basename,
+                                	wanted_frame_nr,
+                                	pvals->cache_ainfo_ptr->extension);
+       if(pvals->cache_ainfo_ptr->new_filename == NULL)
+       {
+          printf("gap: error got no source frame filename\n");
+          return -1;
+       }
+
+       /* load the wanted source frame */
+       pvals->cache_tmp_image_id =  p_load_image(pvals->cache_ainfo_ptr->new_filename);
+       if(pvals->cache_tmp_image_id < 0)
+       {
+          printf("gap: load error on src image %s\n", pvals->cache_ainfo_ptr->new_filename);
+          return -1;
+       }
+
+     }
+     
+     pvals->cache_tmp_layer_id = p_get_flattened_layer(pvals->cache_tmp_image_id, GIMP_EXPAND_AS_NECESSARY);
+     
+
+     /* check if we are generating an anim preview
+      * where we must Scale (down) the src image to preview size
+      */
+     if ((pvals->apv_mlayer_image >= 0)
+     &&  ((pvals->apv_scalex != 100.0) || (pvals->apv_scaley != 100.0)))
+     {
+       GimpParam     *l_params;
+       gint        l_retvals;
+       gint32      l_size_x, l_size_y;
+
+       if(gap_debug)
+       {
+          printf("p_fetch_src_frame: Scale for Animpreview apv_scalex %f apv_scaley %f\n"
+                 , (float)pvals->apv_scalex, (float)pvals->apv_scaley );
+       }
+
+       l_size_x = (gimp_image_width(pvals->cache_tmp_image_id) * pvals->apv_scalex) / 100;
+       l_size_y = (gimp_image_height(pvals->cache_tmp_image_id) * pvals->apv_scaley) / 100;
+
+       l_params = gimp_run_procedure ("gimp_image_scale",
+			       &l_retvals,
+			       GIMP_PDB_IMAGE,    pvals->cache_tmp_image_id,
+			       GIMP_PDB_INT32,    l_size_x,
+			       GIMP_PDB_INT32,    l_size_y,
+			       GIMP_PDB_END);
+     }
+         
+     pvals->cache_src_image_id = pvals->src_image_id;
+     pvals->cache_frame_number = wanted_frame_nr;
+  }
+
+  return 0; /* OK */    
+}	/* end p_fetch_src_frame */
+

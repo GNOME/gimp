@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * 1.1.29a; 2000/11/23   hof: gap locking (changed to procedures and placed here)
  * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_clear_video_paste
  * 1.1.14a; 2000/01/02   hof: new: p_get_frame_nr
  * 1.1.8a;  1999/08/31   hof: new: p_strdup_del_underscore and p_strdup_add_underscore
@@ -61,6 +62,13 @@
 
 #endif /* !G_OS_WIN32 */
 
+typedef struct
+{
+    char   key[50];
+    long   lock;        /* 0 ... NOT Locked, 1 ... locked */
+    gint32 image_id;
+    gint32 pid;
+} t_gap_lockdata;
 
 typedef struct t_anim_info {
    gint32      image_id;
@@ -123,6 +131,13 @@ gint32 p_vid_edit_clear(void);
 gint32 p_vid_edit_framecount(void);
 gint   gap_vid_edit_copy(GimpRunModeType run_mode, gint32 image_id, long range_from, long range_to);
 gint   gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode);
+gint32 p_getpid(void);
+gint   p_pid_is_alive(gint32 pid);
+
+gint   p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode);
+void   p_gap_lock_set(gint32 image_id);
+void   p_gap_lock_remove(gint32 image_id);
+
 
 #define  VID_PASTE_REPLACE         0
 #define  VID_PASTE_INSERT_BEFORE   1

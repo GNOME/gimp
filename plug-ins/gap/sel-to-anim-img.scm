@@ -107,9 +107,9 @@
 (script-fu-register "script-fu-selection-to-anim-image"
 		    _"<Image>/Script-Fu/Animators/Selection to AnimImage..."
 		    "Create a multilayer image from current selection and apply any PDB Filter to all layer-copies"
-		    "Wolfgang Hofer <hof@hotbot.com>"
+		    "Wolfgang Hofer <hof@gimp.org>"
 		    "Wolfgang Hofer"
-		    "20/05/98"
+		    "2000/11/30"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

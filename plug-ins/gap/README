@@ -1,4 +1,4 @@
-Project gap "Gimp Animation Package"   04. June 2000  release 1.1.23a
+Project gap "Gimp Animation Package"   25. Nov 2000  release 1.1.29b
 
 --------------------------------------------------------------------
 Introduction
@@ -130,6 +130,10 @@ Write (encode)
 --------------------------------------------------------------------
 Change Log
 --------------------------------------------------------------------
+- 1.1.29b - Frame Based Stepmodes in MovePath
+          - NONINTERACTIVE interface for Move Path
+          - Inform about Locks in Dialog Window,
+            (clear lock if locking process does not exist --UNIX only)
 - 1.1.20a - MovePath
              - AnimPreview
              - Keyframes
@@ -477,6 +481,24 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
         the Layers of the SourceImage are stepped through,
         and the next handled frame recieves the next
         Layer from the Source_images Layerstack.
+        
+        For the Frame based Stepmodes ("Frame Loop", "Frame PingPong" ...)
+        the selected Source(Layer) should be a Layer of another AnimFrame.
+        In the Frame based Stepmodes the Source Object is considered
+        as AnimFrames and stepping is done from frame to frame
+        (and not from layer to layer)
+        The inserted Layer is always a copy of one Frame of the
+        source object Animation (no matter which Src Layer was selected)
+        where all the visible source Layers are merged.
+        
+        The FrameBased Modes can be used to mix Videos with many frames,
+        because there is no need to convert one of the videos to
+        a multilayer image.
+	
+	If you use a normal Image (that is not an AnimFrame) as Source
+	for the FrameBased Stepmodes it acts like an Animation with 
+	only one frame.
+        
       
       The copies of the SourceLayer(s) were modified by transitions
         with varying Parameters.

@@ -28,7 +28,8 @@
  */
 
 /* revision history:
- * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
+ * gimp   1.1.29b;   2000/11/30  hof: use g_snprintf
+ * gimp   1.1.28a;   2000/11/05  hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * gimp   1.1.6;     1999/06/21  hof: bugix: wrong iterator total_steps and direction
  * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GimpImageType with GimpImageBaseType)
  * version 0.98.00   1998.11.27  hof: - use new module gap_pdb_calls.h
@@ -177,7 +178,8 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
   argv[3].radio_ret  = 4;
 
   /* Layer select pattern string */
-  sprintf (sel_pattern, "0");
+  sel_pattern[0] = '0';
+  sel_pattern[1] = '\0';
   p_init_arr_arg(&argv[4], WGT_TEXT);
   argv[4].label_txt = _("Select Pattern:");
   argv[4].entry_width = 140;       /* pixel */
@@ -719,7 +721,7 @@ p_do_filter_dialogs(t_anim_info *ainfo_ptr,
   *plugin_data_len = p_get_data(filter_procname);
   if(*plugin_data_len > 0)
   {
-     sprintf(l_key_from, "%s_ITER_FROM", filter_procname);
+     g_snprintf(l_key_from, sizeof(l_key_from), "%s_ITER_FROM", filter_procname);
      p_set_data(l_key_from, *plugin_data_len);
   }
   else
@@ -817,11 +819,11 @@ p_do_2nd_filter_dialogs(char *filter_procname,
   if(l_plugin_data_len <= 0)
      goto cleanup;
 
-   sprintf(l_key_to, "%s_ITER_TO", filter_procname);
+   g_snprintf(l_key_to, sizeof(l_key_to), "%s_ITER_TO", filter_procname);
    p_set_data(l_key_to, l_plugin_data_len);
 
    /* get FROM values */
-   sprintf(l_key_from, "%s_ITER_FROM", filter_procname);
+   g_snprintf(l_key_from, sizeof(l_key_from), "%s_ITER_FROM", filter_procname);
    l_plugin_data_len = p_get_data(l_key_from);
    p_set_data(filter_procname, l_plugin_data_len);
 

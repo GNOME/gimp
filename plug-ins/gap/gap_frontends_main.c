@@ -41,9 +41,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.11b; 1999/11/20";
+static char *gap_main_version =  "1.1.29b; 2000/11/25";
 
 /* revision history:
+ * gimp    1.1.29b; 2000/11/25  hof: use gap lock procedures, update e-mail adress + main version
  * gimp    1.1.11b; 1999/11/20  hof: added gap_decode_xanim, fixed typo in mpeg encoder menu path
  *                                   based on parts that were found in gap_main.c before.
  */
@@ -121,7 +122,7 @@ query ()
   gimp_install_procedure("plug_in_gap_xanim_decode",
 			 "This plugin calls xanim to split any video to anim frames. (xanim exporting edition must be installed on your system)",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Split Video to Frames/Any XANIM readable..."),
@@ -133,7 +134,7 @@ query ()
   gimp_install_procedure("extension_gap_xanim_decode",
 			 "This plugin calls xanim to split any video to anim frames. (xanim exporting edition must be installed on your system)",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."),
@@ -145,7 +146,7 @@ query ()
   gimp_install_procedure("plug_in_gap_mpeg_encode",
 			 "This plugin calls mpeg_encode to convert anim frames to MPEG1, or just generates a param file for mpeg_encode. (mpeg_encode must be installed on your system)",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG1..."),
@@ -158,7 +159,7 @@ query ()
   gimp_install_procedure("plug_in_gap_mpeg2encode",
 			 "This plugin calls mpeg2encode to convert anim frames to MPEG1 or MPEG2, or just generates a param file for mpeg2encode. (mpeg2encode must be installed on your system)",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
 			 N_("<Image>/Video/Encode/MPEG2..."),
@@ -179,15 +180,6 @@ run (char    *name,
      int     *nreturn_vals,
      GimpParam **return_vals)
 {
-  typedef struct
-  {
-    long   lock;        /* 0 ... NOT Locked, 1 ... locked */
-    gint32 image_id;
-    long   timestamp;   /* locktime not used for now */
-  } t_lockdata;
-
-  t_lockdata  l_lock;
-  static char l_lockname[50];
   char       *l_env;
   
   char        l_extension[32];
@@ -195,6 +187,7 @@ run (char    *name,
   GimpRunModeType run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32     image_id;
+  gint32     lock_image_id;
   gint32     nr;
    
   gint32     l_rc;
@@ -213,22 +206,18 @@ run (char    *name,
 
   run_mode = param[0].data.d_int32;
   image_id = -1;
+  lock_image_id = image_id;
 
   if(gap_debug) fprintf(stderr, "\n\ngap_main: debug name = %s\n", name);
 
   if (strcmp (name, "extension_gap_xanim_decode") != 0)
   {
     image_id = param[1].data.d_image;
+    lock_image_id = image_id;
 
     /* check for locks */
-    l_lock.lock = 0;
-    sprintf(l_lockname, "plug_in_gap_plugins_LOCK_%d", (int)image_id);
-    gimp_get_data (l_lockname, &l_lock);
-
-    if((l_lock.lock != 0) && (l_lock.image_id == image_id))
+    if(p_gap_lock_is_locked(lock_image_id, run_mode))
     {
-         fprintf(stderr, "gap_plugin is LOCKED for Image ID=%s\n", l_lockname);
-
          status = GIMP_PDB_EXECUTION_ERROR;
          values[0].type = GIMP_PDB_STATUS;
          values[0].data.d_status = status;
@@ -237,9 +226,7 @@ run (char    *name,
 
 
     /* set LOCK on current image (for all gap_plugins) */
-    l_lock.lock = 1;
-    l_lock.image_id = image_id;
-    gimp_set_data (l_lockname, &l_lock, sizeof(l_lock));
+    p_gap_lock_set(lock_image_id);
   }
   
   if (run_mode == GIMP_RUN_NONINTERACTIVE) {
@@ -333,8 +320,6 @@ run (char    *name,
   if (strcmp (name, "extension_gap_xanim_decode") != 0)
   {
     /* remove LOCK on this image for all gap_plugins */
-    l_lock.lock = 0;
-    l_lock.image_id = -1;
-    gimp_set_data (l_lockname, &l_lock, sizeof(l_lock));
+     p_gap_lock_remove(lock_image_id);
   }
 }

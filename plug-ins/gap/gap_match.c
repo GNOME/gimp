@@ -26,6 +26,7 @@
  */
 
 /* revision history:
+ * gimp   1.1.29b;   2000/11/30  hof: used g_snprintf
  * version 0.97.00  1998.10.14  hof: - created module 
  */
 #include "config.h"
@@ -102,8 +103,8 @@ p_substitute_framenr (char *buffer, int buff_len, char *new_layername, long curr
 	  if(l_digits > 0)
 	  {
 	    l_digits--;
-	    sprintf(&l_fmt_str[2], "%dd", l_digits);
-	    sprintf(&buffer[l_idx], l_fmt_str, (int)curr);
+	    g_snprintf(&l_fmt_str[2], sizeof(l_fmt_str) -2,  "%dd", l_digits);
+	    g_snprintf(&buffer[l_idx], buff_len - l_idx, l_fmt_str, (int)curr);
 	    l_idx += l_digits; 
             l_digits = 0;
 	    l_cpy    = 0;

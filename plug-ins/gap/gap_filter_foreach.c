@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.29b; 2000/11/30   hof: use g_snprintf
  * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * version 0.97.00              hof: - modul splitted (2.nd part is now gap_filter_pdb.c)
  * version 0.96.03              hof: - pitstop dialog provides optional backup on each step
@@ -132,7 +133,7 @@ static gint p_pitstop(GimpRunModeType run_mode, char *plugin_name, gint text_fla
     l_but_argv[0].but_val  = 0;
     l_but_argv[1].but_txt  = _("Cancel");
     l_but_argv[1].but_val  = -1;
-    sprintf(l_skip_txt, "Skip %d", (int)layer_idx);
+    g_snprintf(l_skip_txt, sizeof(l_skip_txt), "Skip %d", (int)layer_idx);
     l_but_argv[2].but_txt  = l_skip_txt;
     l_but_argv[2].but_val  = 1;
 
@@ -337,7 +338,7 @@ int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
             l_plugin_data_len = p_get_data(plugin_name);
             if(l_plugin_data_len > 0)
             {
-               sprintf(l_key_from, "%s_ITER_FROM", plugin_name);
+               g_snprintf(l_key_from, sizeof(l_key_from), "%s_ITER_FROM", plugin_name);
                p_set_data(l_key_from, l_plugin_data_len);
             }
             else l_rc = -1;
@@ -387,7 +388,7 @@ int p_foreach_multilayer(GimpRunModeType run_mode, gint32 image_id,
                 l_plugin_data_len = p_get_data(plugin_name);
                 if(l_plugin_data_len > 0)
                 {
-                   sprintf(l_key_to, "%s_ITER_TO", plugin_name);
+                   g_snprintf(l_key_to, sizeof(l_key_to), "%s_ITER_TO", plugin_name);
                    p_set_data(l_key_to, l_plugin_data_len);
                 }
                 else l_rc = -1;

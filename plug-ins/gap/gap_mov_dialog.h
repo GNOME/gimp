@@ -27,6 +27,8 @@
 #define _GAP_MOV_DIALOG_H
 
 /* revision history:
+ * gimp    1.1.29b; 2000/11/19  hof: new feature: FRAME based Stepmodes, 
+ *                                   increased controlpoint Limit GAP_MOV_MAX_POINT (from 256 -> 1024)
  * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview
  * version 0.96.02; 1998.07.25  hof: added clip_to_img
  */
@@ -38,8 +40,16 @@ typedef enum
   GAP_STEP_ONCE      = 2,
   GAP_STEP_ONCE_REV  = 3,
   GAP_STEP_PING_PONG = 4,
-  GAP_STEP_NONE      = 5
+  GAP_STEP_NONE      = 5,
+  GAP_STEP_FRAME_LOOP      = 100,
+  GAP_STEP_FRAME_LOOP_REV  = 101,
+  GAP_STEP_FRAME_ONCE      = 102,
+  GAP_STEP_FRAME_ONCE_REV  = 103,
+  GAP_STEP_FRAME_PING_PONG = 104,
+  GAP_STEP_FRAME_NONE      = 105
 } t_mov_stepmodes;
+
+#define GAP_STEP_FRAME      GAP_STEP_FRAME_LOOP
 
 typedef enum
 {
@@ -59,22 +69,18 @@ typedef enum
 
 typedef struct {
 	long    dst_frame_nr;     /* current destination frame_nr */
-	long    src_layer_idx;    /* index of current layer */
-	gint32 *src_layers;       /* array of source images layer id's */
-	long    src_last_layer;   /* index of last layer 0 upto n-1 */
+	long    src_layer_idx;    /* index of current layer (used for multilayer stepmodes) */
+	long    src_frame_idx;    /* current frame number (used for source frame stepmodes) */
+	gint32 *src_layers;       /* array of source images layer id's (used for multilayer stepmodes) */
+	long    src_last_layer;   /* index of last layer 0 upto n-1 (used for multilayer stepmodes) */
 	gdouble currX,  currY;
-	gdouble deltaX, deltaY;
         gint    l_handleX;
         gint    l_handleY;
         
 	gdouble currOpacity;
-	gdouble deltaOpacity;
 	gdouble currWidth;
-	gdouble deltaWidth;
 	gdouble currHeight;
-	gdouble deltaHeight;
 	gdouble currRotation;
-	gdouble deltaRotation;
 } t_mov_current;
 
 typedef struct {
@@ -88,7 +94,7 @@ typedef struct {
 	gint    keyframe;
 } t_mov_point;
 
-#define GAP_MOV_MAX_POINT 256
+#define GAP_MOV_MAX_POINT 1024
 
 /*
  * Notes:
@@ -117,7 +123,6 @@ typedef struct {
 	gint    dst_range_start;  /* use current frame as default */
 	gint    dst_range_end;
 	gint    dst_layerstack;
-	gint    dst_combination_mode;   /* GimpLayerModeEffects */
 
         /* for dialog only */	
 	gint32  dst_image_id;      /* frame image */
@@ -141,6 +146,13 @@ typedef struct {
         gdouble  apv_scalex;
         gdouble  apv_scaley;
 
+        /* for FRAME based stepmodes */
+        gint32   cache_src_image_id;    /* id of the source image (from where cache image was copied) */ 
+        gint32   cache_tmp_image_id;    /* id of a cached flattened copy of the src image */
+        gint32   cache_tmp_layer_id;    /* the only visible layer in the cached image */
+        gint32   cache_frame_number;
+        t_anim_info *cache_ainfo_ptr;
+
 } t_mov_values;
 
 typedef struct {
@@ -151,5 +163,7 @@ typedef struct {
 long  p_move_dialog (t_mov_data *mov_ptr);
 void  p_set_handle_offsets(t_mov_values *val_ptr, t_mov_current *cur_ptr);
 int   p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr);
+gint32 p_get_flattened_layer (gint32 image_id, GimpMergeType mergemode);
+gint   p_fetch_src_frame(t_mov_values *pvals,  gint32 wanted_frame_nr);
 
 #endif

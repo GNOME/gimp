@@ -58,7 +58,8 @@
 /*
  * Changelog:
  *
- * 2000/02/07 v1.1.16a:  hof: replaced sprintf by g_strdup_printf
+ * 2000/11/30 v1.1.29b:  hof: new e-mail adress
+ * 2000/02/07 v1.1.16a:  hof: used g_strdup_printf
  * 2000/01/06 v1.1.14a:  hof: save thumbnails .xvpics p_gimp_file_save_thumbnail
  *                       store framerate in video_info file
  * 1999/11/25 v1.1.11.b: Initial release. [hof] 
@@ -172,9 +173,9 @@ query ()
   gimp_install_procedure ("plug_in_gap_decode_mpeg",
                           "Split MPEG1 movies into animframes and load 1st frame",
                           "Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored",
-                          "Wolfgang Hofer (hof@hotbot.com)",
+                          "Wolfgang Hofer (hof@gimp.org)",
                           "Wolfgang Hofer",
-                          "2000/01/01",
+                          "2000/11/30",
                           N_("<Image>/Video/Split Video to Frames/MPEG1"),
 			  NULL,
                           GIMP_PLUGIN,
@@ -184,9 +185,9 @@ query ()
   gimp_install_procedure ("extension_gap_decode_mpeg",
                           "Split MPEG1 movies into animframes and load 1st frame",
                           "Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored",
-                          "Wolfgang Hofer (hof@hotbot.com)",
+                          "Wolfgang Hofer (hof@gimp.org)",
                           "Wolfgang Hofer",
-                          "2000/01/01",
+                          "2000/11/30",
                           N_("<Toolbox>/Xtns/Split Video to Frames/MPEG1"),
 			  NULL,
                           GIMP_EXTENSION,

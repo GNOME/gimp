@@ -70,11 +70,12 @@
 
 
 /* revision history:
+ * version 1.1.29b; 2000.11.30   hof: new e-mail adress
  * version 1.1.20a; 2000.04.25   hof: copy/cut/paste menu
  * version 1.1.14a; 2000.01.08   hof: 1st release
  */
 
-static char *gap_navigator_version = "1.1.19a; 2000/04/24";
+static char *gap_navigator_version = "1.1.29b; 2000/11/30";
 
 
 /* SYTEM (UNIX) includes */ 
@@ -456,7 +457,7 @@ query ()
   gimp_install_procedure(PLUGIN_NAME,
 			 "GAP video navigator dialog",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_navigator_version,
 			 N_("<Image>/Video/VCR Navigator..."),
@@ -884,7 +885,7 @@ void navi_reload_ainfo_force(gint32 image_id)
 
   if(naviD->framerange_number_label)
   {
-     sprintf(frame_nr_to_char, "%04d - %04d"
+     g_snprintf(frame_nr_to_char, sizeof(frame_nr_to_char), "%04d - %04d"
             , (int)naviD->ainfo_ptr->first_frame_nr
 	    , (int)naviD->ainfo_ptr->last_frame_nr );
      gtk_label_set_text (GTK_LABEL (naviD->framerange_number_label),
@@ -1398,7 +1399,7 @@ static void navi_playback(gint32 optimize)
     if(naviD->vin_ptr->framerate > 0)
     {
        l_frame_delay = 1000 / naviD->vin_ptr->framerate;
-       sprintf(l_frame_name, "frame_[####] (%dms)", (int)l_frame_delay);
+       g_snprintf(l_frame_name, sizeof(l_frame_name), "frame_[####] (%dms)", (int)l_frame_delay);
     }
   }
 
@@ -2671,7 +2672,7 @@ navi_preview_extents (void)
 }
 
 static void
-navi_calc_frametiming(gint32 frame_nr, char *buf)
+navi_calc_frametiming(gint32 frame_nr, char *buf, gint32 sizeof_buf)
 {
   gint32 first;
   gdouble msec_per_frame;
@@ -2688,13 +2689,13 @@ navi_calc_frametiming(gint32 frame_nr, char *buf)
 
   if(naviD->vin_ptr == NULL)
   {
-    sprintf(buf, "min:sec:msec");
+    g_snprintf(buf, sizeof_buf, "min:sec:msec");
     return;
   }
   
   if(naviD->vin_ptr->framerate < 1)
   {
-    sprintf(buf, "min:sec:msec");
+    g_snprintf(buf, sizeof_buf, "min:sec:msec");
     return;
   }
   
@@ -2705,7 +2706,7 @@ navi_calc_frametiming(gint32 frame_nr, char *buf)
   tsec = (tmsec / 1000) % 60;
   tmin = tmsec / 60000;
   
-  sprintf(buf, "%02d:%02d:%03d", (int)tmin, (int)tsec, (int)tms);
+  g_snprintf(buf, sizeof_buf, "%02d:%02d:%03d", (int)tmin, (int)tsec, (int)tms);
 }
 
 static void
@@ -2713,7 +2714,7 @@ frame_widget_time_label_update(FrameWidget *fw)
 {
   char frame_nr_to_time[20];
   
-  navi_calc_frametiming(fw->frame_nr, frame_nr_to_time);
+  navi_calc_frametiming(fw->frame_nr, frame_nr_to_time, sizeof(frame_nr_to_time));
 
   gtk_label_set_text (GTK_LABEL (fw->time_label), frame_nr_to_time);
 }
@@ -2749,8 +2750,8 @@ frame_widget_create (gint32 image_id, gint32 frame_nr)
   frame_widget->visited       = TRUE;
   /* frame_widget->drop_type     = GIMP_DROP_NONE; */
   
-  sprintf(frame_nr_to_char, "%04d", (int)frame_nr);
-  navi_calc_frametiming(frame_nr, frame_nr_to_time);
+  g_snprintf(frame_nr_to_char, sizeof(frame_nr_to_char), "%04d", (int)frame_nr);
+  navi_calc_frametiming(frame_nr, frame_nr_to_time, sizeof(frame_nr_to_time));
   
 
   /*  Need to let the list item know about the frame_widget  */
@@ -2864,7 +2865,7 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
     return naviD->vbox;
   }
   l_basename = NULL;
-  sprintf(frame_nr_to_char, "0000 - 0000");
+  g_snprintf(frame_nr_to_char, sizeof(frame_nr_to_char), "0000 - 0000");
   naviD = g_new (NaviDialog, 1);
   naviD->waiting_cursor = FALSE;
   naviD->cursor_wait = gdk_cursor_new (GDK_WATCH);
@@ -2884,7 +2885,7 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
   navi_reload_ainfo_force(image_id);
   if(naviD->ainfo_ptr != NULL)
   {
-    sprintf(frame_nr_to_char, "%04d - %04d"
+    g_snprintf(frame_nr_to_char, sizeof(frame_nr_to_char), "%04d - %04d"
             , (int)naviD->ainfo_ptr->first_frame_nr
             , (int)naviD->ainfo_ptr->last_frame_nr);
     l_basename = naviD->ainfo_ptr->basename;

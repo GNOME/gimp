@@ -11,6 +11,7 @@
  */
 
 /* revision history:
+ * 1.1.29b;  2000/11/30  hof: used g_snprintf
  * version 0.99.00  1999.03.14  hof: Codegeneration of File ./gen_filter_iter_code.c
  *                                   splittet into single Files XX_iter_ALT.inc
  *                                   bugfixes in code generation
@@ -84,14 +85,14 @@ p_type_to_string(GimpPDBArgType t)
 }
 
 
-static void p_get_gendate(char *gendate)
+static void p_get_gendate(char *gendate, gint32 sizeof_gendate)
 {
   struct      tm *l_t;
   long        l_ti;
 
   l_ti = time(0L);          /* Get UNIX time */
   l_t  = localtime(&l_ti);  /* konvert time to tm struct */
-  sprintf(gendate, "%02d.%02d.%02d %02d:%02d"
+  g_snprintf(gendate, sizeof_gendate, "%02d.%02d.%02d %02d:%02d"
 	   , l_t->tm_mday
 	   , l_t->tm_mon + 1
 	   , l_t->tm_year
@@ -170,7 +171,7 @@ gint p_gen_code_iter_ALT(char  *proc_name)
 
 
   l_rc = 0;
-  p_get_gendate(&l_gendate[0]);
+  p_get_gendate(&l_gendate[0], sizeof(l_gendate));
   
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
@@ -199,7 +200,7 @@ gint p_gen_code_iter_ALT(char  *proc_name)
      if (l_params[1].type !=  GIMP_PDB_IMAGE)    { l_rc = -1;  }
      if (l_params[2].type !=  GIMP_PDB_DRAWABLE) { l_rc = -1;  }
 
-     sprintf(l_filename, "%s_iter_ALT.inc", l_clean_proc_name);
+     g_snprintf(l_filename, sizeof(l_filename), "%s_iter_ALT.inc", l_clean_proc_name);
      l_fp = fopen(l_filename, "w");
      if(l_fp != NULL)
      {
@@ -362,7 +363,7 @@ gint p_gen_code_iter(char  *proc_name)
   gchar             l_clean_par_name[256];
 
   l_rc = 0;
-  p_get_gendate(&l_gendate[0]);
+  p_get_gendate(&l_gendate[0], sizeof(l_gendate));
   
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
@@ -391,7 +392,7 @@ gint p_gen_code_iter(char  *proc_name)
      if (l_params[2].type !=  GIMP_PDB_DRAWABLE) { l_rc = -1;  }
      
      
-     sprintf(l_filename, "%s_iter.c", l_clean_proc_name);
+     g_snprintf(l_filename, sizeof(l_filename), "%s_iter.c", l_clean_proc_name);
 
      l_fp = fopen(l_filename, "w");
      if(l_fp != NULL)
@@ -659,7 +660,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "  static GimpParamDef *return_vals = NULL;\n");
        fprintf(l_fp, "  static int nreturn_vals = 0;\n");
        fprintf(l_fp, "\n");
-       fprintf(l_fp, "  sprintf(l_blurb_text, \"This extension calculates the modified values for one iterationstep for the call of %s\");\n", l_clean_proc_name);
+       fprintf(l_fp, "  g_snprintf(l_blurb_text, sizeof(l_blurb_text), \"This extension calculates the modified values for one iterationstep for the call of %s\");\n", l_clean_proc_name);
        fprintf(l_fp, "\n");
        fprintf(l_fp, "  gimp_install_procedure(\"%s_Iterator\",\n", l_clean_proc_name);
        fprintf(l_fp, "                         l_blurb_text,\n");

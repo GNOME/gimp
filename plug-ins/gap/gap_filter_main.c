@@ -46,9 +46,10 @@
 /* GAP includes */
 #include "gap_filter.h"
 
-static char *gap_filter_version = "0.92.00; 1998/01/16";
+static char *gap_filter_version = "0.92.01; 2000/11/30";
 
 /* revision history:
+ * 2000/11/30 v1.1.29b:  hof: new e-mail adress
  * version 0.92.00              hof: set gap_debug from environment 
  * version 0.91.01; Tue Dec 23  hof: 1.st (pre) release
  */
@@ -99,7 +100,7 @@ query ()
   gimp_install_procedure("plug_in_gap_layers_run_animfilter",
 			 "This plugin calls another plugin for each layer of an image, varying its settings (to produce animated effects). The called plugin must work on a single drawable and must be able to GIMP_RUN_WITH_LAST_VALS",
 			 "",
-			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer (hof@gimp.org)",
 			 "Wolfgang Hofer",
 			 gap_filter_version,
 			 N_("<Image>/Filters/Filter all Layers..."),
