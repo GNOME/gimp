@@ -1,5 +1,9 @@
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimppropwidgets.[ch]: oops, use libgimp header.
+	
+2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimppropwidgets.[ch]: magic-copied from app/widgets
 	and un-movable things then removed.
 	
@@ -46,7 +50,7 @@
 	* app/widgets/gimpsizebox.c
 	* app/widgets/gimpstrokeeditor.c
 	* app/widgets/gimptemplateeditor.c
-	* app/widgets/gimptooloptionseditor.c: fix includes
+	* app/widgets/gimptooloptionseditor.c: fix includes.
 
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
