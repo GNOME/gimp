@@ -33,6 +33,8 @@ libappwidgets_a_sources = \
 	gimpchannellistitem.h		\
 	gimpchannellistview.c		\
 	gimpchannellistview.h		\
+	gimpchanneltreeview.c		\
+	gimpchanneltreeview.h		\
 	gimpcoloreditor.c		\
 	gimpcoloreditor.h		\
 	gimpcolormapeditor.c		\
@@ -83,6 +85,8 @@ libappwidgets_a_sources = \
 	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\
 	gimpdrawablelistview.h		\
+	gimpdrawabletreeview.c		\
+	gimpdrawabletreeview.h		\
 	gimpeditor.c			\
 	gimpeditor.h			\
 	gimpenummenu.c			\
@@ -111,10 +115,14 @@ libappwidgets_a_sources = \
 	gimpitemlistitem.h		\
 	gimpitemlistview.c		\
 	gimpitemlistview.h		\
+	gimpitemtreeview.c		\
+	gimpitemtreeview.h		\
 	gimplayerlistitem.c		\
 	gimplayerlistitem.h		\
 	gimplayerlistview.c		\
 	gimplayerlistview.h		\
+	gimplayertreeview.c		\
+	gimplayertreeview.h		\
 	gimplistitem.c			\
 	gimplistitem.h			\
 	gimpmenufactory.c		\
@@ -159,6 +167,8 @@ libappwidgets_a_sources = \
 	gimpundoeditor.h		\
 	gimpvectorslistview.c		\
 	gimpvectorslistview.h		\
+	gimpvectorstreeview.c		\
+	gimpvectorstreeview.h		\
 	gimpviewabledialog.c		\
 	gimpviewabledialog.h		\
 	gimpwidgets-constructors.c	\

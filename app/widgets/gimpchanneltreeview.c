@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpchannellistview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimpchanneltreeview.c
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,40 +38,39 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask-select.h"
 
-#include "gimpchannellistview.h"
+#include "gimpchanneltreeview.h"
 #include "gimpcomponenteditor.h"
 #include "gimpdnd.h"
-#include "gimplistitem.h"
 #include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_channel_list_view_class_init (GimpChannelListViewClass *klass);
-static void   gimp_channel_list_view_init       (GimpChannelListView      *view);
+static void   gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass);
+static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view);
 
-static void   gimp_channel_list_view_set_image      (GimpItemListView     *item_view,
+static void   gimp_channel_tree_view_set_image      (GimpItemTreeView     *item_view,
 						     GimpImage            *gimage);
 
-static void   gimp_channel_list_view_select_item    (GimpContainerView   *view,
+static void   gimp_channel_tree_view_select_item    (GimpContainerView   *view,
 						     GimpViewable        *item,
 						     gpointer             insert_data);
-static void   gimp_channel_list_view_set_preview_size (GimpContainerView *view);
+static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
 
-static void   gimp_channel_list_view_toselection_clicked
+static void   gimp_channel_tree_view_toselection_clicked
                                                     (GtkWidget           *widget,
-						     GimpChannelListView *view);
-static void   gimp_channel_list_view_toselection_extended_clicked
+						     GimpChannelTreeView *view);
+static void   gimp_channel_tree_view_toselection_extended_clicked
                                                     (GtkWidget           *widget,
 						     guint                state,
-						     GimpChannelListView *view);
+						     GimpChannelTreeView *view);
 
 
-static GimpDrawableListViewClass *parent_class = NULL;
+static GimpDrawableTreeViewClass *parent_class = NULL;
 
 
 GType
-gimp_channel_list_view_get_type (void)
+gimp_channel_tree_view_get_type (void)
 {
   static GType view_type = 0;
 
@@ -79,19 +78,19 @@ gimp_channel_list_view_get_type (void)
     {
       static const GTypeInfo view_info =
       {
-        sizeof (GimpChannelListViewClass),
+        sizeof (GimpChannelTreeViewClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_channel_list_view_class_init,
+        (GClassInitFunc) gimp_channel_tree_view_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpChannelListView),
+        sizeof (GimpChannelTreeView),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_channel_list_view_init,
+        (GInstanceInitFunc) gimp_channel_tree_view_init,
       };
 
-      view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_LIST_VIEW,
-                                          "GimpChannelListView",
+      view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_TREE_VIEW,
+                                          "GimpChannelTreeView",
                                           &view_info, 0);
     }
 
@@ -99,20 +98,20 @@ gimp_channel_list_view_get_type (void)
 }
 
 static void
-gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
+gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 {
   GimpContainerViewClass *container_view_class;
-  GimpItemListViewClass  *item_view_class;
+  GimpItemTreeViewClass  *item_view_class;
 
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  item_view_class      = GIMP_ITEM_LIST_VIEW_CLASS (klass);
+  item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  container_view_class->select_item      = gimp_channel_list_view_select_item;
-  container_view_class->set_preview_size = gimp_channel_list_view_set_preview_size;
+  container_view_class->select_item      = gimp_channel_tree_view_select_item;
+  container_view_class->set_preview_size = gimp_channel_tree_view_set_preview_size;
 
-  item_view_class->set_image       = gimp_channel_list_view_set_image;
+  item_view_class->set_image       = gimp_channel_tree_view_set_image;
 
   item_view_class->get_container   = gimp_image_get_channels;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_channel;
@@ -129,10 +128,11 @@ gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
   item_view_class->raise_to_top_desc    = _("Raise Channel to Top");
   item_view_class->lower_desc           = _("Lower Channel");
   item_view_class->lower_to_bottom_desc = _("Lower Channel to Bottom");
+  item_view_class->rename_desc          = _("Rename Channel");
 }
 
 static void
-gimp_channel_list_view_init (GimpChannelListView *view)
+gimp_channel_tree_view_init (GimpChannelTreeView *view)
 {
   gchar *str;
 
@@ -150,8 +150,8 @@ gimp_channel_list_view_init (GimpChannelListView *view)
   view->toselection_button =
     gimp_editor_add_button (GIMP_EDITOR (view),
                             GIMP_STOCK_SELECTION_REPLACE, str, NULL,
-                            G_CALLBACK (gimp_channel_list_view_toselection_clicked),
-                            G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
+                            G_CALLBACK (gimp_channel_tree_view_toselection_clicked),
+                            G_CALLBACK (gimp_channel_tree_view_toselection_extended_clicked),
                             view);
 
   g_free (str);
@@ -167,15 +167,15 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 }
 
 
-/*  GimpChannelListView methods  */
+/*  GimpItemTreeView methods  */
 
 static void
-gimp_channel_list_view_set_image (GimpItemListView *item_view,
+gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 				  GimpImage        *gimage)
 {
-  GimpChannelListView *channel_view;
+  GimpChannelTreeView *channel_view;
 
-  channel_view = GIMP_CHANNEL_LIST_VIEW (item_view);
+  channel_view = GIMP_CHANNEL_TREE_VIEW (item_view);
 
   if (! channel_view->component_editor)
     {
@@ -194,8 +194,7 @@ gimp_channel_list_view_set_image (GimpItemListView *item_view,
   gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (channel_view->component_editor),
                                gimage);
 
-  if (GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image)
-    GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
 
   if (item_view->gimage)
     gtk_widget_show (channel_view->component_editor);
@@ -205,20 +204,19 @@ gimp_channel_list_view_set_image (GimpItemListView *item_view,
 /*  GimpContainerView methods  */
 
 static void
-gimp_channel_list_view_select_item (GimpContainerView *view,
+gimp_channel_tree_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
-  GimpItemListView    *item_view;
-  GimpChannelListView *list_view;
+  GimpItemTreeView    *item_view;
+  GimpChannelTreeView *tree_view;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
-  list_view = GIMP_CHANNEL_LIST_VIEW (view);
+  item_view = GIMP_ITEM_TREE_VIEW (view);
+  tree_view = GIMP_CHANNEL_TREE_VIEW (view);
 
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
-							   item,
-							   insert_data);
+  GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
+                                                         item,
+                                                         insert_data);
 
   if (item_view->gimage)
     {
@@ -229,41 +227,40 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
       gtk_widget_set_sensitive (GIMP_EDITOR (view)->button_box, ! floating_sel);
     }
 
-  gtk_widget_set_sensitive (list_view->toselection_button, item != NULL);
+  gtk_widget_set_sensitive (tree_view->toselection_button, item != NULL);
 }
 
 static void
-gimp_channel_list_view_set_preview_size (GimpContainerView *view)
+gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
 {
-  GimpChannelListView *channel_view;
+  GimpChannelTreeView *channel_view;
 
-  channel_view = GIMP_CHANNEL_LIST_VIEW (view);
+  channel_view = GIMP_CHANNEL_TREE_VIEW (view);
 
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
+  GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
 
   gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
                                           view->preview_size);
 }
 
 static void
-gimp_channel_list_view_toselection_clicked (GtkWidget           *widget,
-					    GimpChannelListView *view)
+gimp_channel_tree_view_toselection_clicked (GtkWidget           *widget,
+					    GimpChannelTreeView *view)
 {
-  gimp_channel_list_view_toselection_extended_clicked (widget, 0, view);
+  gimp_channel_tree_view_toselection_extended_clicked (widget, 0, view);
 }
 
 static void
-gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget,
+gimp_channel_tree_view_toselection_extended_clicked (GtkWidget           *widget,
 						     guint                state,
-						     GimpChannelListView *view)
+						     GimpChannelTreeView *view)
 {
   GimpImage *gimage;
   GimpItem  *item;
 
-  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
+  gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
 
-  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
   if (item)
     {

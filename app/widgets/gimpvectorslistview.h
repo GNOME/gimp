@@ -25,8 +25,11 @@
 
 #include "gimpitemlistview.h"
 
+#include "gimpvectorstreeview.h"
 
+#if 0
 typedef void (* GimpStrokeItemFunc) (GimpVectors *vectors);
+#endif
 
 
 #define GIMP_TYPE_VECTORS_LIST_VIEW            (gimp_vectors_list_view_get_type ())

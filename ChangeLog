@@ -1,3 +1,60 @@
+2003-03-16  Michael Natterer  <mitch@gimp.org>
+
+	Added GtkTreeView versions of layers/channels/vectors:
+
+	* app/core/core-enums.[ch]: renamed GIMP_UNDO_GROUP_LAYER_PROPERTIES
+	to GIMP_UNDO_GROUP_ITEM_PROPERTIES.
+
+	* app/core/gimpcontainer.c (gimp_container_reorder): don't try
+	to reorder containers with num_children == 1.
+
+	* app/core/gimpmarshal.list: added VOID: STRING, UINT marshaller.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpchanneltreeview.[ch]
+	* app/widgets/gimpdrawabletreeview.[ch]
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimplayertreeview.[ch]
+	* app/widgets/gimpvectorstreeview.[ch]: new widgets.
+
+	* app/widgets/gimpcellrenderertoggle.c: draw the frame only if the
+	cell is prelit.
+
+	* app/widgets/gimpcellrendererviewable.[ch]: added "clicked"
+	signal, unref the renderer in finalize(). Set the renderer's
+	border color to black if the cell is not selected (a hack that
+	saves tons of code in GimpLayerTreeView).
+
+	* app/widgets/gimpcomponenteditor.c: no need to gtk_list_store_set()
+	stuff we just got from the store.
+
+	* app/widgets/gimpcontainertreeview.[ch]: added lots of state used
+	by the new subclasses to the GimpContainerTreeView struct.  Create
+	the GtkListStore/GtkTreeView in GObject::constructor() and only
+	collect parameters in init() so subclasses can modify store/view
+	creation. Do most of the button_press_event stuff manually and
+	return TRUE from the handler.
+	
+	* app/widgets/gimpcontainerview.c: cleanup.
+
+	* app/widgets/gimpitemlistview.h
+	* app/widgets/gimpvectorslistview.h: temp hacks before they die.
+
+	* app/widgets/gimppreviewrenderer.[ch]: added
+	gimp_preview_renderer_update_idle() which idle-emits "update"
+	without invalidating.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: added constructors for the new dialogs.
+
+	* app/gui/channels-commands.c
+	* app/gui/channels-menu.c
+	* app/gui/layers-commands.c
+	* app/gui/layers-menu.c
+	* app/gui/vectors-commands.c
+	* app/gui/vectors-menu.c: accept tree views as callback data.
+
 2003-03-15  Sven Neumann  <sven@gimp.org>
 
 	* app/base/levels.c (levels_adjust_by_colors): implemented this

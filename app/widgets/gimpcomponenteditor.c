@@ -109,8 +109,8 @@ gimp_component_editor_get_type (void)
       };
 
       editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
-                                          "GimpComponentEditor",
-                                          &editor_info, 0);
+                                            "GimpComponentEditor",
+                                            &editor_info, 0);
     }
 
   return editor_type;
@@ -319,10 +319,6 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
                           -1);
 
       gimp_preview_renderer_set_size (renderer, preview_size, 1);
-
-      gtk_list_store_set (GTK_LIST_STORE (editor->model), &iter,
-                          COLUMN_RENDERER, renderer,
-                          -1);
 
       g_object_unref (renderer);
     }

@@ -30,6 +30,7 @@
 
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemlistview.h"
+#include "widgets/gimpitemtreeview.h"
 
 #include "vectors-commands.h"
 #include "vectors-menu.h"
@@ -155,7 +156,12 @@ vectors_menu_update (GtkItemFactory *factory,
   GList       *next = NULL;
   GList       *prev = NULL;
 
-  gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+  if (GIMP_IS_ITEM_LIST_VIEW (data))
+    gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+  else if (GIMP_IS_ITEM_TREE_VIEW (data))
+    gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
+  else
+    return;
 
   vectors = gimp_image_get_active_vectors (gimage);
 

@@ -44,6 +44,7 @@
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpitemlistview.h"
+#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -70,6 +71,8 @@ static void   layers_resize_layer_query   (GimpImage *gimage,
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
   else if (GIMP_IS_ITEM_LIST_VIEW (data)) \
     gimage = ((GimpItemListView *) data)->gimage; \
+  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
+    gimage = ((GimpItemTreeView *) data)->gimage; \
   else \
     gimage = NULL; \
   \
@@ -737,7 +740,7 @@ edit_layer_query_ok_callback (GtkWidget *widget,
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
           gimp_image_undo_group_start (options->gimage,
-                                       GIMP_UNDO_GROUP_LAYER_PROPERTIES,
+                                       GIMP_UNDO_GROUP_ITEM_PROPERTIES,
                                        _("Rename Layer"));
 
           if (gimp_layer_is_floating_sel (layer))

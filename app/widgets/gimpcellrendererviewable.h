@@ -46,6 +46,10 @@ struct _GimpCellRendererViewable
 struct _GimpCellRendererViewableClass
 {
   GtkCellRendererClass  parent_class;
+
+  void (* clicked) (GimpCellRendererViewable *cell,
+                    const gchar              *path,
+                    GdkModifierType           state);
 };
 
 

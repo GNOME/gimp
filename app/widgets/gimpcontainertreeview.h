@@ -41,9 +41,26 @@ struct _GimpContainerTreeView
   GimpContainerView  parent_instance;
 
   GtkWidget         *scrolled_win;
+
   GtkTreeModel      *model;
+  gint               n_model_columns;
+  GType              model_columns[16];
+
+  gint               model_column_renderer;
+  gint               model_column_name;
+
   GtkTreeView       *view;
   GtkTreeSelection  *selection;
+
+  GtkTreeViewColumn *main_column;
+  GtkCellRenderer   *renderer_cell;
+  GtkCellRenderer   *name_cell;
+
+  GList             *toggle_columns;
+  GList             *toggle_cells;
+  GList             *renderer_cells;
+
+  gint               preview_border_width;
 
   GQuark             invalidate_preview_handler_id;
   GQuark             name_changed_handler_id;

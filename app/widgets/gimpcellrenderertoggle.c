@@ -340,7 +340,8 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
         state = GTK_STATE_INSENSITIVE;
     }
 
-  if (gdk_rectangle_intersect (expose_area, cell_area, &draw_rect))
+  if (gdk_rectangle_intersect (expose_area, cell_area, &draw_rect) &&
+      (flags & GTK_CELL_RENDERER_PRELIT))
     gtk_paint_shadow (widget->style,
                       window,
                       state,

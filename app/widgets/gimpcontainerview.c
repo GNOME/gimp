@@ -212,8 +212,7 @@ gimp_container_view_destroy (GtkObject *object)
       view->hash_table = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 void
@@ -224,9 +223,7 @@ gimp_container_view_set_container (GimpContainerView *view,
   g_return_if_fail (! container || GIMP_IS_CONTAINER (container));
 
   if (container != view->container)
-    {
-      GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_container (view, container);
-    }
+    GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_container (view, container);
 }
 
 static void
@@ -238,7 +235,6 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       GimpContainerViewClass *view_class;
 
       gimp_container_view_select_item (view, NULL);
-
       gimp_container_view_clear_items (view);
 
       g_signal_handlers_disconnect_by_func (view->container,
@@ -288,7 +284,8 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	{
 	  GimpItemGetNameFunc get_name_func;
 
-	  get_name_func = gimp_container_view_get_built_in_name_func (view->container->children_type);
+	  get_name_func =
+            gimp_container_view_get_built_in_name_func (view->container->children_type);
 
 	  gimp_container_view_set_name_func (view, get_name_func);
 	}
@@ -301,12 +298,10 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 			       G_CALLBACK (gimp_container_view_add),
 			       view,
 			       G_CONNECT_SWAPPED);
-
       g_signal_connect_object (view->container, "remove",
 			       G_CALLBACK (gimp_container_view_remove),
 			       view,
 			       G_CONNECT_SWAPPED);
-
       g_signal_connect_object (view->container, "reorder",
 			       G_CALLBACK (gimp_container_view_reorder),
 			       view,
@@ -328,8 +323,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	  object = gimp_context_get_by_type (view->context,
 					     view->container->children_type);
 
-	  gimp_container_view_select_item (view,
-					   object ? GIMP_VIEWABLE (object): NULL);
+	  gimp_container_view_select_item (view, (GimpViewable *) object);
 
 	  if (view->dnd_widget)
             gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
@@ -391,8 +385,7 @@ gimp_container_view_set_context (GimpContainerView *view,
           object = gimp_context_get_by_type (view->context,
                                              view->container->children_type);
 
-          gimp_container_view_select_item (view,
-                                           object ? GIMP_VIEWABLE (object) : NULL);
+          gimp_container_view_select_item (view, (GimpViewable *) object);
 
           if (view->dnd_widget)
             gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
@@ -424,10 +417,7 @@ gimp_container_view_set_name_func (GimpContainerView   *view,
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
 
-  if (view->get_name_func != get_name_func)
-    {
-      view->get_name_func = get_name_func;
-    }
+  view->get_name_func = get_name_func;
 }
 
 void
@@ -497,11 +487,9 @@ gimp_container_view_item_selected (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   if (view->container && view->context)
-    {
-      gimp_context_set_by_type (view->context,
-				view->container->children_type,
-				GIMP_OBJECT (viewable));
-    }
+    gimp_context_set_by_type (view->context,
+                              view->container->children_type,
+                              GIMP_OBJECT (viewable));
 
   gimp_container_view_select_item (view, viewable);
 }

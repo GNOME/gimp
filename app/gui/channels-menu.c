@@ -28,8 +28,9 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimpcomponenteditor.h"
-#include "widgets/gimpitemlistview.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpitemlistview.h"
+#include "widgets/gimpitemtreeview.h"
 
 #include "channels-commands.h"
 #include "channels-menu.h"
@@ -126,7 +127,12 @@ channels_menu_update (GtkItemFactory *factory,
     {
       GList *list;
 
-      gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+      if (GIMP_IS_ITEM_LIST_VIEW (data))
+        gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+      else if (GIMP_IS_ITEM_TREE_VIEW (data))
+        gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
+      else
+        return;
 
       channel = gimp_image_get_active_channel (gimage);
 

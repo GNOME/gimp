@@ -329,7 +329,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge Layers"              >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="QuickMask"                 >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                     >*/
-  GIMP_UNDO_GROUP_LAYER_PROPERTIES,   /*< desc="Layer Properties"          >*/
+  GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"           >*/
   GIMP_UNDO_GROUP_LAYER_SCALE,        /*< desc="Scale Layer"               >*/
   GIMP_UNDO_GROUP_LAYER_RESIZE,       /*< desc="Resize Layer"              >*/
   GIMP_UNDO_GROUP_LAYER_DISPLACE,     /*< desc="Move Layer"                >*/

@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpitemlistview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimpitemtreeview.h
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_ITEM_LIST_VIEW_H__
-#define __GIMP_ITEM_LIST_VIEW_H__
+#ifndef __GIMP_ITEM_TREE_VIEW_H__
+#define __GIMP_ITEM_TREE_VIEW_H__
 
 
-#include "gimpcontainerlistview.h"
+#include "gimpcontainertreeview.h"
 
 
 typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *gimage);
@@ -50,19 +50,19 @@ typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
 typedef void            (* GimpActivateItemFunc) (GimpItem        *item);
 
 
-#define GIMP_TYPE_ITEM_LIST_VIEW            (gimp_item_list_view_get_type ())
-#define GIMP_ITEM_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListView))
-#define GIMP_ITEM_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListViewClass))
-#define GIMP_IS_ITEM_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_LIST_VIEW))
-#define GIMP_IS_ITEM_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_LIST_VIEW))
-#define GIMP_ITEM_LIST_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListViewClass))
+#define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
+#define GIMP_ITEM_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeView))
+#define GIMP_ITEM_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeViewClass))
+#define GIMP_IS_ITEM_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_TREE_VIEW))
+#define GIMP_IS_ITEM_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_TREE_VIEW))
+#define GIMP_ITEM_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeViewClass))
 
 
-typedef struct _GimpItemListViewClass  GimpItemListViewClass;
+typedef struct _GimpItemTreeViewClass  GimpItemTreeViewClass;
 
-struct _GimpItemListView
+struct _GimpItemTreeView
 {
-  GimpContainerListView  parent_instance;
+  GimpContainerTreeView  parent_instance;
 
   GimpImage             *gimage;
 
@@ -84,15 +84,15 @@ struct _GimpItemListView
   GtkWidget             *delete_button;
 };
 
-struct _GimpItemListViewClass
+struct _GimpItemTreeViewClass
 {
-  GimpContainerListViewClass  parent_class;
+  GimpContainerTreeViewClass  parent_class;
 
-  /*  virtual functions  */
-  void (* set_image) (GimpItemListView *view,
+  /*  signals  */
+  void (* set_image) (GimpItemTreeView *view,
                       GimpImage        *gimage);
 
-  /*  virtual functions for manipulating the image's item list  */
+  /*  virtual functions for manipulating the image's item tree  */
   GimpGetContainerFunc  get_container;
   GimpGetItemFunc       get_active_item;
   GimpSetItemFunc       set_active_item;
@@ -110,12 +110,13 @@ struct _GimpItemListViewClass
   const gchar          *raise_to_top_desc;
   const gchar          *lower_desc;
   const gchar          *lower_to_bottom_desc;
+  const gchar          *rename_desc;
 };
 
 
-GType       gimp_item_list_view_get_type (void) G_GNUC_CONST;
+GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
+GtkWidget * gimp_item_tree_view_new      (gint                  preview_size,
                                           GimpImage            *gimage,
                                           GType                 item_type,
                                           const gchar          *signal_name,
@@ -125,8 +126,8 @@ GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
                                           GimpMenuFactory      *menu_facotry,
                                           const gchar          *menu_identifier);
 
-void       gimp_item_list_view_set_image (GimpItemListView     *view,
+void       gimp_item_tree_view_set_image (GimpItemTreeView     *view,
                                           GimpImage            *gimage);
 
 
-#endif  /*  __GIMP_ITEM_LIST_VIEW_H__  */
+#endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */

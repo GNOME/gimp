@@ -25,7 +25,9 @@
 
 #include "gimpcontainerlistview.h"
 
+#include "gimpitemtreeview.h"
 
+#if 0
 typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *gimage);
 typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *gimage);
 typedef void            (* GimpSetItemFunc)      (GimpImage       *gimage,
@@ -48,7 +50,7 @@ typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
                                                   gboolean         interactive);
 typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
 typedef void            (* GimpActivateItemFunc) (GimpItem        *item);
-
+#endif
 
 #define GIMP_TYPE_ITEM_LIST_VIEW            (gimp_item_list_view_get_type ())
 #define GIMP_ITEM_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_LIST_VIEW, GimpItemListView))

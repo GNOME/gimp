@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrendererviewable.h
+ * gimpcellrendererviewable.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,12 +25,19 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcellrendererviewable.h"
 #include "gimppreview-popup.h"
 #include "gimppreviewrenderer.h"
 
+
+enum
+{
+  CLICKED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -42,6 +49,7 @@ enum
 static void gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass);
 static void gimp_cell_renderer_viewable_init       (GimpCellRendererViewable      *cell);
 
+static void gimp_cell_renderer_viewable_finalize     (GObject         *object);
 static void gimp_cell_renderer_viewable_get_property (GObject         *object,
                                                       guint            param_id,
                                                       GValue          *value,
@@ -72,6 +80,8 @@ static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer *cell,
                                                       GdkRectangle    *cell_area,
                                                       GtkCellRendererState flags);
 
+
+static guint viewable_cell_signals[LAST_SIGNAL] = { 0 };
 
 static GtkCellRendererClass *parent_class = NULL;
 
@@ -115,12 +125,26 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  viewable_cell_signals[CLICKED] =
+    g_signal_new ("clicked",
+		  G_OBJECT_CLASS_TYPE (object_class),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpCellRendererViewableClass, clicked),
+		  NULL, NULL,
+		  gimp_marshal_VOID__STRING_UINT,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_STRING,
+                  G_TYPE_UINT);
+
+  object_class->finalize     = gimp_cell_renderer_viewable_finalize;
   object_class->get_property = gimp_cell_renderer_viewable_get_property;
   object_class->set_property = gimp_cell_renderer_viewable_set_property;
 
   cell_class->get_size       = gimp_cell_renderer_viewable_get_size;
   cell_class->render         = gimp_cell_renderer_viewable_render;
   cell_class->activate       = gimp_cell_renderer_viewable_activate;
+
+  klass->clicked             = NULL;
 
   g_object_class_install_property (object_class,
                                    PROP_RENDERER,
@@ -134,6 +158,22 @@ static void
 gimp_cell_renderer_viewable_init (GimpCellRendererViewable *cellviewable)
 {
   GTK_CELL_RENDERER (cellviewable)->mode = GTK_CELL_RENDERER_MODE_ACTIVATABLE;
+}
+
+static void
+gimp_cell_renderer_viewable_finalize (GObject *object)
+{
+  GimpCellRendererViewable *cell;
+
+  cell = GIMP_CELL_RENDERER_VIEWABLE (object);
+
+  if (cell->renderer)
+    {
+      g_object_unref (cell->renderer);
+      cell->renderer = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -248,8 +288,19 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
 
   if (cellviewable->renderer)
-    gimp_preview_renderer_draw (cellviewable->renderer, window, widget,
-                                cell_area, expose_area);
+    {
+      if (! flags & GTK_CELL_RENDERER_SELECTED)
+        {
+          GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+
+          gimp_preview_renderer_set_border_color (cellviewable->renderer,
+                                                  &black);
+          gimp_preview_renderer_remove_idle (cellviewable->renderer);
+        }
+
+      gimp_preview_renderer_draw (cellviewable->renderer, window, widget,
+                                  cell_area, expose_area);
+    }
 }
 
 static gboolean
@@ -270,6 +321,9 @@ gimp_cell_renderer_viewable_activate (GtkCellRenderer      *cell,
       if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
           ((GdkEventButton *) event)->button == 1)
         {
+          g_signal_emit (cell, viewable_cell_signals[CLICKED], 0,
+                         path, ((GdkEventButton *) event)->state);
+
           return gimp_preview_popup_show (widget,
                                           (GdkEventButton *) event,
                                           cellviewable->renderer->viewable,

@@ -759,6 +759,9 @@ gimp_container_reorder (GimpContainer *container,
       return FALSE;
     }
 
+  if (container->num_children == 1)
+    return TRUE;
+
   g_signal_emit (container, container_signals[REORDER], 0,
 		 object, new_index);
 

@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawablelistview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimpdrawabletreeview.c
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,42 +41,57 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpchannellistview.h"
+#include "gimpcellrenderertoggle.h"
+#include "gimpchanneltreeview.h"
 #include "gimpdnd.h"
-#include "gimpdrawablelistview.h"
 #include "gimpitemfactory.h"
-#include "gimplayerlistview.h"
-#include "gimplistitem.h"
-#include "gimppreview.h"
+#include "gimplayertreeview.h"
+#include "gimppreviewrenderer.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass);
-static void   gimp_drawable_list_view_init       (GimpDrawableListView      *view);
+static void   gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass);
+static void   gimp_drawable_tree_view_init       (GimpDrawableTreeView      *view);
 
-static void   gimp_drawable_list_view_set_image  (GimpItemListView     *view,
+static GObject *gimp_drawable_tree_view_constructor (GType              type,
+                                                     guint              n_params,
+                                                     GObjectConstructParam  *params);
+static void  gimp_drawable_tree_view_set_container  (GimpContainerView *view,
+                                                     GimpContainer     *container);
+static gpointer gimp_drawable_tree_view_insert_item (GimpContainerView *view,
+                                                     GimpViewable      *viewable,
+                                                     gint               index);
+
+static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
                                                   GimpImage            *gimage);
 
-static void   gimp_drawable_list_view_floating_selection_changed
+static void   gimp_drawable_tree_view_floating_selection_changed
                                                  (GimpImage            *gimage,
-                                                  GimpDrawableListView *view);
+                                                  GimpDrawableTreeView *view);
 
-static void   gimp_drawable_list_view_new_pattern_dropped
+static void   gimp_drawable_tree_view_new_pattern_dropped
                                                  (GtkWidget            *widget,
                                                   GimpViewable         *viewable,
                                                   gpointer              data);
-static void   gimp_drawable_list_view_new_color_dropped
+static void   gimp_drawable_tree_view_new_color_dropped
                                                  (GtkWidget            *widget,
                                                   const GimpRGB        *color,
                                                   gpointer              data);
 
+static void   gimp_drawable_tree_view_visibility_changed
+                                                 (GimpDrawable          *drawable,
+                                                  GimpDrawableTreeView  *view);
+static void   gimp_drawable_tree_view_eye_toggled(GtkCellRendererToggle *toggle,
+                                                  gchar                 *path,
+                                                  GimpDrawableTreeView  *view);
 
-static GimpItemListViewClass *parent_class = NULL;
+
+static GimpItemTreeViewClass *parent_class = NULL;
 
 
 GType
-gimp_drawable_list_view_get_type (void)
+gimp_drawable_tree_view_get_type (void)
 {
   static GType view_type = 0;
 
@@ -84,19 +99,19 @@ gimp_drawable_list_view_get_type (void)
     {
       static const GTypeInfo view_info =
       {
-        sizeof (GimpDrawableListViewClass),
+        sizeof (GimpDrawableTreeViewClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_drawable_list_view_class_init,
+        (GClassInitFunc) gimp_drawable_tree_view_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpDrawableListView),
+        sizeof (GimpDrawableTreeView),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_drawable_list_view_init,
+        (GInstanceInitFunc) gimp_drawable_tree_view_init,
       };
 
-      view_type = g_type_register_static (GIMP_TYPE_ITEM_LIST_VIEW,
-                                          "GimpDrawableListView",
+      view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
+                                          "GimpDrawableTreeView",
                                           &view_info, 0);
     }
 
@@ -104,69 +119,168 @@ gimp_drawable_list_view_get_type (void)
 }
 
 static void
-gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
+gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 {
-  GimpItemListViewClass *item_view_class;
+  GObjectClass           *object_class;
+  GimpContainerViewClass *container_view_class;
+  GimpItemTreeViewClass  *item_view_class;
 
-  item_view_class = GIMP_ITEM_LIST_VIEW_CLASS (klass);
+  object_class         = G_OBJECT_CLASS (klass);
+  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  item_view_class->set_image = gimp_drawable_list_view_set_image;
+  object_class->constructor           = gimp_drawable_tree_view_constructor;
+
+  container_view_class->set_container = gimp_drawable_tree_view_set_container;
+  container_view_class->insert_item   = gimp_drawable_tree_view_insert_item;
+
+  item_view_class->set_image          = gimp_drawable_tree_view_set_image;
 }
 
 static void
-gimp_drawable_list_view_init (GimpDrawableListView *view)
+gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
-  GimpItemListView *item_view;
+  GimpContainerTreeView *tree_view;
+  GimpItemTreeView      *item_view;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  item_view = GIMP_ITEM_TREE_VIEW (view);
+
+  view->model_column_visible = tree_view->n_model_columns;
+
+  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
 
   gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
-			      gimp_drawable_list_view_new_pattern_dropped,
+			      gimp_drawable_tree_view_new_pattern_dropped,
                               view);
   gimp_dnd_color_dest_add (item_view->new_button,
-                           gimp_drawable_list_view_new_color_dropped,
+                           gimp_drawable_tree_view_new_color_dropped,
                            view);
 }
 
+static GObject *
+gimp_drawable_tree_view_constructor (GType                  type,
+                                     guint                  n_params,
+                                     GObjectConstructParam *params)
+{
+  GimpContainerTreeView *tree_view;
+  GimpDrawableTreeView  *drawable_view;
+  GObject               *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  tree_view     = GIMP_CONTAINER_TREE_VIEW (object);
+  drawable_view = GIMP_DRAWABLE_TREE_VIEW (object);
+
+  drawable_view->eye_column = gtk_tree_view_column_new ();
+  gtk_tree_view_insert_column (tree_view->view, drawable_view->eye_column, 0);
+
+  drawable_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  gtk_tree_view_column_pack_start (drawable_view->eye_column,
+                                   drawable_view->eye_cell,
+                                   FALSE);
+  gtk_tree_view_column_set_attributes (drawable_view->eye_column,
+                                       drawable_view->eye_cell,
+                                       "active",
+                                       drawable_view->model_column_visible,
+                                       NULL);
+
+  tree_view->toggle_columns = g_list_prepend (tree_view->toggle_columns,
+                                              drawable_view->eye_column);
+  tree_view->toggle_cells   = g_list_prepend (tree_view->toggle_cells,
+                                              drawable_view->eye_cell);
+
+  g_signal_connect (drawable_view->eye_cell, "toggled",
+                    G_CALLBACK (gimp_drawable_tree_view_eye_toggled),
+                    drawable_view);
+
+  return object;
+}
+
 static void
-gimp_drawable_list_view_set_image (GimpItemListView *item_view,
+gimp_drawable_tree_view_set_container (GimpContainerView *view,
+                                       GimpContainer     *container)
+{
+  GimpDrawableTreeView *drawable_view;
+
+  drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
+
+  if (view->container)
+    {
+      gimp_container_remove_handler (view->container,
+				     drawable_view->visibility_changed_handler_id);
+    }
+
+  GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_container (view, container);
+
+  if (view->container)
+    {
+      drawable_view->visibility_changed_handler_id =
+	gimp_container_add_handler (view->container, "visibility_changed",
+				    G_CALLBACK (gimp_drawable_tree_view_visibility_changed),
+				    view);
+    }
+}
+
+static gpointer
+gimp_drawable_tree_view_insert_item (GimpContainerView *view,
+                                     GimpViewable      *viewable,
+                                     gint               index)
+{
+  GtkTreeIter *iter;
+
+  iter = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view, viewable,
+                                                                index);
+
+  gtk_list_store_set (GTK_LIST_STORE (GIMP_CONTAINER_TREE_VIEW (view)->model),
+                      iter,
+                      GIMP_DRAWABLE_TREE_VIEW (view)->model_column_visible,
+                      gimp_drawable_get_visible (GIMP_DRAWABLE (viewable)),
+                      -1);
+
+  return iter;
+}
+
+static void
+gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
                                    GimpImage        *gimage)
 {
-  GimpDrawableListView *view;
+  GimpDrawableTreeView *view;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (item_view));
+  g_return_if_fail (GIMP_IS_DRAWABLE_TREE_VIEW (item_view));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
-  view = GIMP_DRAWABLE_LIST_VIEW (item_view);
+  view = GIMP_DRAWABLE_TREE_VIEW (item_view);
 
   if (item_view->gimage)
     {
       g_signal_handlers_disconnect_by_func (item_view->gimage,
-					    gimp_drawable_list_view_floating_selection_changed,
+					    gimp_drawable_tree_view_floating_selection_changed,
 					    view);
     }
 
-  GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
+  GIMP_ITEM_TREE_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
 
   if (item_view->gimage)
     {
       g_signal_connect (item_view->gimage,
                         "floating_selection_changed",
-			G_CALLBACK (gimp_drawable_list_view_floating_selection_changed),
+			G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
 			view);
 
       if (gimp_image_floating_sel (item_view->gimage))
-	gimp_drawable_list_view_floating_selection_changed (item_view->gimage,
+	gimp_drawable_tree_view_floating_selection_changed (item_view->gimage,
                                                             view);
     }
 }
 
 static void
-gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage,
-						    GimpDrawableListView *view)
+gimp_drawable_tree_view_floating_selection_changed (GimpImage            *gimage,
+						    GimpDrawableTreeView *view)
 {
+#if 0
   GimpViewable *floating_sel;
   GList        *list;
   GList        *free_list;
@@ -174,11 +288,11 @@ gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage
   floating_sel = (GimpViewable *) gimp_image_floating_sel (gimage);
 
   list = free_list = gtk_container_get_children
-    (GTK_CONTAINER (GIMP_CONTAINER_LIST_VIEW (view)->gtk_list));
+    (GTK_CONTAINER (GIMP_CONTAINER_TREE_VIEW (view)->gtk_tree));
 
   for (; list; list = g_list_next (list))
     {
-      if (! (GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview)->viewable ==
+      if (! (GIMP_PREVIEW (GIMP_TREE_ITEM (list->data)->preview)->viewable ==
 	     floating_sel))
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (list->data),
@@ -189,11 +303,12 @@ gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage
   g_list_free (free_list);
 
   /*  update button states  */
-  /* gimp_drawable_list_view_drawable_changed (gimage, view); */
+  /* gimp_drawable_tree_view_drawable_changed (gimage, view); */
+#endif
 }
 
 static void
-gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
+gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                      GimpBucketFillMode  fill_mode,
                                      const GimpRGB      *color,
                                      GimpPattern        *pattern)
@@ -237,23 +352,82 @@ gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
 }
 
 static void
-gimp_drawable_list_view_new_pattern_dropped (GtkWidget    *widget,
+gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
                                              GimpViewable *viewable,
                                              gpointer      data)
 {
-  gimp_drawable_list_view_new_dropped (GIMP_ITEM_LIST_VIEW (data),
+  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data),
                                        GIMP_PATTERN_BUCKET_FILL,
                                        NULL,
                                        GIMP_PATTERN (viewable));
 }
 
 static void
-gimp_drawable_list_view_new_color_dropped (GtkWidget     *widget,
+gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                            const GimpRGB *color,
                                            gpointer       data)
 {
-  gimp_drawable_list_view_new_dropped (GIMP_ITEM_LIST_VIEW (data),
+  gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data),
                                        GIMP_FG_BUCKET_FILL,
                                        color,
                                        NULL);
+}
+
+static void
+gimp_drawable_tree_view_visibility_changed (GimpDrawable         *drawable,
+                                            GimpDrawableTreeView *view)
+{
+  GimpContainerView     *container_view;
+  GimpContainerTreeView *tree_view;
+  GtkTreeIter           *iter;
+
+  container_view = GIMP_CONTAINER_VIEW (view);
+  tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+
+  iter = g_hash_table_lookup (container_view->hash_table, drawable);
+
+  if (iter)
+    gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                        view->model_column_visible,
+                        gimp_drawable_get_visible (drawable),
+                        -1);
+}
+
+static void
+gimp_drawable_tree_view_eye_toggled (GtkCellRendererToggle *toggle,
+                                     gchar                 *path_str,
+                                     GimpDrawableTreeView  *view)
+{
+  GimpContainerTreeView *tree_view;
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpPreviewRenderer *renderer;
+      GimpDrawable        *drawable;
+      GimpImage           *gimage;
+      gboolean             active;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+      g_object_get (toggle,
+                    "active", &active,
+                    NULL);
+
+      drawable = GIMP_DRAWABLE (renderer->viewable);
+      gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      gimp_drawable_set_visible (drawable, !active);
+      gimp_image_flush (gimage);
+
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
 }

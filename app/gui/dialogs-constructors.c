@@ -52,6 +52,7 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpimageview.h"
 #include "widgets/gimpitemlistview.h"
+#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
@@ -65,6 +66,7 @@
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorslistview.h"
+#include "widgets/gimpvectorstreeview.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -140,7 +142,7 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 
 static void dialogs_image_item_view_image_changed  (GimpContext         *context,
                                                     GimpImage           *gimage,
-                                                    GimpItemListView    *view);
+                                                    GimpContainerView   *view);
 static void dialogs_path_view_image_changed        (GimpContext         *context,
                                                     GimpImage           *gimage,
                                                     GtkWidget           *view);
@@ -775,6 +777,40 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_layer_tree_view_new (GimpDialogFactory *factory,
+			     GimpContext       *context,
+                             gint               preview_size)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
+
+  view =
+    gimp_item_tree_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_LAYER,
+                             "active_layer_changed",
+                             (GimpNewItemFunc)      layers_new_layer_query,
+                             (GimpEditItemFunc)     layers_edit_layer_query,
+                             (GimpActivateItemFunc) layers_edit_layer_query,
+                             factory->menu_factory, "<Layers>");
+
+  dockable = dialogs_dockable_new (view,
+				   "Layer Tree", _("Layers"), NULL,
+				   NULL,
+				   dialogs_set_image_item_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
+GtkWidget *
 dialogs_channel_list_view_new (GimpDialogFactory *factory,
 			       GimpContext       *context,
                                gint               preview_size)
@@ -800,6 +836,40 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 
   dockable = dialogs_dockable_new (view,
 				   _("Channel List"), _("Channels"), NULL,
+				   NULL,
+				   dialogs_set_image_item_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
+GtkWidget *
+dialogs_channel_tree_view_new (GimpDialogFactory *factory,
+			       GimpContext       *context,
+                               gint               preview_size)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
+
+  view =
+    gimp_item_tree_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_CHANNEL,
+                             "active_channel_changed",
+                             (GimpNewItemFunc)      channels_new_channel_query,
+                             (GimpEditItemFunc)     channels_edit_channel_query,
+                             (GimpActivateItemFunc) channels_edit_channel_query,
+                             factory->menu_factory, "<Channels>");
+
+  dockable = dialogs_dockable_new (view,
+				   "Channel Tree", _("Channels"), NULL,
 				   NULL,
 				   dialogs_set_image_item_context_func);
 
@@ -839,6 +909,45 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 
   dockable = dialogs_dockable_new (view,
 				   _("Paths List"), _("Paths"), NULL,
+				   NULL,
+				   dialogs_set_image_item_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
+GtkWidget *
+dialogs_vectors_tree_view_new (GimpDialogFactory *factory,
+			       GimpContext       *context,
+                               gint               preview_size)
+{
+  GimpImage           *gimage;
+  GimpVectorsTreeView *vectors_view;
+  GtkWidget           *view;
+  GtkWidget           *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  if (preview_size < 1)
+    preview_size = context->gimp->config->layer_preview_size;
+
+  view =
+    gimp_item_tree_view_new (preview_size,
+                             gimage,
+                             GIMP_TYPE_VECTORS,
+                             "active_vectors_changed",
+                             (GimpNewItemFunc)      vectors_new_vectors_query,
+                             (GimpEditItemFunc)     vectors_edit_vectors_query,
+                             (GimpActivateItemFunc) vectors_vectors_tool,
+                             factory->menu_factory, "<Vectors>");
+
+  vectors_view = GIMP_VECTORS_TREE_VIEW (view);
+
+  vectors_view->stroke_item_func = vectors_stroke_vectors;
+
+  dockable = dialogs_dockable_new (view,
+				   "Paths Tree", _("Paths"), NULL,
 				   NULL,
 				   dialogs_set_image_item_context_func);
 
@@ -1453,10 +1562,10 @@ static void
 dialogs_set_image_item_context_func (GimpDockable *dockable,
                                      GimpContext  *context)
 {
-  GimpItemListView *view;
+  GimpContainerView *view;
 
-  view = (GimpItemListView *) g_object_get_data (G_OBJECT (dockable),
-                                                 "gimp-dialogs-view");
+  view = (GimpContainerView *) g_object_get_data (G_OBJECT (dockable),
+                                                  "gimp-dialogs-view");
 
   if (! view)
     return;
@@ -1613,11 +1722,14 @@ dialogs_dockable_new (GtkWidget                  *widget,
 }
 
 static void
-dialogs_image_item_view_image_changed (GimpContext      *context,
-                                       GimpImage        *gimage,
-                                       GimpItemListView *view)
+dialogs_image_item_view_image_changed (GimpContext       *context,
+                                       GimpImage         *gimage,
+                                       GimpContainerView *view)
 {
-  gimp_item_list_view_set_image (view, gimage);
+  if (GIMP_IS_ITEM_LIST_VIEW (view))
+    gimp_item_list_view_set_image (GIMP_ITEM_LIST_VIEW (view), gimage);
+  else if (GIMP_IS_ITEM_TREE_VIEW (view))
+    gimp_item_tree_view_set_image (GIMP_ITEM_TREE_VIEW (view), gimage);
 }
 
 static void

@@ -105,6 +105,7 @@ void   gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
 
 void   gimp_preview_renderer_invalidate       (GimpPreviewRenderer *renderer);
 void   gimp_preview_renderer_update           (GimpPreviewRenderer *renderer);
+void   gimp_preview_renderer_update_idle      (GimpPreviewRenderer *renderer);
 void   gimp_preview_renderer_remove_idle      (GimpPreviewRenderer *renderer);
 
 void   gimp_preview_renderer_draw             (GimpPreviewRenderer *renderer,
