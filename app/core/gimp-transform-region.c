@@ -426,9 +426,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                     }
                   else
                     {
-                      /* cubic only needs to be done if no supersampling
-                         is needed */
-
                       if (interpolation_type == GIMP_INTERPOLATION_LINEAR)
                         sample_linear (&surround, u[0] - u1, v[0] - v1,
                                        color, bytes, alpha);
@@ -1229,9 +1226,26 @@ sample_linear (PixelSurround *surround,
   pixel_surround_release (surround);
 }
 
+/* macros to handle conversion to/from fixed point, this fixed point code
+ * uses signed integers, by using 8 bits for the fractional part we have
+ *
+ *  1 bit  sign
+ * 21 bits integer part
+ *  8 bit  fractional part
+ *
+ * 1023 discrete subpixel sample positions should be enough for the needs
+ * of the supersampling algorithm, drawables where the dimensions have a need
+ * exceeding 2^21 ( 2097152px, will typically use terabytes of memory, when
+ * that is the common need, we can probably assume 64 bit integers and adjust
+ * FIXED_SHIFT accordingly.
+ */
+#define FIXED_SHIFT          10
+#define FIXED_UNIT           (1 << FIXED_SHIFT)
+#define DOUBLE2FIXED(val)    ((val) * FIXED_UNIT)
+#define FIXED2DOUBLE(val)    ((val) / FIXED_UNIT)
 
 /*
-    bilinear interpolation of a 16.16 pixel
+    bilinear interpolation of a fixed point pixel
 */
 static void
 sample_bi (TileManager *tm,
@@ -1244,11 +1258,11 @@ sample_bi (TileManager *tm,
 {
   guchar C[4][4];
   gint   i;
-  gint   xscale = (x & 65535);
-  gint   yscale = (y & 65535);
+  gint   xscale = (x & (FIXED_UNIT-1));
+  gint   yscale = (y & (FIXED_UNIT-1));
 
-  gint   x0 = x >> 16;
-  gint   y0 = y >> 16;
+  gint   x0 = x >> FIXED_SHIFT;
+  gint   y0 = y >> FIXED_SHIFT;
   gint   x1 = x0 + 1;
   gint   y1 = y0 + 1;
 
@@ -1265,7 +1279,8 @@ sample_bi (TileManager *tm,
   read_pixel_data_1 (tm, x1, y1, C[3]);
 
 #define lerp(v1,v2,r) \
-        (((guint)(v1) * (65536 - (guint)(r)) + (guint)(v2)*(guint)(r)) / 65536)
+        (((guint)(v1) * (FIXED_UNIT - (guint)(r)) + \
+          (guint)(v2) * (guint)(r)) >> FIXED_SHIFT)
 
   color[alpha]= lerp (lerp (C[0][alpha], C[1][alpha], yscale),
                       lerp (C[2][alpha], C[3][alpha], yscale), xscale);
@@ -1292,6 +1307,8 @@ sample_bi (TileManager *tm,
 #undef lerp
 }
 
+
+
 /*
  * Returns TRUE if one of the deltas of the
  * quad edge is > 1.0 (16.16 fixed values).
@@ -1302,15 +1319,15 @@ supersample_test (gint x0, gint y0,
                   gint x2, gint y2,
                   gint x3, gint y3)
 {
-  if (abs (x0 - x1) > 65535) return TRUE;
-  if (abs (x1 - x2) > 65535) return TRUE;
-  if (abs (x2 - x3) > 65535) return TRUE;
-  if (abs (x3 - x0) > 65535) return TRUE;
+  if (abs (x0 - x1) > FIXED_UNIT ||
+      abs (x1 - x2) > FIXED_UNIT ||
+      abs (x2 - x3) > FIXED_UNIT ||
+      abs (x3 - x0) > FIXED_UNIT ||
 
-  if (abs (y0 - y1) > 65535) return TRUE;
-  if (abs (y1 - y2) > 65535) return TRUE;
-  if (abs (y2 - y3) > 65535) return TRUE;
-  if (abs (y3 - y0) > 65535) return TRUE;
+      abs (y0 - y1) > FIXED_UNIT ||
+      abs (y1 - y2) > FIXED_UNIT ||
+      abs (y2 - y3) > FIXED_UNIT ||
+      abs (y3 - y0) > FIXED_UNIT) return TRUE;
 
   return FALSE;
 }
@@ -1325,15 +1342,16 @@ supersample_dtest (gdouble x0, gdouble y0,
                    gdouble x2, gdouble y2,
                    gdouble x3, gdouble y3)
 {
-  if (fabs (x0 - x1) > 1.0) return TRUE;
-  if (fabs (x1 - x2) > 1.0) return TRUE;
-  if (fabs (x2 - x3) > 1.0) return TRUE;
-  if (fabs (x3 - x0) > 1.0) return TRUE;
+  if (fabs (x0 - x1) > 1.0 ||
+      fabs (x1 - x2) > 1.0 ||
+      fabs (x2 - x3) > 1.0 ||
+      fabs (x3 - x0) > 1.0 ||
 
-  if (fabs (y0 - y1) > 1.0) return TRUE;
-  if (fabs (y1 - y2) > 1.0) return TRUE;
-  if (fabs (y2 - y3) > 1.0) return TRUE;
-  if (fabs (y3 - y0) > 1.0) return TRUE;
+      fabs (y0 - y1) > 1.0 ||
+      fabs (y1 - y2) > 1.0 ||
+      fabs (y2 - y3) > 1.0 ||
+      fabs (y3 - y0) > 1.0)
+    return TRUE;
 
   return FALSE;
 }
@@ -1378,23 +1396,23 @@ get_sample (TileManager *tm,
          thus using a bilinear interpolation,. almost as good as
          doing the perspective transform for each subpixel coordinate*/
 
-      tx  = x0 / 2 + x1 / 2;
-      tlx = x0 / 2 + xc / 2;
-      trx = x1 / 2 + xc / 2;
-      lx  = x0 / 2 + x3 / 2;
-      rx  = x1 / 2 + x2 / 2;
-      blx = x3 / 2 + xc / 2;
-      brx = x2 / 2 + xc / 2;
-      bx  = x3 / 2 + x2 / 2;
+      tx  = (x0 + x1) / 2;
+      tlx = (x0 + xc) / 2;
+      trx = (x1 + xc) / 2;
+      lx  = (x0 + x3) / 2;
+      rx  = (x1 + x2) / 2;
+      blx = (x3 + xc) / 2;
+      brx = (x2 + xc) / 2;
+      bx  = (x3 + x2) / 2;
 
-      ty  = y0 / 2 + y1 / 2;
-      tly = y0 / 2 + yc / 2;
-      try = y1 / 2 + yc / 2;
-      ly  = y0 / 2 + y3 / 2;
-      ry  = y1 / 2 + y2 / 2;
-      bly = y3 / 2 + yc / 2;
-      bry = y2 / 2 + yc / 2;
-      by  = y3 / 2 + y2 / 2;
+      ty  = (y0 + y1) / 2;
+      tly = (y0 + yc) / 2;
+      try = (y1 + yc) / 2;
+      ly  = (y0 + y3) / 2;
+      ry  = (y1 + y2) / 2;
+      bly = (y3 + yc) / 2;
+      bry = (y2 + yc) / 2;
+      by  = (y3 + y2) / 2;
 
       get_sample (tm,
                   tlx,tly,
@@ -1438,11 +1456,11 @@ sample_adapt (TileManager *tm,
     C[0] = C[1] = C[2] = C[3] = 0;
 
     get_sample (tm,
-                xc * 65535, yc * 65535,
-                x0 * 65535, y0 * 65535,
-                x1 * 65535, y1 * 65535,
-                x2 * 65535, y2 * 65535,
-                x3 * 65535, y3 * 65535,
+                DOUBLE2FIXED (xc), DOUBLE2FIXED (yc),
+                DOUBLE2FIXED (x0), DOUBLE2FIXED (y0),
+                DOUBLE2FIXED (x1), DOUBLE2FIXED (y1),
+                DOUBLE2FIXED (x2), DOUBLE2FIXED (y2),
+                DOUBLE2FIXED (x3), DOUBLE2FIXED (y3),
                 &cc, level, C, bg_color, bpp, alpha);
 
     if (!cc)

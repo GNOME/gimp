@@ -1,3 +1,12 @@
+2004-10-27  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: made the fixed point used in
+	supersampling configurable (in source) and changed from 15.16 to
+	21.10 fixed point.
+	
+	Fixes bug #128594 for drawables less than 2G wide.
+	
+
 2004-10-27  Michael Schumacher <schumaml@gmx.de>
 
 	* app/widgets/gimpwidgets-utils.c: fixed a typo in
