@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-15 13:58+0100\n"
-"PO-Revision-Date: 2003-11-15 13:59+0100\n"
+"POT-Creation-Date: 2003-11-16 01:34+0100\n"
+"PO-Revision-Date: 2003-11-16 01:36+0100\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,62 +25,71 @@ msgstr "Odabiranje četke"
 msgid "_Browse..."
 msgstr "_Pretraži..."
 
-#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s Nemože da rukuje nivoima"
 
-#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Spojiti uočljive nivoe"
 
-#: libgimp/gimpexport.c:192
+#: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s Nemože da rukuje ofset, veličinom ili zatamnjenosti nivoa"
 
-#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s Može samo da rukuje nivoem kao animacionim okvirima"
 
-#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
 msgstr "Sačuvaj kao animaciju"
 
-#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
 msgid "Flatten Image"
 msgstr "Poravnan snimak"
 
-#: libgimp/gimpexport.c:228
+#: libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s Nemože rukovati prozirnost"
+msgstr "%s ne može da radi sa providnošću"
 
-#: libgimp/gimpexport.c:237
+#: libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s ne može da radi sa maskama slojeva"
+
+#: libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "Primeni maske slojeva"
+
+#: libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s Može samo da rukuje RGB snimcima"
+msgstr "%s može da rukuje jedino RGB slikama"
 
-#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Preokreni u RGB"
 
-#: libgimp/gimpexport.c:246
+#: libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s Može samo da rukuje sivo nijansirane snimke"
 
-#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
+#: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Preokreni u sivo nijansirano"
 
-#: libgimp/gimpexport.c:255
+#: libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s Može samo da rukuje indeksirane snimke"
 
-#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
+#: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -88,52 +97,65 @@ msgstr ""
 "Preokrenite u indeksirane koristeći uobičajeno podešavanje\n"
 "(Uradite to ručno da naštimujete rezultate)"
 
-#: libgimp/gimpexport.c:265
+#: libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s može da radi samo sa RGB ili indeksiranim slikama"
+
+#: libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Pretvorite u indeksirane koristeći uobičajena podešavanja\n"
+"(Uradite to ručno da naštimujete rezultate)"
+
+#: libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%s Može samo da rukuje  RGB ili sivo nijansirane snimke"
 
-#: libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s Može samo da rukuje RGB ili indeksirane snimke"
 
-#: libgimp/gimpexport.c:284
+#: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s Može samo da rukuje sive nijansirane ili indeksirane snimke"
 
-#: libgimp/gimpexport.c:295
+#: libgimp/gimpexport.c:346
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s treba alfa kanal"
 
-#: libgimp/gimpexport.c:296
+#: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
 msgstr "Dodati alfa kanal"
 
-#: libgimp/gimpexport.c:331
+#: libgimp/gimpexport.c:382
 msgid "Confirm Save"
 msgstr "Potvrdi čuvanje"
 
-#: libgimp/gimpexport.c:336
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Potvrdi"
 
-#: libgimp/gimpexport.c:405
+#: libgimp/gimpexport.c:456
 msgid "Export File"
 msgstr "Izvezi datoteku"
 
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:460
 msgid "_Ignore"
 msgstr "Z_anemari"
 
-#: libgimp/gimpexport.c:411
+#: libgimp/gimpexport.c:462
 msgid "_Export"
 msgstr "_Izvezi"
 
 #. the headline
-#: libgimp/gimpexport.c:433
+#: libgimp/gimpexport.c:484
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -142,11 +164,11 @@ msgstr ""
 "Treba prvo da izvezete vašu sliku pre nego što je sačuvate kao %s iz "
 "sledećih razloga:"
 
-#: libgimp/gimpexport.c:511
+#: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
 msgstr "Izvozno pretvaranje neće izmeniti vaš originalni snimak."
 
-#: libgimp/gimpexport.c:607
+#: libgimp/gimpexport.c:664
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -155,7 +177,7 @@ msgstr ""
 "Vi ste u toku da sačuvate masku nivoa kao %s.\n"
 "Ovo neće sačuvati vidljive nivoe."
 
-#: libgimp/gimpexport.c:613
+#: libgimp/gimpexport.c:670
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -201,7 +223,7 @@ msgstr "Podešavanja parametra"
 msgid "Pattern Selection"
 msgstr "Selekcija obrasca"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "odsto"
 
@@ -469,23 +491,23 @@ msgstr "_Rotiraj"
 msgid "_Shear"
 msgstr "_Deli"
 
-#: libgimpwidgets/gimpunitmenu.c:268
+#: libgimpwidgets/gimpunitmenu.c:298
 msgid "More..."
 msgstr "Još..."
 
-#: libgimpwidgets/gimpunitmenu.c:578
+#: libgimpwidgets/gimpunitmenu.c:608
 msgid "Unit Selection"
 msgstr "Izbor jedinice"
 
-#: libgimpwidgets/gimpunitmenu.c:625
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:629
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1253
+#: libgimpwidgets/gimpwidgets.c:1252
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -493,11 +515,11 @@ msgstr ""
 "Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
 "omogućiti da ponovite datu \"slučajno\" operaciju"
 
-#: libgimpwidgets/gimpwidgets.c:1257
+#: libgimpwidgets/gimpwidgets.c:1256
 msgid "_Randomize"
 msgstr "_Slučajno"
 
-#: libgimpwidgets/gimpwidgets.c:1268
+#: libgimpwidgets/gimpwidgets.c:1267
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
 

@@ -8,7 +8,7 @@ libgimp/gimpgradientmenu.c
 libgimp/gimpmenu.c
 libgimp/gimpmiscui.c
 libgimp/gimppatternmenu.c
-libgimp/gimpunit.c
+libgimp/gimpunitcache.c
 
 libgimpbase/gimputils.c
 
