@@ -58,6 +58,9 @@ void       gdisplay_drop_pattern        (GtkWidget      *widget,
 void       gdisplay_drop_color          (GtkWidget      *widget,
 					 const GimpRGB  *color,
 					 gpointer        data);
+void       gdisplay_drop_buffer         (GtkWidget      *widget,
+					 GimpViewable   *viewable,
+					 gpointer        data);
 
 
 #endif /* __DISP_CALLBACKS_H__ */

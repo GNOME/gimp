@@ -33,6 +33,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -53,10 +54,12 @@
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "gdisplay.h"
+#include "global_edit.h"
 #include "indicator-area.h"
 #include "menus.h"
 
 #include "app_procs.h"
+#include "appenv.h"
 #include "gimage.h"
 #include "gimprc.h"
 
@@ -90,6 +93,12 @@ static void   toolbox_drop_drawable      (GtkWidget      *widget,
 static void   toolbox_drop_tool          (GtkWidget      *widget,
 					  GimpViewable   *viewable,
 					  gpointer        data);
+static void   toolbox_drop_tool          (GtkWidget      *widget,
+					  GimpViewable   *viewable,
+					  gpointer        data);
+static void   toolbox_drop_buffer        (GtkWidget      *widget,
+					  GimpViewable   *viewable,
+					  gpointer        data);
 
 
 #define COLUMNS 3
@@ -107,7 +116,8 @@ static GtkTargetEntry toolbox_target_table[] =
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
   GIMP_TARGET_LAYER_MASK,
-  GIMP_TARGET_TOOL
+  GIMP_TARGET_TOOL,
+  GIMP_TARGET_BUFFER
 };
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
@@ -430,9 +440,10 @@ toolbox_create (void)
 			      toolbox_drop_drawable, NULL);
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_CHANNEL,
 			      toolbox_drop_drawable, NULL);
-
   gimp_dnd_viewable_dest_set (window, GIMP_TYPE_TOOL_INFO,
 			      toolbox_drop_tool, NULL);
+  gimp_dnd_viewable_dest_set (window, GIMP_TYPE_BUFFER,
+			      toolbox_drop_buffer, NULL);
 
   gtk_widget_show (window);
 
@@ -570,4 +581,15 @@ toolbox_drop_tool (GtkWidget    *widget,
 		   gpointer      data)
 {
   gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
+}
+
+static void
+toolbox_drop_buffer (GtkWidget    *widget,
+		     GimpViewable *viewable,
+		     gpointer      data)
+{
+  if (gimp_busy)
+    return;
+
+  gimp_edit_paste_as_new (NULL, GIMP_BUFFER (viewable)->tiles);
 }

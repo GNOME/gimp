@@ -24,6 +24,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -61,7 +62,8 @@ static GtkTargetEntry display_target_table[] =
   GIMP_TARGET_CHANNEL,
   GIMP_TARGET_LAYER_MASK,
   GIMP_TARGET_COLOR,
-  GIMP_TARGET_PATTERN
+  GIMP_TARGET_PATTERN,
+  GIMP_TARGET_BUFFER
 };
 static guint display_n_targets = (sizeof (display_target_table) /
 				  sizeof (display_target_table[0]));
@@ -199,6 +201,8 @@ create_display_shell (GDisplay *gdisp,
 			      gdisplay_drop_drawable, gdisp);
   gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_PATTERN,
 			      gdisplay_drop_pattern, gdisp);
+  gimp_dnd_viewable_dest_set (gdisp->shell, GIMP_TYPE_BUFFER,
+			      gdisplay_drop_buffer, gdisp);
   gimp_dnd_color_dest_set    (gdisp->shell,
 			      gdisplay_drop_color, gdisp);
 

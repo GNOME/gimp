@@ -1,5 +1,16 @@
 2001-07-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/global_edit.c: allow a NULL gimage argument for
+	gimp_edit_paste_as_new() (don't set resolution and unit).
+
+	* app/disp_callbacks.[ch]
+	* app/interface.c: allow dropping of a GimpBuffer (pastes the
+	buffer).
+
+	* app/gui/toolbox.c: ditto (creates a new image).
+
+2001-07-02  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* configure.in
 	* help/*: removed all help files. They will be distributed as a

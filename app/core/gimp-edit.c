@@ -258,8 +258,13 @@ gimp_edit_paste_as_new (GimpImage   *invoke,
 		       tile_manager_height (paste), 
 		       RGB);
   gimp_image_undo_disable (gimage);
-  gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
-  gimp_image_set_unit (gimage, invoke->unit);
+
+  if (invoke)
+    {
+      gimp_image_set_resolution (gimage,
+				 invoke->xresolution, invoke->yresolution);
+      gimp_image_set_unit (gimage, invoke->unit);
+    }
 
   layer = gimp_layer_new_from_tiles (gimage,
 				     gimp_image_base_type_with_alpha (gimage),

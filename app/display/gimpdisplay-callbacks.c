@@ -34,6 +34,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -47,17 +48,18 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "devices.h"
-#include "dialog_handler.h"
-#include "disp_callbacks.h"
-#include "gdisplay.h"
 #include "gui/info-window.h"
 #include "gui/layer-select.h"
 
 #include "appenv.h"
 #include "app_procs.h"
+#include "devices.h"
+#include "dialog_handler.h"
+#include "disp_callbacks.h"
 #include "drawable.h"
+#include "gdisplay.h"
 #include "gimprc.h"
+#include "global_edit.h"
 #include "scale.h"
 #include "scroll.h"
 #include "selection.h"
@@ -1016,4 +1018,28 @@ gdisplay_drop_color (GtkWidget     *widget,
 		       &color[3]);
 
   gdisplay_bucket_fill (widget, FG_BUCKET_FILL, color, NULL, data);
+}
+
+void
+gdisplay_drop_buffer (GtkWidget    *widget,
+		      GimpViewable *viewable,
+		      gpointer      data)
+{
+  GimpBuffer *buffer;
+  GDisplay   *gdisp;
+
+  if (gimp_busy)
+    return;
+
+  buffer = GIMP_BUFFER (viewable);
+  gdisp  = (GDisplay *) data;
+
+  /* FIXME: popup a menu for selecting "Paste Into" */
+
+  gimp_edit_paste (gdisp->gimage,
+		   gimp_image_active_drawable (gdisp->gimage),
+		   buffer->tiles,
+		   FALSE);
+
+  gdisplays_flush ();
 }
