@@ -1,3 +1,12 @@
+2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimphistogrambox.[ch]:
+	* app/tools/gimpthresholdtool.c: Changed the threshold tool dialog 
+	so that it uses a two-triangle-slider scale of the sort used in the 
+	levels tool.  Almost all of the changes are actually in the 
+	histogram-box widget code, which is only used by the threshold 
+	tool.  Fixes bug #137521.
+
 2004-06-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: removed redundant hboxes and other

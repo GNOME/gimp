@@ -35,10 +35,16 @@ struct _GimpHistogramBox
   GtkVBox            parent_instance;
 
   GtkWidget         *label;
+  GtkWidget         *slider_area;
   GimpHistogramView *view;
 
   GtkAdjustment     *low_adj;
   GtkAdjustment     *high_adj;
+
+  gint              slider_pos[2];
+  gint              active_slider;
+  gint              low_slider_val;
+  gint              high_slider_val;
 };
 
 struct _GimpHistogramBoxClass
