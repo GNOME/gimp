@@ -59,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.3.0 - 25 April 2000"
+#define PLUG_IN_VERSION  "1.3.1 - 25 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -93,8 +93,9 @@ static gint	save_image                (gchar   *filename,
 					   gint32   drawable_ID,
 					   gint32   orig_image_ID);
 
-static guchar 	*respin_cmap		  (gint32   image_ID,
-					   gint	    *colors);
+static void	respin_cmap		  (png_structp pp,
+					   png_infop info,
+					   gint32   image_ID);
 
 static void     init_gtk                  (void);
 static gint	save_dialog               (void);
@@ -545,7 +546,8 @@ load_image (gchar *filename)	/* I - File to load */
 
   if (info->color_type & PNG_COLOR_MASK_PALETTE) {
 
-    if (info->valid & PNG_INFO_tRNS) {
+#if PNG_LIBPNG_VER > 99
+    if (png_get_valid(pp, info, PNG_INFO_tRNS)) {
       for (empty= 0; empty < 256 && alpha[empty] == 0; ++empty);
         /* Calculates number of fully transparent "empty" entries */
 
@@ -554,6 +556,10 @@ load_image (gchar *filename)	/* I - File to load */
     } else {
       gimp_image_set_cmap(image, (guchar *)info->palette, info->num_palette);
     }
+#else
+    gimp_image_set_cmap(image, (guchar *)info->palette, info->num_palette);
+#endif /* PNG_LIBPNG_VER > 99 */
+
   }
 
  /*
@@ -699,7 +705,6 @@ save_image (gchar  *filename,	        /* I - File to save to */
   gchar		*progress;	/* Title for progress display... */
   gdouble       xres, yres;	/* GIMP resolution (dpi) */
   gdouble	gamma;          /* GIMP gamma e.g. 2.20 */
-  png_color_8   sig_bit;        /* # of significant bits */
   png_color_16  background;     /* Background color */
   png_time      mod_time;       /* Modification time (ie NOW) */
   guchar	red, green,
@@ -717,14 +722,14 @@ save_image (gchar  *filename,	        /* I - File to save to */
   info = png_create_info_struct(pp);
 #else
   pp = (png_structp)calloc(sizeof(png_struct), 1);
-  png_read_init(pp);
+  png_write_init(pp);
 
   info = (png_infop)calloc(sizeof(png_info), 1);
 #endif /* PNG_LIBPNG_VER > 88 */
 
   if (setjmp (pp->jmpbuf))
   {
-    g_message (_("%s\nPNG error. File corrupted?"), filename);
+    g_message (_("%s\nPNG error. Couldn't save image"), filename);
     return 0;
   }
 
@@ -755,21 +760,69 @@ save_image (gchar  *filename,	        /* I - File to save to */
   drawable = gimp_drawable_get (drawable_ID);
   type     = gimp_drawable_type (drawable_ID);
 
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-                      drawable->height, FALSE, FALSE);
-
  /*
-  * Set the image dimensions and save the image...
+  * Set the image dimensions, bit depth, interlacing and compression
   */
 
   png_set_compression_level (pp, pngvals.compression_level);
-
-  gamma = gimp_gamma();
 
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
   info->interlace_type = pngvals.interlaced;
+
+ /*
+  * Set color type and remember bytes per pixel count 
+  */
+
+  switch (type)
+  {
+    case RGB_IMAGE :
+        info->color_type = PNG_COLOR_TYPE_RGB;
+        bpp              = 3;
+        break;
+    case RGBA_IMAGE :
+        info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+        bpp              = 4;
+        break;
+    case GRAY_IMAGE :
+        info->color_type = PNG_COLOR_TYPE_GRAY;
+        bpp              = 1;
+        break;
+    case GRAYA_IMAGE :
+        info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+        bpp              = 2;
+        break;
+    case INDEXED_IMAGE :
+	bpp		 = 1;
+        info->color_type = PNG_COLOR_TYPE_PALETTE;
+	info->valid      |= PNG_INFO_PLTE;
+        info->palette= (png_colorp) gimp_image_get_cmap(image_ID, &num_colors);
+        info->num_palette= num_colors;
+        break;
+    case INDEXEDA_IMAGE :
+	bpp		 = 2;
+	info->color_type = PNG_COLOR_TYPE_PALETTE;
+	respin_cmap (pp, info, image_ID); /* fix up transparency */
+	break;
+    default:
+        g_message ("%s\nImage type can't be saved as PNG", filename);
+        return 0;
+  };
+
+ /*
+  * Fix bit depths for (possibly) smaller colormap images
+  */
+  
+  if (info->valid & PNG_INFO_PLTE) {
+    if (info->num_palette <= 2)
+      info->bit_depth= 1;
+    else if (info->num_palette <= 4)
+      info->bit_depth= 2;
+    else if (info->num_palette <= 16)
+      info->bit_depth= 4;
+    /* otherwise the default is fine */
+  }
 
   /* All this stuff is optional extras, if the user is aiming for smallest
      possible file size she can turn them all off */
@@ -777,18 +830,13 @@ save_image (gchar  *filename,	        /* I - File to save to */
 #if PNG_LIBPNG_VER > 99
   if (!pngvals.noextras) {
 
+    gamma = gimp_gamma();
     png_set_gAMA(pp, info, 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA));
-
-    sig_bit.red    = sig_bit.green  = sig_bit.blue   = 8;
-    sig_bit.gray   = 8;
-    sig_bit.alpha  = 8;
-    png_set_sBIT(pp, info, &sig_bit);
 
     if (type == RGBA_IMAGE || type == GRAYA_IMAGE
                            || type == INDEXEDA_IMAGE) {
       gimp_palette_get_background(&red, &green, &blue);
       
-      info->valid |= PNG_INFO_bKGD;
       background.index = 0;
       background.red = red;
       background.green = green;
@@ -817,64 +865,6 @@ save_image (gchar  *filename,	        /* I - File to save to */
     png_set_pHYs(pp, info, xres * 39.37, yres * 39.37, PNG_RESOLUTION_METER);
   }
 #endif /* PNG_LIBPNG_VER > 99 */
- 
-  switch (type)
-  {
-    case RGB_IMAGE :
-        info->color_type = PNG_COLOR_TYPE_RGB;
-        bpp              = 3;
-        break;
-    case RGBA_IMAGE :
-        info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-        bpp              = 4;
-        break;
-    case GRAY_IMAGE :
-        info->color_type = PNG_COLOR_TYPE_GRAY;
-        bpp              = 1;
-        break;
-    case GRAYA_IMAGE :
-        info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-        bpp              = 2;
-        break;
-    case INDEXED_IMAGE :
-	bpp		 = 1;
-	info->valid      |= PNG_INFO_PLTE;
-        info->color_type = PNG_COLOR_TYPE_PALETTE;
-        info->palette    = (png_colorp)gimp_image_get_cmap (image_ID, &num_colors);
-        info->num_palette= num_colors;
-        break;
-    case INDEXEDA_IMAGE :
-	bpp		 = 2;
-	info->valid	 |= PNG_INFO_PLTE;
-	info->color_type = PNG_COLOR_TYPE_PALETTE;
-	info->palette	 = (png_colorp) respin_cmap (image_ID, &num_colors);
-        if (num_colors < 256) {
- 	  info->valid	 |= PNG_INFO_tRNS;
-          info->num_palette= num_colors + 1;
-        } else {
-          info->num_palette= num_colors;
-        }
-	break;
-    default:
-        g_message ("%s\nImage type can't be saved as PNG", filename);
-        return 0;
-  };
-
-  
-  if (info->valid & PNG_INFO_PLTE) {
-    if (info->num_palette <= 2)
-      info->bit_depth= 1;
-    else if (info->num_palette <= 4)
-      info->bit_depth= 2;
-    else if (info->num_palette <= 16)
-      info->bit_depth= 4;
-    /* otherwise the default is fine */
-  }
-
-  if (info->valid & PNG_INFO_tRNS) {
-    /* It's not really a VERY evil hack, right? -- ruth */
-    png_set_tRNS(pp, info, (png_bytep) "\0", 1, NULL);
-  }
 
   png_write_info (pp, info);
 
@@ -905,12 +895,12 @@ save_image (gchar  *filename,	        /* I - File to save to */
   for (i = 0; i < tile_height; i ++)
     pixels[i]= pixel + drawable->width * bpp * i;
 
+  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
+                      drawable->height, FALSE, FALSE);
+
   for (pass = 0; pass < num_passes; pass ++)
   {
-   /*
-    * This works if you are only writing one row at a time...
-    */
-
+      /* This works if you are only writing one row at a time... */
     for (begin = 0, end = tile_height;
          begin < drawable->height;
          begin += tile_height, end += tile_height)
@@ -940,8 +930,8 @@ save_image (gchar  *filename,	        /* I - File to save to */
 	
 	png_write_rows (pp, pixels, num);
 	
-	gimp_progress_update (((double)pass + (double)end / (double)info->height) /
-			      (double)num_passes);
+	gimp_progress_update (((double)pass + (double)end /
+                    (double)info->height) / (double)num_passes);
       };
   };
 
@@ -976,22 +966,34 @@ save_ok_callback (GtkWidget *widget,
    are left at the FRONT, this is only needed to reduce the size of the
    tRNS chunk when saving GIF-like transparent images with colormaps */
 
-static guchar* respin_cmap (gint32 image_ID, gint *colors) {
+static void respin_cmap (png_structp pp, png_infop info, gint32 image_ID) {
   static guchar after[3 * 256];
+  gint colors;
+  guchar trans[] = { 0 };
   guchar *before;
 
-  before= gimp_image_get_cmap(image_ID, colors);
+  before= gimp_image_get_cmap(image_ID, &colors);
 
-  if (*colors != 256) { /* spare space in palette :) */
-    memcpy(after + 3, before, *colors * 3);
+#if PNG_LIBPNG_VER > 99
+  if (colors < 256) { /* spare space in palette :) */
+    memcpy(after + 3, before, colors * 3);
+
     /* Apps with no natural background will use this instead, see
        elsewhere for the bKGD chunk being written to use index 0 */
     gimp_palette_get_background(after+0, after+1, after+2);
-  } else {
-    memcpy(after, before, *colors * 3);
-  }
 
-  return after;
+    /* One transparent palette entry, alpha == 0 */
+    png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);
+    png_set_PLTE(pp, info, (png_colorp) after, colors + 1);
+  } else {
+    png_set_PLTE(pp, info, (png_colorp) before, colors);
+  }
+#else
+  info->valid	  |= PNG_INFO_PLTE;
+  info->palette=     (png_colorp) before;
+  info->num_palette= colors;
+#endif /* PNG_LIBPNG_VER > 99 */
+
 }
 
 static void 

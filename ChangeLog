@@ -1,3 +1,9 @@
+2000-04-25  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: Better version of previous patch, plus
+	embarassing bug (thanks yosh/ tigert)
+	Now actually tested on libpng 0.88, 1.00 and 1.0.6.
+
 2000-04-25  Sven Neumann <sven@gimp.org>
 
         * app/nav_window.c: (hopefully) fixed a buffer overflow pointed 
