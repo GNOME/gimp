@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = sinus
 
 sinus_SOURCES = \
-	logo_sinus2.h sinus.c sinus_logo.h  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
+	sinus.c sinus_logo.h  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
 
 INCLUDES = \
 	$(X_CFLAGS)			\
