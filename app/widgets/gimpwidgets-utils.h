@@ -31,8 +31,7 @@ void          gimp_message_box           (const gchar     *stock_id,
 
 void          gimp_menu_position         (GtkMenu         *menu,
                                           gint            *x,
-                                          gint            *y,
-                                          gpointer         data);
+                                          gint            *y);
 void          gimp_button_menu_position  (GtkWidget       *button,
                                           GtkMenu         *menu,
                                           GtkPositionType  position,

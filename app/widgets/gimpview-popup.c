@@ -168,16 +168,14 @@ gimp_preview_popup_unmap (GtkWidget        *widget,
 static gboolean
 gimp_preview_popup_timeout (GimpPreviewPopup *popup)
 {
-  GtkWidget *window;
-  GtkWidget *frame;
-  GtkWidget *preview;
-  GdkScreen *screen;
-  gint       orig_x;
-  gint       orig_y;
-  gint       scr_width;
-  gint       scr_height;
-  gint       x;
-  gint       y;
+  GtkWidget    *window;
+  GtkWidget    *frame;
+  GtkWidget    *preview;
+  GdkScreen    *screen;
+  GdkRectangle  rect;
+  gint          monitor;
+  gint          x;
+  gint          y;
 
   popup->timeout_id = 0;
 
@@ -202,16 +200,16 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  gdk_window_get_origin (popup->widget->window, &orig_x, &orig_y);
+  gdk_window_get_origin (popup->widget->window, &x, &y);
 
-  scr_width  = gdk_screen_get_width (screen);
-  scr_height = gdk_screen_get_height (screen);
+  x += popup->button_x - (popup->popup_width  >> 1);
+  y += popup->button_y - (popup->popup_height >> 1);
 
-  x = orig_x + popup->button_x - (popup->popup_width  >> 1);
-  y = orig_y + popup->button_y - (popup->popup_height >> 1);
+  monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  x = CLAMP (x, 0, scr_width  - popup->popup_width);
-  y = CLAMP (y, 0, scr_height - popup->popup_height);
+  x = CLAMP (x, rect.x, rect.x + rect.width  - popup->popup_width);
+  y = CLAMP (y, rect.y, rect.y + rect.height - popup->popup_height);
 
   gtk_window_move (GTK_WINDOW (window), x, y);
   gtk_widget_show (window);

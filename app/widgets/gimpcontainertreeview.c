@@ -307,8 +307,6 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
   GimpContainerTreeView *tree_view;
   GtkWidget             *widget;
   GtkTreeIter            selected_iter;
-  GtkRequisition         requisition;
-  GdkScreen             *screen;
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (data);
   widget    = GTK_WIDGET (tree_view->view);
@@ -341,23 +339,7 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
       *y += widget->style->ythickness;
     }
 
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-  screen = gtk_widget_get_screen (widget);
-
-  gtk_menu_set_screen (menu, screen);
-
-  if (*x + requisition.width > gdk_screen_get_width (screen))
-    *x -= requisition.width;
-
-  if (*x < 0)
-    *x = 0;
-
-  if (*y + requisition.height > gdk_screen_get_height (screen))
-    *y -= requisition.height;
-
-  if (*y < 0)
-    *y = 0;
+  gimp_menu_position (menu, x, y);
 }
 
 static gboolean

@@ -1,3 +1,19 @@
+2003-11-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimpwidgets-utils.[ch]: moved the
+	gimp_menu_position() implementation that was used only from
+	GimpItemFactory to gimpitemfactory.c. Added a new function of the
+	same name that positions a menu taking into account the monitor
+	geometry and the render direction.
+
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c: use gimp_menu_position().
+
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimppreview-popup.c: let windows popup on the
+	current monitor (for Xinerama setups).
+
 2003-11-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimplayertreeview.c

@@ -39,6 +39,7 @@
 #include "gimpitemfactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
+#include "gimpwidgets-utils.h"
 #include "gtkhwrapbox.h"
 
 #include "gimp-intl.h"
@@ -354,11 +355,7 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
                                         gint     *y,
                                         gpointer  data)
 {
-  GtkWidget      *widget;
-  GtkRequisition  requisition;
-  GdkScreen      *screen;
-
-  widget = GTK_WIDGET (data);
+  GtkWidget *widget = GTK_WIDGET (data);
 
   gdk_window_get_origin (widget->window, x, y);
 
@@ -371,23 +368,7 @@ gimp_container_grid_view_menu_position (GtkMenu  *menu,
   *x += widget->allocation.width  / 2;
   *y += widget->allocation.height / 2;
 
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-  screen = gtk_widget_get_screen (widget);
-
-  gtk_menu_set_screen (menu, screen);
-
-  if (*x + requisition.width > gdk_screen_get_width (screen))
-    *x -= requisition.width;
-
-  if (*x < 0)
-    *x = 0;
-
-  if (*y + requisition.height > gdk_screen_get_height (screen))
-    *y -= requisition.height;
-
-  if (*y < 0)
-    *y = 0;
+  gimp_menu_position (menu, x, y);
 }
 
 static gboolean

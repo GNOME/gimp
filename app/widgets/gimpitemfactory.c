@@ -57,7 +57,11 @@ static void     gimp_item_factory_item_realize    (GtkWidget            *widget,
 static gboolean gimp_item_factory_item_key_press  (GtkWidget            *widget,
                                                    GdkEventKey          *kevent,
                                                    GimpItemFactory      *factory);
-static gchar *  gimp_item_factory_translate_func  (const gchar          *path,
+static void     gimp_item_factory_menu_position   (GtkMenu              *menu,
+                                                   gint                 *x,
+                                                   gint                 *y,
+                                                   gpointer              data);
+static gchar  * gimp_item_factory_translate       (const gchar          *path,
                                                    gpointer              data);
 
 
@@ -219,7 +223,7 @@ gimp_item_factory_new (Gimp                      *gimp,
                               NULL);
 
   gtk_item_factory_set_translate_func (GTK_ITEM_FACTORY (factory),
-				       gimp_item_factory_translate_func,
+				       gimp_item_factory_translate,
 				       factory,
 				       NULL);
 
@@ -430,7 +434,7 @@ gimp_item_factory_popup_with_data (GimpItemFactory      *item_factory,
 
   if (! position_func)
     {
-      position_func = gimp_menu_position;
+      position_func = gimp_item_factory_menu_position;
       position_data = parent;
     }
 
@@ -990,9 +994,61 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
   return TRUE;
 }
 
+static void
+gimp_item_factory_menu_position (GtkMenu  *menu,
+                                 gint     *x,
+                                 gint     *y,
+                                 gpointer  data)
+{
+  GdkScreen      *screen;
+  GtkRequisition  requisition;
+  GdkRectangle    rect;
+  gint            monitor;
+  gint            pointer_x;
+  gint            pointer_y;
+
+  g_return_if_fail (GTK_IS_MENU (menu));
+  g_return_if_fail (x != NULL);
+  g_return_if_fail (y != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (data));
+
+  gdk_display_get_pointer (gtk_widget_get_display (GTK_WIDGET (data)),
+                           &screen, &pointer_x, &pointer_y, NULL);
+
+  monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  gtk_menu_set_screen (menu, screen);
+
+  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+  if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_RTL)
+    {
+      *x = pointer_x - 2 - requisition.width;
+
+      if (*x < rect.x)
+        *x = pointer_x + 2;
+    }
+  else
+    {
+      *x = pointer_x + 2;
+
+      if (*x + requisition.width > rect.x + rect.width)
+        *x = pointer_x - 2 - requisition.width;
+    }
+
+  *y = pointer_y + 2;
+
+  if (*y + requisition.height > rect.y + rect.height)
+    *y = pointer_y - 2 - requisition.height;
+
+  if (*x < rect.x) *x = rect.x;
+  if (*y < rect.y) *y = rect.y;
+}
+
 static gchar *
-gimp_item_factory_translate_func (const gchar *path,
-                                  gpointer     data)
+gimp_item_factory_translate (const gchar *path,
+                             gpointer     data)
 {
   GtkItemFactory  *item_factory;
   GimpItemFactory *gimp_factory;

@@ -242,56 +242,68 @@ gimp_message_box_response (GtkWidget  *widget,
   g_free (msg_box);
 }
 
+/**
+ * gimp_menu_position:
+ * @menu: a #GtkMenu widget
+ * @x: pointer to horizontal position
+ * @y: pointer to vertical position
+ *
+ * Positions a #GtkMenu so that it pops up on screen.  This function
+ * takes care of the preferred popup direction (taken from the widget
+ * render direction) and it handles multiple monitors representing a
+ * single #GdkScreen (Xinerama).
+ *
+ * You should call this function with @x and @y initialized to the
+ * origin of the menu. This is typically the center of the widget the
+ * menu is popped up from. gimp_menu_position() will then decide if
+ * and how these initial values need to be changed.
+ **/
 void
-gimp_menu_position (GtkMenu  *menu,
-		    gint     *x,
-		    gint     *y,
-                    gpointer  data)
+gimp_menu_position (GtkMenu *menu,
+		    gint    *x,
+		    gint    *y)
 {
-  GtkRequisition  requisition;
+  GtkWidget      *widget;
   GdkScreen      *screen;
-  gint            pointer_x;
-  gint            pointer_y;
-  gint            screen_width;
-  gint            screen_height;
+  GtkRequisition  requisition;
+  GdkRectangle    rect;
+  gint            monitor;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (data));
 
-  gdk_display_get_pointer (gtk_widget_get_display (GTK_WIDGET (data)),
-                           &screen, &pointer_x, &pointer_y, NULL);
+  widget = GTK_WIDGET (menu);
+
+  screen = gtk_widget_get_screen (widget);
+
+  monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+  gtk_widget_size_request (widget, &requisition);
 
-  screen_width  = gdk_screen_get_width (screen);
-  screen_height = gdk_screen_get_height (screen);
-
-  if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_RTL)
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      *x = pointer_x - 2 - requisition.width;
-
-      if (*x < 0)
-        *x = pointer_x + 2;
+      *x -= requisition.width;
+      if (*x < rect.x)
+        *x += requisition.width;
     }
   else
     {
-      *x = pointer_x + 2;
-
-      if (*x + requisition.width > screen_width)
-        *x = pointer_x - 2 - requisition.width;
+      if (*x + requisition.width > rect.x + rect.width)
+        *x -= requisition.width;
     }
 
-  *y = pointer_y + 2;
+  if (*x < rect.x)
+    *x = rect.x;
 
-  if (*y + requisition.height > screen_height)
-    *y = pointer_y - 2 - requisition.height;
+  if (*y + requisition.height > rect.y + rect.height)
+    *y -= requisition.height;
 
-  if (*x < 0) *x = 0;
-  if (*y < 0) *y = 0;
+  if (*y < rect.y)
+    *y = rect.y;
 }
 
 /**
@@ -313,6 +325,8 @@ gimp_button_menu_position (GtkWidget       *button,
 {
   GdkScreen      *screen;
   GtkRequisition  menu_requisition;
+  GdkRectangle    rect;
+  gint            monitor;
 
   g_return_if_fail (GTK_WIDGET_REALIZED (button));
   g_return_if_fail (GTK_IS_MENU (menu));
@@ -330,13 +344,16 @@ gimp_button_menu_position (GtkWidget       *button,
         }
     }
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (button));
-
-  gtk_menu_set_screen (menu, screen);
-
   gdk_window_get_origin (button->window, x, y);
 
   gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
+
+  screen = gtk_widget_get_screen (button);
+
+  monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  gtk_menu_set_screen (menu, screen);
 
   *x += button->allocation.x;
 
@@ -344,13 +361,13 @@ gimp_button_menu_position (GtkWidget       *button,
     {
     case GTK_POS_LEFT:
       *x -= menu_requisition.width;
-      if (*x < 0)
+      if (*x < rect.x)
         *x += menu_requisition.width + button->allocation.width;
       break;
 
     case GTK_POS_RIGHT:
       *x += button->allocation.width;
-      if (*x + menu_requisition.width > gdk_screen_get_width (screen))
+      if (*x + menu_requisition.width > rect.x + rect.width)
         *x -= button->allocation.width + menu_requisition.width;
       break;
 
@@ -362,10 +379,10 @@ gimp_button_menu_position (GtkWidget       *button,
 
   *y += button->allocation.y + button->allocation.height / 2;
 
-  if (*y + menu_requisition.height > gdk_screen_get_height (screen))
+  if (*y + menu_requisition.height > rect.y + rect.height)
     *y -= menu_requisition.height;
-  if (*y < 0)
-    *y = 0;
+  if (*y < rect.y)
+    *y = rect.y;
 }
 
 void
