@@ -1673,22 +1673,25 @@ prefs_dialog_new (Gimp    *gimp,
                           GTK_BOX (vbox2));
 
 #ifdef ENABLE_MP
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 #else
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (config, "undo-levels", 1.0, 5.0, 0,
                          _("Levels of Undo:"),
                          GTK_TABLE (table), 0);
+  prefs_memsize_entry_add (config, "undo-size",
+                           _("Maximum Undo Memory:"),
+                           GTK_TABLE (table), 1);
   prefs_memsize_entry_add (config, "tile-cache-size",
                            _("Tile Cache Size:"),
-                           GTK_TABLE (table), 1);
+                           GTK_TABLE (table), 2);
 
 #ifdef ENABLE_MP
   prefs_spin_button_add (config, "num-processors", 1.0, 4.0, 0,
                          _("Number of Processors to Use:"),
-                         GTK_TABLE (table), 2);
+                         GTK_TABLE (table), 3);
 #endif /* ENABLE_MP */
 
   /*  File Saving  */

@@ -63,16 +63,18 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpundostack.h"
 
 #include "file/file-utils.h"
 
 #include "widgets/gimpviewabledialog.h"
 
 #include "undo.h"
-#include "undo_types.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -276,7 +278,7 @@ undo_history_set_pixmap_idle (gpointer data)
   static GdkGC *gc = NULL;
   TempBuf   *buf = NULL;
   GdkPixmap *pixmap;
-  UndoType   utype;
+  GimpUndoType   utype;
   MaskBuf   *mbuf = NULL;
   guchar    *src;
   gdouble    r, g, b, a;
@@ -303,7 +305,7 @@ undo_history_set_pixmap_idle (gpointer data)
       height = (gint)(((gdouble)height * (gdouble)width ) /(gdouble) idle->gimage->width + 0.5);
     }
 
-  utype = undo_get_undo_top_type (idle->gimage);
+  utype = gimp_undo_stack_peek (idle->gimage->undo_stack)->undo_type;
 
   if ((utype != MASK_UNDO && utype != IMAGE_QMASK_UNDO) || 
       (mbuf = mask_render_preview (idle->gimage, &width, &height)) == NULL)
@@ -507,7 +509,7 @@ undo_history_undo_callback (GtkWidget *widget,
 {
   undo_history_st *st = data;
 
-  if (undo_pop (st->gimage))
+  if (gimp_image_undo (st->gimage))
     gimp_image_flush (st->gimage);
 }
 
@@ -518,7 +520,7 @@ undo_history_redo_callback (GtkWidget *widget,
 {
   undo_history_st *st = data;
 
-  if (undo_redo (st->gimage))
+  if (gimp_image_redo (st->gimage))
     gimp_image_flush (st->gimage);
 }
 
@@ -589,7 +591,7 @@ undo_history_undo_event (GtkWidget *widget,
 	gtk_clist_remove (clist, cur_selection + 1);
 
       /* find out what's new */
-      name = undo_get_undo_name (st->gimage);
+      name = gimp_object_get_name (GIMP_OBJECT (gimp_undo_stack_peek (st->gimage->undo_stack)));
       namelist[0] = NULL;
       namelist[1] = NULL;
       namelist[2] = (char *) name;
@@ -677,12 +679,12 @@ undo_history_select_row_callback (GtkWidget *widget,
 
   while (cur_selection < st->old_selection)
     {
-      undo_pop (st->gimage);
+      gimp_image_undo (st->gimage);
       st->old_selection--;
     }
   while (cur_selection > st->old_selection)
     {
-      undo_redo (st->gimage);
+      gimp_image_redo (st->gimage);
       st->old_selection++;
     }
 
@@ -735,9 +737,9 @@ undo_history_clean_callback (GtkWidget *widget,
 
 
 /* Used to build up initial contents of clist */
-static gboolean
-undo_history_init_undo (const gchar *undoitemname,
-			void        *data)
+static void
+undo_history_init_undo (gpointer undo,
+                        gpointer data)
 {
   undo_history_st *st = data;
   gchar *namelist[3];
@@ -745,30 +747,26 @@ undo_history_init_undo (const gchar *undoitemname,
 
   namelist[0] = NULL;
   namelist[1] = NULL;
-  namelist[2] = (gchar *) undoitemname;
+  namelist[2] = (gchar *) gimp_object_get_name (GIMP_OBJECT (undo));
   row = gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
   gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
 			clear_pixmap, clear_mask);
-
-  return FALSE;
 }
 
-/* Ditto */
-static gboolean
-undo_history_init_redo (const char *undoitemname,
-			void       *data)
+static void
+undo_history_init_redo (gpointer undo,
+                        gpointer data)
 {
   undo_history_st *st = data;
   gchar *namelist[3];
   gint row;
 
   namelist[0] = NULL;  namelist[1] = NULL;
-  namelist[2] = (gchar *) undoitemname;
+  namelist[1] = NULL;
+  namelist[2] = (gchar *) gimp_object_get_name (GIMP_OBJECT (undo));
   row = gtk_clist_append (GTK_CLIST (st->clist), namelist);
   gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
 			clear_pixmap, clear_mask);
-
-  return FALSE;
 }
 
 
@@ -859,11 +857,16 @@ undo_history_new (GimpImage *gimage)
    }
 
   /* work out the initial contents */
-  undo_map_over_undo_stack (st->gimage, undo_history_init_undo, st);
+  gimp_container_foreach (GIMP_CONTAINER (st->gimage->undo_stack->undos),
+                          undo_history_init_undo, st);
+
   /* force selection to bottom */
   gtk_clist_select_row (GTK_CLIST (st->clist),
 			GTK_CLIST (st->clist)->rows - 1, -1);
-  undo_map_over_redo_stack (st->gimage, undo_history_init_redo, st);
+
+  gimp_container_foreach (GIMP_CONTAINER (st->gimage->redo_stack->undos),
+                          undo_history_init_redo, st);
+
   undo_history_prepend_special (GTK_CLIST (st->clist));
   st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
 

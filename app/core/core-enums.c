@@ -362,6 +362,101 @@ gimp_channel_ops_get_type (void)
 }
 
 
+static const GEnumValue gimp_undo_mode_enum_values[] =
+{
+  { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", "undo" },
+  { GIMP_UNDO_MODE_REDO, "GIMP_UNDO_MODE_REDO", "redo" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_undo_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpUndoMode", gimp_undo_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_undo_type_enum_values[] =
+{
+  { NO_UNDO_GROUP, N_("<<invalid>>"), "no-undo-group" },
+  { FIRST_UNDO_GROUP, "FIRST_UNDO_GROUP", "first-undo-group" },
+  { IMAGE_SCALE_UNDO_GROUP, N_("Scale Image"), "image-scale-undo-group" },
+  { IMAGE_RESIZE_UNDO_GROUP, N_("Resize Image"), "image-resize-undo-group" },
+  { IMAGE_CONVERT_UNDO_GROUP, N_("Convert Image"), "image-convert-undo-group" },
+  { IMAGE_CROP_UNDO_GROUP, N_("Crop Image"), "image-crop-undo-group" },
+  { IMAGE_LAYERS_MERGE_UNDO_GROUP, N_("Merge Layers"), "image-layers-merge-undo-group" },
+  { IMAGE_QMASK_UNDO_GROUP, N_("QuickMask"), "image-qmask-undo-group" },
+  { IMAGE_GUIDE_UNDO_GROUP, N_("Guide"), "image-guide-undo-group" },
+  { LAYER_PROPERTIES_UNDO_GROUP, N_("Layer Properties"), "layer-properties-undo-group" },
+  { LAYER_SCALE_UNDO_GROUP, N_("Scale Layer"), "layer-scale-undo-group" },
+  { LAYER_RESIZE_UNDO_GROUP, N_("Resize Layer"), "layer-resize-undo-group" },
+  { LAYER_DISPLACE_UNDO_GROUP, N_("Move Layer"), "layer-displace-undo-group" },
+  { LAYER_LINKED_UNDO_GROUP, N_("Linked Layer"), "layer-linked-undo-group" },
+  { LAYER_APPLY_MASK_UNDO_GROUP, N_("Apply Layer Mask"), "layer-apply-mask-undo-group" },
+  { FS_FLOAT_UNDO_GROUP, N_("Float Selection"), "fs-float-undo-group" },
+  { FS_ANCHOR_UNDO_GROUP, N_("Anchor Floating Selection"), "fs-anchor-undo-group" },
+  { EDIT_PASTE_UNDO_GROUP, N_("Paste"), "edit-paste-undo-group" },
+  { EDIT_CUT_UNDO_GROUP, N_("Cut"), "edit-cut-undo-group" },
+  { EDIT_COPY_UNDO_GROUP, N_("Copy"), "edit-copy-undo-group" },
+  { TEXT_UNDO_GROUP, N_("Text"), "text-undo-group" },
+  { TRANSFORM_UNDO_GROUP, N_("Transform"), "transform-undo-group" },
+  { PAINT_UNDO_GROUP, N_("Paint"), "paint-undo-group" },
+  { PARASITE_ATTACH_UNDO_GROUP, N_("Attach Parasite"), "parasite-attach-undo-group" },
+  { PARASITE_REMOVE_UNDO_GROUP, N_("Remove Parasite"), "parasite-remove-undo-group" },
+  { MISC_UNDO_GROUP, N_("Plug-In"), "misc-undo-group" },
+  { LAST_UNDO_GROUP, "LAST_UNDO_GROUP", "last-undo-group" },
+  { IMAGE_UNDO, N_("Image"), "image-undo" },
+  { IMAGE_MOD_UNDO, N_("Image Mod"), "image-mod-undo" },
+  { IMAGE_TYPE_UNDO, N_("Image Type"), "image-type-undo" },
+  { IMAGE_SIZE_UNDO, N_("Image Size"), "image-size-undo" },
+  { IMAGE_RESOLUTION_UNDO, N_("Resolution Change"), "image-resolution-undo" },
+  { IMAGE_QMASK_UNDO, N_("QuickMask"), "image-qmask-undo" },
+  { IMAGE_GUIDE_UNDO, N_("Guide"), "image-guide-undo" },
+  { MASK_UNDO, N_("Selection Mask"), "mask-undo" },
+  { ITEM_RENAME_UNDO, N_("Rename Item"), "item-rename-undo" },
+  { LAYER_ADD_UNDO, N_("New Layer"), "layer-add-undo" },
+  { LAYER_REMOVE_UNDO, N_("Delete Layer"), "layer-remove-undo" },
+  { LAYER_MOD_UNDO, N_("Layer Mod"), "layer-mod-undo" },
+  { LAYER_MASK_ADD_UNDO, N_("Add Layer Mask"), "layer-mask-add-undo" },
+  { LAYER_MASK_REMOVE_UNDO, N_("Delete Layer Mask"), "layer-mask-remove-undo" },
+  { LAYER_REPOSITION_UNDO, N_("Layer Reposition"), "layer-reposition-undo" },
+  { LAYER_DISPLACE_UNDO, N_("Layer Move"), "layer-displace-undo" },
+  { CHANNEL_ADD_UNDO, N_("New Channel"), "channel-add-undo" },
+  { CHANNEL_REMOVE_UNDO, N_("Delete Channel"), "channel-remove-undo" },
+  { CHANNEL_MOD_UNDO, N_("Channel Mod"), "channel-mod-undo" },
+  { CHANNEL_REPOSITION_UNDO, N_("Channel Reposition"), "channel-reposition-undo" },
+  { VECTORS_ADD_UNDO, N_("New Vectors"), "vectors-add-undo" },
+  { VECTORS_REMOVE_UNDO, N_("Delete Vectors"), "vectors-remove-undo" },
+  { VECTORS_MOD_UNDO, N_("Vectors Mod"), "vectors-mod-undo" },
+  { VECTORS_REPOSITION_UNDO, N_("Vectors Reposition"), "vectors-reposition-undo" },
+  { FS_TO_LAYER_UNDO, N_("FS to Layer"), "fs-to-layer-undo" },
+  { FS_RIGOR_UNDO, N_("FS Rigor"), "fs-rigor-undo" },
+  { FS_RELAX_UNDO, N_("FS Relax"), "fs-relax-undo" },
+  { TRANSFORM_UNDO, N_("Transform"), "transform-undo" },
+  { PAINT_UNDO, N_("Paint"), "paint-undo" },
+  { PARASITE_ATTACH_UNDO, N_("Attach Parasite"), "parasite-attach-undo" },
+  { PARASITE_REMOVE_UNDO, N_("Remove Parasite"), "parasite-remove-undo" },
+  { CANT_UNDO, N_("EEK: can't undo"), "cant-undo" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_undo_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpUndoType", gimp_undo_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_convert_palette_type_enum_values[] =
 {
   { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },

@@ -62,6 +62,7 @@ struct _GimpCoreConfig
   gdouble                default_yresolution;
   GimpUnit               default_resolution_unit;
   gint                   levels_of_undo;
+  gulong                 undo_size;
   gchar                 *plug_in_rc_path;
   gchar                 *module_load_inhibit;
   GimpPreviewSize        preview_size;

@@ -1,3 +1,37 @@
+2003-02-12  Michael Natterer  <mitch@gimp.org>
+
+	Undo chopping:
+
+	* app/Makefile.am
+	* app/undo_types.h: removed.
+
+	* app/config/gimpcoreconfig.[ch]: added "gulong undo_size".
+	* app/config/gimprc-blurbs.h: and its blurb.
+
+	* app/undo.[ch]
+
+	* app/core/core-enums.[ch]: added GimpUndoMode and GimpUndoType.
+
+	* app/core/core-types.h: removed UndoType, added GimpUndoAccumulator,
+	GimpUndoPopFunc and GimpUndoFreeFunc.
+
+	* app/core/gimpundo.[ch]: do everything the old "Undo" struct did.
+	Removed the virtual push() function and added free().
+
+	* app/core/gimpundostack.[ch]: keeps the new undo/redo stacks
+	and also acts as undo group.
+
+	* app/core/gimpimage-undo.[ch]
+	* app/core/gimpimage.[ch]
+	* app/core/gimpmarshal.list
+
+	* app/undo_history.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/image-menu.c
+	* app/gui/preferences-dialog.c
+	* app/tools/gimpeditselectiontool.c: changed accordingly.
+
 2003-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am

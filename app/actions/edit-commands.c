@@ -34,6 +34,7 @@
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 
 #include "display/gimpdisplay.h"
 
@@ -41,8 +42,6 @@
 
 #include "dialogs.h"
 #include "edit-commands.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -87,7 +86,7 @@ edit_undo_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  if (undo_pop (gimage))
+  if (gimp_image_undo (gimage))
     gimp_image_flush (gimage);
 }
 
@@ -98,7 +97,7 @@ edit_redo_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  if (undo_redo (gimage))
+  if (gimp_image_redo (gimage))
     gimp_image_flush (gimage);
 }
 

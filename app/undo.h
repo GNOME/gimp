@@ -20,48 +20,10 @@
 #define __UNDO_H__
 
 
-/*  Argument to undo_event signal emitted by images  */
-
-typedef enum 
-{
-  UNDO_PUSHED,	/* a new undo has been added to the undo stack       */
-  UNDO_EXPIRED,	/* an undo has been freed from the undo stack        */
-  UNDO_POPPED,	/* an undo has been executed and moved to redo stack */
-  UNDO_REDO,    /* a redo has been executed and moved to undo stack  */
-  UNDO_FREE     /* all undo and redo info has been cleared           */
-} undo_event_t;
-
-
-/*  Stack peeking functions  */
-
-typedef gint (*undo_map_fn) (const gchar *undoitemname, 
-                             gpointer     data);
-
-
-/*  main undo functions  */
-
-gboolean      undo_pop                     (GimpImage     *gimage);
-gboolean      undo_redo                    (GimpImage     *gimage);
-void          undo_free                    (GimpImage     *gimage);
-
-const gchar * undo_get_undo_name           (GimpImage     *gimage);
-const gchar * undo_get_redo_name           (GimpImage     *gimage);
-
-
-void          undo_map_over_undo_stack     (GimpImage     *gimage, 
-                                            undo_map_fn    fn, 
-                                            gpointer       data);
-void          undo_map_over_redo_stack     (GimpImage     *gimage, 
-                                            undo_map_fn    fn, 
-                                            gpointer       data);
-
-UndoType      undo_get_undo_top_type       (GimpImage     *gimage);
-
-
 /*  undo groups  */
 
 gboolean      undo_push_group_start        (GimpImage     *gimage,
-                                            UndoType       type);
+                                            GimpUndoType   undo_type);
 gboolean      undo_push_group_end          (GimpImage     *gimage);
 
 

@@ -414,9 +414,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->undo_event                   = NULL;
   klass->flush                        = NULL;
 
-  klass->undo                         = gimp_image_undo;
-  klass->redo                         = gimp_image_redo;
-
   gimp_image_color_hash_init ();
 }
 
@@ -479,15 +476,11 @@ gimp_image_init (GimpImage *gimage)
   gimage->qmask_color.b         = 0.0;
   gimage->qmask_color.a         = 0.5;
 
-  gimage->undo_stack            = NULL;
-  gimage->redo_stack            = NULL;
-  gimage->undo_bytes            = 0;
-  gimage->undo_levels           = 0;
+  gimage->undo_stack            = gimp_undo_stack_new (gimage);
+  gimage->redo_stack            = gimp_undo_stack_new (gimage);
   gimage->group_count           = 0;
   gimage->pushing_undo_group    = NO_UNDO_GROUP;
 
-  gimage->new_undo_stack        = gimp_undo_stack_new (gimage);
-  gimage->new_redo_stack        = gimp_undo_stack_new (gimage);
 
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
@@ -500,7 +493,7 @@ gimp_image_dispose (GObject *object)
 
   gimage = GIMP_IMAGE (object);
 
-  undo_free (gimage);
+  gimp_image_undo_free (gimage);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -577,15 +570,15 @@ gimp_image_finalize (GObject *object)
       gimage->guides = NULL;
     }
 
-  if (gimage->new_undo_stack)
+  if (gimage->undo_stack)
     {
-      g_object_unref (gimage->new_undo_stack);
-      gimage->new_undo_stack = NULL;
+      g_object_unref (gimage->undo_stack);
+      gimage->undo_stack = NULL;
     }
-  if (gimage->new_redo_stack)
+  if (gimage->redo_stack)
     {
-      g_object_unref (gimage->new_redo_stack);
-      gimage->new_redo_stack = NULL;
+      g_object_unref (gimage->redo_stack);
+      gimage->redo_stack = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -643,13 +636,8 @@ gimp_image_get_memsize (GimpObject *object)
 
   /* FIXME paths */
 
-  memsize += g_slist_length (gimage->undo_stack) * (3 * sizeof (gint) +
-                                                    4 * sizeof (gpointer)); /* FIXME */
-  memsize += g_slist_length (gimage->redo_stack) * (3 * sizeof (gint) +
-                                                    4 * sizeof (gpointer)); /* FIXME */
-
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->new_undo_stack));
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->new_redo_stack));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack));
 
   if (gimage->comp_preview)
     memsize += temp_buf_get_memsize (gimage->comp_preview);
@@ -1538,7 +1526,7 @@ gimp_image_undo_enable (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /*  Free all undo steps as they are now invalidated  */
-  undo_free (gimage);
+  gimp_image_undo_free (gimage);
 
   return gimp_image_undo_thaw (gimage);
 }

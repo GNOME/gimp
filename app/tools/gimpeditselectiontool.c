@@ -35,6 +35,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplist.h"
@@ -387,7 +388,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   if (state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
     {
       /* Operation cancelled - undo the undo-group! */
-      undo_pop (gdisp->gimage);
+      gimp_image_undo (gdisp->gimage);
     }
 
   gimp_image_flush (gdisp->gimage);

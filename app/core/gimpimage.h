@@ -151,17 +151,12 @@ struct _GimpImage
   gboolean           qmask_inverted;        /*  TRUE if qmask is inverted    */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
-  /*  Old undo apparatus  */
-  GSList            *undo_stack;            /*  stack for undo operations    */
-  GSList            *redo_stack;            /*  stack for redo operations    */
-  gint               undo_bytes;            /*  bytes in undo stack          */
-  gint               undo_levels;           /*  levels in undo stack         */
+  GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
+  GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
   gint               group_count;           /*  nested undo groups           */
-  UndoType           pushing_undo_group;    /*  undo group status flag       */
+  GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
   /*  New undo apparatus  */
-  GimpUndoStack     *new_undo_stack;        /*  stack for undo operations    */
-  GimpUndoStack     *new_redo_stack;        /*  stack for redo operations    */
 
   /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
@@ -206,10 +201,6 @@ struct _GimpImageClass
 					 gint                  event);
 
   void (* flush)                        (GimpImage            *gimage);
-
-  /*  virtual functions  */
-  void (* undo)                         (GimpImage            *gimage);
-  void (* redo)                         (GimpImage            *gimage);
 };
 
 

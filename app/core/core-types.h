@@ -44,46 +44,17 @@ typedef enum
   GIMP_POINTS
 } SizeType;
 
-typedef enum /*< pdb-skip >*/ /*< skip >*/
+/*  Argument to undo_event signal emitted by images  */
+
+typedef enum  /*< pdb-skip >*/ /*< skip >*/
 {
-  /* NOTE: If you change this list, please update the textual mapping at
-   *  the bottom of undo.c as well.
-   */
+  UNDO_PUSHED,	/* a new undo has been added to the undo stack       */
+  UNDO_EXPIRED,	/* an undo has been freed from the undo stack        */
+  UNDO_POPPED,	/* an undo has been executed and moved to redo stack */
+  UNDO_REDO,    /* a redo has been executed and moved to undo stack  */
+  UNDO_FREE     /* all undo and redo info has been cleared           */
+} undo_event_t;
 
-  /* Type NO_UNDO_GROUP (0) is special - in the gimpimage structure it
-   * means there is no undo group currently being added to.
-   */
-  NO_UNDO_GROUP = 0,
-
-  FIRST_UNDO_GROUP = NO_UNDO_GROUP,
-
-  IMAGE_SCALE_UNDO_GROUP,
-  IMAGE_RESIZE_UNDO_GROUP,
-  IMAGE_CONVERT_UNDO_GROUP,
-  IMAGE_CROP_UNDO_GROUP,
-  IMAGE_LAYERS_MERGE_UNDO_GROUP,
-  IMAGE_QMASK_UNDO_GROUP,
-  IMAGE_GUIDE_UNDO_GROUP,
-  LAYER_PROPERTIES_UNDO_GROUP,
-  LAYER_SCALE_UNDO_GROUP,
-  LAYER_RESIZE_UNDO_GROUP,
-  LAYER_DISPLACE_UNDO_GROUP,
-  LAYER_LINKED_UNDO_GROUP,
-  LAYER_APPLY_MASK_UNDO_GROUP,
-  FS_FLOAT_UNDO_GROUP,
-  FS_ANCHOR_UNDO_GROUP,
-  EDIT_PASTE_UNDO_GROUP,
-  EDIT_CUT_UNDO_GROUP,
-  EDIT_COPY_UNDO_GROUP,
-  TEXT_UNDO_GROUP,
-  TRANSFORM_UNDO_GROUP,
-  PAINT_UNDO_GROUP,
-  PARASITE_ATTACH_UNDO_GROUP,
-  PARASITE_REMOVE_UNDO_GROUP,
-  MISC_UNDO_GROUP,
-
-  LAST_UNDO_GROUP = MISC_UNDO_GROUP
-} UndoType;
 
 
 /*  base objects  */
@@ -153,6 +124,7 @@ typedef struct _GimpEnvironTable    GimpEnvironTable;
 
 typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
+typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 
 
 /*  non-object types  */
@@ -181,10 +153,19 @@ typedef struct _PathList            PathList;
 
 /*  functions  */
 
-typedef void       (* GimpInitStatusFunc)       (const gchar *text1,
-                                                 const gchar *text2,
-                                                 gdouble      percentage);
-typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar *filename);
+typedef void       (* GimpInitStatusFunc)       (const gchar         *text1,
+                                                 const gchar         *text2,
+                                                 gdouble              percentage);
+
+typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar         *filename);
+
+typedef gboolean   (* GimpUndoPopFunc)          (GimpUndo            *undo,
+                                                 GimpImage           *gimage,
+                                                 GimpUndoMode         undo_mode,
+                                                 GimpUndoAccumulator *accum);
+typedef void       (* GimpUndoFreeFunc)         (GimpUndo            *undo,
+                                                 GimpImage           *gimage,
+                                                 GimpUndoMode         undo_mode);
 
 
 /*  structs  */

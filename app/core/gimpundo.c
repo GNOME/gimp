@@ -31,27 +31,30 @@
 
 enum
 {
-  PUSH,
   POP,
+  FREE,
   LAST_SIGNAL
 };
 
 
-static void      gimp_undo_class_init  (GimpUndoClass *klass);
-static void      gimp_undo_init        (GimpUndo      *undo);
+static void      gimp_undo_class_init  (GimpUndoClass       *klass);
+static void      gimp_undo_init        (GimpUndo            *undo);
 
-static void      gimp_undo_finalize    (GObject       *object);
+static void      gimp_undo_finalize    (GObject             *object);
 
-static gsize     gimp_undo_get_memsize (GimpObject    *object);
+static gsize     gimp_undo_get_memsize (GimpObject          *object);
 
-static TempBuf * gimp_undo_get_preview (GimpViewable  *viewable,
-                                        gint           width,
-                                        gint           height);
+static TempBuf * gimp_undo_get_preview (GimpViewable        *viewable,
+                                        gint                 width,
+                                        gint                 height);
 
-static void      gimp_undo_real_push   (GimpUndo      *undo,
-                                        GimpImage     *gimage);
-static void      gimp_undo_real_pop    (GimpUndo      *undo,
-                                        GimpImage     *gimage);
+static void      gimp_undo_real_pop    (GimpUndo            *undo,
+                                        GimpImage           *gimage,
+                                        GimpUndoMode         undo_mode,
+                                        GimpUndoAccumulator *accum);
+static void      gimp_undo_real_free   (GimpUndo            *undo,
+                                        GimpImage           *gimage,
+                                        GimpUndoMode         undo_mode);
 
 
 static guint undo_signals[LAST_SIGNAL] = { 0 };
@@ -100,25 +103,28 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  undo_signals[PUSH] = 
-    g_signal_new ("push",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpUndoClass, push),
-		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
-
   undo_signals[POP] = 
     g_signal_new ("pop",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUndoClass, pop),
 		  NULL, NULL,
-		  gimp_marshal_VOID__POINTER,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  gimp_marshal_VOID__OBJECT_ENUM_POINTER,
+		  G_TYPE_NONE, 3,
+		  GIMP_TYPE_IMAGE,
+                  GIMP_TYPE_UNDO_MODE,
+                  G_TYPE_POINTER);
+
+  undo_signals[FREE] = 
+    g_signal_new ("free",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpUndoClass, free),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT_ENUM,
+		  G_TYPE_NONE, 2,
+		  GIMP_TYPE_IMAGE,
+                  GIMP_TYPE_UNDO_MODE);
 
   object_class->finalize         = gimp_undo_finalize;
 
@@ -126,8 +132,8 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   viewable_class->get_preview    = gimp_undo_get_preview;
 
-  klass->push                    = gimp_undo_real_push;
   klass->pop                     = gimp_undo_real_pop;
+  klass->free                    = gimp_undo_real_free;
 }
 
 static void
@@ -147,12 +153,6 @@ gimp_undo_finalize (GObject *object)
 
   undo = GIMP_UNDO (object);
 
-  if (undo->free_func)
-    {
-      undo->free_func (undo);
-      undo->free_func = NULL;
-    }
-
   if (undo->preview)
     {
       temp_buf_free (undo->preview);
@@ -170,6 +170,8 @@ gimp_undo_get_memsize (GimpObject *object)
 
   undo = GIMP_UNDO (object);
 
+  memsize += undo->size;
+
   if (undo->preview)
     memsize += temp_buf_get_memsize (undo->preview);
 
@@ -185,61 +187,86 @@ gimp_undo_get_preview (GimpViewable *viewable,
 }
 
 GimpUndo *
-gimp_undo_new (const gchar      *name,
+gimp_undo_new (GimpUndoType      undo_type,
+               const gchar      *name,
                gpointer          data,
+               gsize             size,
                gboolean          dirties_image,
                GimpUndoPopFunc   pop_func,
                GimpUndoFreeFunc  free_func)
 {
   GimpUndo *undo;
 
-  undo = GIMP_UNDO (g_object_new (GIMP_TYPE_UNDO, NULL));
+  g_return_val_if_fail (name != NULL, NULL);
+  //g_return_val_if_fail (size == 0 || data != NULL, NULL);
+
+  undo = g_object_new (GIMP_TYPE_UNDO,
+                       "name", name,
+                       NULL);
   
-  gimp_object_set_name (GIMP_OBJECT (undo), name);
-  
-  undo->data = data;
-  
-  undo->pop_func  = pop_func;
-  undo->free_func = free_func;
+  undo->undo_type     = undo_type;
+  undo->data          = data;
+  undo->size          = size;
+  undo->dirties_image = dirties_image ? TRUE : FALSE;
+  undo->pop_func      = pop_func;
+  undo->free_func     = free_func;
 
   return undo;
 }
 
 void
-gimp_undo_push (GimpUndo  *undo,
-                GimpImage *gimage)
+gimp_undo_pop (GimpUndo            *undo,
+               GimpImage           *gimage,
+               GimpUndoMode         undo_mode,
+               GimpUndoAccumulator *accum)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (accum != NULL);
 
-  g_signal_emit (undo, undo_signals[PUSH], 0, gimage);
+  g_signal_emit (undo, undo_signals[POP], 0, gimage, undo_mode, accum);
+
+  if (undo->dirties_image)
+    {
+      switch (undo_mode)
+        {
+        case GIMP_UNDO_MODE_UNDO:
+          gimp_image_clean (gimage);
+          break;
+
+        case GIMP_UNDO_MODE_REDO:
+          gimp_image_dirty (gimage);
+          break;
+        }
+    }
 }
 
 void
-gimp_undo_pop (GimpUndo  *undo,
-               GimpImage *gimage)
+gimp_undo_free (GimpUndo     *undo,
+                GimpImage    *gimage,
+                GimpUndoMode  undo_mode)
 {
   g_return_if_fail (GIMP_IS_UNDO (undo));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  g_signal_emit (undo, undo_signals[POP], 0, gimage);
+  g_signal_emit (undo, undo_signals[FREE], 0, gimage, undo_mode);
 }
 
 static void
-gimp_undo_real_push (GimpUndo  *undo,
-                     GimpImage *gimage)
-{
-  /* FIXME: need core_config->undo_preview_size */
-
-  undo->preview = gimp_viewable_get_preview (GIMP_VIEWABLE (gimage),
-                                             24,
-					     24);
-}
-
-static void
-gimp_undo_real_pop (GimpUndo  *undo,
-                    GimpImage *gimage)
+gimp_undo_real_pop (GimpUndo            *undo,
+                    GimpImage           *gimage,
+                    GimpUndoMode         undo_mode,
+                    GimpUndoAccumulator *accum)
 {
   if (undo->pop_func)
-    undo->pop_func (undo, gimage);
+    undo->pop_func (undo, gimage, undo_mode, accum);
+}
+
+static void
+gimp_undo_real_free (GimpUndo     *undo,
+                     GimpImage    *gimage,
+                     GimpUndoMode  undo_mode)
+{
+  if (undo->free_func)
+    undo->free_func (undo, gimage, undo_mode);
 }

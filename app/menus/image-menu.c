@@ -31,6 +31,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundostack.h"
 
 #include "plug-in/plug-ins.h"
 
@@ -53,8 +54,6 @@
 #include "select-commands.h"
 #include "tools-commands.h"
 #include "view-commands.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1163,15 +1162,22 @@ image_menu_update (GtkItemFactory *item_factory,
 
     if (gdisp && gimp_image_undo_is_enabled (gimage))
       {
-        undo_name = (gchar *) undo_get_undo_name (gimage);
-        redo_name = (gchar *) undo_get_redo_name (gimage);
+        GimpUndo *undo;
+        GimpUndo *redo;
+
+        undo = gimp_undo_stack_peek (gimage->undo_stack);
+        redo = gimp_undo_stack_peek (gimage->redo_stack);
+
+        if (undo)
+          undo_name =
+            g_strdup_printf (_("Undo %s"),
+                             gimp_object_get_name (GIMP_OBJECT (undo)));
+
+        if (redo)
+          redo_name =
+            g_strdup_printf (_("Redo %s"),
+                             gimp_object_get_name (GIMP_OBJECT (redo)));
       }
-
-    if (undo_name)
-      undo_name = g_strdup_printf (_("Undo %s"), gettext (undo_name));
-
-    if (redo_name)
-      redo_name = g_strdup_printf (_("Redo %s"), gettext (redo_name));
 
     SET_LABEL ("/Edit/Undo", undo_name ? undo_name : _("Undo"));
     SET_LABEL ("/Edit/Redo", redo_name ? redo_name : _("Redo"));

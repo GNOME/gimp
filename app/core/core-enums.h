@@ -267,6 +267,95 @@ typedef enum  /*< proxy-resume >*/
 } GimpChannelOps;
 
 
+#define GIMP_TYPE_UNDO_MODE (gimp_undo_mode_get_type ())
+
+GType gimp_undo_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< proxy-skip >*/ /*< pdb-skip >*/
+{
+  GIMP_UNDO_MODE_UNDO,
+  GIMP_UNDO_MODE_REDO
+} GimpUndoMode;
+
+
+#define GIMP_TYPE_UNDO_TYPE (gimp_undo_type_get_type ())
+
+GType gimp_undo_type_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  /* Type NO_UNDO_GROUP (0) is special - in the gimpimage structure it
+   * means there is no undo group currently being added to.
+   */
+  NO_UNDO_GROUP = 0,                /*< desc="<<invalid>>"               >*/
+
+  FIRST_UNDO_GROUP = NO_UNDO_GROUP,
+
+  IMAGE_SCALE_UNDO_GROUP,           /*< desc="Scale Image"               >*/
+  IMAGE_RESIZE_UNDO_GROUP,          /*< desc="Resize Image"              >*/
+  IMAGE_CONVERT_UNDO_GROUP,         /*< desc="Convert Image"             >*/
+  IMAGE_CROP_UNDO_GROUP,            /*< desc="Crop Image"                >*/
+  IMAGE_LAYERS_MERGE_UNDO_GROUP,    /*< desc="Merge Layers"              >*/
+  IMAGE_QMASK_UNDO_GROUP,           /*< desc="QuickMask"                 >*/
+  IMAGE_GUIDE_UNDO_GROUP,           /*< desc="Guide"                     >*/
+  LAYER_PROPERTIES_UNDO_GROUP,      /*< desc="Layer Properties"          >*/
+  LAYER_SCALE_UNDO_GROUP,           /*< desc="Scale Layer"               >*/
+  LAYER_RESIZE_UNDO_GROUP,          /*< desc="Resize Layer"              >*/
+  LAYER_DISPLACE_UNDO_GROUP,        /*< desc="Move Layer"                >*/
+  LAYER_LINKED_UNDO_GROUP,          /*< desc="Linked Layer"              >*/
+  LAYER_APPLY_MASK_UNDO_GROUP,      /*< desc="Apply Layer Mask"          >*/
+  FS_FLOAT_UNDO_GROUP,              /*< desc="Float Selection"           >*/
+  FS_ANCHOR_UNDO_GROUP,             /*< desc="Anchor Floating Selection" >*/
+  EDIT_PASTE_UNDO_GROUP,            /*< desc="Paste"                     >*/
+  EDIT_CUT_UNDO_GROUP,              /*< desc="Cut"                       >*/
+  EDIT_COPY_UNDO_GROUP,             /*< desc="Copy"                      >*/
+  TEXT_UNDO_GROUP,                  /*< desc="Text"                      >*/
+  TRANSFORM_UNDO_GROUP,             /*< desc="Transform"                 >*/
+  PAINT_UNDO_GROUP,                 /*< desc="Paint"                     >*/
+  PARASITE_ATTACH_UNDO_GROUP,       /*< desc="Attach Parasite"           >*/
+  PARASITE_REMOVE_UNDO_GROUP,       /*< desc="Remove Parasite"           >*/
+  MISC_UNDO_GROUP,                  /*< desc="Plug-In"                   >*/
+
+  LAST_UNDO_GROUP = MISC_UNDO_GROUP,
+
+  /*  Undo types which actually do something  */
+
+  IMAGE_UNDO,	                    /*< desc="Image"                     >*/
+  IMAGE_MOD_UNDO,                   /*< desc="Image Mod"                 >*/
+  IMAGE_TYPE_UNDO,                  /*< desc="Image Type"                >*/
+  IMAGE_SIZE_UNDO,                  /*< desc="Image Size"                >*/
+  IMAGE_RESOLUTION_UNDO,            /*< desc="Resolution Change"         >*/
+  IMAGE_QMASK_UNDO,                 /*< desc="QuickMask"                 >*/
+  IMAGE_GUIDE_UNDO,                 /*< desc="Guide"                     >*/
+  MASK_UNDO,                        /*< desc="Selection Mask"            >*/
+  ITEM_RENAME_UNDO,                 /*< desc="Rename Item"               >*/
+  LAYER_ADD_UNDO,                   /*< desc="New Layer"                 >*/
+  LAYER_REMOVE_UNDO,                /*< desc="Delete Layer"              >*/
+  LAYER_MOD_UNDO,                   /*< desc="Layer Mod"                 >*/
+  LAYER_MASK_ADD_UNDO,              /*< desc="Add Layer Mask"            >*/
+  LAYER_MASK_REMOVE_UNDO,           /*< desc="Delete Layer Mask"         >*/
+  LAYER_REPOSITION_UNDO,            /*< desc="Layer Reposition"          >*/
+  LAYER_DISPLACE_UNDO,              /*< desc="Layer Move"                >*/
+  CHANNEL_ADD_UNDO,                 /*< desc="New Channel"               >*/
+  CHANNEL_REMOVE_UNDO,              /*< desc="Delete Channel"            >*/
+  CHANNEL_MOD_UNDO,                 /*< desc="Channel Mod"               >*/
+  CHANNEL_REPOSITION_UNDO,          /*< desc="Channel Reposition"        >*/
+  VECTORS_ADD_UNDO,                 /*< desc="New Vectors"               >*/
+  VECTORS_REMOVE_UNDO,              /*< desc="Delete Vectors"            >*/
+  VECTORS_MOD_UNDO,                 /*< desc="Vectors Mod"               >*/
+  VECTORS_REPOSITION_UNDO,          /*< desc="Vectors Reposition"        >*/
+  FS_TO_LAYER_UNDO,                 /*< desc="FS to Layer"               >*/
+  FS_RIGOR_UNDO,                    /*< desc="FS Rigor"                  >*/
+  FS_RELAX_UNDO,                    /*< desc="FS Relax"                  >*/
+  TRANSFORM_UNDO,                   /*< desc="Transform"                 >*/
+  PAINT_UNDO,		            /*< desc="Paint"                     >*/
+  PARASITE_ATTACH_UNDO,             /*< desc="Attach Parasite"           >*/
+  PARASITE_REMOVE_UNDO,             /*< desc="Remove Parasite"           >*/
+
+  CANT_UNDO,                        /*< desc="EEK: can't undo"           >*/
+} GimpUndoType;
+
+
 /*
  * non-registered enums; register them if needed
  */

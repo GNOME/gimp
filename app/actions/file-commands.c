@@ -30,6 +30,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpobject.h"
 
 #include "file/file-open.h"
@@ -365,7 +366,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       if (new_gimage)
 	{
-	  undo_free (new_gimage);
+	  gimp_image_undo_free (new_gimage);
 
 	  gimp_displays_reconnect (old_gimage->gimp, old_gimage, new_gimage);
 

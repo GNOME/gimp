@@ -80,6 +80,7 @@ enum
   PROP_DEFAULT_YRESOLUTION,
   PROP_DEFAULT_RESOLUTION_UNIT,
   PROP_UNDO_LEVELS,
+  PROP_UNDO_SIZE,
   PROP_PLUGINRC_PATH,
   PROP_MODULE_LOAD_INHIBIT,
   PROP_PREVIEW_SIZE,
@@ -239,6 +240,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 "undo-levels", UNDO_LEVELS_BLURB,
                                 0, G_MAXINT, 5,
                                 GIMP_PARAM_CONFIRM);
+  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,
+                                    "undo-size", UNDO_SIZE_BLURB,
+                                    0, G_MAXULONG, 1 << 20,
+                                    GIMP_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
@@ -392,6 +397,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_UNDO_LEVELS:
       core_config->levels_of_undo = g_value_get_int (value);
       break;
+    case PROP_UNDO_SIZE:
+      core_config->undo_size = g_value_get_ulong (value);
+      break;
     case PROP_PLUGINRC_PATH:
       g_free (core_config->plug_in_rc_path);
       core_config->plug_in_rc_path = g_value_dup_string (value);
@@ -499,6 +507,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_UNDO_LEVELS:
       g_value_set_int (value, core_config->levels_of_undo);
+      break;
+    case PROP_UNDO_SIZE:
+      g_value_set_ulong (value, core_config->undo_size);
       break;
     case PROP_PLUGINRC_PATH:
       g_value_set_string (value, core_config->plug_in_rc_path);

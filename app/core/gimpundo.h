@@ -23,6 +23,18 @@
 #include "gimpviewable.h"
 
 
+struct _GimpUndoAccumulator
+{
+  gboolean mode_changed;
+  gboolean size_changed;
+  gboolean resolution_changed;
+  gboolean unit_changed;
+  gboolean mask_changed;
+  gboolean qmask_changed;
+  gboolean alpha_changed;
+};
+
+
 #define GIMP_TYPE_UNDO            (gimp_undo_get_type ())
 #define GIMP_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNDO, GimpUndo))
 #define GIMP_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNDO, GimpUndoClass))
@@ -31,18 +43,16 @@
 #define GIMP_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNDO, GimpUndoClass))
 
 
-typedef gboolean (* GimpUndoPopFunc)  (GimpUndo *undo, GimpImage *gimage);
-typedef void     (* GimpUndoFreeFunc) (GimpUndo *undo);
-
-
 typedef struct _GimpUndoClass GimpUndoClass;
 
 struct _GimpUndo
 {
   GimpViewable      parent_instance;
 
-  gpointer          data;           /* data to implement the undo */
-  gboolean          dirties_image;  /* TRUE if undo mutates image */
+  GimpUndoType      undo_type;      /* undo type                          */
+  gpointer          data;           /* data to implement the undo         */
+  gsize             size;           /* size of undo item                  */
+  gboolean          dirties_image;  /* TRUE if undo mutates image         */
 
   GimpUndoPopFunc   pop_func;       /* function pointer to undo pop proc  */
   GimpUndoFreeFunc  free_func;      /* function pointer to free undo data */
@@ -54,23 +64,33 @@ struct _GimpUndoClass
 {
   GimpViewableClass  parent_class;
 
-  void (* push)  (GimpUndo  *undo,
-                  GimpImage *gimage);
-  void (* pop)   (GimpUndo  *undo,
-                  GimpImage *gimage);
+  void (* pop)  (GimpUndo            *undo,
+                 GimpImage           *gimage,
+                 GimpUndoMode         undo_mode,
+                 GimpUndoAccumulator *accum);
+  void (* free) (GimpUndo            *undo,
+                 GimpImage           *gimage,
+                 GimpUndoMode         undo_mode);
 };
 
 
 GType      gimp_undo_get_type (void) G_GNUC_CONST;
-GimpUndo * gimp_undo_new      (const gchar      *name,
-                               gpointer          data,
-                               gboolean          dirties_image,
-                               GimpUndoPopFunc   pop_func,
-                               GimpUndoFreeFunc  free_func);
-void       gimp_undo_push     (GimpUndo         *undo,
-                               GimpImage        *gimage);
-void       gimp_undo_pop      (GimpUndo         *undo,
-                               GimpImage        *gimage);
+
+GimpUndo * gimp_undo_new      (GimpUndoType         undo_type,
+                               const gchar         *name,
+                               gpointer             data,
+                               gsize                size,
+                               gboolean             dirties_image,
+                               GimpUndoPopFunc      pop_func,
+                               GimpUndoFreeFunc     free_func);
+
+void       gimp_undo_pop      (GimpUndo            *undo,
+                               GimpImage           *gimage,
+                               GimpUndoMode         undo_mode,
+                               GimpUndoAccumulator *accum);
+void       gimp_undo_free     (GimpUndo            *undo,
+                               GimpImage           *gimage,
+                               GimpUndoMode         undo_mode);
 
 
 #endif /* __GIMP_UNDO_H__ */

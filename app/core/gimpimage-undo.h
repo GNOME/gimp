@@ -20,8 +20,24 @@
 #define __GIMP_IMAGE_UNDO_H__
 
 
-void gimp_image_undo (GimpImage *gimage);
-void gimp_image_redo (GimpImage *gimage);
+gboolean   gimp_image_undo             (GimpImage        *gimage);
+gboolean   gimp_image_redo             (GimpImage        *gimage);
+
+void       gimp_image_undo_free        (GimpImage        *gimage);
+
+gboolean   gimp_image_undo_group_start (GimpImage        *gimage,
+                                        GimpUndoType      type,
+                                        const gchar      *name);
+gboolean   gimp_image_undo_group_end   (GimpImage        *gimage);
+
+GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
+                                        gsize             size,
+                                        gsize             struct_size,
+                                        GimpUndoType      type,
+                                        const gchar      *name,
+                                        gboolean          dirties_image,
+                                        GimpUndoPopFunc   pop_func,
+                                        GimpUndoFreeFunc  free_func);
 
 
 #endif /* __GIMP_IMAGE_UNDO_H__ */
