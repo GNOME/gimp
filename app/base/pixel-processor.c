@@ -22,6 +22,7 @@
 
 #include "pixel_processor.h"
 #include "pixel_region.h"
+#include "pixel_regionP.h"
 #include "gimprc.h"
 #include <stdarg.h>
 #include <stdio.h>
@@ -46,8 +47,6 @@ typedef void (*p2_func)(void *, PixelRegion * ,PixelRegion *);
 typedef void (*p3_func)(void *, PixelRegion * ,PixelRegion *, PixelRegion *);
 typedef void (*p4_func)(void *, PixelRegion * ,PixelRegion *, PixelRegion *,
 			PixelRegion *);
-
-typedef struct _PixelRegionIterator PixelRegionIterator;
 
 struct _PixelProcessor
 {
@@ -85,7 +84,13 @@ do_parallel_regions(PixelProcessor  *p_s)
   {
     for (i = 0; i < p_s->n_regions; i++)
       if (p_s->r[i])
+      {
 	memcpy(&tr[i], p_s->r[i], sizeof(PixelRegion));
+	IF_THREAD(
+	  if (tr[i].tiles)
+	    tile_lock(tr[i].curtile);
+	  )
+      }
     IF_THREAD(pthread_mutex_unlock(&p_s->mutex);)
     ntiles++;
     switch(p_s->n_regions)
@@ -117,6 +122,15 @@ do_parallel_regions(PixelProcessor  *p_s)
 		 p_s->n_regions);
     }
     IF_THREAD(pthread_mutex_lock(&p_s->mutex);)
+    IF_THREAD(
+      {
+	for (i = 0; i < p_s->n_regions; i++)
+	  if (p_s->r[i])
+	  {
+	    if (tr[i].tiles)
+	      tile_release(tr[i].curtile, tr[i].dirty);
+	  }
+      })
     if (p_s->progress_report_func)
       if (!p_s->progress_report_func(p_s->progress_report_data,
 				     p_s->r[0]->x, p_s->r[0]->y, 
@@ -142,7 +156,10 @@ pixel_regions_do_parallel(PixelProcessor *p_s)
 
   /*		 (p_s->PRI->region_width * p_s->PRI->region_height) /(64*64)); */
   IF_THREAD(
-    nthreads = MIN(num_processors, 5);
+    nthreads = MIN(num_processors, MAX_THREADS);
+    nthreads = MIN(nthreads, 1 + 
+		   (p_s->PRI->region_width * p_s->PRI->region_height)
+		   /(TILE_WIDTH*TILE_HEIGHT));
     if (nthreads > 1)
     {
       pthread_attr_init (&pthread_attr);
@@ -213,6 +230,7 @@ pixel_regions_real_process_parallel(p_func f, void *data,
     pixel_processor_free(p_s);
     return NULL;
   }
+  IF_THREAD(p_s->PRI->dirty_tiles = 0;)
   p_s->f = f;
   p_s->data = data;
   p_s->n_regions = num_regions;

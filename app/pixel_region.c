@@ -21,34 +21,12 @@
 #include <string.h>
 #include "appenv.h"
 #include "pixel_region.h"
+#include "pixel_regionP.h"
 #include "gimprc.h"
 
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
 
-
-typedef struct _PixelRegionHolder PixelRegionHolder;
-
-struct _PixelRegionHolder
-{
-  PixelRegion *PR;
-  unsigned char *original_data;
-  int startx, starty;
-  int count;
-};
-
-
-typedef struct _PixelRegionIterator PixelRegionIterator;
-
-struct _PixelRegionIterator
-{
-  GSList *pixel_regions;
-  int region_width;
-  int region_height;
-  int portion_width;
-  int portion_height;
-  int process_count;
-};
 
 /*********************/
 /*  Local Variables  */
@@ -306,6 +284,7 @@ pixel_regions_register (int num_regions,
   PRI = (PixelRegionIterator *) g_malloc (sizeof (PixelRegionIterator));
   PRI->pixel_regions = NULL;
   PRI->process_count = 0;
+  PRI->dirty_tiles = 1;
 
   if (num_regions < 1)
     return FALSE;
@@ -374,7 +353,9 @@ pixel_regions_process (void *PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      tile_release (PRH->PR->curtile, PRH->PR->dirty);
+	      /* only set the dirty flag if PRH->dirty_tiles = true */
+	      tile_release (PRH->PR->curtile,
+			    PRH->PR->dirty * PRI->dirty_tiles);
 	      PRH->PR->curtile = NULL;
 	    }
 

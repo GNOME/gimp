@@ -43,6 +43,8 @@
 #include "../cursors/mouse1_selmmsk"
 #include "../cursors/mouse1_selp"
 #include "../cursors/mouse1_selpmsk"
+#include "../cursors/bad"
+#include "../cursors/badmsk"
 
 typedef struct
 {
@@ -80,6 +82,8 @@ static BM_Cursor gimp_cursors[] =
     mouse1_selm_x_hot, mouse1_selm_y_hot, NULL},
   { mouse1_sel_bits, mouse1_selmsk_bits, mouse1_sel_width, mouse1_sel_height,
     mouse1_sel_x_hot, mouse1_sel_y_hot, NULL},
+  { bad_bits, badmsk_bits, bad_width, bad_height,
+    bad_x_hot, bad_y_hot, NULL},
 };
 
 

@@ -1052,7 +1052,7 @@ paint_core_subsample_mask (MaskBuf *mask,
 	      s = KERNEL_WIDTH;
 	      while (s--)
 		{
-		  new_val = *d + ((*m * *k++) /255);
+		  new_val = *d + ((*m * *k++ + 128) >> 8);
 		  *d++ = MINIMUM (new_val, 255);
 		}
 	    }

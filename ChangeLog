@@ -1,3 +1,12 @@
+Tue Jul 27 01:21:02 1999  Jay Cox  (jay@elan)
+
+	* app/clone.c: more cursor support.
+	* app/cursorutil.[ch], cursors/{bad,badmsk}: new cursor
+	* app/paint_core.c: fix that rounding error the right way this time.
+	* app/pixel_processor.c, app/pixel_region.c:  Lock the tiles while 
+	they are being processed.  Only create new threads if the region
+	being processed is large enough to warrant it.
+
 1999-07-27  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/zoom_in.xpm
@@ -52,7 +61,7 @@ Mon Jul 26 20:11:01 MEST 1999  Sven Neumann <sven@gimp.org>
 
 Sun Jul 25 23:37:48 1999  Jay Cox  (jaycox@earthlink.net)
 
-	* paint_core.c: fixed longstanding roundoff error in
+	* paint_core.c: fixed long standing roundoff error in
 	paint_core_subsample_mask.  A couple of minor code cleanups.
 
 1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>

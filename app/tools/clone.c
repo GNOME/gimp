@@ -30,6 +30,7 @@
 #include "clone.h"
 #include "selection.h"
 #include "tools.h"
+#include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -387,6 +388,15 @@ clone_cursor_update (Tool           *tool,
 	    ctype = GDK_PENCIL;
 	}
     }
+  
+  if (clone_options->type == IMAGE_CLONE)
+  {
+    if (mevent->state & GDK_CONTROL_MASK)
+      ctype = GDK_CROSSHAIR;
+    else if (!src_drawable_)
+      ctype = GIMP_BAD_CURSOR;
+  }
+
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
