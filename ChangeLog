@@ -1,10 +1,22 @@
+2003-08-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-convert.c (gimp_image_convert): free the
+	colormap and set colormap size to 0 after converting from indexed.
+	Should make gimp_image_get_cmap() behave as advertized again.
+
+	* tools/pdbgen/pdb/image.pdb: use gimp_image_get_colormap_size()
+	instead of accessing gimage->num_cols directly.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-08-28  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/xjt/xpdb_calls.[ch]: removed
 
-	* Makefile.am
-	* plug-ins/xjt/xjt.c: major clean-up. All calls that were in xpdb_calls.c are already
-	available in the various libgimp routines.
+	* plug-ins/xjt/Makefile.am
+	* plug-ins/xjt/xjt.c: major clean-up. All calls that were in
+	xpdb_calls.[ch] are already available in the various libgimp
+	routines.
 
 2003-08-28  Michael Natterer  <mitch@gimp.org>
 

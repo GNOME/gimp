@@ -2017,7 +2017,7 @@ image_get_cmap_invoker (Gimp     *gimp,
 
   if (success)
     {
-      num_bytes = gimage->num_cols * 3;
+      num_bytes = 3 * gimp_image_get_colormap_size (gimage);
       cmap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
     }
 

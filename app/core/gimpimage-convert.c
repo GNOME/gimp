@@ -38,7 +38,7 @@
  *
  * 2000/01/30 - Use palette_selector instead of option_menu for custom
  *  palette. Use libgimp callback functions.  [Sven]
- * 
+ *
  * 99/09/01 - Created a low-bleed FS-dither option.  [Adam]
  *
  * 99/08/29 - Deterministic colour dithering to arbitrary palettes.
@@ -71,7 +71,7 @@
  *  button.  [Adam]
  *
  * 98/04/13 - avoid a division by zero when converting an empty gray-scale
- *  image (who would like to do such a thing anyway??)  [Sven ] 
+ *  image (who would like to do such a thing anyway??)  [Sven ]
  *
  * 98/03/23 - fixed a longstanding fencepost - hopefully the *right*
  *  way, *again*.  [Adam]
@@ -208,13 +208,13 @@ typedef double etype;
   interesting space and efficiently work in the latter space until
   it is time to output the quantized values in RGB again.  For
   this final conversion we implement the function lin_to_rgb().
-  
+
   We effectively pull our three-dimensional space into five dimensions
   such that the most-entropic bits lay in the lowest bits of the resulting
   array index.  This gives significantly better locality of reference
   and hence a small speedup despite the extra work involved in calculating
   the index.
-  
+
   Why not six dimensions?  The expansion of dimensionality is good for random
   access such as histogram population and the query pattern typical of
   dithering but we have some code which iterates in a scanning manner, for
@@ -222,9 +222,9 @@ typedef double etype;
   dimension unmolested in the lower-order bits of the index, since this is
   the dimension most commonly iterated through in the inner loop of the
   scans.
-  
+
   --adam
-  
+
   RhGhRlGlB
 */
 #define VOL_GBITS  (PRECISION_G)
@@ -273,7 +273,7 @@ typedef double etype;
    give you anything. */
 /*
 #define HIST_LIN(hist_ptr,r,g,b) (&(hist_ptr)[REF_FUNC((r),(g),(b))])
-*/  
+*/
 static inline
 ColorFreq* HIST_LIN(ColorFreq *hist_ptr,
 		    const int r, const int g, const int b)
@@ -330,7 +330,7 @@ void rgb_to_unshifted_lin(const unsigned char r,
   *hr = CLAMP(or, 0, 255);
   *hg = CLAMP(og, 0, 255);
   *hb = CLAMP(ob, 0, 255);
-  
+
   /*  fprintf(stderr, " %d:%d:%d ", *hr, *hg, *hb); */
 }
 
@@ -370,9 +370,9 @@ void rgb_to_lin(const unsigned char r,
 	    if (sb < low_b)
 	      low_b = sb;
 	  }
-    
+
     fprintf(stderr, " [L: %0.3f -> %0.3f / a: %0.3f -> %0.3f / b: %0.3f -> %0.3f]\t", low_l, high_l, low_a, high_a, low_b, high_b);
-    
+
     exit(-1);
   }
   */
@@ -516,15 +516,15 @@ typedef struct
 
 static void zero_histogram_gray     (CFHistogram);
 static void zero_histogram_rgb      (CFHistogram);
-static void generate_histogram_gray (CFHistogram, 
-                                     GimpLayer *, 
+static void generate_histogram_gray (CFHistogram,
+                                     GimpLayer *,
                                      int alpha_dither);
-static void generate_histogram_rgb  (CFHistogram, 
-                                     GimpLayer *, 
-                                     int col_limit, 
+static void generate_histogram_rgb  (CFHistogram,
+                                     GimpLayer *,
+                                     int col_limit,
                                      int alpha_dither);
 
-static QuantizeObj* initialize_median_cut (int, int, 
+static QuantizeObj* initialize_median_cut (int, int,
                                            GimpConvertDitherType,
 					   GimpConvertPaletteType,
                                            int);
@@ -592,7 +592,7 @@ make_remap_table (const unsigned char  old_palette[],
 
 	  tempuse[used] = index_used_count[i];
 	  transmap[i] = used;
-	  
+
 	  used++;
 	}
     }
@@ -666,7 +666,7 @@ make_remap_table (const unsigned char  old_palette[],
 	  (*num_entries)++;
 	}
     }
-  
+
   g_free (palentries);
 }
 
@@ -794,8 +794,8 @@ gimp_image_convert (GimpImage              *gimage,
 
       /* don't dither if the input is grayscale and we are simply
          mapping every color */
-      if (old_type == GIMP_GRAY && 
-          num_cols == 256 && 
+      if (old_type == GIMP_GRAY &&
+          num_cols == 256 &&
           palette_type == GIMP_MAKE_PALETTE)
         {
           dither = GIMP_NO_DITHER;
@@ -824,12 +824,12 @@ gimp_image_convert (GimpImage              *gimage,
 	       list = g_list_next (list))
 	    {
 	      layer = (GimpLayer *) list->data;
-	    
+
 	      if (old_type == GIMP_GRAY)
-		generate_histogram_gray (quantobj->histogram, 
+		generate_histogram_gray (quantobj->histogram,
                                          layer, alpha_dither);
 	      else
-		generate_histogram_rgb (quantobj->histogram, 
+		generate_histogram_rgb (quantobj->histogram,
                                         layer, num_cols, alpha_dither);
 	      /*
 	       * Note: generate_histogram_rgb may set needs_quantize if
@@ -854,7 +854,7 @@ gimp_image_convert (GimpImage              *gimage,
            *  with the remapping function set to a special LUT-based
            *  no-dither remapper.
            */
-           
+
 	  quantobj->delete_func (quantobj);
 	  quantobj = initialize_median_cut (old_type, num_cols,
 					    GIMP_NODESTRUCT_DITHER,
@@ -898,7 +898,7 @@ gimp_image_convert (GimpImage              *gimage,
 
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
-      
+
       new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,
 				    GIMP_ITEM (layer)->height,
 				    GIMP_IMAGE_TYPE_BYTES (new_layer_type));
@@ -936,74 +936,85 @@ gimp_image_convert (GimpImage              *gimage,
     }
 
   /* colourmap stuff */
-  if (new_type == GIMP_INDEXED)
+  if (gimage->cmap)
     {
-      if (gimage->cmap)
-	g_free (gimage->cmap);
+      g_free (gimage->cmap);
+      gimage->cmap = NULL;
+    }
+
+  switch (new_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      gimage->num_cols = 0;
+      break;
+
+    case GIMP_INDEXED:
       gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
       if (remove_dups &&
-	  ((palette_type == GIMP_WEB_PALETTE) || 
+          ((palette_type == GIMP_WEB_PALETTE) ||
            (palette_type == GIMP_CUSTOM_PALETTE)))
-	{
-	  gint   i, j;
-	  guchar old_palette [256 * 3];
-	  guchar new_palette [256 * 3];
-	  guchar remap_table [256];
-	  gint   num_entries;
-      
-	  for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
-	    {
-	      old_palette[j++] = quantobj->cmap[i].red;
-	      old_palette[j++] = quantobj->cmap[i].green;
-	      old_palette[j++] = quantobj->cmap[i].blue;
-	    }
+        {
+          gint   i, j;
+          guchar old_palette [256 * 3];
+          guchar new_palette [256 * 3];
+          guchar remap_table [256];
+          gint   num_entries;
 
-	  num_entries = quantobj->actual_number_of_colors;
+          for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
+            {
+              old_palette[j++] = quantobj->cmap[i].red;
+              old_palette[j++] = quantobj->cmap[i].green;
+              old_palette[j++] = quantobj->cmap[i].blue;
+            }
+
+          num_entries = quantobj->actual_number_of_colors;
 
 #if 1
-	  /* Generate a remapping table */
-	  make_remap_table (old_palette, new_palette,
-			    quantobj->index_used_count, 
+          /* Generate a remapping table */
+          make_remap_table (old_palette, new_palette,
+                            quantobj->index_used_count,
                             remap_table, &num_entries);
 
-	  /*  Convert all layers  */
-	  for (list = GIMP_LIST (gimage->layers)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      layer = (GimpLayer *) list->data;
-	  
-	      remap_indexed_layer (layer, remap_table, num_entries);
-	    }
+          /*  Convert all layers  */
+          for (list = GIMP_LIST (gimage->layers)->list;
+               list;
+               list = g_list_next (list))
+            {
+              layer = (GimpLayer *) list->data;
+
+              remap_indexed_layer (layer, remap_table, num_entries);
+            }
 #else
-	  memcpy (new_palette, old_palette, 256*3);
+          memcpy (new_palette, old_palette, 256*3);
 #endif
 
-	  for (i = 0, j = 0; i < num_entries; i++)
-	    {
-	      gimage->cmap[j] = new_palette[j]; j++;
-	      gimage->cmap[j] = new_palette[j]; j++;
-	      gimage->cmap[j] = new_palette[j]; j++;
-	    }
-	  gimage->num_cols = num_entries;
-	}
+          for (i = 0, j = 0; i < num_entries; i++)
+            {
+              gimage->cmap[j] = new_palette[j]; j++;
+              gimage->cmap[j] = new_palette[j]; j++;
+              gimage->cmap[j] = new_palette[j]; j++;
+            }
+          gimage->num_cols = num_entries;
+        }
       else
-	{
-	  int i,j;
+        {
+          gint i,j;
 
-	  for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
-	    {
-	      gimage->cmap[j++] = quantobj->cmap[i].red;
-	      gimage->cmap[j++] = quantobj->cmap[i].green;
-	      gimage->cmap[j++] = quantobj->cmap[i].blue;
-	    }
-	  gimage->num_cols = quantobj->actual_number_of_colors;
-	}
+          for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
+            {
+              gimage->cmap[j++] = quantobj->cmap[i].red;
+              gimage->cmap[j++] = quantobj->cmap[i].green;
+              gimage->cmap[j++] = quantobj->cmap[i].blue;
+            }
+          gimage->num_cols = quantobj->actual_number_of_colors;
+        }
+      break;
     }
 
   /*  Delete the quantizer object, if there is one */
-  if (quantobj) 
+  if (quantobj)
     quantobj->delete_func (quantobj);
 
   /*  Make sure the projection is up to date  */
@@ -1183,8 +1194,8 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 	      for (col = 0; col < srcPR.w; col++)
 		{
 		  offset = *s++ * 3;
-		  val = INTENSITY (cmap[offset+0], 
-                                   cmap[offset+1], 
+		  val = INTENSITY (cmap[offset+0],
+                                   cmap[offset+1],
                                    cmap[offset+2]);
 		  *d++ = (guchar) val;
 		  if (has_alpha)
@@ -1237,8 +1248,8 @@ generate_histogram_gray (CFHistogram  histogram,
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
-                     0, 0, 
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+                     0, 0,
                      GIMP_ITEM (layer)->width,
                      GIMP_ITEM (layer)->height,
                      FALSE);
@@ -1372,7 +1383,7 @@ generate_histogram_rgb (CFHistogram  histogram,
                                       data[GREEN_PIX],
                                       data[BLUE_PIX]);
 		  (*colfreq)++;
-		      
+
 		  if (!needs_quantize)
 		    {
 		      for (nfc_iter = 0;
@@ -1388,13 +1399,13 @@ generate_histogram_rgb (CFHistogram  histogram,
 			      )
 			    goto already_found;
 			}
-			  
+
 		      /* Colour was not in the table of
 		       * existing colours
 		       */
-			  
+
 		      num_found_cols++;
-			  
+
 		      if (num_found_cols > col_limit)
 			{
 			  /* There are more colours in the image
@@ -1425,11 +1436,11 @@ generate_histogram_rgb (CFHistogram  histogram,
 		  row++;
 		}
 
-	      data += srcPR.bytes;	      
+	      data += srcPR.bytes;
 	    }
 	}
     }
-  
+
 /*  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 }
 
@@ -1446,7 +1457,7 @@ find_split_candidate (const boxptr boxlist,
   etype maxc = 0;
   boxptr which = NULL;
   double Lbias;
-  
+
   *which_axis = AXIS_UNDEF;
 
   /* we only perform the initial L-split bias /at all/ if the final
@@ -1481,7 +1492,7 @@ find_split_candidate (const boxptr boxlist,
 #else
 	  /*
 	   * Sorry about the mess, otherwise would get :
-	   * error C2520: conversion from unsigned __int64 to double 
+	   * error C2520: conversion from unsigned __int64 to double
 	   *              not implemented, use signed __int64
 	   */
 	  etype rpe = (double)(((__int64)boxp->rerror) * R_SCALE * R_SCALE);
@@ -1746,16 +1757,16 @@ update_box_rgb (const CFHistogram histogram,
 	      if (freq_here != 0)
 		{
 		  int ge, be, re;
-		
+
 		  dummybox.Rmin = dummybox.Rmax = R;
 		  dummybox.Gmin = dummybox.Gmax = G;
 		  dummybox.Bmin = dummybox.Bmax = B;
 		  compute_color_lin8(&dummyqo, histogram, &dummybox, 1);
-	
+
 		  re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
 		  ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
 		  be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
-		
+
 		  boxp->rerror += freq_here * (re) * (re);
 		  boxp->gerror += freq_here * (ge) * (ge);
 		  boxp->berror += freq_here * (be) * (be);
@@ -1792,9 +1803,9 @@ update_box_rgb (const CFHistogram histogram,
 		  compute_color_lin8(&dummyqo, histogram, &dummybox, 1);
 
 		  re = dummyqo.cmap[0].red   - dummyqo.cmap[1].red;
-		  
+
 		  tempRerror += freq_here * (re) * (re);
-		  
+
 		  if (tempRerror*2 >= boxp->rerror)
 		    goto green_axisscan;
 		  else
@@ -1826,11 +1837,11 @@ update_box_rgb (const CFHistogram histogram,
 		  dummybox.Gmin = dummybox.Gmax = G;
 		  dummybox.Bmin = dummybox.Bmax = B;
 		  compute_color_lin8(&dummyqo, histogram, &dummybox, 1);
-		  
+
 		  ge = dummyqo.cmap[0].green - dummyqo.cmap[1].green;
-		  
+
 		  tempGerror += freq_here * (ge) * (ge);
-		  
+
 		  if (tempGerror*2 >= boxp->gerror)
 		    goto blue_axisscan;
 		  else
@@ -1855,14 +1866,14 @@ update_box_rgb (const CFHistogram histogram,
 	      freq_here = *HIST_LIN(histogram, R, G, B);
 	      if (freq_here != 0)
 		{
-		  int be;		  
+		  int be;
 		  dummybox.Rmin = dummybox.Rmax = R;
 		  dummybox.Gmin = dummybox.Gmax = G;
 		  dummybox.Bmin = dummybox.Bmax = B;
 		  compute_color_lin8(&dummyqo, histogram, &dummybox, 1);
-		  
+
 		  be = dummyqo.cmap[0].blue  - dummyqo.cmap[1].blue;
-		  
+
 		  tempBerror += freq_here * (be) * (be);
 
 		  if (tempBerror*2 >= boxp->berror)
@@ -1933,7 +1944,7 @@ update_box_rgb (const CFHistogram histogram,
 
     if (longest_length2 == 0)
       longest_length2 = 1;
-    
+
     ratio = (longest_length + longest_length2/2) / longest_length2;
     /* fprintf(stderr, " ratio:(%d/%d)=%d ", longest_length, longest_length2, ratio);
        fprintf(stderr, "C%d ", cells_remaining); */
@@ -2873,7 +2884,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 	      /* and update the cache */
 	      if (*cachep == 0)
 		fill_inverse_cmap_gray (quantobj, histogram, pixel);
-	      
+
 	      if (has_alpha)
 		{
 		  if ((dest[ALPHA_I_PIX] =
@@ -2882,12 +2893,12 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 			 ((src[ALPHA_G_PIX] << 6) > (255 * DM[(col+offsetx+srcPR.x)&DM_WIDTHMASK][(row+offsety+srcPR.y)&DM_HEIGHTMASK])) :
 			 (src[ALPHA_G_PIX] > 127)
 			 ) ? 255 : 0)))
-		    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;	
+		    index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
 		}
 	      else
 		{
 		  /* Now emit the colormap index for this cell */
-		  index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;	
+		  index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
 		}
 
 	      src += srcPR.bytes;
@@ -3066,7 +3077,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 	      index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
 
 	    next_pixel:
-	      
+
 	      src += srcPR.bytes;
 	      dest += destPR.bytes;
 	    }
@@ -3184,7 +3195,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      index_used_count[dest[INDEXED_PIX] = *cachep - 1]++;
 
 	    next_pixel:
-	      
+
 	      src += srcPR.bytes;
 	      dest += destPR.bytes;
 	    }
@@ -3328,7 +3339,7 @@ init_error_limit (const int error_freedom)
       /* Coarse function, much bleeding. */
 
       const int STEPSIZE = 190;
-      
+
       for (in = 0; in < STEPSIZE; in++)
 	{
 	  table[in] = in;
@@ -3354,21 +3365,21 @@ init_error_limit (const int error_freedom)
 	  table[in] = out;
 	  table[-in] = -out;
 	}
-      
+
       /* Map errors 1:2 up to +- 3*STEPSIZE */
       for (; in < STEPSIZE*3; in++, out += (in&1) ? 0 : 1)
 	{
 	  table[in] = out;
 	  table[-in] = -out;
 	}
-      
+
       /* Clamp the rest to final out value (which is STEPSIZE*2) */
       for (; in <= 255; in++)
 	{
 	  table[in] = out;
 	  table[-in] = -out;
 	}
-      
+
       return table;
     }
 }
@@ -3584,7 +3595,7 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
 			   quantobj->cmap[i].blue,
 			   &quantobj->clin[i].red,
 			   &quantobj->clin[i].green,
-			   &quantobj->clin[i].blue); 
+			   &quantobj->clin[i].blue);
     }
 }
 
@@ -3756,7 +3767,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 		      == 0)
 		    {
 		      rpr--; gpr--; bpr--;
-		      rnr--; gnr--; bnr--;	
+		      rnr--; gnr--; bnr--;
 		      *(rnr - 1) = *(gnr - 1) = *(bnr - 1) = 0;
 		      goto next_pixel;
 		    }
@@ -3771,7 +3782,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 		      == 0)
 		    {
 		      rpr++; gpr++; bpr++;
-		      rnr++; gnr++; bnr++;	
+		      rnr++; gnr++; bnr++;
 		      *(rnr + 1) = *(gnr + 1) = *(bnr + 1) = 0;
 		      goto next_pixel;
 		    }
@@ -3798,7 +3809,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 	    re = CLAMP(re, global_rmin, global_rmax);
 	    ge = CLAMP(ge, global_gmin, global_gmax);
 	    be = CLAMP(be, global_bmin, global_bmax);*/
-	  
+
 	  re = range_limiter[re + error_limiter[*rpr]];
 	  ge = range_limiter[ge + error_limiter[*gpr]];
 	  be = range_limiter[be + error_limiter[*bpr]];
@@ -3835,7 +3846,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 	    be = (be + 3*global_bmax) / 4;
 	  else if (be < global_bmin)
 	    be = (be + 3*global_bmin) / 4;
-	  
+
 	  color = &quantobj->clin[index];
 
 #if 0
@@ -3990,7 +4001,7 @@ initialize_median_cut (int type,
 	}
 
       if (palette_type == GIMP_WEB_PALETTE  ||
-	  palette_type == GIMP_MONO_PALETTE || 
+	  palette_type == GIMP_MONO_PALETTE ||
           palette_type == GIMP_CUSTOM_PALETTE)
 	switch (dither_type)
 	  {
