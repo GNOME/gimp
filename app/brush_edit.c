@@ -140,11 +140,11 @@ brush_edit_brush_dirty_callback (GimpBrush                *brush,
 }
 
 static void
-brush_renamed_callback (GtkWidget                *widget,
-			BrushEditGeneratedWindow *begw)
+brush_name_changed_callback (GtkWidget                *widget,
+			     BrushEditGeneratedWindow *begw)
 {
   gtk_entry_set_text (GTK_ENTRY (begw->name),
-		      gimp_brush_get_name (GIMP_BRUSH (begw->brush)));
+		      gimp_object_get_name (GIMP_OBJECT (begw->brush)));
 }
 
 void
@@ -178,8 +178,8 @@ brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
   gtk_signal_connect (GTK_OBJECT (brush), "dirty",
 		      GTK_SIGNAL_FUNC (brush_edit_brush_dirty_callback),
 		      begw);
-  gtk_signal_connect (GTK_OBJECT (brush), "rename",
-		      GTK_SIGNAL_FUNC (brush_renamed_callback),
+  gtk_signal_connect (GTK_OBJECT (brush), "name_changed",
+		      GTK_SIGNAL_FUNC (brush_name_changed_callback),
 		      begw);
 
   begw->brush = NULL;
@@ -191,7 +191,8 @@ brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 			    gimp_brush_generated_get_angle (brush));
   gtk_adjustment_set_value (GTK_ADJUSTMENT (begw->aspect_ratio_data),
 			    gimp_brush_generated_get_aspect_ratio (brush));
-  gtk_entry_set_text (GTK_ENTRY (begw->name), gimp_brush_get_name (gbrush));
+  gtk_entry_set_text (GTK_ENTRY (begw->name),
+		      gimp_object_get_name (GIMP_OBJECT (gbrush)));
   begw->brush = brush;
 
   gtk_object_ref (GTK_OBJECT (begw->brush));
@@ -205,7 +206,7 @@ name_changed_func (GtkWidget                *widget,
   gchar *entry_text;
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
-  gimp_brush_set_name (GIMP_BRUSH (begw->brush), entry_text);
+  gimp_object_set_name (GIMP_OBJECT (begw->brush), entry_text);
 }
 
 void

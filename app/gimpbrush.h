@@ -23,20 +23,20 @@
 #include "gimpobject.h"
 
 
-#define GIMP_TYPE_BRUSH         (gimp_brush_get_type ())
-#define GIMP_BRUSH(obj)         (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
-#define GIMP_IS_BRUSH(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
-#define GIMP_BRUSH_CLASS(klass) (GTK_CHECK_CLASS_CAST ((klass), gimp_brush_get_type(), GimpBrushClass))
+#define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
+#define GIMP_BRUSH(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
+#define GIMP_BRUSH_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))
+#define GIMP_IS_BRUSH(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
+#define GIMP_IS_BRUSH_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH))
 
 
 typedef struct _GimpBrushClass GimpBrushClass;
 
 struct _GimpBrush
 {
-  GimpObject   gobject;
+  GimpObject   parent_instance;
 
   gchar       *filename;   /*  actual filename--brush's location on disk  */
-  gchar       *name;       /*  brush's name--for brush selection dialog   */
   gint         spacing;    /*  brush's spacing                            */
   GimpVector2  x_axis;     /*  for calculating brush spacing              */
   GimpVector2  y_axis;     /*  for calculating brush spacing              */
@@ -49,7 +49,6 @@ struct _GimpBrushClass
   GimpObjectClass parent_class;
 
   void        (* dirty)            (GimpBrush *brush);
-  void        (* rename)           (GimpBrush *brush);
 
   /* FIXME: these are no virtual function pointers but bad hacks: */
   GimpBrush * (* select_brush)     (PaintCore *paint_core);
@@ -58,21 +57,17 @@ struct _GimpBrushClass
 
 
 GtkType     gimp_brush_get_type    (void);
-GimpBrush * gimp_brush_load        (gchar     *filename);
+GimpBrush * gimp_brush_load        (const gchar     *filename);
 
-GimpBrush * gimp_brush_load_brush  (gint       fd,
-				    gchar     *filename);
+GimpBrush * gimp_brush_load_brush  (gint             fd,
+				    const gchar     *filename);
 
-TempBuf   * gimp_brush_get_mask    (GimpBrush *brush);
-TempBuf *   gimp_brush_get_pixmap  (GimpBrush *brush);
+TempBuf   * gimp_brush_get_mask    (const GimpBrush *brush);
+TempBuf   * gimp_brush_get_pixmap  (const GimpBrush *brush);
 
-gchar     * gimp_brush_get_name    (GimpBrush *brush);
-void        gimp_brush_set_name    (GimpBrush *brush,
-				    gchar     *name);
-
-gint        gimp_brush_get_spacing (GimpBrush *brush);
-void        gimp_brush_set_spacing (GimpBrush *brush,
-				    gint       spacing);
+gint        gimp_brush_get_spacing (const GimpBrush *brush);
+void        gimp_brush_set_spacing (GimpBrush       *brush,
+				    gint             spacing);
 
 
 #endif /* __GIMP_BRUSH_H__ */

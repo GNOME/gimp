@@ -62,6 +62,7 @@
 
 /*  Local function declarations  */
 static void     gimp_image_destroy               (GtkObject    *object);
+static void     gimp_image_name_changed          (GimpObject   *object);
 static void     gimp_image_free_projection       (GimpImage    *gimage);
 static void     gimp_image_allocate_shadow       (GimpImage    *gimage,
 						  gint          width,
@@ -145,7 +146,6 @@ enum
   CLEAN,
   DIRTY,
   REPAINT,
-  RENAME,
   RESIZE,
   RESTRUCTURE,
   COLORMAP_CHANGED,
@@ -161,9 +161,11 @@ static GimpObjectClass *parent_class = NULL;
 static void
 gimp_image_class_init (GimpImageClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass  *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class      = (GtkObjectClass *) klass;
+  gimp_object_class = (GimpObjectClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
@@ -197,15 +199,6 @@ gimp_image_class_init (GimpImageClass *klass)
 		    GTK_TYPE_INT,
 		    GTK_TYPE_INT,
 		    GTK_TYPE_INT);
-
-  gimp_image_signals[RENAME] =
-    gtk_signal_new ("rename",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       rename),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
 
   gimp_image_signals[RESIZE] =
     gtk_signal_new ("resize",
@@ -249,10 +242,11 @@ gimp_image_class_init (GimpImageClass *klass)
 
   object_class->destroy = gimp_image_destroy;
 
+  gimp_object_class->name_changed = gimp_image_name_changed;
+
   klass->clean            = NULL;
   klass->dirty            = NULL;
   klass->repaint          = NULL;
-  klass->rename           = NULL;
   klass->resize           = NULL;
   klass->restructure      = NULL;
   klass->colormap_changed = NULL;
@@ -381,10 +375,9 @@ gimp_image_new (gint               width,
 		gint               height,
 		GimpImageBaseType  base_type)
 {
-  GimpImage *gimage = GIMP_IMAGE (gtk_type_new (gimp_image_get_type ()));
+  GimpImage *gimage = GIMP_IMAGE (gtk_type_new (GIMP_TYPE_IMAGE));
   gint i;
 
-  gimage->filename  = NULL;
   gimage->width     = width;
   gimage->height    = height;
   gimage->base_type = base_type;
@@ -430,38 +423,32 @@ gimp_image_new (gint               width,
 }
 
 void
-gimp_image_set_filename (GimpImage *gimage, 
-			 gchar     *filename)
+gimp_image_set_filename (GimpImage   *gimage,
+			 const gchar *filename)
 {
-  gchar    *new_filename;
-  gchar    *old_filename;
-  gboolean  free_old;
+  gimp_object_set_name (GIMP_OBJECT (gimage), filename);
+}
 
-  /* 
-   * WARNING: this function will free the current filename even if you are 
-   * setting it to itself so any pointer you hold to the filename will be
-   * invalid after this call.  So please use with care.
-   */
+static void
+gimp_image_name_changed (GimpObject *object)
+{
+  GimpImage   *gimage;
+  const gchar *name;
 
-  new_filename = g_strdup (filename);
-  old_filename = gimage->filename;
-  free_old = gimage->has_filename;
+  gimage = GIMP_IMAGE (object);
+  name   = gimp_object_get_name (object);
 
-  if (filename && filename[0])
+  if (name && name[0])
     {
-      gimage->filename = new_filename;
       gimage->has_filename = TRUE;
     }
   else
     {
-      gimage->filename = NULL;
       gimage->has_filename = FALSE;
     }
 
-  if (free_old)
-    g_free (old_filename);
-
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RENAME]);
+  if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
+    GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 }
 
 void
@@ -795,10 +782,7 @@ gimp_image_destroy (GtkObject *object)
   
   if (gimage->cmap)
     g_free (gimage->cmap);
-  
-  if (gimage->has_filename)
-    g_free (gimage->filename);
-  
+
   gimp_image_free_layers (gimage);
   gimp_image_free_channels (gimage);
 
@@ -3627,7 +3611,7 @@ gimp_image_filename (const GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (gimage->has_filename)
-    return gimage->filename;
+    return gimp_object_get_name (GIMP_OBJECT (gimage));
   else
     return _("Untitled");
 }

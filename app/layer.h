@@ -42,49 +42,49 @@ typedef struct _GimpLayerMaskClass  GimpLayerMaskClass;
 
 struct _GimpLayer
 {
-  GimpDrawable drawable;
+  GimpDrawable      parent_instance;
 
-  gboolean   linked;		  /*  control linkage                */
-  gboolean   preserve_trans;	  /*  preserve transparency          */
+  gboolean          linked;           /*  control linkage                */
+  gboolean          preserve_trans;   /*  preserve transparency          */
 
-  LayerMask *mask;                /*  possible layer mask            */
-  gint       apply_mask;          /*  controls mask application      */
-  gboolean   edit_mask;           /*  edit mask or layer?            */
-  gboolean   show_mask;           /*  show mask or layer?            */
+  LayerMask        *mask;             /*  possible layer mask            */
+  gint              apply_mask;       /*  controls mask application      */
+  gboolean          edit_mask;        /*  edit mask or layer?            */
+  gboolean          show_mask;        /*  show mask or layer?            */
 
-  gint              opacity;      /*  layer opacity                  */
-  LayerModeEffects  mode;         /*  layer combination mode         */
+  gint              opacity;          /*  layer opacity                  */
+  LayerModeEffects  mode;             /*  layer combination mode         */
 
   /*  Floating selections  */
   struct
   {
-    TileManager  *backing_store;  /*  for obscured regions           */
-    GimpDrawable *drawable;       /*  floating sel is attached to    */
-    gboolean      initial;        /*  is fs composited yet?          */
+    TileManager  *backing_store;      /*  for obscured regions           */
+    GimpDrawable *drawable;           /*  floating sel is attached to    */
+    gboolean      initial;            /*  is fs composited yet?          */
 
-    gboolean      boundary_known; /*  is the current boundary valid  */
-    BoundSeg     *segs;           /*  boundary of floating sel       */
-    gint          num_segs;       /*  number of segs in boundary     */
+    gboolean      boundary_known;     /*  is the current boundary valid  */
+    BoundSeg     *segs;               /*  boundary of floating sel       */
+    gint          num_segs;           /*  number of segs in boundary     */
   } fs;
 };
 
 struct _GimpLayerClass
 {
-  GimpDrawableClass parent_class;
+  GimpDrawableClass  parent_class;
 
   void (* removed) (GimpLayer *layer);
 };
 
 struct _GimpLayerMask
 {
-  GimpChannel drawable;
+  GimpChannel  parent_instance;
 
-  Layer *layer;
+  Layer       *layer;
 };
 
 struct _GimpLayerMaskClass
 {
-  GimpChannelClass parent_class;
+  GimpChannelClass  parent_class;
 };
 
 /*  Special undo types  */

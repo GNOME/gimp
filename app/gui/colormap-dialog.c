@@ -263,7 +263,7 @@ gimp_colormap_dialog_create (GimpSet *context)
 						     image_cmap_change_cb,
 						     ipal);
   ipal->rename_handler       = gimp_set_add_handler (context,
-						     "rename",
+						     "name_changed",
 						     image_rename_cb,
 						     ipal);
 

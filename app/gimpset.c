@@ -172,7 +172,7 @@ gimp_set_new (GtkType  type,
    */
   g_assert (!(type == GTK_TYPE_NONE && weak == TRUE));
 
-  set = gtk_type_new (gimp_set_get_type ());
+  set = gtk_type_new (GIMP_TYPE_SET);
   set->type = type;
   set->weak = weak;
 

@@ -1303,7 +1303,7 @@ file_save (GimpImage   *gimage,
       if (set_filename)
 	{
 	  /*  set the image title  */
-	  gimp_image_set_filename (gimage, filename);
+	  gimp_object_set_name (GIMP_OBJECT (gimage), filename);
 	  /* note: 'filename' may have been free'd by above call! */
 	}
     }

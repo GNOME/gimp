@@ -146,19 +146,20 @@ struct _PaletteDialog
 };
 
 /*  local function prototypes  */
-static void  palette_entry_free    (PaletteEntry *);
-static void  palette_entries_free  (PaletteEntries *);
-static void  palette_entries_load  (gchar *);
-static void  palette_entries_save  (PaletteEntries *, gchar *);
-static void  palette_save_palettes (void);
+static void  palette_entry_free             (PaletteEntry   *entry);
+static void  palette_entries_free           (PaletteEntries *entries);
+static void  palette_entries_load           (const gchar    *filename);
+static void  palette_entries_save           (PaletteEntries *entries,
+				             const gchar    *filename);
+static void  palette_save_palettes          (void);
 
 static void  palette_entries_list_insert    (PaletteEntries *entries);
 
-static void  palette_dialog_draw_entries    (PaletteDialog *palette,
-					     gint           row_start,
-					     gint           column_highlight);
-static void  palette_dialog_redraw          (PaletteDialog *palette);
-static void  palette_dialog_scroll_top_left (PaletteDialog *palette);
+static void  palette_dialog_draw_entries    (PaletteDialog  *palette,
+					     gint            row_start,
+					     gint            column_highlight);
+static void  palette_dialog_redraw          (PaletteDialog  *palette);
+static void  palette_dialog_scroll_top_left (PaletteDialog  *palette);
 
 static PaletteDialog * palette_dialog_new        (gboolean       editor);
 static ImportDialog  * palette_import_dialog_new (PaletteDialog *palette);
@@ -375,7 +376,7 @@ palette_entries_add_entry (PaletteEntries *entries,
 }
 
 static void
-palette_entries_load (gchar *filename)
+palette_entries_load (const gchar *filename)
 {
   PaletteEntries *entries;
   gchar  str[512];
@@ -505,11 +506,11 @@ palette_entries_delete (gchar *filename)
 
 static void
 palette_entries_save (PaletteEntries *palette,
-		      gchar          *filename)
+		      const gchar    *filename)
 {
   PaletteEntry *entry;
-  GSList *list;
-  FILE *fp;
+  GSList       *list;
+  FILE         *fp;
 
   if (! filename)
     return;

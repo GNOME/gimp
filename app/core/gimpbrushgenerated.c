@@ -113,10 +113,10 @@ gimp_brush_generated_new (gfloat radius,
   GimpBrushGenerated *brush;
 
   /* set up normal brush data */
-  brush =
-    GIMP_BRUSH_GENERATED (gtk_type_new (gimp_brush_generated_get_type ()));
+  brush = GIMP_BRUSH_GENERATED (gtk_type_new (GIMP_TYPE_BRUSH_GENERATED));
 
-  GIMP_BRUSH (brush)->name    = g_strdup ("Untitled");
+  gimp_object_set_name (GIMP_OBJECT (brush), "Untitled");
+
   GIMP_BRUSH (brush)->spacing = 20;
 
   /* set up gimp_brush_generated data */
@@ -166,7 +166,7 @@ gimp_brush_generated_load (const gchar *file_name)
   fgets (string, 255, fp);
   if (string[strlen (string) - 1] == '\n')
     string[strlen (string) - 1] = 0;
-  GIMP_BRUSH (brush)->name = g_strdup (string);
+  gimp_object_set_name (GIMP_OBJECT (brush), string);
 
   /* read brush spacing */
   fscanf (fp, "%f", &fl);
@@ -217,10 +217,10 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
   fprintf (fp, "1.0\n");
 
   /* write name */
-  fprintf (fp, "%.255s\n", GIMP_BRUSH (brush)->name);
+  fprintf (fp, "%.255s\n", GIMP_OBJECT (brush)->name);
 
   /* write brush spacing */
-  fprintf (fp, "%f\n", (float) GIMP_BRUSH (brush)->spacing);
+  fprintf (fp, "%f\n", (gfloat) GIMP_BRUSH (brush)->spacing);
 
   /* write brush radius */
   fprintf (fp, "%f\n", brush->radius);

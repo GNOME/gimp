@@ -347,12 +347,6 @@ gimp_context_destroy (GtkObject *object)
   if (context->parent)
     gimp_context_unset_parent (context);
 
-  if (context->name)
-    {
-      g_free (context->name);
-      context->name = NULL;
-    }
-
   if (context->image)
     gtk_signal_disconnect_by_data (GTK_OBJECT (image_context), context);
 
@@ -397,6 +391,8 @@ gimp_context_class_init (GimpContextClass *klass)
 
   object_class = GTK_OBJECT_CLASS (klass);
 
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+
   gtk_object_add_arg_type (gimp_context_arg_names[IMAGE_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_IMAGE);
   gtk_object_add_arg_type (gimp_context_arg_names[DISPLAY_CHANGED],
@@ -417,8 +413,6 @@ gimp_context_class_init (GimpContextClass *klass)
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_PATTERN);
   gtk_object_add_arg_type (gimp_context_arg_names[GRADIENT_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_GRADIENT);
-
-  parent_class = gtk_type_class (gimp_object_get_type ());
 
   gimp_context_signals[IMAGE_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[IMAGE_CHANGED],
@@ -546,7 +540,6 @@ gimp_context_class_init (GimpContextClass *klass)
 static void
 gimp_context_init (GimpContext *context)
 {
-  context->name   = NULL;
   context->parent = NULL;
 
   context->defined_args = GIMP_CONTEXT_ALL_ARGS_MASK;
@@ -601,7 +594,7 @@ gimp_context_get_type (void)
 	(GtkClassInitFunc) NULL
       };
 
-      context_type = gtk_type_unique (gimp_object_get_type (), &context_info);
+      context_type = gtk_type_unique (GIMP_TYPE_OBJECT, &context_info);
     }
 
   return context_type;
@@ -615,10 +608,13 @@ gimp_context_new (const gchar *name,
 
   g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
 
-  context = gtk_type_new (gimp_context_get_type ());
+  context = gtk_type_new (GIMP_TYPE_CONTEXT);
 
   /*  FIXME: need unique names here  */
-  context->name = g_strdup (name ? name : "Unnamed");
+  if (! name)
+    name = "Unnamed";
+
+  gimp_object_set_name (GIMP_OBJECT (context), name);
 
   if (template)
     {
@@ -685,13 +681,13 @@ gimp_context_get_standard (void)
 /*****************************************************************************/
 /*  functions manipulating a single context  *********************************/
 
-gchar *
-gimp_context_get_name (GimpContext *context)
+const gchar *
+gimp_context_get_name (const GimpContext *context)
 {
   context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
-  return context->name;
+  return gimp_object_get_name (GIMP_OBJECT (context));
 }
 
 void
@@ -701,14 +697,14 @@ gimp_context_set_name (GimpContext *context,
   context_check_current (context);
   context_return_if_fail (context);
 
-  if (context->name)
-    g_free (context->name);
+  if (! name)
+    name = "Unnamed";
 
-  context->name = g_strdup (name ? name : "Unnamed");
+  gimp_object_set_name (GIMP_OBJECT (context), name);
 }
 
 GimpContext *
-gimp_context_get_parent (GimpContext *context)
+gimp_context_get_parent (const GimpContext *context)
 {
   context_check_current (context);
   context_return_val_if_fail (context, NULL);
@@ -1387,7 +1383,7 @@ gimp_context_brush_dirty (GimpBrush   *brush,
 			  GimpContext *context)
 {
   g_free (context->brush_name);
-  context->brush_name = g_strdup (brush->name);
+  context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
 
   gimp_context_brush_changed (context);
 }
@@ -1461,7 +1457,7 @@ gimp_context_real_set_brush (GimpContext *context,
       gtk_signal_connect (GTK_OBJECT (brush), "dirty",
 			  GTK_SIGNAL_FUNC (gimp_context_brush_dirty),
 			  context);
-      gtk_signal_connect (GTK_OBJECT (brush), "rename",
+      gtk_signal_connect (GTK_OBJECT (brush), "name_changed",
 			  GTK_SIGNAL_FUNC (gimp_context_brush_dirty),
 			  context);
 
@@ -1474,7 +1470,7 @@ gimp_context_real_set_brush (GimpContext *context,
 	}
 
       if (brush != standard_brush)
-	context->brush_name = g_strdup (brush->name);
+	context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
     }
 
   gimp_context_brush_changed (context);

@@ -29,23 +29,21 @@ typedef enum
   MODE_EXECUTABLE  = 1 << 1
 } GimpDataFileFlags;
 
-typedef void (* GimpDataFileLoaderFunc) (gchar *filename);
+typedef void (* GimpDataFileLoaderFunc) (const gchar *filename);
 
 
-/***** Functions *****/
-
-void datafiles_read_directories (gchar                  *path_str,
-				 GimpDataFileLoaderFunc  loader_func,
-				 GimpDataFileFlags       flags);
+void     datafiles_read_directories (const gchar            *path_str,
+				     GimpDataFileLoaderFunc  loader_func,
+				     GimpDataFileFlags       flags);
 
 /* Return the current datafiles access, modification
  *  or change time. The current datafile is the one for
  *  which the "DataFileLoaderFunc" function has been called
  *  on.
  */
-time_t datafile_atime (void);
-time_t datafile_mtime (void);
-time_t datafile_ctime (void);
+time_t   datafile_atime (void);
+time_t   datafile_mtime (void);
+time_t   datafile_ctime (void);
 
 
 #endif  /*  __DATAFILES_H__ */

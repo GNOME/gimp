@@ -627,7 +627,7 @@ gimp_dnd_get_brush_data (GtkWidget     *widget,
   if (! brush)
     return NULL;
 
-  name = g_strdup (gimp_brush_get_name (brush));
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
 
   if (! name)
     return NULL;

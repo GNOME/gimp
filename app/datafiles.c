@@ -53,10 +53,9 @@
 #include "libgimp/gimpenv.h"
 
 
-/***** Functions *****/
-
 static gboolean    filestat_valid = FALSE;
 static struct stat filestat;
+
 
 #ifdef G_OS_WIN32
 /*
@@ -103,7 +102,7 @@ is_script (const gchar *filename)
 #endif
 
 void
-datafiles_read_directories (gchar                  *path_str,
+datafiles_read_directories (const gchar            *path_str,
 			    GimpDataFileLoaderFunc  loader_func,
 			    GimpDataFileFlags       flags)
 {
@@ -179,6 +178,7 @@ datafile_atime (void)
 {
   if (filestat_valid)
     return filestat.st_atime;
+
   return 0;
 }
 
@@ -187,6 +187,7 @@ datafile_mtime (void)
 {
   if (filestat_valid)
     return filestat.st_mtime;
+
   return 0;
 }
 
@@ -195,5 +196,6 @@ datafile_ctime (void)
 {
   if (filestat_valid)
     return filestat.st_ctime;
+
   return 0;
 }

@@ -24,9 +24,11 @@
 #include "gimpbrush.h"
 
 
-#define GIMP_TYPE_BRUSH_PIPE    (gimp_brush_pipe_get_type ())
-#define GIMP_BRUSH_PIPE(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
-#define GIMP_IS_BRUSH_PIPE(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIPE))
+#define GIMP_TYPE_BRUSH_PIPE            (gimp_brush_pipe_get_type ())
+#define GIMP_BRUSH_PIPE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
+#define GIMP_BRUSH_PIPE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipeClass))
+#define GIMP_IS_BRUSH_PIPE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIPE))
+#define GIMP_IS_BRUSH_PIPE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PIPE))
 
 
 typedef enum
@@ -46,7 +48,7 @@ typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
 
 struct _GimpBrushPipe
 {
-  GimpBrush         gbrush;     /* Also itself a brush */
+  GimpBrush         parent_instance;
 
   gint              dimension;
   gint             *rank;	/* Size in each dimension */
@@ -69,7 +71,7 @@ struct _GimpBrushPipeClass
 
 GtkType     gimp_brush_pipe_get_type   (void);
 
-GimpBrush * gimp_brush_pipe_load       (gchar *filename);
+GimpBrush * gimp_brush_pipe_load       (const gchar *filename);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_H__ */

@@ -149,8 +149,8 @@ static void plug_in_handle_proc_run       (GPProcRun         *proc_run);
 static void plug_in_handle_proc_return    (GPProcReturn      *proc_return);
 static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
-static void plug_in_write_rc              (gchar             *filename);
-static void plug_in_init_file             (gchar             *filename);
+static void plug_in_write_rc              (const gchar       *filename);
+static void plug_in_init_file             (const gchar       *filename);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
@@ -670,7 +670,7 @@ plug_in_file_handler (gchar *name,
 
 
 PlugInDef *
-plug_in_def_new (gchar *prog)
+plug_in_def_new (const gchar *prog)
 {
   PlugInDef *plug_in_def;
 
@@ -2213,7 +2213,7 @@ plug_in_write_rc_string (FILE  *fp,
 }
 
 static void
-plug_in_write_rc (gchar *filename)
+plug_in_write_rc (const gchar *filename)
 {
   FILE          *fp;
   PlugInDef     *plug_in_def;
@@ -2327,7 +2327,7 @@ plug_in_write_rc (gchar *filename)
 }
 
 static void
-plug_in_init_file (gchar *filename)
+plug_in_init_file (const gchar *filename)
 {
   GSList    *tmp;
   PlugInDef *plug_in_def;

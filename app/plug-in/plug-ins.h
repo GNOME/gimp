@@ -128,7 +128,7 @@ PlugInProcDef * plug_in_file_handler         (gchar         *name,
 void            plug_in_def_add              (PlugInDef     *plug_in_def);
 
 /* Allocate and free a plug-in definition. */
-PlugInDef     * plug_in_def_new              (gchar         *prog);
+PlugInDef     * plug_in_def_new              (const gchar   *prog);
 void            plug_in_def_free             (PlugInDef     *plug_in_def, 
 					      gboolean       free_proc_defs);
 

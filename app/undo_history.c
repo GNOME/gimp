@@ -745,7 +745,7 @@ undo_history_new (GImage *gimage)
   gtk_signal_connect (GTK_OBJECT (gimage), "undo_event",
 		      GTK_SIGNAL_FUNC (undo_history_undo_event),
 		      st);
-  gtk_signal_connect (GTK_OBJECT (gimage), "rename",
+  gtk_signal_connect (GTK_OBJECT (gimage), "name_changed",
 		      GTK_SIGNAL_FUNC (undo_history_gimage_rename_callback),
 		      st);
   gtk_signal_connect (GTK_OBJECT (gimage), "destroy",

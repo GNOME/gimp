@@ -85,9 +85,9 @@ static void
 info_window_image_rename_callback (GimpImage *gimage,
 				   gpointer   data)
 {
-  InfoDialog *id;
-  gchar *title;
-  GDisplay * gdisp;
+  InfoDialog  *id;
+  gchar       *title;
+  GDisplay    *gdisp;
   InfoWinData *iwd;
 
   id = (InfoDialog *) data;
@@ -302,7 +302,7 @@ info_window_create (GDisplay *gdisp)
   info_window_create_extended (info_win);
 
   /*  keep track of image name changes  */
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "rename",
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "name_changed",
 		      GTK_SIGNAL_FUNC (info_window_image_rename_callback),
 		      info_win);
 

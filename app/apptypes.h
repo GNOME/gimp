@@ -88,9 +88,9 @@ typedef enum
   COLOR_MODE,
   VALUE_MODE,
   DIVIDE_MODE,
-  DODGE_MODE,          
-  BURN_MODE,           
-  HARDLIGHT_MODE,     
+  DODGE_MODE,
+  BURN_MODE,
+  HARDLIGHT_MODE,
   ERASE_MODE,         /*< skip >*/
   REPLACE_MODE,       /*< skip >*/
   ANTI_ERASE_MODE     /*< skip >*/
@@ -152,7 +152,7 @@ typedef enum
 } InterpolationType;
 
 typedef enum /*< skip >*/
-{ 
+{
   ORIENTATION_UNKNOWN,
   ORIENTATION_HORIZONTAL,
   ORIENTATION_VERTICAL
@@ -202,7 +202,6 @@ typedef enum
   PDB_SUCCESS,
   PDB_CANCEL
 } PDBStatusType;
-
 
 /*  Procedure types  */
 typedef enum /*< chop=PDB_ >*/

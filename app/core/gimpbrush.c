@@ -59,7 +59,6 @@
 enum
 {
   DIRTY,
-  RENAME,
   LAST_SIGNAL
 };
 
@@ -78,7 +77,6 @@ gimp_brush_destroy (GtkObject *object)
   GimpBrush *brush = GIMP_BRUSH (object);
 
   g_free (brush->filename);
-  g_free (brush->name);
 
   if (brush->mask)
     temp_buf_free (brush->mask);
@@ -105,21 +103,11 @@ gimp_brush_class_init (GimpBrushClass *klass)
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
-  gimp_brush_signals[RENAME] =
-    gtk_signal_new ("rename",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpBrushClass,
-				       rename),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
   gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_brush_destroy;
 
   klass->dirty            = NULL;
-  klass->rename           = NULL;
 
   klass->select_brush     = gimp_brush_select_brush;
   klass->want_null_motion = gimp_brush_want_null_motion;
@@ -129,7 +117,6 @@ void
 gimp_brush_init (GimpBrush *brush)
 {
   brush->filename  = NULL;
-  brush->name      = NULL;
 
   brush->spacing   = 20;
   brush->x_axis.x  = 15.0;
@@ -167,7 +154,7 @@ gimp_brush_get_type (void)
 }
 
 GimpBrush *
-gimp_brush_load (gchar *filename)
+gimp_brush_load (const gchar *filename)
 {
   GimpBrush *brush;
   gint       fd;
@@ -208,7 +195,7 @@ gimp_brush_want_null_motion (PaintCore *paint_core)
 }
 
 TempBuf *
-gimp_brush_get_mask (GimpBrush *brush)
+gimp_brush_get_mask (const GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
@@ -217,7 +204,7 @@ gimp_brush_get_mask (GimpBrush *brush)
 }
 
 TempBuf *
-gimp_brush_get_pixmap (GimpBrush *brush)
+gimp_brush_get_pixmap (const GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
@@ -225,34 +212,8 @@ gimp_brush_get_pixmap (GimpBrush *brush)
   return brush->pixmap;
 }
 
-gchar *
-gimp_brush_get_name (GimpBrush *brush)
-{
-  g_return_val_if_fail (brush != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
-
-  return brush->name;
-}
-
-void
-gimp_brush_set_name (GimpBrush *brush, 
-		     gchar     *name)
-{
-  g_return_if_fail (brush != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
-
-  if (strcmp (brush->name, name) == 0)
-    return;
-
-  if (brush->name)
-    g_free (brush->name);
-  brush->name = g_strdup (name);
-
-  gtk_signal_emit (GTK_OBJECT (brush), gimp_brush_signals[RENAME]);
-}
-
 gint
-gimp_brush_get_spacing (GimpBrush *brush)
+gimp_brush_get_spacing (const GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, 0);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
@@ -271,8 +232,8 @@ gimp_brush_set_spacing (GimpBrush *brush,
 }
 
 GimpBrush *
-gimp_brush_load_brush (gint   fd,
-		       gchar *filename)
+gimp_brush_load_brush (gint         fd,
+		       const gchar *filename)
 {
   GimpBrush   *brush;
   GPattern    *pattern;
@@ -285,7 +246,7 @@ gimp_brush_load_brush (gint   fd,
   g_return_val_if_fail (fd != -1, NULL);
 
   /*  Read in the header size  */
-  if (read (fd, &header, sizeof (header)) != sizeof (header)) 
+  if (read (fd, &header, sizeof (header)) != sizeof (header))
     return NULL;
 
   /*  rearrange the bytes in each unsigned int  */
@@ -335,10 +296,10 @@ gimp_brush_load_brush (gint   fd,
   switch (header.bytes)
     {
     case 1:
-      brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+      brush = GIMP_BRUSH (gtk_type_new (GIMP_TYPE_BRUSH));
       brush->mask = temp_buf_new (header.width, header.height, 1,
 				  0, 0, NULL);
-      if (read (fd, 
+      if (read (fd,
 		temp_buf_data (brush->mask), header.width * header.height) <
 	  header.width * header.height)
 	{
@@ -348,7 +309,7 @@ gimp_brush_load_brush (gint   fd,
 	  gtk_object_unref (GTK_OBJECT (brush));
 	  return NULL;
 	}
-      
+
       /*  For backwards-compatibility, check if a pattern follows.
 	  The obsolete .gpb format did it this way.  */
       pattern = pattern_load (fd, filename);
@@ -377,13 +338,13 @@ gimp_brush_load_brush (gint   fd,
       break;
 
     case 4:
-      brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+      brush = GIMP_BRUSH (gtk_type_new (GIMP_TYPE_BRUSH));
       brush->mask =   temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
       brush->pixmap = temp_buf_new (header.width, header.height, 3, 0, 0, NULL);
 
       for (i = 0; i < header.width * header.height; i++)
 	{
-	  if (read (fd, temp_buf_data (brush->pixmap) 
+	  if (read (fd, temp_buf_data (brush->pixmap)
 		    + i * 3, 3) != 3 ||
 	      read (fd, temp_buf_data (brush->mask) + i, 1) != 1)
 	    {
@@ -403,7 +364,10 @@ gimp_brush_load_brush (gint   fd,
       return NULL;
     }
 
-  brush->name     = name;
+  gimp_object_set_name (GIMP_OBJECT (brush), name);
+
+  g_free (name);
+
   brush->spacing  = header.spacing;
   brush->x_axis.x = header.width  / 2.0;
   brush->x_axis.y = 0.0;

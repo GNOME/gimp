@@ -575,20 +575,20 @@ static void      cpopup_blend_endpoints           (gdouble          r0,
 /* Gradient functions */
 
 static gradient_t     * grad_new_gradient             (void);
-static void             grad_free_gradient            (gradient_t *grad);
+static void             grad_free_gradient            (gradient_t  *grad);
 static void             grad_free_gradients           (void);
-static void             grad_load_gradient            (gchar      *filename);
-static void             grad_save_gradient            (gradient_t *grad,
-						       gchar      *filename);
-static void             grad_save_all                 (gboolean    need_free);
+static void             grad_load_gradient            (const gchar *filename);
+static void             grad_save_gradient            (gradient_t  *grad,
+						       const gchar *filename);
+static void             grad_save_all                 (gboolean     need_free);
 
 static gradient_t     * grad_create_default_gradient  (void);
 
-static gint             grad_insert_in_gradients_list (gradient_t *grad);
+static gint             grad_insert_in_gradients_list (gradient_t  *grad);
 
-static void             grad_dump_gradient            (gradient_t *grad,
-						       FILE       *file);
-static void     gradients_list_uniquefy_gradient_name (gradient_t *gradient);
+static void             grad_dump_gradient            (gradient_t  *grad,
+						       FILE        *file);
+static void     gradients_list_uniquefy_gradient_name (gradient_t  *gradient);
 
 
 /* Segment functions */
@@ -5844,7 +5844,7 @@ grad_free_gradients (void)
 /*****/
 
 static void
-grad_load_gradient (gchar *filename)
+grad_load_gradient (const gchar *filename)
 {
   FILE           *file;
   gradient_t     *grad;
@@ -5922,11 +5922,11 @@ grad_load_gradient (gchar *filename)
 /*****/
 
 static void
-grad_save_gradient (gradient_t *grad,
-		    char       *filename)
+grad_save_gradient (gradient_t  *grad,
+		    const gchar *filename)
 {
   FILE           *file;
-  int             num_segments;
+  gint            num_segments;
   grad_segment_t *seg;
 
   g_assert (grad != NULL);

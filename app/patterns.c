@@ -67,9 +67,9 @@ static GPattern *standard_pattern = NULL;
 
 /*  local function prototypes  */
 static GPattern *  pattern_load_real      (gint           fd,
-					   gchar         *filename,
+					   const gchar   *filename,
 					   gboolean       quiet);
-static void        load_pattern           (gchar         *filename);
+static void        load_pattern           (const gchar   *filename);
 static void        pattern_free_func      (gpointer       data, 
 					   gpointer       dummy);
 static gint        pattern_compare_func   (gconstpointer  second, 
@@ -153,8 +153,8 @@ pattern_list_get_pattern_by_index (GSList *list,
 }
 
 GPattern *
-pattern_list_get_pattern (GSList *list,
-			  gchar  *name)
+pattern_list_get_pattern (GSList      *list,
+			  const gchar *name)
 {
   GPattern *pattern;
 
@@ -173,21 +173,21 @@ pattern_list_get_pattern (GSList *list,
 }
 
 GPattern *
-pattern_load (gint      fd,
-	      gchar    *filename)
+pattern_load (gint         fd,
+	      const gchar *filename)
 {
   return pattern_load_real (fd, filename, TRUE);
 }
 
 static GPattern *
-pattern_load_real (gint      fd,
-	           gchar    *filename,
-	           gboolean  quiet)
+pattern_load_real (gint         fd,
+	           const gchar *filename,
+	           gboolean     quiet)
 {
   GPattern      *pattern;
   PatternHeader  header;
-  gint    bn_size;
-  gchar  *name;
+  gint           bn_size;
+  gchar         *name;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (fd != -1, NULL);
@@ -260,10 +260,9 @@ pattern_free (GPattern *pattern)
 {
   if (pattern->mask)
     temp_buf_free (pattern->mask);
-  if (pattern->filename)
-    g_free (pattern->filename);
-  if (pattern->name)
-    g_free (pattern->name);
+
+  g_free (pattern->filename);
+  g_free (pattern->name);
 
   g_free (pattern);
 }
@@ -286,7 +285,7 @@ pattern_compare_func (gconstpointer first,
 }
 
 static void
-load_pattern (gchar *filename)
+load_pattern (const gchar *filename)
 {
   GPattern *pattern;
   gint      fd;
@@ -299,7 +298,7 @@ load_pattern (gchar *filename)
   g_return_if_fail (filename != NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
-  if (fd == -1) 
+  if (fd == -1)
     return;
 
   pattern = pattern_load_real (fd, filename, FALSE);

@@ -713,7 +713,7 @@ devices_write_rc_device (DeviceInfo *device_info,
   if (gimp_context_get_brush (device_info->context))
     {
       fprintf (fp, "\n        (brush \"%s\")",
-	       gimp_context_get_brush (device_info->context)->name);
+	       GIMP_OBJECT (gimp_context_get_brush (device_info->context))->name);
     }
 
   if (gimp_context_get_pattern (device_info->context))

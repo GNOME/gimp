@@ -25,29 +25,31 @@
 #include "gimpbrush.h"
 
 
-#define GIMP_TYPE_BRUSH_GENERATED    (gimp_brush_generated_get_type ())
-#define GIMP_BRUSH_GENERATED(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
-#define GIMP_IS_BRUSH_GENERATED(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
+#define GIMP_TYPE_BRUSH_GENERATED            (gimp_brush_generated_get_type ())
+#define GIMP_BRUSH_GENERATED(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
+#define GIMP_BRUSH_GENERATED_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
+#define GIMP_IS_BRUSH_GENERATED(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
+#define GIMP_IS_BRUSH_GENERATED_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_GENERATED))
+
 
 typedef struct _GimpBrushGeneratedClass GimpBrushGeneratedClass;
 
 struct _GimpBrushGenerated
 {
-  GimpBrush gbrush;
+  GimpBrush  parent_instance;
 
-  gfloat    radius;
-  gfloat    hardness;     /* 0.0 - 1.0  */
-  gfloat    angle;        /* in degrees */
-  gfloat    aspect_ratio; /* y/x        */
+  gfloat     radius;
+  gfloat     hardness;     /* 0.0 - 1.0  */
+  gfloat     angle;        /* in degrees */
+  gfloat     aspect_ratio; /* y/x        */
 
+  /* private */
   gint      freeze;
-
-  /*GSpline *profile_curve */ /* Some lazy day...  */
 };
 
 struct _GimpBrushGeneratedClass
 {
-  GimpBrushClass parent_class;
+  GimpBrushClass  parent_class;
 };
 
 

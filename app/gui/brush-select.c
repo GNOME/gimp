@@ -676,10 +676,11 @@ static void
 brush_change_callbacks (BrushSelect *bsp,
 			gboolean     closing)
 {
-  gchar *name;
+  gchar      *name;
   ProcRecord *prec = NULL;
-  GimpBrush *brush;
-  gint nreturn_vals;
+  GimpBrush  *brush;
+  gint        nreturn_vals;
+
   static gboolean busy = FALSE;
 
   /* Any procs registered to callback? */
@@ -688,8 +689,8 @@ brush_change_callbacks (BrushSelect *bsp,
   if (!bsp || !bsp->callback_name || busy)
     return;
 
-  busy = TRUE;
-  name = bsp->callback_name;
+  busy  = TRUE;
+  name  = bsp->callback_name;
   brush = gimp_context_get_brush (bsp->context);
 
   /* If its still registered run it */
@@ -700,7 +701,7 @@ brush_change_callbacks (BrushSelect *bsp,
       return_vals =
 	procedural_db_run_proc (name,
 				&nreturn_vals,
-				PDB_STRING,    brush->name,
+				PDB_STRING,    GIMP_OBJECT (brush)->name,
 				PDB_FLOAT,     gimp_context_get_opacity (bsp->context),
 				PDB_INT32,     bsp->spacing_value,
 				PDB_INT32,     (gint) gimp_context_get_paint_mode (bsp->context),
@@ -725,9 +726,9 @@ void
 brushes_check_dialogs (void)
 {
   BrushSelect *bsp;
-  GSList *list;
-  gchar *name;
-  ProcRecord *prec = NULL;
+  GSList      *list;
+  gchar       *name;
+  ProcRecord  *prec = NULL;
 
   list = brush_active_dialogs;
 
@@ -896,7 +897,7 @@ connect_signals_to_brush (GimpBrush   *brush,
   gtk_signal_connect (GTK_OBJECT (brush), "dirty",
 		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
 		      bsp);
-  gtk_signal_connect (GTK_OBJECT (brush), "rename",
+  gtk_signal_connect (GTK_OBJECT (brush), "name_changed",
 		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
 		      bsp);
 }
@@ -1484,7 +1485,7 @@ update_active_brush_field (BrushSelect *bsp)
     return;
 
   /*  Set brush name  */
-  gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
+  gtk_label_set_text (GTK_LABEL (bsp->brush_name), GIMP_OBJECT (brush)->name);
 
   /*  Set brush size  */
   g_snprintf (buf, sizeof (buf), "(%d x %d)",

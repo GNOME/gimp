@@ -19,6 +19,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -68,8 +69,8 @@ static GimpBrush *
 gimp_brush_pipe_select_brush (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
-  gint i, brushix, ix;
-  gdouble angle;
+  gint           i, brushix, ix;
+  gdouble        angle;
 
   g_return_val_if_fail (paint_core != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), NULL);
@@ -133,7 +134,7 @@ static gboolean
 gimp_brush_pipe_want_null_motion (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
-  gint i;
+  gint           i;
 
   g_return_val_if_fail (paint_core != NULL, TRUE);
   g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), TRUE);
@@ -154,7 +155,7 @@ static void
 gimp_brush_pipe_destroy (GtkObject *object)
 {
   GimpBrushPipe *pipe;
-  gint i;
+  gint           i;
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_PIPE (object));
@@ -231,20 +232,18 @@ gimp_brush_pipe_get_type (void)
   return type;
 }
 
-#include <errno.h>
-
 GimpBrush *
-gimp_brush_pipe_load (gchar *filename)
+gimp_brush_pipe_load (const gchar *filename)
 {
   GimpBrushPipe     *pipe = NULL;
   GimpPixPipeParams  params;
-  gint     i;
-  gint     num_of_brushes = 0;
-  gint     totalcells;
-  gchar   *paramstring;
-  GString *buffer;
-  gchar    c;
-  gint     fd;
+  gint               i;
+  gint               num_of_brushes = 0;
+  gint               totalcells;
+  gchar             *paramstring;
+  GString           *buffer;
+  gchar              c;
+  gint               fd;
 
   g_return_val_if_fail (filename != NULL, NULL);
 
@@ -265,9 +264,9 @@ gimp_brush_pipe_load (gchar *filename)
   if (buffer->len > 0 && buffer->len < 1024)
     {
       pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));      
-      GIMP_BRUSH (pipe)->name = buffer->str;
+      gimp_object_set_name (GIMP_OBJECT (pipe), buffer->str);
     }
-  g_string_free (buffer, FALSE);
+  g_string_free (buffer, TRUE);
 
   if (!pipe)
     {
@@ -374,9 +373,9 @@ gimp_brush_pipe_load (gchar *filename)
 	{
 	  gtk_object_ref (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
 	  gtk_object_sink (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
-	  
-	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
-	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
+
+	  gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->nbrushes]),
+				NULL);
 	}
       else
 	{

@@ -25,6 +25,7 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
+
 void   palettes_init            (gboolean no_data);
 void   palettes_free            (void);
 

@@ -46,9 +46,8 @@ typedef struct _GimpImageClass GimpImageClass;
 
 struct _GimpImage
 {
-  GimpObject gobject;
+  GimpObject         parent_instance;
 
-  gchar             *filename;              /*  original filename            */
   gboolean           has_filename;          /*  has a valid filename         */
   PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
 
@@ -126,7 +125,6 @@ struct _GimpImageClass
   void (* clean)            (GimpImage *gimage);
   void (* dirty)            (GimpImage *gimage);
   void (* repaint)          (GimpImage *gimage);
-  void (* rename)           (GimpImage *gimage);
   void (* resize)           (GimpImage *gimage);
   void (* restructure)      (GimpImage *gimage);
   void (* colormap_changed) (GimpImage *gimage);
@@ -183,7 +181,7 @@ GimpImage     * gimp_image_new               (gint                width,
 					      gint                height,
 					      GimpImageBaseType   base_type);
 void            gimp_image_set_filename      (GimpImage          *gimage,
-					      gchar              *filename);
+					      const gchar        *filename);
 void            gimp_image_set_resolution    (GimpImage          *gimage,
 					      gdouble             xres,
 					      gdouble             yres);

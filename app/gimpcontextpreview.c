@@ -344,7 +344,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
       gimp_context_preview_draw_brush (gcp);
       gtk_signal_connect (GTK_OBJECT (gcp->data), "dirty",
 			  GTK_SIGNAL_FUNC (brush_dirty_callback), gcp);
-      gtk_signal_connect (GTK_OBJECT (gcp->data), "rename",
+      gtk_signal_connect (GTK_OBJECT (gcp->data), "name_changed",
 			  GTK_SIGNAL_FUNC (brush_rename_callback), gcp);
       break;
     case GCP_PATTERN:
@@ -367,7 +367,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 	case GCP_BRUSH:
 	  {
 	    GimpBrush *brush = GIMP_BRUSH (gcp->data);
-	    name = brush->name;
+	    name = GIMP_OBJECT (brush)->name;
 	  }
 	  break;
 	case GCP_PATTERN:
@@ -385,6 +385,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 	default:
 	  break;
 	}
+
       gimp_help_set_help_data (GTK_WIDGET (gcp), name, NULL);
     }
 }
@@ -572,7 +573,7 @@ gimp_context_preview_popup_timeout (gpointer data)
 
     default:
       break;
-    }  
+    }
   gtk_widget_queue_draw (gcp_popup_preview);
 
   return FALSE;
@@ -817,7 +818,7 @@ brush_rename_callback (GimpBrush          *brush,
 		       GimpContextPreview *gcp)
 {
   if (gcp->show_tooltips)
-    gimp_help_set_help_data (GTK_WIDGET (gcp), brush->name, NULL);
+    gimp_help_set_help_data (GTK_WIDGET (gcp), GIMP_OBJECT (brush)->name, NULL);
 
   return TRUE;
 }

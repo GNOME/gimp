@@ -69,7 +69,7 @@ gimage_new (gint              width,
   gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
 		      GTK_SIGNAL_FUNC (gimage_destroy_handler),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (gimage), "rename",
+  gtk_signal_connect (GTK_OBJECT (gimage), "name_changed",
 		      GTK_SIGNAL_FUNC (gimage_rename_handler),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "resize",

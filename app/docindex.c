@@ -486,7 +486,8 @@ raise_if_match (gpointer data,
   pair  = (BoolCharPair *) user_data;
 
   if (gdisp->gimage->has_filename &&
-      strcmp (pair->string, gdisp->gimage->filename) == 0)
+      strcmp (pair->string,
+	      gimp_object_get_name (GIMP_OBJECT (gdisp->gimage))) == 0)
     {
       pair->boole = TRUE;
       gdk_window_raise (gdisp->shell->window);

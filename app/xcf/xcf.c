@@ -1694,7 +1694,7 @@ xcf_load_image (XcfInfo *info)
   if (!xcf_load_image_props (info, gimage))
     goto hard_error;
 
-  while (1)
+  while (TRUE)
     {
       /* read in the offset of the next layer */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
@@ -1730,7 +1730,7 @@ xcf_load_image (XcfInfo *info)
       xcf_seek_pos (info, saved_pos);
     }
 
-  while (1)
+  while (TRUE)
     {
       /* read in the offset of the next channel */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
@@ -1772,7 +1772,7 @@ xcf_load_image (XcfInfo *info)
   if (info->active_channel)
     gimp_image_set_active_channel (gimage, info->active_channel);
 
-  gimp_image_set_filename (gimage, info->filename);
+  gimp_object_set_name (GIMP_OBJECT (gimage), info->filename);
 
   return gimage;
 
@@ -1780,13 +1780,17 @@ xcf_load_image (XcfInfo *info)
   if (num_successful_elements == 0)
     goto hard_error;
   
-  g_message("XCF: This file is corrupt!  I have loaded as much\nof it as I can, but it is incomplete.");
+  g_message ("XCF: This file is corrupt!  I have loaded as much\n"
+	     "of it as I can, but it is incomplete.");
   
   return gimage;
   
  hard_error:  
-  g_message("XCF: This file is corrupt!  I could not even\nsalvage any partial image data from it.");
+  g_message ("XCF: This file is corrupt!  I could not even\n"
+	     "salvage any partial image data from it.");
+
   gimage_delete (gimage);
+
   return NULL;
 }
 
@@ -1797,7 +1801,7 @@ xcf_load_image_props (XcfInfo *info,
   PropType prop_type;
   guint32 prop_size;
 
-  while (1)
+  while (TRUE)
     {
       if (!xcf_load_prop (info, &prop_type, &prop_size))
 	return FALSE;
@@ -2020,7 +2024,7 @@ xcf_load_layer_props (XcfInfo *info,
   PropType prop_type;
   guint32 prop_size;
 
-  while (1)
+  while (TRUE)
     {
       if (!xcf_load_prop (info, &prop_type, &prop_size))
 	return FALSE;
@@ -2112,7 +2116,7 @@ xcf_load_channel_props (XcfInfo *info,
   PropType prop_type;
   guint32 prop_size;
 
-  while (1)
+  while (TRUE)
     {
       if (!xcf_load_prop (info, &prop_type, &prop_size))
 	return FALSE;

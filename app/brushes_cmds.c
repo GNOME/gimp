@@ -106,7 +106,7 @@ brushes_get_brush_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (brush->name);
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
       return_args[2].value.pdb_int = brush->mask->width;
       return_args[3].value.pdb_int = brush->mask->height;
       return_args[4].value.pdb_int = brush->spacing;
@@ -450,7 +450,7 @@ brushes_list_invoker (Argument *args)
 
   while (list)
     {
-      brushes[i++] = g_strdup (((GimpBrush *) list->data)->name);
+      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
       list = list->next;
     }
 
@@ -521,7 +521,7 @@ brushes_get_brush_data_invoker (Argument *args)
 	    {
 	      brush = (GimpBrush *) list->data;
     
-	      if (!strcmp (brush->name, name))
+	      if (!strcmp (GIMP_OBJECT (brush)->name, name))
 		{
 		  success = TRUE;
 		  break;
@@ -543,7 +543,7 @@ brushes_get_brush_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (brush->name);
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
       return_args[2].value.pdb_float = 1.0;
       return_args[3].value.pdb_int = brush->spacing;
       return_args[4].value.pdb_int = 0;

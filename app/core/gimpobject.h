@@ -34,14 +34,14 @@ typedef struct _GimpObjectClass GimpObjectClass;
 
 struct _GimpObject
 {
-  GtkObject object;
+  GtkObject  parent_instance;
 
-  gchar *name;
+  gchar     *name;
 };
 
 struct _GimpObjectClass
 {
-  GtkObjectClass parent_class;
+  GtkObjectClass  parent_class;
 
   void (* name_changed) (GimpObject *object);
 };

@@ -160,8 +160,7 @@ gimp_layer_mask_get_type (void)
 	(GtkClassInitFunc) NULL,
       };
 
-      layer_mask_type = gtk_type_unique (gimp_channel_get_type (), 
-					 &layer_mask_info);
+      layer_mask_type = gtk_type_unique (GIMP_TYPE_CHANNEL, &layer_mask_info);
     }
 
   return layer_mask_type;
@@ -284,7 +283,7 @@ layer_new (GimpImage        *gimage,
       return NULL;
     }
 
-  layer = gtk_type_new (gimp_layer_get_type ());
+  layer = gtk_type_new (GIMP_TYPE_LAYER);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
 			   gimage, width, height, type, name);
@@ -1771,7 +1770,7 @@ layer_mask_new (GimpImage *gimage,
   LayerMask *layer_mask;
   gint       i;
 
-  layer_mask = gtk_type_new (gimp_layer_mask_get_type ());
+  layer_mask = gtk_type_new (GIMP_TYPE_LAYER_MASK);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer_mask), 
 			   gimage, width, height, GRAY_GIMAGE, name);

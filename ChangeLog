@@ -1,3 +1,48 @@
+2001-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/apptypes.h
+	* app/brush_edit.c
+	* app/brush_select.c
+	* app/brushes_cmds.c
+	* app/channel.h
+	* app/colormap_dialog.c
+	* app/datafiles.[ch]
+	* app/devices.c
+	* app/docindex.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpbrushlist.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpcontext.[ch]
+	* app/gimpcontextpreview.c
+	* app/gimpdnd.c
+	* app/gimpdrawable.h
+	* app/gimpimage.[ch]
+	* app/gimplist.h
+	* app/gimpobject.h
+	* app/gimpset.[ch]
+	* app/gradient.c
+	* app/info_window.c
+	* app/layer.[ch]
+	* app/module_db.c
+	* app/palette.[ch]
+	* app/patterns.[ch]
+	* app/plug_in.[ch]
+	* app/undo_history.c
+	* app/xcf.c
+	* tools/pdbgen/pdb/brushes.pdb
+
+	- Removed the "name" argument from all objects and use
+	  GimpObject's name.
+	- Use the same code in all "uniquefy name" functions (this
+	  functionality will be a method of the "GimpContainer" class).
+	- Renamed the parent instances of all objects to "parent instance".
+	- Added missing instance and class cast macros.
+	- Changed some "gchar *" to "const gchar *" parameters.
+
 2001-01-12  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml: updated status

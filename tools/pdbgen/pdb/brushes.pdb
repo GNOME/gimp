@@ -51,7 +51,8 @@ sub paint_mode_arg () {{
 
 sub brush_outargs {
     foreach (@outargs) {
-	my $alias = "brush->$_->{name}";
+	my $alias = ($_->{type} eq 'string') ?
+	            "GIMP_OBJECT (brush)->$_->{name}" : "brush->$_->{name}";
 	$alias = "g_strdup ($alias)" if $_->{type} eq 'string';
 	$alias =~ s/brush/brush->mask/ if $_->{name} =~ /width|height/;
 	$_->{alias} = $alias;
@@ -274,7 +275,7 @@ HELP
 
   while (list)
     {
-      brushes[i++] = g_strdup (((GimpBrush *) list->data)->name);
+      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
       list = list->next;
     }
 }
@@ -332,7 +333,7 @@ HELP
 	{
 	  brush = (GimpBrush *) list->data;
 
-	  if (!strcmp (brush->name, name))
+	  if (!strcmp (GIMP_OBJECT (brush)->name, name))
 	    {
 	      success = TRUE;
 	      break;

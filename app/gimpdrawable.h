@@ -34,7 +34,7 @@ typedef struct _GimpDrawableClass GimpDrawableClass;
 
 struct _GimpDrawable
 {
-  GimpObject data;
+  GimpObject     parent_instance;
 
   TileManager   *tiles;                 /* tiles for drawable data        */
   gboolean       visible;               /* controls visibility            */
@@ -57,7 +57,7 @@ struct _GimpDrawable
 
 struct _GimpDrawableClass
 {
-  GimpObjectClass parent_class;
+  GimpObjectClass  parent_class;
 
   void (* invalidate_preview) (GimpDrawable *drawable);
 };

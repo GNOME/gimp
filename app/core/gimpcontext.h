@@ -77,9 +77,8 @@ typedef struct _GimpContextClass GimpContextClass;
 
 struct _GimpContext
 {
-  GimpObject	    object;
+  GimpObject	    parent_instance;
 
-  gchar		   *name;
   GimpContext	   *parent;
 
   guint32           defined_args;
@@ -107,7 +106,7 @@ struct _GimpContext
 
 struct _GimpContextClass
 {
-  GimpObjectClass parent_class;
+  GimpObjectClass  parent_class;
 
   void (* image_changed)      (GimpContext      *context,
 			       GimpImage        *image);
@@ -168,14 +167,14 @@ GimpContext * gimp_context_get_standard      (void);
 
 /*  functions for manipulating a single context
  */
-gchar       * gimp_context_get_name          (GimpContext *context);
-void          gimp_context_set_name          (GimpContext *context,
-					      const gchar *name);
+const gchar * gimp_context_get_name          (const GimpContext *context);
+void          gimp_context_set_name          (GimpContext       *context,
+					      const gchar       *name);
 
-GimpContext * gimp_context_get_parent        (GimpContext *context);
-void          gimp_context_set_parent        (GimpContext *context,
-					      GimpContext *parent);
-void          gimp_context_unset_parent      (GimpContext *context);
+GimpContext * gimp_context_get_parent        (const GimpContext *context);
+void          gimp_context_set_parent        (GimpContext       *context,
+					      GimpContext       *parent);
+void          gimp_context_unset_parent      (GimpContext       *context);
 
 /*  define / undefinine context arguments
  *
