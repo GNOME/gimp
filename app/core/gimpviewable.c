@@ -51,6 +51,9 @@ static guint  viewable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
+static GQuark  quark_preview_temp_buf = 0;
+static GQuark  quark_preview_pixbuf   = 0;
+
 
 GType 
 gimp_viewable_get_type (void)
@@ -88,6 +91,9 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  quark_preview_temp_buf = g_quark_from_static_string ("viewable-preview-temp-buf");
+  quark_preview_pixbuf   = g_quark_from_static_string ("viewable-preview-pixbuf");
 
   viewable_signals[INVALIDATE_PREVIEW] =
     g_signal_new ("invalidate_preview",
@@ -130,11 +136,8 @@ gimp_viewable_get_memsize (GimpObject *object)
   GdkPixbuf *pixbuf;
   gsize      memsize = 0;
 
-  temp_buf = g_object_get_data (G_OBJECT (object),
-				"static-viewable-preview");
-
-  pixbuf = g_object_get_data (G_OBJECT (object),
-                              "static-viewable-preview-pixbuf");
+  temp_buf = g_object_get_qdata (G_OBJECT (object), quark_preview_temp_buf);
+  pixbuf   = g_object_get_qdata (G_OBJECT (object), quark_preview_pixbuf);
 
   if (temp_buf)
     {
@@ -183,8 +186,8 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_object_set_data (G_OBJECT (viewable), "static-viewable-preview", NULL);
-  g_object_set_data (G_OBJECT (viewable), "static-viewable-preview-pixbuf", NULL);
+  g_object_set_qdata (G_OBJECT (viewable), quark_preview_temp_buf, NULL);
+  g_object_set_qdata (G_OBJECT (viewable), quark_preview_pixbuf, NULL);
 }
 
 TempBuf *
@@ -207,8 +210,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   if (temp_buf)
     return temp_buf;
 
-  temp_buf = g_object_get_data (G_OBJECT (viewable),
-				"static-viewable-preview");
+  temp_buf = g_object_get_qdata (G_OBJECT (viewable), quark_preview_temp_buf);
 
   if (temp_buf                   &&
       temp_buf->width  == width  &&
@@ -220,9 +222,9 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   if (viewable_class->get_new_preview)
     temp_buf = viewable_class->get_new_preview (viewable, width, height);
 
-  g_object_set_data_full (G_OBJECT (viewable), "static-viewable-preview",
-			  temp_buf,
-			  (GDestroyNotify) temp_buf_free);
+  g_object_set_qdata_full (G_OBJECT (viewable), quark_preview_temp_buf,
+                           temp_buf,
+                           (GDestroyNotify) temp_buf_free);
 
   return temp_buf;
 }
@@ -267,8 +269,7 @@ gimp_viewable_get_preview_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  pixbuf = g_object_get_data (G_OBJECT (viewable),
-                              "static-viewable-preview-pixbuf");
+  pixbuf = g_object_get_qdata (G_OBJECT (viewable), quark_preview_pixbuf);
 
   if (pixbuf                                  &&
       gdk_pixbuf_get_width (pixbuf) ==  width &&
@@ -279,9 +280,9 @@ gimp_viewable_get_preview_pixbuf (GimpViewable *viewable,
 
   pixbuf = gimp_viewable_get_new_preview_pixbuf (viewable, width, height);
 
-  g_object_set_data_full (G_OBJECT (viewable), "static-viewable-preview-pixbuf",
-			  pixbuf,
-			  (GDestroyNotify) g_object_unref);
+  g_object_set_qdata_full (G_OBJECT (viewable), quark_preview_pixbuf,
+                           pixbuf,
+                           (GDestroyNotify) g_object_unref);
 
   return pixbuf;
 }

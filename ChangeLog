@@ -1,5 +1,10 @@
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpviewable.c: small speedup: use
+	g_object_[get|set]_qdata() instead of g_object_[set|set]_data().
+
+2002-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpviewable.c (gimp_viewable_real_invalidate_preview):
 	remove the attached preview pixbuf just as the preview temp_buf.
 
