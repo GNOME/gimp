@@ -1920,7 +1920,7 @@ msgstr "Мени слојева"
 
 #: app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr "_Слој"
+msgstr "С_лој"
 
 #: app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -3822,11 +3822,7 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr ""
-"Остава за делиће осигурава да ГИМП не изгуби делић између меморије и диска. "
-"Постављање бише вредности значи да ће ГИМП користити мању привремену "
-"датотеку, али ће више користити меморију. Обрнуто, мања вредност значи да ће "
-"ГИМП више користити привремену датотеку а мање меморију."
+msgstr "Остава за делиће осигурава да ГИМП не изгуби делић између меморије и диска. Постављање више вредности значи да ће ГИМП користити мању привремену датотеку, али ће више користити меморију. Обрнуто, мања вредност значи да ће ГИМП више користити привремену датотеку а мање меморију."
 
 #: app/config/gimprc-blurbs.h:384
 msgid ""
@@ -8889,7 +8885,7 @@ msgstr "_Четка"
 #: app/tools/gimppaintoptions-gui.c:102 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:330
 msgid "Opacity:"
-msgstr "Непровридност:"
+msgstr "Непровидност:"
 
 #: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:373
 #: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323

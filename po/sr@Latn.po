@@ -236,8 +236,7 @@ msgstr ""
 "pretvoriti u UTF-8: %s\n"
 "\n"
 "Najverovatnije vaš sistem datoteka čuva datoteke sa kodiranjem koje nije UTF-"
-"8, a niste to naznačili.  Postavite promenljivu okruženja "
-"G_FILENAME_ENCODING."
+"8, a niste to naznačili.  Postavite promenljivu okruženja G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:93 app/core/gimp.c:856 app/dialogs/dialogs.c:138
@@ -1378,8 +1377,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"Vraćanjem slike u oblik sačuvan na disku ćete izgubiti sve izmene, "
-"uključujući podatke za poništavanje."
+"Vraćanjem slike u oblik sačuvan na disku ćete izgubiti sve izmene, uključujući "
+"podatke za poništavanje."
 
 #: app/actions/file-commands.c:372
 msgid "Open Image as Layer"
@@ -1921,7 +1920,7 @@ msgstr "Meni slojeva"
 
 #: app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr "_Sloj"
+msgstr "S_loj"
 
 #: app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -3415,8 +3414,8 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano "
-"su uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
+"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano su "
+"uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
 
 #: app/config/gimprc-blurbs.h:47
 msgid ""
@@ -3429,8 +3428,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:73
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Ovo je rastojanje u tačkama na kojem se koristi prijanjanje uz vođice i "
-"mrežu."
+"Ovo je rastojanje u tačkama na kojem se koristi prijanjanje uz vođice i mrežu."
 
 #: app/config/gimprc-blurbs.h:77
 msgid ""
@@ -3440,10 +3438,10 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine "
-"prema algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i "
-"nastavlja dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu "
-"ne bude veća od izabranog praga. Ova vrednost predstavlja podrazumevani prag."
+"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine prema "
+"algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i nastavlja "
+"dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu ne bude "
+"veća od izabranog praga. Ova vrednost predstavlja podrazumevani prag."
 
 #: app/config/gimprc-blurbs.h:90
 msgid ""
@@ -3490,8 +3488,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se "
-"otvori datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
+"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se otvori "
+"datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
 
 #: app/config/gimprc-blurbs.h:167
 msgid ""
@@ -3563,17 +3561,16 @@ msgid ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 msgstr ""
-"Ukoliko je uključeno, alat za premeštanje menja aktivni sloj ili putanju "
-"kada se bira sloj ili putanja. Ovo je bilo podrazumevano ponašanje u "
-"starijim izdanjima."
+"Ukoliko je uključeno, alat za premeštanje menja aktivni sloj ili putanju kada se "
+"bira sloj ili putanja. Ovo je bilo podrazumevano ponašanje u starijim izdanjima."
 
 #: app/config/gimprc-blurbs.h:214
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
-"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu "
-"prozora slike."
+"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu prozora "
+"slike."
 
 #: app/config/gimprc-blurbs.h:218
 msgid ""
@@ -3593,9 +3590,9 @@ msgid ""
 msgstr ""
 "Kada je uključeno, X server će na svaki pokret biti upitan za trenutni "
 "položaj miša, radije nego da se oslanjamo na nagoveštaj položaja. Ovo znači "
-"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da "
-"stvar bude čudnija, na nekim X serverima uključivanje ove opcije će "
-"rezultirati bržim crtanjem."
+"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da stvar "
+"bude čudnija, na nekim X serverima uključivanje ove opcije će rezultirati "
+"bržim crtanjem."
 
 #: app/config/gimprc-blurbs.h:245
 msgid ""
@@ -3651,8 +3648,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz "
-"konture trenutne četke"
+"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz konture "
+"trenutne četke"
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
@@ -3660,9 +3657,8 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
-"Kada je uključeno, u prozorčićima se prikazuje dugme za dobijanje "
-"odgovarajuće stranice pomoći. Bez ovog dugmeta, do pomoći se može doći "
-"pritiskom na F1. "
+"Kada je uključeno, u prozorčićima se prikazuje dugme za dobijanje odgovarajuće "
+"stranice pomoći. Bez ovog dugmeta, do pomoći se može doći pritiskom na F1. "
 
 #: app/config/gimprc-blurbs.h:284
 msgid ""
@@ -3685,16 +3681,16 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati "
-"preko „Pregled->Prikaži lenjire“ naredbe."
+"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati preko "
+"„Pregled->Prikaži lenjire“ naredbe."
 
 #: app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se "
-"takođe može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
+"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se takođe "
+"može menjati preko „Pregled->Prikaži linije sa klizačem“ naredbe."
 
 #: app/config/gimprc-blurbs.h:300
 msgid ""
@@ -3725,16 +3721,16 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati "
-"preko naredbe „Pregled->Prikaži vođice“."
+"Kada je uključeno, vođice su podrazumevano vidljive. Ovo se može menjati preko "
+"naredbe „Pregled->Prikaži vođice“."
 
 #: app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati "
-"preko naredbe „Pregled->Prikaži mrežu“."
+"Kada je uključeno, mreža je podrazumevano vidljiva. Ovo se može menjati preko "
+"naredbe „Pregled->Prikaži mrežu“."
 
 #: app/config/gimprc-blurbs.h:320
 msgid "Enable to display a handy GIMP tip on startup."
@@ -3800,8 +3796,8 @@ msgid ""
 msgstr ""
 "Podešava direktorijum za privremene datoteke. Datoteke će se pojavljivati tu "
 "tokom rada u GIMP-u. Većina datoteka će nestati kada se GIMP zatvori, ali "
-"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude "
-"direktorijum koji delite sa drugim korisnicima."
+"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude direktorijum "
+"koji delite sa drugim korisnicima."
 
 #: app/config/gimprc-blurbs.h:365
 msgid ""
@@ -3826,19 +3822,15 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr ""
-"Ostava za deliće osigurava da GIMP ne izgubi delić između memorije i diska. "
-"Postavljanje biše vrednosti znači da će GIMP koristiti manju privremenu "
-"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da "
-"će GIMP više koristiti privremenu datoteku a manje memoriju."
+msgstr "Ostava za deliće osigurava da GIMP ne izgubi delić između memorije i diska. Postavljanje više vrednosti znači da će GIMP koristiti manju privremenu datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da će GIMP više koristiti privremenu datoteku a manje memoriju."
 
 #: app/config/gimprc-blurbs.h:384
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
-"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to "
-"kako vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
+"Oznaka vrste prozora koja se postavlja za alatke. Ovo može uticati na to kako "
+"vaš upravljač prozorima iscrtava i postavlja prozor sa alatkama."
 
 #: app/config/gimprc-blurbs.h:388
 msgid "Sets the manner in which transparency is displayed in images."
@@ -3870,9 +3862,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Podešava gornju granicu količine memorije koja može biti korišćena za "
-"čuvanje operacija za poništavanje po slici. Nezavisno od ovog podešavanja, "
-"može se opozvati najviše onoliko operacija koliko je podešeno."
+"Podešava gornju granicu količine memorije koja može biti korišćena za čuvanje "
+"operacija za poništavanje po slici. Nezavisno od ovog podešavanja, može se "
+"opozvati najviše onoliko operacija koliko je podešeno."
 
 #: app/config/gimprc-blurbs.h:407
 msgid "Sets the size of the previews in the Undo History."
@@ -3890,10 +3882,10 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna "
-"putanja ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji "
-"(PATH). Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će "
-"adresa biti dodata na naredbu razdvojena razmakom."
+"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna putanja "
+"ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji (PATH). "
+"Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će adresa "
+"biti dodata na naredbu razdvojena razmakom."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -4585,8 +4577,7 @@ msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznata dubina
 #: app/core/gimpbrush.c:579
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
+msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
 
 #: app/core/gimpbrush.c:595 app/core/gimpbrush.c:715
 #, c-format
@@ -4989,8 +4980,7 @@ msgstr "Spoji vidljive slojeve"
 
 #: app/core/gimpimage-merge.c:107
 msgid "Not enough visible layers for a merge. There must be at least two."
-msgstr ""
-"Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
+msgstr "Nema dovoljno vidljivih slojeva za spajanje. Mora ih biti najmanje dva."
 
 #: app/core/gimpimage-merge.c:142
 msgid "Flatten Image"
@@ -5010,8 +5000,7 @@ msgstr "Spoji vidljive putanje"
 
 #: app/core/gimpimage-merge.c:580
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr ""
-"Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
+msgstr "Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dve."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable Quick Mask"
@@ -5419,8 +5408,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Kobna greška pri obradi datoteke sa mustrom „%s“: nepoznato izdanje odsečaka "
-"%d."
+"Kobna greška pri obradi datoteke sa mustrom „%s“: nepoznato izdanje odsečaka %"
+"d."
 
 #: app/core/gimppattern.c:367
 #, c-format
@@ -6929,8 +6918,8 @@ msgid ""
 "ins and modules can also configured here."
 msgstr ""
 "Datoteka gimprc služi za čuvanje ličnih podešavanja koje se tiču GIMPovog "
-"podrazumevanog ponašanja. Putanje pretrage za četke, palete, prelive,  "
-"mustre, dodatke i module se takođe mogu podesiti ovde."
+"podrazumevanog ponašanja. Putanje pretrage za četke, palete, prelive,  mustre, "
+"dodatke i module se takođe mogu podesiti ovde."
 
 #: app/dialogs/user-install-dialog.c:141
 msgid ""
@@ -6961,8 +6950,8 @@ msgid ""
 msgstr ""
 "Ključne prečice mogu se dinamički podesiti u GIMPu. Datoteka menurc je skup "
 "vaših podešavanja, pa se može sačuvati za sledeću sesiju. Možete menjati ovu "
-"datoteku po želji, ali je mnogo lakše podesiti prečice iz GIMPa. Brisanje "
-"ove datoteke će vratiti u upotrebu podrazmevane prečice."
+"datoteku po želji, ali je mnogo lakše podesiti prečice iz GIMPa. Brisanje ove "
+"datoteke će vratiti u upotrebu podrazmevane prečice."
 
 #: app/dialogs/user-install-dialog.c:167
 msgid ""
@@ -6971,8 +6960,8 @@ msgid ""
 "the saved position."
 msgstr ""
 "Datoteka sessionrc se koristi za smeštanje podatka o tome koji prozor je bio "
-"otvoren kada ste poslednji put zatvorili GIMP. Možete podesiti GIMP da "
-"ponovo otvori ove prozore."
+"otvoren kada ste poslednji put zatvorili GIMP. Možete podesiti GIMP da ponovo "
+"otvori ove prozore."
 
 #: app/dialogs/user-install-dialog.c:174
 msgid ""
@@ -7105,8 +7094,8 @@ msgid ""
 msgstr ""
 "Ovaj direktorijum se koristi kao privremena ostava bafera za poništavanje, "
 "kao bi se smanjilo korišćenje memorije. Ako je GIMP nepropisno ubijen, "
-"daototeke tipa: gimp<#>.<#> mogu ostati u njemu. Ove datoteke su beskorisne "
-"i mogu se slobodno izbrisati."
+"daototeke tipa: gimp<#>.<#> mogu ostati u njemu. Ove datoteke su beskorisne i "
+"mogu se slobodno izbrisati."
 
 #: app/dialogs/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
@@ -7262,8 +7251,8 @@ msgstr "Kliknite na „Nastavi“ da prihvatite navedena podešavanja."
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti."
-"</b>"
+"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti.</"
+"b>"
 
 #: app/dialogs/user-install-dialog.c:1065
 #, c-format
@@ -7286,9 +7275,9 @@ msgid ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
-"Gimp koristi ograničenu količinu memorije za skladištenje podataka o "
-"slikama, tzv. „ostavu za deliće“. Podesite njenu veličinu kako bi stala u "
-"memoriju. Mislite i na memoriju potrebnu za ostale procese na sistemu."
+"Gimp koristi ograničenu količinu memorije za skladištenje podataka o slikama, "
+"tzv. „ostavu za deliće“. Podesite njenu veličinu kako bi stala u memoriju. "
+"Mislite i na memoriju potrebnu za ostale procese na sistemu."
 
 #: app/dialogs/user-install-dialog.c:1373
 msgid "Tile cache size:"
@@ -7404,8 +7393,7 @@ msgstr "Sačuvaj izmene slike „%s“ pre zatvaranja?"
 #, c-format
 msgid "If you don't save the image, changes from the last %s will be lost."
 msgstr ""
-"Ukoliko ne sačuvate sliku, izmene učinjene u poslednjih %s će biti "
-"izgubljene."
+"Ukoliko ne sačuvate sliku, izmene učinjene u poslednjih %s će biti izgubljene."
 
 #. one second, the time period
 #: app/display/gimpdisplayshell-close.c:266
@@ -8897,7 +8885,7 @@ msgstr "_Četka"
 #: app/tools/gimppaintoptions-gui.c:102 app/widgets/gimpbrushselect.c:201
 #: app/widgets/gimplayertreeview.c:330
 msgid "Opacity:"
-msgstr "Neprovridnost:"
+msgstr "Neprovidnost:"
 
 #: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:373
 #: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:323
@@ -9242,8 +9230,8 @@ msgstr ""
 "Sloj koji ste izabrali je tekstualni, ali je menjan pomoću drugih alata. "
 "Izmena sloja tekstualnim alatom će odbaciti ove izmene.\n"
 "\n"
-"Možete menjati ovaj sloj ili napraviti novi tekstualni sloj na osnovu "
-"njegovih tekstualnih osobina."
+"Možete menjati ovaj sloj ili napraviti novi tekstualni sloj na osnovu njegovih "
+"tekstualnih osobina."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
