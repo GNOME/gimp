@@ -1,5 +1,10 @@
 2003-02-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb.c: fixed gimp_rgb_intensity_uchar() which
+	used to return 0 or 1 instead of 0 to 255. Fixes bug #107202.
+
+2003-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-undo-push.c (undo_push_layer_mask): fixed
 	typo which caused layer mask undo to fail.
 

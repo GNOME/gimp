@@ -177,11 +177,13 @@ gimp_rgb_gamma (GimpRGB *rgb,
 gdouble
 gimp_rgb_intensity (const GimpRGB *rgb)
 {
+  gdouble intensity;
+
   g_return_val_if_fail (rgb != NULL, 0.0);
 
-  return (INTENSITY_RED   * rgb->r + 
-	  INTENSITY_GREEN * rgb->g + 
-	  INTENSITY_BLUE  * rgb->b);
+  intensity = INTENSITY (rgb->r, rgb->g, rgb->b);
+
+  return CLAMP (intensity, 0.0, 1.0);
 }
 
 guchar
@@ -189,7 +191,7 @@ gimp_rgb_intensity_uchar (const GimpRGB *rgb)
 {
   g_return_val_if_fail (rgb != NULL, 0);
 
-  return (CLAMP (gimp_rgb_intensity (rgb) * 255.999, 0.0, 1.0));
+  return gimp_rgb_intensity (rgb) * 255.999;
 }
 
 void
