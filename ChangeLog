@@ -1,3 +1,8 @@
+Thu Apr 29 16:32:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/gfig/gfig.c : OS/2 patches.
+ 	use G_SEARCHPATH_SEPARATOR_S instead of ":", add sys/types.h,,.
+
 1999-04-29  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/brush_select.[ch]

@@ -48,10 +48,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
-#include <sys/types.h>
 #include <dirent.h>
 #include <ctype.h>
 #include <math.h>
@@ -838,13 +838,13 @@ plug_in_parse_gfig_path()
 
   /* Search through all directories in the  path */
 
-  token = strtok (path_string, ":");
+  token = strtok (path_string, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
       if (*token == '\0')
 	{
-	  token = strtok (NULL, ":");
+	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
 	  continue;
 	}
 
@@ -858,6 +858,9 @@ plug_in_parse_gfig_path()
 	  path = g_malloc (strlen (token) + 2);
 	  strcpy (path, token);
 	} /* else */
+#ifdef __EMX__
+      _fnslashify(path);
+#endif
 
       /* Check if directory exists */
       err = stat (path, &filestat);
@@ -879,7 +882,7 @@ plug_in_parse_gfig_path()
 	  create_warn_dialog(buf);
 	  g_free (path);
 	}
-      token = strtok (NULL, ":");
+      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
     }
   g_free (path_string);
 }
@@ -6229,10 +6232,18 @@ gfig_update_stat_labels()
   if(current_obj->filename)
     {
       gint slen;
+#ifndef __EMX__
       gchar *hm = getenv("HOME");
+#else
+      gchar *hm = _fnslashify(g_strdup(getenv("HOME")));
+#endif
       gchar *dfn = g_strdup(current_obj->filename);
       
+#ifndef __EMX__
       if(!strncmp(dfn,hm,strlen(hm)-1))
+#else
+      if(!strnicmp(dfn,hm,strlen(hm)-1))
+#endif
 	 {
 	   strcpy(dfn,"~");
 	   strcat(dfn,&dfn[strlen(hm)]);
@@ -6248,6 +6259,9 @@ gfig_update_stat_labels()
       else
 	sprintf(str,"%.40s",dfn);
       g_free(dfn);
+#ifdef __EMX__
+      g_free(hm);
+#endif
     }
   else
     sprintf(str,"<NONE>");
