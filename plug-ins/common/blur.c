@@ -180,23 +180,26 @@ query (void)
   const gchar *copyright_date = "1995-1998";
 
   gimp_install_procedure ("plug_in_blur_randomize",
-                          (gchar *) blurb,
-                          (gchar *) help,
-                          (gchar *) author,
-                          (gchar *) copyrights,
-                          (gchar *) copyright_date,
-                          N_("<Image>/Filters/Blur/_Blur..."),
+                          blurb,
+                          help,
+                          author,
+                          copyrights,
+                          copyright_date,
+                          N_("_Blur..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
+  gimp_plugin_menu_register ("plug_in_blur_randomize",
+                             N_("<Image>/Filters/Blur"));
+
   gimp_install_procedure (PLUG_IN_NAME,
-                          (gchar *) blurb,
-                          (gchar *) help,
-                          (gchar *) author,
-                          (gchar *) copyrights,
-                          (gchar *) copyright_date,
+                          blurb,
+                          help,
+                          author,
+                          copyrights,
+                          copyright_date,
                           NULL,
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,

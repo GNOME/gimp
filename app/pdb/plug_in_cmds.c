@@ -28,12 +28,14 @@
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpprotocol.h"
 
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
 #include "plug-in/plug-in-def.h"
+#include "plug-in/plug-in-params.h"
 #include "plug-in/plug-in-proc.h"
 #include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
@@ -525,8 +527,46 @@ plugin_menu_register_invoker (Gimp        *gimp,
 
               if (! strcmp (procedure_name, proc_def->db_info.name))
                 {
-                  proc_def->menu_paths = g_list_append (proc_def->menu_paths,
-                                                        g_strdup (menu_path));
+                  if (proc_def->menu_label)
+                    {
+                      GError *error = NULL;
+
+                      if (! plug_in_proc_args_check (gimp->current_plug_in->name,
+                                                     gimp->current_plug_in->prog,
+                                                     procedure_name,
+                                                     menu_path,
+                                                     proc_def->db_info.args,
+                                                     proc_def->db_info.num_args,
+                                                     proc_def->db_info.values,
+                                                     proc_def->db_info.num_values,
+                                                     &error))
+                        {
+                          g_message (error->message);
+                          g_clear_error (&error);
+
+                          success = FALSE;
+                        }
+                      else
+                        {
+                          proc_def->menu_paths = g_list_append (proc_def->menu_paths,
+                                                                g_strdup (menu_path));
+                        }
+                    }
+                  else
+                    {
+                      g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                                 "attempted to install additional menu_path \"%s\"\n"
+                                 "for procedure \"%s\".\n"
+                                 "However the menu_path given in "
+                                 "gimp_install_procedure() already contained "
+                                 "a path. To make this work, pass just the menu's "
+                                 "label to gimp_install_procedure().",
+                                 gimp_filename_to_utf8 (gimp->current_plug_in->name),
+                                 gimp_filename_to_utf8 (gimp->current_plug_in->prog),
+                                 menu_path, procedure_name);
+
+                      success = FALSE;
+                    }
 
                   break;
                 }

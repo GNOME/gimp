@@ -81,6 +81,7 @@ static ProcArg xcf_load_return_vals[] =
 static PlugInProcDef xcf_plug_in_load_proc =
 {
   "gimp_xcf_load",
+  "XCF (GIMP)",
   NULL,
   NULL,
   "xcf",
@@ -130,6 +131,7 @@ static ProcArg xcf_save_args[] =
 static PlugInProcDef xcf_plug_in_save_proc =
 {
   "gimp_xcf_save",
+  "XCF (GIMP)",
   NULL,
   NULL,
   "xcf",
@@ -181,8 +183,8 @@ xcf_init (Gimp *gimp)
   procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
   procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
 
-  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>/XCF (GIMP)");
-  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>/XCF (GIMP)");
+  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>");
+  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>");
 
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);

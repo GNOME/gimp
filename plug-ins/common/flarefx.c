@@ -186,13 +186,15 @@ query (void)
                           "Karl-Johan Andersson", /* Author */
                           "Karl-Johan Andersson", /* Copyright */
                           "May 2000",
-                          /* don't translate '<Image>' entry,
-                           * it is keyword for the gtk toolkit */
-                          N_("<Image>/Filters/Light Effects/_FlareFX..."),
+                          N_("_FlareFX..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_flarefx",
+                             /* don't translate '<Image>' */
+                             N_("<Image>/Filters/Light Effects"));
 }
 
 static void

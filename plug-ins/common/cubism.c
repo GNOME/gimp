@@ -142,11 +142,14 @@ query (void)
 			  "Spencer Kimball & Tracy Scott",
 			  "Spencer Kimball & Tracy Scott",
 			  "1996",
-			  N_("<Image>/Filters/Artistic/_Cubism..."),
+			  N_("_Cubism..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_cubism",
+                             N_("<Image>/Filters/Artistic"));
 }
 
 static void

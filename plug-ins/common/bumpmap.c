@@ -369,11 +369,14 @@ query (void)
                           "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
                           "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Map/_Bump Map..."),
+                          N_("_Bump Map..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_bump_map",
+                             N_("<Image>/Filters/Map"));
 
   gimp_install_procedure ("plug_in_bump_map_tiled",
                           "Create an embossing effect using a tiled image "

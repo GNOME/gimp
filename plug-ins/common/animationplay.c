@@ -211,7 +211,7 @@ static gint               ncolours;
 static GtkWidget         *psbutton;
 
 /* for shaping */
-typedef struct 
+typedef struct
 {
   gint x, y;
 } CursorOffset;
@@ -240,11 +240,14 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997, 1998...",
-                          N_("<Image>/Filters/Animation/_Playback..."),
+                          N_("_Playback..."),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_animationplay",
+                             N_("<Image>/Filters/Animation"));
 }
 
 static void

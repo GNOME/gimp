@@ -269,18 +269,32 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
-  path_original   = g_strdup (proc_def->menu_paths->data);
-  path_translated = g_strdup (dgettext (locale_domain, path_original));
+  if (proc_def->menu_label)
+    {
+      path_original   = g_strdup (proc_def->menu_label);
+      path_translated = g_strdup (dgettext (locale_domain, path_original));
 
-  p1 = strrchr (path_original, '/');
-  p2 = strrchr (path_translated, '/');
+      p1 = path_original;
+      p2 = path_translated;
+    }
+  else
+    {
+      path_original   = g_strdup (proc_def->menu_paths->data);
+      path_translated = g_strdup (dgettext (locale_domain, path_original));
+
+      p1 = strrchr (path_original, '/');
+      p2 = strrchr (path_translated, '/');
+    }
 
   if (p1 && p2)
     {
       GimpPlugInActionEntry  entry;
       gchar                 *label;
 
-      label = p2 + 1;
+      if (proc_def->menu_label)
+        label = proc_def->menu_label;
+      else
+        label = p2 + 1;
 
       entry.name        = proc_def->db_info.name;
       entry.stock_id    = NULL;
@@ -298,10 +312,22 @@ plug_in_actions_add_proc (GimpActionGroup *group,
       gimp_action_group_add_plug_in_actions (group, &entry, 1,
                                              G_CALLBACK (plug_in_run_cmd_callback));
 
-      *p1 = '\0';
-      *p2 = '\0';
+      if (proc_def->menu_label)
+        {
+          GList *list;
 
-      plug_in_actions_build_path (group, path_original, path_translated);
+          for (list = proc_def->menu_paths; list; list = g_list_next (list))
+            plug_in_actions_build_path (group,
+                                        list->data,
+                                        dgettext (locale_domain, list->data));
+        }
+      else
+        {
+          *p1 = '\0';
+          *p2 = '\0';
+
+          plug_in_actions_build_path (group, path_original, path_translated);
+        }
     }
 
   g_free (path_original);

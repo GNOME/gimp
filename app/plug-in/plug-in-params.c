@@ -450,3 +450,137 @@ plug_in_args_destroy (Argument *args,
   else
     g_free (args);
 }
+
+gboolean
+plug_in_param_defs_check (const gchar *plug_in_name,
+                          const gchar *plug_in_prog,
+                          const gchar *procedure_name,
+                          const gchar *menu_path,
+                          GPParamDef  *params,
+                          guint32      n_args,
+                          GPParamDef  *return_vals,
+                          guint32      n_return_vals,
+                          GError     **error)
+{
+  return plug_in_proc_args_check (plug_in_name,
+                                  plug_in_prog,
+                                  procedure_name,
+                                  menu_path,
+                                  (ProcArg *) params,
+                                  n_args,
+                                  (ProcArg *) return_vals,
+                                  n_return_vals,
+                                  error);
+}
+
+gboolean
+plug_in_proc_args_check (const gchar *plug_in_name,
+                         const gchar *plug_in_prog,
+                         const gchar *procedure_name,
+                         const gchar *menu_path,
+                         ProcArg     *args,
+                         guint32      n_args,
+                         ProcArg     *return_vals,
+                         guint32      n_return_vals,
+                         GError     **error)
+{
+  g_return_val_if_fail (plug_in_name != NULL, FALSE);
+  g_return_val_if_fail (plug_in_prog != NULL, FALSE);
+  g_return_val_if_fail (procedure_name != NULL, FALSE);
+  g_return_val_if_fail (menu_path != NULL, FALSE);
+  g_return_val_if_fail (args == NULL || n_args > 0, FALSE);
+  g_return_val_if_fail (return_vals == NULL || n_return_vals > 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (strncmp (menu_path, "<Toolbox>", 9) == 0)
+    {
+      if ((n_args < 1) ||
+          (args[0].arg_type != GIMP_PDB_INT32))
+        {
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Toolbox> procedure \"%s\" "
+                       "which does not take the standard <Toolbox> Plug-In "
+                       "args.\n"
+                       "(INT32)",
+                       gimp_filename_to_utf8 (plug_in_name),
+                       gimp_filename_to_utf8 (plug_in_prog),
+                       procedure_name);
+          return FALSE;
+        }
+    }
+  else if (strncmp (menu_path, "<Image>", 7) == 0)
+    {
+      if ((n_args < 3) ||
+          (args[0].arg_type != GIMP_PDB_INT32) ||
+          (args[1].arg_type != GIMP_PDB_IMAGE) ||
+          (args[2].arg_type != GIMP_PDB_DRAWABLE))
+        {
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Image> procedure \"%s\" "
+                       "which does not take the standard <Image> Plug-In "
+                       "args.\n"
+                       "(INT32, IMAGE, DRAWABLE)",
+                       gimp_filename_to_utf8 (plug_in_name),
+                       gimp_filename_to_utf8 (plug_in_prog),
+                       procedure_name);
+          return FALSE;
+        }
+    }
+  else if (strncmp (menu_path, "<Load>", 6) == 0)
+    {
+      if ((n_args < 3) ||
+          (args[0].arg_type != GIMP_PDB_INT32) ||
+          (args[1].arg_type != GIMP_PDB_STRING) ||
+          (args[2].arg_type != GIMP_PDB_STRING))
+        {
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Load> procedure \"%s\" "
+                       "which does not take the standard <Load> Plug-In "
+                       "args.\n"
+                       "(INT32, STRING, STRING)",
+                       gimp_filename_to_utf8 (plug_in_name),
+                       gimp_filename_to_utf8 (plug_in_prog),
+                       procedure_name);
+          return FALSE;
+        }
+    }
+  else if (strncmp (menu_path, "<Save>", 6) == 0)
+    {
+      if ((n_args < 5) ||
+          (args[0].arg_type != GIMP_PDB_INT32)    ||
+          (args[1].arg_type != GIMP_PDB_IMAGE)    ||
+          (args[2].arg_type != GIMP_PDB_DRAWABLE) ||
+          (args[3].arg_type != GIMP_PDB_STRING)   ||
+          (args[4].arg_type != GIMP_PDB_STRING))
+        {
+          g_set_error (error, 0, 0,
+                       "Plug-In \"%s\"\n(%s)\n\n"
+                       "attempted to install <Save> procedure \"%s\" "
+                       "which does not take the standard <Save> Plug-In "
+                       "args.\n"
+                       "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
+                       gimp_filename_to_utf8 (plug_in_name),
+                       gimp_filename_to_utf8 (plug_in_prog),
+                       procedure_name);
+          return FALSE;
+        }
+    }
+  else
+    {
+      g_set_error (error, 0, 0,
+                   "Plug-In \"%s\"\n(%s)\n\n"
+                   "attempted to install procedure \"%s\" "
+                   "in an invalid menu location.\n"
+                   "Use either \"<Toolbox>\", \"<Image>\", "
+                   "\"<Load>\", or \"<Save>\".",
+                   gimp_filename_to_utf8 (plug_in_name),
+                   gimp_filename_to_utf8 (plug_in_prog),
+                   procedure_name);
+      return FALSE;
+    }
+
+  return TRUE;
+}

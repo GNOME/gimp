@@ -223,11 +223,14 @@ query (void)
                           "Martin Guldahl <mguldahl@xmission.com>",
                           "Martin Guldahl <mguldahl@xmission.com>",
                           "2002",
-                          N_("<Image>/Filters/Colors/Channel Mi_xer.."),
+                          N_("Channel Mi_xer.."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Colors"));
 }
 
 /*----------------------------------------------------------------------

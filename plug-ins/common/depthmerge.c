@@ -196,11 +196,14 @@ query (void)
 			  "Sean Cier",
 			  "Sean Cier",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Combine/_Depth Merge..."),
+			  N_("_Depth Merge..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Combine"));
 }
 
 static void

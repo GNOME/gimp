@@ -85,11 +85,14 @@ query (void)
                           "Federico Mena Quintero",
                           "Federico Mena Quintero",
                           "1996",
-                          N_("<Image>/Layer/Colors/Auto/_Stretch Contrast"),
+                          N_("_Stretch Contrast"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_c_astretch",
+                             N_("<Image>/Layer/Colors/Auto"));
 }
 
 static void

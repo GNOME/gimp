@@ -118,11 +118,14 @@ query (void)
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
                           PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Colors/_Colorify..."),
+			  N_("_Colorify..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Colors"));
 }
 
 static void

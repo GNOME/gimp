@@ -20,19 +20,38 @@
 #define __PLUG_IN_PARAMS_H__
 
 
-Argument * plug_in_params_to_args (GPParam  *params,
-                                   gint      nparams,
-                                   gboolean  full_copy);
-GPParam  * plug_in_args_to_params (Argument *args,
-                                   gint      nargs,
-                                   gboolean  full_copy);
+Argument * plug_in_params_to_args   (GPParam     *params,
+                                     gint         n_params,
+                                     gboolean     full_copy);
+GPParam  * plug_in_args_to_params   (Argument    *args,
+                                     gint         n_args,
+                                     gboolean     full_copy);
 
-void       plug_in_params_destroy (GPParam  *params,
-                                   gint      nparams,
-                                   gboolean  full_destroy);
-void       plug_in_args_destroy   (Argument *args,
-                                   gint      nargs,
-                                   gboolean  full_destroy);
+void       plug_in_params_destroy   (GPParam     *params,
+                                     gint         n_params,
+                                     gboolean     full_destroy);
+void       plug_in_args_destroy     (Argument    *args,
+                                     gint         n_args,
+                                     gboolean     full_destroy);
+
+gboolean   plug_in_param_defs_check (const gchar *plug_in_name,
+                                     const gchar *plug_in_prog,
+                                     const gchar *procedure_name,
+                                     const gchar *menu_path,
+                                     GPParamDef  *params,
+                                     guint32      n_args,
+                                     GPParamDef  *return_vals,
+                                     guint32      n_return_vals,
+                                     GError     **error);
+gboolean   plug_in_proc_args_check  (const gchar *plug_in_name,
+                                     const gchar *plug_in_prog,
+                                     const gchar *procedure_name,
+                                     const gchar *menu_path,
+                                     ProcArg     *args,
+                                     guint32      n_args,
+                                     ProcArg     *return_vals,
+                                     guint32      n_return_vals,
+                                     GError     **error);
 
 
 #endif /* __PLUG_IN_PARAMS_H__ */

@@ -319,8 +319,46 @@ HELP
 
           if (! strcmp (procedure_name, proc_def->db_info.name))
             {
-              proc_def->menu_paths = g_list_append (proc_def->menu_paths,
-                                                    g_strdup (menu_path));
+              if (proc_def->menu_label)
+                {
+                  GError *error = NULL;
+
+                  if (! plug_in_proc_args_check (gimp->current_plug_in->name,
+                                                 gimp->current_plug_in->prog,
+                                                 procedure_name,
+                                                 menu_path,
+                                                 proc_def->db_info.args,
+                                                 proc_def->db_info.num_args,
+                                                 proc_def->db_info.values,
+                                                 proc_def->db_info.num_values,
+                                                 &error))
+                    {
+                      g_message (error->message);
+                      g_clear_error (&error);
+
+                      success = FALSE;
+                    }
+                  else
+                    {
+                      proc_def->menu_paths = g_list_append (proc_def->menu_paths,
+                                                            g_strdup (menu_path));
+                    }
+                }
+              else
+                {
+                  g_message ("Plug-In \"%s\"\n(%s)\n\n"
+                             "attempted to install additional menu_path \"%s\"\n"
+                             "for procedure \"%s\".\n"
+                             "However the menu_path given in "
+                             "gimp_install_procedure() already contained "
+                             "a path. To make this work, pass just the menu's "
+                             "label to gimp_install_procedure().",
+                             gimp_filename_to_utf8 (gimp->current_plug_in->name),
+                             gimp_filename_to_utf8 (gimp->current_plug_in->prog),
+                             menu_path, procedure_name);
+
+                  success = FALSE;
+                }
 
               break;
             }
@@ -344,10 +382,11 @@ match_strings (regex_t *preg,
 }
 CODE
 
-@headers = qw(<string.h> <stdlib.h> "regexrepl/regex.h" "core/gimp.h"
+@headers = qw(<string.h> <stdlib.h> "regexrepl/regex.h"
+              "libgimpbase/gimpprotocol.h" "core/gimp.h" 
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "plug-in/plug-in-def.h" "plug-in/plug-in-proc.h"
-              "plug-in/plug-in-progress.h");
+              "plug-in/plug-in-def.h" "plug-in/plug-in-params.h"
+              "plug-in/plug-in-proc.h" "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update plugins_query
 	    plugin_domain_register plugin_help_register plugin_menu_register);

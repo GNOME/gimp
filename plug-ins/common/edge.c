@@ -136,7 +136,7 @@ query (void)
     { GIMP_PDB_INT32, "edgemode", "Edge detection algorithm: { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3),  DIFFERENTIAL (4), LAPLACE (5) }" }
   };
 
-  gchar *help_string =
+  const gchar *help_string =
     "Perform edge detection on the contents of the specified drawable."
     "AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in "
     "(useful for tilable image). EDGEMODE sets the kind of matrix "
@@ -149,11 +149,14 @@ query (void)
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
                           "Peter Mattis",
                           "1996",
-                          N_("<Image>/Filters/Edge-Detect/_Edge..."),
+                          N_("_Edge..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_edge",
+                             N_("<Image>/Filters/Edge-Detect"));
 }
 
 static void

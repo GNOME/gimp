@@ -239,7 +239,10 @@ gimp_file_dialog_new (Gimp                 *gimp,
           gchar  *name;
           GSList *ext;
 
-          name = strrchr (file_proc->menu_paths->data, '/') + 1;
+          if (file_proc->menu_label)
+            name = file_proc->menu_label;
+          else
+            name = strrchr (file_proc->menu_paths->data, '/') + 1;
 
           filter = gtk_file_filter_new ();
           gtk_file_filter_set_name (filter, name);

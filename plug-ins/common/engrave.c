@@ -103,11 +103,14 @@ query (void)
 			  "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			  "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			  "1995,1996,1997",
-			  N_("<Image>/Filters/Distorts/En_grave..."),
+			  N_("En_grave..."),
 			  "RGBA, GRAYA",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_engrave",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

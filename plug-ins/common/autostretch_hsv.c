@@ -89,11 +89,14 @@ query (void)
 			  "Scott Goehring and Federico Mena Quintero",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Layer/Colors/Auto/Stretch _HSV"),
+			  N_("Stretch _HSV"),
 			  "RGB*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_autostretch_hsv",
+                             N_("<Image>/Layer/Colors/Auto"));
 }
 
 static void

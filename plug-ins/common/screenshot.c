@@ -136,15 +136,15 @@ query (void)
 			  "Sven Neumann <sven@gimp.org>, Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2003",
 			  "v0.9.7 (2003/11/15)",
-			  N_("<Toolbox>/File/Acquire/_Screen Shot..."),
+			  N_("_Screen Shot..."),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/File/Acquire/_Screen Shot..."));
+  gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Toolbox>/File/Acquire"));
+  /* gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Image>/File/Acquire")); */
 }
 
 static void

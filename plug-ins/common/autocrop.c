@@ -72,11 +72,14 @@ query (void)
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
-                          N_("<Image>/Image/Crop/_Autocrop"),
+                          N_("_Autocrop"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_autocrop",
+                             N_("<Image>/Image/Crop"));
 }
 
 static void

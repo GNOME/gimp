@@ -191,11 +191,14 @@ query (void)
 			  "Lauri Alanko",
 			  "Lauri Alanko",
 			  "1997",
-			  N_("<Image>/Filters/Generic/_Convolution Matrix..."),
+			  N_("_Convolution Matrix..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_convmatrix",
+                             N_("<Image>/Filters/Generic"));
 }
 
 static void

@@ -51,6 +51,7 @@ file_dialog_actions_setup (GimpActionGroup *group,
       const gchar           *stock_id  = NULL;
       gchar                 *help_id;
       GimpPlugInActionEntry  entry;
+      gchar                 *label;
       gboolean               is_xcf;
 
       if (! file_proc->menu_paths)
@@ -77,9 +78,14 @@ file_dialog_actions_setup (GimpActionGroup *group,
           help_id = plug_in_proc_def_get_help_id (file_proc, help_domain);
         }
 
+      if (file_proc->menu_label)
+        label = file_proc->menu_label;
+      else
+        label = strrchr (file_proc->menu_paths->data, '/') + 1;
+
       entry.name        = file_proc->db_info.name;
       entry.stock_id    = stock_id;
-      entry.label       = strstr (file_proc->menu_paths->data, "/") + 1;
+      entry.label       = label;
       entry.accelerator = file_proc->accelerator;
       entry.tooltip     = NULL;
       entry.proc_def    = file_proc;

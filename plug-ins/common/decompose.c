@@ -239,12 +239,17 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("<Image>/Filters/Colors/_Decompose..."),
+			  N_("_Decompose..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
+
+  gimp_plugin_menu_register ("plug_in_decompose",
+                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_decompose",
+                             N_("<Image>/Image/Mode"));
 }
 
 static void

@@ -96,14 +96,16 @@ query (void)
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
 			  "7th Aug 1999",
-			  N_("<Image>/Filters/Colors/Color to _Alpha..."),
+			  N_("Color to _Alpha..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_plugin_menu_register ("plug_in_colortoalpha",
-                             N_("<Image>/Layer/Transparency/Modify/Color to _Alpha..."));
+                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_colortoalpha",
+                             N_("<Image>/Layer/Transparency/Modify"));
 }
 
 static void

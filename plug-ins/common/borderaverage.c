@@ -96,12 +96,15 @@ query (void)
                           "Philipp Klaus",
                           "Internet Access AG",
                           "1998",
-                          N_("<Image>/Filters/Colors/_Border Average..."),
+                          N_("_Border Average..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
                           args, return_vals);
+
+  gimp_plugin_menu_register ("plug_in_borderaverage",
+                             N_("<Image>/Filters/Colors"));
 }
 
 static void

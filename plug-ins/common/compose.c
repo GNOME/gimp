@@ -291,12 +291,17 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("<Image>/Filters/Colors/C_ompose..."),
+			  N_("C_ompose..."),
 			  "GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
+
+  gimp_plugin_menu_register ("plug_in_compose",
+                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_compose",
+                             N_("<Image>/Image/Mode"));
 
   gimp_install_procedure ("plug_in_drawable_compose",
 			  "Compose an image from multiple drawables of gray images",

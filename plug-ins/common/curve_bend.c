@@ -574,13 +574,16 @@ query (void)
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Distorts/_Curve Bend..."),
+                          N_("_Curve Bend..."),
                           PLUG_IN_IMAGE_TYPES,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
                           args,
                           return_vals);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Distorts"));
 
    /* the installation of the Iterator procedure for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,

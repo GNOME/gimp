@@ -89,11 +89,14 @@ query (void)
 			  "Martin Weber",
 		 	  "Martin Weber",
 		  	  "1997",
-			  N_("<Image>/Layer/Colors/Auto/_Color Enhance"),
+			  N_("_Color Enhance"),
 	   	  	  "RGB*, INDEXED*",
  			  GIMP_PLUGIN,
 	 	  	  G_N_ELEMENTS (args), 0,
  			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_color_enhance",
+                             N_("<Image>/Layer/Colors/Auto"));
 }
 
 static void

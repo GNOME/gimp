@@ -890,7 +890,6 @@ gchar *
 plug_in_get_undo_desc (PlugIn *plug_in)
 {
   PlugInProcDef *proc_def;
-  gchar         *stripped;
   gchar         *undo_desc;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
@@ -904,17 +903,28 @@ plug_in_get_undo_desc (PlugIn *plug_in)
   else
     proc_def = NULL;
 
-  if (proc_def && proc_def->menu_paths)
+  if (proc_def && (proc_def->menu_label || proc_def->menu_paths))
     {
       const gchar *path;
+      gchar       *stripped;
       gchar       *ellipses;
 
-      path = dgettext (plug_ins_locale_domain (plug_in->gimp,
-                                               plug_in->prog, NULL),
-                       proc_def->menu_paths->data);
+      if (proc_def->menu_label)
+        path = dgettext (plug_ins_locale_domain (plug_in->gimp,
+                                                 plug_in->prog, NULL),
+                         proc_def->menu_label);
+      else
+        path = dgettext (plug_ins_locale_domain (plug_in->gimp,
+                                                 plug_in->prog, NULL),
+                         proc_def->menu_paths->data);
 
-      stripped  = gimp_strip_uline (path);
-      undo_desc = g_path_get_basename (stripped);
+      stripped = gimp_strip_uline (path);
+
+      if (proc_def->menu_label)
+        undo_desc = g_strdup (stripped);
+      else
+        undo_desc = g_strdup (strrchr (stripped, '/') + 1);
+
       g_free (stripped);
 
       ellipses = strstr (undo_desc, "...");

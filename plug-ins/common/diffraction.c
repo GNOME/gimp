@@ -181,11 +181,14 @@ query (void)
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero & David Bleecker",
 			  "April 1997, 0.5",
-			  N_("<Image>/Filters/Render/Pattern/_Diffraction Patterns..."),
+			  N_("_Diffraction Patterns..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_diffraction",
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

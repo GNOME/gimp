@@ -152,11 +152,14 @@ query (void)
                           "Marc Lehmann <pcg@goof.com>",
                           "Marc Lehmann <pcg@goof.com>",
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Enhance/Des_tripe..."),
+                          N_("Des_tripe..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Enhance"));
 }
 
 static void

@@ -543,92 +543,25 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
    *   --only sanity check arguments when the procedure requests a menu path
    */
 
-  if (proc_install->menu_path)
+  if (proc_install->menu_path && proc_install->menu_path[0] == '<')
     {
-      if (strncmp (proc_install->menu_path, "<Toolbox>", 9) == 0)
-	{
-	  if ((proc_install->nparams < 1) ||
-	      (proc_install->params[0].type != GIMP_PDB_INT32))
-	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
-			 "attempted to install <Toolbox> procedure \"%s\" "
-			 "which does not take the standard <Toolbox> Plug-In "
-                         "args.\n"
-                         "(INT32)",
-                         gimp_filename_to_utf8 (plug_in->name),
-			 gimp_filename_to_utf8 (plug_in->prog),
-                         proc_install->name);
-	      return;
-	    }
-	}
-      else if (strncmp (proc_install->menu_path, "<Image>", 7) == 0)
-	{
-	  if ((proc_install->nparams < 3) ||
-	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
-	      (proc_install->params[1].type != GIMP_PDB_IMAGE) ||
-	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE))
-	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
-                         "attempted to install <Image> procedure \"%s\" "
-                         "which does not take the standard <Image> Plug-In "
-                         "args.\n"
-                         "(INT32, IMAGE, DRAWABLE)",
-                         gimp_filename_to_utf8 (plug_in->name),
-			 gimp_filename_to_utf8 (plug_in->prog),
-                         proc_install->name);
-	      return;
-	    }
-	}
-      else if (strncmp (proc_install->menu_path, "<Load>", 6) == 0)
-	{
-	  if ((proc_install->nparams < 3) ||
-	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
-	      (proc_install->params[1].type != GIMP_PDB_STRING) ||
-	      (proc_install->params[2].type != GIMP_PDB_STRING))
-	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
-                         "attempted to install <Load> procedure \"%s\" "
-                         "which does not take the standard <Load> Plug-In "
-                         "args.\n"
-                         "(INT32, STRING, STRING)",
-                         gimp_filename_to_utf8 (plug_in->name),
-			 gimp_filename_to_utf8 (plug_in->prog),
-                         proc_install->name);
-	      return;
-	    }
-	}
-      else if (strncmp (proc_install->menu_path, "<Save>", 6) == 0)
-	{
-	  if ((proc_install->nparams < 5) ||
-	      (proc_install->params[0].type != GIMP_PDB_INT32)    ||
-	      (proc_install->params[1].type != GIMP_PDB_IMAGE)    ||
-	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE) ||
-	      (proc_install->params[3].type != GIMP_PDB_STRING)   ||
-	      (proc_install->params[4].type != GIMP_PDB_STRING))
-	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n\n"
-                         "attempted to install <Save> procedure \"%s\" "
-                         "which does not take the standard <Save> Plug-In "
-                         "args.\n"
-                         "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
-                         gimp_filename_to_utf8 (plug_in->name),
-			 gimp_filename_to_utf8 (plug_in->prog),
-                         proc_install->name);
-	      return;
-	    }
-	}
-      else
-	{
-	  g_message ("Plug-In \"%s\"\n(%s)\n\n"
-                     "attempted to install procedure \"%s\" "
-                     "in an invalid menu location.\n"
-                     "Use either \"<Toolbox>\", \"<Image>\", "
-                     "\"<Load>\", or \"<Save>\".",
-                     gimp_filename_to_utf8 (plug_in->name),
-		     gimp_filename_to_utf8 (plug_in->prog),
-                     proc_install->name);
-	  return;
-	}
+      GError *error = NULL;
+
+      if (! plug_in_param_defs_check (plug_in->name,
+                                      plug_in->prog,
+                                      proc_install->name,
+                                      proc_install->menu_path,
+                                      proc_install->params,
+                                      proc_install->nparams,
+                                      proc_install->return_vals,
+                                      proc_install->nreturn_vals,
+                                      &error))
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+
+          return;
+        }
     }
 
   /*  Sanity check for array arguments  */
@@ -746,12 +679,17 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   proc_def = plug_in_proc_def_new ();
 
-  proc_def->prog            = g_strdup (prog);
-
   if (proc_install->menu_path)
-    proc_def->menu_paths    = g_list_append (proc_def->menu_paths,
-                                             g_strdup (proc_install->menu_path));
+    {
+      if (proc_install->menu_path[0] == '<')
+        proc_def->menu_paths =
+          g_list_append (proc_def->menu_paths,
+                         g_strdup (proc_install->menu_path));
+      else
+        proc_def->menu_label = g_strdup (proc_install->menu_path);
+    }
 
+  proc_def->prog            = g_strdup (prog);
   proc_def->accelerator     = NULL;
   proc_def->extensions      = NULL;
   proc_def->prefixes        = NULL;

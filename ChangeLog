@@ -1,3 +1,80 @@
+2004-05-07  Michael Natterer  <mitch@gimp.org>
+
+	Changed plug-in menu registration again to allow passing just the
+	menu item's label (not the full path) in gimp_install_procedure()
+	and only the path (excluding the item's label) in
+	gimp_plugin_menu_register(). Matches the internal action system
+	better and makes translating the menu paths much easier.
+
+	(Of yourse it's still possible to use the old syntax for backward
+	compatibility).
+
+	* app/plug-in/plug-in-proc.[ch]: added "gchar *menu_label".
+
+	* app/plug-in/plug-in-params.[ch]: added new functions
+	plug_in_param_defs_check() and plug_in_proc_args_check() which
+	check if a procedure's parameters match its menu location
+	(e.g. <Image> needs RUN-MODE, IMAGE, DRAWABLE).
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install): if
+	registering an old-style (full) menu_path, use
+	plug_in_param_defs_check(), set proc_def->menu_label otherwise.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_register): use
+	plug_in_proc_args_check() on the passed menu_path and make sure
+	old and new style menu registration are not mixed.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	* app/plug-in/plug-in-rc.c: save/restore "menu_label".
+
+	* app/actions/file-dialog-actions.c
+	* app/actions/plug-in-actions.c
+	* app/menus/plug-in-menus.c: changed action/menu creation
+	accordingly. Some hacks needed to allow both old and new style
+	menu_label/menu_paths.
+
+	* app/plug-in/plug-in.c
+	* app/widgets/gimpfiledialog.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/screenshot.c: ported the first few plug-ins
+	to the new registration scheme.
+
 2004-05-06  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/app.pl: make libgimp* headers always included

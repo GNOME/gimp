@@ -136,11 +136,14 @@ query (void)
                           "Shuji Narazaki <narazaki@InetQ.or.jp>",
                           "Shuji Narazaki",
                           "1997",
-                          N_("<Image>/Layer/Align _Visible Layers..."),
+                          N_("Align _Visible Layers..."),
                           "RGB*,GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Layer"));
 }
 
 static void

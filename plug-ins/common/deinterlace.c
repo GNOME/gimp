@@ -88,11 +88,14 @@ query (void)
 			  "Andrew Kieschnick",
 			  "Andrew Kieschnick",
 			  "1997",
-			  N_("<Image>/Filters/Enhance/_Deinterlace..."),
+			  N_("_Deinterlace..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_deinterlace",
+                             N_("<Image>/Filters/Enhance"));
 }
 
 static void

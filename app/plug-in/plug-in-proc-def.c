@@ -73,6 +73,7 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def->db_info.values);
 
   g_free (proc_def->prog);
+  g_free (proc_def->menu_label);
 
   g_list_foreach (proc_def->menu_paths, (GFunc) g_free, NULL);
   g_list_free (proc_def->menu_paths);
@@ -144,9 +145,9 @@ plug_in_proc_def_get_help_id (const PlugInProcDef *proc_def,
 }
 
 gint
-plug_in_proc_def_compare_menu_path (gconstpointer  a,
-                                    gconstpointer  b,
-                                    gpointer       user_data)
+plug_in_proc_def_compare_menu_path (gconstpointer a,
+                                    gconstpointer b,
+                                    gpointer      user_data)
 {
   Gimp                *gimp       = GIMP (user_data);
   const PlugInProcDef *proc_def_a = a;

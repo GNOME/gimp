@@ -193,7 +193,7 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2003",
-                          N_("<Image>/Filters/Animation/Optimize (for _GIF)"),
+                          N_("Optimize (for _GIF)"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
@@ -211,7 +211,7 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2001",
-                          N_("<Image>/Filters/Animation/_Optimize (Difference)"),
+                          N_("_Optimize (Difference)"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
@@ -228,12 +228,19 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1997-2001",
-                          N_("<Image>/Filters/Animation/_UnOptimize"),
+                          N_("_UnOptimize"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
+
+  gimp_plugin_menu_register ("plug_in_animationoptimize",
+                             N_("<Image>/Filters/Animation"));
+  gimp_plugin_menu_register ("plug_in_animationoptimize_diff",
+                             N_("<Image>/Filters/Animation"));
+  gimp_plugin_menu_register ("plug_in_animationunoptimize",
+                             N_("<Image>/Filters/Animation"));
 
 #ifdef EXPERIMENTAL_BACKDROP_CODE
   gimp_install_procedure ("plug_in_animation_remove_backdrop",
@@ -244,7 +251,7 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "2001",
-                          N_("<Image>/Filters/Animation/_Remove Backdrop"),
+                          N_("_Remove Backdrop"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
@@ -260,12 +267,17 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "2001",
-                          N_("<Image>/Filters/Animation/_Find Backdrop"),
+                          N_("_Find Backdrop"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_args),
                           args, return_args);
+
+  gimp_plugin_menu_register ("plug_in_animation_remove_backdrop",
+                             N_("<Image>/Filters/Animation"));
+  gimp_plugin_menu_register ("plug_in_animation_find_backdrop",
+                             N_("<Image>/Filters/Animation"));
 #endif
 }
 

@@ -188,14 +188,16 @@ query (void)
                           "robert@experimental.net",
                           "robert@experimental.net",
                           "June 20th, 1997",
-                          N_("<Image>/Filters/Colors/Colorcube A_nalysis..."),
+                          N_("Colorcube A_nalysis..."),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
   gimp_plugin_menu_register ("plug_in_ccanalyze",
-                             N_("<Image>/Layer/Colors/Info/Colorcube A_nalysis..."));
+                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_ccanalyze",
+                             N_("<Image>/Layer/Colors/Info"));
 }
 
 /* main function */
