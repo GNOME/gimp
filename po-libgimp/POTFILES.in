@@ -9,6 +9,7 @@ libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpfileselection.c
+libgimpwidgets/gimppickbutton.c
 libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
