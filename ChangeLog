@@ -1,5 +1,10 @@
 2005-02-04  Manish Singh  <yosh@gimp.org>
 
+	* app/widgets/gimppropwidgets.h: readd declaration of
+	gimp_prop_paint_mode_menu_new().
+
+2005-02-04  Manish Singh  <yosh@gimp.org>
+
 	* gimpui.pc.in: add libgimpconfig to Libs.
 
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

@@ -23,6 +23,13 @@
 #define __GIMP_APP_PROP_WIDGETS_H__
 
 
+/*  GParamEnum  */
+
+GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gboolean     with_behind_mode);
+
+
 /*  GimpParamColor  */
 
 GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
