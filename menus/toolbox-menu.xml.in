@@ -12,8 +12,7 @@
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu" name="Acquire">
-      </menu>
+      <menu action="file-acquire-menu" name="Acquire" />
       <separator />
       <menuitem action="dialogs-preferences" />
       <menu action="dialogs-menu" name="Dialogs">
@@ -48,4 +47,5 @@
     </menu>
 
   </menubar>
+
 </ui>

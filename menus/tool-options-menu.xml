@@ -7,12 +7,9 @@
       <menuitem action="tool-options-save-new" />
       <separator />
     </menu>
-    <menu action="tool-options-restore-menu">
-    </menu>
-    <menu action="tool-options-rename-menu">
-    </menu>
-    <menu action="tool-options-delete-menu">
-    </menu>
+    <menu action="tool-options-restore-menu" />
+    <menu action="tool-options-rename-menu" />
+    <menu action="tool-options-delete-menu" />
     <separator />
     <menuitem action="tool-options-reset" />
     <menuitem action="tool-options-reset-all" />

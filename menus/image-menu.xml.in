@@ -12,8 +12,7 @@
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu" name="Acquire">
-      </menu>
+      <menu action="file-acquire-menu" name="Acquire" />
       <separator />
       <placeholder name="Save">
 	<menuitem action="file-save" />
@@ -284,49 +283,31 @@
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
       <separator />
-      <menu action="plug-in-blur-menu" name="Blur">
-      </menu>
+      <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-colors-menu" name="Colors">
-	<menu action="plug-in-colors-map-menu" name="Map">
-	</menu>
+	<menu action="plug-in-colors-map-menu" name="Map" />
       </menu>
-      <menu action="plug-in-noise-menu" name="Noise">
-      </menu>
-      <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
-      </menu>
-      <menu action="plug-in-enhance-menu" name="Enhance">
-      </menu>
-      <menu action="plug-in-generic-menu" name="Generic">
-      </menu>
+      <menu action="plug-in-noise-menu" name="Noise" />
+      <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
+      <menu action="plug-in-enhance-menu" name="Enhance" />
+      <menu action="plug-in-generic-menu" name="Generic" />
       <separator />
-      <menu action="plug-in-glass-effects-menu" name="Glass Effects">
-      </menu>
-      <menu action="plug-in-light-effects-menu" name="Light Effects">
-      </menu>
-      <menu action="plug-in-distorts-menu" name="Distorts">
-      </menu>
-      <menu action="plug-in-artistic-menu" name="Artistic">
-      </menu>
-      <menu action="plug-in-map-menu" name="Map">
-      </menu>
+      <menu action="plug-in-glass-effects-menu" name="Glass Effects" />
+      <menu action="plug-in-light-effects-menu" name="Light Effects" />
+      <menu action="plug-in-distorts-menu" name="Distorts" />
+      <menu action="plug-in-artistic-menu" name="Artistic" />
+      <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">
-	<menu action="plug-in-render-clouds-menu" name="Clouds">
-	</menu>
-	<menu action="plug-in-render-nature-menu" name="Nature">
-	</menu>
-	<menu action="plug-in-render-pattern-menu" name="Pattern">
-	</menu>
+	<menu action="plug-in-render-clouds-menu" name="Clouds" />
+	<menu action="plug-in-render-nature-menu" name="Nature" />
+	<menu action="plug-in-render-pattern-menu" name="Pattern" />
       </menu>
-      <menu action="plug-in-web-menu" name="Web">
-      </menu>
+      <menu action="plug-in-web-menu" name="Web" />
       <separator />
-      <menu action="plug-in-animation-menu" name="Animation">
-      </menu>
-      <menu action="plug-in-combine-menu" name="Combine">
-      </menu>
+      <menu action="plug-in-animation-menu" name="Animation" />
+      <menu action="plug-in-combine-menu" name="Combine" />
       <separator />
-      <menu action="plug-in-toys-menu" name="Toys">
-      </menu>
+      <menu action="plug-in-toys-menu" name="Toys" />
     </menu>
 
   </menubar-and-popup>

@@ -1,5 +1,12 @@
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in
+	* menus/tool-options-menu.xml
+	* menus/toolbox-menu.xml.in: use empty elements for empty menus.
+	Makes the XML somewhat easier to read.
+
+2004-05-02  Sven Neumann  <sven@gimp.org>
+
 	* menus/Makefile.am
 	* menus/dialogs-menuitems.xml: new file that holds menuitems that
 	appear in several places.
