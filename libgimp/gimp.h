@@ -535,6 +535,7 @@ void          gimp_layer_set_show_mask             (gint32        layer_ID,
 						    gint          show_mask);
 void          gimp_layer_set_visible               (gint32        layer_ID,
 						    gint          visible);
+gint32        gimp_layer_get_tattoo                (gint32        layer_ID);
 
 
 /****************************************
@@ -573,6 +574,7 @@ void    gimp_channel_set_show_masked (gint32   channel_ID,
 				      gint     show_masked);
 void    gimp_channel_set_visible     (gint32   channel_ID,
 				      gint     visible);
+gint32  gimp_channel_get_tattoo      (gint32   channel_ID);
 
 
 /****************************************
@@ -635,6 +637,7 @@ void       gimp_layer_attach_new_parasite(gint32      drawable,
 					  int size, const void *data);
 void       gimp_drawable_detach_parasite (gint32      drawable,
 					  const char *name);
+
 
 /****************************************
  *               GTiles                  *

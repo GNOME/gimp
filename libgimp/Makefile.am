@@ -16,6 +16,8 @@ libgimpi_a_SOURCES = \
 	gimpprotocol.h	\
 	gimpwire.c	\
 	gimpwire.h	\
+	gserialize.c	\
+	gserialize.h	\
 	parasite.c	\
 	parasite.h	\
 	parasiteF.h	\
@@ -44,6 +46,8 @@ libgimp_la_SOURCES = \
 	gimptile.c	\
 	gimpwire.c	\
 	gimpwire.h	\
+	gserialize.c	\
+	gserialize.h	\
 	parasite.c	\
 	parasite.h	\
 	parasiteF.h	\
@@ -63,6 +67,7 @@ gimpinclude_HEADERS = \
 	gimpmenu.h	\
 	gimpui.h	\
 	gimpintl.h	\
+	gserialize.h	\
 	parasite.h	\
 	parasiteF.h	\
 	parasiteP.h

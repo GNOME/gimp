@@ -615,7 +615,6 @@ gimp_drawable_attach_parasite (gint32 drawable_ID,
 				    PARAM_PARASITE, p,
 				    PARAM_END);
 
-
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 

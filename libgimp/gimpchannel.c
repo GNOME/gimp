@@ -302,3 +302,25 @@ gimp_channel_set_show_masked (gint32 channel_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
+
+gint32
+gimp_channel_get_tattoo (gint32 channel_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  int tattoo;
+
+  return_vals = gimp_run_procedure ("gimp_channel_get_tattoo",
+				    &nreturn_vals,
+				    PARAM_CHANNEL, channel_ID,
+				    PARAM_END);
+
+  tattoo = -1;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    tattoo = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return tattoo;
+}
+

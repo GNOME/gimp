@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "libgimp/gserialize.h"
 
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
@@ -41,6 +42,7 @@
 static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);
 static void       init (void);
+static void       test_gserialize();
 
 /* GLOBAL data */
 int no_interface;
@@ -150,6 +152,8 @@ main (int argc, char **argv)
 
   show_version = FALSE;
   show_help = FALSE;
+
+  test_gserialize();
 
   for (i = 1; i < argc; i++)
     {
@@ -383,4 +387,61 @@ on_sig_child (int sig_num)
       if (pid <= 0)
 	break;
     }
+}
+
+typedef struct 
+{
+  gint32 test_gint32;
+  float test_float;
+  char *test_string;
+  guint32  test_length;
+  guint16 *test_array;
+} test_struct;
+
+static void test_gserialize()
+{
+  GSerialDescription *test_struct_descript;
+  test_struct *ts, *to;
+  char ser_1[] = {3, 4, 3, 2, 1, 4, 51, 51, 83, 64, 6, 4, 0, 0, 0, 102, 111, 111, 0, 8, 2, 0, 0, 0, 6, 5, 8, 7};
+  void *ser;
+  long len;
+  int i;
+  ts = g_malloc(sizeof(test_struct));
+  to = g_malloc(sizeof(test_struct));
+  test_struct_descript 
+    = g_new_serial_description("test_struct",
+			       g_serial_item(GSERIAL_INT32,
+					     test_struct,
+					     test_gint32),
+			       g_serial_item(GSERIAL_FLOAT,
+					     test_struct,
+					     test_float),
+			       g_serial_item(GSERIAL_STRING,
+					     test_struct,
+					     test_string),
+			       g_serial_vlen_array(GSERIAL_INT16ARRAY,
+						   test_struct,
+						   test_array,
+						   test_length),
+			       NULL);
+
+
+  ts->test_gint32 = 0x01020304;
+  ts->test_float = 3.3f;
+  ts->test_string = "foo";
+  ts->test_length = 2;
+  ts->test_array  = g_malloc(sizeof(short) *2);
+  ts->test_array[0] = 0x0506;
+  ts->test_array[1] = 0x0708;
+
+  g_deserialize(test_struct_descript,  (char *)(void*)to, ser_1);
+
+  g_return_if_fail (to->test_gint32 == ts->test_gint32);
+  g_return_if_fail (to->test_float == ts->test_float);
+  g_return_if_fail (strcmp(to->test_string, ts->test_string) == 0);
+  g_return_if_fail (to->test_length == ts->test_length);
+  g_return_if_fail (to->test_array[0] == ts->test_array[0]);
+  g_return_if_fail (to->test_array[1] == ts->test_array[1]);
+  /*  really should free the memory... */
+  g_message("Passed serialization test\n");
 }

@@ -1,3 +1,15 @@
+1998-11-07  Jay Cox  <jaycox@earthlink.net>
+
+	* libgimp/{gimp.h, gimpchannel.c, gimpdrawable.c, gimplayer.c}:
+	export the tattoo functions to the plug-ins
+	
+	* libimp/gserialize.c, libimp/gserialize.h: new files for 
+	serializing structures
+	
+	* main.c: test the gserialize functions
+	
+	* gimpsignal.h: declare gimp_sigtype_* as extern
+	
 Thu Nov  5 16:42:21 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: added MAINTAINERS to EXTRA_DIST
