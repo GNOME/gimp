@@ -1,3 +1,8 @@
+2005-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-processor.c: fixed a bug I introduced with my
+	latest changes and cleaned up the code further.
+
 2005-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-open-dialog.c (file_open_dialog_response)

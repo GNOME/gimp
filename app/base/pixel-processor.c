@@ -45,19 +45,19 @@ extern GimpBaseConfig *base_config;
 
 
 typedef void (* p1_func) (gpointer     data,
-			  PixelRegion *);
+			  PixelRegion *region1);
 typedef void (* p2_func) (gpointer     data,
-			  PixelRegion * ,
-			  PixelRegion *);
+			  PixelRegion *region1,
+			  PixelRegion *region2);
 typedef void (* p3_func) (gpointer     data,
-			  PixelRegion *,
-			  PixelRegion *,
-			  PixelRegion *);
+			  PixelRegion *region1,
+			  PixelRegion *region2,
+			  PixelRegion *region3);
 typedef void (* p4_func) (gpointer     data,
-			  PixelRegion *,
-			  PixelRegion *,
-			  PixelRegion *,
-			  PixelRegion *);
+			  PixelRegion *region1,
+			  PixelRegion *region2,
+			  PixelRegion *region3,
+			  PixelRegion *region4);
 
 
 typedef struct _PixelProcessor PixelProcessor;
@@ -65,7 +65,7 @@ typedef struct _PixelProcessor PixelProcessor;
 struct _PixelProcessor
 {
   gpointer             data;
-  PixelProcessorFunc   f;
+  PixelProcessorFunc   func;
   PixelRegionIterator *PRI;
 
 #ifdef ENABLE_MP
@@ -73,12 +73,9 @@ struct _PixelProcessor
   gint                 nthreads;
 #endif
 
-  gint                 n_regions;
-  PixelRegion         *r[4];
+  gint                 num_regions;
+  PixelRegion         *regions[4];
 };
-
-
-static void  pixel_processor_free (PixelProcessor *pp);
 
 
 #ifdef ENABLE_MP
@@ -104,55 +101,55 @@ do_parallel_regions (PixelProcessor *processor)
 
   do
     {
-      for (i = 0; i < processor->n_regions; i++)
-	if (processor->r[i])
+      for (i = 0; i < processor->num_regions; i++)
+	if (processor->regions[i])
 	  {
-	    memcpy (&tr[i], processor->r[i], sizeof (PixelRegion));
+	    memcpy (&tr[i], processor->regions[i], sizeof (PixelRegion));
 	    if (tr[i].tiles)
-	      tile_lock(tr[i].curtile);
+	      tile_lock (tr[i].curtile);
 	  }
 
       pthread_mutex_unlock (&processor->mutex);
       n_tiles++;
 
-      switch(processor->n_regions)
+      switch(processor->num_regions)
 	{
 	case 1:
-	  ((p1_func) processor->f) (processor->data,
-                                    processor->r[0] ? &tr[0] : NULL);
+	  ((p1_func) processor->func) (processor->data,
+                                       processor->regions[0] ? &tr[0] : NULL);
 	  break;
 
 	case 2:
-	  ((p2_func) processor->f) (processor->data,
-                                    processor->r[0] ? &tr[0] : NULL,
-                                    processor->r[1] ? &tr[1] : NULL);
+	  ((p2_func) processor->func) (processor->data,
+                                       processor->regions[0] ? &tr[0] : NULL,
+                                       processor->regions[1] ? &tr[1] : NULL);
 	  break;
 
 	case 3:
-	  ((p3_func) processor->f) (processor->data,
-                                    processor->r[0] ? &tr[0] : NULL,
-                                    processor->r[1] ? &tr[1] : NULL,
-                                    processor->r[2] ? &tr[2] : NULL);
+	  ((p3_func) processor->func) (processor->data,
+                                       processor->regions[0] ? &tr[0] : NULL,
+                                       processor->regions[1] ? &tr[1] : NULL,
+                                       processor->regions[2] ? &tr[2] : NULL);
 	  break;
 
 	case 4:
-	  ((p4_func) processor->f) (processor->data,
-                                    processor->r[0] ? &tr[0] : NULL,
-                                    processor->r[1] ? &tr[1] : NULL,
-                                    processor->r[2] ? &tr[2] : NULL,
-                                    processor->r[3] ? &tr[3] : NULL);
+	  ((p4_func) processor->func) (processor->data,
+                                       processor->regions[0] ? &tr[0] : NULL,
+                                       processor->regions[1] ? &tr[1] : NULL,
+                                       processor->regions[2] ? &tr[2] : NULL,
+                                       processor->regions[3] ? &tr[3] : NULL);
 	  break;
 
 	default:
 	  g_warning ("do_parallel_regions: Bad number of regions %d\n",
-                     processor->n_regions);
+                     processor->num_regions);
           break;
     }
 
     pthread_mutex_lock (&processor->mutex);
 
-    for (i = 0; i < processor->n_regions; i++)
-      if (processor->r[i])
+    for (i = 0; i < processor->num_regions; i++)
+      if (processor->regions[i])
 	{
 	  if (tr[i].tiles)
 	    tile_release (tr[i].curtile, tr[i].dirty);
@@ -183,37 +180,37 @@ do_parallel_regions_single (PixelProcessor *processor)
 {
   do
     {
-      switch (processor->n_regions)
+      switch (processor->num_regions)
         {
         case 1:
-          ((p1_func) processor->f) (processor->data,
-                                    processor->r[0]);
+          ((p1_func) processor->func) (processor->data,
+                                       processor->regions[0]);
           break;
 
         case 2:
-          ((p2_func) processor->f) (processor->data,
-                                    processor->r[0],
-                                    processor->r[1]);
+          ((p2_func) processor->func) (processor->data,
+                                       processor->regions[0],
+                                       processor->regions[1]);
           break;
 
         case 3:
-          ((p3_func) processor->f) (processor->data,
-                                    processor->r[0],
-                                    processor->r[1],
-                                    processor->r[2]);
+          ((p3_func) processor->func) (processor->data,
+                                       processor->regions[0],
+                                       processor->regions[1],
+                                       processor->regions[2]);
           break;
 
         case 4:
-          ((p4_func) processor->f) (processor->data,
-                                    processor->r[0],
-                                    processor->r[1],
-                                    processor->r[2],
-                                    processor->r[3]);
+          ((p4_func) processor->func) (processor->data,
+                                       processor->regions[0],
+                                       processor->regions[1],
+                                       processor->regions[2],
+                                       processor->regions[3]);
           break;
 
         default:
           g_warning ("do_parallel_regions_single: Bad number of regions %d\n",
-                     processor->n_regions);
+                     processor->num_regions);
         }
     }
 
@@ -270,78 +267,74 @@ pixel_regions_do_parallel (PixelProcessor *processor)
     }
 }
 
-static PixelProcessor *
-pixel_regions_process_parallel_valist (PixelProcessorFunc  f,
+static void
+pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
                                        gpointer            data,
                                        gint                num_regions,
                                        va_list             ap)
 {
-  PixelProcessor *processor = g_new (PixelProcessor, 1);
+  PixelProcessor  processor = { NULL, };
   gint            i;
 
   for (i = 0; i < num_regions; i++)
-    processor->r[i] = va_arg (ap, PixelRegion *);
+    processor.regions[i] = va_arg (ap, PixelRegion *);
 
   switch(num_regions)
     {
     case 1:
-      processor->PRI = pixel_regions_register (num_regions,
-                                               processor->r[0]);
+      processor.PRI = pixel_regions_register (num_regions,
+                                              processor.regions[0]);
       break;
 
     case 2:
-      processor->PRI = pixel_regions_register (num_regions,
-                                               processor->r[0],
-                                               processor->r[1]);
+      processor.PRI = pixel_regions_register (num_regions,
+                                              processor.regions[0],
+                                              processor.regions[1]);
       break;
 
     case 3:
-      processor->PRI = pixel_regions_register (num_regions,
-                                               processor->r[0],
-                                               processor->r[1],
-                                               processor->r[2]);
+      processor.PRI = pixel_regions_register (num_regions,
+                                              processor.regions[0],
+                                              processor.regions[1],
+                                              processor.regions[2]);
       break;
 
     case 4:
-      processor->PRI = pixel_regions_register (num_regions,
-                                               processor->r[0],
-                                               processor->r[1],
-                                               processor->r[2],
-                                               processor->r[3]);
+      processor.PRI = pixel_regions_register (num_regions,
+                                              processor.regions[0],
+                                              processor.regions[1],
+                                              processor.regions[2],
+                                              processor.regions[3]);
       break;
 
     default:
       g_warning ("pixel_regions_process_parallel:"
-                 "Bad number of regions %d\n", processor->n_regions);
-      pixel_processor_free (processor);
-      return NULL;
+                 "Bad number of regions %d\n", processor.num_regions);
     }
 
-  processor->f = f;
-  processor->data = data;
-  processor->n_regions = num_regions;
+  if (! processor.PRI)
+    {
+      return;
+    }
+
+  processor.func        = func;
+  processor.data        = data;
+  processor.num_regions = num_regions;
 
 #ifdef ENABLE_MP
-  pthread_mutex_init (&processor->mutex, NULL);
-  processor->nthreads = 0;
+  pthread_mutex_init (&processor.mutex, NULL);
+  processor.nthreads = 0;
 #endif
 
-  pixel_regions_do_parallel (processor);
-
-  if (processor->PRI)
-    return processor;
+  pixel_regions_do_parallel (&processor);
 
 #ifdef ENABLE_MP
-  pthread_mutex_destroy (&processor->mutex);
+  pthread_mutex_destroy (&processor.mutex);
 #endif
-
-  pixel_processor_free (processor);
-
-  return NULL;
 }
 
 void
-pixel_regions_process_parallel (PixelProcessorFunc  f,
+pixel_regions_process_parallel (PixelProcessorFunc  func,
 				gpointer            data,
 				gint                num_regions,
 				...)
@@ -350,16 +343,7 @@ pixel_regions_process_parallel (PixelProcessorFunc  f,
 
   va_start (va, num_regions);
 
-  pixel_regions_process_parallel_valist (f, data, num_regions, va);
+  pixel_regions_process_parallel_valist (func, data, num_regions, va);
 
   va_end (va);
-}
-
-static void
-pixel_processor_free (PixelProcessor *processor)
-{
-  if (processor->PRI)
-    pixel_regions_process_stop (processor->PRI);
-
-  g_free (processor);
 }
