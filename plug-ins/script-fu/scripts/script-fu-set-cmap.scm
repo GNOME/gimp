@@ -54,7 +54,7 @@
 )
 
 (tiny-fu-register "tiny-fu-set-cmap"
-    _"<Image>/Tiny-Fu/Utils/Set Colormap"
+    _"Set Colormap"
     "Change the colourmap of an image to the colours in a specified palette."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
@@ -64,3 +64,6 @@
     SF-DRAWABLE  "Drawable" 0
     SF-PALETTE  _"Palette"  "Default"
 )
+
+(tiny-fu-menu-register "tiny-fu-set-cmap"
+                      _"<Image>/Tiny-Fu/Utils")

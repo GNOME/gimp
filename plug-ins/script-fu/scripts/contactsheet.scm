@@ -272,7 +272,7 @@
 )
 
 (tiny-fu-register "tiny-fu-contactsheet"
-    _"<Toolbox>/Xtns/Tiny-Fu/Utils/Contact Sheet"
+    _"Contact Sheet"
     "Create a series of images containing thumbnail sized versions
      of all of the images contained in a specified directory."
     "Kevin Cozens <kcozens@interlog.com>"
@@ -280,12 +280,15 @@
     "July 19, 2004"
     ""
     SF-DIRNAME _"Directory"        "/tmp/test"
-    SF-OPTION  _"Sheet Size"       '("640 x 480"
+    SF-OPTION  _"Sheet size"       '("640 x 480"
                                      "800 x 600"
                                      "1024 x 768"
                                      "1280 x 1024")
-    SF-FONT    _"Title Font"       "Helvetica Bold Italic"
-    SF-FONT    _"Legend Font"      "Helvetica Bold"
-    SF-COLOR   _"Text Color"       '(255 255 255)
+    SF-FONT    _"Title font"       "Helvetica Bold Italic"
+    SF-FONT    _"Legend font"      "Helvetica Bold"
+    SF-COLOR   _"Text color"       '(255 255 255)
     SF-COLOR   _"Background color" '(0 0 0)
 )
+
+(tiny-fu-menu-register "tiny-fu-contactsheet"
+                      _"<Toolbox>/Xtns/Tiny-Fu/Utils")
