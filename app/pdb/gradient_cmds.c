@@ -38,6 +38,7 @@
 
 static ProcRecord gradient_new_proc;
 static ProcRecord gradient_duplicate_proc;
+static ProcRecord gradient_is_editable_proc;
 static ProcRecord gradient_rename_proc;
 static ProcRecord gradient_delete_proc;
 static ProcRecord gradient_get_uniform_samples_proc;
@@ -71,6 +72,7 @@ register_gradient_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &gradient_new_proc);
   procedural_db_register (gimp, &gradient_duplicate_proc);
+  procedural_db_register (gimp, &gradient_is_editable_proc);
   procedural_db_register (gimp, &gradient_rename_proc);
   procedural_db_register (gimp, &gradient_delete_proc);
   procedural_db_register (gimp, &gradient_get_uniform_samples_proc);
@@ -240,6 +242,75 @@ static ProcRecord gradient_duplicate_proc =
   1,
   gradient_duplicate_outargs,
   { { gradient_duplicate_invoker } }
+};
+
+static Argument *
+gradient_is_editable_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpGradient *gradient = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      gradient = (GimpGradient *)
+        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+      if (gradient)
+        success = TRUE;
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&gradient_is_editable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_DATA (gradient)->writable;
+
+  return return_args;
+}
+
+static ProcArg gradient_is_editable_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The gradient name"
+  }
+};
+
+static ProcArg gradient_is_editable_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "editable",
+    "True if the gradient can be edited"
+  }
+};
+
+static ProcRecord gradient_is_editable_proc =
+{
+  "gimp_gradient_is_editable",
+  "Tests if gradient can be edited",
+  "Returns True if you have permission to change the gradient",
+  "Bill Skaggs <weskaggs@primate.ucdavis.edu",
+  "Bill Skaggs",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  gradient_is_editable_inargs,
+  1,
+  gradient_is_editable_outargs,
+  { { gradient_is_editable_invoker } }
 };
 
 static Argument *

@@ -92,6 +92,38 @@ gimp_gradient_duplicate (const gchar *name)
 }
 
 /**
+ * gimp_gradient_is_editable:
+ * @name: The gradient name.
+ *
+ * Tests if gradient can be edited
+ *
+ * Returns True if you have permission to change the gradient
+ *
+ * Returns: True if the gradient can be edited.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_gradient_is_editable (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean editable = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_is_editable",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    editable = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return editable;
+}
+
+/**
  * gimp_gradient_rename:
  * @name: The gradient name.
  * @new_name: The new name of the gradient.

@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 gchar*   gimp_gradient_new                                 (const gchar               *name);
 gchar*   gimp_gradient_duplicate                           (const gchar               *name);
+gboolean gimp_gradient_is_editable                         (const gchar               *name);
 gchar*   gimp_gradient_rename                              (const gchar               *name,
 							    const gchar               *new_name);
 gboolean gimp_gradient_delete                              (const gchar               *name);

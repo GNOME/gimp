@@ -1,3 +1,14 @@
+2005-01-03  Sven Neumann  <neumann@jpk.com>
+
+	* tools/pdbgen/pdb/gradient.pdb: do actually add the new procedure
+	gimp_gradient_is_editable().
+
+	* app/pdb/gradient_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgradient_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
 2005-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c

@@ -8,14 +8,28 @@ EXPORTS
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
 	gimp_brush_duplicate
+	gimp_brush_get_angle
+	gimp_brush_get_aspect_ratio
+	gimp_brush_get_hardness
 	gimp_brush_get_info
 	gimp_brush_get_pixels
+	gimp_brush_get_radius
+	gimp_brush_get_shape
 	gimp_brush_get_spacing
+	gimp_brush_get_spikes
+	gimp_brush_is_editable
+	gimp_brush_is_generated
 	gimp_brush_new
 	gimp_brush_rename
 	gimp_brush_select_destroy
 	gimp_brush_select_new
+	gimp_brush_set_angle
+	gimp_brush_set_aspect_ratio
+	gimp_brush_set_hardness
+	gimp_brush_set_radius
+	gimp_brush_set_shape
 	gimp_brush_set_spacing
+	gimp_brush_set_spikes
 	gimp_brushes_close_popup
 	gimp_brushes_get_brush
 	gimp_brushes_get_brush_data
@@ -49,6 +63,7 @@ EXPORTS
 	gimp_clone_default
 	gimp_clone_type_get_type
 	gimp_color_balance
+	gimp_colorize
 	gimp_context_get_background
 	gimp_context_get_brush
 	gimp_context_get_font
@@ -132,22 +147,22 @@ EXPORTS
 	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
 	gimp_drawable_set_visible
-	gimp_drawable_transform_flip_simple
+	gimp_drawable_transform_2d
+	gimp_drawable_transform_2d_default
 	gimp_drawable_transform_flip
 	gimp_drawable_transform_flip_default
+	gimp_drawable_transform_flip_simple
+	gimp_drawable_transform_matrix
+	gimp_drawable_transform_matrix_default
 	gimp_drawable_transform_perspective
 	gimp_drawable_transform_perspective_default
-	gimp_drawable_transform_rotate_simple
 	gimp_drawable_transform_rotate
 	gimp_drawable_transform_rotate_default
+	gimp_drawable_transform_rotate_simple
 	gimp_drawable_transform_scale
 	gimp_drawable_transform_scale_default
 	gimp_drawable_transform_shear
 	gimp_drawable_transform_shear_default
-	gimp_drawable_transform_2d
-	gimp_drawable_transform_2d_default
-	gimp_drawable_transform_matrix
-	gimp_drawable_transform_matrix_default
 	gimp_drawable_type
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
@@ -201,6 +216,7 @@ EXPORTS
 	gimp_gradient_duplicate
 	gimp_gradient_get_custom_samples
 	gimp_gradient_get_uniform_samples
+	gimp_gradient_is_editable
 	gimp_gradient_new
 	gimp_gradient_rename
 	gimp_gradient_segment_color_get_type
@@ -333,6 +349,7 @@ EXPORTS
 	gimp_install_cmap
 	gimp_install_procedure
 	gimp_install_temp_proc
+	gimp_interpolation_type_get_type
 	gimp_invert
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
@@ -364,6 +381,7 @@ EXPORTS
 	gimp_layer_translate
 	gimp_levels
 	gimp_levels_auto
+	gimp_levels_stretch
 	gimp_main
 	gimp_mask_apply_mode_get_type
 	gimp_merge_type_get_type
@@ -388,6 +406,7 @@ EXPORTS
 	gimp_palette_get_background
 	gimp_palette_get_foreground
 	gimp_palette_get_info
+	gimp_palette_is_editable
 	gimp_palette_new
 	gimp_palette_rename
 	gimp_palette_select_destroy
@@ -538,6 +557,7 @@ EXPORTS
 	gimp_tile_width
 	gimp_transfer_mode_get_type
 	gimp_transform_2d
+	gimp_transform_direction_get_type
 	gimp_uninstall_temp_proc
 	gimp_version
 	gimp_wm_class
