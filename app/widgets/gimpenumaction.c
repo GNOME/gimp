@@ -106,7 +106,7 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_int ("value",
                                                      NULL, NULL,
-                                                     0, G_MININT, G_MAXINT,
+                                                     G_MININT, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
 
   action_signals[SELECTED] =

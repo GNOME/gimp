@@ -299,10 +299,11 @@ gimp_enum_store_lookup_by_value (GtkTreeModel *model,
 }
 
 /**
- * gimp_enum_store_lookup_by_value:
+ * gimp_enum_store_set_icons:
  * @store:        a #GimpEnumStore
  * @widget:       the widget used to create the icon pixbufs
  * @stock_prefix: a prefix to create icon stock ID from enum values
+ * @size:         the size to create the icons in
  *
  * Creates a stock ID for each enum value in the @store by appending
  * the value's nick to the given @stock_prefix inserting a hyphen

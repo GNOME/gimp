@@ -180,6 +180,7 @@ gimp_action_group_get_property (GObject    *object,
 
 /**
  * gimp_action_group_new:
+ * @gimp: the @Gimp instance this action group belongs to
  * @name: the name of the action group.
  *
  * Creates a new #GimpActionGroup object. The name of the action group

@@ -94,7 +94,7 @@ gimp_enum_combo_box_new (GType enum_type)
 
 /**
  * gimp_enum_combo_box_new_with_model:
- * @enum_type: the #GType of an enum.
+ * @enum_store: a #GimpEnumStore to use as the tree model
  *
  * Creates a new #GimpEnumComboBox using the #GimpEnumStore as its model.
  *
@@ -212,8 +212,6 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                              stock_prefix, GTK_ICON_SIZE_MENU);
 }
 
-/*  This is a kludge to allow to work around bug #135875.  */
-
 /**
  * gimp_enum_combo_box_set_visible:
  * @combo_box: a #GimpEnumComboBox
@@ -222,7 +220,7 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
  *
  * Sets a filter on the combo_box that selectively hides items. The
  * registered callback @func is called with an iter for each item and
- * returns %TRUE or %FALSE indicating whether the respective row
+ * must return %TRUE or %FALSE indicating whether the respective row
  * should be visible or not.
  *
  * This function must only be called once for a @combo_box. If you
