@@ -1319,7 +1319,8 @@ script_fu_interface (SFScript *script)
 
   /*  Action area  */
   bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_EDGE);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
   gtk_box_pack_start (GTK_BOX (main_box), bbox, FALSE, TRUE, 0);
 
   button = gtk_button_new_with_label ("OK");
