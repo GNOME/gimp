@@ -1,5 +1,13 @@
 2001-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/pixelize.c: implemented a feature request:
+
+	Made the pixel size configurable independently in x and y
+	direction. Added new PDB function. Use a GimpCoordinates widget
+	for the dialog.
+
+2001-11-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: use
 	gimp_display_shell_[install|remove]_override_cursor() to set the
 	middle mouse button move cursor so we get the original cursor back

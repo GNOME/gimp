@@ -83,38 +83,48 @@ static char rcsid[] = "$Id$";
 typedef struct
 {
   gint pixelwidth;
+  gint pixelheight;
 } PixelizeValues;
 
 typedef struct
 {
-  gint run;
+  GtkWidget *sizeentry;
+  gint       run;
 } PixelizeInterface;
 
 typedef struct
 {
   gint x, y, w, h;
   gint width;
+  gint height;
   guchar *data;
 } PixelArea;
 
 /* Declare local functions.
  */
-static void	query	(void);
-static void	run	(gchar	 *name,
-			 gint	 nparams,
-			 GimpParam	 *param,
-			 gint	 *nreturn_vals,
-			 GimpParam	 **return_vals);
+static void   query                (void);
+static void   run                  (gchar         *name,
+                                    gint           nparams,
+                                    GimpParam     *param,
+                                    gint          *nreturn_vals,
+                                    GimpParam    **return_vals);
 
-static gint	pixelize_dialog      (void);
-static void	pixelize_ok_callback (GtkWidget *widget,
-				      gpointer   data);
+static gint   pixelize_dialog      (GimpDrawable  *drawable);
+static void   pixelize_ok_callback (GtkWidget     *widget,
+                                    gpointer       data);
 
-static void	pixelize	(GimpDrawable *drawable);
-static void	pixelize_large	(GimpDrawable *drawable, gint pixelwidth);
-static void	pixelize_small	(GimpDrawable *drawable, gint pixelwidth,
-				 gint tile_width);
-static void	pixelize_sub    (gint pixelwidth, gint bpp);
+static void   pixelize             (GimpDrawable  *drawable);
+static void   pixelize_large       (GimpDrawable  *drawable,
+                                    gint           pixelwidth,
+                                    gint           pixelheight);
+static void   pixelize_small       (GimpDrawable  *drawable,
+                                    gint           pixelwidth,
+                                    gint           pixelheight,
+                                    gint           tile_width,
+                                    gint           tile_height);
+static void   pixelize_sub         (gint           pixelwidth,
+                                    gint           pixelheight,
+                                    gint           bpp);
 
 /***** Local vars *****/
 
@@ -128,11 +138,13 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static PixelizeValues pvals =
 {
+  10,
   10
 };
 
 static PixelizeInterface pint =
 {
+  NULL,
   FALSE	    /* run */
 };
 
@@ -145,14 +157,21 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef args[]=
+  static GimpParamDef pixelize_args[]=
   {
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
+    { GIMP_PDB_INT32, "pixelwidth", "Pixel width (the decrease in resolution)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static GimpParamDef pixelize2_args[]=
+  {
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "pixelwidth", "Pixel width (the decrease in horizontal resolution)" },
+    { GIMP_PDB_INT32, "pixelheight", "Pixel height (the decrease in vertical resolution)" }
+  };
 
   gimp_install_procedure ("plug_in_pixelize",
 			  "Pixelize the contents of the specified drawable",
@@ -163,28 +182,40 @@ query (void)
 			  N_("<Image>/Filters/Blur/Pixelize..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
-			  args, NULL);
+			  G_N_ELEMENTS (pixelize_args), 0,
+			  pixelize_args, NULL);
+
+  gimp_install_procedure ("plug_in_pixelize2",
+			  "Pixelize the contents of the specified drawable",
+			  "Pixelize the contents of the specified drawable with speficied pixelizing width.",
+			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
+			  "Spencer Kimball & Peter Mattis, Tracy Scott",
+			  "2001",
+			  NULL,
+			  "RGB*, GRAY*",
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (pixelize2_args), 0,
+			  pixelize2_args, NULL);
 }
 
 static void
-run (gchar   *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam  **return_vals)
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -198,7 +229,7 @@ run (gchar   *name,
       gimp_get_data ("plug_in_pixelize", &pvals);
 
       /*  First acquire information with a dialog  */
-      if (! pixelize_dialog ())
+      if (! pixelize_dialog (drawable))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -208,15 +239,27 @@ run (gchar   *name,
     case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
-      if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+      if ((! strcmp (name, "plug_in_pixelize") && nparams != 4) ||
+          (! strcmp (name, "plug_in_pixelize2") && nparams != 5))
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  pvals.pixelwidth = (gdouble) param[3].data.d_int32;
+	  pvals.pixelwidth  = (gdouble) param[3].data.d_int32;
+
+          if (nparams == 4)
+            pvals.pixelheight = pvals.pixelwidth;
+          else
+            pvals.pixelheight = (gdouble) param[4].data.d_int32;
 	}
+
       if ((status == GIMP_PDB_SUCCESS) &&
-	  pvals.pixelwidth <= 0)
-	status = GIMP_PDB_CALLING_ERROR;
+	  (pvals.pixelwidth <= 0 || pvals.pixelheight <= 0))
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -263,12 +306,14 @@ run (gchar   *name,
 }
 
 static gint
-pixelize_dialog (void)
+pixelize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *adjustment;
+  GtkWidget *vbox;
+  guint32    image_id;
+  GimpUnit   unit;
+  gdouble    xres, yres;
 
   gimp_ui_init ("pixelize", FALSE);
 
@@ -293,24 +338,34 @@ pixelize_dialog (void)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  adjustment =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Pixel Width:"), SCALE_WIDTH, ENTRY_WIDTH,
-			  pvals.pixelwidth, 1, 64, 1, 8, 0,
-			  FALSE, 0, GIMP_MAX_IMAGE_SIZE,
-			  NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &pvals.pixelwidth);
-
   gtk_widget_show (frame);
-  gtk_widget_show (table);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  image_id = gimp_drawable_image (drawable->drawable_id);
+  unit = gimp_image_get_unit (image_id);
+  gimp_image_get_resolution (image_id, &xres, &yres);
+
+  pint.sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, ENTRY_WIDTH,
+                                         GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                         TRUE, FALSE,
+
+                                         _("Pixel Width:"),
+                                         pvals.pixelwidth, xres,
+                                         1, drawable->width,
+                                         1, drawable->width,
+                                         
+                                         _("Pixel Height:"),
+                                         pvals.pixelheight, yres,
+                                         1, drawable->height,
+                                         1, drawable->height);
+
+  gtk_box_pack_start (GTK_BOX (vbox), pint.sizeentry, FALSE, FALSE, 0);
+  gtk_widget_show (pint.sizeentry);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -327,6 +382,12 @@ pixelize_ok_callback (GtkWidget *widget,
 {
   pint.run = TRUE;
 
+  pvals.pixelwidth =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.sizeentry), 0);
+
+  pvals.pixelheight =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.sizeentry), 1);
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -338,20 +399,30 @@ static void
 pixelize (GimpDrawable *drawable)
 {
   gint tile_width;
+  gint tile_height;
   gint pixelwidth;
+  gint pixelheight;
 
-  tile_width = gimp_tile_width();
-  pixelwidth = pvals.pixelwidth;
+  tile_width  = gimp_tile_width ();
+  tile_height = gimp_tile_height ();
+
+  pixelwidth  = pvals.pixelwidth;
+  pixelheight = pvals.pixelheight;
 
   if (pixelwidth < 0)
     pixelwidth = - pixelwidth;
   if (pixelwidth < 1)
     pixelwidth = 1;
 
-  if (pixelwidth >= tile_width)
-    pixelize_large (drawable, pixelwidth);
+  if (pixelheight < 0)
+    pixelheight = - pixelheight;
+  if (pixelheight < 1)
+    pixelheight = 1;
+
+  if (pixelwidth >= tile_width || pixelheight >= tile_height)
+    pixelize_large (drawable, pixelwidth, pixelheight);
   else
-    pixelize_small (drawable, pixelwidth, tile_width);
+    pixelize_small (drawable, pixelwidth, pixelheight, tile_width, tile_height);
 }
 
 /*
@@ -360,34 +431,35 @@ pixelize (GimpDrawable *drawable)
  */
 static void
 pixelize_large (GimpDrawable *drawable,
-		gint       pixelwidth)
+		gint          pixelwidth,
+                gint          pixelheight)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src_row, *dest_row;
-  guchar *src, *dest;
-  gulong *average;
-  gint row, col, b, bpp;
-  gint x, y, x_step, y_step;
-  gulong count;
-  gint x1, y1, x2, y2;
-  gint progress, max_progress;
-  gpointer pr;
+  GimpPixelRgn  src_rgn, dest_rgn;
+  guchar       *src_row, *dest_row;
+  guchar       *src, *dest;
+  gulong       *average;
+  gint          row, col, b, bpp;
+  gint          x, y, x_step, y_step;
+  gulong        count;
+  gint          x1, y1, x2, y2;
+  gint          progress, max_progress;
+  gpointer      pr;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp(drawable->drawable_id);
-  average = g_new(gulong, bpp);
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+  average = g_new (gulong, bpp);
 
   /* Initialize progress */
   progress = 0;
   max_progress = 2 * (x2 - x1) * (y2 - y1);
 
-  for (y = y1; y < y2; y += pixelwidth - (y % pixelwidth))
+  for (y = y1; y < y2; y += pixelheight - (y % pixelheight))
     {
       for (x = x1; x < x2; x += pixelwidth - (x % pixelwidth))
 	{
-	  x_step = pixelwidth - (x % pixelwidth);
-	  y_step = pixelwidth - (y % pixelwidth);
+	  x_step = pixelwidth  - (x % pixelwidth);
+	  y_step = pixelheight - (y % pixelheight);
 	  x_step = MIN(x_step, x2-x);
 	  y_step = MIN(y_step, y2-y);
 
@@ -471,13 +543,15 @@ pixelize_large (GimpDrawable *drawable,
  */
 static void
 pixelize_small (GimpDrawable *drawable,
-		gint       pixelwidth,
-		gint       tile_width)
+		gint          pixelwidth,
+                gint          pixelheight,
+		gint          tile_width,
+                gint          tile_height)
 {
   GimpPixelRgn src_rgn, dest_rgn;
-  gint bpp;
-  gint x1, y1, x2, y2;
-  gint progress, max_progress;
+  gint         bpp;
+  gint         x1, y1, x2, y2;
+  gint         progress, max_progress;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
@@ -489,15 +563,17 @@ pixelize_small (GimpDrawable *drawable,
 
   bpp = drawable->bpp;
 
-  area.width = (tile_width / pixelwidth) * pixelwidth;
-  area.data= g_new(guchar, (glong) bpp * area.width * area.width );
+  area.width  = (tile_width  / pixelwidth)  * pixelwidth;
+  area.height = (tile_height / pixelheight) * pixelheight;
+  area.data= g_new (guchar, (glong) bpp * area.width * area.height);
 
-  for(area.y = y1; area.y < y2;
-       area.y += area.width - (area.y % area.width))
+  for (area.y = y1; area.y < y2;
+       area.y += area.height - (area.y % area.height))
     {
-      area.h = area.width - (area.y % area.width);
-      area.h = MIN(area.h, y2 - area.y);
-      for(area.x = x1; area.x < x2;
+      area.h = area.height - (area.y % area.height);
+      area.h = MIN (area.h, y2 - area.y);
+
+      for (area.x = x1; area.x < x2;
 	   area.x += area.width - (area.x % area.width))
 	{
 	  area.w = area.width - (area.x % area.width);
@@ -506,7 +582,7 @@ pixelize_small (GimpDrawable *drawable,
 	  gimp_pixel_rgn_get_rect (&src_rgn, area.data,
 				   area.x, area.y, area.w, area.h);
 
-	  pixelize_sub(pixelwidth, bpp);
+	  pixelize_sub (pixelwidth, pixelheight, bpp);
 
 	  gimp_pixel_rgn_set_rect (&dest_rgn, area.data,
 				   area.x, area.y, area.w, area.h);
@@ -532,6 +608,7 @@ pixelize_small (GimpDrawable *drawable,
 
 static void
 pixelize_sub (gint pixelwidth,
+              gint pixelheight,
 	      gint bpp)
 {
   glong average[4];		/* bpp <= 4 */
@@ -544,10 +621,11 @@ pixelize_sub (gint pixelwidth,
 
   rowstride = area.w * bpp;
 
-  for (y = area.y; y < area.y + area.h; y += pixelwidth - (y % pixelwidth))
+  for (y = area.y; y < area.y + area.h; y += pixelheight - (y % pixelheight))
     {
-      h = pixelwidth - (y % pixelwidth);
-      h = MIN(h, area.y + area.h - y);
+      h = pixelheight - (y % pixelheight);
+      h = MIN (h, area.y + area.h - y);
+
       for (x = area.x; x < area.x + area.w; x += pixelwidth - (x % pixelwidth))
 	{
 	  w = pixelwidth - (x % pixelwidth);
