@@ -441,13 +441,15 @@ load_image (gchar *filename)
       offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
                         + (footer[3] * 16777216);
 
-      if (fseek (fp, offset, SEEK_SET) ||
-          fread (extension, sizeof (extension), 1, fp) != 1) {
-        g_message (_("TGA: Cannot read extension from \"%s\"\n"), filename);
-        return -1;
+      if (offset != 0) {
+        if (fseek (fp, offset, SEEK_SET) ||
+            fread (extension, sizeof (extension), 1, fp) != 1) {
+          g_message (_("TGA: Cannot read extension from \"%s\"\n"), filename);
+          return -1;
+        }
+        /* Eventually actually handle version 2 TGA here */
       }
 
-      /* Eventually actually handle version 2 TGA here */
     }
   }
 
