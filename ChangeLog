@@ -1,3 +1,9 @@
+2003-11-22  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/core/gimpimage-snap.c: behave correctly for grid
+	spacing of 1px, whitespace clean up. Fixes the grid part of bug
+	#125864.
+
 2003-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolordisplay.[ch]: added API to

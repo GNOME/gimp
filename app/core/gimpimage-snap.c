@@ -70,14 +70,14 @@ gimp_image_snap_x (GimpImage *gimage,
       for (list = gimage->guides; list; list = g_list_next (list))
         {
           guide = (GimpGuide *) list->data;
-          
+
           if (guide->position < 0)
             continue;
-          
+
           if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
             {
               dist = ABS (guide->position - x);
-              
+
               if (dist < MIN (EPSILON, mindist))
                 {
                   mindist = dist;
@@ -91,19 +91,19 @@ gimp_image_snap_x (GimpImage *gimage,
   if (snap_to_grid && gimage->grid != NULL)
     {
       grid = gimp_image_get_grid (gimage);
-      
+
       g_object_get (grid,
                     "xspacing", &xspacing,
                     "xoffset",  &xoffset,
                     NULL);
-      
+
       for (i = xoffset; i <= gimage->width; i += xspacing)
         {
           if (i < 0)
             continue;
-              
-          dist = ABS (i - x);
-          
+
+          dist = ABS (i - x - 0.5);
+
           if (dist < MIN (EPSILON, mindist))
             {
               mindist = dist;
@@ -149,14 +149,14 @@ gimp_image_snap_y (GimpImage *gimage,
       for (list = gimage->guides; list; list = g_list_next (list))
         {
           guide = (GimpGuide *) list->data;
-          
+
           if (guide->position < 0)
             continue;
-          
+
           if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
             {
               dist = ABS (guide->position - y);
-              
+
               if (dist < MIN (EPSILON, mindist))
                 {
                   mindist = dist;
@@ -170,19 +170,19 @@ gimp_image_snap_y (GimpImage *gimage,
   if (snap_to_grid && gimage->grid != NULL)
     {
       grid = gimp_image_get_grid (gimage);
-  
+
       g_object_get (grid,
                     "yspacing", &yspacing,
                     "yoffset",  &yoffset,
                     NULL);
-      
+
       for (i = yoffset; i <= gimage->height; i += yspacing)
         {
           if (i < 0)
             continue;
-          
-          dist = ABS (i - y);
-          
+
+          dist = ABS (i - y - 0.5);
+
           if (dist < MIN (EPSILON, mindist))
             {
               mindist = dist;
@@ -238,15 +238,15 @@ gimp_image_snap_point (GimpImage *gimage,
       for (list = gimage->guides; list; list = g_list_next (list))
         {
           guide = (GimpGuide *) list->data;
-          
+
           if (guide->position < 0)
             continue;
-          
+
           switch (guide->orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
               dist = ABS (guide->position - y);
-              
+
               if (dist < MIN (EPSILON, minydist))
                 {
                   minydist = dist;
@@ -254,10 +254,10 @@ gimp_image_snap_point (GimpImage *gimage,
                   snapped = TRUE;
                 }
               break;
-              
+
             case GIMP_ORIENTATION_VERTICAL:
               dist = ABS (guide->position - x);
-              
+
               if (dist < MIN (EPSILON, minxdist))
                 {
                   minxdist = dist;
@@ -265,17 +265,17 @@ gimp_image_snap_point (GimpImage *gimage,
                   snapped = TRUE;
                 }
               break;
-              
+
             default:
               break;
             }
         }
     }
-  
+
   if (snap_to_grid && gimage->grid != NULL)
     {
       grid = gimp_image_get_grid (gimage);
-      
+
       g_object_get (grid,
                     "xspacing", &xspacing,
                     "yspacing", &yspacing,
@@ -288,7 +288,7 @@ gimp_image_snap_point (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - x);
+          dist = ABS (i - x - 0.5);
 
           if (dist < MIN (EPSILON, minxdist))
             {
@@ -303,7 +303,7 @@ gimp_image_snap_point (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - y);
+          dist = ABS (i - y - 0.5);
 
           if (dist < MIN (EPSILON, minydist))
             {
@@ -367,7 +367,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
     *tx1 = nx1;
   else if (snap2)
     *tx1 = ROUND (x1 + (nx2 - x2));
-  
+
   if (snap3 && snap4)
     {
       if (ABS (y1 - ny1) > ABS (y2 - ny2))
