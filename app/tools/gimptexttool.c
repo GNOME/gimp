@@ -45,9 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define PIXELS 0
-#define POINTS 1
-
 #define FOUNDRY    0
 #define FAMILY     1
 #define WEIGHT     2

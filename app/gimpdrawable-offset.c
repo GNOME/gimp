@@ -33,8 +33,6 @@
 #include "channel_pvt.h"
 
 #define ENTRY_WIDTH        60
-#define OFFSET_BACKGROUND  0
-#define OFFSET_TRANSPARENT 1
 
 typedef struct
 {

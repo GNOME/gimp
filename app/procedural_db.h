@@ -18,6 +18,8 @@
 #ifndef __PROCEDURAL_DB_H__
 #define __PROCEDURAL_DB_H__
 
+#include <glib.h>
+
 #include "gimpimageF.h"
 
 /*  Procedural database types  */

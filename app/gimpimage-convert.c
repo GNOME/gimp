@@ -96,8 +96,6 @@
 #include "drawable_pvt.h"		/* ick ick. */
 #include "tile_manager_pvt.h"		/* ick ick ick. */
 
-#define MAXNUMCOLORS 256
-
 #define NODITHER 0
 #define FSDITHER 1
 #define NODESTRUCTDITHER 2
@@ -233,11 +231,6 @@ typedef struct
   int          reusepal_flag;
 } IndexedDialog;
 
-static Argument * convert_rgb_invoker               (Argument *);
-static Argument * convert_grayscale_invoker         (Argument *);
-static Argument * convert_indexed_invoker           (Argument *);
-static Argument * convert_indexed_palette_invoker   (Argument *);
-
 static void indexed_ok_callback     (GtkWidget *, gpointer);
 static void indexed_cancel_callback (GtkWidget *, gpointer);
 static gint indexed_delete_callback (GtkWidget *, GdkEvent *, gpointer);
@@ -245,7 +238,6 @@ static void indexed_num_cols_update (GtkWidget *, gpointer);
 static void indexed_radio_update    (GtkWidget *, gpointer);
 static void indexed_dither_update   (GtkWidget *, gpointer);
 
-static void convert_image       (GImage *, int, int, int, int);
 static void rgb_converter       (Layer *, TileManager *, int);
 static void grayscale_converter (Layer *, TileManager *, int);
 
@@ -268,8 +260,9 @@ static gboolean needs_quantize;
 
 static GtkWidget *build_palette_menu(int *default_palette);
 static void palette_entries_callback(GtkWidget *w, gpointer client_data);
-static PaletteEntriesP theCustomPalette = NULL;
 static gboolean UserHasWebPal = FALSE;
+
+PaletteEntriesP theCustomPalette = NULL;
 
 
 /* Defaults */
@@ -744,7 +737,7 @@ indexed_dither_update (GtkWidget *w,
     dialog->dither = FALSE;
 }
 
-static void
+void
 convert_image (GImage *gimage,
 	       int     new_type,
 	       int     num_cols,     /*  used only for new_type == INDEXED  */
@@ -3132,320 +3125,4 @@ initialize_median_cut (int type,
   quantobj->delete_func = delete_median_cut;
 
   return quantobj;
-}
-
-
-/*
- *  Procedure database functions and data structures
- */
-
-/*  The convert-rgb procedure definition  */
-ProcArg convert_rgb_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  }
-};
-
-ProcRecord convert_rgb_proc =
-{
-  "gimp_convert_rgb",
-  "Convert specified image to RGB color",
-  "This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  1,
-  convert_rgb_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { convert_rgb_invoker } },
-};
-
-
-static Argument *
-convert_rgb_invoker (Argument *args)
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  make sure the drawable is not RGB color  */
-  if (success)
-    success = (gimage_base_type (gimage) != RGB);
-
-  if (success)
-    convert_image ((void *) gimage, RGB, 0, 0, 0);
-
-  return procedural_db_return_args (&convert_rgb_proc, success);
-}
-
-
-
-/*  The convert-grayscale procedure definition  */
-ProcArg convert_grayscale_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  }
-};
-
-ProcRecord convert_grayscale_proc =
-{
-  "gimp_convert_grayscale",
-  "Convert specified image to grayscale (256 intensity levels)",
-  "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels).  This process requires an image of type RGB or INDEXED.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  1,
-  convert_grayscale_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { convert_grayscale_invoker } },
-};
-
-
-static Argument *
-convert_grayscale_invoker (Argument *args)
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  make sure the drawable is not GRAYSCALE color  */
-  if (success)
-    success = (gimage_base_type (gimage) != GRAY);
-
-  if (success)
-    convert_image ((void *) gimage, GRAY, 0, 0, 0);
-
-  return procedural_db_return_args (&convert_grayscale_proc, success);
-}
-
-
-
-/*  The convert-indexed procedure definition  */
-ProcArg convert_indexed_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_INT32,
-    "dither",
-    "Floyd-Steinberg dithering"
-  },
-  { PDB_INT32,
-    "num_cols",
-    "the number of colors to quantize to"
-  }
-};
-
-ProcRecord convert_indexed_proc =
-{
-  "gimp_convert_indexed",
-  "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256).",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  convert_indexed_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { convert_indexed_invoker } },
-};
-
-
-static Argument *
-convert_indexed_invoker (Argument *args)
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-  int dither;
-  int num_cols;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-        success = FALSE;
-    }
-  /*  make sure the drawable is not INDEXED color  */
-  if (success)
-    success = (gimage_base_type (gimage) != INDEXED);
-  if (success)
-    dither = (args[1].value.pdb_int) ? TRUE : FALSE;
-  if (success)
-    {
-      num_cols = args[2].value.pdb_int;
-      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
-        success = FALSE;
-    }
-
-  if (success)
-    convert_image ((void *) gimage, INDEXED, num_cols, dither, 0);
-
-  return procedural_db_return_args (&convert_indexed_proc, success);
-}
-
-
-
-/*  The convert-indexed-palette procedure definition  */
-ProcArg convert_indexed_palette_args[] =
-{
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
-  { PDB_INT32,
-    "dither",
-    "Floyd-Steinberg dithering"
-  },
-  { PDB_INT32,
-    "palette_type",
-    "The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)"
-  },
-  { PDB_INT32,
-    "num_cols",
-    "the number of colors to quantize to, ignored unless (palette_type == 0)"
-  },
-  { PDB_STRING,
-    "palette",
-    "The name of the custom palette to use, ignored unless (palette_type == 4)"
-  }
-};
-
-ProcRecord convert_indexed_palette_proc =
-{
-  "gimp_convert_indexed_palette",
-  "Convert specified image to indexed color",
-  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  convert_indexed_palette_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { convert_indexed_palette_invoker } },
-};
-
-
-static Argument *
-convert_indexed_palette_invoker (Argument *args)
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-  int dither;
-  int num_cols=0;
-  int palette_type;
-  char *palette_name;
-
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  /*  make sure the drawable is not INDEXED color  */
-  if (success)
-    success = (gimage_base_type (gimage) != INDEXED);
-  if (success)
-    dither = (args[1].value.pdb_int) ? TRUE : FALSE;
-  if (success)
-    {
-      PaletteEntriesP entries, the_palette = NULL;
-      GSList *list;
-
-		palette_type = args[2].value.pdb_int;
-		switch(palette_type) {
-		  case MAKE_PALETTE:
-          num_cols = args[3].value.pdb_int;
-          if (num_cols < 1 || num_cols > MAXNUMCOLORS)
-            success = FALSE;
-		  break;
-		  case REUSE_PALETTE:
-		  break;
-		  case WEB_PALETTE:
-		  break;
-		  case MONO_PALETTE:
-		  break;
-		  case CUSTOM_PALETTE:
-          palette_name = args[4].value.pdb_pointer;
- /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
-          if (!palette_entries_list) palette_init_palettes(FALSE);
-		    for(list = palette_entries_list;
-              list;
-              list = g_slist_next(list)) {
-                entries = (PaletteEntriesP) list->data;
-                if (strcmp(palette_name, entries->name)==0) {
-	/*					fprintf(stderr, "found it!\n"); */
-                  the_palette = entries;
-                  break;
-					 }
-			 }
-          if (the_palette == NULL) {
-	/*			fprintf(stderr, "didn't find it\n"); */
-            success = FALSE;
-			 }
-          else
-            theCustomPalette = the_palette;
-		  break;
-		  default:
-          success = FALSE;
-		}
-	 }
-    if (success)
-       convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
-  return procedural_db_return_args (&convert_indexed_palette_proc, success);
 }

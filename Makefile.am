@@ -18,7 +18,7 @@ EXTRA_DIST = \
 	pixmaps/new.xpm		 \
 	pixmaps/no.xpm		 \
 	pixmaps/raise.xpm	 \
-	pixmaps/paths.xbm	 \
+	pixmaps/path.xbm	 \
 	pixmaps/penadd.xpm	 \
 	pixmaps/pendel.xpm	 \
 	pixmaps/penedit.xpm	 \

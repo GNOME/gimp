@@ -32,21 +32,17 @@
 #include "clone.h"
 #include "color_balance.h"
 #include "color_picker.h"
-#include "convert.h"
 #include "convolve.h"
 #include "crop.h"
 #include "curves.h"
 #include "desaturate.h"
 #include "drawable_cmds.h"
-#include "edit_cmds.h"
 #include "ellipse_select.h"
 #include "equalize.h"
 #include "eraser.h"
 #include "flip_tool.h"
-#include "floating_sel_cmds.h"
 #include "free_select.h"
 #include "fuzzy_select.h"
-#include "gdisplay_cmds.h"
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
 #include "gimprc.h"
@@ -60,7 +56,6 @@
 #include "internal_procs.h"
 #include "paintbrush.h"
 #include "palette.h"
-#include "paths_cmds.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "pencil.h"
@@ -72,11 +67,17 @@
 #include "shear_tool.h"
 #include "text_tool.h"
 #include "threshold.h"
-#include "undo_cmds.h"
 #include "parasite_cmds.h"
 #include "procedural_db.h"
 
 #include "libgimp/gimpintl.h"
+
+void register_gdisplay_procs     (void);
+void register_edit_procs         (void);
+void register_floating_sel_procs (void);
+void register_undo_procs         (void);
+void register_convert_procs      (void);
+void register_paths_procs        (void);
 
 void
 internal_procs_init ()
@@ -123,20 +124,15 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  GDisplay procedures  */
-  procedural_db_register (&gdisplay_new_proc); pcount++;
-  procedural_db_register (&gdisplay_delete_proc); pcount++;
-  procedural_db_register (&gdisplays_flush_proc); pcount++;
+  register_gdisplay_procs ();
+  pcount += 3;
 
   app_init_update_status(NULL, _("Edit procedures"),
 			 pcount/total_pcount);
 
   /*  Edit procedures  */
-  procedural_db_register (&edit_cut_proc); pcount++;
-  procedural_db_register (&edit_copy_proc); pcount++;
-  procedural_db_register (&edit_paste_proc); pcount++;
-  procedural_db_register (&edit_clear_proc); pcount++;
-  procedural_db_register (&edit_fill_proc); pcount++;
-  procedural_db_register (&edit_stroke_proc); pcount++;
+  register_edit_procs ();
+  pcount += 6;
 
   app_init_update_status(NULL, _("GImage procedures"),
 			 pcount/total_pcount);
@@ -316,19 +312,15 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Floating Selections  */
-  procedural_db_register (&floating_sel_remove_proc); pcount++;
-  procedural_db_register (&floating_sel_anchor_proc); pcount++;
-  procedural_db_register (&floating_sel_to_layer_proc); pcount++;
-  procedural_db_register (&floating_sel_attach_proc); pcount++;
-  procedural_db_register (&floating_sel_rigor_proc); pcount++;
-  procedural_db_register (&floating_sel_relax_proc); pcount++;
+  register_floating_sel_procs ();
+  pcount += 6;
 
   app_init_update_status(NULL, _("Undo"),
 			 pcount/total_pcount);
 
   /*  Undo  */
-  procedural_db_register (&undo_push_group_start_proc); pcount++;
-  procedural_db_register (&undo_push_group_end_proc); pcount++;
+  register_undo_procs ();
+  pcount += 2;
 
   app_init_update_status(NULL, _("Palette"),
 			 pcount/total_pcount);
@@ -396,10 +388,8 @@ internal_procs_init ()
   procedural_db_register (&posterize_proc); pcount++;
   procedural_db_register (&threshold_proc); pcount++;
 
-  procedural_db_register (&convert_rgb_proc); pcount++;
-  procedural_db_register (&convert_grayscale_proc); pcount++;
-  procedural_db_register (&convert_indexed_proc); pcount++;
-  procedural_db_register (&convert_indexed_palette_proc); pcount++;
+  register_convert_procs ();
+  pcount += 4;
 
   app_init_update_status(NULL, _("Channel ops"),
 			 pcount/total_pcount);
@@ -423,13 +413,8 @@ internal_procs_init ()
   procedural_db_register (&gimp_detach_parasite_proc); pcount++;
 
   /* paths procedures */
-  procedural_db_register (&path_list_proc); pcount++;  
-  procedural_db_register (&path_get_points_proc); pcount++;  
-  procedural_db_register (&path_get_current_proc); pcount++;  
-  procedural_db_register (&path_set_current_proc); pcount++; 
-  procedural_db_register (&path_set_points_proc); pcount++;   
-  procedural_db_register (&path_stroke_current_proc); pcount++;   
-
+  register_paths_procs ();
+  pcount += 6;
 
   app_init_update_status(NULL, _("Procedural database"),
 			 pcount/total_pcount);

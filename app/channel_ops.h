@@ -21,6 +21,11 @@
 #include "procedural_db.h"
 #include "gimpimageF.h"
 
+typedef enum {
+  OFFSET_BACKGROUND,
+  OFFSET_TRANSPARENT
+} ChannelOffsetType;
+
 /*  channel_ops functions  */
 void  channel_ops_offset    (GimpImage*);
 

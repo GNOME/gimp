@@ -95,6 +95,7 @@ gimp_SOURCES = \
 	commands.h		\
 	convert.c		\
 	convert.h		\
+	convert_cmds.c		\
 	convolve.c		\
 	convolve.h		\
 	crop.c			\
@@ -126,7 +127,6 @@ gimp_SOURCES = \
 	drawable_cmds.c		\
 	drawable_cmds.h		\
 	edit_cmds.c		\
-	edit_cmds.h		\
 	edit_selection.c	\
 	edit_selection.h	\
 	ellipse_select.c	\
@@ -146,7 +146,6 @@ gimp_SOURCES = \
 	floating_sel.c		\
 	floating_sel.h		\
 	floating_sel_cmds.c	\
-	floating_sel_cmds.h	\
 	file_new_dialog.c	\
 	file_new_dialog.h	\
 	frac.c			\
@@ -161,7 +160,6 @@ gimp_SOURCES = \
 	gdisplayP.h		\
 	gdisplayF.h		\
 	gdisplay_cmds.c		\
-	gdisplay_cmds.h		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
 	general.c		\
@@ -200,6 +198,7 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimphistogramP.h	\
 	gimpunit.c		\
+	gimpunit_cmds.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -277,7 +276,6 @@ gimp_SOURCES = \
 	parasitelistF.h		\
 	parasitelistP.h		\
 	paths_cmds.c		\
-	paths_cmds.h		\
 	paths_dialog.h		\
 	paths_dialog.c		\
 	pathsP.h		\
@@ -351,8 +349,6 @@ gimp_SOURCES = \
 	undo.c			\
 	undo.h			\
 	undo_cmds.c		\
-	undo_cmds.h		\
-	unit_cmds.h		\
 	unitrc.h		\
 	wilber.h		\
 	vector2d.c		\

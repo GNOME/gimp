@@ -31,15 +31,15 @@ typedef enum {
   CUSTOM_PALETTE
 } ConvertPaletteType;
 
-/*  convert functions  */
-void  convert_to_rgb        (GimpImage *);
-void  convert_to_grayscale  (GimpImage *);
-void  convert_to_indexed    (GimpImage *);
+#define MAXNUMCOLORS 256
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord convert_rgb_proc;
-extern ProcRecord convert_grayscale_proc;
-extern ProcRecord convert_indexed_proc;
-extern ProcRecord convert_indexed_palette_proc;
+/*  convert functions  */
+void convert_to_rgb        (GimpImage *);
+void convert_to_grayscale  (GimpImage *);
+void convert_to_indexed    (GimpImage *);
+
+void convert_image         (GimpImage *, int, int, int, int);
+
+extern PaletteEntriesP theCustomPalette;
 
 #endif  /*  __CONVERT_H__  */

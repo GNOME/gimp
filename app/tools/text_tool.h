@@ -21,6 +21,11 @@
 #include "tools.h"
 #include "procedural_db.h"
 
+typedef enum {
+  PIXELS,
+  POINTS
+} SizeType;
+
 typedef struct {
   int antialias;
   int border;
