@@ -1,6 +1,9 @@
 # GIMP controllerrc
 
 (controller "GimpControllerWheel"
+    (options
+        (name "Main Mouse Wheel")
+        (enabled TRUE))
     (mapping 0 "context-font-next")
     (mapping 1 "context-gradient-next")
     (mapping 2 "context-pattern-next")

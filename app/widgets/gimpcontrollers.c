@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-params.h"
 #include "config/gimpconfig-utils.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
@@ -88,6 +90,19 @@ gimp_controllers_init (Gimp *gimp)
                           GIMP_CONTROLLER_MANAGER_DATA_KEY, manager,
                           (GDestroyNotify) gimp_controller_manager_free);
 
+  /*  EEEEEEK  */
+  {
+    static const GInterfaceInfo config_iface_info =
+    {
+      NULL,  /* iface_init     */
+      NULL,  /* iface_finalize */
+      NULL   /* iface_data     */
+    };
+
+    g_type_add_interface_static (GIMP_TYPE_CONTROLLER, GIMP_TYPE_CONFIG,
+                                 &config_iface_info);
+  }
+
   g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
 }
 
@@ -105,6 +120,7 @@ gimp_controllers_exit (Gimp *gimp)
 enum
 {
   CONTROLLER,
+  CONTROLLER_OPTIONS,
   CONTROLLER_MAPPING
 };
 
@@ -141,6 +157,8 @@ gimp_controllers_restore (Gimp          *gimp,
 
   g_scanner_scope_add_symbol (scanner, 0, "controller",
                               GINT_TO_POINTER (CONTROLLER));
+  g_scanner_scope_add_symbol (scanner, CONTROLLER, "options",
+                              GINT_TO_POINTER (CONTROLLER_OPTIONS));
   g_scanner_scope_add_symbol (scanner, CONTROLLER, "mapping",
                               GINT_TO_POINTER (CONTROLLER_MAPPING));
 
@@ -290,6 +308,21 @@ gimp_controller_deserialize (GimpControllerManager *manager,
                                             (GDestroyNotify) g_free,
                                             (GDestroyNotify) g_object_unref);
 
+  /* EEEEEK */
+  {
+    GParamSpec **props;
+    gint         n_props;
+    gint         i;
+
+    props = g_object_class_list_properties (g_type_class_peek (controller_type),
+                                            &n_props);
+
+    for (i = 0; i < n_props; i++)
+      props[i]->flags |= GIMP_PARAM_SERIALIZE;
+
+    g_free (props);
+  }
+
   token = G_TOKEN_LEFT_PAREN;
 
   while (g_scanner_peek_next_token (scanner) == token)
@@ -305,6 +338,22 @@ gimp_controller_deserialize (GimpControllerManager *manager,
         case G_TOKEN_SYMBOL:
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
+            case CONTROLLER_OPTIONS:
+              {
+                GimpConfigInterface *config_iface;
+
+                config_iface = GIMP_CONFIG_GET_INTERFACE (info->controller);
+
+                if (! config_iface->deserialize (GIMP_CONFIG (info->controller),
+                                                 scanner,
+                                                 1,
+                                                 FALSE))
+                  {
+                    goto error;
+                  }
+              }
+              break;
+
             case CONTROLLER_MAPPING:
               {
                 GtkAction *action = NULL;
@@ -401,12 +450,12 @@ gimp_controller_info_event (GimpController            *controller,
                             GimpControllerInfo        *info)
 {
   GtkAction   *action;
-  const gchar *controller_name;
+  const gchar *class_name;
 
-  controller_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
+  class_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
 
-  g_print ("Received '%s' controller event '%s'\n",
-           controller_name,
+  g_print ("Received '%s' (class '%s') controller event '%s'\n",
+           controller->name, class_name,
            gimp_controller_get_event_name (controller, event->any.event_id));
 
   action = g_hash_table_lookup (info->mapping, &event->any.event_id);

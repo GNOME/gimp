@@ -1,5 +1,12 @@
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontrollers.c: load the controller's
+	properties from the controllerrc file.
+
+	* etc/controllerrc: set the wheel's properties.
+
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
 	* etc/controllerrc: use the 10% actions for opacity.
 
 2004-06-16  Michael Natterer  <mitch@gimp.org>
