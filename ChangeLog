@@ -3,7 +3,8 @@
 	* app/pdb/parasite_cmds.c
 	* tools/pdbgen/pdb/parasite.pdb: fixed nasty bug in perl expression
 	that caused all parasite PDB functions to work on global gimp parasites
-	instead of image and drawable ones.
+	even if the gimp_image_parasite* and gimp_drawable_parasite* functions
+	were called.
 	
 2001-09-17  Sven Neumann  <sven@gimp.org>
 
