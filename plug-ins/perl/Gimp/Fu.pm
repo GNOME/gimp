@@ -99,10 +99,10 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_CUSTOM	=> 'string',
          &PF_FILE	=> 'string',
          &PF_TEXT	=> 'string',
-         &PF_IMAGE	=> 'path',
-         &PF_LAYER	=> 'index',
-         &PF_CHANNEL	=> 'index',
-         &PF_DRAWABLE	=> 'index',
+         &PF_IMAGE	=> 'image',
+         &PF_LAYER	=> 'layer',
+         &PF_CHANNEL	=> 'channel',
+         &PF_DRAWABLE	=> 'drawable',
 );
 
 @_params=qw(PF_INT8 PF_INT16 PF_INT32 PF_FLOAT PF_VALUE PF_STRING PF_COLOR
@@ -241,7 +241,7 @@ sub string2pf($$) {
       $s?1:0;
    #} elsif($type==PF_IMAGE) {
    } else {
-      die __"conversion to type $pf_type2string{$type} is not yet implemented\n";
+      die __"conversion from string to type $pf_type2string{$type} is not yet implemented\n";
    }
 }
 
@@ -290,9 +290,11 @@ Gimp::on_net {
 	   $args[$idx]=string2pf($arg,$params->[$idx]);
 	   $interact--;
 	 }
-      } else {
+      } elsif (@args < @$params) {
          push(@args,string2pf($_,$params->[@args]));
 	 $interact--;
+      } else {
+         die __"too many arguments, use --help\n";
       }
    }
 

@@ -244,14 +244,16 @@ sub canonicalize_colour {
       [map {eval "0x$_"} ($1,$2,$3)];
    } else {
       unless (%rgb_db) {
+         local *RGB_TEXT;
          if ($rgb_db_path) {
-            open RGB_TEXT,"<$rgb_db_path" or croak __"unable to open $rgb_db_path";
+            open RGB_TEXT, "<$rgb_db_path" or croak __"unable to open $rgb_db_path";
          } else {
-            *RGB_TEXT=*DATA;
+            *RGB_TEXT = *DATA;
+            seek RGB_TEXT, 0, 0;
          }
          while(<RGB_TEXT>) {
             next unless /^\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*$/;
-            $rgb_db{lc($4)}=[$1,$2,$3];
+            $rgb_db{lc($4)} = [$1,$2,$3];
          }
          close RGB_TEXT;
       }
@@ -590,7 +592,7 @@ sub new($$$$$$$$) {
    init Gimp::PixelRgn(@_);
 }
 
-package Gimp::GimpParasite;
+package Gimp::Parasite;
 
 sub is_type($$)		{ $_[0]->[0] eq $_[1] }
 sub is_persistent($)	{ $_[0]->[1] & &Gimp::PARASITE_PERSISTENT }
@@ -608,6 +610,7 @@ sub new($$$$)		{ shift; [@_] }
 package Gimp::run_mode;
 
 # I guess I now use almost every perl feature available ;)
+# [except pseudo hashes. pseudo hashes must die!]
 
 use overload fallback => 1,
              '0+'     => sub { ${$_[0]} };
