@@ -352,6 +352,7 @@ tools_new_dodgeburn (void)
   private = (PaintCore *) tool->private;
 
   private->paint_func = dodgeburn_paint_func;
+  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
   tool->modifier_key_func = dodgeburn_modifier_key_func;
 
