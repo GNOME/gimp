@@ -536,7 +536,7 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkTable.
  *
- * Note that if you pass a @tooltip or @private_tip to this function you'll
+ * Note that if you pass a @tooltip or @help_data to this function you'll
  * have to initialize GIMP's help system with gimp_help_init() before using it.
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.

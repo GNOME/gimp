@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "boundary.h"
 #include "by_color_select.h"
@@ -85,11 +87,12 @@ static void by_color_select_color_drop (GtkWidget *, guchar, guchar, guchar,
 
 /*  by_color select action functions  */
 
-static void by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
-static void by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
-static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void by_color_select_oper_update    (Tool *, GdkEventMotion *, gpointer);
-static void by_color_select_control        (Tool *, ToolAction,       gpointer);
+static void by_color_select_button_press    (Tool *, GdkEventButton *, gpointer);
+static void by_color_select_button_release  (Tool *, GdkEventButton *, gpointer);
+static void by_color_select_modifier_update (Tool *, GdkEventKey *   , gpointer);
+static void by_color_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
+static void by_color_select_oper_update     (Tool *, GdkEventMotion *, gpointer);
+static void by_color_select_control         (Tool *, ToolAction,       gpointer);
 
 static ByColorDialog * by_color_select_dialog_new (void);
 
@@ -448,8 +451,9 @@ by_color_select_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
 
-  if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
-    if (layer == gdisp->gimage->active_layer)
+  if (by_color_options->sample_merged ||
+      ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)) &&
+       layer == gdisp->gimage->active_layer))
       {
 	switch (by_col_sel->operation)
 	  {
@@ -466,7 +470,7 @@ by_color_select_cursor_update (Tool           *tool,
 	    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
 	    break;
 	  case SELECTION_MOVE_MASK:
-	    gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+	    gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
 	    break;
 	  case SELECTION_MOVE: 
 	    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
@@ -475,7 +479,67 @@ by_color_select_cursor_update (Tool           *tool,
 	return;
       }
 
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
+}
+
+static void
+by_color_select_update_op_state (ByColorSelect *by_col_sel,
+				 gint           state,  
+				 GDisplay      *gdisp)
+{
+  if (active_tool->state == ACTIVE)
+    return;
+
+  if ((state & GDK_SHIFT_MASK) &&
+      !(state & GDK_CONTROL_MASK))
+    by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
+  else if ((state & GDK_CONTROL_MASK) &&
+           !(state & GDK_SHIFT_MASK))
+    by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
+  else if ((state & GDK_CONTROL_MASK) &&
+           (state & GDK_SHIFT_MASK))
+    by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
+  else
+    by_col_sel->operation = by_color_dialog->operation;
+}
+
+static void
+by_color_select_modifier_update (Tool        *tool,
+				 GdkEventKey *kevent,
+				 gpointer     gdisp_ptr)
+{
+  ByColorSelect *by_col_sel;
+  gint state;
+
+  by_col_sel = (ByColorSelect *) tool->private;
+
+  state = kevent->state;
+
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      if (state & GDK_MOD1_MASK)
+        state &= ~GDK_MOD1_MASK;
+      else
+        state |= GDK_MOD1_MASK;
+      break;
+
+    case GDK_Shift_L: case GDK_Shift_R:
+      if (state & GDK_SHIFT_MASK)
+        state &= ~GDK_SHIFT_MASK;
+      else
+        state |= GDK_SHIFT_MASK;
+      break;
+
+    case GDK_Control_L: case GDK_Control_R:
+      if (state & GDK_CONTROL_MASK)
+        state &= ~GDK_CONTROL_MASK;
+      else
+        state |= GDK_CONTROL_MASK;
+      break;
+    }
+
+  by_color_select_update_op_state (by_col_sel, state, (GDisplay *) gdisp_ptr);
 }
 
 static void
@@ -485,22 +549,10 @@ by_color_select_oper_update (Tool           *tool,
 {
   ByColorSelect *by_col_sel;
 
-  if (active_tool->state == ACTIVE)
-    return;
-
   by_col_sel = (ByColorSelect *) tool->private;
 
-  if ((mevent->state & GDK_SHIFT_MASK) &&
-      !(mevent->state & GDK_CONTROL_MASK))
-    by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
-  else if ((mevent->state & GDK_CONTROL_MASK) &&
-           !(mevent->state & GDK_SHIFT_MASK))
-    by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
-  else if ((mevent->state & GDK_CONTROL_MASK) &&
-           (mevent->state & GDK_SHIFT_MASK))
-    by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
-  else
-    by_col_sel->operation = by_color_dialog->operation;
+  by_color_select_update_op_state (by_col_sel, mevent->state,
+				   (GDisplay *) gdisp_ptr);
 }
 
 static void
@@ -558,6 +610,7 @@ tools_new_by_color_select (void)
   tool->button_press_func   = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->cursor_update_func  = by_color_select_cursor_update;
+  tool->modifier_key_func   = by_color_select_modifier_update;
   tool->oper_update_func    = by_color_select_oper_update;
   tool->control_func        = by_color_select_control;
 

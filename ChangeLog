@@ -1,3 +1,10 @@
+2000-03-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/by_color_select.c: immediate cursor_update feedback on
+	modifier events.
+
+	* libgimp/gimpwidgets.c: one more s/private_tip/help_data/
+
 2000-03-07  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/Makefile.am: added missing $(MAILER)
