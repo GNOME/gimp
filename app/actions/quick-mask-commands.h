@@ -23,7 +23,7 @@
 void   qmask_toggle_cmd_callback    (GtkAction *action,
                                      gpointer   data);
 void   qmask_invert_cmd_callback    (GtkAction *action,
-                                     gint       value,
+                                     GtkAction *current,
                                      gpointer   data);
 void   qmask_configure_cmd_callback (GtkAction *action,
                                      gpointer   data);

@@ -88,21 +88,19 @@ qmask_toggle_cmd_callback (GtkAction *action,
 
 void
 qmask_invert_cmd_callback (GtkAction *action,
-                           gint       value,
+                           GtkAction *current,
                            gpointer   data)
 {
   GimpImage *gimage;
+  gint       value;
   return_if_no_image (gimage, data);
 
-  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-    {
-      if (value != gimage->qmask_inverted)
-        {
-          gimp_image_qmask_invert (gimage);
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-          if (gimp_image_get_qmask_state (gimage))
-            gimp_image_flush (gimage);
-        }
+  if (value != gimage->qmask_inverted)
+    {
+      gimp_image_qmask_invert (gimage);
+      gimp_image_flush (gimage);
     }
 }
 

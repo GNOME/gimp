@@ -1,3 +1,9 @@
+2004-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/qmask-commands.c (qmask_invert_cmd_callback): is a
+	GtkRadioAction callback but behaved like a GtkToggleAction
+	callback. Fixes bug #152948.
+
 2004-09-19  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/bumpmap.c: use a GimpDrawablePreview instead of a
