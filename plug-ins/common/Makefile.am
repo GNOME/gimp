@@ -70,8 +70,7 @@ libexec_PROGRAMS = \
 	film \
 	flarefx \
 	fractaltrace \
-	gauss_iir \
-	gauss_rle \
+	gauss \
 	gbr \
 	gee \
 	gee_zoom \
@@ -732,23 +731,10 @@ fractaltrace_LDADD = \
 	$(RT_LIBS)							\
 	$(INTLLIBS)
 
-gauss_iir_SOURCES = \
-	gauss_iir.c
+gauss_SOURCES = \
+	gauss.c
 
-gauss_iir_LDADD = \
-	$(libgimpui)							\
-	$(libgimpwidgets)						\
-	$(libgimp)							\
-	$(libgimpcolor)							\
-	$(libgimpbase)							\
-	$(GTK_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)
-
-gauss_rle_SOURCES = \
-	gauss_rle.c
-
-gauss_rle_LDADD = \
+gauss_LDADD = \
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\

@@ -1,5 +1,16 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: removed the two gaussian blur
+	plug-ins...
+
+	* plug-ins/common/gauss.c: and added a merged version done by
+	William Skaggs. Fixes bug #134088.
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/sgi/sgi.c: applied a patch from Philip Lafleur that
 	makes the plug-in handle images with more than 4 channels. At the
 	moment the extra information is discarded (bug #143673).

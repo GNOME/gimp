@@ -55,8 +55,7 @@ plug-ins/common/exchange.c
 plug-ins/common/film.c
 plug-ins/common/flarefx.c
 plug-ins/common/fractaltrace.c
-plug-ins/common/gauss_iir.c
-plug-ins/common/gauss_rle.c
+plug-ins/common/gauss.c
 plug-ins/common/gbr.c
 plug-ins/common/gee.c
 plug-ins/common/gee_zoom.c
