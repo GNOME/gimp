@@ -1,6 +1,6 @@
 # Swedish messages for the GIMP perl plugin.
-# Copyright (C) 2001 Free Software Foundation, Inc.
-# Christian Rose <menthos@menthos.com>, 2001.
+# Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2001, 2002.
 #
 # $Id$
 #
@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: 2001-08-23 12:28\n"
-"PO-Revision-Date: 2001-10-14 16:29+0200\n"
+"PO-Revision-Date: 2002-01-28 02:44+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid " (press Tab to complete)"
-msgstr " (tryck Tabb för att färdigställa)"
+msgstr " (tryck Tabb fÃ¶r att fÃ¤rdigstÃ¤lla)"
 
 msgid " = [argument error]\n"
 msgstr " = [argumentfel]\n"
@@ -30,10 +30,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
-"       gränssnittsargument är\n"
+"       grÃ¤nssnittsargument Ã¤r\n"
 "           -o | --output <filspec>    skriv fil till disk, visa inte\n"
-"           -i | --interact            låt användaren redigera värdet först\n"
-"       skriptargument är\n"
+"           -i | --interact            lÃ¥t anvÃ¤ndaren redigera vÃ¤rdet fÃ¶rst\n"
+"       skriptargument Ã¤r\n"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -44,54 +44,54 @@ msgid ""
 "           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-"Användning: $0 [gimp-arg..] [gränssnittsarg..] [skriptarg..]\n"
-"       gimp-argument är\n"
-"           -gimp <vadsomhelst>        används endast internt\n"
-"           -h | -help | --help | -?   skriv ut hjälp\n"
-"           -v | --verbose             var mer utförlig i det du gör\n"
-"           --host|--tcp VÄRD[:PORT]   anslut till VÄRD (eventuellt med PORT)\n"
-"                                      (se Gimp::Net(3) för mer information)\n"
+"AnvÃ¤ndning: $0 [gimp-arg..] [grÃ¤nssnittsarg..] [skriptarg..]\n"
+"       gimp-argument Ã¤r\n"
+"           -gimp <vadsomhelst>        anvÃ¤nds endast internt\n"
+"           -h | -help | --help | -?   skriv ut hjÃ¤lp\n"
+"           -v | --verbose             var mer utfÃ¶rlig i det du gÃ¶r\n"
+"           --host|--tcp VÃ„RD[:PORT]   anslut till VÃ„RD (eventuellt med PORT)\n"
+"                                      (se Gimp::Net(3) fÃ¶r mer information)\n"
 
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ är ingen giltig importtagg för paketet $pkg"
+msgstr "$_ Ã¤r ingen giltig importtagg fÃ¶r paketet $pkg"
 
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: ogiltig växel, prova $0 --help\n"
+msgstr "$_: ogiltig vÃ¤xel, prova $0 --help\n"
 
 msgid "$_: unknown/illegal file-save option"
-msgstr "$_: okänd/otillåten filsparningsoperation"
+msgstr "$_: okÃ¤nd/otillÃ¥ten filsparningsoperation"
 
 msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
 msgstr ""
-"$function: argumentnamnet \"$p->[1]\" innehåller otillåtna tecken, endast "
-"0-9, a-z och _ är tillåtna"
+"$function: argumentnamnet \"$p->[1]\" innehÃ¥ller otillÃ¥tna tecken, endast "
+"0-9, a-z och _ Ã¤r tillÃ¥tna"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
-"$function: argument-/returvärdet \"$p->[1]\" har ogiltig typ \"$p->[0]\""
+"$function: argument-/returvÃ¤rdet \"$p->[1]\" har ogiltig typ \"$p->[0]\""
 
 msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
 msgstr ""
-"$function: att anropa $AUTOLOAD utan att ange importtaggen :auto är "
-"föråldrad användning!\n"
+"$function: att anropa $AUTOLOAD utan att ange importtaggen :auto Ã¤r "
+"fÃ¶rÃ¥ldrad anvÃ¤ndning!\n"
 
 msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
 msgstr ""
-"$function: funktionsnamnet innehåller ovanliga tecken, en bra regel är att "
-"bara använda 0-9, a-z och _"
+"$function: funktionsnamnet innehÃ¥ller ovanliga tecken, en bra regel Ã¤r att "
+"bara anvÃ¤nda 0-9, a-z och _"
 
 msgid "$s: not an integer\n"
 msgstr "$s: inte ett heltal\n"
 
 msgid "%s arguments for function '%s'"
-msgstr "%s argument för funktionen \"%s\""
+msgstr "%s argument fÃ¶r funktionen \"%s\""
 
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
-"%s: procedurdatabaskörning misslyckades på grund av ogiltiga indataargument"
+"%s: procedurdatabaskÃ¶rning misslyckades pÃ¥ grund av ogiltiga indataargument"
 
 msgid "%s: procedural database execution failed"
-msgstr "%s: procedurdatabaskörning misslyckades"
+msgstr "%s: procedurdatabaskÃ¶rning misslyckades"
 
 msgid "(UNINITIALIZED)"
 msgstr "(OINITIERAD)"
@@ -103,7 +103,7 @@ msgid ", %d bytes data]"
 msgstr ", %d byte data]"
 
 msgid ", authorization required"
-msgstr ", auktorisering krävs"
+msgstr ", auktorisering krÃ¤vs"
 
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
@@ -115,22 +115,22 @@ msgid "/Filters/Logulator"
 msgstr "/Filter/Logulator"
 
 msgid "/Xtns/Perl"
-msgstr "/Utökningar/Perl"
+msgstr "/UtÃ¶kningar/Perl"
 
 msgid "/Xtns/Render"
-msgstr "/Utökningar/Rendera"
+msgstr "/UtÃ¶kningar/Rendera"
 
 msgid "/Xtns/Render/Logos"
-msgstr "/Utökningar/Rendera/Logotyper"
+msgstr "/UtÃ¶kningar/Rendera/Logotyper"
 
 msgid "/Xtns/Render/Povray"
-msgstr "/Utökningar/Rendera/Povray"
+msgstr "/UtÃ¶kningar/Rendera/Povray"
 
 msgid "9x15bold"
 msgstr "9x15bold"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> insticksmodul anropades utan både bild och ritbara argument!\n"
+msgstr "<Image> insticksmodul anropades utan bÃ¥de bild och ritbara argument!\n"
 
 msgid "<Image>/Edit/Repeat & Duplicate..."
 msgstr "<Image>/Redigera/Upprepa och duplicera..."
@@ -139,40 +139,40 @@ msgid "<Image>/Filters/Animation/Animate Cells..."
 msgstr "<Image>/Filter/Animation/Animera celler..."
 
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filter/Animation/BlåsInUt..."
+msgstr "<Image>/Filter/Animation/BlÃ¥sInUt..."
 
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filter/Tillämpa Perl-uttryck..."
+msgstr "<Image>/Filter/TillÃ¤mpa Perl-uttryck..."
 
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filter/Smeta ut/Smeta ut 2×2"
+msgstr "<Image>/Filter/Smeta ut/Smeta ut 2Ã—2"
 
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filter/Färger/Färg till alfa..."
+msgstr "<Image>/Filter/FÃ¤rger/FÃ¤rg till alfa..."
 
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filter/Färger/Eld..."
+msgstr "<Image>/Filter/FÃ¤rger/Eld..."
 
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filter/Färger/Mappa till toning..."
+msgstr "<Image>/Filter/FÃ¤rger/Mappa till toning..."
 
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filter/Störningar/Spegeldelning..."
+msgstr "<Image>/Filter/StÃ¶rningar/Spegeldelning..."
 
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filter/Störningar/Repor..."
+msgstr "<Image>/Filter/StÃ¶rningar/Repor..."
 
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filter/Störningar/Vind..."
+msgstr "<Image>/Filter/StÃ¶rningar/Vind..."
 
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filter/Hörndetektering/Hörndetektering 2×2"
+msgstr "<Image>/Filter/HÃ¶rndetektering/HÃ¶rndetektering 2Ã—2"
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filter/Förbättra/Förbättra kontrast 2×2"
+msgstr "<Image>/Filter/FÃ¶rbÃ¤ttra/FÃ¶rbÃ¤ttra kontrast 2Ã—2"
 
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filter/Förbättra/Warp-skärpa..."
+msgstr "<Image>/Filter/FÃ¶rbÃ¤ttra/Warp-skÃ¤rpa..."
 
 msgid "<Image>/Filters/Logulator/Blended II..."
 msgstr "<Image>/Filter/Logulator/Tonad II..."
@@ -220,19 +220,19 @@ msgid "<Image>/Filters/Misc/Magick..."
 msgstr "<Image>/Filter/Diverse/Magi..."
 
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filter/Störningar/Färgutjämna..."
+msgstr "<Image>/Filter/StÃ¶rningar/FÃ¤rgutjÃ¤mna..."
 
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filter/Störningar/Återkoppling..."
+msgstr "<Image>/Filter/StÃ¶rningar/Ã…terkoppling..."
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filter/Störningar/Xach-syn..."
+msgstr "<Image>/Filter/StÃ¶rningar/Xach-syn..."
 
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filter/Rendera/Lägg till damm..."
+msgstr "<Image>/Filter/Rendera/LÃ¤gg till damm..."
 
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filter/Rendera/Lägg till glöd"
+msgstr "<Image>/Filter/Rendera/LÃ¤gg till glÃ¶d"
 
 msgid "<Image>/Filters/Render/Brushed Metal..."
 msgstr "<Image>/Filter/Rendera/Polerad metall..."
@@ -244,16 +244,16 @@ msgid "<Image>/Filters/Render/Fit Text..."
 msgstr "<Image>/Filter/Rendera/Passa in text..."
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filter/Rendera/Markera hörn..."
+msgstr "<Image>/Filter/Rendera/Markera hÃ¶rn..."
 
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filter/Rendera/Slumpmässiga färgtoningar..."
+msgstr "<Image>/Filter/Rendera/SlumpmÃ¤ssiga fÃ¤rgtoningar..."
 
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filter/Rendera/Stämpla..."
+msgstr "<Image>/Filter/Rendera/StÃ¤mpla..."
 
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Filter/Rendera/TeX-sträng..."
+msgstr "<Image>/Filter/Rendera/TeX-strÃ¤ng..."
 
 msgid "<Image>/Filters/Render/Terral Text..."
 msgstr "<Image>/Filter/Rendera/Jordtext..."
@@ -262,7 +262,7 @@ msgid "<Image>/Filters/Web/Perl-o-tine..."
 msgstr "<Image>/Filter/Webb/Perlotinering..."
 
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filter/Webb/Förbered för GIF..."
+msgstr "<Image>/Filter/Webb/FÃ¶rbered fÃ¶r GIF..."
 
 msgid "<Image>/Filters/Web/Webify..."
 msgstr "<Image>/Filter/Webb/Webbifiera..."
@@ -271,7 +271,7 @@ msgid "<Image>/Guides/Center Guide..."
 msgstr "<Image>/Guider/Centreringsguide..."
 
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Guider/Guiderutnät..."
+msgstr "<Image>/Guider/GuiderutnÃ¤t..."
 
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Guider/Ta bort guide"
@@ -280,10 +280,10 @@ msgid "<Image>/Guides/To Selection..."
 msgstr "<Image>/Guider/Till markering..."
 
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Bild/Alfa/Alfa till färg..."
+msgstr "<Image>/Bild/Alfa/Alfa till fÃ¤rg..."
 
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Bild/Alfa/Töm alfa..."
+msgstr "<Image>/Bild/Alfa/TÃ¶m alfa..."
 
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Lager/Centrera lager"
@@ -292,7 +292,7 @@ msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Lager/Stack/Arrangera om lager..."
 
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Markera/Runda rektangulär markering..."
+msgstr "<Image>/Markera/Runda rektangulÃ¤r markering..."
 
 msgid "<Image>/Select/Round..."
 msgstr "<Image>/Markera/Runda..."
@@ -313,73 +313,73 @@ msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr "<Save> insticksmodulen anropades utan de 5 standardargumenten!\n"
 
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Utökningar/Animation/Affischtavla..."
+msgstr "<Toolbox>/UtÃ¶kningar/Animation/Affischtavla..."
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Utökningar/Animation/Seth-spinn..."
+msgstr "<Toolbox>/UtÃ¶kningar/Animation/Seth-spinn..."
 
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Utökningar/Skapa_bilder"
+msgstr "<Toolbox>/UtÃ¶kningar/Skapa_bilder"
 
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Utökningar/Gimp::Fu-exempel..."
+msgstr "<Toolbox>/UtÃ¶kningar/Gimp::Fu-exempel..."
 
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Utökningar/Hemsideslogotyp"
+msgstr "<Toolbox>/UtÃ¶kningar/Hemsideslogotyp"
 
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Utökningar/PDB-bläddrare..."
+msgstr "<Toolbox>/UtÃ¶kningar/PDB-blÃ¤ddrare..."
 
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Utökningar/Parasitredigerare..."
+msgstr "<Toolbox>/UtÃ¶kningar/Parasitredigerare..."
 
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Utökningar/Perl-exempelinsticksmodul"
+msgstr "<Toolbox>/UtÃ¶kningar/Perl-exempelinsticksmodul"
 
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Utökningar/Perl/Kontrollcenter..."
+msgstr "<Toolbox>/UtÃ¶kningar/Perl/Kontrollcenter..."
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Utökningar/Perl/Server"
+msgstr "<Toolbox>/UtÃ¶kningar/Perl/Server"
 
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Utökningar/Rendera/Brickor..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Brickor..."
 
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Utökningar/Rendera/Typsnittstabell..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Typsnittstabell..."
 
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Utökningar/Rendera/Gyllene medel..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Gyllene medel..."
 
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Utökningar/Rendera/Logotyp/Brandtext..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Logotyp/Brandtext..."
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/utökningar/Rendera/Logotyp/Glödande stål"
+msgstr "<Toolbox>/utÃ¶kningar/Rendera/Logotyp/GlÃ¶dande stÃ¥l"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Utökningar/Rendera/Logotyper/Inre avfasning..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Logotyper/Inre avfasning..."
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Utökningar/Rendera/Bildpunktsgenerator..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Bildpunktsgenerator..."
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Utökningar/Rendera/Povray/Inställningar..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Povray/InstÃ¤llningar..."
 
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Utökningar/Rendera/Povray/Textur..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Povray/Textur..."
 
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Utökningar/Rendera/Slumpmässig konst nr 1..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/SlumpmÃ¤ssig konst nr 1..."
 
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Utökningar/Rendera/Stämplar..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/StÃ¤mplar..."
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Utökningar/Rendera/Yin-Yang..."
+msgstr "<Toolbox>/UtÃ¶kningar/Rendera/Yin-Yang..."
 
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Utökningar/Visuella skript..."
+msgstr "<Toolbox>/UtÃ¶kningar/Visuella skript..."
 
 msgid "Accelerator"
 msgstr "Snabbtangent"
@@ -388,11 +388,11 @@ msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
-"Ett jämnt antal ramar behövs för tillbakaspinning.\n"
+"Ett jÃ¤mnt antal ramar behÃ¶vs fÃ¶r tillbakaspinning.\n"
 "Justerade upp antalet ramar till $frames"
 
 msgid "Author"
-msgstr "Författare"
+msgstr "FÃ¶rfattare"
 
 msgid "BG"
 msgstr "BG"
@@ -410,7 +410,7 @@ msgstr ""
 "\n"
 "$blurb\n"
 "\n"
-"HJÄLP:\n"
+"HJÃ„LP:\n"
 "\n"
 "$help"
 
@@ -418,10 +418,10 @@ msgid "Background"
 msgstr "Bakgrund"
 
 msgid "Browse"
-msgstr "Bläddra"
+msgstr "BlÃ¤ddra"
 
 msgid "Brush Selection Dialog"
-msgstr "Penselväljardialog"
+msgstr "PenselvÃ¤ljardialog"
 
 msgid "Bumpmap"
 msgstr "Bumpmapp"
@@ -433,10 +433,10 @@ msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Kan inte anropa \"$AUTOLOAD\" just nu"
 
 msgid "Close"
-msgstr "Stäng"
+msgstr "StÃ¤ng"
 
 msgid "Color"
-msgstr "Färg"
+msgstr "FÃ¤rg"
 
 msgid "Command"
 msgstr "Kommando"
@@ -451,7 +451,7 @@ msgid "Date/Version"
 msgstr "Datum/Version"
 
 msgid "Defaults"
-msgstr "Standardvärden"
+msgstr "StandardvÃ¤rden"
 
 msgid "Description"
 msgstr "Beskrivning"
@@ -461,58 +461,58 @@ msgstr "Redigera"
 
 msgid "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
 msgstr ""
-"INT32 förväntades men fick \"%s\". Lägg till \"*1\" om du verkligen vill "
-"skicka en sträng"
+"INT32 fÃ¶rvÃ¤ntades men fick \"%s\". LÃ¤gg till \"*1\" om du verkligen vill "
+"skicka en strÃ¤ng"
 
 msgid "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"
 msgstr ""
-"INT32 förväntades men fick \"%s\". Du menade kanske \"%s\" istället och "
-"glömde att använda \"use strict\""
+"INT32 fÃ¶rvÃ¤ntades men fick \"%s\". Du menade kanske \"%s\" istÃ¤llet och "
+"glÃ¶mde att anvÃ¤nda \"use strict\""
 
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "ÖDESDIGERT: canonicalize_colour returnerade inte ett värde!"
+msgstr "Ã–DESDIGERT: canonicalize_colour returnerade inte ett vÃ¤rde!"
 
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "ÖDESDIGERT: kunde inte skapa $tmp: $!\n"
+msgstr "Ã–DESDIGERT: kunde inte skapa $tmp: $!\n"
 
 msgid "FG"
 msgstr "FG"
 
 msgid "Fileselector for $name"
-msgstr "Filväljare för $name"
+msgstr "FilvÃ¤ljare fÃ¶r $name"
 
 msgid "Font Selection Dialog ($desc)"
-msgstr "Typsnittsväljardialog ($desc)"
+msgstr "TypsnittsvÃ¤ljardialog ($desc)"
 
 msgid "Function Info"
 msgstr "Funktionsinformation"
 
 msgid "Gradient Selection Dialog"
-msgstr "Färgtoningsväljardialog"
+msgstr "FÃ¤rgtoningsvÃ¤ljardialog"
 
 msgid "Help for "
-msgstr "Hjälp om "
+msgstr "HjÃ¤lp om "
 
 msgid "Help"
-msgstr "Hjälp"
+msgstr "HjÃ¤lp"
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr "Ogiltig standardtypsnittsbeskrivning för $function: $val\n"
+msgstr "Ogiltig standardtypsnittsbeskrivning fÃ¶r $function: $val\n"
 
 msgid "Image Types"
 msgstr "Bildtyper"
 
 msgid "Last Modified"
-msgstr "Senast ändrad"
+msgstr "Senast Ã¤ndrad"
 
 msgid "Load $name"
-msgstr "Läs in $name"
+msgstr "LÃ¤s in $name"
 
 msgid "Load"
-msgstr "Läs in"
+msgstr "LÃ¤s in"
 
 msgid "Menu Path"
-msgstr "Menysökväg"
+msgstr "MenysÃ¶kvÃ¤g"
 
 msgid "More..."
 msgstr "Mer..."
@@ -521,28 +521,28 @@ msgid "NAME"
 msgstr "NAMN"
 
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Inga horisontella eller vertikala guider hittades. Avbröt."
+msgstr "Inga horisontella eller vertikala guider hittades. AvbrÃ¶t."
 
 msgid "OK"
 msgstr "OK"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "PDB-bläddrare - olof-versionen (fortfarande en alfaversion)"
+msgstr "PDB-blÃ¤ddrare - olof-versionen (fortfarande en alfaversion)"
 
 msgid "Pattern Selection Dialog"
-msgstr "Mönsterväljardialog"
+msgstr "MÃ¶nstervÃ¤ljardialog"
 
 msgid "Plug-In Path"
-msgstr "Sökväg till insticksmodul"
+msgstr "SÃ¶kvÃ¤g till insticksmodul"
 
 msgid "Previous"
-msgstr "Föregående"
+msgstr "FÃ¶regÃ¥ende"
 
 msgid "Reset all values to their default"
-msgstr "Återställ alla värden till deras standardvärden"
+msgstr "Ã…terstÃ¤ll alla vÃ¤rden till deras standardvÃ¤rden"
 
 msgid "Restore values to the previous ones"
-msgstr "Återställ värden till de föregående"
+msgstr "Ã…terstÃ¤ll vÃ¤rden till de fÃ¶regÃ¥ende"
 
 msgid "Save $name"
 msgstr "Spara $name"
@@ -551,7 +551,7 @@ msgid "Save"
 msgstr "Spara"
 
 msgid "Saving '$filename' as COLORHTML..."
-msgstr "Sparas \"$filename\" som FÄRGHTML..."
+msgstr "Sparas \"$filename\" som FÃ„RGHTML..."
 
 msgid "Saving '$filename' as DATAURL..."
 msgstr "Sparar \"$filename\" som DATAURL..."
@@ -560,13 +560,13 @@ msgid "Seth Spin..."
 msgstr "Seth-spinn..."
 
 msgid "Shortcuts"
-msgstr "Genvägar"
+msgstr "GenvÃ¤gar"
 
 msgid "Spin Layer DEST (250ms)"
-msgstr "Spinnlager-MÅL (250 ms)"
+msgstr "Spinnlager-MÃ…L (250 ms)"
 
 msgid "Spin Layer SRC (250ms)"
-msgstr "Spinnlager-KÄLLA (250 ms)"
+msgstr "Spinnlager-KÃ„LLA (250 ms)"
 
 msgid "Status"
 msgstr "Status"
@@ -581,22 +581,22 @@ msgid "Text"
 msgstr "Text"
 
 msgid "This module was built without support for PDL."
-msgstr "Denna modul byggdes utan stöd för PDL."
+msgstr "Denna modul byggdes utan stÃ¶d fÃ¶r PDL."
 
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Kan inte konvertera en referens till typen \"%s\""
 
 msgid "Unable to grok '%s' as colour specifier"
-msgstr "Kan inte förstå \"%s\" som färgspecifierare"
+msgstr "Kan inte fÃ¶rstÃ¥ \"%s\" som fÃ¤rgspecifierare"
 
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "Kan inte öppna \"$filename\" för skrivning: $!\n"
+msgstr "Kan inte Ã¶ppna \"$filename\" fÃ¶r skrivning: $!\n"
 
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Kan inte läsa temporär bildbricka $tmp: $!"
+msgstr "Kan inte lÃ¤sa temporÃ¤r bildbricka $tmp: $!"
 
 msgid "Unsupported argumenttype $type"
-msgstr "Argumenttypen $type stöds inte"
+msgstr "Argumenttypen $type stÃ¶ds inte"
 
 msgid "Visual Scriptor"
 msgstr "Visuella skript"
@@ -606,26 +606,26 @@ msgstr "VARNING"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
-"VARNING: $function returnerade någonting som inte är en bild: \"$img\"\n"
+"VARNING: $function returnerade nÃ¥gonting som inte Ã¤r en bild: \"$img\"\n"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
-"VARNING: klienten kopplades från samtidigt som den hade ett aktivt lås\n"
+"VARNING: klienten kopplades frÃ¥n samtidigt som den hade ett aktivt lÃ¥s\n"
 
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "VARNING: klienten försökte låsa upp utan att ha ett lås"
+msgstr "VARNING: klienten fÃ¶rsÃ¶kte lÃ¥sa upp utan att ha ett lÃ¥s"
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr "VARNING: delad låsning begärt men inte implementerat"
+msgstr "VARNING: delad lÃ¥sning begÃ¤rt men inte implementerat"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "Du kan inte köra detta skript med en INDEXERAD bild!!"
+msgstr "Du kan inte kÃ¶ra detta skript med en INDEXERAD bild!!"
 
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Du kan inte köra detta skript utan en ALFAKANAL!!"
+msgstr "Du kan inte kÃ¶ra detta skript utan en ALFAKANAL!!"
 
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr "Du behöver minst 2 lager för att utföra prep4gif"
+msgstr "Du behÃ¶ver minst 2 lager fÃ¶r att utfÃ¶ra prep4gif"
 
 msgid "[undefined]"
 msgstr "[odefinierad]"
@@ -645,10 +645,10 @@ msgstr ""
 "\n"
 
 msgid "a color must have three components (array elements)"
-msgstr "en färg måste ha tre komponenter (vektorelement)"
+msgstr "en fÃ¤rg mÃ¥ste ha tre komponenter (vektorelement)"
 
 msgid "accepted tcp connection from "
-msgstr "accepterade tcp-anslutning från "
+msgstr "accepterade tcp-anslutning frÃ¥n "
 
 msgid "accepted unix connection"
 msgstr "accepterade unix-anslutning"
@@ -660,22 +660,22 @@ msgid "accepting connections on $unix_path"
 msgstr "accepterar anslutningar i $unix_path"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "accepterar anslutningar på port $Gimp::Net::default_tcp_port"
+msgstr "accepterar anslutningar pÃ¥ port $Gimp::Net::default_tcp_port"
 
 msgid "accepting connections on port $port"
-msgstr "accepterar anslutningar på port $port"
+msgstr "accepterar anslutningar pÃ¥ port $port"
 
 msgid "argument incompatible with type IMAGE"
-msgstr "argumentet är inte kompatibelt med typen IMAGE"
+msgstr "argumentet Ã¤r inte kompatibelt med typen IMAGE"
 
 msgid "argument is not of type %s"
-msgstr "argumentet är inte av typen %s"
+msgstr "argumentet Ã¤r inte av typen %s"
 
 msgid "argument type %s expected (not %s)"
-msgstr "argumenttypen %s förväntades (inte %s)"
+msgstr "argumenttypen %s fÃ¶rvÃ¤ntades (inte %s)"
 
 msgid "arguments to main not yet supported!"
-msgstr "argument till main stöds inte än!"
+msgstr "argument till main stÃ¶ds inte Ã¤n!"
 
 msgid "authorization failed: $r[1]\n"
 msgstr "auktorisering misslyckades: $r[1]\n"
@@ -684,34 +684,34 @@ msgid "authorization ok, but: $r[1]\n"
 msgstr "auktorisering ok, men: $r[1]\n"
 
 msgid "authorization required for tcp connections"
-msgstr "auktorisering krävs för tcp-anslutningar"
+msgstr "auktorisering krÃ¤vs fÃ¶r tcp-anslutningar"
 
 msgid "authorization unnecessary"
-msgstr "auktorisering behövs inte"
+msgstr "auktorisering behÃ¶vs inte"
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "anropas som \"%s\", men \"%s\" är inte registrerad i pdb"
+msgstr "anropas som \"%s\", men \"%s\" Ã¤r inte registrerad i pdb"
 
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "stänger anslutning %d (%d begäran under %g sekunder)"
+msgstr "stÃ¤nger anslutning %d (%d begÃ¤ran under %g sekunder)"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
-"konvertering till typen $pf_type2string{$type} är inte implementerad än\n"
+"konvertering till typen $pf_type2string{$type} Ã¤r inte implementerad Ã¤n\n"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
-"kunde inte ansluta till gimp-servern (försäkra dig om att Perl-Server kör)"
+"kunde inte ansluta till gimp-servern (fÃ¶rsÃ¤kra dig om att Perl-Server kÃ¶r)"
 
 msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
-"dimensionerna stämmer inte överens, pdl har dimensionen %d men minst %d "
-"dimensioner krävs"
+"dimensionerna stÃ¤mmer inte Ã¶verens, pdl har dimensionen %d men minst %d "
+"dimensioner krÃ¤vs"
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
-"dimensionerna stämmer inte överens, pdl har dimensionen %d men högst %d "
-"dimensioner är tillåtna"
+"dimensionerna stÃ¤mmer inte Ã¶verens, pdl har dimensionen %d men hÃ¶gst %d "
+"dimensioner Ã¤r tillÃ¥tna"
 
 msgid "dunno how to pass arg type %d"
 msgstr "vet inte hur argumenttyp %d ska skickas"
@@ -720,171 +720,171 @@ msgid "dunno how to return param type %d"
 msgstr "vet inte hur parametertyp %d ska returneras"
 
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "perl-server förväntades på andra sidan av uttaget, fick @r\n"
+msgstr "perl-server fÃ¶rvÃ¤ntades pÃ¥ andra sidan av uttaget, fick @r\n"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
-"protokollversion $Gimp::_PROT_VERSION förväntades, men servern använder "
+"protokollversion $Gimp::_PROT_VERSION fÃ¶rvÃ¤ntades, men servern anvÃ¤nder "
 "$r[0]\n"
 
 msgid "export failed"
 msgstr "export misslyckades"
 
 msgid "function '$exe' not found in this script (must be one of "
-msgstr "funktionen \"$exe\" hittades inte detta skript (måste vara en av "
+msgstr "funktionen \"$exe\" hittades inte detta skript (mÃ¥ste vara en av "
 
 msgid "function name contains dashes instead of underscores"
-msgstr "funktionsnamnet innehåller bindestreck istället för understreck"
+msgstr "funktionsnamnet innehÃ¥ller bindestreck istÃ¤llet fÃ¶r understreck"
 
 msgid "function/macro \"$name\" not found in $class"
 msgstr "funktionen/makrot \"$name\" hittades inte i $class"
 
 msgid "get current background colour from the gimp"
-msgstr "få tag i aktuell bakgrundsfärg från gimp"
+msgstr "fÃ¥ tag i aktuell bakgrundsfÃ¤rg frÃ¥n gimp"
 
 msgid "get current foreground colour from the gimp"
-msgstr "få tag i aktuell förgrundsfärg från gimp"
+msgstr "fÃ¥ tag i aktuell fÃ¶rgrundsfÃ¤rg frÃ¥n gimp"
 
 msgid "gimp procedure '%s' not found"
 msgstr "gimp-proceduren \"%s\" kunde inte hittas"
 
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel-funktioner kräver modulen PDL::Core"
+msgstr "gimp-perl-pixel-funktioner krÃ¤ver modulen PDL::Core"
 
 msgid "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register stöder endast 1, 2 eller 3 argument, uppgradera till gimp-1.1 och rapportera detta fel"
+"gimp_pixel_rgns_register stÃ¶der endast 1, 2 eller 3 argument, uppgradera till gimp-1.1 och rapportera detta fel"
 
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data är ännu inte implementerat\n"
+msgstr "gimp_tile_get_data Ã¤r Ã¤nnu inte implementerat\n"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data är ännu inte implementerat\n"
+msgstr "gimp_tile_set_data Ã¤r Ã¤nnu inte implementerat\n"
 
 msgid "illegal command received, aborting connection"
-msgstr "ogiltigt kommando upptäckt, avbryter anslutning"
+msgstr "ogiltigt kommando upptÃ¤ckt, avbryter anslutning"
 
 msgid "illegal parasite specification, arrayref expected"
-msgstr "ogiltig parasitspecifikation, vektorreferens förväntades"
+msgstr "ogiltig parasitspecifikation, vektorreferens fÃ¶rvÃ¤ntades"
 
 msgid "illegal parasite specification, expected three array members"
-msgstr "ogiltig parasitspecifikation, tre vektormedlemmar förväntades"
+msgstr "ogiltig parasitspecifikation, tre vektormedlemmar fÃ¶rvÃ¤ntades"
 
 msgid "illegal parasite specification, reference expected"
-msgstr "ogiltig parasitspecifikation, referens förväntades"
+msgstr "ogiltig parasitspecifikation, referens fÃ¶rvÃ¤ntades"
 
 msgid "illegal type for colour specification"
-msgstr "ogiltig typ för färgspecifikation"
+msgstr "ogiltig typ fÃ¶r fÃ¤rgspecifikation"
 
 msgid "interface '$interface_type' unsupported."
-msgstr "gränssnittet \"$interface_type\" stöds inte."
+msgstr "grÃ¤nssnittet \"$interface_type\" stÃ¶ds inte."
 
 msgid "interface=... tag is no longer supported\n"
-msgstr "taggen interface=... stöds inte längre\n"
+msgstr "taggen interface=... stÃ¶ds inte lÃ¤ngre\n"
 
 msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
-"ogiltig GIMPVÄRD: \"spawn\" är inte en giltig anslutningsmetod för servern"
+"ogiltig GIMPVÃ„RD: \"spawn\" Ã¤r inte en giltig anslutningsmetod fÃ¶r servern"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
-"sista argumentet till gimp_pattern_select_widget måste vara skalärreferens"
+"sista argumentet till gimp_pattern_select_widget mÃ¥ste vara skalÃ¤rreferens"
 
 msgid "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
 "felaktig parameterdefinition, [PARAMETERTYP,\"NAMN\",\"BESKRIVNING\"] eller "
-"PARAMETERTYP förväntades"
+"PARAMETERTYP fÃ¶rvÃ¤ntades"
 
 msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"menysökvägen _måste_ starta med <Image>, <Toolbox>, <Load>, <Save> eller "
+"menysÃ¶kvÃ¤gen _mÃ¥ste_ starta med <Image>, <Toolbox>, <Load>, <Save> eller "
 "<None>!"
 
 msgid "no additional information available, use --help\n"
-msgstr "ingen ytterligare information tillgänglig, använd --help\n"
+msgstr "ingen ytterligare information tillgÃ¤nglig, anvÃ¤nd --help\n"
 
 msgid "no font specified, using default"
-msgstr "inget typsnitt angivet, använder standardtypsnittet"
+msgstr "inget typsnitt angivet, anvÃ¤nder standardtypsnittet"
 
 msgid "not enough"
-msgstr "för lite"
+msgstr "fÃ¶r lite"
 
 msgid "only blessed scalars accepted here"
-msgstr "endast godkända skalärer accepteras här"
+msgstr "endast godkÃ¤nda skalÃ¤rer accepteras hÃ¤r"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "parametern \"$entry->[1]\" är inte valfri\n"
+msgstr "parametern \"$entry->[1]\" Ã¤r inte valfri\n"
 
 msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "parametrar och returvärden måste vara vektorreferens (även om tom)!"
+msgstr "parametrar och returvÃ¤rden mÃ¥ste vara vektorreferens (Ã¤ven om tom)!"
 
 msgid "pdl height != region height"
-msgstr "pdl-höjd != områdeshöjd"
+msgstr "pdl-hÃ¶jd != omrÃ¥deshÃ¶jd"
 
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-vektorreferens krävs som datatyp för en gimp-vektor"
+msgstr "perl-vektorreferens krÃ¤vs som datatyp fÃ¶r en gimp-vektor"
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"bildpunktsstorlek stämmer inte överens, pdl har %d kanalbildpunkter men %d "
-"kanaler kräver"
+"bildpunktsstorlek stÃ¤mmer inte Ã¶verens, pdl har %d kanalbildpunkter men %d "
+"kanaler krÃ¤ver"
 
 msgid "plug-in returned %d more values than expected"
-msgstr "insticksmodul returnerade %d fler värden än som förväntades"
+msgstr "insticksmodul returnerade %d fler vÃ¤rden Ã¤n som fÃ¶rvÃ¤ntades"
 
 msgid "received QUIT request"
-msgstr "mottog AVSLUTA-begäran"
+msgstr "mottog AVSLUTA-begÃ¤ran"
 
 msgid "register called with too many or wrong arguments\n"
-msgstr "register anropades med för många eller felaktiga argument\n"
+msgstr "register anropades med fÃ¶r mÃ¥nga eller felaktiga argument\n"
 
 msgid "required callback 'net' not found\n"
-msgstr "nödvändig callback \"net\" kunde inte hittas\n"
+msgstr "nÃ¶dvÃ¤ndig callback \"net\" kunde inte hittas\n"
 
 msgid "required callback 'query' not found\n"
-msgstr "nödvändig callback \"query\" kunde inte hittas\n"
+msgstr "nÃ¶dvÃ¤ndig callback \"query\" kunde inte hittas\n"
 
 msgid "required callback 'run' not found\n"
-msgstr "nödvändig utbildning \"run\" kunde inte hittas\n"
+msgstr "nÃ¶dvÃ¤ndig utbildning \"run\" kunde inte hittas\n"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
-"run_mode måste vara INTERACTIVE, NONINTERACTIVE eller RUN_WITH_LAST_VALS\n"
+"run_mode mÃ¥ste vara INTERACTIVE, NONINTERACTIVE eller RUN_WITH_LAST_VALS\n"
 
 msgid "server going down..."
-msgstr "servern går ner..."
+msgstr "servern gÃ¥r ner..."
 
 msgid "server requests authorization, but no authorization available\n"
-msgstr "servern begär auktorisering, men ingen auktorisering är tillgänglig\n"
+msgstr "servern begÃ¤r auktorisering, men ingen auktorisering Ã¤r tillgÃ¤nglig\n"
 
 msgid "server version $Gimp::VERSION started"
 msgstr "server version $Gimp::VERSION startades"
 
 msgid "text string is empty"
-msgstr "textsträngen är tom"
+msgstr "textstrÃ¤ngen Ã¤r tom"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
-"modulen gtk-perl krävs för att öppna ett dialogfönster\n"
-"som kör med standardvärden"
+"modulen gtk-perl krÃ¤vs fÃ¶r att Ã¶ppna ett dialogfÃ¶nster\n"
+"som kÃ¶r med standardvÃ¤rden"
 
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"modulen gtk-perl krävs för att köra denna\n"
-"insticksmodul i interaktivt läge\n"
+"modulen gtk-perl krÃ¤vs fÃ¶r att kÃ¶ra denna\n"
+"insticksmodul i interaktivt lÃ¤ge\n"
 
 msgid "too many arguments"
-msgstr "för många argument"
+msgstr "fÃ¶r mÃ¥nga argument"
 
 msgid "too many"
-msgstr "för många"
+msgstr "fÃ¶r mÃ¥nga"
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "försöker starta gimp med flaggorna \"$opt\"\n"
+msgstr "fÃ¶rsÃ¶ker starta gimp med flaggorna \"$opt\"\n"
 
 msgid "unable to accept tcp connection: $!\n"
 msgstr "kan inte acceptera tcp-anslutning: $!\n"
@@ -905,31 +905,31 @@ msgid "unable to create listening unix socket: $!\n"
 msgstr "kan inte skapa lyssnande unix-uttag: $!\n"
 
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr "kan inte skapa uttagspar för gimp-komunikation: $!"
+msgstr "kan inte skapa uttagspar fÃ¶r gimp-komunikation: $!"
 
 msgid "unable to fork: $!"
 msgstr "kan inte grena: $!"
 
 msgid "unable to grok colour specification"
-msgstr "kan inte förstå färgspecifikation"
+msgstr "kan inte fÃ¶rstÃ¥ fÃ¤rgspecifikation"
 
 msgid "unable to open $rgb_db_path"
-msgstr "kan inte öppna $rgb_db_path"
+msgstr "kan inte Ã¶ppna $rgb_db_path"
 
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "kan inte öppna Gimp::Net-kommunikationsuttag: $!\n"
+msgstr "kan inte Ã¶ppna Gimp::Net-kommunikationsuttag: $!\n"
 
 msgid "unable to read '$fn': $!"
-msgstr "kan inte läsa \"$fn\": $!"
+msgstr "kan inte lÃ¤sa \"$fn\": $!"
 
 msgid "unable to read temporary file $tmp: $!"
-msgstr "kan inte läsa temporär fil $tmp: $!"
+msgstr "kan inte lÃ¤sa temporÃ¤r fil $tmp: $!"
 
 msgid "unauthorized command received, aborting connection"
 msgstr "ickeauktoriserat kommando mottogs, avbryter anslutning"
 
 msgid "url size is too large ($max > 1024)\n"
-msgstr "url-storleken är för stor ($max > 1024)\n"
+msgstr "url-storleken Ã¤r fÃ¶r stor ($max > 1024)\n"
 
 msgid "wrong authorization, aborting connection"
 msgstr "felaktig auktorisering, avbryter anslutning"

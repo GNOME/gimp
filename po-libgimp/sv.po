@@ -1,19 +1,19 @@
-# Swedish translations for GIMP.
-# Copyright (C) 1999, 2000, 2001 Free Software Foundation, Inc.
-# Tomas Ögren <stric@ing.umu.se>, 1999.
-# Christian Rose <menthos@menthos.com>, 2000, 2001.
+# Swedish messages for libgimp.
+# Copyright (C) 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
+# Tomas Ã–gren <stric@ing.umu.se>, 1999.
+# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 #
 # $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2001-12-29 18:03+0100\n"
-"PO-Revision-Date: 2001-12-03 02:23+0100\n"
+"POT-Creation-Date: 2002-01-28 02:46+0100\n"
+"PO-Revision-Date: 2002-01-28 02:47+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
@@ -22,11 +22,11 @@ msgstr "kan inte hantera lager"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "Slå samman synliga lager"
+msgstr "SlÃ¥ samman synliga lager"
 
 #: libgimp/gimpexport.c:179
 msgid "can't handle layer offsets, size or opacity"
-msgstr "kan inte hantera lageravstånd, lagerstorlek eller lageropacitet"
+msgstr "kan inte hantera lageravstÃ¥nd, lagerstorlek eller lageropacitet"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -54,11 +54,11 @@ msgstr "Konvertera till RGB"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
-msgstr "kan endast hantera gråskalebilder"
+msgstr "kan endast hantera grÃ¥skalebilder"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
-msgstr "Konvertera till gråskala"
+msgstr "Konvertera till grÃ¥skala"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
@@ -69,12 +69,12 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertera till Indexerat med standardinställningar\n"
-"(Gör det manuellt om du vill finjustera)"
+"Konvertera till Indexerat med standardinstÃ¤llningar\n"
+"(GÃ¶r det manuellt om du vill finjustera)"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
-msgstr "kan endast hantera RGB-bilder eller gråskalebilder"
+msgstr "kan endast hantera RGB-bilder eller grÃ¥skalebilder"
 
 #: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
@@ -82,15 +82,15 @@ msgstr "kan endast hantera RGB-bilder eller indexerade bilder"
 
 #: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
-msgstr "kan endast hantera gråskalebilder eller indexerade bilder"
+msgstr "kan endast hantera grÃ¥skalebilder eller indexerade bilder"
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "behöver en alfakanal"
+msgstr "behÃ¶ver en alfakanal"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "Lägg till alfakanal"
+msgstr "LÃ¤gg till alfakanal"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -99,11 +99,11 @@ msgstr "Lägg till alfakanal"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr "Bekräfta sparande"
+msgstr "BekrÃ¤fta sparande"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr "Bekräfta"
+msgstr "BekrÃ¤fta"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
@@ -139,7 +139,7 @@ msgstr "Ignorera"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Din bild bör exporteras innan den kan sparas av följande anledningar:"
+msgstr "Din bild bÃ¶r exporteras innan den kan sparas av fÃ¶ljande anledningar:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
@@ -154,60 +154,17 @@ msgstr "en lagermask"
 msgid "a channel (saved selection)"
 msgstr "en kanal (sparad markering)"
 
-#. pseudo unit
-#: libgimp/gimpunit.c:52
-msgid "pixel"
-msgstr "bildpunkt"
-
-#: libgimp/gimpunit.c:52
-msgid "pixels"
-msgstr "bildpunkter"
-
-#. standard units
-#: libgimp/gimpunit.c:55
-msgid "inch"
-msgstr "tum"
-
-#: libgimp/gimpunit.c:55
-msgid "inches"
-msgstr "tum"
-
 #: libgimp/gimpunit.c:56
-msgid "millimeter"
-msgstr "millimeter"
-
-#: libgimp/gimpunit.c:56
-msgid "millimeters"
-msgstr "millimeter"
-
-#. professional units
-#: libgimp/gimpunit.c:59
-msgid "point"
-msgstr "punkt"
-
-#: libgimp/gimpunit.c:59
-msgid "points"
-msgstr "punkter"
-
-#: libgimp/gimpunit.c:60
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:60
-msgid "picas"
-msgstr "picas"
-
-#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "procent:"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
-msgstr "/Förgrundsfärg"
+msgstr "/FÃ¶rgrundsfÃ¤rg"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
 msgid "/Background Color"
-msgstr "/Bakgrundsfärg"
+msgstr "/BakgrundsfÃ¤rg"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
@@ -219,11 +176,11 @@ msgstr "/Vit"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Directory"
-msgstr "Välj katalog"
+msgstr "VÃ¤lj katalog"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "Välj fil"
+msgstr "VÃ¤lj fil"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -246,8 +203,8 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Om du inte trycker \"Tid\"-knappen kan du här ange ett värde för generering "
-"av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
+"Om du inte trycker \"Tid\"-knappen kan du hÃ¤r ange ett vÃ¤rde fÃ¶r generering "
+"av ett slumptalsfrÃ¶ - det lÃ¥ter dig upprepa en given \"slump\"-funktion"
 
 #: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
@@ -258,7 +215,7 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Skapa slumptalsfrö till slumptalsgeneratorn baserat på den aktuella tiden - "
+"Skapa slumptalsfrÃ¶ till slumptalsgeneratorn baserat pÃ¥ den aktuella tiden - "
 "detta garanterar en vettig slumpfunktion"
 
 #: libgimpwidgets/gimpwidgets.c:1129
@@ -272,6 +229,36 @@ msgstr "kilobyte"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "megabyte"
+
+#~ msgid "pixel"
+#~ msgstr "bildpunkt"
+
+#~ msgid "pixels"
+#~ msgstr "bildpunkter"
+
+#~ msgid "inch"
+#~ msgstr "tum"
+
+#~ msgid "inches"
+#~ msgstr "tum"
+
+#~ msgid "millimeter"
+#~ msgstr "millimeter"
+
+#~ msgid "millimeters"
+#~ msgstr "millimeter"
+
+#~ msgid "point"
+#~ msgstr "punkt"
+
+#~ msgid "points"
+#~ msgstr "punkter"
+
+#~ msgid "pica"
+#~ msgstr "pica"
+
+#~ msgid "picas"
+#~ msgstr "picas"
 
 #~ msgid "OK"
 #~ msgstr "OK"
