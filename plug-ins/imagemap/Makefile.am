@@ -10,23 +10,17 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	arrow_up.xpm	\
 	circle.xpm	\
 	coord.xpm	\
-	copy.xpm	\
-	cut.xpm		\
-	delete.xpm	\
 	dimension.xpm	\
 	edit.xpm	\
 	grid.xpm	\
 	map_info.xpm	\
 	open.xpm	\
-	paste.xpm	\
 	polygon.xpm	\
 	preferences.xpm	\
 	rectangle.xpm	\
-	redo.xpm	\
 	save.xpm	\
 	to_back.xpm	\
 	to_front.xpm	\
-	undo.xpm	\
 	zoom_in.xpm	\
 	zoom_out.xpm	\
 	ChangeLog	\

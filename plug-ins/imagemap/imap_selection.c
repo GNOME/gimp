@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,6 @@
 
 #include "arrow_up.xpm"
 #include "arrow_down.xpm"
-#include "delete.xpm"
-#include "edit.xpm"
 
 static void
 set_buttons(Selection_t *data)
@@ -177,13 +175,13 @@ make_selection_toolbar(Selection_t *data, GtkWidget *window)
 					selection_command, 
 					&data->cmd_move_down);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->edit = make_toolbar_icon(toolbar, window, edit_xpm, "Edit",
-				  _("Edit"), selection_command, 
-				  &data->cmd_edit);
+   data->edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
+					"Edit", _("Edit"), selection_command, 
+					&data->cmd_edit);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->remove = make_toolbar_icon(toolbar, window, delete_xpm, "Delete",
-				    _("Delete"), selection_command, 
-				    &data->cmd_delete);
+   data->remove = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE, "Delete",
+					  _("Delete"), selection_command, 
+					  &data->cmd_delete);
 
    gtk_widget_show(toolbar);
 

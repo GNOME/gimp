@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #include "imap_preferences.h"
 #include "imap_rectangle.h"
 #include "imap_settings.h"
+#include "imap_stock.h"
 #include "imap_source.h"
 #include "imap_tools.h"
 
@@ -216,39 +217,35 @@ menu_grid(GtkWidget *widget, gpointer data)
 static void
 make_file_menu(GtkWidget *menu_bar)
 {
-   GtkWidget 	*file_menu = make_menu_bar_item(menu_bar, _("File"));
-   GtkWidget	*item;
+   GtkWidget 	*file_menu = make_menu_bar_item(menu_bar, _("_File"));
 
    _menu.file_menu = file_menu;
-   item = make_item_with_label(file_menu, _("Open..."), menu_command,
-			       &_menu.cmd_open);
-   add_accelerator(item, 'O', GDK_CONTROL_MASK);
-   item = make_item_with_label(file_menu, _("Save"), menu_command,
-			       &_menu.cmd_save);
-   add_accelerator(item, 'S', GDK_CONTROL_MASK);
-   make_item_with_label(file_menu, _("Save As..."), menu_command,
+   make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
+			&_menu.cmd_open);
+   make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command, 
+			&_menu.cmd_save);
+   make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
 			&_menu.cmd_save_as);
    make_separator(file_menu);
-   make_item_with_label(file_menu, _("Preferences..."), menu_command,
+   make_item_with_image(file_menu, GTK_STOCK_PREFERENCES, menu_command,
 			&_menu.cmd_preferences);
    make_separator(file_menu);
-   item = make_item_with_label(file_menu, GTK_STOCK_CLOSE, menu_command,
-			       &_menu.cmd_close);
-   add_accelerator(item, 'W', GDK_CONTROL_MASK);
-   item = make_item_with_label(file_menu, _("Quit"), menu_command,
-			       &_menu.cmd_quit);
-   add_accelerator(item, 'Q', GDK_CONTROL_MASK);
+   make_item_with_image(file_menu, GTK_STOCK_CLOSE, menu_command,
+			&_menu.cmd_close);
+   make_item_with_image(file_menu, GTK_STOCK_QUIT, menu_command,
+			&_menu.cmd_quit);
 }
 
 static void
 command_list_changed(Command_t *command, gpointer data)
 {
    gchar *scratch;
+   GtkWidget *icon;
 
    /* Set undo entry */
    if (_menu.undo)
       gtk_widget_destroy(_menu.undo);
-   scratch = g_strdup_printf (_("Undo %s"), 
+   scratch = g_strdup_printf (_("_Undo %s"), 
                               command && command->name ? command->name : "");
    _menu.undo = insert_item_with_label(_menu.edit_menu, 1, scratch,
 				       menu_command, &_menu.cmd_undo);
@@ -256,17 +253,25 @@ command_list_changed(Command_t *command, gpointer data)
    add_accelerator(_menu.undo, 'Z', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(_menu.undo, (command != NULL));
 
+   icon = gtk_image_new_from_stock(GTK_STOCK_UNDO, GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.undo), icon);
+   gtk_widget_show(icon);
+
    /* Set redo entry */
    command = command_list_get_redo_command();
    if (_menu.redo)
       gtk_widget_destroy(_menu.redo);
-   scratch = g_strdup_printf (_("Redo %s"), 
+   scratch = g_strdup_printf (_("_Redo %s"), 
                               command && command->name ? command->name : "");
    _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
 				       menu_command, &_menu.cmd_redo);
    g_free (scratch);
    add_accelerator(_menu.redo, 'R', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(_menu.redo, (command != NULL));
+
+   icon = gtk_image_new_from_stock(GTK_STOCK_REDO, GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.redo), icon);
+   gtk_widget_show(icon);
 }
 
 static void
@@ -284,28 +289,26 @@ paste_buffer_removed(Object_t *obj, gpointer data)
 static void
 make_edit_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *edit_menu = make_menu_bar_item(menu_bar, _("Edit"));
+   GtkWidget *edit_menu = make_menu_bar_item(menu_bar, _("_Edit"));
    GtkWidget *item, *paste;
 
    _menu.edit_menu = edit_menu;
    command_list_changed(NULL, NULL);
 
    make_separator(edit_menu);
-   _menu.cut = make_item_with_label(edit_menu, _("Cut"), menu_command,
+   _menu.cut = make_item_with_image(edit_menu, GTK_STOCK_CUT, menu_command,
 				    &_menu.cmd_cut);
-   add_accelerator(_menu.cut, 'X', GDK_CONTROL_MASK);
-   _menu.copy = make_item_with_label(edit_menu, _("Copy"), menu_command,
+   _menu.copy = make_item_with_image(edit_menu, GTK_STOCK_COPY, menu_command,
 				     &_menu.cmd_copy);
-   add_accelerator(_menu.copy, 'C', GDK_CONTROL_MASK);
-   paste = make_item_with_label(edit_menu, _("Paste"), menu_command,
+   paste = make_item_with_image(edit_menu, GTK_STOCK_PASTE, menu_command,
 				&_menu.cmd_paste);
    add_accelerator(paste, 'V', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(paste, FALSE);
-   item = make_item_with_label(edit_menu, _("Select All"), menu_command,
+   item = make_item_with_label(edit_menu, _("Select _All"), menu_command,
 			       &_menu.cmd_select_all);
    add_accelerator(item, 'A', GDK_CONTROL_MASK);
    make_separator(edit_menu);
-   _menu.clear = make_item_with_label(edit_menu, _("Clear"), menu_command,
+   _menu.clear = make_item_with_image(edit_menu, GTK_STOCK_CLEAR, menu_command,
 				      &_menu.cmd_clear);
    add_accelerator(_menu.clear, 'K', GDK_CONTROL_MASK);
    _menu.edit = make_item_with_label(edit_menu, _("Edit Area Info..."),
@@ -320,7 +323,7 @@ make_edit_menu(GtkWidget *menu_bar)
 static void
 make_view_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *view_menu = make_menu_bar_item(menu_bar, _("View"));
+   GtkWidget *view_menu = make_menu_bar_item(menu_bar, _("_View"));
    GtkWidget *zoom_menu, *item;
    GSList *group = NULL;
 
@@ -348,12 +351,10 @@ make_view_menu(GtkWidget *menu_bar)
 
    make_separator(view_menu);
 
-   _menu.zoom_in = make_item_with_label(view_menu, _("Zoom In"), menu_command,
-					&_menu.cmd_zoom_in);
-   add_accelerator(_menu.zoom_in, '=', 0);
-   _menu.zoom_out = make_item_with_label(view_menu, _("Zoom Out"), 
+   _menu.zoom_in = make_item_with_image(view_menu, GTK_STOCK_ZOOM_IN, 
+					menu_command, &_menu.cmd_zoom_in);
+   _menu.zoom_out = make_item_with_image(view_menu, GTK_STOCK_ZOOM_OUT, 
 					 menu_command, &_menu.cmd_zoom_out);
-   add_accelerator(_menu.zoom_out, '-', 0);
    gtk_widget_set_sensitive(_menu.zoom_out, FALSE);
 
    zoom_menu = make_sub_menu(view_menu, _("Zoom To"));
@@ -386,7 +387,7 @@ make_view_menu(GtkWidget *menu_bar)
 static void
 make_mapping_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *menu = make_menu_bar_item(menu_bar, _("Mapping"));
+   GtkWidget *menu = make_menu_bar_item(menu_bar, _("_Mapping"));
    GSList    *group;
 
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
@@ -399,14 +400,14 @@ make_mapping_menu(GtkWidget *menu_bar)
    _menu.polygon = make_radio_item(menu, group, _("Polygon"), menu_polygon,
 				   NULL);
    make_separator(menu);
-   make_item_with_label(menu, _("Edit Map Info..."), menu_command,
+   make_item_with_image(menu, IMAP_STOCK_MAP_INFO, menu_command,
 			&_menu.cmd_edit_map_info);
 }
 
 static void
 make_goodies_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *goodies_menu = make_menu_bar_item(menu_bar, _("Goodies"));
+   GtkWidget *goodies_menu = make_menu_bar_item(menu_bar, _("_Goodies"));
    _menu.grid = make_check_item(goodies_menu, _("Grid"), menu_grid, NULL);
    make_item_with_label(goodies_menu, _("Grid Settings..."), menu_command,
 			&_menu.cmd_grid_settings);
@@ -417,7 +418,7 @@ make_goodies_menu(GtkWidget *menu_bar)
 static void
 make_help_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("Help"));
+   GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
    gtk_menu_item_right_justify(GTK_MENU_ITEM(gtk_menu_get_attach_widget(
       GTK_MENU(help_menu))));
    make_item_with_label(help_menu, _("About ImageMap..."), menu_command,

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ make_default_dialog(const gchar *title)
    gtk_widget_grab_default(data->ok);
    gtk_widget_show(data->ok);
 
-   data->apply = gtk_button_new_with_label(_("Apply"));
+   data->apply = gtk_button_new_from_stock(GTK_STOCK_APPLY);
    GTK_WIDGET_SET_FLAGS(data->apply, GTK_CAN_DEFAULT);
    g_signal_connect(G_OBJECT(data->apply), "clicked",
                     G_CALLBACK(dialog_apply), (gpointer) data);
@@ -181,7 +181,7 @@ default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title)
 }
 
 void 
-default_dialog_set_ok_sensitivity(DefaultDialog_t *dialog, gint sensitive)
+default_dialog_set_ok_sensitivity(DefaultDialog_t *dialog, gboolean sensitive)
 {
    gtk_widget_set_sensitive(dialog->ok, sensitive);
 }
@@ -191,6 +191,6 @@ default_dialog_set_label(DefaultDialog_t *dialog, gchar *text)
 {
    GtkWidget *label = gtk_label_new(text);
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), label, 
-		      TRUE, TRUE, 10);
+		      TRUE, TRUE, 5);
    gtk_widget_show(label);
 }

@@ -1,6 +1,28 @@
 2002-06-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/imagemap/Makefile: added imap_stock.[ch]
+	* plug-ins/imagemap/imap_about.c: bumped version number to 2.0
+
+	* plug-ins/imagemap/imap_browse.[ch]: use GTK_STOCK_OPEN stock icon
+
+	* plug-ins/imagemap/imap_default_dialog.c: added apply stock icon
+
+	* plug-ins/imagemap/imap_popup.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_menu_funcs.c: enable mnemonics in menus and
+	use stock icons whenever possible.
+
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/imagemap/copy.xpm
+	* plug-ins/imagemap/cut.xpm
+	* plug-ins/imagemap/paste.xpm
+	* plug-ins/imagemap/delete.xpm
+	* plug-ins/imagemap/undo.xpm
+	* plug-ins/imagemap/redo.xpm: removed since we now use stock icons.
+	
+2002-06-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/Makefile.am: added imap_stock.[ch]
 
 	* plug-ins/imagemap/imap_circle.[ch]
 	* plug-ins/imagemap/imap_cmd_guides.[ch]

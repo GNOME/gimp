@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include "imap_menu.h"
 #include "imap_menu_funcs.h"
 #include "imap_popup.h"
+#include "imap_stock.h"
 #include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -125,7 +126,8 @@ create_main_popup_menu(void)
    GSList    *group;
    
    _popup.main = popup_menu = gtk_menu_new();
-   make_item_with_label(popup_menu, _("Map Info..."), menu_command, 
+
+   make_item_with_image(popup_menu, IMAP_STOCK_MAP_INFO, menu_command, 
 			&_popup.cmd_edit_map_info);
    
    sub_menu = make_sub_menu(popup_menu, _("Tools"));
@@ -142,10 +144,10 @@ create_main_popup_menu(void)
 				    popup_polygon, NULL);
    
    sub_menu = make_sub_menu(popup_menu, _("Zoom"));
-   _popup.zoom_in = make_item_with_label(sub_menu, _("In"), menu_command, 
-					 &_popup.cmd_zoom_in);
-   _popup.zoom_out = make_item_with_label(sub_menu, _("Out"), menu_command,
-					  &_popup.cmd_zoom_out);
+   _popup.zoom_in = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_IN, 
+					 menu_command, &_popup.cmd_zoom_in);
+   _popup.zoom_out = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_OUT, 
+					  menu_command, &_popup.cmd_zoom_out);
    gtk_widget_set_sensitive(_popup.zoom_out, FALSE);
 
    _popup.grid = make_check_item(popup_menu, _("Grid"), popup_grid, NULL);
@@ -153,7 +155,7 @@ create_main_popup_menu(void)
 			&_popup.cmd_grid_settings);
    make_item_with_label(popup_menu, _("Guides..."), menu_command,
 			&_popup.cmd_create_guides);
-   paste = make_item_with_label(popup_menu, _("Paste"), menu_command, 
+   paste = make_item_with_image(popup_menu, GTK_STOCK_PASTE, menu_command, 
 				&_popup.cmd_paste);
    gtk_widget_set_sensitive(paste, FALSE);
    paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);
