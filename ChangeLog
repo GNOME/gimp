@@ -1,5 +1,11 @@
 2004-01-27  Manish Singh  <yosh@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_interpolate): Use a real
+	GimpVector2 for vector operations, instead of stuffing everything
+	into a GimpCoords. C99 aliasing fix.
+
+2004-01-27  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/plugindetails.c: removed unused variable.
 
 	* plug-ins/common/nlfilt.c: declare nlfiltRow as inline in the

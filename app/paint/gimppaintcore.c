@@ -679,7 +679,10 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 			     GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options)
 {
-  GimpCoords  delta;
+  GimpVector2 delta_vec;
+  gdouble     delta_pressure;
+  gdouble     delta_xtilt, delta_ytilt;
+  gdouble     delta_wheel;
   gint        n, num_points;
   gdouble     t0, dt, tn;
   gdouble     st_factor, st_offset;
@@ -700,36 +703,36 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   gimp_avoid_exact_integer (&core->cur_coords.x);
   gimp_avoid_exact_integer (&core->cur_coords.y);
 
-  delta.x        = core->cur_coords.x        - core->last_coords.x;
-  delta.y        = core->cur_coords.y        - core->last_coords.y;
-  delta.pressure = core->cur_coords.pressure - core->last_coords.pressure;
-  delta.xtilt    = core->cur_coords.xtilt    - core->last_coords.xtilt;
-  delta.ytilt    = core->cur_coords.ytilt    - core->last_coords.ytilt;
-  delta.wheel    = core->cur_coords.wheel    - core->last_coords.wheel;
+  delta_vec.x    = core->cur_coords.x        - core->last_coords.x;
+  delta_vec.y    = core->cur_coords.y        - core->last_coords.y;
+  delta_pressure = core->cur_coords.pressure - core->last_coords.pressure;
+  delta_xtilt    = core->cur_coords.xtilt    - core->last_coords.xtilt;
+  delta_ytilt    = core->cur_coords.ytilt    - core->last_coords.ytilt;
+  delta_wheel    = core->cur_coords.wheel    - core->last_coords.wheel;
 
   /*  return if there has been no motion  */
-  if (! delta.x        &&
-      ! delta.y        &&
-      ! delta.pressure &&
-      ! delta.xtilt    &&
-      ! delta.ytilt    &&
-      ! delta.wheel)
+  if (! delta_vec.x    &&
+      ! delta_vec.y    &&
+      ! delta_pressure &&
+      ! delta_xtilt    &&
+      ! delta_ytilt    &&
+      ! delta_wheel)
     return;
 
   /* calculate the distance traveled in the coordinate space of the brush */
   mag = gimp_vector2_length (&(core->brush->x_axis));
-  xd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
+  xd  = gimp_vector2_inner_product (&delta_vec,
 				    &(core->brush->x_axis)) / (mag * mag);
 
   mag = gimp_vector2_length (&(core->brush->y_axis));
-  yd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
+  yd  = gimp_vector2_inner_product (&delta_vec,
 				    &(core->brush->y_axis)) / (mag * mag);
 
   dist    = 0.5 * sqrt (xd * xd + yd * yd);
   total   = dist + core->distance;
   initial = core->distance;
 
-  pixel_dist    = gimp_vector2_length ((GimpVector2 *) &delta);
+  pixel_dist    = gimp_vector2_length (&delta_vec);
   pixel_initial = core->pixel_dist;
 
   /*  FIXME: need to adapt the spacing to the size  */
@@ -751,14 +754,14 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
    *  be negative!)
    */
 
-  if (delta.x*delta.x > delta.y*delta.y)
+  if (delta_vec.x * delta_vec.x > delta_vec.y * delta_vec.y)
     {
-      st_factor = delta.x;
+      st_factor = delta_vec.x;
       st_offset = core->last_coords.x - 0.5;
     }
   else
     {
-      st_factor = delta.y;
+      st_factor = delta_vec.y;
       st_offset = core->last_coords.y - 0.5;
     }
 
@@ -786,7 +789,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
        * chunks.
        */
 
-      if (num_points == 0 && (delta.x == 0 || delta.y == 0))
+      if (num_points == 0 && (delta_vec.x == 0 || delta_vec.y == 0))
 	return;
     }
   else if (fabs (st_factor) < EPSILON)
@@ -827,8 +830,8 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
       t0 = (s0 - st_offset) / st_factor;
       tn = (sn - st_offset) / st_factor;
 
-      x = (gint) floor (core->last_coords.x + t0 * delta.x);
-      y = (gint) floor (core->last_coords.y + t0 * delta.y);
+      x = (gint) floor (core->last_coords.x + t0 * delta_vec.x);
+      y = (gint) floor (core->last_coords.y + t0 * delta_vec.y);
       if (t0 < 0.0 && !( x == (gint) floor (core->last_coords.x) &&
                          y == (gint) floor (core->last_coords.y) ))
         {
@@ -848,8 +851,8 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
           s0 += direction;
         }
 
-      x = (gint) floor (core->last_coords.x + tn * delta.x);
-      y = (gint) floor (core->last_coords.y + tn * delta.y);
+      x = (gint) floor (core->last_coords.x + tn * delta_vec.x);
+      y = (gint) floor (core->last_coords.y + tn * delta_vec.y);
       if (tn > 1.0 && !( x == (gint) floor( core->cur_coords.x ) &&
                          y == (gint) floor( core->cur_coords.y ) ))
         {
@@ -888,12 +891,12 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
       GimpBrush *current_brush;
       gdouble    t = t0 + n*dt;
 
-      core->cur_coords.x        = core->last_coords.x        + t * delta.x;
-      core->cur_coords.y        = core->last_coords.y        + t * delta.y;
-      core->cur_coords.pressure = core->last_coords.pressure + t * delta.pressure;
-      core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta.xtilt;
-      core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta.ytilt;
-      core->cur_coords.wheel    = core->last_coords.wheel    + t * delta.wheel;
+      core->cur_coords.x        = core->last_coords.x        + t * delta_vec.x;
+      core->cur_coords.y        = core->last_coords.y        + t * delta_vec.y;
+      core->cur_coords.pressure = core->last_coords.pressure + t * delta_pressure;
+      core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta_xtilt;
+      core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta_ytilt;
+      core->cur_coords.wheel    = core->last_coords.wheel    + t * delta_wheel;
 
       core->distance            = initial                    + t * dist;
       core->pixel_dist          = pixel_initial              + t * pixel_dist;
@@ -907,12 +910,12 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
       core->brush = current_brush;
     }
 
-  core->cur_coords.x        = core->last_coords.x        + delta.x;
-  core->cur_coords.y        = core->last_coords.y        + delta.y;
-  core->cur_coords.pressure = core->last_coords.pressure + delta.pressure;
-  core->cur_coords.xtilt    = core->last_coords.xtilt    + delta.xtilt;
-  core->cur_coords.ytilt    = core->last_coords.ytilt    + delta.ytilt;
-  core->cur_coords.wheel    = core->last_coords.wheel    + delta.wheel;
+  core->cur_coords.x        = core->last_coords.x        + delta_vec.x;
+  core->cur_coords.y        = core->last_coords.y        + delta_vec.y;
+  core->cur_coords.pressure = core->last_coords.pressure + delta_pressure;
+  core->cur_coords.xtilt    = core->last_coords.xtilt    + delta_xtilt;
+  core->cur_coords.ytilt    = core->last_coords.ytilt    + delta_ytilt;
+  core->cur_coords.wheel    = core->last_coords.wheel    + delta_wheel;
 
   core->distance   = total;
   core->pixel_dist = pixel_initial + pixel_dist;
