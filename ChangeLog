@@ -1,3 +1,8 @@
+2003-08-24  Simon Budig  <simon@gimp.org>
+
+	* data/brushes/feltpen.gih
+	* data/brushes/hsparks.gih: Marked as binary.
+
 2003-08-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-filter-dialog.c
@@ -116,7 +121,7 @@
 	are filled for ms.po
 
 2003-06-22  Hasbullah Bin Pit  <sebol@ikhlas.com>
-                                                                                
+
         * configure.in(ALL_LINGUAS): Added "ms" (Malay).
 
 2003-08-22  Simon Budig  <simon@gimp.org>
