@@ -1,3 +1,8 @@
+Wed Nov 18 17:35:38 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c: fixed a longstanding bug in the splash-screen.
+	Finally it shouldn't resize even with LARGE fonts.
+
 Wed Nov 18 16:44:32 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/ops_buttons.[ch]
