@@ -148,16 +148,16 @@ mask_render_preview (GImage        *gimage,
   Channel * mask;
   MaskBuf * scaled_buf = NULL;
   PixelRegion srcPR, destPR;
-  int subsample;
-  int width, height;
-  int scale;
+  gint subsample;
+  gint width, height;
+  gint scale;
 
   mask = gimage_get_mask (gimage);
   if ((drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||
       (drawable_height (GIMP_DRAWABLE(mask)) > *pheight))
     {
-      if (((float) drawable_width (GIMP_DRAWABLE (mask)) / (float) *pwidth) >
-	  ((float) drawable_height (GIMP_DRAWABLE (mask)) / (float) *pheight))
+      if (((gfloat) drawable_width (GIMP_DRAWABLE (mask)) / (gfloat) *pwidth) >
+	  ((gfloat) drawable_height (GIMP_DRAWABLE (mask)) / (gfloat) *pheight))
 	{
 	  width = *pwidth;
 	  height = (drawable_height (GIMP_DRAWABLE (mask)) * (*pwidth)) / drawable_width (GIMP_DRAWABLE (mask));
@@ -367,9 +367,9 @@ undo_history_set_pixmap_idle (gpointer data)
   g_free (even);
   g_free (odd);
 
-  if(buf)
+  if (buf)
     temp_buf_free (buf);
-  if(mbuf)
+  if (mbuf)
     mask_buf_free (mbuf);
 
   gtk_clist_set_row_data (idle->clist, idle->row, (gpointer)2);
@@ -495,7 +495,7 @@ undo_history_prepend_special (GtkCList *clist)
 /* Recalculate which of the undo and redo buttons are meant to be sensitive */
 static void
 undo_history_set_sensitive (undo_history_st *st,
-			    int              rows)
+			    gint             rows)
 {
   gtk_widget_set_sensitive (st->undo_button, (st->old_selection != 0));
   gtk_widget_set_sensitive (st->redo_button, (st->old_selection != rows-1));
@@ -506,15 +506,15 @@ undo_history_set_sensitive (undo_history_st *st,
  * redo stacks. */
 static void
 undo_history_undo_event (GtkWidget *widget,
-			 int        ev,
+			 gint       ev,
 			 gpointer   data)
 {
   undo_history_st *st = data;
   undo_event_t event = ev;
-  const char *name;
-  char *namelist[3];
+  const gchar *name;
+  gchar *namelist[3];
   GList *list;
-  int cur_selection;
+  gint cur_selection;
   GtkCList *clist;
   gint row;
   GdkPixmap *pixmap;
@@ -544,7 +544,7 @@ undo_history_undo_event (GtkWidget *widget,
       namelist[1] = NULL;
       namelist[2] = (char *) name;
       row = gtk_clist_append (clist, namelist);
-      g_assert (clist->rows == cur_selection+2);
+      g_assert (clist->rows == cur_selection + 2);
 
       undo_history_set_pixmap (clist, row, st->preview_size, st->gimage);
 
@@ -552,7 +552,7 @@ undo_history_undo_event (GtkWidget *widget,
       gtk_clist_select_row (clist, clist->rows - 1, -1);
       gtk_clist_thaw (clist);
       gtk_clist_moveto (clist, clist->rows - 1, 0, 1.0, 0.0);
-      cur_selection = clist->rows-1;
+      cur_selection = clist->rows - 1;
       break;
 
     case UNDO_EXPIRED:
@@ -592,6 +592,10 @@ undo_history_undo_event (GtkWidget *widget,
       break;
     }
 
+  /*  if the image is clean, set the clean pixmap  */ 
+  if (st->gimage->dirty == 0)
+    gtk_clist_set_pixmap (clist, cur_selection, 1, clean_pixmap, clean_mask);
+
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->clist), st);
 
   st->old_selection = cur_selection;
@@ -607,7 +611,7 @@ undo_history_select_row_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   undo_history_st *st = data;
-  int cur_selection;
+  gint cur_selection;
 
   cur_selection = row;
 
@@ -632,6 +636,10 @@ undo_history_select_row_callback (GtkWidget *widget,
 
   undo_history_set_pixmap (GTK_CLIST (widget), cur_selection, st->preview_size, st->gimage);
 
+  /*  if the image is clean, set the clean pixmap  */ 
+  if (st->gimage->dirty == 0)
+    gtk_clist_set_pixmap (GTK_CLIST (widget), cur_selection, 1, clean_pixmap, clean_mask);
+
   gtk_signal_handler_unblock_by_func (GTK_OBJECT (st->gimage),
 				      undo_history_undo_event, st);    
 
@@ -644,20 +652,21 @@ undo_history_clean_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   undo_history_st *st = data;
-  int i;
-  int nrows;
+  gint i;
+  gint nrows;
   GtkCList *clist;
 
   if (st->gimage->dirty != 0)
     return;
 
-  /* The image is clean, so this is the version on disc.  Remove the
-   * clean star from all other entries, and add it to the current
-   * one. */
-
-  /* XXX currently broken, since "clean" signal is emitted before
-   * UNDO_POPPED event.  I don't want to change the order of the
-   * signals.  So I'm a little stuck. --austin */
+  /* 
+   * The image has become clean. Remove the clean_pixmap from 
+   * all entries. It will be set in the undo_event or select_row
+   * callbacks. 
+   * Ugly, but works better than before. The actual problem is 
+   * that the "clean" signal is emitted before UNDO_POPPED event,
+   * so we can not simply set the clean pixmap here.
+   */ 
 
   clist = GTK_CLIST (st->clist);
   nrows = clist->rows;
@@ -665,47 +674,45 @@ undo_history_clean_callback (GtkWidget *widget,
   gtk_clist_freeze (clist);
   for (i=0; i < nrows; i++)
     gtk_clist_set_text (clist, i, 1, NULL);
-  gtk_clist_set_pixmap (clist, st->old_selection, 1,
-			clean_pixmap, clean_mask);
   gtk_clist_thaw (clist);
 }
 
 
 /* Used to build up initial contents of clist */
-static int
-undo_history_init_undo (const char *undoitemname,
-			void       *data)
+static gboolean
+undo_history_init_undo (const gchar *undoitemname,
+			void        *data)
 {
   undo_history_st *st = data;
-  char *namelist[3];
+  gchar *namelist[3];
   gint row;
 
   namelist[0] = NULL;
   namelist[1] = NULL;
-  namelist[2] = (char *) undoitemname;
+  namelist[2] = (gchar *) undoitemname;
   row = gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
   gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
 			clear_pixmap, clear_mask);
 
-  return 0;
+  return FALSE;
 }
 
 /* Ditto */
-static int
+static gboolean
 undo_history_init_redo (const char *undoitemname,
 			void       *data)
 {
   undo_history_st *st = data;
-  char *namelist[3];
+  gchar *namelist[3];
   gint row;
 
   namelist[0] = NULL;  namelist[1] = NULL;
-  namelist[2] = (char *) undoitemname;
+  namelist[2] = (gchar *) undoitemname;
   row = gtk_clist_append (GTK_CLIST (st->clist), namelist);
   gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
 			clear_pixmap, clear_mask);
 
-  return 0;
+  return FALSE;
 }
 
 
@@ -818,6 +825,10 @@ undo_history_new (GImage *gimage)
   gtk_signal_connect (GTK_OBJECT (st->clist), "select_row",
 		      GTK_SIGNAL_FUNC (undo_history_select_row_callback),
 		      st);
+
+  /*  if the image is clean, set the clean pixmap  */ 
+  if (st->gimage->dirty == 0)
+    gtk_clist_set_pixmap (GTK_CLIST (st->clist), st->old_selection, 1, clean_pixmap, clean_mask);
 
   gtk_widget_show (GTK_WIDGET (st->clist));
 

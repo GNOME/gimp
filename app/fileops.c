@@ -1753,6 +1753,8 @@ file_save_ok_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
       file_save_with_proc (the_gimage, filename, raw_filename, save_file_proc);
+
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
 }
 
@@ -1830,6 +1832,9 @@ file_overwrite_callback (GtkWidget *widget,
 			   overwrite_data->raw_filename,
 			   save_file_proc);
   }
+
+  /* always make file save dialog sensitive */
+  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
   g_free (overwrite_data->full_filename);
   g_free (overwrite_data->raw_filename);

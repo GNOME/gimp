@@ -172,7 +172,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->disp_count            = 0;
   gimage->instance_count        = 0;
   gimage->shadow                = NULL;
-  gimage->dirty                 = 1;     /* Why is that? I doubt this is correct. --Sven */
+  gimage->dirty                 = 1;
   gimage->undo_on               = TRUE;
   gimage->construct_flag        = -1;
   gimage->tattoo_state          = 0;
@@ -1170,17 +1170,24 @@ void
 gimp_image_parasite_attach (GimpImage    *gimage, 
 			    GimpParasite *parasite)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (gimage) && parasite != NULL);
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
   if (gimp_parasite_is_undoable (parasite))
     undo_push_image_parasite (gimage, parasite);
-  if (gimp_parasite_is_persistent (parasite) &&
-      !gimp_parasite_compare (parasite,
-			      gimp_image_parasite_find (gimage,
-							gimp_parasite_name (parasite))))
+
+  /*  We used to push an cantundo on te stack here. This made the undo stack
+      unusable (NULL on the stack) and prevented people from undoing after a 
+      save (since most save plug-ins attach an undoable comment parasite).
+      Now we simply attach the parasite without pushing an undo. That way it's
+      undoable but does not block the undo system.   --Sven
+  else if (gimp_parasite_is_persistent (parasite) &&
+	   !gimp_parasite_compare (parasite,
+		  		   gimp_image_parasite_find (gimage,
+			  				     gimp_parasite_name (parasite))))
     undo_push_cantundo (gimage, _("attach parasite to image"));
+  */
 
   parasite_list_add (gimage->parasites, parasite);
 
@@ -1197,15 +1204,18 @@ gimp_image_parasite_detach (GimpImage   *gimage,
 {
   GimpParasite *p;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_IMAGE (gimage) && parasite != NULL);
 
   if (!(p = parasite_list_find (gimage->parasites, parasite)))
     return;
 
   if (gimp_parasite_is_undoable (p))
     undo_push_image_parasite_remove (gimage, gimp_parasite_name (p));
+
+  /*  see comment in function gimp_image_parasite_attach()
   else if (gimp_parasite_is_persistent (p))
     undo_push_cantundo (gimage, _("detach parasite from image"));
+   */
 
   parasite_list_remove (gimage->parasites, parasite);
 }
@@ -3447,6 +3457,8 @@ gimp_image_undo_freeze (GimpImage *gimage)
 gboolean
 gimp_image_undo_thaw (GimpImage *gimage)
 {
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
   gimage->undo_on = TRUE;
 
   return TRUE;
