@@ -95,14 +95,13 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   INIT_I18N();
 
-  /*  Get the specified drawable  */
   image_ID = param[1].data.d_image;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -148,33 +147,32 @@ guillotine (gint32 image_ID)
     {
       gint position = gimp_image_get_guide_position (image_ID, guide);
 
-      if (position == 0)
-        continue;
-
       switch (gimp_image_get_guide_orientation (image_ID, guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if (position == image_height)
-            continue;
-
-          hguides = g_list_insert_sorted (hguides, GINT_TO_POINTER (position),
-                                          guide_sort_func);
+          if (! g_list_find (hguides, GINT_TO_POINTER (position)))
+            {
+              hguides = g_list_insert_sorted (hguides,
+                                              GINT_TO_POINTER (position),
+                                              guide_sort_func);
+              guides_found = TRUE;
+            }
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if (position == image_width)
-            continue;
-
-          vguides = g_list_insert_sorted (vguides, GINT_TO_POINTER (position),
-                                          guide_sort_func);
+          if (! g_list_find (vguides, GINT_TO_POINTER (position)))
+            {
+              vguides = g_list_insert_sorted (vguides,
+                                              GINT_TO_POINTER (position),
+                                              guide_sort_func);
+              guides_found = TRUE;
+            }
           break;
 
         case GIMP_ORIENTATION_UNKNOWN:
           g_assert_not_reached ();
           break;
         }
-
-      guides_found = TRUE;
     }
 
   if (guides_found)
@@ -213,9 +211,7 @@ guillotine (gint32 image_ID)
                                GPOINTER_TO_INT (hg->data));
 
               /* show the rough coordinates of the image in the title */
-              new_filename = g_strdup_printf ("%s-(%i,%i)",
-                                              filename,
-                                              x, y);
+              new_filename = g_strdup_printf ("%s-(%i,%i)", filename, x, y);
               gimp_image_set_filename (new_image, new_filename);
               g_free (new_filename);
 
