@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -59,37 +60,40 @@
 
 /*  local function prototypes  */
 
-static void   gimp_measure_tool_class_init      (GimpMeasureToolClass *klass);
-static void   gimp_measure_tool_init            (GimpMeasureTool      *tool);
+static void     gimp_measure_tool_class_init      (GimpMeasureToolClass *klass);
+static void     gimp_measure_tool_init            (GimpMeasureTool      *tool);
 
-static void   gimp_measure_tool_control         (GimpTool        *tool,
-                                                 GimpToolAction   action,
-                                                 GimpDisplay     *gdisp);
-static void   gimp_measure_tool_button_press    (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
-static void   gimp_measure_tool_button_release  (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
-static void   gimp_measure_tool_motion          (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
-static void   gimp_measure_tool_cursor_update   (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *gdisp);
+static void     gimp_measure_tool_control         (GimpTool        *tool,
+                                                   GimpToolAction   action,
+                                                   GimpDisplay     *gdisp);
+static void     gimp_measure_tool_button_press    (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *gdisp);
+static void     gimp_measure_tool_button_release  (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *gdisp);
+static void     gimp_measure_tool_motion          (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   guint32          time,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *gdisp);
+static gboolean gimp_measure_tool_key_press       (GimpTool        *tool,
+                                                   GdkEventKey     *kevent,
+                                                   GimpDisplay     *gdisp);
+static void     gimp_measure_tool_cursor_update   (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+                                                   GdkModifierType  state,
+                                                   GimpDisplay     *gdisp);
 
-static void   gimp_measure_tool_draw            (GimpDrawTool    *draw_tool);
+static void     gimp_measure_tool_draw            (GimpDrawTool    *draw_tool);
 
+static void     gimp_measure_tool_halt            (GimpMeasureTool *mtool);
 
-
-static gdouble     measure_tool_get_angle          (gint             dx,
+static gdouble     gimp_measure_tool_get_angle     (gint             dx,
                                                     gint             dy,
                                                     gdouble          xres,
                                                     gdouble          yres);
@@ -159,6 +163,7 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
+  tool_class->key_press      = gimp_measure_tool_key_press;
   tool_class->cursor_update  = gimp_measure_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_measure_tool_draw;
@@ -184,11 +189,7 @@ gimp_measure_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      if (GIMP_MEASURE_TOOL (tool)->dialog)
-        gtk_widget_destroy (GIMP_MEASURE_TOOL (tool)->dialog);
-
-      gimp_tool_pop_status (tool);
-      gimp_tool_control_halt (tool->control);
+      gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
       break;
 
     default:
@@ -487,6 +488,27 @@ gimp_measure_tool_motion (GimpTool        *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (mtool));
 }
 
+static gboolean
+gimp_measure_tool_key_press (GimpTool    *tool,
+                             GdkEventKey *kevent,
+                             GimpDisplay *gdisp)
+{
+  if (gdisp == tool->gdisp)
+    {
+      switch (kevent->keyval)
+        {
+        case GDK_Escape:
+          gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
+          return TRUE;
+
+        default:
+          break;
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_measure_tool_cursor_update (GimpTool        *tool,
                                  GimpCoords      *coords,
@@ -653,11 +675,28 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
+static void
+gimp_measure_tool_halt (GimpMeasureTool *mtool)
+{
+  GimpTool *tool = GIMP_TOOL (mtool);
+
+  if (mtool->dialog)
+    gtk_widget_destroy (mtool->dialog);
+
+  gimp_tool_pop_status (tool);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (mtool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (mtool));
+
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
+}
+
 static gdouble
-measure_tool_get_angle (gint    dx,
-                        gint    dy,
-                        gdouble xres,
-                        gdouble yres)
+gimp_measure_tool_get_angle (gint    dx,
+                             gint    dy,
+                             gdouble xres,
+                             gdouble yres)
 {
   gdouble angle;
 
@@ -723,17 +762,17 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
   if (mtool->num_points != 3)
     bx = ax > 0 ? 1 : -1;
 
-  theta1 = measure_tool_get_angle (ax, ay, 1.0, 1.0);
-  theta2 = measure_tool_get_angle (bx, by, 1.0, 1.0);
+  theta1 = gimp_measure_tool_get_angle (ax, ay, 1.0, 1.0);
+  theta2 = gimp_measure_tool_get_angle (bx, by, 1.0, 1.0);
 
   pixel_angle = fabs (theta1 - theta2);
   if (pixel_angle > 180.0)
     pixel_angle = fabs (360.0 - pixel_angle);
 
-  theta1 = measure_tool_get_angle (ax, ay,
-                                   image->xresolution, image->yresolution);
-  theta2 = measure_tool_get_angle (bx, by,
-                                   image->xresolution, image->yresolution);
+  theta1 = gimp_measure_tool_get_angle (ax, ay,
+                                        image->xresolution, image->yresolution);
+  theta2 = gimp_measure_tool_get_angle (bx, by,
+                                        image->xresolution, image->yresolution);
 
   mtool->angle1 = theta1;
   mtool->angle2 = theta2;
