@@ -1,5 +1,11 @@
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig.c (gimp_config_iface_duplicate): set
+	construct_param->foo, not construct_param*s*->foo, so we don't set
+	the first construct param again and crash.
+
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/cubism.c: added "..." to the progress text.
 
 2004-08-31  Michael Natterer  <mitch@gimp.org>
