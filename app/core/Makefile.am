@@ -178,7 +178,7 @@ EXTRA_DIST = \
 #
 # rules to generate built sources
 #
-# setup autogeneration dependancies
+# setup autogeneration dependencies
 gen_sources = xgen-gmh xgen-gmc xgen-cec
 CLEANFILES = $(gen_sources)
 

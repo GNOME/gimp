@@ -174,7 +174,7 @@ libappwidgets_a_SOURCES = \
 #
 # rules to generate built sources
 #
-# setup autogeneration dependancies
+# setup autogeneration dependencies
 gen_sources = xgen-wec
 CLEANFILES = $(gen_sources)
 

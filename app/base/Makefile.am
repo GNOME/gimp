@@ -78,7 +78,7 @@ EXTRA_DIST = makefile.msc
 #
 # rules to generate built sources
 #
-# setup autogeneration dependancies
+# setup autogeneration dependencies
 gen_sources = xgen-bec
 CLEANFILES = $(gen_sources)
 

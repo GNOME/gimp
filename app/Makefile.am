@@ -109,6 +109,7 @@ INCLUDES = \
 
 gimp_1_3_LDADD = \
 	$(gimp_exp)							\
+	config/libappconfig.a						\
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
 	tools/libapptools.a						\
@@ -121,7 +122,6 @@ gimp_1_3_LDADD = \
 	xcf/libappxcf.a							\
 	file/libappfile.a						\
 	plug-in/libappplug-in.a						\
-	config/libappconfig.a						\
 	paint-funcs/libapppaint-funcs.a					\
 	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\

@@ -1,5 +1,16 @@
 2003-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/Makefile.am: removed the "truly ugly hack"...
+
+	* app/Makefile.am: ...and changed the linking order instead.
+
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/paint/Makefile.am
+	* app/widgets/Makefile.am: fixed typo.
+
+2003-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: removed gimp_main_loop() and
 	gimp_main_loop_quit() because they were a temp_hack until plug-ins
 	have their own main loops. Added gimp_threads_enter() and
@@ -33,7 +44,7 @@
 	message handlers and kill the plug-in if it misbehaves. Cleanup.
 
 	* app/plug-in/plug-in-progress.c (plug_in_progress_cancel): if the
-	plug-in runs synchronous, provide a GIMP_PDB_CANCEL return value
+	plug-in runs synchronously, provide a GIMP_PDB_CANCEL return value
 	so we don't see error messages about the "failed" procedure.
 
 	* app/plug-in/plug-in-run.c: removed plug_in_push,pop() stuff.
