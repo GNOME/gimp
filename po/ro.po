@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2\n"
-"POT-Creation-Date: 2002-02-03 20:05-0800\n"
+"POT-Creation-Date: 2003-05-19 15:07-0700\n"
 "PO-Revision-Date: 2001-12-18 12:00+0200\n"
 "Last-Translator: Paul-Dan Oprişa-Stănescu <oprisa@mec.utt.ro>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "Presiune:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
+#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:565
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -59,45 +59,45 @@ msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgid "brought to you by"
 msgstr "vă este oferit de"
 
-#: app/app_procs.c:378
+#: app/app_procs.c:379
 msgid "GIMP Startup"
 msgstr "Pornire GIMP"
 
-#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
+#: app/app_procs.c:500 app/app_procs.c:508 app/gimprc.c:459
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "procesez \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Looking for data files"
 msgstr "Caut fişierele de date"
 
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Parasites"
 msgstr "Paraziţi"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:586 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Pensule"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:588 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Modele"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:575 app/preferences_dialog.c:2547
+#: app/app_procs.c:590 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Palete"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:592 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Gradienţi"
 
-#: app/app_procs.c:655
+#: app/app_procs.c:671
 #, c-format
 msgid ""
 "Unable to open a test swap file.  Please check the\n"
@@ -105,11 +105,11 @@ msgid ""
 "in your Preferences (currently '%s')."
 msgstr ""
 
-#: app/app_procs.c:775
+#: app/app_procs.c:791
 msgid "Really Quit?"
 msgstr "Chiar doriţi să terminaţi?"
 
-#: app/app_procs.c:779
+#: app/app_procs.c:795
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -119,23 +119,23 @@ msgstr ""
 "\n"
 "Terminaţi GIMP?"
 
-#: app/app_procs.c:780
+#: app/app_procs.c:796
 msgid "Quit"
 msgstr "Terminare"
 
 #. the cancel button
-#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
-#: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
-#: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
-#: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
-#: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
-#: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
-#: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
-#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
-#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
-#: app/threshold.c:285 app/user_install.c:597
+#: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
+#: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
+#: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
+#: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
+#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
+#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
+#: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
+#: app/threshold.c:301 app/user_install.c:605
 msgid "Cancel"
 msgstr "Renunţă"
 
@@ -151,7 +151,7 @@ msgstr "Curbă stricată"
 msgid "Curve not closed!"
 msgstr "Curba nu este închisă!"
 
-#: app/bezier_select.c:3287 app/gimage_mask.c:625
+#: app/bezier_select.c:3294 app/gimage_mask.c:625
 msgid "Paintbrush operation failed."
 msgstr "Operaţia de tip 'pensula' a eşuat."
 
@@ -275,49 +275,55 @@ msgstr "Amestecare..."
 msgid "Blend: "
 msgstr "Amestec:"
 
-#: app/brightness_contrast.c:132 app/brightness_contrast.c:221
+#: app/brightness_contrast.c:133 app/brightness_contrast.c:235
 #: app/tools.c:1054
 msgid "Brightness-Contrast"
 msgstr "Luminozitate-contrast"
 
-#: app/brightness_contrast.c:175
+#: app/brightness_contrast.c:176 app/color_balance.c:217 app/curves.c:450
+#: app/hue_saturation.c:292 app/levels.c:246 app/posterize.c:160
+#: app/threshold.c:217
+msgid "The image has no drawables."
+msgstr ""
+
+#: app/brightness_contrast.c:182
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Luminozitatea-contrast nu funcţionează pe imagini indexate."
 
-#: app/brightness_contrast.c:226 app/channel_ops.c:97
+#: app/brightness_contrast.c:240 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
-#: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
-#: app/curves.c:569 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:379 app/layers_dialog.c:3561
-#: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
-#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
+#: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
+#: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
+#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
+#: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:228 app/by_color_select.c:727
-#: app/color_balance.c:284 app/curves.c:571 app/file_new_dialog.c:360
-#: app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210
-#: app/resize.c:222 app/threshold.c:283 app/tools.c:1547
+#: app/brightness_contrast.c:242 app/by_color_select.c:727
+#: app/color_balance.c:297 app/curves.c:590 app/file_new_dialog.c:360
+#: app/hue_saturation.c:401 app/levels.c:373 app/posterize.c:227
+#: app/resize.c:222 app/threshold.c:299 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Normal"
 
 #. Create the brightness scale widget
-#: app/brightness_contrast.c:246
+#: app/brightness_contrast.c:260
 msgid "Brightness:"
 msgstr "Luminozitate:"
 
 #. Create the contrast scale widget
-#: app/brightness_contrast.c:277
+#: app/brightness_contrast.c:291
 msgid "Contrast:"
 msgstr "Contrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693
-#: app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579
-#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
+#: app/brightness_contrast.c:326 app/color_balance.c:465 app/curves.c:712
+#: app/fileops.c:467 app/hue_saturation.c:591 app/levels.c:604
+#: app/palette.c:3229 app/posterize.c:266 app/threshold.c:374
 msgid "Preview"
 msgstr "Previzualizare"
 
@@ -328,12 +334,12 @@ msgstr "Editor de pensule"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
+#: app/crop.c:1074 app/devices.c:760 app/docindex.c:781 app/errorconsole.c:284
+#: app/gdisplay_ops.c:313 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
+#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:171
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
 msgstr "Închide"
@@ -496,7 +502,7 @@ msgstr "copia %s"
 msgid "Selection Mask"
 msgstr "Masca de selecţie"
 
-#: app/channel_ops.c:91 app/resize.c:436
+#: app/channel_ops.c:91 app/resize.c:438
 msgid "Offset"
 msgstr "Decalaj"
 
@@ -505,9 +511,9 @@ msgstr "Decalaj"
 msgid "Offset X:"
 msgstr "Decalaj X:"
 
-#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
-#: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
-#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
+#: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
+#: app/resize.c:374 app/resize.c:468 app/resize.c:606 app/rotate_tool.c:111
+#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1451
 msgid "Y:"
 msgstr "Y:"
 
@@ -517,11 +523,11 @@ msgid "Wrap Around"
 msgstr "Umple împrejur"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3665
+#: app/layers_dialog.c:3677
 msgid "Background"
 msgstr "Fundal (BG)"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3667
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -562,18 +568,18 @@ msgstr "Elimină canalul"
 msgid "Empty Channel Copy"
 msgstr "Copie goală a canalului"
 
-#: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:594 app/histogram_tool.c:322 app/levels.c:379
+#: app/channels_dialog.c:1440 app/color_balance.c:367 app/color_select.c:254
+#: app/curves.c:613 app/histogram_tool.c:322 app/levels.c:404
 msgid "Red"
 msgstr "Roşu"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:595 app/histogram_tool.c:323 app/levels.c:380
+#: app/channels_dialog.c:1444 app/color_balance.c:392 app/color_select.c:255
+#: app/curves.c:614 app/histogram_tool.c:323 app/levels.c:405
 msgid "Green"
 msgstr "Verde"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:596 app/histogram_tool.c:324 app/levels.c:381
+#: app/channels_dialog.c:1448 app/color_balance.c:417 app/color_select.c:256
+#: app/curves.c:615 app/histogram_tool.c:324 app/levels.c:406
 msgid "Blue"
 msgstr "Albastru"
 
@@ -636,47 +642,47 @@ msgid "No patterns available for this operation."
 msgstr "Nu există modele disponibile pt. ac. operaţie."
 
 #. The shell and main vbox
-#: app/color_balance.c:173 app/color_balance.c:277 app/tools.c:1026
+#: app/color_balance.c:173 app/color_balance.c:290 app/tools.c:1026
 msgid "Color Balance"
 msgstr "Echilibrare culori"
 
-#: app/color_balance.c:217
+#: app/color_balance.c:223
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Echilibrarea culorilor funcţionează numai pe imagini RGB."
 
-#: app/color_balance.c:266 app/dodgeburn.c:186
+#: app/color_balance.c:279 app/dodgeburn.c:186
 msgid "Shadows"
 msgstr "Umbriri"
 
-#: app/color_balance.c:267 app/dodgeburn.c:184
+#: app/color_balance.c:280 app/dodgeburn.c:184
 msgid "Midtones"
 msgstr "Semitonuri"
 
-#: app/color_balance.c:268 app/dodgeburn.c:182
+#: app/color_balance.c:281 app/dodgeburn.c:182
 msgid "Highlights"
 msgstr "Evidenţieri"
 
-#: app/color_balance.c:299
+#: app/color_balance.c:312
 msgid "Color Levels:"
 msgstr "Nivele culoare:"
 
 #. Create the cyan-red scale widget
-#: app/color_balance.c:339
+#: app/color_balance.c:352
 msgid "Cyan"
 msgstr "Cian"
 
 #. Create the magenta-green scale widget
-#: app/color_balance.c:364
+#: app/color_balance.c:377
 msgid "Magenta"
 msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
-#: app/color_balance.c:389
+#: app/color_balance.c:402
 msgid "Yellow"
 msgstr "Galben"
 
 #. The preserve luminosity toggle
-#: app/color_balance.c:442
+#: app/color_balance.c:455
 msgid "Preserve Luminosity"
 msgstr "Menţine luminozitatea"
 
@@ -755,15 +761,15 @@ msgstr "S"
 msgid "V"
 msgstr "V"
 
-#: app/color_select.c:245 app/hue_saturation.c:361
+#: app/color_select.c:245 app/hue_saturation.c:381
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:246 app/hue_saturation.c:363
+#: app/color_select.c:246 app/hue_saturation.c:383
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:247 app/hue_saturation.c:365
+#: app/color_select.c:247 app/hue_saturation.c:385
 msgid "B"
 msgstr "B"
 
@@ -777,8 +783,8 @@ msgstr "Nuanţă"
 msgid "Saturation"
 msgstr "Saturaţie"
 
-#: app/color_select.c:253 app/curves.c:593 app/histogram_tool.c:321
-#: app/layers_dialog.c:394 app/levels.c:378 app/paint_funcs.c:102
+#: app/color_select.c:253 app/curves.c:612 app/histogram_tool.c:321
+#: app/layers_dialog.c:394 app/levels.c:403 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
 msgstr "Valoare"
@@ -947,11 +953,11 @@ msgstr "Permite lărgirea"
 msgid "Tool Toggle"
 msgstr "Comutator unelte"
 
-#: app/crop.c:221 app/crop.c:1069
+#: app/crop.c:221 app/crop.c:1070
 msgid "Crop"
 msgstr "Decupare"
 
-#: app/crop.c:223 app/crop.c:1071
+#: app/crop.c:223 app/crop.c:1072
 msgid "Resize"
 msgstr "Redimensionare"
 
@@ -959,93 +965,93 @@ msgstr "Redimensionare"
 msgid "Crop: "
 msgstr "Decupare: "
 
-#: app/crop.c:1042
+#: app/crop.c:1043
 msgid "Crop: 0 x 0"
 msgstr "Decupare: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1063
+#: app/crop.c:1064
 msgid "Crop & Resize Information"
 msgstr "Informaţii de decupare şi redimensionare"
 
 #. add the information fields
-#: app/crop.c:1079
+#: app/crop.c:1080
 msgid "Origin X:"
 msgstr "Origine X:"
 
 #. the pixel size labels
-#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/crop.c:1096 app/file_new_dialog.c:394 app/file_new_dialog.c:412
 #: app/tool_options.c:353
 msgid "Width:"
 msgstr "Lăţime:"
 
-#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Înălţime:"
 
-#: app/crop.c:1120
+#: app/crop.c:1121
 msgid "From Selection"
 msgstr "Din selecţie"
 
-#: app/crop.c:1126
+#: app/crop.c:1127
 msgid "Auto Shrink"
 msgstr "Restrângere automată"
 
 #. The shell and main vbox
-#: app/curves.c:403 app/curves.c:564 app/tools.c:1166
+#: app/curves.c:403 app/curves.c:583 app/tools.c:1166
 msgid "Curves"
 msgstr "Curbe"
 
-#: app/curves.c:450
+#: app/curves.c:456
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "La imaginile indexate curbele nu pot fi ajustate."
 
-#: app/curves.c:586
+#: app/curves.c:605
 msgid "Modify Curves for Channel:"
 msgstr "Modifică curbele canalului:"
 
-#: app/curves.c:597 app/levels.c:382
+#: app/curves.c:616 app/levels.c:407
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:676
+#: app/curves.c:695
 msgid "Curve Type:"
 msgstr "Tip curbă:"
 
-#: app/curves.c:683
+#: app/curves.c:702
 msgid "Smooth"
 msgstr "Netezire"
 
-#: app/curves.c:684
+#: app/curves.c:703
 msgid "Free"
 msgstr "Eliberează"
 
-#: app/curves.c:710 app/levels.c:607 app/module_db.c:874
+#: app/curves.c:729 app/levels.c:632 app/module_db.c:874
 msgid "Load"
 msgstr "Încarcă"
 
-#: app/curves.c:718 app/devices.c:758 app/levels.c:617 app/palette.c:2054
+#: app/curves.c:737 app/devices.c:758 app/levels.c:642 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Salvează"
 
-#: app/curves.c:1317
+#: app/curves.c:1342
 msgid "Load Curves"
 msgstr "Încarcă curbe"
 
-#: app/curves.c:1332
+#: app/curves.c:1357
 msgid "Save Curves"
 msgstr "Salvează curbe"
 
-#: app/curves.c:1623
+#: app/curves.c:1648
 msgid "Load/Save Curves"
 msgstr "Încarcă/Salvează curbe"
 
-#: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495
-#: app/paths_dialog.c:1908
+#: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
+#: app/paths_dialog.c:1918
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nu am putut deschide fişierul %s"
@@ -1063,7 +1069,7 @@ msgstr "Stare dispozitiv"
 msgid "Pasted Layer"
 msgstr "Strat inserat"
 
-#: app/docindex.c:113
+#: app/docindex.c:112
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1073,7 +1079,7 @@ msgstr ""
 "<Shift> Ridică fereastra deschisă\n"
 "<Ctrl> Prezintă dialogul pentru imagini"
 
-#: app/docindex.c:118
+#: app/docindex.c:117
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
@@ -1081,7 +1087,7 @@ msgstr ""
 "Mută obiectul selectat în sus în index\n"
 "<Shift> În vârf"
 
-#: app/docindex.c:122
+#: app/docindex.c:121
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
@@ -1089,11 +1095,11 @@ msgstr ""
 "Mută obiectul selectat în jos în index\n"
 "<Shift> La bază"
 
-#: app/docindex.c:126
+#: app/docindex.c:125
 msgid "Remove the selected entry from the index"
 msgstr "Elimină obiectul selectat din index"
 
-#: app/docindex.c:715
+#: app/docindex.c:775
 msgid "Document Index"
 msgstr "Index document"
 
@@ -1122,7 +1128,7 @@ msgstr "Mod"
 msgid "Move: 0, 0"
 msgstr "Deplasare: 0, 0"
 
-#: app/edit_selection.c:451 app/edit_selection.c:461
+#: app/edit_selection.c:436 app/edit_selection.c:446
 msgid "Move: "
 msgstr "Deplasare: "
 
@@ -1210,16 +1216,16 @@ msgid "New Image"
 msgstr "Imagine nouă"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
-#: app/preferences_dialog.c:1593 app/user_install.c:1430
+#: app/preferences_dialog.c:1593 app/user_install.c:1438
 msgid "Pixels"
 msgstr "Pixeli"
 
 #. the resolution labels
-#: app/file_new_dialog.c:529 app/resize.c:598
+#: app/file_new_dialog.c:529 app/resize.c:600
 msgid "Resolution X:"
 msgstr "Rezoluţie X:"
 
-#: app/file_new_dialog.c:550 app/resize.c:619
+#: app/file_new_dialog.c:550 app/resize.c:621
 msgid "pixels/%a"
 msgstr "pixeli/%a"
 
@@ -1228,16 +1234,16 @@ msgstr "pixeli/%a"
 msgid "Image Type"
 msgstr "Tip imagine"
 
-#: app/fileops.c:269 app/fileops.c:315
+#: app/fileops.c:316 app/fileops.c:361
 msgid "Load Image"
 msgstr "Încarcă imagine"
 
 #. format-chooser frame
-#: app/fileops.c:330
+#: app/fileops.c:376
 msgid "Determine File Type"
 msgstr "Determină tip fişier"
 
-#: app/fileops.c:403
+#: app/fileops.c:449
 msgid ""
 "Generate\n"
 "Preview"
@@ -1245,11 +1251,11 @@ msgstr ""
 "Generează o\n"
 "previzualizare"
 
-#: app/fileops.c:422
+#: app/fileops.c:468
 msgid "No Selection."
 msgstr "Nimic selectat."
 
-#: app/fileops.c:470 app/fileops.c:1757
+#: app/fileops.c:527 app/fileops.c:530 app/fileops.c:1991 app/fileops.c:1994
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1258,19 +1264,19 @@ msgstr ""
 "Salvare eşuată.\n"
 "%s"
 
-#: app/fileops.c:495 app/fileops.c:527
+#: app/fileops.c:556 app/fileops.c:587
 msgid "Save Image"
 msgstr "Salvare imagine"
 
-#: app/fileops.c:544
+#: app/fileops.c:617
 msgid "Save Options"
 msgstr "Salvare opţiuni"
 
-#: app/fileops.c:553
+#: app/fileops.c:626
 msgid "Determine File Type:"
 msgstr "Determină tip fişier:"
 
-#: app/fileops.c:616
+#: app/fileops.c:689
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1278,7 +1284,7 @@ msgstr ""
 "Refacerea a eşuat.\n"
 "Nici un fişier nu este asociat cu această imagine."
 
-#: app/fileops.c:627
+#: app/fileops.c:700
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1293,19 +1299,19 @@ msgstr ""
 "(Veţi pierde toate modificările\n"
 "şi toate informaţiile de refacere)"
 
-#: app/fileops.c:634
+#: app/fileops.c:707
 msgid "Revert Image?"
 msgstr "Restaurez imaginea?"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:712 app/fileops.c:2157
 msgid "Yes"
 msgstr "Da"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:712 app/fileops.c:2157
 msgid "No"
 msgstr "Nu"
 
-#: app/fileops.c:742
+#: app/fileops.c:843 app/fileops.c:848
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1314,7 +1320,7 @@ msgstr ""
 "%s a eşuat.\n"
 "%s: Tip de fişier necunoscut."
 
-#: app/fileops.c:759
+#: app/fileops.c:871 app/fileops.c:876
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1323,7 +1329,7 @@ msgstr ""
 "%s a eşuat.\n"
 "%s nu este un fişier obişnuit."
 
-#: app/fileops.c:780
+#: app/fileops.c:903 app/fileops.c:908
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1332,11 +1338,11 @@ msgstr ""
 "%s a eşuat.\n"
 "%s: Nu aveţi permisiunea."
 
-#: app/fileops.c:836 app/fileops.c:1547
+#: app/fileops.c:971 app/fileops.c:1744
 msgid "Open"
 msgstr "Deschide"
 
-#: app/fileops.c:1154
+#: app/fileops.c:1302 app/fileops.c:1307
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1345,7 +1351,7 @@ msgstr ""
 "Salvarea a eşuat.\n"
 "%s: Tip de fişier necunoscut."
 
-#: app/fileops.c:1169
+#: app/fileops.c:1326 app/fileops.c:1331
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1354,7 +1360,7 @@ msgstr ""
 "Salvarea a eşuat.\n"
 "%s nu este un fişier obişnuit."
 
-#: app/fileops.c:1188
+#: app/fileops.c:1354 app/fileops.c:1359
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1363,35 +1369,35 @@ msgstr ""
 "Salvarea a eşuat.\n"
 "%s: Nu aveţi permisiunea."
 
-#: app/fileops.c:1435
+#: app/fileops.c:1626
 msgid "(This thumbnail may be out of date)"
 msgstr "(Poate această miniatură este învechită)"
 
-#: app/fileops.c:1436
+#: app/fileops.c:1627
 msgid "(No Information)"
 msgstr "(Nici o informaţie)"
 
-#: app/fileops.c:1446
+#: app/fileops.c:1637
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Salvarea miniaturilor este dezactivată)"
 
-#: app/fileops.c:1450
+#: app/fileops.c:1641
 msgid "(Could not write thumbnail file)"
 msgstr "(Nu pot scrie fişierul cu miniatura)"
 
-#: app/fileops.c:1454
+#: app/fileops.c:1645
 msgid "(Thumbnail file not written)"
 msgstr "(Fişierul cu miniatura nu a fost creat)"
 
-#: app/fileops.c:1472
+#: app/fileops.c:1663
 msgid "No preview available"
 msgstr "Previzualizare imposibilă"
 
-#: app/fileops.c:1572
+#: app/fileops.c:1769
 msgid "(could not make preview)"
 msgstr "(nu pot previzualiza)"
 
-#: app/fileops.c:1643 app/fileops.c:1684
+#: app/fileops.c:1846 app/fileops.c:1849 app/fileops.c:1902 app/fileops.c:1905
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1400,20 +1406,20 @@ msgstr ""
 "Deschiderea a eşuat.\n"
 "%s"
 
-#: app/fileops.c:1892
+#: app/fileops.c:2146 app/fileops.c:2150
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s există, suprascriu?"
 
-#: app/fileops.c:1894
+#: app/fileops.c:2152
 msgid "File Exists!"
 msgstr "Fişierul există!"
 
-#: app/fileops.c:1956
+#: app/fileops.c:2222
 msgid "Revert"
 msgstr "Refacere"
 
-#: app/fileops.c:1969
+#: app/fileops.c:2238 app/fileops.c:2241
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1478,7 +1484,7 @@ msgstr "indexat-gol"
 msgid "indexed"
 msgstr "indexat"
 
-#: app/gdisplay_ops.c:302
+#: app/gdisplay_ops.c:305
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1620,31 +1626,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Folosesc Netscape în schimb"
 
-#: app/gimpimage.c:2328
+#: app/gimpimage.c:2332
 msgid "Layer cannot be raised any further"
 msgstr "Stratul nu mai poate fi ridicat"
 
-#: app/gimpimage.c:2356
+#: app/gimpimage.c:2360
 msgid "Layer cannot be lowered any further"
 msgstr "Stratul nu mai poate fi coborât"
 
-#: app/gimpimage.c:2382
+#: app/gimpimage.c:2386
 msgid "Layer is already on top"
 msgstr "Stratul este deja în vârf"
 
-#: app/gimpimage.c:2388
+#: app/gimpimage.c:2392
 msgid "Can't raise Layer without alpha"
 msgstr "Nu pot ridica un strat fără alfa"
 
-#: app/gimpimage.c:2416
+#: app/gimpimage.c:2420
 msgid "Layer is already on bottom"
 msgstr "Stratul este deja la bază"
 
-#: app/gimpimage.c:2471
+#: app/gimpimage.c:2475
 msgid "BG has no alpha, layer was placed above"
 msgstr "Fundalul nu are alfa, stratul a fost plasat deasupra"
 
-#: app/gimpimage.c:2543
+#: app/gimpimage.c:2547
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1652,11 +1658,11 @@ msgstr ""
 "Nu sunt suficiente straturi vizibile pentru a le combina.\n"
 "Trebuie să fie cel puţin două."
 
-#: app/gimpimage.c:2627
+#: app/gimpimage.c:2631
 msgid "There are not enough visible layers for a merge down."
 msgstr "Nu sunt destule straturi vizibile pentru a le combina în jos."
 
-#: app/gimpimage.c:3077
+#: app/gimpimage.c:3079
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1664,7 +1670,7 @@ msgstr ""
 "Nu pot aplica stratului masca\n"
 "deoarece stratul are deja una."
 
-#: app/gimpimage.c:3083
+#: app/gimpimage.c:3085
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1672,7 +1678,7 @@ msgstr ""
 "Nu pot pune mască unui strat\n"
 "dintr-o imagine indexată."
 
-#: app/gimpimage.c:3089
+#: app/gimpimage.c:3091
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1680,20 +1686,20 @@ msgstr ""
 "Nu pot pune mască unui strat\n"
 "fără canalul alfa."
 
-#: app/gimpimage.c:3098
+#: app/gimpimage.c:3100
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nu pot pune o mască de o dimensiune diferită de cea a stratului."
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3213
 #, fuzzy
 msgid "Channel cannot be raised any further"
 msgstr "Canalul nu mai poate fi ridicat"
 
-#: app/gimpimage.c:3257
+#: app/gimpimage.c:3264
 msgid "Channel cannot be lowered any further"
 msgstr "Canalul nu mai poate fi coborât"
 
-#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3496 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Fără nume"
@@ -1706,41 +1712,41 @@ msgstr "Progres"
 msgid "Please wait..."
 msgstr "Aşteptaţi vă rog..."
 
-#: app/gimprc.c:475
+#: app/gimprc.c:478
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "eroare de procesare: \"%s\"\n"
 
-#: app/gimprc.c:476
+#: app/gimprc.c:479
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  la linia %d coloana %d\n"
 
-#: app/gimprc.c:477
+#: app/gimprc.c:480
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  element neaşteptat: %s\n"
 
-#: app/gimprc.c:1452
+#: app/gimprc.c:1465
 msgid "error parsing pluginrc"
 msgstr "eroare la procesarea pluginrc"
 
-#: app/gimprc.c:2927
+#: app/gimprc.c:2947
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Nu pot deschide %s; %s"
 
-#: app/gimprc.c:2946
+#: app/gimprc.c:2966
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Nu pot redenumi %s în %s.old; %s"
 
-#: app/gimprc.c:2952
+#: app/gimprc.c:2972
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Nu pot redeschide %s\n"
 
-#: app/gimprc.c:2964
+#: app/gimprc.c:2984
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Nu pot scrie în %s; %s"
@@ -1835,15 +1841,20 @@ msgstr "Inserează tamponul cu nume"
 msgid "Select a buffer to paste:"
 msgstr "Selectează tamponul de inserat:"
 
-#: app/global_edit.c:883
+#: app/global_edit.c:856
+#, fuzzy
+msgid "(Unnamed Buffer)"
+msgstr "Inserează tamponul cu nume"
+
+#: app/global_edit.c:886
 msgid "Cut Named"
 msgstr "Tăiere cu nume"
 
-#: app/global_edit.c:886 app/global_edit.c:918
+#: app/global_edit.c:889 app/global_edit.c:921
 msgid "Enter a name for this buffer"
 msgstr "Introduce numele tamponului"
 
-#: app/global_edit.c:915
+#: app/global_edit.c:918
 msgid "Copy Named"
 msgstr "Copiere cu nume"
 
@@ -2032,166 +2043,166 @@ msgstr "Poziţie reper: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Distanţă: %0.6f"
 
-#: app/gradient.c:3490 app/gradient.c:4553
+#: app/gradient.c:3494 app/gradient.c:4557
 msgid "Left endpoint's color"
 msgstr "Culoare capăt stânga"
 
-#: app/gradient.c:3501 app/gradient.c:3543
+#: app/gradient.c:3505 app/gradient.c:3547
 msgid "Load from"
 msgstr "Încarcă din"
 
-#: app/gradient.c:3505
+#: app/gradient.c:3509
 msgid "Left neighbor's right endpoint"
 msgstr "Capătul din dreapta al vecinului din stânga"
 
-#: app/gradient.c:3506
+#: app/gradient.c:3510
 msgid "Right endpoint"
 msgstr "Capătul din dreapta"
 
-#: app/gradient.c:3516 app/gradient.c:3558
+#: app/gradient.c:3520 app/gradient.c:3562
 msgid "Save to"
 msgstr "Salvează în"
 
-#: app/gradient.c:3532 app/gradient.c:4631
+#: app/gradient.c:3536 app/gradient.c:4635
 msgid "Right endpoint's color"
 msgstr "Culoarea capătului din dreapta"
 
-#: app/gradient.c:3547
+#: app/gradient.c:3551
 msgid "Right neighbor's left endpoint"
 msgstr "Capătul din stânga al vecinului din dreapta"
 
-#: app/gradient.c:3548
+#: app/gradient.c:3552
 msgid "Left endpoint"
 msgstr "Capătul din stânga"
 
-#: app/gradient.c:3659
+#: app/gradient.c:3663
 msgid "Selection operations"
 msgstr "Operaţie de selecţie"
 
-#: app/gradient.c:3831
+#: app/gradient.c:3835
 msgid "Blending function for segment"
 msgstr "Funcţia de amestec pentru segment"
 
-#: app/gradient.c:3833
+#: app/gradient.c:3837
 msgid "Coloring type for segment"
 msgstr "Tip de colorare pentru segment"
 
-#: app/gradient.c:3835
+#: app/gradient.c:3839
 msgid "Split segment at midpoint"
 msgstr "Împarte segmentul la mijloc"
 
-#: app/gradient.c:3837 app/gradient.c:4934
+#: app/gradient.c:3841 app/gradient.c:4938
 msgid "Split segment uniformly"
 msgstr "Împarte segmentul uniform"
 
-#: app/gradient.c:3839
+#: app/gradient.c:3843
 msgid "Delete segment"
 msgstr "Elimină segmentul"
 
-#: app/gradient.c:3841
+#: app/gradient.c:3845
 msgid "Re-center segment's midpoint"
 msgstr "Recentrează mijlocul segmentului"
 
-#: app/gradient.c:3843
+#: app/gradient.c:3847
 msgid "Re-distribute handles in segment"
 msgstr "Redistribuie reperele din segment"
 
-#: app/gradient.c:3845
+#: app/gradient.c:3849
 msgid "Flip segment"
 msgstr "Oglindeşte segmentul"
 
-#: app/gradient.c:3847 app/gradient.c:5495
+#: app/gradient.c:3851 app/gradient.c:5499
 msgid "Replicate segment"
 msgstr "Multiplică segmentul"
 
-#: app/gradient.c:3852
+#: app/gradient.c:3856
 msgid "Blending function for selection"
 msgstr "Funcţia de amestec pentru selecţie"
 
-#: app/gradient.c:3854
+#: app/gradient.c:3858
 msgid "Coloring type for selection"
 msgstr "Tipul de colorare pentru selecţie"
 
-#: app/gradient.c:3856
+#: app/gradient.c:3860
 msgid "Split segments at midpoints"
 msgstr "Împarte segmentele la mijloc"
 
-#: app/gradient.c:3858 app/gradient.c:4935
+#: app/gradient.c:3862 app/gradient.c:4939
 msgid "Split segments uniformly"
 msgstr "Împarte segmentele uniform"
 
-#: app/gradient.c:3860
+#: app/gradient.c:3864
 msgid "Delete selection"
 msgstr "Elimină selecţia"
 
-#: app/gradient.c:3862
+#: app/gradient.c:3866
 msgid "Re-center midpoints in selection"
 msgstr "Recentrează mijloacele din selecţie"
 
-#: app/gradient.c:3864
+#: app/gradient.c:3868
 msgid "Re-distribute handles in selection"
 msgstr "Redistribuie reperele din selecţie"
 
-#: app/gradient.c:3866
+#: app/gradient.c:3870
 msgid "Flip selection"
 msgstr "Oglindeşte selecţia"
 
-#: app/gradient.c:3868 app/gradient.c:5496
+#: app/gradient.c:3872 app/gradient.c:5500
 msgid "Replicate selection"
 msgstr "Multiplică selecţia"
 
-#: app/gradient.c:4152
+#: app/gradient.c:4156
 msgid "FG color"
 msgstr "Culoarea de prim-plan"
 
-#: app/gradient.c:4200
+#: app/gradient.c:4204
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4720 app/gradient.c:4790
+#: app/gradient.c:4724 app/gradient.c:4794
 msgid "(Varies)"
 msgstr "(Variabil)"
 
-#: app/gradient.c:4942
+#: app/gradient.c:4946
 msgid "Split"
 msgstr "Împărţire"
 
 #. Instructions
-#: app/gradient.c:4956
+#: app/gradient.c:4960
 msgid "Please select the number of uniform parts"
 msgstr "Selectaţi vă rog numărul de părţi uniforme"
 
-#: app/gradient.c:4962
+#: app/gradient.c:4966
 msgid "in which you want to split the selected segment"
 msgstr "în care doriţi să împărţiţi segmentul selectat"
 
-#: app/gradient.c:4963
+#: app/gradient.c:4967
 msgid "in which you want to split the segments in the selection"
 msgstr "în care doriţi să împărţiţi segmentele din selecţie"
 
-#: app/gradient.c:5323
+#: app/gradient.c:5327
 msgid "Blend endpoints' colors"
 msgstr "Amestecă culorile capetelor"
 
-#: app/gradient.c:5335
+#: app/gradient.c:5339
 msgid "Blend endpoints' opacity"
 msgstr "Amestecă opacitatea capetelor"
 
-#: app/gradient.c:5503
+#: app/gradient.c:5507
 msgid "Replicate"
 msgstr "Multiplicare"
 
 #. Instructions
-#: app/gradient.c:5516
+#: app/gradient.c:5520
 msgid "Please select the number of times"
 msgstr "Selectaţi vă rog de câte ori"
 
-#: app/gradient.c:5521
+#: app/gradient.c:5525
 msgid "you want to replicate the selected segment"
 msgstr "doriţi să multiplicaţi segmentul selectat"
 
-#: app/gradient.c:5522
+#: app/gradient.c:5526
 msgid "you want to replicate the selection"
 msgstr "doriţi să multiplicaţi selecţia"
 
@@ -2238,46 +2249,46 @@ msgid "Information on Channel:"
 msgstr "Informaţii despre canal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
+#: app/hue_saturation.c:248 app/hue_saturation.c:394 app/tools.c:1082
 msgid "Hue-Saturation"
 msgstr "Nuanţă-saturaţie"
 
-#: app/hue_saturation.c:292
+#: app/hue_saturation.c:298
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Nuanţă-saturaţie funcţionează numai pe imaginii RGB."
 
-#: app/hue_saturation.c:360
+#: app/hue_saturation.c:380
 msgid "Master"
 msgstr "Dominant"
 
-#: app/hue_saturation.c:362
+#: app/hue_saturation.c:382
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:364
+#: app/hue_saturation.c:384
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:366
+#: app/hue_saturation.c:386
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:451
+#: app/hue_saturation.c:471
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Ajustare nuanţă / luminozitate / saturaţie"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:463
+#: app/hue_saturation.c:483
 msgid "Hue:"
 msgstr "Nuanţă:"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:497
+#: app/hue_saturation.c:517
 msgid "Lightness:"
 msgstr "Luminozitate:"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:531
+#: app/hue_saturation.c:551
 msgid "Saturation:"
 msgstr "Saturaţie:"
 
@@ -2294,11 +2305,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Scară de gri"
 
-#: app/image_new.c:77 app/layers_dialog.c:3664
+#: app/image_new.c:77 app/layers_dialog.c:3676
 msgid "Foreground"
 msgstr "Prim Plan (FG)"
 
-#: app/image_new.c:87 app/layers_dialog.c:3666
+#: app/image_new.c:87 app/layers_dialog.c:3678
 msgid "White"
 msgstr "Alb"
 
@@ -2636,7 +2647,7 @@ msgstr "masca %s"
 msgid "Layer Select"
 msgstr "Selectare strat"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3595
+#: app/layers_dialog.c:272 app/layers_dialog.c:3607
 msgid "New Layer"
 msgstr "Strat nou"
 
@@ -2718,62 +2729,62 @@ msgstr "Păstr. trans."
 msgid "Keep Transparency"
 msgstr "Păstrează transparenţa"
 
-#: app/layers_dialog.c:1957
+#: app/layers_dialog.c:1968
 msgid "Empty Layer Copy"
 msgstr "Copiere strat gol"
 
-#: app/layers_dialog.c:2221 app/layers_dialog.c:3404 app/layers_dialog.c:3774
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
 msgid "Floating Selection"
 msgstr "Selecţie plutitoare"
 
-#: app/layers_dialog.c:3555
+#: app/layers_dialog.c:3567
 msgid "New Layer Options"
 msgstr "Opţiuni strat nou"
 
 #. The name label and entry
-#: app/layers_dialog.c:3584
+#: app/layers_dialog.c:3596
 msgid "Layer Name:"
 msgstr "Nume strat:"
 
 #. The size labels
-#: app/layers_dialog.c:3599
+#: app/layers_dialog.c:3611
 msgid "Layer Width:"
 msgstr "Lăţime strat:"
 
-#: app/layers_dialog.c:3660
+#: app/layers_dialog.c:3672
 msgid "Layer Fill Type"
 msgstr "Tip umplere strat"
 
-#: app/layers_dialog.c:3739
+#: app/layers_dialog.c:3751
 msgid "Edit Layer Attributes"
 msgstr "Modificare atribute strat"
 
-#: app/layers_dialog.c:3766
+#: app/layers_dialog.c:3778
 msgid "Layer name:"
 msgstr "Nume strat:"
 
-#: app/layers_dialog.c:3834
+#: app/layers_dialog.c:3846
 msgid "Add Mask Options"
 msgstr "Adaugă opţiuni de mascare"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3852
+#: app/layers_dialog.c:3864
 msgid "Initialize Layer Mask to:"
 msgstr "Iniţializează mască strat cu:"
 
-#: app/layers_dialog.c:3857
+#: app/layers_dialog.c:3869
 msgid "White (Full Opacity)"
 msgstr "Alb (complet opac)"
 
-#: app/layers_dialog.c:3859
+#: app/layers_dialog.c:3871
 msgid "Black (Full Transparency)"
 msgstr "Negru (complet transparent)"
 
-#: app/layers_dialog.c:3861
+#: app/layers_dialog.c:3873
 msgid "Layer's Alpha Channel"
 msgstr "Canalul alfa al stratului"
 
-#: app/layers_dialog.c:3923 app/layers_dialog.c:4009
+#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2781,27 +2792,27 @@ msgstr ""
 "Lăţime sau înălţime invalide.\n"
 "Amândouă trebuie să fie pozitive."
 
-#: app/layers_dialog.c:4095
+#: app/layers_dialog.c:4107
 msgid "Layer Merge Options"
 msgstr "Opţiuni de combinare straturi"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4132
 msgid "Final, Merged Layer should be:"
 msgstr "Straturile combinate vor fi:"
 
-#: app/layers_dialog.c:4121
+#: app/layers_dialog.c:4133
 msgid "Final, Anchored Layer should be:"
 msgstr "Startul ancorat va fi:"
 
-#: app/layers_dialog.c:4126
+#: app/layers_dialog.c:4138
 msgid "Expanded as necessary"
 msgstr "Expandat cât trebuie"
 
-#: app/layers_dialog.c:4128
+#: app/layers_dialog.c:4140
 msgid "Clipped to image"
 msgstr "Decupat după imagine"
 
-#: app/layers_dialog.c:4130
+#: app/layers_dialog.c:4142
 msgid "Clipped to bottom layer"
 msgstr "Decupat după stratul de la bază"
 
@@ -2810,7 +2821,7 @@ msgid "Layers, Channels & Paths"
 msgstr "Straturi, canale şi trasee"
 
 #. The Auto-button
-#: app/lc_dialog.c:169 app/levels.c:597
+#: app/lc_dialog.c:169 app/levels.c:622
 msgid "Auto"
 msgstr "Automat"
 
@@ -2823,35 +2834,35 @@ msgid "Channels"
 msgstr "Canale"
 
 #. The shell and main vbox
-#: app/levels.c:200 app/levels.c:341 app/tools.c:1194
+#: app/levels.c:202 app/levels.c:366 app/tools.c:1194
 msgid "Levels"
 msgstr "Nivele"
 
-#: app/levels.c:244
+#: app/levels.c:252
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Nivelele pentru imaginile indexate nu pot fi modificate."
 
-#: app/levels.c:370
+#: app/levels.c:395
 msgid "Modify Levels for Channel:"
 msgstr "Modifică nivele pentru canal:"
 
-#: app/levels.c:394
+#: app/levels.c:419
 msgid "Input Levels:"
 msgstr "Nivele intrare:"
 
-#: app/levels.c:503
+#: app/levels.c:528
 msgid "Output Levels:"
 msgstr "Nivele ieşire:"
 
-#: app/levels.c:1088
+#: app/levels.c:1122
 msgid "Load Levels"
 msgstr "Încarcă nivele"
 
-#: app/levels.c:1103
+#: app/levels.c:1137
 msgid "Save Levels"
 msgstr "Salvează nivele"
 
-#: app/levels.c:1432
+#: app/levels.c:1466
 msgid "Load/Save Levels"
 msgstr "Inc./Salv. nivele"
 
@@ -2871,7 +2882,7 @@ msgstr "Mărire"
 msgid "Zoom out"
 msgstr "Micşorare"
 
-#: app/main.c:289
+#: app/main.c:295
 msgid ""
 "\n"
 "Invalid option.\n"
@@ -2879,11 +2890,11 @@ msgstr ""
 "\n"
 "Opţiune invalidă.\n"
 
-#: app/main.c:305
+#: app/main.c:311
 msgid "GIMP version"
 msgstr "Versiune GIMP"
 
-#: app/main.c:309
+#: app/main.c:315
 #, c-format
 msgid ""
 "\n"
@@ -2894,15 +2905,15 @@ msgstr ""
 "Utilizare: %s [opţiune ... ] [fişier ... ]\n"
 "\n"
 
-#: app/main.c:310
+#: app/main.c:316
 msgid "Options:\n"
 msgstr "Opţiuni:\n"
 
-#: app/main.c:311
+#: app/main.c:317
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <comenzi>    Execută pachetul de comenzi.\n"
 
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -2910,46 +2921,46 @@ msgstr ""
 "  -c, --console-messages   Afişează atenţionările la consolă în loc de o "
 "căsuţă de dialog.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
 "  -d, --no-data            Nu încărca pensule, gradienţi, palete,  modele.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Execută fără interfaţă cu utilizatorul.\n"
 
-#: app/main.c:315
+#: app/main.c:321
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Cu un fişier gimprc alternativ.\n"
 
-#: app/main.c:316
+#: app/main.c:322
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Afişează ajutorul.\n"
 
-#: app/main.c:317
+#: app/main.c:323
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    Încearcă refacerea sesiunii salvate.\n"
 
-#: app/main.c:318
+#: app/main.c:324
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Fără fereastra de pornire.\n"
 
-#: app/main.c:319
+#: app/main.c:325
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Fără imagine cu fereastra de pornire.\n"
 
-#: app/main.c:320
+#: app/main.c:326
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Tipăreşte informaţii versiune.\n"
 
-#: app/main.c:321
+#: app/main.c:327
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Arată mesajele de pornire.\n"
 
-#: app/main.c:322
+#: app/main.c:328
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -2957,25 +2968,25 @@ msgstr ""
 "  --no-shm                 Nu folosi memoria partajată între GIMP şi "
 "pluginuri.\n"
 
-#: app/main.c:323
+#: app/main.c:329
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Nu folosi extensia de memorie partajată X.\n"
 
-#: app/main.c:324
+#: app/main.c:330
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "  --debug-handlers         Permite depanarea nefatală a semnalelor.\n"
 
-#: app/main.c:325
+#: app/main.c:331
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      În terminalul X specificat.\n"
 
-#: app/main.c:326
+#: app/main.c:332
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Cu fişierul sistem gimprc alternativ.\n"
 
-#: app/main.c:328
+#: app/main.c:334
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
@@ -2983,7 +2994,7 @@ msgstr ""
 "                           Mod depanare a semnalelor fatale.\n"
 "\n"
 
-#: app/main.c:345
+#: app/main.c:351
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Această fereastră se va închide în zece secunde)\n"
 
@@ -3749,7 +3760,7 @@ msgstr "/Exportă traseu..."
 msgid "/Edit Path Attributes..."
 msgstr "/Schimbă atribute traseu"
 
-#: app/menus.c:1314
+#: app/menus.c:1316 app/menus.c:1319
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Eroare la deschiderea fişierului: %s\n"
@@ -3845,7 +3856,7 @@ msgstr "Stare:"
 msgid "Autoload during startup"
 msgstr "Încărcare automată la pornire"
 
-#: app/move.c:502
+#: app/move.c:504
 msgid "Move Tool"
 msgstr "Unealtă deplasare"
 
@@ -4127,40 +4138,40 @@ msgstr "Schimbă atribute traseu"
 msgid "Enter a new name for the path"
 msgstr "Introduce noul nume al traseului"
 
-#: app/paths_dialog.c:1923
+#: app/paths_dialog.c:1933
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Nu am reuşit să citesc din %s"
 
-#: app/paths_dialog.c:1938
+#: app/paths_dialog.c:1948
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Nu am reuşit să citesc traseul din %s"
 
-#: app/paths_dialog.c:1945
+#: app/paths_dialog.c:1955
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "Nu este specificat nici un punct în fişierul de traseu %s"
 
-#: app/paths_dialog.c:1956
+#: app/paths_dialog.c:1966
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Nu am reuşit să citesc punctele de traseu din %s"
 
-#: app/paths_dialog.c:2029 app/xcf.c:438
+#: app/paths_dialog.c:2039
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "deschidere eşuată la %s: %s\n"
 
-#: app/paths_dialog.c:2051
+#: app/paths_dialog.c:2061
 msgid "Load/Store Bezier Curves"
 msgstr "Încarcă/Memorează curbele Bezier"
 
-#: app/paths_dialog.c:2091
+#: app/paths_dialog.c:2101
 msgid "Load Path"
 msgstr "Încarcă traseul"
 
-#: app/paths_dialog.c:2113
+#: app/paths_dialog.c:2123
 msgid "Store Path"
 msgstr "Memorează traseul"
 
@@ -4200,38 +4211,43 @@ msgstr "Matrice:"
 msgid "Perspective..."
 msgstr "Perspectivă..."
 
-#: app/plug_in.c:332
+#: app/plug_in.c:337
 msgid "Resource configuration"
 msgstr "Configurare resurse"
 
-#: app/plug_in.c:339
+#: app/plug_in.c:344
 msgid "Plug-ins"
 msgstr "Pluginuri"
 
-#: app/plug_in.c:352
+#: app/plug_in.c:359
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "interogare plugin: \"%s\"\n"
 
-#: app/plug_in.c:390
+#: app/plug_in.c:380
+#, fuzzy, c-format
+msgid "init plug-in: \"%s\"\n"
+msgstr "interogare plugin: \"%s\"\n"
+
+#: app/plug_in.c:416
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "scriu \"%s\"\n"
 
-#: app/plug_in.c:405
+#: app/plug_in.c:431
 msgid "Starting extensions: "
 msgstr "Pornesc extensiile: "
 
-#: app/plug_in.c:407
+#: app/plug_in.c:433
 msgid "Extensions"
 msgstr "Extensii"
 
-#: app/plug_in.c:850
+#: app/plug_in.c:881
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Nu pot localiza pluginul: \"%s\""
 
-#: app/plug_in.c:1477
+#: app/plug_in.c:1516
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4248,15 +4264,15 @@ msgstr ""
 "Recomand salvarea imaginilor modificate şi repornirea GIMP-ului\n"
 "pentru a evita surprizele neplăcute."
 
-#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+#: app/posterize.c:118 app/posterize.c:220 app/tools.c:1110
 msgid "Posterize"
 msgstr "Posterizare"
 
-#: app/posterize.c:158
+#: app/posterize.c:166
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterizarea nu funcţionează pe imagini indexate."
 
-#: app/posterize.c:225
+#: app/posterize.c:242
 msgid "Posterize Levels:"
 msgstr "Nivele posterizare:"
 
@@ -4642,7 +4658,7 @@ msgstr "Folosire conservativă a memoriei"
 msgid "Levels of Undo:"
 msgstr "Nivele de refacere:"
 
-#: app/preferences_dialog.c:2218 app/user_install.c:1343
+#: app/preferences_dialog.c:2218 app/user_install.c:1351
 msgid "Tile Cache Size:"
 msgstr "Dim. \"Tile Cache\":"
 
@@ -4735,7 +4751,7 @@ msgstr "Determină rezoluţia monitorului"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Curent %d x %d dpi)"
 
-#: app/preferences_dialog.c:2431 app/user_install.c:1481
+#: app/preferences_dialog.c:2431 app/user_install.c:1489
 msgid "Calibrate"
 msgstr "Calibrează"
 
@@ -4763,7 +4779,7 @@ msgstr "Alege directorul temporar"
 msgid "Swap Dir:"
 msgstr "Director swap:"
 
-#: app/preferences_dialog.c:2499 app/user_install.c:1363
+#: app/preferences_dialog.c:2499 app/user_install.c:1371
 msgid "Select Swap Dir"
 msgstr "Alege directorul de swap"
 
@@ -4852,7 +4868,7 @@ msgstr "Eroare la apelarea PDB, nu am găsit %s"
 msgid "PDB calling error %s"
 msgstr "Eroare la apelare PDB %s"
 
-#: app/procedural_db.c:248
+#: app/procedural_db.c:250
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -4936,7 +4952,7 @@ msgid "Original Width:"
 msgstr "Lăţimea originală"
 
 #. the new size labels
-#: app/resize.c:303 app/resize.c:535
+#: app/resize.c:303 app/resize.c:537
 msgid "New Width:"
 msgstr "Lăţime nouă:"
 
@@ -4945,23 +4961,23 @@ msgstr "Lăţime nouă:"
 msgid "Ratio X:"
 msgstr "Proporţie pe X:"
 
-#: app/resize.c:464
+#: app/resize.c:466
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:521
+#: app/resize.c:523
 msgid "Print Size & Display Unit"
 msgstr "Mărime la tipărire şi unitatea de măsură ecran"
 
-#: app/resize.c:1310
+#: app/resize.c:1312
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Eroare scalare: Lăţimea şi înălţimea trebuie să fie > 0."
 
-#: app/resize.c:1391
+#: app/resize.c:1393
 msgid "Layer Too Small"
 msgstr "Strat prea mic"
 
-#: app/resize.c:1395
+#: app/resize.c:1397
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -4995,7 +5011,7 @@ msgstr "Informaţii despre rotaţie"
 msgid "Center X:"
 msgstr "Centru X:"
 
-#: app/rotate_tool.c:395
+#: app/rotate_tool.c:400
 msgid "Rotating..."
 msgstr "Rotesc..."
 
@@ -5044,17 +5060,12 @@ msgstr "Margine:"
 msgid "Use Dynamic Text"
 msgstr "Cu text dinamic"
 
-#: app/text_tool.c:613
-#, c-format
-msgid "Font '%s' not found."
-msgstr "Nu am găsit fontul '%s'."
-
-#: app/text_tool.c:635
+#: app/text_tool.c:615 app/text_tool.c:644
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Nu am găsit fontul '%s'.%s"
 
-#: app/text_tool.c:638
+#: app/text_tool.c:618 app/text_tool.c:647
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5064,19 +5075,19 @@ msgstr ""
 "Dacă nu aveţi instalate fonturi scalabile, încercaţi să opriţiantialiasing-"
 "ul din opţiunile acestei unelte."
 
-#: app/text_tool.c:751
+#: app/text_tool.c:760
 msgid "Text Layer"
 msgstr "Strat de text"
 
-#: app/threshold.c:175 app/threshold.c:276 app/tools.c:1138
+#: app/threshold.c:175 app/threshold.c:292 app/tools.c:1138
 msgid "Threshold"
 msgstr "Prag de declanşare"
 
-#: app/threshold.c:217
+#: app/threshold.c:223
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Pragul de declanşare nu funcţionează pe imagini indexate."
 
-#: app/threshold.c:298
+#: app/threshold.c:314
 msgid "Threshold Range:"
 msgstr "Valoare prag:"
 
@@ -5089,27 +5100,32 @@ msgid ""
 "swap directory in your Preferences."
 msgstr ""
 
-#: app/tips_dialog.c:75
+#. The string "gimp_tips.txt" needs special handling by
+#. translators. It is used to identify the tips file to
+#. be used for the current locale. Please translate it
+#. accordingly. For example for the german locale that
+#. would be "gimp_tips.de.txt".
+#: app/tips_dialog.c:80
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.ro.txt"
 
-#: app/tips_dialog.c:87
+#: app/tips_dialog.c:95
 msgid "GIMP Tip of the Day"
 msgstr "Una pe zi de la GIMP"
 
-#: app/tips_dialog.c:148
+#: app/tips_dialog.c:156
 msgid "Show tip next time GIMP starts"
 msgstr "Prezintă sugestiile şi la următoarea pornire"
 
-#: app/tips_dialog.c:178
+#: app/tips_dialog.c:186
 msgid "Previous Tip"
 msgstr "Cea anterioară"
 
-#: app/tips_dialog.c:187
+#: app/tips_dialog.c:195
 msgid "Next Tip"
 msgstr "Cea următoare"
 
-#: app/tips_dialog.c:290
+#: app/tips_dialog.c:298
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
@@ -5902,11 +5918,11 @@ msgstr "[ imagine de bază ]"
 msgid "Redo"
 msgstr "Refacere"
 
-#: app/user_install.c:106
+#: app/user_install.c:114
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "GIMP nu este instalat corect pentru utilizatorul curent\n"
 
-#: app/user_install.c:107
+#: app/user_install.c:115
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
@@ -5914,13 +5930,13 @@ msgstr ""
 "Înscrierea utilizatorului a fost omisă deoarece s-a intâlnit indicatorul '--"
 "nointerface'\n"
 
-#: app/user_install.c:108
+#: app/user_install.c:116
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Pentru a efectua înscrierea, porniţi GIMP fără indicatorul '--nointerface'\n"
 
-#: app/user_install.c:167
+#: app/user_install.c:175
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -5934,7 +5950,7 @@ msgstr ""
 "pentru pensule, palete, gradienţi, modele, pluginuri\n"
 "şi module."
 
-#: app/user_install.c:176
+#: app/user_install.c:184
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -5942,7 +5958,7 @@ msgstr ""
 "GIMP foloseşte un fişier adiţional gtkrc care permite\n"
 "configurarea unui aspect diferit faţă de alte aplicaţii GTK."
 
-#: app/user_install.c:182
+#: app/user_install.c:190
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -5958,7 +5974,7 @@ msgstr ""
 "sunt memorate în acest fişier. Acest fişier a fost proiectat\n"
 "pentru a fi citit numai de către GIMP, şi nu trebuie modificat."
 
-#: app/user_install.c:192
+#: app/user_install.c:200
 #, fuzzy
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
@@ -5975,7 +5991,7 @@ msgstr ""
 "mai uşor să definiţi tastele direct din GIMP. Ştergerea \n"
 "acestui fişier va restaura tastele de acces direct originale."
 
-#: app/user_install.c:202
+#: app/user_install.c:210
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -5985,7 +6001,7 @@ msgstr ""
 "erau deschise ultima dată când aţi folosit GIMP. Puteţi\n"
 "configura GIMP să redeschidă aceste ferestre în aceeaşi poziţie."
 
-#: app/user_install.c:209
+#: app/user_install.c:217
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5999,7 +6015,7 @@ msgstr ""
 "ţoli, puncte şi pica. Acest fişier este suprascris\n"
 "de fiecare dată când terminaţi sesiunea GIMP."
 
-#: app/user_install.c:218
+#: app/user_install.c:226
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -6013,7 +6029,7 @@ msgstr ""
 "pe lângă directorul sistem în care sunt instalate\n"
 " pensulele proprii GIMP."
 
-#: app/user_install.c:227
+#: app/user_install.c:235
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -6025,7 +6041,7 @@ msgstr ""
 "după pensulele generate, fişierul gimprc verifică acest\n"
 "subdirector."
 
-#: app/user_install.c:235
+#: app/user_install.c:243
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -6039,7 +6055,7 @@ msgstr ""
 "pe lângă directorul sistem în care sunt instalaţi\n"
 "gradienţii GIMP."
 
-#: app/user_install.c:244
+#: app/user_install.c:252
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -6059,7 +6075,7 @@ msgstr ""
 "efectuate în timpul execuţiei GIMP să persiste între \n"
 "sesiuni."
 
-#: app/user_install.c:256
+#: app/user_install.c:264
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -6072,7 +6088,7 @@ msgstr ""
 "fişierul gimprc verifică şi acest subdirector,\n"
 "pe lângă directorul sistem cu modele GIMP."
 
-#: app/user_install.c:265
+#: app/user_install.c:273
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -6086,7 +6102,7 @@ msgstr ""
 "fişierul gimprc verifică şi acest subdirector,\n"
 "pe lângă directorul sistem cu pluginuri GIMP."
 
-#: app/user_install.c:274
+#: app/user_install.c:282
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -6100,7 +6116,7 @@ msgstr ""
 "fişierul gimprc verifică şi acest subdirector, \n"
 "pe lângă directorul sistem cu module GIMP."
 
-#: app/user_install.c:283
+#: app/user_install.c:291
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -6112,7 +6128,7 @@ msgstr ""
 "Când caută după scripturi fişierul gimprc verifică şi acest\n"
 "subdirector, pe lângă directorul sistem cu scripturi."
 
-#: app/user_install.c:291
+#: app/user_install.c:299
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -6126,7 +6142,7 @@ msgstr ""
 "sub forma:gimp<#>.<#>. Aceste fişiere sunt inutile pentru\n"
 "celelalte sesiuni GIMP şi pot fi şterse fară nici o problemă."
 
-#: app/user_install.c:300
+#: app/user_install.c:308
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
@@ -6134,7 +6150,7 @@ msgstr ""
 "Acest subdirector este folosit pentru a memora fişierele\n"
 "cu parametri pentru unealta de trasat curbe."
 
-#: app/user_install.c:306
+#: app/user_install.c:314
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
@@ -6142,7 +6158,7 @@ msgstr ""
 "Acest subdirector este folosit pentru a memora fişierele\n"
 "pentru unealta de nivele."
 
-#: app/user_install.c:312
+#: app/user_install.c:320
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -6156,7 +6172,7 @@ msgstr ""
 "fişierul gimprc verifică şi acest subdirector pe lângă cel\n"
 "de sistem al instalării FractalExplorer în GIMP."
 
-#: app/user_install.c:321
+#: app/user_install.c:329
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -6170,7 +6186,7 @@ msgstr ""
 "gimprc verifică şi acest subdirector, pe lângă directorul\n"
 "sistem al instalării GFig în GIMP."
 
-#: app/user_install.c:330
+#: app/user_install.c:338
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -6184,7 +6200,7 @@ msgstr ""
 "verifică şi acest subdirector, pe lângă directorul sistem\n"
 "cu gflare."
 
-#: app/user_install.c:339
+#: app/user_install.c:347
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -6198,7 +6214,7 @@ msgstr ""
 "gimprc verifică şi acest subdirector, pe lângă directorul\n"
 "sistem al instalării Gimpresionist în GIMP."
 
-#: app/user_install.c:412
+#: app/user_install.c:420
 msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
@@ -6206,20 +6222,20 @@ msgstr ""
 "Aşteptaţi, vă rog, până când vă este\n"
 "creat propriul director GIMP ..."
 
-#: app/user_install.c:590
+#: app/user_install.c:598
 msgid "GIMP User Installation"
 msgstr "Înscriere ca utilizator GIMP"
 
-#: app/user_install.c:595
+#: app/user_install.c:603
 msgid "Continue"
 msgstr "Continuă"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/user_install.c:636
+#: app/user_install.c:644
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
-#: app/user_install.c:733
+#: app/user_install.c:741
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6227,11 +6243,11 @@ msgstr ""
 "Bine aţi venit la\n"
 "înscrierea ca utilizator GIMP"
 
-#: app/user_install.c:735
+#: app/user_install.c:743
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Clic pe \"Continuă\" pentru a vă înscrie ca utilizator GIMP."
 
-#: app/user_install.c:739
+#: app/user_install.c:747
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
@@ -6241,7 +6257,7 @@ msgstr ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis şi echipa de dezvoltare GIMP."
 
-#: app/user_install.c:748
+#: app/user_install.c:756
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -6253,7 +6269,7 @@ msgstr ""
 "de către Fundaţia Software Liber; fie versiunea 2 a licenţei, sau\n"
 "(dacă doriţi) orice altă versiune ulterioară."
 
-#: app/user_install.c:753
+#: app/user_install.c:761
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -6265,7 +6281,7 @@ msgstr ""
 "BUN DE A FI VÂNDUT sau CAPACITATE DE A ATINGE UN ANUMIT SCOP.\n"
 "Pentru mai multe detalii vezi: Licenţa Publică Generală GNU."
 
-#: app/user_install.c:758
+#: app/user_install.c:766
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -6277,15 +6293,15 @@ msgstr ""
 "Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
 "Boston, MA 02111-1307, USA."
 
-#: app/user_install.c:784
+#: app/user_install.c:792
 msgid "Personal GIMP Directory"
 msgstr "Directorul personal GIMP"
 
-#: app/user_install.c:785
+#: app/user_install.c:793
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr "Clic \"Continuă\" pentru a vă crea directorul personal GIMP."
 
-#: app/user_install.c:804
+#: app/user_install.c:812
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
@@ -6294,7 +6310,7 @@ msgstr ""
 "Pentru o instalare corectă a GIMP, trebuie creat\n"
 "un subdirector numit %s."
 
-#: app/user_install.c:810
+#: app/user_install.c:818
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
@@ -6304,31 +6320,31 @@ msgstr ""
 "Pentru a primi mai multe informaţii despre un element faceţi\n"
 "clic pe fişierul sau subdirectorul respectiv din arbore."
 
-#: app/user_install.c:897
+#: app/user_install.c:905
 msgid "User Installation Log"
 msgstr "Jurnalul de înscriere utilizator"
 
-#: app/user_install.c:903
+#: app/user_install.c:911
 msgid "GIMP Performance Tuning"
 msgstr "Ajustare performanţe GIMP"
 
-#: app/user_install.c:904
+#: app/user_install.c:912
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Clic \"Continuă\" pentru a accepta parametrii de mai sus."
 
-#: app/user_install.c:907
+#: app/user_install.c:915
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "Pentru performanţe maxime ale GIMP, unii parametri pot fi ajustaţi."
 
-#: app/user_install.c:916
+#: app/user_install.c:924
 msgid "Monitor Resolution"
 msgstr "Rezoluţie monitor"
 
-#: app/user_install.c:917
+#: app/user_install.c:925
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Clic \"Continuă\" pentru a porni GIMP."
 
-#: app/user_install.c:920
+#: app/user_install.c:928
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -6336,60 +6352,60 @@ msgstr ""
 "Pentru a afişa imaginile în mărime naturală, GIMP trebuie să "
 "cunoascărezoluţia monitorului dumneavoastră."
 
-#: app/user_install.c:929
+#: app/user_install.c:937
 msgid "Aborting Installation..."
 msgstr "Abandonez instalarea..."
 
-#: app/user_install.c:956
+#: app/user_install.c:964
 #, fuzzy, c-format
 msgid "Cannot open %s for reading"
 msgstr "Nu pot deschide %s; %s"
 
-#: app/user_install.c:964
+#: app/user_install.c:972
 #, fuzzy, c-format
 msgid "Cannot open %s for writing"
 msgstr "Nu pot deschide %s; %s"
 
-#: app/user_install.c:974
+#: app/user_install.c:982
 #, c-format
 msgid "Error while writing %s"
 msgstr ""
 
-#: app/user_install.c:984
+#: app/user_install.c:992
 #, c-format
 msgid "Error while reading %s"
 msgstr ""
 
-#: app/user_install.c:1019
+#: app/user_install.c:1027
 #, fuzzy, c-format
 msgid "Cannot open directory %s"
 msgstr "Nu pot deschide %s; %s"
 
-#: app/user_install.c:1026
+#: app/user_install.c:1034
 #, fuzzy, c-format
 msgid "Cannot create directory %s -- %s"
 msgstr "Nu pot scrie în %s; %s"
 
-#: app/user_install.c:1046
+#: app/user_install.c:1054
 #, c-format
 msgid "Cannot get status of file %s"
 msgstr ""
 
-#: app/user_install.c:1094
+#: app/user_install.c:1102
 #, fuzzy, c-format
 msgid ""
 "%s does not exist.\n"
 "Cannot install."
 msgstr "nu există. Nu pot instala."
 
-#: app/user_install.c:1106
+#: app/user_install.c:1114
 #, fuzzy, c-format
 msgid ""
 "%s has invalid permissions.\n"
 "Cannot install."
 msgstr "nu are permisiuni valide. Nu pot instala."
 
-#: app/user_install.c:1169
+#: app/user_install.c:1177
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6399,44 +6415,44 @@ msgstr ""
 "Dacă nu, instalarea s-a terminat cu succes!\n"
 "Altfel, opriţi şi căutaţi cauzele posibile ale erorilor..."
 
-#: app/user_install.c:1180
+#: app/user_install.c:1188
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Clic \"Continuă\" pentru a termina instalarea GIMP."
 
-#: app/user_install.c:1185 app/user_install.c:1306
+#: app/user_install.c:1193 app/user_install.c:1314
 msgid "Installation failed.  Contact system administrator."
 msgstr "Instalarea a eşuat. Contactaţi administratorul de sistem."
 
-#: app/user_install.c:1222 app/user_install.c:1243
+#: app/user_install.c:1230 app/user_install.c:1251
 #, fuzzy, c-format
 msgid "Creating directory %s\n"
 msgstr "Directoarele de gradienţi"
 
-#: app/user_install.c:1228 app/user_install.c:1249
+#: app/user_install.c:1236 app/user_install.c:1257
 #, fuzzy, c-format
 msgid "Cannot create directory -- %s"
 msgstr "Nu pot scrie în %s; %s"
 
-#: app/user_install.c:1233 app/user_install.c:1294
+#: app/user_install.c:1241 app/user_install.c:1302
 msgid "  Success\n"
 msgstr ""
 
-#: app/user_install.c:1270
+#: app/user_install.c:1278
 #, c-format
 msgid "Populating directory %s from %s\n"
 msgstr ""
 
-#: app/user_install.c:1280
+#: app/user_install.c:1288
 #, fuzzy, c-format
 msgid "Copying file %s from %s\n"
 msgstr "Eroare la deschiderea fişierului %s: %s"
 
-#: app/user_install.c:1301
+#: app/user_install.c:1309
 #, c-format
 msgid "  Failure -- %s\n"
 msgstr ""
 
-#: app/user_install.c:1329
+#: app/user_install.c:1337
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6446,7 +6462,7 @@ msgstr ""
 "\"Tile Cache\". Trebuie ajustată mărimea ei pentru a încăpea în memorie.\n"
 "Ţineţi cont şi de memoria folosită de alte procese în execuţie."
 
-#: app/user_install.c:1354
+#: app/user_install.c:1362
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6459,11 +6475,11 @@ msgstr ""
 "Pe un sistem UNIX, puteţi folosi directorul temporar de sistem\n"
 "(\"/tmp\" sau \"/var/tmp\")."
 
-#: app/user_install.c:1368
+#: app/user_install.c:1376
 msgid "Swap Directory:"
 msgstr "Directorul de swap:"
 
-#: app/user_install.c:1403
+#: app/user_install.c:1411
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6471,20 +6487,20 @@ msgstr ""
 "GIMP poate obţine această informaţie de la sistemul de ferestre.\n"
 "Totuşi, de obicei acesta nu furnizează nişte valori utile."
 
-#: app/user_install.c:1410
+#: app/user_install.c:1418
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Preia rezoluţia de la sistemul de ferestre (Curent %d x %d dpi)"
 
-#: app/user_install.c:1424
+#: app/user_install.c:1432
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativ, stabiliţi rezoluţia monitorului manual."
 
-#: app/user_install.c:1437
+#: app/user_install.c:1445
 msgid "Monitor Resolution X:"
 msgstr "Rezoluţie monitor X:"
 
-#: app/user_install.c:1474
+#: app/user_install.c:1482
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6492,12 +6508,38 @@ msgstr ""
 "Puteţi apăsa butonul \"Calibrează\" pentru a deschide o fereastră\n"
 "care vă permite să determinaţi rezoluţia monitorului în mod interactiv."
 
-#: app/xcf.c:384
+#: app/xcf.c:423
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Eroare XCF: versiunea %d de fişier XCF nu este suportată"
 
-#: app/xcf.c:1817
+#: app/xcf.c:475
+#, fuzzy, c-format
+msgid "XCF file save failed: %s"
+msgstr ""
+"Salvare eşuată.\n"
+"%s"
+
+#: app/xcf.c:481
+#, fuzzy, c-format
+msgid ""
+"Open failed on '%s':\n"
+"%s"
+msgstr "deschidere eşuată la %s: %s\n"
+
+#: app/xcf.c:1850
+msgid ""
+"XCF: This file is corrupt!  I have loaded as much\n"
+"of it as I can, but it is incomplete."
+msgstr ""
+
+#: app/xcf.c:1856
+msgid ""
+"XCF: This file is corrupt!  I could not even\n"
+"salvage any partial image data from it."
+msgstr ""
+
+#: app/xcf.c:1883
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6506,6 +6548,11 @@ msgstr ""
 "ATENŢIE, XCF: versiunea 0 a formatului fişierului XCF\n"
 "nu salvează corect hărţi de culori indexate.Se substituie cu harta scării de "
 "gri."
+
+#: app/xcf.c:3016
+#, fuzzy, c-format
+msgid "Error writing XCF: %s"
+msgstr "Eroare la deschiderea fişierului: %s\n"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
@@ -6531,6 +6578,9 @@ msgstr "Acuarelă"
 #, fuzzy
 msgid "Color History"
 msgstr "Istoric culori"
+
+#~ msgid "Font '%s' not found."
+#~ msgstr "Nu am găsit fontul '%s'."
 
 #~ msgid ""
 #~ "Did you notice any error messages in the console window?\n"

@@ -1,5 +1,9 @@
 2003-05-19  Manish Singh  <yosh@gimp.org>
 
+	* Made 1.2.4 release
+
+2003-05-19  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.c: Add SIOD banner to console
 	startup.
 

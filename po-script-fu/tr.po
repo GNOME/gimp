@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
+"POT-Creation-Date: 2003-05-19 15:16-0700\n"
 "PO-Revision-Date: 2001-07-18 13:43+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -35,23 +35,23 @@ msgid "SIOD Output"
 msgstr "SIOD Çýktýsý"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "Þu Anki Komut"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:311
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open SIOD output pipe"
 msgstr "SIOD çýkýþ veriyolu açýlamadý"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD çýkýþ veriyoluna akýþ açýlamadý"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu deðerlendirme modu sadece etkileþimsiz çaðrýma olanak tanýr"
 
@@ -106,12 +106,12 @@ msgid "About"
 msgstr "Hakkýnda"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:549
+#: plug-ins/script-fu/script-fu-server.c:561
 msgid "OK"
 msgstr "Tamam"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:563
 msgid "Cancel"
 msgstr "Ýptal"
 
@@ -128,17 +128,17 @@ msgstr ""
 "Lütfen ayarlarýný kontrol edin.\n"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:521
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Yazar:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/dbbrowser/dbbrowser_utils.c:551
 #: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Telif Hakký:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/dbbrowser/dbbrowser_utils.c:536
 #: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Tarih:"
@@ -161,15 +161,15 @@ msgstr ""
 "%s çalýþtýrýlýrken Script-Fu hatasý\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:556
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Sunucu Ayarlarý"
 
-#: plug-ins/script-fu/script-fu-server.c:571
+#: plug-ins/script-fu/script-fu-server.c:583
 msgid "Server Port:"
 msgstr "Sunucu Portu:"
 
-#: plug-ins/script-fu/script-fu-server.c:577
+#: plug-ins/script-fu/script-fu-server.c:589
 msgid "Server Logfile:"
 msgstr "Sunucu Kütüðü:"
 
@@ -181,11 +181,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Konsol..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Sunucu..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1120 plug-ins/script-fu/script-fu.c:1121
 msgid "Re-read all available scripts"
 msgstr "Tüm programlarý tekrar oku"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1125
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Tazele..."
 
@@ -214,42 +214,42 @@ msgid "Search:"
 msgstr ""
 
 #. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 #, fuzzy
 msgid "Name:"
 msgstr "Tarih:"
 
 #. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:363
 #, fuzzy
 msgid "Blurb:"
 msgstr "Y Bulanýklýðý"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+#: plug-ins/dbbrowser/dbbrowser_utils.c:385
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+#: plug-ins/dbbrowser/dbbrowser_utils.c:432
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+#: plug-ins/dbbrowser/dbbrowser_utils.c:646
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+#: plug-ins/dbbrowser/dbbrowser_utils.c:670
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+#: plug-ins/dbbrowser/dbbrowser_utils.c:680
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:746
 #, fuzzy
 msgid "DB Browser"
 msgstr "Gözat..."
@@ -751,10 +751,6 @@ msgstr ""
 "Ýsmi..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Web Tarayýcý/Geliþtirici ÇSS"
-
-#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Hatalarý"
 
@@ -763,12 +759,9 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
 msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Elkitabý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/GIMP User Group"
 msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Haberleri"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Eðitim Yazýlarý"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -813,10 +806,6 @@ msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP.ORG/Grokking the GIMP"
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Xtns/Web Tarayýcý/Eklem Listesi"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Web Tarayýcý/Kullanýcý ÇSS"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -2270,6 +2259,15 @@ msgstr "Geniþlik"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Kopya Üzerinde Çalýþ"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Xtns/Web Tarayýcý/Geliþtirici ÇSS"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Xtns/Web Tarayýcý/GIMP Eðitim Yazýlarý"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Xtns/Web Tarayýcý/Kullanýcý ÇSS"
 
 #~ msgid ""
 #~ "Burn-In: Need two layers in total!\n"

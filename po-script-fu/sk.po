@@ -3,11 +3,10 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2002.
 #
-
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-script-fu 1.2.2\n"
-"POT-Creation-Date: 2001-12-19 06:13-0500\n"
+"POT-Creation-Date: 2003-05-19 15:16-0700\n"
 "PO-Revision-Date: 2002-02-04 22:08+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -38,23 +37,23 @@ msgid "SIOD Output"
 msgstr "SIOD výstup"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "Aktuálny príkaz"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:311
 msgid "Browse..."
 msgstr "Prechádza»..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open SIOD output pipe"
 msgstr "Nie je mo¾né otvori» SIOD výstupnú rúru"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Nie je mo¾né otvori» tok na výstupnej rúre SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Iba neinteraktívne spustenie umo¾òuje re¾im vyhodnocovanie Script-Fu"
 
@@ -109,12 +108,12 @@ msgid "About"
 msgstr "O skripte"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:549
+#: plug-ins/script-fu/script-fu-server.c:561
 msgid "OK"
 msgstr "OK"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:563
 msgid "Cancel"
 msgstr "Storno"
 
@@ -131,17 +130,17 @@ msgstr ""
 "Skontrolujte si prosím svoje nastavenia.\n"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:521
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/dbbrowser/dbbrowser_utils.c:551
 #: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/dbbrowser/dbbrowser_utils.c:536
 #: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Dátum:"
@@ -165,15 +164,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:556
 msgid "Script-Fu Server Options"
 msgstr "Nastavenia Script-Fu servera"
 
-#: plug-ins/script-fu/script-fu-server.c:571
+#: plug-ins/script-fu/script-fu-server.c:583
 msgid "Server Port:"
 msgstr "Port servera:"
 
-#: plug-ins/script-fu/script-fu-server.c:577
+#: plug-ins/script-fu/script-fu-server.c:589
 msgid "Server Logfile:"
 msgstr "Protokol servera:"
 
@@ -185,11 +184,11 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Konzola..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Roz¹./Script-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1120 plug-ins/script-fu/script-fu.c:1121
 msgid "Re-read all available scripts"
 msgstr "Znovu preèíta» v¹etky dostupné skripty"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1125
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Roz¹./Script-Fu/Obnovi»"
 
@@ -217,40 +216,40 @@ msgid "Search:"
 msgstr "Hµada»"
 
 #. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Názov:"
 
 #. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:363
 msgid "Blurb:"
 msgstr "Zálo¾ka:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+#: plug-ins/dbbrowser/dbbrowser_utils.c:385
 msgid "In:"
 msgstr "Dnu:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+#: plug-ins/dbbrowser/dbbrowser_utils.c:432
 msgid "Out:"
 msgstr "Von:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Help:"
 msgstr "Pomocník:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+#: plug-ins/dbbrowser/dbbrowser_utils.c:646
 msgid "DB Browser (by name - please wait)"
 msgstr "DB Prehliadaè (podµa názvu - èakajte prosím)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+#: plug-ins/dbbrowser/dbbrowser_utils.c:670
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB Prehliadaè (podµa zálo¾ky - èakajte prosím)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+#: plug-ins/dbbrowser/dbbrowser_utils.c:680
 msgid "DB Browser (please wait)"
 msgstr "DB Prehliadaè (èakajte prosím)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:746
 msgid "DB Browser"
 msgstr "DB Prehliadaè"
 
@@ -677,7 +676,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Pomôcky/Znaková mapa..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
@@ -685,7 +685,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Bod..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
@@ -703,7 +704,8 @@ msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Bod..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
@@ -717,10 +719,12 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
+msgstr ""
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/V¹eobecné nápisy na "
 "trubici..."
@@ -736,10 +740,11 @@ msgstr ""
 "trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlaèítka "
-"na trubici..."
+"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlaèítka na "
+"trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
@@ -750,10 +755,6 @@ msgstr ""
 "na trubici..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Roz¹./Web prehliadaè/Otázky (FAQ) vývojarov"
-
-#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr "<Toolbox>/Roz¹./Web prehliadaè/GIMP chyby"
 
@@ -762,12 +763,9 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
 msgstr "<Toolbox>/Roz¹./Web prehliadaè/GIMP manuál"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/GIMP User Group"
 msgstr "<Toolbox>/Roz¹./Web prehliadaè/GIMP novinky"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Roz¹./Web prehliadaè/GIMP návody"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -812,10 +810,6 @@ msgstr "<Toolbox>/Roz¹./Web prehliadaè/Pochopenie GIMPu"
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Roz¹./Web prehliadaè/Register zásuvných modulov"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Roz¹./Web prehliadaè/Otázky (FAQ) pou¾ívateµov"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -2269,3 +2263,11 @@ msgstr "©írka"
 msgid "Work on Copy"
 msgstr "Pracova» s kópiou"
 
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Roz¹./Web prehliadaè/Otázky (FAQ) vývojarov"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Roz¹./Web prehliadaè/GIMP návody"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Roz¹./Web prehliadaè/Otázky (FAQ) pou¾ívateµov"

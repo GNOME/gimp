@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.2.3\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
+"POT-Creation-Date: 2003-05-19 15:16-0700\n"
 "PO-Revision-Date: 2001-11-18 22:06+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -34,23 +34,23 @@ msgid "SIOD Output"
 msgstr "Вывод SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "Текущая команда"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:311
 msgid "Browse..."
 msgstr "Просмотр..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open SIOD output pipe"
 msgstr "Не удалось открыть канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Не удалось открыть поток в канал вывода SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
@@ -105,12 +105,12 @@ msgid "About"
 msgstr "О программе"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:549
+#: plug-ins/script-fu/script-fu-server.c:561
 msgid "OK"
 msgstr "Да"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:563
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -127,17 +127,17 @@ msgstr ""
 "Пожалуйста проверьте ваши настройки.\n"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:521
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/dbbrowser/dbbrowser_utils.c:551
 #: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/dbbrowser/dbbrowser_utils.c:536
 #: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Дата:"
@@ -161,15 +161,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:556
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу: Параметры сервера"
 
-#: plug-ins/script-fu/script-fu-server.c:571
+#: plug-ins/script-fu/script-fu-server.c:583
 msgid "Server Port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/script-fu-server.c:577
+#: plug-ins/script-fu/script-fu-server.c:589
 msgid "Server Logfile:"
 msgstr "Регистрационный файл сервера:"
 
@@ -181,11 +181,11 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1120 plug-ins/script-fu/script-fu.c:1121
 msgid "Re-read all available scripts"
 msgstr "Перечитать все доступные скрипты"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1125
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
 
@@ -213,40 +213,40 @@ msgid "Search:"
 msgstr "Поиск:"
 
 #. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Название:"
 
 #. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:363
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+#: plug-ins/dbbrowser/dbbrowser_utils.c:385
 msgid "In:"
 msgstr "В:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+#: plug-ins/dbbrowser/dbbrowser_utils.c:432
 msgid "Out:"
 msgstr "Из:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Help:"
 msgstr "Справка:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+#: plug-ins/dbbrowser/dbbrowser_utils.c:646
 msgid "DB Browser (by name - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+#: plug-ins/dbbrowser/dbbrowser_utils.c:670
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+#: plug-ins/dbbrowser/dbbrowser_utils.c:680
 msgid "DB Browser (please wait)"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:746
 msgid "DB Browser"
 msgstr ""
 
@@ -745,10 +745,6 @@ msgstr ""
 "кнопки..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО разработчика"
-
-#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr "<Toolbox>/Расш./Web-браузер/Ошибки GIMP"
 
@@ -757,12 +753,9 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
 msgstr "<Toolbox>/Расш./Web-браузер/Руководство GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/GIMP User Group"
 msgstr "<Toolbox>/Расш./Web-браузер/Новости GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Расш./Web-браузер/Учебники GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -807,10 +800,6 @@ msgstr "<Toolbox>/Расш./Web-браузер/Grokking the Gimp"
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Расш./Web-браузер/Регистрация дополнений"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -2263,3 +2252,12 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Работать с копией"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО разработчика"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Расш./Web-браузер/Учебники GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp 1.2.4\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
+"POT-Creation-Date: 2003-01-14 17:02-0800\n"
 "PO-Revision-Date: 2002-08-28 15:23+0200\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:389
 msgid "Select File"
 msgstr ""
 

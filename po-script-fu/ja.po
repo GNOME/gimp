@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2002-05-05 17:13+0900\n"
+"POT-Creation-Date: 2003-05-19 15:16-0700\n"
 "PO-Revision-Date: 2002-05-05 17:12+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -36,23 +36,23 @@ msgid "SIOD Output"
 msgstr "SIOD 出力"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "現在実行しているコマンド"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:311
 msgid "Browse..."
 msgstr "場所を指定..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open SIOD output pipe"
 msgstr "SIOD 出力パイプが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 出力パイプ上のストリームが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
@@ -107,12 +107,12 @@ msgid "About"
 msgstr "このプラグインについて"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:549
+#: plug-ins/script-fu/script-fu-server.c:561
 msgid "OK"
 msgstr "了解"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:563
 msgid "Cancel"
 msgstr "取消"
 
@@ -129,17 +129,17 @@ msgstr ""
 "不正なものがあります.設定を確認して下さい.\n"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:521
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/dbbrowser/dbbrowser_utils.c:551
 #: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/dbbrowser/dbbrowser_utils.c:536
 #: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "日付:"
@@ -163,15 +163,15 @@ msgstr ""
 "実行中に Script-Fu エラー発生\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:556
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu サーバオプション"
 
-#: plug-ins/script-fu/script-fu-server.c:571
+#: plug-ins/script-fu/script-fu-server.c:583
 msgid "Server Port:"
 msgstr "サーバポート:"
 
-#: plug-ins/script-fu/script-fu-server.c:577
+#: plug-ins/script-fu/script-fu-server.c:589
 msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
@@ -183,11 +183,11 @@ msgstr "<Toolbox>/拡張/Script-Fu/コンソール..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/拡張/Script-Fu/サーバ..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1120 plug-ins/script-fu/script-fu.c:1121
 msgid "Re-read all available scripts"
 msgstr "全てのスクリプトを再読み込み"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1125
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"
 
@@ -215,40 +215,40 @@ msgid "Search:"
 msgstr "検索:"
 
 #. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "名前:"
 
 #. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:363
 msgid "Blurb:"
 msgstr "説明:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+#: plug-ins/dbbrowser/dbbrowser_utils.c:385
 msgid "In:"
 msgstr "入力:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+#: plug-ins/dbbrowser/dbbrowser_utils.c:432
 msgid "Out:"
 msgstr "出力:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Help:"
 msgstr "ヘルプ:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+#: plug-ins/dbbrowser/dbbrowser_utils.c:646
 msgid "DB Browser (by name - please wait)"
 msgstr "DB ブラウザ (名前で - お待ちください)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+#: plug-ins/dbbrowser/dbbrowser_utils.c:670
 msgid "DB Browser (by blurb - please wait)"
 msgstr "DB ブラウザ (説明で - お待ちください)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+#: plug-ins/dbbrowser/dbbrowser_utils.c:680
 msgid "DB Browser (please wait)"
 msgstr "DB ブラウザ (お待ちください)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:746
 msgid "DB Browser"
 msgstr "DB ブラウザ"
 
@@ -738,10 +738,6 @@ msgstr ""
 "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/拡張/Web ブラウザ/開発者向け FAQ"
-
-#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP のバグ"
 
@@ -750,12 +746,9 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
 msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP マニュアル"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/GIMP User Group"
 msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP ニュース"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP チュートリアル"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -800,10 +793,6 @@ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP を理解しよう"
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/拡張/Web ブラウザ/プラグイン登録所"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -2256,3 +2245,12 @@ msgstr "幅"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "コピーで作業する"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/開発者向け FAQ"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP チュートリアル"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"

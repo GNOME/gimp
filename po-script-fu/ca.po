@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2002-08-28 15:08+0200\n"
+"POT-Creation-Date: 2003-05-19 15:16-0700\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -35,23 +35,23 @@ msgid "SIOD Output"
 msgstr "Sortida SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:290
 msgid "Current Command"
 msgstr "Ordre actual"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:311
 msgid "Browse..."
 msgstr "Navega..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open SIOD output pipe"
 msgstr "No es pot obrir el conducte de sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
@@ -129,17 +129,17 @@ msgstr ""
 "Si us plau, reviseu els paràmetres.\n"
 
 #. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:521
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
+#: plug-ins/dbbrowser/dbbrowser_utils.c:551
 #: plug-ins/script-fu/script-fu-scripts.c:1979
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
+#: plug-ins/dbbrowser/dbbrowser_utils.c:536
 #: plug-ins/script-fu/script-fu-scripts.c:1985
 msgid "Date:"
 msgstr "Data:"
@@ -183,11 +183,11 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Consola..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Servidor..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:1120 plug-ins/script-fu/script-fu.c:1121
 msgid "Re-read all available scripts"
 msgstr "Torna a llegir totes les seqüències disponibles"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:1125
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Extensions/Script-Fu/Refresca"
 
@@ -215,41 +215,41 @@ msgid "Search:"
 msgstr "Cerca:"
 
 #. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+#: plug-ins/dbbrowser/dbbrowser_utils.c:347
 msgid "Name:"
 msgstr "Nom:"
 
 #. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:363
 msgid "Blurb:"
 msgstr "Anunci de portada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+#: plug-ins/dbbrowser/dbbrowser_utils.c:385
 msgid "In:"
 msgstr "Entrada:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+#: plug-ins/dbbrowser/dbbrowser_utils.c:432
 msgid "Out:"
 msgstr "Sortida:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Help:"
 msgstr "Ajuda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+#: plug-ins/dbbrowser/dbbrowser_utils.c:646
 msgid "DB Browser (by name - please wait)"
 msgstr "Navegador de la base de dades (per nom; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+#: plug-ins/dbbrowser/dbbrowser_utils.c:670
 msgid "DB Browser (by blurb - please wait)"
 msgstr ""
 "Navegador de la base de dades (per anunci de portada; si us plau, espereu)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+#: plug-ins/dbbrowser/dbbrowser_utils.c:680
 msgid "DB Browser (please wait)"
 msgstr "Navegador de la base de dades (si us plau, espereu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:746
 msgid "DB Browser"
 msgstr "Navegador de la base de dades"
 
@@ -827,12 +827,6 @@ msgstr ""
 "subsubbotó del conducte..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr ""
-"<Toolbox>/Extensions/Navegador web/Desenvolupador de les preguntes més "
-"freqüents"
-
-#: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr "<Toolbox>/Extensions/Navegador web/Errors de programació del GIMP"
 
@@ -841,12 +835,9 @@ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
 msgstr "<Toolbox>/Extensions/Navegador web/Manual del GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Web Browser/GIMP User Group"
 msgstr "<Toolbox>/Extensions/Navegador web/Noticies del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Extensions/Navegador web/Tutorials del GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -892,11 +883,6 @@ msgstr "<Toolbox>/Extensions/Navegador web/'Grokking' el GIMP"
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr ""
 "<Toolbox>/Extensions/Navegador web/Registre de la integració automàtica"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr ""
-"<Toolbox>/Extensions/Navegador web/Usuari de les preguntes més freqüents"
 
 #
 #: plug-ins/script-fu/scripts/round-corners.scm:0
@@ -2525,6 +2511,18 @@ msgstr "Amplada"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Treballa a la còpia"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr ""
+#~ "<Toolbox>/Extensions/Navegador web/Desenvolupador de les preguntes més "
+#~ "freqüents"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Extensions/Navegador web/Tutorials del GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr ""
+#~ "<Toolbox>/Extensions/Navegador web/Usuari de les preguntes més freqüents"
 
 #~ msgid "About the GIMP"
 #~ msgstr "Quant al GIMP"

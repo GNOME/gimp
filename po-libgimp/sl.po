@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
+"POT-Creation-Date: 2003-01-14 17:02-0800\n"
 "PO-Revision-Date: 2002-04-01 23:53+0200\n"
 "Last-Translator: Miha Tom¹iè <miha.tomsic@guest.arnes.si>\n"
-"Language-Team: Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
+"Language-Team: Language-Team: Slovenian <translation-team-sl@lists."
+"sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-
 
 #: libgimp/gimpcolorbutton.c:121
 msgid "/Use Foreground Color"
@@ -164,7 +164,7 @@ msgstr "maska sloja"
 msgid "a channel (saved selection)"
 msgstr "kanal (shranjena izbira)"
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:389
 msgid "Select File"
 msgstr "Izberi datoteko"
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.4\n"
-"POT-Creation-Date: 2003-01-02 17:20+0100\n"
+"POT-Creation-Date: 2003-05-19 15:07-0700\n"
 "PO-Revision-Date: 2003-01-02 17:21+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "Druck:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
+#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:565
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -63,7 +63,7 @@ msgstr "wurde Euch gebracht von"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: app/app_procs.c:500 app/app_procs.c:508 app/gimprc.c:456
+#: app/app_procs.c:500 app/app_procs.c:508 app/gimprc.c:459
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "bearbeite \"%s\"\n"
@@ -133,10 +133,10 @@ msgstr "Beenden"
 #: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
-#: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
-#: app/gradient.c:5505 app/hue_saturation.c:402 app/interface.c:1047
-#: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
-#: app/layers_dialog.c:4103 app/levels.c:375 app/palette.c:1825
+#: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
+#: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
+#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
+#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
 #: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:301 app/user_install.c:605
@@ -298,8 +298,8 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:398 app/layers_dialog.c:3561
-#: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
+#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
 #: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
@@ -308,7 +308,7 @@ msgstr "OK"
 
 #: app/brightness_contrast.c:242 app/by_color_select.c:727
 #: app/color_balance.c:297 app/curves.c:590 app/file_new_dialog.c:360
-#: app/hue_saturation.c:400 app/levels.c:373 app/posterize.c:227
+#: app/hue_saturation.c:401 app/levels.c:373 app/posterize.c:227
 #: app/resize.c:222 app/threshold.c:299 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
 msgid "Reset"
@@ -326,7 +326,7 @@ msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:326 app/color_balance.c:465 app/curves.c:712
-#: app/fileops.c:420 app/hue_saturation.c:590 app/levels.c:604
+#: app/fileops.c:467 app/hue_saturation.c:591 app/levels.c:604
 #: app/palette.c:3229 app/posterize.c:266 app/threshold.c:374
 msgid "Preview"
 msgstr "Vorschau"
@@ -338,7 +338,7 @@ msgstr "Pinseleditor"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1074 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
+#: app/crop.c:1074 app/devices.c:760 app/docindex.c:781 app/errorconsole.c:284
 #: app/gdisplay_ops.c:313 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
@@ -526,11 +526,11 @@ msgid "Wrap Around"
 msgstr "Umwickeln"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3665
+#: app/layers_dialog.c:3677
 msgid "Background"
 msgstr "Hintergrund"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3667
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -764,15 +764,15 @@ msgstr "S"
 msgid "V"
 msgstr "V"
 
-#: app/color_select.c:245 app/hue_saturation.c:380
+#: app/color_select.c:245 app/hue_saturation.c:381
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:246 app/hue_saturation.c:382
+#: app/color_select.c:246 app/hue_saturation.c:383
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:247 app/hue_saturation.c:384
+#: app/color_select.c:247 app/hue_saturation.c:385
 msgid "B"
 msgstr "B"
 
@@ -992,7 +992,7 @@ msgid "Width:"
 msgstr "Breite:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:543
+#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Höhe:"
@@ -1075,7 +1075,7 @@ msgstr "Gerätestatus"
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
-#: app/docindex.c:113
+#: app/docindex.c:112
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1085,7 +1085,7 @@ msgstr ""
 "<Shift> Fenster anheben wenn bereits geöffnet\n"
 "<Ctrl> Bild Öffnen-Dialog"
 
-#: app/docindex.c:118
+#: app/docindex.c:117
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
@@ -1093,7 +1093,7 @@ msgstr ""
 "Bewege den ausgewählten Eintrag nach oben\n"
 "<Shift> Ganz nach oben"
 
-#: app/docindex.c:122
+#: app/docindex.c:121
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
@@ -1101,11 +1101,11 @@ msgstr ""
 "Bewege den ausgewählten Eintrag nach unten\n"
 "<Shift> Ganz nach unten"
 
-#: app/docindex.c:126
+#: app/docindex.c:125
 msgid "Remove the selected entry from the index"
 msgstr "Entferne den ausgewählten Eintrag aus der Liste"
 
-#: app/docindex.c:715
+#: app/docindex.c:775
 msgid "Document Index"
 msgstr "Dokumentenindex"
 
@@ -1134,7 +1134,7 @@ msgstr "Modus"
 msgid "Move: 0, 0"
 msgstr "Verschieben: 0, 0"
 
-#: app/edit_selection.c:451 app/edit_selection.c:461
+#: app/edit_selection.c:436 app/edit_selection.c:446
 msgid "Move: "
 msgstr "Verschieben: "
 
@@ -1239,16 +1239,16 @@ msgstr "Pixel/%a"
 msgid "Image Type"
 msgstr "Bildart"
 
-#: app/fileops.c:269 app/fileops.c:314
+#: app/fileops.c:316 app/fileops.c:361
 msgid "Load Image"
 msgstr "Bild öffnen"
 
 #. format-chooser frame
-#: app/fileops.c:329
+#: app/fileops.c:376
 msgid "Determine File Type"
 msgstr "Dateityp bestimmen"
 
-#: app/fileops.c:402
+#: app/fileops.c:449
 msgid ""
 "Generate\n"
 "Preview"
@@ -1256,11 +1256,11 @@ msgstr ""
 "Vorschau\n"
 "erzeugen"
 
-#: app/fileops.c:421
+#: app/fileops.c:468
 msgid "No Selection."
 msgstr "Keine Auswahl."
 
-#: app/fileops.c:469 app/fileops.c:1755
+#: app/fileops.c:527 app/fileops.c:530 app/fileops.c:1991 app/fileops.c:1994
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1269,19 +1269,19 @@ msgstr ""
 "Sichern schlug fehl.\n"
 "%s"
 
-#: app/fileops.c:494 app/fileops.c:525
+#: app/fileops.c:556 app/fileops.c:587
 msgid "Save Image"
 msgstr "Bild sichern"
 
-#: app/fileops.c:542
+#: app/fileops.c:617
 msgid "Save Options"
 msgstr "Einstellungen"
 
-#: app/fileops.c:551
+#: app/fileops.c:626
 msgid "Determine File Type:"
 msgstr "Dateityp bestimmen:"
 
-#: app/fileops.c:614
+#: app/fileops.c:689
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1289,7 +1289,7 @@ msgstr ""
 "Kann Bild nicht zurücksetzen,\n"
 "da kein Dateiname mit dem Bild verknüpft ist"
 
-#: app/fileops.c:625
+#: app/fileops.c:700
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1304,19 +1304,19 @@ msgstr ""
 "(Alle Änderungen inklusive aller\n"
 "Undo-Informationen gehen verloren)"
 
-#: app/fileops.c:632
+#: app/fileops.c:707
 msgid "Revert Image?"
 msgstr "Bild zurücksetzen?"
 
-#: app/fileops.c:637 app/fileops.c:1897
+#: app/fileops.c:712 app/fileops.c:2157
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:637 app/fileops.c:1897
+#: app/fileops.c:712 app/fileops.c:2157
 msgid "No"
 msgstr "Nein"
 
-#: app/fileops.c:740
+#: app/fileops.c:843 app/fileops.c:848
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1325,7 +1325,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Unbekannter Typ."
 
-#: app/fileops.c:757
+#: app/fileops.c:871 app/fileops.c:876
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1334,7 +1334,7 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:778
+#: app/fileops.c:903 app/fileops.c:908
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1343,11 +1343,11 @@ msgstr ""
 "%s fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:834 app/fileops.c:1546
+#: app/fileops.c:971 app/fileops.c:1744
 msgid "Open"
 msgstr "Öffnen"
 
-#: app/fileops.c:1153
+#: app/fileops.c:1302 app/fileops.c:1307
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1356,7 +1356,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Unbekannter Dateityp."
 
-#: app/fileops.c:1168
+#: app/fileops.c:1326 app/fileops.c:1331
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1365,7 +1365,7 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s ist keine reguläre Datei."
 
-#: app/fileops.c:1187
+#: app/fileops.c:1354 app/fileops.c:1359
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1374,35 +1374,35 @@ msgstr ""
 "Sichern fehlgeschlagen.\n"
 "%s: Zugriff verweigert."
 
-#: app/fileops.c:1434
+#: app/fileops.c:1626
 msgid "(This thumbnail may be out of date)"
 msgstr "(Diese Vorschau könnte veraltet sein)"
 
-#: app/fileops.c:1435
+#: app/fileops.c:1627
 msgid "(No Information)"
 msgstr "(Keine Information)"
 
-#: app/fileops.c:1445
+#: app/fileops.c:1637
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Vorschau-Sicherung ist abgeschaltet)"
 
-#: app/fileops.c:1449
+#: app/fileops.c:1641
 msgid "(Could not write thumbnail file)"
 msgstr "(Konnte Vorschau-Datei nicht schreiben)"
 
-#: app/fileops.c:1453
+#: app/fileops.c:1645
 msgid "(Thumbnail file not written)"
 msgstr "(Vorschau-Datei nicht geschrieben)"
 
-#: app/fileops.c:1471
+#: app/fileops.c:1663
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/fileops.c:1571
+#: app/fileops.c:1769
 msgid "(could not make preview)"
 msgstr "(konnte keine Vorschau erstellen)"
 
-#: app/fileops.c:1641 app/fileops.c:1682
+#: app/fileops.c:1846 app/fileops.c:1849 app/fileops.c:1902 app/fileops.c:1905
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1411,20 +1411,20 @@ msgstr ""
 "Öffnen fehlgeschlagen.\n"
 "%s"
 
-#: app/fileops.c:1890
+#: app/fileops.c:2146 app/fileops.c:2150
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1892
+#: app/fileops.c:2152
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1954
+#: app/fileops.c:2222
 msgid "Revert"
 msgstr "Zurücksetzen"
 
-#: app/fileops.c:1967
+#: app/fileops.c:2238 app/fileops.c:2241
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1672,7 +1672,7 @@ msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3087
+#: app/gimpimage.c:3079
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1680,7 +1680,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3093
+#: app/gimpimage.c:3085
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1688,7 +1688,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3099
+#: app/gimpimage.c:3091
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1696,20 +1696,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3108
+#: app/gimpimage.c:3100
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3216
+#: app/gimpimage.c:3213
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3267
+#: app/gimpimage.c:3264
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3488 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3496 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -1722,41 +1722,41 @@ msgstr "Fortschritt"
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: app/gimprc.c:475
+#: app/gimprc.c:478
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "Fehler bei Bearbeitung von: \"%s\"\n"
 
-#: app/gimprc.c:476
+#: app/gimprc.c:479
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  in Zeile %d Spalte %d\n"
 
-#: app/gimprc.c:477
+#: app/gimprc.c:480
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  unerwartetes Symbol: %s\n"
 
-#: app/gimprc.c:1452
+#: app/gimprc.c:1465
 msgid "error parsing pluginrc"
 msgstr "Fehler beim Lesen der pluginrc"
 
-#: app/gimprc.c:2927
+#: app/gimprc.c:2947
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kann %s nicht öffnen; %s"
 
-#: app/gimprc.c:2946
+#: app/gimprc.c:2966
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kann %s nicht in %s.old umbenennen; %s"
 
-#: app/gimprc.c:2952
+#: app/gimprc.c:2972
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Konnte %s nicht wieder öffnen\n"
 
-#: app/gimprc.c:2964
+#: app/gimprc.c:2984
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kann nicht in %s schreiben; %s"
@@ -2039,166 +2039,166 @@ msgstr "Markerposition: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
 
-#: app/gradient.c:3490 app/gradient.c:4553
+#: app/gradient.c:3494 app/gradient.c:4557
 msgid "Left endpoint's color"
 msgstr "Farbe des linken Endpunktes"
 
-#: app/gradient.c:3501 app/gradient.c:3543
+#: app/gradient.c:3505 app/gradient.c:3547
 msgid "Load from"
 msgstr "Holen aus"
 
-#: app/gradient.c:3505
+#: app/gradient.c:3509
 msgid "Left neighbor's right endpoint"
 msgstr "Rechter Endpunkt des linken Nachbars"
 
-#: app/gradient.c:3506
+#: app/gradient.c:3510
 msgid "Right endpoint"
 msgstr "Rechter Endpunkt"
 
-#: app/gradient.c:3516 app/gradient.c:3558
+#: app/gradient.c:3520 app/gradient.c:3562
 msgid "Save to"
 msgstr "Sichern unter"
 
-#: app/gradient.c:3532 app/gradient.c:4631
+#: app/gradient.c:3536 app/gradient.c:4635
 msgid "Right endpoint's color"
 msgstr "Farbe des rechten Endpunktes"
 
-#: app/gradient.c:3547
+#: app/gradient.c:3551
 msgid "Right neighbor's left endpoint"
 msgstr "Linker Endpunkt des rechten Nachbars"
 
-#: app/gradient.c:3548
+#: app/gradient.c:3552
 msgid "Left endpoint"
 msgstr "Linker Endpunkt"
 
-#: app/gradient.c:3659
+#: app/gradient.c:3663
 msgid "Selection operations"
 msgstr "Auswahl-Operationen"
 
-#: app/gradient.c:3831
+#: app/gradient.c:3835
 msgid "Blending function for segment"
 msgstr "Verlaufsfunktion für Segment"
 
-#: app/gradient.c:3833
+#: app/gradient.c:3837
 msgid "Coloring type for segment"
 msgstr "Farbe für Segment"
 
-#: app/gradient.c:3835
+#: app/gradient.c:3839
 msgid "Split segment at midpoint"
 msgstr "Segment mittig teilen"
 
-#: app/gradient.c:3837 app/gradient.c:4934
+#: app/gradient.c:3841 app/gradient.c:4938
 msgid "Split segment uniformly"
 msgstr "Segment gleichmäßig teilen"
 
-#: app/gradient.c:3839
+#: app/gradient.c:3843
 msgid "Delete segment"
 msgstr "Segment löschen"
 
-#: app/gradient.c:3841
+#: app/gradient.c:3845
 msgid "Re-center segment's midpoint"
 msgstr "Mittelpunkt des Segments zentrieren"
 
-#: app/gradient.c:3843
+#: app/gradient.c:3847
 msgid "Re-distribute handles in segment"
 msgstr "Punkte gleichmäßig im Segment verteilen"
 
-#: app/gradient.c:3845
+#: app/gradient.c:3849
 msgid "Flip segment"
 msgstr "Segment spiegeln"
 
-#: app/gradient.c:3847 app/gradient.c:5495
+#: app/gradient.c:3851 app/gradient.c:5499
 msgid "Replicate segment"
 msgstr "Segment replizieren"
 
-#: app/gradient.c:3852
+#: app/gradient.c:3856
 msgid "Blending function for selection"
 msgstr "Farbverlaufsfunktion für Auswahl"
 
-#: app/gradient.c:3854
+#: app/gradient.c:3858
 msgid "Coloring type for selection"
 msgstr "Färbungsart für Auswahl"
 
-#: app/gradient.c:3856
+#: app/gradient.c:3860
 msgid "Split segments at midpoints"
 msgstr "Segment an Mittelpunkten aufteilen"
 
-#: app/gradient.c:3858 app/gradient.c:4935
+#: app/gradient.c:3862 app/gradient.c:4939
 msgid "Split segments uniformly"
 msgstr "Segment gleichmäßig aufteilen"
 
-#: app/gradient.c:3860
+#: app/gradient.c:3864
 msgid "Delete selection"
 msgstr "Auswahl löschen"
 
-#: app/gradient.c:3862
+#: app/gradient.c:3866
 msgid "Re-center midpoints in selection"
 msgstr "Mittelpunkte in Auswahl zentrieren"
 
-#: app/gradient.c:3864
+#: app/gradient.c:3868
 msgid "Re-distribute handles in selection"
 msgstr "Punkte gleichmäßig in Auswahl verteilen"
 
-#: app/gradient.c:3866
+#: app/gradient.c:3870
 msgid "Flip selection"
 msgstr "Auswahl spiegeln"
 
-#: app/gradient.c:3868 app/gradient.c:5496
+#: app/gradient.c:3872 app/gradient.c:5500
 msgid "Replicate selection"
 msgstr "Auswahl replizieren"
 
-#: app/gradient.c:4152
+#: app/gradient.c:4156
 msgid "FG color"
 msgstr "VG-Farbe"
 
-#: app/gradient.c:4200
+#: app/gradient.c:4204
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4720 app/gradient.c:4790
+#: app/gradient.c:4724 app/gradient.c:4794
 msgid "(Varies)"
 msgstr "(änderlich)"
 
-#: app/gradient.c:4942
+#: app/gradient.c:4946
 msgid "Split"
 msgstr "Teilen"
 
 #. Instructions
-#: app/gradient.c:4956
+#: app/gradient.c:4960
 msgid "Please select the number of uniform parts"
 msgstr "Bitte Anzahl der Abschnitte eingeben"
 
-#: app/gradient.c:4962
+#: app/gradient.c:4966
 msgid "in which you want to split the selected segment"
 msgstr "in der Sie das ausgewählte Segment teilen wollen"
 
-#: app/gradient.c:4963
+#: app/gradient.c:4967
 msgid "in which you want to split the segments in the selection"
 msgstr "in der Sie die Segmente in der Auswahl teilen woll"
 
-#: app/gradient.c:5323
+#: app/gradient.c:5327
 msgid "Blend endpoints' colors"
 msgstr "Farben der Enpunkte mitteln"
 
-#: app/gradient.c:5335
+#: app/gradient.c:5339
 msgid "Blend endpoints' opacity"
 msgstr "Deckkraft der Enpunkte mitteln"
 
-#: app/gradient.c:5503
+#: app/gradient.c:5507
 msgid "Replicate"
 msgstr "Duplizieren"
 
 #. Instructions
-#: app/gradient.c:5516
+#: app/gradient.c:5520
 msgid "Please select the number of times"
 msgstr "Bitte Anzahl der Nachbildungen"
 
-#: app/gradient.c:5521
+#: app/gradient.c:5525
 msgid "you want to replicate the selected segment"
 msgstr "des ausgweählten Segments eingeben"
 
-#: app/gradient.c:5522
+#: app/gradient.c:5526
 msgid "you want to replicate the selection"
 msgstr "der Auswahl eingeben"
 
@@ -2245,7 +2245,7 @@ msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:393 app/tools.c:1082
+#: app/hue_saturation.c:248 app/hue_saturation.c:394 app/tools.c:1082
 msgid "Hue-Saturation"
 msgstr "Farbton-Sättigung"
 
@@ -2253,38 +2253,38 @@ msgstr "Farbton-Sättigung"
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Farbton-Sättigung funktioniert nur bei RGB Bildern."
 
-#: app/hue_saturation.c:379
+#: app/hue_saturation.c:380
 msgid "Master"
 msgstr "Gesamt"
 
-#: app/hue_saturation.c:381
+#: app/hue_saturation.c:382
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:383
+#: app/hue_saturation.c:384
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:385
+#: app/hue_saturation.c:386
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:470
+#: app/hue_saturation.c:471
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Farbton / Helligkeit / Sättigung"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:482
+#: app/hue_saturation.c:483
 msgid "Hue:"
 msgstr "Farbton:"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:516
+#: app/hue_saturation.c:517
 msgid "Lightness:"
 msgstr "Helligkeit:"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:550
+#: app/hue_saturation.c:551
 msgid "Saturation:"
 msgstr "Sättigung:"
 
@@ -2301,11 +2301,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: app/image_new.c:77 app/layers_dialog.c:3664
+#: app/image_new.c:77 app/layers_dialog.c:3676
 msgid "Foreground"
 msgstr "Vordergrund"
 
-#: app/image_new.c:87 app/layers_dialog.c:3666
+#: app/image_new.c:87 app/layers_dialog.c:3678
 msgid "White"
 msgstr "Weiß"
 
@@ -2643,7 +2643,7 @@ msgstr "%s Maske"
 msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3595
+#: app/layers_dialog.c:272 app/layers_dialog.c:3607
 msgid "New Layer"
 msgstr "Neue Ebene"
 
@@ -2725,62 +2725,62 @@ msgstr "Erhalte Transp."
 msgid "Keep Transparency"
 msgstr "Erhalte Transparenz"
 
-#: app/layers_dialog.c:1957
+#: app/layers_dialog.c:1968
 msgid "Empty Layer Copy"
 msgstr "Leere Ebene Kopie"
 
-#: app/layers_dialog.c:2221 app/layers_dialog.c:3404 app/layers_dialog.c:3774
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
-#: app/layers_dialog.c:3555
+#: app/layers_dialog.c:3567
 msgid "New Layer Options"
 msgstr "Einstellungen für neue Ebene"
 
 #. The name label and entry
-#: app/layers_dialog.c:3584
+#: app/layers_dialog.c:3596
 msgid "Layer Name:"
 msgstr "Ebenenname:"
 
 #. The size labels
-#: app/layers_dialog.c:3599
+#: app/layers_dialog.c:3611
 msgid "Layer Width:"
 msgstr "Ebenenbreite:"
 
-#: app/layers_dialog.c:3660
+#: app/layers_dialog.c:3672
 msgid "Layer Fill Type"
 msgstr "Ebenenfüllart"
 
-#: app/layers_dialog.c:3739
+#: app/layers_dialog.c:3751
 msgid "Edit Layer Attributes"
 msgstr "Ebenenmerkmale ändern"
 
-#: app/layers_dialog.c:3766
+#: app/layers_dialog.c:3778
 msgid "Layer name:"
 msgstr "Ebenenname:"
 
-#: app/layers_dialog.c:3834
+#: app/layers_dialog.c:3846
 msgid "Add Mask Options"
 msgstr "Einstellungen für neue Maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3852
+#: app/layers_dialog.c:3864
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisierung Ebenenmaske nach:"
 
-#: app/layers_dialog.c:3857
+#: app/layers_dialog.c:3869
 msgid "White (Full Opacity)"
 msgstr "Weiß (volle Deckkraft)"
 
-#: app/layers_dialog.c:3859
+#: app/layers_dialog.c:3871
 msgid "Black (Full Transparency)"
 msgstr "Schwarz (volle Transparenz)"
 
-#: app/layers_dialog.c:3861
+#: app/layers_dialog.c:3873
 msgid "Layer's Alpha Channel"
 msgstr "Alphakanal der Ebene"
 
-#: app/layers_dialog.c:3923 app/layers_dialog.c:4009
+#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2788,27 +2788,27 @@ msgstr ""
 "Ungültige Breite oder Höhe.\n"
 "Beide müssen positiv sein."
 
-#: app/layers_dialog.c:4095
+#: app/layers_dialog.c:4107
 msgid "Layer Merge Options"
 msgstr "Ebenen vereinen"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4132
 msgid "Final, Merged Layer should be:"
 msgstr "Die fertige, vereinte Ebene soll sein:"
 
-#: app/layers_dialog.c:4121
+#: app/layers_dialog.c:4133
 msgid "Final, Anchored Layer should be:"
 msgstr "Die fertige, verankerte Ebene soll sein:"
 
-#: app/layers_dialog.c:4126
+#: app/layers_dialog.c:4138
 msgid "Expanded as necessary"
 msgstr "Nach Bedarf erweitern"
 
-#: app/layers_dialog.c:4128
+#: app/layers_dialog.c:4140
 msgid "Clipped to image"
 msgstr "Auf Bild beschnitten"
 
-#: app/layers_dialog.c:4130
+#: app/layers_dialog.c:4142
 msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
@@ -3758,7 +3758,7 @@ msgstr "/Pfad exportieren..."
 msgid "/Edit Path Attributes..."
 msgstr "/Pfadeigenschaften..."
 
-#: app/menus.c:1314
+#: app/menus.c:1316 app/menus.c:1319
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
@@ -3854,7 +3854,7 @@ msgstr "Status:"
 msgid "Autoload during startup"
 msgstr "Automatisch beim Start laden"
 
-#: app/move.c:502
+#: app/move.c:504
 msgid "Move Tool"
 msgstr "Verschieben"
 
@@ -4202,38 +4202,43 @@ msgstr "Matrix:"
 msgid "Perspective..."
 msgstr "Perspektivisch..."
 
-#: app/plug_in.c:334
+#: app/plug_in.c:337
 msgid "Resource configuration"
 msgstr "Ressourcen Konfiguration"
 
-#: app/plug_in.c:341
+#: app/plug_in.c:344
 msgid "Plug-ins"
 msgstr "Plugins"
 
-#: app/plug_in.c:354
+#: app/plug_in.c:359
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "Frage Plugin: \"%s\" ab\n"
 
-#: app/plug_in.c:392
+#: app/plug_in.c:380
+#, fuzzy, c-format
+msgid "init plug-in: \"%s\"\n"
+msgstr "Frage Plugin: \"%s\" ab\n"
+
+#: app/plug_in.c:416
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "schreibe \"%s\"\n"
 
-#: app/plug_in.c:407
+#: app/plug_in.c:431
 msgid "Starting extensions: "
 msgstr "Starte Erweiterung: "
 
-#: app/plug_in.c:409
+#: app/plug_in.c:433
 msgid "Extensions"
 msgstr "Erweiterungen"
 
-#: app/plug_in.c:852
+#: app/plug_in.c:881
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
 
-#: app/plug_in.c:1476
+#: app/plug_in.c:1516
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4853,7 +4858,7 @@ msgstr "PDB Aufruffehler %s nicht gefunden"
 msgid "PDB calling error %s"
 msgstr "PDB Aufruffehler %s"
 
-#: app/procedural_db.c:248
+#: app/procedural_db.c:250
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -4998,7 +5003,7 @@ msgstr "Rotation Informationen"
 msgid "Center X:"
 msgstr "Zentrum X:"
 
-#: app/rotate_tool.c:395
+#: app/rotate_tool.c:400
 msgid "Rotating..."
 msgstr "Rotiere..."
 

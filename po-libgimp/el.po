@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
+"POT-Creation-Date: 2003-01-14 17:02-0800\n"
 "PO-Revision-Date: 2001-12-27 15:07+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -178,7 +178,7 @@ msgid "a channel (saved selection)"
 msgstr "Αποθήκευση επιλογής"
 
 #
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:389
 msgid "Select File"
 msgstr "Επιλογή Αρχείου"
 

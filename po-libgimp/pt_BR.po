@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-1.1.21\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
+"POT-Creation-Date: 2003-01-14 17:02-0800\n"
 "PO-Revision-Date: 2000-04-03 15:38-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -162,7 +162,7 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:389
 msgid "Select File"
 msgstr "Selecionar arquivo"
 
