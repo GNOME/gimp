@@ -1,3 +1,8 @@
+2004-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c (app_run): register a log handler for the
+	"Gimp-Menus" domain.
+
 2004-07-15  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/mng.c: cleanup.

@@ -175,25 +175,26 @@ app_run (const gchar         *full_prog_name,
   gint                i;
 
   const gchar *log_domains[] =
-    {
-      "Gimp",
-      "Gimp-Actions",
-      "Gimp-Base",
-      "Gimp-Composite",
-      "Gimp-Config",
-      "Gimp-Core",
-      "Gimp-Display",
-      "Gimp-File",
-      "Gimp-GUI",
-      "Gimp-PDB",
-      "Gimp-Paint-Funcs",
-      "Gimp-Plug-In",
-      "Gimp-Text",
-      "Gimp-Tools",
-      "Gimp-Vectors",
-      "Gimp-Widgets",
-      "Gimp-XCF"
-    };
+  {
+    "Gimp",
+    "Gimp-Actions",
+    "Gimp-Base",
+    "Gimp-Composite",
+    "Gimp-Config",
+    "Gimp-Core",
+    "Gimp-Display",
+    "Gimp-File",
+    "Gimp-GUI",
+    "Gimp-Menus",
+    "Gimp-PDB",
+    "Gimp-Paint-Funcs",
+    "Gimp-Plug-In",
+    "Gimp-Text",
+    "Gimp-Tools",
+    "Gimp-Vectors",
+    "Gimp-Widgets",
+    "Gimp-XCF"
+  };
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
