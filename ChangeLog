@@ -1,5 +1,11 @@
 2001-01-16  Sven Neumann  <sven@gimp.org>
 
+	* app/color_notebook.c: fixed my last change
+
+	* libgimp/gimpcolorarea.c: swapped opaque and transparent areas
+	
+2001-01-16  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpcolorspace.c: fixed RGB to HSV routine
 
 	* app/color_notebook.c: tweaked dialog layout a little, disabled

@@ -344,7 +344,7 @@ gimp_color_area_update (GimpColorArea *gca)
 
 	  for (x = 0; x < width; x++)
 	    {
-	      if (x * height < y * width)
+	      if (x * height > y * width)
 		{
 		  *p++ = opaque[0];
 		  *p++ = opaque[1];
@@ -353,7 +353,7 @@ gimp_color_area_update (GimpColorArea *gca)
 		  continue;
 		}
 
-	      frac = (gdouble) (x * height) / (gdouble) width - y;
+	      frac = y - (gdouble) (x * height) / (gdouble) width;
 	      
 	      if (((x / check_size) ^ (y / check_size)) & 1) 
 		{

@@ -408,7 +408,7 @@ color_notebook_new (GimpRGB               *color,
   gtk_widget_show (cnp->orig_color);
 
   /*  The color space sliders, toggle buttons and entries  */
-  table = gtk_table_new (show_alpha ? 8 : 7, 4, FALSE);
+  table = gtk_table_new (8, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
@@ -416,7 +416,7 @@ color_notebook_new (GimpRGB               *color,
   gtk_widget_show (table);
 
   group = NULL;
-  for (i = 0; i < (show_alpha ? 8 : 7); i++)
+  for (i = 0; i < (show_alpha ? 7 : 6); i++)
     {
       if (i == 6)
 	{
@@ -455,8 +455,7 @@ color_notebook_new (GimpRGB               *color,
 
   /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 3);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 4, 
-		    show_alpha ? 8 : 7, show_alpha ? 8 : 9,
+  gtk_table_attach (GTK_TABLE (table), hbox, 1, 4, 8, 9,
 		    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (hbox);
 
@@ -735,11 +734,10 @@ color_notebook_page_switch (GtkWidget       *widget,
 
   cnp->cur_page = csel;
 
-  for (i = 0; i < 7; i++)
+  for (i = 0; i < 6; i++)
     {
-      if (cnp->toggles[i])
-	gtk_widget_set_sensitive (cnp->toggles[i], 
-				  csel->info->methods.set_channel != NULL);
+      gtk_widget_set_sensitive (cnp->toggles[i], 
+				csel->info->methods.set_channel != NULL);
     }
 
   color_notebook_update (cnp, UPDATE_CHANNEL | UPDATE_NOTEBOOK);
@@ -1179,7 +1177,7 @@ color_history_write (FILE *fp)
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
-      fprintf (fp, "\n   (color %f %f %f %f)",
+      fprintf (fp, "\n    (color %f %f %f %f)",
 	       color_history[i].r,
 	       color_history[i].g,
 	       color_history[i].b,
