@@ -1,3 +1,9 @@
+2005-02-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/uri/uri-backend-wget.c: Handle HTTP 302 Redirect output
+	from wget properly. Also give a little more informative display for
+	unspecified sizes. Fixes bug #168322.
+
 2005-02-24  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-commands.c (file_open_as_layer_cmd_callback):

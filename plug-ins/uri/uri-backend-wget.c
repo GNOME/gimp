@@ -108,6 +108,7 @@ uri_backend_load_image (const gchar  *uri,
       gchar     buf[BUFSIZE];
       gboolean  seen_resolve = FALSE;
       gboolean  connected    = FALSE;
+      gboolean  redirect     = FALSE;
       gboolean  file_found   = FALSE;
       gchar     sizestr[32];
       gint      size         = 0;
@@ -127,6 +128,17 @@ uri_backend_load_image (const gchar  *uri,
       input = fdopen (p[0], "r");
 
       /*  hardcoded and not-really-foolproof scanning of wget putput  */
+
+    wget_begin:
+      /* Eat any Location lines */
+      if (redirect && fgets (buf, sizeof (buf), input) == NULL)
+        {
+          g_set_error (error, 0, 0,
+                       _("wget exited abnormally on URI '%s'"), uri);
+          return FALSE;
+        }
+
+      redirect = FALSE;
 
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
@@ -195,6 +207,16 @@ uri_backend_load_image (const gchar  *uri,
 
           return FALSE;
         }
+      else if (strstr (buf, "302 Found"))
+        {
+          DEBUG (buf);
+
+          connected = FALSE;
+          seen_resolve = FALSE;
+
+          redirect = TRUE;
+          goto wget_begin;
+        }
 
       DEBUG (buf);
 
@@ -243,9 +265,17 @@ uri_backend_load_image (const gchar  *uri,
       size = atoi (sizestr);
 
       /*  Start the actual download...  */
-      memsize = gimp_memsize_to_string (size);
-      message = g_strdup_printf (_("Downloading %s of image data..."),
-                                 memsize);
+      if (size > 0)
+        {
+          memsize = gimp_memsize_to_string (size);
+          message = g_strdup_printf (_("Downloading %s of image data..."),
+                                     memsize);
+        }
+      else
+        {
+          message = g_strdup (_("Downloading unknown amount of image data..."));
+          memsize = NULL;
+        }
 
       gimp_progress_set_text ("%s %s", message, timeout_msg);
 
@@ -270,8 +300,10 @@ uri_backend_load_image (const gchar  *uri,
           if (dot == '.')  /* one kilobyte */
             {
               kilobytes++;
-              gimp_progress_update ((gdouble) (kilobytes * 1024) /
-                                    (gdouble) size);
+
+              if (size > 0)
+                gimp_progress_update ((gdouble) (kilobytes * 1024) /
+                                      (gdouble) size);
             }
           else if (dot == ':')  /* the time string contains a ':' */
             {
