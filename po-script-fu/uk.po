@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-05-22 11:33-0700\n"
+"POT-Creation-Date: 2000-06-20 16:49+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Консольний режим Скрипт-Фу дозволя╓ лише ╕нтерактивну роботу"
 
 #: plug-ins/script-fu/script-fu-console.c:187
 msgid "Script-Fu Console"
@@ -51,26 +51,28 @@ msgstr "Неможливо в╕дкрити пот╕к на канал╕ виводу SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:622
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
+msgstr "Режим виконання Скрипт-Фу дозволя╓ лише не╕нтерактивну роботу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1124
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error\n"
 "%s"
-msgstr "Script-Fu: %s"
+msgstr "
+"Помилка Скрипт-Фу\n"
+"%s"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1173
 #: plug-ins/script-fu/script-fu-scripts.c:1175
 msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
+msgstr "/Скрипт-Фу/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1175
 #: plug-ins/script-fu/script-fu-scripts.c:1177
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
+msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1202
@@ -81,27 +83,27 @@ msgstr "Аргументи скрипту"
 #: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1267
 msgid "Script-Fu Color Selection"
-msgstr "Виб╕р кольору Script-Fu"
+msgstr "Виб╕р кольору Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu File Selection"
-msgstr "Виб╕р файлу Script-Fu"
+msgstr "Виб╕р файлу Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-fu Pattern Selection"
-msgstr "Виб╕р шаблону Script-Fu"
+msgstr "Виб╕р шаблону Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu Gradient Selection"
-msgstr "Виб╕р град╕╓нту Script-Fu"
+msgstr "Виб╕р град╕╓нту Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1384
 msgid "Script-Fu Brush Selection"
-msgstr "Виб╕р пензля Script-Fu"
+msgstr "Виб╕р пензля Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1427
 msgid "Reset to Defaults"
@@ -151,11 +153,11 @@ msgstr "Типи зображень:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2117
 msgid "Script-Fu Font Selection"
-msgstr "Виб╕р шрифту Script-Fu"
+msgstr "Виб╕р шрифту Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
-msgstr "Параметри сервера Script-Fu"
+msgstr "Параметри сервера Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
@@ -167,11 +169,11 @@ msgstr "Журнальний файл сервера:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr "<Toolbox>/Розширення/Скрипт-Фу/Консоль..."
 
 #: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr "<Toolbox>/Розширення/Скрипт-Фу/Сервер..."
 
 #: plug-ins/script-fu/script-fu.c:1009 plug-ins/script-fu/script-fu.c:1010
 msgid "Re-read all available scripts"
@@ -179,11 +181,11 @@ msgstr "Перечитати ус╕ ╕снуюч╕ скрипти"
 
 #: plug-ins/script-fu/script-fu.c:1014
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Розширення/Script-Fu/Поновити"
+msgstr "<Toolbox>/Розширення/Скрипт-Фу/Поновити"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
-msgstr ""
+msgstr "<Image>/Редагування/Коп╕ювати видим╕"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
@@ -208,6 +210,107 @@ msgstr ""
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
 msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Toolbox>/Розш./Script-Fu/Логотипи/Ком╕кс..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "Виб╕р шрифту Script-Fu"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "Виб╕р файлу Script-Fu"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "Виб╕р файлу Script-Fu"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
@@ -378,11 +481,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Розш./Script-Fu/Логотипи/Хром..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Хром..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Розш./Script-Fu/Логотипи/Ком╕кс..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Ком╕кс..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
@@ -430,7 +533,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Швидк╕сний текст..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
@@ -453,9 +556,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #, fuzzy
@@ -751,11 +853,6 @@ msgstr "Непрозор╕сть тла"
 msgid "Background Color"
 msgstr "Кол╕р тла"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "Background Gradient"
-msgstr "Зображення на тл╕"
-
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
@@ -852,6 +949,13 @@ msgstr ""
 #, fuzzy
 msgid "Border Color"
 msgstr "Кол╕р переднього плану"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
+msgid "Border Size (pixels)"
+msgstr "Розм╕р тексту (в п╕кселях)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -960,21 +1064,23 @@ msgstr "Кол╕р"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr ""
+msgstr "Стовпчики"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
 msgstr "Створення нового зображення"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
 msgid "Create Shadow"
-msgstr "Т╕нь"
+msgstr "Створити т╕нь"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Custom Gradient"
+msgstr "╤нший град╕╓нт"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
 msgid "Dark Color"
-msgstr "Кол╕р"
+msgstr "Темний кол╕р"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
@@ -1072,6 +1178,32 @@ msgstr "Рад╕ус"
 msgid "Edge Width"
 msgstr "Ширина зображення"
 
+#: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
+msgid "Effect Size (pixels * 3)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
+msgid "Effect Size (pixels * 30)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
+msgid "Effect Size (pixels * 4)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
+msgid "Effect Size (pixels * 5)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
+msgid "Effect Size (pixels)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 #, fuzzy
@@ -1113,6 +1245,19 @@ msgstr ""
 msgid "Even/Odd"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-HSV"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "FG-BG-RGB"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
+msgid "FG-Transparent"
+msgstr "Прозоре тло"
+
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
 msgstr ""
@@ -1152,7 +1297,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
@@ -1284,6 +1428,12 @@ msgstr "Кол╕р сяйва"
 msgid "Glow Radius"
 msgstr "Рад╕ус"
 
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#, fuzzy
+msgid "Glow Size (pixels * 4)"
+msgstr "Розм╕р тексту (в п╕кселях)"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
@@ -1353,7 +1503,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1404,14 +1554,13 @@ msgid "Invert"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
 msgid "Keep Background"
-msgstr "Видалити тло"
+msgstr "Лишити тло"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Зберегти шар рель╓фу"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
@@ -1540,6 +1689,11 @@ msgstr ""
 msgid "Odd"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
+msgid "Offset (pixels)"
+msgstr "Розм╕р шрифту (п╕ксел╕)"
+
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
 msgid "Offset Radius"
@@ -1553,6 +1707,10 @@ msgstr ""
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+msgid "Offsets (pixels * 2)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
@@ -1578,14 +1736,13 @@ msgid "Outline Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
-#, fuzzy
 msgid "Outline Color"
-msgstr "Кол╕р шрифту"
+msgstr "Кол╕р контура"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Outline Size"
-msgstr ""
+msgstr "Розм╕р контура"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
@@ -1638,6 +1795,7 @@ msgstr "Шаблон"
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
 msgstr "Шаблон"
 
@@ -1666,12 +1824,11 @@ msgstr "Розм╕р зображення"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "Radius (pixels)"
-msgstr "Розм╕р шрифту (п╕ксел╕)"
+msgstr "Рад╕ус (в п╕кселях)"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 #: plug-ins/script-fu/scripts/text-circle.scm:0
@@ -1753,27 +1910,26 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr "Щвидк╕сть"
+msgstr "Швидк╕сть"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr ""
+msgstr "Пор╕г вибору за кол╕ром"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Separate Layer"
-msgstr ""
+msgstr "В╕╕д╕лити шар"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
-msgstr ""
+msgstr "Сеп╕я"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
 msgid "Shadow Blur Radius"
-msgstr "Кол╕р т╕н╕"
+msgstr "Рад╕ус розмивання т╕н╕"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1782,28 +1938,27 @@ msgstr "Кол╕р т╕н╕"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Darkness"
-msgstr ""
+msgstr "Темнота т╕н╕"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
 msgid "Shadow Depth"
-msgstr "Т╕нь"
+msgstr "Глибина т╕н╕"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "Вага т╕н╕ (%)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow X Offset"
-msgstr ""
+msgstr "Зм╕щення т╕н╕ по X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow Y Offset"
-msgstr ""
+msgstr "Зм╕щення т╕н╕ по Y"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
@@ -1812,7 +1967,7 @@ msgstr "Т╕нь"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "Р╕зк╕сть (в градусах)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Shear Length"
@@ -1850,6 +2005,14 @@ msgstr "╤нтервал"
 #, fuzzy
 msgid "Sphere Color"
 msgstr "Кол╕р т╕н╕"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+msgid "Spots density Y"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
@@ -1891,9 +2054,8 @@ msgid "Supersample"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Text Color (Active)"
-msgstr "Кол╕р тексту"
+msgstr "Кол╕р тексту (активний)"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -1912,9 +2074,8 @@ msgid "Text Color"
 msgstr "Кол╕р тексту"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "Text Pattern"
-msgstr "Шаблон"
+msgstr "Текстовий шаблон"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2000,12 +2161,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "Верхн╕й кол╕р (активний)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Upper Color"
-msgstr "Кол╕р тексту"
+msgstr "Верхн╕й кол╕р"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
@@ -2079,13 +2239,3 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Працювати з коп╕╓ю"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
-#~ msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
-
-#~ msgid "File Name"
-#~ msgstr "Назва файлу"
-
-#~ msgid "Image"
-#~ msgstr "Зображення"
