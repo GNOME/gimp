@@ -804,9 +804,9 @@ colorsel_triangle_drag_begin (GtkWidget      *widget,
 			    window,
 			    (GtkDestroyNotify) gtk_widget_destroy);
 
-  bg.red = 0xff * coldata->values[RED];
-  bg.green = 0xff * coldata->values[GREEN];
-  bg.blue = 0xff *coldata->values[BLUE];
+  bg.red = 256 * coldata->values[RED];
+  bg.green = 256 * coldata->values[GREEN];
+  bg.blue = 256 *coldata->values[BLUE];
 
   gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
   gdk_window_set_background (window->window, &bg);
@@ -851,9 +851,9 @@ colorsel_triangle_drop_handle (GtkWidget        *widget,
   
   vals = (guint16 *)selection_data->data;
 
-  coldata->values[RED]   = vals[0] / 0xff;
-  coldata->values[GREEN] = vals[1] / 0xff;
-  coldata->values[BLUE]  = vals[2] / 0xff;
+  coldata->values[RED]   = vals[0] / 256;
+  coldata->values[GREEN] = vals[1] / 256;
+  coldata->values[BLUE]  = vals[2] / 256;
   
   color_select_update_hsv_values (coldata);
   update_previews (coldata, TRUE);
@@ -872,9 +872,9 @@ colorsel_triangle_drag_handle (GtkWidget        *widget,
 
   coldata = (ColorSelectP) data;
 
-  vals[0] = coldata->values[RED] * 0xff;
-  vals[1] = coldata->values[GREEN] * 0xff;
-  vals[2] = coldata->values[BLUE] * 0xff;
+  vals[0] = coldata->values[RED] * 256;
+  vals[1] = coldata->values[GREEN] * 256;
+  vals[2] = coldata->values[BLUE] * 256;
   vals[3] = 0xffff;
 
   gtk_selection_data_set (selection_data,

@@ -1,3 +1,9 @@
+2000-12-29  Simon Budig   <simon@gimp.org>
+
+	* modules/colorsel_triangle.c  Argh - converting 16bit colors
+	(from DnD-Source) to 8 bit must not be done by dividing by 0xff (255)!
+	divide by 256 instead...
+
 2000-12-29  Tor Lillqvist  <tml@iki.fi>
 
 	* app/makefile.mingw.in: Build as a windowing application (-mwindows).
