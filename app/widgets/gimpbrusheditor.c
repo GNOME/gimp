@@ -157,10 +157,23 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
+  /*  number of spikes  */
+  editor->spikes_data =
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
+                                          0, 2,
+                                          _("Spikes:"), -1, 5,
+                                          2.0, 2.0, 20.0, 1.0, 1.0, 0,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL));
+
+  g_signal_connect (editor->spikes_data, "value_changed",
+                    G_CALLBACK (gimp_brush_editor_update_brush),
+                    editor);
+
   /*  brush hardness scale  */
   editor->hardness_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 2,
+                                          0, 3,
                                           _("Hardness:"), -1, 5,
                                           0.0, 0.0, 1.0, 0.01, 0.1, 2,
                                           TRUE, 0.0, 0.0,
@@ -173,7 +186,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush aspect ratio scale  */
   editor->aspect_ratio_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 3,
+                                          0, 4,
                                           _("Aspect ratio:"), -1, 5,
                                           0.0, 1.0, 20.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -186,7 +199,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush angle scale  */
   editor->angle_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 4,
+                                          0, 5,
                                           _("Angle:"), -1, 5,
                                           0.0, 0.0, 180.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -277,6 +290,7 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
 {
   GimpBrushGenerated *brush;
   gdouble             radius;
+  gint                spikes;
   gdouble             hardness;
   gdouble             ratio;
   gdouble             angle;
@@ -287,11 +301,13 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
   brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
 
   radius   = editor->radius_data->value;
+  spikes   = ROUND (editor->spikes_data->value);
   hardness = editor->hardness_data->value;
   ratio    = editor->aspect_ratio_data->value;
   angle    = editor->angle_data->value;
 
   if (angle    != gimp_brush_generated_get_radius       (brush) ||
+      spikes   != gimp_brush_generated_get_spikes       (brush) ||
       hardness != gimp_brush_generated_get_hardness     (brush) ||
       ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
       angle    != gimp_brush_generated_get_angle        (brush))
@@ -304,6 +320,7 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
       g_object_freeze_notify (G_OBJECT (brush));
 
       gimp_brush_generated_set_radius       (brush, radius);
+      gimp_brush_generated_set_spikes       (brush, spikes);
       gimp_brush_generated_set_hardness     (brush, hardness);
       gimp_brush_generated_set_aspect_ratio (brush, ratio);
       gimp_brush_generated_set_angle        (brush, angle);
@@ -365,6 +382,11 @@ gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
     {
       adj   = editor->radius_data;
       value = brush->radius;
+    }
+  else if (! strcmp (pspec->name, "spikes"))
+    {
+      adj   = editor->spikes_data;
+      value = brush->spikes;
     }
   else if (! strcmp (pspec->name, "hardness"))
     {

@@ -351,7 +351,7 @@ gimp_brush_new (const gchar *name,
 
   return gimp_brush_generated_new (name,
                                    GIMP_BRUSH_GENERATED_CIRCLE,
-                                   5.0, 0.5, 1.0, 0.0,
+                                   5.0, 2, 0.5, 1.0, 0.0,
                                    stingy_memory_use);
 }
 

@@ -44,6 +44,7 @@ struct _GimpBrushGenerated
 
   GimpBrushGeneratedShape shape;
   gfloat                  radius;
+  gint                    spikes;       /* 2 - 20     */
   gfloat                  hardness;     /* 0.0 - 1.0  */
   gfloat                  aspect_ratio; /* y/x        */
   gfloat                  angle;        /* in degrees */
@@ -60,6 +61,7 @@ GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
 GimpData  * gimp_brush_generated_new          (const gchar *name,
                                                GimpBrushGeneratedShape  shape,
                                                gfloat       radius,
+                                               gint         spikes,
                                                gfloat       hardness,
                                                gfloat       aspect_ratio,
                                                gfloat       angle,
@@ -73,6 +75,8 @@ GimpBrushGeneratedShape
                                                GimpBrushGeneratedShape  shape);
 gfloat  gimp_brush_generated_set_radius       (GimpBrushGenerated      *brush,
                                                gfloat                   radius);
+gint    gimp_brush_generated_set_spikes       (GimpBrushGenerated      *brush,
+                                               gint                     spikes);
 gfloat  gimp_brush_generated_set_hardness     (GimpBrushGenerated      *brush,
                                                gfloat                   hardness);
 gfloat  gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated      *brush,
@@ -83,6 +87,7 @@ gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated      *brush,
 GimpBrushGeneratedShape
         gimp_brush_generated_get_shape        (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_radius       (const GimpBrushGenerated *brush);
+gint    gimp_brush_generated_get_spikes       (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_hardness     (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_angle        (const GimpBrushGenerated *brush);

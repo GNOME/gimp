@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifdef HAVE_UNISTD_H
@@ -50,6 +51,7 @@ enum
   PROP_0,
   PROP_SHAPE,
   PROP_RADIUS,
+  PROP_SPIKES,
   PROP_HARDNESS,
   PROP_ASPECT_RATIO,
   PROP_ANGLE
@@ -135,6 +137,11 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                                         1.0, 1000.0, 5.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_SPIKES,
+                                   g_param_spec_int    ("spikes", NULL, NULL,
+                                                        2, 20, 2,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_HARDNESS,
                                    g_param_spec_double ("hardness", NULL, NULL,
                                                         0.0, 1.0, 0.0,
@@ -179,6 +186,9 @@ gimp_brush_generated_set_property (GObject      *object,
     case PROP_RADIUS:
       gimp_brush_generated_set_radius (brush, g_value_get_double (value));
       break;
+    case PROP_SPIKES:
+      gimp_brush_generated_set_spikes (brush, g_value_get_int (value));
+      break;
     case PROP_HARDNESS:
       gimp_brush_generated_set_hardness (brush, g_value_get_double (value));
       break;
@@ -208,7 +218,10 @@ gimp_brush_generated_get_property (GObject    *object,
       g_value_set_enum (value, brush->shape);
       break;
     case PROP_RADIUS:
-      g_value_set_double (value, brush->angle);
+      g_value_set_double (value, brush->radius);
+      break;
+    case PROP_SPIKES:
+      g_value_set_int (value, brush->spikes);
       break;
     case PROP_HARDNESS:
       g_value_set_double (value, brush->hardness);
@@ -232,6 +245,7 @@ gimp_brush_generated_save (GimpData  *data,
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
   FILE               *file;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gboolean            have_shape = FALSE;
 
   file  = fopen (data->filename, "wb");
 
@@ -248,15 +262,20 @@ gimp_brush_generated_save (GimpData  *data,
   fprintf (file, "GIMP-VBR\n");
 
   /* write version */
-  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE)
-    fprintf (file, "1.5\n");
+  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE || brush->spikes > 2)
+    {
+      fprintf (file, "1.5\n");
+      have_shape = TRUE;
+    }
   else
-    fprintf (file, "1.0\n");
+    {
+      fprintf (file, "1.0\n");
+    }
 
   /* write name */
   fprintf (file, "%.255s\n", GIMP_OBJECT (brush)->name);
 
-  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE)
+  if (have_shape)
     {
       GEnumClass *enum_class;
       GEnumValue *shape_val;
@@ -277,6 +296,12 @@ gimp_brush_generated_save (GimpData  *data,
   fprintf (file, "%s\n",
            g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                             brush->radius));
+
+  if (have_shape)
+    {
+      /* write brush spikes */
+      fprintf (file, "%d\n", brush->spikes);
+    }
 
   /* write brush hardness */
   fprintf (file, "%s\n",
@@ -313,6 +338,7 @@ gimp_brush_generated_duplicate (GimpData *data,
   return gimp_brush_generated_new (GIMP_OBJECT (brush)->name,
                                    brush->shape,
                                    brush->radius,
+                                   brush->spikes,
                                    brush->hardness,
                                    brush->aspect_ratio,
                                    brush->angle,
@@ -350,7 +376,7 @@ gimp_brush_generated_dirty (GimpData *data)
   gint                width, height;
   guchar             *lookup;
   gdouble             sum;
-  gdouble             c, s;
+  gdouble             c, s, cs, ss;
   gdouble             short_radius;
   gdouble             buffer[OVERSAMPLING];
 
@@ -384,6 +410,11 @@ gimp_brush_generated_dirty (GimpData *data)
         height = ceil (MAX (fabs (gbrush->x_axis.y), fabs (gbrush->y_axis.y)));
         break;
     }
+
+  if (brush->spikes > 2)
+    /* could be optimized by respecting the angle */
+    width = height = ceil (sqrt (brush->radius * brush->radius +
+                                 short_radius * short_radius));
 
   gbrush->mask = temp_buf_new (width  * 2 + 1,
                                height * 2 + 1,
@@ -434,15 +465,34 @@ gimp_brush_generated_dirty (GimpData *data)
       lookup[x++] = 0;
     }
 
-  /* compute one half and mirror it */
-  for (y = 0; y <= height; y++)
+  cs = cos (- 2 * G_PI / brush->spikes);
+  ss = sin (- 2 * G_PI / brush->spikes);
+
+  /*for an even number of spikes compute one half and mirror it */
+  for (y = (brush->spikes % 2 ? -height : 0); y <= height; y++)
     {
       for (x = -width; x <= width; x++)
         {
-          gdouble tx, ty;
+          gdouble tx, ty, angle;
 
           tx = c*x - s*y;
-          ty = c*y + s*x;
+          ty = fabs (s*x + c*y);
+
+          if (brush->spikes > 2)
+            {
+              angle = atan2 (ty, tx);
+
+              while (angle > G_PI / brush->spikes)
+                {
+                  gdouble sx = tx, sy = ty;
+                  
+                  tx = cs * sx - ss * sy;
+                  ty = ss * sx + cs * sy;
+
+                  angle -= 2 * G_PI / brush->spikes;
+                }
+            }
+
           ty *= brush->aspect_ratio;
           switch (brush->shape)
             {
@@ -462,8 +512,10 @@ gimp_brush_generated_dirty (GimpData *data)
           else
             a = 0;
 
-          centerp[     y * gbrush->mask->width + x] = a;
-          centerp[-1 * y * gbrush->mask->width - x] = a;
+          centerp[ y * gbrush->mask->width + x] = a;
+
+          if (brush->spikes % 2 == 0)
+            centerp[-1 * y * gbrush->mask->width - x] = a;
         }
     }
 
@@ -477,6 +529,7 @@ GimpData *
 gimp_brush_generated_new (const gchar             *name,
                           GimpBrushGeneratedShape  shape,
                           gfloat                   radius,
+                          gint                     spikes,
                           gfloat                   hardness,
                           gfloat                   aspect_ratio,
                           gfloat                   angle,
@@ -490,6 +543,7 @@ gimp_brush_generated_new (const gchar             *name,
                         "shape",        shape,
                         "name",         name,
                         "radius",       radius,
+                        "spikes",       spikes,
                         "hardness",     hardness,
                         "aspect-ratio", aspect_ratio,
                         "angle",        angle,
@@ -519,6 +573,7 @@ gimp_brush_generated_load (const gchar  *filename,
   gboolean                 have_shape = FALSE;
   gdouble                  spacing;
   gdouble                  radius;
+  gint                     spikes = 2;
   gdouble                  hardness;
   gdouble                  aspect_ratio;
   gdouble                  angle;
@@ -621,6 +676,15 @@ gimp_brush_generated_load (const gchar  *filename,
     goto failed;
   radius = g_ascii_strtod (string, NULL);
 
+  if (have_shape)
+    {
+      /* read brush radius */
+      errno = 0;
+      if (! fgets (string, sizeof (string), file))
+        goto failed;
+      spikes = CLAMP (atoi (string), 2, 20);
+    }
+
   /* read brush hardness */
   errno = 0;
   if (! fgets (string, sizeof (string), file))
@@ -643,9 +707,10 @@ gimp_brush_generated_load (const gchar  *filename,
 
   /* create new brush */
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
-                        "shape",        shape,
                         "name",         name,
+                        "shape",        shape,
                         "radius",       radius,
+                        "spikes",       spikes,
                         "hardness",     hardness,
                         "aspect-ratio", aspect_ratio,
                         "angle",        angle,
@@ -710,6 +775,25 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
     }
 
   return brush->radius;
+}
+
+gint
+gimp_brush_generated_set_spikes (GimpBrushGenerated *brush,
+                                 gint                spikes)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1);
+
+  spikes = CLAMP (spikes, 2, 20);
+
+  if (brush->spikes != spikes)
+    {
+      brush->spikes = spikes;
+
+      g_object_notify (G_OBJECT (brush), "spikes");
+      gimp_data_dirty (GIMP_DATA (brush));
+    }
+
+  return brush->spikes;
 }
 
 gfloat
@@ -787,6 +871,14 @@ gimp_brush_generated_get_radius (const GimpBrushGenerated *brush)
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->radius;
+}
+
+gint
+gimp_brush_generated_get_spikes (const GimpBrushGenerated *brush)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1);
+
+  return brush->spikes;
 }
 
 gfloat

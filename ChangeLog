@@ -1,3 +1,12 @@
+2004-08-01  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpbrushgenerated.[ch]: Added optional spikes for
+	the generated brushes, enabling star shaped generated brushes.
+
+	* app/widgets/gimpbrusheditor.[ch]: GUI for this.
+
+	* app/core/gimpbrush.c: changed accordingly.
+
 2004-08-01  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/mapcolor.c
