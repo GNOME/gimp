@@ -543,7 +543,6 @@ gimp_vectors_stroke (GimpItem      *item,
 {
   GimpVectors       *vectors;
   GimpPaintInfo     *paint_info;
-  GimpStrokeOptions *stroke_options;
   gboolean           retval;
 
   g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
@@ -559,35 +558,8 @@ gimp_vectors_stroke (GimpItem      *item,
 
   if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
     {
-      GimpContext  *context;
-      GimpRGB       color;
-      gdouble       width;
-
-      stroke_options = GIMP_STROKE_OPTIONS (stroke_desc);
-
-      context = GIMP_CONTEXT (stroke_options);
-      gimp_context_get_foreground (context, &color);
-
-      width = stroke_options->width;
-
-      if (stroke_options->width_unit != GIMP_UNIT_PIXEL)
-        {
-          GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-          width = (width *
-                   _gimp_unit_get_factor (gimage->gimp,
-                                          stroke_options->width_unit) *
-                   (gimage->xresolution + gimage->yresolution) / 2);
-        }
-
       gimp_drawable_stroke_vectors (drawable, vectors,
-                                    gimp_context_get_opacity (context),
-                                    &color,
-                                    gimp_context_get_paint_mode (context),
-                                    width,
-                                    stroke_options->join_style,
-                                    stroke_options->cap_style,
-                                    stroke_options->antialias);
+                                    GIMP_STROKE_OPTIONS (stroke_desc));
       retval = TRUE;
     }
   else

@@ -33,6 +33,8 @@
 
 #include "core/gimpitem.h"
 #include "core/gimpscanconvert.h"
+#include "core/gimpstrokeoptions.h"
+#include "core/gimpunit.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -50,19 +52,24 @@
 /*  local function prototypes  */
 
 void
-gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
-                              GimpVectors          *vectors,
-                              gdouble               opacity,
-                              GimpRGB              *color,
-                              GimpLayerModeEffects  paint_mode,
-                              gdouble               width,
-                              GimpJoinStyle         join,
-                              GimpCapStyle          cap,
-                              gboolean              antialias)
+gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
+                              GimpVectors       *vectors,
+                              GimpStrokeOptions *options)
 {
-  GimpScanConvert *scan_convert;
+  /* Stroke options */
+  gdouble               opacity;
+  GimpRGB               *color;
+  GimpLayerModeEffects  paint_mode;
+  gdouble               width;
+  GimpJoinStyle         join;
+  GimpCapStyle          cap;
+  gboolean              antialias;
+  GArray               *dash_array = NULL;
+
   gint             num_coords = 0;
   GimpStroke      *stroke;
+
+  GimpScanConvert *scan_convert;
   TileManager     *base;
   TileManager     *mask;
   gint             x1, x2, y1, y2, bytes, w, h;
@@ -70,9 +77,30 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   guchar           bg[1] = { 0, };
   guchar          *src_bytes;
   PixelRegion      maskPR, basePR;
-  GArray          *dash_array = NULL;
-  gint             dashes_len = 4;
-  gdouble          dashes[4] = { 2.0, 2.0, 6.0, 2.0 };
+
+  /* get the options from the GimpStrokeOptions */
+
+  g_object_get (options,
+                "opacity",    &opacity,
+                "foreground", &color,
+                "paint-mode", &paint_mode,
+
+                "width",      &width,
+                "join-style", &join,
+                "cap-style",  &cap,
+                "antialias",  &antialias,
+                NULL);
+  
+  
+  if (options->width_unit != GIMP_UNIT_PIXEL)
+    {
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+ 
+      width = (width *
+               _gimp_unit_get_factor (gimage->gimp,
+                                      options->width_unit) *
+               (gimage->xresolution + gimage->yresolution) / 2);
+    }
 
   /* what area do we operate on? */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -123,8 +151,10 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
       return;
     }
 
+  /*
   dash_array = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), dashes_len);
   dash_array = g_array_prepend_vals (dash_array, &dashes, dashes_len);
+  */
 
   gimp_scan_convert_stroke (scan_convert, width, join, cap, 10.0,
                             0.0, dash_array);
@@ -148,7 +178,10 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   src_bytes = g_malloc0 (bytes);
 
   /* Fill a TileManager with the stroke color */
-  gimp_rgb_get_uchar (color, &(ucolor[0]), &(ucolor[1]), &(ucolor[2]));
+  gimp_rgb_get_uchar (color, ucolor + 0, ucolor + 1, ucolor + 2);
+
+  g_free (color);
+
   src_bytes[bytes - 1] = OPAQUE_OPACITY;
   gimp_image_transform_color (GIMP_ITEM (drawable)->gimage, drawable,
                               src_bytes, GIMP_RGB, ucolor);

@@ -23,14 +23,8 @@
 #define  __GIMP_DRAWABLE_STROKE_H__
 
 
-void gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
-                                   GimpVectors          *vectors,
-                                   gdouble               opacity,
-                                   GimpRGB              *color,
-                                   GimpLayerModeEffects  paint_mode,
-                                   gdouble               width,
-                                   GimpJoinStyle         join,
-                                   GimpCapStyle          cap,
-                                   gboolean              antialias);
+void gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
+                                   GimpVectors       *vectors,
+                                   GimpStrokeOptions *options);
 
 #endif  /*  __GIMP_DRAWABLE_STROKE_H__  */
