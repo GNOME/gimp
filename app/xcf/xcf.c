@@ -99,7 +99,9 @@ static PlugInProcDef xcf_plug_in_load_proc =
     { { xcf_load_invoker } },
   },
   NULL, /* fill me in at runtime */
-  NULL /* fill me in at runtime */
+  NULL, /* fill me in at runtime */
+  NULL, /* fill me in at runtime */
+  0
 };
 
 static ProcArg xcf_save_args[] =
@@ -146,7 +148,9 @@ static PlugInProcDef xcf_plug_in_save_proc =
     { { xcf_save_invoker } },
   },
   NULL, /* fill me in at runtime */
-  NULL /* fill me in at runtime */
+  NULL, /* fill me in at runtime */
+  NULL, /* fill me in at runtime */
+  0
 };
 
 

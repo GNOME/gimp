@@ -1,3 +1,22 @@
+2001-12-27  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* NEWS
+	* configure.in: require latest versions of glib, gtk+ and friends. 
+	Bumped our version number to 1.3.2.
+
+	* app/plug-in/plug-in.c (plug_in_params_destroy, plug_in_args_destroy):
+	moved condition out of the switch statement, simplified code.
+	
+	* app/plug-in/plug-in-proc.[ch]: moved plug_in_proc_def_destroy() here.
+
+	* app/gimprc.c: use plug_in_proc_def_destroy().
+	
+	* app/pdb/procedural_db.c: use g_string_hash() instead of our own hash
+	function.
+
+	* app/xcf/xcf.c: initialize all fields of the PlugInProcDef struct.
+	
 2001-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (text_render): fixed text positioning by

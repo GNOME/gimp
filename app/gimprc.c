@@ -1667,34 +1667,7 @@ parse_proc_def (PlugInProcDef **proc_def)
   return OK;
 
  error:
-  g_free (pd->db_info.name);
-  g_free (pd->db_info.blurb);
-  g_free (pd->db_info.help);
-  g_free (pd->db_info.author);
-  g_free (pd->db_info.copyright);
-  g_free (pd->db_info.date);
-  g_free (pd->menu_path);
-  g_free (pd->extensions);
-  g_free (pd->prefixes);
-  g_free (pd->magics);
-  g_free (pd->image_types);
-
-  for (i = 0; i < pd->db_info.num_args; i++)
-    {
-      g_free (pd->db_info.args[i].name);
-      g_free (pd->db_info.args[i].description);
-    }
-
-  for (i = 0; i < pd->db_info.num_values; i++)
-    {
-      g_free (pd->db_info.values[i].name);
-      g_free (pd->db_info.values[i].description);
-    }
-
-  g_free (pd->db_info.args);
-  g_free (pd->db_info.values);
-  g_free (pd);
-
+  plug_in_proc_def_destroy (pd, FALSE);
   return ERROR;
 }
 

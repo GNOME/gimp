@@ -187,8 +187,6 @@ static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def,
 					   void (* superceed_fn) (void *));
 static void plug_in_proc_def_dead         (void              *freed_proc_def);
 static void plug_in_proc_def_remove       (PlugInProcDef     *proc_def);
-static void plug_in_proc_def_destroy      (PlugInProcDef     *proc_def,
-					   gboolean           data_only);
 
 static Argument * plug_in_temp_run       (ProcRecord *proc_rec,
 					  Argument   *args,
@@ -2053,7 +2051,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if (proc_install->type == GIMP_TEMPORARY)
 	    plug_in_proc_def_remove (proc_def);
 	  else
-	    plug_in_proc_def_destroy (proc_def, TRUE);  /* destroys data_only */ 
+	    plug_in_proc_def_destroy (proc_def, TRUE); /* destroys data_only */
 
 	  break;
 	}
@@ -2947,64 +2945,6 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
   plug_in_proc_def_destroy (proc_def, TRUE);
 }
 
-static void
-plug_in_proc_def_destroy (PlugInProcDef *proc_def,
-			  gboolean       data_only)
-{
-  gint i;
-
-  if (proc_def->prog)
-    g_free (proc_def->prog);
-  if (proc_def->menu_path)
-    g_free (proc_def->menu_path);
-  if (proc_def->accelerator)
-    g_free (proc_def->accelerator);
-  if (proc_def->extensions)
-    g_free (proc_def->extensions);
-  if (proc_def->prefixes)
-    g_free (proc_def->prefixes);
-  if (proc_def->magics)
-    g_free (proc_def->magics);
-  if (proc_def->image_types)
-    g_free (proc_def->image_types);
-  if (proc_def->db_info.name)
-    g_free (proc_def->db_info.name);
-  if (proc_def->db_info.blurb)
-    g_free (proc_def->db_info.blurb);
-  if (proc_def->db_info.help)
-    g_free (proc_def->db_info.help);
-  if (proc_def->db_info.author)
-    g_free (proc_def->db_info.author);
-  if (proc_def->db_info.copyright)
-    g_free (proc_def->db_info.copyright);
-  if (proc_def->db_info.date)
-    g_free (proc_def->db_info.date);
-
-  for (i = 0; i < proc_def->db_info.num_args; i++)
-    {
-      if (proc_def->db_info.args[i].name)
-	g_free (proc_def->db_info.args[i].name);
-      if (proc_def->db_info.args[i].description)
-	g_free (proc_def->db_info.args[i].description);
-    }
-
-  for (i = 0; i < proc_def->db_info.num_values; i++)
-    {
-      if (proc_def->db_info.values[i].name)
-	g_free (proc_def->db_info.values[i].name);
-      if (proc_def->db_info.values[i].description)
-	g_free (proc_def->db_info.values[i].description);
-    }
-
-  if (proc_def->db_info.args)
-    g_free (proc_def->db_info.args);
-  if (proc_def->db_info.values)
-    g_free (proc_def->db_info.values);
-
-  if (!data_only)
-    g_free (proc_def);
-}
-
 static Argument *
 plug_in_temp_run (ProcRecord *proc_rec,
 		  Argument   *args,
@@ -3401,72 +3341,67 @@ plug_in_params_destroy (GPParam *params,
 {
   gint i, j;
 
-  for (i = 0; i < nparams; i++)
+  if (full_destroy)
     {
-      switch (params[i].type)
-	{
-	case GIMP_PDB_INT32:
-	case GIMP_PDB_INT16:
-	case GIMP_PDB_INT8:
-	case GIMP_PDB_FLOAT:
+      for (i = 0; i < nparams; i++)
+        {
+          switch (params[i].type)
+            {
+            case GIMP_PDB_INT32:
+            case GIMP_PDB_INT16:
+            case GIMP_PDB_INT8:
+            case GIMP_PDB_FLOAT:
+              break;
+
+            case GIMP_PDB_STRING:
+              g_free (params[i].data.d_string);
+              break;
+            case GIMP_PDB_INT32ARRAY:
+              g_free (params[i].data.d_int32array);
+              break;
+            case GIMP_PDB_INT16ARRAY:
+              g_free (params[i].data.d_int16array);
+              break;
+            case GIMP_PDB_INT8ARRAY:
+              g_free (params[i].data.d_int8array);
+              break;
+            case GIMP_PDB_FLOATARRAY:
+              g_free (params[i].data.d_floatarray);
+              break;
+            case GIMP_PDB_STRINGARRAY:
+              for (j = 0; j < params[i-1].data.d_int32; j++)
+                g_free (params[i].data.d_stringarray[j]);
+              g_free (params[i].data.d_stringarray);
+              break;
+            case GIMP_PDB_COLOR:
+              break;
+            case GIMP_PDB_REGION:
+              g_message ("the \"region\" arg type is not currently supported");
+              break;
+            case GIMP_PDB_DISPLAY:
+            case GIMP_PDB_IMAGE:
+            case GIMP_PDB_LAYER:
+            case GIMP_PDB_CHANNEL:
+            case GIMP_PDB_DRAWABLE:
+            case GIMP_PDB_SELECTION:
+            case GIMP_PDB_BOUNDARY:
+            case GIMP_PDB_PATH:
+              break;
+            case GIMP_PDB_PARASITE:
+              if (params[i].data.d_parasite.data)
+                {
+                  g_free (params[i].data.d_parasite.name);
+                  g_free (params[i].data.d_parasite.data);
+                  params[i].data.d_parasite.name = 0;
+                  params[i].data.d_parasite.data = 0;
+                }
 	  break;
-	case GIMP_PDB_STRING:
-	  if (full_destroy)
-	    g_free (params[i].data.d_string);
-	  break;
-	case GIMP_PDB_INT32ARRAY:
-	  if (full_destroy)
-	    g_free (params[i].data.d_int32array);
-	  break;
-	case GIMP_PDB_INT16ARRAY:
-	  if (full_destroy)
-	    g_free (params[i].data.d_int16array);
-	  break;
-	case GIMP_PDB_INT8ARRAY:
-	  if (full_destroy)
-	    g_free (params[i].data.d_int8array);
-	  break;
-	case GIMP_PDB_FLOATARRAY:
-	  if (full_destroy)
-	    g_free (params[i].data.d_floatarray);
-	  break;
-	case GIMP_PDB_STRINGARRAY:
-	  if (full_destroy)
-	    {
-	      for (j = 0; j < params[i-1].data.d_int32; j++)
-		g_free (params[i].data.d_stringarray[j]);
-	      g_free (params[i].data.d_stringarray);
-	    }
-	  break;
-	case GIMP_PDB_COLOR:
-	  break;
-	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
-	  break;
-	case GIMP_PDB_DISPLAY:
-	case GIMP_PDB_IMAGE:
-	case GIMP_PDB_LAYER:
-	case GIMP_PDB_CHANNEL:
-	case GIMP_PDB_DRAWABLE:
-	case GIMP_PDB_SELECTION:
-	case GIMP_PDB_BOUNDARY:
-	case GIMP_PDB_PATH:
-	  break;
-	case GIMP_PDB_PARASITE:
-	  if (full_destroy)
-	    if (params[i].data.d_parasite.data)
-              {
-                g_free (params[i].data.d_parasite.name);
-                g_free (params[i].data.d_parasite.data);
-                params[i].data.d_parasite.name = 0;
-                params[i].data.d_parasite.data = 0;
-              }
-	  break;
-	case GIMP_PDB_STATUS:
-	  break;
-	case GIMP_PDB_END:
-	  break;
-	}
+            case GIMP_PDB_STATUS:
+              break;
+            case GIMP_PDB_END:
+              break;
+            }
+        }
     }
 
   g_free (params);
@@ -3481,73 +3416,60 @@ plug_in_args_destroy (Argument *args,
   gint    count;
   gint    i, j;
 
-  for (i = 0; i < nargs; i++)
+  if (full_destroy)
     {
-      switch (args[i].arg_type)
-	{
-	case GIMP_PDB_INT32:
-	case GIMP_PDB_INT16:
-	case GIMP_PDB_INT8:
-	case GIMP_PDB_FLOAT:
-	  break;
-	case GIMP_PDB_STRING:
-	  if (full_destroy)
-	    g_free (args[i].value.pdb_pointer);
-	  break;
-	case GIMP_PDB_INT32ARRAY:
-	  if (full_destroy)
-	    g_free (args[i].value.pdb_pointer);
-	  break;
-	case GIMP_PDB_INT16ARRAY:
-	  if (full_destroy)
-	    g_free (args[i].value.pdb_pointer);
-	  break;
-	case GIMP_PDB_INT8ARRAY:
-	  if (full_destroy)
-	    g_free (args[i].value.pdb_pointer);
-	  break;
-	case GIMP_PDB_FLOATARRAY:
-	  if (full_destroy)
-	    g_free (args[i].value.pdb_pointer);
-	  break;
-	case GIMP_PDB_STRINGARRAY:
-	  if (full_destroy)
-	    {
-	      count = args[i-1].value.pdb_int;
+      for (i = 0; i < nargs; i++)
+        {
+          switch (args[i].arg_type)
+            {
+            case GIMP_PDB_INT32:
+            case GIMP_PDB_INT16:
+            case GIMP_PDB_INT8:
+            case GIMP_PDB_FLOAT:
+              break;
+
+            case GIMP_PDB_STRING:
+            case GIMP_PDB_INT32ARRAY:
+            case GIMP_PDB_INT16ARRAY:
+            case GIMP_PDB_INT8ARRAY:
+            case GIMP_PDB_FLOATARRAY:
+              g_free (args[i].value.pdb_pointer);
+              break;
+
+            case GIMP_PDB_STRINGARRAY:
+              count = args[i-1].value.pdb_int;
 	      stringarray = args[i].value.pdb_pointer;
 
 	      for (j = 0; j < count; j++)
 		g_free (stringarray[j]);
 
 	      g_free (args[i].value.pdb_pointer);
-	    }
-	  break;
-	case GIMP_PDB_COLOR:
-	  break;
-	case GIMP_PDB_REGION:
-	  g_message ("the \"region\" arg type is not currently supported");
-	  break;
-	case GIMP_PDB_DISPLAY:
-	case GIMP_PDB_IMAGE:
-	case GIMP_PDB_LAYER:
-	case GIMP_PDB_CHANNEL:
-	case GIMP_PDB_DRAWABLE:
-	case GIMP_PDB_SELECTION:
-	case GIMP_PDB_BOUNDARY:
-	case GIMP_PDB_PATH:
-	  break;
-	case GIMP_PDB_PARASITE:
-	  if (full_destroy)
-	    {
-	      gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
-	      args[i].value.pdb_pointer = NULL;
-	    }
-	  break;
-	case GIMP_PDB_STATUS:
-	  break;
-	case GIMP_PDB_END:
-	  break;
-	}
+              break;
+
+            case GIMP_PDB_COLOR:
+              break;
+            case GIMP_PDB_REGION:
+              g_message ("the \"region\" arg type is not currently supported");
+              break;
+            case GIMP_PDB_DISPLAY:
+            case GIMP_PDB_IMAGE:
+            case GIMP_PDB_LAYER:
+            case GIMP_PDB_CHANNEL:
+            case GIMP_PDB_DRAWABLE:
+            case GIMP_PDB_SELECTION:
+            case GIMP_PDB_BOUNDARY:
+            case GIMP_PDB_PATH:
+              break;
+              
+            case GIMP_PDB_PARASITE:
+              gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
+              break;
+              
+            case GIMP_PDB_STATUS:
+            case GIMP_PDB_END:
+              break;
+            }
+        }
     }
 
   g_free (args);

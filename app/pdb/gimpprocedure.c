@@ -35,17 +35,13 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  Local functions  */
-static guint   procedural_db_hash_func (gconstpointer key);
-
-
 void
 procedural_db_init (Gimp *gimp)
 {
   g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->procedural_ht = g_hash_table_new (procedural_db_hash_func, g_str_equal);
+  gimp->procedural_ht = g_hash_table_new (g_str_hash, g_str_equal);
 }
 
 static void
@@ -62,7 +58,8 @@ procedural_db_free (Gimp *gimp)
 {
   if (gimp->procedural_ht)
     {
-      g_hash_table_foreach (gimp->procedural_ht, procedural_db_free_entry, NULL);
+      g_hash_table_foreach (gimp->procedural_ht, 
+                            procedural_db_free_entry, NULL);
       g_hash_table_destroy (gimp->procedural_ht);
   
       gimp->procedural_ht = NULL;
@@ -90,6 +87,7 @@ procedural_db_unregister (Gimp        *gimp,
   GList *list;
 
   list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
+
   if (list)
     {
       list = g_list_remove (list, list->data);
@@ -108,16 +106,14 @@ ProcRecord *
 procedural_db_lookup (Gimp        *gimp,
 		      const gchar *name)
 {
-  GList      *list;
-  ProcRecord *procedure;
+  GList *list;
 
   list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
-  if (list != NULL)
-    procedure = (ProcRecord *) list->data;
-  else
-    procedure = NULL;
 
-  return procedure;
+  if (list)
+    return (ProcRecord *) list->data;
+  else
+    return NULL;
 }
 
 Argument *
@@ -139,8 +135,9 @@ procedural_db_execute (Gimp        *gimp,
       g_message (_("PDB calling error %s not found"), name);
       
       return_args = g_new (Argument, 1);
-      return_args->arg_type = GIMP_PDB_STATUS;
+      return_args->arg_type      = GIMP_PDB_STATUS;
       return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
+
       return return_args;
     }
   
@@ -151,8 +148,9 @@ procedural_db_execute (Gimp        *gimp,
 	  g_message (_("PDB calling error %s not found"), name);
 
 	  return_args = g_new (Argument, 1);
-	  return_args->arg_type = GIMP_PDB_STATUS;
+	  return_args->arg_type      = GIMP_PDB_STATUS;
 	  return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
+
 	  return return_args;
 	}
       list = list->next;
@@ -163,7 +161,7 @@ procedural_db_execute (Gimp        *gimp,
 	  if (args[i].arg_type != procedure->args[i].arg_type)
 	    {
 	      return_args = g_new (Argument, 1);
-	      return_args->arg_type = GIMP_PDB_STATUS;
+	      return_args->arg_type      = GIMP_PDB_STATUS;
 	      return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
 
 	      g_message (_("PDB calling error %s"), procedure->name);
@@ -176,24 +174,21 @@ procedural_db_execute (Gimp        *gimp,
       switch (procedure->proc_type)
 	{
 	case GIMP_INTERNAL:
-	  return_args = (* procedure->exec_method.internal.marshal_func) (gimp, args);
+	  return_args = 
+            (* procedure->exec_method.internal.marshal_func) (gimp, args);
 	  break;
 
 	case GIMP_PLUGIN:
-	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
-	  break;
-
 	case GIMP_EXTENSION:
-	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
-	  break;
-
 	case GIMP_TEMPORARY:
-	  return_args = plug_in_run (procedure, args, procedure->num_args, TRUE, FALSE, -1);
+	  return_args = plug_in_run (procedure, 
+                                     args, procedure->num_args, 
+                                     TRUE, FALSE, -1);
 	  break;
 
 	default:
 	  return_args = g_new (Argument, 1);
-	  return_args->arg_type = GIMP_PDB_STATUS;
+	  return_args->arg_type      = GIMP_PDB_STATUS;
 	  return_args->value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
@@ -202,12 +197,13 @@ procedural_db_execute (Gimp        *gimp,
 	  (procedure->num_values > 0))
 	memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
 
-      /*  Check if the return value is a PDB_PASS_THROUGH, in which case run the
-       *  next procedure in the list
-       */
+      /*  Check if the return value is a PDB_PASS_THROUGH, 
+          in which case run the next procedure in the list  */
+
       if (return_args[0].value.pdb_int != GIMP_PDB_PASS_THROUGH)
 	break;
-      else if (list)  /*  Pass through, so destroy return values and run another procedure  */
+      else if (list)  /*  Pass through, 
+                          destroy return values and run another procedure  */
 	procedural_db_destroy_args (return_args, procedure->num_values);
     }
 
@@ -229,8 +225,9 @@ procedural_db_run_proc (Gimp        *gimp,
   if ((proc = procedural_db_lookup (gimp, name)) == NULL)
     {
       return_vals = g_new (Argument, 1);
-      return_vals->arg_type = GIMP_PDB_STATUS;
+      return_vals->arg_type      = GIMP_PDB_STATUS;
       return_vals->value.pdb_int = GIMP_PDB_CALLING_ERROR;
+
       return return_vals;
     }
 
@@ -241,7 +238,8 @@ procedural_db_run_proc (Gimp        *gimp,
 
   for (i = 0; i < proc->num_args; i++)
     {
-      if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, GimpPDBArgType)))
+      if (proc->args[i].arg_type != 
+          (params[i].arg_type = va_arg (args, GimpPDBArgType)))
 	{
 	  g_message (_("Incorrect arguments passed to procedural_db_run_proc:\n"
 		       "Argument %d to '%s' should be a %s, but got passed a %s"),
@@ -260,9 +258,11 @@ procedural_db_run_proc (Gimp        *gimp,
         case GIMP_PDB_DISPLAY:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
+
         case GIMP_PDB_FLOAT:
           params[i].value.pdb_float = (gdouble) va_arg (args, gdouble);
           break;
+
         case GIMP_PDB_STRING:
         case GIMP_PDB_INT32ARRAY:
         case GIMP_PDB_INT16ARRAY:
@@ -271,11 +271,14 @@ procedural_db_run_proc (Gimp        *gimp,
         case GIMP_PDB_STRINGARRAY:
           params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
+
         case GIMP_PDB_COLOR:
 	  params[i].value.pdb_color = va_arg (args, GimpRGB);
           break;
+
         case GIMP_PDB_REGION:
           break;
+
         case GIMP_PDB_IMAGE:
         case GIMP_PDB_LAYER:
         case GIMP_PDB_CHANNEL:
@@ -285,12 +288,15 @@ procedural_db_run_proc (Gimp        *gimp,
         case GIMP_PDB_PATH:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
+
         case GIMP_PDB_PARASITE:
           params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
+
         case GIMP_PDB_STATUS:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
+
 	case GIMP_PDB_END:
 	  break;
 	}
@@ -318,12 +324,12 @@ procedural_db_return_args (ProcRecord *procedure,
 
   if (success)
     {
-      return_args[0].arg_type = GIMP_PDB_STATUS;
+      return_args[0].arg_type      = GIMP_PDB_STATUS;
       return_args[0].value.pdb_int = GIMP_PDB_SUCCESS;
     }
   else
     {
-      return_args[0].arg_type = GIMP_PDB_STATUS;
+      return_args[0].arg_type      = GIMP_PDB_STATUS;
       return_args[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -353,10 +359,12 @@ procedural_db_destroy_args (Argument *args,
 	  /*  Keep this around in case we need to free an array of strings  */
 	  prev_val = args[i].value.pdb_int;
 	  break;
+
 	case GIMP_PDB_INT16:
 	case GIMP_PDB_INT8:
 	case GIMP_PDB_FLOAT:
 	  break;
+
 	case GIMP_PDB_STRING:
 	case GIMP_PDB_INT32ARRAY:
 	case GIMP_PDB_INT16ARRAY:
@@ -364,15 +372,18 @@ procedural_db_destroy_args (Argument *args,
 	case GIMP_PDB_FLOATARRAY:
 	  g_free (args[i].value.pdb_pointer);
 	  break;
+
 	case GIMP_PDB_STRINGARRAY:
 	  strs = (gchar **) args[i].value.pdb_pointer;
 	  for (j = 0; j < prev_val; j++)
 	    g_free (strs[j]);
 	  g_free (strs);
 	  break;
+
 	case GIMP_PDB_COLOR:
 	  g_free (args[i].value.pdb_pointer);
 	  break;
+
 	case GIMP_PDB_REGION:
 	case GIMP_PDB_DISPLAY:
 	case GIMP_PDB_IMAGE:
@@ -390,53 +401,4 @@ procedural_db_destroy_args (Argument *args,
     }
 
   g_free (args);
-}
-
-/* We could just use g_str_hash() here ... that uses a different
- * hash function, though
- */
-
-static guint
-procedural_db_hash_func (gconstpointer key)
-{
-  const gchar *string;
-  guint        result;
-  gint         c;
-
-  /*
-   * I tried a zillion different hash functions and asked many other
-   * people for advice.  Many people had their own favorite functions,
-   * all different, but no-one had much idea why they were good ones.
-   * I chose the one below (multiply by 9 and add new character)
-   * because of the following reasons:
-   *
-   * 1. Multiplying by 10 is perfect for keys that are decimal strings,
-   *    and multiplying by 9 is just about as good.
-   * 2. Times-9 is (shift-left-3) plus (old).  This means that each
-   *    character's bits hang around in the low-order bits of the
-   *    hash value for ever, plus they spread fairly rapidly up to
-   *    the high-order bits to fill out the hash value.  This seems
-   *    works well both for decimal and non-decimal strings.
-   *
-   * tclHash.c --
-   *
-   *      Implementation of in-memory hash tables for Tcl and Tcl-based
-   *      applications.
-   *
-   * Copyright (c) 1991-1993 The Regents of the University of California.
-   * Copyright (c) 1994 Sun Microsystems, Inc.
-   */
-
-  string = (const gchar *) key;
-  result = 0;
-  while (1)
-    {
-      c = *string;
-      string++;
-      if (c == 0)
-	break;
-      result += (result << 3) + c;
-    }
-
-  return result;
 }
