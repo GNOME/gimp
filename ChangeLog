@@ -1,3 +1,8 @@
+2001-02-13  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* pixmaps/refresh.xpm: new icon
+
 2001-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gradient_editor.[ch]

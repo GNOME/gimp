@@ -163,6 +163,7 @@ EXTRA_DIST = \
 	pixmaps/qmasksel.xpm			\
 	pixmaps/qmasknosel.xpm			\
 	pixmaps/question.xpm			\
+	pixmaps/refresh.xpm			\
 	pixmaps/topath.xpm			\
 	pixmaps/toselection.xpm			\
 	pixmaps/update.xpm      		\
