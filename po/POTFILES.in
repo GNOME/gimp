@@ -70,6 +70,7 @@ app/config/gimpscanner.c
 app/core/core-enums.c
 app/core/gimp-edit.c
 app/core/gimp-gradients.c
+app/core/gimp-gui.c
 app/core/gimp-modules.c
 app/core/gimp-units.c
 app/core/gimp.c
@@ -122,6 +123,7 @@ app/display/gimpdisplay.c
 app/display/gimpdisplayoptions.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
+app/display/gimpdisplayshell-close.c
 app/display/gimpdisplayshell-dnd.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
@@ -270,6 +272,7 @@ app/widgets/gimpactiongroup.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbrushselect.c
+app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c
 app/widgets/gimpcolordisplayeditor.c
