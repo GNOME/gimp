@@ -118,12 +118,12 @@ msgstr "Afslut"
 #: app/app_procs.c:765 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:280 app/color_notebook.c:127 app/convert.c:513
-#: app/curves.c:561 app/file_new_dialog.c:210 app/file_new_dialog.c:360
+#: app/curves.c:564 app/file_new_dialog.c:210 app/file_new_dialog.c:360
 #: app/gdisplay_color_ui.c:159 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
 #: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:379
-#: app/interface.c:1041 app/layers_dialog.c:3524 app/layers_dialog.c:3708
-#: app/layers_dialog.c:3803 app/layers_dialog.c:4064 app/levels.c:346
+#: app/interface.c:1041 app/layers_dialog.c:3544 app/layers_dialog.c:3728
+#: app/layers_dialog.c:3823 app/layers_dialog.c:4084 app/levels.c:346
 #: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1481
 #: app/qmask.c:278 app/resize.c:220 app/resize.c:1393
 #: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
@@ -279,10 +279,10 @@ msgstr "Lysstyrke-kontrast virker ikke på indekserede tegneobjekter."
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
 #: app/color_balance.c:276 app/color_notebook.c:124 app/convert.c:511
-#: app/curves.c:557 app/file_new_dialog.c:210 app/file_new_dialog.c:356
+#: app/curves.c:560 app/file_new_dialog.c:210 app/file_new_dialog.c:356
 #: app/gdisplay_color_ui.c:157 app/gimpui.c:122 app/hue_saturation.c:375
-#: app/layers_dialog.c:3522 app/layers_dialog.c:3706 app/layers_dialog.c:3801
-#: app/layers_dialog.c:4062 app/levels.c:342 app/module_db.c:314
+#: app/layers_dialog.c:3542 app/layers_dialog.c:3726 app/layers_dialog.c:3821
+#: app/layers_dialog.c:4082 app/levels.c:342 app/module_db.c:315
 #: app/posterize.c:203 app/preferences_dialog.c:1477 app/qmask.c:276
 #: app/resize.c:214 app/resize.c:1393 app/resolution_calibrate.c:109
 #: app/threshold.c:276 modules/cdisplay_gamma.c:330
@@ -291,7 +291,7 @@ msgid "OK"
 msgstr "Ok"
 
 #: app/brightness_contrast.c:222 app/by_color_select.c:721
-#: app/color_balance.c:278 app/curves.c:559 app/file_new_dialog.c:358
+#: app/color_balance.c:278 app/curves.c:562 app/file_new_dialog.c:358
 #: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
 #: app/resize.c:217 app/threshold.c:278 app/tools.c:1543
 #: app/transform_core.c:406 modules/colorsel_water.c:634
@@ -309,7 +309,7 @@ msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:681
+#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:684
 #: app/fileops.c:413 app/hue_saturation.c:567 app/levels.c:575
 #: app/palette.c:3216 app/posterize.c:244 app/threshold.c:353
 msgid "Preview"
@@ -324,7 +324,7 @@ msgstr "Penselredigering"
 #: app/color_notebook.c:124 app/color_picker.c:297 app/colormap_dialog.i.c:173
 #: app/crop.c:1071 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
-#: app/histogram_tool.c:275 app/info_window.c:255 app/lc_dialog.c:213
+#: app/histogram_tool.c:275 app/info_window.c:256 app/lc_dialog.c:213
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:382 app/tips_dialog.c:160
@@ -354,7 +354,7 @@ msgstr "Vinkel:"
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
+#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:355
 #: app/palette.c:2049 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Opdatér"
@@ -481,12 +481,12 @@ msgid "copy"
 msgstr "kopi"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:334 app/layer.c:1759
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:334 app/layer.c:1757
 #, c-format
 msgid "%s copy"
 msgstr "%s kopi"
 
-#: app/channel.c:615
+#: app/channel.c:617
 msgid "Selection Mask"
 msgstr "Markeringsmaske"
 
@@ -511,11 +511,11 @@ msgid "Wrap Around"
 msgstr "Flyd udenom"
 
 #: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:290
-#: app/layers_dialog.c:3626
+#: app/layers_dialog.c:3646
 msgid "Background"
 msgstr "Baggrund"
 
-#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3628
+#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3648
 msgid "Transparent"
 msgstr "Gennemsigtig"
 
@@ -557,17 +557,17 @@ msgid "Empty Channel Copy"
 msgstr "Tøm kanelkopi"
 
 #: app/channels_dialog.c:1433 app/color_balance.c:348 app/color_select.c:250
-#: app/curves.c:582 app/histogram_tool.c:303 app/levels.c:375
+#: app/curves.c:585 app/histogram_tool.c:303 app/levels.c:375
 msgid "Red"
 msgstr "Rød"
 
 #: app/channels_dialog.c:1437 app/color_balance.c:373 app/color_select.c:251
-#: app/curves.c:583 app/histogram_tool.c:304 app/levels.c:376
+#: app/curves.c:586 app/histogram_tool.c:304 app/levels.c:376
 msgid "Green"
 msgstr "Grøn"
 
 #: app/channels_dialog.c:1441 app/color_balance.c:398 app/color_select.c:252
-#: app/curves.c:584 app/histogram_tool.c:305 app/levels.c:377
+#: app/curves.c:587 app/histogram_tool.c:305 app/levels.c:377
 msgid "Blue"
 msgstr "Blå"
 
@@ -730,10 +730,10 @@ msgstr "Intensitet:"
 #: app/color_picker.c:632 app/color_picker.c:633 app/color_picker.c:634
 #: app/color_picker.c:635 app/color_picker.c:636 app/color_picker.c:637
 #: app/color_picker.c:638 app/color_picker.c:650 app/color_picker.c:657
-#: app/color_picker.c:675 app/color_picker.c:690 app/info_window.c:185
-#: app/info_window.c:191 app/info_window.c:197 app/info_window.c:203
-#: app/info_window.c:422 app/info_window.c:423 app/info_window.c:424
-#: app/info_window.c:425 app/info_window.c:447
+#: app/color_picker.c:675 app/color_picker.c:690 app/info_window.c:186
+#: app/info_window.c:192 app/info_window.c:198 app/info_window.c:204
+#: app/info_window.c:423 app/info_window.c:424 app/info_window.c:425
+#: app/info_window.c:426 app/info_window.c:448
 msgid "N/A"
 msgstr "I/T"
 
@@ -771,7 +771,7 @@ msgstr "Glød"
 msgid "Saturation"
 msgstr "Mætning"
 
-#: app/color_select.c:249 app/curves.c:581 app/histogram_tool.c:302
+#: app/color_select.c:249 app/curves.c:584 app/histogram_tool.c:302
 #: app/layers_dialog.c:389 app/levels.c:374 app/paint_funcs.c:98
 #: app/tool_options.c:932
 msgid "Value"
@@ -974,7 +974,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1096 app/file_new_dialog.c:398 app/file_new_dialog.c:416
-#: app/layers_dialog.c:3566 app/resize.c:279 app/resize.c:304 app/resize.c:536
+#: app/layers_dialog.c:3586 app/resize.c:279 app/resize.c:304 app/resize.c:536
 #: app/scale_tool.c:83 app/scale_tool.c:90 app/tool_options.c:364
 msgid "Height:"
 msgstr "Højde:"
@@ -988,57 +988,57 @@ msgid "Auto Shrink"
 msgstr "Autokrymp"
 
 #. The shell and main vbox
-#: app/curves.c:393 app/curves.c:552 app/tools.c:1162
+#: app/curves.c:396 app/curves.c:555 app/tools.c:1162
 msgid "Curves"
 msgstr "Kurver"
 
-#: app/curves.c:440
+#: app/curves.c:443
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurver for indekserede tegneobjekter kan ikke justeres."
 
-#: app/curves.c:574
+#: app/curves.c:577
 msgid "Modify Curves for Channel:"
 msgstr "Ændr kurver for kanal:"
 
-#: app/curves.c:585 app/levels.c:378
+#: app/curves.c:588 app/levels.c:378
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:664
+#: app/curves.c:667
 msgid "Curve Type:"
 msgstr "Kurvetype:"
 
-#: app/curves.c:671
+#: app/curves.c:674
 msgid "Smooth"
 msgstr "Udtvær"
 
-#: app/curves.c:672
+#: app/curves.c:675
 msgid "Free"
 msgstr "Fri"
 
-#: app/curves.c:698 app/levels.c:603 app/module_db.c:865
+#: app/curves.c:701 app/levels.c:603 app/module_db.c:874
 msgid "Load"
 msgstr "Indlæs"
 
-#: app/curves.c:706 app/devices.c:753 app/levels.c:613 app/palette.c:2047
+#: app/curves.c:709 app/devices.c:753 app/levels.c:613 app/palette.c:2047
 #: app/preferences_dialog.c:380 app/preferences_dialog.c:1479
 msgid "Save"
 msgstr "Gem"
 
-#: app/curves.c:1305
+#: app/curves.c:1308
 msgid "Load Curves"
 msgstr "Indlæs kurver"
 
-#: app/curves.c:1320
+#: app/curves.c:1323
 msgid "Save Curves"
 msgstr "Gem kurver"
 
-#: app/curves.c:1611
+#: app/curves.c:1614
 msgid "Load/Save Curves"
 msgstr "Indlæs/Gem kurver"
 
-#: app/curves.c:1656 app/curves.c:1674 app/levels.c:1481 app/levels.c:1499
+#: app/curves.c:1659 app/curves.c:1677 app/levels.c:1481 app/levels.c:1499
 #: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
@@ -1112,7 +1112,7 @@ msgstr "Tilstand"
 msgid "Move: 0, 0"
 msgstr "Flyt: 0, 0"
 
-#: app/edit_selection.c:444 app/edit_selection.c:454
+#: app/edit_selection.c:448 app/edit_selection.c:458
 msgid "Move: "
 msgstr "Flyt: "
 
@@ -1238,7 +1238,7 @@ msgstr ""
 msgid "No Selection."
 msgstr "Ingen markering."
 
-#: app/fileops.c:462 app/fileops.c:1755
+#: app/fileops.c:462 app/fileops.c:1760
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1286,11 +1286,11 @@ msgstr ""
 msgid "Revert Image?"
 msgstr "Genskab billede?"
 
-#: app/fileops.c:631 app/fileops.c:1895
+#: app/fileops.c:631 app/fileops.c:1900
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:631 app/fileops.c:1895
+#: app/fileops.c:631 app/fileops.c:1900
 msgid "No"
 msgstr "Nej"
 
@@ -1321,11 +1321,11 @@ msgstr ""
 "%s fejlede.\n"
 "%s: Tilladelse nægtet."
 
-#: app/fileops.c:823
+#: app/fileops.c:828
 msgid "Open"
 msgstr "Åbn"
 
-#: app/fileops.c:1134
+#: app/fileops.c:1139
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1334,7 +1334,7 @@ msgstr ""
 "Kan ikke gemme.\n"
 "%s: ukendt filtype."
 
-#: app/fileops.c:1149
+#: app/fileops.c:1154
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1343,7 +1343,7 @@ msgstr ""
 "Kan ikke gemme.\n"
 "%s er ikke en almindelig fil"
 
-#: app/fileops.c:1168
+#: app/fileops.c:1173
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1352,35 +1352,35 @@ msgstr ""
 "Kan ikke gemme.\n"
 "%s: Tilladelse nægtet."
 
-#: app/fileops.c:1415
+#: app/fileops.c:1420
 msgid "(This thumbnail may be out of date)"
 msgstr "(Denne miniature kan være forældet)"
 
-#: app/fileops.c:1416
+#: app/fileops.c:1421
 msgid "(No Information)"
 msgstr "(Ingen information)"
 
-#: app/fileops.c:1426
+#: app/fileops.c:1431
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Miniaturegemning er deaktiveret)"
 
-#: app/fileops.c:1430
+#: app/fileops.c:1435
 msgid "(Could not write thumbnail file)"
 msgstr "(Kunne ikke skrive miniaturefil)"
 
-#: app/fileops.c:1434
+#: app/fileops.c:1439
 msgid "(Thumbnail file not written)"
 msgstr "(Miniaturefil ikke skrevet)"
 
-#: app/fileops.c:1452
+#: app/fileops.c:1457
 msgid "No preview available"
 msgstr "Kan ikke vise miniature"
 
-#: app/fileops.c:1561
+#: app/fileops.c:1566
 msgid "(could not make preview)"
 msgstr "(kunne ikke lave miniature)"
 
-#: app/fileops.c:1639 app/fileops.c:1681
+#: app/fileops.c:1644 app/fileops.c:1686
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1389,20 +1389,20 @@ msgstr ""
 "Fejl under åbning\n"
 "%s"
 
-#: app/fileops.c:1888
+#: app/fileops.c:1893
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1890
+#: app/fileops.c:1895
 msgid "File Exists!"
 msgstr "Filen eksisterer!"
 
-#: app/fileops.c:1949
+#: app/fileops.c:1954
 msgid "Revert"
 msgstr "Gendan"
 
-#: app/fileops.c:1960
+#: app/fileops.c:1965
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -2291,16 +2291,16 @@ msgstr ""
 "Billedopløsningen er udenfor grænserne,\n"
 "bruger standard opløsning istedet."
 
-#: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
+#: app/image_new.c:65 app/info_window.c:66 app/info_window.c:535
 #: app/preferences_dialog.c:1650
 msgid "Grayscale"
 msgstr "Gråtoner"
 
-#: app/image_new.c:71 app/layers_dialog.c:3625
+#: app/image_new.c:71 app/layers_dialog.c:3645
 msgid "Foreground"
 msgstr "Forgrund"
 
-#: app/image_new.c:81 app/layers_dialog.c:3627
+#: app/image_new.c:81 app/layers_dialog.c:3647
 msgid "White"
 msgstr "Hvid"
 
@@ -2363,97 +2363,97 @@ msgstr ""
 msgid "General"
 msgstr "Generelt"
 
-#: app/info_window.c:64
+#: app/info_window.c:65
 msgid "Static Gray"
 msgstr "Statisk grå"
 
-#: app/info_window.c:66
+#: app/info_window.c:67
 msgid "Static Color"
 msgstr "Statisk farve"
 
-#: app/info_window.c:67
+#: app/info_window.c:68
 msgid "Pseudo Color"
 msgstr "Pseudofarve"
 
-#: app/info_window.c:68
+#: app/info_window.c:69
 msgid "True Color"
 msgstr "Rigtig farve"
 
-#: app/info_window.c:69
+#: app/info_window.c:70
 msgid "Direct Color"
 msgstr "Direkte farve"
 
-#: app/info_window.c:161
+#: app/info_window.c:162
 msgid "R:"
 msgstr "R:"
 
-#: app/info_window.c:167
+#: app/info_window.c:168
 msgid "G:"
 msgstr "G:"
 
-#: app/info_window.c:173
+#: app/info_window.c:174
 msgid "B:"
 msgstr "B:"
 
-#: app/info_window.c:179
+#: app/info_window.c:180
 msgid "A:"
 msgstr "A:"
 
-#: app/info_window.c:211
+#: app/info_window.c:212
 msgid "Extended"
 msgstr "Udvidet"
 
 #. add the information fields
-#: app/info_window.c:274
+#: app/info_window.c:275
 msgid "Dimensions (w x h):"
 msgstr "Dimensioner (v x h):"
 
-#: app/info_window.c:278
+#: app/info_window.c:279
 msgid "Resolution:"
 msgstr "Opløsning:"
 
-#: app/info_window.c:280
+#: app/info_window.c:281
 msgid "Scale Ratio:"
 msgstr "Skaleringsrate:"
 
-#: app/info_window.c:282
+#: app/info_window.c:283
 msgid "Display Type:"
 msgstr "Skærmtype:"
 
-#: app/info_window.c:284
+#: app/info_window.c:285
 msgid "Visual Class:"
 msgstr "Synlig klasse:"
 
-#: app/info_window.c:286
+#: app/info_window.c:287
 msgid "Visual Depth:"
 msgstr "Synlig dybde:"
 
 #. create the info dialog
-#: app/info_window.c:314
+#: app/info_window.c:315
 #, c-format
 msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
-#: app/info_window.c:508
+#: app/info_window.c:509
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixler"
 
 #. image resolution
-#: app/info_window.c:520
+#: app/info_window.c:521
 #, c-format
 msgid "%g x %g dpi"
 msgstr "%g x %g dpi"
 
-#: app/info_window.c:532
+#: app/info_window.c:533
 msgid "RGB Color"
 msgstr "RGB-farve"
 
-#: app/info_window.c:537
+#: app/info_window.c:538
 msgid "Indexed Color"
 msgstr "Indekseret farve"
 
-#: app/info_window.c:537
+#: app/info_window.c:538
 msgid "colors"
 msgstr "farver"
 
@@ -2559,7 +2559,7 @@ msgid "Image"
 msgstr "Billede"
 
 #. the layer name label
-#: app/internal_procs.c:119 app/layer_select.c:137
+#: app/internal_procs.c:119 app/layer_select.c:145
 msgid "Layer"
 msgstr "Lag"
 
@@ -2634,11 +2634,11 @@ msgstr "Lag uden højde eller bredde er ikke tilladt."
 msgid "%s mask"
 msgstr "%s maske"
 
-#: app/layer_select.c:101
+#: app/layer_select.c:105
 msgid "Layer Select"
 msgstr "Vælg lag"
 
-#: app/layers_dialog.c:267 app/layers_dialog.c:3556
+#: app/layers_dialog.c:267 app/layers_dialog.c:3576
 msgid "New Layer"
 msgstr "Nyt lag"
 
@@ -2718,62 +2718,62 @@ msgstr "Behold gennemsigtighed"
 msgid "Keep Transparency"
 msgstr "Behold gennemsigtighed"
 
-#: app/layers_dialog.c:1928
+#: app/layers_dialog.c:1948
 msgid "Empty Layer Copy"
 msgstr "Kopiering af lag uden indhold"
 
-#: app/layers_dialog.c:2191 app/layers_dialog.c:3365 app/layers_dialog.c:3735
+#: app/layers_dialog.c:2211 app/layers_dialog.c:3385 app/layers_dialog.c:3755
 msgid "Floating Selection"
 msgstr "Flydende udvalg"
 
-#: app/layers_dialog.c:3516
+#: app/layers_dialog.c:3536
 msgid "New Layer Options"
 msgstr "Alternativer for nyt lag"
 
 #. The name label and entry
-#: app/layers_dialog.c:3545
+#: app/layers_dialog.c:3565
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/layers_dialog.c:3560
+#: app/layers_dialog.c:3580
 msgid "Layer Width:"
 msgstr "Bredde på lag:"
 
-#: app/layers_dialog.c:3621
+#: app/layers_dialog.c:3641
 msgid "Layer Fill Type"
 msgstr "Fyldtype for lag"
 
-#: app/layers_dialog.c:3700
+#: app/layers_dialog.c:3720
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagets attributter"
 
-#: app/layers_dialog.c:3727
+#: app/layers_dialog.c:3747
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/layers_dialog.c:3795
+#: app/layers_dialog.c:3815
 msgid "Add Mask Options"
 msgstr "Tilføj alternativer for maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3813
+#: app/layers_dialog.c:3833
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser lagets maske til:"
 
-#: app/layers_dialog.c:3818
+#: app/layers_dialog.c:3838
 msgid "White (Full Opacity)"
 msgstr "Hvidt (Helt uigennemsigtig)"
 
-#: app/layers_dialog.c:3820
+#: app/layers_dialog.c:3840
 msgid "Black (Full Transparency)"
 msgstr "Sort (Helt gennemsigtig)"
 
-#: app/layers_dialog.c:3822
+#: app/layers_dialog.c:3842
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/layers_dialog.c:3884 app/layers_dialog.c:3970
+#: app/layers_dialog.c:3904 app/layers_dialog.c:3990
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2781,27 +2781,27 @@ msgstr ""
 "Ugyldig bredde eller højde.\n"
 "Begge skal være positive."
 
-#: app/layers_dialog.c:4056
+#: app/layers_dialog.c:4076
 msgid "Layer Merge Options"
 msgstr "Alternativer for fletning af lag"
 
-#: app/layers_dialog.c:4081
+#: app/layers_dialog.c:4101
 msgid "Final, Merged Layer should be:"
 msgstr "Endelig, flettet lag skal være:"
 
-#: app/layers_dialog.c:4082
+#: app/layers_dialog.c:4102
 msgid "Final, Anchored Layer should be:"
 msgstr "Endelig, forankret lag skal være:"
 
-#: app/layers_dialog.c:4087
+#: app/layers_dialog.c:4107
 msgid "Expanded as necessary"
 msgstr "Udvides efter behov"
 
-#: app/layers_dialog.c:4089
+#: app/layers_dialog.c:4109
 msgid "Clipped to image"
 msgstr "Klippet til billede"
 
-#: app/layers_dialog.c:4091
+#: app/layers_dialog.c:4111
 msgid "Clipped to bottom layer"
 msgstr "Klippes til bundlag"
 
@@ -3771,74 +3771,74 @@ msgstr "Frigivning forespurgt"
 msgid "Unloaded OK"
 msgstr "Frigav Ok"
 
-#: app/module_db.c:308
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Modul-DB"
 
-#: app/module_db.c:601
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "indlæs modul: \"%s\"\n"
 
-#: app/module_db.c:608
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "springer over modul: \"%s\"\n"
 
-#: app/module_db.c:634
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "fejl under indlæsning af modul: %s: %s"
 
-#: app/module_db.c:813
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<Ingen moduler>"
 
-#: app/module_db.c:826 app/module_db.c:835
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:826
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "kun i hukommelse"
 
-#: app/module_db.c:835
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "ingensteder (klik 'genindlæs')"
 
-#: app/module_db.c:874
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "Frigiv"
 
-#: app/module_db.c:890
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "Mening:"
 
-#: app/module_db.c:891
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: app/module_db.c:892
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:893
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "Kopibeskyttelse:"
 
-#: app/module_db.c:894
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "Dato:"
 
-#: app/module_db.c:895
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "Pladsering:"
 
-#: app/module_db.c:896
+#: app/module_db.c:905
 msgid "State:"
 msgstr "Tilstand:"
 
-#: app/module_db.c:915
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "Autolæsning under opstart"
 

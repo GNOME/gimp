@@ -41,7 +41,7 @@ msgstr "Om"
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
 #: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:403
-#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:800
+#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:842
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
 #: plug-ins/common/curve_bend.c:1369 plug-ins/common/decompose.c:874
 #: plug-ins/common/deinterlace.c:271 plug-ins/common/depthmerge.c:643
@@ -75,10 +75,10 @@ msgstr "Om"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2208
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
 #: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1586
+#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
 #: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
 #: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
@@ -123,7 +123,7 @@ msgstr "Ok"
 #: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:405 plug-ins/common/compose.c:778
-#: plug-ins/common/convmatrix.c:804 plug-ins/common/csource.c:655
+#: plug-ins/common/convmatrix.c:846 plug-ins/common/csource.c:655
 #: plug-ins/common/cubism.c:305 plug-ins/common/curve_bend.c:1371
 #: plug-ins/common/decompose.c:876 plug-ins/common/deinterlace.c:273
 #: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:622
@@ -157,10 +157,10 @@ msgstr "Ok"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
+#: plug-ins/common/spheredesigner.c:2212 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1588 plug-ins/common/tile.c:407
+#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
@@ -207,7 +207,7 @@ msgstr "Annullér"
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
-#: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
+#: plug-ins/common/spheredesigner.c:2230 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
 #: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
@@ -349,7 +349,7 @@ msgstr ""
 "Mandelbrot og Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
+#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2305
 #: plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Indlæs"
@@ -358,10 +358,10 @@ msgstr "Indlæs"
 msgid "Load a fractal from file"
 msgstr "Indlæs en fraktal fra en fil"
 
-#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:802
+#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:844
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
 #: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
+#: plug-ins/common/spheredesigner.c:2210 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -372,7 +372,7 @@ msgid "Reset parameters to default values"
 msgstr "Nulstil til standardværdier"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
+#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2312
 #: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
 #: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
@@ -532,7 +532,7 @@ msgstr "Kosinus"
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1607
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1606
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
 msgstr "Ingen"
@@ -1112,7 +1112,7 @@ msgid "Options"
 msgstr "Opsætning"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1575 plug-ins/common/spheredesigner.c:2614
+#: plug-ins/common/spheredesigner.c:1551 plug-ins/common/spheredesigner.c:2590
 msgid "Light"
 msgstr "Lys"
 
@@ -1284,7 +1284,7 @@ msgid "Map Images to Box Faces"
 msgstr "Afbild billeder to ansigtskasser"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2442
+#: plug-ins/common/spheredesigner.c:2418
 msgid "Scale X:"
 msgstr "Skalering X:"
 
@@ -1368,7 +1368,7 @@ msgstr "Vis/skjul gitter for forhåndsvisning"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:454
 #: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1413,7 +1413,7 @@ msgstr "%s: forkert farvekort"
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:923
-#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:280
+#: plug-ins/common/tiff.c:680 plug-ins/common/tile.c:280
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
@@ -1441,7 +1441,7 @@ msgstr "Kan ikke åbne %s"
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1022
-#: plug-ins/common/tiff.c:1338 plug-ins/common/xbm.c:982
+#: plug-ins/common/tiff.c:1337 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2366,11 +2366,11 @@ msgstr "Gør omgivelserne gennemsigtige"
 msgid "Lens Refraction Index:"
 msgstr "Linsens brydningsindeks:"
 
-#: plug-ins/common/autocrop.c:73
+#: plug-ins/common/autocrop.c:74
 msgid "<Image>/Image/Transforms/Autocrop"
 msgstr "<Image>/Billede/Transformation/Automatisk tilskæring"
 
-#: plug-ins/common/autocrop.c:117
+#: plug-ins/common/autocrop.c:119
 msgid "Cropping..."
 msgstr "Beskærer..."
 
@@ -2792,40 +2792,48 @@ msgstr "Beskær"
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
 msgstr "<Image>/Filter/Almindelig/Convolution matrix..."
 
-#: plug-ins/common/convmatrix.c:264
+#: plug-ins/common/convmatrix.c:225
+msgid ""
+"Convolution Matrix does not work\n"
+"on layers smaller than 3 pixels."
+msgstr ""
+"Convelution matrix virker ikke\n"
+"på lag mindre end 3 piksler."
+
+#: plug-ins/common/convmatrix.c:278
 msgid "Applying convolution"
 msgstr "Tilføjer convolution"
 
-#: plug-ins/common/convmatrix.c:795
+#: plug-ins/common/convmatrix.c:837
 msgid "Convolution Matrix"
 msgstr "Convolution matrix"
 
-#: plug-ins/common/convmatrix.c:821
+#: plug-ins/common/convmatrix.c:863
 msgid "Matrix"
 msgstr "Matrix"
 
-#: plug-ins/common/convmatrix.c:857
+#: plug-ins/common/convmatrix.c:899
 msgid "Divisor:"
 msgstr "Divisor:"
 
-#: plug-ins/common/convmatrix.c:876 plug-ins/common/depthmerge.c:775
+#: plug-ins/common/convmatrix.c:918 plug-ins/common/depthmerge.c:775
 msgid "Offset:"
 msgstr "Afstand:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
+#: plug-ins/common/convmatrix.c:942 plug-ins/common/ps.c:2708
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: plug-ins/common/convmatrix.c:908
+#: plug-ins/common/convmatrix.c:950
 msgid "Alpha-weighting"
 msgstr "Alfa-vægtlægning"
 
-#: plug-ins/common/convmatrix.c:923
+#: plug-ins/common/convmatrix.c:965
 msgid "Border"
 msgstr "Kant"
 
-#: plug-ins/common/convmatrix.c:948
+#: plug-ins/common/convmatrix.c:990
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -2838,7 +2846,7 @@ msgid "Prefixed Name:"
 msgstr "Prefiksnavn:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1622 plug-ins/common/xbm.c:1202
+#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -3353,7 +3361,7 @@ msgstr "Kantdetektering..."
 msgid "Edge Detection"
 msgstr "Kantdetektering"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
+#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2609
 #: plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "Mængde:"
@@ -3371,7 +3379,7 @@ msgstr "Relief"
 msgid "Function"
 msgstr "Funktion"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
+#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1550
 msgid "Bumpmap"
 msgstr "Bumpmap"
 
@@ -3694,12 +3702,12 @@ msgstr "Mellemrum:"
 msgid "Description:"
 msgstr "Beskrivelse:"
 
-#: plug-ins/common/gee.c:198
+#: plug-ins/common/gee.c:201
 msgid "GEE!  The GIMP E'er Egg!"
 msgstr "ORV! GIMPs påskeæg!"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:209
+#: plug-ins/common/gee.c:212
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Tak fordi du valgte GIMP **"
 
@@ -4946,7 +4954,7 @@ msgstr "Plasma..."
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2425
+#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2401
 msgid "Turbulence:"
 msgstr "Turbulens:"
 
@@ -5010,7 +5018,7 @@ msgid "Help:"
 msgstr "Hjælp:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2357
+#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2333
 #: plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Type:"
@@ -6044,114 +6052,114 @@ msgstr "Spiral"
 msgid "Spots"
 msgstr "Prikker"
 
-#: plug-ins/common/spheredesigner.c:1573 plug-ins/common/spheredesigner.c:2602
+#: plug-ins/common/spheredesigner.c:1549 plug-ins/common/spheredesigner.c:2578
 msgid "Texture"
 msgstr "Tekstur"
 
-#: plug-ins/common/spheredesigner.c:1576
+#: plug-ins/common/spheredesigner.c:1552
 msgid "(unknown!?)"
 msgstr "(ukendt!?)"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1826
 msgid "Open file"
 msgstr "Åbn fil"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1826
 msgid "Save file"
 msgstr "Gem fil"
 
-#: plug-ins/common/spheredesigner.c:2111 plug-ins/common/spheredesigner.c:2149
+#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/spheredesigner.c:2125
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
 msgstr "Farvevælgerdialog"
 
-#: plug-ins/common/spheredesigner.c:2227
+#: plug-ins/common/spheredesigner.c:2203
 msgid "Sphere Designer"
 msgstr "Sfæredesigner"
 
-#: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
+#: plug-ins/common/spheredesigner.c:2244 plug-ins/gimpressionist/preview.c:117
+#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Opdatér"
 
-#: plug-ins/common/spheredesigner.c:2277
+#: plug-ins/common/spheredesigner.c:2253
 msgid "Textures"
 msgstr "Teksturer"
 
-#: plug-ins/common/spheredesigner.c:2302 plug-ins/gfig/gfig.c:3137
+#: plug-ins/common/spheredesigner.c:2278 plug-ins/gfig/gfig.c:3137
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
 msgstr "Tilføj"
 
-#: plug-ins/common/spheredesigner.c:2309
+#: plug-ins/common/spheredesigner.c:2285
 msgid "Dup"
 msgstr "Duplikér"
 
-#: plug-ins/common/spheredesigner.c:2316
+#: plug-ins/common/spheredesigner.c:2292
 msgid "Del"
 msgstr "Slet"
 
-#: plug-ins/common/spheredesigner.c:2343
+#: plug-ins/common/spheredesigner.c:2319
 msgid "Texture Properties"
 msgstr "Teksturegenskaber"
 
-#: plug-ins/common/spheredesigner.c:2364
+#: plug-ins/common/spheredesigner.c:2340
 msgid "Texture:"
 msgstr "Tekstur:"
 
-#: plug-ins/common/spheredesigner.c:2371
+#: plug-ins/common/spheredesigner.c:2347
 msgid "Colors:"
 msgstr "Farver:"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2408 plug-ins/gimpressionist/paper.c:169
+#: plug-ins/common/spheredesigner.c:2384 plug-ins/gimpressionist/paper.c:169
 #: plug-ins/ifscompose/ifscompose.c:563
 msgid "Scale:"
 msgstr "Skalér:"
 
-#: plug-ins/common/spheredesigner.c:2459
+#: plug-ins/common/spheredesigner.c:2435
 msgid "Scale Y:"
 msgstr "Skalering Y:"
 
-#: plug-ins/common/spheredesigner.c:2476
+#: plug-ins/common/spheredesigner.c:2452
 msgid "Scale Z:"
 msgstr "Skalering Z:"
 
-#: plug-ins/common/spheredesigner.c:2494
+#: plug-ins/common/spheredesigner.c:2470
 msgid "Rotate X:"
 msgstr "Rotation X:"
 
-#: plug-ins/common/spheredesigner.c:2511
+#: plug-ins/common/spheredesigner.c:2487
 msgid "Rotate Y:"
 msgstr "Rotation Y:"
 
-#: plug-ins/common/spheredesigner.c:2528
+#: plug-ins/common/spheredesigner.c:2504
 msgid "Rotate Z:"
 msgstr "Rotation Z:"
 
-#: plug-ins/common/spheredesigner.c:2545
+#: plug-ins/common/spheredesigner.c:2521
 msgid "Pos X:"
 msgstr "Position X:"
 
-#: plug-ins/common/spheredesigner.c:2562
+#: plug-ins/common/spheredesigner.c:2538
 msgid "Pos Y:"
 msgstr "Position Y:"
 
-#: plug-ins/common/spheredesigner.c:2579
+#: plug-ins/common/spheredesigner.c:2555
 msgid "Pos Z:"
 msgstr "Position Z:"
 
-#: plug-ins/common/spheredesigner.c:2608
+#: plug-ins/common/spheredesigner.c:2584
 msgid "Bump"
 msgstr "Bump"
 
-#: plug-ins/common/spheredesigner.c:2650
+#: plug-ins/common/spheredesigner.c:2626
 msgid "Exp:"
 msgstr "Export:"
 
-#: plug-ins/common/spheredesigner.c:2667
+#: plug-ins/common/spheredesigner.c:2643
 msgid ""
 "by Vidar Madsen\n"
 "September 1999"
@@ -6159,11 +6167,11 @@ msgstr ""
 "af Vidar Madsen\n"
 "September 1999"
 
-#: plug-ins/common/spheredesigner.c:2787
+#: plug-ins/common/spheredesigner.c:2763
 msgid "Rendering..."
 msgstr "Tegner..."
 
-#: plug-ins/common/spheredesigner.c:2837
+#: plug-ins/common/spheredesigner.c:2813
 msgid "<Image>/Filters/Render/Sphere Designer..."
 msgstr "<Image>/Filter/Render/Kugle-Designer..."
 
@@ -6257,8 +6265,8 @@ msgstr "Kan ikke åbne fil for skrivning"
 
 #: plug-ins/common/sunras.c:1038 plug-ins/common/sunras.c:1129
 #: plug-ins/common/sunras.c:1210 plug-ins/common/sunras.c:1305
-#: plug-ins/common/xwd.c:1274 plug-ins/common/xwd.c:1436
-#: plug-ins/common/xwd.c:1633 plug-ins/common/xwd.c:1884
+#: plug-ins/common/xwd.c:1273 plug-ins/common/xwd.c:1435
+#: plug-ins/common/xwd.c:1632 plug-ins/common/xwd.c:1883
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
 msgstr "EOF mødt ved læsning"
@@ -6325,31 +6333,31 @@ msgstr "Alfa-tærskel: farve-gennemsigtighed..."
 msgid "Threshold Alpha"
 msgstr "Alfatærskel"
 
-#: plug-ins/common/tiff.c:690
+#: plug-ins/common/tiff.c:689
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:1581
+#: plug-ins/common/tiff.c:1580
 msgid "Save as TIFF"
 msgstr "Gem som TIFF"
 
-#: plug-ins/common/tiff.c:1603
+#: plug-ins/common/tiff.c:1602
 msgid "Compression"
 msgstr "Kompression"
 
-#: plug-ins/common/tiff.c:1608
+#: plug-ins/common/tiff.c:1607
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1609
+#: plug-ins/common/tiff.c:1608
 msgid "Pack Bits"
 msgstr "Pak bit"
 
-#: plug-ins/common/tiff.c:1610
+#: plug-ins/common/tiff.c:1609
 msgid "Deflate"
 msgstr "Udpak"
 
-#: plug-ins/common/tiff.c:1611
+#: plug-ins/common/tiff.c:1610
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7198,19 +7206,19 @@ msgstr "kan ikke operere på ukendt billedtype"
 msgid "can't open file for writing"
 msgstr "kan ikke åbne filen for skriving"
 
-#: plug-ins/common/xwd.c:1176
+#: plug-ins/common/xwd.c:1175
 msgid "EOF encountered on "
 msgstr "EOF fundet ved "
 
-#: plug-ins/common/xwd.c:1322
+#: plug-ins/common/xwd.c:1321
 msgid "No memory for mapping colors"
 msgstr "Ikke nok lager til at udpladsere farvene"
 
-#: plug-ins/common/xwd.c:2008
+#: plug-ins/common/xwd.c:2007
 msgid "Error during writing indexed/grey image"
 msgstr "Fejl under skriving af indekseret/gråt billede"
 
-#: plug-ins/common/xwd.c:2097
+#: plug-ins/common/xwd.c:2096
 msgid "Error during writing rgb image"
 msgstr "Fejl under skriving af rgb billede"
 
