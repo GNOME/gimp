@@ -1031,7 +1031,7 @@ gint fp_advanced_dialog()
     {
       label=Current.rangeLabels[i]=gtk_label_new("-");
       if (!(i%4)) {
-	gtk_label_set(GTK_LABEL(label),rangeNames[i/4]);
+	gtk_label_set_text(GTK_LABEL(label),rangeNames[i/4]);
 	gtk_misc_set_alignment(GTK_MISC(label),0.0,1.0);
       }
       gtk_widget_show(label);

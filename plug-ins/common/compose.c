@@ -865,8 +865,8 @@ compose_type_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
     compose_idx = toggle_val - &(composeint.compose_flag[0]);
     for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
-      gtk_label_set (GTK_LABEL (composeint.channel_label[j]),
-                     compose_dsc[compose_idx].channel_name[j]);
+      gtk_label_set_text (GTK_LABEL (composeint.channel_label[j]),
+                          compose_dsc[compose_idx].channel_name[j]);
   }
   else
     *toggle_val = FALSE;

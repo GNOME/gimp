@@ -270,7 +270,7 @@ ErrorMessage(guchar *message)
   gtk_widget_show(table);
   
   label=gtk_label_new("");
-  gtk_label_set(GTK_LABEL(label),message);
+  gtk_label_set_text(GTK_LABEL(label),message);
   gtk_widget_show(label);
   gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,
 		   GTK_FILL|GTK_EXPAND,GTK_FILL|GTK_EXPAND,15,15);

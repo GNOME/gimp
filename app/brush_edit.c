@@ -132,7 +132,7 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
     char str[255];
     begw->scale = scale;
     g_snprintf(str, 200, "%d:1", scale);
-    gtk_label_set(GTK_LABEL(begw->scale_label), str);
+    gtk_label_set_text(GTK_LABEL(begw->scale_label), str);
     gtk_widget_draw(begw->scale_label, NULL);
   }
   gtk_widget_draw(begw->preview, NULL);

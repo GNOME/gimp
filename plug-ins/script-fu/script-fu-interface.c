@@ -1183,7 +1183,7 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_TOGGLE:
-	  gtk_label_set (GTK_LABEL (label), "Script Toggle");
+	  gtk_label_set_text (GTK_LABEL (label), "Script Toggle");
 	  script->args_widgets[i] = gtk_check_button_new_with_label (script->arg_labels[i]);
 	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
@@ -1449,7 +1449,7 @@ script_fu_file_preview (GtkWidget *preview,
   if (data == NULL) 
     return;
 
-  gtk_label_set (GTK_LABEL (preview), g_basename((gchar *) data));
+  gtk_label_set_text (GTK_LABEL (preview), g_basename((gchar *) data));
 }
 
 
@@ -1481,12 +1481,12 @@ script_fu_font_preview (GtkWidget *preview,
   
       label = g_new (guchar, strlen (family) + 1);
       sprintf (label, "%s", family);
-      gtk_label_set (GTK_LABEL (preview), label);
+      gtk_label_set_text (GTK_LABEL (preview), label);
       g_free (label);
     }
   else
     {
-      gtk_label_set (GTK_LABEL (preview), "NOT SET");
+      gtk_label_set_text (GTK_LABEL (preview), "NOT SET");
     }
   
   g_free (fontname);

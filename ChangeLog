@@ -1,3 +1,14 @@
+Sat Dec 19 15:46:27 CST 1998 Shawn T. Amundson <amundson@gtk.org>
+
+	* app/brush_edit.c:
+	  app/by_color_select.c:
+	  plug-ins/script-fu/script-fu-scripts.c: 
+	  plug-ins/compose/compose.c:
+	  plug-ins/fp/fp.c:
+	  plug-ins/fp/fp_gdk.c:
+	  plug-ins/fp/fp_gtk.c:
+	  plug-ins/maze/maze_face.c: s/gtk_label_set/gtk_label_set_text/g
+
 Sun Dec 20 00:55:21 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c: applied the second patch from Xach with

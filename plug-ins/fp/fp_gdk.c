@@ -148,15 +148,15 @@ update_range_labels()
 {
   guchar buffer[3];
   
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[1]),"0");
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[1]),"0");
   
   sprintf(buffer,"%d",Current.Cutoffs[SHADOWS]);
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[3]),buffer);
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[5]),buffer);
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[3]),buffer);
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[5]),buffer);
 
   sprintf(buffer,"%d",Current.Cutoffs[MIDTONES]);
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[7]),buffer);
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[9]),buffer);
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[7]),buffer);
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[9]),buffer);
 
-  gtk_label_set(GTK_LABEL(Current.rangeLabels[11]),"255");
+  gtk_label_set_text (GTK_LABEL(Current.rangeLabels[11]),"255");
 }

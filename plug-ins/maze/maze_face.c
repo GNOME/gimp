@@ -683,7 +683,7 @@ maze_help (GtkWidget *widget, gpointer foo)
 static void
 maze_msg (gchar *msg)
 {
-     gtk_label_set(GTK_LABEL(msg_label), msg);
+     gtk_label_set_text(GTK_LABEL(msg_label), msg);
 }
 
 static void
