@@ -8,6 +8,7 @@
 #include "interface.h"
 #include "wilber.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define TIPS_FILE_NAME "gimp_tips.txt"

@@ -1,3 +1,12 @@
+Tue Jan 26 22:17:57 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* app/blob.c: s/(NONE|LEFT|RIGHT)/EDGE_$1/g to clear up namespace
+
+	* app/menus.c: create dummy var to i18n File/MRU item
+	(gimp-joke-9901122-1.patch)
+
+	* app/tips_dialog.c: #include <config.h> (gimp-joke-9901122-1.patch)
+
 Mon Jan 25 20:40:26 GMT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* user_install: create modules/ directory in user's ~/.gimp-1.1 dir

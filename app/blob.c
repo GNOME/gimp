@@ -44,9 +44,9 @@ blob_new (int y, int height)
 }
 
 typedef enum {
-  NONE = 0,
-  LEFT = 1 << 0,
-  RIGHT = 1 << 1
+  EDGE_NONE = 0,
+  EDGE_LEFT = 1 << 0,
+  EDGE_RIGHT = 1 << 1
 } EdgeType;
 
 Blob *
@@ -75,7 +75,7 @@ blob_convex_union (Blob *b1, Blob *b2)
     {
       if (b1->data[i].right >= b1->data[i].left)
 	{
-	  present[j] = LEFT | RIGHT;
+	  present[j] = EDGE_LEFT | EDGE_RIGHT;
 	  result->data[j].left = b1->data[i].left;
 	  result->data[j].right = b1->data[i].right;
 	}
@@ -94,7 +94,7 @@ blob_convex_union (Blob *b1, Blob *b2)
 	    }
 	  else
 	    {
-	      present[j] = LEFT | RIGHT;
+	      present[j] = EDGE_LEFT | EDGE_RIGHT;
 	      result->data[j].left = b2->data[i].left;
 	      result->data[j].right = b2->data[i].right;
 	    }
@@ -115,7 +115,7 @@ blob_convex_union (Blob *b1, Blob *b2)
   
   for (i=start+1;i<result->height;i++)
     {
-      if (!(present[i] & LEFT))
+      if (!(present[i] & EDGE_LEFT))
 	continue;
 
       x2 = result->data[i].left - result->data[i2].left;
@@ -123,9 +123,9 @@ blob_convex_union (Blob *b1, Blob *b2)
       
       while (x2*y1 - x1*y2 < 0) /* clockwise rotation */
 	{
-	  present[i2] &= ~LEFT;
+	  present[i2] &= ~EDGE_LEFT;
 	  i2 = i1;
-	  while (!(present[--i1] & LEFT) && i1>=start);
+	  while (!(present[--i1] & EDGE_LEFT) && i1>=start);
 
 	  if (i1<start)
 	    {
@@ -155,7 +155,7 @@ blob_convex_union (Blob *b1, Blob *b2)
   
   for (i=start+1;i<result->height;i++)
     {
-      if (!(present[i] & RIGHT))
+      if (!(present[i] & EDGE_RIGHT))
 	continue;
 
       x2 = result->data[i].right - result->data[i2].right;
@@ -163,9 +163,9 @@ blob_convex_union (Blob *b1, Blob *b2)
       
       while (x2*y1 - x1*y2 > 0) /* counter-clockwise rotation */
 	{
-	  present[i2] &= ~RIGHT;
+	  present[i2] &= ~EDGE_RIGHT;
 	  i2 = i1;
-	  while (!(present[--i1] & RIGHT) && i1>=start);
+	  while (!(present[--i1] & EDGE_RIGHT) && i1>=start);
 
 	  if (i1<start)
 	    {
@@ -197,7 +197,7 @@ blob_convex_union (Blob *b1, Blob *b2)
   for (i1=start; i1<result->height-2; i1++)
     {
       /* Find empty gaps */
-      if (!(present[i1+1] & LEFT))
+      if (!(present[i1+1] & EDGE_LEFT))
 	{
 	  int increment;	/* fractional part */
 	  int denom;		/* denominator of fraction */
@@ -207,7 +207,7 @@ blob_convex_union (Blob *b1, Blob *b2)
 
 	  /* find bottom of gap */
 	  i2 = i1+2;
-	  while (!(present[i2] & LEFT) && i2 < result->height) i2++;
+	  while (!(present[i2] & EDGE_LEFT) && i2 < result->height) i2++;
 	  
 	  if (i2 < result->height)
 	    {
@@ -248,7 +248,7 @@ blob_convex_union (Blob *b1, Blob *b2)
   for (i1=start; i1<result->height-2; i1++)
     {
       /* Find empty gaps */
-      if (!(present[i1+1] & RIGHT))
+      if (!(present[i1+1] & EDGE_RIGHT))
 	{
 	  int increment;	/* fractional part */
 	  int denom;		/* denominator of fraction */
@@ -258,7 +258,7 @@ blob_convex_union (Blob *b1, Blob *b2)
 
 	  /* find bottom of gap */
 	  i2 = i1+2;
-	  while (!(present[i2] & RIGHT) && i2 < result->height) i2++;
+	  while (!(present[i2] & EDGE_RIGHT) && i2 < result->height) i2++;
 	  
 	  if (i2 < result->height)
 	    {
@@ -442,22 +442,22 @@ blob_conic_add_pixel (Blob *b, EdgeType *present, int x, int y, int octant)
     {
       if (octant <= 4)
 	{
-	  if (present[y-b->y] & RIGHT)
+	  if (present[y-b->y] & EDGE_RIGHT)
 	    b->data[y-b->y].right = MAX(b->data[y-b->y].right,x);
 	  else
 	    {
 	      b->data[y-b->y].right = x;
-	      present[y-b->y] |= RIGHT;
+	      present[y-b->y] |= EDGE_RIGHT;
 	    }
 	}
       else
 	{
-	  if (present[y-b->y] & LEFT)
+	  if (present[y-b->y] & EDGE_LEFT)
 	    b->data[y-b->y].left = MIN(b->data[y-b->y].left,x);
 	  else
 	    {
 	      b->data[y-b->y].left = x;
-	      present[y-b->y] |= LEFT;
+	      present[y-b->y] |= EDGE_LEFT;
 	    }
 	}
     }
@@ -695,7 +695,7 @@ blob_conic (Blob *b, int xs, int ys,
 done:				/* jump out of two levels */
   
   for (i=0; i<b->height; i++)
-    if (present[i] != (LEFT | RIGHT))
+    if (present[i] != (EDGE_LEFT | EDGE_RIGHT))
       {
 	b->data[i].left = 0;
 	b->data[i].right = -1;

@@ -162,6 +162,17 @@ Plug-ins and Scripts
    or fixed to work with changes in the GIMP core or GTK+. One day I
    might add a list of all changed plug-ins to this list...
 
+Color selectors
+   An API has been added to allow the addition of any number of
+   different color selection systems via pluggable modules. The GTK
+   color selector and a triangle color selector have been added to the
+   color selection dialog through this new system.
+
+Better feedback 
+   Internal operations that take a long time to complete (transforms,
+   gradients, etc.) now display a progress bar and cursor change to
+   inform the user about what's going on.
+
 Miscellaneous
    - The painting functions (brush, pencil, airbrush, etc.) have been
      optimized.

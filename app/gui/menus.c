@@ -33,10 +33,13 @@
 #include "gdisplay.h"
 #include "docindex.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
-#define MRU_MENU_ENTRY_SIZE sizeof ("/File/MRU00 ")
+#define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
+
+static char* dummyMRU = N_("/File/MRU00 ");
 
 static void menus_init (void);
 static GtkItemFactoryEntry * translate_entries (const GtkItemFactoryEntry *, gint);
@@ -465,7 +468,7 @@ menus_last_opened_add (gchar *filename)
 }
 
 void
-menus_init_mru ()
+menus_init_mru (void)
 {
   gchar			*paths, *accelerators;
   gint			i;
