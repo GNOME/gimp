@@ -403,7 +403,7 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @spinbutton_usize: 
 
 
-<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_SPINBUTTON ##### -->
+<!-- ##### MACRO GIMP_MEMSIZE_ENTRY_SPINBUTTON ##### -->
 <para>
 
 </para>
@@ -411,7 +411,7 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @memsize: 
 
 
-<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ ##### -->
+<!-- ##### MACRO GIMP_MEMSIZE_ENTRY_SPINBUTTON_ADJ ##### -->
 <para>
 
 </para>
@@ -419,7 +419,7 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @memsize: 
 
 
-<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_OPTIONMENU ##### -->
+<!-- ##### MACRO GIMP_MEMSIZE_ENTRY_OPTIONMENU ##### -->
 <para>
 
 </para>
@@ -427,7 +427,7 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @memsize: 
 
 
-<!-- ##### FUNCTION gimp_mem_size_entry_new ##### -->
+<!-- ##### FUNCTION gimp_memsize_entry_new ##### -->
 <para>
 
 </para>

@@ -459,24 +459,24 @@ gimp_config_deserialize_memsize (GValue     *value,
                                  GParamSpec *prop_spec,
                                  GScanner   *scanner)
 {
-  GTokenType  token;
-  gchar      *orig_cset_first = NULL;
-  gchar      *orig_cset_nth   = NULL;
+  gchar *orig_cset_first = scanner->config->cset_identifier_first;
+  gchar *orig_cset_nth   = scanner->config->cset_identifier_nth;
 
-  orig_cset_first = scanner->config->cset_identifier_first;
-  orig_cset_nth   = scanner->config->cset_identifier_nth;
-  
   scanner->config->cset_identifier_first = G_CSET_DIGITS;
   scanner->config->cset_identifier_nth   = G_CSET_DIGITS "gGmMkKbB";
   
-  token = gimp_config_deserialize_any (value, prop_spec, scanner);
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
+    return G_TOKEN_IDENTIFIER;
 
-  if (orig_cset_first)
-    scanner->config->cset_identifier_first = orig_cset_first;
-  if (orig_cset_nth)
-    scanner->config->cset_identifier_nth = orig_cset_nth;
+  g_scanner_get_next_token (scanner);
+
+  scanner->config->cset_identifier_first = orig_cset_first;
+  scanner->config->cset_identifier_nth   = orig_cset_nth;
   
-  return token;
+  if (gimp_memsize_set_from_string (value, scanner->value.v_identifier))
+    return G_TOKEN_RIGHT_PAREN;
+  else
+    return G_TOKEN_NONE;
 }
 
 static GTokenType

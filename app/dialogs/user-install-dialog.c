@@ -1129,7 +1129,7 @@ user_install_tuning (void)
   
   tile_cache_adj = gtk_adjustment_new (base_config->tile_cache_size, 
 				       0, G_MAXULONG, 1.0, 1.0, 0.0);
-  memsize = gimp_mem_size_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
+  memsize = gimp_memsize_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
   gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
   gtk_widget_show (memsize);
 

@@ -607,7 +607,7 @@ gimp_radio_group_set_active (GtkRadioButton *radio_button,
  *
  * This function is a shortcut for gtk_adjustment_new() and a subsequent
  * gtk_spin_button_new() and does some more initialisation stuff like
- * setting a standard minimun horizontal size.
+ * setting a standard minimum horizontal size.
  *
  * Returns: A #GtkSpinbutton and it's #GtkAdjustment.
  **/
@@ -1086,127 +1086,115 @@ gimp_coordinates_new (GimpUnit         unit,
 typedef struct
 {
   GtkAdjustment *adjustment;
-  GtkAdjustment *divided_adj;
-  guint          mem_size_unit;
-} GimpMemSizeEntryData;
+  GtkAdjustment *shifted_adj;
+  guint          shift;
+} GimpMemsizeEntryData;
 
 static void
-gimp_mem_size_entry_callback (GtkAdjustment *adj,
-			      gpointer       data)
+gimp_memsize_entry_callback (GtkAdjustment *adj,
+                             gpointer       data)
 {
-  GimpMemSizeEntryData *gmsed;
-  gulong                new_value;
+  GimpMemsizeEntryData *gmed = (GimpMemsizeEntryData *) data;
 
-  gmsed = (GimpMemSizeEntryData *)data;
-  new_value = (gulong) adj->value * gmsed->mem_size_unit;
-
-  gtk_adjustment_set_value (gmsed->adjustment, new_value);
+  gtk_adjustment_set_value (gmed->adjustment,
+                            (gulong) adj->value << gmed->shift);
 }
 
 static void
-gimp_mem_size_unit_callback (GtkWidget *widget,
-			     gpointer   data)
+gimp_memsize_unit_callback (GtkWidget *widget,
+                            gpointer   data)
 {
-  GimpMemSizeEntryData *gmsed;
-  gulong                divided_mem_size;
-  guint                 new_unit;
+  GimpMemsizeEntryData *gmed = (GimpMemsizeEntryData *) data;
+  guint shift;
 
-  gmsed = (GimpMemSizeEntryData *)data;
+  shift = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
+                                               "gimp-item-data"));
 
-  new_unit = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
-                                                  "gimp-item-data"));
-
-  if (new_unit && new_unit != gmsed->mem_size_unit)
+  if (shift && shift != gmed->shift)
     {
-      GtkAdjustment *div_adj = GTK_ADJUSTMENT (gmsed->divided_adj);
+      gulong size = (gulong) gmed->adjustment->value >> shift;
 
-      divided_mem_size = (gulong) gmsed->adjustment->value / new_unit;
-      gmsed->mem_size_unit = new_unit;
+      gmed->shift = shift;
 
-      div_adj->lower = gmsed->adjustment->lower / new_unit;
-      div_adj->upper = gmsed->adjustment->upper / new_unit;
+      gmed->shifted_adj->lower = (gulong) gmed->adjustment->lower >> shift;
+      gmed->shifted_adj->upper = (gulong) gmed->adjustment->upper >> shift;
 
-      gtk_adjustment_changed (div_adj);
+      gtk_adjustment_changed (gmed->shifted_adj);
 
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (gmsed->divided_adj), 
-				divided_mem_size);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gmed->shifted_adj), size);
     }
 }
 
 /**
- * gimp_mem_size_entry_new:
+ * gimp_memsize_entry_new:
  * @adjustment: The adjustment containing the memsize and it's limits.
  *
  * Returns: A #GtkHBox with a #GtkSpinButton and a #GtkOptionMenu.
  **/
 GtkWidget *
-gimp_mem_size_entry_new (GtkAdjustment *adjustment)
+gimp_memsize_entry_new (GtkAdjustment *adjustment)
 {
+  GimpMemsizeEntryData *gmed;
   GtkWidget *hbox;
-  GtkObject *divided_adj;
   GtkWidget *spinbutton;
-  GtkWidget *optionmenu;
-
-  GimpMemSizeEntryData *gmsed;
-  gulong mem_size_unit;
-  gulong divided_mem_size;  
-  gint   i;
+  GtkWidget *menu;
+  GtkObject *shifted_adj;
+  guint      shift;
 
   g_return_val_if_fail (GTK_IS_ADJUSTMENT (adjustment), NULL);
   g_return_val_if_fail (adjustment->lower >= 0, NULL);
-  g_return_val_if_fail (adjustment->value >= 0, NULL);
+  g_return_val_if_fail (adjustment->upper <= G_MAXULONG, NULL);
 
-  gmsed = g_new (GimpMemSizeEntryData, 1);
+  gmed = g_new (GimpMemsizeEntryData, 1);
 
-  for (i = 0, mem_size_unit = 1; i < 2; i++)
+  for (shift = 30; shift > 0; shift -= 10)
     {
-      if ( (gulong) adjustment->value % (mem_size_unit << 10) != 0 )
-	break;
-      mem_size_unit <<= 10;
+      gulong size = adjustment->value;
+
+      if (size > (1 << shift) && size % (1 << shift) == 0)
+        break;
     }
 
-  divided_mem_size = (gulong) adjustment->value / mem_size_unit;
-
   hbox = gtk_hbox_new (FALSE, 2);
-  spinbutton =
-    gimp_spin_button_new (&divided_adj, divided_mem_size,
-			  adjustment->lower / mem_size_unit,
-                          adjustment->upper / mem_size_unit,
-                          1.0, 16.0, 0.0, 1.0, 0.0);
-  g_signal_connect (G_OBJECT (divided_adj), "value_changed",
-                    G_CALLBACK (gimp_mem_size_entry_callback),
-                    gmsed);
+
+  spinbutton = gimp_spin_button_new (&shifted_adj,
+                                     (gulong) adjustment->value >> shift,
+                                     (gulong) adjustment->lower >> shift,
+                                     (gulong) adjustment->upper >> shift,
+                                     1, 8, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_mem_size_unit_callback),
-			   gmsed, (gpointer) mem_size_unit,
+  g_signal_connect (G_OBJECT (shifted_adj), "value_changed",
+                    G_CALLBACK (gimp_memsize_entry_callback),
+                    gmed);
 
-			   _("Bytes"),     GINT_TO_POINTER (1 << 0),  NULL,
-			   _("KiloBytes"), GINT_TO_POINTER (1 << 10), NULL,
-			   _("MegaBytes"), GINT_TO_POINTER (1 << 20), NULL,
+  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_memsize_unit_callback),
+                                gmed,
+                                GUINT_TO_POINTER (shift),
+                                _("Bytes"),     GUINT_TO_POINTER (0),  NULL,
+                                _("KiloBytes"), GUINT_TO_POINTER (10), NULL,
+                                _("MegaBytes"), GUINT_TO_POINTER (20), NULL,
+                                _("GigaBytes"), GUINT_TO_POINTER (30), NULL,
+                                NULL);
 
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
 
   g_object_ref (adjustment);
   gtk_object_sink (GTK_OBJECT (adjustment));
-  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
-			    G_CALLBACK (g_object_unref),
-			    adjustment);
-  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
-			    G_CALLBACK (g_free),
-			    gmsed);
 
-  gmsed->adjustment    = adjustment;
-  gmsed->divided_adj   = GTK_ADJUSTMENT (divided_adj);
-  gmsed->mem_size_unit = mem_size_unit;
+  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
+			    G_CALLBACK (g_object_unref), adjustment);
+  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
+			    G_CALLBACK (g_free), gmed);
+
+  gmed->adjustment  = adjustment;
+  gmed->shifted_adj = GTK_ADJUSTMENT (shifted_adj);
+  gmed->shift       = shift;
 
   g_object_set_data (G_OBJECT (hbox), "spinbutton", spinbutton);
-  g_object_set_data (G_OBJECT (hbox), "optionmenu", optionmenu);
+  g_object_set_data (G_OBJECT (hbox), "optionmenu", menu);
 
   return hbox;
 }

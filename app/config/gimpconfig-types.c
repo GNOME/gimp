@@ -81,6 +81,60 @@ gimp_memsize_get_type (void)
   return memsize_type;
 }
 
+gboolean
+gimp_memsize_set_from_string (GValue      *value,
+                              const gchar *string)
+{
+  gchar  *end;
+  gulong  size;
+
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_MEMSIZE (value), FALSE);
+  g_return_val_if_fail (string != NULL, FALSE);
+
+  size = strtoul (string, &end, 0);
+
+  if (size == ULONG_MAX && errno == ERANGE)
+    return FALSE;
+
+  if (end && *end)
+    {
+      guint shift;
+      
+      switch (g_ascii_tolower (*end))
+        {
+        case 'b':
+          shift = 0;
+          break;
+        case 'k':
+          shift = 10;
+          break;
+        case 'm':
+          shift = 20;
+          break;
+        case 'g':
+          shift = 30;
+          break;
+        default:
+          return FALSE;
+        }
+
+      /* protect against overflow */
+      if (shift)
+        {
+          gulong limit = G_MAXULONG >> (shift);
+      
+          if (size != (size & limit))
+            return FALSE;
+
+          size <<= shift;
+        }
+    }
+  
+  g_value_set_ulong (value, size);
+  
+  return TRUE;
+}
+
 GType
 gimp_path_get_type (void)
 {
@@ -157,61 +211,10 @@ static void
 string_to_memsize (const GValue *src_value,
                    GValue       *dest_value)
 {
-  const gchar *str;
-  gchar       *end;
-  gulong       size;
+  const gchar *str = g_value_get_string (src_value);
 
-  str = g_value_get_string (src_value);
-
-  if (!str || !*str)
-    goto error;
-
-  size = strtoul (str, &end, 0);
-
-  if (size == ULONG_MAX && errno == ERANGE)
-    goto error;
-
-  if (end && *end)
-    {
-      guint shift;
-      
-      switch (g_ascii_tolower (*end))
-        {
-        case 'b':
-          shift = 0;
-          break;
-        case 'k':
-          shift = 10;
-          break;
-        case 'm':
-          shift = 20;
-          break;
-        case 'g':
-          shift = 30;
-          break;
-        default:
-          goto error;
-        }
-
-      /* protect against overflow */
-      if (shift)
-        {
-          gulong limit = G_MAXULONG >> (shift);
-      
-          if (size != (size & limit))
-            goto error;
-
-          size <<= shift;
-        }
-    }
-  
-  g_value_set_ulong (dest_value, size);
-  
-  return;
-  
- error:
-  g_value_set_ulong (dest_value, 0);
-  g_warning ("Can't convert string to GimpMemsize.");
+  if (!str || !gimp_memsize_set_from_string (dest_value, str))
+    g_warning ("Can't convert string to GimpMemsize.");
 };
 
 
@@ -219,9 +222,7 @@ static void
 unit_to_string (const GValue *src_value,
                 GValue       *dest_value)
 {
-  GimpUnit unit;
-
-  unit = (GimpUnit) g_value_get_int (src_value);
+  GimpUnit unit = (GimpUnit) g_value_get_int (src_value);
 
   g_value_set_string (dest_value, gimp_unit_get_identifier (unit));
 };
