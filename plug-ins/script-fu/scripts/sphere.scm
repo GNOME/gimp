@@ -53,10 +53,10 @@
     (gimp-ellipse-select img (- cx radius) (- cy radius)
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		light-x light-y light-end-x light-end-y)
+    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     light-x light-y light-end-x light-end-y)
 
     (gimp-selection-none img)
     (gimp-palette-set-background old-bg)

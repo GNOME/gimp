@@ -95,7 +95,6 @@ PDB_WRAPPERS_C = \
 	gimplayer_pdb.c			\
 	gimpmessage_pdb.c		\
 	gimpmisc_pdb.c			\
-	gimpmisctools_pdb.c		\
 	gimppainttools_pdb.c		\
 	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
@@ -136,7 +135,6 @@ PDB_WRAPPERS_H = \
 	gimplayer_pdb.h			\
 	gimpmessage_pdb.h		\
 	gimpmisc_pdb.h			\
-	gimpmisctools_pdb.h		\
 	gimppainttools_pdb.h		\
 	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\

@@ -23,7 +23,6 @@ pdb_sources = \
 	pdb/layer.pdb		\
 	pdb/message.pdb		\
 	pdb/misc.pdb		\
-	pdb/misc_tools.pdb	\
 	pdb/paint_tools.pdb	\
 	pdb/palette.pdb		\
 	pdb/palette_select.pdb	\

@@ -66,19 +66,19 @@
     (gimp-edit-fill text-shadow-layer BACKGROUND-FILL)
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend text-shadow-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 1 1)
+    (gimp-edit-blend text-shadow-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 1 1)
 
     (gimp-selection-none img)
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
 
-    (gimp-blend blend-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 width 0)
+    (gimp-edit-blend blend-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 width 0)
 
     (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE
 		    tile-type 1 0)

@@ -118,7 +118,9 @@ procedural_db_init_procs (Gimp               *gimp,
   }
   compat_procs[] =
   {
+    { "gimp_blend",                    "gimp_edit_blend"                },
     { "gimp_brushes_list",             "gimp_brushes_get_list"          },
+    { "gimp_bucket_fill",              "gimp_edit_bucket_fill"          },
     { "gimp_channel_delete",           "gimp_drawable_delete"           },
     { "gimp_channel_get_name",         "gimp_drawable_get_name"         },
     { "gimp_channel_get_tattoo",       "gimp_drawable_get_tattoo"       },
@@ -126,6 +128,7 @@ procedural_db_init_procs (Gimp               *gimp,
     { "gimp_channel_set_name",         "gimp_drawable_set_name"         },
     { "gimp_channel_set_tattoo",       "gimp_drawable_set_tattoo"       },
     { "gimp_channel_set_visible",      "gimp_drawable_set_visible"      },
+    { "gimp_color_picker",             "gimp_image_pick_color"          },
     { "gimp_convert_grayscale",        "gimp_image_convert_grayscale"   },
     { "gimp_convert_indexed",          "gimp_image_convert_indexed"     },
     { "gimp_convert_rgb",              "gimp_image_convert_rgb"         },

@@ -41,10 +41,10 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
-	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-	      FALSE 0 0 TRUE
-	      x1 y1 x2 y2))
+  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
+		   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		   FALSE 0 0 TRUE
+		   x1 y1 x2 y2))
 
 (define (script-fu-alien-glow-button text
 				     font
@@ -102,10 +102,10 @@
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend button-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 img-height img-width)
+    (gimp-edit-blend button-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 img-height img-width)
 
     (gimp-edit-clear glow-layer)
 

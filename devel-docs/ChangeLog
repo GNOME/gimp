@@ -1,3 +1,12 @@
+2004-01-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: moved color_picker, blend and
+	bucket_fill to their new places.
+
+	* libgimp/tmpl/gimpedit.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimptools.sgml: regenerated.
+
 2003-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

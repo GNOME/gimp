@@ -53,10 +53,10 @@
 
 	  (gimp-gradients-set-gradient "Coffee")
 
-	  (gimp-blend theStain CUSTOM-MODE NORMAL-MODE
-		      GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
-		      FALSE 0 0 TRUE
-		      0 0 0 0)
+	  (gimp-edit-blend theStain CUSTOM-MODE NORMAL-MODE
+			   GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
+			   FALSE 0 0 TRUE
+			   0 0 0 0)
 
 	  (gimp-layer-set-offsets theStain
 				  (- (rand theWidth) (/ theSize 2))

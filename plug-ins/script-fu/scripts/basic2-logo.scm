@@ -46,10 +46,10 @@
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend logo-layer FG-BG-RGB-MODE MULTIPLY-MODE
-		GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 width height)
+    (gimp-edit-blend logo-layer FG-BG-RGB-MODE MULTIPLY-MODE
+		     GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 width height)
 
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-layer-translate highlight-layer (- posx 2) (- posy 2))

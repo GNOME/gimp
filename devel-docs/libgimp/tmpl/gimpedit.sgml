@@ -62,6 +62,46 @@ Edit menu functions (cut, copy, paste, clear, etc.)
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_edit_bucket_fill ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@fill_mode: 
+@paint_mode: 
+@opacity: 
+@threshold: 
+@sample_merged: 
+@x: 
+@y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_edit_blend ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@blend_mode: 
+@paint_mode: 
+@gradient_type: 
+@opacity: 
+@offset: 
+@repeat: 
+@reverse: 
+@supersample: 
+@max_depth: 
+@threshold: 
+@dither: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_edit_stroke ##### -->
 <para>
 

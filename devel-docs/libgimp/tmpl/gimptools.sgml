@@ -38,46 +38,6 @@ Functions giving access to common toolbox tools.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_blend ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@blend_mode: 
-@paint_mode: 
-@gradient_type: 
-@opacity: 
-@offset: 
-@repeat: 
-@reverse: 
-@supersample: 
-@max_depth: 
-@threshold: 
-@dither: 
-@x1: 
-@y1: 
-@x2: 
-@y2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_bucket_fill ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@fill_mode: 
-@paint_mode: 
-@opacity: 
-@threshold: 
-@sample_merged: 
-@x: 
-@y: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_by_color_select ##### -->
 <para>
 
@@ -117,22 +77,6 @@ Functions giving access to common toolbox tools.
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_color_picker ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@drawable_ID: 
-@x: 
-@y: 
-@sample_merged: 
-@sample_average: 
-@average_radius: 
-@color: 
 @Returns: 
 
 

@@ -221,6 +221,8 @@ gimp_edit_copy
 gimp_edit_paste
 gimp_edit_clear
 gimp_edit_fill
+gimp_edit_bucket_fill
+gimp_edit_blend
 gimp_edit_stroke
 </SECTION>
 
@@ -327,6 +329,7 @@ gimp_image_get_active_drawable
 gimp_image_unset_active_channel
 gimp_image_get_floating_sel
 gimp_image_floating_sel_attached_to
+gimp_image_pick_color
 gimp_image_pick_correlate_layer
 gimp_image_add_layer
 gimp_image_remove_layer
@@ -554,12 +557,9 @@ gimp_tile_cache_ntiles
 <FILE>gimptools</FILE>
 gimp_airbrush
 gimp_airbrush_default
-gimp_blend
-gimp_bucket_fill
 gimp_by_color_select
 gimp_clone
 gimp_clone_default
-gimp_color_picker
 gimp_convolve
 gimp_convolve_default
 gimp_dodgeburn

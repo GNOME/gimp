@@ -140,10 +140,10 @@
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend gradient FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 0 (- height 1))
+    (gimp-edit-blend gradient FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 0 (- height 1))
 
     (gimp-selection-none img)
 

@@ -56,10 +56,10 @@
 	(let ((theMask (car (gimp-layer-create-mask thinLayer 0))))
 	  (gimp-layer-add-mask thinLayer theMask)
 
-	  (gimp-blend theMask FG-BG-RGB-MODE NORMAL-MODE
-		      GRADIENT-LINEAR 100 0 REPEAT-TRIANGULAR FALSE
-		      FALSE 0 0 TRUE
-		      0 0 0 (/ theHeight 2)))
+	  (gimp-edit-blend theMask FG-BG-RGB-MODE NORMAL-MODE
+			   GRADIENT-LINEAR 100 0 REPEAT-TRIANGULAR FALSE
+			   FALSE 0 0 TRUE
+			   0 0 0 (/ theHeight 2)))
 
 	(set! theLayer (car(gimp-image-flatten theImage)))))
 	

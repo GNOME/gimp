@@ -44,10 +44,10 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
-	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-	      FALSE 0 0 TRUE
-	      x1 y1 x2 y2))
+  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
+		   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		   FALSE 0 0 TRUE
+		   x1 y1 x2 y2))
 
 (define (script-fu-button00 text
 			    size
@@ -111,10 +111,10 @@
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend gradient FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 (- img-width 1) (- img-height 1))
+    (gimp-edit-blend gradient FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 (- img-width 1) (- img-height 1))
 
     (plug-in-bump-map 1 img gradient bumpmap
 		      135 45 bevel-width 0 0 0 0 TRUE pressed 0)

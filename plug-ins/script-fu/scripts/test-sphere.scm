@@ -178,20 +178,20 @@
     (gimp-ellipse-select img (- cx radius) (- cy radius)
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		light-x light-y light-end-x light-end-y)
+    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     light-x light-y light-end-x light-end-y)
 
     (gimp-selection-none img)
 
     (gimp-gradients-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable CUSTOM-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
-		FALSE 0 0 TRUE
-		10 10 30 60)
+    (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
+		     FALSE 0 0 TRUE
+		     10 10 30 60)
 
     (gimp-selection-none img)
 

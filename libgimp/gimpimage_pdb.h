@@ -64,6 +64,14 @@ gint32            gimp_image_get_active_drawable      (gint32                ima
 gboolean          gimp_image_unset_active_channel     (gint32                image_ID);
 gint32            gimp_image_get_floating_sel         (gint32                image_ID);
 gint32            gimp_image_floating_sel_attached_to (gint32                image_ID);
+gboolean          gimp_image_pick_color               (gint32                image_ID,
+						       gint32                drawable_ID,
+						       gdouble               x,
+						       gdouble               y,
+						       gboolean              sample_merged,
+						       gboolean              sample_average,
+						       gdouble               average_radius,
+						       GimpRGB              *color);
 gint32            gimp_image_pick_correlate_layer     (gint32                image_ID,
 						       gint                  x,
 						       gint                  y);

@@ -47,10 +47,10 @@
 
     (gimp-gradients-set-gradient gradient)
 
-    (gimp-blend logo-layer CUSTOM-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		FALSE 0 0 TRUE
-		0 0 0 (+ height 5))
+    (gimp-edit-blend logo-layer CUSTOM-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+		     FALSE 0 0 TRUE
+		     0 0 0 (+ height 5))
 
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
     (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
@@ -95,10 +95,10 @@
     (gimp-layer-add-mask reflect-layer layer-mask)
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 (- (/ height 2)) 0 height)
+    (gimp-edit-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 (- (/ height 2)) 0 height)
 
     (gimp-image-remove-channel img channel)
 

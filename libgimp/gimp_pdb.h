@@ -45,7 +45,6 @@
 #include <libgimp/gimplayer_pdb.h>
 #include <libgimp/gimpmessage_pdb.h>
 #include <libgimp/gimpmisc_pdb.h>
-#include <libgimp/gimpmisctools_pdb.h>
 #include <libgimp/gimppainttools_pdb.h>
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>

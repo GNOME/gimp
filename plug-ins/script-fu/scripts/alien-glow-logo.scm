@@ -37,10 +37,10 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-palette-set-foreground '(79 79 79))
 
-    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 1 1)
+    (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 1 1)
 
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))

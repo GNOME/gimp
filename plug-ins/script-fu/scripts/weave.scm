@@ -68,10 +68,10 @@
 		      FALSE
 		      0)
 
-    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		(/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0 0)
+    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0 0)
 
     ; Create main vertical ribbon
 
@@ -84,10 +84,10 @@
 		      FALSE
 		      0)
 
-    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0)
+    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0)
 
     ; Create the secondary horizontal ribbon
 

@@ -40,6 +40,7 @@
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
@@ -52,6 +53,7 @@
 #include "gimp-intl.h"
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 static ProcRecord image_list_proc;
@@ -73,6 +75,7 @@ static ProcRecord image_get_active_drawable_proc;
 static ProcRecord image_unset_active_channel_proc;
 static ProcRecord image_get_floating_sel_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
+static ProcRecord image_pick_color_proc;
 static ProcRecord image_pick_correlate_layer_proc;
 static ProcRecord image_add_layer_proc;
 static ProcRecord image_remove_layer_proc;
@@ -137,6 +140,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_unset_active_channel_proc);
   procedural_db_register (gimp, &image_get_floating_sel_proc);
   procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
+  procedural_db_register (gimp, &image_pick_color_proc);
   procedural_db_register (gimp, &image_pick_correlate_layer_proc);
   procedural_db_register (gimp, &image_add_layer_proc);
   procedural_db_register (gimp, &image_remove_layer_proc);
@@ -1369,6 +1373,129 @@ static ProcRecord image_floating_sel_attached_to_proc =
   1,
   image_floating_sel_attached_to_outargs,
   { { image_floating_sel_attached_to_invoker } }
+};
+
+static Argument *
+image_pick_color_invoker (Gimp     *gimp,
+                          Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpDrawable *drawable;
+  gdouble x;
+  gdouble y;
+  gboolean sample_merged;
+  gboolean sample_average;
+  gdouble average_radius;
+  GimpRGB color;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+
+  x = args[2].value.pdb_float;
+
+  y = args[3].value.pdb_float;
+
+  sample_merged = args[4].value.pdb_int ? TRUE : FALSE;
+
+  sample_average = args[5].value.pdb_int ? TRUE : FALSE;
+
+  average_radius = args[6].value.pdb_float;
+  if (sample_average && (average_radius <= 0.0))
+    success = FALSE;
+
+  if (success)
+    {
+      if (!sample_merged)
+	if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
+	  success = FALSE;
+    
+      if (success)
+	success = gimp_image_pick_color (gimage,
+					 drawable,
+					 (gint) x, (gint) y,
+					 sample_merged,
+					 sample_average,
+					 average_radius,
+					 NULL,
+					 &color,
+					 NULL);
+    }
+
+  return_args = procedural_db_return_args (&image_pick_color_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_color = color;
+
+  return return_args;
+}
+
+static ProcArg image_pick_color_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable to pick from"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "x",
+    "x coordinate of upper-left corner of rectangle"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "y",
+    "y coordinate of upper-left corner of rectangle"
+  },
+  {
+    GIMP_PDB_INT32,
+    "sample_merged",
+    "Use the composite image, not the drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "sample_average",
+    "Average the color of all the pixels in a specified radius"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "average_radius",
+    "The radius of pixels to average"
+  }
+};
+
+static ProcArg image_pick_color_outargs[] =
+{
+  {
+    GIMP_PDB_COLOR,
+    "color",
+    "The return color"
+  }
+};
+
+static ProcRecord image_pick_color_proc =
+{
+  "gimp_image_pick_color",
+  "Determine the color at the given drawable coordinates",
+  "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored except for finding the image it belongs to.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  7,
+  image_pick_color_inargs,
+  1,
+  image_pick_color_outargs,
+  { { image_pick_color_invoker } }
 };
 
 static Argument *

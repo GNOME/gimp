@@ -93,10 +93,10 @@
 		 (if (= fadeout TRUE)
 		     (begin
                        ; blend with 20% offset to get less transparency in the front
-		       (gimp-blend bl-mask FG-BG-RGB-MODE NORMAL-MODE
-				   GRADIENT-LINEAR 100 20 REPEAT-NONE FALSE
-				   FALSE 0 0 TRUE
-				   (+ bl-x-off bl-width) 0 bl-x-off 0)))
+		       (gimp-edit-blend bl-mask FG-BG-RGB-MODE NORMAL-MODE
+					GRADIENT-LINEAR 100 20 REPEAT-NONE FALSE
+					FALSE 0 0 TRUE
+					(+ bl-x-off bl-width) 0 bl-x-off 0)))
 
 		 (if (= fadeout FALSE)
 		     (begin
@@ -115,11 +115,11 @@
 
                      ;--- blend glow color inside the letters
 		     (gimp-palette-set-foreground glow-color)
-		     (gimp-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
-				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-				 FALSE 0 0 TRUE
-				 (+ bl-x-off bl-width) 0
-				 (- (+ bl-x-off bl-width) after-glow) 0)
+		     (gimp-edit-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
+				      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+				      FALSE 0 0 TRUE
+				      (+ bl-x-off bl-width) 0
+				      (- (+ bl-x-off bl-width) after-glow) 0)
 
                      ;--- add corona effect
 		     (gimp-selection-layer-alpha bl-layer)
@@ -128,11 +128,11 @@
 		     (gimp-layer-set-preserve-trans bl-layer FALSE)
 		     (gimp-selection-feather img corona-width)
 		     (gimp-palette-set-foreground glow-color)
-		     (gimp-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
-				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-				 FALSE 0 0 TRUE
-				 (- (+ bl-x-off bl-width) corona-width) 0
-				 (- (+ bl-x-off bl-width) after-glow) 0))
+		     (gimp-edit-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
+				      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+				      FALSE 0 0 TRUE
+				      (- (+ bl-x-off bl-width) corona-width) 0
+				      (- (+ bl-x-off bl-width) after-glow) 0))
 
 		 ;--- merge with bg layer
 		 (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))

@@ -94,10 +94,10 @@
     (gimp-palette-set-background '(31 31 31))
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-BILINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		cx cy bx by)
+    (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-BILINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     cx cy bx by)
 
     (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100 0)
 

@@ -203,6 +203,22 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_pick_color ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@drawable_ID: 
+@x: 
+@y: 
+@sample_merged: 
+@sample_average: 
+@average_radius: 
+@color: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_pick_correlate_layer ##### -->
 <para>
 

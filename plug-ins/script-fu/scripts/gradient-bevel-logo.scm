@@ -59,10 +59,10 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
 
-    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-RADIAL 95 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		indentX indentY indentX (- height indentY))
+    (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-RADIAL 95 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     indentX indentY indentX (- height indentY))
 
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)

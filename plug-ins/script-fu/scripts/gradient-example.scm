@@ -47,10 +47,10 @@
 
     ; Render gradient
 
-    (gimp-blend drawable CUSTOM-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		FALSE 0 0 TRUE
-		0 0 (- width 1) 0)
+    (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+		     FALSE 0 0 TRUE
+		     0 0 (- width 1) 0)
 
     ; Terminate
 

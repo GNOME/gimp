@@ -21,7 +21,6 @@
     layer
     message
     misc
-    misc_tools
     paint_tools
     palette
     palette_select

@@ -42,6 +42,9 @@ G_BEGIN_DECLS
 #define gimp_use_xshm                           TRUE
 #define gimp_color_cube                         ((guchar *) { 6, 6, 4, 24 })
 
+#define gimp_blend                              gimp_edit_blend
+#define gimp_bucket_fill                        gimp_edit_bucket_fill
+#define gimp_color_picker                       gimp_image_pick_color
 #define gimp_convert_rgb                        gimp_image_convert_rgb
 #define gimp_convert_grayscale                  gimp_image_convert_grayscale
 #define gimp_convert_indexed                    gimp_image_convert_indexed

@@ -121,11 +121,11 @@
     (gimp-drawable-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
-    (gimp-blend text-layer CUSTOM-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-		FALSE 0.2 3 TRUE
-		padding padding
-		(- text-width padding 1) (- text-height padding 1))
+    (gimp-edit-blend text-layer CUSTOM-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
+		     FALSE 0.2 3 TRUE
+		     padding padding
+		     (- text-width padding 1) (- text-height padding 1))
 
     ; Semicircle at the left
 
@@ -133,9 +133,9 @@
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-color-picker img text-layer
-							 text-layers-offset 0
-							 TRUE FALSE 0)))
+    (gimp-palette-set-background (car (gimp-image-pick-color img text-layer
+							     text-layers-offset 0
+							     TRUE FALSE 0)))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     ; Fade-out gradient at the right
@@ -145,10 +145,10 @@
     (gimp-palette-set-foreground (car (gimp-palette-get-background)))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend bg-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-		FALSE 0.2 3 TRUE
-		(- img-width fade-width) 0 (- img-width 1) 0)
+    (gimp-edit-blend bg-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0.2 3 TRUE
+		     (- img-width fade-width) 0 (- img-width 1) 0)
 
     (gimp-selection-none img)
 

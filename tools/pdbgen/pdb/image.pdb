@@ -522,6 +522,75 @@ HELP
     %invoke = ( code => 'gimp_image_unset_active_channel (gimage);' );
 }
 
+sub image_pick_color {
+    $blurb = <<'BLURB';
+Determine the color at the given drawable coordinates
+BLURB
+
+    $help = <<'HELP';
+This tool determines the color at the specified coordinates. The
+returned color is an RGB triplet even for grayscale and indexed
+drawables. If the coordinates lie outside of the extents of the
+specified drawable, then an error is returned. If the drawable has an
+alpha channel, the algorithm examines the alpha value of the drawable
+at the coordinates. If the alpha value is completely transparent (0),
+then an error is returned. If the sample_merged parameter is non-zero,
+the data of the composite image will be used instead of that for the
+specified drawable. This is equivalent to sampling for colors after
+merging all visible layers. In the case of a merged sampling, the
+supplied drawable is ignored except for finding the image it belongs
+to.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'drawable', type => 'drawable',
+          desc => 'The drawable to pick from' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
+	{ name => 'sample_merged', type => 'boolean',
+          desc => 'Use the composite image, not the drawable' },
+	{ name => 'sample_average', type => 'boolean',
+	  desc => 'Average the color of all the pixels in a specified
+		   radius' },
+	{ name => 'average_radius', type => '0 < float',
+	  desc => 'The radius of pixels to average',
+	  cond => [ 'sample_average' ] }
+    );
+    $inargs[1]->{no_success} = 1;
+
+    @outargs = (
+	{ name => 'color', type => 'color', void_ret => 1,
+	  desc => 'The return color', init => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-pick-color.h") ],
+	code => <<'CODE'
+{
+  if (!sample_merged)
+    if (!drawable || (gimp_item_get_image (GIMP_ITEM (drawable)) != gimage))
+      success = FALSE;
+
+  if (success)
+    success = gimp_image_pick_color (gimage,
+                                     drawable,
+                                     (gint) x, (gint) y,
+			             sample_merged,
+                                     sample_average,
+                                     average_radius,
+                                     NULL,
+                                     &color,
+                                     NULL);
+}
+CODE
+    );
+}
+
 sub image_pick_correlate_layer {
     $blurb = 'Find the layer visible at the specified coordinates.';
 
@@ -1454,7 +1523,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
 		   image_get_active_drawable
                    image_unset_active_channel
                    image_get_floating_sel image_floating_sel_attached_to
-                   image_pick_correlate_layer
+                   image_pick_color image_pick_correlate_layer
                    image_add_layer image_remove_layer
 		   image_raise_layer image_lower_layer
                    image_raise_layer_to_top image_lower_layer_to_bottom
@@ -1465,7 +1534,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_get_cmap image_set_cmap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..32,35..59]]);
+%exports = (app => [@procs], lib => [@procs[0..33,36..60]]);
 
 $desc = 'Image';
 

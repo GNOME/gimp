@@ -3525,14 +3525,14 @@ paint_layer_new (gchar *new_name)
 static void
 paint_layer_fill (void)
 {
-  gimp_bucket_fill (gfig_drawable,
-                    selopt.fill_type,    /* Fill mode */
-                    GIMP_NORMAL_MODE,
-                    selopt.fill_opacity, /* Fill opacity */
-                    0.0,                 /* threshold - ignored */
-                    FALSE,               /* Sample merged - ignored */
-                    0.0,                 /* x - ignored */
-                    0.0);                /* y - ignored */
+  gimp_edit_bucket_fill (gfig_drawable,
+                         selopt.fill_type,    /* Fill mode */
+                         GIMP_NORMAL_MODE,
+                         selopt.fill_opacity, /* Fill opacity */
+                         0.0,                 /* threshold - ignored */
+                         FALSE,               /* Sample merged - ignored */
+                         0.0,                 /* x - ignored */
+                         0.0);                /* y - ignored */
 }
 
 static void

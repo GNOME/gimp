@@ -108,10 +108,10 @@
     (gimp-palette-set-foreground '(103 103 103))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
-		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-		FALSE 0 0 TRUE
-		0 0 size size)
+    (gimp-edit-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
+		     GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		     FALSE 0 0 TRUE
+		     0 0 size size)
     
     (gimp-selection-grow img grow-amount)
     (gimp-palette-set-foreground glow-color)
