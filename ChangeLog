@@ -1778,14 +1778,14 @@
 	* plug-ins/imagemap/imap_main.c: changed accordingly. Removed
 	trailing whitespace all over the place.
 
-2003-06-22  Manish Singh  <yosh@gimp.org>
+2003-08-22  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: disallow libgimpprint >= 4.3.0, addresses bug #120162.
 
 	* configure.in: reverted previous change, until all po directories
 	are filled for ms.po
 
-2003-06-22  Hasbullah Bin Pit  <sebol@ikhlas.com>
+2003-08-22  Hasbullah Bin Pit  <sebol@ikhlas.com>
 
         * configure.in(ALL_LINGUAS): Added "ms" (Malay).
 
