@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <libgimpwidgets/gimpwidgets.h>
+#include <libgimpwidgets/gimpcontroller.h>
 
 gimp_button_get_type
 gimp_cell_renderer_color_get_type

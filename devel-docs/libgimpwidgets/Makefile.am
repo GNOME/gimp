@@ -47,7 +47,8 @@ GTKDOC_CFLAGS = \
 	@CFLAGS@		\
 	-I$(top_srcdir) 	\
 	-I$(top_builddir) 	\
-	@GTK_CFLAGS@
+	@GTK_CFLAGS@		\
+	-DGIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 
 GTKDOC_LIBS = \
         $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la        \
