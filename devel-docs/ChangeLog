@@ -1,5 +1,9 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/tmpl/gimpdrawabletransform.sgml: regenerated.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/libgimp-sections.txt
 	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
 

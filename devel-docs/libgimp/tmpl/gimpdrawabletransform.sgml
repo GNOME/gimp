@@ -60,9 +60,11 @@ gimpdrawabletransform
 @y0: 
 @x1: 
 @y1: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_perspective ##### -->
@@ -101,9 +103,11 @@ gimpdrawabletransform
 @y2: 
 @x3: 
 @y3: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_rotate_simple ##### -->
@@ -152,9 +156,11 @@ gimpdrawabletransform
 @auto_center: 
 @center_x: 
 @center_y: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_scale ##### -->
@@ -185,9 +191,11 @@ gimpdrawabletransform
 @y0: 
 @x1: 
 @y1: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_shear ##### -->
@@ -214,9 +222,11 @@ gimpdrawabletransform
 @drawable_ID: 
 @shear_type: 
 @magnitude: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_2d ##### -->
@@ -253,9 +263,11 @@ gimpdrawabletransform
 @angle: 
 @dest_x: 
 @dest_y: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
 <!-- ##### FUNCTION gimp_drawable_transform_matrix ##### -->
@@ -296,8 +308,10 @@ gimpdrawabletransform
 @coeff_2_0: 
 @coeff_2_1: 
 @coeff_2_2: 
-@interpolation: 
+@interpolate: 
 @clip_result: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@interpolation: 
 
 
