@@ -327,7 +327,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
           gtk_image_get_stock (image, &stock_id, NULL);
           gtk_image_set_from_stock (image, stock_id, tool_icon_size);
 
-          gtk_button_set_relief (tool_button, relief);
+          gtk_button_set_relief (GTK_BUTTON (tool_button), relief);
         }
     }
 

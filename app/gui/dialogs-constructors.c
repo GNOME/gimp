@@ -1153,7 +1153,7 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
   GtkImage *image;
   gchar    *text;
 
-  if (image = g_object_get_data (G_OBJECT (label), "tool-icon"))
+  if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
     gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
 
   text = g_strdup_printf (_("%s Options"), tool_info->blurb);
