@@ -256,6 +256,8 @@ lc_dialog_rebuild (int new_preview_size)
     {
       flag = 1;
       gimage = lc_dialog->gimage;
+      /*  Unregister the dialog  */
+      dialog_unregister (lc_dialog->shell);
       lc_dialog_free ();
     }
 
@@ -292,14 +294,18 @@ void
 lc_dialog_menu_preview_dirty (GtkObject *obj,
 			      gpointer   client_data)
 {
+  if(!preview_size)
+    return;
   /* Update preview at a less busy time */
-  /*   printf("menu_preview_dirty:: adding %p to obj %p\n",client_data,obj); */
   gtk_idle_add((GtkFunction)image_menu_preview_update_do,(gpointer)obj); 
 }
     
 void 
 lc_dialog_preview_update(GimpImage *gimage)
 {
+  if(!preview_size)
+    return;
+
   layers_dialog_invalidate_previews(gimage);
   gtk_idle_add((GtkFunction)image_menu_preview_update_do,gimage);
 }
@@ -566,40 +572,46 @@ lc_dialog_create_image_menu_cb (gpointer im,
   gtk_container_add (GTK_CONTAINER (menu_item), hbox);
   gtk_widget_show(hbox);
   
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show(vbox);
+  if(preview_size)
+    {
+      
+      vbox = gtk_vbox_new(FALSE, 0);
+      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+      gtk_widget_show(vbox);
+      
+      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+      
+      lc_dialog_fill_preview_with_thumb(wcolor_box,
+					gimage,
+					MENU_THUMBNAIL_WIDTH,
+					MENU_THUMBNAIL_HEIGHT);
+      
+      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+			    MENU_THUMBNAIL_WIDTH , 
+			    MENU_THUMBNAIL_HEIGHT);
+      
+      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+      gtk_widget_show(wcolor_box);
+      
+      if(gtk_object_get_data(GTK_OBJECT (gimage),"menu_preview_dirty") == NULL)
+	{
+	  /* Only add this signal once */
+	  gtk_object_set_data(GTK_OBJECT (gimage),"menu_preview_dirty",(gpointer)1);
+	  gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
+				    GTK_SIGNAL_FUNC(lc_dialog_menu_preview_dirty),NULL);
+	}
+      gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview",wcolor_box);
+      gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview_gimage",gimage);
+
+    }
   
-  wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
-  
-  lc_dialog_fill_preview_with_thumb(wcolor_box,
-				    gimage,
-				    MENU_THUMBNAIL_WIDTH,
-				    MENU_THUMBNAIL_HEIGHT);
-  
-  gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
- 			MENU_THUMBNAIL_WIDTH , 
- 			MENU_THUMBNAIL_HEIGHT);
-  
-  gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
-  gtk_widget_show(wcolor_box);
-  
+  gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
+
   wlabel = gtk_label_new(menu_item_label);
   gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
   gtk_widget_show(wlabel);
- 
-  gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
-  if(gtk_object_get_data(GTK_OBJECT (gimage),"menu_preview_dirty") == NULL)
-    {
-      /* Only add this signal once */
-      gtk_object_set_data(GTK_OBJECT (gimage),"menu_preview_dirty",(gpointer)1);
-      gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
- 				GTK_SIGNAL_FUNC(lc_dialog_menu_preview_dirty),NULL);
-    }
-  gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview",wcolor_box);
-  gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview_gimage",gimage);
   
   gtk_widget_show (menu_item);
   

@@ -1,3 +1,14 @@
+Fri Jun 25 22:09:04 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* lc_dialog.c
+
+	Fixed problem when preview sizes are changed in L&C&P 
+	dialog and then the busy cursors stuff tried to change 
+	the cursor on a dialog that has been removed. (ie
+	the LCP dialog should be unregistered when it is destroyed)
+	
+	Small previews in LCP dialog image menu do not get created when 		no preview preference is set.
+
 Thu Jun 24 18:13:35 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/mkgen.pl
