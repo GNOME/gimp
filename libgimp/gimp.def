@@ -3,10 +3,9 @@ EXPORTS
 	gimp_airbrush_default
 	gimp_attach_new_parasite
 	gimp_blend
-	gimp_brush_select_destroy
-	gimp_brush_select_new
 	gimp_brushes_close_popup
 	gimp_brushes_get_brush_data
+	gimp_brushes_popup
 	gimp_brushes_set_popup
 	gimp_bucket_fill
 	gimp_by_color_select
@@ -99,8 +98,6 @@ EXPORTS
 	gimp_floating_sel_remove
 	gimp_floating_sel_rigor
 	gimp_floating_sel_to_layer
-	gimp_font_select_destroy
-	gimp_font_select_new
 	gimp_fonts_close_popup
 	gimp_fonts_popup
 	gimp_fonts_set_popup
@@ -114,13 +111,12 @@ EXPORTS
 	gimp_get_progname
 	gimp_gimprc_query
 	gimp_gimprc_set
-	gimp_gradient_select_destroy
-	gimp_gradient_select_new
 	gimp_gradients_close_popup
 	gimp_gradients_get_gradient
 	gimp_gradients_get_gradient_data
 	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
+	gimp_gradients_popup
 	gimp_gradients_sample_custom
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_gradient
@@ -266,10 +262,9 @@ EXPORTS
 	gimp_path_set_points
 	gimp_path_set_tattoo
 	gimp_path_stroke_current
-	gimp_pattern_select_destroy
-	gimp_pattern_select_new
 	gimp_patterns_close_popup
 	gimp_patterns_get_pattern_data
+	gimp_patterns_popup
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_perspective
@@ -328,6 +323,7 @@ EXPORTS
 	gimp_show_tool_tips
 	gimp_smudge
 	gimp_smudge_default
+	gimp_temp_PDB_name
 	gimp_temp_name
 	gimp_text
 	gimp_text_fontname

@@ -23,8 +23,6 @@ PKG_LINK = \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
-#	tools-enums.obj \
-	tools.obj \
 	gimpairbrushtool.obj \
 #	gimpbezierselecttool.obj \
 	gimpblendoptions.obj \
@@ -68,6 +66,7 @@ OBJECTS = \
 	gimpmoveoptions.obj \
 	gimpmovetool.obj \
 	gimppaintbrushtool.obj \
+	gimppaintoptions-gui.obj \
 	gimppainttool.obj \
 	gimppenciltool.obj \
 	gimpperspectivetool.obj \
@@ -84,14 +83,14 @@ OBJECTS = \
 	gimpthresholdtool.obj \
 	gimptool.obj \
 	gimptoolcontrol.obj \
+	gimptooloptions-gui.obj \
 	gimptransformoptions.obj \
 	gimptransformtool.obj \
 	gimptransformtool-undo.obj \
 	gimpvectoroptions.obj \
 	gimpvectortool.obj \
-	paint_options.obj \
-	tool_options.obj \
 	tool_manager.obj \
+	tools.obj \
 	tools-enums.obj \
 
 INCLUDES = \

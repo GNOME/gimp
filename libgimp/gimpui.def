@@ -1,6 +1,8 @@
 EXPORTS
-	gimp_brush_select_widget_close
+	gimp_brush_select_new
+	gimp_brush_select_destroy
 	gimp_brush_select_widget_new
+	gimp_brush_select_widget_close
 	gimp_brush_select_widget_set
 	gimp_channel_menu_new
 	gimp_drawable_menu_new
@@ -15,16 +17,19 @@ EXPORTS
 	gimp_fixme_preview_new2
 	gimp_fixme_preview_put_pixel
 	gimp_fixme_preview_update
-	gimp_font_select_widget_close
+	gimp_font_select_new
 	gimp_font_select_widget_new
+	gimp_font_select_widget_close
 	gimp_font_select_widget_set
-	gimp_gradient_select_widget_close
+	gimp_gradient_select_new
 	gimp_gradient_select_widget_new
+	gimp_gradient_select_widget_close
 	gimp_gradient_select_widget_set
 	gimp_image_menu_new
 	gimp_layer_menu_new
-	gimp_pattern_select_widget_close
+	gimp_pattern_select_new
 	gimp_pattern_select_widget_new
+	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_set
 	gimp_plug_in_get_path
 	gimp_ui_init

@@ -77,17 +77,7 @@
 #include <gtk/gtklist.h>
 
 #ifdef G_OS_WIN32
-#include <io.h>
-
-#ifndef W_OK
-#define W_OK 2
-#endif
-#ifndef S_ISDIR
-#define S_ISDIR(m) ((m) & _S_IFDIR)
-#endif
-#ifndef S_ISREG
-#define S_ISREG(m) ((m) & _S_IFREG)
-#endif
+#include <libgimpbase/gimpwin32-io.h>
 #endif
 
 #include "libgimp/stdplugins-intl.h"

@@ -33,14 +33,7 @@
 #include <glib-object.h>
 
 #ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-#ifndef _O_TEMPORARY
-#define _O_TEMPORARY 0
+#include <libgimpbase/gimpwin32-io.h>
 #endif
 
 #include "base-types.h"

@@ -1525,7 +1525,7 @@ gimp_config (GPConfig *config)
        * transfering tile data
        */
       gchar fileMapName[128];
-      gint  tileByteSize = gimp_tile_width () * gimp_tile_height () * 4;
+      gint  tileByteSize = _tile_width * _tile_height * 4;
 
       /* From the id, derive the file map name */
       g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);

@@ -23,6 +23,8 @@ INCLUDES = \
 	-I$(includedir) \
 
 OBJECTS = \
+	gimpanchor.obj \
+	gimpvectors.obj \
 	gimpbezierstroke.obj \
 	gimpstroke.obj \
 	gimpvectors.obj \

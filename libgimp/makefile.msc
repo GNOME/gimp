@@ -26,6 +26,11 @@ DEPLIBS = $(GLIB_LIBS) $(INTL_LIBS)
 
 # CFLAGS = $(GLIB_CFLAGS) 
 
+!IFNDEF DEBUG
+# Debug Release!
+OPTIMIZE = -Zi -MD
+!ENDIF
+
 all : \
 	..\config.h \
 #	gimpi.lib \
@@ -57,11 +62,11 @@ PDB_WRAPPERS_O = \
 	gimpguides_pdb.obj \
 	gimphelp_pdb.obj \
 	gimpimage_pdb.obj \
-	gimppainttools_pdb.obj \
 	gimplayer_pdb.obj \
 	gimpmessage_pdb.obj \
 	gimpmisc_pdb.obj \
 	gimpmisctools_pdb.obj \
+	gimppainttools_pdb.obj \
 	gimppalette_pdb.obj \
 	gimpparasite_pdb.obj \
 	gimppaths_pdb.obj \
@@ -75,6 +80,7 @@ PDB_WRAPPERS_O = \
 	gimptransformtools_pdb.obj \
 	gimpundo_pdb.obj \
 	gimpunit_pdb.obj \
+
 
 # used by libgimp and core (?)
 gimpi_OBJECTS = \
@@ -95,7 +101,7 @@ gimp_OBJECTS = \
 #	$(gimpi_OBJECTS) \
 	gimpchannel.obj \
 	gimpdrawable.obj \
-	gimphelp.obj \
+#	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
 	gimpmisc.obj \
@@ -121,10 +127,15 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpui.obj \
 	gimpbrushmenu.obj \
+	gimpbrushselect.obj \
 	gimpfontmenu.obj \
+	gimpfontselect.obj \
+	gimpfontselect_pdb.obj \
 	gimpgradientmenu.obj \
+	gimpgradientselect.obj \
 	gimpmenu.obj \
 	gimppatternmenu.obj \
+	gimppatternselect.obj \
 	gimpexport.obj \
 	gimpmiscui.obj \
 #	gimppatheditor.obj \

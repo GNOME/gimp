@@ -58,6 +58,7 @@ OBJECTS = \
 	gimpedit.obj \
 	gimpenvirontable.obj \
 	gimpgradient.obj \
+	gimpgrid.obj \
 	gimp-gradients.obj \
 	gimpimage.obj \
 	gimpimagemap.obj \
@@ -68,6 +69,7 @@ OBJECTS = \
 	gimpimage-crop.obj \
 	gimpimage-duplicate.obj \
 	gimpimage-flip.obj \
+	gimpimage-grid.obj \
 	gimpimage-guides.obj \
 	gimpimage-mask.obj \
 	gimpimage-mask-select.obj \
@@ -79,6 +81,7 @@ OBJECTS = \
 	gimpimage-qmask.obj \
 	gimpimage-resize.obj \
 	gimpimage-rotate.obj \
+	gimpimage-snap.obj \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
@@ -102,6 +105,7 @@ OBJECTS = \
 	gimppreviewcache.obj \
 	gimpscanconvert.obj \
 	gimptemplate.obj \
+	gimptooloptions.obj \
 	gimp-templates.obj \
 	gimptoolinfo.obj \
 	gimpundo.obj \

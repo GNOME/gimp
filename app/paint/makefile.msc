@@ -39,6 +39,7 @@ OBJECTS = \
 	gimppaintcore-undo.obj \
 	gimppaintoptions.obj \
 	gimppencil.obj \
+	gimppenciloptions.obj \
 	gimpsmudge.obj \
 	gimpsmudgeoptions.obj \
 	paint.obj \

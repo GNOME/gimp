@@ -12,6 +12,7 @@ EXPORTS
 	gimp_cmyk_set
 	gimp_cmyk_set_uchar
 	gimp_cmyk_to_rgb
+	gimp_cmyk_to_rgb_int
 	gimp_cmyka_get_uchar
 	gimp_cmyka_set
 	gimp_cmyka_set_uchar

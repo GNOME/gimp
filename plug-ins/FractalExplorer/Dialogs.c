@@ -22,7 +22,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifdef G_OS_WIN32
+#if 0 //def G_OS_WIN32
 #  include <io.h>
 #  ifndef W_OK
 #    define W_OK 2

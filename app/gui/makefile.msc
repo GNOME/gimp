@@ -39,7 +39,6 @@ OBJECTS = \
 	convert-dialog.obj \
 	data-commands.obj \
 	debug-commands.obj \
-	device-status-dialog.obj \
 	dialogs.obj \
 	dialogs-commands.obj \
 	dialogs-menu.obj \
@@ -63,6 +62,7 @@ OBJECTS = \
 	gradients-commands.obj \
 	gradients-menu.obj \
 	gradient-select.obj \
+	grid-dialog.obj \
 	gui.obj \
 	help-commands.obj \
 	image-commands.obj \

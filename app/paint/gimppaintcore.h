@@ -103,7 +103,7 @@ struct _GimpPaintCore
   /*  brush buffers  */
   MaskBuf            *pressure_brush;
 
-  MaskBuf            *solid_brushes[PAINT_CORE_SOLID_SUBSAMPLE][PAINT_CORE_SOLID_SUBSAMPLE];;
+  MaskBuf            *solid_brushes[PAINT_CORE_SOLID_SUBSAMPLE][PAINT_CORE_SOLID_SUBSAMPLE];
   MaskBuf            *last_solid_brush;
   gboolean            solid_cache_invalid;
 

@@ -47,6 +47,7 @@ OBJECTS = \
 	gimpdatafactoryview.obj \
 	gimpdeviceinfo.obj \
 	gimpdevices.obj \
+	gimpdevicestatus.obj \
 	gimpdialogfactory.obj \
 	gimpdnd.obj \
 	gimpdock.obj \

@@ -1,3 +1,39 @@
+2003-07-26  Hans Breuer  <hans@breuer.org>
+
+	* libgimp/gimpcompat.h : renamed GimpOrientationType
+	with Compat postfix to avoid name clashing when using
+	this header together with libgimp/gimpenums.h
+
+	* app/composite/makefile.msc : (new file)
+	  **/makefile.msc : updated
+
+	* libgimp/gimp.c : use static defined _tile<widht|height>
+	in this file instead of function call
+
+	* libgimp/gimp.def libgimp/libgimpui.def : moved from former
+	to latter : gimp_<brush|font|gradient|pattern>_select_<new|destroy>
+	added to former gimp_<brushes|gradients|patterns>_popup
+
+	* app/paint/gimppaintcore.h : removed double semicolon
+	which gave msvc error C2059: syntax error : ';'
+
+	* libgimpbase/gimpwin32-io.h : (new file) compatibilty defines 
+	which were spread over multiple files to make up mostly for 
+	missing unistd.h
+
+	* app/base/tile-swap.c app/core/gimpimagefile.c 
+	  libgimpbase/gimpdatafiles.c
+	  plug-ins/FractalExplorer/FractalExplorer.c : use new header
+
+	* plug-ins/gflare/gflare.c 
+	  plug-ins/flame/flame.c 
+	  plug-ins/FractalExplorer/Dialogs.c :
+	removed #ifdef G_OS_WIN32 special casing, not needed anymore
+	due to g_file_test() usage
+
+	* app/text/*.* : changes required for build with PangoWin32, 
+	but not commited ...
+
 2003-07-26  Adam D. Moss  <adam@gimp.org>
 
 	* LICENSE: (new file) Explain the mix of licenses within

@@ -11,7 +11,7 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base config xcf core file text \
+SUBDIRS = composite paint-funcs base config xcf core file text \
 	display paint vectors pdb plug-in tools widgets gui
 
 sub-all: 
@@ -26,6 +26,7 @@ LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
 PKG_LINK = \
 	config/appconfig.lib \
+	composite/appcomposite.lib \
 	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
 	plug-in/appplug-in.lib \

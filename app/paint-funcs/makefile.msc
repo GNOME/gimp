@@ -17,7 +17,8 @@ mmx_sources = \
 	
 # temporay hack, link appbase to find our required exports
 PKG_LINK = \
-	..\base\appbase.lib \
+	..\base\appbase-$(PKG_VER).lib \
+	..\composite\appcomposite-$(PKG_VER).lib \
 	$(GLIB_LIBS) \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 
