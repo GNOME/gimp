@@ -1,3 +1,6 @@
+Mon Oct  5 23:56:09 EEST 1998 Lauri Alanko <nether@gimp.org>
+	* po/fr.po: fixed a compile-halting typo
+	
 Mon Oct  5 16:18:08 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	 * app/channels_dialog.c: fixed assignment in g_return_if_fail

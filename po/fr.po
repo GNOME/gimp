@@ -20,7 +20,7 @@ msgstr "A Propos de GIMP"
 
 #: app/about_dialog.c:194
 msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
-msgstr "msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:197
 msgid "Version "
