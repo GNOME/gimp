@@ -2222,7 +2222,7 @@ static ProcRecord image_clean_all_proc =
 {
   "gimp_image_clean_all",
   "Set the image dirty count to 0.",
-  "This procedure sets the specified image's dirty count to 0, allowing operations to occur without having a 'dirtied' image. This is especially useful for cre ating and loading images which should not initially be considered dirty, even though layers must be created, filled, and installed in the image.",
+  "This procedure sets the specified image's dirty count to 0, allowing operations to occur without having a 'dirtied' image. This is especially useful for creating and loading images which should not initially be considered dirty, even though layers must be created, filled, and installed in the image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

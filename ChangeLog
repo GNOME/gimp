@@ -1,3 +1,17 @@
+Sun Jan  9 14:48:21 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.c
+	* app/gimage_cmds.c
+	* tools/pdbgen/pdb/gimage.pdb: fixed typos
+
+	* app/gimphistogram.c: indentation
+	
+	* app/histogramwidget.c: grab the pointer in the histogramwidget,
+	so a button_release outside the widget is noticed correctly 
+
+	* app/levels.c: instead of undoing the user action, simply don't 
+	allow the user to set the range in the histogram_widget
+
 2000-01-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/tga.c

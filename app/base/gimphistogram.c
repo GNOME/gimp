@@ -38,10 +38,10 @@
 
 
 GimpHistogram *
-gimp_histogram_new()
+gimp_histogram_new (void)
 {
   GimpHistogram *histogram;
-  histogram = g_new(GimpHistogram, 1);
+  histogram = g_new (GimpHistogram, 1);
   histogram->values = NULL;
   histogram->nchannels = 0;
   return histogram;
@@ -54,15 +54,16 @@ gimp_histogram_free (GimpHistogram *histogram)
   if (histogram->values)
   {
     for (i = 0; i < histogram->nchannels; i++)
-      g_free(histogram->values[i]);
-    g_free(histogram->values);
+      g_free (histogram->values[i]);
+    g_free (histogram->values);
   }
-  g_free(histogram);
+  g_free (histogram);
 }
 
 void
-gimp_histogram_calculate_sub_region(GimpHistogram *histogram,
-				    PixelRegion *region, PixelRegion *mask)
+gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
+				     PixelRegion   *region, 
+				     PixelRegion   *mask)
 {
   const unsigned char *src, *msrc;
   const unsigned char *m, *s;
@@ -71,14 +72,14 @@ gimp_histogram_calculate_sub_region(GimpHistogram *histogram,
 #ifdef ENABLE_MP
   int slot = 0;
   /* find an unused temporary slot to put our results in and lock it */
-  pthread_mutex_lock(&histogram->mutex);
+  pthread_mutex_lock (&histogram->mutex);
   {
     while (histogram->tmp_slots[slot])
       slot++;
     values = histogram->tmp_values[slot];
     histogram->tmp_slots[slot] = 1;
   }
-  pthread_mutex_unlock(&histogram->mutex);
+  pthread_mutex_unlock (&histogram->mutex);
 #else /* !ENABLE_MP */
   values = histogram->values;
 #endif
@@ -206,13 +207,15 @@ gimp_histogram_calculate_sub_region(GimpHistogram *histogram,
 #ifdef ENABLE_MP
   /* unlock this slot */
   /* we shouldn't have to use mutex locks here */
-  pthread_mutex_lock(&histogram->mutex);
+  pthread_mutex_lock (&histogram->mutex);
   histogram->tmp_slots[slot] = 0;
-  pthread_mutex_unlock(&histogram->mutex);
+  pthread_mutex_unlock (&histogram->mutex);
 #endif
 }
 
-static void gimp_histogram_alloc(GimpHistogram *histogram, int bytes)
+static void 
+gimp_histogram_alloc (GimpHistogram *histogram, 
+		      int            bytes)
 {
   int i;
   if (bytes + 1 != histogram->nchannels)
@@ -220,38 +223,39 @@ static void gimp_histogram_alloc(GimpHistogram *histogram, int bytes)
     if (histogram->values)
     {
       for (i = 0; i < histogram->nchannels; i++)
-	g_free(histogram->values[i]);
-      g_free(histogram->values);
+	g_free (histogram->values[i]);
+      g_free (histogram->values);
     }
     histogram->nchannels = bytes + 1;
-    histogram->values = g_new(double *, histogram->nchannels);
+    histogram->values = g_new (double *, histogram->nchannels);
     for (i = 0; i < histogram->nchannels; i++)
-      histogram->values[i] = g_new(double, 256);
+      histogram->values[i] = g_new (double, 256);
   }
 }
 
 void
-gimp_histogram_calculate (GimpHistogram *histogram, PixelRegion *region,
-			  PixelRegion *mask)
+gimp_histogram_calculate (GimpHistogram *histogram, 
+			  PixelRegion   *region,
+			  PixelRegion   *mask)
 {
   int i, j;
 #ifdef ENABLE_MP
   int k;
 #endif
 
-  gimp_histogram_alloc(histogram, region->bytes);
+  gimp_histogram_alloc (histogram, region->bytes);
 
 #ifdef ENABLE_MP
-  pthread_mutex_init(&histogram->mutex, NULL);
-  histogram->tmp_slots = g_new(char, num_processors);
-  histogram->tmp_values = g_new(double **, num_processors);
+  pthread_mutex_init (&histogram->mutex, NULL);
+  histogram->tmp_slots = g_new (char, num_processors);
+  histogram->tmp_values = g_new (double **, num_processors);
   for (i = 0; i < num_processors; i++)
   {
-    histogram->tmp_values[i] = g_new(double *, histogram->nchannels);
+    histogram->tmp_values[i] = g_new (double *, histogram->nchannels);
     histogram->tmp_slots[i] = 0;
     for (j = 0; j < histogram->nchannels; j++)
     {
-      histogram->tmp_values[i][j] = g_new(double, 256);
+      histogram->tmp_values[i][j] = g_new (double, 256);
       for (k = 0; k < 256; k++)
 	histogram->tmp_values[i][j][k] = 0.0;
     }
@@ -262,8 +266,8 @@ gimp_histogram_calculate (GimpHistogram *histogram, PixelRegion *region,
     for (j = 0; j < 256; j++)
       histogram->values[i][j] = 0.0;
 
-  pixel_regions_process_parallel((p_func)gimp_histogram_calculate_sub_region,
-				histogram, 2, region, mask);
+  pixel_regions_process_parallel ((p_func)gimp_histogram_calculate_sub_region,
+				  histogram, 2, region, mask);
 
 #ifdef ENABLE_MP
   /* add up all the tmp buffers and free their memmory */
@@ -275,17 +279,17 @@ gimp_histogram_calculate (GimpHistogram *histogram, PixelRegion *region,
 	histogram->values[j][k] += histogram->tmp_values[i][j][k];
       g_free (histogram->tmp_values[i][j]);
     }
-    g_free(histogram->tmp_values[i]);
+    g_free (histogram->tmp_values[i]);
   }
-  g_free(histogram->tmp_values);
-  g_free(histogram->tmp_slots);
+  g_free (histogram->tmp_values);
+  g_free (histogram->tmp_slots);
 #endif
 }
 
 
 void
-gimp_histogram_calculate_drawable(GimpHistogram *histogram,
-				  GimpDrawable *drawable)
+gimp_histogram_calculate_drawable (GimpHistogram *histogram,
+				   GimpDrawable  *drawable)
 {
   PixelRegion region;
   PixelRegion mask;
@@ -314,7 +318,8 @@ gimp_histogram_calculate_drawable(GimpHistogram *histogram,
 }
 
 double
-gimp_histogram_get_maximum (GimpHistogram *histogram, int channel)
+gimp_histogram_get_maximum (GimpHistogram *histogram, 
+			    int            channel)
 {
   double max = 0.0;
   int x;
@@ -325,7 +330,9 @@ gimp_histogram_get_maximum (GimpHistogram *histogram, int channel)
 }
 
 double
-gimp_histogram_get_value (GimpHistogram *histogram, int channel, int bin)
+gimp_histogram_get_value (GimpHistogram *histogram, 
+			  int            channel, 
+			  int            bin)
 {
   if (channel < histogram->nchannels && bin >= 0 && bin < 256)
     return histogram->values[channel][bin];
@@ -333,12 +340,14 @@ gimp_histogram_get_value (GimpHistogram *histogram, int channel, int bin)
 }
 
 double
-gimp_histogram_get_channel (GimpHistogram *histogram, int channel, int bin)
+gimp_histogram_get_channel (GimpHistogram *histogram, 
+			    int            channel, 
+			    int            bin)
 {
   if (histogram->nchannels > 3)
-    return gimp_histogram_get_value(histogram, channel + 1, bin);
+    return gimp_histogram_get_value (histogram, channel + 1, bin);
   else
-    return gimp_histogram_get_value(histogram, channel    , bin);
+    return gimp_histogram_get_value (histogram, channel    , bin);
 }
 
 int
@@ -348,7 +357,9 @@ gimp_histogram_nchannels (GimpHistogram *histogram)
 }
 
 double
-gimp_histogram_get_count (GimpHistogram *histogram, int start, int end)
+gimp_histogram_get_count (GimpHistogram *histogram, 
+			  int            start, 
+			  int            end)
 {
   int i;
   double count = 0.0;
@@ -358,27 +369,32 @@ gimp_histogram_get_count (GimpHistogram *histogram, int start, int end)
 }
 
 double
-gimp_histogram_get_mean (GimpHistogram *histogram, int channel,
-			 int start, int end)
+gimp_histogram_get_mean (GimpHistogram *histogram, 
+			 int            channel,
+			 int            start, 
+			 int            end)
 {
   int i;
   double mean = 0.0;
   double count;
   for (i = start; i <= end; i++)
     mean += i * histogram->values[channel][i];
-  count = gimp_histogram_get_count(histogram, start, end);
+  count = gimp_histogram_get_count (histogram, start, end);
   if (count > 0.0)
     return mean / count;
   return mean;
 }
 
 int
-gimp_histogram_get_median (GimpHistogram *histogram, int channel, int start, int end)
+gimp_histogram_get_median (GimpHistogram *histogram, 
+			   int            channel, 
+			   int            start, 
+			   int            end)
 {
   int i;
   double sum = 0.0;
   double count;
-  count = gimp_histogram_get_count(histogram, start, end);
+  count = gimp_histogram_get_count (histogram, start, end);
   for (i = start; i <= end; i++)
   {
     sum += i * histogram->values[channel][i];
@@ -389,8 +405,10 @@ gimp_histogram_get_median (GimpHistogram *histogram, int channel, int start, int
 }
 
 double
-gimp_histogram_get_std_dev (GimpHistogram *histogram, int channel,
-			    int start, int end)
+gimp_histogram_get_std_dev (GimpHistogram *histogram, 
+			    int            channel,
+			    int            start, 
+			    int            end)
 {
   int i;
   double dev = 0.0;
@@ -401,7 +419,7 @@ gimp_histogram_get_std_dev (GimpHistogram *histogram, int channel,
   if (count == 0.0)
     count = 1.0;
   for (i = start; i <= end; i++)
-    dev += gimp_histogram_get_value(histogram, channel, i) *
+    dev += gimp_histogram_get_value (histogram, channel, i) * 
       (i - mean) * (i - mean);
   return sqrt (dev / count);
 }

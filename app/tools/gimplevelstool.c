@@ -145,13 +145,11 @@ static void   levels_gamma_adjustment_update       (GtkAdjustment *, gpointer);
 static void   levels_high_input_adjustment_update  (GtkAdjustment *, gpointer);
 static void   levels_low_output_adjustment_update  (GtkAdjustment *, gpointer);
 static void   levels_high_output_adjustment_update (GtkAdjustment *, gpointer);
-static gint   levels_input_da_events               (GtkWidget *, GdkEvent *,
+static gint   levels_input_da_events               (GtkWidget *, GdkEvent *, 
 						    LevelsDialog *);
 static gint   levels_output_da_events              (GtkWidget *, GdkEvent *,
 						    LevelsDialog *);
 
-static void   levels_histogram_range               (HistogramWidget *,
-						    gint, gint, void *);
 static void   make_file_dlg                        (gpointer);
 static void   file_ok_callback                     (GtkWidget *, gpointer);
 static void   file_cancel_callback                 (GtkWidget *, gpointer);
@@ -159,18 +157,6 @@ static void   file_cancel_callback                 (GtkWidget *, gpointer);
 static gboolean  read_levels_from_file             (FILE *f);
 static void      write_levels_to_file              (FILE *f);
 
-static void
-levels_histogram_range (HistogramWidget *hw,
-			gint             start,
-			gint             end,
-			void            *data)
-{
-  LevelsDialog *ld;
-
-  ld = (LevelsDialog *) data;
-
-  histogram_widget_range (ld->histogram, -1, -1);
-}
 
 /*  levels action functions  */
 
@@ -461,9 +447,9 @@ levels_dialog_new (void)
   ld->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (ld->histogram));
 
-  gtk_signal_connect (GTK_OBJECT (ld->histogram), "rangechanged",
-		      GTK_SIGNAL_FUNC (levels_histogram_range),
-		      ld);
+  /* ignore button_events, since we don't want the user to be able to set the range */
+  gtk_widget_set_events (GTK_WIDGET (ld->histogram), 
+			 (GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK));
 
   gtk_widget_show (GTK_WIDGET (ld->histogram));
   gtk_widget_show (frame);

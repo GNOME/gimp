@@ -58,7 +58,7 @@ static void   histogram_widget_init       (HistogramWidget *histogram);
 /*  Function definitions  */
 
 guint
-histogram_widget_get_type()
+histogram_widget_get_type (void)
 {
   static guint type = 0;
   if (!type)
@@ -96,20 +96,21 @@ histogram_widget_class_init (HistogramWidgetClass *klass)
 						    GTK_TYPE_INT,
 						    GTK_TYPE_INT);
 
-  gtk_object_class_add_signals(GTK_OBJECT_CLASS(klass),
-			       histogram_widget_signals, LAST_SIGNAL);
+  gtk_object_class_add_signals (GTK_OBJECT_CLASS(klass),
+				histogram_widget_signals, LAST_SIGNAL);
 
   
 }
 
-static void histogram_widget_init(HistogramWidget *histogram)
+static void 
+histogram_widget_init (HistogramWidget *histogram)
 {
   histogram->histogram = NULL;
 }
 
 static void
 histogram_widget_draw (HistogramWidget *histogram,
-		int        update)
+		       int              update)
 {
   double max;
   double v;
@@ -168,7 +169,7 @@ histogram_widget_draw (HistogramWidget *histogram,
 
 static gint
 histogram_widget_events (HistogramWidget *histogram,
-			 GdkEvent  *event)
+			 GdkEvent        *event)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -182,6 +183,14 @@ histogram_widget_events (HistogramWidget *histogram,
 
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
+
+      if (bevent->button != 1)
+	break;
+      
+      gdk_pointer_grab (GTK_WIDGET (histogram)->window, FALSE, 
+			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
+			NULL, NULL, bevent->time);
+
       width = GTK_WIDGET(histogram)->allocation.width - 2;
 
       histogram_widget_draw (histogram, RANGE);
@@ -193,6 +202,10 @@ histogram_widget_events (HistogramWidget *histogram,
       break;
 
     case GDK_BUTTON_RELEASE:
+      bevent = (GdkEventButton *) event;
+
+      gdk_pointer_ungrab (bevent->time);
+
       gtk_signal_emit(GTK_OBJECT(histogram), histogram_widget_signals[RANGED],
 		      MIN (histogram->start, histogram->end),
 		      MAX (histogram->start, histogram->end));

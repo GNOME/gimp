@@ -2146,7 +2146,7 @@ GDisplay *
 gdisplays_check_valid (GDisplay  *gtest, 
 		       GimpImage *gimage)
 {
-  /* Give a gdisp check that it is still valid and points to the require
+  /* Give a gdisp check that it is still valid and points to the required
    * GimpImage. If not return the first gDisplay that does point to the 
    * gimage. If none found return NULL;
    */
