@@ -616,9 +616,9 @@ tile_manager_get_memsize (const TileManager *tm)
   g_return_val_if_fail (tm != NULL, 0);
 
   memsize += (sizeof (TileManager) +
-              tm->ntile_rows * tm->ntile_cols *
+              (gint64) tm->ntile_rows * tm->ntile_cols *
               (sizeof (Tile) + sizeof (gpointer)) +
-              tm->width * tm->height * tm->bpp);
+              (gint64) tm->width * tm->height * tm->bpp);
 
   return memsize;
 }

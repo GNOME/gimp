@@ -1,3 +1,12 @@
+2004-02-13  Manish Singh  <yosh@gimp.org>
+
+	* app/base/temp-buf.c (temp_buf_get_memsize)
+	* core/gimpviewable.c (gimp_viewable_get_memsize): Add some casts
+	to gsize for ints to prevent overflows.
+
+	* app/base/tile-manager.c (tile_manager_get_memsize): Same as above,
+	except cast to gint64.
+
 2004-02-13  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage-guides.[ch]: make a similar fix as in my

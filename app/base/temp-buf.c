@@ -569,9 +569,9 @@ temp_buf_get_memsize (TempBuf *temp_buf)
     }
   else
     {
-      memsize += (temp_buf->bytes *
-                  temp_buf->width *
-                  temp_buf->height);
+      memsize += ((gsize) temp_buf->bytes *
+                          temp_buf->width *
+                          temp_buf->height);
     }
 
   return memsize;

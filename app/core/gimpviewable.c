@@ -276,8 +276,8 @@ gimp_viewable_get_memsize (GimpObject *object,
         }
 
       *gui_size += (pixbuf_instance_size +
-                    gdk_pixbuf_get_height (pixbuf) *
-                    gdk_pixbuf_get_rowstride (pixbuf));
+                    (gsize) gdk_pixbuf_get_height (pixbuf) *
+                            gdk_pixbuf_get_rowstride (pixbuf));
     }
 
   return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
