@@ -3,6 +3,7 @@
 SUBDIRS = 			\
 	libgck			\
 	megawidget		\
+	gpc			\
 	MapObject		\
 	AlienMap		\
 	dbbrowser		\

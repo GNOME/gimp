@@ -2,10 +2,10 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = blur
+pluginlib_LIBRARIES = libgpc.a
 
-blur_SOURCES = \
-	blur.c  $(top_srcdir)/plug-ins/gpc/gpc.h 
+libgpc_a_SOURCES = \
+	gpc.c gpc.h
 
 INCLUDES = \
 	$(X_CFLAGS)			\
@@ -13,7 +13,6 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
@@ -21,10 +20,11 @@ LDADD = \
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimp.la
 
-blur_DEPENDENCIES = $(DEPS)
+libgpc_aDEPENDENCIES = $(DEPS)
+
+man_MANS=gpc.3
 
 .PHONY: files
 
@@ -38,3 +38,4 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+

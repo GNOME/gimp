@@ -3,7 +3,6 @@
  * available at http://www.rru.com/~meo/gimp/ .
  *
  * Copyright (C) 1997 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
- * Blur code Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * GUI based on GTK code from:
  *    alienmap (Copyright (C) 1996, 1997 Daniel Cotting)
  *    plasma   (Copyright (C) 1996 Stephen Norris),
@@ -30,8 +29,12 @@
 /****************************************************************************
  * Randomize:
  *
- * randomize version 1.4 (3 Feb 1998, MEO)
+ * randomize version 1.6 (29 Apr 1998, MEO)
  * history
+ *     1.6 -  29 Apr 1998 MEO
+ *         moved blur to separate plugin (blur 2.0)
+ *     1.5 -  5 Feb 1998 MEO
+ *         added alpha layer handling to blur code
  *     1.4 -  3 Feb 1998 MEO
  *         added details to PDB parameter help strings
  *     1.3 -  3 Feb 1998 MEO
@@ -88,7 +91,6 @@
  * This plug-in adds a user-defined amount of randomization to an
  * image.  Variations include:
  * 
- *  - blurring
  *  - hurling (spewing random colors)
  *  - picking a nearby pixel at random
  *  - slurring (a crude form of melting)
@@ -96,10 +98,7 @@
  * In any case, for each pixel in the selection or image,
  * whether to change the pixel is decided by picking a
  * random number, weighted by the user's "randomization" percentage.
- * If the random number is in range, the pixel is modified.  For
- * blurring, an average is determined from the current and adjacent
- * pixels. *(Except for the random factor, the blur code came
- * straight from the original S&P blur plug-in.)*  Picking
+ * If the random number is in range, the pixel is modified.  Picking
  * one selects the new pixel value at random from the current and
  * adjacent pixels.  Hurling assigns a random value to the pixel.
  * Slurring sort of melts downwards; if a pixel is to be slurred,
@@ -107,10 +106,7 @@
  * of the pixels adjacent to the one above is used (even odds as
  * to which it will be).
  * 
- * Picking, hurling and slurring work with any image type.  Blurring
- * works only with RGB and grayscale images.  If randomize is
- * run against an indexed image, "blur" is not presented as an
- * option.
+ * Picking, hurling and slurring work with any image type.
  * 
  * This plug-in's effectiveness varies a lot with the type
  * and clarity of the image being "randomized".
@@ -131,7 +127,7 @@
 #include <time.h>
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
-#include "gpc.h"
+#include <plug-ins/gpc/gpc.h>
 
 /*********************************
  *
@@ -146,12 +142,11 @@
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
 #define PLUG_IN_NAME "plug_in_randomize"
-#define RNDM_VERSION "Randomize 1.4"
+#define RNDM_VERSION "Randomize 1.6"
 
-#define RNDM_BLUR 1
-#define RNDM_HURL 2
-#define RNDM_PICK 3
-#define RNDM_SLUR 4
+#define RNDM_HURL 1
+#define RNDM_PICK 2
+#define RNDM_SLUR 3
 
 #define SEED_TIME 10
 #define SEED_USER 11
@@ -174,7 +169,7 @@ typedef struct {
 } RandomizeVals;
 
 static RandomizeVals pivals = {
-    RNDM_BLUR,
+    RNDM_HURL,
     50.0,
     SEED_TIME,
     0,
@@ -189,7 +184,6 @@ static RandomizeInterface rndm_int = {
     FALSE     /*  have we run? */
 };
 
-static gint is_indexed_drawable = FALSE;
 
 /*********************************
  *
@@ -247,52 +241,37 @@ static void
 query()
 {
     static GParamDef args[] = {
-	{ PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-	{ PARAM_IMAGE, "image", "Input image (unused)" },
-	{ PARAM_DRAWABLE, "drawable", "Input drawable" },
-	{ PARAM_INT32, "rndm_type",
-            "Randomization type (1=blur 2=hurl 3=pick 4=slur)" },
-	{ PARAM_FLOAT, "rndm_pct", "Randomization percentage (1 - 100)" },
-	{ PARAM_FLOAT, "rndm_rcount", "Repeat count(1 - 100)" },
+        { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+        { PARAM_IMAGE, "image", "Input image (unused)" },
+        { PARAM_DRAWABLE, "drawable", "Input drawable" },
+        { PARAM_INT32, "rndm_type",
+            "Randomization type (1=hurl 2=pick 3=slur)" },
+        { PARAM_FLOAT, "rndm_pct", "Randomization percentage (1 - 100)" },
+        { PARAM_FLOAT, "rndm_rcount", "Repeat count(1 - 100)" },
     };
     static GParamDef *return_vals = NULL;
     static int nargs = sizeof(args) / sizeof (args[0]);
     static int nreturn_vals = 0;
 
-    const char *blurb = "Add a random factor to the image, by blurring, picking a nearby pixel, slurring (similar to melting), or just hurling on it.";
-    const char *help = "This function randomly ``blurs'' the specified drawable, using either a 3x3 blur, picking a nearby pixel, slurring (cheezy melting), or hurling (spewing colors).  The type and percentage are user selectable.  Blurring is not supported for indexed images.";
+    const char *blurb = "Add a random factor to the image, by picking a nearby pixel, slurring (similar to melting), or just hurling on it.";
+    const char *help = "This function randomly modified the drawable, either by picking a nearby pixel, slurring (cheezy melting), or hurling (spewing colors).  The type and percentage are user selectable.";
     const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
     const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
     const char *copyright_date = "1995-1997";
 
     gimp_install_procedure(PLUG_IN_NAME,
-	(char *) blurb,
-	(char *) help,
-	(char *) author,
-	(char *) copyrights,
-	(char *) copyright_date,
-	"<Image>/Filters/Noise/Randomize",
-	"RGB*, GRAY*, INDEXED*",
-	PROC_PLUG_IN,
-	nargs, nreturn_vals,
-	args, return_vals);
+        (char *) blurb,
+        (char *) help,
+        (char *) author,
+        (char *) copyrights,
+        (char *) copyright_date,
+        "<Image>/Filters/Noise/Randomize",
+        "RGB*, GRAY*, INDEXED*",
+        PROC_PLUG_IN,
+        nargs, nreturn_vals,
+        args, return_vals);
 }
 
-/*
- *  If it's indexed and the current action is BLUR,
- *  use something else.  PICK seems the likeliest
- *  candidate, although in the spirit of randomity
- *  we could pick one at random!
- */
-void
-fix_index_blur(GDrawable *drawable) {
-    if (gimp_drawable_indexed(drawable->id)) {
-        is_indexed_drawable = TRUE;
-        if (pivals.rndm_type == RNDM_BLUR) {
-            pivals.rndm_type = RNDM_PICK;
-        }
-    }
-}
 
 
 /*********************************
@@ -311,7 +290,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
 
     GDrawable *drawable;
     GRunModeType run_mode;
-    GStatusType status = STATUS_SUCCESS;	/* assume the best! */
+    GStatusType status = STATUS_SUCCESS;        /* assume the best! */
     char *rndm_type_str = '\0';
     char prog_label[32];
     static GParam values[1];
@@ -332,94 +311,90 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
       gimp_drawable_gray(drawable->id) ||
       gimp_drawable_indexed(drawable->id)) {
 
-	switch (run_mode) {
+        switch (run_mode) {
 /*
  *  If we're running interactively, pop up the dialog box.
  */
-	    case RUN_INTERACTIVE:
-		fix_index_blur(drawable);
-		gimp_get_data(PLUG_IN_NAME, &pivals);
-		if (!randomize_dialog())	/* return on Cancel */
-		    return;
-		break;
+            case RUN_INTERACTIVE:
+                gimp_get_data(PLUG_IN_NAME, &pivals);
+                if (!randomize_dialog())        /* return on Cancel */
+                    return;
+                break;
 /*
  *  If we're not interactive (probably scripting), we
  *  get the parameters from the param[] array, since
  *  we don't use the dialog box.  Make sure they all
  *  parameters have legitimate values.
  */
-	    case RUN_NONINTERACTIVE:
-		fix_index_blur(drawable);
-		if (nparams != 6) {
-		    status = STATUS_CALLING_ERROR;
-		}
-		if (status == STATUS_SUCCESS) {
-		    pivals.rndm_type = (gint) param[3].data.d_int32;
-		    pivals.rndm_pct = (gdouble) param[4].data.d_float;
-		    pivals.rndm_rcount = (gdouble) param[5].data.d_float;
-		}
-		if (status == STATUS_SUCCESS &&
-		  ((pivals.rndm_type != RNDM_PICK &&
-		    pivals.rndm_type != RNDM_BLUR &&
-		    pivals.rndm_type != RNDM_SLUR &&
-		    pivals.rndm_type != RNDM_HURL) ||
-		  (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
+            case RUN_NONINTERACTIVE:
+                if (nparams != 6) {
+                    status = STATUS_CALLING_ERROR;
+                }
+                if (status == STATUS_SUCCESS) {
+                    pivals.rndm_type = (gint) param[3].data.d_int32;
+                    pivals.rndm_pct = (gdouble) param[4].data.d_float;
+                    pivals.rndm_rcount = (gdouble) param[5].data.d_float;
+                }
+                if (status == STATUS_SUCCESS &&
+                  ((pivals.rndm_type != RNDM_PICK &&
+                    pivals.rndm_type != RNDM_SLUR &&
+                    pivals.rndm_type != RNDM_HURL) ||
+                  (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
                   (pivals.rndm_rcount < 1.0 || pivals.rndm_rcount > 100.0))) {
-		    status = STATUS_CALLING_ERROR;
-		}
-		break;
+                    status = STATUS_CALLING_ERROR;
+                }
+                break;
 /*
  *  If we're running with the last set of values, get those values.
  */
-	    case RUN_WITH_LAST_VALS:
-		gimp_get_data(PLUG_IN_NAME, &pivals);
-		break;
+            case RUN_WITH_LAST_VALS:
+                gimp_get_data(PLUG_IN_NAME, &pivals);
+                break;
 /*
  *  Hopefully we never get here!
  */
-	    default:
-		break;
-	}
+            default:
+                break;
+        }
         if (status == STATUS_SUCCESS) {
 /*
  *  JUST DO IT!
  */
-	    switch (pivals.rndm_type) {
-                case RNDM_BLUR: rndm_type_str = "blur"; break;
+            switch (pivals.rndm_type) {
                 case RNDM_HURL: rndm_type_str = "hurl"; break;
                 case RNDM_PICK: rndm_type_str = "pick"; break;
                 case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
-	    sprintf(prog_label, "%s (%s)", RNDM_VERSION, rndm_type_str);
-	    gimp_progress_init(prog_label);
-	    gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+            sprintf(prog_label, "%s (%s)", RNDM_VERSION, rndm_type_str);
+            gimp_progress_init(prog_label);
+            gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 /*
  *  Initialize the rand() function seed
  */
-	    if (pivals.seed_type == SEED_TIME)
-	        srand(time(NULL));
-	    else
-	        srand(pivals.rndm_seed);
+            if (pivals.seed_type == SEED_TIME)
+                srand(time(NULL));
+            else
+                srand(pivals.rndm_seed);
 
-	    randomize(drawable);
+            randomize(drawable);
 /*
  *  If we ran interactively (even repeating) update the display.
  */
             if (run_mode != RUN_NONINTERACTIVE) {
-	        gimp_displays_flush();
-	    }
+                gimp_displays_flush();
+            }
 /*
  *  If we use the dialog popup, set the data for future use.
  */
-	    if (run_mode == RUN_INTERACTIVE) {
-	        gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(RandomizeVals));
-	    }
+            if (run_mode == RUN_INTERACTIVE) {
+                gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(RandomizeVals));
+            }
         }
     } else {
 /*
  *  If we got the wrong drawable type, we need to complain.
  */
-	status = STATUS_EXECUTION_ERROR;
+        status = STATUS_EXECUTION_ERROR;
     }
 /*
  *  DONE!
@@ -455,8 +430,8 @@ randomize_prepare_row(GPixelRgn *pixel_rgn, guchar *data, int x, int y, int w)
  *  Fill in edge pixels
  */
     for (b = 0; b < pixel_rgn->bpp; b++) {
-	data[-(gint)pixel_rgn->bpp + b] = data[b];
-	data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
+        data[-(gint)pixel_rgn->bpp + b] = data[b];
+        data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
     }
 }
 
@@ -482,6 +457,7 @@ randomize(GDrawable *drawable)
     gint row, col;
     gint x1, y1, x2, y2;
     gint cnt;
+    gint has_alpha, ind;
 
 /*
  *  Get the input area. This is the bounding box of the selection in
@@ -493,11 +469,12 @@ randomize(GDrawable *drawable)
     gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
 /*
  *  Get the size of the input image. (This will/must be the same
- *  as the size of the output image.
+ *  as the size of the output image.  Also get alpha info.
  */
     width = drawable->width;
     height = drawable->height;
     bytes = drawable->bpp;
+    has_alpha = gimp_drawable_has_alpha(drawable->id);
 /*
  *  allocate row buffers
  */
@@ -524,128 +501,117 @@ randomize(GDrawable *drawable)
 /*
  *  prepare the first row and previous row
  */
-	randomize_prepare_row(sp, pr, x1, y1 - 1, (x2 - x1));
-	randomize_prepare_row(dp, cr, x1, y1, (x2 - x1));
+        randomize_prepare_row(sp, pr, x1, y1 - 1, (x2 - x1));
+        randomize_prepare_row(dp, cr, x1, y1, (x2 - x1));
 /*
  *  loop through the rows, applying the selected convolution
  */
-	for (row = y1; row < y2; row++) {
-	    /*  prepare the next row  */
-	    randomize_prepare_row(sp, nr, x1, row + 1, (x2 - x1));
+        for (row = y1; row < y2; row++) {
+            /*  prepare the next row  */
+            randomize_prepare_row(sp, nr, x1, row + 1, (x2 - x1));
 
-	    d = dest;
-	    for (col = 0; col < (x2 - x1) * bytes; col++) {
-		if (((rand() % 100)) <= (gint) pivals.rndm_pct) {
-		    switch (pivals.rndm_type) {
-/*
- *  BLUR
- *      Use the average of the neighboring pixels.
- */
-			case RNDM_BLUR:
-			*d++ = ((gint) pr[col - bytes] + (gint) pr[col] +
-			    (gint) pr[col + bytes] +
-			    (gint) cr[col - bytes] + (gint) cr[col] +
-			    (gint) cr[col + bytes] +
-			    (gint) nr[col - bytes] + (gint) nr[col] +
-			    (gint) nr[col + bytes]) / 9;
-			break;
+            d = dest;
+            ind = 0;
+            for (col = 0; col < (x2 - x1) * bytes; col++) {
+                if (((rand() % 100)) <= (gint) pivals.rndm_pct) {
+                    switch (pivals.rndm_type) {
 /*
  *  HURL
  *      Just assign a random value.
  */
-			case RNDM_HURL:
-			*d++ = rand() % 256;
-			break;
+                      case RNDM_HURL:
+                        *d++ = rand() % 256;
+                      break;
 /*
  *  PICK
  *      pick at random from a neighboring pixel.
  */
-			case RNDM_PICK:
-			    switch (rand() % 9) {
-				case 0:
-				    *d++ = (gint) pr[col - bytes];
-				    break;
-				case 1:
-				    *d++ = (gint) pr[col];
-				    break;
-				case 2:
-				    *d++ = (gint) pr[col + bytes];
-				    break;
-				case 3:
-				    *d++ = (gint) cr[col - bytes];
-				    break;
-				case 4:
-				    *d++ = (gint) cr[col];
-				    break;
-				case 5:
-				    *d++ = (gint) cr[col + bytes];
-				    break;
-				case 6:
-				    *d++ = (gint) nr[col - bytes];
-				    break;
-				case 7:
-				    *d++ = (gint) nr[col];
-				    break;
-				case 8:
-				    *d++ = (gint) nr[col + bytes];
-				    break;
-			    }
-			    break;
+                      case RNDM_PICK:
+                        switch (rand() % 9) {
+                            case 0:
+                                *d++ = (gint) pr[col - bytes];
+                                break;
+                            case 1:
+                                *d++ = (gint) pr[col];
+                                break;
+                            case 2:
+                                *d++ = (gint) pr[col + bytes];
+                                break;
+                            case 3:
+                                *d++ = (gint) cr[col - bytes];
+                                break;
+                            case 4:
+                                *d++ = (gint) cr[col];
+                                break;
+                            case 5:
+                                *d++ = (gint) cr[col + bytes];
+                                break;
+                            case 6:
+                                *d++ = (gint) nr[col - bytes];
+                                break;
+                            case 7:
+                                *d++ = (gint) nr[col];
+                                break;
+                            case 8:
+                                *d++ = (gint) nr[col + bytes];
+                                break;
+                        }
+                      break;
 /*
  *  SLUR
  *      80% chance it's from directly above,
  *      10% from above left,
  *      10% from above right.
  */
-		       case RNDM_SLUR:
-			    switch (rand() % 10) {
-				case 0:
-				    *d++ = (gint) pr[col - bytes];
-				    break;
-				case 9:
-				    *d++ = (gint) pr[col + bytes];
-				    break;
-				default:
-				    *d++ = (gint) pr[col];
-				    break;
-			    }
-			    break;
-		    }
+                      case RNDM_SLUR:
+                        switch (rand() % 10) {
+                            case 0:
+                                *d++ = (gint) pr[col - bytes];
+                                break;
+                            case 9:
+                                *d++ = (gint) pr[col + bytes];
+                                break;
+                            default:
+                                *d++ = (gint) pr[col];
+                                break;
+                        }
+                      break;
+                    }
 /*
  *  Otherwise, this pixel was not selected for randomization,
  *  so use the current value.
  */
-		} else {
-		    *d++ = (gint) cr[col];
-		}
-	    }
+                } else {
+                    *d++ = (gint) cr[col];
+                }
+            }
 /*
  *  Save the modified row, shuffle the row pointers, and every
  *  so often, update the progress meter.
  */
-	    gimp_pixel_rgn_set_row(dp, dest, x1, row, (x2 - x1));
+            gimp_pixel_rgn_set_row(dp, dest, x1, row, (x2 - x1));
 
-	    tmp = pr;
-	    pr = cr;
-	    cr = nr;
-	    nr = tmp;
+            tmp = pr;
+            pr = cr;
+            cr = nr;
+            nr = tmp;
 
-	    if (PROG_UPDATE_TIME)
-		gimp_progress_update((double) row / (double) (y2 - y1));
-	}
+            if (PROG_UPDATE_TIME)
+                gimp_progress_update((double) row / (double) (y2 - y1));
+        }
 /*
  *  if we have more cycles to perform, swap the src and dest Pixel Regions
  */
         if (cnt < pivals.rndm_rcount) {
-	    if (tp != NULL) {
-		tp = dp;
-		dp = sp;
-		sp = tp;
+            if (tp != NULL) {
+                tp = dp;
+                dp = sp;
+                sp = tp;
             } else {
-		tp = &srcPR;
-		sp = &destPR;
-		dp = &destPR2;
-	    }
+                tp = &srcPR;
+                sp = &destPR;
+                dp = &destPR2;
+            }
         }
     }
     gimp_progress_update((double) 100);
@@ -681,7 +647,7 @@ static gint
 randomize_dialog()
 {
     GtkWidget *dlg, *entry, *frame,
-	*seed_hbox, *seed_vbox, *table, *toggle_hbox;
+        *seed_hbox, *seed_vbox, *table, *toggle_hbox;
     GSList *type_group = NULL;
     GSList *seed_group = NULL;
     gchar **argv;
@@ -690,7 +656,6 @@ randomize_dialog()
 /*
  *  various initializations
  */
-    gint do_blur = (pivals.rndm_type == RNDM_BLUR);
     gint do_pick = (pivals.rndm_type == RNDM_PICK);
     gint do_hurl = (pivals.rndm_type == RNDM_HURL);
     gint do_slur = (pivals.rndm_type == RNDM_SLUR);
@@ -713,7 +678,7 @@ randomize_dialog()
     gtk_window_set_title(GTK_WINDOW(dlg), RNDM_VERSION);
     gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-	(GtkSignalFunc) gpc_close_callback, NULL);
+        (GtkSignalFunc) gpc_close_callback, NULL);
 /*
  *  Parameter settings
  *
@@ -731,10 +696,10 @@ randomize_dialog()
 /*
  *  Action area OK & Cancel buttons
  */
-    gpc_add_action_button("OK", (GtkSignalFunc) randomize_ok_callback, dlg
-        /* , "Accept settings and apply filter to image" */);
-    gpc_add_action_button("Cancel", (GtkSignalFunc) gpc_cancel_callback, dlg
-        /* , "Close plug-in without making any changes" */);
+    gpc_add_action_button("OK", (GtkSignalFunc) randomize_ok_callback, dlg,
+        "Accept settings and apply filter to image");
+    gpc_add_action_button("Cancel", (GtkSignalFunc) gpc_cancel_callback, dlg,
+        "Close plug-in without making any changes");
 /*
  *  Randomization Type - label & radio buttons
  */
@@ -743,15 +708,7 @@ randomize_dialog()
     toggle_hbox = gtk_hbox_new(FALSE, 5);
     gtk_container_border_width(GTK_CONTAINER(toggle_hbox), 5);
     gtk_table_attach(GTK_TABLE(table), toggle_hbox, 1, 2, 0, 1,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-/*
- *  Blur button (won't work with indexed - if the drawable is indexed,
- *      don't allow blur as an option)
- */
-    if (! is_indexed_drawable) {
-	gpc_add_radio_button(&type_group, "Blur", toggle_hbox, &do_blur,
-            "Blur each pixel by averaging its value with those of its neighbors");
-    }
+        GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
 /*
  *  Hurl, Pick and Slur buttons
  */
@@ -771,7 +728,7 @@ randomize_dialog()
     seed_vbox = gtk_vbox_new(FALSE, 2);
     gtk_container_border_width(GTK_CONTAINER(seed_vbox), 5);
     gtk_table_attach(GTK_TABLE(table), seed_vbox, 1, 2, 1, 2,
-	GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
+        GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
 /*
  *  Time button
  */
@@ -797,7 +754,7 @@ randomize_dialog()
     sprintf(buffer, "%d", pivals.rndm_seed);
     gtk_entry_set_text(GTK_ENTRY(entry), buffer);
     gtk_signal_connect(GTK_OBJECT(entry), "changed",
-	(GtkSignalFunc) gpc_text_update, &pivals.rndm_seed);
+        (GtkSignalFunc) gpc_text_update, &pivals.rndm_seed);
     gtk_widget_show(entry);
     gpc_set_tooltip(entry, "Value for seeding the random number generator");
     gtk_widget_show(seed_hbox);
@@ -828,22 +785,20 @@ randomize_dialog()
 /*
  *  Figure out which type of randomization to apply.
  */
-    if (do_blur) {
-	pivals.rndm_type = RNDM_BLUR;
-    } else if (do_pick) {
-	pivals.rndm_type = RNDM_PICK;
+    if (do_pick) {
+        pivals.rndm_type = RNDM_PICK;
     } else if (do_slur) {
-	pivals.rndm_type = RNDM_SLUR;
+        pivals.rndm_type = RNDM_SLUR;
     } else {
-	pivals.rndm_type = RNDM_HURL;
+        pivals.rndm_type = RNDM_HURL;
     }
 /*
  *  Figure out which type of seed initialization to apply.
  */
     if (do_time) {
-	pivals.seed_type = SEED_TIME;
+        pivals.seed_type = SEED_TIME;
     } else {
-	pivals.seed_type = SEED_USER;
+        pivals.seed_type = SEED_USER;
     }
 
     return rndm_int.run;

@@ -2,9 +2,8 @@
  * This is a convenience library for plugins for the GIMP v 0.99.8 or later.
  * Documentation is available at http://www.rru.com/~meo/gimp/ .
  *
- * Copyright (C) 1997 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
- * Blur code Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * GUI based on GTK code from:
+ * Copyright (C) 1997, 1998 Miles O'Neal <meo@rru.com> http://www.rru.com/~meo/
+ * GUI may include GTK code from:
  *    alienmap (Copyright (C) 1996, 1997 Daniel Cotting)
  *    plasma   (Copyright (C) 1996 Stephen Norris),
  *    oilify   (Copyright (C) 1996 Torsten Martinsen),
@@ -28,10 +27,16 @@
  ****************************************************************************/
 
 /****************************************************************************
- * gpc:
+ * gpc: GTK Plug-in Convenience library
  *
- * gpc version 1.1 (3 Feb 1998, MEO)
  * history
+ *     1.4 - 30 Apr 1998 MEO
+ *         added man page
+ *     1.3 - 29 Apr 1998 MEO
+ *         GTK 1.0 port (minor tooltips change)
+ *         restored tooltips to action buttons
+ *     1.2 - 11 Feb 1998 MEO
+ *         added basic comments
  *     1.1 -  3 Feb 1998 MEO
  *         removed tooltips from action buttons
  *     1.0 -  2 Feb 1998 MEO
@@ -48,7 +53,7 @@
 
 
 /*
- *  TOGGLE UPDATE callback
+ *  TOGGLE UPDATE callback - toggles the TOGGLE widget's data
  */
 static void
 gpc_toggle_update(GtkWidget *widget, gpointer data) {
@@ -62,7 +67,7 @@ gpc_toggle_update(GtkWidget *widget, gpointer data) {
       *toggle_val = FALSE;
 }
 /*
- *  DESTROY callback
+ *  DESTROY callback - quit this plug-in
  */
 void
 gpc_close_callback(GtkWidget *widget, gpointer data) {
@@ -70,7 +75,7 @@ gpc_close_callback(GtkWidget *widget, gpointer data) {
 }
 
 /*
- *  CANCEL BUTTON callback
+ *  CANCEL BUTTON callback - go away without saving state, etc.
  */
 void
 gpc_cancel_callback(GtkWidget *widget, gpointer data) {
@@ -78,7 +83,7 @@ gpc_cancel_callback(GtkWidget *widget, gpointer data) {
 }
 
 /*
- *  SCALE UPDATE callback
+ *  SCALE UPDATE callback - update the SCALE widget's data
  */
 void
 gpc_scale_update(GtkAdjustment *adjustment, double *scale_val) {
@@ -87,7 +92,7 @@ gpc_scale_update(GtkAdjustment *adjustment, double *scale_val) {
 
 
 /*
- *  TEXT UPDATE callback
+ *  TEXT UPDATE callback - update the TEXT widget's data
  */
 void
 gpc_text_update(GtkWidget *widget, gpointer data) {
@@ -106,6 +111,9 @@ gpc_text_update(GtkWidget *widget, gpointer data) {
 static GtkTooltips *tips;
 
 
+/*
+ *  TOOLTIP INITIALIZATION
+ */
 void
 gpc_setup_tooltips(GtkWidget *parent)
 {
@@ -131,16 +139,23 @@ gpc_setup_tooltips(GtkWidget *parent)
 }
 
 
+/*
+ *  SET TOOLTIP for a widget
+ */
 void
 gpc_set_tooltip(GtkWidget *widget, const char *tip)
 {
     if (tip && tip[0])
-        gtk_tooltips_set_tip (tips, widget, (char *) tip,NULL);
+        gtk_tooltips_set_tip(tips, widget, (char *) tip, NULL);
 }
 
+
+/*
+ *  ADD ACTION BUTTON to a dialog
+ */
 void
-gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog
-    /* , char *tip */ )
+gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog,
+    char *tip)
 {
     GtkWidget *button;
 
@@ -151,9 +166,13 @@ gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog
 	button, TRUE, TRUE, 0);
     gtk_widget_grab_default(button);
     gtk_widget_show(button);
-    /* gpc_set_tooltip(button, tip); */
+    gpc_set_tooltip(button, tip);
 }
 
+
+/*
+ *  ADD RADIO BUTTON to a dialog
+ */
 void
 gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,
     gint *value, char *tip)
@@ -171,6 +190,10 @@ gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,
     gpc_set_tooltip(toggle, tip);
 }
 
+
+/*
+ *  ADD LABEL widget to a dialog at given location
+ */
 void
 gpc_add_label(char *value, GtkWidget *table, int left, int right,
     int top, int bottom)
@@ -184,6 +207,10 @@ gpc_add_label(char *value, GtkWidget *table, int left, int right,
     gtk_widget_show(label);
 }
 
+
+/*
+ *  ADD HORIZONTAL SCALE widget to a dialog at given location
+ */
 void
 gpc_add_hscale(GtkWidget *table, int width, float low, float high,
     gdouble *val, int left, int right, int top, int bottom, char *tip)

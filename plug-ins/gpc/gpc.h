@@ -2,9 +2,8 @@
  * This is a convenience library for plugins for the GIMP v 0.99.8 or later.
  * Documentation is available at http://www.rru.com/~meo/gimp/ .
  *
- * Copyright (C) 1997 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
- * Blur code Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * GUI based on GTK code from:
+ * Copyright (C) 1997, 1998 Miles O'Neal <meo@rru.com> http://www.rru.com/~meo/
+ * GUI may include GTK code from:
  *    alienmap (Copyright (C) 1996, 1997 Daniel Cotting)
  *    plasma   (Copyright (C) 1996 Stephen Norris),
  *    oilify   (Copyright (C) 1996 Torsten Martinsen),
@@ -28,10 +27,16 @@
  ****************************************************************************/
 
 /****************************************************************************
- * gpc:
+ * gpc: GTK Plug-in Convenience library
  *
- * gpc version 1.1 (3 Feb 1998, MEO)
  * history
+ *     1.4 - 30 Apr 1998 MEO
+ *         added man page
+ *     1.3 - 29 Apr 1998 MEO
+ *         GTK 1.0 port (minor tooltips change)
+ *         restored tooltips to action buttons
+ *     1.2 - 11 Feb 1998 MEO
+ *         added basic comments
  *     1.1 -  3 Feb 1998 MEO
  *         removed tooltips from action buttons
  *     1.0 -  2 Feb 1998 MEO
@@ -60,8 +65,8 @@ void
 gpc_set_tooltip(GtkWidget *widget, const char *tip);
 
 void
-gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog
-    /* , char *tip */ );
+gpc_add_action_button(char *label, GtkSignalFunc callback, GtkWidget *dialog,
+    char *tip);
 
 void
 gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,

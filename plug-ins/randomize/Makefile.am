@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = randomize
 
 randomize_SOURCES = \
-	randomize.c gpc.c gpc.h
+	randomize.c  $(top_srcdir)/plug-ins/gpc/gpc.h 
 
 INCLUDES = \
 	$(X_CFLAGS)			\
@@ -13,14 +13,15 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
-					\
 	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimp.la
 
 randomize_DEPENDENCIES = $(DEPS)

@@ -548,6 +548,7 @@ plug-ins/gfig/gfig-examples/Makefile
 plug-ins/screenshot/Makefile
 plug-ins/sharpen/Makefile
 plug-ins/psd/Makefile
+plug-ins/gpc/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile
