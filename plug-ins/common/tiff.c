@@ -14,6 +14,7 @@
  * TIFF file, then a parasite is created and vice versa.
  * peter@kirchgessner.net -- 29 Oct 2002
  * Progress bar only when run interactive
+ * Added support for layer offsets - pablo.dangelo@web.de -- 7 Jan 2004
  */
 
 /*
@@ -401,6 +402,14 @@ load_image (const gchar *filename)
   gboolean      alpha;
   gint          image = 0, image_type = GIMP_RGB;
   gint          layer, layer_type     = GIMP_RGB_IMAGE;
+  float         layer_offset_x        = 0.0;
+  float         layer_offset_y        = 0.0;
+  gint          layer_offset_x_pixel  = 0;
+  gint          layer_offset_y_pixel  = 0;
+  gint          min_row = G_MAXINT;
+  gint          min_col = G_MAXINT;
+  gint          max_row = 0;
+  gint          max_col = 0;
   gushort       extra, *extra_types;
   channel_data *channel = NULL;
 
@@ -658,6 +667,17 @@ load_image (const gchar *filename)
            not xres.  This is left as an exercise for the reader - they
            should feel free to shoot the author of the broken program
            that produced the damaged TIFF file in the first place. */
+
+        /* handle layer offset */
+        if (!TIFFGetField (tif, TIFFTAG_XPOSITION, &layer_offset_x))
+          layer_offset_x = 0.0;
+        if (!TIFFGetField (tif, TIFFTAG_YPOSITION, &layer_offset_y))
+          layer_offset_y = 0.0;
+
+        /* round floating point position to integer position
+           required by GIMP */
+        layer_offset_x_pixel = ROUND(layer_offset_x * xres);
+        layer_offset_y_pixel = ROUND(layer_offset_y * yres);
       }
 
       /* Install colormap for INDEXED images only */
@@ -772,6 +792,25 @@ load_image (const gchar *filename)
       g_free (channel);
       channel = NULL;
 
+      /* compute bounding box of all layers read so far */
+      if (min_col > layer_offset_x_pixel)
+        min_col = layer_offset_x_pixel;
+      if (min_row > layer_offset_y_pixel)
+        min_row = layer_offset_y_pixel;
+
+      if (max_col < layer_offset_x_pixel + cols)
+        max_col = layer_offset_x_pixel + cols;
+      if (max_row < layer_offset_y_pixel + rows)
+        max_row = layer_offset_y_pixel + rows;
+
+      /* position the layer */
+      if (layer_offset_x_pixel > 0 || layer_offset_y_pixel > 0)
+        {
+          gimp_layer_set_offsets (layer,
+                                  layer_offset_x_pixel, layer_offset_y_pixel);
+        }
+
+
       if (ilayer > 0 && !alpha)
         gimp_layer_add_alpha (layer);
 
@@ -779,6 +818,10 @@ load_image (const gchar *filename)
       ilayer++;
     }
   while (TIFFReadDirectory (tif));
+
+  /* resize image to bounding box of all layers */
+  gimp_image_resize (image,
+                     max_col - min_col, max_row - min_row, -min_col, -min_row);
 
   gimp_image_undo_enable (image);
 

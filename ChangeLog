@@ -1,3 +1,9 @@
+2004-01-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c (load_image): applied a patch from 
+	Pablo d'Angelo that fixes layer offsets for multipage TIFF files
+	(bug #131016).
+
 2004-01-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/add-bevel.scm: fix typo:
