@@ -975,7 +975,7 @@ static char *measure_bits [] =
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: xinput_airbrush  */
 
-
+/*
 #define xinput_airbrush_width 22
 #define xinput_airbrush_height 22
 static char *xinput_airbrush_bits [] =
@@ -1003,11 +1003,12 @@ static char *xinput_airbrush_bits [] =
   "...aaccegggaggeccaa...",
   "......................"
 };               
+*/
 
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: path_tool  */
 
-
+/*
 #define path_tool_width 22
 #define path_tool_height 22
 static char *path_tool_bits [] = 
@@ -1035,6 +1036,7 @@ static char *path_tool_bits [] =
   "..a...................",
   "......................"
 };
+*/
 
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: by_color_select  */

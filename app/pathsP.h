@@ -20,59 +20,81 @@
 
 #include "libgimp/gimpmatrix.h"
 
-/* Cutdown representation of the bezier curve description */
-/* Will be used to hopefully store in XCF format...
- */
+#include "gdisplayF.h"    /* GDisplay */
+#include "gimpimageF.h"   /* Tattoo   */
 
-typedef struct {
+
+typedef struct 
+{
   guint32 type;
   gdouble x;
   gdouble y;
-} PATHPOINT, *PATHPOINTP;
+} PathPoint;
 
-typedef struct {
-  GSList       * path_details;
-  guint32        pathtype; /* Only beziers to start with */
-  gboolean       closed;
-  guint32        state;
-  guint32        locked;  /* Only bottom bit used */
-  Tattoo         tattoo;  /* The tattoo for the path */
-  GString      * name;
-}  PATH, *PATHP;
+typedef struct 
+{
+  GSList    *path_details;
+  guint32    pathtype; /* Only beziers to start with */
+  gboolean   closed;
+  guint32    state;
+  guint32    locked;  /* Only bottom bit used */
+  Tattoo     tattoo;  /* The tattoo for the path */
+  gchar     *name;
+} Path;
 
-typedef struct {
-  GimpImage * gimage;
-  GDisplay  * gdisp; /* This is a hack.. Needed so we can get back to 
-		      * the same display that these curves were added
-		      * too. That way when an entry in the paths dialog
-		      * is clicked the bezier tool can be targeted at 
-		      * correct display. Note this display could have been
-		      * deleted (ie different view), but gdisplays_check_valid()
-		      * function will take care of that.. In this case we just
-		      * pick a display that the gimage is rendered in.
-		      */
-  GSList    * bz_paths;  /* list of BZPATHP */
-  guint       sig_id;
-  gint32      last_selected_row;
-} PATHIMAGELIST, *PATHIMAGELISTP, PathsList;
+typedef struct 
+{
+  GimpImage *gimage;
+  GDisplay  *gdisp; /* This is a hack.. Needed so we can get back to 
+                     * the same display that these curves were added
+		     * too. That way when an entry in the paths dialog
+		     * is clicked the bezier tool can be targeted at 
+		     * correct display. Note this display could have been
+		     * deleted (ie different view), but gdisplays_check_valid()
+		     * function will take care of that.. In this case we just
+		     * pick a display that the gimage is rendered in.
+		     */
+  GSList    *bz_paths;  /* list of BZPATHP */
+  guint      sig_id;
+  gint32     last_selected_row;
+} PathList;
 
-typedef enum {
+typedef enum 
+{
   BEZIER = 1
 } PathType;
 
-PATHPOINTP    pathpoint_new(gint,gdouble,gdouble);
-PATHP         path_new(GimpImage *,PathType,GSList *,gint,gint,gint,gint,gchar *);
-PathsList   * pathsList_new(GimpImage *,gint,GSList *);
-gboolean      paths_set_path(GimpImage *,gchar *);
-gboolean      paths_set_path_points(GimpImage *,gchar *,gint,gint,gint,gdouble *);
-void          paths_stroke(GimpImage *,PathsList *,PATHP);
-gint          paths_distance(PATHP ,gdouble ,gint *,gint *, gdouble *);
-Tattoo        paths_get_tattoo(PATHP);
-PATHP         paths_get_path_by_tattoo(GimpImage *,Tattoo);
-void        * paths_transform_start_undo(GimpImage  *);
-void          paths_transform_free_undo(void *);
-void          paths_transform_do_undo(GimpImage *,void *);
-void          paths_transform_current_path(GimpImage  *,GimpMatrix3,gboolean);
-gboolean      paths_delete_path(GimpImage *,gchar *);
+PathPoint *   path_point_new  (gint, gdouble, gdouble);
+void          path_point_free (PathPoint *pathpoint);
+
+Path *        path_new        (GimpImage *, PathType, GSList *,
+			       gint, gint, gint, gint, gchar *);
+Path*         path_copy       (GimpImage *gimage, Path* p);
+void          path_free       (Path *path);
+
+Tattoo        path_get_tattoo             (Path*);
+Path *        path_get_path_by_tattoo     (GimpImage *, Tattoo);
+
+void          path_stroke     (GimpImage *, PathList *, Path *);
+gint          path_distance   (Path *, gdouble, gint *, gint *, gdouble *);
+
+PathList *    path_list_new   (GimpImage *, gint, GSList *);
+void          path_list_free  (PathList *);
+
+gboolean      paths_set_path        (GimpImage *, gchar *);
+gboolean      paths_set_path_points (GimpImage *, gchar *, gint, gint, gint, gdouble *);
+
+void *        paths_transform_start_undo   (GimpImage *);
+void          paths_transform_free_undo    (void *);
+void          paths_transform_do_undo      (GimpImage *,void *);
+void          paths_transform_current_path (GimpImage *, GimpMatrix3, gboolean);
+
+gboolean      paths_delete_path            (GimpImage *, gchar *);
+
+GSList *      pathpoints_copy (GSList *list);
+void          pathpoints_free (GSList *list);
 
 #endif  /*  __PATHSP_H__  */
+
+
+

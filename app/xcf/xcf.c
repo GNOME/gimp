@@ -697,9 +697,10 @@ static Parasite *read_a_parasite(XcfInfo *info)
   return p;
 }
 
-static void write_bz_point(gpointer pptr, gpointer iptr)
+static void 
+write_bz_point (gpointer pptr, gpointer iptr)
 {
-  PATHPOINTP bpt = (PATHPOINTP)pptr;
+  PathPoint *bpt = (PathPoint*)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
   gfloat   xfloat = (gfloat)bpt->x;
   gfloat   yfloat = (gfloat)bpt->y;
@@ -715,9 +716,10 @@ static void write_bz_point(gpointer pptr, gpointer iptr)
   info->cp += xcf_write_float(info->fp, &yfloat,1);
 }
 
-static PATHPOINTP v1read_bz_point(XcfInfo *info)
+static PathPoint* 
+v1read_bz_point(XcfInfo *info)
 {
-  PATHPOINTP ptr;
+  PathPoint *ptr;
   guint32 type;
   gint32 x;
   gint32 y;
@@ -726,14 +728,15 @@ static PATHPOINTP v1read_bz_point(XcfInfo *info)
   info->cp += xcf_read_int32(info->fp, (guint32*)&x,1);
   info->cp += xcf_read_int32(info->fp, (guint32*)&y,1);
 
-  ptr = pathpoint_new(type,(gdouble)x,(gdouble)y);
+  ptr = path_point_new (type,(gdouble)x,(gdouble)y);
 
   return (ptr);
 }
 
-static PATHPOINTP read_bz_point(XcfInfo *info)
+static PathPoint * 
+read_bz_point(XcfInfo *info)
 {
-  PATHPOINTP ptr;
+  PathPoint *ptr;
   guint32 type;
   gfloat x;
   gfloat y;
@@ -742,14 +745,15 @@ static PATHPOINTP read_bz_point(XcfInfo *info)
   info->cp += xcf_read_float(info->fp, &x,1);
   info->cp += xcf_read_float(info->fp, &y,1);
  
-  ptr = pathpoint_new(type,(gdouble)x,(gdouble)y);
+  ptr = path_point_new(type,(gdouble)x,(gdouble)y);
 
   return (ptr);
 }
 
-static void write_one_path(gpointer pptr, gpointer iptr)
+static void 
+write_one_path (gpointer pptr, gpointer iptr)
 {
-  PATHP bzp = (PATHP)pptr;
+  Path *bzp = (Path*)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
   guint8 state = (gchar)bzp->state;
   guint32 num_points;
@@ -766,7 +770,7 @@ static void write_one_path(gpointer pptr, gpointer iptr)
    * then each point.
    */
  
-  info->cp += xcf_write_string(info->fp, &bzp->name->str, 1);
+  info->cp += xcf_write_string(info->fp, &bzp->name, 1);
   info->cp += xcf_write_int32(info->fp, &bzp->locked,1);
   info->cp += xcf_write_int8(info->fp, &state,1);
   closed = bzp->closed;
@@ -780,9 +784,10 @@ static void write_one_path(gpointer pptr, gpointer iptr)
   g_slist_foreach(bzp->path_details,write_bz_point,info);
 }
 
-static PATHP read_one_path(GImage *gimage,XcfInfo *info)
+static Path*
+read_one_path (GImage *gimage,XcfInfo *info)
 {
-  PATHP bzp;
+  Path *bzp;
   gchar *name;
   guint32 locked;
   guint8  state;
@@ -805,7 +810,7 @@ static PATHP read_one_path(GImage *gimage,XcfInfo *info)
       ptype = BEZIER;
       while(num_points-- > 0)
       {
-        PATHPOINTP bpt;
+        PathPoint *bpt;
         /* Read in a path */
         bpt = v1read_bz_point(info);
         pts_list = g_slist_append(pts_list,bpt);
@@ -817,7 +822,7 @@ static PATHP read_one_path(GImage *gimage,XcfInfo *info)
       info->cp += xcf_read_int32(info->fp, (guint32 *)&ptype,1);
       while(num_points-- > 0)
       {
-        PATHPOINTP bpt;
+        PathPoint *bpt;
         /* Read in a path */
         bpt = read_bz_point(info);
         pts_list = g_slist_append(pts_list,bpt);
@@ -830,7 +835,7 @@ static PATHP read_one_path(GImage *gimage,XcfInfo *info)
       info->cp += xcf_read_int32(info->fp, (guint32 *)&tattoo,1);
       while(num_points-- > 0)
       {
-        PATHPOINTP bpt;
+        PathPoint *bpt;
         /* Read in a path */
         bpt = read_bz_point(info);
         pts_list = g_slist_append(pts_list,bpt);
@@ -841,12 +846,13 @@ static PATHP read_one_path(GImage *gimage,XcfInfo *info)
       g_warning("Unknown path type..Possibly corrupt XCF file");
     }
 
-  bzp = path_new(gimage,ptype,pts_list,closed,(gint)state,locked,tattoo,name);
+  bzp = path_new (gimage, ptype, pts_list, closed, (gint)state, locked, tattoo, name);
 
   return(bzp);
 }
 
-static void write_bzpaths(PathsList *paths, XcfInfo *info)
+static void 
+write_bzpaths (PathList *paths, XcfInfo *info)
 {
   guint32 num_paths;
   /* Write out the following:-
@@ -863,11 +869,12 @@ static void write_bzpaths(PathsList *paths, XcfInfo *info)
   g_slist_foreach(paths->bz_paths,write_one_path,info);  
 }
 
-static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
+static PathList* 
+read_bzpaths (GImage *gimage, XcfInfo *info)
 {
   guint32 num_paths;
   guint32 last_selected_row;
-  PathsList *paths;
+  PathList *paths;
   GSList *bzp_list = NULL;
 
   info->cp += xcf_read_int32(info->fp,&last_selected_row,1);
@@ -875,13 +882,13 @@ static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
 
   while(num_paths-- > 0)
     {
-      PATHP bzp;
+      Path *bzp;
       /* Read in a path */
       bzp = read_one_path(gimage,info);
       bzp_list = g_slist_append(bzp_list,bzp);
     }
 
-  paths = pathsList_new(gimage,last_selected_row,bzp_list);
+  paths = path_list_new (gimage, last_selected_row, bzp_list);
 
   return(paths);
 }
@@ -1182,10 +1189,10 @@ xcf_save_prop (XcfInfo  *info,
       break;
     case PROP_PATHS:
       {
-	PathsList *paths_list;
+	PathList *paths_list;
 	guint32 base, length;
 	long pos;
-	paths_list =  va_arg (args, PathsList *);
+	paths_list =  va_arg (args, PathList *);
 	if (paths_list)
 	{
  	  info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
@@ -1891,9 +1898,9 @@ xcf_load_image_props (XcfInfo *info,
 	 break;
 	case PROP_PATHS:
 	  {
-	    PathsList *paths = read_bzpaths(gimage,info);
+	    PathList *paths = read_bzpaths (gimage, info);
 	    /* add to gimage */
-	    gimp_image_set_paths(gimage,paths);
+	    gimp_image_set_paths (gimage, paths);
 	  }
 	  break;
 	case PROP_USER_UNIT:

@@ -164,7 +164,7 @@ context_manager_init (void)
 	case INK:
 	case DODGEBURN:
 	case SMUDGE:
-	case XINPUT_AIRBRUSH:
+/*  	case XINPUT_AIRBRUSH: */
 	  tool_info[i].tool_context =
 	    gimp_context_new (tool_info[i].private_tip, global_tool_context);
 	  break;

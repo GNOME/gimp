@@ -81,7 +81,7 @@ struct _GimpImage
 
   ParasiteList *parasites;            /*  Plug-in parasite data        */
 
-  PathsList *paths;                   /*  Paths data for this image    */
+  PathList *paths;                    /*  Paths data for this image    */
 
   gint visible [MAX_CHANNELS];        /*  visible channels             */
   gint active  [MAX_CHANNELS];        /*  active channels              */

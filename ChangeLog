@@ -1,3 +1,45 @@
+Wed Feb 16 02:36:48 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb
+	* app/Makefile.am
+	* app/bezier_select.c
+	* app/bezier_select.h
+	* app/bezier_selectP.h
+	* app/channel_ops.c
+	* app/context_manager.c
+	* app/gimage_cmds.c
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpimageP.h
+	* app/lc_dialog.c
+	* app/menus.c
+	* app/path.c: new file
+	* app/pathsP.h
+	* app/paths_cmds.c
+	* app/paths_dialog.c
+	* app/paths_dialog.h
+	* app/paths_dialogP.h
+	* app/pixmaps2.h
+	* app/tool_options.c
+	* app/tools.c
+	* app/toolsF.h
+	* app/xcf.c: 
+	Moved some functions out of paths_dialog.c into the new file 
+	paths.c and did a general namespace cleanup:
+	s/PATHP/Path*/  s/PATHIMAGELISTP/PathList/ and friends.
+
+	Paths are now copied on image duplicate (fixes bug #5726).
+	
+	Removed Path Tool and XInput Airbrush from the build and 
+	renamed "Layers & Channels" to "Layers, Channels & Paths".
+
+	* plug-ins/xjt/README_xjt_fileformat.txt
+	* plug-ins/xjt/xjt.c
+	* plug-ins/xjt/xpdb_calls.c
+	* plug-ins/xjt/xpdb_calls.h: applied patch from Wolfgang Hofer
+	that enables loading and saving of paths based on Andy's change
+	explained below.
+
 Tue Feb 15 23:27:42 GMT 2000 Andy Thomas <alt@gimp.org>
 
 	 * gimp/app/gimpdrawable.c

@@ -20,6 +20,7 @@
  */
 
 /* revision history:
+ * version 1.1.16a; 2000/02/04  hof: path lockedstaus, tattoo set procedures
  * version 1.1.15b; 2000/01/28  hof: parasites part2
  * version 1.1.15;  2000/01/20  hof: parasites
  * version 1.02.00; 1999/02/01  hof: PDB-calls to load/save resolution tattoos and parasites
@@ -65,6 +66,12 @@ gdouble* p_gimp_path_get_points(gint32 image_id, gchar *name,
 gchar**  p_gimp_path_list(gint32 image_id, gint32 *num_paths);
 gchar*   p_gimp_path_get_current(gint32 image_id);
 gint     p_gimp_path_set_current(gint32 image_id, gchar *name);
+gint32   p_gimp_path_get_locked(gint32 image_id, gchar *name);
+gint     p_gimp_path_set_locked(gint32 image_id, gchar *name, gint32 lockstatus);
+gint32   p_gimp_path_get_tattoo(gint32 image_id, gchar *name);
+gint     p_gimp_path_set_tattoo(gint32 image_id, gchar *name, gint32 tattoovalue);
+gint     p_gimp_layer_set_tattoo(gint32 layer_id, gint32 tattoovalue);
+gint     p_gimp_channel_set_tattoo(gint32 channel_id, gint32 tattoovalue);
 
 
 #endif

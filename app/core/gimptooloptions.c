@@ -469,9 +469,9 @@ paint_options_init (PaintOptions         *options,
 			       _("Dodge or Burn") :
 			       ((tool_type == SMUDGE) ?
 				_("Smudge Tool") :
-				((tool_type == XINPUT_AIRBRUSH) ?
-				 _("Xinput Airbrush") :
-				 "ERROR: Unknown Paint Tool Type")))))))))))),
+/*  				((tool_type == XINPUT_AIRBRUSH) ? */
+/*  				 _("Xinput Airbrush") : */
+				 "ERROR: Unknown Paint Tool Type"))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */
@@ -522,7 +522,7 @@ paint_options_init (PaintOptions         *options,
     case AIRBRUSH:
     case CLONE:
     case INK:
-    case XINPUT_AIRBRUSH:
+/*      case XINPUT_AIRBRUSH: */
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       options->paint_mode_w =
@@ -562,7 +562,7 @@ paint_options_init (PaintOptions         *options,
     case INK:
     case DODGEBURN:
     case SMUDGE:
-    case XINPUT_AIRBRUSH:
+/*      case XINPUT_AIRBRUSH: */
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);

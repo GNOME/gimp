@@ -2,6 +2,7 @@
 XJT Fileformat specification:   
 ------------------------------
 
+ (XJT 1.1.16b,  2000.02.05)  unit
  (XJT 1.1.15b,  2000.01.30)  paths
  (XJT 1.1.15a,  2000.01.23)
  (XJT 1.1,      1998.10.31 - 1999.03.16)
@@ -123,10 +124,10 @@ Syntax of the PRP -file
 	  PROP_GIMP_VERSION
 	  PROP_DIMENSION
 	  PROP_RESOLUTION
+          PROP_UNIT
 	  PROP_TYPE
 	  PROP_GUIDES        (can occure more than 1 time)
           PROP_PARASITES     (can occure more than 1 time)
-
  
   Layer Properties:
   =================
@@ -212,6 +213,7 @@ Syntax of the PRP -file
 	   PROP_PATH_TYPE
 	   PROP_PATH_CURRENT
            PROP_PATH_LOCKED
+           PROP_TATTOO
 	   PROP_PATH_POINT
 
 --------------------------
@@ -283,6 +285,7 @@ Boolean tokens default always to FALSE and become TRUE when specified.
    PROP_COMPRESSION,	       "*",	 PTYP_NOT_SUPPORTED,	   0,
    PROP_GUIDES, 	       "g",	 PTYP_2xINT,		   0, 0,
    PROP_RESOLUTION,            "res",    PTYP_2xFLT,               72.0, 72.0,
+   PROP_UNIT,                  "unt",    PTYP_INT,                 0,     /* XJT_UNIT_PIXEL */
    PROP_TATTOO,                "tto",    PTYP_INT,                 0,
    PROP_PARASITES,             "pte",	 PTYP_INT,		   0,
 
@@ -295,7 +298,7 @@ Boolean tokens default always to FALSE and become TRUE when specified.
 
    PROP_GIMP_VERSION,	       "gimp",	 PTYP_3xINT,		   0,
    PROP_PATH_POINT,	       "php",	 PTYP_FLIST,		   0.0, 0.0, 0.0
-   PROP_PATH_TYPE,	       "pht",	 PTYP_INT,		   1,   /* BEZIER */
+   PROP_PATH_TYPE,	       "pht",	 PTYP_INT,		   1,   /* XJT_BEZIER_PATH */
    PROP_PATH_CURRENT,	       "pha",	 PTYP_BOOLEAN,  	   FALSE, 
    PROP_PATH_LOCKED,	       "phl",	 PTYP_BOOLEAN,  	   FALSE, 
 
@@ -357,6 +360,13 @@ PROP_PATH_POINT
      
      where type can be 1  (BEZIER_ANCHOR point)
                     or 2  (BEZIER_CONTROL point)
+
+PROP_UNIT    valid values are:
+    0 ... XJT_UNIT_PIXEL
+    1 ... XJT_UNIT_INCH
+    2 ... XJT_UNIT_MM
+    3 ... XJT_UNIT_POINT
+    4 ... XJT_UNIT_PICA
 
 
 

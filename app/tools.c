@@ -542,6 +542,7 @@ ToolInfo tool_info[] =
     NULL
   },
 
+/*
   {
     NULL,
     N_("Xinput Airbrush"),
@@ -558,6 +559,7 @@ ToolInfo tool_info[] =
     NULL,
     NULL
   },          
+*/
 
   {
     NULL,
@@ -576,6 +578,7 @@ ToolInfo tool_info[] =
     NULL
   },
 
+/*
   {
     NULL,
     N_("Path"),
@@ -592,7 +595,7 @@ ToolInfo tool_info[] =
     NULL,
     NULL
   },
-
+*/
 
   /*  Non-toolbox tools  */
   { 

@@ -409,6 +409,13 @@ bezier_select_reset (BezierSelect *bezier_sel)
   bezier_sel->scanlines = NULL;
 }
 
+void
+bezier_select_free (BezierSelect *bezier_sel)
+{
+  bezier_select_reset (bezier_sel);
+  g_free (bezier_sel);
+}
+
 /* Find the curve that points to this curve. This makes to_check point
  * the start of a curve. 
  */

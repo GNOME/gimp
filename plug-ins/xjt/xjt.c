@@ -8,11 +8,7 @@
  *  gzip and bzip2 compression Programs.
  *
  * IMPORTANT NOTE:
- *   This plugin needs GIMP 1.1.15 or newer versions of the GIMP-core to run.
- *
- * Things left to do for next XJT release
- *    - load/save path
- *    - show continous progress while loading/saving
+ *   This plugin needs GIMP 1.1.16 or newer versions of the GIMP-core to run.
  */
  
 /* The GIMP -- an image manipulation program
@@ -34,11 +30,12 @@
  */
 
 /* TODO:
- *  - support units and user units 
- *  - load tattoos (code is prepared for tattos)
+ *  - support user units 
+ *  - show continous progress while loading/saving
  */
 
 /* revision history:
+ * version 1.1.16a; 2000/02/04  hof: load paths continued, load tattos, load/save unit
  * version 1.1.15b; 2000/01/28  hof: save/load paths  (load is not activated PDB-bug)
  *                                   continued save/load parasites,
  *                                   replaced static buffers by dynamic allocated memory (goodbye to sprintf)
@@ -176,6 +173,15 @@ typedef enum
 
 typedef enum
 {
+  XJT_UNIT_PIXEL = 0,
+  XJT_UNIT_INCH  = 1,
+  XJT_UNIT_MM    = 2,
+  XJT_UNIT_POINT = 3,
+  XJT_UNIT_PICA  = 4
+} XJTUnitType;
+
+typedef enum
+{
   XJT_NORMAL_MODE = 0,
   XJT_DISSOLVE_MODE = 1,
   XJT_BEHIND_MODE = 2,
@@ -234,6 +240,7 @@ typedef struct
   gint32          path_locked;
   gint32          path_closed;
   gint32          current_flag;
+  gint32          tattoo;
   gchar          *name;
   gint32          num_points;
   gdouble        *path_points;
@@ -303,6 +310,7 @@ typedef struct
   gint              image_height;
   gfloat            xresolution;
   gfloat            yresolution;
+  GimpUnit          unit;
   gint32            tattoo;
   gint              n_layers;
   gint              n_channels;
@@ -315,7 +323,7 @@ typedef struct
 } t_image_props;
 
 
-#define PROP_TABLE_ENTRIES 33
+#define PROP_TABLE_ENTRIES 34
 t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {             
   /* t_proptype              mnemonic   t_paramtyp             default values */
   { PROP_END,                   "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
@@ -338,13 +346,14 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   { PROP_COMPRESSION,           "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
   { PROP_GUIDES,                "g",      PTYP_2xINT,               0.0,  0.0,  0.0 } ,
   { PROP_RESOLUTION,            "res",    PTYP_2xFLT,              72.0, 72.0,  0.0 } ,
-  { PROP_TATTOO,                "tto",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
+  { PROP_UNIT,                  "unt",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
+  { PROP_TATTOO,                "tto",    PTYP_INT,                -1.0,  0.0,  0.0 } ,
   { PROP_PARASITES,             "pte",	  PTYP_INT,		    0.0,  0.0,  0.0 } ,
  
   { PROP_PATH_POINTS,           "php",    PTYP_FLIST,               0.0,  0.0,  0.0 } ,
   { PROP_PATH_TYPE,             "pht",    PTYP_INT,                 1.0,  0.0,  0.0 } ,
   { PROP_PATH_CURRENT,          "pha",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
-  { PROP_PATH_LOCKED,           "phl",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
+  { PROP_PATH_LOCKED,           "phl",    PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_PARASITE_FLAGS,        "ptf",    PTYP_INT,                 1.0,  0.0,  0.0 } ,
   { PROP_FLOATING_ATTACHED,     "fa",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_NAME,                  "n",      PTYP_STRING,              0.0,  0.0,  0.0 } ,
@@ -459,7 +468,7 @@ query (void)
 			  "loads files of the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Jan-30",
+                          "2000-Feb-04",
 			  "<Load>/xjt",
 			  NULL,
                           PROC_PLUG_IN,
@@ -471,7 +480,7 @@ query (void)
 			  "saves files in the jpeg-tar file format",
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Jan-30",
+                          "2000-Feb-04",
                           "<Save>/xjt",
 			  "RGB*, GRAY*",
                           PROC_PLUG_IN,
@@ -718,6 +727,46 @@ p_to_XJTPathType(gint32 intype)
   return(XJT_PATHTYPE_UNDEF);
 }
 
+
+GimpUnit
+p_to_GimpUnit(XJTUnitType intype)
+{
+  switch(intype)
+  {
+    case XJT_UNIT_PIXEL:      return(GIMP_UNIT_PIXEL);
+    case XJT_UNIT_INCH:       return(GIMP_UNIT_INCH);
+    case XJT_UNIT_MM:         return(GIMP_UNIT_MM);
+    case XJT_UNIT_POINT:      return(GIMP_UNIT_POINT);
+    case XJT_UNIT_PICA:       return(GIMP_UNIT_PICA);
+  }
+  printf (_("XJT file contains unknown unittype %d"), (int)intype);
+  if((gint32)intype > (gint32)XJT_UNIT_PICA)
+  {
+    return((GimpUnit)intype);
+  }
+  return (GIMP_UNIT_PIXEL);
+}
+
+XJTUnitType
+p_to_XJTUnitType(GimpUnit intype)
+{
+  switch(intype)
+  {
+    case GIMP_UNIT_PIXEL:      return(XJT_UNIT_PIXEL);
+    case GIMP_UNIT_INCH:       return(XJT_UNIT_INCH);
+    case GIMP_UNIT_MM:         return(XJT_UNIT_MM);
+    case GIMP_UNIT_POINT:      return(XJT_UNIT_POINT);
+    case GIMP_UNIT_PICA:       return(XJT_UNIT_PICA);
+    case GIMP_UNIT_END:        break;
+    case GIMP_UNIT_PERCENT:    break;
+  }
+  printf (_("Warning: unsupported unittype %d saved to XJT"), (int)intype);
+  if((gint32)intype > (gint32)XJT_UNIT_PICA)
+  {
+    return((XJTUnitType)intype);
+  }
+  return(XJT_UNIT_PIXEL);
+}
 
 /* ---------------------- SAVE DIALOG procedures  -------------------------- */
 
@@ -1218,6 +1267,12 @@ p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
       l_param.int_val1 = p_to_XJTPathType(l_path_type);
       p_write_prop (fp, PROP_PATH_TYPE, &l_param, wr_all_prp);
 
+      l_param.int_val1 = p_gimp_path_get_tattoo(image_id, l_path_names[l_idx]);
+      p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
+
+      l_param.int_val1 = p_gimp_path_get_locked(image_id, l_path_names[l_idx]);
+      p_write_prop (fp, PROP_PATH_LOCKED, &l_param, wr_all_prp);
+
       l_param.string_val = l_path_names[l_idx];
       p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
 
@@ -1447,7 +1502,7 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
  
    fprintf(fp, "%s", GIMP_XJ_IMAGE);
     
-   l_param.string_val = "1.1.15b";
+   l_param.string_val = "1.1.16a";
    p_write_prop (fp, PROP_VERSION, &l_param, wr_all_prp);
 
    l_param.int_val1 = GIMP_MAJOR_VERSION;
@@ -1464,13 +1519,11 @@ p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
    l_param.flt_val2 = l_yresolution;
    p_write_prop (fp, PROP_RESOLUTION, &l_param, wr_all_prp);
 
-   /* in GIMP 1.0.2 there is no interface to access guides
-    * (so they were ignored in GIMP1.0.2 with warnings.
-    *  The warning is printed even if there are no guides,
-    *  because XJT does not know if there are guides without the Interface)
-    *
-    * In GIMP 1.1 guide are saved as expected.
-    */
+   /* write unit */
+   l_param.int_val1 = p_to_XJTUnitType(gimp_image_get_unit(image_id));
+   p_write_prop (fp, PROP_UNIT, &l_param, wr_all_prp);
+
+   /* write guides */
    l_guide_id = p_gimp_image_findnext_guide(image_id, 0);  /* get 1.st guide */
    while(l_guide_id > 0)
    {
@@ -1905,6 +1958,7 @@ t_path_props * p_new_path_prop()
 
   l_new_prop = g_malloc(sizeof(t_path_props));
     l_new_prop->path_type = p_to_GimpPathType(XJT_PATHTYPE_BEZIER);
+    l_new_prop->tattoo    = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
     l_new_prop->path_locked = FALSE;
     l_new_prop->path_closed = FALSE;
     l_new_prop->current_flag = FALSE;
@@ -1930,6 +1984,7 @@ t_image_props * p_new_image_prop()
     l_new_prop->image_height     = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val2;
     l_new_prop->xresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val1;
     l_new_prop->yresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val2;
+    l_new_prop->unit             = p_to_GimpUnit(g_prop_table[p_get_property_index(PROP_UNIT)].default_val1);
     l_new_prop->tattoo           = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
     l_new_prop->n_layers = 0;
     l_new_prop->n_channels = 0;
@@ -2757,6 +2812,9 @@ gint p_scann_image_prop(gchar* scan_ptr, t_image_props *image_prop)
             image_prop->image_width = l_param.int_val1;
             image_prop->image_height = l_param.int_val2;
             break;
+       case PROP_UNIT:
+            image_prop->unit = p_to_GimpUnit(l_param.int_val1);
+            break;
        case PROP_GUIDES: 
             l_guide_prop = p_new_guide_prop();
             if(l_guide_prop)
@@ -2901,6 +2959,12 @@ gint p_scann_path_prop(gchar* scan_ptr, t_image_props *image_prop)
        case PROP_PATH_TYPE:
             l_new_prop->path_type = p_to_GimpPathType(l_param.int_val1);
             break;
+       case PROP_PATH_LOCKED:
+            l_new_prop->path_locked = l_param.int_val1;
+            break;
+       case PROP_TATTOO:
+            l_new_prop->tattoo = l_param.int_val1;
+            break;
        case PROP_NAME:
             l_new_prop->name  = l_param.string_val;
             break;
@@ -2944,6 +3008,11 @@ p_add_paths(gint32 image_id, t_path_props *path_props)
        }
        p_gimp_path_set_points(image_id, l_prop->name,
 	                      l_prop->path_type, l_prop->num_points, l_prop->path_points);
+       p_gimp_path_set_locked(image_id, l_prop->name, l_prop->path_locked);
+       if(l_prop->tattoo >= 0)
+       {
+          p_gimp_path_set_tattoo(image_id, l_prop->name, l_prop->tattoo);
+       }
      }
      l_prop = (t_path_props *)l_prop->next;
   }
@@ -3255,6 +3324,7 @@ load_xjt_image (gchar *filename)
    p_gimp_image_set_resolution  (l_image_id, 
                                  l_image_prp_ptr->xresolution,
                                  l_image_prp_ptr->yresolution);
+   gimp_image_set_unit(l_image_id, l_image_prp_ptr->unit);
 
    p_check_and_add_parasite(l_image_id,
                             l_dirname,
@@ -3318,6 +3388,10 @@ load_xjt_image (gchar *filename)
      gimp_layer_set_visible (l_layer_id, l_layer_prp_ptr->visible);
         p_layer_set_linked (l_layer_id, l_layer_prp_ptr->linked);
      gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
+     if(l_layer_prp_ptr->tattoo >= 0)
+     {
+        p_gimp_layer_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
+     }
 
      if(l_layer_prp_ptr->active_layer)
      {
@@ -3366,7 +3440,12 @@ load_xjt_image (gchar *filename)
               {
                  l_fsel_attached_to_id = l_channel_id;    /* the floating selection is attached to this layer_mask */
               }
-
+              
+              if(l_channel_prp_ptr->tattoo >= 0)
+              {
+                 p_gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+              }
+             
               /* gimp_layer_set_offsets(l_channel_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy); */
 
               gimp_layer_set_apply_mask (l_layer_id, l_layer_prp_ptr->apply_mask);
@@ -3383,8 +3462,6 @@ load_xjt_image (gchar *filename)
            break;
         }
      }    /* end search for layermask */
-
-
    }
    
    /* load all channels */ 
@@ -3418,6 +3495,10 @@ load_xjt_image (gchar *filename)
 			    l_channel_prp_ptr->channel_pos,
 			    XJT_CHANNEL_PARASITE);
      
+     if(l_channel_prp_ptr->tattoo >= 0)
+     {
+        p_gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+     }
      if(l_channel_prp_ptr->selection)
      {
         if(xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
@@ -3488,50 +3569,9 @@ load_xjt_image (gchar *filename)
 
 
    /* create paths */
-
-   /* hof: 2000.01.30
-    * The  PDB-interface of
-    *   gimp_path_set_points gimp 1.1.15
-    *   --------------------
-    *   does not work, especially if the image has no display.
-    *   Most of the time it crashed and
-    *   in some cases cases it just brings unusable results.
-    *
-    * for debug reasons i added a display
-    *
-    *   but (as usual in file load plugins), the gimp
-    *   main app opens a new display at success
-    *   and our image gets 2 displays
-    *   -- so this is not a usable workaround
-    *   If somebody can fix the problem until gimp 1.2
-    *   we can remove the ugly WARNING printf's
-    *   and the call to
-    *      gimp_display_new(l_image_id);
-    */
    if(l_image_prp_ptr->path_props)
    {
-     guchar *l_env;
-     
-     l_env = getenv("XJT_DEBUG");
-     if(l_env != NULL)
-     {
-       if(*l_env == '1')
-       {
-         gimp_display_new(l_image_id);
-       }
-       p_add_paths(l_image_id,  l_image_prp_ptr->path_props);
-     }
-     else
-     {
-         printf("XJT: WARNING paths found in file %s were not attached to the image\n", filename);
-         printf("     because the PDB interface of gimp_path_set_points does not work in gimp 1.1.15\n");
-         printf("     you may try to set the XJT_DEBUG Environmentvariable and restart the gimp\n");
-	 printf("       XJT_DEBUG=1    ... try workaround (results in opening of 2 displays)\n");
-	 printf("       XJT_DEBUG=2    ... try the (buggy) call without workaround, and test the crash\n");
-
-         /* activate the next line when the Bug in gimp_path_set_points is fixed */
-         /* p_add_paths(l_image_id,  l_image_prp_ptr->path_props); */
-      }
+      p_add_paths(l_image_id,  l_image_prp_ptr->path_props);
    }
 
 cleanup:

@@ -37,14 +37,14 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
-	{ name => 'paths_list', type => 'stringarray', init => 1,
+	{ name => 'path_list', type => 'stringarray', init => 1,
 	  desc => 'List of the paths belonging to this image',
 	  array => { name => 'num_paths', init => 1,
 		     desc => 'The number of paths returned' } }
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist' ],
+	vars => [ 'PathList *plist' ],
 	code => <<'CODE'
 {
   plist = gimage->paths;
@@ -56,11 +56,11 @@ HELP
 
       num_paths = g_slist_length (pl);
 
-      paths_list = g_new (gchar *, num_paths);
+      path_list = g_new (gchar *, num_paths);
       while (pl)
 	{
-	  PATHP pptr = pl->data;
-	  paths_list[count++] = g_strdup (pptr->name->str);
+	  Path *pptr = pl->data;
+	  path_list[count++] = g_strdup (pptr->name);
 	  pl = pl->next;
 	}
     }
@@ -87,7 +87,7 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
-	{ name => 'paths_type', type => 'int32',
+	{ name => 'path_type', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported',
 	  alias => 'pptr->pathtype', no_declare => 1 },
@@ -110,7 +110,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -124,7 +124,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -146,7 +146,7 @@ HELP
 	      /* fill points and types in */
 	      while (points_list)
 		{
-		  PATHPOINTP ppoint = points_list->data;
+		  PathPoint *ppoint = points_list->data;
 		  pnts[pcount] = ppoint->x;
 		  pnts[pcount + 1] = ppoint->y;
 		  pnts[pcount + 2] = (gfloat) ppoint->type; /* Bit of fiddle but should be understandable why it was done */
@@ -180,18 +180,18 @@ HELP
     @outargs = (
 	{ name => 'current_path_name', type => 'string',
 	  desc => 'The name of the current path',
-	  alias => 'g_strdup (pptr->name->str)', no_declare => 1 }
+	  alias => 'g_strdup (pptr->name)', no_declare => 1 }
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
   plist = gimage->paths;
 
   if (plist && plist->bz_paths && plist->last_selected_row >= 0)
-    pptr = (PATHP) g_slist_nth_data (plist->bz_paths, plist->last_selected_row);
+    pptr = (Path*) g_slist_nth_data (plist->bz_paths, plist->last_selected_row);
   else
     success = FALSE;
 }
@@ -295,7 +295,7 @@ HELP
 			  stroke';
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -303,10 +303,10 @@ HELP
 
   if (plist && plist->bz_paths && plist->last_selected_row >= 0)
     {
-      if ((pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
+      if ((pptr = (Path*) g_slist_nth_data (plist->bz_paths,
 					    plist->last_selected_row)))
 	      
-	paths_stroke (gimage, plist, pptr); /* Found the path to stroke.. */
+	path_stroke (gimage, plist, pptr); /* Found the path to stroke.. */
       else
 	success = FALSE;
     }
@@ -347,7 +347,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code  => <<'CODE'
 {
   /* Get the path with the given name */
@@ -355,10 +355,10 @@ HELP
 
   if (plist && plist->bz_paths && plist->last_selected_row >= 0)
     {
-      pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
+      pptr = (Path*) g_slist_nth_data (plist->bz_paths,
 				       plist->last_selected_row);
-      success = paths_distance (pptr, distance, &x_point, &y_point,
-				&gradient);
+      success = path_distance (pptr, distance, &x_point, &y_point,
+			       &gradient);
     }
   else
     success = FALSE;
@@ -389,7 +389,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -403,7 +403,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -411,7 +411,7 @@ HELP
 	}
 
       if (pl && pptr)
-	tattoo = paths_get_tattoo (pptr);
+	tattoo = path_get_tattoo (pptr);
       else
 	success = FALSE;
     }
@@ -441,7 +441,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -455,7 +455,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -493,11 +493,11 @@ HELP
     @outargs = (
 	{ name => 'path_name', type => 'string',
 	  desc => 'The name of the path with the specified tattoo',
-	  alias => 'g_strdup (pptr->name->str)', no_declare => 1 }
+	  alias => 'g_strdup (pptr->name)', no_declare => 1 }
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -505,7 +505,7 @@ HELP
 
   if (plist && plist->bz_paths)
     {	
-      if ((pptr = paths_get_path_by_tattoo (gimage, tattoo)) == NULL)
+      if ((pptr = path_get_path_by_tattoo (gimage, tattoo)) == NULL)
 	success = FALSE;
     }
   else
@@ -557,7 +557,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -571,7 +571,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -609,7 +609,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -623,7 +623,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -670,7 +670,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -684,7 +684,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;
@@ -729,7 +729,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	vars => [ 'PathList *plist', 'Path *pptr = NULL' ],
 	code => <<'CODE'
 {
   /* Get the path with the given name */
@@ -743,7 +743,7 @@ HELP
 	{
 	  pptr = pl->data;
 
-	  if (!strcmp (pname, pptr->name->str))
+	  if (!strcmp (pname, pptr->name))
 	    break; /* Found the path */
 
 	  pl = pl->next;

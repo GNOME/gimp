@@ -96,7 +96,7 @@ lc_dialog_create (GimpImage* gimage)
 
   lc_dialog = g_new (LCDialog, 1);
   lc_dialog->shell =
-    gimp_dialog_new (_("Layers & Channels"), "layers_and_channels",
+    gimp_dialog_new (_("Layers, Channels & Paths"), "layers_channels_paths",
 		     lc_dialog_help_func,
 		     "dialogs/layers_and_channels.html",
 		     GTK_WIN_POS_NONE,

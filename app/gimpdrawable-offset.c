@@ -517,7 +517,7 @@ duplicate (GimpImage *gimage)
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
-  PathsList *paths;
+  PathList *paths;
   gint count;
 
   gimp_add_busy_cursors_until_idle ();
@@ -663,22 +663,22 @@ duplicate (GimpImage *gimage)
 
   /* Copy paths */
   paths = gimp_image_get_paths (gimage);
-#ifdef 0  /* we need a path_duplicate() function */
   if (paths)
     {
       GSList *plist = NULL;
-      PATHP path;
+      GSList *new_plist = NULL;
+      Path *path;
+      PathList *new_paths;
       
       for (plist = paths->bz_paths; plist; plist = plist->next)
 	{
 	  path = plist->data;
-	  plist = g_slist_append (plist, path_duplicate (new_gimage, path));
+	  new_plist = g_slist_append (new_plist, path_copy (new_gimage, path));
 	}
       
-      new_paths = pathsList_new (new_gimage, paths->last_selected_row, plist);
+      new_paths = path_list_new (new_gimage, paths->last_selected_row, new_plist);
       gimp_image_set_paths (new_gimage, new_paths);
     }
-#endif
 
   gimage_enable_undo (new_gimage);
 

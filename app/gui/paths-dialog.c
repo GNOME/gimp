@@ -19,8 +19,6 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <errno.h>
 
 #include "gdk/gdkkeysyms.h"
@@ -97,7 +95,7 @@ struct _PathsDialog
   GdkColor    white;
   gint        selected_row_num;
   gboolean    been_selected;
-  PATHIMAGELISTP current_path_list;
+  PathList * current_path_list;
 };
 
 typedef struct _PathWidget PathWidget;
@@ -106,15 +104,7 @@ struct _PathWidget
 {
   GdkPixmap *paths_pixmap;
   GString   *text;
-  PATHP      bzp;
-};
-
-typedef struct _PathUndo PathUndo;
-
-struct _PathUndo
-{
-  Tattoo tattoo;
-  PATHP  copy_path;
+  Path*      bzp;
 };
 
 typedef struct _PathCounts PathCounts;
@@ -126,9 +116,7 @@ struct _PathCounts
 };
 
 static PathsDialog *paths_dialog = NULL;
-static PATHP        copy_pp      = NULL;
-
-static gchar  * unique_name                   (GimpImage *, gchar *);
+static Path*        copy_pp      = NULL;
 
 /*  static gint path_widget_preview_events   (GtkWidget *, GdkEvent *);  */
 static void     paths_dialog_realized        (GtkWidget *widget);
@@ -139,10 +127,7 @@ static void     paths_unselect_row           (GtkWidget *widget, gint row, gint 
 static gint     paths_list_events            (GtkWidget *widget, GdkEvent *event);
 static void     paths_dialog_map_callback    (GtkWidget *widget, gpointer data);
 static void     paths_dialog_unmap_callback  (GtkWidget *widget, gpointer data);
-static void     paths_dialog_destroy_cb      (GimpImage *image);
 static void     paths_update_paths           (gpointer data, gint row);
-static GSList * pathpoints_copy              (GSList *list);
-static void     pathpoints_free              (GSList *list);
 static void     paths_update_preview         (BezierSelect *bezier_sel);
 static void     paths_dialog_preview_extents           (void);
 static void     paths_dialog_new_point_callback        (GtkWidget *, gpointer);
@@ -152,7 +137,7 @@ static void     paths_dialog_edit_point_callback       (GtkWidget *, gpointer);
 static void     paths_dialog_advanced_to_path_callback (GtkWidget *, gpointer);
 static void     paths_dialog_null_callback             (GtkWidget *, gpointer);
 
-static void     path_close                   (PATHP);
+static void     path_close                   (Path*);
 
 /*  the ops buttons  */
 static GtkSignalFunc to_path_ext_callbacks[] = 
@@ -426,166 +411,28 @@ clear_pathwidget (gpointer data)
     }
 }
 
-static void
-pathpoint_free (gpointer data,
-		gpointer user_data)
-{
-  PATHPOINTP pathpoint = data;
-  g_free (pathpoint);
-}
 
-static void 
-path_free (gpointer data,
-	   gpointer user_data)
-{
-  PATHP bzp = data;
-  g_return_if_fail(bzp != NULL);
-  g_string_free(bzp->name,TRUE);
-  pathpoints_free(bzp->path_details);
-  g_free(bzp);
-}
-
-static PATHP
+static Path*
 path_dialog_new (GimpImage *gimage,
 		 gint       name_seed, 
 		 gpointer   data)
 {
-  PATHP    bzp;
-  GString *s = g_string_new (NULL);
-  gchar   *suniq;
+  Path  *bzp;
+  gchar *s;
 
-  g_string_sprintf (s, _("Path %d"), name_seed);
-  suniq = unique_name (gimage, s->str);
-  if (suniq)
-    {
-      g_string_free (s, TRUE);
-      s = g_string_new (suniq);
-      g_free (suniq);
-    }
-  bzp = path_new (gimage, BEZIER, (GSList *) data, 0, 0, 0, 0, s->str);
-  g_string_free (s, TRUE);
+  s = g_strdup_printf (_("Path %d"), name_seed);
+  bzp = path_new (gimage, BEZIER, (GSList *) data, 0, 0, 0, 0, s);
+
   return bzp;
 }
 
-/* Always return a copy that must be freed later */
-
-static gchar *
-strip_off_cnumber (gchar *str)
-{
-  gchar *hashptr;
-  gint   num;
-  gchar *copy;
-
-  if (!str)
-    return str;
-
-  copy = g_strdup (str);
-
-  if ((hashptr = strrchr (copy,'#')) &&              /* have a hash */
-      strlen(hashptr) > 0 &&                         /* followed by something */
-      (num = atoi(hashptr+1)) > 0 &&                 /* which is a number */
-      ((int) log10 (num) + 1) == strlen (hashptr+1)) /* which is at the end */
-    {
-      gchar * tstr;
-      /* Has a #<number> */
-      *hashptr = '\0';
-      tstr = g_strdup (copy);
-      g_free (copy);
-      copy = tstr;
-    }
-
-  return copy;
-}
-
-/* Return NULL if already unique else a unique string */
-
-static gchar *
-unique_name (GimpImage *gimage,
-	     gchar     *cstr)
-{
-  GSList *tlist;
-  PATHIMAGELISTP plp;
-  gboolean unique = TRUE;
-  gchar *copy_cstr;
-  gchar *copy_test;
-  gchar *stripped_copy;
-  gint counter = 1;
-
-  /* Get bzpath structure  */
-  if(!gimage || !(plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage)))
-    return NULL;
-
-  tlist = plp->bz_paths;
-
-  while(tlist)
-    {
-      gchar *test_str = ((PATHP)(tlist->data))->name->str;
-      if(strcmp(cstr,test_str) == 0)
-	{
-	    unique = FALSE;
-	    break;
-	}
-      tlist = g_slist_next(tlist);
-    }
-
-  if(unique)
-    {
-      return NULL;
-    }
-
-  /* OK Clashes with something */
-  /* restart scan to find unique name */
-
-  stripped_copy = strip_off_cnumber(cstr);
-  copy_cstr = g_strdup_printf("%s#%d",stripped_copy,counter++);
-
-  tlist = plp->bz_paths;
-
-  while(tlist)
-    {
-	copy_test = ((PATHP)(tlist->data))->name->str;
-	if(strcmp(copy_cstr,copy_test) == 0)
-	    {
-		g_free(copy_cstr);
-		copy_cstr = g_strdup_printf("%s#%d",stripped_copy,counter++);
-		tlist = plp->bz_paths;
-		continue;
-	    }
-	tlist = g_slist_next(tlist);
-    }
-
-  g_free(stripped_copy);
-  return copy_cstr;
-}
-
-static PATHP
-path_copy (GimpImage *gimage,
-	   PATHP      p)
-{
-  PATHP p_copy = g_new0 (PATH, 1);
-  gchar *ext;
-
-  ext = unique_name (gimage, p->name->str);
-  p_copy->name = g_string_new (ext);
-  g_free (ext);
-  p_copy->closed = p->closed;
-  p_copy->state = p->state;
-  p_copy->pathtype = p->pathtype;
-  p_copy->path_details = pathpoints_copy (p->path_details);
-  if (gimage)
-    p_copy->tattoo = gimp_image_get_new_tattoo (gimage);
-  else
-    p_copy->tattoo = p->tattoo;
-  return p_copy;
-}
-
-static PATHPOINTP
+static PathPoint*
 path_start_last_seg (GSList *plist)
 {
-  PATHPOINTP retp = plist->data;
+  PathPoint *retp = plist->data;
   while (plist)
     {
-      if (((PATHPOINTP) (plist->data))->type == BEZIER_MOVE &&
+      if (((PathPoint*) (plist->data))->type == BEZIER_MOVE &&
 	  g_slist_next (plist))
 	{
 	  plist = g_slist_next (plist);
@@ -597,22 +444,22 @@ path_start_last_seg (GSList *plist)
 }
 
 static void
-path_close (PATHP bzp)
+path_close (Path *bzp)
 {
-  PATHPOINTP pdata;
-  PATHPOINTP pathpoint;
+  PathPoint *pdata;
+  PathPoint *pathpoint;
 
   /* bzpaths are only really closed when converted to the BezierSelect ones */
   bzp->closed = 1;
   /* first point */
-  pdata = (PATHPOINTP)bzp->path_details->data;
+  pdata = (PathPoint*)bzp->path_details->data;
 
   if (g_slist_length (bzp->path_details) < 5)
     {
       int i;
       for (i = 0 ; i < 2 ; i++)
 	{
-	  pathpoint = g_new0 (PATHPOINT, 1);
+	  pathpoint = g_new0 (PathPoint, 1);
 	  pathpoint->type = (i & 1) ? BEZIER_ANCHOR : BEZIER_CONTROL;
 	  pathpoint->x = pdata->x+i;
 	  pathpoint->y = pdata->y+i;
@@ -620,7 +467,7 @@ path_close (PATHP bzp)
 	  bzp->path_details = g_slist_append (bzp->path_details, pathpoint);
 	}
     }
-  pathpoint = g_new0 (PATHPOINT, 1);
+  pathpoint = g_new0 (PathPoint, 1);
   pdata = path_start_last_seg (bzp->path_details);
   pathpoint->type = BEZIER_CONTROL;
   pathpoint->x = pdata->x;
@@ -630,15 +477,8 @@ path_close (PATHP bzp)
   bzp->state = BEZIER_EDIT;
 }
 
-static void
-beziersel_free (BezierSelect *bezier_sel)
-{
-  bezier_select_reset (bezier_sel);
-  g_free (bezier_sel);
-}
-
 static BezierSelect *
-path_to_beziersel (PATHP bzp)
+path_to_beziersel (Path *bzp)
 {
   BezierSelect *bezier_sel;
   BezierPoint  *bpnt = NULL;
@@ -662,8 +502,8 @@ path_to_beziersel (PATHP bzp)
 
   while (list)
     {
-      PATHPOINTP pdata;
-      pdata = (PATHPOINTP)list->data;
+      PathPoint* pdata;
+      pdata = (PathPoint*)list->data;
       if (pdata->type == BEZIER_MOVE)
 	{
 /* 	  printf("Close last curve off\n"); */
@@ -693,18 +533,6 @@ path_to_beziersel (PATHP bzp)
   return bezier_sel;
 }
 
-static void
-pathimagelist_free (PATHIMAGELISTP iml)
-{
-  g_return_if_fail (iml != NULL);
-  if (iml->bz_paths)
-    {
-      g_slist_foreach (iml->bz_paths, path_free, NULL);
-      g_slist_free (iml->bz_paths);
-    }
-  g_free (iml);
-}
-
 static void 
 bz_change_name_row_to (gint   row,
 		       gchar *text)
@@ -717,9 +545,9 @@ bz_change_name_row_to (gint   row,
   if (!pwidget)
     return;
 
-  g_string_free (pwidget->bzp->name, TRUE);
+  g_free (pwidget->bzp->name);
 
-  pwidget->bzp->name = g_string_new (text);
+  pwidget->bzp->name = g_strdup (text);
 }
 
 static void 
@@ -779,7 +607,7 @@ clear_pixmap_preview (PathWidget *pwidget)
 
 /* insrow == -1 -> append else insert at insrow */
 void 
-paths_add_path (PATHP bzp,
+paths_add_path (Path *bzp,
 		gint  insrow)
 {
   /* Create a new entry in the list */
@@ -858,7 +686,7 @@ paths_add_path (PATHP bzp,
   gtk_clist_set_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			row,
 			1,
-			bzp->name->str,
+			bzp->name,
 			2,
 			pwidget->paths_pixmap,
 			NULL);
@@ -880,7 +708,7 @@ paths_add_path (PATHP bzp,
 static void
 paths_dialog_preview_extents (void)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (!paths_dialog)
     return;
@@ -956,7 +784,7 @@ paths_select_row (GtkWidget      *widget,
 		  gpointer        data)
 {
   PathWidget *pwidget;
-  PATHP bzp;
+  Path* bzp;
   BezierSelect * bsel;
   GDisplay *gdisp;
   gint last_row;
@@ -973,7 +801,7 @@ paths_select_row (GtkWidget      *widget,
 
   last_row = paths_dialog->current_path_list->last_selected_row;
 
-  bzp = (PATHP)g_slist_nth_data(paths_dialog->current_path_list->bz_paths,row);
+  bzp = (Path*)g_slist_nth_data(paths_dialog->current_path_list->bz_paths,row);
 
   g_return_if_fail(bzp != NULL);
 
@@ -1009,7 +837,7 @@ paths_select_row (GtkWidget      *widget,
 	  tmprow = paths_dialog->current_path_list->last_selected_row;
 	  paths_dialog->current_path_list->last_selected_row = row;
 	  paths_update_preview (bsel);
-	  beziersel_free (bsel);
+	  bezier_select_free (bsel);
 	  paths_dialog->current_path_list->last_selected_row = tmprow;
 	  paths_dialog->selected_row_num = tmprow;
 	}
@@ -1049,7 +877,7 @@ paths_select_row (GtkWidget      *widget,
     }
   bezier_paste_bezierselect_to_current (gdisp, bsel);
   paths_update_preview (bsel);
-  beziersel_free (bsel);
+  bezier_select_free (bsel);
 }
 
 static void
@@ -1060,7 +888,7 @@ paths_unselect_row (GtkWidget      *widget,
 		    gpointer        data)
 {
   PathWidget *pwidget;
-  PATHP bzp;
+  Path* bzp;
 
   pwidget = (PathWidget *) gtk_clist_get_row_data (GTK_CLIST (widget), row);
 
@@ -1084,7 +912,7 @@ paths_unselect_row (GtkWidget      *widget,
 void
 paths_dialog_update (GimpImage* gimage)
 {
-  PATHIMAGELISTP new_path_list;
+  PathList* new_path_list;
   GSList *plist;
   gint loop;
   gint tmprow;
@@ -1094,7 +922,7 @@ paths_dialog_update (GimpImage* gimage)
 
   if (paths_dialog->gimage == gimage &&
       paths_dialog->current_path_list ==
-      (PATHIMAGELISTP) gimp_image_get_paths (gimage))
+      (PathList*) gimp_image_get_paths (gimage))
     return;
 
   paths_dialog->gimage = gimage;
@@ -1107,7 +935,7 @@ paths_dialog_update (GimpImage* gimage)
   gtk_clist_thaw (GTK_CLIST (paths_dialog->paths_list));
 
   /*  Find bz list  */
-  new_path_list = (PATHIMAGELISTP) gimp_image_get_paths (gimage);
+  new_path_list = (PathList*) gimp_image_get_paths (gimage);
 
   paths_dialog->current_path_list = new_path_list;
   paths_dialog->been_selected = FALSE;
@@ -1161,15 +989,15 @@ static void
 paths_update_paths (gpointer data,
 		    gint     row)
 {
-  PATHP bzp;
+  Path* bzp;
   BezierSelect *bezier_sel;
 
-  paths_add_path ((bzp = (PATHP) data), -1);
+  paths_add_path ((bzp = (Path*) data), -1);
   /* Now fudge the drawing....*/
   bezier_sel = path_to_beziersel (bzp);
   paths_dialog->current_path_list->last_selected_row = row;
   paths_update_preview (bezier_sel);
-  beziersel_free (bezier_sel);
+  bezier_select_free (bezier_sel);
  
   if (bzp->locked)
     {
@@ -1297,9 +1125,9 @@ paths_list_events (GtkWidget *widget,
   return FALSE;
 }
 
-static PATHIMAGELISTP
-path_add_to_current (PATHIMAGELISTP  pip,
-		     PATHP           bzp,
+static PathList*
+path_add_to_current (PathList*  pip,
+		     Path*           bzp,
 		     GimpImage      *gimage,
 		     gint            pos)
 {
@@ -1307,7 +1135,7 @@ path_add_to_current (PATHIMAGELISTP  pip,
   if (!pip)
     {
       /* This image does not have a list */
-      pip = pathsList_new (gimage, 0, NULL);
+      pip = path_list_new (gimage, 0, NULL);
 
       /* add to gimage */
       gimp_image_set_paths (gimage, pip);
@@ -1321,14 +1149,14 @@ path_add_to_current (PATHIMAGELISTP  pip,
   return pip;
 }
 
-static PATHP
-paths_dialog_new_path (PATHIMAGELISTP *plp,
+static Path*
+paths_dialog_new_path (PathList* *plp,
 		       gpointer        points,
 		       GimpImage      *gimage,
 		       gint            pos)
 {
   static gint nseed = 0;
-  PATHP bzp;
+  Path* bzp;
 
   bzp  = path_dialog_new (gimage, nseed++, points);
   *plp = path_add_to_current (*plp, bzp, gimage, pos);
@@ -1342,7 +1170,7 @@ paths_dialog_new_path_callback (GtkWidget *widget,
 {
   BezierSelect * bsel;
   GDisplay *gdisp;
-  PATHP bzp;
+  Path* bzp;
 
   bzp = paths_dialog_new_path (&paths_dialog->current_path_list,
 			       NULL,
@@ -1360,15 +1188,15 @@ paths_dialog_new_path_callback (GtkWidget *widget,
   gdisp = gdisplays_check_valid (paths_dialog->current_path_list->gdisp,
 				 paths_dialog->gimage);
   bezier_paste_bezierselect_to_current (gdisp, bsel);
-  beziersel_free (bsel);
+  bezier_select_free (bsel);
 }
 
 void 
 paths_dialog_delete_path_callback (GtkWidget *widget, 
 				   gpointer   udata)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
+  Path* bzp;
+  PathList* plp;
   gboolean new_sz;
   gint row = paths_dialog->selected_row_num;
   BezierSelect *bsel  = NULL;
@@ -1382,12 +1210,12 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
   
   /* Get bzpath structure & delete its content */
   plp = paths_dialog->current_path_list;
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row); 
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row); 
 
   /* Remove from list */
   plp->bz_paths = g_slist_remove (plp->bz_paths, bzp);
   new_sz = (g_slist_length (plp->bz_paths) > 0);
-  path_free (bzp, NULL);
+  path_free (bzp);
 
   /* Remove from the clist ... */ 
   gtk_signal_handler_block_by_data (GTK_OBJECT (paths_dialog->paths_list), 
@@ -1403,7 +1231,7 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
 			     plp->sig_id);
 
       gimp_image_set_paths (plp->gimage, NULL);
-      pathimagelist_free (plp);
+      path_list_free (plp);
 
       /* Paste an empty BezierSelect to the current display to emulate an empty path list */
 
@@ -1413,7 +1241,7 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
 				     paths_dialog->gimage);
 
       bezier_paste_bezierselect_to_current (gdisp, bsel);
-      beziersel_free (bsel);
+      bezier_select_free (bsel);
 
       paths_dialog->current_path_list = NULL;
 
@@ -1428,9 +1256,9 @@ void
 paths_dialog_paste_path_callback (GtkWidget *widget, 
 				  gpointer   data)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
-  PATHPOINTP pp;
+  Path* bzp;
+  PathList* plp;
+  PathPoint* pp;
   BezierSelect * bezier_sel;
   gint tmprow;
   GDisplay *gdisp;
@@ -1451,7 +1279,7 @@ paths_dialog_paste_path_callback (GtkWidget *widget,
   if (!plp)
     return;
 
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row); 
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row); 
 
   if (bzp->path_details)
     {
@@ -1469,7 +1297,7 @@ paths_dialog_paste_path_callback (GtkWidget *widget,
 
   /* First point on new curve is a moveto */
   copy_pp->path_details = NULL;
-  path_free (copy_pp, NULL);
+  path_free (copy_pp);
   copy_pp = NULL;
 
   paths_dialog_set_menu_sensitivity ();
@@ -1482,7 +1310,7 @@ paths_dialog_paste_path_callback (GtkWidget *widget,
 				 paths_dialog->gimage);
   bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
   paths_update_preview (bezier_sel);
-  beziersel_free (bezier_sel);
+  bezier_select_free (bezier_sel);
   paths_dialog->current_path_list->last_selected_row = tmprow;
 }
 
@@ -1490,8 +1318,8 @@ void
 paths_dialog_copy_path_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
+  Path* bzp;
+  PathList* plp;
   gint row = paths_dialog->selected_row_num;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
@@ -1502,7 +1330,7 @@ paths_dialog_copy_path_callback (GtkWidget *widget,
   
   /* Get bzpath structure  */
   plp = paths_dialog->current_path_list;
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row);
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row);
 
   if (!bzp->path_details || g_slist_length (bzp->path_details) <= 5)
     return;
@@ -1521,8 +1349,8 @@ void
 paths_dialog_dup_path_callback (GtkWidget *widget, 
 				gpointer   data)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
+  Path* bzp;
+  PathList* plp;
   BezierSelect * bezier_sel;
   gint row;
   gint tmprow;
@@ -1536,7 +1364,7 @@ paths_dialog_dup_path_callback (GtkWidget *widget,
   row = paths_dialog->current_path_list->last_selected_row;
   /* Get bzpath structure  */
   plp = paths_dialog->current_path_list;
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row); 
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row); 
 
   /* Insert at the current position */
   bzp = path_copy (paths_dialog->gimage, bzp);
@@ -1548,7 +1376,7 @@ paths_dialog_dup_path_callback (GtkWidget *widget,
   tmprow = paths_dialog->current_path_list->last_selected_row;
   paths_dialog->current_path_list->last_selected_row = row;
   paths_update_preview (bezier_sel);
-  beziersel_free (bezier_sel);
+  bezier_select_free (bezier_sel);
   paths_dialog->current_path_list->last_selected_row = tmprow;
 }
 
@@ -1629,8 +1457,8 @@ void
 paths_dialog_path_to_sel_callback (GtkWidget *widget, 
 				   gpointer   data)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
+  Path* bzp;
+  PathList* plp;
   BezierSelect * bezier_sel;
   GDisplay  * gdisp;
   gint row = paths_dialog->selected_row_num;
@@ -1643,7 +1471,7 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
   
   /* Get bzpath structure  */
   plp = paths_dialog->current_path_list;
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row); 
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row); 
 
   /* Return if no point list */
   if (!bzp->path_details)
@@ -1655,24 +1483,24 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
 
   if (!bzp->closed)
     {
-      PATHP bzpcopy = path_copy (paths_dialog->gimage,bzp);
+      Path* bzpcopy = path_copy (paths_dialog->gimage,bzp);
       /* Close it */
       path_close (bzpcopy);
       bezier_sel = path_to_beziersel (bzpcopy);
-      path_free (bzpcopy, NULL);
+      path_free (bzpcopy);
       bezier_to_selection (bezier_sel, gdisp);
-      beziersel_free (bezier_sel);
+      bezier_select_free (bezier_sel);
 
       /* Force display to show no closed curve */
       bezier_sel = path_to_beziersel (bzp);
       bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
-      beziersel_free (bezier_sel);
+      bezier_select_free (bezier_sel);
     }
   else
     {
       bezier_sel = path_to_beziersel (bzp);
       bezier_to_selection (bezier_sel, gdisp);
-      beziersel_free (bezier_sel);
+      bezier_select_free (bezier_sel);
     }
 }
 
@@ -1680,8 +1508,8 @@ void
 paths_dialog_stroke_path_callback (GtkWidget *widget, 
 				   gpointer   data)
 {
-  PATHP bzp;
-  PATHIMAGELISTP plp;
+  Path* bzp;
+  PathList* plp;
   gint row = paths_dialog->selected_row_num;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
@@ -1692,10 +1520,10 @@ paths_dialog_stroke_path_callback (GtkWidget *widget,
   
   /* Get bzpath structure  */
   plp = paths_dialog->current_path_list;
-  bzp = (PATHP) g_slist_nth_data (plp->bz_paths, row); 
+  bzp = (Path*) g_slist_nth_data (plp->bz_paths, row); 
 
   /* Now do the stroke....*/
-  paths_stroke (paths_dialog->gimage, paths_dialog->current_path_list, bzp);
+  path_stroke (paths_dialog->gimage, paths_dialog->current_path_list, bzp);
 }
 
 void
@@ -1730,10 +1558,12 @@ paths_dialog_unmap_callback (GtkWidget *widget,
 				 paths_dialog->accel_group);
 }
 
-static void
-paths_dialog_destroy_cb (GimpImage *gimage)
+void
+paths_dialog_destroy_cb (GtkObject *object,
+			 gpointer   data)
 {
-  PATHIMAGELISTP new_path_list;
+  GimpImage *gimage = (GimpImage *)object;
+  PathList* new_path_list;
 
   if (!paths_dialog)
     return;
@@ -1753,72 +1583,61 @@ paths_dialog_destroy_cb (GimpImage *gimage)
     }
 
   /* Find bz list */  
-  new_path_list = (PATHIMAGELISTP) gimp_image_get_paths (gimage);
+  new_path_list = (PathList*) gimp_image_get_paths (gimage);
 
   if (!new_path_list)
     return; /* Already removed - signal handler just left in the air */
 
-  pathimagelist_free (new_path_list);
+  path_list_free (new_path_list);
 
   gimp_image_set_paths (gimage, NULL);
 }
 
 /* Functions used from the bezier code .. tie in with this code */
-
-static void
-pathpoints_free (GSList *list)
-{
-  if (!list)
-    return;
-
-  g_slist_foreach (list, pathpoint_free, NULL);
-  g_slist_free (list);
-}
-
 static GSList *
 pathpoints_create (BezierSelect *sel)
 {
   gint i;
   GSList *list = NULL;
-  PATHPOINTP pathpoint;
+  PathPoint *pathpoint;
   BezierPoint *pts = (BezierPoint *) sel->points;
   BezierPoint *start_pnt = pts;
   gint need_move = 0;
 
   for (i=0; i< sel->num_points; i++)
     {
-      pathpoint = pathpoint_new((need_move)?BEZIER_MOVE:pts->type,
-                                (gdouble)pts->x,(gdouble)pts->y);
+      pathpoint = path_point_new ((need_move)?BEZIER_MOVE:pts->type,
+				  (gdouble)pts->x,(gdouble)pts->y);
       need_move = 0;
-      list = g_slist_append(list,pathpoint);
+      list = g_slist_append (list, pathpoint);
       if(pts->next_curve)
-      {
-	/* The curve must loop back on itself */
-  	if(start_pnt != pts->next)
-	  g_warning("Curve of of sync");
-	
-	need_move = 1;
-	pts = pts->next_curve;
-	start_pnt = pts;
-      }
+	{
+	  /* The curve must loop back on itself */
+	  if(start_pnt != pts->next)
+	    g_warning("Curve of of sync");
+	  
+	  need_move = 1;
+	  pts = pts->next_curve;
+	  start_pnt = pts;
+	}
       else
-      {
-      	pts = pts->next;
-      }
+	{
+	  pts = pts->next;
+	}
     }
   return(list);
 }
 
-static GSList *
+GSList *
 pathpoints_copy (GSList *list)
 {
   GSList *slcopy = NULL;
-  PATHPOINTP pdata;
-  PATHPOINTP pathpoint;
+  PathPoint* pdata;
+  PathPoint* pathpoint;
   while(list)
     {
-      pathpoint = g_new0(PATHPOINT,1);
-      pdata = (PATHPOINTP)list->data;
+      pathpoint = g_new0(PathPoint,1);
+      pdata = (PathPoint*)list->data;
       pathpoint->type = pdata->type;
       pathpoint->x = pdata->x;
       pathpoint->y = pdata->y;
@@ -1828,16 +1647,26 @@ pathpoints_copy (GSList *list)
   return slcopy;
 }
 
+void
+pathpoints_free (GSList *list)
+{
+  if (!list)
+    return;
+
+  g_slist_foreach (list, (GFunc)path_point_free, NULL);
+  g_slist_free (list);
+}
+
 static void
-paths_update_bzpath (PATHIMAGELISTP  plp,
+paths_update_bzpath (PathList*  plp,
 		     BezierSelect   *bezier_sel)
 {
-  PATHP p;
+  Path* p;
 
-  p = (PATHP)g_slist_nth_data(plp->bz_paths,plp->last_selected_row);
+  p = (Path*)g_slist_nth_data(plp->bz_paths,plp->last_selected_row);
   
   if(p->path_details) 
-    pathpoints_free(p->path_details); 
+    pathpoints_free (p->path_details); 
   
   p->path_details = pathpoints_create(bezier_sel);
   p->closed = bezier_sel->closed;
@@ -1845,7 +1674,7 @@ paths_update_bzpath (PATHIMAGELISTP  plp,
 }
 
 static gboolean
-paths_replaced_current (PATHIMAGELISTP  plp,
+paths_replaced_current (PathList*  plp,
 			BezierSelect   *bezier_sel)
 {
   /* Is there a currently selected path in this image? */
@@ -1865,7 +1694,7 @@ number_curves_in_path (GSList *plist)
   gint count = 0;
   while(plist)
     {
-      if(((PATHPOINTP)(plist->data))->type == BEZIER_MOVE &&
+      if(((PathPoint*)(plist->data))->type == BEZIER_MOVE &&
 	 g_slist_next(plist))
 	{
 	  count++;
@@ -1969,7 +1798,7 @@ paths_update_preview (BezierSelect *bezier_sel)
       gtk_clist_set_pixtext (GTK_CLIST (paths_dialog->paths_list),
 			     row,
 			     1,
-			     pwidget->bzp->name->str,
+			     pwidget->bzp->name,
 			     2,
 			     pwidget->paths_pixmap,
 			     NULL);
@@ -2007,7 +1836,7 @@ paths_dialog_edit_point_callback (GtkWidget *widget,
 void
 paths_dialog_flush (void)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (!paths_dialog)
     return;
@@ -2048,8 +1877,8 @@ paths_first_button_press (BezierSelect *bezier_sel,
      All this of course depends on the fact that gdisp is the same
      as before. 
   */
-  PATHP bzp; 
-  PATHIMAGELISTP plp;
+  Path* bzp; 
+  PathList* plp;
 
   if(paths_dialog)
     {
@@ -2060,14 +1889,14 @@ paths_first_button_press (BezierSelect *bezier_sel,
   /* Button not pressed in this image...
    * find which one it was pressed in if any.
    */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gdisp->gimage);      
+  plp = (PathList*)gimp_image_get_paths(gdisp->gimage);      
 
   /* Since beziers are part of the save format.. make the image dirty */
 /*   undo_push_cantundo(gdisp->gimage, _("path modification")); */
   
   if(!paths_replaced_current(plp,bezier_sel))
     {
-      bzp = paths_dialog_new_path(&plp,pathpoints_create(bezier_sel),gdisp->gimage,-1);
+      bzp = paths_dialog_new_path (&plp, pathpoints_create(bezier_sel),gdisp->gimage,-1);
       bzp->closed = bezier_sel->closed;
       bzp->state  = bezier_sel->state;
       if(paths_dialog && paths_dialog->gimage == gdisp->gimage)
@@ -2103,77 +1932,6 @@ paths_new_bezier_select_tool (void)
 
 
 /**************************************************************/
-/* Code to serialise the bezier curves.
- * The curves will be saved out in XCF property format.
- * The "save as XCF format" will prompt to save the curves away.
- *
- * Note the save should really used PDB function to get the
- * curves etc. But I have yet to do those 8-)
- */
-/**************************************************************/
-
-
-PATHPOINTP 
-pathpoint_new (gint    type,
-	       gdouble x, 
-	       gdouble y)
-{
-  PATHPOINTP pathpoint = g_new0(PATHPOINT,1);
-
-  pathpoint->type = type;
-  pathpoint->x = x;
-  pathpoint->y = y;
-  return(pathpoint);
-}
-
-PATHP
-path_new (GimpImage *gimage,
-	  PathType   ptype,
-	  GSList    *path_details,
-	  gint       closed,
-	  gint       state,
-	  gint       locked,
-	  gint       tattoo,  
-	  gchar     *name)
-{
-  PATHP path = g_new0(PATH,1);
-
-  path->path_details = path_details;
-  path->closed = closed;
-  path->state = state;
-  path->locked = locked;
-  path->name = g_string_new(name);
-  path->pathtype = ptype;
-  if(tattoo)
-    path->tattoo = tattoo;
-  else
-    path->tattoo = gimp_image_get_new_tattoo(gimage);
-
-  return path;
-}
-
-PathsList *
-pathsList_new (GimpImage *gimage,
-	       gint       last_selected_row,
-	       GSList    *bz_paths)
-{
-  PATHIMAGELISTP pip = g_new0(PATHIMAGELIST,1);
-  pip->gimage = gimage;
-  pip->last_selected_row = last_selected_row;
-  
-  /* add connector to image delete/destroy */
-  pip->sig_id = gtk_signal_connect(GTK_OBJECT (gimage),
-				   "destroy",
-				   GTK_SIGNAL_FUNC (paths_dialog_destroy_cb),
-				   pip);
-
-  pip->bz_paths = bz_paths;
-
-  return (PathsList *)pip;
-}
-
-
-/**************************************************************/
 /* Code to save/load from filesystem                          */
 /**************************************************************/
 
@@ -2182,12 +1940,12 @@ static int load_store;
 
 static void
 path_write_current_to_file (FILE  *f,
-			    PATHP  bzp)
+			    Path*  bzp)
 {
   GSList *list = bzp->path_details;
-  PATHPOINTP pdata;
+  PathPoint* pdata;
 
-  fprintf(f, "Name: %s\n", bzp->name->str);
+  fprintf(f, "Name: %s\n", bzp->name);
   fprintf(f, "#POINTS: %d\n", g_slist_length(bzp->path_details));
   fprintf(f, "CLOSED: %d\n", bzp->closed==1?1:0);
   fprintf(f, "DRAW: %d\n", 0);
@@ -2195,7 +1953,7 @@ path_write_current_to_file (FILE  *f,
 
   while (list)
     {
-      pdata = (PATHPOINTP)list->data;
+      pdata = (PathPoint*)list->data;
       fprintf(f,"TYPE: %d X: %d Y: %d\n", pdata->type, (gint)pdata->x, (gint)pdata->y);
       list = g_slist_next(list);
     }
@@ -2208,9 +1966,9 @@ file_ok_callback (GtkWidget *widget,
   GtkFileSelection *fs;
   FILE *f; 
   char* filename;
-  PATHP bzpath;
+  Path* bzpath;
   GSList * pts_list = NULL;
-  PATHIMAGELISTP plp;
+  PathList* plp;
   gint row = paths_dialog->selected_row_num;
   gint this_path_count = 0;
 
@@ -2266,7 +2024,7 @@ file_ok_callback (GtkWidget *widget,
 
 	  for(i=0; i< val; i++)
 	    {
-	      PATHPOINTP bpt;
+	      PathPoint* bpt;
 	      readfields = fscanf(f,"TYPE: %d X: %lg Y: %lg\n", &type, &x, &y);
 	      if(readfields != 3)
 		{
@@ -2295,7 +2053,7 @@ file_ok_callback (GtkWidget *widget,
 		  return;
 		}
 
-	      bpt = pathpoint_new(type, (gdouble)x, (gdouble)y);
+	      bpt = path_point_new (type, (gdouble)x, (gdouble)y);
 	      pts_list = g_slist_append(pts_list,bpt);
 	    }
 
@@ -2330,7 +2088,7 @@ file_ok_callback (GtkWidget *widget,
     } 
   else 
     {
-      PATHP bzp;
+      Path* bzp;
 
       /* Get current selection... ignore if none */
       if(paths_dialog->selected_row_num < 0)
@@ -2338,7 +2096,7 @@ file_ok_callback (GtkWidget *widget,
       
       /* Get bzpath structure  */
       plp = paths_dialog->current_path_list;
-      bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
+      bzp = (Path*)g_slist_nth_data(plp->bz_paths,row); 
 
       f = fopen(filename, "wb");
       if (NULL == f) 
@@ -2457,14 +2215,14 @@ void *
 paths_transform_start_undo (GimpImage *gimage)
 {
   /* Save only the locked paths away */
-  PATHIMAGELISTP plp;
+  PathList* plp;
   GSList        *plist;
-  PATHP          p;
-  PATHP          p_copy;
+  Path*          p;
+  Path*          p_copy;
   GSList        *undo_list = NULL;
 
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  plp = (PathList*)gimp_image_get_paths(gimage);
   
   if(!plp)
     return NULL;
@@ -2473,7 +2231,7 @@ paths_transform_start_undo (GimpImage *gimage)
 
   while(plist)
     {
-      p = (PATHP)plist->data;
+      p = (Path*)plist->data;
       if(p->locked)
 	{
 	  /* save away for a rainly day */
@@ -2489,13 +2247,13 @@ void
 paths_transform_free_undo (void *data)
 {
   GSList *pundolist = data;
-  PATHP   p;
+  Path*   p;
   /* free data associated with the transform path undo */
 
   while(pundolist)
     {
-      p = (PATHP)pundolist->data;
-      path_free(p,NULL);
+      p = (Path*)pundolist->data;
+      path_free (p);
       pundolist = g_slist_next(pundolist);
     }
 
@@ -2508,22 +2266,22 @@ paths_transform_do_undo (GimpImage *gimage,
 {
   GSList *pundolist = data;
   /* Restore the paths as they were before this transform took place. */
-  PATHP   p_undo;
-  PATHP   p;
-  BezierSelect  *bezier_sel;
-  gint           tmprow;
-  gint           loop;
-  gboolean       preview_update = FALSE;
-  PATHIMAGELISTP plp;
-  GSList        *plist;
+  Path *p_undo;
+  Path *p;
+  BezierSelect *bezier_sel;
+  gint tmprow;
+  gint loop;
+  gboolean preview_update = FALSE;
+  PathList *plp;
+  GSList *plist;
 
   /* free data associated with the transform path undo */
 
-  while(pundolist)
+  while (pundolist)
     {
-      p_undo = (PATHP)pundolist->data;
+      p_undo = (Path*)pundolist->data;
       /* Find the old path and replace it */
-      p = paths_get_path_by_tattoo(gimage,p_undo->tattoo);
+      p = path_get_path_by_tattoo (gimage, p_undo->tattoo);
       if(p)
 	{
 	  /* Path is still around... undo the transform stuff */
@@ -2531,7 +2289,7 @@ paths_transform_do_undo (GimpImage *gimage,
 	  p->closed = p_undo->closed;
 	  p->state = p_undo->state;
 	  p->pathtype = p_undo->pathtype;
-	  p->path_details = pathpoints_copy(p_undo->path_details);
+	  p->path_details = pathpoints_copy (p_undo->path_details);
 	  preview_update = TRUE;
 	}
       pundolist = g_slist_next(pundolist);
@@ -2540,7 +2298,7 @@ paths_transform_do_undo (GimpImage *gimage,
   if(preview_update && paths_dialog)
     {
       /* Heck the previews need updating...*/
-      plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+      plp = (PathList*)gimp_image_get_paths(gimage);
       plist = plp->bz_paths;
       loop = 0;
       
@@ -2552,7 +2310,7 @@ paths_transform_do_undo (GimpImage *gimage,
 	  tmprow = paths_dialog->current_path_list->last_selected_row;
 	  paths_dialog->current_path_list->last_selected_row = loop;
 	  paths_update_preview(bezier_sel);
-	  beziersel_free(bezier_sel);
+	  bezier_select_free (bezier_sel);
 	  paths_dialog->current_path_list->last_selected_row = tmprow;
 	  paths_dialog->selected_row_num = tmprow;
 	  loop++;
@@ -2575,9 +2333,9 @@ transform_func (GimpImage  *gimage,
 		gdouble     x, 
 		gdouble     y)
 {
-  PATHIMAGELISTP plp;
-  PATHP          p;
-  PATHP          p_copy;
+  PathList* plp;
+  Path*          p;
+  Path*          p_copy;
   GSList        *points_list;
   BezierSelect  *bezier_sel;
   GSList        *plist;
@@ -2587,7 +2345,7 @@ transform_func (GimpImage  *gimage,
   /* As a first off lets just translate the current path */
 
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  plp = (PathList*)gimp_image_get_paths(gimage);
 
   if(!plp)
     return;
@@ -2597,7 +2355,7 @@ transform_func (GimpImage  *gimage,
 
   while(plist)
     {
-      p = (PATHP)plist->data;
+      p = (Path*)plist->data;
       if(p->locked)
 	{
 	  p_copy = p;
@@ -2606,7 +2364,7 @@ transform_func (GimpImage  *gimage,
 	  
 	  while (points_list)
 	    {
-	      PATHPOINTP ppoint = points_list->data;
+	      PathPoint* ppoint = points_list->data;
 	      
 	      if(flip)
 		{
@@ -2641,7 +2399,7 @@ transform_func (GimpImage  *gimage,
 	      tmprow = paths_dialog->current_path_list->last_selected_row;
 	      paths_dialog->current_path_list->last_selected_row = loop;
 	      paths_update_preview(bezier_sel);
-	      beziersel_free(bezier_sel);
+	      bezier_select_free(bezier_sel);
 	      paths_dialog->current_path_list->last_selected_row = tmprow;
 	      paths_dialog->selected_row_num = tmprow;
 	    }
@@ -2676,9 +2434,9 @@ paths_transform_current_path (GimpImage   *gimage,
 			      GimpMatrix3  transform,
 			      gboolean     forpreview)
 {
-  PATHIMAGELISTP plp;
-  PATHP          p;
-  PATHP          p_copy;
+  PathList* plp;
+  Path*          p;
+  Path*          p_copy;
   GSList        *points_list;
   BezierSelect  *bezier_sel;
   GSList        *plist;
@@ -2688,7 +2446,7 @@ paths_transform_current_path (GimpImage   *gimage,
   /* As a first off lets just translate the current path */
 
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  plp = (PathList*)gimp_image_get_paths(gimage);
 
   if(!plp)
     return;
@@ -2698,7 +2456,7 @@ paths_transform_current_path (GimpImage   *gimage,
 
   while(plist)
     {
-      p = (PATHP)plist->data;
+      p = (Path*)plist->data;
       if(p->locked)
 	{
 	  if(forpreview)
@@ -2711,7 +2469,7 @@ paths_transform_current_path (GimpImage   *gimage,
 	  while (points_list)
 	    {
 	      gdouble newx,newy;
-	      PATHPOINTP ppoint = points_list->data;
+	      PathPoint* ppoint = points_list->data;
 	      
 	      /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
 	      
@@ -2740,13 +2498,13 @@ paths_transform_current_path (GimpImage   *gimage,
 	      tmprow = paths_dialog->current_path_list->last_selected_row;
 	      paths_dialog->current_path_list->last_selected_row = loop;
 	      paths_update_preview(bezier_sel);
-	      beziersel_free(bezier_sel);
+	      bezier_select_free(bezier_sel);
 	      paths_dialog->current_path_list->last_selected_row = tmprow;
 	      paths_dialog->selected_row_num = tmprow;
 	    }
 
 	  if(forpreview)
-	    path_free(p_copy,NULL);
+	    path_free (p_copy);
 	}
       plist = g_slist_next(plist);
       loop++;
@@ -2758,15 +2516,15 @@ paths_draw_current (GDisplay    *gdisp,
 		    DrawCore    *core,
 		    GimpMatrix3  transform)
 {
-  PATHIMAGELISTP plp;
-  PATHP          bzp;
+  PathList* plp;
+  Path*          bzp;
   BezierSelect * bezier_sel;
-  PATHP          p_copy;
+  Path*          p_copy;
   GSList       * points_list;
   GSList       * plist;
 
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gdisp->gimage);
+  plp = (PathList*)gimp_image_get_paths(gdisp->gimage);
 
   if(!plp)
     return;
@@ -2775,7 +2533,7 @@ paths_draw_current (GDisplay    *gdisp,
 
   while(plist)
     {
-      bzp = (PATHP)plist->data;
+      bzp = (Path*)plist->data;
   /* This image path is locked */
   if(bzp->locked)
     {
@@ -2786,7 +2544,7 @@ paths_draw_current (GDisplay    *gdisp,
       while (points_list)
 	{
 	  gdouble newx,newy;
-	  PATHPOINTP ppoint = points_list->data;
+	  PathPoint* ppoint = points_list->data;
 	  
 	  /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
 	  
@@ -2805,12 +2563,13 @@ paths_draw_current (GDisplay    *gdisp,
       bezier_sel = path_to_beziersel(p_copy);
       bezier_sel->core = core; /* A bit hacky */
       bezier_draw(gdisp,bezier_sel);
-      beziersel_free(bezier_sel);
-      path_free(p_copy,NULL);
+      bezier_select_free(bezier_sel);
+      path_free (p_copy);
     }
   plist = g_slist_next(plist);
     }
 }
+
 
 /*************************************/
 /* PDB function aids                 */
@@ -2825,10 +2584,10 @@ paths_set_path (GimpImage *gimage,
   gint           row = 0;
   gboolean       found = FALSE;
   GSList        *tlist;
-  PATHIMAGELISTP plp;
+  PathList* plp;
 
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  plp = (PathList*)gimp_image_get_paths(gimage);
 
   if(!plp)
     return FALSE;
@@ -2837,7 +2596,7 @@ paths_set_path (GimpImage *gimage,
   
   while(tlist)
     {
-      gchar *test_str = ((PATHP)(tlist->data))->name->str;
+      gchar *test_str = ((Path*)(tlist->data))->name;
       if(strcmp(pname,test_str) == 0)
 	{
 	  found = TRUE;
@@ -2876,13 +2635,12 @@ paths_set_path_points (GimpImage *gimage,
 		       gint       num_pnts,
 		       gdouble   *pnts)
 {
-  PathsList *plist    = gimp_image_get_paths(gimage);
+  PathList  *plist    = gimp_image_get_paths(gimage);
   GSList    *pts_list = NULL;
-  PATHP      bzpath;
+  Path*      bzpath;
   BezierSelect  *bezier_sel;
   gint       pcount   = 0;
   gint       this_path_count = 0;
-  gchar     *suniq;
 
   if(num_pnts < 6 ||
      (pclosed && ((num_pnts/3) % 3)) ||
@@ -2895,14 +2653,9 @@ paths_set_path_points (GimpImage *gimage,
   if(ptype != BEZIER)
     ptype = BEZIER;
 
-  suniq = unique_name(gimage,pname);
-
-  if(suniq)
-    pname = suniq;
-
   while(num_pnts)
     {
-      PATHPOINTP bpt;
+      PathPoint *bpt;
       gint type;
       gdouble x; 
       gdouble y;
@@ -2941,7 +2694,7 @@ paths_set_path_points (GimpImage *gimage,
 /* 	     (int)x, */
 /* 	     (int)y); */
       
-      bpt = pathpoint_new(type, (gdouble)x, (gdouble)y);
+      bpt = path_point_new (type, (gdouble)x, (gdouble)y);
       pts_list = g_slist_append(pts_list,bpt);
 
       num_pnts -= 3;
@@ -2989,7 +2742,7 @@ paths_set_path_points (GimpImage *gimage,
 	  GSList *bzp_list = NULL;
 	  
 	  bzp_list = g_slist_append(bzp_list,bzpath);
-	  plist = pathsList_new(gimage,0,bzp_list);
+	  plist = path_list_new(gimage,0,bzp_list);
 	  gimp_image_set_paths(gimage,plist);
 	}
       else
@@ -3011,90 +2764,19 @@ paths_set_path_points (GimpImage *gimage,
 	bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
     }
 
-  beziersel_free(bezier_sel);
+  bezier_select_free(bezier_sel);
+
   return TRUE;
 }
-
-void 
-paths_stroke (GimpImage *gimage,
-	      PathsList *pl,
-	      PATHP      bzp)
-{
-  BezierSelect * bezier_sel;
-  GDisplay  * gdisp;
-
-  gdisp = gdisplays_check_valid(pl->gdisp,gimage);
-  bezier_sel = path_to_beziersel(bzp);
-  bezier_stroke (bezier_sel, gdisp, SUBDIVIDE, !bzp->closed);
-  beziersel_free(bezier_sel);
-}
-
-gint 
-paths_distance (PATHP    bzp,
-		gdouble  dist,
-		gint    *x,
-		gint    *y, 
-		gdouble *grad)
-{
-  gint ret;
-  BezierSelect * bezier_sel;
-  bezier_sel = path_to_beziersel(bzp);
-  ret = bezier_distance_along(bezier_sel,!bzp->closed,dist,x,y,grad);
-  beziersel_free(bezier_sel);
-  return(ret);
-}
-
-Tattoo
-paths_get_tattoo (PATHP p)
-{
-  if(!p)
-    {
-      g_warning("paths_get_tattoo: invalid path");
-      return 0;
-    }
-
-  return (p->tattoo);
-}
-
-PATHP
-paths_get_path_by_tattoo (GimpImage *gimage,
-			  Tattoo     tattoo)
-{
-  GSList        *tlist;
-  PATHIMAGELISTP plp;
-
-  if(!gimage || !tattoo)
-    return NULL;
-
-  /* Go around the list and check all tattoos. */
-
-  /* Get path structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
-
-  if(!plp)
-    return (NULL);
-
-  tlist = plp->bz_paths;
-  
-  while(tlist)
-    {
-      PATHP p = (PATHP)(tlist->data);
-      if(p->tattoo == tattoo)
-	return (p);
-      tlist = g_slist_next(tlist);
-    }
-  return (NULL);
-}
-
 
 gboolean
 paths_delete_path (GimpImage *gimage,
 		   gchar     *pname)
 {
-  gint           row = 0;
-  gboolean       found = FALSE;
-  GSList        *tlist;
-  PATHIMAGELISTP plp;
+  gint       row = 0;
+  gboolean   found = FALSE;
+  GSList    *tlist;
+  PathList *plp;
 
   if(!pname || !gimage)
     {
@@ -3104,7 +2786,7 @@ paths_delete_path (GimpImage *gimage,
 
   /* Removed the named path ... */
   /* Get bzpath structure  */
-  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  plp = (PathList*) gimp_image_get_paths(gimage);
 
   if(!plp)
     return FALSE;
@@ -3113,7 +2795,7 @@ paths_delete_path (GimpImage *gimage,
   
   while(tlist)
     {
-      gchar *test_str = ((PATHP)(tlist->data))->name->str;
+      gchar *test_str = ((Path*)(tlist->data))->name;
       if(strcmp(pname,test_str) == 0)
 	{
 	  found = TRUE;
@@ -3132,7 +2814,7 @@ paths_delete_path (GimpImage *gimage,
     {
       gtk_signal_disconnect (GTK_OBJECT (plp->gimage), plp->sig_id);
       gimp_image_set_paths (plp->gimage, NULL);
-      pathimagelist_free (plp);
+      path_list_free (plp);
     }
 
   /* Redisplay if required */

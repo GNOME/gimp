@@ -1165,18 +1165,19 @@ gimp_image_get_new_tattoo (GimpImage *image)
 {
   image->tattoo_state++;
   if (image->tattoo_state <= 0)
-    g_warning("Tattoo state has become corrupt (2.1 billion operation limit exceded)");
+    g_warning ("Tattoo state has become corrupt (2.1 billion operation limit exceded)");
   return (image->tattoo_state);
 }
 
 Tattoo
-gimp_image_get_tattoo_state(GimpImage *image)
+gimp_image_get_tattoo_state (GimpImage *image)
 {
   return (image->tattoo_state);
 }
 
 int 
-gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
+gimp_image_set_tattoo_state (GimpImage *gimage, 
+			     Tattoo     val)
 {
   Layer *layer;
   GSList *layers = gimage->layers;
@@ -1184,8 +1185,8 @@ gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
   Channel *channel;
   GSList *channels = gimage->channels;
   Tattoo maxval = 0;
-  PATHP pptr = NULL;
-  PathsList *plist;
+  Path *pptr = NULL;
+  PathList *plist;
 
   while (layers)
     {
@@ -1201,7 +1202,7 @@ gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
 	}
 
       /* Now check path an't got this tattoo */
-      if(paths_get_path_by_tattoo(gimage,ltattoo) != NULL)
+      if(path_get_path_by_tattoo(gimage,ltattoo) != NULL)
 	{
 	  retval = FALSE; /* Oopps duplicated tattoo in layer */
 	}
@@ -1219,7 +1220,7 @@ gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
       if(ctattoo > maxval)
 	maxval = ctattoo;
       /* Now check path an't got this tattoo */
-      if(paths_get_path_by_tattoo(gimage,ctattoo) != NULL)
+      if(path_get_path_by_tattoo (gimage, ctattoo) != NULL)
 	{
 	  retval = FALSE; /* Oopps duplicated tattoo in layer */
 	}
@@ -1240,7 +1241,7 @@ gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
 	{
 	  pptr = pl->data;
 
-	  ptattoo = paths_get_tattoo (pptr);
+	  ptattoo = path_get_tattoo (pptr);
 	  
 	  if(ptattoo > maxval)
 	    maxval = ptattoo;
@@ -1272,12 +1273,12 @@ gimp_image_colormap_changed (GimpImage *image,
 
 void
 gimp_image_set_paths (GimpImage *gimage,
-		      PathsList *paths)
+		      PathList  *paths)
 {
   gimage->paths = paths;
 }
 
-PathsList *
+PathList *
 gimp_image_get_paths (GimpImage *gimage)
 {
   return gimage->paths;

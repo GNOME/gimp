@@ -328,13 +328,7 @@ gimp_SOURCES = \
 	parasitelist.h		\
 	parasitelistF.h		\
 	parasitelistP.h		\
-	path_bezier.c		\
-	path_bezier.h		\
-	path_curves.c		\
-	path_curves.h		\
-	path_tool.c		\
-	path_tool.h		\
-	path_toolP.h		\
+	path.c			\
 	paths_cmds.c		\
 	paths_dialog.c		\
 	paths_dialog.h		\
@@ -434,9 +428,7 @@ gimp_SOURCES = \
 	unit_cmds.c		\
 	wilber.h		\
 	xcf.c			\
-	xcf.h			\
-	xinput_airbrush.c	\
-	xinput_airbrush.h
+	xcf.h
 
 EXTRA_DIST = \
 	colormap_dialog.i.c	\

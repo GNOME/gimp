@@ -18,6 +18,7 @@
 #ifndef __BEZIER_SELECTP_H__
 #define __BEZIER_SELECTP_H__
 
+#include "draw_core.h"
 
 #define BEZIER_START     1
 #define BEZIER_ADD       2
@@ -41,7 +42,7 @@ typedef struct _bezier_point BezierPoint;
 struct _bezier_point
 {
   int type;                   /* type of point (anchor/control/move) */
-  double x, y;                   /* location of point in image space  */
+  double x, y;                /* location of point in image space  */
   int sx, sy;                 /* location of point in screen space */
   BezierPoint *next;          /* next point on curve               */
   BezierPoint *prev;          /* prev point on curve               */
@@ -82,6 +83,7 @@ typedef void (*BezierPointsFunc) (BezierSelect *, GdkPoint *, int,gpointer);
 int   bezier_select_load                   (void *, BezierPoint *, int, int);
 void  bezier_draw_curve                    (BezierSelect *,BezierPointsFunc, int,gpointer);
 void  bezier_select_reset                  (BezierSelect *);
+void  bezier_select_free                   (BezierSelect *bezier_sel);
 void  bezier_add_point                     (BezierSelect *, int, gdouble, gdouble);
 void  bezier_paste_bezierselect_to_current (GDisplay *,BezierSelect *);
 void  bezier_select_mode                   (gint);
@@ -91,3 +93,5 @@ gint  bezier_distance_along                (BezierSelect *, gint, gdouble,gint *
 void  bezier_draw                          (GDisplay *,BezierSelect *);
 
 #endif /* __BEZIER_SELECTP_H__ */
+
+

@@ -64,10 +64,8 @@ typedef enum
   INK,
   DODGEBURN,
   SMUDGE,
-  XINPUT_AIRBRUSH,
   MEASURE,
-  PATH_TOOL,
-  LAST_TOOLBOX_TOOL = PATH_TOOL,
+  LAST_TOOLBOX_TOOL = MEASURE,
 
   /*  Non-toolbox tools  */
   BY_COLOR_SELECT,

@@ -147,7 +147,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL, NULL },
   { { N_("/File/Dialogs"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  { { N_("/File/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
+  { { N_("/File/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_lc_cmd_callback, 0 },
     "file/dialogs/layers_and_channels.html", NULL },
   { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T", dialogs_tool_options_cmd_callback, 0 },
     "file/dialogs/tool_options.html", NULL },
@@ -473,7 +473,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Layers"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  { { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
+  { { N_("/Layers/Layers, Channels & Paths..."), "<control>L", dialogs_lc_cmd_callback, 0 },
     "dialogs/layers_and_channels.html", NULL },
 
   /*  <Image>/Layers/Stack  */
@@ -552,7 +552,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Dialogs"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  { { N_("/Dialogs/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
+  { { N_("/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_lc_cmd_callback, 0 },
     "dialogs/layers_and_channels.html", NULL },
   { { N_("/Dialogs/Tool Options..."), NULL, dialogs_tool_options_cmd_callback, 0 },
     "dialogs/tool_options.html", NULL },

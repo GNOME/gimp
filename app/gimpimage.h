@@ -171,8 +171,8 @@ Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
 int             gimp_image_set_tattoo_state       (GimpImage *, Tattoo);
 Tattoo          gimp_image_get_tattoo_state       (GimpImage *);
 
-void            gimp_image_set_paths              (GimpImage *, PathsList *);
-PathsList *     gimp_image_get_paths              (GimpImage *);
+void            gimp_image_set_paths              (GimpImage *, PathList *);
+PathList *      gimp_image_get_paths              (GimpImage *);
 
 /* Temporary hack till colormap manipulation is encapsulated in functions.
    Call this whenever you modify an image's colormap. The ncol argument

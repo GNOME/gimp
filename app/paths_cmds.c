@@ -64,8 +64,8 @@ path_list_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 num_paths = 0;
-  gchar **paths_list = NULL;
-  PathsList *plist;
+  gchar **path_list = NULL;
+  PathList *plist;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -82,11 +82,11 @@ path_list_invoker (Argument *args)
     
 	  num_paths = g_slist_length (pl);
     
-	  paths_list = g_new (gchar *, num_paths);
+	  path_list = g_new (gchar *, num_paths);
 	  while (pl)
 	    {
-	      PATHP pptr = pl->data;
-	      paths_list[count++] = g_strdup (pptr->name->str);
+	      Path *pptr = pl->data;
+	      path_list[count++] = g_strdup (pptr->name);
 	      pl = pl->next;
 	    }
 	}
@@ -97,7 +97,7 @@ path_list_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_int = num_paths;
-      return_args[2].value.pdb_pointer = paths_list;
+      return_args[2].value.pdb_pointer = path_list;
     }
 
   return return_args;
@@ -121,7 +121,7 @@ static ProcArg path_list_outargs[] =
   },
   {
     PDB_STRINGARRAY,
-    "paths_list",
+    "path_list",
     "List of the paths belonging to this image"
   }
 };
@@ -151,8 +151,8 @@ path_get_points_invoker (Argument *args)
   gchar *pname;
   gint32 num_pdetails = 0;
   gdouble *pnts = NULL;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -175,7 +175,7 @@ path_get_points_invoker (Argument *args)
 	    {
 	      pptr = pl->data;
     
-	      if (!strcmp (pname, pptr->name->str))
+	      if (!strcmp (pname, pptr->name))
 		break; /* Found the path */
     
 	      pl = pl->next;
@@ -197,7 +197,7 @@ path_get_points_invoker (Argument *args)
 		  /* fill points and types in */
 		  while (points_list)
 		    {
-		      PATHPOINTP ppoint = points_list->data;
+		      PathPoint *ppoint = points_list->data;
 		      pnts[pcount] = ppoint->x;
 		      pnts[pcount + 1] = ppoint->y;
 		      pnts[pcount + 2] = (gfloat) ppoint->type; /* Bit of fiddle but should be understandable why it was done */
@@ -244,7 +244,7 @@ static ProcArg path_get_points_outargs[] =
 {
   {
     PDB_INT32,
-    "paths_type",
+    "path_type",
     "The type of the path. Currently only one type (1 = Bezier) is supported"
   },
   {
@@ -286,8 +286,8 @@ path_get_current_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -299,7 +299,7 @@ path_get_current_invoker (Argument *args)
       plist = gimage->paths;
     
       if (plist && plist->bz_paths && plist->last_selected_row >= 0)
-	pptr = (PATHP) g_slist_nth_data (plist->bz_paths, plist->last_selected_row);
+	pptr = (Path*) g_slist_nth_data (plist->bz_paths, plist->last_selected_row);
       else
 	success = FALSE;
     }
@@ -307,7 +307,7 @@ path_get_current_invoker (Argument *args)
   return_args = procedural_db_return_args (&path_get_current_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (pptr->name->str);
+    return_args[1].value.pdb_pointer = g_strdup (pptr->name);
 
   return return_args;
 }
@@ -489,8 +489,8 @@ path_stroke_current_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -503,10 +503,10 @@ path_stroke_current_invoker (Argument *args)
     
       if (plist && plist->bz_paths && plist->last_selected_row >= 0)
 	{
-	  if ((pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
+	  if ((pptr = (Path*) g_slist_nth_data (plist->bz_paths,
 						plist->last_selected_row)))
 		  
-	    paths_stroke (gimage, plist, pptr); /* Found the path to stroke.. */
+	    path_stroke (gimage, plist, pptr); /* Found the path to stroke.. */
 	  else
 	    success = FALSE;
 	}
@@ -552,8 +552,8 @@ path_get_point_at_dist_invoker (Argument *args)
   gint32 x_point = 0;
   gint32 y_point = 0;
   gdouble gradient = 0;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -568,10 +568,10 @@ path_get_point_at_dist_invoker (Argument *args)
     
       if (plist && plist->bz_paths && plist->last_selected_row >= 0)
 	{
-	  pptr = (PATHP) g_slist_nth_data (plist->bz_paths,
+	  pptr = (Path*) g_slist_nth_data (plist->bz_paths,
 					   plist->last_selected_row);
-	  success = paths_distance (pptr, distance, &x_point, &y_point,
-				    &gradient);
+	  success = path_distance (pptr, distance, &x_point, &y_point,
+				   &gradient);
 	}
       else
 	success = FALSE;
@@ -646,8 +646,8 @@ path_get_tattoo_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
   gint32 tattoo = 0;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -670,7 +670,7 @@ path_get_tattoo_invoker (Argument *args)
 	    {
 	      pptr = pl->data;
     
-	      if (!strcmp (pname, pptr->name->str))
+	      if (!strcmp (pname, pptr->name))
 		break; /* Found the path */
     
 	      pl = pl->next;
@@ -678,7 +678,7 @@ path_get_tattoo_invoker (Argument *args)
 	    }
     
 	  if (pl && pptr)
-	    tattoo = paths_get_tattoo (pptr);
+	    tattoo = path_get_tattoo (pptr);
 	  else
 	    success = FALSE;
 	}
@@ -740,8 +740,8 @@ get_path_by_tattoo_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 tattoo;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -756,7 +756,7 @@ get_path_by_tattoo_invoker (Argument *args)
     
       if (plist && plist->bz_paths)
 	{        
-	  if ((pptr = paths_get_path_by_tattoo (gimage, tattoo)) == NULL)
+	  if ((pptr = path_get_path_by_tattoo (gimage, tattoo)) == NULL)
 	    success = FALSE;
 	}
       else
@@ -766,7 +766,7 @@ get_path_by_tattoo_invoker (Argument *args)
   return_args = procedural_db_return_args (&get_path_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (pptr->name->str);
+    return_args[1].value.pdb_pointer = g_strdup (pptr->name);
 
   return return_args;
 }
@@ -869,8 +869,8 @@ path_get_locked_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
   gint32 lockstatus = 0;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -893,7 +893,7 @@ path_get_locked_invoker (Argument *args)
 	    {
 	      pptr = pl->data;
     
-	      if (!strcmp (pname, pptr->name->str))
+	      if (!strcmp (pname, pptr->name))
 		break; /* Found the path */
     
 	      pl = pl->next;
@@ -963,8 +963,8 @@ path_set_locked_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
   gint32 lockstatus = 0;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -989,7 +989,7 @@ path_set_locked_invoker (Argument *args)
 	    {
 	      pptr = pl->data;
     
-	      if (!strcmp (pname, pptr->name->str))
+	      if (!strcmp (pname, pptr->name))
 		break; /* Found the path */
     
 	      pl = pl->next;
@@ -1050,8 +1050,8 @@ path_set_tattoo_invoker (Argument *args)
   GimpImage *gimage;
   gchar *pname;
   gint32 tattovalue = 0;
-  PathsList *plist;
-  PATHP pptr = NULL;
+  PathList *plist;
+  Path *pptr = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -1076,7 +1076,7 @@ path_set_tattoo_invoker (Argument *args)
 	    {
 	      pptr = pl->data;
     
-	      if (!strcmp (pname, pptr->name->str))
+	      if (!strcmp (pname, pptr->name))
 		break; /* Found the path */
     
 	      pl = pl->next;

@@ -22,6 +22,7 @@
  */
 
 /* revision history:
+ * version 1.1.16a; 2000/02/04  hof: path lockedstaus, tattoo set procedures
  * version 1.1.15b; 2000/01/28  hof: parasites
  *                                   removed old gimp 1.0.x PDB Interfaces
  * version 1.1.15;  2000/01/20  hof: parasites
@@ -511,7 +512,7 @@ gint32  p_gimp_layer_get_tattoo (gint32 layer_id)
       return(return_vals[1].data.d_int32);  /* OK, return Tattoo Id */
    }
    printf("XJT: Error: PDB call of %s failed\n", l_procname);
-   return(0);
+   return(-1);
 }	/* end p_gimp_layer_get_tattoo */
 
 /* ============================================================================
@@ -536,7 +537,7 @@ gint32  p_gimp_channel_get_tattoo (gint32 channel_id)
       return(return_vals[1].data.d_int32);  /* OK, return Tattoo Id */
    }
    printf("XJT: Error: PDB call of %s failed\n", l_procname);
-   return(0);
+   return(-1);
 }	/* end p_gimp_channel_get_tattoo */
 
 /* ============================================================================
@@ -766,4 +767,182 @@ p_gimp_path_set_current(gint32 image_id, gchar *name)
    printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
    return(-1);
 }	/* end p_gimp_path_set_current */
+
+/* ============================================================================
+ * p_gimp_path_get_locked
+ *   
+ * ============================================================================
+ */
+
+gint32
+p_gimp_path_get_locked(gint32 image_id, gchar *name)
+{
+   static gchar    *l_called_proc = "gimp_path_get_locked";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(return_vals[1].data.d_int32); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(FALSE);
+}	/* end p_gimp_path_get_locked */
+
+/* ============================================================================
+ * p_gimp_path_set_locked
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_path_set_locked(gint32 image_id, gchar *name, gint32 lockstatus)
+{
+   static gchar    *l_called_proc = "gimp_path_set_locked";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_INT32, lockstatus,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(0); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_path_set_locked */
+
+/* ============================================================================
+ * p_gimp_path_get_tattoo
+ *   
+ * ============================================================================
+ */
+
+gint32
+p_gimp_path_get_tattoo(gint32 image_id, gchar *name)
+{
+   static gchar    *l_called_proc = "gimp_path_get_tattoo";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(return_vals[1].data.d_int32); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_path_get_tattoo */
+
+/* ============================================================================
+ * p_gimp_path_set_tattoo
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_path_set_tattoo(gint32 image_id, gchar *name, gint32 tattoovalue)
+{
+   static gchar    *l_called_proc = "gimp_path_set_tattoo";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   if(p_procedure_available(l_called_proc) < 0)
+   {
+     return(-1);
+   }
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_INT32, tattoovalue,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(0); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_path_set_tattoo */
+
+
+/* ============================================================================
+ * p_gimp_layer_set_tattoo
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_layer_set_tattoo(gint32 layer_id, gint32 tattoovalue)
+{
+   static gchar    *l_called_proc = "gimp_layer_set_tattoo";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   if(p_procedure_available(l_called_proc) < 0)
+   {
+     return(-1);
+   }
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_LAYER, layer_id,
+                                 PARAM_INT32, tattoovalue,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(0); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_layer_set_tattoo */
+
+
+/* ============================================================================
+ * p_gimp_channel_set_tattoo
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_channel_set_tattoo(gint32 channel_id, gint32 tattoovalue)
+{
+   static gchar    *l_called_proc = "gimp_channel_set_tattoo";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   if(p_procedure_available(l_called_proc) < 0)
+   {
+     return(-1);
+   }
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_CHANNEL, channel_id,
+                                 PARAM_INT32, tattoovalue,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(0); /* OK */
+   }
+   printf("XJT: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_channel_set_tattoo */
 

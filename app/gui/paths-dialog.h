@@ -29,5 +29,7 @@ void  paths_dialog_sel_to_path_callback          (GtkWidget *, gpointer);
 void  paths_dialog_import_path_callback          (GtkWidget *, gpointer);
 void  paths_dialog_export_path_callback          (GtkWidget *, gpointer);
 void  paths_dialog_edit_path_attributes_callback (GtkWidget *, gpointer);
+void  paths_dialog_destroy_cb                    (GtkObject *, gpointer);
+
 
 #endif  /*  __PATHS_DIALOG_H__  */
