@@ -7,6 +7,8 @@ Revision history for Gimp-Perl extension.
           "uuuuuse peedee-ell or dieieie".
         - implemented Gimp::Fu::PF_RADIO.
         - added blowinout.pl and terral_text.
+        - the use of Gimp::PDL to access the region/tile functions is
+          now mandatory. The old string interface does not exist anymore.
         
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.
