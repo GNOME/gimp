@@ -48,7 +48,7 @@
     (gimp-selection-layer-alpha text-layer)
     (gimp-context-set-background (list grey grey grey))
     (gimp-edit-fill text-mask BACKGROUND-FILL)
-    (gimp-selection-clear img)
+    (gimp-selection-none img)
     (if (> blur-radius 0)
         (plug-in-gauss-iir 1 img text-mask blur-radius 1 1)
     )

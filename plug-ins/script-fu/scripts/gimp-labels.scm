@@ -73,7 +73,7 @@
 	  (gimp-by-color-select text-layer bg-color
 				color-thresh CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
 	  (gimp-edit-clear text-layer)
-	  (gimp-selection-clear img)))
+	  (gimp-selection-none img)))
     
     (if (= index TRUE)
    	(gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors

@@ -66,7 +66,7 @@
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-edit-fill text-mask BACKGROUND-FILL)
-    (gimp-selection-clear img)
+    (gimp-selection-none img)
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)
 

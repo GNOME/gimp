@@ -98,7 +98,7 @@
 	  (gimp-by-color-select text-layer '(255 255 255)
 				1 CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
 	  (gimp-edit-clear text-layer)
-	  (gimp-selection-clear img)))
+	  (gimp-selection-none img)))
         
     (if (= crop TRUE)
 	 (plug-in-autocrop 1 img text-layer))

@@ -1,3 +1,12 @@
+2004-11-13  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/news-text.scm
+	* plug-ins/script-fu/scripts/speed-text.scm: Changed calls to
+	gimp-selection-clear to use gimp-selection-none in preparation
+	for the deprecation of -clear. (bug #156765)
+
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: document the fact that
