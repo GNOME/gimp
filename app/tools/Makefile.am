@@ -154,7 +154,6 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
-	$(LIBART_CFLAGS)	\
 	-I$(includedir)
 
 

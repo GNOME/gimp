@@ -1,3 +1,14 @@
+2003-09-07  Sven Neumann  <sven@gimp.org>
+
+	* app/display/Makefile.am
+	* app/gui/Makefile.am
+	* app/paint/Makefile.am
+	* app/pdb/Makefile.am
+	* app/text/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* app/xcf/Makefile.am (INCLUDES): removed $(LIBART_CFLAGS) again.
+
 2003-09-07  Dave Neary  <bolsh@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]
