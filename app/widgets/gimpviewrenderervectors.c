@@ -136,7 +136,7 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
 
       if (coordinates->len > 0)
         {
-          points = g_new (GdkPoint, coordinates->len + (closed ? 1 : 0));
+          points = g_new (GdkPoint, coordinates->len);
 
           for (i = 0; i < coordinates->len; i++)
             {
@@ -147,9 +147,6 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
               points[i].x = rect.x + ROUND (coords->x / xscale);
               points[i].y = rect.y + ROUND (coords->y / yscale);
             }
-
-          if (closed)
-            g_array_append_val (coordinates, points[0]);
 
           gdk_draw_lines (window, widget->style->black_gc,
                           points, coordinates->len);

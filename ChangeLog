@@ -1,5 +1,10 @@
 2003-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppreviewrenderervectors.c: fixed preview of
+	closed paths.
+	
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppreviewrenderer.c
 	* app/widgets/gimppreviewrenderervectors.c: simplified drawing
 	code to a point where it becomes readable again. Draw centered
