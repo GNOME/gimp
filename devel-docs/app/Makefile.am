@@ -86,8 +86,8 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/file/libappfile.a				\
         $(top_builddir)/app/plug-in/libappplug-in.a			\
         $(top_builddir)/app/paint-funcs/libapppaint-funcs.a		\
-        $(top_builddir)/app/base/libappbase.a				\
         $(top_builddir)/app/composite/libappcomposite.a			\
+        $(top_builddir)/app/base/libappbase.a				\
         $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la      \
         $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la        \
         $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la        \

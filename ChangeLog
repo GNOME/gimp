@@ -1,5 +1,16 @@
 2003-10-21  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base.c (base_init): removed the call to
+	cpu_accel_print_results(); should have got enough testing and
+	gimp-composite outputs the same info anyway.
+
+	* app/Makefile.am: link libappcomposite.a before libappbase.a.
+
+	* app/config/Makefile.am (test_config_LDADD): it's not any longer
+	needed to link the test against libappdisplay. and libappwidgets.a.
+
+2003-10-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpvectorstreeview.c: implement
 	GimpItemTreeView::set_image and set the sensitivity of the
 	"Selection To Path" button from there. Fixes bug #125058.

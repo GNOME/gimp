@@ -665,6 +665,7 @@
       <xi:include href="xml/gimphistogrambox.xml"/>
       <xi:include href="xml/gimphistogramview.xml"/>
       <xi:include href="xml/gimptexteditor.xml"/>
+      <xi:include href="xml/gimptooldialog.xml"/>
       <xi:include href="xml/gimpviewablebutton.xml"/>
       <xi:include href="xml/gimpviewabledialog.xml"/>
     </chapter>

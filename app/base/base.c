@@ -43,7 +43,6 @@
 #include "composite/gimp-composite.h"
 
 #include "base.h"
-#include "cpu-accel.h"
 #include "temp-buf.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
@@ -80,9 +79,6 @@ base_init (GimpBaseConfig *config,
 #ifdef G_OS_WIN32
   g_printerr ("You can minimize this window, but don't close it.\n\n");
 #endif
-
-  if (use_mmx)
-    cpu_accel_print_results ();
 #endif /* odd minor version */
 
   tile_cache_init (config->tile_cache_size);

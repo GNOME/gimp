@@ -4497,6 +4497,12 @@ gimp_toolbox_indicator_area_create
 </SECTION>
 
 <SECTION>
+<FILE>gimptooldialog</FILE>
+<TITLE>GimpToolDialog</TITLE>
+gimp_tool_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>gimpundoeditor</FILE>
 <TITLE>GimpUndoEditor</TITLE>
 GimpUndoEditor
