@@ -79,6 +79,11 @@ static gboolean gimp_fg_bg_editor_button_press    (GtkWidget      *widget,
                                                    GdkEventButton *bevent);
 static gboolean gimp_fg_bg_editor_button_release  (GtkWidget      *widget,
                                                    GdkEventButton *bevent);
+static gboolean gimp_fg_bg_editor_drag_motion     (GtkWidget      *widget,
+                                                   GdkDragContext *context,
+                                                   gint            x,
+                                                   gint            y,
+                                                   guint           time);
 
 static void     gimp_fg_bg_editor_context_changed (GimpContext    *context,
                                                    const GimpRGB  *color,
@@ -89,7 +94,6 @@ static void     gimp_fg_bg_editor_drag_color      (GtkWidget      *widget,
 static void     gimp_fg_bg_editor_drop_color      (GtkWidget      *widget,
                                                    const GimpRGB  *color,
                                                    gpointer        data);
-
 
 
 static guint  editor_signals[LAST_SIGNAL] = { 0 };
@@ -152,6 +156,7 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
   widget_class->expose_event         = gimp_fg_bg_editor_expose;
   widget_class->button_press_event   = gimp_fg_bg_editor_button_press;
   widget_class->button_release_event = gimp_fg_bg_editor_button_release;
+  widget_class->drag_motion          = gimp_fg_bg_editor_drag_motion;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
@@ -474,7 +479,6 @@ gimp_fg_bg_editor_button_press (GtkWidget      *widget,
         default:
           break;
         }
-
     }
 
   return FALSE;
@@ -512,6 +516,30 @@ gimp_fg_bg_editor_button_release (GtkWidget      *widget,
 
       editor->click_target = INVALID_AREA;
     }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
+                               GdkDragContext *context,
+                               gint            x,
+                               gint            y,
+                               guint           time)
+{
+  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+
+  editor->dnd_target = gimp_fg_bg_editor_target (editor, x, y);
+
+  if (editor->dnd_target == FORE_AREA ||
+      editor->dnd_target == BACK_AREA)
+    {
+      gdk_drag_status (context, GDK_ACTION_COPY, time);
+
+      return TRUE;
+    }
+
+  gdk_drag_status (context, 0, time);
 
   return FALSE;
 }
@@ -618,14 +646,17 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
 
   if (editor->context)
     {
-      switch (editor->active_color)
+      switch (editor->dnd_target)
         {
-        case GIMP_ACTIVE_COLOR_FOREGROUND:
+        case FORE_AREA:
           gimp_context_set_foreground (editor->context, color);
           break;
 
-        case GIMP_ACTIVE_COLOR_BACKGROUND:
+        case BACK_AREA:
           gimp_context_set_background (editor->context, color);
+          break;
+
+        default:
           break;
         }
     }

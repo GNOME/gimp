@@ -1,3 +1,10 @@
+2004-07-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfgbgarea.[ch]: implement GtkWidget::drag_motion()
+	and set the FG/BG depending on where the color was dropped. Also
+	set the drag status accordingly so the cursor indicates whether
+	dropping will have an effect or not. Fixes bug #145219.
+
 2004-07-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimptemplate.c: do like Liam taught us and use the
