@@ -1,3 +1,9 @@
+2004-01-27  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/tiff.c: Apply patch from Andrey Kiselev to 
+	improve defaults when there is no photometric specified for 
+	CCITT encoded tiffs. Closes bug #131902.
+
 2004-01-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/layers-commands.c (layers_add_mask_query): use the

@@ -524,14 +524,29 @@ load_image (const gchar *filename)
 
       if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
         {
-          g_message ("Could not get photometric from '%s'. "
-                     "Assuming min-is-black",
-                     gimp_filename_to_utf8 (filename));
-          /* old AppleScan software misses out the photometric tag (and
-           * incidentally assumes min-is-white, but xv assumes min-is-black,
-           * so we follow xv's lead.  It's not much hardship to invert the
-           * image later). */
-          photomet = PHOTOMETRIC_MINISBLACK;
+          uint16 compress;
+          if (TIFFGetField(tif, TIFFTAG_COMPRESSION, &compress) &&
+              (compress == COMPRESSION_CCITTFAX3 ||
+               compress == COMPRESSION_CCITTFAX4 ||
+               compress == COMPRESSION_CCITTRLE ||
+               compress == COMPRESSION_CCITTRLEW))
+            {
+              g_message ("Could not get photometric from '%s'. "
+                         "Image is CCITT compressed, assuming min-is-white",
+                         filename);
+              photomet = PHOTOMETRIC_MINISWHITE;
+            }
+          else
+            {
+              g_message ("Could not get photometric from '%s'. "
+                         "Assuming min-is-black",
+                         filename);
+              /* old AppleScan software misses out the photometric tag (and
+               * incidentally assumes min-is-white, but xv assumes
+               * min-is-black, so we follow xv's lead.  It's not much hardship
+               * to invert the image later). */
+              photomet = PHOTOMETRIC_MINISBLACK;
+            }
         }
 
       /* test if the extrasample represents an associated alpha channel... */
