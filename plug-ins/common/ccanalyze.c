@@ -20,7 +20,7 @@
 
 /*
  * Analyze colorcube.
- * 
+ *
  * Author: robert@experimental.net
  */
 
@@ -52,10 +52,10 @@
 /*
  * I found the following implementation of storing a sparse color matrix
  * in Dr. Dobb's Journal #232 (July 1995).
- * 
+ *
  * The matrix is build as three linked lists, each representing a color-
- * cube axis. Each node in the matrix contains two pointers: one to its 
- * neighbour and one to the next color-axis. 
+ * cube axis. Each node in the matrix contains two pointers: one to its
+ * neighbour and one to the next color-axis.
  *
  * Each red node contains a pointer to the next red node, and a pointer to
  * the green nodes. Green nodes, in turn, each contain a pointer to the next
@@ -72,8 +72,8 @@
  *      |
  *      v
  *         RED(91)  ->  RED(212)  ->  ...
- *      |            |             
- *      |            v 
+ *      |            |
+ *      |            v
  *      |            GREEN(81)  ->  GREEN(128)  ->  ...
  *      |            |              |
  *      |            |              v
@@ -268,7 +268,7 @@ analyze (GimpDrawable *drawable)
 
   gimp_progress_init (_("Colorcube Analysis..."));
 
-  /* 
+  /*
    * Get the input area. This is the bounding box of the selection in
    * the image (or the entire image if there is no selection). Only
    * operating on the input area is simply an optimization. It doesn't
@@ -277,7 +277,7 @@ analyze (GimpDrawable *drawable)
    */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  /* 
+  /*
    * Get the size of the input image (this will/must be the same
    * as the size of the output image).
    */
@@ -300,7 +300,7 @@ analyze (GimpDrawable *drawable)
 
       for (x = 0; x < x2 - x1; x++)
         {
-          /* 
+          /*
            * If the image is indexed, fetch RGB values
            * from colormap.
            */
@@ -406,7 +406,7 @@ insertcolor (guchar r,
   newblue->next_neighbour = NULL;
   newblue->next_axis = NULL;
 
-  /* 
+  /*
    * At the end of the list, we store the entire triplet.
    * For now, there is no reason whatsoever to do this, but perhaps
    * it might prove useful someday :)
@@ -472,8 +472,8 @@ insertcolor (guchar r,
   uniques++;
 }
 
-/* 
- * Update RGB count, and keep track of maximum values (which aren't used 
+/*
+ * Update RGB count, and keep track of maximum values (which aren't used
  * anywhere as of yet, but they might be useful sometime).
  */
 static void
@@ -565,7 +565,7 @@ doDialog (void)
       doLabel (table, _("Compression ratio (approx.): %d to 1"),
                       (gint) RINT ((double) (width * height * bpp) / filesize));
     }
-        
+
   /* show stuff */
   gtk_widget_show_all (dialog);
 

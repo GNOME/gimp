@@ -1,3 +1,8 @@
+2003-09-03  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* ccanalyze.c: Changed from CR/LF style to LF style in preparation
+	for the next batch of changes.
+
 2003-09-03  Manish Singh  <yosh@gimp.org>
 
 	* autogen.sh: fix case for uname checks (needs to be in all CAPS).
