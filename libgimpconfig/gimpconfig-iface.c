@@ -236,7 +236,7 @@ gimp_config_serialize (GObject      *object,
     {
       gchar *msg;
 
-      if (g_file_test (filename, G_FILE_TEST_EXIST))
+      if (g_file_test (filename, G_FILE_TEST_EXISTS))
         {
           msg = g_strdup_printf (_("Error when writing to temporary file for '%s': %s\n"
                                    "The original file has not been touched."),
