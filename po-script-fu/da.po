@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2002-04-06 16:27+0200\n"
-"PO-Revision-Date: 2002-04-06 16:28+0200\n"
+"POT-Creation-Date: 2002-04-09 21:15+0200\n"
+"PO-Revision-Date: 2002-04-09 21:15+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -859,7 +859,7 @@ msgstr "Afstand (skærmpunkter)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Kopletter..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Ko-pletter..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
@@ -1146,7 +1146,7 @@ msgstr "Stænk"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Tegneserie..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Tegneserie..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
@@ -1165,7 +1165,7 @@ msgstr "Omridsstørrelse"
 # bøvet i sammenhængen
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Metal..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Metal..."
 
 # det er næsten umuligt at oversætte "cool" på en måde så det ikke lyder
 # bøvet i sammenhængen
@@ -1529,7 +1529,7 @@ msgstr "Effektstørrelse (skærmpunkter * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Farveovergangskant..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Farveovergangskant..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
@@ -2036,7 +2036,7 @@ msgstr "Omdrejningsvinkel"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Toolbox>/Script-Fu/Alfa til logo/Partikelspor..."
+msgstr "<Image>/Script-Fu/Alfa til logo/Partikelspor..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
