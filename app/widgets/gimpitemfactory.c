@@ -114,10 +114,11 @@ gimp_item_factory_class_init (GimpItemFactoryClass *klass)
 static void
 gimp_item_factory_init (GimpItemFactory *factory)
 {
-  factory->gimp            = NULL;
-  factory->update_func     = NULL;
-  factory->update_on_popup = FALSE;
-  factory->help_id         = NULL;
+  factory->gimp              = NULL;
+  factory->update_func       = NULL;
+  factory->update_on_popup   = FALSE;
+  factory->help_id           = NULL;
+  factory->translation_trash = NULL;
 }
 
 static void
@@ -330,6 +331,13 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 
   if (textdomain)
     g_object_set_data (G_OBJECT (item_factory), "textdomain", NULL);
+
+  if (item_factory->translation_trash)
+    {
+      g_list_foreach (item_factory->translation_trash, (GFunc) g_free, NULL);
+      g_list_free (item_factory->translation_trash);
+      item_factory->translation_trash = NULL;
+    }
 
   menu_path = gimp_strip_uline (((GtkItemFactoryEntry *) entry)->path);
 
@@ -970,27 +978,32 @@ static gchar *
 gimp_item_factory_translate_func (const gchar *path,
                                   gpointer     data)
 {
-  GtkItemFactory *item_factory;
-  gchar          *menupath;
-  gchar          *retval;
-  gchar          *translation;
-  gchar          *domain   = NULL;
-  gchar          *complete = NULL;
-  gchar          *p, *t;
+  GtkItemFactory  *item_factory;
+  GimpItemFactory *gimp_factory;
+  const gchar     *retval;
+  gchar           *translation;
+  gchar           *domain   = NULL;
+  gchar           *complete = NULL;
+  gchar           *p, *t;
 
   item_factory = GTK_ITEM_FACTORY (data);
+  gimp_factory = GIMP_ITEM_FACTORY (data);
 
   if (strstr (path, "tearoff") ||
       strstr (path, "/---")    ||
       strstr (path, "/MRU"))
-    return g_strdup (path);
+    {
+      return (gchar *) path;
+    }
 
   domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
   complete = g_object_get_data (G_OBJECT (item_factory), "complete");
 
   if (domain)  /*  use the plugin textdomain  */
     {
-      menupath = g_strconcat (item_factory->path, path, NULL);
+      gchar *full_path;
+
+      full_path = g_strconcat (item_factory->path, path, NULL);
 
       if (complete)
 	{
@@ -1000,7 +1013,12 @@ gimp_item_factory_translate_func (const gchar *path,
 	  complete    = g_strconcat (item_factory->path, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
-	  while (*complete && *translation && strcmp (complete, menupath))
+          g_print ("moving plug-in translation to trash: %s\n", translation);
+
+          gimp_factory->translation_trash =
+            g_list_prepend (gimp_factory->translation_trash, translation);
+
+	  while (*complete && *translation && strcmp (complete, full_path))
 	    {
 	      p = strrchr (complete, '/');
 	      t = strrchr (translation, '/');
@@ -1014,15 +1032,13 @@ gimp_item_factory_translate_func (const gchar *path,
 	    }
 
 	  g_free (complete);
+          /* DON'T set complete to NULL here */
 	}
       else
 	{
-	  translation = dgettext (domain, menupath);
+	  translation = dgettext (domain, full_path);
 	}
 
-      /*
-       * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
-       */
       if (strncmp (item_factory->path, translation,
                    strlen (item_factory->path)) == 0)
 	{
@@ -1031,17 +1047,15 @@ gimp_item_factory_translate_func (const gchar *path,
       else
 	{
 	  g_warning ("%s: bad translation for menupath: %s",
-                     G_STRLOC, menupath);
+                     G_STRLOC, full_path);
 
-	  retval = menupath + strlen (item_factory->path);
-	  if (complete)
-	    g_free (translation);
+	  retval = path;
 	}
+
+      g_free (full_path);
     }
   else  /*  use the gimp textdomain  */
     {
-      menupath = retval = g_strdup (path);
-
       if (complete)
 	{
           /*  This is a branch, use the complete path for translation,
@@ -1050,7 +1064,12 @@ gimp_item_factory_translate_func (const gchar *path,
 	  complete    = g_strdup (complete);
 	  translation = g_strdup (gettext (complete));
 
-	  while (*complete && *translation && strcmp (complete, menupath))
+          g_print ("moving core translation to trash: %s\n", translation);
+
+          gimp_factory->translation_trash =
+            g_list_prepend (gimp_factory->translation_trash, translation);
+
+	  while (*complete && *translation && strcmp (complete, path))
 	    {
 	      p = strrchr (complete, '/');
 	      t = strrchr (translation, '/');
@@ -1064,9 +1083,12 @@ gimp_item_factory_translate_func (const gchar *path,
 	    }
 
 	  g_free (complete);
+          /* DON'T set complete to NULL here */
 	}
       else
-	translation = gettext (menupath);
+        {
+          translation = gettext (path);
+        }
 
       if (*translation == '/')
 	{
@@ -1075,12 +1097,11 @@ gimp_item_factory_translate_func (const gchar *path,
       else
 	{
 	  g_warning ("%s: bad translation for menupath: %s",
-                     G_STRLOC, menupath);
+                     G_STRLOC, path);
 
-	  if (complete)
-	    g_free (translation);
+          retval = path;
 	}
     }
 
-  return retval;
+  return (gchar *) retval;
 }

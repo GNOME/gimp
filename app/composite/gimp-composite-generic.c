@@ -1133,15 +1133,18 @@ gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
 void
 gimp_composite_generic_init (void)
 {
-  guint i;
   GRand *gr;
+  guint  i;
+
 #define RANDOM_SEED 314159265
 
   /*  generate a table of random seeds  */
-  gr = g_rand_new_with_seed(RANDOM_SEED);
+  gr = g_rand_new_with_seed (RANDOM_SEED);
 
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
-    random_table[i] = g_rand_int(gr);
+    random_table[i] = g_rand_int (gr);
+
+  g_rand_free (gr);
 
   for (i = 0; i < 256; i++)
     add_lut[i] = i;

@@ -51,6 +51,8 @@ struct _GimpItemFactory
   GimpItemFactoryUpdateFunc  update_func;
   gboolean                   update_on_popup;
   gchar                     *help_id;
+
+  GList                     *translation_trash;
 };
 
 struct _GimpItemFactoryClass
