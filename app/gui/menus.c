@@ -360,22 +360,27 @@ menus_quit ()
   char filename[512];
   char *gimp_dir;
 
-  if (!entry_ht)
-    return;
-
-  gimp_dir = gimp_directory ();
-  if ('\000' != gimp_dir[0])
+  if (entry_ht) 
     {
-      sprintf (filename, "%s/menurc", gimp_dir);
-
-      fp = fopen (filename, "w");
-      if (!fp)
-	return;
-
-      g_hash_table_foreach (entry_ht, menus_foreach, fp);
-
-      fclose (fp);
+      gimp_dir = gimp_directory ();
+      if ('\000' != gimp_dir[0])
+	{
+	  sprintf (filename, "%s/menurc", gimp_dir);
+	  
+	  fp = fopen (filename, "w");
+	  if (fp) 
+	    {
+	      g_hash_table_foreach (entry_ht, menus_foreach, fp);
+	      fclose (fp);
+	    }
+	}
     }
+  
+  if (!initialize)
+    {
+      gtk_menu_factory_destroy (factory);
+    }
+
 }
 
 
