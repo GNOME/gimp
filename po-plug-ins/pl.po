@@ -13,11 +13,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "POT-Creation-Date: 2002-03-29 13:06+0100\n"
-"PO-Revision-Date: 2002-03-29 13:07+0100\n"
+"PO-Revision-Date: 2003-03-11 01:40+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-2\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1
@@ -2804,7 +2804,7 @@ msgid ""
 "on layers smaller than 3 pixels."
 msgstr ""
 "Macierz przekszta³ceñ nie operuje na\n"
-"wartwach mniejszych od trzech pikseli."
+"warstwach mniejszych od trzech pikseli."
 
 #: plug-ins/common/convmatrix.c:1
 msgid "Applying convolution"
@@ -3712,7 +3712,7 @@ msgstr "Rozmycie Gaussa RLE"
 #: plug-ins/common/gbr.c:1
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "B³±d w pliku \"%s\" z pêdzlami GIMPa."
+msgstr "B³±d w pliku \"%s\" z pêdzlami GIMP-a."
 
 #: plug-ins/common/gbr.c:1 plug-ins/common/gih.c:1
 #: plug-ins/common/gih.c:1
@@ -4084,7 +4084,7 @@ msgid ""
 msgstr ""
 "Jeste¶ szalony?\n"
 "\n"
-"Zamierzasz stworzyæ olbrzymi\n"
+"Zamierzasz utworzyæ olbrzymi\n"
 "plik HTML, który najpewniej\n"
 "rozwali twoj± przegl±darkê."
 
@@ -4239,7 +4239,7 @@ msgstr "Przyczernienie"
 
 #: plug-ins/common/illusion.c:1
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr "<Image>/Filtry/Odwzorowanie/Illuzja..."
+msgstr "<Image>/Filtry/Odwzorowanie/Iluzja..."
 
 #: plug-ins/common/illusion.c:1
 msgid "Illusion..."
@@ -5354,7 +5354,7 @@ msgstr "wyst±pi³ b³±d zapisu"
 
 #: plug-ins/common/ps.c:1
 msgid "Load PostScript"
-msgstr "Wczytaj PostScript"
+msgstr "Odczyt PostScriptu"
 
 #. Rendering
 #: plug-ins/common/ps.c:1 plug-ins/flame/flame.c:1
@@ -5376,7 +5376,7 @@ msgstr "Prostok±t ograniczaj±cy"
 #. Colouring
 #: plug-ins/common/ps.c:1
 msgid "Coloring"
-msgstr "Kolorowanie"
+msgstr "Kolory obrazu"
 
 #: plug-ins/common/ps.c:1
 msgid "B/W"
@@ -5393,11 +5393,11 @@ msgstr "Wyg³adzanie tekstu"
 
 #: plug-ins/common/ps.c:1 plug-ins/common/ps.c:1
 msgid "Weak"
-msgstr "S³aby"
+msgstr "S³abe"
 
 #: plug-ins/common/ps.c:1 plug-ins/common/ps.c:1
 msgid "Strong"
-msgstr "Silny"
+msgstr "Silne"
 
 #: plug-ins/common/ps.c:1
 msgid "Graphic Antialiasing"
@@ -7048,7 +7048,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:1
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr "XBM: nie mo¿na stworzyæ \"%s\"\n"
+msgstr "XBM: nie mo¿na utworzyæ \"%s\"\n"
 
 #: plug-ins/common/xbm.c:1
 msgid "Save as XBM"
@@ -9210,7 +9210,7 @@ msgstr "Tempo nastêpowania kolejnych ramek w ramkach na sekundê"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Bitrate:"
-msgstr "Tempo bitowe:"
+msgstr "Gêsto¶æ bitowa:"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid ""
@@ -9218,7 +9218,7 @@ msgid ""
 "(low rate gives good compression + bad quality)"
 msgstr ""
 "Wykorzystywane dla sta³ych ilo¶ci bitów na sekundê\n"
-"(niskie tempa ramkowe daj± lepsz± kompresjê lecz gorsz± jako¶æ)"
+"(niskie gêsto¶ci ramkowe daj± lepsz± kompresjê lecz gorsz± jako¶æ)"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Outputfile:"
@@ -9265,7 +9265,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Constant Bitrate :"
-msgstr "Sta³e tempo bitowe :"
+msgstr "Sta³a gêsto¶æ bitowa :"
 
 #: plug-ins/gap/gap_mpege.c:1
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
@@ -9652,7 +9652,7 @@ msgstr "Konwertowanie do odcieni szaro¶ci"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid "Convert to Indexed"
-msgstr "Konwertowanie do Indeksowanych"
+msgstr "Konwertowanie do indeksowanych"
 
 #: plug-ins/gap/gap_range_ops.c:1
 msgid ""
@@ -10502,7 +10502,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Gfig brush selection"
-msgstr "Wybór pêdzla GFiga"
+msgstr "Wybór pêdzla Gfiga"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Fade out:"
@@ -10523,7 +10523,7 @@ msgstr "Brak opcji..."
 #. Start of new brush selection code
 #: plug-ins/gfig/gfig.c:1
 msgid "Set Brush..."
-msgstr "Wybierz pêdziel..."
+msgstr "Wybierz pêdzel..."
 
 #: plug-ins/gfig/gfig.c:1 plug-ins/gimpressionist/orientmap.c:1
 #: plug-ins/gimpressionist/sizemap.c:1
@@ -10730,7 +10730,7 @@ msgstr "Nazwa obiektu Gfiga:"
 #. the dialog
 #: plug-ins/gfig/gfig.c:1
 msgid "Rescan for Gfig Objects"
-msgstr "Poszukaj fraktali"
+msgstr "Ponowne wyszukiwanie obiektów Gfiga"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Add Gfig Path"
@@ -10759,7 +10759,7 @@ msgstr "Warstwa Gfiga %d"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "About GFig"
-msgstr "Informacje o GFigu"
+msgstr "Informacje o wtyczce Gfig"
 
 #: plug-ins/gfig/gfig.c:1
 msgid "Gfig - GIMP plug-in"
@@ -11619,7 +11619,7 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"Je¶li stworzysz i zapamiêtasz ciekawe ustawienia\n"
+"Je¶li utworzysz i zapamiêtasz ciekawe ustawienia\n"
 "(równie¿ pêdzle lub papiery), wy¶lij je do autora\n"
 "na adres <vidar@prosalg.no> (w jêzyku angielskim), aby\n"
 "mog³y zostaæ do³±czone w kolejnej wersji.\n"
