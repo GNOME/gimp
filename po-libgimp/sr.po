@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2003-11-16 01:36+0100\n"
+"POT-Creation-Date: 2003-11-24 03:25+0100\n"
+"PO-Revision-Date: 2003-11-24 03:28+0100\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -402,11 +402,11 @@ msgstr "Хексадекадна _тројка:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Текуће:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Старо:"
 
 #: libgimpwidgets/gimpfileentry.c:331
 msgid "Select Folder"
@@ -541,21 +541,20 @@ msgid "Color Deficient Vision"
 msgstr "Поглед оскудних боја"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "Врста oskudnosti бојe:"
+msgstr "Врста _оштећења бојe:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr "Протанопиа (неосетњивост на црвено)"
+msgstr "Протанопиа (неосетљивост на црвено)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Деутеранопиа (неосетњивост на зелено)"
+msgstr "Деутеранопија (неосетљивост на зелено)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Тиранопиа (неосетњивост на плаво)"
+msgstr "Тиранопиа (неосетљивост на плаво)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
@@ -566,9 +565,8 @@ msgid "Gamma"
 msgstr "Гама"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Гама:"
+msgstr "_Гама:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -579,45 +577,46 @@ msgid "Contrast"
 msgstr "Контраст"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Контраст циклус:"
+msgstr "_Циклуси контраста:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Филтер пробе у боји који користи ICC профил боја"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Проба у боји"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Чулно"
 
+# лоше
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Релативно колориметријски"
 
+# гадно
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Апсолутно колориметријски"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Намера:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Изаберите ICC профил боја"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Профил:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "Замена за _црну тачку"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
