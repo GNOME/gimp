@@ -1,3 +1,11 @@
+2000-12-20  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/makefile.mingw.in (COMMON): Remove gpb and
+	spheredesigner. Add gih. (Thanks Sven and Jens for cleaning up the
+	brush stuff...)
+
+	* libgimp/gimp.def: Add gimp_invert.
+
 2000-12-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphistogram.c: plonk, my "cleanup" yesterday

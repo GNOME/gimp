@@ -82,8 +82,8 @@ COMMON = 			\
 	gicon			\
 	gif			\
 	gifload			\
+	gih			\
 	glasstile		\
-	gpb			\
 	gqbist			\
 	gradmap			\
 	grid			\
@@ -134,7 +134,6 @@ COMMON = 			\
 	snoise			\
 	sobel			\
 	sparkle			\
-	spheredesigner		\
 	spread			\
 	struc			\
 	sunras			\

@@ -202,6 +202,7 @@ EXPORTS
 	gimp_install_cmap
 	gimp_install_procedure
 	gimp_install_temp_proc
+	gimp_invert
 	gimp_layer_add_alpha
 	gimp_layer_copy
 	gimp_layer_create_mask
