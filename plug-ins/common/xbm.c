@@ -745,12 +745,12 @@ not_bw_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  label = gtk_label_new (_(
-			 "The image which you are trying to save as\n"
-			 "an XBM contains more than two colors.\n\n"
-			 "Please convert it to a black and white\n"
-			 "(1-bit) indexed image and try again."
-			 ));
+  g_message(_(
+	 "The image which you are trying to save as\n"
+	 "an XBM contains more than two colors.\n\n"
+	 "Please convert it to a black and white\n"
+	 "(1-bit) indexed image and try again."
+	 ));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
   gtk_widget_show (vbox);
@@ -960,6 +960,7 @@ init_gtk ()
   
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
+  gtk_initialized = TRUE;
 }
 
 static gint

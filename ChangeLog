@@ -1,3 +1,7 @@
+Tue Oct 26 01:57:00 BST 1999 Nick Lamb <njl195@zepler.org>
+
+        * plug-ins/common/xbm.c: Use gtk_initialized
+
 Mon Oct 25 16:49:19 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimpimage.c: don't free the old filename pointer till we're
