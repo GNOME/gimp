@@ -88,6 +88,18 @@ gtk_hwrap_box_init (GtkHWrapBox *hwbox)
   hwbox->max_child_height = 0;
 }
 
+GtkWidget *
+gtk_hwrap_box_new (gboolean homogeneous)
+{
+  GtkHWrapBox *hwbox;
+
+  hwbox = GTK_HWRAP_BOX (gtk_widget_new (gtk_hwrap_box_get_type (), NULL));
+
+  GTK_WRAP_BOX (hwbox)->homogeneous = homogeneous ? TRUE : FALSE;
+
+  return GTK_WIDGET (hwbox);
+}
+
 static inline void
 get_child_requisition (GtkWrapBox     *wbox,
 		       GtkWidget      *child,
@@ -252,10 +264,10 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
 	}
 
       /*<h2v-off>*/
-      g_print ("ratio for width %d height %d = %f\n",
+      /* g_print ("ratio for width %d height %d = %f\n",
 	       (gint) layout_width,
 	       (gint) layout_height,
-	       ratio);
+	       ratio); */
       /*<h2v-on>*/
     }
   while (row_inc);
@@ -263,9 +275,9 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
   /*<h2v-off>*/
   requisition->width += GTK_CONTAINER (wbox)->border_width * 2;
   requisition->height += GTK_CONTAINER (wbox)->border_width * 2;
-  g_print ("choosen: width %d, height %d\n",
+  /* g_print ("choosen: width %d, height %d\n",
 	   requisition->width,
-	   requisition->height);
+	   requisition->height); */
   /*<h2v-on>*/
 }
 
@@ -449,11 +461,11 @@ layout_row (GtkWrapBox    *wbox,
 	    }
 	  else
 	    {
-	      g_print ("child_allocation.x %d += %d * %f ",
-		       child_allocation.x, n_children, extra);
+	      /* g_print ("child_allocation.x %d += %d * %f ",
+		       child_allocation.x, n_children, extra); */
 	      child_allocation.x += n_children * extra;
-	      g_print ("= %d\n",
-		       child_allocation.x);
+	      /* g_print ("= %d\n",
+		       child_allocation.x); */
 	      child_allocation.width = MIN (child_requisition.width,
 					    area->width - child_allocation.x + area->x);
 	    }
@@ -619,9 +631,9 @@ gtk_hwrap_box_size_allocate (GtkWidget     *widget,
   area.height = MAX (1, (gint) allocation->height - border * 2);
   
   /*<h2v-off>*/
-  g_print ("got: width %d, height %d\n",
+  /* g_print ("got: width %d, height %d\n",
 	   allocation->width,
-	   allocation->height);
+	   allocation->height); */
   /*<h2v-on>*/
   
   layout_rows (wbox, &area);

@@ -349,7 +349,7 @@ create_tools (GtkWidget *parent)
   gint i, j;
 
   /*create_logo (parent);*/
-  wbox = GTK_WIDGET (gtk_type_new (gtk_hwrap_box_get_type ()));
+  wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), .36);
   gtk_box_pack_start (GTK_BOX (parent), wbox, TRUE, TRUE, 0);
 
@@ -526,6 +526,7 @@ create_toolbox ()
 
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
+  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
   session_set_window_geometry (window, &toolbox_session_info, TRUE);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),

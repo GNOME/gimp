@@ -1,3 +1,13 @@
+Thu Sep  2 11:51:02 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gtkhwrapbox.[ch]
+	* app/gtkwrapbox.[ch]: sync from gle
+
+	* app/inteface.c: set allow_shrink on the toolbox window, use
+	gtk_hwrap_box_new
+
+	* app/blend.c: use shift to constrain to 45 deg: XachCode (tm)
+
 Thu Sep  2 19:25:03 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: call device_status_free before freeing brushes

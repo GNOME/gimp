@@ -630,6 +630,33 @@ blend_motion (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
 
+
+  /* Restrict to multiples of 45 degrees if shift is pressed */
+  if (mevent->state & GDK_SHIFT_MASK) {
+    int dx, dy, d;
+    int abs_dx, abs_dy;
+
+    dx = blend_tool->endx - blend_tool->startx;
+    dy = blend_tool->endy - blend_tool->starty;
+    abs_dx = abs(dx);
+    abs_dy = abs(dy);
+
+    d  = (abs_dx + abs_dy) >> 1;
+
+    if ((abs_dx >> 1) < abs_dy && (abs_dy >> 1) < abs_dx) 
+      {
+        blend_tool->endx = blend_tool->startx + ((dx < 0) ? -d : d);
+        blend_tool->endy = blend_tool->starty + ((dy < 0) ? -d : d);
+      }
+    else
+      {
+        if (abs_dx > abs_dy)
+          blend_tool->endy = blend_tool->starty;
+        else
+          blend_tool->endx = blend_tool->startx;
+      }
+  }
+
   /* restrict to horizontal/vertical blend, if modifiers are pressed */
   if (mevent->state & GDK_MOD1_MASK)
     {

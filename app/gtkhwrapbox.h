@@ -61,7 +61,7 @@ struct _GtkHWrapBoxClass
 
 /* --- prototypes --- */
 GtkType	   gtk_hwrap_box_get_type           (void);
-
+GtkWidget* gtk_hwrap_box_new                (gboolean homogeneous);
 
 
 #ifdef __cplusplus

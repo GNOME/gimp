@@ -123,7 +123,3 @@ void       gtk_wrap_box_set_child_packing   (GtkWrapBox      *wbox,
 
 
 #endif /* __GTK_WRAP_BOX_H__ */
-
-
-
-
