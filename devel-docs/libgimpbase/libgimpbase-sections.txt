@@ -125,6 +125,7 @@ gimp_unit_get_plural
 <SECTION>
 <FILE>gimputils</FILE>
 gimp_utf8_strtrim
+gimp_memsize_to_string
 </SECTION>
 
 <SECTION>

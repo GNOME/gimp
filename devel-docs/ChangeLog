@@ -1,3 +1,8 @@
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimputils.sgml: added gimp_memsize_to_string()
+
 2003-04-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
