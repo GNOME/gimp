@@ -78,7 +78,7 @@ while test $# -gt 0; do
       case $1 in
         --install-bin)
           install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
-          install_dir="$HOME/.gimp/plug-ins"
+          install_dir="$HOME/@gimpdir@/plug-ins"
           ;;
         --install-admin-bin)
           install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
@@ -115,7 +115,7 @@ while test $# -gt 0; do
         --build)
           install_dir=. ;;
         --install)
-          install_dir="$HOME/.gimp/plug-ins" ;;
+          install_dir="$HOME/@gimpdir@/plug-ins" ;;
         --install-admin)
           install_dir="$plug_in_dir/plug-ins" ;;
       esac

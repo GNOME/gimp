@@ -1,3 +1,10 @@
+Mon Jun  8 21:55:55 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: use @gimpdir@ instead of hardcoding .gimp
+
+	* app/palette.c: remove unnecessary gtk_widget_destroy for menus
+	that have already been removed (from Shuji Narazaki)
+
 Mon Jun  8 20:58:09 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/blend.c
