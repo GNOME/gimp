@@ -29,7 +29,8 @@ struct _GimpSessionInfo
   gint       y;
   gint       width;
   gint       height;
-  gboolean   open;  /*  only valid while restoring and saving the session  */
+  gboolean   open;   /*  only valid while restoring and saving the session  */
+  gint       screen; /*  only valid while restoring and saving the session  */
 
   /*  dialog specific list of GimpSessionInfoAux  */
   GList     *aux_info;

@@ -201,6 +201,7 @@ gimp_session_info_save (GimpSessionInfo  *info,
   if (info->open)
     {
       gimp_config_writer_open (writer, "open-on-exit");
+      gimp_config_writer_printf (writer, "%d", info->screen);
       gimp_config_writer_close (writer);
     }
 
@@ -457,6 +458,10 @@ gimp_session_info_deserialize (GScanner *scanner,
 
             case SESSION_INFO_OPEN:
               info->open = TRUE;
+
+              token = G_TOKEN_INT;
+              if (! gimp_scanner_parse_int (scanner, &info->screen))
+                goto error;
               break;
 
             case SESSION_INFO_AUX:
@@ -530,18 +535,28 @@ void
 gimp_session_info_restore (GimpSessionInfo   *info,
                            GimpDialogFactory *factory)
 {
+  GdkDisplay *display;
+  GdkScreen  *screen;
+
   g_return_if_fail (info != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
 
-  info->open = FALSE;
+  display = gdk_display_get_default ();
+
+  screen = gdk_display_get_screen (display, info->screen);
+
+  if (! screen)
+    screen = gdk_display_get_default_screen (display);
+
+  info->open   = FALSE;
+  info->screen = 0;
 
   if (info->toplevel_entry)
     {
       GtkWidget *dialog;
 
       dialog =
-        gimp_dialog_factory_dialog_new (factory,
-                                        gdk_screen_get_default (),
+        gimp_dialog_factory_dialog_new (factory, screen,
                                         info->toplevel_entry->identifier,
                                         info->toplevel_entry->preview_size);
 
@@ -553,8 +568,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       GimpDock *dock;
       GList    *books;
 
-      dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory,
-                                                      gdk_screen_get_default ()));
+      dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
 
       if (dock && info->aux_info)
         session_info_set_aux_info (GTK_WIDGET (dock), info->aux_info);
@@ -709,9 +723,15 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
     }
 
   if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
-    info->open = GTK_WIDGET_VISIBLE (info->widget);
+    {
+      info->open   = GTK_WIDGET_VISIBLE (info->widget);
+      info->screen = gdk_screen_get_number (gtk_widget_get_screen (info->widget));
+    }
   else
-    info->open = FALSE;
+    {
+      info->open   = FALSE;
+      info->screen = 0;
+    }
 }
 
 

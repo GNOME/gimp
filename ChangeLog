@@ -1,3 +1,20 @@
+2003-11-13  Michael Natterer  <mitch@gimp.org>
+
+	Made session management multiscreen aware:
+
+	* app/widgets/gimpsessioninfo.[ch]: added "gint screen" member
+	to struct GimpSessionInfo.
+
+	(gimp_session_info_get_geometry): ask the window for its screen.
+	(gimp_session_info_restore): place the window on the remembered
+	screen if the screen exists.
+
+	(gimp_session_info_save)
+	(gimp_session_info_deserialize): extended "open-on-exit" property
+	to include the screen number (e.g. "(open-on-exit 1)" for screen 1).
+
+	This change breaks everybody's sessionrc again...
+
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/color-history.[ch]
