@@ -1,5 +1,9 @@
 2002-11-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c: more useful debugging output.
+
+2002-11-29  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_pixmap_button_new):
 	use gtk_label_new_with_mnemonic():
 

@@ -534,14 +534,15 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
   if (selection_data->length < 0)
     return;
 
-  g_print ("gimp_dnd_data_drop_handle(%d)\n", info);
-
   for (data_type = GIMP_DND_TYPE_NONE + 1;
        data_type <= GIMP_DND_TYPE_LAST;
        data_type++)
     {
       if (dnd_data_defs[data_type].target_entry.info == info)
 	{
+          g_print ("gimp_dnd_data_drop_handle(%s)\n",
+                   dnd_data_defs[data_type].target_entry.target);
+
 	  set_data_func = (GCallback)
 	    g_object_get_data (G_OBJECT (widget),
                                dnd_data_defs[data_type].set_data_func_name);
