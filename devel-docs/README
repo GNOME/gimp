@@ -99,4 +99,11 @@ make templates - Merges the changes into the templates. This will
 		 until there are no warnings output.
              
 
+More information
+----------------
+Using the system as described above, you can write documentation without 
+any knowledge of SGML and DocBook, but when editing the templates you 
+will sometimes want to do a little extra structuring or markup. The best 
+source for information about DocBook seems to be "DocBook: The Definitive 
+Guide" which is available online at http://www.docbook.org/tdg/html/.
 
