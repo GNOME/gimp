@@ -1,3 +1,9 @@
+Mon May 29 22:41:31 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* app/about_dialog.c
+
+	Added C.Bunks.
+
 2000-05-29  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am

@@ -76,6 +76,7 @@ static gchar *scroll_text[] =
   "Simon Budig",
   "Seth Burgess",
   "Brent Burton",
+  "Carey Bunks",
   "Francisco Bustamante",
   "Ed Connel",
   "Jay Cox",
