@@ -62,6 +62,7 @@
 #include <dirent.h>
 #endif
 #include <ctype.h>
+#include <errno.h>
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
@@ -1456,10 +1457,8 @@ gfig_save_callbk (void)
   
   if (!fp)
     {
-      message = g_strconcat (_("Error opening: %s"), 
-			     "\n",
-			     _("Could not save."), 
-			     savename);
+      message = g_strdup_printf (_("Error opening file '%s':\n%s"),
+                                   savename, g_strerror (errno));
       g_message (message);
       g_free (message);
       return;
