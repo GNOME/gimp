@@ -1,3 +1,8 @@
+2004-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c: changed mnemonic so that
+	you can close an image w/o saving it by using Ctrl-W Alt-W.
+
 2004-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-qmask.h: added comment about not changing the
