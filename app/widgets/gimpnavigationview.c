@@ -68,7 +68,6 @@ static gboolean   gimp_navigation_preview_motion_notify  (GtkWidget          *wi
 							  GdkEventMotion     *mevent);
 static gboolean   gimp_navigation_preview_key_press      (GtkWidget          *widget, 
 							  GdkEventKey        *kevent);
-static void   gimp_navigation_preview_render     (GimpPreview                *preview);
 static void  gimp_navigation_preview_draw_marker (GimpNavigationPreview      *nav_preview,
 						  GdkRectangle               *area);
 
@@ -109,13 +108,11 @@ gimp_navigation_preview_get_type (void)
 static void
 gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 {
-  GtkObjectClass   *object_class;
-  GtkWidgetClass   *widget_class;
-  GimpPreviewClass *preview_class;
+  GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
-  object_class  = GTK_OBJECT_CLASS (klass);
-  widget_class  = GTK_WIDGET_CLASS (klass);
-  preview_class = GIMP_PREVIEW_CLASS (klass);
+  object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -159,8 +156,6 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
   widget_class->scroll_event         = gimp_navigation_preview_scroll;
   widget_class->motion_notify_event  = gimp_navigation_preview_motion_notify;
   widget_class->key_press_event      = gimp_navigation_preview_key_press;
-
-  preview_class->render              = gimp_navigation_preview_render;
 }
 
 static void
@@ -201,8 +196,7 @@ gimp_navigation_preview_destroy (GtkObject *object)
       nav_preview->gc = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -512,17 +506,6 @@ gimp_navigation_preview_key_press (GtkWidget   *widget,
     }
 
   return FALSE;
-}
-
-static void
-gimp_navigation_preview_render (GimpPreview *preview)
-{
-  GimpNavigationPreview *nav_preview;
-
-  nav_preview = GIMP_NAVIGATION_PREVIEW (preview);
-
-  if (GIMP_PREVIEW_CLASS (parent_class)->render)
-    GIMP_PREVIEW_CLASS (parent_class)->render (preview);
 }
 
 static void

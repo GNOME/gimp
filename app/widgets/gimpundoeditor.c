@@ -30,7 +30,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpundostack.h"
 
-#include "gimpcontainerlistview.h"
+#include "gimpcontainertreeview.h"
 #include "gimpundoeditor.h"
 
 #include "libgimp/gimpintl.h"
@@ -106,7 +106,7 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
 {
   undo_editor->container = NULL;
 
-  undo_editor->view = gimp_container_list_view_new (NULL,
+  undo_editor->view = gimp_container_tree_view_new (NULL,
                                                     NULL,
                                                     GIMP_PREVIEW_SIZE_MEDIUM,
                                                     FALSE, 3, 3);

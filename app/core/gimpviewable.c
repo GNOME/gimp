@@ -135,6 +135,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->size_changed            = NULL;
 
   klass->get_preview_size        = gimp_viewable_real_get_preview_size;
+  klass->get_popup_size          = NULL;
   klass->get_preview             = NULL;
   klass->get_new_preview         = NULL;
 }
@@ -293,6 +294,36 @@ gimp_viewable_get_preview_size (GimpViewable *viewable,
   GIMP_VIEWABLE_GET_CLASS (viewable)->get_preview_size (viewable, size,
                                                         popup, dot_for_dot,
                                                         width, height);
+}
+
+gboolean
+gimp_viewable_get_popup_size (GimpViewable *viewable,
+                              gint          width,
+                              gint          height,
+                              gboolean      dot_for_dot,
+                              gint         *popup_width,
+                              gint         *popup_height)
+{
+  GimpViewableClass *viewable_class;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  if (viewable_class->get_popup_size)
+    {
+      gint dummy_width;
+      gint dummy_height;
+
+      if (! popup_width)  popup_width  = &dummy_width;
+      if (! popup_height) popup_height = &dummy_height;
+
+      return viewable_class->get_popup_size (viewable,
+                                             width, height, dot_for_dot,
+                                             popup_width, popup_height);
+    }
+
+  return FALSE;
 }
 
 TempBuf *

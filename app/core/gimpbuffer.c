@@ -44,8 +44,14 @@ static void      gimp_buffer_get_preview_size (GimpViewable    *viewable,
                                                gint             size,
                                                gboolean         is_popup,
                                                gboolean         dot_for_dot,
-                                               gint            *width,
-                                               gint            *height);
+                                               gint            *popup_width,
+                                               gint            *popup_height);
+static gboolean  gimp_buffer_get_popup_size   (GimpViewable    *viewable,
+                                               gint             width,
+                                               gint             height,
+                                               gboolean         dot_for_dot,
+                                               gint            *popup_width,
+                                               gint            *popup_height);
 static TempBuf * gimp_buffer_get_new_preview  (GimpViewable    *viewable,
                                                gint             width,
                                                gint             height);
@@ -100,6 +106,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   gimp_object_class->get_memsize   = gimp_buffer_get_memsize;
 
   viewable_class->get_preview_size = gimp_buffer_get_preview_size;
+  viewable_class->get_popup_size   = gimp_buffer_get_popup_size;
   viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
 }
 
@@ -160,6 +167,50 @@ gimp_buffer_get_preview_size (GimpViewable *viewable,
                                    width,
                                    height,
                                    NULL);
+}
+
+static gboolean
+gimp_buffer_get_popup_size (GimpViewable *viewable,
+                            gint          width,
+                            gint          height,
+                            gboolean      dot_for_dot,
+                            gint         *popup_width,
+                            gint         *popup_height)
+{
+  GimpBuffer *buffer;
+  gint        buffer_width;
+  gint        buffer_height;
+
+  buffer        = GIMP_BUFFER (viewable);
+  buffer_width  = gimp_buffer_get_width (buffer);
+  buffer_height = gimp_buffer_get_height (buffer);
+
+  if (buffer_width > width || buffer_height > height)
+    {
+      gboolean scaling_up;
+
+      gimp_viewable_calc_preview_size (viewable,
+                                       buffer_width,
+                                       buffer_height,
+                                       MIN (width  * 2,
+                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
+                                       MIN (height * 2,
+                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
+                                       dot_for_dot, 1.0, 1.0,
+                                       popup_width,
+                                       popup_height,
+                                       &scaling_up);
+
+      if (scaling_up)
+        {
+          *popup_width  = buffer_width;
+          *popup_height = buffer_height;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static TempBuf *

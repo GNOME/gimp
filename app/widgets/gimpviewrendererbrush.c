@@ -39,8 +39,6 @@ static void   gimp_brush_preview_init       (GimpBrushPreview      *preview);
 
 static void        gimp_brush_preview_destroy        (GtkObject   *object);
 static void        gimp_brush_preview_render         (GimpPreview *preview);
-static GtkWidget * gimp_brush_preview_create_popup   (GimpPreview *preview);
-static gboolean    gimp_brush_preview_needs_popup    (GimpPreview *preview);
 
 static gboolean    gimp_brush_preview_render_timeout (gpointer     data);
 
@@ -87,11 +85,9 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy         = gimp_brush_preview_destroy;
+  object_class->destroy = gimp_brush_preview_destroy;
 
-  preview_class->render         = gimp_brush_preview_render;
-  preview_class->create_popup   = gimp_brush_preview_create_popup;
-  preview_class->needs_popup    = gimp_brush_preview_needs_popup;
+  preview_class->render = gimp_brush_preview_render;
 }
 
 static void
@@ -116,8 +112,7 @@ gimp_brush_preview_destroy (GtkObject *object)
       brush_preview->pipe_animation_index = 0;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -136,7 +131,6 @@ gimp_brush_preview_render (GimpPreview *preview)
   if (brush_preview->pipe_timeout_id)
     {
       g_source_remove (brush_preview->pipe_timeout_id);
-
       brush_preview->pipe_timeout_id = 0;
     }
 
@@ -293,41 +287,6 @@ gimp_brush_preview_render (GimpPreview *preview)
                                GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
-}
-
-static GtkWidget *
-gimp_brush_preview_create_popup (GimpPreview *preview)
-{
-  gint popup_width;
-  gint popup_height;
-
-  popup_width  = GIMP_BRUSH (preview->viewable)->mask->width;
-  popup_height = GIMP_BRUSH (preview->viewable)->mask->height;
-
-  return gimp_preview_new_full (preview->viewable,
-				popup_width,
-				popup_height,
-				0,
-				TRUE, FALSE, FALSE);
-}
-
-static gboolean
-gimp_brush_preview_needs_popup (GimpPreview *preview)
-{
-  GimpBrush *brush;
-  gint       brush_width;
-  gint       brush_height;
-
-  brush        = GIMP_BRUSH (preview->viewable);
-  brush_width  = brush->mask->width;
-  brush_height = brush->mask->height;
-
-  if (GIMP_IS_BRUSH_PIPE (brush)    ||
-      brush_width  > preview->width ||
-      brush_height > preview->height)
-    return TRUE;
-
-  return FALSE;
 }
 
 static gboolean

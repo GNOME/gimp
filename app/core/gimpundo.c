@@ -45,6 +45,12 @@ static void      gimp_undo_finalize            (GObject             *object);
 
 static gsize     gimp_undo_get_memsize         (GimpObject          *object);
 
+static gboolean  gimp_undo_get_popup_size      (GimpViewable        *viewable,
+                                                gint                 width,
+                                                gint                 height,
+                                                gboolean             dot_for_dot,
+                                                gint                *popup_width,
+                                                gint                *popup_height);
 static TempBuf * gimp_undo_get_new_preview     (GimpViewable        *viewable,
                                                 gint                 width,
                                                 gint                 height);
@@ -130,6 +136,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   gimp_object_class->get_memsize  = gimp_undo_get_memsize;
 
+  viewable_class->get_popup_size  = gimp_undo_get_popup_size;
   viewable_class->get_new_preview = gimp_undo_get_new_preview;
 
   klass->pop                      = gimp_undo_real_pop;
@@ -184,6 +191,30 @@ gimp_undo_get_memsize (GimpObject *object)
     memsize += temp_buf_get_memsize (undo->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static gboolean
+gimp_undo_get_popup_size (GimpViewable *viewable,
+                          gint          width,
+                          gint          height,
+                          gboolean      dot_for_dot,
+                          gint         *popup_width,
+                          gint         *popup_height)
+{
+  GimpUndo *undo;
+
+  undo = GIMP_UNDO (viewable);
+
+  if (undo->preview &&
+      (undo->preview->width > width || undo->preview->height > height))
+    {
+      *popup_width  = undo->preview->width;
+      *popup_height = undo->preview->height;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static TempBuf *

@@ -35,8 +35,7 @@
 static void   gimp_image_preview_class_init (GimpImagePreviewClass *klass);
 static void   gimp_image_preview_init       (GimpImagePreview      *preview);
 
-static void        gimp_image_preview_render       (GimpPreview *preview);
-static GtkWidget * gimp_image_preview_create_popup (GimpPreview *preview);
+static void   gimp_image_preview_render     (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -79,8 +78,7 @@ gimp_image_preview_class_init (GimpImagePreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  preview_class->render       = gimp_image_preview_render;
-  preview_class->create_popup = gimp_image_preview_create_popup;
+  preview_class->render = gimp_image_preview_render;
 }
 
 static void
@@ -155,46 +153,4 @@ gimp_image_preview_render (GimpPreview *preview)
                                GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (render_buf);
-}
-
-static GtkWidget *
-gimp_image_preview_create_popup (GimpPreview *preview)
-{
-  GimpImage *gimage;
-  gint       popup_width;
-  gint       popup_height;
-  gboolean   scaling_up;
-
-  gimage = GIMP_IMAGE (preview->viewable);
-
-  gimp_viewable_calc_preview_size (preview->viewable,
-                                   gimage->width,
-                                   gimage->height,
-                                   MIN (preview->width  * 2,
-                                        GIMP_PREVIEW_MAX_POPUP_SIZE),
-                                   MIN (preview->height * 2,
-                                        GIMP_PREVIEW_MAX_POPUP_SIZE),
-                                   preview->dot_for_dot,
-                                   gimage->xresolution,
-                                   gimage->yresolution,
-                                   &popup_width,
-                                   &popup_height,
-                                   &scaling_up);
-
-  if (scaling_up)
-    {
-      return gimp_preview_new_full (preview->viewable,
-				    gimage->width,
-				    gimage->height,
-				    0,
-				    TRUE, FALSE, FALSE);
-    }
-  else
-    {
-      return gimp_preview_new_full (preview->viewable,
-				    popup_width,
-				    popup_height,
-				    0,
-				    TRUE, FALSE, FALSE);
-    }
 }

@@ -71,6 +71,12 @@ static void        gimp_brush_finalize              (GObject        *object);
 
 static gsize       gimp_brush_get_memsize           (GimpObject     *object);
 
+static gboolean    gimp_brush_get_popup_size        (GimpViewable   *viewable,
+                                                     gint            width,
+                                                     gint            height,
+                                                     gboolean        dot_for_dot,
+                                                     gint           *popup_width,
+                                                     gint           *popup_height);
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
@@ -145,6 +151,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   gimp_object_class->get_memsize  = gimp_brush_get_memsize;
 
+  viewable_class->get_popup_size  = gimp_brush_get_popup_size;
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
 
   data_class->get_extension       = gimp_brush_get_extension;
@@ -204,6 +211,29 @@ gimp_brush_get_memsize (GimpObject *object)
     memsize += temp_buf_get_memsize (brush->pixmap);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static gboolean
+gimp_brush_get_popup_size (GimpViewable *viewable,
+                           gint          width,
+                           gint          height,
+                           gboolean      dot_for_dot,
+                           gint         *popup_width,
+                           gint         *popup_height)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (viewable);
+
+  if (brush->mask->width > width || brush->mask->height > height)
+    {
+      *popup_width  = brush->mask->width;
+      *popup_height = brush->mask->height;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static TempBuf *

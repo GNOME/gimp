@@ -28,6 +28,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 
+#define GIMP_VIEWABLE_MAX_POPUP_SIZE 256
+
+
 #define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())
 #define GIMP_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))
 #define GIMP_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE, GimpViewableClass))
@@ -64,6 +67,12 @@ struct _GimpViewableClass
                                     gboolean      dot_for_dot,
 				    gint         *width,
 				    gint         *height);
+  gboolean  (* get_popup_size)     (GimpViewable *viewable,
+                                    gint          width,
+                                    gint          height,
+                                    gboolean      dot_for_dot,
+				    gint         *popup_width,
+				    gint         *popup_height);
   TempBuf * (* get_preview)        (GimpViewable *viewable,
 				    gint          width,
 				    gint          height);
@@ -96,6 +105,13 @@ void        gimp_viewable_get_preview_size       (GimpViewable *viewable,
                                                   gboolean      dot_for_dot,
                                                   gint         *width,
                                                   gint         *height);
+gboolean    gimp_viewable_get_popup_size         (GimpViewable *viewable,
+                                                  gint          width,
+                                                  gint          height,
+                                                  gboolean      dot_for_dot,
+                                                  gint         *popup_width,
+                                                  gint         *popup_height);
+
 TempBuf   * gimp_viewable_get_preview            (GimpViewable *viewable,
                                                   gint          width,
                                                   gint          height);

@@ -28,18 +28,12 @@
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
-#include "core/gimppalette.h"
-#include "core/gimppattern.h"
 
 #include "gimpbrushpreview.h"
 #include "gimpbufferpreview.h"
 #include "gimpdrawablepreview.h"
-#include "gimpgradientpreview.h"
 #include "gimpimagepreview.h"
-#include "gimppalettepreview.h"
-#include "gimppatternpreview.h"
 
 
 GType
@@ -61,18 +55,6 @@ gimp_preview_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {
       type = GIMP_TYPE_IMAGE_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_PATTERN))
-    {
-      type = GIMP_TYPE_PATTERN_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_GRADIENT))
-    {
-      type = GIMP_TYPE_GRADIENT_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_PALETTE))
-    {
-      type = GIMP_TYPE_PALETTE_PREVIEW;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
     {

@@ -54,6 +54,12 @@ static void       gimp_palette_get_preview_size (GimpViewable      *viewable,
                                                  gboolean           dot_for_dot,
                                                  gint              *width,
                                                  gint              *height);
+static gboolean   gimp_palette_get_popup_size   (GimpViewable      *viewable,
+                                                 gint               width,
+                                                 gint               height,
+                                                 gboolean           dot_for_dot,
+                                                 gint              *popup_width,
+                                                 gint              *popup_height);
 static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
@@ -118,6 +124,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   gimp_object_class->get_memsize   = gimp_palette_get_memsize;
 
   viewable_class->get_preview_size = gimp_palette_get_preview_size;
+  viewable_class->get_popup_size   = gimp_palette_get_popup_size;
   viewable_class->get_new_preview  = gimp_palette_get_new_preview;
 
   data_class->dirty                = gimp_palette_dirty;
@@ -186,6 +193,41 @@ gimp_palette_get_preview_size (GimpViewable *viewable,
 {
   *width  = size;
   *height = size / 2;
+}
+
+static gboolean
+gimp_palette_get_popup_size (GimpViewable *viewable,
+                             gint          width,
+                             gint          height,
+                             gboolean      dot_for_dot,
+                             gint         *popup_width,
+                             gint         *popup_height)
+{
+  GimpPalette *palette;
+  gint         p_width;
+  gint         p_height;
+
+  palette = GIMP_PALETTE (viewable);
+
+  if (! palette->n_colors)
+    return FALSE;
+
+  if (palette->n_columns)
+    p_width = palette->n_columns;
+  else
+    p_width = MIN (palette->n_colors, 16);
+
+  p_height = MAX (1, palette->n_colors / p_width);
+
+  if (p_width * 4 > width || p_height * 4 > height)
+    {
+      *popup_width  = p_width  * 4;
+      *popup_height = p_height * 4;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static TempBuf *

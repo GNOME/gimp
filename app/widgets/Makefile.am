@@ -97,8 +97,6 @@ libappwidgets_a_sources = \
 	gimpfontselection-dialog.h	\
 	gimpgradienteditor.c		\
 	gimpgradienteditor.h		\
-	gimpgradientpreview.c		\
-	gimpgradientpreview.h		\
 	gimphelp.c			\
 	gimphelp.h			\
 	gimphistogrambox.c		\
@@ -133,12 +131,10 @@ libappwidgets_a_sources = \
 	gimpnavigationpreview.h		\
 	gimppaletteeditor.c		\
 	gimppaletteeditor.h		\
-	gimppalettepreview.c		\
-	gimppalettepreview.h		\
-	gimppatternpreview.c		\
-	gimppatternpreview.h		\
 	gimppreview.c			\
 	gimppreview.h			\
+	gimppreview-popup.c		\
+	gimppreview-popup.h		\
 	gimppreview-utils.c		\
 	gimppreview-utils.h		\
 	gimppropwidgets.c		\

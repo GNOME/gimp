@@ -98,6 +98,50 @@ gimp_drawable_get_preview_size (GimpViewable *viewable,
     }
 }
 
+gboolean
+gimp_drawable_get_popup_size (GimpViewable *viewable,
+                              gint          width,
+                              gint          height,
+                              gboolean      dot_for_dot,
+                              gint         *popup_width,
+                              gint         *popup_height)
+{
+  GimpDrawable *drawable;
+  GimpImage    *gimage;
+
+  drawable = GIMP_DRAWABLE (viewable);
+  gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (drawable->width > width || drawable->height > height)
+    {
+      gboolean scaling_up;
+
+      gimp_viewable_calc_preview_size (viewable,
+                                       drawable->width,
+                                       drawable->height,
+                                       MIN (width  * 2,
+                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
+                                       MIN (height * 2,
+                                            GIMP_VIEWABLE_MAX_POPUP_SIZE),
+                                       dot_for_dot,
+                                       gimage ? gimage->xresolution : 1.0,
+                                       gimage ? gimage->yresolution : 1.0,
+                                       popup_width,
+                                       popup_height,
+                                       &scaling_up);
+
+      if (scaling_up)
+        {
+          *popup_width = drawable->width;
+          *popup_width = drawable->height;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 TempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
 			   gint          width,

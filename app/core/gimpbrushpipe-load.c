@@ -45,6 +45,8 @@
 
 #include "core-types.h"
 
+#include "base/temp-buf.h"
+
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushpipe.h"
@@ -59,6 +61,13 @@ static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
 static void        gimp_brush_pipe_finalize         (GObject    *object);
 
 static gsize       gimp_brush_pipe_get_memsize      (GimpObject *object);
+
+static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable   *viewable,
+                                                     gint            width,
+                                                     gint            height,
+                                                     gboolean        dot_for_dot,
+                                                     gint           *popup_width,
+                                                     gint           *popup_height);
 
 static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush  *brush,
                                                      GimpCoords *last_coords,
@@ -102,12 +111,14 @@ gimp_brush_pipe_get_type (void)
 static void
 gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-  GimpBrushClass  *brush_class;
+  GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
+  GimpBrushClass    *brush_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   brush_class       = GIMP_BRUSH_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -115,6 +126,8 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   object_class->finalize         = gimp_brush_pipe_finalize;
 
   gimp_object_class->get_memsize = gimp_brush_pipe_get_memsize;
+
+  viewable_class->get_popup_size = gimp_brush_pipe_get_popup_size;
 
   brush_class->select_brush      = gimp_brush_pipe_select_brush;
   brush_class->want_null_motion  = gimp_brush_pipe_want_null_motion;
@@ -201,6 +214,24 @@ gimp_brush_pipe_get_memsize (GimpObject *object)
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static gboolean
+gimp_brush_pipe_get_popup_size (GimpViewable   *viewable,
+                                gint            width,
+                                gint            height,
+                                gboolean        dot_for_dot,
+                                gint           *popup_width,
+                                gint           *popup_height)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (viewable);
+
+  *popup_width  = brush->mask->width;
+  *popup_height = brush->mask->height;
+
+  return TRUE;
 }
 
 static GimpBrush *

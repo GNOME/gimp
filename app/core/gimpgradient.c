@@ -55,6 +55,12 @@ static void       gimp_gradient_get_preview_size (GimpViewable      *viewable,
                                                   gboolean           dot_for_dot,
                                                   gint              *width,
                                                   gint              *height);
+static gboolean   gimp_gradient_get_popup_size   (GimpViewable      *viewable,
+                                                  gint               width,
+                                                  gint               height,
+                                                  gboolean           dot_for_dot,
+                                                  gint              *popup_width,
+                                                  gint              *popup_height);
 static TempBuf  * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
                                                   gint               width,
                                                   gint               height);
@@ -128,6 +134,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   gimp_object_class->get_memsize   = gimp_gradient_get_memsize;
 
   viewable_class->get_preview_size = gimp_gradient_get_preview_size;
+  viewable_class->get_popup_size   = gimp_gradient_get_popup_size;
   viewable_class->get_new_preview  = gimp_gradient_get_new_preview;
 
   data_class->dirty                = gimp_gradient_dirty;
@@ -186,6 +193,25 @@ gimp_gradient_get_preview_size (GimpViewable *viewable,
 {
   *width  = size;
   *height = size / 2;
+}
+
+static gboolean
+gimp_gradient_get_popup_size (GimpViewable *viewable,
+                              gint          width,
+                              gint          height,
+                              gboolean      dot_for_dot,
+                              gint         *popup_width,
+                              gint         *popup_height)
+{
+  if (width < 128 || height < 32)
+    {
+      *popup_width  = 128;
+      *popup_height =  32;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static TempBuf *

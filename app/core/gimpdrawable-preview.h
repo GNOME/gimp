@@ -30,6 +30,12 @@ void      gimp_drawable_get_preview_size (GimpViewable *viewable,
                                           gboolean      dot_for_dot,
                                           gint         *width,
                                           gint         *height);
+gboolean  gimp_drawable_get_popup_size   (GimpViewable *viewable,
+                                          gint          width,
+                                          gint          height,
+                                          gboolean      dot_for_dot,
+                                          gint         *popup_width,
+                                          gint         *popup_height);
 TempBuf * gimp_drawable_get_preview      (GimpViewable *viewable,
                                           gint          width, 
                                           gint          height);

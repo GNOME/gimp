@@ -1,3 +1,52 @@
+2003-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.[ch]: added virtual function
+	get_popup_size() which returns a boolean indicating if a popup is
+	needed and its size.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable-preview.[ch]
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/core/gimpundo.c: implement it.
+
+	* app/widgets/gimppreview.[ch]: removed virtual functions
+	needs_popup() and create_popup(). Removed the code which creates
+	the popup and the popup members of the GimpPreview struct.
+
+	* app/widgets/gimppreview-popup.[ch]: new files providing the
+	utility function gimp_preview_popup_show() which can show popups
+	from any widget, not just from a GimpPreview. Checks if a popup is
+	needed using gimp_viewable_get_popup_size().
+
+	* app/widgets/gimpcellrendererviewable.c: show popups here too.
+
+	* app/widgets/gimpbrushpreview.c
+	* app/widgets/gimpbufferpreview.c
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpimagepreview.c: removed needs_popup() and
+	create_popup() implementations.
+
+	* app/widgets/gimpnavigationpreview.c: removed empty render()
+	implementation.
+
+	* app/widgets/gimpundoeditor.c: use a tree instead of a list view.
+
+	* app/widgets/gimpgradientpreview.[ch]
+	* app/widgets/gimppalettepreview.[ch]
+	* app/widgets/gimppatternpreview.[ch]: removed because they only
+	implemented the removed popup functions.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimppreview-utils.c: changed accordingly
+
 2003-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-serialize.c (gimp_config_serialize_properties):

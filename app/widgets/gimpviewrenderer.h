@@ -27,7 +27,6 @@
 
 
 #define GIMP_PREVIEW_MAX_SIZE         1024
-#define GIMP_PREVIEW_MAX_POPUP_SIZE    256
 #define GIMP_PREVIEW_MAX_BORDER_WIDTH   16
 
 
@@ -71,9 +70,6 @@ struct _GimpPreview
   guint           press_state;
   guint           idle_id;
   gboolean        needs_render;
-  guint           popup_id;
-  gint            popup_x;
-  gint            popup_y;
 };
 
 struct _GimpPreviewClass
@@ -89,8 +85,6 @@ struct _GimpPreviewClass
 
   /*  virtual functions  */
   void        (* render)           (GimpPreview *preview);
-  gboolean    (* needs_popup)      (GimpPreview *preview);
-  GtkWidget * (* create_popup)     (GimpPreview *preview);
 };
 
 

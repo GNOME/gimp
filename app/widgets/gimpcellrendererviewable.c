@@ -28,6 +28,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcellrendererviewable.h"
+#include "gimppreview-popup.h"
 
 
 enum
@@ -62,7 +63,14 @@ static void gimp_cell_renderer_viewable_render       (GtkCellRenderer *cell,
                                                       GdkRectangle    *background_area,
                                                       GdkRectangle    *cell_area,
                                                       GdkRectangle    *expose_area,
-                                                      GtkCellRendererState  flags);
+                                                      GtkCellRendererState flags);
+static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer *cell,
+                                                      GdkEvent        *event,
+                                                      GtkWidget       *widget,
+                                                      const gchar     *path,
+                                                      GdkRectangle    *background_area,
+                                                      GdkRectangle    *cell_area,
+                                                      GtkCellRendererState flags);
 
 
 GtkCellRendererPixbufClass *parent_class = NULL;
@@ -112,6 +120,7 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 
   cell_class->get_size       = gimp_cell_renderer_viewable_get_size;
   cell_class->render         = gimp_cell_renderer_viewable_render;
+  cell_class->activate       = gimp_cell_renderer_viewable_activate;
 
   g_object_class_install_property (object_class,
                                    PROP_VIEWABLE,
@@ -131,6 +140,7 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 static void
 gimp_cell_renderer_viewable_init (GimpCellRendererViewable *cellviewable)
 {
+  GTK_CELL_RENDERER (cellviewable)->mode = GTK_CELL_RENDERER_MODE_ACTIVATABLE;
 }
 
 static void
@@ -356,6 +366,43 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
                                                   cell_area,
                                                   expose_area,
                                                   flags);
+}
+
+static gboolean
+gimp_cell_renderer_viewable_activate (GtkCellRenderer      *cell,
+                                      GdkEvent             *event,
+                                      GtkWidget            *widget,
+                                      const gchar          *path,
+                                      GdkRectangle         *background_area,
+                                      GdkRectangle         *cell_area,
+                                      GtkCellRendererState  flags)
+{
+  GimpCellRendererViewable *cellviewable;
+
+  cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
+
+  if (cellviewable->viewable &&
+      ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
+      ((GdkEventButton *) event)->button == 1)
+    {
+      gint preview_width;
+      gint preview_height;
+
+      gimp_viewable_get_preview_size (cellviewable->viewable,
+                                      cellviewable->preview_size,
+                                      FALSE, TRUE,
+                                      &preview_width,
+                                      &preview_height);
+
+      return gimp_preview_popup_show (widget,
+                                      (GdkEventButton *) event,
+                                      cellviewable->viewable,
+                                      preview_width,
+                                      preview_height,
+                                      TRUE);
+    }
+
+  return FALSE;
 }
 
 GtkCellRenderer *
