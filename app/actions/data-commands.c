@@ -146,7 +146,7 @@ data_delete_data_cmd_callback (GtkAction *action,
       delete_data->factory = view->factory;
       delete_data->data    = data;
 
-      dialog = gimp_message_dialog_new (_("Delete Object"), GIMP_STOCK_WARNING,
+      dialog = gimp_message_dialog_new (_("Delete Object"), GIMP_STOCK_QUESTION,
                                         GTK_WIDGET (view), 0,
                                         gimp_standard_help_func, NULL,
 

@@ -36,6 +36,8 @@
 #include "plug-in/plug-in-proc-def.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "display/gimpdisplay.h"
 
@@ -47,9 +49,9 @@
 
 /*  local function prototypes  */
 
-static void   plug_in_reset_all_callback (GtkWidget *widget,
-                                          gboolean   reset_all,
-                                          gpointer   data);
+static void  plug_in_reset_all_response (GtkWidget *dialog,
+                                         gint       response_id,
+                                         Gimp      *gimp);
 
 
 /*  public functions  */
@@ -185,37 +187,42 @@ void
 plug_in_reset_all_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  Gimp      *gimp;
-  GtkWidget *qbox;
+  Gimp      *gimp = action_data_get_gimp (data);
+  GtkWidget *dialog;
 
-  gimp = action_data_get_gimp (data);
   if (! gimp)
     return;
 
-  qbox = gimp_query_boolean_box (_("Reset all Filters"),
-                                 NULL,
-                                 gimp_standard_help_func,
-                                 GIMP_HELP_FILTER_RESET_ALL,
-                                 GTK_STOCK_DIALOG_QUESTION,
-                                 _("Do you really want to reset all "
-                                   "filters to default values?"),
-                                 GIMP_STOCK_RESET, GTK_STOCK_CANCEL,
-                                 NULL, NULL,
-                                 plug_in_reset_all_callback,
-                                 gimp);
-  gtk_widget_show (qbox);
+  dialog = gimp_message_dialog_new (_("Reset all Filters"), GIMP_STOCK_QUESTION,
+                                    NULL, 0,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GIMP_STOCK_RESET, GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (plug_in_reset_all_response),
+                    gimp);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Do you really want to reset all "
+                                       "filters to default values?"));
+
+  gtk_widget_show (dialog);
 }
 
 
 /*  private functions  */
 
 static void
-plug_in_reset_all_callback (GtkWidget *widget,
-                            gboolean   reset_all,
-                            gpointer   data)
+plug_in_reset_all_response (GtkWidget *dialog,
+                            gint       response_id,
+                            Gimp      *gimp)
 {
-  Gimp *gimp = GIMP (data);
+  gtk_widget_destroy (dialog);
 
-  if (reset_all)
+  if (response_id == GTK_RESPONSE_OK)
     procedural_db_free_data (gimp);
 }

@@ -36,6 +36,8 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimpviewabledialog.h"
@@ -153,20 +155,20 @@ struct _GimpTemplateDeleteData
 };
 
 static void
-templates_delete_template_callback (GtkWidget *widget,
-                                    gboolean   delete,
-                                    gpointer   data)
+templates_delete_confirm_response (GtkWidget              *dialog,
+                                   gint                    response_id,
+                                   GimpTemplateDeleteData *delete_data)
 {
-  GimpTemplateDeleteData *delete_data = data;
+  gtk_widget_destroy (dialog);
 
-  if (! delete)
-    return;
-
-  if (gimp_container_have (delete_data->container,
-			   GIMP_OBJECT (delete_data->template)))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      gimp_container_remove (delete_data->container,
-			     GIMP_OBJECT (delete_data->template));
+      if (gimp_container_have (delete_data->container,
+                               GIMP_OBJECT (delete_data->template)))
+        {
+          gimp_container_remove (delete_data->container,
+                                 GIMP_OBJECT (delete_data->template));
+        }
     }
 }
 
@@ -188,32 +190,35 @@ templates_delete_template_cmd_callback (GtkAction *action,
     {
       GimpTemplateDeleteData *delete_data;
       GtkWidget              *dialog;
-      gchar                  *str;
 
       delete_data = g_new0 (GimpTemplateDeleteData, 1);
 
       delete_data->container = container;
       delete_data->template  = template;
 
-      str = g_strdup_printf (_("Are you sure you want to delete template '%s' "
-                               "from the list and from disk?"),
-			     GIMP_OBJECT (template)->name);
+      dialog =
+        gimp_message_dialog_new (_("Delete Template"), GIMP_STOCK_QUESTION,
+                                 GTK_WIDGET (editor), 0,
+                                 gimp_standard_help_func, NULL,
 
-      dialog = gimp_query_boolean_box (_("Delete Template"),
-                                       GTK_WIDGET (editor),
-				       gimp_standard_help_func, NULL,
-				       GIMP_STOCK_QUESTION,
-				       str,
-				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
-				       G_OBJECT (template),
-				       "disconnect",
-				       templates_delete_template_callback,
-				       delete_data);
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 
-      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
+                                 NULL);
 
-      g_free (str);
+      g_signal_connect_object (template, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
 
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (templates_delete_confirm_response),
+                        delete_data);
+
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Are you sure you want to delete "
+                                           "template '%s' from the list and "
+                                           "from disk?"),
+                                         GIMP_OBJECT (template)->name);
       gtk_widget_show (dialog);
     }
 }

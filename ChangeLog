@@ -1,5 +1,12 @@
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-commands.c
+	* app/actions/templates-commands.c
+	* app/actions/tool-options-commands.c: ported more boolean queries
+	to GimpMessageDialog.
+
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpmessagedialog.c: handle parent widget not being
 	a GtkWindow by calling gtk_widget_get_toplevel().
 
