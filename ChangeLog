@@ -1,3 +1,13 @@
+2002-09-01  Manish Singh  <yosh@gimp.org>
+
+	* modules/Makefile.am: use AM_CPPFLAGS instead of CPPFLAGS
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: changed deprecated calls
+
+	* modules/colorsel_triangle.c: #undef GTK_DISABLE_DEPRECATED,
+	still needs to be fixed for use of GtkPreview
+
 2002-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-commands.[ch]: oops, the callback's name has

@@ -2,7 +2,7 @@
 
 libdir = $(gimpplugindir)/modules
 
-CPPFLAGS = -DMODULE_COMPILATION
+AM_CPPFLAGS = -DMODULE_COMPILATION
 
 INCLUDES = \
         -I$(top_srcdir)		\

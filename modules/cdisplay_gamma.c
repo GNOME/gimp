@@ -277,7 +277,7 @@ gamma_configure_ok_callback (GtkWidget *widget,
   GammaContext *context = data;
 
   context->gamma =
-    gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
+    gtk_spin_button_get_value (GTK_SPIN_BUTTON (context->spinner));
   gamma_create_lookup_table (context);
 
 #if 0
@@ -357,7 +357,7 @@ gamma_configure (gpointer cd_ID,
       adjustment = gtk_adjustment_new (context->gamma, 0.01, 10.0, 0.01, 0.1, 0.0);
       context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
-      gtk_widget_set_usize (context->spinner, 100, 0);
+      gtk_widget_set_size_request (context->spinner, 100, -1);
       gtk_box_pack_start (GTK_BOX (hbox), context->spinner, FALSE, FALSE, 0);
     }
 
