@@ -1699,6 +1699,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage, MergeType merge_type)
   if (merge_list && merge_list->next)
     {
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
+      layer->opacity = 255;
       g_slist_free (merge_list);
       return layer;
     }
