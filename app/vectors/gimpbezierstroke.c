@@ -171,7 +171,7 @@ gimp_bezier_stroke_new (const GimpCoords *start)
 
   g_printerr ("Adding at %f, %f\n", start->x, start->y);
   
-  anchor->type = ANCHOR_HANDLE;
+  anchor->type = GIMP_HANDLE_ANCHOR;
   anchor->selected = TRUE;
 
   stroke->anchors = g_list_append (stroke->anchors, anchor);
@@ -253,7 +253,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
       if (loose_end == 1)
         {
           while (listneighbor &&
-                 ((GimpAnchor *) listneighbor->data)->type == CONTROL_HANDLE)
+                 ((GimpAnchor *) listneighbor->data)->type == GIMP_HANDLE_CONTROL)
             {
               control_count++;
               listneighbor = listneighbor->prev;
@@ -262,7 +262,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
       else
         {
           while (listneighbor &&
-                 ((GimpAnchor *) listneighbor->data)->type == CONTROL_HANDLE)
+                 ((GimpAnchor *) listneighbor->data)->type == GIMP_HANDLE_CONTROL)
             {
               control_count++;
               listneighbor = listneighbor->next;
@@ -286,10 +286,10 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
             {
             case 0:
             case 1:
-              anchor->type = CONTROL_HANDLE;
+              anchor->type = GIMP_HANDLE_CONTROL;
               break;
             case 2:
-              anchor->type = ANCHOR_HANDLE;
+              anchor->type = GIMP_HANDLE_ANCHOR;
               break;
             default:
               g_printerr ("inconsistent bezier curve: "
@@ -364,7 +364,7 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   count = 0;
 
   for (anchorlist = stroke->anchors;
-       anchorlist && ((GimpAnchor *) anchorlist->data)->type != ANCHOR_HANDLE;
+       anchorlist && ((GimpAnchor *) anchorlist->data)->type != GIMP_HANDLE_ANCHOR;
        anchorlist = g_list_next (anchorlist));
 
   for ( ; anchorlist; anchorlist = g_list_next (anchorlist))

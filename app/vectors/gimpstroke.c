@@ -517,7 +517,7 @@ gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == ANCHOR_HANDLE)
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_ANCHOR)
             ret_list = g_list_append (ret_list, cur_ptr->data);
           cur_ptr = g_list_next (cur_ptr);
         }
@@ -547,14 +547,14 @@ gimp_stroke_get_draw_controls (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == CONTROL_HANDLE)
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_CONTROL)
             {
               if (cur_ptr->next &&
-                  ((GimpAnchor *) cur_ptr->next->data)->type == ANCHOR_HANDLE &&
+                  ((GimpAnchor *) cur_ptr->next->data)->type == GIMP_HANDLE_ANCHOR &&
                   ((GimpAnchor *) cur_ptr->next->data)->selected)
                 ret_list = g_list_append (ret_list, cur_ptr->data);
               else if (cur_ptr->prev &&
-                  ((GimpAnchor *) cur_ptr->prev->data)->type == ANCHOR_HANDLE &&
+                  ((GimpAnchor *) cur_ptr->prev->data)->type == GIMP_HANDLE_ANCHOR &&
                   ((GimpAnchor *) cur_ptr->prev->data)->selected)
                 ret_list = g_list_append (ret_list, cur_ptr->data);
             }
@@ -587,7 +587,7 @@ gimp_stroke_get_draw_lines (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == ANCHOR_HANDLE &&
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_ANCHOR &&
               ((GimpAnchor *) cur_ptr->data)->selected)
             {
               if (cur_ptr->next)

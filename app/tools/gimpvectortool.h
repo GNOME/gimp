@@ -75,5 +75,7 @@ GType   gimp_vector_tool_get_type (void) G_GNUC_CONST;
 void    gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                       GimpVectors    *vectors);
 
+void    gimp_vector_tool_clear_vectors (GimpVectorTool *vector_tool);
+
 
 #endif  /*  __GIMP_VECTOR_TOOL_H__  */

@@ -1,3 +1,15 @@
+2003-03-20  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]
+	Fixed crashes and weird problems when the tool changed images or
+	images got closed. Fixes Bug #108318.
+
+	* app/vectors/vectors-types.h: More sane names for the
+	GimpAnchorType enum.
+
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c: changed accordingly.
+
 2003-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: added GIMP_UNDO_GROUP_MASK.

@@ -29,8 +29,8 @@ typedef struct _GimpAnchor GimpAnchor;
 
 typedef enum
 {
-  ANCHOR_HANDLE,
-  CONTROL_HANDLE,
+  GIMP_HANDLE_ANCHOR,
+  GIMP_HANDLE_CONTROL,
 } GimpAnchorType;
 
 typedef enum
