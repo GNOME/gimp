@@ -634,6 +634,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_LAYER_MODE, N_("Set Layer Mode"), "layer-mode" },
   { GIMP_UNDO_LAYER_OPACITY, N_("Set Layer Opacity"), "layer-opacity" },
   { GIMP_UNDO_LAYER_PRESERVE_TRANS, N_("Set Preserve Trans"), "layer-preserve-trans" },
+  { GIMP_UNDO_TEXT_LAYER, N_("Text"), "text-layer" },
   { GIMP_UNDO_CHANNEL_ADD, N_("New Channel"), "channel-add" },
   { GIMP_UNDO_CHANNEL_REMOVE, N_("Delete Channel"), "channel-remove" },
   { GIMP_UNDO_CHANNEL_MOD, N_("Channel Mod"), "channel-mod" },

@@ -37,6 +37,8 @@
 
 #include "plug-in/plug-ins.h"
 
+#include "text/gimptextlayer.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
@@ -619,6 +621,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     GIMP_HELP_LAYER_DELETE, NULL },
+  { { N_("/Layer/Discard _Text Information"), NULL,
+      layers_text_discard_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_TEXT },
+    NULL,
+    GIMP_HELP_LAYER_TEXT_DISCARD, NULL },
 
   MENU_SEPARATOR ("/Layer/---"),
 
@@ -1323,6 +1330,7 @@ image_menu_update (GtkItemFactory *item_factory,
   gboolean            lp            = FALSE;
   gboolean            sel           = FALSE;
   gboolean            alpha         = FALSE;
+  gboolean            text_layer    = FALSE;
   gint                lind          = -1;
   gint                lnum          = -1;
   gboolean            fullscreen    = FALSE;
@@ -1366,6 +1374,9 @@ image_menu_update (GtkItemFactory *item_factory,
 	      lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
 	      alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 	      lind  = gimp_image_get_layer_index (gimage, layer);
+
+              text_layer = (GIMP_IS_TEXT_LAYER (layer) &&
+                            GIMP_TEXT_LAYER (layer)->text);
 	    }
 
 	  lnum = gimp_container_num_children (gimage->layers);
@@ -1543,11 +1554,12 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  Layer  */
 
-  SET_SENSITIVE ("/Layer/New Layer...",    gdisp);
-  SET_SENSITIVE ("/Layer/Duplicate Layer", lp && !fs && !aux);
-  SET_SENSITIVE ("/Layer/Anchor Layer",    lp &&  fs && !aux);
-  SET_SENSITIVE ("/Layer/Merge Down",      lp && !fs && !aux);
-  SET_SENSITIVE ("/Layer/Delete Layer",    lp && !aux);
+  SET_SENSITIVE ("/Layer/New Layer...",      gdisp);
+  SET_SENSITIVE ("/Layer/Duplicate Layer",   lp && !fs && !aux);
+  SET_SENSITIVE ("/Layer/Anchor Layer",      lp &&  fs && !aux);
+  SET_SENSITIVE ("/Layer/Merge Down",        lp && !fs && !aux);
+  SET_SENSITIVE ("/Layer/Delete Layer",      lp && !aux);
+  SET_VISIBLE   ("/Layer/Discard Text Information", text_layer && !aux);
 
   SET_SENSITIVE ("/Layer/Layer Boundary Size...", lp && !aux);
   SET_SENSITIVE ("/Layer/Layer to Image Size",    lp && !aux);

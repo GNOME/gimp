@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextLayer
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpparasitelist.h"
 
 #include "gimptext.h"
@@ -60,9 +61,6 @@ static void       gimp_text_layer_finalize      (GObject        *object);
 
 static gint64     gimp_text_layer_get_memsize   (GimpObject     *object,
                                                  gint64         *gui_size);
-static TempBuf  * gimp_text_layer_get_preview   (GimpViewable   *viewable,
-                                                 gint            width,
-                                                 gint            height);
 
 static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
                                                  GType           new_type,
@@ -130,7 +128,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   gimp_object_class->get_memsize   = gimp_text_layer_get_memsize;
 
   viewable_class->default_stock_id = "gimp-text-layer";
-  viewable_class->get_preview      = gimp_text_layer_get_preview;
 
   item_class->default_name         = _("Text Layer");
   item_class->duplicate            = gimp_text_layer_duplicate;
@@ -198,15 +195,6 @@ gimp_text_layer_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
-static TempBuf *
-gimp_text_layer_get_preview (GimpViewable *viewable,
-			     gint          width,
-			     gint          height)
-{
-  return GIMP_VIEWABLE_CLASS (parent_class)->get_preview (viewable,
-							  width, height);
-}
-
 static GimpItem *
 gimp_text_layer_duplicate (GimpItem *item,
                            GType     new_type,
@@ -227,12 +215,17 @@ gimp_text_layer_duplicate (GimpItem *item,
   text_layer     = GIMP_TEXT_LAYER (item);
   new_text_layer = GIMP_TEXT_LAYER (new_item);
 
-  new_text_layer->text = gimp_config_duplicate (GIMP_CONFIG (text_layer->text));
-  new_text_layer->text_parasite = text_layer->text_parasite;
+  if (text_layer->text)
+    {
+      new_text_layer->text =
+        gimp_config_duplicate (GIMP_CONFIG (text_layer->text));
 
-  g_signal_connect_object (new_text_layer->text, "notify",
-                           G_CALLBACK (gimp_text_layer_text_notify),
-                           new_text_layer, G_CONNECT_SWAPPED);
+      g_signal_connect_object (new_text_layer->text, "notify",
+                               G_CALLBACK (gimp_text_layer_text_notify),
+                               new_text_layer, G_CONNECT_SWAPPED);
+    }
+
+  new_text_layer->text_parasite = text_layer->text_parasite;
 
   return new_item;
 }
@@ -292,13 +285,33 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
                           GimpText      *text)
 {
   g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-  g_return_if_fail (GIMP_IS_TEXT (text));
-  g_return_if_fail (layer->text == NULL);
+  g_return_if_fail (text == NULL || GIMP_IS_TEXT (text));
 
-  layer->text = g_object_ref (text);
-  g_signal_connect_object (text, "notify",
-                           G_CALLBACK (gimp_text_layer_text_notify),
-                           layer, G_CONNECT_SWAPPED);
+  if (layer->text == text)
+    return;
+
+  if (layer->text)
+    {
+      gimp_text_layer_flush (layer);
+
+      g_signal_handlers_disconnect_by_func (layer->text,
+                                            G_CALLBACK (gimp_text_layer_text_notify),
+                                            layer);
+
+      g_object_unref (layer->text);
+      layer->text = NULL;
+    }
+
+  if (text)
+    {
+      layer->text = g_object_ref (text);
+
+      g_signal_connect_object (text, "notify",
+                               G_CALLBACK (gimp_text_layer_text_notify),
+                               layer, G_CONNECT_SWAPPED);
+    }
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 }
 
 GimpText *
@@ -309,12 +322,42 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
   return layer->text;
 }
 
+/**
+ * gimp_text_layer_discard:
+ * @layer: a #GimpTextLayer
+ *
+ * Discards the text information. This makes @layer behave like a
+ * normal layer.
+ */
 void
-gimp_text_layer_render (GimpTextLayer *layer)
+gimp_text_layer_discard (GimpTextLayer *layer)
 {
   g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
 
-  gimp_text_layer_render_now (layer);
+  if (! layer->text)
+    return;
+
+  gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
+                                   _("Discard Text Information"),
+                                   layer);
+
+  gimp_text_layer_set_text (layer, NULL);
+}
+
+/**
+ * gimp_text_layer_flush:
+ * @layer: a #GimpTextLayer
+ *
+ * Flushes pending changes to the text layer that would otherwise be
+ * performed in an idle handler.
+ */
+ void
+gimp_text_layer_flush (GimpTextLayer *layer)
+{
+  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
+
+  if (layer->idle_render_id)
+    gimp_text_layer_render_now (layer);
 }
 
 static void
@@ -364,6 +407,9 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
       g_source_remove (layer->idle_render_id);
       layer->idle_render_id = 0;
     }
+
+  if (! layer->text)
+    return FALSE;
 
   drawable = GIMP_DRAWABLE (layer);
   item     = GIMP_ITEM (layer);

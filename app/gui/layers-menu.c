@@ -28,6 +28,8 @@
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 
+#include "text/gimptextlayer.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemtreeview.h"
@@ -96,6 +98,11 @@ GimpItemFactoryEntry layers_menu_entries[] =
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     GIMP_HELP_LAYER_DELETE, NULL },
+  { { N_("/_Discard Text Information"), NULL,
+      layers_text_discard_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_TEXT },
+    NULL,
+    GIMP_HELP_LAYER_TEXT_DISCARD, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -178,6 +185,7 @@ layers_menu_update (GtkItemFactory *factory,
   gboolean   alpha      = FALSE;    /*  alpha channel present  */
   gboolean   indexed    = FALSE;    /*  is indexed             */
   gboolean   next_alpha = FALSE;
+  gboolean   text_layer = FALSE;
   GList     *next       = NULL;
   GList     *prev       = NULL;
 
@@ -215,10 +223,16 @@ layers_menu_update (GtkItemFactory *factory,
         next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
       else
         next_alpha = FALSE;
+
+      text_layer = (layer &&
+                    GIMP_IS_TEXT_LAYER (layer) &&
+                    GIMP_TEXT_LAYER (layer)->text);
     }
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
+#define SET_VISIBLE(menu,condition) \
+        gimp_item_factory_set_visible (factory, menu, (condition) != 0)
 
   SET_SENSITIVE ("/Edit Layer Attributes...", layer && !fs && !ac);
 
@@ -234,6 +248,7 @@ layers_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Anchor Layer",    layer &&  fs && !ac);
   SET_SENSITIVE ("/Merge Down",      layer && !fs && !ac && next);
   SET_SENSITIVE ("/Delete Layer",    layer && !ac);
+  SET_VISIBLE   ("/Discard Text Information", text_layer && !ac);
 
   SET_SENSITIVE ("/Layer Boundary Size...", layer && !ac);
   SET_SENSITIVE ("/Layer to Image Size",    layer && !ac);

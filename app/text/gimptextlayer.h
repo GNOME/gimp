@@ -62,7 +62,8 @@ GimpLayer * gimp_text_layer_new        (GimpImage     *image,
 GimpText  * gimp_text_layer_get_text   (GimpTextLayer *layer);
 void        gimp_text_layer_set_text   (GimpTextLayer *layer,
                                         GimpText      *text);
-void        gimp_text_layer_render     (GimpTextLayer *layer);
+void        gimp_text_layer_discard    (GimpTextLayer *layer);
+void        gimp_text_layer_flush      (GimpTextLayer *layer);
 
 
 #endif /* __GIMP_TEXT_LAYER_H__ */

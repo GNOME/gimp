@@ -57,6 +57,8 @@
 
 #include "paint/gimppaintcore.h"
 
+#include "text/gimptextlayer.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "gimp-intl.h"
@@ -2075,6 +2077,94 @@ undo_free_layer_properties (GimpUndo     *undo,
                             GimpUndoMode  undo_mode)
 {
   g_free (undo->data);
+}
+
+
+/*********************/
+/*  Text Layer Undo  */
+/*********************/
+
+typedef struct _TextUndo TextUndo;
+
+struct _TextUndo
+{
+  GimpText *text;
+};
+
+static gboolean undo_pop_text_layer  (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode,
+                                      GimpUndoAccumulator *accum);
+static void     undo_free_text_layer (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode);
+
+
+gboolean
+gimp_image_undo_push_text_layer (GimpImage     *gimage,
+                                 const gchar   *undo_desc,
+                                 GimpTextLayer *layer)
+{
+  GimpUndo *undo;
+  gssize    size = 0;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), FALSE);
+
+  if (layer->text)
+    size += gimp_object_get_memsize (GIMP_OBJECT (layer->text), NULL);
+
+  undo = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
+                                    sizeof (TextUndo) + size,
+                                    sizeof (TextUndo),
+                                    GIMP_UNDO_TEXT_LAYER, undo_desc,
+                                    TRUE,
+                                    undo_pop_text_layer,
+                                    undo_free_text_layer);
+
+  if (undo)
+    {
+      TextUndo *tu = undo->data;
+
+      tu->text = (layer->text ?
+                  gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_text_layer (GimpUndo            *undo,
+                     GimpUndoMode         undo_mode,
+                     GimpUndoAccumulator *accum)
+{
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  TextUndo      *tu    = undo->data;
+  GimpText      *text;
+
+  text = (layer->text ?
+          gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
+
+  gimp_text_layer_set_text (layer, tu->text);
+
+  if (tu->text)
+    g_object_unref (tu->text);
+
+  tu->text = text;
+
+  return TRUE;
+}
+
+static void
+undo_free_text_layer (GimpUndo     *undo,
+                      GimpUndoMode  undo_mode)
+{
+  TextUndo *tu = undo->data;
+
+  if (tu->text)
+    g_object_unref (tu->text);
+
+  g_free (tu);
 }
 
 

@@ -28,8 +28,8 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
+#include "core/gimplayer.h"
 #include "core/gimpimage.h"
-#include "text/gimptextlayer.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimppreviewrendererbrush.h"

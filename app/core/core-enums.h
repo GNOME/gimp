@@ -470,6 +470,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set Layer Mode"            >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set Layer Opacity"         >*/
   GIMP_UNDO_LAYER_PRESERVE_TRANS,     /*< desc="Set Preserve Trans"        >*/
+  GIMP_UNDO_TEXT_LAYER,               /*< desc="Text"                      >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New Channel"               >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete Channel"            >*/
   GIMP_UNDO_CHANNEL_MOD,              /*< desc="Channel Mod"               >*/

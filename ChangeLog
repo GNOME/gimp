@@ -1,3 +1,29 @@
+2004-01-05  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: added GIMP_UNDO_TEXT_LAYER to
+	GimpUndoType enum.
+
+	* app/core/gimpimage-undo-push.[ch]: added new undo function
+	gimp_image_undo_push_text_layer().
+
+	* app/text/gimptextlayer.[ch]: renamed gimp_text_layer_render() to
+	gimp_layer_text_layer_flush().
+	Added new function gimp_text_layer_discard().
+
+	* app/text/gimptextlayer-transform.c: changed accordingly.
+
+	* app/gui/image-menu.c
+	* app/gui/layers-commands.[ch]	
+	* app/gui/layers-menu.c: added menu entries that allow to discard
+	the text information of a text layer (bug #118547).
+
+	* app/widgets/gimppreviewrendererlayer.c
+	(gimp_preview_renderer_layer_render): treat text layers without a
+	text object like ordinary layers.
+
+	* app/widgets/gimppreviewrenderer-utils.c: include gimplayer.h
+	instead of gimptextlayer.h.
+
 2004-01-04  Ville Pätsi  <drc@gimp.org>
 
 	* gimp.spec.in: Remove last hardcoded -1.3's.

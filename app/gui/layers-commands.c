@@ -39,6 +39,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
+#include "text/gimptextlayer.h"
+
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpenummenu.h"
@@ -295,6 +297,18 @@ layers_delete_cmd_callback (GtkWidget *widget,
     gimp_image_remove_layer (gimage, active_layer);
 
   gimp_image_flush (gimage);
+}
+
+void
+layers_text_discard_cmd_callback (GtkWidget *widet,
+                                  gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer, data);
+
+  if (GIMP_IS_TEXT_LAYER (active_layer))
+    gimp_text_layer_discard (GIMP_TEXT_LAYER (active_layer));
 }
 
 void

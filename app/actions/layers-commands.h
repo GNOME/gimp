@@ -48,6 +48,8 @@ void   layers_merge_down_cmd_callback         (GtkWidget *widet,
                                                gpointer   data);
 void   layers_delete_cmd_callback             (GtkWidget *widet,
                                                gpointer   data);
+void   layers_text_discard_cmd_callback       (GtkWidget *widet,
+                                               gpointer   data);
 
 void   layers_resize_cmd_callback             (GtkWidget *widet,
                                                gpointer   data);

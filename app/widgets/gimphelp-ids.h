@@ -128,6 +128,7 @@
 #define GIMP_HELP_LAYER_ANCHOR                    "gimp-layer-anchor"
 #define GIMP_HELP_LAYER_MERGE_DOWN                "gimp-layer-merge-down"
 #define GIMP_HELP_LAYER_DELETE                    "gimp-layer-delete"
+#define GIMP_HELP_LAYER_TEXT_DISCARD              "gimp-layer-text-discard"
 #define GIMP_HELP_LAYER_PREVIOUS                  "gimp-layer-previous"
 #define GIMP_HELP_LAYER_NEXT                      "gimp-layer-next"
 #define GIMP_HELP_LAYER_TOP                       "gimp-layer-top"
