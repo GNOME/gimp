@@ -2,8 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * PostScript file plugin
  * PostScript writing and GhostScript interfacing code
- * Copyright (C) 1997 Peter Kirchgessner
- * (email: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg)
+ * Copyright (C) 1997-98 Peter Kirchgessner
+ * (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
  *
  * Added controls for TextAlphaBits and GraphicsAlphaBits
  *   George White <aa056@chebucto.ns.ca>
@@ -38,10 +38,12 @@
  * V 1.03, nn, 20-Dec-97: Initialize some variables
  * V 1.04, PK, 20-Dec-97: Add Encapsulated PostScript output and preview
  * V 1.05, PK, 21-Sep-98: Write b/w-images (indexed) using image-operator
+ * V 1.06, PK, 22-Dec-98: Fix problem with writing color PS files.
+ *                        Ghostview may hang when displaying the files.
  */
-#define VERSIO                                               1.05
-static char dversio[] =                                    "v1.05  26-Sep-98";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.05  26-Sep-98";
+#define VERSIO                                               1.06
+static char dversio[] =                                    "v1.06  22-Dec-98";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.06  22-Dec-98";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1386,7 +1388,7 @@ save_ps_setup (FILE *ofp,
   if (bpp == 1)
     fprintf (ofp, "/scanline %d string def\n", (width+7)/8);
   else
-    fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp);
+    fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp/8);
 
   fprintf (ofp, "%% Image geometry\n%d %d %d\n", width, height,
            (bpp == 1) ? 1 : 8);

@@ -1,3 +1,7 @@
+Sun Jan  3 14:39:01 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/ps/ps.c: update from author
+
 Sat Jan  2 15:04:16 PST 1999 Manish Singh <yosh@gimp.org>
 
         * ltconfig: cases for Unixware 2.1.2 (from Geoff Clare)
