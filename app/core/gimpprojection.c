@@ -77,7 +77,7 @@ static GHashTable *display_ht = NULL;
 
 
 GDisplay*
-gdisplay_new (GimpImage       *gimage,
+gdisplay_new (GimpImage    *gimage,
 	      unsigned int  scale)
 {
   GDisplay *gdisp;
@@ -173,8 +173,8 @@ print (char *buf, int len, int start, const char *fmt, ...)
 
 static void
 gdisplay_format_title (GDisplay *gdisp,
-		       char   *title,
-		       int     title_len)
+		       char     *title,
+		       int       title_len)
 {
   GimpImage *gimage;
   char *image_type_str;
@@ -1012,7 +1012,21 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	} 
       else 
 	{
-	  g_snprintf (buffer, CURSOR_STR_LENGTH, "%d, %d", t_x, t_y);
+	  if (gdisp->dot_for_dot)
+	    {
+	      g_snprintf (buffer, CURSOR_STR_LENGTH, 
+			  gdisp->cursor_format_str, t_x, t_y);
+	    }
+	  else /* show real world units */
+	    {
+	      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+	      g_snprintf (buffer, CURSOR_STR_LENGTH,
+			  gdisp->cursor_format_str,
+			  (float)t_x * unit_factor / gdisp->gimage->xresolution,
+			  (float)t_y * unit_factor / gdisp->gimage->yresolution,
+			  gimp_unit_get_symbol (gdisp->gimage->unit));
+	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
 	}
     }
@@ -1033,6 +1047,7 @@ gdisplay_set_dot_for_dot (GDisplay *gdisp, int value)
     {
       gdisp->dot_for_dot = value;
 
+      gdisplay_resize_cursor_label (gdisp);
       resize_display (gdisp, allow_resize_windows, TRUE);
     }
 }
@@ -1044,11 +1059,44 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   /* Set a proper size for the coordinates display in the statusbar. */
   char buffer[CURSOR_STR_LENGTH];
   int cursor_label_width;
- 
-  g_snprintf (buffer, sizeof(buffer),"%d, %d", gdisp->gimage->width, gdisp->gimage->height);
+  int label_frame_size_difference;
+
+  if (gdisp->dot_for_dot)
+    {
+      g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
+		  "%%d, %%d");
+      g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
+		  gdisp->gimage->width, gdisp->gimage->height);
+    }
+  else /* show real world units */
+    {
+      float unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+
+      g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
+		  "%%.%df, %%.%df %%s",
+		  gimp_unit_get_digits (gdisp->gimage->unit),
+		  gimp_unit_get_digits (gdisp->gimage->unit));
+
+      g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
+		  (float)gdisp->gimage->width * unit_factor /
+		  gdisp->gimage->xresolution,
+		  (float)gdisp->gimage->height * unit_factor /
+		  gdisp->gimage->yresolution,
+		  gimp_unit_get_symbol (gdisp->gimage->unit));
+    }
   cursor_label_width = 
     gdk_string_width ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
+  
+  /* find out how many pixels the label's parent frame is bigger than
+   * the label itself */
+  label_frame_size_difference =
+    gdisp->cursor_label->parent->allocation.width -
+    gdisp->cursor_label->allocation.width;
+
   gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
+  if (label_frame_size_difference) /* don't resize if this is a new display */
+    gtk_widget_set_usize (gdisp->cursor_label->parent,
+			  cursor_label_width + label_frame_size_difference, -1);
 }
 
 void

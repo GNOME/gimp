@@ -1,3 +1,12 @@
+Sat Feb 27 18:07:53 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/scale.c: use image's units, not the ruler units, when
+	    dimentioning the rulers.  Gimprc ruler-units syntax has no
+	    use anymore.
+
+	* app/gdisplay.[ch]: applied statusbar unit display patch from
+ 	    Michael Natterer.
+
 Sat Feb 27 16:54:51 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/gimage_cmds.c: When a gimage's colourmap is changed,

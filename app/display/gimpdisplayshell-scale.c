@@ -161,10 +161,12 @@ change_scale (GDisplay *gdisp,
 
 
 /* scale image coord to realworld units (cm, inches, pixels) */
+/* 27/Feb/1999 I tried inlining this, but the result was slightly
+ * slower (poorer cache locality, probably) -- austin */
 static gdouble
 img2real (GDisplay *gdisp, gboolean xdir, gdouble a)
 {
-  float res;  
+  float res;
 
   if (gdisp->dot_for_dot)
     return a;
@@ -174,20 +176,7 @@ img2real (GDisplay *gdisp, gboolean xdir, gdouble a)
   else
     res = gdisp->gimage->yresolution;
 
-  switch (ruler_units) {
-  case GTK_PIXELS:
-    return a;
-
-  case GTK_INCHES:
-    return a / res;
-
-  case GTK_CENTIMETERS:
-    return a * 2.54 / res;
-
-  default:
-    g_warning ("unknown ruler_units %d, can't happen", ruler_units);
-    return a;
-  }
+  return a * gimp_unit_get_factor (gdisp->gimage->unit) / res;
 }
 
 

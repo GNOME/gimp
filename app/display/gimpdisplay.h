@@ -67,6 +67,9 @@
    the status line */
 #define CURSOR_STR_LENGTH 256
 
+/* maximal length of the format string for the cursor-coordinates */
+#define CURSOR_FORMAT_LENGTH 16
+
 typedef struct _IdleRenderStruct
 {
   int width;
@@ -97,6 +100,10 @@ struct _GDisplay
   GtkWidget *statusbar;           /*  widget for statusbar                    */
   GtkWidget *progressbar;         /*  widget for progressbar                  */
   GtkWidget *cursor_label;        /*  widget for cursor position              */
+  char cursor_format_str [CURSOR_FORMAT_LENGTH]; /* we need a variable format
+						  * string because different
+						  * units have different number
+						  * of decimals               */
   GtkWidget *cancelbutton;        /*  widget for cancel button                */
   guint progressid;               /*  id of statusbar message for progress    */
 
