@@ -43,7 +43,7 @@
 #define CONST_BUFFER(b)   (b)
 #else
 #define INIT_VECTOR(v...) (v)
-#define CONST_BUFFER(b)   ((const guchar *)(b))
+#define CONST_BUFFER(b)   ((guchar *)(b))
 #endif
 
 static const vector unsigned char alphamask = (const vector unsigned char)
