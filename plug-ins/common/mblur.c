@@ -4,9 +4,11 @@
  * Motion Blur plug-in for GIMP 0.99
  * Copyright (C) 1997 Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz)
  * 
- * This plug-in is port of Motion Blur plug-in for GIMP 0.54 by Thorsten Martinsen
+ * This plug-in is port of Motion Blur plug-in for GIMP 0.54 by
+ * Thorsten Martinsen
  * 	Copyright (C) 1996 Torsten Martinsen <torsten@danbbs.dk>
- * 	Bresenham algorithm stuff hacked from HP2xx written by Heinz W. Werntges
+ * 	Bresenham algorithm stuff hacked from HP2xx written by
+ *      Heinz W. Werntges
  * 	Changes for version 1.11/1.12 Copyright (C) 1996 Federico Mena Quintero
  * 	quartic@polloux.fciencias.unam.mx
  *
@@ -365,12 +367,12 @@ mblur_linear (void)
 
                       sum[img_bpp-1] += alpha;
                       for (c = 0; c < img_bpp-1; c++)
-                          sum[c] += pixel[c] * alpha;
+                        sum[c] += pixel[c] * alpha;
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          sum[c] += pixel[c];
+                        sum[c] += pixel[c];
                     }
                   i++;
 
@@ -402,14 +404,16 @@ mblur_linear (void)
                     {
                       gint32 alpha = sum[img_bpp-1];
 
-                      if (d[img_bpp-1] = alpha/i)
+                      if ((d[img_bpp-1] = alpha/i) != 0)
+                        {
                           for (c = 0; c < img_bpp-1; c++)
-                              d[c] = sum[c] / alpha;
+                            d[c] = sum[c] / alpha;
+                        }
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          d[c] = sum[c] / i;
+                        d[c] = sum[c] / i;
                     }
 		}
 	      d += dest_rgn.bpp;
@@ -513,12 +517,12 @@ mblur_radial (void)
 
                       sum[img_bpp-1] += alpha;
                       for (c = 0; c < img_bpp-1; c++)
-                          sum[c] += pixel[c] * alpha;
+                        sum[c] += pixel[c] * alpha;
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          sum[c] += pixel[c];
+                        sum[c] += pixel[c];
                     }
 		}
 
@@ -532,14 +536,16 @@ mblur_radial (void)
                     {
                       gint32 alpha = sum[img_bpp-1];
 
-                      if (d[img_bpp-1] = alpha/count)
+                      if ((d[img_bpp-1] = alpha/count) != 0)
+                        {
                           for (c = 0; c < img_bpp-1; c++)
-                              d[c] = sum[c] / alpha;
+                            d[c] = sum[c] / alpha;
+                        }
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          d[c] = sum[c] / count;
+                        d[c] = sum[c] / count;
                     }
 		}
 	      d += dest_rgn.bpp;
@@ -620,12 +626,12 @@ mblur_zoom (void)
 
                       sum[img_bpp-1] += alpha;
                       for (c = 0; c < img_bpp-1; c++)
-                          sum[c] += pixel[c] * alpha;
+                        sum[c] += pixel[c] * alpha;
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          sum[c] += pixel[c];
+                        sum[c] += pixel[c];
                     }
 		}
 
@@ -639,14 +645,16 @@ mblur_zoom (void)
                     {
                       gint32 alpha = sum[img_bpp-1];
 
-                      if (d[img_bpp-1] = alpha/i)
+                      if ((d[img_bpp-1] = alpha/i) != 0)
+                        {
                           for (c = 0; c < img_bpp-1; c++)
-                              d[c] = sum[c] / alpha;
+                            d[c] = sum[c] / alpha;
+                        }
                     }
                   else
                     {
                       for (c = 0; c < img_bpp; c++)
-                          d[c] = sum[c] / i;
+                        d[c] = sum[c] / i;
                     }
 		}
 	      d += dest_rgn.bpp;
