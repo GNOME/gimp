@@ -1,3 +1,8 @@
+2003-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/module-browser.c: pack the button box non-expanding,
+	removed cruft from the ModuleBrowser struct.
+
 2003-01-28  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimpui.def: Add missing entry points.

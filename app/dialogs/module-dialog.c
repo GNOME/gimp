@@ -53,15 +53,15 @@ typedef struct _ModuleBrowser ModuleBrowser;
 
 struct _ModuleBrowser
 {
-  GtkWidget    *table;
-  GtkWidget    *label[NUM_INFO_LINES];
-  GtkWidget    *button_label;
+  Gimp         *gimp;
+
   GimpModule   *last_update;
-  GtkWidget    *button;
   GtkListStore *list;
 
-  GQuark        modules_handler_id;
-  Gimp         *gimp;
+  GtkWidget    *table;
+  GtkWidget    *label[NUM_INFO_LINES];
+  GtkWidget    *button;
+  GtkWidget    *button_label;
 };
 
 
@@ -185,7 +185,7 @@ module_browser_new (Gimp *gimp)
 
   hbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
 
