@@ -1,3 +1,9 @@
+Mon Apr 27 20:57:26 1998 EDT Matthew Wilson <msw@gimp.org>
+
+	* app/curves: Initialize data that is referenced in event handlers
+	in the curves_new_dialog function.  Be on the look out for this
+	kind of stuff in other dialogs.
+	
 Tue Apr 28 00:16:31 1998  Tim Janik  <timj@gtk.org>
 
 	* app/channels_dialog.c (channels_dialog_create): adjust the scrolled

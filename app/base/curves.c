@@ -437,12 +437,16 @@ curves_new_dialog ()
   GtkWidget *channel_hbox;
   GtkWidget *menu;
   GtkWidget *table;
-  int i;
+  int i, j;
 
   cd = g_malloc (sizeof (CurvesDialog));
   cd->preview = TRUE;
   cd->curve_type = SMOOTH;
   cd->pixmap = NULL;
+  cd->channel = HISTOGRAM_VALUE;
+  for (i = 0; i < 5; i++)
+    for (j = 0; j < 256; j++)
+      cd->curve[i][j] = j;
 
   for (i = 0; i < 5; i++)
     channel_items [i].user_data = (gpointer) cd;
