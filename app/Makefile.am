@@ -297,7 +297,8 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"
+	-DGIMPDIR=\""$(gimpdir)"\"	\
+	$(THREAD_CPPFLAGS)
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -307,6 +308,7 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
+	$(THREAD_LIBS)
 	-lc
 
 DEPS = \

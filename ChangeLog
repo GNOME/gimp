@@ -1,3 +1,8 @@
+Sat Jun 20 11:36:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* app/Makefile.am: really add thread support
+
 Sat Jun 20 12:04:41 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.h: #include config.h so we can tell if we're doing
