@@ -1,10 +1,15 @@
+2003-03-18  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Fixed some badly worded strings in the Danish translation.
+
 2003-03-10  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
 
 2003-03-04  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by Francisco Vila Doncel <fravd@wanadoo.es>
+	* es.po: Updated Spanish translation by Francisco Vila Doncel
+	<fravd@wanadoo.es>
 
 2003-03-02  Evandro Fernandes Giovanini <evandrofg@ig.com.br>
 
