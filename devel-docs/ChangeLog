@@ -1,7 +1,8 @@
 2003-11-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt
-	* libgimpbase/tmpl/gimplimits.sgml: added GIMP_MAX_MEMSIZE.
+	* libgimpbase/tmpl/gimplimits.sgml: added GIMP_MAX_MEMSIZE,
+	documented all limits.
 
 2003-11-23  Michael Natterer  <mitch@gimp.org>
 
