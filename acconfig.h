@@ -49,6 +49,9 @@
 
 #undef USE_PTHREADS
 
+#undef HAVE_GNOME
+#undef HAVE_BONOBO
+
 
 /* Leave that blank line there!!  Autoheader needs it.
    If you're adding to this file, keep in mind:

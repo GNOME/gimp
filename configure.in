@@ -551,6 +551,28 @@ EOF
    fi
 fi
 
+AC_ARG_WITH(gnome, [  --with-gnome       Turn on GNOME support.],
+[if test "x$with_gnome" != xno; then
+	AC_MSG_CHECKING(for GNOME)
+	if test -f `which gnome-config`; then
+		AC_MSG_RESULT(yes)
+		AC_DEFINE(HAVE_GNOME)
+		if test -f `gnome-config --libdir`/bonoboConf.sh; then
+			AC_DEFINE(HAVE_BONOBO)
+			GNOME_CFLAGS=`gnome-config --cflags bonobo gnorba gnomeui`
+			GNOME_LIBS=`gnome-config --libs bonobo gnorba gnomeui`
+		else
+			GNOME_CFLAGS=`gnome-config --cflags gnorba gnomeui`
+			GNOME_LIBS=`gnome-config --libs gnorba gnomeui`
+		fi
+	else
+		AC_MSG_RESULT(no)
+	fi
+fi], )
+
+AC_SUBST(GNOME_LIBS)
+AC_SUBST(GNOME_CFLAGS)
+
 GIMPDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg

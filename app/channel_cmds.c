@@ -97,7 +97,7 @@ channel_new_invoker (Argument *args)
 
   if (success)
     {
-      opacity = (int) ((opacity_arg * 255) / 100);
+      channel_set_opacity (channel, opacity);
       channel = channel_new (gimage, width, height, name, opacity, color);
       success = channel != NULL;
     }
@@ -642,7 +642,7 @@ channel_set_opacity_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel_set_opacity (channel, opacity);
+    channel->opacity = (int) ((opacity * 255) / 100);
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);
 }
@@ -754,7 +754,7 @@ channel_set_color_invoker (Argument *args)
   color = (guchar *) args[1].value.pdb_pointer;
 
   if (success)
-    channel_set_color(channel, color);
+      channel_set_color(channel, color);
 
   return procedural_db_return_args (&channel_set_color_proc, success);
 }

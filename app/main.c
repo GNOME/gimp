@@ -46,6 +46,13 @@
 
 #include "libgimp/gimpintl.h"
 
+#ifdef HAVE_GNOME
+#include <gnome.h>
+#ifdef HAVE_BONOBO
+#include <bonobo/gnome-bonobo.h>
+#endif
+#endif
+
 static RETSIGTYPE on_signal (int);
 #ifdef SIGCHLD
 static RETSIGTYPE on_sig_child (int);
@@ -134,7 +141,28 @@ main (int argc, char **argv)
 #endif
   textdomain("gimp");
 
+#ifdef HAVE_GNOME
+  /* XXX cmdline args are broken */
+#ifdef HAVE_BONOBO
+  {
+    CORBA_Environment ev;
+    CORBA_ORB orb;
+    PortableServer_POA poa;
+    PortableServer_POAManager poam;
+
+    CORBA_exception_init(&ev);
+    orb = gnome_CORBA_init ("gimp", "1.1", &argc, argv, GNORBA_INIT_SERVER_FUNC, &ev);
+    poa = CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
+    poam = PortableServer_POA__get_the_POAManager(poa, &ev);
+    bonobo_init(orb, poa, poam);
+    CORBA_exception_free(&ev);
+  }
+#else
+  gnome_init ("gimp", "1.1", argc, argv);
+#endif
+#else
   gtk_init (&argc, &argv);
+#endif
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();

@@ -414,15 +414,20 @@ AM_CPPFLAGS = \
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@
 
+GNOME_LIBS=@GNOME_LIBS@
+GNOME_CFLAGS=@GNOME_CFLAGS@
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/intl		\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)
+	-I$(includedir)			\
+	$(GNOME_CFLAGS)
 
 gimp_LDADD = \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
+	$(GNOME_LIBS)				\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(GIMP_MP_LIBS)				\
