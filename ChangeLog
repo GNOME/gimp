@@ -1,3 +1,9 @@
+Thu Feb 22 18:23:10 GMT 2001  Adam D. Moss  <adam@gimp.org>
+
+	* tools/pdbgen/pdb/channel.pdb: Save a bunch of slow-witted
+	old people like myself from having to upgrade PERL for the sake
+	of sugar.  Baby.
+
 2001-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: forgot one s/gimptool/gimptool-1.4/

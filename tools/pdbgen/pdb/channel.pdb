@@ -225,8 +225,10 @@ HELP
 
     @inargs = ( &channel_arg, &channel_arg, &operation_arg );
 	       
-    foreach my $i (0 .. 1) {
-	$inargs[$i]{$_} .= $i + 1 for qw(name desc);
+    foreach my $i (0,1) {
+        foreach my $unused (qw(name desc)) {
+  	  $inargs[$i]{$unused} .= $i + 1;
+        }
     }
 
     foreach (qw(x y)) {
