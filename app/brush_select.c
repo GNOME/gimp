@@ -1556,8 +1556,8 @@ brush_select_events (GtkWidget   *widget,
 		}
 	      
 	      /*  Show the brush popup window if the brush is too large  */
-	      if (brush->mask->width  > bsp->cell_width ||
-		  brush->mask->height > bsp->cell_height ||
+	      if (brush->mask->width  > bsp->cell_width - 2 * MARGIN_WIDTH ||
+		  brush->mask->height > bsp->cell_height - 2 * MARGIN_HEIGHT ||
 		  GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
 		{
 		  brush_popup_open (bsp, bevent->x, bevent->y, brush);

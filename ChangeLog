@@ -1,3 +1,8 @@
+Tue Nov  9 22:57:13 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/brush_select.c: take margin into account when deciding if 
+	popping up a preview is necessary
+
 Tue Nov  9 21:15:26 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/lc_dialog.c
