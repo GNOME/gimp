@@ -196,6 +196,7 @@ static guchar *srcimage = NULL;
 static guchar *dstimage = NULL;
 static gint preview_width, preview_height,sel_width,sel_height;
 static gint image_bpp;
+static gint preserve_trans;
 static vector_2d* deform_vectors = NULL;
 static vector_2d* deform_area_vectors = NULL;
 static int lastx, lasty;
@@ -715,6 +716,10 @@ iwarp_init (void)
  sel_width = xh-xl;
  sel_height = yh-yl;
  image_bpp = gimp_drawable_bpp(drawable->id);
+ if (gimp_drawable_is_layer (drawable->id))
+   preserve_trans = (gimp_layer_get_preserve_transparency (drawable->id));
+ else
+   preserve_trans = FALSE;
  if (image_bpp <3) preview_bpp = 1; else preview_bpp = 3;
  dx = (gfloat) sel_width / MAX_PREVIEW_WIDTH;
  dy = (gfloat) sel_height / MAX_PREVIEW_HEIGHT;
@@ -1272,11 +1277,26 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
 
     xn = deform_area_vectors[fptr].x + x + xi;
     yn = deform_area_vectors[fptr].y + y + yi;
+    
+    /* gcc - shut up! */
+    alpha = 1;
+
+    /* Yeah, it is ugly but since color is a pointer into image-data
+       I must not change color[image_bpp - 1]  ... */
+
+    if (preserve_trans && (image_bpp == 4 || image_bpp == 2)) {
+      iwarp_preview_get_point (x + xi, y + yi, color);
+      alpha = (gfloat) color[image_bpp - 1] / 255;
+    }
+
     iwarp_preview_get_point(xn,yn,color);
+
+    if (!preserve_trans && (image_bpp == 4 || image_bpp == 2)) {
+      alpha = (gfloat) color[image_bpp - 1] / 255;
+    }
 
     if (preview_bpp == 3) { 
      if (image_bpp == 4) {
-       alpha = (gfloat)color[3] / 255;
        dstimage[ptr*3] = (guchar)(alpha*color[0]+ (1.0-alpha)*iwarp_transparent_color(x+xi,y+yi));
        dstimage[ptr*3+1] = (guchar)(alpha*color[1]+ (1.0-alpha)*iwarp_transparent_color(x+xi,y+yi));
        dstimage[ptr*3+2] = (guchar)(alpha*color[2]+ (1.0-alpha)*iwarp_transparent_color(x+xi,y+yi));
@@ -1289,7 +1309,6 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
     }
     else {
      if (image_bpp == 2) { 
-      alpha = (gfloat)color[1] / 255;
       dstimage[ptr] = (guchar)(alpha *color[0]+ (1.0-alpha)*iwarp_transparent_color(x+xi,y+yi)) ;
      }
      else

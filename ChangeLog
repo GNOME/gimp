@@ -1,3 +1,13 @@
+2000-03-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/iwarp.c: applied gimp-simon-20000325-1 provided
+	by Simon Budig <Simon.Budig@unix-ag.org> which fixes bug #6224.
+
+	* plug-ins/script-fu/scripts/neon-logo.scm: applied 
+	gimp-simon-20000326-0 (once again from Simon "bughunter" Budig)
+	which changes the neon-logo to get a neon-like effect again and 
+	thereby fixes bug #2358.
+	
 Sun Mar 26 00:41:56 CET 2000  Sven Neumann  <sven@gimp.org>
 
 	* app/convert.c: reverted Martin's change since it gives no

@@ -27,6 +27,14 @@
     (set-pt a 2 255 255)
     a))
 
+(define (neon-spline4)
+  (let* ((a (cons-array 8 'byte)))
+    (set-pt a 0 0 0)
+    (set-pt a 1 64 64)
+    (set-pt a 2 127 192)
+    (set-pt a 3 255 255)
+    a))
+
 (define (find-hue-offset color)
   (let* ((R (car color))
 	 (G (cadr color))
@@ -86,7 +94,7 @@
     (gimp-selection-none img)
 
     (gimp-edit-clear glow-layer)
-    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
+    (gimp-edit-clear tube-layer)
 
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
@@ -97,31 +105,36 @@
     (gimp-selection-shrink img shrink)
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill selection BG-IMAGE-FILL)
-    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
+    (gimp-edit-clear tube-layer)
 
     (gimp-selection-none img)
     (if (not (= feather1 0)) (plug-in-gauss-rle 1 img tube-layer feather1 TRUE TRUE))
     (gimp-selection-load selection)
     (if (not (= feather2 0)) (plug-in-gauss-rle 1 img tube-layer feather2 TRUE TRUE))
 
-    (gimp-brightness-contrast tube-layer -10 15)
-    (gimp-selection-none img)
-    (gimp-hue-saturation tube-layer 0 tube-hue -15 70)
-
-    (gimp-selection-load selection)
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img inc-shrink)
-    (gimp-curves-spline tube-layer 0 6 (neon-spline1))
+    (gimp-curves-spline tube-layer 4 6 (neon-spline1))
 
     (gimp-selection-load selection)
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img (* inc-shrink 2))
-    (gimp-curves-spline tube-layer 0 6 (neon-spline2))
+    (gimp-curves-spline tube-layer 4 6 (neon-spline2))
 
     (gimp-selection-load selection)
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img (* inc-shrink 3))
-    (gimp-curves-spline tube-layer 0 6 (neon-spline3))
+    (gimp-curves-spline tube-layer 4 6 (neon-spline3))
+
+    (gimp-layer-set-preserve-trans tube-layer 1)
+    (gimp-selection-layer-alpha tube-layer)
+    (gimp-selection-invert img)
+    (gimp-palette-set-background glow-color)
+    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
+
+    (gimp-selection-none img)
+    (gimp-layer-set-preserve-trans tube-layer 0)
+    (gimp-curves-spline tube-layer 4 8 (neon-spline4))
 
     (gimp-selection-load selection)
     (gimp-selection-grow img grow)
@@ -130,12 +143,12 @@
     (gimp-selection-invert img)
 
     (gimp-selection-feather img feather)
-    (gimp-palette-set-background glow-color)
     (gimp-edit-fill glow-layer BG-IMAGE-FILL)
 
     (if (not (= shadow 0))
 	(begin
-	  (gimp-selection-layer-alpha tube-layer)
+          (gimp-selection-load selection)
+          (gimp-selection-grow img grow)
 	  (gimp-selection-shrink img shadow-shrink)
 	  (gimp-selection-feather img shadow-feather)
 	  (gimp-selection-translate img shadow-offx shadow-offy)
