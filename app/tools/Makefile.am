@@ -64,8 +64,6 @@ libapptools_a_sources = \
 	gimpfreeselecttool.h		\
 	gimpfuzzyselecttool.c		\
 	gimpfuzzyselecttool.h		\
-	gimphistogramtool.c		\
-	gimphistogramtool.h		\
 	gimphistogramoptions.c		\
 	gimphistogramoptions.h		\
 	gimphuesaturationtool.c		\

@@ -130,7 +130,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
                     G_CALLBACK (gimp_histogram_box_histogram_range),
                     box);
 
-  box->histogram = GIMP_HISTOGRAM_VIEW (view);
+  box->view = GIMP_HISTOGRAM_VIEW (view);
 
   /*  The gradient below the histogram */
   frame = gtk_frame_new (NULL);
@@ -207,28 +207,28 @@ static void
 gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
                                    GimpHistogramBox *box)
 {
-  if ((gdouble) box->histogram->start == adjustment->value)
+  if ((gdouble) box->view->start == adjustment->value)
     return;
 
   box->high_adj->lower = adjustment->value;
   gtk_adjustment_changed (box->high_adj);
 
-  gimp_histogram_view_set_range (box->histogram,
-                                 adjustment->value, box->histogram->end);
+  gimp_histogram_view_set_range (box->view,
+                                 adjustment->value, box->view->end);
 }
 
 static void
 gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
                                     GimpHistogramBox *box)
 {
-  if ((gdouble) box->histogram->end == adjustment->value)
+  if ((gdouble) box->view->end == adjustment->value)
     return;
 
   box->low_adj->upper = adjustment->value;
   gtk_adjustment_changed (box->low_adj);
 
-  gimp_histogram_view_set_range (box->histogram,
-                                 box->histogram->start, adjustment->value);
+  gimp_histogram_view_set_range (box->view,
+                                 box->view->start, adjustment->value);
 }
 
 static void
@@ -276,8 +276,8 @@ gimp_histogram_box_gradient_expose (GtkWidget      *widget,
   if (width <= 0 || height <= 0)
     return TRUE;
 
-  if (box->histogram)
-    channel = box->histogram->channel;
+  if (box->view)
+    channel = box->view->channel;
   else
     channel = GIMP_HISTOGRAM_VALUE;
 
@@ -334,9 +334,9 @@ gimp_histogram_box_set_channel (GimpHistogramBox     *box,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_BOX (box));
 
-  if (!box->histogram)
+  if (!box->view)
     return;
 
-  gimp_histogram_view_set_channel (box->histogram, channel);
+  gimp_histogram_view_set_channel (box->view, channel);
 }
 

@@ -207,6 +207,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PATH,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INDEXED_PALETTE,          NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_HISTOGRAM,                NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_HISTOGRAM_LINEAR,         NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_UNDO_HISTORY,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TRANSPARENCY,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -219,9 +222,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_HISTOGRAM_LINEAR,         NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    NULL,        0, 0, LIBGIMP_DOMAIN },
-
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
@@ -264,7 +264,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_FLIP,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_FREE_SELECT,         NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_FUZZY_SELECT,        NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_HISTOGRAM,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_HUE_SATURATION,      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_INK,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_ISCISSORS,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -360,6 +359,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_PATH,                     stock_path_22                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_24          },
+  { GIMP_STOCK_HISTOGRAM,                stock_histogram_22                },
   { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_24             },
   { GIMP_STOCK_TRANSPARENCY,             stock_transparency_24             },
 
@@ -384,7 +384,6 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_FLIP,                stock_tool_flip_22                },
   { GIMP_STOCK_TOOL_FREE_SELECT,         stock_tool_free_select_22         },
   { GIMP_STOCK_TOOL_FUZZY_SELECT,        stock_tool_fuzzy_select_22        },
-  { GIMP_STOCK_TOOL_HISTOGRAM,           stock_tool_histogram_22           },
   { GIMP_STOCK_TOOL_HUE_SATURATION,      stock_tool_hue_saturation_22      },
   { GIMP_STOCK_TOOL_INK,                 stock_tool_ink_22                 },
   { GIMP_STOCK_TOOL_ISCISSORS,           stock_tool_iscissors_22           },
@@ -456,6 +455,9 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_PATH,                     stock_path_16                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_16          },
+  { GIMP_STOCK_HISTOGRAM,                stock_histogram_16                },
+  { GIMP_STOCK_HISTOGRAM_LINEAR,         stock_histogram_linear_16         },
+  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    stock_histogram_logarithmic_16    },
   { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_16             },
   { GIMP_STOCK_TRANSPARENCY,             stock_transparency_16             },
 
@@ -470,9 +472,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_NAVIGATION,               stock_navigation_16               },
   { GIMP_STOCK_QMASK_OFF,                stock_qmask_off_16                },
   { GIMP_STOCK_QMASK_ON,                 stock_qmask_on_16                 },
-
-  { GIMP_STOCK_HISTOGRAM_LINEAR,         stock_histogram_linear_16         },
-  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    stock_histogram_logarithmic_16    },
 
   { GIMP_STOCK_LIST,                     stock_list_16                     },
   { GIMP_STOCK_GRID,                     stock_grid_16                     },
@@ -514,7 +513,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOL_FLIP,                stock_tool_flip_16                },
   { GIMP_STOCK_TOOL_FREE_SELECT,         stock_tool_free_select_16         },
   { GIMP_STOCK_TOOL_FUZZY_SELECT,        stock_tool_fuzzy_select_16        },
-  { GIMP_STOCK_TOOL_HISTOGRAM,           stock_tool_histogram_16           },
   { GIMP_STOCK_TOOL_HUE_SATURATION,      stock_tool_hue_saturation_16      },
   { GIMP_STOCK_TOOL_INK,                 stock_tool_ink_16                 },
   { GIMP_STOCK_TOOL_ISCISSORS,           stock_tool_iscissors_16           },

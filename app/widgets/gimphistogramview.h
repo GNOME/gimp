@@ -46,7 +46,7 @@ struct _GimpHistogramView
   GimpHistogramScale     scale;
   gint                   start;
   gint                   end;
-  
+
   GdkGC                 *range_gc;
 };
 

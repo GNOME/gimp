@@ -53,7 +53,6 @@
 #include "gimpfliptool.h"
 #include "gimpfreeselecttool.h"
 #include "gimpfuzzyselecttool.h"
-#include "gimphistogramtool.h"
 #include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
 #include "gimpiscissorstool.h"
@@ -142,7 +141,6 @@ gimp_tools_init (Gimp *gimp)
 
     gimp_measure_tool_register,
     gimp_magnify_tool_register,
-    gimp_histogram_tool_register,
     gimp_color_picker_tool_register,
 
     /*  path tool */

@@ -111,6 +111,7 @@ typedef struct _GimpFontSelectionDialog GimpFontSelectionDialog;
 
 typedef struct _GimpHistogramView       GimpHistogramView;
 typedef struct _GimpHistogramBox        GimpHistogramBox;
+typedef struct _GimpHistogramEditor     GimpHistogramEditor;
 
 typedef struct _GimpTextEditor          GimpTextEditor;
 

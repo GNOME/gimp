@@ -730,10 +730,10 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_SEPARATOR ("/Layer/Colors/---"),
 
   { { N_("/Layer/Colors/_Histogram"), NULL,
-      tools_select_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_HISTOGRAM },
-    "gimp-histogram-tool",
-    GIMP_HELP_TOOL_HISTOGRAM, NULL },
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_HISTOGRAM },
+    "gimp-histogram-editor",
+    GIMP_HELP_HISTOGRAM_DIALOG, NULL },
 
   /*  <Image>/Layer/Mask  */
 

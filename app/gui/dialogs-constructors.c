@@ -44,17 +44,18 @@
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdataeditor.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimperrorconsole.h"
-#include "widgets/gimpimagedock.h"
-#include "widgets/gimpimageview.h"
-#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpdevicestatus.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimperrorconsole.h"
 #include "widgets/gimpfontview.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimphistogrameditor.h"
+#include "widgets/gimpimagedock.h"
+#include "widgets/gimpimageview.h"
+#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptemplateview.h"
@@ -765,6 +766,29 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
   g_signal_connect (view, "selected",
 		    G_CALLBACK (dialogs_indexed_palette_selected),
 		    dockable);
+
+  return dockable;
+}
+
+GtkWidget *
+dialogs_histogram_editor_new (GimpDialogFactory *factory,
+                              GimpContext       *context,
+                              gint               preview_size)
+{
+  GimpHistogramEditor *histogram_editor;
+  GtkWidget           *view;
+  GtkWidget           *dockable;
+
+  view = gimp_histogram_editor_new (gimp_context_get_image (context));
+
+  histogram_editor = GIMP_HISTOGRAM_EDITOR (view);
+
+  dockable = dialogs_dockable_new (view,
+				   _("Histogram"), NULL,
+                                   GIMP_STOCK_HISTOGRAM,
+                                   GIMP_HELP_HISTOGRAM_DIALOG);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
   return dockable;
 }

@@ -55,6 +55,7 @@ STOCK_MENU_IMAGES = \
 	stock-gradient-spiral-clockwise-16.png		\
 	stock-gradient-square-16.png			\
 	stock-grid-16.png				\
+	stock-histogram-16.png				\
 	stock-histogram-linear-16.png			\
 	stock-histogram-logarithmic-16.png		\
 	stock-image-16.png				\
@@ -135,6 +136,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-gravity-west-24.png		\
 	stock-hchain-24.png			\
 	stock-hchain-broken-24.png		\
+	stock-histogram-22.png			\
 	stock-image-24.png			\
 	stock-images-24.png			\
 	stock-indexed-palette-24.png		\
@@ -241,8 +243,6 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-free-select-22.png		\
 	tools/stock-tool-fuzzy-select-16.png		\
 	tools/stock-tool-fuzzy-select-22.png		\
-	tools/stock-tool-histogram-16.png		\
-	tools/stock-tool-histogram-22.png		\
 	tools/stock-tool-hue-saturation-16.png		\
 	tools/stock-tool-hue-saturation-22.png		\
 	tools/stock-tool-ink-16.png			\

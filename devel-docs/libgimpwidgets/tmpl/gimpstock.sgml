@@ -143,6 +143,14 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_HISTOGRAM ##### -->
+<para>
+<inlinegraphic fileref="stock-histogram-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-histogram-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_HISTOGRAM_LINEAR ##### -->
 <para>
 <inlinegraphic fileref="stock-histogram-linear-16.png" format="png"></inlinegraphic>
@@ -978,14 +986,6 @@ the ones in dialog size).
 <para>
 <inlinegraphic fileref="stock-tool-fuzzy-select-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-fuzzy-select-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_HISTOGRAM ##### -->
-<para>
-<inlinegraphic fileref="stock-tool-histogram-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-histogram-16.png" format="png"></inlinegraphic>
 </para>
 
 

@@ -215,15 +215,15 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
 
-  g_signal_handlers_block_by_func (t_tool->histogram_box->histogram,
+  g_signal_handlers_block_by_func (t_tool->histogram_box->view,
                                    gimp_threshold_tool_histogram_range,
                                    t_tool);
-  gimp_histogram_view_set_histogram (t_tool->histogram_box->histogram,
+  gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
                                      t_tool->hist);
-  gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
                                  t_tool->threshold->low_threshold,
                                  t_tool->threshold->high_threshold);
-  g_signal_handlers_unblock_by_func (t_tool->histogram_box->histogram,
+  g_signal_handlers_unblock_by_func (t_tool->histogram_box->view,
                                      gimp_threshold_tool_histogram_range,
                                      t_tool);
 
@@ -260,13 +260,13 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
-  g_signal_connect (t_tool->histogram_box->histogram, "range_changed",
+  g_signal_connect (t_tool->histogram_box->view, "range_changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 
   tool_options = GIMP_TOOL (t_tool)->tool_info->tool_options;
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
-                                       t_tool->histogram_box->histogram);
+                                       t_tool->histogram_box->view);
 }
 
 static void
@@ -277,7 +277,7 @@ gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
   t_tool->threshold->low_threshold  = 127.0;
   t_tool->threshold->high_threshold = 255.0;
 
-  gimp_histogram_view_set_range (t_tool->histogram_box->histogram,
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
                                  t_tool->threshold->low_threshold,
                                  t_tool->threshold->high_threshold);
 }

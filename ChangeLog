@@ -1,6 +1,48 @@
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
+	Replaced the histogram tool by a histogram dialog:
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/stock-tool-histogram-[16|22].png:
+	removed here ...
+	
+	* themes/Default/images/stock-histogram-[16|22].png: ,,, and added
+	under these new names.
+
+	* libgimpwidgets/gimpstock.[ch]: register the icons as
+	GIMP_STOCK_HISTOGRAM and removed the histogram tool stock icons.
+	
+	* app/base/gimphistogram.c: don't crash when uncalculated values
+	are requested from a GimpHistogram. Allow to reset the histogram
+	by calling gimp_histogram_calculate() with a NULL region.
+
+	* app/widgets/gimphistogrambox.[ch]: renamed the GimpHistogramView
+	struct member to "view".
+
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
+	* app/widgets/gimphistogramview.[ch] (gimp_histogram_view_events):
+	return TRUE when events were handled.
+
+	* app/tools/Makefile.am
+	* app/tools/gimp-tools.c
+	* app/tools/gimphistogramtool.[ch]: removed the histogram tool.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimphelp-ids.h
+	* app/widgets/widgets-types.h
+	* app/widgets/gimphistogrameditor.[ch]: added GimpHistogramEditor.
+	Has some rough edges still...
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/image-menu.c: register the new dialog instead of the
+	histogram tool.
+
 2003-10-31  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/wmf.c: made multi-head safe.
+	* plug-ins/common/wmf.c: made multi-head safe. The whole tree
+	compiles with GDK_MULTIHEAD_SAFE now.
 
 2003-10-31  Sven Neumann  <sven@gimp.org>
 

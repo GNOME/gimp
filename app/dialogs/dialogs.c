@@ -169,6 +169,8 @@ static const GimpDialogFactoryEntry dock_entries[] =
     0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-indexed-palette",  dialogs_indexed_palette_new,
     0, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-histogram-editor", dialogs_histogram_editor_new,
+    0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-selection-editor", dialogs_selection_editor_new,
     0, FALSE, FALSE, FALSE, TRUE },
   { "gimp-undo-history",     dialogs_undo_history_new,

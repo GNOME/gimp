@@ -35,7 +35,7 @@ struct _GimpHistogramBox
   GtkVBox            parent_instance;
 
   GtkWidget         *label;
-  GimpHistogramView *histogram;
+  GimpHistogramView *view;
   GtkWidget         *gradient;
   guchar            *gradient_buf;
 

@@ -108,6 +108,8 @@ libappwidgets_a_sources = \
 	gimphelp-ids.h			\
 	gimphistogrambox.c		\
 	gimphistogrambox.h		\
+	gimphistogrameditor.c		\
+	gimphistogrameditor.h		\
 	gimphistogramview.c		\
 	gimphistogramview.h		\
 	gimpimagedock.c			\

@@ -138,6 +138,9 @@ GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
 GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_histogram_editor_new   (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_selection_editor_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

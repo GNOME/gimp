@@ -296,7 +296,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   return TRUE;
 }
 
-static gint
+static gboolean
 gimp_histogram_view_events (GimpHistogramView *view,
                             GdkEvent          *event)
 {
@@ -323,7 +323,7 @@ gimp_histogram_view_events (GimpHistogramView *view,
       view->end   = view->start;
 
       gtk_widget_queue_draw (widget);
-      break;
+      return TRUE;
 
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
@@ -343,7 +343,7 @@ gimp_histogram_view_events (GimpHistogramView *view,
 
       g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
                      view->start, view->end);
-      break;
+      return TRUE;
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
@@ -352,7 +352,7 @@ gimp_histogram_view_events (GimpHistogramView *view,
       view->start = CLAMP ((((mevent->x - 1) * 256) / width), 0, 255);
 
       gtk_widget_queue_draw (widget);
-      break;
+      return TRUE;
 
     default:
       break;
