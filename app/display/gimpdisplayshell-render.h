@@ -38,9 +38,12 @@ void   gimp_display_shell_render (GimpDisplayShell *shell,
  */
 extern guchar *render_check_buf;
 extern guchar *render_empty_buf;
+extern guchar *render_white_buf;
 extern guchar *render_temp_buf;
+
 extern guchar *render_blend_dark_check;
 extern guchar *render_blend_light_check;
+extern guchar *render_blend_white;
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */

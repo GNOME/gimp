@@ -25,12 +25,16 @@
 
 #include "widgets-types.h"
 
+#include "base/temp-buf.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcellrendererviewable.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
+#include "gimppreview.h"
 
 
 enum
@@ -139,6 +143,75 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 }
 
 static void
+gimp_container_tree_view_set_viewable_func (GtkTreeViewColumn *tree_column,
+                                            GtkCellRenderer   *cell,
+                                            GtkTreeModel      *tree_model,
+                                            GtkTreeIter       *iter,
+                                            gpointer           data)
+{
+  GimpContainerTreeView *tree_view;
+  GimpViewable          *viewable;
+  GdkPixbuf             *pixbuf;
+  gint                   preview_size;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (data);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list), iter,
+                      COLUMN_VIEWABLE, &viewable,
+                      COLUMN_PIXBUF,   &pixbuf,
+                      -1);
+
+  preview_size = GIMP_CONTAINER_VIEW (tree_view)->preview_size;
+
+  if (! pixbuf && GTK_WIDGET_DRAWABLE (tree_view))
+    {
+      TempBuf *temp_buf;
+      gint     width;
+      gint     height;
+
+      gimp_viewable_get_preview_size (viewable, preview_size,
+                                      FALSE, TRUE,
+                                      &width, &height);
+
+      temp_buf = gimp_viewable_get_preview (viewable, width, height);
+
+      if (temp_buf)
+        {
+          pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+                                   temp_buf->width,
+                                   temp_buf->height);
+
+          gimp_preview_render_to_buffer (temp_buf, -1,
+                                         GIMP_PREVIEW_BG_CHECKS,
+                                         GIMP_PREVIEW_BG_WHITE,
+                                         gdk_pixbuf_get_pixels (pixbuf),
+                                         gdk_pixbuf_get_width (pixbuf),
+                                         gdk_pixbuf_get_height (pixbuf),
+                                         gdk_pixbuf_get_rowstride (pixbuf));
+        }
+
+      if (pixbuf)
+        {
+          gtk_list_store_set (tree_view->list, iter,
+                              COLUMN_PIXBUF, pixbuf,
+                              -1);
+          return;
+        }
+    }
+
+  g_object_set (G_OBJECT (cell),
+                "viewable",     viewable,
+                "preview-size", preview_size,
+                "pixbuf",       pixbuf,
+                NULL);
+
+  g_object_unref (viewable);
+
+  if (pixbuf)
+    g_object_unref (pixbuf);
+}
+
+static void
 gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
   GtkTreeViewColumn *column;
@@ -170,11 +243,11 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
   gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_append_column (tree_view->view, column);
 
-  cell = gtk_cell_renderer_pixbuf_new ();
+  cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, cell,
-                                       "pixbuf", COLUMN_PIXBUF,
-                                       NULL);
+  gtk_tree_view_column_set_cell_data_func (column, cell,
+                                           gimp_container_tree_view_set_viewable_func,
+                                           tree_view, NULL);
 
   gtk_tree_view_insert_column_with_attributes (tree_view->view,
                                                1, NULL,
@@ -211,7 +284,8 @@ gimp_container_tree_view_new (GimpContainer *container,
 
   g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
+  g_return_val_if_fail (preview_size > 0 &&
+                        preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
@@ -260,21 +334,9 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
                               gboolean               set_name)
 {
   GimpContainerView *view;
-  GdkPixbuf         *pixbuf = NULL;
-  gchar             *name   = NULL;
+  gchar             *name = NULL;
 
   view = GIMP_CONTAINER_VIEW (tree_view);
-
-  if (set_preview)
-    {
-      gint width;
-      gint height;
-
-      gimp_viewable_get_preview_size (viewable, view->preview_size, FALSE, TRUE,
-                                      &width, &height);
-
-      pixbuf = gimp_viewable_get_new_preview_pixbuf (viewable, width, height);
-    }
 
   if (set_name)
     {
@@ -284,22 +346,19 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
     }
 
-  if (! (pixbuf || name))
+  if (! (set_preview || name))
     return;
 
   gtk_list_store_set (tree_view->list, iter,
                       COLUMN_VIEWABLE, viewable,
 
-                      pixbuf ? COLUMN_PIXBUF     : COLUMN_NAME,
-                      pixbuf ? (gpointer) pixbuf : (gpointer) name,
+                      set_preview ? COLUMN_PIXBUF     : COLUMN_NAME,
+                      set_preview ? NULL              : (gpointer) name,
 
-                      pixbuf ? (name ? COLUMN_NAME : -1)   : -1,
-                      pixbuf ? (name ? name        : NULL) : NULL,
+                      set_preview ? (name ? COLUMN_NAME : -1)   : -1,
+                      set_preview ? (name ? name        : NULL) : NULL,
 
                       -1);
-
-  if (pixbuf)
-    g_object_unref (pixbuf);
 
   if (name)
     g_free (name);
@@ -458,6 +517,11 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
           g_object_unref (selected_viewable);
         }
 
+      if (selected)
+        g_signal_handlers_block_by_func (tree_view->selection,
+                                         gimp_container_tree_view_selection_changed,
+                                         tree_view);
+
       gtk_list_store_remove (tree_view->list, iter);
 
       if (new_index == -1)
@@ -468,7 +532,26 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
       gimp_container_tree_view_set (tree_view, iter, viewable, TRUE, TRUE);
 
       if (selected)
-	gimp_container_view_select_item (view, viewable);
+        {
+          GtkTreePath *path;
+
+          gtk_tree_selection_select_iter (tree_view->selection, iter);
+
+          g_signal_handlers_unblock_by_func (tree_view->selection,
+                                             gimp_container_tree_view_selection_changed,
+                                             tree_view);
+
+          path = gtk_tree_model_get_path (GTK_TREE_MODEL (tree_view->list),
+                                          iter);
+
+#ifdef __GNUC__
+#warning FIXME: use use_align == FALSE as soon as implemented by GtkTreeView
+#endif
+          gtk_tree_view_scroll_to_cell (tree_view->view, path,
+                                        NULL, TRUE, 0.5, 0.0);
+
+          gtk_tree_path_free (path);
+        }
     }
 }
 
@@ -563,28 +646,9 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
     {
       do
         {
-          GimpViewable *viewable;
-          GdkPixbuf    *pixbuf;
-          gint          width;
-          gint          height;
-
-          gtk_tree_model_get (tree_model, &iter,
-                              COLUMN_VIEWABLE, &viewable,
-                              -1);
-
-          gimp_viewable_get_preview_size (viewable, view->preview_size,
-                                          FALSE, TRUE,
-                                          &width, &height);
-
-          pixbuf = gimp_viewable_get_new_preview_pixbuf (viewable,
-                                                         width, height);
-
           gtk_list_store_set (tree_view->list, &iter,
-                              COLUMN_PIXBUF, pixbuf,
+                              COLUMN_PIXBUF, NULL,
                               -1);
-
-          g_object_unref (viewable);
-          g_object_unref (pixbuf);
         }
       while (gtk_tree_model_iter_next (tree_model, &iter));
     }

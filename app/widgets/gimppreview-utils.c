@@ -30,22 +30,16 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimpundo.h"
 
 #include "gimpbrushpreview.h"
 #include "gimpbufferpreview.h"
 #include "gimpdrawablepreview.h"
 #include "gimpgradientpreview.h"
 #include "gimpimagepreview.h"
-#include "gimpimagefilepreview.h"
 #include "gimppalettepreview.h"
 #include "gimppatternpreview.h"
-#include "gimptoolinfopreview.h"
-#include "gimpundopreview.h"
 
 
 GType
@@ -83,18 +77,6 @@ gimp_preview_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
     {
       type = GIMP_TYPE_BUFFER_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_TOOL_INFO))
-    {
-      type = GIMP_TYPE_TOOL_INFO_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
-    {
-      type = GIMP_TYPE_IMAGEFILE_PREVIEW;
-    }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_UNDO))
-    {
-      type = GIMP_TYPE_UNDO_PREVIEW;
     }
 
   return type;

@@ -173,7 +173,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
   { { N_("/File/Dialogs/Document History..."), "foo",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
-    "gimp-document-history",
+    "gimp-document-list",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,

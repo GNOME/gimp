@@ -149,31 +149,10 @@ gimp_image_preview_render (GimpPreview *preview)
   if (preview_width  < width)  render_buf->x = (width  - preview_width)  / 2;
   if (preview_height < height) render_buf->y = (height - preview_height) / 2;
 
-  if (render_buf->x || render_buf->y)
-    {
-      TempBuf *temp_buf;
-      guchar   white[4] = { 255, 255, 255, 255 };
-
-      temp_buf = temp_buf_new (width, height,
-			       render_buf->bytes,
-			       0, 0,
-			       white);
-
-      temp_buf_copy_area (render_buf, temp_buf,
-			  0, 0,
-			  render_buf->width,
-			  render_buf->height,
-			  render_buf->x,
-			  render_buf->y);
-
-      temp_buf_free (render_buf);
-
-      render_buf = temp_buf;
-    }
-
-  gimp_preview_render_and_flush (preview,
-				 render_buf,
-				 GIMP_IMAGE_PREVIEW (preview)->channel);
+  gimp_preview_render_preview (preview, render_buf,
+                               GIMP_IMAGE_PREVIEW (preview)->channel,
+                               GIMP_PREVIEW_BG_CHECKS,
+                               GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (render_buf);
 }

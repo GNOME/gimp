@@ -536,9 +536,6 @@ tool_manager_register_tool (GType                   tool_type,
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
   const gchar     *paint_core_name;
-  GtkIconSet      *icon_set;
-  GtkStyle        *style;
-  GdkPixbuf       *pixbuf;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
@@ -585,21 +582,6 @@ tool_manager_register_tool (GType                   tool_type,
       paint_core_name = "GimpPaintbrush";
     }
 
-  icon_set = gtk_icon_factory_lookup_default (stock_id);
-
-#ifdef __GNUC__
-#warning FIXME: remove gtk_widget_get_default_style()
-#endif
-  style = gtk_widget_get_default_style ();
-
-  pixbuf = gtk_icon_set_render_icon (icon_set,
-				     style,
-				     GTK_TEXT_DIR_LTR,
-				     GTK_STATE_NORMAL,
-				     GTK_ICON_SIZE_BUTTON,
-				     NULL,
-				     NULL);
-
   tool_manager = tool_manager_get (gimp);
 
   tool_info = gimp_tool_info_new (gimp,
@@ -614,10 +596,7 @@ tool_manager_register_tool (GType                   tool_type,
 				  help_domain,
 				  help_data,
                                   paint_core_name,
-				  stock_id,
-				  pixbuf);
-
-  g_object_unref (pixbuf);
+				  stock_id);
 
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
                      options_gui_func);

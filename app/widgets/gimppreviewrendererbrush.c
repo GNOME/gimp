@@ -37,12 +37,12 @@
 static void   gimp_brush_preview_class_init (GimpBrushPreviewClass *klass);
 static void   gimp_brush_preview_init       (GimpBrushPreview      *preview);
 
-static void        gimp_brush_preview_destroy             (GtkObject   *object);
-static void        gimp_brush_preview_render              (GimpPreview *preview);
-static GtkWidget * gimp_brush_preview_create_popup        (GimpPreview *preview);
-static gboolean    gimp_brush_preview_needs_popup         (GimpPreview *preview);
+static void        gimp_brush_preview_destroy        (GtkObject   *object);
+static void        gimp_brush_preview_render         (GimpPreview *preview);
+static GtkWidget * gimp_brush_preview_create_popup   (GimpPreview *preview);
+static gboolean    gimp_brush_preview_needs_popup    (GimpPreview *preview);
 
-static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *preview);
+static gboolean    gimp_brush_preview_render_timeout (gpointer     data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -120,13 +120,6 @@ gimp_brush_preview_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-#define indicator_width  7
-#define indicator_height 7
-
-#define WHT { 255, 255, 255 }
-#define BLK {   0,   0,   0 }
-#define RED { 255, 127, 127 }
-
 static void
 gimp_brush_preview_render (GimpPreview *preview)
 {
@@ -137,11 +130,6 @@ gimp_brush_preview_render (GimpPreview *preview)
   gint              height;
   gint              brush_width;
   gint              brush_height;
-  guchar           *buf;
-  guchar           *b;
-  gint              x, y;
-  gint              offset_x;
-  gint              offset_y;
 
   brush_preview = GIMP_BRUSH_PREVIEW (preview);
 
@@ -160,41 +148,53 @@ gimp_brush_preview_render (GimpPreview *preview)
   height = preview->height;
 
   temp_buf = gimp_viewable_get_new_preview (preview->viewable,
-					    width,
-					    height);
+                                            width, height);
+
+  if (temp_buf->width < width)
+    temp_buf->x = (width - temp_buf->width) / 2;
+
+  if (temp_buf->height < height)
+    temp_buf->y = (height - temp_buf->height) / 2;
 
   if (preview->is_popup)
     {
-      gimp_preview_render_and_flush (preview,
-				     temp_buf,
-				     -1);
+      gimp_preview_render_preview (preview, temp_buf, -1,
+                                   GIMP_PREVIEW_BG_WHITE,
+                                   GIMP_PREVIEW_BG_WHITE);
 
       temp_buf_free (temp_buf);
 
       if (GIMP_IS_BRUSH_PIPE (brush))
 	{
-	  if (width  != brush_width  ||
-	      height != brush_height)
+	  if (width != brush_width || height != brush_height)
 	    {
 	      g_warning ("%s(): non-fullsize pipe popups are not supported yet.",
 			 G_GNUC_FUNCTION);
 	      return;
 	    }
 
-	  brush_preview->pipe_animation_index  = 0;
+	  brush_preview->pipe_animation_index = 0;
 	  brush_preview->pipe_timeout_id =
-	    g_timeout_add (300,
-			   (GSourceFunc) gimp_brush_preview_render_timeout_func,
-			   brush_preview);
+            g_timeout_add (300, gimp_brush_preview_render_timeout,
+                           brush_preview);
 	}
 
       return;
     }
 
-  buf = temp_buf_data (temp_buf);
+#define INDICATOR_WIDTH  7
+#define INDICATOR_HEIGHT 7
 
-  if (width < brush_width || height < brush_height)
+  if (temp_buf->width  >= INDICATOR_WIDTH  &&
+      temp_buf->height >= INDICATOR_HEIGHT &&
+      (width  < brush_width  ||
+       height < brush_height ||
+       GIMP_IS_BRUSH_PIPE (brush)))
     {
+#define WHT { 255, 255, 255 }
+#define BLK {   0,   0,   0 }
+#define RED { 255, 127, 127 }
+
       static const guchar scale_indicator_bits[7][7][3] = 
       {
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
@@ -217,34 +217,6 @@ gimp_brush_preview_render (GimpPreview *preview)
         { WHT, RED, RED, RED, RED, RED, RED }
       };
 
-      offset_x = width  - indicator_width;
-      offset_y = height - indicator_height;
-
-      b = buf + (offset_y * width + offset_x) * temp_buf->bytes;
-
-      for (y = 0; y < indicator_height; y++)
-        {
-          for (x = 0; x < indicator_height; x++)
-            {
-              if (GIMP_IS_BRUSH_PIPE (brush))
-                {
-                  *b++ = scale_pipe_indicator_bits[y][x][0];
-                  *b++ = scale_pipe_indicator_bits[y][x][1];
-                  *b++ = scale_pipe_indicator_bits[y][x][2];
-                }
-              else
-                {
-                  *b++ = scale_indicator_bits[y][x][0];
-                  *b++ = scale_indicator_bits[y][x][1];
-                  *b++ = scale_indicator_bits[y][x][2];
-                }
-            }
-
-          b += (width - indicator_width) * temp_buf->bytes;
-        }
-    }
-  else if (GIMP_IS_BRUSH_PIPE (brush))
-    {
       static const guchar pipe_indicator_bits[7][7][3] = 
       {
         { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
@@ -256,34 +228,69 @@ gimp_brush_preview_render (GimpPreview *preview)
         { WHT, RED, RED, RED, RED, RED, RED }
       };
 
-      offset_x = width  - indicator_width;
-      offset_y = height - indicator_height;
-
-      b = buf + (offset_y * width + offset_x) * temp_buf->bytes;
-
-      for (y = 0; y < indicator_height; y++)
-        {
-          for (x = 0; x < indicator_height; x++)
-            {
-              *b++ = pipe_indicator_bits[y][x][0];
-              *b++ = pipe_indicator_bits[y][x][1];
-              *b++ = pipe_indicator_bits[y][x][2];
-            }
-
-          b += (width - indicator_width) * temp_buf->bytes;
-        }
-    }
-
-#undef indicator_width
-#undef indicator_height
-
 #undef WHT
 #undef BLK
 #undef RED
 
-  gimp_preview_render_and_flush (preview,
-				 temp_buf,
-				 -1);
+      guchar   *buf;
+      gint      x, y;
+      gint      offset_x;
+      gint      offset_y;
+      gboolean  alpha;
+      gboolean  pipe;
+      gboolean  scale;
+
+      buf = temp_buf_data (temp_buf);
+
+      offset_x = temp_buf->width  - INDICATOR_WIDTH;
+      offset_y = temp_buf->height - INDICATOR_HEIGHT;
+
+      buf += (offset_y * temp_buf->width + offset_x) * temp_buf->bytes;
+
+      pipe  = GIMP_IS_BRUSH_PIPE (brush);
+      scale = (width < brush_width || height < brush_height);
+      alpha = (temp_buf->bytes == 4);
+
+      for (y = 0; y < INDICATOR_HEIGHT; y++)
+        {
+          for (x = 0; x < INDICATOR_WIDTH; x++)
+            {
+              if (scale)
+                {
+                  if (pipe)
+                    {
+                      *buf++ = scale_pipe_indicator_bits[y][x][0];
+                      *buf++ = scale_pipe_indicator_bits[y][x][1];
+                      *buf++ = scale_pipe_indicator_bits[y][x][2];
+                    }
+                  else
+                    {
+                      *buf++ = scale_indicator_bits[y][x][0];
+                      *buf++ = scale_indicator_bits[y][x][1];
+                      *buf++ = scale_indicator_bits[y][x][2];
+                    }
+                }
+              else if (pipe)
+                {
+                  *buf++ = pipe_indicator_bits[y][x][0];
+                  *buf++ = pipe_indicator_bits[y][x][1];
+                  *buf++ = pipe_indicator_bits[y][x][2];
+                }
+
+              if (alpha)
+                *buf++ = 255;
+            }
+
+          buf += (temp_buf->width - INDICATOR_WIDTH) * temp_buf->bytes;
+        }
+    }
+
+#undef INDICATOR_WIDTH
+#undef INDICATOR_HEIGHT
+
+  gimp_preview_render_preview (preview, temp_buf, -1,
+                               GIMP_PREVIEW_BG_WHITE,
+                               GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 }
@@ -324,12 +331,15 @@ gimp_brush_preview_needs_popup (GimpPreview *preview)
 }
 
 static gboolean
-gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
+gimp_brush_preview_render_timeout (gpointer data)
 {
-  GimpPreview   *preview;
-  GimpBrushPipe *brush_pipe;
-  GimpBrush     *brush;
-  TempBuf       *temp_buf;
+  GimpBrushPreview *brush_preview;
+  GimpPreview      *preview;
+  GimpBrushPipe    *brush_pipe;
+  GimpBrush        *brush;
+  TempBuf          *temp_buf;
+
+  brush_preview = GIMP_BRUSH_PREVIEW (data);
 
   preview = GIMP_PREVIEW (brush_preview);
 
@@ -355,7 +365,9 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
 					    preview->width,
 					    preview->height);
 
-  gimp_preview_render_and_flush (preview, temp_buf, -1);
+  gimp_preview_render_preview (preview, temp_buf, -1,
+                               GIMP_PREVIEW_BG_WHITE,
+                               GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 

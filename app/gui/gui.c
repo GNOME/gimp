@@ -572,6 +572,13 @@ static gboolean
 gui_exit_finish_callback (Gimp     *gimp,
                           gboolean  kill_it)
 {
+  g_signal_handlers_disconnect_by_func (gimp->config,
+                                        gui_show_tooltips_notify,
+                                        gimp);
+
+  gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
+  image_disconnect_handler_id = 0;
+
   g_object_unref (toolbox_item_factory);
   toolbox_item_factory = NULL;
 
@@ -586,13 +593,6 @@ gui_exit_finish_callback (Gimp     *gimp,
 
   dialogs_exit (gimp);
   gimp_devices_exit (gimp);
-
-  g_signal_handlers_disconnect_by_func (gimp->config,
-                                        gui_show_tooltips_notify,
-                                        gimp);
-
-  gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
-  image_disconnect_handler_id = 0;
 
   if (themes_hash)
     {

@@ -53,6 +53,7 @@ struct _GimpPreview
   gboolean        dot_for_dot;
 
   GimpRGB         border_color;
+  GdkGC          *border_gc;
 
   gboolean        is_popup;
   gboolean        clickable;
@@ -62,6 +63,8 @@ struct _GimpPreview
   /*< private >*/
   guchar         *buffer;
   gint            rowstride;
+
+  GdkPixbuf      *no_preview_pixbuf;
 
   gint            size;
   gboolean        in_button;
@@ -132,9 +135,25 @@ void         gimp_preview_update           (GimpPreview   *preview);
 
 /*  protected  */
 
-void         gimp_preview_render_and_flush (GimpPreview   *preview,
+typedef enum
+{
+  GIMP_PREVIEW_BG_CHECKS,
+  GIMP_PREVIEW_BG_WHITE
+} GimpPreviewBG;
+
+void         gimp_preview_render_to_buffer (TempBuf       *temp_buf,
+                                            gint           channel,
+                                            GimpPreviewBG  inside_bg,
+                                            GimpPreviewBG  outside_bg,
+                                            guchar        *dest_buffer,
+                                            gint           dest_width,
+                                            gint           dest_height,
+                                            gint           dest_rowstride);
+void         gimp_preview_render_preview   (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
-					    gint           channel);
+					    gint           channel,
+                                            GimpPreviewBG  inside_bg,
+                                            GimpPreviewBG  outside_bg);
 
 
 #endif /* __GIMP_PREVIEW_H__ */

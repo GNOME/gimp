@@ -106,9 +106,11 @@ gimp_gradient_preview_render (GimpPreview *preview)
   temp_buf = gimp_viewable_get_new_preview (preview->viewable,
 					    width, height);
 
-  gimp_preview_render_and_flush (preview,
-                                 temp_buf,
-                                 -1);
+  gimp_preview_render_preview (preview,
+                               temp_buf,
+                               -1,
+                               GIMP_PREVIEW_BG_CHECKS,
+                               GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 }

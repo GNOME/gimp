@@ -383,7 +383,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       measure_tool_info = info_dialog_new (NULL,
                                            tool->tool_info->blurb,
                                            GIMP_OBJECT (tool->tool_info)->name,
-                                           tool->tool_info->stock_id,
+                                           GIMP_VIEWABLE (tool->tool_info)->stock_id,
                                            _("Measure Distances and Angles"),
 					   tool_manager_help_func, NULL);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);

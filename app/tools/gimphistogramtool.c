@@ -342,7 +342,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
     gimp_viewable_dialog_new (NULL,
                               tool_info->blurb,
                               GIMP_OBJECT (tool_info)->name,
-                              tool_info->stock_id,
+                              GIMP_VIEWABLE (tool_info)->stock_id,
                               _("View Image Histogram"),
                               tool_manager_help_func, NULL,
 

@@ -88,7 +88,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   MENU_SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-history",
+  ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-list",
            "<StockItem>",                      GTK_STOCK_OPEN),
   ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console",
            "<StockItem>",                      GIMP_STOCK_WARNING),

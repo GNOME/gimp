@@ -203,7 +203,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
         gimp_viewable_dialog_new (NULL,
                                   tool_info->blurb,
                                   GIMP_OBJECT (tool_info)->name,
-                                  tool_info->stock_id,
+                                  GIMP_VIEWABLE (tool_info)->stock_id,
                                   image_map_tool->shell_desc,
                                   tool_manager_help_func, NULL,
 

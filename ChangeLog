@@ -1,4 +1,4 @@
-2003-02-25  Michael Natterer  <mitch@gimp.org>
+2003-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.[ch]: added "gchar *stock_id" to the
 	GimpViewable struct. It is used by the GUI if the get_preview()

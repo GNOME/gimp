@@ -251,7 +251,7 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 					    gimp_container_view_reorder,
 					    view);
 
-        g_hash_table_destroy (view->hash_table);
+      g_hash_table_destroy (view->hash_table);
 
       view_class = GIMP_CONTAINER_VIEW_GET_CLASS (view);
 

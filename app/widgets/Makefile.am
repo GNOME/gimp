@@ -29,6 +29,8 @@ libappwidgets_a_sources = \
 	gimpbufferpreview.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
+	gimpcellrendererviewable.c	\
+	gimpcellrendererviewable.h	\
 	gimpchannellistitem.c		\
 	gimpchannellistitem.h		\
 	gimpchannellistview.c		\
@@ -107,8 +109,6 @@ libappwidgets_a_sources = \
 	gimpimagedock.h			\
 	gimpimageeditor.c		\
 	gimpimageeditor.h		\
-	gimpimagefilepreview.c		\
-	gimpimagefilepreview.h		\
 	gimpimagepreview.c		\
 	gimpimagepreview.h		\
 	gimpimageview.c			\
@@ -153,12 +153,8 @@ libappwidgets_a_sources = \
 	gimptoolbox-color-area.h	\
 	gimptoolbox-indicator-area.c	\
 	gimptoolbox-indicator-area.h	\
-	gimptoolinfopreview.c		\
-	gimptoolinfopreview.h		\
 	gimpundoeditor.c		\
 	gimpundoeditor.h		\
-	gimpundopreview.c		\
-	gimpundopreview.h		\
 	gimpvectorslistview.c		\
 	gimpvectorslistview.h		\
 	gimpviewabledialog.c		\

@@ -1099,14 +1099,17 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     {
       GimpToolInfo *tool_info;
+      gchar        *stock_id;
 
       tool_info = GIMP_TOOL (tr_tool)->tool_info;
+
+      stock_id = GIMP_VIEWABLE (tool_info)->stock_id;
 
       tr_tool->info_dialog =
         info_dialog_new (NULL,
                          tool_info->blurb,
                          GIMP_OBJECT (tool_info)->name,
-                         tool_info->stock_id,
+                         stock_id,
                          tr_tool->shell_desc,
                          tool_manager_help_func, NULL);
 
@@ -1120,7 +1123,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                       transform_cancel_callback,
                                       tr_tool, NULL, NULL, FALSE, TRUE,
 
-                                      tool_info->stock_id,
+                                      stock_id,
                                       transform_ok_callback,
                                       tr_tool, NULL, NULL, TRUE, FALSE,
 

@@ -73,9 +73,12 @@ static void   render_setup_notify (gpointer    config,
 /*  accelerate transparency of image scaling  */
 guchar *render_check_buf         = NULL;
 guchar *render_empty_buf         = NULL;
+guchar *render_white_buf         = NULL;
 guchar *render_temp_buf          = NULL;
+
 guchar *render_blend_dark_check  = NULL;
 guchar *render_blend_light_check = NULL;
+guchar *render_blend_white       = NULL;
 
 
 static guchar *tile_buf           = NULL;
@@ -135,6 +138,12 @@ render_exit (Gimp *gimp)
       render_blend_light_check = NULL;
     }
 
+  if (render_blend_white)
+    {
+      g_free (render_blend_white);
+      render_blend_white = NULL;
+    }
+
   if (render_check_buf)
     {
       g_free (render_check_buf);
@@ -145,6 +154,12 @@ render_exit (Gimp *gimp)
     {
       g_free (render_empty_buf);
       render_empty_buf = NULL;
+    }
+
+  if (render_white_buf)
+    {
+      g_free (render_white_buf);
+      render_white_buf = NULL;
     }
 
   if (render_temp_buf)
@@ -185,6 +200,8 @@ render_setup_notify (gpointer    config,
     render_blend_dark_check = g_new (guchar, 65536);
   if (! render_blend_light_check)
     render_blend_light_check = g_new (guchar, 65536);
+  if (! render_blend_white)
+    render_blend_white = g_new (guchar, 65536);
 
   for (i = 0; i < 256; i++)
     for (j = 0; j < 256; j++)
@@ -193,6 +210,9 @@ render_setup_notify (gpointer    config,
 	  ((j * i + check_combos[check_type][0] * (255 - i)) / 255);
 	render_blend_light_check [(i << 8) + j] = (guchar)
 	  ((j * i + check_combos[check_type][1] * (255 - i)) / 255);
+
+	render_blend_white [(i << 8) + j] = (guchar)
+	  ((j * i + 255 * (255 - i)) / 255);
       }
 
   switch (check_size)
@@ -213,6 +233,7 @@ render_setup_notify (gpointer    config,
 
   g_free (render_check_buf);
   g_free (render_empty_buf);
+  g_free (render_white_buf);
   g_free (render_temp_buf);
 
 #ifdef __GNUC__
@@ -242,12 +263,16 @@ render_setup_notify (gpointer    config,
 	}
 
       render_empty_buf = g_new0 (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
+      render_white_buf = g_new  (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
       render_temp_buf  = g_new  (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
+
+      memset (render_white_buf, 255, (MAX_PREVIEW_SIZE + 4) * 3);
     }
   else
     {
       render_check_buf = NULL;
       render_empty_buf = NULL;
+      render_white_buf = NULL;
       render_temp_buf  = NULL;
     }
 }

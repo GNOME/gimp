@@ -762,7 +762,7 @@ GimpItemFactoryEntry image_menu_entries[] =
   { { N_("/Dialogs/Document History..."), "foo",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
-    "gimp-document-history",
+    "gimp-document-list",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
@@ -860,7 +860,7 @@ image_menu_setup (GimpItemFactory *factory)
             entry.entry.callback        = tools_select_cmd_callback;
             entry.entry.callback_action = 0;
             entry.entry.item_type       = "<StockItem>";
-            entry.entry.extra_data      = tool_info->stock_id;
+            entry.entry.extra_data      = GIMP_VIEWABLE (tool_info)->stock_id;
             entry.quark_string          = NULL;
             entry.help_page             = tool_info->help_data;
             entry.description           = NULL;

@@ -266,6 +266,11 @@ tree_items[] =
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
+    TRUE, "tool-options",
+    N_("This folder is used to store tool options."),
+    TREE_ITEM_MKDIR_ONLY, NULL
+  },
+  {
     TRUE, "curves",
     N_("This folder is used to store parameter files for the\n"
        "Curves tool."),

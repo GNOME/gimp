@@ -87,7 +87,9 @@ static const GimpDialogFactoryEntry dock_entries[] =
 
   { "gimp-color-editor",     dialogs_color_editor_new,        0, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp-document-history", dialogs_document_history_new,   48, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-document-list",    dialogs_document_list_new,      48, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-document-grid",    dialogs_document_grid_new,      48, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-document-tree",    dialogs_document_tree_new,      48, FALSE, FALSE, FALSE, TRUE },
 
   { "gimp-brush-editor",     dialogs_brush_editor_get,        0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-gradient-editor",  dialogs_gradient_editor_get,     0, TRUE,  FALSE, FALSE, TRUE },

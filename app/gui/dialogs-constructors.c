@@ -957,9 +957,9 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_document_history_new (GimpDialogFactory *factory,
-			      GimpContext       *context,
-                              gint               preview_size)
+dialogs_document_list_new (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           gint               preview_size)
 {
   GtkWidget *view;
 
@@ -972,7 +972,51 @@ dialogs_document_history_new (GimpDialogFactory *factory,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
-			       _("Document History"), _("History"),
+			       _("Document History List"), _("History"),
+                               GTK_STOCK_OPEN,
+			       dialogs_stock_text_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_document_grid_new (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_document_view_new (GIMP_VIEW_TYPE_GRID,
+                                 context->gimp->documents,
+                                 context,
+                                 preview_size,
+                                 5, 3,
+                                 file_file_open_dialog,
+                                 factory->menu_factory);
+
+  return dialogs_dockable_new (view,
+			       _("Document History Grid"), _("History"),
+                               GTK_STOCK_OPEN,
+			       dialogs_stock_text_tab_func,
+			       dialogs_set_editor_context_func);
+}
+
+GtkWidget *
+dialogs_document_tree_new (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_document_view_new (GIMP_VIEW_TYPE_TREE,
+                                 context->gimp->documents,
+                                 context,
+                                 preview_size,
+                                 5, 3,
+                                 file_file_open_dialog,
+                                 factory->menu_factory);
+
+  return dialogs_dockable_new (view,
+			       _("Document History Tree"), _("History"),
                                GTK_STOCK_OPEN,
 			       dialogs_stock_text_tab_func,
 			       dialogs_set_editor_context_func);
@@ -1236,7 +1280,9 @@ dialogs_tool_tab_tool_changed (GimpContext  *context,
                                GimpToolInfo *tool_info,
                                GtkImage     *image)
 {
-  gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
+  gtk_image_set_from_stock (image,
+                            GIMP_VIEWABLE (tool_info)->stock_id,
+                            image->icon_size);
 }
 
 static GtkWidget *
@@ -1244,13 +1290,15 @@ dialogs_tool_tab_func (GimpDockable *dockable,
 		       GimpDockbook *dockbook,
 		       GtkIconSize   size)
 {
-  GimpContext *context;
-  GtkWidget   *image;
+  GimpContext  *context;
+  GimpViewable *viewable;
+  GtkWidget    *image;
 
   context = dockbook->dock->context;
 
-  image = gtk_image_new_from_stock (gimp_context_get_tool (context)->stock_id,
-                                    size);
+  viewable = GIMP_VIEWABLE (gimp_context_get_tool (context));
+
+  image = gtk_image_new_from_stock (viewable->stock_id, size);
 
   g_signal_connect_object (context, "tool_changed",
 			   G_CALLBACK (dialogs_tool_tab_tool_changed),
@@ -1268,7 +1316,9 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
   GtkImage *image;
 
   if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
-    gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
+    gtk_image_set_from_stock (image,
+                              GIMP_VIEWABLE (tool_info)->stock_id,
+                              image->icon_size);
 
   gtk_label_set_text (label, tool_info->blurb);
 
@@ -1298,7 +1348,7 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 
   hbox = gtk_hbox_new (FALSE, 2);
 
-  image = gtk_image_new_from_stock (gimp_context_get_tool (context)->stock_id,
+  image = gtk_image_new_from_stock (GIMP_VIEWABLE (tool_info)->stock_id,
                                     size);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);

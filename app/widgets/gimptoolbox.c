@@ -648,7 +648,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
       g_object_set_data (G_OBJECT (tool_info), "toolbox-button", button);
       g_object_set_data (G_OBJECT (button), "tool-info", tool_info);
 
-      image = gtk_image_new_from_stock (tool_info->stock_id,
+      image = gtk_image_new_from_stock (GIMP_VIEWABLE (tool_info)->stock_id,
 					GTK_ICON_SIZE_BUTTON);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
