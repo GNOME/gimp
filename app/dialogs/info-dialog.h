@@ -52,7 +52,7 @@ struct _InfoDialog
   GSList      *field_list;
   gint         nfields;
 
-  void        *user_data;
+  gpointer     user_data;
 };
 
 /*  Info Dialog functions  */

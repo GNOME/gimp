@@ -1237,7 +1237,7 @@ user_install_resolution (void)
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
   resolution_entry =
     gimp_coordinates_new (GIMP_UNIT_INCH, pixels_per_unit,
-			  FALSE, FALSE, 75,
+			  FALSE, FALSE, 10,
 			  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
 			  abs (gimprc.monitor_xres - gimprc.monitor_yres) < GIMP_MIN_RESOLUTION,
 			  FALSE,

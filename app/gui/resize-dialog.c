@@ -39,6 +39,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define SB_WIDTH 10
+
+
 typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
@@ -120,7 +123,6 @@ resize_widget_new (GimpImage    *gimage,
 		   GimpUnit      unit,
 		   gboolean      dot_for_dot,
 		   GCallback     ok_cb,
-		   GCallback     cancel_cb,
 		   gpointer      user_data)
 {
   Resize        *resize;
@@ -218,7 +220,7 @@ resize_widget_new (GimpImage    *gimage,
 	  }
 	frame = gtk_frame_new (_("Size"));
 	break;
-      }	
+      }
 
     resize->resize_shell =
       gimp_viewable_dialog_new (GIMP_IS_VIEWABLE (object) ?
@@ -228,10 +230,8 @@ resize_widget_new (GimpImage    *gimage,
                                 gimp_standard_help_func, help_page,
 
                                 GTK_STOCK_CANCEL, 
-                                cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
-                                cancel_cb ? user_data : NULL,
-                                cancel_cb ? NULL : (gpointer) 1,
-                                NULL, FALSE, TRUE,
+                                G_CALLBACK (gtk_widget_destroy),
+                                NULL, (gpointer) 1, NULL, FALSE, TRUE,
 
                                 GIMP_STOCK_RESET, reset_callback,
                                 resize, NULL, NULL, FALSE, FALSE,
@@ -248,17 +248,10 @@ resize_widget_new (GimpImage    *gimage,
 
   /*  handle the image disappearing under our feet  */
   if (object && signal)
-    {
-      if (cancel_cb)
-	g_signal_connect (G_OBJECT (object), signal,
-			  cancel_cb,
-			  user_data);
-      else
-	g_signal_connect_object (G_OBJECT (object), signal,
-				 G_CALLBACK (gtk_widget_destroy),
-				 G_OBJECT (resize->resize_shell),
-				 G_CONNECT_SWAPPED);
-    }
+    g_signal_connect_object (G_OBJECT (object), signal,
+                             G_CALLBACK (gtk_widget_destroy),
+                             G_OBJECT (resize->resize_shell),
+                             G_CONNECT_SWAPPED);
 
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
@@ -276,11 +269,12 @@ resize_widget_new (GimpImage    *gimage,
 
   table = gtk_table_new (6, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  the original width & height labels  */
@@ -297,10 +291,10 @@ resize_widget_new (GimpImage    *gimage,
   gtk_widget_show (label);
 
   private->orig_width_label = gtk_label_new ("");
-  gtk_misc_set_alignment (GTK_MISC ( private->orig_width_label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (private->orig_width_label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table),  private->orig_width_label, 1, 2, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show ( private->orig_width_label);
+  gtk_widget_show (private->orig_width_label);
 
   private->orig_height_label = gtk_label_new ("");
   gtk_misc_set_alignment (GTK_MISC (private->orig_height_label), 0.0, 0.5);
@@ -322,19 +316,23 @@ resize_widget_new (GimpImage    *gimage,
   gtk_widget_show (label);
 
   /*  the new size sizeentry  */
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 1,
+                                     1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-  private->size_se =
-    gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 75,
-			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  private->size_se = gimp_size_entry_new (1, unit, "%a",
+                                          TRUE, TRUE, FALSE, SB_WIDTH,
+                                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (private->size_se), spinbutton,
 			     1, 2, 0, 1);
   gtk_widget_show (spinbutton);
+
   gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, 2, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (private->size_se);
@@ -395,15 +393,14 @@ resize_widget_new (GimpImage    *gimage,
   gtk_widget_show (abox);
   
   /*  the scale ratio spinbuttons  */
-  private->ratio_x_adj =
-    gtk_adjustment_new (resize->ratio_x, 
-			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
-			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
-			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj),
-                                    0.01, 4);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  spinbutton =
+    gimp_spin_button_new (&private->ratio_x_adj,
+                          resize->ratio_x, 
+                          (double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
+                          (double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
   gtk_widget_show (spinbutton);
 
@@ -411,19 +408,18 @@ resize_widget_new (GimpImage    *gimage,
 		    G_CALLBACK (ratio_callback),
 		    resize);
 
-  private->ratio_y_adj =
-    gtk_adjustment_new (resize->ratio_y,
-			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
-			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
-			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj),
-                                    0.01, 4);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  spinbutton =
+    gimp_spin_button_new (&private->ratio_y_adj,
+                          resize->ratio_y,
+                          (double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
+                          (double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
+                          0.01, 0.1, 1,
+                          0.01, 4);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (G_OBJECT ( private->ratio_y_adj), "value_changed",
+  g_signal_connect (G_OBJECT (private->ratio_y_adj), "value_changed",
 		    G_CALLBACK (ratio_callback),
 		    resize);
 
@@ -457,24 +453,29 @@ resize_widget_new (GimpImage    *gimage,
       gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
  
       /*  the offset sizeentry  */
-      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_size_request (spinbutton, 75, -1);
+      spinbutton = gimp_spin_button_new (&adjustment,
+                                         1, 1, 1, 1, 10, 1,
+                                         1, 2);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-      private->offset_se =
-	gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 75,
-			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      private->offset_se = gimp_size_entry_new (1, unit, "%a",
+                                                TRUE, FALSE, FALSE, SB_WIDTH,
+                                                GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 0, 4);
+      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 1, 4);
+      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 3, 8);
+      gtk_table_set_row_spacing (GTK_TABLE (private->offset_se), 0, 2);
+
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
 				 GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_table_attach_defaults (GTK_TABLE (private->offset_se), spinbutton,
 				 1, 2, 0, 1);
-      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 0, 4);
+      gtk_widget_show (spinbutton);
+
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
 				    _("X:"), 0, 0, 1.0);
       gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->offset_se),
 				    _("Y:"), 1, 0, 1.0);
-      gtk_widget_show (spinbutton);
       gtk_container_add (GTK_CONTAINER (abox), private->offset_se);
       gtk_widget_show (private->offset_se);
 
@@ -503,7 +504,6 @@ resize_widget_new (GimpImage    *gimage,
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
       gtk_table_attach_defaults (GTK_TABLE (private->offset_se), button,
                                  4, 5, 1, 2);
-      gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 3, 8);
       gtk_widget_show (button);
 
       g_signal_connect (G_OBJECT (button), "clicked",
@@ -547,6 +547,7 @@ resize_widget_new (GimpImage    *gimage,
 
       table = gtk_table_new (4, 2, FALSE);
       gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
       gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
@@ -565,27 +566,32 @@ resize_widget_new (GimpImage    *gimage,
 
       /*  the print size sizeentry  */
       abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_size_request (spinbutton, 75, -1);
-      gtk_container_add (GTK_CONTAINER (abox), spinbutton);
-      gtk_widget_show (spinbutton);
       gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (abox);
 
+      spinbutton = gimp_spin_button_new (&adjustment,
+                                         1, 1, 1, 1, 10, 1,
+                                         1, 2);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
+      gtk_container_add (GTK_CONTAINER (abox), spinbutton);
+      gtk_widget_show (spinbutton);
+
       abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-      private->printsize_se =
-	gimp_size_entry_new (1, unit, "%a", FALSE, FALSE, FALSE, 75,
-			     GIMP_SIZE_ENTRY_UPDATE_SIZE);
-      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->printsize_se),
-				 GTK_SPIN_BUTTON (spinbutton), NULL);
-      gtk_container_add (GTK_CONTAINER (abox), private->printsize_se);
       gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (private->printsize_se);
       gtk_widget_show (abox);
+
+      private->printsize_se = gimp_size_entry_new (1, unit, "%a",
+                                                   FALSE, FALSE, FALSE, SB_WIDTH,
+                                                   GIMP_SIZE_ENTRY_UPDATE_SIZE);
+      gtk_table_set_col_spacing (GTK_TABLE (private->printsize_se), 1, 4);
+
+      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->printsize_se),
+				 GTK_SPIN_BUTTON (spinbutton), NULL);
+
+      gtk_container_add (GTK_CONTAINER (abox), private->printsize_se);
+      gtk_widget_show (private->printsize_se);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->printsize_se),
 				      0, resolution_x, FALSE);
@@ -610,7 +616,7 @@ resize_widget_new (GimpImage    *gimage,
       g_signal_connect (G_OBJECT (private->printsize_se), "unit_changed",
 			G_CALLBACK (unit_update),
 			resize);
-      
+
       /*  the resolution labels  */
       label = gtk_label_new (_("Resolution X:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -625,23 +631,26 @@ resize_widget_new (GimpImage    *gimage,
       gtk_widget_show (label);
 
       /*  the resolution sizeentry  */
-      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_size_request (spinbutton, 75, -1);
+      spinbutton = gimp_spin_button_new (&adjustment,
+                                         1, 1, 1, 1, 10, 1,
+                                         1, 2);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
       private->resolution_se =
 	gimp_size_entry_new (1, gimage->gimp->config->default_resolution_units, 
 			     _("pixels/%a"),
-			     FALSE, FALSE, FALSE, 75,
+			     FALSE, FALSE, FALSE, SB_WIDTH,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
       gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);
       gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);
+      gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);
+
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
 				 GTK_SPIN_BUTTON (spinbutton), NULL);
       gtk_table_attach_defaults (GTK_TABLE (private->resolution_se), spinbutton,
 				 1, 2, 0, 1);
       gtk_widget_show (spinbutton);
+
       gtk_table_attach (GTK_TABLE (table), private->resolution_se, 1, 2, 2, 4,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (private->resolution_se);

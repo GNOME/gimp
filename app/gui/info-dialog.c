@@ -30,134 +30,286 @@
 
 #include "info-dialog.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 
-/*  static functions  */
-static void info_field_new              (InfoDialog    *idialog,
-					 InfoFieldType  field_type,
-					 gchar         *title,
-					 GtkWidget     *widget,
-					 GtkObject     *object,
-					 gpointer       value_ptr,
-					 GCallback      callback,
-					 gpointer       callback_data);
-static void update_field                (InfoField     *info_field);
-static gint info_dialog_delete_callback (GtkWidget     *widget,
-					 GdkEvent      *event,
-					 gpointer       data);
+#define SB_WIDTH 10
 
 
-static void
-info_field_new (InfoDialog    *idialog,
-		InfoFieldType  field_type,
-		gchar         *title,
-		GtkWidget     *widget,
-		GtkObject     *obj,
-		gpointer       value_ptr,
-		GCallback      callback,
-		gpointer       callback_data)
+/*  local function prototypes  */
+
+static InfoDialog * info_dialog_new_extended    (GimpViewable  *viewable,
+                                                 const gchar   *title,
+                                                 const gchar   *wmclass_name,
+                                                 const gchar   *stock_id,
+                                                 const gchar   *desc,
+                                                 GimpHelpFunc   help_func,
+                                                 gpointer       help_data,
+                                                 gboolean       in_notebook);
+static gboolean     info_dialog_delete_callback (GtkWidget     *widget,
+                                                 GdkEvent      *event,
+                                                 gpointer       data);
+static void         info_dialog_field_new       (InfoDialog    *idialog,
+                                                 InfoFieldType  field_type,
+                                                 gchar         *title,
+                                                 GtkWidget     *widget,
+                                                 GtkObject     *object,
+                                                 gpointer       value_ptr,
+                                                 GCallback      callback,
+                                                 gpointer       callback_data);
+static void         info_dialog_update_field    (InfoField     *info_field);
+
+
+/*  public functions  */
+
+InfoDialog *
+info_dialog_new (GimpViewable *viewable,
+                 const gchar  *title,
+                 const gchar  *wmclass_name,
+                 const gchar  *stock_id,
+                 const gchar  *desc,
+		 GimpHelpFunc  help_func,
+		 gpointer      help_data)
+{
+  return info_dialog_new_extended (viewable, title, wmclass_name,
+                                   stock_id, desc,
+                                   help_func, help_data, FALSE);
+}
+
+InfoDialog *
+info_dialog_notebook_new (GimpViewable *viewable,
+                          const gchar  *title,
+                          const gchar  *wmclass_name,
+                          const gchar  *stock_id,
+                          const gchar  *desc,
+                          GimpHelpFunc  help_func,
+			  gpointer      help_data)
+{
+  return info_dialog_new_extended (viewable, title, wmclass_name,
+                                   stock_id, desc,
+                                   help_func, help_data, TRUE);
+}
+
+void
+info_dialog_free (InfoDialog *idialog)
+{
+  g_return_if_fail (idialog != NULL);
+
+  g_slist_foreach (idialog->field_list, (GFunc) g_free, NULL);
+  g_slist_free (idialog->field_list);
+
+  gtk_widget_destroy (idialog->shell);
+
+  g_free (idialog);
+}
+
+void
+info_dialog_popup (InfoDialog *idialog)
+{
+  g_return_if_fail (idialog != NULL);
+
+  if (! GTK_WIDGET_VISIBLE (idialog->shell))
+    gtk_widget_show (idialog->shell);
+}
+
+void
+info_dialog_popdown (InfoDialog *idialog)
+{
+  g_return_if_fail (idialog != NULL);
+  
+  if (GTK_WIDGET_VISIBLE (idialog->shell))
+    gtk_widget_hide (idialog->shell);
+}
+
+void
+info_dialog_update (InfoDialog *idialog)
+{
+  GSList *list;
+
+  g_return_if_fail (idialog != NULL);
+
+  for (list = idialog->field_list; list; list = g_slist_next (list))
+    info_dialog_update_field ((InfoField *) list->data);
+}
+
+GtkWidget *
+info_dialog_add_label (InfoDialog *idialog,
+		       gchar      *title,
+		       gchar      *text_ptr)
 {
   GtkWidget *label;
-  InfoField *field;
-  gint       row;
 
-  field = g_new (InfoField, 1);
+  g_return_val_if_fail (idialog != NULL, NULL);
 
-  row = idialog->nfields + 1;
-  gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
+  label = gtk_label_new (text_ptr);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (idialog->info_table), label,
-		    0, 1, row - 1, row,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  info_dialog_field_new (idialog, INFO_LABEL, title, label, NULL,
+                         text_ptr,
+                         NULL, NULL);
 
-  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), widget,
-			     1, 2, row - 1, row);
-  gtk_widget_show (widget);
+  return label;
+}
 
-  gtk_table_set_col_spacing (GTK_TABLE (idialog->info_table), 0, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (idialog->info_table), 2);
+GtkWidget *
+info_dialog_add_entry (InfoDialog    *idialog,
+		       gchar         *title,
+		       gchar         *text_ptr,
+		       GCallback      callback,
+		       gpointer       callback_data)
+{
+  GtkWidget *entry;
 
-  field->field_type = field_type;
+  g_return_val_if_fail (idialog != NULL, NULL);
 
-  if (obj == NULL)
-    field->obj = GTK_OBJECT (widget);
+  entry = gtk_entry_new ();
+  gtk_widget_set_size_request (entry, 50, -1);
+  gtk_entry_set_text (GTK_ENTRY (entry), text_ptr ? text_ptr : "");
+
+  if (callback)
+    g_signal_connect (G_OBJECT (entry), "changed",
+		      callback,
+		      callback_data);
+
+  info_dialog_field_new (idialog, INFO_ENTRY, title, entry, NULL,
+                         text_ptr,
+                         callback, callback_data);
+
+  return entry;
+}
+
+GtkWidget *
+info_dialog_add_scale   (InfoDialog    *idialog,
+			 gchar         *title,
+			 gdouble       *value_ptr,
+			 gfloat         lower,
+			 gfloat         upper,
+			 gfloat         step_increment,
+			 gfloat         page_increment,
+			 gfloat         page_size,
+			 gint           digits,
+			 GCallback      callback,
+			 gpointer       callback_data)
+{
+  GtkObject *adjustment;
+  GtkWidget *scale;
+
+  g_return_val_if_fail (idialog != NULL, NULL);
+
+  adjustment = gtk_adjustment_new (value_ptr ? *value_ptr : 0, lower, upper,
+				   step_increment, page_increment, page_size);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+
+  if (digits >= 0)
+    gtk_scale_set_digits (GTK_SCALE (scale), MAX (digits, 6));
   else
-    field->obj = obj;
+    gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
-  field->value_ptr     = value_ptr;
-  field->callback      = callback;
-  field->callback_data = callback_data;
+  if (callback)
+    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		      callback,
+		      callback_data);
 
-  idialog->field_list = g_slist_prepend (idialog->field_list, field);
-  idialog->nfields++;
+  info_dialog_field_new (idialog, INFO_SCALE, title, scale, adjustment,
+                         value_ptr,
+                         callback, callback_data);
+
+  return scale;
 }
 
-static void
-update_field (InfoField *field)
+GtkWidget *
+info_dialog_add_spinbutton (InfoDialog    *idialog,
+			    gchar         *title,
+			    gdouble       *value_ptr,
+			    gfloat         lower,
+			    gfloat         upper,
+			    gfloat         step_increment,
+			    gfloat         page_increment,
+			    gfloat         page_size,
+			    gfloat         climb_rate,
+			    gint           digits,
+			    GCallback      callback,
+			    gpointer       callback_data)
 {
-  const gchar *old_text;
-  gint         num;
-  gint         i;
+  GtkWidget *alignment;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
 
-  if (field->value_ptr == NULL)
-    return;
+  g_return_val_if_fail (idialog != NULL, NULL);
 
-  if (field->field_type != INFO_LABEL)
-    g_signal_handlers_block_by_func (G_OBJECT (field->obj),
-				     field->callback,
-				     field->callback_data);
+  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
 
-  switch (field->field_type)
-    {
-    case INFO_LABEL:
-      gtk_label_set_text (GTK_LABEL (field->obj), (gchar *) field->value_ptr);
-      break;
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     value_ptr ? *value_ptr : 0,
+                                     lower, upper,
+                                     step_increment, page_increment, page_size,
+                                     climb_rate, MAX (MIN (digits, 6), 0));
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-    case INFO_ENTRY:
-      old_text = gtk_entry_get_text (GTK_ENTRY (field->obj));
-      if (strcmp (old_text, (gchar *) field->value_ptr))
-	gtk_entry_set_text (GTK_ENTRY (field->obj), (gchar *) field->value_ptr);
-      break;
+  if (callback)
+    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		      callback,
+		      callback_data);
 
-    case INFO_SCALE:
-    case INFO_SPINBUTTON:
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (field->obj),
-				*((gdouble *) field->value_ptr));
-      break;
+  gtk_container_add (GTK_CONTAINER (alignment), spinbutton);
+  gtk_widget_show (spinbutton);
 
-    case INFO_SIZEENTRY:
-      num = GIMP_SIZE_ENTRY (field->obj)->number_of_fields;
-      for (i = 0; i < num; i++)
-	gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), i,
-				    ((gdouble *) field->value_ptr)[i]);
-      break;
+  info_dialog_field_new (idialog, INFO_SPINBUTTON, title, alignment,
+                         adjustment,
+                         value_ptr,
+                         callback, callback_data);
 
-    default:
-      g_warning ("%s: Unknown info_dialog field type.", G_STRLOC);
-      break;
-    }
-
-  if (field->field_type != INFO_LABEL)
-    g_signal_handlers_unblock_by_func (G_OBJECT (field->obj),
-				       field->callback,
-				       field->callback_data);
+  return spinbutton;
 }
 
-static gboolean
-info_dialog_delete_callback (GtkWidget *widget,
-			     GdkEvent  *event,
-			     gpointer   data)
+GtkWidget *
+info_dialog_add_sizeentry (InfoDialog                *idialog,
+			   gchar                     *title,
+			   gdouble                   *value_ptr,
+			   gint                       nfields,
+			   GimpUnit                   unit,
+			   gchar                     *unit_format,
+			   gboolean                   menu_show_pixels,
+			   gboolean                   menu_show_percent,
+			   gboolean                   show_refval,
+			   GimpSizeEntryUpdatePolicy  update_policy,
+			   GCallback                  callback,
+			   gpointer                   callback_data)
 {
-  info_dialog_popdown ((InfoDialog *) data);
+  GtkWidget *alignment;
+  GtkWidget *sizeentry;
+  gint       i;
 
-  return TRUE;
+  g_return_val_if_fail (idialog != NULL, NULL);
+
+  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+
+  sizeentry = gimp_size_entry_new (nfields, unit, unit_format,
+				   menu_show_pixels, menu_show_percent,
+				   show_refval, SB_WIDTH,
+				   update_policy);
+  if (value_ptr)
+    for (i = 0; i < nfields; i++)
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), i, value_ptr[i]);
+
+  if (callback)
+    g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+		      callback,
+		      callback_data);
+
+  gtk_container_add (GTK_CONTAINER (alignment), sizeentry);
+  gtk_widget_show (sizeentry);
+
+  info_dialog_field_new (idialog, INFO_SIZEENTRY, title, alignment,
+                         GTK_OBJECT (sizeentry),
+                         value_ptr,
+                         callback, callback_data);
+
+  return sizeentry;
 }
+
+
+/*  private functions  */
 
 static InfoDialog *
 info_dialog_new_extended (GimpViewable *viewable,
@@ -224,260 +376,111 @@ info_dialog_new_extended (GimpViewable *viewable,
   return idialog;
 }
 
-/*  public functions  */
-
-InfoDialog *
-info_dialog_notebook_new (GimpViewable *viewable,
-                          const gchar  *title,
-                          const gchar  *wmclass_name,
-                          const gchar  *stock_id,
-                          const gchar  *desc,
-                          GimpHelpFunc  help_func,
-			  gpointer      help_data)
+static gboolean
+info_dialog_delete_callback (GtkWidget *widget,
+			     GdkEvent  *event,
+			     gpointer   data)
 {
-  return info_dialog_new_extended (viewable, title, wmclass_name,
-                                   stock_id, desc,
-                                   help_func, help_data, TRUE);
+  info_dialog_popdown ((InfoDialog *) data);
+
+  return TRUE;
 }
 
-InfoDialog *
-info_dialog_new (GimpViewable *viewable,
-                 const gchar  *title,
-                 const gchar  *wmclass_name,
-                 const gchar  *stock_id,
-                 const gchar  *desc,
-		 GimpHelpFunc  help_func,
-		 gpointer      help_data)
-{
-  return info_dialog_new_extended (viewable, title, wmclass_name,
-                                   stock_id, desc,
-                                   help_func, help_data, FALSE);
-}
-
-void
-info_dialog_free (InfoDialog *idialog)
-{
-  GSList *list;
-
-  g_return_if_fail (idialog != NULL);
-
-  /*  Free each item in the field list  */
-  for (list = idialog->field_list; list; list = g_slist_next (list))
-    g_free (list->data);
-
-  /*  Free the actual field linked list  */
-  g_slist_free (idialog->field_list);
-
-  /*  Destroy the associated widgets  */
-  gtk_widget_destroy (idialog->shell);
-
-  /*  Free the info dialog memory  */
-  g_free (idialog);
-}
-
-void
-info_dialog_popup (InfoDialog *idialog)
-{
-  g_return_if_fail (idialog != NULL);
-
-  if (! GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_show (idialog->shell);
-
-}
-
-void
-info_dialog_popdown (InfoDialog *idialog)
-{
-  g_return_if_fail (idialog != NULL);
-  
-  if (GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_hide (idialog->shell);
-}
-
-void
-info_dialog_update (InfoDialog *idialog)
-{
-  GSList *list;
-
-  if (! idialog)
-    return;
-
-  for (list = idialog->field_list; list; list = g_slist_next (list))
-    update_field ((InfoField *) list->data);
-}
-
-GtkWidget *
-info_dialog_add_label (InfoDialog    *idialog,
-		       char          *title,
-		       char          *text_ptr)
+static void
+info_dialog_field_new (InfoDialog    *idialog,
+                       InfoFieldType  field_type,
+                       gchar         *title,
+                       GtkWidget     *widget,
+                       GtkObject     *obj,
+                       gpointer       value_ptr,
+                       GCallback      callback,
+                       gpointer       callback_data)
 {
   GtkWidget *label;
+  InfoField *field;
+  gint       row;
 
-  g_return_val_if_fail (idialog != NULL, NULL);
+  field = g_new (InfoField, 1);
 
-  label = gtk_label_new (text_ptr);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  row = idialog->nfields + 1;
+  gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
 
-  info_field_new (idialog, INFO_LABEL, title, label, NULL,
-		  text_ptr,
-		  NULL, NULL);
+  label = gtk_label_new (title);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (idialog->info_table), label,
+		    0, 1, row - 1, row,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  return label;
-}
+  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), widget,
+			     1, 2, row - 1, row);
+  gtk_widget_show (widget);
 
-GtkWidget *
-info_dialog_add_entry (InfoDialog    *idialog,
-		       gchar         *title,
-		       gchar         *text_ptr,
-		       GCallback      callback,
-		       gpointer       callback_data)
-{
-  GtkWidget *entry;
+  gtk_table_set_col_spacing (GTK_TABLE (idialog->info_table), 0, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (idialog->info_table), 2);
 
-  g_return_val_if_fail (idialog != NULL, NULL);
+  field->field_type = field_type;
 
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 50, -1);
-  gtk_entry_set_text (GTK_ENTRY (entry), text_ptr ? text_ptr : "");
-
-  if (callback)
-    g_signal_connect (G_OBJECT (entry), "changed",
-		      callback,
-		      callback_data);
-
-  info_field_new (idialog, INFO_ENTRY, title, entry, NULL,
-		  text_ptr,
-		  callback, callback_data);
-
-  return entry;
-}
-
-GtkWidget *
-info_dialog_add_scale   (InfoDialog    *idialog,
-			 gchar         *title,
-			 gdouble       *value_ptr,
-			 gfloat         lower,
-			 gfloat         upper,
-			 gfloat         step_increment,
-			 gfloat         page_increment,
-			 gfloat         page_size,
-			 gint           digits,
-			 GCallback      callback,
-			 gpointer       callback_data)
-{
-  GtkObject *adjustment;
-  GtkWidget *scale;
-
-  g_return_val_if_fail (idialog != NULL, NULL);
-
-  adjustment = gtk_adjustment_new (value_ptr ? *value_ptr : 0, lower, upper,
-				   step_increment, page_increment, page_size);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-
-  if (digits >= 0)
-    gtk_scale_set_digits (GTK_SCALE (scale), MAX (digits, 6));
+  if (obj == NULL)
+    field->obj = GTK_OBJECT (widget);
   else
-    gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+    field->obj = obj;
 
-  if (callback)
-    g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		      callback,
-		      callback_data);
+  field->value_ptr     = value_ptr;
+  field->callback      = callback;
+  field->callback_data = callback_data;
 
-  info_field_new (idialog, INFO_SCALE, title, scale, adjustment,
-		  value_ptr,
-		  callback, callback_data);
-
-  return scale;
+  idialog->field_list = g_slist_prepend (idialog->field_list, field);
+  idialog->nfields++;
 }
 
-GtkWidget *
-info_dialog_add_spinbutton (InfoDialog    *idialog,
-			    gchar         *title,
-			    gdouble       *value_ptr,
-			    gfloat         lower,
-			    gfloat         upper,
-			    gfloat         step_increment,
-			    gfloat         page_increment,
-			    gfloat         page_size,
-			    gfloat         climb_rate,
-			    gint           digits,
-			    GCallback      callback,
-			    gpointer       callback_data)
+static void
+info_dialog_update_field (InfoField *field)
 {
-  GtkWidget *alignment;
-  GtkObject *adjustment;
-  GtkWidget *spinbutton;
+  const gchar *old_text;
+  gint         num;
+  gint         i;
 
-  g_return_val_if_fail (idialog != NULL, NULL);
+  if (field->value_ptr == NULL)
+    return;
 
-  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  if (field->field_type != INFO_LABEL)
+    g_signal_handlers_block_by_func (G_OBJECT (field->obj),
+				     field->callback,
+				     field->callback_data);
 
-  adjustment = gtk_adjustment_new (value_ptr ? *value_ptr : 0, lower, upper,
-				   step_increment, page_increment, page_size);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
-				    climb_rate, MAX (MIN (digits, 6), 0));
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  switch (field->field_type)
+    {
+    case INFO_LABEL:
+      gtk_label_set_text (GTK_LABEL (field->obj), (gchar *) field->value_ptr);
+      break;
 
-  if (callback)
-    g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		      callback,
-		      callback_data);
+    case INFO_ENTRY:
+      old_text = gtk_entry_get_text (GTK_ENTRY (field->obj));
+      if (strcmp (old_text, (gchar *) field->value_ptr))
+	gtk_entry_set_text (GTK_ENTRY (field->obj), (gchar *) field->value_ptr);
+      break;
 
-  gtk_container_add (GTK_CONTAINER (alignment), spinbutton);
-  gtk_widget_show (spinbutton);
+    case INFO_SCALE:
+    case INFO_SPINBUTTON:
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (field->obj),
+				*((gdouble *) field->value_ptr));
+      break;
 
-  info_field_new (idialog, INFO_SPINBUTTON, title, alignment,
-		  adjustment,
-		  value_ptr,
-		  callback, callback_data);
+    case INFO_SIZEENTRY:
+      num = GIMP_SIZE_ENTRY (field->obj)->number_of_fields;
+      for (i = 0; i < num; i++)
+	gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), i,
+				    ((gdouble *) field->value_ptr)[i]);
+      break;
 
-  return spinbutton;
-}
+    default:
+      g_warning ("%s: Unknown info_dialog field type.", G_STRLOC);
+      break;
+    }
 
-GtkWidget *
-info_dialog_add_sizeentry (InfoDialog                *idialog,
-			   gchar                     *title,
-			   gdouble                   *value_ptr,
-			   gint                       nfields,
-			   GimpUnit                   unit,
-			   gchar                     *unit_format,
-			   gboolean                   menu_show_pixels,
-			   gboolean                   menu_show_percent,
-			   gboolean                   show_refval,
-			   GimpSizeEntryUpdatePolicy  update_policy,
-			   GCallback                  callback,
-			   gpointer                   callback_data)
-{
-  GtkWidget *alignment;
-  GtkWidget *sizeentry;
-  gint       i;
-
-  g_return_val_if_fail (idialog != NULL, NULL);
-
-  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-
-  sizeentry = gimp_size_entry_new (nfields, unit, unit_format,
-				   menu_show_pixels, menu_show_percent,
-				   show_refval, 75,
-				   update_policy);
-  if (value_ptr)
-    for (i = 0; i < nfields; i++)
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), i, value_ptr[i]);
-
-  if (callback)
-    g_signal_connect (G_OBJECT (sizeentry), "value_changed",
-		      callback,
-		      callback_data);
-
-  gtk_container_add (GTK_CONTAINER (alignment), sizeentry);
-  gtk_widget_show (sizeentry);
-
-  info_field_new (idialog, INFO_SIZEENTRY, title, alignment,
-		  GTK_OBJECT (sizeentry),
-		  value_ptr,
-		  callback, callback_data);
-
-  return sizeentry;
+  if (field->field_type != INFO_LABEL)
+    g_signal_handlers_unblock_by_func (G_OBJECT (field->obj),
+				       field->callback,
+				       field->callback_data);
 }

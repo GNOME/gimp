@@ -617,7 +617,7 @@ layers_new_layer_query (GimpImage *gimage,
 		     options);
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
@@ -628,19 +628,12 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name label and entry  */
-  label = gtk_label_new (_("Layer Name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
-  gtk_widget_show (label);
-
   options->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (options->name_entry, 75, -1);
-  gtk_table_attach_defaults (GTK_TABLE (table), 
-			     options->name_entry, 1, 2, 0, 1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (layer_name ? layer_name : _("New Layer")));
-  gtk_widget_show (options->name_entry);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Layer _Name:"), 1.0, 0.5,
+                             options->name_entry, 1, FALSE);
 
   /*  The size labels  */
   label = gtk_label_new (_("Layer Width:"));
@@ -656,19 +649,23 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_widget_show (label);
 
   /*  The size sizeentry  */
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
-  
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 1,
+                                     1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+
   options->size_se = gimp_size_entry_new (1, gimage->unit, "%a",
-					  TRUE, TRUE, FALSE, 75,
+					  TRUE, TRUE, FALSE, 10,
 					  GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (options->size_se), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (options->size_se), 0, 2);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (options->size_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (options->size_se), spinbutton,
                              1, 2, 0, 1);
   gtk_widget_show (spinbutton);
+
   gtk_table_attach (GTK_TABLE (table), options->size_se, 1, 2, 1, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (options->size_se);
@@ -777,8 +774,7 @@ layers_edit_layer_query (GimpLayer *layer)
 {
   EditLayerOptions *options;
   GtkWidget        *vbox;
-  GtkWidget        *hbox;
-  GtkWidget        *label;
+  GtkWidget        *table;
 
   options = g_new0 (EditLayerOptions, 1);
 
@@ -813,32 +809,29 @@ layers_edit_layer_query (GimpLayer *layer)
 			   G_CONNECT_SWAPPED);
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
-  /*  The name hbox, label and entry  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Layer name:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  /*  The name label and entry  */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   options->name_entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      ((gimp_layer_is_floating_sel (layer) ?
 			_("Floating Selection") :
 			gimp_object_get_name (GIMP_OBJECT (layer)))));
-  gtk_widget_show (options->name_entry);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Layer _Name"), 1.0, 0.5,
+                             options->name_entry, 1, FALSE);
 
   g_signal_connect (G_OBJECT (options->name_entry), "activate",
 		    G_CALLBACK (edit_layer_query_ok_callback),
 		    options);
-
-  gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -1048,9 +1041,10 @@ layers_scale_layer_query (GimpImage *gimage,
 {
   ScaleLayerOptions *options;
 
-  /*  the new options structure  */
-  options = g_new (ScaleLayerOptions, 1);
-  options->layer  = layer;
+  options = g_new0 (ScaleLayerOptions, 1);
+
+  options->layer = layer;
+
   options->resize =
     resize_widget_new (gimage,
                        ScaleWidget,
@@ -1064,8 +1058,7 @@ layers_scale_layer_query (GimpImage *gimage,
 		       gimage->unit,
 		       TRUE,
 		       G_CALLBACK (scale_layer_query_ok_callback),
-		       NULL,
-		       options);
+                       options);
 
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,
@@ -1140,9 +1133,10 @@ layers_resize_layer_query (GimpImage *gimage,
 {
   ResizeLayerOptions *options;
 
-  /*  the new options structure  */
-  options = g_new (ResizeLayerOptions, 1);
-  options->layer  = layer;
+  options = g_new0 (ResizeLayerOptions, 1);
+
+  options->layer = layer;
+
   options->resize =
     resize_widget_new (gimage,
                        ResizeWidget,
@@ -1156,8 +1150,7 @@ layers_resize_layer_query (GimpImage *gimage,
 		       gimage->unit,
 		       TRUE,
 		       G_CALLBACK (resize_layer_query_ok_callback),
-		       NULL,
-		       options);
+                       options);
 
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,

@@ -41,6 +41,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define SB_WIDTH 10
+
+
 typedef struct
 {
   GtkWidget          *dialog;
@@ -89,7 +92,7 @@ file_new_dialog_create (Gimp      *gimp,
                         GimpImage *gimage)
 {
   NewImageInfo *info;
-  GtkWidget    *top_vbox;
+  GtkWidget    *main_vbox;
   GtkWidget    *hbox;
   GtkWidget    *vbox;
   GtkWidget    *abox;
@@ -131,15 +134,15 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_window_set_resizable (GTK_WINDOW (info->dialog), FALSE);
 
   /*  vbox holding the rest of the dialog  */
-  top_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 4);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (info->dialog)->vbox),
-		      top_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (top_vbox);
+		      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
   /*  Image size frame  */
   frame = gtk_frame_new (_("Image Size"));
-  gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 0);
@@ -149,7 +152,7 @@ file_new_dialog_create (Gimp      *gimp,
 
   table = gtk_table_new (7, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 4, 4);
@@ -190,30 +193,33 @@ file_new_dialog_create (Gimp      *gimp,
   /*  create the sizeentry which keeps it all together  */
   abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 5);
-  info->size_se =
-    gimp_size_entry_new (0, info->values->unit, "%a", FALSE, FALSE, TRUE, 75,
-			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (info->size_se), 1, 2);
-  gtk_container_add (GTK_CONTAINER (abox), info->size_se);
-  gtk_widget_show (info->size_se);
   gtk_widget_show (abox);
 
+  info->size_se = gimp_size_entry_new (0, info->values->unit, "%a",
+                                       FALSE, FALSE, TRUE, SB_WIDTH,
+                                       GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (info->size_se), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (info->size_se), 1, 2);
+  gtk_container_add (GTK_CONTAINER (abox), info->size_se);
+  gtk_widget_show (info->size_se);
+
   /*  height in units  */
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 0,
+                                     1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   /*  add the "height in units" spinbutton to the sizeentry  */
   gtk_table_attach_defaults (GTK_TABLE (info->size_se), spinbutton,
 			     0, 1, 2, 3);
   gtk_widget_show (spinbutton);
 
   /*  height in pixels  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
-  gtk_widget_set_size_request (spinbutton2, 75, -1);
+  hbox = gtk_hbox_new (FALSE, 4);
+
+  spinbutton2 = gimp_spin_button_new (&adjustment,
+                                      1, 1, 1, 1, 10, 0,
+                                      1, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton2), SB_WIDTH);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton2);
 
@@ -235,10 +241,10 @@ file_new_dialog_create (Gimp      *gimp,
 			     GTK_SPIN_BUTTON (spinbutton2));
 
   /*  width in units  */
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 0,
+                                     1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   /*  add the "width in units" spinbutton to the sizeentry  */
   gtk_table_attach_defaults (GTK_TABLE (info->size_se), spinbutton,
 			     0, 1, 1, 2);
@@ -247,14 +253,15 @@ file_new_dialog_create (Gimp      *gimp,
   /*  width in pixels  */
   abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 0, 1);
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
-  gtk_widget_set_size_request (spinbutton2, 75, -1);
+  gtk_widget_show (abox);
+
+  spinbutton2 = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 0,
+                                     1, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton2), SB_WIDTH);
   /*  add the "width in pixels" spinbutton to the main table  */
   gtk_container_add (GTK_CONTAINER (abox), spinbutton2);
   gtk_widget_show (spinbutton2);
-  gtk_widget_show (abox);
 
   /*  register the width spinbuttons with the sizeentry  */
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (info->size_se),
@@ -303,27 +310,29 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
-  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 7);
+  gtk_widget_show (abox);
+
+  spinbutton = gimp_spin_button_new (&adjustment,
+                                     1, 1, 1, 1, 10, 0,
+                                     1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
   info->resolution_se =
     gimp_size_entry_new (1, gimp->config->default_resolution_units,
 			 _("pixels/%a"),
-		         FALSE, FALSE, FALSE, 75,
+		         FALSE, FALSE, FALSE, SB_WIDTH,
 		         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 1, 2);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 2, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (info->resolution_se), 0, 2);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (info->resolution_se),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (info->resolution_se), spinbutton,
 			     1, 2, 0, 1);
   gtk_widget_show (spinbutton);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 7);
-  gtk_widget_show (abox);
 
   gtk_container_add (GTK_CONTAINER (abox), info->resolution_se);  
   gtk_widget_show (info->resolution_se);
@@ -355,8 +364,8 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (info->couple_resolutions);
 
   /*  hbox containing the Image type and fill type frames  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (top_vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  frame for Image Type  */

@@ -1,5 +1,24 @@
 2002-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-new-dialog.c
+	* app/gui/offset-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/gui/user-install-dialog.c: replaced some more pixel sizes by
+	char sizes. Tweaked table spacings. Mnemonics.
+
+	* app/gui/info-dialog.[ch]: internal cleanup.
+
+	* app/gui/resize-dialog.[ch]: same here. Removed the "cancel_cb"
+	from the API and simply destroy the dialog on "Cancel". Makes the
+	dialog construction less weird.
+
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c: changed accordingly. Same cleanups
+	as above.
+
+2002-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c
 	* plug-ins/FractalExplorer/FractalExplorer.c: some stock items.
 

@@ -61,6 +61,8 @@
 #include "libgimp/gimpintl.h"
 
 
+#define SB_WIDTH 10
+
 /*  gimprc will be parsed with a buffer size of 1024, 
  *  so don't set this too large
  */
@@ -1866,7 +1868,7 @@ preferences_dialog_create (Gimp *gimp)
 
   sizeentry =
     gimp_size_entry_new (2, gimp->config->default_units, "%p",
-			 FALSE, FALSE, TRUE, 75,
+			 FALSE, FALSE, TRUE, SB_WIDTH,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
@@ -1917,7 +1919,7 @@ preferences_dialog_create (Gimp *gimp)
 
   sizeentry2 = gimp_size_entry_new (2, gimp->config->default_resolution_units,
 				    pixels_per_unit,
-				    FALSE, FALSE, TRUE, 75,
+				    FALSE, FALSE, TRUE, SB_WIDTH,
 				    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
@@ -2499,7 +2501,7 @@ preferences_dialog_create (Gimp *gimp)
 
   sizeentry =
     gimp_size_entry_new (2, GIMP_UNIT_INCH, pixels_per_unit,
-			 FALSE, FALSE, TRUE, 75,
+			 FALSE, FALSE, TRUE, SB_WIDTH,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   
   g_free (pixels_per_unit);

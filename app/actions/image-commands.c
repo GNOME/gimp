@@ -127,20 +127,21 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   image_resize->gdisp  = gdisp;
   image_resize->gimage = gimage;
-  image_resize->resize = resize_widget_new (gimage,
-                                            ResizeWidget,
-					    ResizeImage,
-					    G_OBJECT (gdisp),
-					    "disconnect",
-					    gimage->width,
-					    gimage->height,
-					    gimage->xresolution,
-					    gimage->yresolution,
-					    gimage->unit,
-					    GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
-					    G_CALLBACK (image_resize_callback),
-					    NULL,
-					    image_resize);
+
+  image_resize->resize =
+    resize_widget_new (gimage,
+                       ResizeWidget,
+                       ResizeImage,
+                       G_OBJECT (gdisp),
+                       "disconnect",
+                       gimage->width,
+                       gimage->height,
+                       gimage->xresolution,
+                       gimage->yresolution,
+                       gimage->unit,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
+                       G_CALLBACK (image_resize_callback),
+                       image_resize);
 
   g_object_weak_ref (G_OBJECT (image_resize->resize->resize_shell),
 		     (GWeakNotify) g_free,
@@ -164,20 +165,21 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   image_scale->gdisp  = gdisp;
   image_scale->gimage = gimage;
-  image_scale->resize = resize_widget_new (gimage,
-                                           ScaleWidget,
-					   ResizeImage,
-					   G_OBJECT (gdisp),
-					   "disconnect",
-					   gimage->width,
-					   gimage->height,
-					   gimage->xresolution,
-					   gimage->yresolution,
-					   gimage->unit,
-					   GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
-					   G_CALLBACK (image_scale_callback),
-					   NULL,
-					   image_scale);
+
+  image_scale->resize =
+    resize_widget_new (gimage,
+                       ScaleWidget,
+                       ResizeImage,
+                       G_OBJECT (gdisp),
+                       "disconnect",
+                       gimage->width,
+                       gimage->height,
+                       gimage->xresolution,
+                       gimage->yresolution,
+                       gimage->unit,
+                       GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
+                       G_CALLBACK (image_scale_callback),
+                       image_scale);
 
   g_object_weak_ref (G_OBJECT (image_scale->resize->resize_shell),
 		     (GWeakNotify) g_free,

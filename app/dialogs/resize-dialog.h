@@ -81,7 +81,6 @@ Resize * resize_widget_new (GimpImage    *gimage,
 			    GimpUnit      unit,
 			    gboolean      dot_for_dot,
 			    GCallback     ok_cb,
-			    GCallback     cancel_cb,
 			    gpointer      user_data);
 
 
