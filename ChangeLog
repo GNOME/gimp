@@ -1,5 +1,10 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpgradient-load.c (gimp_gradient_load_svg): improved
+	error message.
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/test-color-parser.c: added more test samples.
 
 	* libgimpcolor/gimprgb-parse.c: fixed a bug that I found with the

@@ -269,7 +269,7 @@ gimp_gradient_load_svg (const gchar  *filename,
   else if (success)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("No gradients found in '%s'"),
+                   _("No linear gradient found in '%s'"),
                    gimp_filename_to_utf8 (filename));
     }
   else if (error && *error) /*  parser reported an error  */
