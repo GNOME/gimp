@@ -1,9 +1,14 @@
 2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/hot.c: let the hot filter also act on the current 
+	selection (fixes #82480).
+	* Adds mnemonics to dialog.
+
+2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/common/checkerboard.c: fix for #82499 (small typo) and also 
 	adds mnemonics
 
-=======
 2002-05-24  Sven Neumann  <sven@gimp.org>
 
 	* app/core/cpercep.[ch]

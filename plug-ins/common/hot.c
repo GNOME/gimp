@@ -77,30 +77,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-struct Grgb
-{
-  guint8 red;
-  guint8 green;
-  guint8 blue;
-};
-
-struct GRegion
-{
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
-};
-
-struct piArgs
+typedef struct
 {
   gint32 image;
   gint32 drawable;
   gint32 mode;
   gint32 action;
   gint32 new_layerp;
-};
+} piArgs;
 
 typedef enum
 {
@@ -165,12 +149,12 @@ static void run          (gchar      *name,
 			  gint       *nretvals,
 			  GimpParam **retvals);
 
-static gint pluginCore   (struct piArgs   *argp);
-static gint pluginCoreIA (struct piArgs   *argp);
-static gint hotp         (register guint8  r,
-			  register guint8  g,
-			  register guint8  b);
-static void build_tab    (gint             m);
+static gint pluginCore   (piArgs   *argp);
+static gint pluginCoreIA (piArgs   *argp);
+static gboolean hotp     (guint8  r,
+			  guint8  g,
+			  guint8  b);
+static void build_tab    (gint    m);
 
 /*
  * gc: apply the gamma correction specified for this video standard.
@@ -245,12 +229,12 @@ run (gchar      *name,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
-  struct piArgs    args;
+  piArgs    args;
 
   *nretvals = 1;
   *retvals  = rvals;
 
-  memset (&args, (int) 0, sizeof (struct piArgs));
+  memset (&args, (int) 0, sizeof (args));
   args.mode = -1;
 
   gimp_get_data ("plug_in_hot", &args);
@@ -277,7 +261,7 @@ run (gchar      *name,
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
-      gimp_set_data ("plug_in_hot", &args, sizeof (struct piArgs));
+      gimp_set_data ("plug_in_hot", &args, sizeof (args));
 
     break;
 
@@ -312,7 +296,7 @@ run (gchar      *name,
 }
 
 static gint
-pluginCore (struct piArgs *argp)
+pluginCore (piArgs *argp)
 {
   GimpDrawable *drw, *ndrw=NULL;
   GimpPixelRgn srcPr, dstPr;
@@ -320,7 +304,8 @@ pluginCore (struct piArgs *argp)
   gint nl=0;
   gint y, x, i;
   gint Y, I, Q;
-  guint width, height, Bpp;
+  guint width, height, bpp;
+  gint sel_x1, sel_x2, sel_y1, sel_y2;
   gint prog_interval;
   guchar *src, *s, *dst, *d;
   guchar r, prev_r=0, new_r=0;
@@ -334,7 +319,7 @@ pluginCore (struct piArgs *argp)
 
   width = drw->width;
   height = drw->height;
-  Bpp = drw->bpp;
+  bpp = drw->bpp;
   if (argp->new_layerp)
     {
       gchar name[40];
@@ -361,19 +346,28 @@ pluginCore (struct piArgs *argp)
       gimp_image_add_layer (argp->image, nl, 0);
     }
 
-  src = g_new (guchar, width * height * Bpp);
+  gimp_drawable_mask_bounds (drw->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+
+  width = sel_x2 - sel_x1;
+  height = sel_y2 - sel_y1;
+
+  src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * 4);
-  gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPr, drw, sel_x1, sel_y1, width, height, FALSE, 
+		       FALSE);
   if (argp->new_layerp)
     {
-      gimp_pixel_rgn_init (&dstPr, ndrw, 0, 0, width, height, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dstPr, ndrw, sel_x1, sel_y1, width, height, FALSE, 
+			   FALSE);
     }
   else
     {
-      gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dstPr, drw, sel_x1, sel_y1, width, height, TRUE, 
+			   TRUE);
     }
 
-  gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
+  gimp_pixel_rgn_get_rect (&srcPr, src, sel_x1, sel_y1, width, height);
 
   s = src;
   d = dst;
@@ -383,11 +377,11 @@ pluginCore (struct piArgs *argp)
   gimp_progress_init (_("Hot"));
   prog_interval = height / 10;
 
-  for (y = 0; y < height; y++)
+  for (y = sel_y1; y < sel_y2; y++)
     {
       if (y % prog_interval == 0)
-	gimp_progress_update ((double) y / (double) height);
-      for (x = 0; x < width; x++)
+	gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
+      for (x = sel_x1; x < sel_x2; x++)
 	{
 	  if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))
 	    {
@@ -396,7 +390,7 @@ pluginCore (struct piArgs *argp)
 		  for (i = 0; i < 3; i++)
 		    *d++ = 0;
 		  s += 3;
-		  if (Bpp == 4)
+		  if (bpp == 4)
 		    *d++ = *s++;
 		  else if (argp->new_layerp)
 		    *d++ = 255;
@@ -412,7 +406,7 @@ pluginCore (struct piArgs *argp)
 		      *d++ = new_g;
 		      *d++ = new_b;
 		      s += 3;
-		      if (Bpp == 4)
+		      if (bpp == 4)
 			*d++ = *s++;
 		      else if (argp->new_layerp)
 			*d++ = 255;
@@ -514,7 +508,7 @@ pluginCore (struct piArgs *argp)
 		      *d++ = new_g = g;
 		      *d++ = new_b = b;
 		      s += 3;
-		      if (Bpp == 4)
+		      if (bpp == 4)
 			*d++ = *s++;
 		      else if (argp->new_layerp)
 			*d++ = 255;
@@ -525,32 +519,32 @@ pluginCore (struct piArgs *argp)
 	    {
 	      if (!argp->new_layerp)
 		{
-		  for (i = 0; i < Bpp; i++)
+		  for (i = 0; i < bpp; i++)
 		    *d++ = *s++;
 		} 
 	      else
 		{
-		  s += Bpp;
+		  s += bpp;
 		  d += 4;
 		}
 	    }
 	}
     }
-  gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
+  gimp_pixel_rgn_set_rect (&dstPr, dst, sel_x1, sel_y1, width, height);
 
-  free (src);
-  free (dst);
+  g_free (src);
+  g_free (dst);
 
   if (argp->new_layerp)
     {
       gimp_drawable_flush (ndrw);
-      gimp_drawable_update (nl, 0, 0, width, height);
+      gimp_drawable_update (nl, sel_x1, sel_y1, width, height);
     }
   else
     {
       gimp_drawable_flush (drw);
       gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
-      gimp_drawable_update (drw->drawable_id, 0, 0, width, height);
+      gimp_drawable_update (drw->drawable_id, sel_x1, sel_y1, width, height);
     }
 
   gimp_displays_flush ();
@@ -558,7 +552,7 @@ pluginCore (struct piArgs *argp)
   return retval;
 }
 
-gboolean run_flag = FALSE;
+static gboolean run_flag = FALSE;
 
 static void
 hot_ok_callback (GtkWidget *widget,
@@ -570,7 +564,7 @@ hot_ok_callback (GtkWidget *widget,
 }
 
 static gint
-pluginCoreIA (struct piArgs *argp)
+pluginCoreIA (piArgs *argp)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
@@ -606,7 +600,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Create New Layer"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Create _New Layer"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -620,8 +614,8 @@ pluginCoreIA (struct piArgs *argp)
 				 &argp->mode,
                                  GINT_TO_POINTER (argp->mode),
 
-				 "NTSC", GINT_TO_POINTER (MODE_NTSC), NULL,
-				 "PAL",  GINT_TO_POINTER (MODE_PAL), NULL,
+				 "N_TSC", GINT_TO_POINTER (MODE_NTSC), NULL,
+				 "_PAL",  GINT_TO_POINTER (MODE_PAL), NULL,
 
 				 NULL);
 
@@ -633,13 +627,13 @@ pluginCoreIA (struct piArgs *argp)
                                  &argp->action,
                                  GINT_TO_POINTER (argp->action),
 
-                                 _("Reduce Luminance"),
+                                 _("Reduce _Luminance"),
                                  GINT_TO_POINTER (ACT_LREDUX), NULL,
 
-                                 _("Reduce Saturation"),
+                                 _("Reduce _Saturation"),
                                  GINT_TO_POINTER (ACT_SREDUX), NULL,
 
-                                 _("Blacken"),
+                                 _("_Blacken"),
                                  GINT_TO_POINTER (ACT_FLAG), NULL,
 
                                  NULL);
@@ -681,8 +675,8 @@ pluginCoreIA (struct piArgs *argp)
 static void
 build_tab (int m)
 {
-  register double f;
-  register int pv;
+  double f;
+  int pv;
 
   for (pv = 0; pv <= MAXPIX; pv++)
     {
@@ -707,15 +701,13 @@ build_tab (int m)
   icompos_lim = (int)(compos_lim * SCALE + 0.5);
 }
 
-static int
-hotp (register guint8 r,
-      register guint8 g,
-      register guint8 b)
+static gboolean
+hotp (guint8 r,
+      guint8 g,
+      guint8 b)
 {
-  register int	y, i, q;
-  register long	y2, c2;
-
-  /*  fprintf(stderr, "\tr: %d, g: %d, b: %d\n", r, g, b);*/
+  int	y, i, q;
+  long	y2, c2;
   
   /*
    * Pixel decoding, gamma correction, and matrix multiplication
@@ -756,15 +748,11 @@ hotp (register guint8 r,
   c2 = (long)i * i + (long)q * q;
   y2 = (long)icompos_lim - y;
   y2 *= y2;
-  /*  fprintf(stderr, "hotp: c2: %d; ichroma_lim2: %d; y2: %d; ",
-	  c2, ichroma_lim2, y2);*/
   
   if (c2 <= ichroma_lim2 && c2 <= y2)
     {	/* no problems */
-      /*    fprintf(stderr, "nope\n");*/
-      return 0;
+      return FALSE;
     }
 
-  /*  fprintf(stderr, "yup\n");*/
-  return 1;
+  return TRUE;
 }
