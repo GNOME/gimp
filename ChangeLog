@@ -1,5 +1,12 @@
 2003-06-20  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/message.pdb (message): use
+	plug_in_get_undo_desc() instead of duplicating its code.
+
+	* app/pdb/message_cmds.c: regenerated.
+
+2003-06-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/plug-in-commands.c (plug_in_run_cmd_callback): pass the
 	gdisp_ID to plug_in_run() again. Broke this with my last commit...
 

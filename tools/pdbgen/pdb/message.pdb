@@ -49,44 +49,7 @@ HELP
       gchar *domain = NULL;
 
       if (gimp->current_plug_in)
-        {
-          GSList *list;
-
-          for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
-            {
-              PlugInProcDef *proc_def = list->data;
-
-              if (&proc_def->db_info == gimp->current_plug_in->proc_rec)
-                {
-                  const gchar *progname;
-
-                  progname = plug_in_proc_def_get_progname (proc_def);
-
-                  if (proc_def->menu_path)
-                    {
-                      const gchar *path;
-                      gchar       *ellipses;
-
-                      path = dgettext (plug_ins_locale_domain (gimp, progname,
-                                                               NULL),
-                                       proc_def->menu_path);
-
-                      domain = g_path_get_basename (path);
-
-                      ellipses = strstr (domain, "...");
-
-                      if (ellipses && ellipses == (domain + strlen (domain) - 3))
-                        *ellipses = '\\0';
-                    }
-                  else
-                    {
-                      domain = g_path_get_basename (progname);
-                    }
-
-                  break;
-                }
-            }
-        }
+	domain = plug_in_get_undo_desc (gimp->current_plug_in);
 
       gimp_message (gimp, domain, message);
 
@@ -134,8 +97,7 @@ HELP
     %invoke = ( code => 'gimp->message_handler = handler;' );
 }
 
-@headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "plug-in/plug-in-proc.h" "gimp-intl.h");
+@headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h" "gimp-intl.h");
 
 @procs = qw(message message_get_handler message_set_handler);
 %exports = (app => [@procs], lib => [@procs]);
