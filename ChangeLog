@@ -1,3 +1,22 @@
+2001-10-27  Nathan Summers  <rock@gimp.org>
+
+        * app/plug_in.c
+        * libgimp/gimp.c
+        * libgimpbase/gimpbasetypes.h
+        * libgimpbase/gimpprotocol.c
+        * libgimpbase/gimpprotocol.h
+        * tools/pdbgen/pdb/palette.pdb: added preliminary pdb support to
+        manipulate palettes.  Incremented plugin interface version number.
+
+        * app/pdb/internal_procs.c
+        * app/pdb/palette_cmds.c
+        * app/pdb/procedural_db.c
+        * app/pdb/procedural_db_cmds.c
+        * libgimp/gimppalette_pdb.c
+        * libgimp/gimppalette_pdb.h
+        * plug-ins/script-fu/script-fu-constants.c
+        * tools/pdbgen/enums.pl: regenerated
+
 2001-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrushgenerated.h
