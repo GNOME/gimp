@@ -457,7 +457,7 @@ ReadImage (FILE     *fd,
       if (grey)
         {
           base_type = GIMP_GRAY;
-          image_type = GIMP_RGB_IMAGE;
+          image_type = GIMP_GRAY_IMAGE;
         }
       else
         {

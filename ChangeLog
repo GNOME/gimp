@@ -1,3 +1,8 @@
+2004-11-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/bmpread.c: Fix cut'n'paste err so grayscale images
+	load again. Fixes bug #157764.
+
 2004-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
