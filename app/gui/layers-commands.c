@@ -181,26 +181,13 @@ layers_new_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
 
   gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
 
   if (! gimage)
     return;
 
-  /*  If there is a floating selection, the new command transforms
-   *  the current fs into a new layer
-   */
-  if ((layer = gimp_image_floating_sel (gimage)))
-    {
-      floating_sel_to_layer (layer);
-
-      gdisplays_flush ();
-    }
-  else
-    {
-      layers_new_layer_query (gimage);
-    }
+  layers_new_layer_query (gimage);
 }
 
 void
@@ -567,12 +554,26 @@ void
 layers_new_layer_query (GimpImage *gimage)
 {
   NewLayerOptions *options;
+  GimpLayer       *floating_sel;
   GtkWidget       *vbox;
   GtkWidget       *table;
   GtkWidget       *label;
   GtkObject       *adjustment;
   GtkWidget       *spinbutton;
   GtkWidget       *frame;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  /*  If there is a floating selection, the new command transforms
+   *  the current fs into a new layer
+   */
+  if ((floating_sel = gimp_image_floating_sel (gimage)))
+    {
+      floating_sel_to_layer (floating_sel);
+
+      gdisplays_flush ();
+      return;
+    }
 
   options = g_new0 (NewLayerOptions, 1);
 

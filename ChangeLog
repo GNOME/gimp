@@ -1,5 +1,12 @@
 2001-11-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/layers-commands.c: fixed the layers dialog's "New Layer"
+	button by checking for a floating selection in
+	layers_new_layer_query() instead of
+	layers_new_layer_cmd_callback().
+
+2001-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]: restructured the new draw utility
 	functions and added gimp_draw_tool_draw_handle() and
 	gimp_draw_tool_on_handle().
