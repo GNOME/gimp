@@ -220,7 +220,7 @@ tile_alloc (Tile *tile)
 
   /* Allocate the data for the tile.
    */
-  tile->data = g_new (guchar, tile_size (tile));
+  tile->data = g_new (guchar, tile_size_inline (tile));
 
 #ifdef HINTS_SANITY
   tile_exist_count++;

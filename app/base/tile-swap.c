@@ -411,8 +411,8 @@ tile_swap_command (Tile *tile,
 	if (swap_file->fd == -1)
 	  goto out;
       }
-  } 
-  while ((* swap_file->swap_func) (swap_file->fd, 
+  }
+  while ((* swap_file->swap_func) (swap_file->fd,
 				   tile, command, swap_file->user_data));
 
 out:
@@ -521,7 +521,7 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 
   if (!async_swapin_tiles)
     async_swapin_tiles = async_swapin_tiles_end;
-  
+
   pthread_cond_signal (&async_swapin_signal);
   pthread_mutex_unlock (&async_swapin_mutex);
 
@@ -579,22 +579,22 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 	}
     }
 
-  bytes = tile_size (tile);
+  bytes = tile_size_inline (tile);
   tile_alloc (tile);
 
   nleft = bytes;
   while (nleft > 0)
     {
-      do 
+      do
 	{
 	  err = read (fd, tile->data + bytes - nleft, nleft);
-	} 
+	}
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)
 	{
 	  if (read_err_msg)
-	    g_message ("unable to read tile data from disk: %s (%d/%d bytes read)", 
+	    g_message ("unable to read tile data from disk: %s (%d/%d bytes read)",
 		       g_strerror (errno), err, nleft);
 	  read_err_msg = FALSE;
 	  return;
@@ -624,12 +624,12 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
   off_t newpos;
 
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
-  rbytes = tile_size (tile);
+  rbytes = tile_size_inline (tile);
 
   /*  If there is already a valid swap_offset, use it  */
   if (tile->swap_offset == -1)
     newpos = tile_swap_find_offset (def_swap_file, fd, bytes);
-  else 
+  else
     newpos = tile->swap_offset;
 
   if (def_swap_file->cur_position != newpos)
@@ -638,7 +638,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (offset == -1)
 	{
 	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %s", 
+	    g_message ("unable to seek to tile location on disk: %s",
 		       g_strerror (errno));
 	  seek_err_msg = FALSE;
 	  return;
@@ -653,7 +653,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (err <= 0)
 	{
 	  if (write_err_msg)
-	    g_message ("unable to write tile data to disk: %s (%d/%d bytes written)", 
+	    g_message ("unable to write tile data to disk: %s (%d/%d bytes written)",
 		       g_strerror (errno), err, nleft);
 	  write_err_msg = FALSE;
 	  return;
@@ -708,7 +708,7 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 		{
 		  gap2->end = gap->end;
 		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps = 
+		  def_swap_file->gaps =
 		    g_list_remove_link (def_swap_file->gaps, tmp);
 		  g_list_free (tmp);
 		}
@@ -726,7 +726,7 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 		{
 		  gap2->start = gap->start;
 		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps = 
+		  def_swap_file->gaps =
 		    g_list_remove_link (def_swap_file->gaps, tmp);
 		  g_list_free (tmp);
 		}
@@ -814,7 +814,7 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 	  if (gap->start == gap->end)
 	    {
 	      tile_swap_gap_destroy (gap);
-	      def_swap_file->gaps = 
+	      def_swap_file->gaps =
 		g_list_remove_link (def_swap_file->gaps, tmp);
 	      g_list_free (tmp);
 	    }
@@ -827,7 +827,7 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 
   offset = def_swap_file->swap_file_end;
 
-  tile_swap_resize (def_swap_file, fd, 
+  tile_swap_resize (def_swap_file, fd,
 		    def_swap_file->swap_file_end + swap_file_grow);
 
   if ((offset + bytes) < (def_swap_file->swap_file_end))
@@ -899,16 +899,16 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
 	return;
     }
 
-  bytes = tile_size (tile);
+  bytes = tile_size_inline (tile);
   tile_alloc (tile);
 
   nleft = bytes;
   while (nleft > 0)
     {
-      do 
+      do
 	{
 	  err = read (fd, tile->data + bytes - nleft, nleft);
-	} 
+	}
       while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)

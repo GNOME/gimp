@@ -1,3 +1,20 @@
+2004-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (shapeburst_region): don't call
+	tile_ewidth() three times from the inner loop.
+
+	* app/base/tile-manager.c (tile_manager_get): don't call
+	tile_size() twice on the same tile.
+
+	* app/base/tile-private.h: added tile_size_inline(), an inline
+	version of the tile_size() function.
+
+	* app/base/tile-cache.c
+	* app/base/tile-manager.c
+	* app/base/tile-swap.c
+	* app/base/tile.c: use tile_size_inline() from inside the tile
+	subsystem.
+
 2004-06-13  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpiscissorstool.c: Minor tweaks to two macros.

@@ -3552,7 +3552,9 @@ shapeburst_region (PixelRegion      *srcPR,
           min = (gint) MIN (min_left, min_prev);
           fraction = 255;
 
-          /*  This might need to be changed to 0 instead of k = (min) ? (min - 1) : 0  */
+          /*  This might need to be changed to 0
+              instead of k = (min) ? (min - 1) : 0  */
+
           for (k = (min) ? (min - 1) : 0; k <= min; k++)
             {
               x = j;
@@ -3561,15 +3563,21 @@ shapeburst_region (PixelRegion      *srcPR,
 
               while (y >= end)
                 {
+                  gint width;
+
                   tile = tile_manager_get_tile (srcPR->tiles,
                                                 x, y, TRUE, FALSE);
+
                   tile_data = tile_data_pointer (tile,
                                                  x % TILE_WIDTH,
                                                  y % TILE_HEIGHT);
-                  boundary = MIN ((y % TILE_HEIGHT),
-                                  (tile_ewidth (tile) - (x % TILE_WIDTH) - 1));
-                  boundary = MIN (boundary, (y - end)) + 1;
-                  inc = 1 - tile_ewidth (tile);
+                  width = tile_ewidth (tile);
+
+                  boundary = MIN (y % TILE_HEIGHT,
+                                  width - (x % TILE_WIDTH) - 1);
+                  boundary = MIN (boundary, y - end) + 1;
+
+                  inc = 1 - width;
 
                   while (boundary--)
                     {

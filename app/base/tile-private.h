@@ -102,4 +102,13 @@ struct _Tile
 #endif
 
 
+/*  an inlined version of tile_size()  */
+static inline gint
+tile_size_inline (Tile *tile)
+{
+  return tile->ewidth * tile->eheight * tile->bpp;
+}
+
+
+
 #endif /* __TILE_PRIVATE_H__ */

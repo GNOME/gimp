@@ -149,7 +149,7 @@ tile_cache_insert (Tile *tile)
       tile->listhead = NULL;
 
       if (list == &dirty_list)
-        cur_cache_dirty -= tile_size (tile);
+        cur_cache_dirty -= tile_size_inline (tile);
     }
   else
     {
@@ -168,7 +168,7 @@ tile_cache_insert (Tile *tile)
 	    }
 	}
 
-      cur_cache_size += tile_size (tile);
+      cur_cache_size += tile_size_inline (tile);
     }
 
   /* Put the tile at the end of the proper list */
@@ -191,7 +191,7 @@ tile_cache_insert (Tile *tile)
 
   if (tile->dirty || (tile->swap_offset == -1))
     {
-      cur_cache_dirty += tile_size (tile);
+      cur_cache_dirty += tile_size_inline (tile);
 
 #ifdef USE_PTHREADS
       pthread_mutex_lock (&dirty_mutex);
@@ -226,10 +226,10 @@ tile_cache_flush_internal (Tile *tile)
 
   if (list)
     {
-      cur_cache_size -= tile_size (tile);
+      cur_cache_size -= tile_size_inline (tile);
 
       if (list == &dirty_list)
-        cur_cache_dirty -= tile_size (tile);
+        cur_cache_dirty -= tile_size_inline (tile);
 
       if (tile->next)
 	tile->next->prev = tile->prev;
@@ -342,7 +342,7 @@ tile_idle_thread (gpointer data)
 	      list = tile->listhead;
 
 	      if (list == &dirty_list)
-                cur_cache_dirty -= tile_size (tile);
+                cur_cache_dirty -= tile_size_inline (tile);
 
 	      if (tile->next)
 		tile->next->prev = tile->prev;
@@ -416,7 +416,7 @@ tile_idle_preswap (gpointer data)
         clean_list.first = tile;
 
       clean_list.last = tile;
-      cur_cache_dirty -= tile_size (tile);
+      cur_cache_dirty -= tile_size_inline (tile);
     }
 
   return TRUE;

@@ -216,13 +216,16 @@ tile_manager_get (TileManager *tm,
 	    {
 	      /* Copy-on-write required */
 	      Tile *newtile = g_new (Tile, 1);
+              gint  newsize;
 
 	      tile_init (newtile, (*tile_ptr)->bpp);
 
 	      newtile->ewidth  = (*tile_ptr)->ewidth;
 	      newtile->eheight = (*tile_ptr)->eheight;
 	      newtile->valid   = (*tile_ptr)->valid;
-	      newtile->data    = g_new (guchar, tile_size (newtile));
+
+              newsize = tile_size_inline (newtile);
+	      newtile->data    = g_new (guchar, newsize);
 
 	      if (!newtile->valid)
 		g_warning ("Oh boy, r/w tile is invalid... we suck. "
@@ -235,14 +238,12 @@ tile_manager_get (TileManager *tm,
 
 	      if ((*tile_ptr)->data)
 		{
-		  memcpy (newtile->data,
-                          (*tile_ptr)->data, tile_size (newtile));
+		  memcpy (newtile->data, (*tile_ptr)->data, newsize);
 		}
 	      else
 		{
 		  tile_lock (*tile_ptr);
-		  memcpy (newtile->data,
-                          (*tile_ptr)->data, tile_size (newtile));
+		  memcpy (newtile->data, (*tile_ptr)->data, newsize);
 		  tile_release (*tile_ptr, FALSE);
 		}
 
