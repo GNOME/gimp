@@ -147,9 +147,6 @@ MAIN ()
   int i;
   gboolean ix_used[256];
 
-  g_print ("PNG: fuiac: Image claims to use %d/256 indices - finding free "
-           "index...\n", (*colors));
-
   for (i = 0; i < 256; i++)
     {
       ix_used[i] = (gboolean) FALSE;
@@ -167,7 +164,6 @@ MAIN ()
     {
       if (ix_used[i] == (gboolean) FALSE)
         {
-          g_print ("PNG: Found unused colour index %d.\n", i);
           return i;
         }
     }
@@ -178,14 +174,9 @@ MAIN ()
   if ((*colors) < 256)
     {
       (*colors)++;
-      g_print
-        ("PNG: 2nd pass - Increasing bounds and using colour index %d.\n",
-         (int) (*colors) - 1);
       return ((*colors) - 1);
     }
 
-  g_message (_
-             ("PNG: Couldn't simply reduce colors further.\nSaving as opaque.\n"));
   return (-1);
 }
 
@@ -1037,6 +1028,9 @@ save_image (gchar * filename,   /* I - File to save to */
 
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
+
+          /* If we're dealing with a paletted image with 
+           * transparency set, write out the remapped palette */
           if (info->valid & PNG_INFO_tRNS)
             {
               for (i = 0; i < num; ++i)
@@ -1044,16 +1038,13 @@ save_image (gchar * filename,   /* I - File to save to */
                   fixed = pixels[i];
                   for (k = 0; k < drawable->width; ++k)
                     {
-                      if (PNG_INFO_PLTE)
-                        fixed[k] = remap[fixed[2 * k]];
-                      else
-                        fixed[k] = (fixed[k * 2 + 1] > 127) ?
-                          fixed[k * 2] + 1 : 0;
+                      fixed[k] = remap[fixed[2 * k]];
 
                     }
                 }
-              /* Forgot this case before, what if there are too many colors? */
             }
+          /* Otherwise if we have a paletted image and transparency 
+           * couldn't be set, we ignore the alpha channel */
           else if (info->valid & PNG_INFO_PLTE && bpp == 2)
             {
               for (i = 0; i < num; ++i)
@@ -1146,14 +1137,6 @@ respin_cmap (png_structp pp,
       gint i;
 
       png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
-      g_print ("PNG: Swapping index %d  and index 0 of \"before\" ",
-               transparent);
-      g_print ("in \"after\".\n");
-
-      g_print ("Old palette:\n");
-      for (i = 0; i < colors; i++)
-        g_print ("Index %3d: (%3d, %3d, %3d)\n", i,
-                 before[3 * i], before[3 * i + 1], before[3 * i + 2]);
 
       /* Transform all pixels with a value = transparent to 
        * 0 and vice versa to compensate for re-ordering in palette 
@@ -1166,21 +1149,12 @@ respin_cmap (png_structp pp,
        * transparent of after, then from transparent+1 to colors-1 
        * unchanged, and finally from index transparent to index 0. */
 
-      g_print ("PNG: Setting index %d to transparent.\n", transparent);
-      g_print ("PNG: Copying from index 0 of \"before\" ");
-      g_print ("to index %d of \"after\".\n", transparent);
       for (i = 0; i < colors; i++)
         {
           palette[i].red = before[3 * remap[i]];
           palette[i].green = before[3 * remap[i] + 1];
           palette[i].blue = before[3 * remap[i] + 2];
         }
-
-      g_print ("Setting a palette of %d colours.\n", colors);
-
-      for (i = 0; i < colors; i++)
-        g_print ("Index %3d: (%3d, %3d, %3d)\n", i,
-                 palette[i].red, palette[i].green, palette[i].blue);
 
       png_set_PLTE (pp, info, palette, colors);
     }
