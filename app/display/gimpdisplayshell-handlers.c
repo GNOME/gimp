@@ -157,8 +157,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
                     shell);
   g_signal_connect (gimage, "invalidate_preview",
-		    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
-		    shell);
+                    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
+                    shell);
 
   shell->vectors_freeze_handler =
     gimp_container_add_handler (gimage->vectors, "freeze",
@@ -390,8 +390,8 @@ gimp_display_shell_size_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_scale_resize (shell,
-				   GIMP_DISPLAY_CONFIG (gimage->gimp->config)->resize_windows_on_resize,
-				   TRUE);
+                                   GIMP_DISPLAY_CONFIG (gimage->gimp->config)->resize_windows_on_resize,
+                                   TRUE);
 }
 
 static void
@@ -622,9 +622,7 @@ gimp_display_shell_ants_speed_notify_handler (GObject          *config,
 static gboolean
 gimp_display_shell_idle_update_icon (gpointer data)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
   shell->icon_idle_id = 0;
 

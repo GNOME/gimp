@@ -24,7 +24,7 @@
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -259,7 +259,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
           gint       snap_distance;
 
           snap_distance =
-            GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+            GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
               (guide = gimp_image_find_guide (gdisp->gimage,
@@ -562,7 +562,9 @@ gimp_move_tool_oper_update (GimpTool        *tool,
     {
       gint snap_distance;
 
-      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+      snap_distance =
+        GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+
       guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
                                      FUNSCALEY (shell, snap_distance));
@@ -631,7 +633,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
       gint       snap_distance;
 
       snap_distance =
-        GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+        GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,

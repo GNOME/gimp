@@ -25,10 +25,8 @@
 
 #include "core/gimp.h"
 #include "core/gimparea.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
-#include "core/gimpprojection.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"

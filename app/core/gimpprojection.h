@@ -23,16 +23,16 @@
 #include "gimpobject.h"
 
 
-typedef struct _IdleRenderStruct IdleRenderStruct;
+typedef struct _GimpProjectionIdleRender GimpProjectionIdleRender;
 
-struct _IdleRenderStruct
+struct _GimpProjectionIdleRender
 {
   gint    width;
   gint    height;
   gint    x;
   gint    y;
-  gint    basex;
-  gint    basey;
+  gint    base_x;
+  gint    base_y;
   guint   idle_id;
   GSList *update_areas;   /*  flushed update areas */
 };
@@ -50,18 +50,18 @@ typedef struct _GimpProjectionClass GimpProjectionClass;
 
 struct _GimpProjection
 {
-  GimpObject        parent_instance;
+  GimpObject                parent_instance;
 
-  GimpImage        *gimage;
+  GimpImage                *gimage;
 
-  GimpImageType     type;
-  gint              bytes;
-  TileManager      *tiles;
+  GimpImageType             type;
+  gint                      bytes;
+  TileManager              *tiles;
 
-  GSList           *update_areas;
-  IdleRenderStruct  idle_render;
+  GSList                   *update_areas;
+  GimpProjectionIdleRender  idle_render;
 
-  gboolean          construct_flag;
+  gboolean                  construct_flag;
 };
 
 struct _GimpProjectionClass
@@ -88,6 +88,7 @@ gdouble          gimp_projection_get_opacity    (const GimpProjection *proj);
 
 void             gimp_projection_flush          (GimpProjection       *proj);
 void             gimp_projection_flush_now      (GimpProjection       *proj);
+void             gimp_projection_finish_draw    (GimpProjection       *proj);
 
 
 #endif /*  __GIMP_PROJECTION_H__  */

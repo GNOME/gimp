@@ -62,9 +62,6 @@ static void  gimp_gui_config_get_property (GObject            *object,
 enum
 {
   PROP_0,
-  PROP_TRANSPARENCY_SIZE,
-  PROP_TRANSPARENCY_TYPE,
-  PROP_SNAP_DISTANCE,
   PROP_DEFAULT_THRESHOLD,
   PROP_INFO_WINDOW_PER_DISPLAY,
   PROP_TRUST_DIRTY_FLAG,
@@ -137,18 +134,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_SIZE,
-                                 "transparency-size", TRANSPARENCY_SIZE_BLURB,
-                                 GIMP_TYPE_CHECK_SIZE, GIMP_MEDIUM_CHECKS,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
-                                 "transparency-type", TRANSPARENCY_TYPE_BLURB,
-                                 GIMP_TYPE_CHECK_TYPE, GIMP_GRAY_CHECKS,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SNAP_DISTANCE,
-                                "snap-distance", DEFAULT_SNAP_DISTANCE_BLURB,
-                                1, 255, 8,
-                                0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
                                 "default-threshold", DEFAULT_THRESHOLD_BLURB,
                                 0, 255, 15,
@@ -294,15 +279,6 @@ gimp_gui_config_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_TRANSPARENCY_SIZE:
-      gui_config->transparency_size = g_value_get_enum (value);
-      break;
-    case PROP_TRANSPARENCY_TYPE:
-      gui_config->transparency_type = g_value_get_enum (value);
-      break;
-    case PROP_SNAP_DISTANCE:
-      gui_config->snap_distance = g_value_get_int (value);
-      break;
     case PROP_DEFAULT_THRESHOLD:
       gui_config->default_threshold = g_value_get_int (value);
       break;
@@ -402,15 +378,6 @@ gimp_gui_config_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_TRANSPARENCY_SIZE:
-      g_value_set_enum (value, gui_config->transparency_size);
-      break;
-    case PROP_TRANSPARENCY_TYPE:
-      g_value_set_enum (value, gui_config->transparency_type);
-      break;
-    case PROP_SNAP_DISTANCE:
-      g_value_set_int (value, gui_config->snap_distance);
-      break;
     case PROP_DEFAULT_THRESHOLD:
       g_value_set_int (value, gui_config->default_threshold);
       break;

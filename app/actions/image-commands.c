@@ -478,13 +478,18 @@ image_scale_callback (GtkWidget *widget,
 {
   ImageResizeOptions      *options = data;
   GimpImageScaleCheckType  scale_check;
+  gint64                   max_memsize;
   gint64                   new_memsize;
 
   gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
+  max_memsize =
+    GIMP_GUI_CONFIG (options->gimage->gimp->config)->max_new_image_size;
+
   scale_check = gimp_image_scale_check (options->gimage,
                                         options->dialog->width,
                                         options->dialog->height,
+                                        max_memsize,
                                         &new_memsize);
   switch (scale_check)
     {
@@ -495,8 +500,7 @@ image_scale_callback (GtkWidget *widget,
         gchar *warning_message;
 
         size_str     = gimp_memsize_to_string (new_memsize);
-        max_size_str = gimp_memsize_to_string
-          (GIMP_GUI_CONFIG (options->gimage->gimp->config)->max_new_image_size);
+        max_size_str = gimp_memsize_to_string (max_memsize);
 
         warning_message = g_strdup_printf
           (_("You are trying to create an image with a size of %s.\n\n"

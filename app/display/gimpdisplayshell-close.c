@@ -100,9 +100,9 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gchar     *title;
   gchar     *message;
 
-  if (shell->warning_dialog)
+  if (shell->close_dialog)
     {
-      gtk_window_present (GTK_WINDOW (shell->warning_dialog));
+      gtk_window_present (GTK_WINDOW (shell->close_dialog));
       return;
     }
 
@@ -110,7 +110,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   title = g_strdup_printf (_("Close %s?"), name);
 
-  shell->warning_dialog =
+  shell->close_dialog =
     dialog = gimp_dialog_new (title,
                               "gimp-display-shell-close",
                               GTK_WIDGET (shell), 0,
@@ -126,7 +126,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &shell->warning_dialog);
+                    &shell->close_dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_display_shell_close_response),
@@ -174,7 +174,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
                                    gint              response_id,
                                    GimpDisplayShell *shell)
 {
-  gtk_widget_destroy (GTK_WIDGET (shell->warning_dialog));
+  gtk_widget_destroy (widget);
 
   if (response_id == GTK_RESPONSE_OK)
     gimp_display_delete (shell->gdisp);

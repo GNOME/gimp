@@ -166,14 +166,14 @@ gimp_drawable_get_type (void)
       static const GTypeInfo drawable_info =
       {
         sizeof (GimpDrawableClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_drawable_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpDrawable),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_drawable_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_drawable_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpDrawable),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_drawable_init,
       };
 
       static const GInterfaceInfo pickable_iface_info =
@@ -184,8 +184,8 @@ gimp_drawable_get_type (void)
       };
 
       drawable_type = g_type_register_static (GIMP_TYPE_ITEM,
-					      "GimpDrawable",
-					      &drawable_info, 0);
+                                              "GimpDrawable",
+                                              &drawable_info, 0);
 
       g_type_add_interface_static (drawable_type, GIMP_TYPE_PICKABLE,
                                    &pickable_iface_info);
@@ -197,39 +197,34 @@ gimp_drawable_get_type (void)
 static void
 gimp_drawable_class_init (GimpDrawableClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_drawable_signals[UPDATE] =
     g_signal_new ("update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDrawableClass, update),
-		  NULL, NULL,
-		  gimp_marshal_VOID__INT_INT_INT_INT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDrawableClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   gimp_drawable_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDrawableClass, alpha_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDrawableClass, alpha_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize             = gimp_drawable_finalize;
 
@@ -297,10 +292,8 @@ static gint64
 gimp_drawable_get_memsize (GimpObject *object,
                            gint64     *gui_size)
 {
-  GimpDrawable *drawable;
-  gint64        memsize = 0;
-
-  drawable = GIMP_DRAWABLE (object);
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
+  gint64        memsize  = 0;
 
   if (drawable->tiles)
     memsize += tile_manager_get_memsize (drawable->tiles);
@@ -315,12 +308,10 @@ gimp_drawable_get_memsize (GimpObject *object,
 static void
 gimp_drawable_invalidate_preview (GimpViewable *viewable)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (viewable);
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-
-  drawable = GIMP_DRAWABLE (viewable);
 
   drawable->preview_valid = FALSE;
 
@@ -420,7 +411,7 @@ gimp_drawable_scale (GimpItem              *item,
   new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
 
   pixel_region_init (&srcPR, drawable->tiles,
-		     0, 0, item->width, item->height,
+                     0, 0, item->width, item->height,
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0, new_width, new_height,
@@ -615,8 +606,8 @@ gimp_drawable_transform (GimpItem               *item,
 
 static guchar *
 gimp_drawable_get_color_at (GimpPickable *pickable,
-			    gint          x,
-			    gint          y)
+                            gint          x,
+                            gint          y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
   GimpImage    *gimage;
@@ -636,7 +627,7 @@ gimp_drawable_get_color_at (GimpPickable *pickable,
   dest = g_new (guchar, 5);
 
   tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
-				TRUE, FALSE);
+                                TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
   gimp_image_get_color (gimage, gimp_drawable_type (drawable), src, dest);
@@ -761,46 +752,46 @@ gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
       gint i, j;
 
       for (i = y; i < (y + height); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-	{
-	  for (j = x; j < (x + width); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-	    {
+        {
+          for (j = x; j < (x + width); j += (TILE_WIDTH - (j % TILE_WIDTH)))
+            {
               Tile *src_tile;
               Tile *dest_tile;
 
-	      src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
+              src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
 
-	      if (tile_is_valid (src_tile))
-		{
-		  /* swap tiles, not pixels! */
+              if (tile_is_valid (src_tile))
+                {
+                  /* swap tiles, not pixels! */
 
-		  src_tile = tile_manager_get_tile (tiles,
+                  src_tile = tile_manager_get_tile (tiles,
                                                     j, i, TRUE, FALSE /*TRUE*/);
-		  dest_tile = tile_manager_get_tile (gimp_drawable_data (drawable), j, i, TRUE, FALSE /* TRUE */);
+                  dest_tile = tile_manager_get_tile (gimp_drawable_data (drawable), j, i, TRUE, FALSE /* TRUE */);
 
-		  tile_manager_map_tile (tiles,
+                  tile_manager_map_tile (tiles,
                                          j, i, dest_tile);
-		  tile_manager_map_tile (gimp_drawable_data (drawable),
+                  tile_manager_map_tile (gimp_drawable_data (drawable),
                                          j, i, src_tile);
 #if 0
-		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
-			       tile_data_pointer (dest_tile, 0, 0),
-			       tile_size (src_tile));
+                  swap_pixels (tile_data_pointer (src_tile, 0, 0),
+                               tile_data_pointer (dest_tile, 0, 0),
+                               tile_size (src_tile));
 #endif
 
-		  tile_release (dest_tile, FALSE /* TRUE */);
-		  tile_release (src_tile, FALSE /* TRUE */);
-		}
-	    }
-	}
+                  tile_release (dest_tile, FALSE /* TRUE */);
+                  tile_release (src_tile, FALSE /* TRUE */);
+                }
+            }
+        }
     }
   else
     {
       PixelRegion PR1, PR2;
 
       pixel_region_init (&PR1, tiles,
-			 0, 0, width, height, TRUE);
+                         0, 0, width, height, TRUE);
       pixel_region_init (&PR2, gimp_drawable_data (drawable),
-			 x, y, width, height, TRUE);
+                         x, y, width, height, TRUE);
 
       swap_region (&PR1, &PR2);
     }
@@ -813,13 +804,13 @@ gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
 
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
-			 GimpImage     *gimage,
+                         GimpImage     *gimage,
                          gint           offset_x,
                          gint           offset_y,
-			 gint           width,
-			 gint           height,
-			 GimpImageType  type,
-			 const gchar   *name)
+                         gint           width,
+                         gint           height,
+                         GimpImageType  type,
+                         const gchar   *name)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -844,10 +835,10 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
 void
 gimp_drawable_update (GimpDrawable *drawable,
-		      gint          x,
-		      gint          y,
-		      gint          width,
-		      gint          height)
+                      gint          x,
+                      gint          y,
+                      gint          width,
+                      gint          height)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -1067,12 +1058,12 @@ gimp_drawable_shadow (GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimp_image_shadow (gimage, item->width, item->height,
-			    drawable->bytes);
+                            drawable->bytes);
 }
 
 void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
-			    gboolean      push_undo,
+                            gboolean      push_undo,
                             const gchar  *undo_desc)
 {
   GimpImage   *gimage;
@@ -1101,7 +1092,7 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
 
 void
 gimp_drawable_fill (GimpDrawable      *drawable,
-		    const GimpRGB     *color,
+                    const GimpRGB     *color,
                     const GimpPattern *pattern)
 {
   GimpItem      *item;
@@ -1159,15 +1150,15 @@ gimp_drawable_fill (GimpDrawable      *drawable,
     }
 
   gimp_drawable_update (drawable,
-			0, 0,
-			gimp_item_width  (item),
-			gimp_item_height (item));
+                        0, 0,
+                        gimp_item_width  (item),
+                        gimp_item_height (item));
 }
 
 void
 gimp_drawable_fill_by_type (GimpDrawable *drawable,
-			    GimpContext  *context,
-			    GimpFillType  fill_type)
+                            GimpContext  *context,
+                            GimpFillType  fill_type)
 {
   GimpRGB      color;
   GimpPattern *pattern = NULL;
@@ -1209,10 +1200,10 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 
 gboolean
 gimp_drawable_mask_bounds (GimpDrawable *drawable,
-			   gint         *x1,
-			   gint         *y1,
-			   gint         *x2,
-			   gint         *y2)
+                           gint         *x1,
+                           gint         *y1,
+                           gint         *x2,
+                           gint         *y2)
 {
   GimpItem    *item;
   GimpImage   *gimage;

@@ -1,3 +1,37 @@
+2004-07-14  Michael Natterer  <mitch@gimp.org>
+
+	Code review & cleanup:
+
+	* app/config/gimpguiconfig.[ch]: removed transparency-size,
+	transparency-type and snap-distance properties...
+
+	* app/config/gimpdisplayconfig.[ch]: ...and added them here.
+
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpmovetool.c: changed accordingly.
+
+	* app/core/gimpimage-scale.[ch] (gimp_layer_scale_check): added a
+	"max_memsize" parameter instead of looking it up in GimpGuiConfig.
+
+	* app/actions/image-commands.c: changed accordingly.
+
+	* app/core/gimparea.c
+	* app/core/gimpdrawable.c: converted tabs to spaces, cleanup.
+
+	* app/core/gimpprojection.[ch]: renamed IdleRenderStruct to
+	GimpProjectionIdleRender, reordered functions, cleanup.
+
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplay.c: removed unused #includes.
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-close.c: renamed
+	shell->warning_dialog to shell->close_dialog, some random
+	cleanups.
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/widgets/gimpselectioneditor.c: minor coding style cleanup.
+
 2004-07-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpitem.c: added documentation comments to some

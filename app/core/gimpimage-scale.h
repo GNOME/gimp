@@ -31,6 +31,7 @@ GimpImageScaleCheckType
        gimp_image_scale_check   (const GimpImage       *gimage,
                                  gint                   new_width,
                                  gint                   new_height,
+                                 gint64                 max_memsize,
                                  gint64                *new_memsize);
 
 

@@ -135,15 +135,15 @@ struct _GimpDisplayShell
   gint              cursor_x;          /* software cursor X value             */
   gint              cursor_y;          /* software cursor Y value             */
 
-  GtkWidget        *warning_dialog;    /*  close warning dialog               */
+  GtkWidget        *close_dialog;      /*  close dialog                       */
   InfoDialog       *info_dialog;       /*  image information dialog           */
   GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
   GtkWidget        *nav_popup;         /*  navigation popup                   */
   GtkWidget        *grid_dialog;       /*  grid configuration dialog          */
 
-  GimpColorDisplayStack *filter_stack;  /* color display conversion stuff      */
+  GimpColorDisplayStack *filter_stack;   /* color display conversion stuff    */
   guint                  filter_idle_id;
-  GtkWidget             *filters_dialog;/* color display filter dialog         */
+  GtkWidget             *filters_dialog; /* color display filter dialog       */
 
   gint              paused_count;
 

@@ -54,22 +54,21 @@ GSList *
 gimp_area_list_process (GSList   *list,
                         GimpArea *area)
 {
-  GSList   *new_list;
-  GSList   *l;
-  gint      area1, area2, area3;
-  GimpArea *ga2;
+  GSList *new_list;
+  GSList *l;
+  gint    area1, area2, area3;
 
   /*  start new list off  */
   new_list = g_slist_prepend (NULL, area);
 
   for (l = list; l; l = g_slist_next (l))
     {
-      ga2 = (GimpArea *) l->data;
+      GimpArea *ga2 = l->data;
 
       area1 = (area->x2 - area->x1) * (area->y2 - area->y1) + OVERHEAD;
       area2 = (ga2->x2 - ga2->x1) * (ga2->y2 - ga2->y1) + OVERHEAD;
-      area3 = (MAX (ga2->x2, area->x2) - MIN (ga2->x1, area->x1)) *
-	(MAX (ga2->y2, area->y2) - MIN (ga2->y1, area->y1)) + OVERHEAD;
+      area3 = ((MAX (ga2->x2, area->x2) - MIN (ga2->x1, area->x1)) *
+               (MAX (ga2->y2, area->y2) - MIN (ga2->y1, area->y1)) + OVERHEAD);
 
       if ((area1 + area2) < area3)
         {

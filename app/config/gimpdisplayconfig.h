@@ -40,6 +40,9 @@ struct _GimpDisplayConfig
 {
   GimpCoreConfig      parent_instance;
 
+  GimpCheckSize       transparency_size;
+  GimpCheckType       transparency_type;
+  gint                snap_distance;
   gint                marching_ants_speed;
   gboolean            resize_windows_on_zoom;
   gboolean            resize_windows_on_resize;

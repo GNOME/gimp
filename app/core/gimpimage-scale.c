@@ -33,8 +33,6 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 
-#include "config/gimpguiconfig.h"
-
 #include "gimp-intl.h"
 
 
@@ -190,6 +188,7 @@ gimp_image_scale (GimpImage             *gimage,
  * @gimage:      A #GimpImage.
  * @new_width:   The new width.
  * @new_height:  The new height.
+ * @max_memsize: The maximum new memory size.
  * @new_memsize: The new memory size.
  *
  * Inventory the layer list in gimage and check that it may be
@@ -197,8 +196,7 @@ gimp_image_scale (GimpImage             *gimage,
  *
  * Return value: #GIMP_IMAGE_SCALE_OK if scaling the image will shrink none
  *               of its layers completely away, and the new image size
- *               is smaller than the maximum specified in the
- *               preferences.
+ *               is smaller than @max_memsize.
  *               #GIMP_IMAGE_SCALE_TOO_SMALL if scaling would remove some
  *               existing layers.
  *               #GIMP_IMAGE_SCALE_TOO_BIG if the new image size would
@@ -208,6 +206,7 @@ GimpImageScaleCheckType
 gimp_image_scale_check (const GimpImage *gimage,
                         gint             new_width,
                         gint             new_height,
+                        gint64           max_memsize,
                         gint64          *new_memsize)
 {
   GList  *list;
@@ -244,8 +243,7 @@ gimp_image_scale_check (const GimpImage *gimage,
 
   *new_memsize = new_size;
 
-  if (new_size > current_size &&
-      new_size > GIMP_GUI_CONFIG (gimage->gimp->config)->max_new_image_size)
+  if (new_size > current_size && new_size > max_memsize)
     return GIMP_IMAGE_SCALE_TOO_BIG;
 
   for (list = GIMP_LIST (gimage->layers)->list;

@@ -87,14 +87,14 @@ gimp_selection_editor_get_type (void)
       static const GTypeInfo editor_info =
       {
         sizeof (GimpSelectionEditorClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_selection_editor_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSelectionEditor),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_selection_editor_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_selection_editor_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSelectionEditor),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_selection_editor_init,
       };
 
       editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
@@ -211,8 +211,8 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
   if (image_editor->gimage)
     {
       g_signal_handlers_disconnect_by_func (image_editor->gimage,
-					    gimp_selection_editor_mask_changed,
-					    editor);
+                                            gimp_selection_editor_mask_changed,
+                                            editor);
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
@@ -220,8 +220,8 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
   if (gimage)
     {
       g_signal_connect (gimage, "mask_changed",
-			G_CALLBACK (gimp_selection_editor_mask_changed),
-			editor);
+                        G_CALLBACK (gimp_selection_editor_mask_changed),
+                        editor);
 
       gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview),
                                  GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
