@@ -1,3 +1,7 @@
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated after files have been moved.
+
 2003-10-22  Jan Morén  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
@@ -11,8 +15,8 @@
 	* sk.po: Updated Slovak translation by Zdenko Podobny.
 
 2003-10-20  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Added Translation by
+
+	* ms.po: Added Translation by
                 MIMOS Open Source Development Group <ismas@mimos.my>
 
 2003-10-19  Sven Neumann  <sven@gimp.org>
