@@ -88,7 +88,7 @@ ReadBMP (char *name)
   
   if (Bitmap_File_Head.biSize!=40) 
     {
-      g_warning(_("OS/2 unsupported!\n"));
+      g_warning("OS/2 unsupported!\n");
       if (!ReadOK (fd, puffer, Bitmap_File_Head.biSize))
         {
           g_message (_("%s: error reading BMP file header\n"), prog_name);

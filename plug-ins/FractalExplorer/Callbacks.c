@@ -22,34 +22,6 @@ dialog_save_callback(GtkWidget * widget, gpointer data)
 {
     create_file_selection();
 }				/* dialog_save_callback */
-
-/**********************************************************************
- FUNCTION: dialog_savelanguage_callback
- *********************************************************************/
-
-void
-dialog_savelanguage_callback(GtkWidget * widget, gpointer data)
-{
-  FILE * fp;
-  char * filname;
-  
-  filname = g_strconcat (gimp_directory (),
-			 G_DIR_SEPARATOR_S,
-			 "fractalexplorerrc",
-			 NULL);
-  lng=wvals.language;
-  fp = fopen (filname, "w");
-  if (fp) {
-    if (lng==0) fputs("FX-LANG:En\n",fp);
-    if (lng==1) fputs("FX-LANG:Fr\n",fp);
-    if (lng==2) fputs("FX-LANG:De\n",fp);
-    fclose(fp);
-  }
-  
-  g_free (filename);
-}				/* dialog_savelanguage_callback */
-
-
 /**********************************************************************
  FUNCTION: load_button_press
  *********************************************************************/
@@ -263,14 +235,6 @@ explorer_toggle_update(GtkWidget * widget,
 	wvals.colormode = 0;
     else if (do_colormode2)
 	wvals.colormode = 1;
-
-    if (do_english)
-	wvals.language = 0;
-    else if (do_french)
-	wvals.language = 1;
-    else if (do_german)
-	wvals.language = 2;
-	
 	
     if (do_type0)
 	wvals.fractaltype = 0;

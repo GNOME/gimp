@@ -16,10 +16,11 @@ FractalExplorer_SOURCES = \
 	FractalExplorer.c	\
 	FractalExplorer.h	\
 	Globals.c		\
-	Languages.h		\
-	Languages.c		\
 	logo.h			\
 	pix_data.h
+
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
 	-I$(top_srcdir)			\

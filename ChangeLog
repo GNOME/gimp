@@ -1,3 +1,28 @@
+Thu Jan  6 00:58:32 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.c
+	* plug-ins/bmp/bmpread.c: i18n fixes
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/imagemap/imap_main.c: strtok() is dangerous !!
+	
+	"Never use this function. This function modifies its first argument."
+	So if you absolutely need to use it, save a pointer to your string
+	or bad things will happen soon.
+
+	* plug-ins/FractalExplorer/Callbacks.c
+	* plug-ins/FractalExplorer/Callbacks.h
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/Dialogs.h
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/FractalExplorer/Makefile.am
+	* po-plug-ins/POTFILES.in: added gettext support and removed the
+	selfmade i18n routines. I have left the Language.[ch] files in CVS 
+	for now since it contains useful french and german translations. 
+	Please add these to the po files so we can get rid of the files ASAP.
+
 Wed Jan  5 21:35:14 GMT 2000 Andy Thomas <alt@gimp.org>
 
 	* PLUGIN_MAINTAINERS

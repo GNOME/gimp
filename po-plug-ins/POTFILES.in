@@ -3,6 +3,8 @@
 
 plug-ins/AlienMap/AlienMap.c
 plug-ins/AlienMap2/AlienMap2.c
+plug-ins/FractalExplorer/Dialogs.c
+plug-ins/FractalExplorer/FractalExplorer.c
 plug-ins/Lighting/lighting_main.c
 plug-ins/Lighting/lighting_ui.c
 plug-ins/bmp/bmp.c

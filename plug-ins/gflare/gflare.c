@@ -872,6 +872,7 @@ plug_in_parse_gflare_path ()
   gchar *home;
   gchar *path;
   gchar *token;
+  gchar *next_token;
   struct stat filestat;
   gint	err;
 
@@ -899,13 +900,14 @@ plug_in_parse_gflare_path ()
 
   /* Search through all directories in the  path */
 
-  token = strtok (path_string, ":");
+  next_token = path_string;
+  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S );
 
   while (token)
     {
       if (*token == '\0')
 	{
-	  token = strtok (NULL, ":");
+	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
 	  continue;
 	}
 
@@ -936,8 +938,7 @@ plug_in_parse_gflare_path ()
 	  DEBUG_PRINT(("Not found `%s'\n", path));
 	  g_free (path);
 	}
-
-      token = strtok (NULL, ":");
+      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
     }
   g_free (path_string);
 

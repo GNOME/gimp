@@ -818,6 +818,7 @@ plug_in_parse_gfig_path()
   gchar *home;
   gchar *path;
   gchar *token;
+  gchar *next_token;
   struct stat filestat;
   gint	err;
   gchar buf[256];
@@ -856,7 +857,8 @@ plug_in_parse_gfig_path()
 
   /* Search through all directories in the  path */
 
-  token = strtok (path_string, G_SEARCHPATH_SEPARATOR_S);
+  next_token = path_string;
+  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {

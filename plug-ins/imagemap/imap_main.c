@@ -772,6 +772,7 @@ save_as_cern(gpointer param, OutputFunc_t output)
 {
    char *p;
    gchar *description;
+   gchar *next_token;
 
    write_cern_comment(param, output);
    output(param, "-:Image Map file created by GIMP Imagemap Plugin\n");
@@ -789,7 +790,8 @@ save_as_cern(gpointer param, OutputFunc_t output)
    output(param, "FORMAT:cern\n");
    
    description = g_strdup(_map_info.description);
-   for (p = strtok(description, "\n"); p; p = strtok(NULL, "\n")) {
+   next_token = description;
+   for (p = strtok (next_token, "\n"); p; p = strtok(NULL, "\n")) {
       write_cern_comment(param, output);
       output(param, "DESCRIPTION:%s\n", p);
    }

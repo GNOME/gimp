@@ -39,6 +39,12 @@
    many it's research."  --Wilson Mizner
  *********************************************************************/
 
+/* Changes:
+ *
+ * 2000-01-05  Fixed a problem with strtok and got rid of the selfmade i18n
+ *             Sven Neumann <sven@gimp.org>
+ */
+
 /**********************************************************************
  Include necessary files  
  *********************************************************************/
@@ -76,10 +82,10 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "pix_data.h"
 
-#include "Languages.h"
 #include "FractalExplorer.h"
 #include "Events.h"
 #include "Callbacks.h"
@@ -126,13 +132,15 @@ query()
     static int          nargs = sizeof(args) / sizeof(args[0]);
     static int          nreturn_vals = 0;
 
+    INIT_I18N();
+
     gimp_install_procedure("plug_in_fractalexplorer",
-			   "Chaos Fractal Explorer Plug-In",
+			   _("Chaos Fractal Explorer Plug-In"),
 			   "No help yet.",
 	                   "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			   "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			   "December, 1998",
-			   "<Image>/Filters/Render/Pattern/Fractal Explorer...",
+			   N_("<Image>/Filters/Render/Pattern/Fractal Explorer..."),
 			   "RGB*",
 			   PROC_PLUG_IN,
 			   nargs, nreturn_vals,
@@ -158,9 +166,6 @@ run(char *name,
     int                 pwidth,
                         pheight;
     GStatusType         status = STATUS_SUCCESS;
-    FILE * fp;
-    gchar * filname=NULL;
-    gchar load_buf[MAX_LOAD_LINE];
 
     run_mode = param[0].data.d_int32;
 
@@ -169,6 +174,8 @@ run(char *name,
 
     *nreturn_vals = 1;
     *return_vals = values;
+
+    INIT_I18N_UI();
 
   /*  Get the specified drawable  */
     drawable = gimp_drawable_get(param[2].data.d_drawable);
@@ -210,36 +217,6 @@ run(char *name,
 
 	gimp_get_data("plug_in_fractalexplorer", &wvals);
 	
-	lng=0;
-
-	filname = g_strconcat (gimp_directory (),
-			       G_DIR_SEPARATOR_S,
-			       "fractalexplorerrc",
-			       NULL);
-        fp = fopen (filname, "r");
-        if (!fp)
-            {
-              fp = fopen (filname, "w");
-              if (fp) fputs("FX-LANG:En\n",fp);
-            }
-	    else
-	    {
-	    	fgets(load_buf, MAX_LOAD_LINE, fp);
-                if (strlen(load_buf) > 0) load_buf[strlen(load_buf) - 1] = '\0';
-              if(strncmp("FX-LANG:En",load_buf,strlen(load_buf))==0)
-               { lng=0; }
-              if(strncmp("FX-LANG:Fr",load_buf,strlen(load_buf))==0)
-               { lng=1; }
-              if(strncmp("FX-LANG:De",load_buf,strlen(load_buf))==0)
-               { lng=2; }
-	    }   
-        fclose(fp);
-	
-        wvals.language=lng;
-	do_english = (wvals.language == 0);
-        do_french = (wvals.language == 1);
-        do_german = (wvals.language == 2);
-
       /* Get information from the dialog */
 
 	if (!explorer_dialog())
@@ -609,7 +586,7 @@ fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
     return(FALSE);
 
   delete_dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(delete_dialog), msg[lng][MSG_DELFRAC]);
+  gtk_window_set_title(GTK_WINDOW(delete_dialog), _("Delete fractal"));
   gtk_window_position(GTK_WINDOW(delete_dialog), GTK_WIN_POS_MOUSE);
   gtk_container_set_border_width(GTK_CONTAINER(delete_dialog), 0);
   
@@ -621,12 +598,13 @@ fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
   
   /* Question */
   
-  label = gtk_label_new(msg[lng][MSG_DELSURE]);
+  label = gtk_label_new(_("Are you sure you want to delete"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
   
-  str = g_strdup_printf(msg[lng][MSG_DELSURE2], sel_obj->draw_name);
+  str = g_strdup_printf (_("\"%s\" from the list and from disk?"), 
+			 sel_obj->draw_name);
   
   label = gtk_label_new(str);
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
@@ -636,7 +614,7 @@ fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
   g_free(str);
   
   /* Buttons */
-  button = gtk_button_new_with_label (msg[lng][MSG_DEL]);
+  button = gtk_button_new_with_label (_("Delete"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_ok,
                       data);
@@ -646,7 +624,7 @@ fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
   gtk_object_set_user_data(GTK_OBJECT(button),widget);
   gtk_widget_show (button);
   
-  button = gtk_button_new_with_label (msg[lng][MSG_CANCEL]);
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_cancel,
                       data);
@@ -714,25 +692,21 @@ gradient_list_button_press(GtkWidget *widget,
           fp = fopen (filename, "r");
           if (!fp)
             {
-              g_warning (msg[lng][MSG_OPENERROR], filename);
+              g_warning ("Error opening: %s", filename);
               return 0;
             }
           get_line(load_buf,MAX_LOAD_LINE,fp,1);
           if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
-          {
-             gchar err[MAXSTRLEN];
-             sprintf(err,msg[lng][MSG_WRONGFILETYPE],sel_obj->filename);
-             create_warn_dialog(err);
-             return(0);
-          }
+	    {
+	      g_message (_("File '%s' is not a FractalExplorer file"), sel_obj->filename);
+
+	      return(0);
+	    }
 
           if(gradient_load_options(sel_obj,fp))
             {
-               gchar err[MAXSTRLEN];
-               sprintf(err,msg[lng][MSG_CORRUPTFILE],
-	      filename,
-	      line_no);
-              create_warn_dialog(err);
+              g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), filename, line_no);
+	      
               return(0);
             }
           fclose(fp);
@@ -742,10 +716,10 @@ gradient_list_button_press(GtkWidget *widget,
 	}
 	}
         else
-          g_warning(msg[lng][MSG_NULLLIST]);
+          g_warning("Internal error - list item has null object!");
         break;
     default:
-      printf(msg[lng][MSG_UNKNOWN_EVENT]);
+      printf("Unknown event\n");
       break;
     }
 
@@ -824,7 +798,7 @@ fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gin
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (options->query_box),msg[lng][MSG_EDIT_FRACNAME]);
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit fractal name"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  the main vbox  */
@@ -835,7 +809,7 @@ fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gin
   /*  the name entry hbox, label and entry  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (msg[lng][MSG_FRACNAME]);
+  label = gtk_label_new (_("Fractal name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   options->name_entry = gtk_entry_new ();
@@ -845,7 +819,7 @@ fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gin
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (msg[lng][MSG_OK]);
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_list_ok_callback,
                       options);
@@ -854,7 +828,7 @@ fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gin
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (msg[lng][MSG_CANCEL]);
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_list_cancel_callback,
                       options);
@@ -877,7 +851,7 @@ new_fractalexplorer_obj(gchar * name)
   fractalexplorer = fractalexplorer_new();
 
   if(!name)
-    name = msg[lng][MSG_NEWFRAC];
+    name = _("New fractal");
 
   fractalexplorer->draw_name = g_strdup(name);
 
@@ -1369,11 +1343,11 @@ list_button_press(GtkWidget *widget,
       dialog_update_preview(); }
 /*    new_obj_2edit(sel_obj); */
   else
-    g_warning(msg[lng][MSG_NULLLIST]);
+    g_warning("Internal error - list item has null object!");
 
       break;
     default:
-      printf(msg[lng][MSG_UNKNOWN_EVENT]);
+      printf("Unknown event\n");
       break;
     }
 
@@ -1389,7 +1363,7 @@ list_button_press(GtkWidget *widget,
  */
 
 void
-plug_in_parse_fractalexplorer_path()
+plug_in_parse_fractalexplorer_path (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -1397,9 +1371,9 @@ plug_in_parse_fractalexplorer_path()
   gchar *home;
   gchar *path;
   gchar *token;
+  gchar *next_token;
   struct stat filestat;
   gint	err;
-  gchar buf[MAXSTRLEN];
   
   if(fractalexplorer_path_list)
     g_list_free(fractalexplorer_path_list);
@@ -1413,9 +1387,10 @@ plug_in_parse_fractalexplorer_path()
   
   if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
     {
-      g_warning(msg[lng][MSG_MISSING_GIMPRC]);
-      create_warn_dialog(msg[lng][MSG_MISSING_GIMPRC]);
-       
+      g_message (_("No fractalexplorer-path in gimprc:\n"
+		   "You need to add an entry like\n"
+		   "(fractalexplorer-path \"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\n"
+		   "to your ~/.gimprc/gimprc file\n"));
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -1430,7 +1405,8 @@ plug_in_parse_fractalexplorer_path()
 
   /* Search through all directories in the  path */
 
-  token = strtok (path_string, G_SEARCHPATH_SEPARATOR_S);
+  next_token = path_string;
+  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
@@ -1461,9 +1437,7 @@ plug_in_parse_fractalexplorer_path()
 	}
       else
 	{
-	  sprintf(buf,msg[lng][MSG_WRONGPATH], path);
-	  g_warning(buf);
-	  create_warn_dialog(buf);
+	  g_message (_("fractalexplorer-path miss-configured - \nPath `%.100s' not found\n"), path);
 	  g_free (path);
 	}
       token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
@@ -1571,7 +1545,7 @@ fractalexplorer_load (gchar *filename, gchar *name)
   fp = fopen (filename, "r");
   if (!fp)
     {
-      g_warning (msg[lng][MSG_OPENERROR], filename);
+      g_warning ("Error opening: %s", filename);
       return NULL;
     }
 
@@ -1592,23 +1566,17 @@ fractalexplorer_load (gchar *filename, gchar *name)
 
   if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
     {
-      gchar err[MAXSTRLEN];
-      sprintf(err,msg[lng][MSG_WRONGFILETYPE],fractalexplorer->filename);
-      create_warn_dialog(err);
-      fclose(fp);
+      g_message (_("File '%s' is not a FractalExplorer file"), filename);
+      fclose (fp);
+
       return(NULL);
     }
   
   if(load_options(fractalexplorer,fp))
     {
-      /* waste some mem */
-      gchar err[MAXSTRLEN];
-      sprintf(err,
-	      msg[lng][MSG_CORRUPTFILE],
-	      filename,
-	      line_no);
-      create_warn_dialog(err);
+      g_message (_("File '%s' is corrupt\nLine %d Option section incorrect"), filename, line_no);
       fclose(fp);
+
       return(NULL);
     }
 
@@ -1635,7 +1603,7 @@ gradient_load (gchar *filename, gchar *name)
   fp = fopen (filename, "r");
   if (!fp)
     {
-      g_warning (msg[lng][MSG_OPENERROR], filename);
+      g_warning ("Error opening: %s", filename);
       return NULL;
     }
 
@@ -1656,9 +1624,8 @@ gradient_load (gchar *filename, gchar *name)
 
   if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
     {
-      gchar err[MAXSTRLEN];
-      sprintf(err,msg[lng][MSG_WRONGFILETYPE],gradi->filename);
-      create_warn_dialog(err);
+      g_message (_("File '%s' is not a FractalExplorer file"), gradi->filename);
+
       return(NULL);
     }
 
@@ -1701,7 +1668,7 @@ fractalexplorer_rescan_file_selection_ok(GtkWidget *w,
 
   if (!S_ISDIR(filestat.st_mode))
     {
-     g_warning(msg[lng][MSG_NOTDIR],filenamebuf);
+     g_warning("Entry %.100s is not a directory\n", filenamebuf);
     }  
   else
     {
@@ -1741,7 +1708,7 @@ fractalexplorer_list_load_all(GList *plist)
       dir = opendir (path);
 
       if (!dir)
-	g_warning(msg[lng][MSG_DIRREADERROR], path);
+	g_warning ("error reading fractalexplorer directory \"%s\"", path);
       else
 	{
 	  while ((dir_ent = readdir (dir)))
@@ -1776,7 +1743,7 @@ fractalexplorer_list_load_all(GList *plist)
     {
       /* lets have at least one! */
       fractalexplorer = fractalexplorer_new();
-      fractalexplorer->draw_name = g_strdup(msg[lng][MSG_FIRSTFRACTAL]);
+      fractalexplorer->draw_name = g_strdup(_("My first fractal"));
       fractalexplorer_list_insert(fractalexplorer);
     }
   pic_obj = current_obj = fractalexplorer_list->data;  /* set to first entry */
@@ -1808,7 +1775,7 @@ gradient_list_load_all(GList *plist)
       dir = opendir (path);
 
       if (!dir)
-	g_warning(msg[lng][MSG_DIRREADERROR], path);
+	g_warning ("error reading fractalexplorer directory \"%s\"", path);
       else
 	{
 	  while ((dir_ent = readdir (dir)))
@@ -1868,7 +1835,7 @@ add_objects_list ()
   GtkWidget *list;
   GtkWidget *button;
 
-  frame = gtk_frame_new(msg[lng][MSG_CHOOSE_FRACTAL]);
+  frame = gtk_frame_new (_("Choose fractal by double-clicking on it"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width(GTK_CONTAINER(frame), 10);
   gtk_widget_show(frame);
@@ -1901,12 +1868,12 @@ add_objects_list ()
   build_list_items(list);
 
   /* Put buttons in */
-  button = gtk_button_new_with_label (msg[lng][MSG_RESCAN]);
+  button = gtk_button_new_with_label (_("Rescan"));
   gtk_widget_show(button);
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) rescan_button_press,
 		      NULL);
-  gtk_tooltips_set_tip(tips,button,msg[lng][MSG_RESCAN_COMMENT], NULL); 
+  gtk_tooltips_set_tip (tips, button, _("Select directory and rescan collection"), NULL); 
   gtk_table_attach(GTK_TABLE(table), button, 0, 1, 3, 4, GTK_FILL, GTK_FILL,  0, 0);
 
 /*  
@@ -1927,12 +1894,12 @@ add_objects_list ()
   gtk_table_attach(GTK_TABLE(table), button, 2, 3, 2, 3, GTK_FILL, GTK_FILL,  0, 0);
 */
  
-  button = gtk_button_new_with_label (msg[lng][MSG_DEL]);
+  button = gtk_button_new_with_label (_("Delete"));
   gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 		      (GtkSignalFunc) fractalexplorer_delete_fractalexplorer_callback,
 		      (gpointer)list);
   gtk_widget_show(button);
-  gtk_tooltips_set_tip(tips,button,msg[lng][MSG_DELETE_COMMENT], NULL); 
+  gtk_tooltips_set_tip (tips, button, _("Delete currently selected fractal"), NULL); 
   gtk_table_attach(GTK_TABLE(table), button, 1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
 
   /* Attach the frame for the list Show the widgets */
@@ -1959,7 +1926,7 @@ add_gradients_list ()
   GtkWidget *scrolled_win;
   GtkWidget *list;
 
-  frame = gtk_frame_new(msg[lng][MSG_CHOOSE_GRADIENT]);
+  frame = gtk_frame_new (_("Choose gradient by double-clicking on it"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width(GTK_CONTAINER(frame), 10);
   gtk_widget_show(frame);
@@ -2049,7 +2016,7 @@ fractalexplorer_rescan_add_entry_callback (GtkWidget *w,
   static GtkWidget *window = NULL;
 
   /* Call up the file sel dialouge */
-  window = gtk_file_selection_new (msg[lng][MSG_ADDPATH]);
+  window = gtk_file_selection_new (_("Add FractalExplorer path"));
   gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data(GTK_OBJECT(window),(gpointer)client_data);
 
@@ -2082,7 +2049,7 @@ fractalexplorer_rescan_list (void)
 
   /*  the dialog  */
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), msg[lng][MSG_RESCANTITLE1]);
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Rescan for fractals"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
   /*  the main vbox  */
@@ -2118,7 +2085,7 @@ fractalexplorer_rescan_list (void)
       list = list->next;
     }
 
-  button = gtk_button_new_with_label (msg[lng][MSG_OK]);
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_rescan_ok_callback,
                       (gpointer)dlg);
@@ -2140,7 +2107,7 @@ fractalexplorer_rescan_list (void)
       rescan_list = NULL;
     }
 
-  button = gtk_button_new_with_label (msg[lng][MSG_ADDDIR]);
+  button = gtk_button_new_with_label (_("Add dir"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_rescan_add_entry_callback,
                       (gpointer)list_widget);
@@ -2152,7 +2119,7 @@ fractalexplorer_rescan_list (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (msg[lng][MSG_CANCEL]);
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_rescan_cancel_callback,
                       (gpointer)dlg);

@@ -5,7 +5,6 @@
 
 void                dialog_close_callback(GtkWidget * widget, gpointer data);
 void                dialog_save_callback(GtkWidget * widget, gpointer data);
-void                dialog_savelanguage_callback(GtkWidget * widget, gpointer data);
 void                load_button_press(GtkWidget * widget, gpointer data);
 void                dialog_ok_callback(GtkWidget * widget, gpointer data);
 void                dialog_reset_callback(GtkWidget * widget, gpointer data);

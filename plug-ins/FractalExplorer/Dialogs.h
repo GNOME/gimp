@@ -22,7 +22,6 @@ GtkWidget          *explorer_logo_dialog();
 GtkWidget          *explorer_load_dialog();
 void                set_tooltip(GtkTooltips * tooltips, GtkWidget * widget, const char *desc);
 void         dialog_change_scale(void);
-void         create_warn_dialog(gchar * msg);
 void         save_options(FILE * fp);
 void         save_callback();
 void         file_selection_ok(GtkWidget * w,

@@ -1,7 +1,8 @@
+#include "config.h"
+
 #include "FractalExplorer.h"
 #include "Callbacks.h"
 #include "Dialogs.h"
-#include "Languages.h"
 #include "Events.h"
 
 #include <sys/types.h>
@@ -10,6 +11,9 @@
 #include <string.h>
 
 #include "logo.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 #ifdef G_OS_WIN32
 #  include <io.h>
@@ -56,7 +60,6 @@ explorer_dialog(void)
     GSList             *redmode_group = NULL,
                        *greenmode_group = NULL,
                        *bluemode_group = NULL,
-                       *language_group = NULL,
                        *colormode_group = NULL,
                        *type_group = NULL;
 
@@ -83,10 +86,6 @@ explorer_dialog(void)
     do_type6 = (wvals.fractaltype == 6);
     do_type7 = (wvals.fractaltype == 7);
     do_type8 = (wvals.fractaltype == 8);
-
-    do_english = (wvals.language == 0);
-    do_french = (wvals.language == 1);
-    do_german = (wvals.language == 2);
 
     argc = 1;
     argv = g_new(gchar *, 1);
@@ -175,7 +174,7 @@ explorer_dialog(void)
     gtk_frame_set_shadow_type(GTK_FRAME(frame2), GTK_SHADOW_ETCHED_IN);
     gtk_container_set_border_width (GTK_CONTAINER (frame2), 10);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame2, 
-			    gtk_label_new (msg[lng][MSG_FRACTALOPTIONS]));
+			      gtk_label_new (_("Parameters")));
     gtk_widget_show (frame2);
 
     toggle_vbox2 = gtk_vbox_new(FALSE, 0);
@@ -189,7 +188,7 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(toggle_vbox2), top_table2, FALSE, FALSE, 0);
     gtk_widget_show(top_table2);
 
-    frame = gtk_frame_new(msg[lng][MSG_PARAMETERS]);
+    frame = gtk_frame_new(_("Parameters"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 4, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
@@ -203,18 +202,25 @@ explorer_dialog(void)
     gtk_table_set_row_spacings(GTK_TABLE(table), 0);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), table, FALSE, FALSE, 0);
     gtk_widget_show(table);
-    dialog_create_value("XMIN", GTK_TABLE(table), 0, &wvals.xmin, -3, 3, msg[lng][MSG_XMIN], &(elements->xmin));
-    dialog_create_value("XMAX", GTK_TABLE(table), 1, &wvals.xmax, -3, 3, msg[lng][MSG_XMAX], &(elements->xmax));
-    dialog_create_value("YMIN", GTK_TABLE(table), 2, &wvals.ymin, -3, 3, msg[lng][MSG_YMIN], &(elements->ymin));
-    dialog_create_value("YMAX", GTK_TABLE(table), 3, &wvals.ymax, -3, 3, msg[lng][MSG_YMAX], &(elements->ymax));
-    dialog_create_value("ITER", GTK_TABLE(table), 4, &wvals.iter, 0, 1000, msg[lng][MSG_ITER], &(elements->iter));
-    dialog_create_value("CX", GTK_TABLE(table), 5, &wvals.cx, -2.5, 2.5, msg[lng][MSG_CX], &(elements->cx));
-    dialog_create_value("CY", GTK_TABLE(table), 6, &wvals.cy, -2.5, 2.5, msg[lng][MSG_CY], &(elements->cy));
+    dialog_create_value("XMIN", GTK_TABLE(table), 0, &wvals.xmin, -3, 3, 
+			_("Change the first (minimal) x-coordinate delimitation"), &(elements->xmin));
+    dialog_create_value("XMAX", GTK_TABLE(table), 1, &wvals.xmax, -3, 3, 
+			_("Change the second (maximal) x-coordinate delimitation"), &(elements->xmax));
+    dialog_create_value("YMIN", GTK_TABLE(table), 2, &wvals.ymin, -3, 3, 
+			_("Change the first (minimal) y-coordinate delimitation"), &(elements->ymin));
+    dialog_create_value("YMAX", GTK_TABLE(table), 3, &wvals.ymax, -3, 3, 
+			_("Change the second (maximal) y-coordinate delimitation"), &(elements->ymax));
+    dialog_create_value("ITER", GTK_TABLE(table), 4, &wvals.iter, 0, 1000, 
+			_("Change the iteration value. The higher it is, the more details will be calculated, which will take more time"), &(elements->iter));
+    dialog_create_value("CX", GTK_TABLE(table), 5, &wvals.cx, -2.5, 2.5,
+			_("Change the CX value (changes aspect of fractal, active with every fractal but Mandelbrot and Sierpinski)"), &(elements->cx));
+    dialog_create_value("CY", GTK_TABLE(table), 6, &wvals.cy, -2.5, 2.5, 
+			_("Change the CY value (changes aspect of fractal, active with every fractal but Mandelbrot and Sierpinski)"), &(elements->cy));
 
 
     button = gtk_button_new();
     gtk_table_attach(GTK_TABLE(table), button, 1, 2, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
-    text = gtk_label_new(msg[lng][MSG_RESET]);
+    text = gtk_label_new (_("Reset"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -222,10 +228,10 @@ explorer_dialog(void)
 		       (GtkSignalFunc) dialog_reset_callback,
 		       dialog);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_RESET_PARAM_COMMENT]);
+    set_tooltip(tips, button, _("Reset parameters to default values"));
     
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_LOAD]);
+    text = gtk_label_new (_("Load"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_table_attach(GTK_TABLE(table), button, 0, 1, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
@@ -235,11 +241,11 @@ explorer_dialog(void)
 		       (GtkSignalFunc) load_button_press,
 		       dialog);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_LOADCOMMENT]);
+    set_tooltip(tips, button, _("Load a fractal from file"));
     
     button = gtk_button_new();
     gtk_table_attach(GTK_TABLE(table), button, 2, 3, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
-    text = gtk_label_new(msg[lng][MSG_SAVE]);
+    text = gtk_label_new(_("Save"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -248,7 +254,7 @@ explorer_dialog(void)
 		       (GtkSignalFunc) dialog_save_callback,
 		       dialog);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_SAVECOMMENT]);
+    set_tooltip(tips, button, _("Save active fractal to file"));
 
     
     gtk_widget_show(table);
@@ -256,7 +262,7 @@ explorer_dialog(void)
     gtk_widget_show(frame);
 
 /*  Fractal type toggle box  */
-    frame = gtk_frame_new(msg[lng][MSG_FRACTALTYPE]);
+    frame = gtk_frame_new (_("Fractal type"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 4, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
 
@@ -379,24 +385,24 @@ explorer_dialog(void)
     gtk_widget_show(hbox);
     gtk_widget_show(frame);
 
-    frame = gtk_frame_new(msg[lng][MSG_PREVIEW]);
+    frame = gtk_frame_new(_("Preview options"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table), frame, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     toggle_vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox), 5);
     gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
     
-    toggle = gtk_check_button_new_with_label(msg[lng][MSG_REALTIMEPREVIEW]);
+    toggle = gtk_check_button_new_with_label(_("Realtime preview"));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) explorer_toggle_update,
 		       &wvals.alwayspreview);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.alwayspreview);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_REDRAWCOMMENT]);
+    set_tooltip(tips, toggle, _("If you enable this option the preview will be redrawn automatically"));
 
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_REDRAW]);
+    text = gtk_label_new(_("Redraw"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -406,12 +412,12 @@ explorer_dialog(void)
 		       dialog);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_REDRAWPREVIEW]);
+    set_tooltip(tips, button, _("Redraw preview"));
     
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
-    frame = gtk_frame_new(msg[lng][MSG_ZOOMOPTS]);
+    frame = gtk_frame_new (_("Zoom options"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table), frame, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     toggle_vbox = gtk_vbox_new(FALSE, 0);
@@ -419,7 +425,7 @@ explorer_dialog(void)
     gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
     
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_UNDOZOOM]);
+    text = gtk_label_new (_("Undo zoom"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -429,10 +435,10 @@ explorer_dialog(void)
 		       dialog);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button,msg[lng][MSG_UNDOCOMMENT]);
+    set_tooltip(tips, button, _("Undo last zoom"));
     
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_REDOZOOM]);
+    text = gtk_label_new (_("Redo zoom"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -442,10 +448,10 @@ explorer_dialog(void)
 		       dialog);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_REDOCOMMENT]);
+    set_tooltip(tips, button, _("Redo last zoom"));
 
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_STEPIN]);
+    text = gtk_label_new (_("Step In"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -455,10 +461,10 @@ explorer_dialog(void)
 		       dialog);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_STEPIN]);
+    set_tooltip(tips, button, _("Step In"));
 
     button = gtk_button_new();
-    text = gtk_label_new(msg[lng][MSG_STEPOUT]);
+    text = gtk_label_new (_("Step Out"));
     gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
     gtk_container_add(GTK_CONTAINER(button), text);
     gtk_widget_show(text);
@@ -468,7 +474,7 @@ explorer_dialog(void)
 		       dialog);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_STEPOUT]);
+    set_tooltip(tips, button, _("Step Out"));
     
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
@@ -478,7 +484,7 @@ explorer_dialog(void)
     gtk_container_set_border_width (GTK_CONTAINER (frame2), 10);
     gtk_widget_show(frame2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame2, 
-			    gtk_label_new (msg[lng][MSG_COLOROPTS]));
+			      gtk_label_new (_("Colors")));
 
     toggle_vbox2 = gtk_vbox_new(FALSE, 0);
     gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox2), 0);
@@ -491,7 +497,7 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(toggle_vbox2), top_table2, FALSE, FALSE, 0);
     gtk_widget_show(top_table2);
 
-    frame = gtk_frame_new(msg[lng][MSG_NUMCOLORS]);
+    frame = gtk_frame_new(_("Number of Colors"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -506,21 +512,22 @@ explorer_dialog(void)
     gtk_table_set_row_spacings(GTK_TABLE(table6), 0);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), table6, FALSE, FALSE, 0);
     gtk_widget_show(table6);
-    dialog_create_int_value(msg[lng][MSG_NUMCOLORS], GTK_TABLE(table6), 0, &wvals.ncolors, 2, MAXNCOLORS, msg[lng][MSG_CHGNUMCOLORS], &(elements->ncol));
+    dialog_create_int_value (_("Number of Colors"), GTK_TABLE(table6), 0, &wvals.ncolors, 2, MAXNCOLORS, 
+			     _("Change the number of colors in the mapping"), &(elements->ncol));
 
-    elements->useloglog = toggle = gtk_check_button_new_with_label(msg[lng][MSG_USELOGLOG]);
+    elements->useloglog = toggle = gtk_check_button_new_with_label(_("Use loglog smoothing"));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) explorer_toggle_update,
 		       &wvals.useloglog);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.useloglog);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_USELOGLOGCOMMENT]);
+    set_tooltip(tips, toggle, _("Use log log smoothing to eliminate \"banding\" in the result"));
 
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
-    frame = gtk_frame_new(msg[lng][MSG_COLORDENSITY]);
+    frame = gtk_frame_new(_("Color density"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -535,13 +542,16 @@ explorer_dialog(void)
     gtk_table_set_row_spacings(GTK_TABLE(table6), 0);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), table6, FALSE, FALSE, 0);
     gtk_widget_show(table6);
-    dialog_create_value(msg[lng][MSG_RED], GTK_TABLE(table6), 0, &wvals.redstretch, 0.0, 1.0, msg[lng][MSG_REDINTENSITY], &(elements->red));
-    dialog_create_value(msg[lng][MSG_GREEN], GTK_TABLE(table6), 1, &wvals.greenstretch, 0.0, 1.0, msg[lng][MSG_GREENINTENSITY], &(elements->green));
-    dialog_create_value(msg[lng][MSG_BLUE], GTK_TABLE(table6), 2, &wvals.bluestretch, 0.0, 1.0, msg[lng][MSG_BLUEINTENSITY], &(elements->blue));
+    dialog_create_value (_("Red"), GTK_TABLE(table6), 0, &wvals.redstretch, 0.0, 1.0, 
+			 _("Change the intensity of the red channel"), &(elements->red));
+    dialog_create_value (_("Green"), GTK_TABLE(table6), 1, &wvals.greenstretch, 0.0, 1.0, 
+			 _("Change the intensity of the green channel"), &(elements->green));
+    dialog_create_value (_("Blue"), GTK_TABLE(table6), 2, &wvals.bluestretch, 0.0, 1.0, 
+			 _("Change the intensity of the blue channel"), &(elements->blue));
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
-    frame3 = gtk_frame_new(msg[lng][MSG_COLORFUNCTION]);
+    frame3 = gtk_frame_new (_("Color function"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame3), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame3, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame3);
@@ -557,7 +567,7 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(toggle_vbox3), table6, FALSE, FALSE, 0);
     gtk_widget_show(table6);
 
-    frame = gtk_frame_new(msg[lng][MSG_RED]);
+    frame = gtk_frame_new (_("Red"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(table6), frame, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -567,7 +577,7 @@ explorer_dialog(void)
     gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
     gtk_widget_show(toggle_vbox);
 
-    toggle = elements->redmodesin = gtk_radio_button_new_with_label(redmode_group, msg[lng][MSG_SINE]);
+    toggle = elements->redmodesin = gtk_radio_button_new_with_label(redmode_group, _("Sine"));
     redmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -575,9 +585,9 @@ explorer_dialog(void)
 		       &do_redsinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_redsinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_SINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use sine-function for this color component"));
 
-    toggle = elements->redmodecos = gtk_radio_button_new_with_label(redmode_group, msg[lng][MSG_COSINE]);
+    toggle = elements->redmodecos = gtk_radio_button_new_with_label(redmode_group, _("Cosine"));
     redmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -585,9 +595,9 @@ explorer_dialog(void)
 		       &do_redcosinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_redcosinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_COSINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use cosine-function for this color component"));
 
-    toggle = elements->redmodenone = gtk_radio_button_new_with_label(redmode_group, msg[lng][MSG_NONE]);
+    toggle = elements->redmodenone = gtk_radio_button_new_with_label(redmode_group, _("None"));
     redmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -595,23 +605,23 @@ explorer_dialog(void)
 		       &do_rednone);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_rednone);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_NONECOMMENT]);
+    set_tooltip(tips, toggle, _("Use linear mapping instead of any trigonometrical function for this color channel"));
 
-    elements->redinvert = toggle = gtk_check_button_new_with_label(msg[lng][MSG_INVERSION]);
+    elements->redinvert = toggle = gtk_check_button_new_with_label(_("Inversion"));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) explorer_toggle_update,
 		       &wvals.redinvert);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.redinvert);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_INVERSIONCOMMENT]);
+    set_tooltip(tips, toggle, _("If you enable this option higher color values will be swapped with lower ones and vice versa"));
 
     
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
 /*  Greenmode toggle box  */
-    frame = gtk_frame_new(msg[lng][MSG_GREEN]);
+    frame = gtk_frame_new (_("Green"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(table6), frame, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -620,7 +630,7 @@ explorer_dialog(void)
     gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
     gtk_widget_show(toggle_vbox);
 
-    toggle = elements->greenmodesin = gtk_radio_button_new_with_label(greenmode_group, msg[lng][MSG_SINE]);
+    toggle = elements->greenmodesin = gtk_radio_button_new_with_label(greenmode_group, _("Sine"));
     greenmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -628,9 +638,9 @@ explorer_dialog(void)
 		       &do_greensinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_greensinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_SINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use sine-function for this color component"));
 
-    toggle = elements->greenmodecos = gtk_radio_button_new_with_label(greenmode_group, msg[lng][MSG_COSINE]);
+    toggle = elements->greenmodecos = gtk_radio_button_new_with_label(greenmode_group, _("Cosine"));
     greenmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -638,9 +648,9 @@ explorer_dialog(void)
 		       &do_greencosinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_greencosinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_COSINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use cosine-function for this color component"));
 
-    toggle = elements->greenmodenone = gtk_radio_button_new_with_label(greenmode_group, msg[lng][MSG_NONE]);
+    toggle = elements->greenmodenone = gtk_radio_button_new_with_label(greenmode_group, _("None"));
     greenmode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -648,22 +658,22 @@ explorer_dialog(void)
 		       &do_greennone);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_greennone);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_NONECOMMENT]);
+    set_tooltip(tips, toggle, _("Use linear mapping instead of any trigonometrical function for this color channel"));
 
-    elements->greeninvert =     toggle = gtk_check_button_new_with_label(msg[lng][MSG_INVERSION]);
+    elements->greeninvert =     toggle = gtk_check_button_new_with_label (_("Inversion"));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) explorer_toggle_update,
 		       &wvals.greeninvert);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.greeninvert);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_INVERSIONCOMMENT]);
+    set_tooltip(tips, toggle, _("If you enable this option higher color values will be swapped with lower ones and vice versa"));
 
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
 /*  Bluemode toggle box  */
-    frame = gtk_frame_new(msg[lng][MSG_BLUE]);
+    frame = gtk_frame_new (_("Blue"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(table6), frame, 2, 3, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -672,7 +682,7 @@ explorer_dialog(void)
     gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
     gtk_widget_show(toggle_vbox);
 
-    toggle = elements->bluemodesin = gtk_radio_button_new_with_label(bluemode_group, msg[lng][MSG_SINE]);
+    toggle = elements->bluemodesin = gtk_radio_button_new_with_label(bluemode_group, _("Sine"));
     bluemode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -680,9 +690,9 @@ explorer_dialog(void)
 		       &do_bluesinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_bluesinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_SINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use sine-function for this color component"));
 
-    toggle = elements->bluemodecos = gtk_radio_button_new_with_label(bluemode_group, msg[lng][MSG_COSINE]);
+    toggle = elements->bluemodecos = gtk_radio_button_new_with_label(bluemode_group, _("Cosine"));
     bluemode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -690,9 +700,9 @@ explorer_dialog(void)
 		       &do_bluecosinus);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_bluecosinus);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_COSINECOMMENT]);
+    set_tooltip(tips, toggle, _("Use cosine-function for this color component"));
 
-    toggle = elements->bluemodenone = gtk_radio_button_new_with_label(bluemode_group, msg[lng][MSG_NONE]);
+    toggle = elements->bluemodenone = gtk_radio_button_new_with_label(bluemode_group, _("None"));
     bluemode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -700,17 +710,17 @@ explorer_dialog(void)
 		       &do_bluenone);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_bluenone);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_NONECOMMENT]);
+    set_tooltip(tips, toggle, _("Use linear mapping instead of any trigonometrical function for this color channel"));
 
     
-    elements->blueinvert = toggle = gtk_check_button_new_with_label(msg[lng][MSG_INVERSION]);
+    elements->blueinvert = toggle = gtk_check_button_new_with_label (_("Inversion"));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) explorer_toggle_update,
 		       &wvals.blueinvert);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.blueinvert);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_INVERSIONCOMMENT]);
+    set_tooltip(tips, toggle, _("If you enable this option higher color values will be swapped with lower ones and vice versa"));
 
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
@@ -719,7 +729,7 @@ explorer_dialog(void)
 
 /*  Colormode toggle box  */
 
-    frame = gtk_frame_new(msg[lng][MSG_COLORMODE]);
+    frame = gtk_frame_new (_("Color mode"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     hbox = gtk_hbox_new(FALSE, 0);
@@ -728,7 +738,7 @@ explorer_dialog(void)
     toggle_vbox = gtk_vbox_new(FALSE, 0);
 
     gtk_box_pack_start(GTK_BOX(hbox), toggle_vbox, FALSE, FALSE, 10);
-    toggle = elements->colormode0 = gtk_radio_button_new_with_label(colormode_group, msg[lng][MSG_ASSPECIFIED]);
+    toggle = elements->colormode0 = gtk_radio_button_new_with_label(colormode_group, _("As specified above"));
     colormode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -736,10 +746,10 @@ explorer_dialog(void)
 		       &do_colormode1);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_colormode1);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_ASSPECIFIEDCOMMENT]);
+    set_tooltip(tips, toggle, _("Create a color-map with the options you specified above (color density/function). The result is visible in the preview image"));
     
     
-    toggle = elements->colormode1 = gtk_radio_button_new_with_label(colormode_group, msg[lng][MSG_APPLYGRADIENT]);
+    toggle = elements->colormode1 = gtk_radio_button_new_with_label(colormode_group, _("Apply active gradient to final image"));
     colormode_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -747,7 +757,7 @@ explorer_dialog(void)
 		       &do_colormode2);
     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_colormode2);
     gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, msg[lng][MSG_APPLYGRADIENTCOMMENT]);
+    set_tooltip(tips, toggle, _("Create a color-map using a gradient from the gradient editor"));
     gtk_widget_show(toggle_vbox);
     toggle_vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), toggle_vbox, TRUE, TRUE, 10);
@@ -763,90 +773,21 @@ explorer_dialog(void)
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
- 			    gtk_label_new (msg[lng][MSG_FRACTALPRESETS]));
+			      gtk_label_new (_("Fractals")));
     gtk_widget_show (frame);
     
     frame= add_gradients_list ();
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
- 			    gtk_label_new (msg[lng][MSG_GRADIENTPRESETS]));
+ 			    gtk_label_new (_("Gradients")));
     gtk_widget_show (frame);
-
-    frame2 = gtk_frame_new(NULL);
-    gtk_frame_set_shadow_type(GTK_FRAME(frame2), GTK_SHADOW_ETCHED_IN);
-    gtk_container_set_border_width (GTK_CONTAINER (frame2), 10);
-    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame2, 
-			    gtk_label_new (msg[lng][MSG_GENERALOPTIONS]));
-			    
-    toggle_vbox2 = gtk_vbox_new(FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox2), 10);
-    gtk_container_add(GTK_CONTAINER(frame2), toggle_vbox2);
-    gtk_widget_show(toggle_vbox2);
-
-    toggle_vbox = gtk_vbox_new(FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox), 10);
-    gtk_box_pack_start(GTK_BOX(toggle_vbox2), toggle_vbox, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0);
-    gtk_widget_show(toggle_vbox);
-
-    toggle = gtk_radio_button_new_with_label(language_group, "English");
-    language_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) explorer_toggle_update,
-		       &do_english);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_english);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "This sets the default language to English. Note that you will have to restart the plug-in!");
-
-    toggle = gtk_radio_button_new_with_label(language_group, "Français");
-    language_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) explorer_toggle_update,
-		       &do_french);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_french);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "Cette option active les messages en français. Il vous faudra redémarrer le programme pour que les changements prennent effet.");
-
-    toggle = gtk_radio_button_new_with_label(language_group, "Deutsch");
-    language_group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
-    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-		       (GtkSignalFunc) explorer_toggle_update,
-		       &do_german);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), do_german);
-    gtk_widget_show(toggle);
-    set_tooltip(tips, toggle, "Diese Option stellt die deutschen Texte ein. Damit diese jedoch angezeigt werden, ist ein Neustart des Programms noetig.");
-    gtk_widget_show(toggle_vbox);
-    
-    toggle_vbox = gtk_vbox_new(FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox), 10);
-    gtk_box_pack_start(GTK_BOX(toggle_vbox2), toggle_vbox, FALSE, FALSE, 0);
-    gtk_widget_show(toggle_vbox);
-    
-    button = gtk_button_new();
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), button, FALSE, FALSE, 0);
-    text = gtk_label_new(msg[lng][MSG_SAVELANGUAGE]);
-    gtk_misc_set_alignment(GTK_MISC(text), 0.5, 0.5);
-    gtk_container_add(GTK_CONTAINER(button), text);
-    gtk_widget_show(text);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       (GtkSignalFunc) dialog_savelanguage_callback,
-		       dialog);
-    gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_SAVELANGUAGE_COMMENT]);
-    
-    gtk_widget_show(toggle_vbox);
-			    
-			    
-    gtk_widget_show (frame2);
 
   /* Buttons */
 
     gtk_container_set_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 
-    button = gtk_button_new_with_label(msg[lng][MSG_OK]);
+    button = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc) dialog_ok_callback,
@@ -854,25 +795,25 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
     gtk_widget_grab_default(button);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_STARTCALC]);
+    set_tooltip (tips, button, _("Accept settings and start the calculation of the fractal"));
 
-    button = gtk_button_new_with_label(msg[lng][MSG_CANCEL]);
+    button = gtk_button_new_with_label(_("Cancel"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc) dialog_cancel_callback,
 		       dialog);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_MAINDLGCANCEL]);
+    set_tooltip(tips, button, _("Discard any changes and close dialog box"));
 
-    button = gtk_button_new_with_label(msg[lng][MSG_ABOUT]);
+    button = gtk_button_new_with_label (_("About"));
     GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc) explorer_about_callback, button);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		       button, TRUE, TRUE, 0);
     gtk_widget_show(button);
-    set_tooltip(tips, button, msg[lng][MSG_ABOUTCOMMENT]);
+    set_tooltip(tips, button, _("Show information about the plug-in and the author"));
 
     /* Done */
 
@@ -1416,14 +1357,14 @@ explorer_logo_dialog()
     gint                y,
                         x;
 
-    xdlg = logodlg = gtk_dialog_new();
-    gtk_window_set_title(GTK_WINDOW(xdlg), msg[lng][MSG_ABOUT]);
+    xdlg = logodlg = gtk_dialog_new ();
+    gtk_window_set_title (GTK_WINDOW(xdlg), _("About"));
     gtk_window_position(GTK_WINDOW(xdlg), GTK_WIN_POS_NONE);
     gtk_signal_connect(GTK_OBJECT(xdlg), "destroy",
 		       (GtkSignalFunc) dialog_close_callback,
 		       NULL);
 
-    xbutton = gtk_button_new_with_label(msg[lng][MSG_OK]);
+    xbutton = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT(xbutton), "clicked",
 		       (GtkSignalFunc) explorer_logo_ok_callback,
@@ -1432,7 +1373,7 @@ explorer_logo_dialog()
 		       xbutton, TRUE, TRUE, 0);
     gtk_widget_grab_default(xbutton);
     gtk_widget_show(xbutton);
-    set_tooltip(tips, xbutton, msg[lng][MSG_ABOUTBOXOKCOMMENT]);
+    set_tooltip(tips, xbutton, _("Show information about the plug-in and the author"));
 
     xframe = gtk_frame_new(NULL);
     gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
@@ -1481,7 +1422,7 @@ explorer_logo_dialog()
     gtk_box_pack_start(GTK_BOX(xhbox), vpaned, TRUE, TRUE, 0);
     gtk_container_set_border_width (GTK_CONTAINER(vpaned), 0);
     gtk_widget_show (vpaned);
-
+    
     xframe3 = gtk_frame_new (NULL);
 /*    gtk_frame_set_shadow_type (GTK_FRAME(xframe3), GTK_SHADOW_IN); */
 /*    gtk_widget_set_usize (xframe3, 20, 20); */
@@ -1514,25 +1455,24 @@ explorer_logo_dialog()
     gtk_widget_realize (text);
 
     gtk_text_insert (GTK_TEXT (text), NULL, &text->style->black, NULL, 
-                         "\nCotting Software Productions\n"
-			 "Quellenstrasse 10\n"
-			 "CH-8005 Zuerich (Switzerland)\n\n"
-			 "cotting@multimania.com\n"
-			 "http://www.multimania.com/cotting\n\n"
-			 "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
-			 "Version 2.00 Beta 2 (Multilingual)\n"
-	  , -1);
+		     "\nCotting Software Productions\n"
+		     "Quellenstrasse 10\n"
+		     "CH-8005 Zuerich (Switzerland)\n\n"
+		     "cotting@multimania.com\n"
+		     "http://www.multimania.com/cotting\n\n"
+		     "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
+		     "Version 2.00 Beta 2 (Multilingual)\n", -1);
  
     gtk_text_thaw (GTK_TEXT (text));
 #endif
 
     xlabel = gtk_label_new("\nCotting Software Productions\n"
-			 "Quellenstrasse 10\n"
-			 "CH-8005 Zuerich (Switzerland)\n\n"
-			 "cotting@multimania.com\n"
-			 "http://www.multimania.com/cotting\n\n"
-			 "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
-			 "Version 2.00 Beta 2 (Multilingual)\n");
+			   "Quellenstrasse 10\n"
+			   "CH-8005 Zuerich (Switzerland)\n\n"
+			   "cotting@multimania.com\n"
+			   "http://www.multimania.com/cotting\n\n"
+			   "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
+			   "Version 2.00 Beta 2 (Multilingual)\n");
     gtk_container_add(GTK_CONTAINER(xframe3),  xlabel);
     gtk_widget_show(xlabel);
 
@@ -1623,7 +1563,7 @@ explorer_load_dialog()
                         x;
 
     xdlg = loaddlg = gtk_dialog_new();
-    gtk_window_set_title(GTK_WINDOW(xdlg), "Loading...");
+    gtk_window_set_title(GTK_WINDOW(xdlg), _("Loading..."));
     gtk_window_position(GTK_WINDOW(xdlg), GTK_WIN_POS_NONE);
     gtk_signal_connect(GTK_OBJECT(xdlg), "destroy",
 		       (GtkSignalFunc) dialog_close_callback,
@@ -1732,10 +1672,6 @@ dialog_change_scale()
     do_type7 = (wvals.fractaltype == 7);
     do_type8 = (wvals.fractaltype == 8);
 
-    do_english = (wvals.language == 0);
-    do_german = (wvals.language == 2);
-    do_french = (wvals.language == 1);
-    
     elements->xmin.data->value = wvals.xmin;
     gtk_signal_emit_by_name(GTK_OBJECT(elements->xmin.data), "value_changed");
     elements->xmax.data->value = wvals.xmax;
@@ -1820,52 +1756,6 @@ dialog_change_scale()
     ready_now = TRUE;
 }
 
-/**********************************************************************
- FUNCTION: ok_warn_window
- *********************************************************************/
-
-/* From testgtk */
-static void
-ok_warn_window(GtkWidget * widget,
-	       gpointer data)
-{
-    gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-/**********************************************************************
- FUNCTION: create_warn_dialog
- *********************************************************************/
-
-void
-create_warn_dialog(gchar * msg)
-{
-    GtkWidget          *window = NULL;
-    GtkWidget          *label;
-    GtkWidget          *button;
-
-    window = gtk_dialog_new();
-
-    gtk_window_set_title(GTK_WINDOW(window), "Warning");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 0);
-
-    button = gtk_button_new_with_label("OK");
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       (GtkSignalFunc) ok_warn_window,
-		       window);
-
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->action_area), button, TRUE, TRUE, 0);
-    gtk_widget_grab_default(button);
-    gtk_widget_show(button);
-    label = gtk_label_new(msg);
-    gtk_misc_set_padding(GTK_MISC(label), 10, 10);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), label, TRUE, TRUE, 0);
-    gtk_widget_show(label);
-    gtk_widget_show(window);
-    gtk_main();
-    gdk_flush();
-
-}
 
 /**********************************************************************
  FUNCTION: save_options
@@ -1913,14 +1803,11 @@ save_callback()
 
     fp = fopen(savename, "w+");
 
-    if (!fp) {
-	gchar               errbuf[MAXSTRLEN];
-
-	sprintf(errbuf, msg[lng][MSG_SAVEERROR], savename);
-	create_warn_dialog(errbuf);
-	g_warning(errbuf);
+    if (!fp) 
+      {
+	g_message (_("Error opening '%.100s' could not save"), savename);
 	return;
-    }
+      }
   /* Write header out */
     fputs(FRACTAL_HEADER, fp);
     fputs("#**********************************************************************\n", fp);
@@ -1931,7 +1818,7 @@ save_callback()
     save_options(fp);
 
     if (ferror(fp))
-	create_warn_dialog(msg[lng][MSG_WRITEFAILURE]);
+      g_message (_("Failed to write file\n"));
     fclose(fp);
 }
 
@@ -1951,7 +1838,7 @@ file_selection_ok(GtkWidget * w,
 
   /* Get the name */
     if (strlen(filenamebuf) == 0) {
-	create_warn_dialog(msg[lng][MSG_NOFILENAME]);
+	g_message (_("Save: No filename given"));
 	return;
     }
   /* Check if directory exists */
@@ -1959,7 +1846,7 @@ file_selection_ok(GtkWidget * w,
 
     if (!err && S_ISDIR(filestat.st_mode)) {
       /* Can't save to directory */
-	create_warn_dialog(msg[lng][MSG_NOSAVETODIR]);
+	g_message (_("Save: Can't save to a directory"));
 	return;
     }
     filename = g_strdup(filenamebuf);
@@ -2016,7 +1903,7 @@ create_load_file_selection()
     GtkWidget   *window = NULL;
 
   /* Load a single object */
-    window = gtk_file_selection_new(msg[lng][MSG_LOADWINTITLE]);
+    window = gtk_file_selection_new(_("Load fractal parameters"));
     gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_NONE);
 
     gtk_signal_connect(GTK_OBJECT(window), "destroy",
@@ -2026,12 +1913,12 @@ create_load_file_selection()
     gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(window)->ok_button),
 		       "clicked", (GtkSignalFunc) load_file_selection_ok,
 		       (gpointer) window);
-    set_tooltip(tips, GTK_FILE_SELECTION(window)->ok_button, msg[lng][MSG_LOADBUTTONCOMMENT]);
+    set_tooltip(tips, GTK_FILE_SELECTION(window)->ok_button, _("Click here to load your file"));
 
     gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(window)->cancel_button),
 			      "clicked", (GtkSignalFunc) gtk_widget_destroy,
 			      GTK_OBJECT(window));
-    set_tooltip(tips, GTK_FILE_SELECTION(window)->cancel_button, msg[lng][MSG_CANCELLOAD]);
+    set_tooltip(tips, GTK_FILE_SELECTION(window)->cancel_button, _("Click here to cancel load procedure"));
     if (!GTK_WIDGET_VISIBLE(window))
 	gtk_widget_show(window);
 }
@@ -2047,7 +1934,7 @@ create_file_selection()
     GtkWidget   *window = NULL;
 
     if (!window) {
-	window = gtk_file_selection_new(msg[lng][MSG_SAVEWINTITLE]);
+	window = gtk_file_selection_new(_("Save fractal parameters"));
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_NONE);
 
 	gtk_signal_connect(GTK_OBJECT(window), "destroy",
@@ -2057,12 +1944,12 @@ create_file_selection()
 	gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(window)->ok_button),
 			   "clicked", (GtkSignalFunc) file_selection_ok,
 			   (gpointer) window);
-	set_tooltip(tips, GTK_FILE_SELECTION(window)->ok_button, msg[lng][MSG_SAVEBUTTONCOMMENT]);
+	set_tooltip(tips, GTK_FILE_SELECTION(window)->ok_button, _("Click here to save your file"));
 
 	gtk_signal_connect_object(GTK_OBJECT(GTK_FILE_SELECTION(window)->cancel_button),
 				"clicked", (GtkSignalFunc) gtk_widget_destroy,
 				  GTK_OBJECT(window));
-	set_tooltip(tips, GTK_FILE_SELECTION(window)->cancel_button, msg[lng][MSG_CANCELSAVE]);
+	set_tooltip(tips, GTK_FILE_SELECTION(window)->cancel_button, _("Click here to cancel save procedure"));
     }
     if(tpath)
       {
@@ -2355,27 +2242,18 @@ explorer_load()
     g_assert(filename != NULL); 
     fp = fopen(filename, "r");
     if (!fp) {
-	g_warning(msg[lng][MSG_OPENERROR], filename);
+	g_warning("Error opening: %s", filename);
 	return;
     }
     get_line(load_buf, MAX_LOAD_LINE, fp, 1);
 
     if (strncmp(FRACTAL_HEADER, load_buf, strlen(load_buf))) {
-	gchar               err[MAXSTRLEN];
-
-	sprintf(err, msg[lng][MSG_WRONGFILETYPE], filename);
-	create_warn_dialog(err);
+	g_message (_("File '%s' is not a FractalExplorer file"), filename);
 	return;
     }
     if (load_options(current_obj,fp)) {
-      /* waste some mem */
-	gchar               err[MAXSTRLEN];
-
-	sprintf(err,
-		msg[lng][MSG_CORRUPTFILE],
-		filename,
-		line_no);
-	create_warn_dialog(err);
+      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), 
+		 filename, line_no);
 	return;
     }
     wvals=current_obj->opts;

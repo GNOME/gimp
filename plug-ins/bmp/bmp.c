@@ -111,6 +111,8 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
   
+  INIT_I18N();
+
   gimp_install_procedure ("file_bmp_load",
                           _("Loads files of Windows BMP file format"),
                           _("Loads files of Windows BMP file format"),
