@@ -13,8 +13,8 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Rotate Color Map"
-HREF="../filters/rcm.html"><LINK
+TITLE="Resynthesize"
+HREF="../filters/resynth.html"><LINK
 REL="NEXT"
 TITLE="Rotate"
 HREF="../filters/rotate.html"></HEAD
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/rcm.html"
+HREF="../filters/resynth.html"
 >Prev</A
 ></TD
 ><TD
@@ -71,20 +71,40 @@ NAME="FILTERS-RIPPLE"
 >Ripple</A
 ></H1
 ><A
-NAME="AEN7462"
+NAME="AEN8709"
 ></A
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN8711"
+>Overview</A
+></H2
 ><P
->    The <SPAN
+>      The <SPAN
 CLASS="QUOTE"
 >"Ripple"</SPAN
-> Filter allows you the distort the image
-    to look like a disturbed water surface.
-  </P
+> Filter allows the distortion of an image
+      to look like a disturbed water surface.
+    </P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN8715"
+>Ripple Options</A
+></H2
 ><P
->    <P
 ></P
 ><DIV
 CLASS="VARIABLELIST"
+><P
+><B
+>Ripple Settings</B
+></P
 ><DL
 ><DT
 ><SPAN
@@ -93,22 +113,24 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    Checking the <SPAN
-CLASS="GUIBUTTON"
->Antialiasing</SPAN
-> box makes
-	    jagged lines at the edge of the ripples be smoothed out
-	    without blurring the image.
+>      	    Checking the
+            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              Antialiasing
+            </A
+>
+            box renders jagged lines at the edge of the ripples smooth
+            without blurring the image.
           </P
 ><P
->	    The <SPAN
+>            The <SPAN
 CLASS="GUIBUTTON"
 >Retain Tileability</SPAN
 > ensures that
-	    where an image is tileable, such as a pattern, the final
-	    distorted image will also be tileable &mdash; i.e. you can
-	    place copies of the image side by side to create a
-	    continuous image without any break.
+            where an image is tileable, such as a pattern, the final
+            distorted image will also be tileable. copies of the image
+            can be placed side by side to create a continuous image
+            without any break.
           </P
 ></DD
 ><DT
@@ -118,8 +140,8 @@ CLASS="GUIBUTTON"
 ></DT
 ><DD
 ><P
->	    Defines which way the ripples occur &mdash; either
-	    horizontal or vertical.
+>      	    Defines which way the ripples occur. Either
+      	    horizontal or vertical.
           </P
 ></DD
 ><DT
@@ -129,27 +151,27 @@ CLASS="GUIBUTTON"
 ></DT
 ><DD
 ><P
->	    When you apply a ripple effect, it performs the distortion
-	    within the confines of the selection, and so there will be
-	    small areas at one edge of the selection which are
-	    missing.
+>      	    When applying a ripple effect, the tool performs the distortion
+      	    within the confines of the selection so there will be
+      	    small areas at one edge of the selection which are
+      	    missing.
          </P
 ><P
->	   Selecting <SPAN
+>           Selecting <SPAN
 CLASS="GUIBUTTON"
 >Black</SPAN
 > fills in these area
-	   with solid black. <SPAN
+           with solid black, <SPAN
 CLASS="GUIBUTTON"
 >Smear</SPAN
-> will fill
-	   this area with pixels stretched to fill and
-	   <SPAN
+> will fill this
+           area with pixels stretched to fill, and
+           <SPAN
 CLASS="GUIBUTTON"
 >Wrap</SPAN
 > fills the blank area with the
-	   pixels that were lost from the other side of the image.
-	 </P
+           pixels that were lost from the other side of the image.
+      	 </P
 ></DD
 ><DT
 ><SPAN
@@ -158,16 +180,16 @@ CLASS="GUIBUTTON"
 ></DT
 ><DD
 ><P
->	    The wave type defines how the curve of the wave is
-	    calculated. You can choose either
-	    <SPAN
+>            The wave type defines how the curve of the wave is
+            calculated. <SPAN
 CLASS="GUIBUTTON"
 >Sawtooth</SPAN
-> which makes a sharper wave
-	    or <SPAN
+> renders a
+            sharper wave. <SPAN
 CLASS="GUIBUTTON"
 >Sine</SPAN
-> which makes it softer.
+> renders a softer
+            wave.
           </P
 ></DD
 ><DT
@@ -177,16 +199,15 @@ CLASS="GUIBUTTON"
 ></DT
 ><DD
 ><P
->	    Setting the Period sets how long the waves are &mdash; the
-	    distance between two crests. Amplitude defines how
-	    high the wave is &mdash; the vertical distance between the mean
-	    and a crest.
+>            Setting the Period controls how long the waves are or the
+            distance between two crests. Amplitude defines how high the
+            wave is or the vertical distance between the mean and a
+            crest.
           </P
 ></DD
 ></DL
 ></DIV
->
-  </P
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -203,7 +224,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/rcm.html"
+HREF="../filters/resynth.html"
 >Prev</A
 ></TD
 ><TD
@@ -228,7 +249,7 @@ HREF="../filters/rotate.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Rotate Color Map</TD
+>Resynthesize</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"

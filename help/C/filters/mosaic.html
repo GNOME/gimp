@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="MIFF"
-HREF="../filters/miff.html"><LINK
+TITLE="Mirror Split"
+HREF="../filters/mirrorsplit.html"><LINK
 REL="NEXT"
-TITLE="Noisify"
-HREF="../filters/noisify.html"></HEAD
+TITLE="Newsprint"
+HREF="../filters/newsprint.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/miff.html"
+HREF="../filters/mirrorsplit.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/noisify.html"
+HREF="../filters/newsprint.html"
 >Next</A
 ></TD
 ></TR
@@ -71,14 +71,14 @@ NAME="FILTERS-MOSAIC"
 >Mosaic</A
 ></H1
 ><A
-NAME="AEN6883"
+NAME="AEN7928"
 ></A
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MOSAIC-OVERVIEW"
+NAME="AEN7930"
 >Overview</A
 ></H2
 ><P
@@ -97,154 +97,202 @@ CLASS="GUILABEL"
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MOSAIC-OPTIONS"
+NAME="AEN7935"
 >Mosaic Options</A
 ></H2
 ><P
->      <A
-HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
->        <SPAN
-CLASS="GUIBUTTON"
->Antialiasing</SPAN
->
-      </A
->
-      outputs aliased tiles in the final render.
-      <A
-HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
->        <SPAN
-CLASS="GUIBUTTON"
->Antialiasing</SPAN
->
-      </A
->
-      can produce a higher quality of render, but will slow the render
-      process.
-    </P
+></P
+><DIV
+CLASS="VARIABLELIST"
 ><P
->      <SPAN
+><B
+>Mosaic Settings</B
+></P
+><DL
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+>
+            </A
+>
+            outputs aliased tiles in the final render.
+            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+>
+            </A
+>
+            can produce a higher quality of render, but will slow the
+            render process.
+          </P
+></DD
+><DT
+>Pitted Surfaces</DT
+><DD
+><P
+>            <SPAN
 CLASS="GUIBUTTON"
 >Pitted Surfaces</SPAN
-> creates a pitted appearance
-      on the rendered tiles similar to rough concrete, or cement. The
-      effect is characterized by many small dots on each of the tiles.
-    </P
+> creates a pitted
+            appearance on the rendered tiles similar to rough concrete,
+            or cement. The effect is characterized by many small dots on
+            each of the tiles.
+          </P
+></DD
+><DT
+>FG/BG Lighting</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUIBUTTON"
 >FG/BG Lighting</SPAN
-> renders the mosaic using the
-      foreground and background colors that are currently selected in
-      the Toolbox. The foreground color changes the lighting source
-      color, and the background color affects the color of the lines
-      between the tiles.
-    </P
+> renders the mosaic
+            using the foreground and background colors that are
+            currently selected in the Toolbox. The foreground color
+            changes the lighting source color, and the background color
+            affects the color of the lines between the tiles.
+          </P
+></DD
+><DT
+>Tiling Primitives</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Tiling Primitives</SPAN
-> sets the shape of the tile.
-      <SPAN
+> sets the shape of the
+            tile. <SPAN
 CLASS="GUIBUTTON"
 >Squares</SPAN
-> sets the tiles as squares.
-      <SPAN
+> sets the tiles as
+            squares. <SPAN
 CLASS="GUIBUTTON"
 >Hexagons</SPAN
-> makes the rendered tiles hexagonal
-      in shape. <SPAN
+> makes the rendered
+            tiles hexagonal in shape. <SPAN
 CLASS="GUIBUTTON"
->Octagons &#38; Squares</SPAN
-> renders the
-      tiles as a combination of octagons, and squares that interconnect
-      well. These primitives may loose all recognizable shape after
-      further adjustments from the <SPAN
+>Octagons &amp;
+            Squares</SPAN
+> renders the tiles as a combination of
+            octagons, and squares that interconnect well. These
+            primitives may loose all recognizable shape after further
+            adjustments from the <SPAN
 CLASS="GUILABEL"
 >Tile Neatness</SPAN
 >
-      slider.
-    </P
+            slider.
+          </P
+></DD
+><DT
+>Tile Size</DT
+><DD
 ><P
->      The <SPAN
-CLASS="GUILABEL"
->Parameter Settings</SPAN
-> control various render
-      options, from color, to shape.
-    </P
-><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Tile Size</SPAN
-> increases or decreases the pixel
-      size of the tile. Smaller settings result in more tiles, and
-      larger settings produce larger tiles. This setting can make
-      significant differences depending on the image size.
-    </P
+> increases or decreases the
+            pixel size of the tile. Smaller settings result in more
+            tiles, and larger settings produce larger tiles. This
+            setting can make significant differences depending on the
+            image size.
+          </P
+></DD
+><DT
+>Tile Height</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Tile Height</SPAN
-> adjusts the amount of light that
-      is rendered onto the tile. A higher setting here will result in a
-      more rounded tile.
-    </P
+> adjusts the amount of light
+            that is rendered onto the tile. A higher setting here will
+            result in a more rounded tile.
+          </P
+></DD
+><DT
+>Tile Spacing</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Tile Spacing</SPAN
-> settings either widen or shrink
-      the gap between the tiles. The minimum setting is
-      <SPAN
+> settings either widen or
+            shrink the gap between the tiles. The minimum setting is
+            <SPAN
 CLASS="QUOTE"
 >"1"</SPAN
->, which represents a one pixel line between the
-      tiles.
-    </P
+>, which represents a one pixel line between
+            the tiles.
+          </P
+></DD
+><DT
+>Tile Neatness</DT
+><DD
 ><P
->      The <SPAN
+>            The <SPAN
 CLASS="GUILABEL"
 >Tile Neatness</SPAN
 > slider alters the
-      randomness, or indeed, the neatness of the tile shapes. A setting
-      of <SPAN
+            randomness, or indeed, the neatness of the tile shapes. A
+            setting of <SPAN
 CLASS="QUOTE"
 >"0.0"</SPAN
-> renders perfectly shaped tiles, and a higher
-      setting will render increasingly more randomized tile shapes.
-    </P
+> renders perfectly shaped
+            tiles, and a higher setting will render increasingly more
+            randomized tile shapes.
+          </P
+></DD
+><DT
+>Light Direction</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Light Direction</SPAN
-> sets the direction from which
-      the lighting color is rendered onto the tiles. A setting of
-      <SPAN
+> sets the direction from
+            which the lighting color is rendered onto the tiles. A
+            setting of <SPAN
 CLASS="QUOTE"
 >"0"</SPAN
-> will render the tiles with light approaching from
-      the left of the image. <SPAN
+> will render the tiles with light
+            approaching from the left of the image. <SPAN
 CLASS="QUOTE"
 >"180"</SPAN
-> will render the light as
-      if coming from the right. <SPAN
+>
+            will render the light as if coming from the right.
+            <SPAN
 CLASS="QUOTE"
 >"90"</SPAN
-> is directly above the
-      image window.
-    </P
+> is directly above the image window.
+          </P
+></DD
+><DT
+>Color Variation</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Color Variation</SPAN
-> changes the amount of color
-      that the renderer will alter for the tiles. That is, this setting
-      when set low, will respect the image coloring, and when set high,
-      will alter the colors for each tile.
-    </P
+> changes the amount of
+            color that the renderer will alter for the tiles. That is,
+            this setting when set low, will respect the image coloring,
+            and when set high, will alter the colors for each tile.
+          </P
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -262,7 +310,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/miff.html"
+HREF="../filters/mirrorsplit.html"
 >Prev</A
 ></TD
 ><TD
@@ -278,7 +326,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/noisify.html"
+HREF="../filters/newsprint.html"
 >Next</A
 ></TD
 ></TR
@@ -287,7 +335,7 @@ HREF="../filters/noisify.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->MIFF</TD
+>Mirror Split</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -300,7 +348,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Noisify</TD
+>Newsprint</TD
 ></TR
 ></TABLE
 ></DIV

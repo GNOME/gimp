@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Smooth Palette"
-HREF="../filters/smooth_palette.html"><LINK
+TITLE="Sobel"
+HREF="../filters/sobel.html"><LINK
 REL="NEXT"
-TITLE="Spread"
-HREF="../filters/spread.html"></HEAD
+TITLE="Sparkle"
+HREF="../filters/sparkle.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/smooth_palette.html"
+HREF="../filters/sobel.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/spread.html"
+HREF="../filters/sparkle.html"
 >Next</A
 ></TD
 ></TR
@@ -71,14 +71,14 @@ NAME="FILTERS-SOLIDNOISE"
 >Solid Noise</A
 ></H1
 ><A
-NAME="AEN7634"
+NAME="AEN8992"
 ></A
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-SOLIDNOISE-OVERVIEW"
+NAME="AEN8994"
 >Overview</A
 ></H2
 ><P
@@ -91,76 +91,127 @@ CLASS="GUILABEL"
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-SOLIDNOISE-OPTIONS"
+NAME="AEN8998"
 >Solid Noise Settings</A
 ></H2
 ><P
->      The <SPAN
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Solid Noise Settings</B
+></P
+><DL
+><DT
+>Random Seed</DT
+><DD
+><P
+>            The <SPAN
 CLASS="GUILABEL"
 >Random Seed</SPAN
-> input allows control over the
-      random base number that is used for the render.
-      <SPAN
+> input allows control
+            over the random base number that is used for the render.
+            <SPAN
 CLASS="GUIBUTTON"
 >Time</SPAN
-> should be used for the most effective
-      random setting.
-    </P
+> should be used for the most
+            effective random setting.
+          </P
+></DD
+><DT
+>Detail</DT
+><DD
 ><P
->      <SPAN
+>            <SPAN
 CLASS="GUILABEL"
 >Detail</SPAN
-> sets the level of aggresiveness for the
-      noise that will be rendered. A higher setting here will produce a
-      more detailed render, a lower setting will produce a much softer
-      one.
-    </P
+> sets the level of aggressiveness
+            for the noise that will be rendered. A higher setting here
+            will produce a more detailed render, a lower setting will
+            produce a much softer one.
+          </P
+></DD
+><DT
+>X/Y Size</DT
+><DD
 ><P
->      The <SPAN
+>            The <SPAN
 CLASS="GUILABEL"
 >X/Y Size</SPAN
-> sliders affect the size of the
-      <SPAN
+> sliders affect the size of
+            the <SPAN
 CLASS="QUOTE"
 >"blobs"</SPAN
-> in the final render. Higher settings will cause
-      the <SPAN
+> in the final render. Higher
+            settings will cause the <SPAN
 CLASS="QUOTE"
 >"blobs"</SPAN
-> to become smaller, where as a lower setting
-      will yeild softer results.
-    </P
+> to become
+            smaller, where as a lower setting will yield softer results.
+          </P
+></DD
+><DT
+>Turbulent</DT
+><DD
 ><P
->      The <SPAN
+>            The <SPAN
 CLASS="GUIBUTTON"
 >Turbulent</SPAN
-> checkbox acts in a similar
-      fashion to the <SPAN
+> checkbox acts in a
+            similar fashion to the <SPAN
 CLASS="GUILABEL"
 >Detail</SPAN
-> setting. Checking this
-      box will create a noise pattern with an increased chaotic nature.
-      The <SPAN
+> setting.
+            Checking this box will create a noise pattern with an
+            increased chaotic nature. The <SPAN
 CLASS="GUIBUTTON"
->Tilable</SPAN
-> checkbox forces the render to
-      maintain a symetric noise pattern, which allows the final rendering
-      to be tiled.
-    </P
+>Tileable</SPAN
+>
+            checkbox forces the render to maintain a symmetric noise
+            pattern, which allows the final rendering to be tiled.
+          </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="WARNING"
 ><P
->      Like many of the <SPAN
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../stylesheet-images/warning.gif"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        Like many of the <SPAN
 CLASS="GUILABEL"
 >Render</SPAN
 > filters, the
-      <SPAN
+        <SPAN
 CLASS="GUILABEL"
 >Solid Noise</SPAN
 > filter destroys the current layer.
-    </P
+      </P
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -178,7 +229,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/smooth_palette.html"
+HREF="../filters/sobel.html"
 >Prev</A
 ></TD
 ><TD
@@ -194,7 +245,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/spread.html"
+HREF="../filters/sparkle.html"
 >Next</A
 ></TD
 ></TR
@@ -203,7 +254,7 @@ HREF="../filters/spread.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Smooth Palette</TD
+>Sobel</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -216,7 +267,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Spread</TD
+>Sparkle</TD
 ></TR
 ></TABLE
 ></DIV

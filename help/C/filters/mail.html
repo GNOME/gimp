@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Layer Functions"
-HREF="../filters/layerfuncs.html"><LINK
+TITLE="Logulator"
+HREF="../filters/logulator.html"><LINK
 REL="NEXT"
-TITLE="Adjust FG-BG / Color Range Mapping"
-HREF="../filters/mapcolor.html"></HEAD
+TITLE="Map to Gradient"
+HREF="../filters/map_to_gradient.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/layerfuncs.html"
+HREF="../filters/logulator.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/mapcolor.html"
+HREF="../filters/map_to_gradient.html"
 >Next</A
 ></TD
 ></TR
@@ -71,43 +71,188 @@ NAME="FILTERS-MAIL"
 >Mail</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MAIL-MESSAGE"
->Our apologies</A
+NAME="AEN7762"
+>Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
+>      The <SPAN
+CLASS="GUIMENUITEM"
+>Mail Image</SPAN
+> tool uses
+      <SPAN
+CLASS="APPLICATION"
+>sendmail</SPAN
+> or a similar mailer to send an
+      image via <SPAN
+CLASS="ABBREV"
+>Email</SPAN
+> to an intended recipient.
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MAIL-HELP"
->Can I help?</A
+NAME="AEN7768"
+>Mail Image Options</A
 ></H2
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Mail Image Settings</B
+></P
+><DL
+><DT
+>Recipient</DT
+><DD
+><P
+>            This input box should contain the recipient
+            <SPAN
+CLASS="ABBREV"
+>Email</SPAN
+> address.
+            <I
+CLASS="EMPHASIS"
+>Required</I
 >
-      with 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Mail
-      </SPAN
+          </P
+></DD
+><DT
+>Sender</DT
+><DD
+><P
+>            This input box should contain the senders
+            <SPAN
+CLASS="ABBREV"
+>Email</SPAN
+> address. This is usually set by the
+            mailer, but may be specified here if the sender address is
+            different from the address that the mailer usually
+            specifies.
+          </P
+></DD
+><DT
+>Subject</DT
+><DD
+><P
+>            This input box specifies the Subject Line of the sent mail.
+          </P
+></DD
+><DT
+>Comment</DT
+><DD
+><P
+>            This input box may contain an optional message comment to
+            send with the image.
+          </P
+></DD
+><DT
+>Filename</DT
+><DD
+><P
+>            This input box should contain the name of the file that will
+            be sent. This filename does not have to correspond to an
+            existing file on the filesystem, it is used by
+            <SPAN
+CLASS="APPLICATION"
+>UUEncode</SPAN
+> or
+            <SPAN
+CLASS="APPLICATION"
+>MIMEncode</SPAN
+>to encode the image
+            correctly and for this requires a filename. The filename
+            must also be suffixed by a valid filetype, such as .jpg, or
+            an empty mail will be sent.
+            <I
+CLASS="EMPHASIS"
+>Required</I
 >
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
-    </P
+          </P
+></DD
+><DT
+>Encapsulation</DT
+><DD
+><P
+>            There are two encoding methods available for use with this
+            plugin. <SPAN
+CLASS="ACRONYM"
+>MIME</SPAN
+> or
+            <SPAN
+CLASS="APPLICATION"
+>UUencode</SPAN
+>. Select the method which
+            either corresponds to an application that is either present
+            on the sending computer or one that is preferred.
+          </P
+></DD
+><DT
+>Message Window</DT
+><DD
+><P
+>            The empty area of the dialog is used to take a message that
+            will be used as body for the <SPAN
+CLASS="ABBREV"
+>Email</SPAN
+>.
+          </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        This filter <I
+CLASS="EMPHASIS"
+>requires</I
+> the presence of
+        <SPAN
+CLASS="APPLICATION"
+>UUencode</SPAN
+> or
+        <SPAN
+CLASS="APPLICATION"
+>MIMEncode</SPAN
+> and
+        <SPAN
+CLASS="APPLICATION"
+>Sendmail</SPAN
+>. The install and setup of
+        these applications is beyond the scope of this document. Please
+        consult your operating system documentation or seek channels of
+        information closer relating to these applications.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -125,7 +270,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/layerfuncs.html"
+HREF="../filters/logulator.html"
 >Prev</A
 ></TD
 ><TD
@@ -141,7 +286,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/mapcolor.html"
+HREF="../filters/map_to_gradient.html"
 >Next</A
 ></TD
 ></TR
@@ -150,7 +295,7 @@ HREF="../filters/mapcolor.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Layer Functions</TD
+>Logulator</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -163,7 +308,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Adjust FG-BG / Color Range Mapping</TD
+>Map to Gradient</TD
 ></TR
 ></TABLE
 ></DIV

@@ -13,8 +13,8 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Adjust FG-BG / Color Range Mapping"
-HREF="../filters/mapcolor.html"><LINK
+TITLE="Map Object"
+HREF="../filters/mapobject.html"><LINK
 REL="NEXT"
 TITLE="Maze"
 HREF="../filters/maze.html"></HEAD
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/mapcolor.html"
+HREF="../filters/mapobject.html"
 >Prev</A
 ></TD
 ><TD
@@ -71,43 +71,73 @@ NAME="FILTERS-MAX-RGB"
 >Max RGB</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MAX-RGB-MESSAGE"
->Our apologies</A
+NAME="AEN7833"
+>Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
+>      This filter changes an image based on the highest or lowest value
+      of one the <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> information.
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-MAX-RGB-HELP"
->Can I help?</A
+NAME="AEN7837"
+>Max RGB Options</A
 ></H2
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
->
-      With 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Max RGB
-      </SPAN
->
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
-    </P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Max RGB Settings</B
+></P
+><DL
+><DT
+>Parameter Settings</DT
+><DD
+><P
+>            There are two available options here.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>								<SPAN
+CLASS="GUILABEL"
+>Hold the Maximal Channels</SPAN
+>: This
+                option will hold for each pixel, the channel that has
+                the maximum value of either the Red, Green, or Blue.
+                All other channel information will be cleared.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUILABEL"
+>Hold the Minimal Channels</SPAN
+>: This
+                option will hold for each pixel, the channel that has
+                the lowest value of either Red, Green, or Blue. All
+                other channel information will be cleared.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -125,7 +155,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/mapcolor.html"
+HREF="../filters/mapobject.html"
 >Prev</A
 ></TD
 ><TD
@@ -150,7 +180,7 @@ HREF="../filters/maze.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Adjust FG-BG / Color Range Mapping</TD
+>Map Object</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"

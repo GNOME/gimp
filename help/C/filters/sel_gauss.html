@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Selection to Path"
-HREF="../filters/sel2path.html"><LINK
+TITLE="Scratches"
+HREF="../filters/scratches.html"><LINK
 REL="NEXT"
-TITLE="Semi-Flatten"
-HREF="../filters/semiflatten.html"></HEAD
+TITLE="Selection to Path"
+HREF="../filters/sel2path.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/sel2path.html"
+HREF="../filters/scratches.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/semiflatten.html"
+HREF="../filters/sel2path.html"
 >Next</A
 ></TD
 ></TR
@@ -71,43 +71,104 @@ NAME="FILTERS-SEL-GAUSS"
 >Selective Gaussian Blur</A
 ></H1
 ><A
-NAME="AEN7566"
+NAME="AEN8853"
 ></A
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN8855"
+>Overview</A
+></H2
 ><P
->    The Selective Gaussian Blur filter performs a
-    mathematical region-based selection of the image in small chunks,
-    and determines the level of detail within that chunk.  After this
-    it applies a gaussian-based blur to it. Selective
-    Gaussian Blur can be very processor intensive, but
-    produces very controlled blurring.
-  </P
+>      The Selective Gaussian Blur filter performs a
+      mathematical region-based selection of the image in small chunks,
+      and determines the level of detail within that chunk.  After this
+      it applies a Gaussian-based blur to it. Selective
+      Gaussian Blur can be very processor intensive, but
+      produces very controlled blurring.
+    </P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN8858"
+>Selective Gaussian Blur Options</A
+></H2
 ><P
->    The <SPAN
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Selective Gaussian Blur Settings</B
+></P
+><DL
+><DT
+>Blur Radius</DT
+><DD
+><P
+>            The <SPAN
 CLASS="GUILABEL"
 >Blur Radius</SPAN
-> setting affects the maximum
-    number of pixels considered for blurring. The higher the setting,
-    the higher the number of pixels that will be included in the
-    region analysis. Be aware that a higher setting will take
-    considerably longer to compute.
-  </P
+> setting affects the
+            maximum number of pixels considered for blurring. The higher
+            the setting, the higher the number of pixels that will be
+            included in the region analysis. Be aware that a higher
+            setting will take considerably longer to compute.
+          </P
+></DD
+><DT
+>Max Delta</DT
+><DD
 ><P
->    The <SPAN
+>            The <SPAN
 CLASS="GUIBUTTON"
 >Max Delta</SPAN
-> slider affects the level of
-    detail that will be blurred. A higher setting here will produce
-    more smoothing of the pixels in the radius.
-  </P
+> slider affects the
+            level of detail that will be blurred. A higher setting here
+            will produce more smoothing of the pixels in the radius.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN8872"
+>See also</A
+></H2
 ><P
->    A common use for the Selective Gaussian
-    Blur filter is smoothing areas affected by populations
-    of <SPAN
+>      A common use for the Selective Gaussian
+      Blur filter is smoothing areas affected by populations
+      of <SPAN
 CLASS="ACRONYM"
 >JPEG</SPAN
 > artifacts, or bad pixelization
-    distortions.
-  </P
+      distortions.
+    </P
+><P
+>      Further information regarding blurring can be found on the
+      <A
+HREF="../filters/gauss_rle.html"
+>        Gaussian Blur - RLE
+      </A
+>
+      and
+      <A
+HREF="../filters/gauss_iir.html"
+>        Gaussian Blur - IIR
+      </A
+>
+      pages.
+    </P
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -124,7 +185,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/sel2path.html"
+HREF="../filters/scratches.html"
 >Prev</A
 ></TD
 ><TD
@@ -140,7 +201,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/semiflatten.html"
+HREF="../filters/sel2path.html"
 >Next</A
 ></TD
 ></TR
@@ -149,7 +210,7 @@ HREF="../filters/semiflatten.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Selection to Path</TD
+>Scratches</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -162,7 +223,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Semi-Flatten</TD
+>Selection to Path</TD
 ></TR
 ></TABLE
 ></DIV

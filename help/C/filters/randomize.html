@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->Randomize</TITLE
+>Randomize (Hurl, Pick, Slur)</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.64
@@ -16,8 +16,8 @@ REL="PREVIOUS"
 TITLE="Random Blends"
 HREF="../filters/randomblends.html"><LINK
 REL="NEXT"
-TITLE="Repeat and Duplicate"
-HREF="../filters/repdup.html"></HEAD
+TITLE="Rotate Color Map"
+HREF="../filters/rcm.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/repdup.html"
+HREF="../filters/rcm.html"
 >Next</A
 ></TD
 ></TR
@@ -68,46 +68,135 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-RANDOMIZE"
->Randomize</A
+>Randomize (Hurl, Pick, Slur)</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-RANDOMIZE-MESSAGE"
->Our apologies</A
+NAME="AEN8514"
+>Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
+>      These three filters
+      (<SPAN
+CLASS="GUILABEL"
+>Hurl</SPAN
+>,
+      <SPAN
+CLASS="GUILABEL"
+>Pick</SPAN
+>, and
+      <SPAN
+CLASS="GUILABEL"
+>Slur</SPAN
+>)
+      are based upon a similar algorithm.
+    </P
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Hurl</SPAN
+> will create noise using
+      <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> colors.
+    </P
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Pick</SPAN
+> creates noise based on neighboring
+      pixels.
+    </P
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Slur</SPAN
+> generates a crude melting effect.
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-RANDOMIZE-HELP"
->Can I help?</A
+NAME="AEN8527"
+>Randomize Options</A
 ></H2
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
->
-      with 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Randomize
-      </SPAN
->
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
+>      As each of the three modes for this plugin share the same
+      interface, only one description will be provided for this filter.
     </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Randomize Settings</B
+></P
+><DL
+><DT
+>Parameter Settings</DT
+><DD
+><P
+>            There are three available settings for this filter.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUILABEL"
+>Random Seed</SPAN
+>: The user may choose to
+                utilize the system time as a seed for the randomization
+                routine. <SPAN
+CLASS="GUILABEL"
+>Time</SPAN
+> is the safest option
+                to choose for a more random effect. If a number is
+                selected, the same random seed may be used across many
+                executions of <SPAN
+CLASS="GUIMENUITEM"
+>Randomization</SPAN
+>
+                to produce similar results.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUILABEL"
+>Randomization (&percnt;)</SPAN
+>: This setting
+                dictates the percentage of pixels that will be
+                considered for randomization. Higher values here should
+                result in more intense noise.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUILABEL"
+>Repeat</SPAN
+>: This option sets the number
+                of times that the filter will be run. This option is of
+                particular interest to those users running
+                <SPAN
+CLASS="GUILABEL"
+>Slur</SPAN
+>.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -141,7 +230,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/repdup.html"
+HREF="../filters/rcm.html"
 >Next</A
 ></TD
 ></TR
@@ -163,7 +252,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Repeat and Duplicate</TD
+>Rotate Color Map</TD
 ></TR
 ></TABLE
 ></DIV

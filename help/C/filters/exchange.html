@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Add Dust"
-HREF="../filters/dust.html"><LINK
+TITLE="Color Enhance"
+HREF="../filters/color_enhance.html"><LINK
 REL="NEXT"
-TITLE="Fade Alpha"
-HREF="../filters/fade-alpha.html"></HEAD
+TITLE="Colorify"
+HREF="../filters/colorify.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/dust.html"
+HREF="../filters/color_enhance.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/fade-alpha.html"
+HREF="../filters/colorify.html"
 >Next</A
 ></TD
 ></TR
@@ -71,14 +71,14 @@ NAME="FILTERS-EXCHANGE"
 >Color Exchange</A
 ></H1
 ><A
-NAME="AEN5805"
+NAME="AEN6046"
 ></A
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-EXCHANGE-OVERVIEW"
+NAME="AEN6048"
 >Overview</A
 ></H2
 ><P
@@ -86,7 +86,7 @@ NAME="FILTERS-EXCHANGE-OVERVIEW"
 CLASS="GUILABEL"
 >Color Exchange</SPAN
 > filter performs color
-      replacement on user defined colors. By selecting a <SPAN
+      replacement on user-defined colors. By selecting a <SPAN
 CLASS="QUOTE"
 >"From
       color"</SPAN
@@ -94,7 +94,7 @@ CLASS="QUOTE"
 CLASS="GUILABEL"
 >Color
       Exchange</SPAN
-> dialog window, and then selecting an
+> dialog window and then selecting an
       appropriate <SPAN
 CLASS="QUOTE"
 >"To Color"</SPAN
@@ -103,59 +103,182 @@ CLASS="QUOTE"
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-EXCHANGE-OPTIONS"
+NAME="AEN6055"
 >Color Exchange Options</A
 ></H2
 ><P
->      The <SPAN
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Color Exchange Settings</B
+></P
+><DL
+><DT
+>Preview Window</DT
+><DD
+><P
+>            This filter provides a preview window that can also be used
+            as a color selection window. Simply click with
+            <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>inside the preview window
+            to change the <SPAN
 CLASS="GUILABEL"
 >From Color</SPAN
-> settings include three
-      <SPAN
-CLASS="GUILABEL"
->threshold</SPAN
-> settings that can be adjusted to
-      include, or exclude, more of any of the three base colors,
-      <SPAN
-CLASS="ACRONYM"
->RGB</SPAN
->. Increasing the
-      <SPAN
-CLASS="GUILABEL"
->threshold</SPAN
-> increases the agressiveness of the
-      filter when the filter seeks matching colors.  That is to say that
-      a higher <SPAN
-CLASS="GUILABEL"
->threshold</SPAN
-> will result in more colors
-      being selected based on their similarities to the adjacent pixel
-      color.  The <SPAN
-CLASS="GUILABEL"
->Lock Thresholds</SPAN
-> checkbox locks
-      the three <SPAN
-CLASS="GUILABEL"
->threshold</SPAN
-> sliders together to give
-      a uniform threshold across each of the colors.
-    </P
+> to whatever
+            color the <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+> cursor is over at the
+            time.
+          </P
+></DD
+><DT
+>From Color</DT
+><DD
 ><P
->      Once the color selection is made, clicking
-      <SPAN
+>            At the top of this section is a clickable color well. This
+            color well launches the color selection dialog which allows
+            the selection of a source color range.
+          </P
+><P
+>            There are two groups of three sliders available that alter
+            the way this filter operates.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
 CLASS="GUIBUTTON"
->OK</SPAN
-> will replace the selected colors with
-      the color chosen as the <SPAN
+>Red</SPAN
+>: This slider alters the
+                amount of red color information used for the
+                <SPAN
+CLASS="GUILABEL"
+>From Color</SPAN
+> color well.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Green</SPAN
+>: This slider alters the
+                amount of green color information used for the
+                <SPAN
+CLASS="GUILABEL"
+>From Color</SPAN
+> color well.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Blue</SPAN
+>: This slider alters the
+                amount of blue color information that is used for the
+                <SPAN
+CLASS="GUILABEL"
+>From Color</SPAN
+> color well.
+              </P
+></LI
+></UL
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Red Threshold</SPAN
+>: This slider
+                changes the aggressiveness for the amount of red used in
+                the color selection.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Green Threshold</SPAN
+>: This slider
+                changes the aggressiveness for the amount of green used
+                in the color selection.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Blue Threshold</SPAN
+>: This slider
+                changes the aggressiveness for the amount of blue used
+                in the color selection.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Lock Thresholds</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Lock Thresholds</SPAN
+> checkbox forces
+            all threshold sliders to work in unison, providing balanced
+            selection aggression across all three color ranges.
+          </P
+></DD
+><DT
+>To Color</DT
+><DD
+><P
+>            The <SPAN
 CLASS="GUILABEL"
 >To Color</SPAN
->. This filter
-      can be extremely useful for replacing colors quickly and easily.
-    </P
+> section provides the
+            mapping for the color destination. All colors that are
+            selected using the options available in the
+            <SPAN
+CLASS="GUILABEL"
+>From Color</SPAN
+> section will be mapped to
+            the color selected here.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                The color well can be clicked to launch the color
+                selection dialog.
+              </P
+></LI
+><LI
+><P
+>                If a more manual method of color selection is required,
+                there are three sliders available here. Each of these
+                sliders represents one of the three primary colors that
+                are available in the context of the image.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -173,7 +296,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/dust.html"
+HREF="../filters/color_enhance.html"
 >Prev</A
 ></TD
 ><TD
@@ -189,7 +312,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/fade-alpha.html"
+HREF="../filters/colorify.html"
 >Next</A
 ></TD
 ></TR
@@ -198,7 +321,7 @@ HREF="../filters/fade-alpha.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Add Dust</TD
+>Color Enhance</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -211,7 +334,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Fade Alpha</TD
+>Colorify</TD
 ></TR
 ></TABLE
 ></DIV

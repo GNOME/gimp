@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Flame"
-HREF="../filters/flame.html"><LINK
+TITLE="FlareFX"
+HREF="../filters/flarefx.html"><LINK
 REL="NEXT"
-TITLE="Frame Filter"
-HREF="../filters/frame_filter.html"></HEAD
+TITLE="Fractal Explorer"
+HREF="../filters/fractalexplorer.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/flame.html"
+HREF="../filters/flarefx.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/frame_filter.html"
+HREF="../filters/fractalexplorer.html"
 >Next</A
 ></TD
 ></TR
@@ -71,43 +71,323 @@ NAME="FILTERS-FP"
 >Filter Pack</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-FP-MESSAGE"
->Our apologies</A
+NAME="AEN6500"
+>Filter Pack Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
+>      This filter is more a collection of basic color modification
+      filters. It is an interactive filter.
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-FP-HELP"
->Can I help?</A
+NAME="AEN6503"
+>Filter Pack Options</A
 ></H2
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
->
-      with 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Filter Pack
-      </SPAN
->
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
-    </P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Filter Pack Settings</B
+></P
+><DL
+><DT
+>Before and After</DT
+><DD
+><P
+>            The before and after preview windows display the original
+            selection or image and the result that will be applied if
+            <SPAN
+CLASS="GUIBUTTON"
+>OK</SPAN
+> is clicked.
+          </P
+></DD
+><DT
+>Show</DT
+><DD
+><P
+>            This section will change the amount of image displayed in
+            the preview windows.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Entire Image</SPAN
+>: This will display
+                the entire image in the preview window ignoring any
+                selection areas.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Selection Only</SPAN
+>: If there is an
+                active selection area within the image, this radio
+                button will toggle the preview windows such that they
+                only display the selection area.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Selection in Context</SPAN
+>: If there is
+                an active selection within the image, this radio button
+                will toggle the preview windows such that they display
+                the selection area and a percentage of the surrounding
+                non-selected image.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Affected Range</DT
+><DD
+><P
+>            This section changes the pixel weight that will be affected
+            by the filter.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Shadows</SPAN
+>: All pixels considered to
+                be of shadow weight will be changed.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Midtones</SPAN
+>: All pixels considered
+                to be of mid tonal weight will be changed.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Highlights</SPAN
+>: All pixels considered
+                to be of highlight weight will be changed.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Select Pixels by</DT
+><DD
+><P
+>            This section modifies the pixel selection routine of the
+            filter.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Hue</SPAN
+>: All pixels will be modified
+                according to hue.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Saturation</SPAN
+>: All pixels will be
+                selected according to saturation.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Value</SPAN
+>: All pixels will be
+                selected according to value.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Roughness</DT
+><DD
+><P
+>            This slider changes the amount of color modification to make
+            against the selected pixels. Higher values will increase the
+            amount of color modification made to the region.
+          </P
+></DD
+><DT
+>Windows</DT
+><DD
+><P
+>            The four <SPAN
+CLASS="GUILABEL"
+>Windows</SPAN
+> checkboxes display or
+            hide the four methods of color modification. These windows
+            are fully interactive.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                Clicking <SPAN
+CLASS="GUIBUTTON"
+>Hue</SPAN
+> will open the
+                <SPAN
+CLASS="GUILABEL"
+>Hue Variations</SPAN
+> window. Within this
+                window are six different hue modification previews.
+                Clicking any of the preview windows will modify the hue
+                of the region with the chosen hue. All preview windows
+                that are open will update dynamically.
+              </P
+></LI
+><LI
+><P
+>                Clicking <SPAN
+CLASS="GUIBUTTON"
+>Saturation</SPAN
+> will open the
+                <SPAN
+CLASS="GUILABEL"
+>Saturation Variations</SPAN
+> window.
+                Clicking either the <SPAN
+CLASS="GUIBUTTON"
+>More Sat.</SPAN
+> or
+                the <SPAN
+CLASS="GUIBUTTON"
+>Less Sat.</SPAN
+> previews will
+                increase or decrease the level of saturation for the
+                region.
+              </P
+></LI
+><LI
+><P
+>                Clicking <SPAN
+CLASS="GUIBUTTON"
+>Value</SPAN
+> will open the
+                <SPAN
+CLASS="GUILABEL"
+>Value Variations</SPAN
+> window. Clicking
+                either the <SPAN
+CLASS="GUIBUTTON"
+>Lighter</SPAN
+> or
+                <SPAN
+CLASS="GUIBUTTON"
+>Darker</SPAN
+> will increase or decrease
+                the level of pixel value for the region.
+              </P
+></LI
+><LI
+><P
+>                Clicking the <SPAN
+CLASS="GUIBUTTON"
+>Advanced</SPAN
+> checkbox
+                will open the <SPAN
+CLASS="GUILABEL"
+>Advanced Filter Pack
+                Options</SPAN
+> window. See below for further
+                information on using this part of the tool.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Advanced Filter Pack Options</DT
+><DD
+><P
+>            This section of <SPAN
+CLASS="GUILABEL"
+>Filter Pack</SPAN
+> allows fine
+            grained pixel selection control.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                The <SPAN
+CLASS="GUILABEL"
+>Smoothness of Aliasing</SPAN
+> section
+                allows the selection of the color range that will be
+                modified, and the selection of the curve. The curve
+                length can be changed using the
+                <SPAN
+CLASS="GUIBUTTON"
+>arrow-heads</SPAN
+> and the curve type
+                can be modified using the slider at the bottom of the
+                section. The slider will change the curve to a square
+                tooth when dragged to the left, and a sine-wave when
+                dragged to the right.
+              </P
+></LI
+><LI
+><P
+>                The <SPAN
+CLASS="GUILABEL"
+>Miscellaneous Options</SPAN
+> section
+                allows the view level for all preview windows. The
+                <SPAN
+CLASS="GUIBUTTON"
+>Preview as You Drag</SPAN
+> checkbox will
+                activate dynamic updating of all preview windows. The
+                <SPAN
+CLASS="GUIBUTTON"
+>Preview Size</SPAN
+> slider changes the
+                zoom level for all preview windows.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -125,7 +405,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/flame.html"
+HREF="../filters/flarefx.html"
 >Prev</A
 ></TD
 ><TD
@@ -141,7 +421,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/frame_filter.html"
+HREF="../filters/fractalexplorer.html"
 >Next</A
 ></TD
 ></TR
@@ -150,7 +430,7 @@ HREF="../filters/frame_filter.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Flame</TD
+>FlareFX</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -163,7 +443,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Frame Filter</TD
+>Fractal Explorer</TD
 ></TR
 ></TABLE
 ></DIV

@@ -13,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Shift"
-HREF="../filters/shift.html"><LINK
+TITLE="Sinus"
+HREF="../filters/sinus.html"><LINK
 REL="NEXT"
-TITLE="Solid Noise"
-HREF="../filters/snoise.html"></HEAD
+TITLE="Sobel"
+HREF="../filters/sobel.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/shift.html"
+HREF="../filters/sinus.html"
 >Prev</A
 ></TD
 ><TD
@@ -54,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/snoise.html"
+HREF="../filters/sobel.html"
 >Next</A
 ></TD
 ></TR
@@ -71,43 +71,78 @@ NAME="FILTERS-SMOOTH-PALETTE"
 >Smooth Palette</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-SMOOTH-PALETTE-MESSAGE"
->Our apologies</A
+NAME="AEN8959"
+>Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
-    </P
+>			This plugin will create a new image that contains palette
+			information derived from the original image. It will attempt to
+			create a smooth palette. That is, one that contains a blend
+			between colors.
+		</P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-SMOOTH-PALETTE-HELP"
->Can I help?</A
+NAME="AEN8962"
+>Smooth Palette Options</A
 ></H2
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
->
-      with 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Smooth Palette
-      </SPAN
->
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
-    </P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Smooth Palette Settings</B
+></P
+><DL
+><DT
+>Parameter Settings</DT
+><DD
+><P
+>						There are three available options to the user.
+					</P
+><P
+></P
+><UL
+><LI
+><P
+>								<SPAN
+CLASS="GUILABEL"
+>Width</SPAN
+>: Specifies the width in
+								pixels of the derived palette.
+							</P
+></LI
+><LI
+><P
+>								<SPAN
+CLASS="GUILABEL"
+>Height</SPAN
+>: Specifies the height in
+								pixels of the derived palette.
+							</P
+></LI
+><LI
+><P
+>								<SPAN
+CLASS="GUILABEL"
+>Search Time</SPAN
+>: Dictates how long the
+								filter should spend matching colors to derive a better,
+								smoother palette.
+							</P
+></LI
+></UL
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -125,7 +160,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/shift.html"
+HREF="../filters/sinus.html"
 >Prev</A
 ></TD
 ><TD
@@ -141,7 +176,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/snoise.html"
+HREF="../filters/sobel.html"
 >Next</A
 ></TD
 ></TR
@@ -150,7 +185,7 @@ HREF="../filters/snoise.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Shift</TD
+>Sinus</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -163,7 +198,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Solid Noise</TD
+>Sobel</TD
 ></TR
 ></TABLE
 ></DIV

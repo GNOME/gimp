@@ -13,8 +13,8 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Selective Gaussian Blur"
-HREF="../filters/sel_gauss.html"><LINK
+TITLE="Selection to Path"
+HREF="../filters/sel2path.html"><LINK
 REL="NEXT"
 TITLE="SGI"
 HREF="../filters/sgi.html"></HEAD
@@ -41,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/sel_gauss.html"
+HREF="../filters/sel2path.html"
 >Prev</A
 ></TD
 ><TD
@@ -71,43 +71,34 @@ NAME="FILTERS-SEMIFLATTEN"
 >Semi-Flatten</A
 ></H1
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="FILTERS-SEMIFLATTEN-MESSAGE"
->Our apologies</A
+NAME="AEN8890"
+>Overview</A
 ></H2
 ><P
->      Sorry, but the help page for this item is not written yet.
-    </P
-></DIV
-><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
-><A
-NAME="FILTERS-SEMIFLATTEN-HELP"
->Can I help?</A
-></H2
+>			The <SPAN
+CLASS="GUILABEL"
+>Semi-flatten</SPAN
+> filter helps those in need
+			of a solution to anti-aliasing indexed images with transparency.
+		</P
 ><P
->      Yes you can! Please send a message to
-      <TT
-CLASS="EMAIL"
->&#60;<A
-HREF="mailto:docs@gimp.org"
->docs@gimp.org</A
->&#62;</TT
->
-      with 
-      <SPAN
-CLASS="GUIMENUITEM"
->        Semi-Flatten
-      </SPAN
->
-      as the subject line. Feel free to also include documentation
-      related suggestions or fix requests.
-    </P
+>			In order to use this filter, the user must set the background
+			color in the toolbox to the color that will be used for the
+			destination of the image. For example, a black circle that will be
+			saved as an indexed image for placement on a green web page would
+			preclude a need to set the background color to the same color
+			green as the web page.
+		</P
+><P
+>			With the background color set, the filter can be started. The
+			filter will scan the edges of the selected layer and color them in
+			a similar fashion to anti-aliasing, but using the selected
+			background color instead of transparency.
+		</P
 ></DIV
 ></DIV
 ><DIV
@@ -125,7 +116,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/sel_gauss.html"
+HREF="../filters/sel2path.html"
 >Prev</A
 ></TD
 ><TD
@@ -150,7 +141,7 @@ HREF="../filters/sgi.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Selective Gaussian Blur</TD
+>Selection to Path</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -163,10 +154,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
-><SPAN
-CLASS="ACRONYM"
->SGI</SPAN
-></TD
+>SGI</TD
 ></TR
 ></TABLE
 ></DIV
