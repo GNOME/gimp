@@ -35,7 +35,7 @@ Sun May 23 02:35:57 BST 1999  Adam D. Moss  <adam@gimp.org>
 	* app/interface.c: made the query_*_box() functions use the
 	ActionArea.
 
-	* plug-ins/gimpunitmenu.c: GTK_WIN_POS_MOUSE for the unit
+	* libgimp/gimpunitmenu.c: GTK_WIN_POS_MOUSE for the unit
 	selection dialog.
 
 Fri May 21 10:39:00 CST 1999  Seth Burgess <sjburges@gimp.org>
