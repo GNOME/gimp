@@ -88,12 +88,16 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  klass->name            = "EEK";
+  klass->help_page       = "help_yourself.html";
+
   klass->clone           = NULL;
   klass->convert         = NULL;
   klass->load_state      = NULL;
   klass->save_state      = NULL;
   klass->configure       = NULL;
   klass->configure_reset = NULL;
+  klass->changed         = NULL;
 }
 
 static void

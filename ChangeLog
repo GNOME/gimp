@@ -1,5 +1,10 @@
 2002-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplay.c (gimp_color_display_class_init):
+	initialize all class members with default values.
+
+2002-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpmodule/gimpmodule.c: use g_message/g_print consistently.
 
 2002-12-19  Michael Natterer  <mitch@gimp.org>
