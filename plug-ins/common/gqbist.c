@@ -2,6 +2,10 @@
  * Written 1997 Jens Ch. Restemeier <jchrr@hrz.uni-bielefeld.de>
  * This program is based on an algorithm / article by
  * Jörn Loviscach.
+ *
+ * It appeared in c't 10/95, page 326 and is called 
+ * "Ausgewürfelt - Moderne Kunst algorithmisch erzeugen".
+ * (~modern art created with algorithms)
  * 
  * It generates one main formula (the middle button) and 8 variations of it.
  * If you select a variation it becomes the new main formula. If you
@@ -33,6 +37,8 @@
  * 1.8 Dscho added transform file load/save, bug-fixes 
  * 1.9 rewrote renderloop.
  * 1.9a fixed a bug.
+ * 1.9b fixed MAIN()
+ * 1.10 added optimizer
  */
                  
 #include <stdio.h>
@@ -50,7 +56,7 @@
 #define NUM_REGISTERS	6
 
 #define PLUG_IN_NAME "plug_in_qbist"
-#define PLUG_IN_VERSION "November 1997, 1.8"
+#define PLUG_IN_VERSION "March 1998, 1.10"
 #define PREVIEW_SIZE 64
 
 /** types *******************************************************************/
@@ -116,6 +122,46 @@ void modify_info(s_info *o_info, s_info *n_info)
 	}
 }
 
+/*
+ * Optimizer
+ */
+int used_trans_flag[MAX_TRANSFORMS];
+int used_reg_flag[NUM_REGISTERS];
+
+void check_last_modified(s_info info, int p, int n)
+{
+	p--;
+	while ((p>=0) && (info.dest[p]!=n)) p--;
+	if (p<0) 
+		used_reg_flag[n]=1;
+	else {
+		used_trans_flag[p]=1;
+		check_last_modified(info, p, info.source[p]);
+		check_last_modified(info, p, info.control[p]);
+	}
+}
+
+void optimize(s_info info)
+{
+	int i;
+	/* double-arg fix: */
+	for (i=0; i<MAX_TRANSFORMS; i++) {
+		used_trans_flag[i]=0;
+		if (i<NUM_REGISTERS)
+			used_reg_flag[i]=0;
+		/* double-arg fix: */
+		switch (info.transformSequence[i]) {
+			case ROTATE: 
+			case ROTATE2: 
+			case COMPLEMENT: 
+				info.control[i]=info.dest[i];
+				break;
+		}
+	}
+	/* check for last modified item */
+	check_last_modified(info, MAX_TRANSFORMS, 0);
+}
+
 void qbist(s_info info, gchar *buffer, int xp, int yp, int num, int width, int height, int bpp)
 {
 	gushort gx;
@@ -127,14 +173,16 @@ void qbist(s_info info, gchar *buffer, int xp, int yp, int num, int width, int h
 
 	for(gx=0; gx<num; gx ++) {
 		for(i=0; i<NUM_REGISTERS; i++) {
-			reg[i][0] = ((float)gx+xp) / ((float)(width));
-			reg[i][1] = ((float)yp) / ((float)(height));
-			reg[i][2] = ((float)i) / ((float)NUM_REGISTERS);
+			if (used_reg_flag[i]) {
+				reg[i][0] = ((float)gx+xp) / ((float)(width));
+				reg[i][1] = ((float)yp) / ((float)(height));
+				reg[i][2] = ((float)i) / ((float)NUM_REGISTERS);
+			}
 		}
 		for(i=0;i<MAX_TRANSFORMS; i++) {
 			sr=info.source[i];cr=info.control[i];dr=info.dest[i];
 			
-			switch (info.transformSequence[i]) {
+			if (used_trans_flag[i]) switch (info.transformSequence[i]) {
 				case PROJECTION: {
 					gfloat scalarProd;
 					scalarProd = (reg[sr][0]*reg[cr][0])+(reg[sr][1]*reg[cr][1])+(reg[sr][2]*reg[cr][2]);
@@ -230,14 +278,14 @@ GParamDef *return_vals  = NULL;
 int        nargs        = sizeof(args) / sizeof(args[0]);
 int        nreturn_vals = 0;
 
-MAIN();
+MAIN()
 
 void query(void)
 {
         gimp_install_procedure(PLUG_IN_NAME, 
                                "Create images based on a random genetic formula", 
                                "This Plug-in is based on an article by "
-                               "Jörn Loviscach. It generates modern art "
+                               "Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art "
                                "pictures from a random genetic formula.", 
                                "Jörn Loviscach, Jens Ch. Restemeier", 
                                "Jörn Loviscach, Jens Ch. Restemeier", 
@@ -322,6 +370,8 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 			gimp_pixel_rgn_init (&imagePR, drawable, 0,0, img_width, img_height, TRUE, TRUE);
 			row_data=(guchar *)malloc((sel_x2-sel_x1)*img_bpp);
 
+			optimize(qbist_info);
+
 			gimp_progress_init ("Qbist ...");
 			for (row=sel_y1; row<sel_y2; row++) {
 				qbist(qbist_info, row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
@@ -378,6 +428,7 @@ void dialog_update_previews(GtkWidget *widget, gpointer data)
 	int i, j;
 	guchar buf[PREVIEW_SIZE * 3];
 	for (j=0;j<9;j++) {
+		optimize(info[(j+5) % 9]);
 		for (i = 0; i < PREVIEW_SIZE; i++) {
 			qbist(info[(j+5) % 9], buf, 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3);
 			gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf, 0, i, PREVIEW_SIZE);
@@ -415,23 +466,22 @@ int load_data(char *name)
 	return(1);
 }
 
-void save_data(char *name, int k)
+void save_data(char *name)
 {
 	int i=0;
 	FILE *f;
 
 	f=fopen(name, "wb");
-	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[k].transformSequence[i], f);
-	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[k].source[i], f);
-	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[k].control[i], f);
-	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[k].dest[i], f);
+	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].transformSequence[i], f);
+	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].source[i], f);
+	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].control[i], f);
+	for(i=0;i<MAX_TRANSFORMS;i++) PUTMACUSHORT(info[0].dest[i], f);
 	fclose(f);
 }
 
 void file_selection_save(GtkWidget *widget, GtkWidget *file_select)
 {
-	save_data(gtk_file_selection_get_filename (GTK_FILE_SELECTION(file_select)),
-	0 /* the middle button */ );
+	save_data(gtk_file_selection_get_filename (GTK_FILE_SELECTION(file_select)));
 	gtk_widget_destroy(file_select);
 }
 
@@ -507,7 +557,7 @@ int dialog_create()
 	gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
 	dialog=gtk_dialog_new ();
-	gtk_window_set_title (GTK_WINDOW(dialog), "G-Qbist 1.0");
+	gtk_window_set_title (GTK_WINDOW(dialog), "G-Qbist 1.10");
 	gtk_signal_connect (GTK_OBJECT (dialog), "destroy", 
 		(GtkSignalFunc) dialog_close, 
 		NULL);
@@ -516,7 +566,7 @@ int dialog_create()
 	gtk_table_set_row_spacings(GTK_TABLE(table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 5);
 	gtk_container_border_width (GTK_CONTAINER (table), 5);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, TRUE, TRUE, 0);
 	gtk_widget_show(table);
 
 	memcpy((char *)&(info[0]), (char *)&qbist_info, sizeof(s_info));

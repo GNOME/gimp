@@ -1,4 +1,4 @@
-/* maze.c, version 0.5.0, July 10, 1998.
+/* maze.c, version 0.6.2, March 7, 1998.
  * This is a plug-in for the GIMP.
  * It draws mazes...
  * 
@@ -19,6 +19,11 @@
  * and used as a template to get me started on this one.  :)
  * 
  * Revision history:
+ * 0.6.2  - drawbox rewritten with memcpy and a row buffer.  By the way, Maze is now
+ *          faster than Checkerboard.
+ *        - Added Help button using extension_web_browser.
+ *        - Added DIVBOX_LOOKS_LIKE_SPINBUTTON flag.  Doesn't look too hot, set to
+ *          FALSE by default.
  * 0.6.1  - Made use-time-for-random-seed a toggle button that remembers
  *          its state, and moved seed to the second notebook page.
  * 0.6.0  - Width and height are now seperate options.  
@@ -50,6 +55,8 @@
  * 0.1.0  - First release.  It works!  :)
  *
  * TO DO:
+ *   Rework the divboxes to be more like spinbuttons.
+ *
  *   Add an option to kill the outer border.
  * 
  *   Fix that stray line down there between maze wall and dead space border...
@@ -380,37 +387,99 @@ maze( GDrawable * drawable)
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
+/* Draws a solid color box in a GPixelRgn. */
+/* Optimization assumptions:
+ * (Or, "Why Maze is Faster Than Checkerboard.")
+ * 
+ * Assuming calling memcpy is faster than using loops.
+ * Row buffers are nice...
+ *
+ * Assume allocating memory for row buffers takes a significant amount 
+ * of time.  Assume drawbox will be called many times.
+ * Only allocate memory once.
+ *
+ * Do not assume the row buffer will always be the same size.  Allow
+ * for reallocating to make it bigger if needed.  However, I don't see 
+ * reason to bother ever shrinking it again.
+ * (Under further investigation, assuming the row buffer never grows
+ * may be a safe assumption in this case.)
+ *
+ * Also assume that the program calling drawbox is short-lived, so
+ * memory leaks aren't of particular concern-- the memory allocated to 
+ * the row buffer is never set free.
+ */
+
+/* Further optimizations that could be made...
+ *  Currently, the row buffer is re-filled with every call.  However,
+ *  plug-ins such as maze and checkerboard only use two colors, and
+ *  for the most part, have rows of the same size with every call.
+ *  We could keep a row of each color on hand so we wouldn't have to
+ *  re-fill it every time...  */
+
+
 static void 
 drawbox( GPixelRgn *dest_rgn, 
 	 guint x, guint y, guint w, guint h, 
 	 guint8 clr[4])
 {
-    guint xx,yy, foo, bar;
-    guint8 bp;
+     guint xx, yy, y_max, x_min /*, x_max */;
+     static guint8 *rowbuf;
+     guint rowsize;
+     static guint high_size=0;
+  
+     /* The maximum [xy] value is that of the far end of the box, or
+      * the edge of the region, whichever comes first. */
+     
+     y_max = dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
+/*   x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
+     
+     x_min = x * dest_rgn->bpp;
+     
+     /* rowsize = x_max - x_min */
+     rowsize = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)) - x_min;
+     
+     /* Does the row buffer need to be (re)allocated? */
+     if (high_size == 0) {
+	  rowbuf = g_new(guint8, rowsize);
+     } else if (rowsize > high_size) {
+	  g_realloc(rowbuf, rowsize * sizeof(guint8) );
+     }
+     
+     high_size = MAX(high_size, rowsize);
+     
+     /* Fill the row buffer with the color. */
+     for (xx= 0;
+	  xx < rowsize;
+	  xx+= dest_rgn->bpp) {
+	  memcpy (&rowbuf[xx], clr, dest_rgn->bpp);
+     } /* next xx */
+     
+     /* Fill in the box in the region with rows... */
+     for (yy = dest_rgn->rowstride * y; 
+	  yy < y_max; 
+	  yy += dest_rgn->rowstride ) {
+	  memcpy (&dest_rgn->data[yy+x_min], rowbuf, rowsize);
+     } /* next yy */
+}
 
-    /* This looks ugly, but it's just finding the lower number... */
-    foo	= dest_rgn->h * dest_rgn->rowstride
-	< y * dest_rgn->rowstride + h * dest_rgn->rowstride
-	? dest_rgn->h * dest_rgn->rowstride 
-	: y * dest_rgn->rowstride + h * dest_rgn->rowstride;
+/* The old drawbox code, preserved here 'just in case' something
+   doesn't go right. */
 
-    bar	= dest_rgn->w * dest_rgn->bpp
-	< x * dest_rgn->bpp + w * dest_rgn->bpp
-	? dest_rgn->w * dest_rgn->bpp
-	: x * dest_rgn->bpp + w * dest_rgn->bpp;
-
-    for (yy = dest_rgn->rowstride * y; 
-	 yy < foo; 
-	 yy += dest_rgn->rowstride ) {
+#if 0
 	for (xx= x * dest_rgn->bpp;
 	     xx < bar;
 	     xx+= dest_rgn->bpp) {
+#if 0
 	    for (bp=0; bp < dest_rgn->bpp; bp++) {
 		dest_rgn->data[yy+xx+bp]=clr[bp];
 	    } /* next bp */
+#else
+		memcpy (&dest_rgn->data[yy+xx], clr, dest_rgn->bpp);
+#endif
 	} /* next xx */
     } /* next yy */
 }
+#endif 
 
 /* The Incredible Recursive Maze Generation Routine */
 /* Ripped from rec.programmers.games maze-faq       */

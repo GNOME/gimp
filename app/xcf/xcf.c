@@ -1639,6 +1639,10 @@ xcf_load_layer (XcfInfo *info,
       if (!layer_mask)
 	goto error;
 
+      /* set the offsets of the layer_mask */
+      GIMP_DRAWABLE(layer_mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
+      GIMP_DRAWABLE(layer_mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
+
       apply_mask = layer->apply_mask;
       edit_mask = layer->edit_mask;
       show_mask = layer->show_mask;

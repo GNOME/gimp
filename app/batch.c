@@ -145,7 +145,7 @@ batch_run_cmd (char *cmd)
 	  args[i].value.pdb_float = atof (cmd);
 	  break;
 	case PDB_STRING:
-	  cmd = strtok (NULL, "\"");
+	  cmd = strtok (NULL, " )");
 	  if (!cmd)
 	    goto error;
 

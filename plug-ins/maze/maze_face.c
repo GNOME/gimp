@@ -1,4 +1,4 @@
-/* maze_face.c, version 0.6.0, Feb 14, 1998.
+/* maze_face.c, version 0.6.2, March 7, 1998.
  * User interface for plug-in-maze.
  * 
  * Implemented as a GIMP 0.99 Plugin by 
@@ -57,6 +57,7 @@ static void maze_msg (gchar *msg);
 static void maze_close_callback (GtkWidget *widget, gpointer data);
 static void maze_ok_callback  (GtkWidget *widget, gpointer data);
 static void maze_entry_callback  (GtkWidget *widget, gpointer data);
+static void maze_help (GtkWidget *widget, gpointer foo);
 
 /* Looking back, it would probably have been easier to completely
  * re-write the whole entry/scale thing to work with the divbox stuff.
@@ -160,6 +161,8 @@ gint maze_dialog()
   GtkWidget *notebook;
   GtkWidget *tilecheck;
 
+  GtkWidget *help_button;
+
   GtkWidget *width_entry, *height_entry;
   GtkWidget *seed_hbox, *seed_entry, *time_button;
   GtkWidget *div_x_hbox, *div_y_hbox;
@@ -174,8 +177,11 @@ gint maze_dialog()
   argv[0] = g_strdup ("maze");
 
   gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+  gdk_set_use_xshm(gimp_use_xshm());
 
   dlg = gtk_dialog_new ();
+
   gtk_window_set_title (GTK_WINDOW (dlg), MAZE_TITLE);
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -200,6 +206,15 @@ gint maze_dialog()
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
+  help_button = gtk_button_new_with_label ("Help");
+  gtk_signal_connect (GTK_OBJECT (help_button), "clicked",
+		      (GtkSignalFunc) maze_help, NULL);
+
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), 
+		      help_button, TRUE, TRUE, 0);
+  gtk_widget_show (help_button);
+
+
   /* Create notebook */
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
@@ -216,6 +231,14 @@ gint maze_dialog()
   gtk_container_add (GTK_CONTAINER(msg_frame), msg_label);
   gtk_widget_show (msg_label);
   gtk_widget_show (msg_frame);
+
+#if 0
+  g_print("label_width: %d, %d\n",
+	  GTK_FRAME(msg_frame)->label_width,
+	  gdk_string_measure (GTK_WIDGET(msg_frame)->style->font, 
+			      GTK_FRAME(msg_frame)->label) + 7);
+#endif
+
 
   /*  Set up Options page  */
   frame = gtk_frame_new ("Maze Options");
@@ -396,11 +419,21 @@ divbox_new (guint *max, GtkWidget *friend, GtkWidget **div_entry)
      GtkWidget *div_hbox;
      GtkWidget *arrowl, *arrowr, *buttonl, *buttonr;
      static gshort less= -1, more= 1;
-     
+#if DIVBOX_LOOKS_LIKE_SPINBUTTON
+     GtkWidget *buttonbox;
+#endif     
+
+
      div_hbox=gtk_hbox_new(FALSE, 0);
-     
+
+#if DIVBOX_LOOKS_LIKE_SPINBUTTON     
+     arrowl=gtk_arrow_new(GTK_ARROW_DOWN,  GTK_SHADOW_OUT);
+     arrowr=gtk_arrow_new(GTK_ARROW_UP, GTK_SHADOW_OUT);
+#else
      arrowl=gtk_arrow_new(GTK_ARROW_LEFT,  GTK_SHADOW_IN);
      arrowr=gtk_arrow_new(GTK_ARROW_RIGHT, GTK_SHADOW_IN);
+#endif
+
      buttonl=gtk_button_new();
      buttonr=gtk_button_new();
      
@@ -414,15 +447,27 @@ divbox_new (guint *max, GtkWidget *friend, GtkWidget **div_entry)
 
      gtk_container_add(GTK_CONTAINER(buttonl),arrowl);
      gtk_container_add(GTK_CONTAINER(buttonr),arrowr);
+
+     gtk_widget_set_usize( *div_entry, ENTRY_WIDTH, 0 );
+
+#if DIVBOX_LOOKS_LIKE_SPINBUTTON
+     buttonbox = gtk_vbox_new(FALSE, 0);
+
+     gtk_box_pack_start(GTK_BOX(buttonbox), buttonr, FALSE, FALSE, 0);
+     gtk_box_pack_start(GTK_BOX(buttonbox), buttonl, FALSE, FALSE, 0);
+     gtk_widget_show(buttonbox);
+
+     gtk_box_pack_start(GTK_BOX(div_hbox), *div_entry, FALSE, FALSE, 2);
+     gtk_box_pack_start(GTK_BOX(div_hbox), buttonbox, FALSE, FALSE, 0);
+#else
      gtk_misc_set_padding(GTK_MISC(arrowl),2,2);
      gtk_misc_set_padding(GTK_MISC(arrowr),2,2);
 
-     gtk_widget_set_usize( *div_entry, ENTRY_WIDTH, 0 );
-     
      gtk_box_pack_start(GTK_BOX(div_hbox), buttonl, FALSE, FALSE, 0);
      gtk_box_pack_start(GTK_BOX(div_hbox), *div_entry,   FALSE, FALSE, 2);
      gtk_box_pack_start(GTK_BOX(div_hbox), buttonr, FALSE, FALSE, 0);
-     
+#endif     
+
      gtk_widget_show (arrowl); gtk_widget_show (arrowr);
      gtk_widget_show (*div_entry);
      gtk_widget_show (buttonl); gtk_widget_show (buttonr);
@@ -583,6 +628,26 @@ maze_close_callback (GtkWidget *widget,
 		     gpointer data)
 {
     gtk_main_quit ();
+}
+
+static void
+maze_help (GtkWidget *widget, gpointer foo)
+{
+     void *bar;
+     gint baz;
+
+     if (gimp_query_procedure("extension_web_browser", 
+			      bar, bar, bar, bar, bar, 
+			      bar, bar, bar, bar, bar)) {
+	  maze_msg("Opening " MAZE_URL);
+	  gimp_run_procedure("extension_web_browser", &baz,
+			     PARAM_INT32, RUN_NONINTERACTIVE, 
+			     PARAM_STRING, MAZE_URL, 
+			     PARAM_INT32, HELP_OPENS_NEW_WINDOW, 
+			     PARAM_END);
+     } else {
+	  maze_msg("See " MAZE_URL);
+     }
 }
 
 static void

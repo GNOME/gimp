@@ -107,7 +107,7 @@ query ()
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
-  gimp_register_magic_load_handler ("file_fli_load", "fli,flc", "", "5,byte,175 ");
+  gimp_register_magic_load_handler ("file_fli_load", "fli,flc", "", "4,short,0x11af,4,short,0x12af");
 }
 
 static void

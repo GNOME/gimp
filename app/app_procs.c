@@ -298,6 +298,7 @@ destroy_initialization_status_window(void)
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
       gtk_idle_remove(idle_tag);
+      gtk_preview_reset (); /* so we can reinit the colormaps */
     }
 }
 
@@ -313,7 +314,6 @@ make_initialization_status_window(void)
 {
   if (no_interface == FALSE)
     {
-      get_standard_colormaps ();
       if (no_splash == FALSE)
 	{
 	  GtkWidget *vbox;
@@ -483,6 +483,7 @@ app_init ()
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
+      get_standard_colormaps ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);

@@ -1,3 +1,20 @@
+Sun Mar  8 17:44:05 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/app_procs.c: fix for (install-colormap) and splash screen
+	using gtk_preview_reset()
+
+	* configure.in: on some platforms libXmu doesn't require libSM and
+	libICE. configure should know this now.
+
+	* app/gradient.c: corrected WM_CLASS typo
+
+	* plug-ins/gfli/gfli.c: fix for load handler magic
+
+	* plug-ins/gtm/gtm.c: don't use naughty gccisms.
+
+	* plug-ins/gqbist
+	* plug-ins/maze: updated from registry
+
 Tue Mar  3 01:02:30 1998  Larry Ewing  <lewing@discord.isc.tamu.edu>
 
 	* app/scale.c: Fixed a long standing bug in the scale factor

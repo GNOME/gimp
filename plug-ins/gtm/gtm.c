@@ -193,14 +193,19 @@ save_image (char   *filename,
 {
   int row,col, cols, rows, x, y;
   int colcount, colspan, rowspan;
-  int palloc[drawable->width][drawable->height];
+  /* This works only in gcc - not allowed according */
+  /* to ANSI C */
+  /*int palloc[drawable->width][drawable->height];*/
+  int *palloc;
   guchar *buffer, *buf2;
   guchar *width, *height;
   GPixelRgn pixel_rgn;
   char *name;
 
   FILE *fp, *fopen();
-   
+
+  palloc = malloc(drawable->width * drawable->height * sizeof(int));
+
   fp = fopen(filename, "w");
   if (gtmvals.fulldoc) {
     fprintf (fp,"<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",filename);
@@ -239,7 +244,7 @@ save_image (char   *filename,
 
   for (row=0; row < rows; row++)
     for (col=0; col < cols; col++)
-      palloc[col][row]=1;
+      palloc[drawable->width * row + col]=1;
 
   colspan=0;
   rowspan=0;
@@ -259,8 +264,8 @@ save_image (char   *filename,
 	rowspan=0;
 	gimp_pixel_rgn_get_pixel(&pixel_rgn, buf2, col, row);
 	
-	while (color_comp(buffer,buf2) && palloc[col][row] == 1 && row < drawable->height) {
-	  while (color_comp(buffer,buf2) && palloc[col][row] == 1 && col < drawable->width ) {
+	while (color_comp(buffer,buf2) && palloc[drawable->width * row + col] == 1 && row < drawable->height) {
+	  while (color_comp(buffer,buf2) && palloc[drawable->width * row + col] == 1 && col < drawable->width ) {
 	    colcount++;
 	    col++;
 	    gimp_pixel_rgn_get_pixel(&pixel_rgn, buf2, col, row);
@@ -282,18 +287,18 @@ save_image (char   *filename,
 	if (colspan > 1 || rowspan > 1) {
 	  for (row=0; row < rowspan; row++)
 	    for (col=0; col < colspan; col++)
-	      palloc[col+x][row+y]=0;
-	  palloc[x][y]=2;
+	      palloc[drawable->width * (row+y) + (col+x)]=0;
+	  palloc[drawable->width * y + x]=2;
 	}
       }
 
-      if (palloc[x][y]==1)
+      if (palloc[drawable->width * y + x]==1)
 	fprintf (fp,"      <TD%s%sBGCOLOR=#%02x%02x%02x>",width,height,buffer[0],buffer[1],buffer[2]);
 
-      if (palloc[x][y]==2)
+      if (palloc[drawable->width * y + x]==2)
 	fprintf (fp,"      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",rowspan,colspan,width,height,buffer[0],buffer[1],buffer[2]);
 
-      if (palloc[x][y]!=0) {
+      if (palloc[drawable->width * y + x]!=0) {
 	if (gtmvals.tdcomp)
 	  fprintf (fp,"%s</TD>\n",gtmvals.cellcontent);
 	else 
@@ -311,6 +316,8 @@ save_image (char   *filename,
   gimp_drawable_detach (drawable);
   free(width);
   free(height);
+
+  free(palloc);
 
   return 1;
 }

@@ -68,10 +68,10 @@ AC_DEFUN(AC_GIMP_CHECK,
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
 
 	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for gtk >= 0.99.4])
-        AC_TRY_COMPILE(
+	AC_MSG_CHECKING([for gtk >= 0.99.5])
+        AC_TRY_LINK(
 [#include <gtk/gtk.h>],
-[GtkTooltipsClass tipclass;],
+[gtk_preview_reset();],
 gtk_found=yes,
 gtk_found=no)
 	AC_MSG_RESULT($gtk_found)
@@ -122,7 +122,9 @@ dnl Test for Xmu
   if test -z "$LIBXMU_LIB"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,
       WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
-      AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt -lSM -lICE)
+      AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
+	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
+	AC_MSG_WARN(*** webbrowser plug-in will not be built ***), -lXt), -lXt, -lSM, -lICE)
   fi
 
 dnl Test for libtiff
