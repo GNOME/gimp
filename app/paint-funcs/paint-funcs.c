@@ -29,7 +29,6 @@
 
 #include "paint-funcs-types.h"
 
-#include "base/base-config.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -38,6 +37,8 @@
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
 #include "paint-funcs-mmx.h"
+
+#include "appenv.h"
 
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001

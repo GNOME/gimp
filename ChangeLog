@@ -1,3 +1,22 @@
+2002-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/appenv.h: moved use_shm declaration here, added use_mmx.
+	
+	* app/main.c: added --no-mmx commandline option, removed --no-xshm
+	from help output.
+	
+	* app/base/base-config.[ch]: removed use-mmx declaration.
+	
+	* app/core/core-types.h
+	* app/base/base-types.h: include libgimpbase/gimpbasetypes.h from base.
+
+	* app/base/base.c: respect user settings for mmx.
+
+	* app/paint-funcs/paint-funcs.c
+	* app/plug-in/plug-in.c: changed accordingly.
+	
+	* docs/gimp-1.3.1.in: updated.
+
 2002-03-22  Duarte Loreto <happyguy_pt@hotmail.com>
 
         * configure.in: Added Portuguese (pt) to ALL_LINGUAS

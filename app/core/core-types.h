@@ -20,7 +20,6 @@
 #define __CORE_TYPES_H__
 
 
-#include "libgimpbase/gimpbasetypes.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "base/base-types.h"

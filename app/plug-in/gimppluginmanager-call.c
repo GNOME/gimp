@@ -107,6 +107,7 @@
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
 
+#include "appenv.h"
 #include "app_procs.h"
 #include "gimprc.h"
 
@@ -260,8 +261,6 @@ plug_in_init_shm (void)
 void
 plug_in_init (Gimp *gimp)
 {
-  extern gboolean use_shm;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /* initialize the gimp protocol library and set the read and

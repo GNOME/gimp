@@ -6,7 +6,7 @@ gimp - an image manipulation and paint program.
 [\-h] [\-\-help] [-v] [\-\-version] [\-b] [\-\-batch \fI<commands>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-n] [\-\-no\-interface] [\-r] 
 [\-\-restore\-session] [\-\-no\-data] [\-\-verbose] [\-\-no\-shm]
-[\-\-no\-xshm] [\-\-display \fIdisplay\fP] [\-\-no\-splash]
+[\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-\-no\-splash]
 [\-\-no\-splash\-image] [\-\-debug\-handlers] [\-\-console\-messages] 
 [\-\-system\-gimprc \fI<gimprc>\fP] [\fIfilename\fP]...
 
@@ -65,11 +65,8 @@ Do not use shared memory between GIMP and its plugins.
 Instead of using shared memory, GIMP will send the data via pipe. This
 will result in slower performance than using shared memory.
 .TP 8
-.B \-\-no\-xshm
-Do not use the X Shared Memory extension. If GIMP is being displayed
-on a remote X server, this probably needs to be enabled. Also useful
-for any X server that doesn't properly support the X shared memory extension.
-This will result in slower performance than with X shared memory enabled.
+.B \-\-no\-mmx
+Do not use MMX routines even if GIMP detects the availability of MMX.
 .TP 8
 .B \-\-display \fIdisplay\fP
 Use the designated X display.
@@ -114,15 +111,19 @@ first and the user gimprc can override the system settings.
 @sysconfdir@/gimprc_user is the default gimprc
 placed in users' home directories the first time gimp is run.
 
+\fB$HOME\fP/.gimp-1.3/devicerc - holds settings for input devices
+together with the tool, colors, brush, pattern and gradient 
+associated to that device.
+
+\fB$HOME\fP/@gimpdir@/documents - lists all images that have been 
+opened or saved using Gimp.
+
 \fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
 config settings. Options such as widget color and fonts sizes 
 can be set here.
 
 @gimpsysconfdir@/gtkrc - sytem wide default set of gimp-specific 
 GTK config settings.
-
-\fB$HOME\fP/@gimpdir@/ideas - lists all images that have been 
-opened or saved using Gimp.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 

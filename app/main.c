@@ -69,6 +69,7 @@ gboolean             use_shm                 = FALSE;
 gboolean             use_debug_handler       = FALSE;
 gboolean             console_messages        = FALSE;
 gboolean             restore_session         = FALSE;
+gboolean             use_mmx                 = TRUE;
 GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
 gchar               *alternate_gimprc        = NULL;
 gchar               *alternate_system_gimprc = NULL;
@@ -252,6 +253,11 @@ main (int    argc,
 	  use_shm = FALSE;
  	  argv[i] = NULL;
 	}
+      else if (strcmp (argv[i], "--no-mmx") == 0)
+	{
+	  use_mmx = FALSE;
+ 	  argv[i] = NULL;
+	}
       else if (strcmp (argv[i], "--debug-handlers") == 0)
 	{
 	  use_debug_handler = TRUE;
@@ -339,7 +345,7 @@ main (int    argc,
       g_print (_("  -v, --version            Output version information.\n"));
       g_print (_("  --verbose                Show startup messages.\n"));	  
       g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
-      g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
+      g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
       g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
       g_print (_("  --display <display>      Use the designated X display.\n"));
       g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));

@@ -35,13 +35,15 @@
  
 #include "base-types.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "base.h"
 #include "base-config.h"
 #include "detect-mmx.h"
 #include "temp-buf.h"
 #include "tile-swap.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "appenv.h"
 
 
 static void   toast_old_temp_files (void);
@@ -56,7 +58,7 @@ base_init (void)
   gchar *path;
 
 #ifdef HAVE_ASM_MMX
-  use_mmx = (intel_cpu_features() & (1 << 23)) ? 1 : 0;
+  use_mmx = use_mmx && (intel_cpu_features() & (1 << 23)) ? 1 : 0;
   g_print ("using MMX: %s\n", use_mmx ? "yes" : "no");
 #endif  
 

@@ -20,6 +20,8 @@
 #define __BASE_TYPES_H__
 
 
+#include "libgimpbase/gimpbasetypes.h"
+
 #include "paint-funcs/paint-funcs-types.h"
 
 #include "base/base-enums.h"
