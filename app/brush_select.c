@@ -20,6 +20,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "brush_scale.h"
+#include "gimpbrushpixmap.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
@@ -213,7 +214,7 @@ brush_select_new (gchar   *title,
   bsp->cell_width = MIN_CELL_SIZE;
   bsp->cell_height = MIN_CELL_SIZE;
 
-  bsp->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  bsp->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (bsp->preview),
 		    MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
   gtk_widget_set_usize (bsp->preview,
@@ -707,7 +708,7 @@ brush_popup_timeout (gpointer data)
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
       gtk_container_add (GTK_CONTAINER (bsp->brush_popup), frame);
       gtk_widget_show (frame);
-      bsp->brush_preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+      bsp->brush_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_container_add (GTK_CONTAINER (frame), bsp->brush_preview);
       gtk_widget_show (bsp->brush_preview);
     }
@@ -732,22 +733,36 @@ brush_popup_timeout (gpointer data)
   gtk_widget_popup (bsp->brush_popup, x, y);
 
   /*  Draw the brush  */
-  buf = g_new (gchar, brush->mask->width);
-  src = (gchar *) temp_buf_data (brush->mask);
-  for (y = 0; y < brush->mask->height; y++)
+  if (GIMP_IS_BRUSH_PIXMAP (brush)) 
     {
-      /*  Invert the mask for display.  We're doing this because
-       *  a value of 255 in the  mask means it is full intensity.
-       *  However, it makes more sense for full intensity to show
-       *  up as black in this brush preview window...
-       */
-      for (x = 0; x < brush->mask->width; x++)
-	buf[x] = 255 - src[x];
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)buf,
-			    0, y, brush->mask->width);
-      src += brush->mask->width;
+      GimpBrushPixmap *pixmapbrush = GIMP_BRUSH_PIXMAP(brush);
+      src = (gchar *) temp_buf_data (pixmapbrush->pixmap_mask);
+      for (y = 0; y < brush->mask->height; y++)
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)src,
+				0, y, brush->mask->width);
+	  src += brush->mask->width * 3;
+	}
     }
-  g_free (buf);
+  else 
+    {
+      buf = g_new (gchar, 3*brush->mask->width);
+      src = (gchar *) temp_buf_data (brush->mask);
+      for (y = 0; y < brush->mask->height; y++)
+	{
+	  /*  Invert the mask for display.  We're doing this because
+	   *  a value of 255 in the  mask means it is full intensity.
+	   *  However, it makes more sense for full intensity to show
+	   *  up as black in this brush preview window...
+	   */
+	  for (x = 0; x < brush->mask->width; x++)
+	    buf[3*x] = buf[3*x+1] = buf[3*x+2] = 255 - src[x];
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)buf,
+				0, y, brush->mask->width);
+	  src += brush->mask->width;
+	}
+      g_free (buf);
+    }
 
   /*  Draw the brush preview  */
   gtk_widget_draw (bsp->brush_preview, NULL);
@@ -802,12 +817,11 @@ display_brush (BrushSelectP bsp,
   int ystart;
   int i, j;
 
-  buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
-
   brush_buf = brush->mask;
 
-  if (brush_buf->width > bsp->cell_width || 
-      brush_buf->height > bsp->cell_height)
+  if (!GIMP_IS_BRUSH_PIXMAP(brush) && /* can't scale color brushes yet */
+      (brush_buf->width > bsp->cell_width || 
+       brush_buf->height > bsp->cell_height))
     {
       double ratio_x = (double)brush_buf->width / bsp->cell_width;
       double ratio_y = (double)brush_buf->height / bsp->cell_height;
@@ -837,25 +851,44 @@ display_brush (BrushSelectP bsp,
   yend = BOUNDS (offset_y + height, 0, bsp->preview->allocation.height);
 
   /*  Get the pointer into the brush mask data  */
-  src = mask_buf_data (brush_buf) + (ystart - offset_y) * brush_buf->width;
-
-  for (i = ystart; i < yend; i++)
+  if (GIMP_IS_BRUSH_PIXMAP (brush)) 
     {
-      /*  Invert the mask for display.  We're doing this because
-       *  a value of 255 in the  mask means it is full intensity.
-       *  However, it makes more sense for full intensity to show
-       *  up as black in this brush preview window...
-       */
-      s = src;
-      b = buf;
-      for (j = 0; j < width; j++)
-	*b++ = 255 - *s++;
-
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, offset_x, i, width);
-
-      src += brush_buf->width;
+      GimpBrushPixmap *pixmapbrush = GIMP_BRUSH_PIXMAP(brush);
+      src = (gchar *) temp_buf_data (pixmapbrush->pixmap_mask) + (ystart - offset_y) * brush->mask->width * 3;
+      for (i = ystart; i < yend; i++)
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), src,
+				offset_x, i, width);
+	  src += brush->mask->width * 3;
+	}
     }
-  g_free (buf);
+  else 
+    {
+      buf = (unsigned char *) g_malloc (3 * sizeof (char) * bsp->cell_width);
+      src = mask_buf_data (brush_buf) + (ystart - offset_y) * brush_buf->width;
+
+      for (i = ystart; i < yend; i++)
+	{
+	  /*  Invert the mask for display.  We're doing this because
+	   *  a value of 255 in the  mask means it is full intensity.
+	   *  However, it makes more sense for full intensity to show
+	   *  up as black in this brush preview window...
+	   */
+	  s = src;
+	  b = buf;
+	  for (j = 0; j < width; j++) 
+	    {
+	      int k = 255 - *s++;
+	      *b++ = k;
+	      *b++ = k;
+	      *b++ = k;
+	    }
+	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+				offset_x, i, width);
+	  src += brush_buf->width;
+	}
+      g_free (buf);
+    }
 
   if (scale)
     {
@@ -884,10 +917,10 @@ display_setup (BrushSelectP bsp)
   int i;
 
   buf =
-    (unsigned char *) g_malloc (sizeof (char) * bsp->preview->allocation.width);
+    (unsigned char *) g_malloc (sizeof (char) * 3 *bsp->preview->allocation.width);
 
   /*  Set the buffer to white  */
-  memset (buf, 255, bsp->preview->allocation.width);
+  memset (buf, 255, bsp->preview->allocation.width*3);
 
   /*  Set the image buffer to white  */
   for (i = 0; i < bsp->preview->allocation.height; i++)
@@ -941,7 +974,7 @@ brush_select_show_selected (BrushSelectP bsp,
   int offset_x, offset_y;
   int i;
 
-  buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
+  buf = (unsigned char *) g_malloc (sizeof (char) * 3 * bsp->cell_width);
 
   if (bsp->old_col != col || bsp->old_row != row)
     {
@@ -953,7 +986,7 @@ brush_select_show_selected (BrushSelectP bsp,
       yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
       /*  set the buf to white  */
-      memset (buf, 255, bsp->cell_width);
+      memset (buf, 255, 3*bsp->cell_width);
 
       for (i = ystart; i < yend; i++)
 	{
@@ -987,7 +1020,7 @@ brush_select_show_selected (BrushSelectP bsp,
   yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
   /*  set the buf to black  */
-  memset (buf, 0, bsp->cell_width);
+  memset (buf, 0, bsp->cell_width * 3);
 
   for (i = ystart; i < yend; i++)
     {

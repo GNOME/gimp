@@ -1,3 +1,10 @@
+1999-08-13  Kelly Martin  <kelly@poverty.bloomington.in.us>
+
+	* app/brush_select.c: Color brushes now appear in the brush
+	selector in color.  Scaling is disabled for color brushes because
+	I can't figure out how to do it just now.  Still need to fix the
+	toolbox to do this too.
+
 Thu Aug 12 19:16:58 1999 Adrian Likins <alikins@redhat.com>
 
 	* app/pixmapbrush.c: added a fix from Xach "I dont code."
