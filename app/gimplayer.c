@@ -381,6 +381,7 @@ layer_copy (Layer    *layer,
     }
 
   /* copy the parasites */
+  gtk_object_unref (GTK_OBJECT (GIMP_DRAWABLE (new_layer)->parasites));
   GIMP_DRAWABLE (new_layer)->parasites 
     = parasite_list_copy (GIMP_DRAWABLE (layer)->parasites);
 

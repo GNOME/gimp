@@ -485,6 +485,7 @@ save_gimprc_strings (gchar *token,
   gchar *prev_line;
   gchar *error_msg;
   gboolean found = FALSE;
+  gchar *personal_gimprc;
   
   UnknownToken *ut;    /* variables to modify unknown_tokens */
   UnknownToken *tmp;
@@ -496,13 +497,16 @@ save_gimprc_strings (gchar *token,
   
   /* get the name of the backup file, and the file pointers.  'name'
      is reused in another context later, disregard it here */
-  error_msg = open_backup_file (gimp_personal_rc_file ("gimprc"),
+  personal_gimprc = gimp_personal_rc_file ("gimprc");
+  error_msg = open_backup_file (personal_gimprc,
 				gimp_system_rc_file (),
 				&name, &fp_new, &fp_old);
+  g_free (personal_gimprc);
 
   if (error_msg != NULL)
     {
       g_message (error_msg);
+      g_free (error_msg);
       return;
     }
 
@@ -621,18 +625,22 @@ save_gimprc (GList **updated_options,
   char *cur_line;
   char *prev_line;
   char *str;
-  char *error_msg;
+  gchar *error_msg;
+  gchar *personal_gimprc;
 
   g_assert(updated_options != NULL);
   g_assert(conflicting_options != NULL);
 
-  error_msg = open_backup_file (gimp_personal_rc_file ("gimprc"),
+  personal_gimprc = gimp_personal_rc_file ("gimprc");
+  error_msg = open_backup_file (personal_gimprc,
 				gimp_system_rc_file (),
 				&name, &fp_new, &fp_old);
+  g_free (personal_gimprc);
 
   if (error_msg != NULL)
     {
       g_message (error_msg);
+      g_free (error_msg);
       return;
     }
 

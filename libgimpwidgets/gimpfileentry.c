@@ -234,7 +234,7 @@ gimp_file_selection_set_filename (GimpFileSelection *gfs,
   g_return_if_fail (gfs != NULL);
   g_return_if_fail (GIMP_IS_FILE_SELECTION (gfs));
 
-  gtk_entry_set_text (GTK_ENTRY (gfs->entry), g_strdup (filename));
+  gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename);
 
   /*  update everything
    */
@@ -411,4 +411,5 @@ gimp_file_selection_check_filename (GimpFileSelection *gfs)
       gtk_pixmap_set (GTK_PIXMAP (gfs->file_exists),
 		      gfs->no_pixmap, gfs->no_mask);
     }
+  g_free (filename);
 }

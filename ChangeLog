@@ -1,3 +1,12 @@
+Sat Nov  6 19:16:57 *ET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/about_dialog.c
+	* app/gimpobject.c
+	* app/gimprc.c
+	* app/layer.c
+	* app/preferences_dialog.c
+	* libgimp/gimpfileselection.c: plugged more mem-leaks	
+
 Sat Nov  6 15:28:11 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.h: Reverted my latest change. It disturbed image 

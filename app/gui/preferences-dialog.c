@@ -822,9 +822,12 @@ file_prefs_filename_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   gchar **val;
+  gchar *filename;
 
   val = data;
-  file_prefs_strset (val, gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget)));
+  filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
+  file_prefs_strset (val, filename);
+  g_free (filename);
 }
 
 static void
@@ -832,9 +835,12 @@ file_prefs_path_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   gchar **val;
+  gchar *path;
 
   val = data;
-  file_prefs_strset (val, gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget)));
+  path =  gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget));
+  file_prefs_strset (val, path);
+  g_free (path);
 }
 
 static void
@@ -1140,7 +1146,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_monitor_yres = monitor_yres;
   old_using_xserver_resolution = using_xserver_resolution;
   old_num_processors = num_processors;
-  old_image_title_format = file_prefs_strdup (image_title_format);	
   old_global_paint_options = global_paint_options;
   old_max_new_image_size = max_new_image_size;
   old_thumbnail_mode = thumbnail_mode;
@@ -1148,6 +1153,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_trust_dirty_flag = trust_dirty_flag;
   old_use_help = use_help;
 
+  file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
   file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
