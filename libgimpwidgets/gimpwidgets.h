@@ -165,6 +165,7 @@ GtkObject * gimp_scale_entry_new       (GtkTable           *table,
                                         const gchar        *tooltip,
                                         const gchar        *help_id);
 
+
 GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
                                         gint                column,
                                         gint                row,
@@ -180,8 +181,12 @@ GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
                                         const gchar        *tooltip,
                                         const gchar        *help_id);
 
-void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
-                                        gboolean            sensitive);
+void     gimp_scale_entry_set_sensitive   (GtkObject       *adjustment,
+                                           gboolean         sensitive);
+
+void     gimp_scale_entry_set_logarithmic (GtkObject       *adjustment,
+                                           gboolean         logarithmic);
+gboolean gimp_scale_entry_get_logarithmic (GtkObject       *adjustment);
 
 
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \

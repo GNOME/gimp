@@ -153,6 +153,8 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
+  gimp_scale_entry_set_logarithmic (GTK_OBJECT (editor->radius_data), TRUE);
+
   g_signal_connect (editor->radius_data, "value_changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);

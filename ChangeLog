@@ -1,5 +1,14 @@
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.[ch]: applied a patch from Joao
+	S. O. Bueno which adds an API that allows to make the scale widget
+	of a GimpScaleEntry behave logarithmic. Fixes bug #149420.
+
+	* app/widgets/gimpbrusheditor.c: use the new functionality for the
+	radius control.
+
+2004-08-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/compose.c (compose_dialog): applied patch from
 	Markus Triska that improves which layers are choosen by
 	default (bug #148172).

@@ -469,6 +469,51 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
 				     adjustment);
 }
 
+static void
+gimp_scale_entry_exp_adjustment_callback (GtkAdjustment *, GtkAdjustment *);
+
+static void
+gimp_scale_entry_log_adjustment_callback (GtkAdjustment *adjustment,
+                                          GtkAdjustment *other_adj)
+{
+  gdouble value;
+
+  g_signal_handlers_block_by_func (other_adj,
+                                   gimp_scale_entry_exp_adjustment_callback,
+                                   adjustment);
+  if (adjustment->lower <= 0.0)
+    value = log (adjustment->value - adjustment->lower + 0.1);
+  else
+    value = log (adjustment->value);
+
+  gtk_adjustment_set_value (other_adj, value);
+
+  g_signal_handlers_unblock_by_func (other_adj,
+                                     gimp_scale_entry_exp_adjustment_callback,
+                                     adjustment);
+}
+
+static void
+gimp_scale_entry_exp_adjustment_callback (GtkAdjustment *adjustment,
+                                          GtkAdjustment *other_adj)
+{
+  gdouble value;
+
+  g_signal_handlers_block_by_func (other_adj,
+                                   gimp_scale_entry_log_adjustment_callback,
+                                   adjustment);
+
+  value = exp (adjustment->value);
+  if (other_adj->lower <= 0.0)
+    value += other_adj->lower  - 0.1;
+
+  gtk_adjustment_set_value (other_adj, value);
+
+  g_signal_handlers_unblock_by_func (other_adj,
+                                     gimp_scale_entry_log_adjustment_callback,
+                                     adjustment);
+}
+
 static GtkObject *
 gimp_scale_entry_new_internal (gboolean     color_scale,
                                GtkTable    *table,
@@ -520,8 +565,8 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   gtk_widget_show (label);
 
   if (! constrain &&
-      unconstrained_lower <= lower &&
-      unconstrained_upper >= upper)
+           unconstrained_lower <= lower &&
+           unconstrained_upper >= upper)
     {
       GtkObject *constrained_adj;
 
@@ -607,6 +652,8 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (return_adj), "label",      label);
   g_object_set_data (G_OBJECT (return_adj), "scale",      scale);
   g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
+
+
 
   return return_adj;
 }
@@ -718,6 +765,148 @@ gimp_color_scale_entry_new (GtkTable    *table,
                                         digits,
                                         TRUE, 0.0, 0.0,
                                         tooltip, help_id);
+}
+
+/**
+ * gimp_scale_entry_set_logarithmic:
+ * @adjustment:  a  #GtkAdjustment as returned by gimp_scale_entry_new()
+ * @logarithmic: a boolean value to set or reset logarithmic behaviour
+ *               of the scale widget
+ *
+ * Sets whether the scale_entry's scale widget will behave in a linear
+ * or logharithmic fashion. Useful when an entry has to attend large
+ * ranges, but smaller selections on that range require a finer
+ * adjustment.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
+                                  gboolean   logarithmic)
+{
+  GtkAdjustment *adj;
+  GtkAdjustment *scale_adj;
+  gdouble        correction;
+  gdouble        log_value, log_lower, log_upper;
+  gdouble        log_step_increment, log_page_increment;
+
+  g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment));
+
+  adj       = GTK_ADJUSTMENT (adjustment);
+  scale_adj = GIMP_SCALE_ENTRY_SCALE_ADJ (adjustment);
+
+  if (logarithmic)
+    {
+      if (gimp_scale_entry_get_logarithmic (adjustment))
+        return;
+
+      correction = scale_adj->lower > 0 ? 0 : 0.1 + - scale_adj->lower;
+
+      log_value = log (scale_adj->value + correction);
+      log_lower = log (scale_adj->lower + correction);
+      log_upper = log (scale_adj->upper + correction);
+      log_step_increment = (log_upper - log_lower) / ((scale_adj->upper -
+                                                       scale_adj->lower) /
+                                                      scale_adj->step_increment);
+      log_page_increment = (log_upper - log_lower) / ((scale_adj->upper -
+                                                       scale_adj->lower) /
+                                                      scale_adj->page_increment);
+
+      if (scale_adj == adj)
+        {
+          GtkObject *new_adj;
+          gdouble    lower;
+          gdouble    upper;
+
+          lower = scale_adj->lower;
+          upper = scale_adj->upper;
+          new_adj = gtk_adjustment_new (scale_adj->value,
+                                        scale_adj->lower,
+                                        scale_adj->upper,
+                                        scale_adj->step_increment,
+                                        scale_adj->page_increment,
+                                        0.0);
+          gtk_range_set_adjustment (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
+                                    GTK_ADJUSTMENT (new_adj));
+
+          scale_adj = (GtkAdjustment *) new_adj;
+         }
+       else
+         {
+           g_signal_handlers_disconnect_by_func (adj,
+                                                 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+                                                 scale_adj);
+           g_signal_handlers_disconnect_by_func (adj,
+                                                 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+                                                 adjustment);
+         }
+
+       scale_adj->value          = log_value;
+       scale_adj->lower          = log_lower;
+       scale_adj->upper          = log_upper;
+       scale_adj->step_increment = log_step_increment;
+       scale_adj->page_increment = log_page_increment;
+
+       g_signal_connect (scale_adj, "value_changed",
+                         G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
+                         adj);
+
+       g_signal_connect (adj, "value_changed",
+                         G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
+                         scale_adj);
+    }
+  else
+    {
+      gdouble lower, upper;
+
+      if (! gimp_scale_entry_get_logarithmic (adjustment))
+        return;
+
+      g_signal_handlers_disconnect_by_func (adj,
+                                            G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
+                                            scale_adj);
+      g_signal_handlers_disconnect_by_func (scale_adj,
+                                            G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
+                                            adj);
+
+      lower = exp (scale_adj->lower);
+      upper = exp (scale_adj->upper);
+      if (adj->lower <= 0.0)
+        {
+          lower += - 0.1  + adj->lower;
+          upper += - 0.1  + adj->lower;
+        }
+
+      scale_adj->value          = adj->value;
+      scale_adj->lower          = lower;
+      scale_adj->upper          = upper;
+      scale_adj->step_increment = adj->step_increment;
+      scale_adj->page_increment = adj->page_increment;
+
+      g_signal_connect (scale_adj, "value_changed",
+                        G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+                        adj);
+
+      g_signal_connect (adj, "value_changed",
+                        G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
+                        scale_adj);
+    }
+}
+
+/**
+ * gimp_scale_entry_get_logarithmic:
+ * @adjustment: a  #GtkAdjustment as returned by gimp_scale_entry_new()
+ *
+ * Return value: %TRUE if the the entry's scale widget will behave in
+ *               logharithmic fashion, %FALSE for linear behaviour.
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
+{
+  return GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
+                                             "logarithmic"));
 }
 
 /**
