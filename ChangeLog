@@ -1,5 +1,13 @@
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: use a UI manager created
+	toolbar instead of two rows of buttons. Added a "dummy-menubar" so
+	the popup menu shows shortcuts again. Removed "Preview" and "Auto"
+	buttons since the preview doesn't block the GUI and can always be
+	updated.
+
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: added new function
 	gimp_statusbar_push_length(), which works exactly like
 	push_coords() but takes only one value plus a GimpOrientationType
