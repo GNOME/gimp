@@ -545,20 +545,15 @@ gimp_list_item_button_state_changed (GtkWidget    *widget,
        */
       if (GTK_WIDGET_DRAWABLE (list_item))
 	{
-	  GdkEventExpose event;
+	  GdkRectangle rect;
 
-	  event.type        = GDK_EXPOSE;
-	  event.send_event  = TRUE;
-	  event.window      = list_item->window;
-	  event.area.x      = widget->allocation.x;
-	  event.area.y      = widget->allocation.y;
-	  event.area.width  = widget->allocation.width;
-	  event.area.height = widget->allocation.height;
-	  event.count       = 0;
+	  rect.x      = widget->allocation.x;
+	  rect.y      = widget->allocation.y;
+	  rect.width  = widget->allocation.width;
+	  rect.height = widget->allocation.height;
 
-	  gdk_window_ref (event.window);
-	  gtk_widget_event (list_item, (GdkEvent*) &event);
-	  gdk_window_unref (event.window);
+	  gdk_window_invalidate_rect (list_item->window, &rect, FALSE);
+	  gdk_window_process_updates (list_item->window, FALSE);
 	}
     }
 }

@@ -41,7 +41,6 @@
 #include "devices.h"
 #include "dialogs.h"
 #include "docindex.h"
-#include "errorconsole.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
 #include "gradient-select.h"
@@ -354,7 +353,6 @@ gui_exit (Gimp *gimp)
 
   /*  handle this in the dialog factory:  */
   document_index_free ();
-  error_console_free ();
   tool_options_dialog_free ();
   toolbox_free ();
 

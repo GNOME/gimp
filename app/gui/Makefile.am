@@ -36,6 +36,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	dialogs-constructors.h		\
 	edit-commands.c			\
 	edit-commands.h			\
+	error-console-dialog.c		\
+	error-console-dialog.h		\
 	file-commands.c			\
 	file-commands.h			\
 	file-dialog-utils.c		\

@@ -124,10 +124,10 @@ static guint preview_signals[LAST_SIGNAL] = { 0 };
 static GtkPreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {

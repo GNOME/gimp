@@ -50,12 +50,12 @@ static guint button_signals[LAST_SIGNAL] = { 0 };
 static GtkButtonClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_button_get_type (void)
 {
-  static guint button_type = 0;
+  static GType button_type = 0;
 
-  if (!button_type)
+  if (! button_type)
     {
       GtkTypeInfo button_info =
       {
@@ -127,17 +127,20 @@ static gboolean
 gimp_button_button_press (GtkWidget      *widget,
 			  GdkEventButton *bevent)
 {
-  g_return_val_if_fail (widget != NULL, FALSE);
+  GimpButton *button;
+
   g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
   g_return_val_if_fail (bevent != NULL, FALSE);
 
+  button = GIMP_BUTTON (widget);
+
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      GimpButton *button;
-
-      button = GIMP_BUTTON (widget);
-
       button->press_state = bevent->state;
+    }
+  else
+    {
+      button->press_state = 0;
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
@@ -146,15 +149,13 @@ gimp_button_button_press (GtkWidget      *widget,
   return TRUE;
 }
 
-static gint
+static gboolean
 gimp_button_button_release (GtkWidget      *widget,
 			    GdkEventButton *bevent)
 {
   GtkButton *button;
   gboolean   extended_clicked = FALSE;
-  gboolean   retval           = TRUE;
 
-  g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
   g_return_val_if_fail (bevent != NULL, FALSE);
 
@@ -180,8 +181,7 @@ gimp_button_button_release (GtkWidget      *widget,
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
-    retval = GTK_WIDGET_CLASS (parent_class)->button_release_event (widget,
-								    bevent);
+    GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, bevent);
 
   if (extended_clicked)
     {
@@ -195,5 +195,5 @@ gimp_button_button_release (GtkWidget      *widget,
       gtk_widget_draw (widget, NULL);
    }
 
-  return retval;
+  return TRUE;
 }

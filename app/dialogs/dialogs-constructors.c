@@ -57,11 +57,8 @@
 #include "color-area.h"
 #include "colormap-dialog.h"
 #include "dialogs.h"
-#include "devices.h"
 #include "dialogs-constructors.h"
-#include "docindex.h"
-#include "errorconsole.h"
-#include "gdisplay.h"
+#include "error-console-dialog.h"
 #include "gradient-editor.h"
 #include "gradient-select.h"
 #include "gradients-commands.h"
@@ -79,6 +76,8 @@
 #include "toolbox.h"
 
 #include "app_procs.h"
+#include "devices.h"
+#include "docindex.h"
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "module_db.h"
@@ -205,13 +204,6 @@ dialogs_palette_select_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
   return palette_dialog_create ();
-}
-
-GtkWidget *
-dialogs_error_console_get (GimpDialogFactory *factory,
-			   GimpContext       *context)
-{
-  return error_console_create ();
 }
 
 GtkWidget *
@@ -705,9 +697,9 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
 
   view = paths_dialog_create ();
 
-  g_signal_connect (G_OBJECT (view), "destroy",
-		    G_CALLBACK (gtk_widget_destroyed),
-		    &view);
+  g_object_weak_ref (G_OBJECT (view),
+		     (GDestroyNotify) gtk_widget_destroyed,
+		     &view);
 
   dockable = dialogs_dockable_new (view,
 				   "Path List", "Paths",
@@ -741,6 +733,34 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
   g_signal_connect (G_OBJECT (view), "selected",
 		    G_CALLBACK (dialogs_indexed_palette_selected),
 		    dockable);
+
+  return dockable;
+}
+
+
+/*  misc dockables  */
+
+GtkWidget *
+dialogs_error_console_get (GimpDialogFactory *factory,
+			   GimpContext       *context)
+{
+  static GtkWidget *view = NULL;
+
+  GtkWidget *dockable;
+
+  if (view)
+    return NULL;
+
+  view = error_console_create ();
+
+  g_object_weak_ref (G_OBJECT (view),
+		     (GDestroyNotify) gtk_widget_destroyed,
+		     &view);
+
+  dockable = dialogs_dockable_new (view,
+				   "Error Console", "Errors",
+				   NULL,
+				   NULL);
 
   return dockable;
 }

@@ -564,7 +564,7 @@ gimp_container_view_add_button (GimpContainerView *view,
 
   if (extended_callback)
     g_signal_connect (G_OBJECT (button), "extended_clicked",
-		      callback,
+		      extended_callback,
 		      callback_data);
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);

@@ -244,8 +244,11 @@ static void
 gimp_layer_list_view_style_set (GtkWidget *widget,
 				GtkStyle  *prev_style)
 {
-  gint content_spacing;
-  gint button_spacing;
+  GimpLayerListView *layer_view;
+  gint               content_spacing;
+  gint               button_spacing;
+
+  layer_view = GIMP_LAYER_LIST_VIEW (widget);
 
   gtk_widget_style_get (widget,
                         "content_spacing",
@@ -254,9 +257,7 @@ gimp_layer_list_view_style_set (GtkWidget *widget,
                         &button_spacing,
 			NULL);
 
-#ifdef __GNUC__
-#warning TODO: gimp_layer_list_view_style_set()
-#endif
+  gtk_box_set_spacing (GTK_BOX (layer_view->options_box), content_spacing);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -313,9 +314,6 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
   gboolean              options_sensitive   = FALSE;
   gboolean              anchor_sensitive    = FALSE;
   gboolean              raise_sensitive     = FALSE;
-  gboolean              lower_sensitive     = FALSE;
-  gboolean              duplicate_sensitive = FALSE;
-  gboolean              edit_sensitive      = FALSE;
 
   list_view     = GIMP_LAYER_LIST_VIEW (view);
   drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
@@ -334,13 +332,13 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
       if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
 	{
 	  anchor_sensitive = TRUE;
+
+	  gtk_widget_set_sensitive (drawable_view->lower_button,     FALSE);
+	  gtk_widget_set_sensitive (drawable_view->duplicate_button, FALSE);
+	  gtk_widget_set_sensitive (drawable_view->edit_button,      FALSE);
 	}
       else
 	{
-	  lower_sensitive     = TRUE;
-	  duplicate_sensitive = TRUE;
-	  edit_sensitive      = TRUE;
-
 	  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
 	      gimp_container_get_child_index (view->container,
 					      GIMP_OBJECT (item)))
@@ -350,12 +348,9 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 	}
     }
 
-  gtk_widget_set_sensitive (list_view->options_box,          options_sensitive);
-  gtk_widget_set_sensitive (drawable_view->raise_button,     raise_sensitive);
-  gtk_widget_set_sensitive (drawable_view->lower_button,     lower_sensitive);
-  gtk_widget_set_sensitive (drawable_view->duplicate_button, duplicate_sensitive);
-  gtk_widget_set_sensitive (drawable_view->edit_button,      edit_sensitive);
-  gtk_widget_set_sensitive (list_view->anchor_button,        anchor_sensitive);
+  gtk_widget_set_sensitive (list_view->options_box,      options_sensitive);
+  gtk_widget_set_sensitive (drawable_view->raise_button, raise_sensitive);
+  gtk_widget_set_sensitive (list_view->anchor_button,    anchor_sensitive);
 }
 
 

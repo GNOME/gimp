@@ -1,3 +1,33 @@
+2001-08-07  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpbutton.[ch]: cleanup.
+
+	* app/Makefile.am
+	* app/errorconsole.[ch]: removed...
+
+	* app/gui/Makefile.am
+	* app/gui/error-console-dialog.[ch]: ...added here. Lots of cleanup,
+	create a vbox instead of a dialog.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c: added a dockable for the error console.
+
+	* app/errors.c
+	* app/gui/gui.c
+	* app/gui/menus.c: changed accordingly.
+
+	* app/widgets/gimpcontainerview.c: conntect "extended_clicked" to
+	the "extended_clicked" callback, not "clicked".
+
+	* app/widgets/gimplayerlistview.c: set the layer option box'
+	spacing in "style_set".
+
+	* app/widgets/gimplistitem.c: argh.
+
+	* themes/Default/gtkrc: changed the default theme to set a smaller
+	font only for the dockable because that's where saving screen
+	estate really makes sense. May need some further tweaking.
+
 2001-08-06  Daniel Egger  <egger@suse.de>
 
 	* autogen.sh: Fix error message to reflect that one needs

@@ -16,8 +16,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	devices.h		\
 	docindex.c		\
 	docindex.h		\
-	errorconsole.c		\
-	errorconsole.h		\
 	gimpprogress.c		\
 	gimpprogress.h		\
 	nav_window.c		\

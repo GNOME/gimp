@@ -45,7 +45,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:palette-select-dialog",  dialogs_palette_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:error-console-dialog",   dialogs_error_console_get,   TRUE,  TRUE,  TRUE,  TRUE  },
   { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE,  TRUE,  TRUE,  TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE, FALSE, TRUE  },
@@ -83,7 +82,9 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:layer-list",      dialogs_layer_list_view_new,    FALSE, FALSE, FALSE, TRUE },
   { "gimp:channel-list",    dialogs_channel_list_view_new,  FALSE, FALSE, FALSE, TRUE },
   { "gimp:path-list",       dialogs_path_list_view_new,     TRUE,  FALSE, FALSE, TRUE },
-  { "gimp:indexed-palette", dialogs_indexed_palette_new,    FALSE, FALSE, FALSE, TRUE }
+  { "gimp:indexed-palette", dialogs_indexed_palette_new,    FALSE, FALSE, FALSE, TRUE },
+
+  { "gimp:error-console",   dialogs_error_console_get,      TRUE,  FALSE, FALSE, TRUE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));

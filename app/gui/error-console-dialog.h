@@ -19,14 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ERROR_CONSOLE_H__
-#define __ERROR_CONSOLE_H__
+#ifndef __ERROR_CONSOLE_DIALOG_H__
+#define __ERROR_CONSOLE_DIALOG_H__
 
 
 void        error_console_add    (const gchar *errormsg);
 
 GtkWidget * error_console_create (void);
-void        error_console_free   (void);
 
 
-#endif /* __ERROR_CONSOLE_H__ */
+#endif /* __ERROR_CONSOLE_DIALOG_H__ */

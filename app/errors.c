@@ -28,12 +28,15 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gui/dialogs.h"
+#include "gui/error-console-dialog.h"
+
 #include "appenv.h"
-#include "errorconsole.h"
 #include "errors.h"
 
 #ifdef G_OS_WIN32
@@ -56,6 +59,8 @@ gimp_message_log_func (const gchar    *log_domain,
 	  break;
 
 	case ERROR_CONSOLE:
+	  gimp_dialog_factory_dialog_raise (global_dock_factory,
+					    "gimp:error-console");
 	  error_console_add ((gchar *) message);
 	  break;
 

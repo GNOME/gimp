@@ -237,8 +237,8 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "gimp:document-index-dialog",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:error-console-dialog",
+      dialogs_create_dockable_cmd_callback, 0 },
+    "gimp:error-console",
     "file/dialogs/error_console.html", NULL },
 #ifdef DISPLAY_FILTERS
   { { N_("/File/Dialogs/Display Filters..."), NULL,
@@ -664,7 +664,8 @@ static GimpItemFactoryEntry image_entries[] =
     NULL,
     "image/dialogs/scale_image.html", NULL },
   { { N_("/Image/Duplicate"), "<control>D",
-      image_duplicate_cmd_callback, 0 },
+      image_duplicate_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL,
     "image/duplicate.html", NULL },
 
@@ -838,8 +839,8 @@ static GimpItemFactoryEntry image_entries[] =
     "gimp:document-index-dialog",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:error-console-dialog",
+      dialogs_create_dockable_cmd_callback, 0 },
+    "gimp:error-console",
     "dialogs/error_console.html", NULL },
 #ifdef DISPLAY_FILTERS
   { { N_("/Dialogs/Display Filters..."), NULL,
@@ -1218,6 +1219,10 @@ static GimpItemFactoryEntry dialogs_entries[] =
   { { N_("/Add Tab/Indexed Palette..."), NULL,
       dialogs_add_tab_cmd_callback, 0 },
     "gimp:indexed-palette",
+    NULL, NULL },
+  { { N_("/Add Tab/Error Console..."), NULL,
+      dialogs_add_tab_cmd_callback, 0 },
+    "gimp:error-console",
     NULL, NULL },
 
   SEPARATOR ("/Add Tab/---"),

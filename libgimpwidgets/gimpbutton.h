@@ -55,7 +55,9 @@ struct _GimpButtonClass
 			     guint       modifier_state);
 };
 
-GtkType     gimp_button_get_type (void);
+
+GType       gimp_button_get_type (void);
+
 GtkWidget * gimp_button_new      (void);
 
 
