@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-03-12 10:00+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -15,36 +15,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu 控制台模式仅允许交互式激活"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu 控制台"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD 输出"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "当前命令"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "浏览..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "无法在 SIOD 输出管道中打开一个流"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "无法打开 SIOD 输出管道"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -159,11 +151,11 @@ msgstr "<Toolbox>/扩展(X)/Script-Fu/徽标/霓虹灯(_E)..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "重新读入所有可用的脚本"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/扩展(X)/Script-Fu/刷新脚本(_R)"
 
@@ -823,7 +815,7 @@ msgstr "<Image>/Script-Fu/动画/混和(_B)..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "间隔帧数"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1596,13 +1588,13 @@ msgstr "<Toolbox>/扩展(X)/Script-Fu/徽标/光泽(_S)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "混和渐变(轮廓)"
+msgid "Blend gradient (Text)"
+msgstr "混和渐变(文字)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "混和渐变(文字)"
+msgid "Blend gradient (outline)"
+msgstr "混和渐变(轮廓)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2670,6 +2662,16 @@ msgstr "突出显示 Y 偏移"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "突出显示不透明度"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "无法在 SIOD 输出管道中打开一个流"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "无法打开 SIOD 输出管道"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "混和渐变(文字)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/扩展(X)/Script-Fu/Script-Fu 控制台(_C)"

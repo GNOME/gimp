@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:17+0200\n"
+"POT-Creation-Date: 2004-07-20 01:15+0200\n"
 "PO-Revision-Date: 2004-06-24 00:12+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -125,7 +125,8 @@ msgstr "%s может обработать только RGB или индекс�
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s может обработать только изображения в оттенках серого или индексированные"
+msgstr ""
+"%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:346
 #, c-format
@@ -196,9 +197,9 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "Без"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -267,33 +268,33 @@ msgstr "%d ГБ"
 msgid "Loading module: '%s'\n"
 msgstr "Загрузка модуля: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
-#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
-#: libgimpmodule/gimpmodule.c:450
+#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
+#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
+#: libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 "Ошибка загрузки модуля \"%s\":\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:283
+#: libgimpmodule/gimpmodule.c:282
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Пропуск модуля: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:424
+#: libgimpmodule/gimpmodule.c:422
 msgid "Module error"
 msgstr "Ошибка модуля"
 
-#: libgimpmodule/gimpmodule.c:425
+#: libgimpmodule/gimpmodule.c:423
 msgid "Loaded"
 msgstr "Загружен"
 
-#: libgimpmodule/gimpmodule.c:426
+#: libgimpmodule/gimpmodule.c:424
 msgid "Load failed"
 msgstr "Сбой при загрузке"
 
-#: libgimpmodule/gimpmodule.c:427
+#: libgimpmodule/gimpmodule.c:425
 msgid "Not loaded"
 msgstr "Не загружен"
 
@@ -318,72 +319,72 @@ msgstr "/Чёрный"
 msgid "/_White"
 msgstr "/Белый"
 
-#: libgimpwidgets/gimpcolorscales.c:142
+#: libgimpwidgets/gimpcolorscales.c:134
 msgid "Scales"
 msgstr "Шкала"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorscales.c:162
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "Тон"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Насыщенность"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "Яркость"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "Красный"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "Зелёный"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "Синий"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "Альфа"
 
-#: libgimpwidgets/gimpcolorscales.c:254
+#: libgimpwidgets/gimpcolorscales.c:244
 msgid "Hexadecimal color notation as used in HTML"
 msgstr "Шестнадцатеричная запись цвета используемая в HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:268
+#: libgimpwidgets/gimpcolorscales.c:258
 msgid "He_x Triplet:"
 msgstr "Шестнадцатиричный триплет:"
 
@@ -395,23 +396,23 @@ msgstr "Текущий:"
 msgid "Old:"
 msgstr "Прежний:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Выбрать каталог"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Выбрать файл"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "Килобайты"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "Мегабайты"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "Гигабайты"
 
@@ -423,11 +424,12 @@ msgstr "Перезаписываемый"
 msgid "Folder"
 msgstr "Каталог"
 
-#: libgimpwidgets/gimppickbutton.c:141
+#: libgimpwidgets/gimppickbutton.c:138
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
+msgstr ""
+"Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -461,55 +463,55 @@ msgstr "Сбросить"
 msgid "Visible"
 msgstr "Видимый"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
 msgstr "Расстояние между буквами"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_ine Spacing"
 msgstr "Расстояние между строками"
 
-#: libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:185
 msgid "_Resize"
 msgstr "Изменить размер"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
 msgid "_Scale"
 msgstr "Масштабировать"
 
-#: libgimpwidgets/gimpstock.c:263
+#: libgimpwidgets/gimpstock.c:264
 msgid "Crop"
 msgstr "Кадрировать"
 
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Transform"
 msgstr "Преобразовать"
 
-#: libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Rotate"
 msgstr "Повернуть"
 
-#: libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Shear"
 msgstr "Наклонить"
 
-#: libgimpwidgets/gimpunitmenu.c:304
+#: libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
 msgstr "Дополнительно..."
 
-#: libgimpwidgets/gimpunitmenu.c:614
+#: libgimpwidgets/gimpunitmenu.c:612
 msgid "Unit Selection"
 msgstr "Выбор единиц"
 
-#: libgimpwidgets/gimpunitmenu.c:657
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "Единица"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "Множитель"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:811
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -517,99 +519,101 @@ msgstr ""
 "Используйте это значение для инициализации генератора случайных чисел - это "
 "даст возможность повторить заданную \"случайную\" операцию"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:815
 msgid "_New Seed"
 msgstr "Новое зерно"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:828
 msgid "Seed random number generator with a generated random number"
-msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
+msgstr ""
+"Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:832
 msgid "_Randomize"
 msgstr "Перемешать"
 
-#: modules/cdisplay_colorblind.c:124
-msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
-
-#: modules/cdisplay_colorblind.c:190
-msgid "Color Deficient Vision"
-msgstr "Зрение со сниженным цветовосприятием"
-
-#: modules/cdisplay_colorblind.c:464
-msgid "Color _Deficiency Type:"
-msgstr "Тип сниженного цветовосприятия:"
-
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr "Протанопия (нечувствительность к красному)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Девтеранопия (нечувствительность к зелёному)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Тританопия (нечувствительность к синему)"
 
-#: modules/cdisplay_gamma.c:90
+#: modules/cdisplay_colorblind.c:153
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
+"Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
+
+#: modules/cdisplay_colorblind.c:242
+msgid "Color Deficient Vision"
+msgstr "Зрение со сниженным цветовосприятием"
+
+#: modules/cdisplay_colorblind.c:540
+msgid "Color _Deficiency Type:"
+msgstr "Тип сниженного цветовосприятия:"
+
+#: modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
 msgstr "Фильтр цветовой гаммы"
 
-#: modules/cdisplay_gamma.c:156
+#: modules/cdisplay_gamma.c:178
 msgid "Gamma"
 msgstr "Гамма"
 
-#: modules/cdisplay_gamma.c:311
+#: modules/cdisplay_gamma.c:352
 msgid "_Gamma:"
 msgstr "Гамма:"
 
-#: modules/cdisplay_highcontrast.c:90
+#: modules/cdisplay_highcontrast.c:105
 msgid "High Contrast color display filter"
 msgstr "Фильтр повышенной контрастности"
 
-#: modules/cdisplay_highcontrast.c:156
+#: modules/cdisplay_highcontrast.c:178
 msgid "Contrast"
 msgstr "Контрастность"
 
-#: modules/cdisplay_highcontrast.c:308
+#: modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
 msgstr "Степень контрастности:"
 
-#: modules/cdisplay_proof.c:102
-msgid "Color proof filter using ICC color profile"
-msgstr "Фильтр настройки цветопередачи, использующий ICC"
-
-#: modules/cdisplay_proof.c:166
-msgid "Color Proof"
-msgstr "Настройка цветопередачи"
-
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr "Перцепционый"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr "Отн. колориметрический"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr "Абсол. колориметрический"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:138
+msgid "Color proof filter using ICC color profile"
+msgstr "Фильтр настройки цветопередачи, использующий ICC"
+
+#: modules/cdisplay_proof.c:238
+msgid "Color Proof"
+msgstr "Настройка цветопередачи"
+
+#: modules/cdisplay_proof.c:457
 msgid "_Intent:"
 msgstr "Тип:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
 msgstr "Файл параметров ICC"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:463
 msgid "_Profile:"
 msgstr "Параметры:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
 msgstr "Компенсация черных точек"
 
@@ -677,6 +681,9 @@ msgstr "Акварель"
 msgid "Pressure"
 msgstr "Давление"
 
+#~ msgid "None"
+#~ msgstr "Без"
+
 #~ msgid "Preview"
 #~ msgstr "Просмотр"
 
@@ -696,4 +703,3 @@ msgstr "Давление"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Нет (нормальное зрение)"
-

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2002-04-28 04:07+0200\n"
 "Last-Translator: Ömer Fadıl USTA <omer_fad@hotmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -15,36 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konsolu sadece etkileşimli çağrıma olanak tanır"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu Konsolu"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD Çıktısı"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Şu Anki Komut"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "SIOD çıkış veriyoluna akış açılamadı"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "SIOD çıkış borusu açılamadı"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu değerlendirme modu sadece etkileşimsiz çağrıma olanak tanır"
 
@@ -158,11 +150,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Lamba..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Tüm programları tekrar oku"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/Tazele..."
@@ -861,7 +853,7 @@ msgstr "<Image>/Script-Fu/Animatörler/Harmanla..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Ara Kareler"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1679,13 +1671,13 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logolar/Cilalı..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "Harman Gradyanı (Dış çizgi)"
+msgid "Blend gradient (Text)"
+msgstr "Harman Gradyanı (Metin)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Harman Gradyanı (Metin)"
+msgid "Blend gradient (outline)"
+msgstr "Harman Gradyanı (Dış çizgi)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2804,6 +2796,16 @@ msgstr "Parlama Y Ofseti"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Parlama Saydamsızlığı"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "SIOD çıkış veriyoluna akış açılamadı"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "SIOD çıkış borusu açılamadı"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Harman Gradyanı (Metin)"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"

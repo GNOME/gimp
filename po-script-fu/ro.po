@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -14,38 +14,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 #, fuzzy
 msgid "Current Command"
 msgstr "Lăţimea curentă:"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-console.c:598
-#, fuzzy
-msgid "Unable to open the SIOD output pipe"
-msgstr "Nu am putut deschide fişierul %s"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -167,11 +158,11 @@ msgstr "Micşorează selecţia"
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Micşorează selecţia"
@@ -858,7 +849,7 @@ msgid "<Image>/Script-Fu/Animators/_Blend..."
 msgstr "Micşorează selecţia"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1683,12 +1674,12 @@ msgstr "Micşorează selecţia"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
+msgid "Blend gradient (Text)"
 msgstr "Model sursă"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
+msgid "Blend gradient (outline)"
 msgstr "Model sursă"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -2805,6 +2796,14 @@ msgstr "Opacitate umplere:"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Opacitate umplere:"
+
+#, fuzzy
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Nu am putut deschide fişierul %s"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Model sursă"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"

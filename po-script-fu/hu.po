@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-06-16 11:34+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -16,36 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "A Script-Fu konzolmódja csak interaktív meghívást tesz lehetővé"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu konzol"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD kimenet"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Aktuális parancs"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Tallózás..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "A folyam megnyitása a SIOD kimeneti csővezetéken sikertelen"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
@@ -161,11 +153,11 @@ msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Ne_on..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Az összes elérhető szkript újraolvasása"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Kiterj./Script-Fu/Parancsfájlok _frissítése"
 
@@ -833,7 +825,7 @@ msgstr "<Image>/Script-Fu/Animáció/_Színkeverés..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Közbülső képkockák"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1616,13 +1608,13 @@ msgstr "<Toolbox>/Kiterj./Script-Fu/Logók/Fé_nyes..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "Körvonal-színátmenet"
+msgid "Blend gradient (Text)"
+msgstr "Szöveg-színátmenet"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Szöveg-színátmenet"
+msgid "Blend gradient (outline)"
+msgstr "Körvonal-színátmenet"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2701,6 +2693,16 @@ msgstr "Kiemelés Y-eltolása"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Kiemelés átlátszatlansága"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "A folyam megnyitása a SIOD kimeneti csővezetéken sikertelen"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Szöveg-színátmenet"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Kiterj./Script-Fu/Script-Fu-_konzol"

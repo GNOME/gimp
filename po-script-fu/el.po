@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -15,44 +15,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Κονσόλα Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 #, fuzzy
 msgid "SIOD Output"
 msgstr "Έξοδος DSP"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 #, fuzzy
 msgid "Current Command"
 msgstr "Εντολή Εκτύπωσης"
 
 #
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Εξερεύνηση..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-#, fuzzy
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
-"Δεν είναι δυνατή η δημιουργία του αρχείου εξόδου: %s\n"
-" %s"
-
-#
-#: plug-ins/script-fu/script-fu-console.c:598
-#, fuzzy
-msgid "Unable to open the SIOD output pipe"
-msgstr "Αδύνατο το άνοιγμα σωλήνωσης"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -186,12 +173,12 @@ msgstr "Κονσόλα Script-Fu"
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 #, fuzzy
 msgid "Re-read all available scripts"
 msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Κονσόλα Script-Fu"
@@ -900,7 +887,7 @@ msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Μέσου επιπέδου"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1743,12 +1730,12 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
+msgid "Blend gradient (Text)"
 msgstr "Θέμα Διαβάθμισης"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
+msgid "Blend gradient (outline)"
 msgstr "Θέμα Διαβάθμισης"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -2911,6 +2898,21 @@ msgstr "Επιλεγμένο"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Τονισμένη ημέρα:"
+
+#, fuzzy
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr ""
+#~ "Δεν είναι δυνατή η δημιουργία του αρχείου εξόδου: %s\n"
+#~ " %s"
+
+#
+#, fuzzy
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Αδύνατο το άνοιγμα σωλήνωσης"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Θέμα Διαβάθμισης"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"

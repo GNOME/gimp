@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-01-27 16:03-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -19,36 +19,28 @@ msgstr ""
 "X-Generator: KBabel 1.3\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "El modo de consola de Script-Fu sólo permite invocación interactiva"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Consola Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "Salida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Comando actual"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Ojear..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "No se puede abrir un flujo en la tubería de salida de SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "No se puede abrir la tubería SIOD de salida"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
@@ -164,11 +156,11 @@ msgstr "<Toolbox>/Exts/Script-Fu/Logotipos/N_eón..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Releer todos los guiones disponibles"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Exts/Script-Fu/_Refrescar los guiones"
 
@@ -855,7 +847,7 @@ msgstr "<Image>/Script-Fu/Animación/_Mezclar..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Fotogramas intermedios"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1656,13 +1648,13 @@ msgstr "<Toolbox>/Exts/Script-Fu/Logotipos/Br_illante..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "Gradiente de mezcla (contorno)"
+msgid "Blend gradient (Text)"
+msgstr "Gradiente de mezcla (texto)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Gradiente de mezcla (texto)"
+msgid "Blend gradient (outline)"
+msgstr "Gradiente de mezcla (contorno)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2754,6 +2746,16 @@ msgstr "Desplazamiento Y del brillo"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Opacidad del brillo"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "No se puede abrir un flujo en la tubería de salida de SIOD"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "No se puede abrir la tubería SIOD de salida"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Gradiente de mezcla (texto)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Exts/Script-Fu/_Consola de Script-Fu"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.TIPS.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
+"POT-Creation-Date: 2004-06-23 13:58+0200\n"
 "PO-Revision-Date: 2004-05-15 15:52+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 
 #: tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to The GIMP !</big>"
+#, fuzzy
+msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Добро пожаловать в GIMP !</big>"
 
 #: tips/gimp-tips.xml.in.h:2
@@ -64,11 +65,12 @@ msgstr ""
 "<tt>Shift</tt>."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
-"A Floating Selection must be anchored to a new layer or to the last active "
+"A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
-"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
-"same."
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Прежде чем продолжать работу с изображением, плавающую выделенную область "
 "надо прикрепить к новому или к последнему активному слою. Чтобы это сделать "
@@ -88,8 +90,9 @@ msgstr ""
 "нажмите удобное вам сочетание клавиш. Оно будет сохранено при выходе из GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
+#, fuzzy
 msgid ""
-"Click and drag on a ruler to place a Guide on an image. All dragged "
+"Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
@@ -135,30 +138,24 @@ msgid ""
 "plug-in to work on the whole image."
 msgstr ""
 "Большинство плагинов работают с активным слоем активного изображения. В "
-"некоторых случаях надо объединять слои (Изображение-&gt;Свести изображение), чтобы "
-"плагин обработал все изображение ."
+"некоторых случаях надо объединять слои (Изображение-&gt;Свести изображение), "
+"чтобы плагин обработал все изображение ."
 
 #: tips/gimp-tips.xml.in.h:14
-msgid ""
-"Nearly all image operations are performed by right-clicking on the image. "
-"And don't worry, you can undo most mistakes..."
-msgstr ""
-"Почти все функции можно вызвать из меню, появляющегося после щелчка правой "
-"кнопкой мыши. И не волнуйтесь, большинство действий можно отменить..."
-
-#: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Некоторые эффекты применимы не ко всем типам изображения. Иногда для того, "
 "чтобы воспользоваться тем или иным фильтром, нужно перевести изображение в "
 "режим RGB (Изображение-&gt;Режим-&gt;RGB), добавить альфа-канал (Слои-&gt;"
-"Добавить альфа-канал) или свести изображение (Изображение-&gt;Свести изображение)."
+"Добавить альфа-канал) или свести изображение (Изображение-&gt;Свести "
+"изображение)."
 
-#: tips/gimp-tips.xml.in.h:16
+#: tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -168,6 +165,11 @@ msgstr ""
 "Чтобы вычесть область из выделенного, используйте клавишу <tt>Ctrl</tt>. "
 "Соответствующие клавиши нужно нажимать до начала выделения и удерживать до "
 "конца процедуры."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"The GIMP can undo most changes to the image, so feel free to experiment."
+msgstr ""
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -212,10 +214,11 @@ msgstr ""
 "слоев и выберите пункт \"Добавить альфа-канал\"."
 
 #: tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
-"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
-"select. To place a circle precisely, drag horizontal and vertical guides "
-"tangent to the circle you want to select, place your cursor at the "
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
@@ -250,9 +253,9 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
-"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
-"makes the window move, your window manager uses the <tt>Alt</tt> key "
-"already. Try pressing <tt>Shift</tt> at the same time."
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
 msgstr ""
 
 #: tips/gimp-tips.xml.in.h:25
@@ -278,8 +281,8 @@ msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"Если находясь в диалоге слоев переместить слой на панель инструментов, то будет создано "
-"новое изображение, состоящее только из этого слоя."
+"Если находясь в диалоге слоев переместить слой на панель инструментов, то "
+"будет создано новое изображение, состоящее только из этого слоя."
 
 #: tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -320,13 +323,14 @@ msgstr ""
 "со слоями. Оно вызывается нажатием правой кнопкой мыши на названии слоя."
 
 #: tips/gimp-tips.xml.in.h:32
+#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a perfect square or "
-"circle, or to have it centered on its starting point."
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
 msgstr ""
-"Чтобы создать выделенную область в виде квадрата или круга, а так же , "
-"чтобы создать выделенную область из указанного центра, используйте клавиши "
+"Чтобы создать выделенную область в виде квадрата или круга, а так же , чтобы "
+"создать выделенную область из указанного центра, используйте клавиши "
 "<tt>Shift</tt> и <tt>Ctrl</tt>."
 
 #: tips/gimp-tips.xml.in.h:33
@@ -368,8 +372,15 @@ msgstr ""
 "для рисования. Для этого надо включить \"Быструю маску\", отредактировать "
 "выделение области рисующим инструментом, а потом выключить \"Быструю маску\"."
 
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Почти все функции можно вызвать из меню, появляющегося после щелчка "
+#~ "правой кнопкой мыши. И не волнуйтесь, большинство действий можно "
+#~ "отменить..."
+
 #~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
 #~ msgstr ""
 #~ "Границу выделения области можно перемещать при помощи клавиши <tt>Alt</"
 #~ "tt>-drag."
-

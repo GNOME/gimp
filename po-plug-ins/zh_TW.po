@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-std-plug-ins 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:26+0200\n"
+"POT-Creation-Date: 2004-07-20 02:58+0200\n"
 "PO-Revision-Date: 2004-03-24 01:26+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -16,8 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:532 plug-ins/gfig/gfig.c:2916
-#: plug-ins/gflare/gflare.c:897
+#: plug-ins/FractalExplorer/Dialogs.c:532 plug-ins/gflare/gflare.c:897
 #, fuzzy, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -31,8 +30,8 @@ msgstr ""
 "的項目。"
 
 #: plug-ins/FractalExplorer/Dialogs.c:552
-#: plug-ins/FractalExplorer/Dialogs.c:1607 plug-ins/gfig/gfig.c:2624
-#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:367
+#: plug-ins/FractalExplorer/Dialogs.c:1607 plug-ins/imagemap/imap_about.c:38
+#: plug-ins/print/gimp_main_window.c:367
 msgid "About"
 msgstr "關於"
 
@@ -256,7 +255,7 @@ msgid "Color Function"
 msgstr ""
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:975 plug-ins/common/channel_mixer.c:581
+#: plug-ins/FractalExplorer/Dialogs.c:975 plug-ins/common/channel_mixer.c:579
 #: plug-ins/common/decompose.c:131
 msgid "Red"
 msgstr "紅"
@@ -275,7 +274,7 @@ msgstr "餘弦"
 
 #: plug-ins/FractalExplorer/Dialogs.c:983
 #: plug-ins/FractalExplorer/Dialogs.c:1024
-#: plug-ins/FractalExplorer/Dialogs.c:1065 plug-ins/Lighting/lighting_ui.c:484
+#: plug-ins/FractalExplorer/Dialogs.c:1065 plug-ins/Lighting/lighting_ui.c:358
 #: plug-ins/common/CML_explorer.c:171 plug-ins/common/align_layers.c:417
 #: plug-ins/common/align_layers.c:448 plug-ins/common/postscript.c:2900
 #: plug-ins/common/postscript.c:2912 plug-ins/common/psp.c:420
@@ -318,13 +317,13 @@ msgid ""
 msgstr "如選用本選項，整幅影像的顏色會更改為與原來影像互補的顏色"
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1016 plug-ins/common/channel_mixer.c:586
+#: plug-ins/FractalExplorer/Dialogs.c:1016 plug-ins/common/channel_mixer.c:584
 #: plug-ins/common/decompose.c:132
 msgid "Green"
 msgstr "綠"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1057 plug-ins/common/channel_mixer.c:591
+#: plug-ins/FractalExplorer/Dialogs.c:1057 plug-ins/common/channel_mixer.c:589
 #: plug-ins/common/decompose.c:137
 msgid "Blue"
 msgstr "藍"
@@ -360,26 +359,26 @@ msgstr ""
 msgid "_Fractals"
 msgstr "碎形(_F)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1777 plug-ins/bmp/bmpwrite.c:198
+#: plug-ins/FractalExplorer/Dialogs.c:1777
+#: plug-ins/Lighting/lighting_ui.c:1113 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:581 plug-ins/common/CML_explorer.c:1997
 #: plug-ins/common/bz2.c:254 plug-ins/common/bz2.c:327
-#: plug-ins/common/channel_mixer.c:1216 plug-ins/common/curve_bend.c:870
-#: plug-ins/common/dicom.c:651 plug-ins/common/gbr.c:586
-#: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1224
+#: plug-ins/common/channel_mixer.c:1193 plug-ins/common/curve_bend.c:870
+#: plug-ins/common/dicom.c:651 plug-ins/common/gbr.c:590
+#: plug-ins/common/gif.c:997 plug-ins/common/gih.c:1228
 #: plug-ins/common/gtm.c:228 plug-ins/common/gz.c:311 plug-ins/common/gz.c:420
-#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1315
-#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
-#: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:589
-#: plug-ins/common/pix.c:519 plug-ins/common/png.c:1177
-#: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1058
-#: plug-ins/common/psd_save.c:1558 plug-ins/common/spheredesigner.c:2087
-#: plug-ins/common/sunras.c:516 plug-ins/common/tga.c:1032
-#: plug-ins/common/tiff.c:1800 plug-ins/common/xbm.c:1000
-#: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:454
-#: plug-ins/flame/flame.c:439 plug-ins/gfig/gfig.c:1023
-#: plug-ins/gfli/gfli.c:718 plug-ins/ifscompose/ifscompose.c:2542
-#: plug-ins/winicon/icosave.c:218 plug-ins/xjt/xjt.c:1267
-#: plug-ins/xjt/xjt.c:1706
+#: plug-ins/common/jpeg.c:1365 plug-ins/common/mng.c:557
+#: plug-ins/common/mng.c:941 plug-ins/common/pat.c:437
+#: plug-ins/common/pcx.c:589 plug-ins/common/pix.c:519
+#: plug-ins/common/png.c:1180 plug-ins/common/pnm.c:776
+#: plug-ins/common/postscript.c:1058 plug-ins/common/psd_save.c:1558
+#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/sunras.c:516
+#: plug-ins/common/tga.c:1032 plug-ins/common/tiff.c:1809
+#: plug-ins/common/xbm.c:1000 plug-ins/common/xwd.c:538
+#: plug-ins/fits/fits.c:454 plug-ins/flame/flame.c:439
+#: plug-ins/gfig/gfig.c:782 plug-ins/gfli/gfli.c:718
+#: plug-ins/ifscompose/ifscompose.c:2542 plug-ins/winicon/icosave.c:238
+#: plug-ins/xjt/xjt.c:1267 plug-ins/xjt/xjt.c:1706
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "無法開啟‘%s’來寫入資料：%s"
@@ -399,24 +398,25 @@ msgstr "儲存碎形參數"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2075 plug-ins/bmp/bmpread.c:118
+#: plug-ins/FractalExplorer/Dialogs.c:2075
+#: plug-ins/Lighting/lighting_ui.c:1251 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:309 plug-ins/common/CML_explorer.c:2212
-#: plug-ins/common/channel_mixer.c:1139 plug-ins/common/curve_bend.c:922
-#: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
-#: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:635
-#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:773
-#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:300
-#: plug-ins/common/pcx.c:306 plug-ins/common/pix.c:336
-#: plug-ins/common/png.c:673 plug-ins/common/pnm.c:399
-#: plug-ins/common/postscript.c:935 plug-ins/common/psd.c:1770
-#: plug-ins/common/psp.c:1461 plug-ins/common/spheredesigner.c:1989
-#: plug-ins/common/sunras.c:385 plug-ins/common/svg.c:245
-#: plug-ins/common/svg.c:628 plug-ins/common/tga.c:417
-#: plug-ins/common/tiff.c:513 plug-ins/common/xbm.c:723
-#: plug-ins/common/xwd.c:388 plug-ins/faxg3/faxg3.c:221
-#: plug-ins/fits/fits.c:341 plug-ins/flame/flame.c:408
-#: plug-ins/gfig/gfig.c:720 plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
-#: plug-ins/help/domain.c:380 plug-ins/winicon/icoload.c:134
+#: plug-ins/common/channel_mixer.c:1115 plug-ins/common/curve_bend.c:922
+#: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:331
+#: plug-ins/common/gifload.c:298 plug-ins/common/gih.c:639
+#: plug-ins/common/jpeg.c:817 plug-ins/common/mng.c:1112
+#: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:306
+#: plug-ins/common/pix.c:336 plug-ins/common/png.c:676
+#: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:935
+#: plug-ins/common/psd.c:1770 plug-ins/common/psp.c:1461
+#: plug-ins/common/spheredesigner.c:1989 plug-ins/common/sunras.c:385
+#: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
+#: plug-ins/common/tga.c:417 plug-ins/common/tiff.c:513
+#: plug-ins/common/xbm.c:723 plug-ins/common/xwd.c:388
+#: plug-ins/faxg3/faxg3.c:221 plug-ins/fits/fits.c:341
+#: plug-ins/flame/flame.c:408 plug-ins/gfig/gfig.c:430
+#: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:463
+#: plug-ins/help/domain.c:380 plug-ins/winicon/icoload.c:128
 #: plug-ins/xjt/xjt.c:2530 plug-ins/xjt/xjt.c:2538
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -438,7 +438,7 @@ msgid "_Fractal Explorer..."
 msgstr "<Image>/濾鏡/描繪/_Fractal Explorer..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:268
-#: plug-ins/common/spheredesigner.c:3127 plug-ins/gfig/gfig.c:355
+#: plug-ins/common/spheredesigner.c:3127 plug-ins/gfig/gfig.c:140
 #, fuzzy
 msgid "<Image>/Filters/Render"
 msgstr "<Image>/濾鏡/描繪/_Gfig..."
@@ -447,7 +447,7 @@ msgstr "<Image>/濾鏡/描繪/_Gfig..."
 msgid "Rendering Fractal..."
 msgstr "正在描繪碎形..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:766 plug-ins/gfig/gfig.c:3846
+#: plug-ins/FractalExplorer/FractalExplorer.c:766
 #: plug-ins/gflare/gflare.c:3100
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -512,13 +512,13 @@ msgstr ""
 msgid "Lighting Effects..."
 msgstr "光線效果..."
 
-#: plug-ins/Lighting/lighting_main.c:167
+#: plug-ins/Lighting/lighting_main.c:184
 #, fuzzy
 msgid "_Lighting Effects..."
 msgstr "光線效果..."
 
 #. don't translate '<Image>'
-#: plug-ins/Lighting/lighting_main.c:174 plug-ins/common/flarefx.c:197
+#: plug-ins/Lighting/lighting_main.c:191 plug-ins/common/flarefx.c:197
 #: plug-ins/common/nova.c:204 plug-ins/common/sparkle.c:193
 #: plug-ins/gflare/gflare.c:834
 #, fuzzy
@@ -526,353 +526,301 @@ msgid "<Image>/Filters/Light Effects"
 msgstr "<Image>/濾鏡/光線效果/_GFlare..."
 
 #. General options
-#: plug-ins/Lighting/lighting_ui.c:317
+#: plug-ins/Lighting/lighting_ui.c:253
 msgid "General Options"
 msgstr "一般選項"
 
-#.
-#. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
-#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-#. mapvals.bump_mapped);
-#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-#. g_signal_connect (toggle, "toggled",
-#. G_CALLBACK (togglebump_update),
-#. &mapvals.bump_mapped);
-#. gtk_widget_show (toggle);
-#.
-#. gimp_help_set_help_data (toggle,
-#. _("Enable/disable bump-mapping (image depth)"),
-#. NULL);
-#.
-#. toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
-#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-#. mapvals.env_mapped);
-#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-#. g_signal_connect (toggle, "toggled",
-#. G_CALLBACK (toggleenvironment_update),
-#. &mapvals.env_mapped);
-#. gtk_widget_show (toggle);
-#.
-#. gimp_help_set_help_data (toggle,
-#. _("Enable/disable environment mapping (reflection)"),
-#. NULL);
-#.
-#: plug-ins/Lighting/lighting_ui.c:352
+#: plug-ins/Lighting/lighting_ui.c:261
 #, fuzzy
 msgid "T_ransparent background"
 msgstr "透明背景(_R)"
 
-#: plug-ins/Lighting/lighting_ui.c:362
+#: plug-ins/Lighting/lighting_ui.c:271
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:365
+#: plug-ins/Lighting/lighting_ui.c:274
 #, fuzzy
 msgid "Cre_ate new image"
 msgstr "產生新的影像(_A)"
 
-#: plug-ins/Lighting/lighting_ui.c:375 plug-ins/MapObject/mapobject_ui.c:580
+#: plug-ins/Lighting/lighting_ui.c:284 plug-ins/MapObject/mapobject_ui.c:570
 msgid "Create a new image when applying filter"
 msgstr "套用濾鏡時會產生新的影像"
 
-#: plug-ins/Lighting/lighting_ui.c:377
+#: plug-ins/Lighting/lighting_ui.c:286
 #, fuzzy
 msgid "High _Quality preview"
 msgstr "高品質預覽(_Q)"
 
-#: plug-ins/Lighting/lighting_ui.c:387
+#: plug-ins/Lighting/lighting_ui.c:296
 msgid "Enable/disable high quality preview"
 msgstr "(不)啟用高品質預覽"
 
-#: plug-ins/Lighting/lighting_ui.c:397
-#, fuzzy
-msgid "E_nable antialiasing"
-msgstr "啟用平滑化(_N)"
-
-#: plug-ins/Lighting/lighting_ui.c:417 plug-ins/MapObject/mapobject_ui.c:612
-#: plug-ins/common/bumpmap.c:1044 plug-ins/common/emboss.c:552
-#: plug-ins/common/fractaltrace.c:841 plug-ins/common/struc.c:1294
-msgid "_Depth:"
-msgstr "深度(_D)："
-
-#: plug-ins/Lighting/lighting_ui.c:420 plug-ins/MapObject/mapobject_ui.c:615
-msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "平滑化的品質。數值大品質會較好，但處理較慢"
-
-#: plug-ins/Lighting/lighting_ui.c:427
-msgid "T_hreshold:"
-msgstr "界限值(_H)："
-
-#: plug-ins/Lighting/lighting_ui.c:430 plug-ins/Lighting/lighting_ui.c:446
-#: plug-ins/MapObject/mapobject_ui.c:632
-msgid "Stop when pixel differences are smaller than this value"
-msgstr "當畫素之間顏色的差別小於此數值時停止運算"
-
-#: plug-ins/Lighting/lighting_ui.c:442 plug-ins/common/threshold_alpha.c:240
-msgid "Threshold:"
-msgstr "界限值："
-
-#: plug-ins/Lighting/lighting_ui.c:474 plug-ins/MapObject/mapobject_ui.c:659
+#: plug-ins/Lighting/lighting_ui.c:325 plug-ins/MapObject/mapobject_ui.c:649
 msgid "Light Settings"
 msgstr "光源設定"
 
-#: plug-ins/Lighting/lighting_ui.c:485
+#. row labels
+#: plug-ins/Lighting/lighting_ui.c:336 plug-ins/common/plugindetails.c:416
+#: plug-ins/common/spheredesigner.c:2617
+msgid "Type:"
+msgstr "類型："
+
+#: plug-ins/Lighting/lighting_ui.c:341
+#, fuzzy
+msgid "Color:"
+msgstr "顏色(_L)："
+
+#: plug-ins/Lighting/lighting_ui.c:359
 msgid "Directional"
 msgstr "方向性"
 
-#: plug-ins/Lighting/lighting_ui.c:486
+#: plug-ins/Lighting/lighting_ui.c:360
 msgid "Point"
 msgstr "點"
 
-#: plug-ins/Lighting/lighting_ui.c:501
-#, fuzzy
-msgid "L_ight yype:"
-msgstr "光源類型(_I)："
-
-#: plug-ins/Lighting/lighting_ui.c:503 plug-ins/MapObject/mapobject_ui.c:687
+#: plug-ins/Lighting/lighting_ui.c:375 plug-ins/MapObject/mapobject_ui.c:677
 msgid "Type of light source to apply"
 msgstr "準備使用的光源類型"
 
-#: plug-ins/Lighting/lighting_ui.c:505 plug-ins/MapObject/mapobject_ui.c:689
+#: plug-ins/Lighting/lighting_ui.c:377 plug-ins/MapObject/mapobject_ui.c:679
 #, fuzzy
 msgid "Select lightsource color"
 msgstr "請選取光源顏色"
 
-#: plug-ins/Lighting/lighting_ui.c:516
-#, fuzzy
-msgid "Lig_ht color:"
-msgstr "光源顏色(_H)："
-
-#: plug-ins/Lighting/lighting_ui.c:520 plug-ins/MapObject/mapobject_ui.c:702
+#: plug-ins/Lighting/lighting_ui.c:391 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Set light source color"
 msgstr "設定光源顏色"
 
-#: plug-ins/Lighting/lighting_ui.c:522 plug-ins/MapObject/mapobject_ui.c:704
-#: plug-ins/MapObject/mapobject_ui.c:1021
-#: plug-ins/print/gimp_main_window.c:464
-msgid "Position"
-msgstr "位置"
-
-#: plug-ins/Lighting/lighting_ui.c:539 plug-ins/common/flarefx.c:731
+#: plug-ins/Lighting/lighting_ui.c:411 plug-ins/common/flarefx.c:731
 #: plug-ins/common/mblur.c:864 plug-ins/common/nova.c:457
 #: plug-ins/common/papertile.c:267 plug-ins/flame/flame.c:1174
 #: plug-ins/gflare/gflare.c:2644
 msgid "_X:"
 msgstr "_X："
 
-#: plug-ins/Lighting/lighting_ui.c:550 plug-ins/MapObject/mapobject_ui.c:728
+#: plug-ins/Lighting/lighting_ui.c:420 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Light source X position in XYZ space"
 msgstr "三維空間中光源的 X 座標"
 
-#: plug-ins/Lighting/lighting_ui.c:556 plug-ins/common/flarefx.c:752
+#: plug-ins/Lighting/lighting_ui.c:427 plug-ins/common/flarefx.c:752
 #: plug-ins/common/mblur.c:870 plug-ins/common/nova.c:478
 #: plug-ins/common/papertile.c:276 plug-ins/flame/flame.c:1188
 #: plug-ins/gflare/gflare.c:2648
 msgid "_Y:"
 msgstr "_Y："
 
-#: plug-ins/Lighting/lighting_ui.c:567 plug-ins/MapObject/mapobject_ui.c:742
+#: plug-ins/Lighting/lighting_ui.c:436 plug-ins/MapObject/mapobject_ui.c:732
 msgid "Light source Y position in XYZ space"
 msgstr "三維空間中光源的 Y 座標"
 
-#: plug-ins/Lighting/lighting_ui.c:573
+#: plug-ins/Lighting/lighting_ui.c:443
 msgid "_Z:"
 msgstr "_Z："
 
-#: plug-ins/Lighting/lighting_ui.c:583 plug-ins/MapObject/mapobject_ui.c:756
+#: plug-ins/Lighting/lighting_ui.c:452 plug-ins/MapObject/mapobject_ui.c:746
 msgid "Light source Z position in XYZ space"
 msgstr "三維空間中光源的 Z 座標"
 
-#: plug-ins/Lighting/lighting_ui.c:586 plug-ins/MapObject/mapobject_ui.c:759
-msgid "Direction Vector"
-msgstr "方向向量"
-
 #. X
-#: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:720
-#: plug-ins/MapObject/mapobject_ui.c:774
+#: plug-ins/Lighting/lighting_ui.c:471 plug-ins/MapObject/mapobject_ui.c:710
+#: plug-ins/MapObject/mapobject_ui.c:764
 #: plug-ins/MapObject/mapobject_ui.c:1032
 #: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/ifscompose/ifscompose.c:556
 msgid "X:"
 msgstr "X："
 
-#: plug-ins/Lighting/lighting_ui.c:612 plug-ins/MapObject/mapobject_ui.c:782
+#: plug-ins/Lighting/lighting_ui.c:480 plug-ins/MapObject/mapobject_ui.c:772
 msgid "Light source X direction in XYZ space"
 msgstr "三維空間中光源的 X 方向"
 
 #. Y
-#: plug-ins/Lighting/lighting_ui.c:617 plug-ins/MapObject/mapobject_ui.c:734
-#: plug-ins/MapObject/mapobject_ui.c:787
+#: plug-ins/Lighting/lighting_ui.c:486 plug-ins/MapObject/mapobject_ui.c:724
+#: plug-ins/MapObject/mapobject_ui.c:777
 #: plug-ins/MapObject/mapobject_ui.c:1045
 #: plug-ins/MapObject/mapobject_ui.c:1092
 #: plug-ins/MapObject/mapobject_ui.c:1190 plug-ins/ifscompose/ifscompose.c:570
 msgid "Y:"
 msgstr "Y："
 
-#: plug-ins/Lighting/lighting_ui.c:627 plug-ins/MapObject/mapobject_ui.c:795
+#: plug-ins/Lighting/lighting_ui.c:495 plug-ins/MapObject/mapobject_ui.c:785
 msgid "Light source Y direction in XYZ space"
 msgstr "三維空間中光源的 Y 方向"
 
-#: plug-ins/Lighting/lighting_ui.c:632 plug-ins/MapObject/mapobject_ui.c:748
-#: plug-ins/MapObject/mapobject_ui.c:800
+#: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:738
+#: plug-ins/MapObject/mapobject_ui.c:790
 #: plug-ins/MapObject/mapobject_ui.c:1058
 #: plug-ins/MapObject/mapobject_ui.c:1103
 #: plug-ins/MapObject/mapobject_ui.c:1202
 msgid "Z:"
 msgstr "Z："
 
-#: plug-ins/Lighting/lighting_ui.c:642 plug-ins/MapObject/mapobject_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:510 plug-ins/MapObject/mapobject_ui.c:798
 msgid "Light source Z direction in XYZ space"
 msgstr "三維空間中光源的 Z 方向"
 
-#: plug-ins/Lighting/lighting_ui.c:669 plug-ins/MapObject/mapobject_ui.c:835
-msgid "Intensity Levels"
-msgstr "光源強度"
+#: plug-ins/Lighting/lighting_ui.c:513
+#, fuzzy
+msgid "Lighting preset:"
+msgstr "光線效果"
 
-#: plug-ins/Lighting/lighting_ui.c:686
-msgid "_Ambient:"
-msgstr "環境(_A)："
+#: plug-ins/Lighting/lighting_ui.c:560
+#, fuzzy
+msgid "Material properties"
+msgstr "素材屬性"
 
-#: plug-ins/Lighting/lighting_ui.c:704 plug-ins/MapObject/mapobject_ui.c:868
+#: plug-ins/Lighting/lighting_ui.c:578
+#, fuzzy
+msgid "_Glowing:"
+msgstr "流動"
+
+#: plug-ins/Lighting/lighting_ui.c:594 plug-ins/MapObject/mapobject_ui.c:859
 msgid "Amount of original color to show where no direct light falls"
 msgstr "當沒有被光源直接照射時顯示的原來色彩份量"
 
-#: plug-ins/Lighting/lighting_ui.c:716
-msgid "_Diffuse:"
-msgstr "散射(_D)："
+#: plug-ins/Lighting/lighting_ui.c:607
+#, fuzzy
+msgid "_Bright:"
+msgstr "亮度(_B)："
 
-#: plug-ins/Lighting/lighting_ui.c:735 plug-ins/MapObject/mapobject_ui.c:895
+#: plug-ins/Lighting/lighting_ui.c:623 plug-ins/MapObject/mapobject_ui.c:888
 msgid "Intensity of original color when lit by a light source"
 msgstr "被光源照到時原色彩的強度"
 
-#: plug-ins/Lighting/lighting_ui.c:743 plug-ins/MapObject/mapobject_ui.c:903
-msgid "Reflectivity"
-msgstr "反射率"
+#: plug-ins/Lighting/lighting_ui.c:636
+#, fuzzy
+msgid "_Shiny:"
+msgstr "正弦(_S)"
 
-#: plug-ins/Lighting/lighting_ui.c:760
-msgid "D_iffuse:"
-msgstr "散射(_I)："
-
-#: plug-ins/Lighting/lighting_ui.c:779 plug-ins/MapObject/mapobject_ui.c:936
-msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "較高的值表示物件會反射較多光線(看起來較光亮)"
-
-#: plug-ins/Lighting/lighting_ui.c:791
-msgid "_Specular:"
-msgstr ""
-
-#: plug-ins/Lighting/lighting_ui.c:811 plug-ins/MapObject/mapobject_ui.c:963
+#: plug-ins/Lighting/lighting_ui.c:652 plug-ins/MapObject/mapobject_ui.c:960
 msgid "Controls how intense the highlights will be"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:823
-msgid "_Highlight:"
-msgstr "高亮度區(_H)："
+#: plug-ins/Lighting/lighting_ui.c:664
+msgid "_Polished:"
+msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:842 plug-ins/MapObject/mapobject_ui.c:990
+#: plug-ins/Lighting/lighting_ui.c:680 plug-ins/MapObject/mapobject_ui.c:989
 msgid "Higher values makes the highlights more focused"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:875
+#. Metallic
+#: plug-ins/Lighting/lighting_ui.c:689
+msgid "_Metallic"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:725
 #, fuzzy
 msgid "E_nable bump mapping"
 msgstr "啟用凹凸貼圖(_N)"
 
-#: plug-ins/Lighting/lighting_ui.c:889
+#: plug-ins/Lighting/lighting_ui.c:739
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:907
+#: plug-ins/Lighting/lighting_ui.c:757
 #, fuzzy
 msgid "Bumpm_ap image:"
 msgstr "_Bumpmap"
 
-#: plug-ins/Lighting/lighting_ui.c:910 plug-ins/flame/flame.c:719
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/flame/flame.c:719
 msgid "Linear"
 msgstr "線性"
 
-#: plug-ins/Lighting/lighting_ui.c:911
+#: plug-ins/Lighting/lighting_ui.c:761
 msgid "Logarithmic"
 msgstr "對數"
 
-#: plug-ins/Lighting/lighting_ui.c:912 plug-ins/flame/flame.c:720
+#: plug-ins/Lighting/lighting_ui.c:762 plug-ins/flame/flame.c:720
 msgid "Sinusoidal"
 msgstr "弦波"
 
-#: plug-ins/Lighting/lighting_ui.c:913 plug-ins/flame/flame.c:721
+#: plug-ins/Lighting/lighting_ui.c:763 plug-ins/flame/flame.c:721
 msgid "Spherical"
 msgstr "球形"
 
-#: plug-ins/Lighting/lighting_ui.c:923
+#: plug-ins/Lighting/lighting_ui.c:773
 msgid "Cu_rve:"
 msgstr "曲線(_R)："
 
-#: plug-ins/Lighting/lighting_ui.c:928
+#: plug-ins/Lighting/lighting_ui.c:778
 #, fuzzy
 msgid "Ma_ximum height:"
 msgstr "高度上限(_X)："
 
-#: plug-ins/Lighting/lighting_ui.c:938
+#: plug-ins/Lighting/lighting_ui.c:788
 msgid "Maximum height for bumps"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:963
+#: plug-ins/Lighting/lighting_ui.c:813
 #, fuzzy
 msgid "E_nable environment mapping"
 msgstr "啟用凹凸貼圖(_N)"
 
-#: plug-ins/Lighting/lighting_ui.c:977
+#: plug-ins/Lighting/lighting_ui.c:827
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:999
+#: plug-ins/Lighting/lighting_ui.c:849
 #, fuzzy
 msgid "En_vironment image:"
 msgstr "環境設定"
 
-#: plug-ins/Lighting/lighting_ui.c:1001
+#: plug-ins/Lighting/lighting_ui.c:851
 msgid "Environment image to use"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1023
+#: plug-ins/Lighting/lighting_ui.c:873
 msgid "Op_tions"
 msgstr "選項(_T)"
 
-#: plug-ins/Lighting/lighting_ui.c:1027 plug-ins/MapObject/mapobject_ui.c:1326
+#: plug-ins/Lighting/lighting_ui.c:877 plug-ins/MapObject/mapobject_ui.c:1326
 msgid "_Light"
 msgstr "光線(_L)"
 
-#: plug-ins/Lighting/lighting_ui.c:1031 plug-ins/MapObject/mapobject_ui.c:1330
+#: plug-ins/Lighting/lighting_ui.c:881 plug-ins/MapObject/mapobject_ui.c:1330
 msgid "_Material"
 msgstr "質地(_M)"
 
-#: plug-ins/Lighting/lighting_ui.c:1035
+#: plug-ins/Lighting/lighting_ui.c:885
 msgid "_Bump Map"
 msgstr "凹凸貼圖(_Bump Map)"
 
-#: plug-ins/Lighting/lighting_ui.c:1039
+#: plug-ins/Lighting/lighting_ui.c:889
 msgid "_Environment Map"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1082
+#: plug-ins/Lighting/lighting_ui.c:935
 msgid "Lighting Effects"
 msgstr "光線效果"
 
-#: plug-ins/Lighting/lighting_ui.c:1131 plug-ins/gimpressionist/preview.c:131
+#: plug-ins/Lighting/lighting_ui.c:984 plug-ins/gimpressionist/preview.c:167
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "更新(_U)"
 
-#: plug-ins/Lighting/lighting_ui.c:1138 plug-ins/MapObject/mapobject_ui.c:1425
+#: plug-ins/Lighting/lighting_ui.c:991 plug-ins/MapObject/mapobject_ui.c:1425
 msgid "Recompute preview image"
 msgstr "重新計算預覽影像"
 
-#: plug-ins/Lighting/lighting_ui.c:1140
+#: plug-ins/Lighting/lighting_ui.c:993
 msgid "I_nteractive"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:1155
+#: plug-ins/Lighting/lighting_ui.c:1008
 msgid "Enable/disable real time preview of changes"
 msgstr "啟用/關閉高品質即時預覽"
+
+#: plug-ins/Lighting/lighting_ui.c:1047
+#, fuzzy
+msgid "Save Lighting Preset"
+msgstr "光線效果"
+
+#: plug-ins/Lighting/lighting_ui.c:1181
+#, fuzzy
+msgid "Load Lighting Preset"
+msgstr "光線效果"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
 #, fuzzy
@@ -893,12 +841,12 @@ msgstr "正在計算 RGB 最大最小值..."
 msgid "Map to Cylinder..."
 msgstr "圓柱體"
 
-#: plug-ins/MapObject/mapobject_main.c:200
+#: plug-ins/MapObject/mapobject_main.c:199
 #, fuzzy
 msgid "Map _Object..."
 msgstr "投影至物件"
 
-#: plug-ins/MapObject/mapobject_main.c:207 plug-ins/common/bumpmap.c:379
+#: plug-ins/MapObject/mapobject_main.c:206 plug-ins/common/bumpmap.c:379
 #: plug-ins/common/displace.c:158 plug-ins/common/fractaltrace.c:138
 #: plug-ins/common/illusion.c:112 plug-ins/common/lic.c:791
 #: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
@@ -908,121 +856,157 @@ msgstr "投影至物件"
 msgid "<Image>/Filters/Map"
 msgstr "<Image>/濾鏡/映射/鋪排(_T)..."
 
-#: plug-ins/MapObject/mapobject_ui.c:258
+#: plug-ins/MapObject/mapobject_ui.c:248
 #: plug-ins/MapObject/mapobject_ui.c:1340
 msgid "_Box"
 msgstr "方體(_B)"
 
-#: plug-ins/MapObject/mapobject_ui.c:276
+#: plug-ins/MapObject/mapobject_ui.c:266
 #: plug-ins/MapObject/mapobject_ui.c:1346
 msgid "C_ylinder"
 msgstr "圓柱體(_Y)"
 
 #. General options
-#: plug-ins/MapObject/mapobject_ui.c:506
+#: plug-ins/MapObject/mapobject_ui.c:496
 #, fuzzy
 msgid "General options"
 msgstr "一般選項"
 
-#: plug-ins/MapObject/mapobject_ui.c:518
+#: plug-ins/MapObject/mapobject_ui.c:508
 msgid "Map to:"
 msgstr "投影至："
 
-#: plug-ins/MapObject/mapobject_ui.c:522
+#: plug-ins/MapObject/mapobject_ui.c:512
 msgid "Plane"
 msgstr "平面"
 
-#: plug-ins/MapObject/mapobject_ui.c:523
+#: plug-ins/MapObject/mapobject_ui.c:513
 msgid "Sphere"
 msgstr "球體"
 
-#: plug-ins/MapObject/mapobject_ui.c:524
+#: plug-ins/MapObject/mapobject_ui.c:514
 msgid "Box"
 msgstr "方體"
 
-#: plug-ins/MapObject/mapobject_ui.c:525
+#: plug-ins/MapObject/mapobject_ui.c:515
 msgid "Cylinder"
 msgstr "圓柱體"
 
-#: plug-ins/MapObject/mapobject_ui.c:540
+#: plug-ins/MapObject/mapobject_ui.c:530
 msgid "Type of object to map to"
 msgstr "映射後的物件類型"
 
-#: plug-ins/MapObject/mapobject_ui.c:542
+#: plug-ins/MapObject/mapobject_ui.c:532
 #, fuzzy
 msgid "Transparent background"
 msgstr "透明背景"
 
-#: plug-ins/MapObject/mapobject_ui.c:553
+#: plug-ins/MapObject/mapobject_ui.c:543
 msgid "Make image transparent outside object"
 msgstr "物體外的部份是透明的"
 
-#: plug-ins/MapObject/mapobject_ui.c:555
+#: plug-ins/MapObject/mapobject_ui.c:545
 #, fuzzy
 msgid "Tile source image"
 msgstr "鋪排來源影像"
 
-#: plug-ins/MapObject/mapobject_ui.c:566
+#: plug-ins/MapObject/mapobject_ui.c:556
 msgid "Tile source image: useful for infinite planes"
 msgstr "鋪排來源影像：對於無限大的平面比較有用"
 
-#: plug-ins/MapObject/mapobject_ui.c:569
+#: plug-ins/MapObject/mapobject_ui.c:559
 #, fuzzy
 msgid "Create new image"
 msgstr "產生新的影像"
 
-#: plug-ins/MapObject/mapobject_ui.c:588
+#: plug-ins/MapObject/mapobject_ui.c:578
 #, fuzzy
 msgid "Enable _antialiasing"
 msgstr "平滑化(_A)"
 
-#: plug-ins/MapObject/mapobject_ui.c:595
+#: plug-ins/MapObject/mapobject_ui.c:585
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "(不)移除鋸齒邊沿 (即平滑化)"
 
-#: plug-ins/MapObject/mapobject_ui.c:624 plug-ins/common/unsharp.c:795
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:1044
+#: plug-ins/common/emboss.c:552 plug-ins/common/fractaltrace.c:841
+#: plug-ins/common/struc.c:1294
+msgid "_Depth:"
+msgstr "深度(_D)："
+
+#: plug-ins/MapObject/mapobject_ui.c:605
+msgid "Antialiasing quality. Higher is better, but slower"
+msgstr "平滑化的品質。數值大品質會較好，但處理較慢"
+
+#: plug-ins/MapObject/mapobject_ui.c:614 plug-ins/common/unsharp.c:799
 #: plug-ins/common/wind.c:989 plug-ins/imagemap/imap_preferences.c:538
 msgid "_Threshold:"
 msgstr "界限值(_T)："
 
-#: plug-ins/MapObject/mapobject_ui.c:668
+#: plug-ins/MapObject/mapobject_ui.c:622
+msgid "Stop when pixel differences are smaller than this value"
+msgstr "當畫素之間顏色的差別小於此數值時停止運算"
+
+#: plug-ins/MapObject/mapobject_ui.c:658
 #, fuzzy
 msgid "Point light"
 msgstr "點光源"
 
-#: plug-ins/MapObject/mapobject_ui.c:669
+#: plug-ins/MapObject/mapobject_ui.c:659
 #, fuzzy
 msgid "Directional light"
 msgstr "方向光源"
 
-#: plug-ins/MapObject/mapobject_ui.c:670
+#: plug-ins/MapObject/mapobject_ui.c:660
 #, fuzzy
 msgid "No light"
 msgstr "沒有光源"
 
-#: plug-ins/MapObject/mapobject_ui.c:684
+#: plug-ins/MapObject/mapobject_ui.c:674
 #, fuzzy
 msgid "Lightsource type:"
 msgstr "光源類型："
 
-#: plug-ins/MapObject/mapobject_ui.c:694
+#: plug-ins/MapObject/mapobject_ui.c:684
 #, fuzzy
 msgid "Lightsource color:"
 msgstr "光源顏色："
 
-#: plug-ins/MapObject/mapobject_ui.c:853
+#: plug-ins/MapObject/mapobject_ui.c:694
+#: plug-ins/MapObject/mapobject_ui.c:1021
+#: plug-ins/print/gimp_main_window.c:464
+msgid "Position"
+msgstr "位置"
+
+#: plug-ins/MapObject/mapobject_ui.c:749
+msgid "Direction Vector"
+msgstr "方向向量"
+
+#: plug-ins/MapObject/mapobject_ui.c:825
+msgid "Intensity Levels"
+msgstr "光源強度"
+
+#: plug-ins/MapObject/mapobject_ui.c:844
 msgid "Ambient:"
 msgstr "環境："
 
-#: plug-ins/MapObject/mapobject_ui.c:880 plug-ins/MapObject/mapobject_ui.c:921
+#: plug-ins/MapObject/mapobject_ui.c:873 plug-ins/MapObject/mapobject_ui.c:916
 msgid "Diffuse:"
 msgstr "散射："
 
-#: plug-ins/MapObject/mapobject_ui.c:948
+#: plug-ins/MapObject/mapobject_ui.c:897
+msgid "Reflectivity"
+msgstr "反射率"
+
+#: plug-ins/MapObject/mapobject_ui.c:931
+msgid "Higher values makes the object reflect more light (appear lighter)"
+msgstr "較高的值表示物件會反射較多光線(看起來較光亮)"
+
+#: plug-ins/MapObject/mapobject_ui.c:945
 msgid "Specular:"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:975
+#: plug-ins/MapObject/mapobject_ui.c:974
 msgid "Highlight:"
 msgstr ""
 
@@ -1185,18 +1169,17 @@ msgstr ""
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:314
-#: plug-ins/common/dicom.c:299 plug-ins/common/gbr.c:332
-#: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:640
-#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:780
-#: plug-ins/common/pat.c:305 plug-ins/common/pcx.c:311
-#: plug-ins/common/pix.c:342 plug-ins/common/png.c:680
-#: plug-ins/common/pnm.c:404 plug-ins/common/postscript.c:941
-#: plug-ins/common/psd.c:1775 plug-ins/common/sunras.c:439
-#: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:518
-#: plug-ins/common/wmf.c:400 plug-ins/common/xbm.c:728
-#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:439
-#: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327
-#: plug-ins/xjt/xjt.c:3316
+#: plug-ins/common/dicom.c:299 plug-ins/common/gbr.c:336
+#: plug-ins/common/gifload.c:303 plug-ins/common/gih.c:644
+#: plug-ins/common/jpeg.c:824 plug-ins/common/pat.c:309
+#: plug-ins/common/pcx.c:311 plug-ins/common/pix.c:342
+#: plug-ins/common/png.c:683 plug-ins/common/pnm.c:404
+#: plug-ins/common/postscript.c:941 plug-ins/common/psd.c:1775
+#: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:422
+#: plug-ins/common/tiff.c:518 plug-ins/common/wmf.c:400
+#: plug-ins/common/xbm.c:728 plug-ins/common/xpm.c:334
+#: plug-ins/common/xwd.c:439 plug-ins/faxg3/faxg3.c:204
+#: plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3316
 #, c-format
 msgid "Opening '%s'..."
 msgstr "正在開啟‘%s’..."
@@ -1224,23 +1207,22 @@ msgstr "讀取 BMP 點陣圖‘%s’的檔頭時發生錯誤"
 #: plug-ins/common/CEL.c:364 plug-ins/common/blinds.c:298
 #: plug-ins/common/compose.c:618 plug-ins/common/decompose.c:586
 #: plug-ins/common/dicom.c:446 plug-ins/common/film.c:952
-#: plug-ins/common/gifload.c:860 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:938 plug-ins/common/pcx.c:338
-#: plug-ins/common/pcx.c:344 plug-ins/common/pix.c:378
-#: plug-ins/common/png.c:807 plug-ins/common/pnm.c:484
-#: plug-ins/common/psd.c:2184 plug-ins/common/smooth_palette.c:256
-#: plug-ins/common/sunras.c:928 plug-ins/common/tga.c:931
-#: plug-ins/common/tiff.c:836 plug-ins/common/tile.c:267
-#: plug-ins/common/winclipboard.c:579 plug-ins/common/xbm.c:871
-#: plug-ins/faxg3/faxg3.c:466 plug-ins/fits/fits.c:512
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2437
-#: plug-ins/gimpressionist/general.c:63 plug-ins/sgi/sgi.c:380
-#: plug-ins/twain/twain.c:754 plug-ins/winsnap/winsnap.c:1237
+#: plug-ins/common/gifload.c:860 plug-ins/common/jpeg.c:984
+#: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
+#: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
+#: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2184
+#: plug-ins/common/smooth_palette.c:256 plug-ins/common/sunras.c:928
+#: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
+#: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
+#: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
+#: plug-ins/fits/fits.c:512 plug-ins/gimpressionist/general.c:110
+#: plug-ins/sgi/sgi.c:380 plug-ins/twain/twain.c:754
+#: plug-ins/winsnap/winsnap.c:1237
 msgid "Background"
 msgstr "背景"
 
 #: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:621
-#: plug-ins/common/hrz.c:445 plug-ins/common/pcx.c:583
+#: plug-ins/common/pcx.c:583
 msgid "Cannot save images with alpha channel."
 msgstr "無法儲存有透明色版的影像。"
 
@@ -1254,26 +1236,26 @@ msgstr "無法處理不明的影像。"
 #. init the progress meter
 #. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:586
-#: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1004
-#: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:248
-#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1270
-#: plug-ins/common/pat.c:438 plug-ins/common/pcx.c:549
-#: plug-ins/common/pix.c:525 plug-ins/common/png.c:1184
-#: plug-ins/common/pnm.c:781 plug-ins/common/postscript.c:1063
-#: plug-ins/common/psd_save.c:1563 plug-ins/common/sunras.c:521
-#: plug-ins/common/tga.c:1037 plug-ins/common/tiff.c:1805
-#: plug-ins/common/xbm.c:1005 plug-ins/common/xpm.c:624
-#: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:685
-#: plug-ins/sgi/sgi.c:549 plug-ins/xjt/xjt.c:1686
+#: plug-ins/common/gbr.c:595 plug-ins/common/gif.c:1004
+#: plug-ins/common/gih.c:1233 plug-ins/common/gtm.c:248
+#: plug-ins/common/jpeg.c:1320 plug-ins/common/pat.c:442
+#: plug-ins/common/pcx.c:549 plug-ins/common/pix.c:525
+#: plug-ins/common/png.c:1187 plug-ins/common/pnm.c:781
+#: plug-ins/common/postscript.c:1063 plug-ins/common/psd_save.c:1563
+#: plug-ins/common/sunras.c:521 plug-ins/common/tga.c:1037
+#: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1005
+#: plug-ins/common/xpm.c:624 plug-ins/common/xwd.c:543
+#: plug-ins/fits/fits.c:461 plug-ins/gfli/gfli.c:685 plug-ins/sgi/sgi.c:549
+#: plug-ins/xjt/xjt.c:1686
 #, c-format
 msgid "Saving '%s'..."
 msgstr "正在儲存‘%s’..."
 
-#: plug-ins/bmp/bmpwrite.c:553
+#: plug-ins/bmp/bmpwrite.c:554
 msgid "Save as BMP"
 msgstr "以 BMP 方式儲存"
 
-#: plug-ins/bmp/bmpwrite.c:567
+#: plug-ins/bmp/bmpwrite.c:568
 msgid "_RLE encoded"
 msgstr "_RLE 編碼"
 
@@ -1621,8 +1603,8 @@ msgid "Randoms from seed (shared)"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:305 plug-ins/common/CML_explorer.c:313
-#: plug-ins/common/decompose.c:141 plug-ins/gimpressionist/orientation.c:163
-#: plug-ins/gimpressionist/size.c:147
+#: plug-ins/common/decompose.c:141 plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/gimpressionist/size.c:154
 msgid "Hue"
 msgstr "色相"
 
@@ -1632,8 +1614,8 @@ msgid "Saturation"
 msgstr "彩度"
 
 #: plug-ins/common/CML_explorer.c:307 plug-ins/common/CML_explorer.c:315
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:109
-#: plug-ins/gimpressionist/size.c:107
+#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:132
+#: plug-ins/gimpressionist/size.c:125
 msgid "Value"
 msgstr "亮度"
 
@@ -1716,7 +1698,7 @@ msgstr "_Y 偏移量："
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1376 plug-ins/maze/maze_face.c:290
+#: plug-ins/common/CML_explorer.c:1376 plug-ins/maze/maze_face.c:289
 msgid "Seed:"
 msgstr ""
 
@@ -1850,7 +1832,7 @@ msgstr ""
 msgid "Save Parameters to"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2052
+#: plug-ins/common/CML_explorer.c:2052 plug-ins/common/channel_mixer.c:1201
 #, fuzzy, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "參數已儲存至‘%s’"
@@ -1859,7 +1841,7 @@ msgstr "參數已儲存至‘%s’"
 msgid "CML Explorer: Overwrite File?"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2087 plug-ins/common/channel_mixer.c:1258
+#: plug-ins/common/CML_explorer.c:2087 plug-ins/common/channel_mixer.c:1232
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -1939,7 +1921,6 @@ msgid "Fill (right to left)"
 msgstr "填滿 (由右至左)"
 
 #: plug-ins/common/align_layers.c:421 plug-ins/common/align_layers.c:452
-#: plug-ins/gfig/gfig.c:2667
 #, fuzzy
 msgid "Snap to grid"
 msgstr "靠齊參考線"
@@ -2136,7 +2117,7 @@ msgstr "透鏡折射率(_L)："
 msgid "_Autocrop Image"
 msgstr "整幅影像(_E)"
 
-#: plug-ins/common/autocrop.c:92
+#: plug-ins/common/autocrop.c:92 plug-ins/common/zealouscrop.c:76
 #, fuzzy
 msgid "<Image>/Image/Crop"
 msgstr "<Image>/影像/模式/組合..."
@@ -2146,7 +2127,7 @@ msgstr "<Image>/影像/模式/組合..."
 msgid "_Autocrop Layer"
 msgstr "捲曲圖層"
 
-#: plug-ins/common/autocrop.c:107 plug-ins/common/zealouscrop.c:76
+#: plug-ins/common/autocrop.c:107
 #, fuzzy
 msgid "<Image>/Layer/Crop"
 msgstr "<Image>/圖層/變換/_Zealous 裁剪"
@@ -2186,7 +2167,7 @@ msgstr "百葉窗"
 #: plug-ins/common/ripple.c:144 plug-ins/common/shift.c:116
 #: plug-ins/common/video.c:1830 plug-ins/common/vpropagate.c:274
 #: plug-ins/common/waves.c:132 plug-ins/common/whirlpinch.c:193
-#: plug-ins/common/wind.c:197 plug-ins/pagecurl/pagecurl.c:221
+#: plug-ins/common/wind.c:197 plug-ins/pagecurl/pagecurl.c:244
 #, fuzzy
 msgid "<Image>/Filters/Distorts"
 msgstr "<Image>/濾鏡/扭曲/風(_N)..."
@@ -2206,12 +2187,12 @@ msgid "Orientation"
 msgstr "方向"
 
 #: plug-ins/common/blinds.c:291 plug-ins/common/ripple.c:478
-#: plug-ins/common/tileit.c:424
+#: plug-ins/common/tileit.c:424 plug-ins/pagecurl/pagecurl.c:540
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
 #: plug-ins/common/blinds.c:292 plug-ins/common/ripple.c:479
-#: plug-ins/common/tileit.c:434
+#: plug-ins/common/tileit.c:434 plug-ins/pagecurl/pagecurl.c:539
 msgid "_Vertical"
 msgstr "垂直(_V)"
 
@@ -2242,7 +2223,7 @@ msgid "<Image>/Filters/Blur"
 msgstr "<Image>/濾鏡/模糊化/模糊化(_B)..."
 
 #: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:273
-#: plug-ins/common/unsharp.c:878
+#: plug-ins/common/unsharp.c:887
 msgid "Blurring..."
 msgstr "模糊化..."
 
@@ -2251,7 +2232,7 @@ msgid "_Border Average..."
 msgstr ""
 
 #: plug-ins/common/borderaverage.c:107 plug-ins/common/ccanalyze.c:122
-#: plug-ins/common/channel_mixer.c:233 plug-ins/common/colorify.c:116
+#: plug-ins/common/channel_mixer.c:231 plug-ins/common/colorify.c:116
 #: plug-ins/common/colortoalpha.c:106 plug-ins/common/compose.c:302
 #: plug-ins/common/decompose.c:251 plug-ins/common/hot.c:224
 #: plug-ins/common/max_rgb.c:119 plug-ins/common/semiflatten.c:86
@@ -2443,39 +2424,39 @@ msgstr "壓縮後的大小：%s"
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "壓縮比例：大約 %d 比 1"
 
-#: plug-ins/common/channel_mixer.c:226
+#: plug-ins/common/channel_mixer.c:224
 msgid "Channel Mi_xer.."
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:515
+#: plug-ins/common/channel_mixer.c:513
 msgid "Channel Mixer"
 msgstr ""
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:547 plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:545 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "預覽(_P)"
 
-#: plug-ins/common/channel_mixer.c:572
+#: plug-ins/common/channel_mixer.c:570
 #, fuzzy
 msgid "O_utput channel:"
 msgstr "輸出類型："
 
-#: plug-ins/common/channel_mixer.c:626 plug-ins/common/diffraction.c:503
+#: plug-ins/common/channel_mixer.c:624 plug-ins/common/diffraction.c:503
 #: plug-ins/common/diffraction.c:541 plug-ins/common/diffraction.c:579
 #: plug-ins/common/exchange.c:432 plug-ins/common/noisify.c:392
 #: plug-ins/common/noisify.c:399
 msgid "_Red:"
 msgstr "紅(_R)："
 
-#: plug-ins/common/channel_mixer.c:644 plug-ins/common/diffraction.c:512
+#: plug-ins/common/channel_mixer.c:642 plug-ins/common/diffraction.c:512
 #: plug-ins/common/diffraction.c:550 plug-ins/common/diffraction.c:588
 #: plug-ins/common/exchange.c:486 plug-ins/common/noisify.c:393
 #: plug-ins/common/noisify.c:400
 msgid "_Green:"
 msgstr "綠(_G)："
 
-#: plug-ins/common/channel_mixer.c:663 plug-ins/common/diffraction.c:521
+#: plug-ins/common/channel_mixer.c:661 plug-ins/common/diffraction.c:521
 #: plug-ins/common/diffraction.c:559 plug-ins/common/diffraction.c:597
 #: plug-ins/common/exchange.c:540 plug-ins/common/noisify.c:394
 #: plug-ins/common/noisify.c:401
@@ -2483,29 +2464,24 @@ msgid "_Blue:"
 msgstr "藍(_B)："
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:674
+#: plug-ins/common/channel_mixer.c:672
 msgid "_Monochrome"
 msgstr "單色(_M)"
 
-#: plug-ins/common/channel_mixer.c:686
+#: plug-ins/common/channel_mixer.c:684
 #, fuzzy
 msgid "Preserve _luminosity"
 msgstr "保留亮度(_L)"
 
-#: plug-ins/common/channel_mixer.c:1021
+#: plug-ins/common/channel_mixer.c:998
 msgid "Load Channel Mixer Settings"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:1161
+#: plug-ins/common/channel_mixer.c:1138
 msgid "Save Channel Mixer Settings"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:1227
-#, c-format
-msgid "Parameters were Saved to '%s'"
-msgstr "參數已儲存至‘%s’"
-
-#: plug-ins/common/channel_mixer.c:1243
+#: plug-ins/common/channel_mixer.c:1217
 msgid "Channel Mixer File Operation Warning"
 msgstr ""
 
@@ -2527,7 +2503,7 @@ msgid "_Psychobilly"
 msgstr "迷幻棋盤(_P)"
 
 #: plug-ins/common/checkerboard.c:365 plug-ins/common/papertile.c:287
-#: plug-ins/gimpressionist/sizemap.c:508
+#: plug-ins/gimpressionist/sizemap.c:460
 msgid "_Size:"
 msgstr "尺寸(_S)："
 
@@ -2907,7 +2883,7 @@ msgid "_Cubism..."
 msgstr "立體主義"
 
 #: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:113
-#: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:115
+#: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:82
 #, fuzzy
 msgid "<Image>/Filters/Artistic"
 msgstr "<Image>/濾鏡/藝術/立體主義(_C)..."
@@ -2960,8 +2936,8 @@ msgid "Curve Bend"
 msgstr "依曲線扭曲"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1278 plug-ins/gimpressionist/orientmap.c:504
-#: plug-ins/gimpressionist/sizemap.c:458 plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/common/curve_bend.c:1278 plug-ins/gimpressionist/orientmap.c:479
+#: plug-ins/gimpressionist/sizemap.c:410 plug-ins/ifscompose/ifscompose.c:927
 msgid "Preview"
 msgstr "預覽"
 
@@ -2981,7 +2957,7 @@ msgstr "自動更新預覽(_V)"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1331 plug-ins/common/mosaic.c:530
-#: plug-ins/common/ripple.c:446 plug-ins/gfig/gfig.c:3005
+#: plug-ins/common/ripple.c:446
 msgid "Options"
 msgstr "選項"
 
@@ -3360,7 +3336,7 @@ msgstr ""
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:678 plug-ins/gimpressionist/orientmap.c:552
+#: plug-ins/common/despeckle.c:678 plug-ins/gimpressionist/orientmap.c:527
 msgid "Type"
 msgstr "類型"
 
@@ -3373,7 +3349,7 @@ msgid "R_ecursive"
 msgstr ""
 
 #: plug-ins/common/despeckle.c:717 plug-ins/common/nlfilt.c:376
-#: plug-ins/common/nova.c:361 plug-ins/common/unsharp.c:762
+#: plug-ins/common/nova.c:361 plug-ins/common/unsharp.c:766
 #: plug-ins/common/whirlpinch.c:721 plug-ins/gflare/gflare.c:2677
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
@@ -3415,7 +3391,12 @@ msgstr "寬度(_W)："
 msgid "Create _histogram"
 msgstr "繪畫星形"
 
-#: plug-ins/common/dicom.c:134 plug-ins/common/dicom.c:160
+#: plug-ins/common/dicom.c:134
+#, fuzzy
+msgid "DICOM image"
+msgstr "影像(_A)"
+
+#: plug-ins/common/dicom.c:160
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr ""
 
@@ -3558,7 +3539,7 @@ msgstr ""
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: plug-ins/common/edge.c:683 plug-ins/common/unsharp.c:779
+#: plug-ins/common/edge.c:683 plug-ins/common/unsharp.c:783
 msgid "_Amount:"
 msgstr "程度(_A)："
 
@@ -3701,8 +3682,8 @@ msgid "On Film:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/common/film.c:1172 plug-ins/gfig/gfig.c:2056
-#: plug-ins/imagemap/imap_selection.c:404 plug-ins/rcm/rcm_dialog.c:164
+#: plug-ins/common/film.c:1172 plug-ins/imagemap/imap_selection.c:404
+#: plug-ins/rcm/rcm_dialog.c:164
 msgid "Selection"
 msgstr "選擇區域"
 
@@ -3916,44 +3897,44 @@ msgstr ""
 msgid "_RLE"
 msgstr "RLE"
 
-#: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:150
+#: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:152
 msgid "GIMP brush"
 msgstr ""
 
-#: plug-ins/common/gbr.c:369 plug-ins/common/gbr.c:381
+#: plug-ins/common/gbr.c:373 plug-ins/common/gbr.c:385
 msgid "Unsupported brush format"
 msgstr "不支援的筆刷格式"
 
-#: plug-ins/common/gbr.c:392
+#: plug-ins/common/gbr.c:396
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "GIMP 筆刷檔案‘%s’中含有錯誤"
 
-#: plug-ins/common/gbr.c:400
+#: plug-ins/common/gbr.c:404
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "筆刷檔案‘%s’中含有無效的 UTF-8 文字。"
 
-#: plug-ins/common/gbr.c:406 plug-ins/common/gih.c:484
-#: plug-ins/common/gih.c:1124 plug-ins/gflare/gflare.c:2976
+#: plug-ins/common/gbr.c:410 plug-ins/common/gih.c:488
+#: plug-ins/common/gih.c:1128 plug-ins/gflare/gflare.c:2976
 msgid "Unnamed"
 msgstr "未命名"
 
-#: plug-ins/common/gbr.c:578
+#: plug-ins/common/gbr.c:582
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP 筆刷檔必須為灰階或 RGBA 影像"
 
-#: plug-ins/common/gbr.c:663
+#: plug-ins/common/gbr.c:667
 msgid "Save as Brush"
 msgstr "儲存為筆刷"
 
 #. attach labels
-#: plug-ins/common/gbr.c:683 plug-ins/common/grid.c:784
+#: plug-ins/common/gbr.c:687 plug-ins/common/grid.c:784
 msgid "Spacing:"
 msgstr "間隔："
 
-#: plug-ins/common/gbr.c:694 plug-ins/common/gih.c:876
-#: plug-ins/common/pat.c:521 plug-ins/gimpressionist/presets.c:405
+#: plug-ins/common/gbr.c:698 plug-ins/common/gih.c:880
+#: plug-ins/common/pat.c:525 plug-ins/gimpressionist/presets.c:585
 msgid "Description:"
 msgstr "描述："
 
@@ -4086,7 +4067,7 @@ msgstr "反覆循環"
 msgid "_Delay between frames where unspecified:"
 msgstr "除非特別指定，否則顯示畫格後延遲以下的時間："
 
-#: plug-ins/common/gif.c:1386 plug-ins/common/mng.c:1408
+#: plug-ins/common/gif.c:1386 plug-ins/common/mng.c:1522
 msgid "milliseconds"
 msgstr "毫秒"
 
@@ -4150,78 +4131,78 @@ msgid ""
 "play or re-save perfectly."
 msgstr ""
 
-#: plug-ins/common/gih.c:196 plug-ins/common/gih.c:216
+#: plug-ins/common/gih.c:196 plug-ins/common/gih.c:218
 msgid "GIMP brush (animated)"
 msgstr ""
 
-#: plug-ins/common/gih.c:308
+#: plug-ins/common/gih.c:312
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "圖層 %s 沒有透明色版，會忽略該圖層"
 
-#: plug-ins/common/gih.c:477
+#: plug-ins/common/gih.c:481
 msgid "Error in GIMP brush pipe file."
 msgstr ""
 
-#: plug-ins/common/gih.c:543
+#: plug-ins/common/gih.c:547
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMP 筆刷檔似乎壞了。"
 
-#: plug-ins/common/gih.c:691
+#: plug-ins/common/gih.c:695
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr ""
 
-#: plug-ins/common/gih.c:839
+#: plug-ins/common/gih.c:843
 msgid "Save as Brush Pipe"
 msgstr ""
 
-#: plug-ins/common/gih.c:862
+#: plug-ins/common/gih.c:866
 #, fuzzy
 msgid "Spacing (percent):"
 msgstr "間隔(百分比)："
 
-#: plug-ins/common/gih.c:929
+#: plug-ins/common/gih.c:933
 msgid "Pixels"
 msgstr "像素"
 
-#: plug-ins/common/gih.c:934
+#: plug-ins/common/gih.c:938
 msgid "Cell size:"
 msgstr ""
 
-#: plug-ins/common/gih.c:946
+#: plug-ins/common/gih.c:950
 #, fuzzy
 msgid "Number of cells:"
 msgstr "顏色數目："
 
-#: plug-ins/common/gih.c:971
+#: plug-ins/common/gih.c:975
 msgid " Rows of "
 msgstr ""
 
-#: plug-ins/common/gih.c:983
+#: plug-ins/common/gih.c:987
 msgid " Columns on each layer"
 msgstr ""
 
-#: plug-ins/common/gih.c:987
+#: plug-ins/common/gih.c:991
 msgid " (Width Mismatch!) "
 msgstr " (寬度不符！) "
 
-#: plug-ins/common/gih.c:991
+#: plug-ins/common/gih.c:995
 msgid " (Height Mismatch!) "
 msgstr " (高度不符！) "
 
-#: plug-ins/common/gih.c:996
+#: plug-ins/common/gih.c:1000
 msgid "Display as:"
 msgstr ""
 
-#: plug-ins/common/gih.c:1005
+#: plug-ins/common/gih.c:1009
 msgid "Dimension:"
 msgstr ""
 
-#: plug-ins/common/gih.c:1043
+#: plug-ins/common/gih.c:1047
 msgid "Ranks:"
 msgstr ""
 
-#: plug-ins/common/gih.c:1080 plug-ins/gfig/gfig.c:2400
+#: plug-ins/common/gih.c:1084
 msgid "Selection:"
 msgstr ""
 
@@ -4288,18 +4269,17 @@ msgstr "參考線..."
 msgid "Drawing Grid..."
 msgstr "正在繪畫格線..."
 
-#: plug-ins/common/grid.c:636 plug-ins/gfig/gfig.c:2646
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
-#: plug-ins/imagemap/imap_toolbar.c:164
+#: plug-ins/common/grid.c:636 plug-ins/imagemap/imap_menu.c:382
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
 msgstr "格線"
 
 #. attach labels
-#: plug-ins/common/grid.c:715 plug-ins/pagecurl/pagecurl.c:574
+#: plug-ins/common/grid.c:715
 msgid "Horizontal"
 msgstr "水平"
 
-#: plug-ins/common/grid.c:717 plug-ins/pagecurl/pagecurl.c:575
+#: plug-ins/common/grid.c:717
 msgid "Vertical"
 msgstr "垂直"
 
@@ -4341,7 +4321,7 @@ msgstr "大理石紋"
 msgid "GIMP Table Magic"
 msgstr "GIMP 表格魔術(GTM)"
 
-#: plug-ins/common/gtm.c:422 plug-ins/gfig/gfig.c:3112
+#: plug-ins/common/gtm.c:422
 msgid "Warning"
 msgstr "警告"
 
@@ -4518,19 +4498,6 @@ msgstr "減低彩度(_S)"
 #: plug-ins/common/hot.c:616 plug-ins/common/waves.c:328
 msgid "_Blacken"
 msgstr "變黑(_B)"
-
-#: plug-ins/common/hrz.c:348
-#, c-format
-msgid "'%s' is not a HRZ file"
-msgstr "‘%s’不是 HRZ 格式檔案"
-
-#: plug-ins/common/hrz.c:454
-msgid "Image must be 256x240"
-msgstr "影像尺寸必須為 256×240"
-
-#: plug-ins/common/hrz.c:460
-msgid "Image must be RGB or GRAY"
-msgstr "影像必須使用 RGB 或灰階色系"
 
 #: plug-ins/common/illusion.c:105
 #, fuzzy
@@ -4738,97 +4705,101 @@ msgstr "JPEG 預覽"
 msgid "Export Preview"
 msgstr "匯出預覽圖"
 
-#: plug-ins/common/jpeg.c:931
+#: plug-ins/common/jpeg.c:763
+msgid "EXIF data will be ignored."
+msgstr ""
+
+#: plug-ins/common/jpeg.c:977
 msgid "JPEG preview"
 msgstr "JPEG 預覽"
 
-#: plug-ins/common/jpeg.c:1189
+#: plug-ins/common/jpeg.c:1239
 #, fuzzy, c-format
 msgid "File size: %02.01f kB"
 msgstr "大小：%ld 位元組(%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1623 plug-ins/common/jpeg.c:1721
+#: plug-ins/common/jpeg.c:1673 plug-ins/common/jpeg.c:1771
 #, fuzzy
 msgid "File size: unknown"
 msgstr "大小：不詳"
 
-#: plug-ins/common/jpeg.c:1687
+#: plug-ins/common/jpeg.c:1737
 msgid "Save as JPEG"
 msgstr "儲存為 JPEG"
 
-#: plug-ins/common/jpeg.c:1707
+#: plug-ins/common/jpeg.c:1757
 #, fuzzy
 msgid "_Quality:"
 msgstr "品質："
 
-#: plug-ins/common/jpeg.c:1711
+#: plug-ins/common/jpeg.c:1761
 #, fuzzy
 msgid "JPEG quality parameter"
 msgstr "參數"
 
-#: plug-ins/common/jpeg.c:1730
+#: plug-ins/common/jpeg.c:1780
 #, fuzzy
 msgid "Show _Preview in image window"
 msgstr "擷取一個視窗"
 
-#: plug-ins/common/jpeg.c:1743
+#: plug-ins/common/jpeg.c:1793
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "進階設定"
 
-#: plug-ins/common/jpeg.c:1771
+#: plug-ins/common/jpeg.c:1821
 #, fuzzy
 msgid "_Smoothing:"
 msgstr "平滑化："
 
-#: plug-ins/common/jpeg.c:1784
+#: plug-ins/common/jpeg.c:1834
 #, fuzzy
 msgid "Frequency (rows):"
 msgstr "頻率(_F)"
 
-#: plug-ins/common/jpeg.c:1798
+#: plug-ins/common/jpeg.c:1848
 msgid "Use restart markers"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1814 plug-ins/xjt/xjt.c:864
+#: plug-ins/common/jpeg.c:1864 plug-ins/xjt/xjt.c:864
 msgid "Optimize"
 msgstr "優化"
 
-#: plug-ins/common/jpeg.c:1828
+#: plug-ins/common/jpeg.c:1878
 msgid "Progressive"
 msgstr "漸進式"
 
-#: plug-ins/common/jpeg.c:1847
+#: plug-ins/common/jpeg.c:1897
 msgid "Force baseline JPEG"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1863
+#: plug-ins/common/jpeg.c:1913
 msgid "Save EXIF data"
 msgstr ""
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:1877
+#: plug-ins/common/jpeg.c:1927
 msgid "Subsampling:"
 msgstr "減低取樣率："
 
 #. DCT method
-#: plug-ins/common/jpeg.c:1901
+#: plug-ins/common/jpeg.c:1951
 msgid "DCT method:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1907
+#: plug-ins/common/jpeg.c:1957
 msgid "Fast Integer"
 msgstr "快速整數"
 
-#: plug-ins/common/jpeg.c:1908
+#: plug-ins/common/jpeg.c:1958
 msgid "Integer"
 msgstr "整數"
 
-#: plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1959
 msgid "Floating-Point"
 msgstr "浮點數"
 
-#: plug-ins/common/jpeg.c:1920
+#: plug-ins/common/jpeg.c:1970
 msgid "Comment"
 msgstr "備註"
 
@@ -5080,110 +5051,116 @@ msgstr "模糊參數"
 msgid "_Angle:"
 msgstr "角度(_A)："
 
-#: plug-ins/common/mng.c:1195
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
+#: plug-ins/common/mng.c:494 plug-ins/common/png.c:1564
+msgid "Couldn't losslessly save transparency, saving opacity instead."
+msgstr "儲存時無法不損失任何透明度資訊，因此改用不透明的方式儲存。"
+
+#: plug-ins/common/mng.c:1309
 msgid "Save as MNG"
 msgstr "另存為 MNG"
 
-#: plug-ins/common/mng.c:1208
+#: plug-ins/common/mng.c:1322
 msgid "MNG Options"
 msgstr "MNG 選項"
 
-#: plug-ins/common/mng.c:1214
+#: plug-ins/common/mng.c:1328
 msgid "Interlace"
 msgstr ""
 
-#: plug-ins/common/mng.c:1226
+#: plug-ins/common/mng.c:1340
 #, fuzzy
 msgid "Save background color"
 msgstr "儲存背景顏色(_B)"
 
-#: plug-ins/common/mng.c:1237
+#: plug-ins/common/mng.c:1351
 #, fuzzy
 msgid "Save gamma"
 msgstr "儲存 _gamma 值"
 
-#: plug-ins/common/mng.c:1247
+#: plug-ins/common/mng.c:1361
 #, fuzzy
 msgid "Save resolution"
 msgstr "儲存解析度(_R)"
 
-#: plug-ins/common/mng.c:1258
+#: plug-ins/common/mng.c:1372
 #, fuzzy
 msgid "Save creation time"
 msgstr "儲存檔案製作時間(_T)"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1391
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1278
+#: plug-ins/common/mng.c:1392
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1281
+#: plug-ins/common/mng.c:1395
 msgid "PNG + delta PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1282
+#: plug-ins/common/mng.c:1396
 msgid "JNG + delta PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1283
+#: plug-ins/common/mng.c:1397
 msgid "All PNG"
 msgstr "全部 PNG"
 
-#: plug-ins/common/mng.c:1284
+#: plug-ins/common/mng.c:1398
 msgid "All JNG"
 msgstr "全部 JNG"
 
-#: plug-ins/common/mng.c:1296
+#: plug-ins/common/mng.c:1410
 msgid "Default chunks type:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1299
+#: plug-ins/common/mng.c:1413
 msgid "Combine"
 msgstr "結合"
 
-#: plug-ins/common/mng.c:1300 plug-ins/gfig/gfig.c:2390
+#: plug-ins/common/mng.c:1414
 msgid "Replace"
 msgstr "取代"
 
-#: plug-ins/common/mng.c:1311
+#: plug-ins/common/mng.c:1425
 msgid "Default frame disposal:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1323
+#: plug-ins/common/mng.c:1437
 #, fuzzy
 msgid "PNG compression level:"
 msgstr "PNG 壓縮程度："
 
-#: plug-ins/common/mng.c:1331 plug-ins/common/png.c:1683
+#: plug-ins/common/mng.c:1445 plug-ins/common/png.c:1705
 msgid "Choose a high compression level for small file size"
 msgstr "較高的壓縮程度可產生較小的檔案"
 
-#: plug-ins/common/mng.c:1345
+#: plug-ins/common/mng.c:1459
 #, fuzzy
 msgid "JPEG compression quality:"
 msgstr "JPEG 壓縮品質："
 
-#: plug-ins/common/mng.c:1362
+#: plug-ins/common/mng.c:1476
 msgid "JPEG smoothing factor:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1372
+#: plug-ins/common/mng.c:1486
 #, fuzzy
 msgid "Animated MNG options"
 msgstr "MNG 動畫選項"
 
-#: plug-ins/common/mng.c:1378
+#: plug-ins/common/mng.c:1492
 msgid "Loop"
 msgstr "循環"
 
-#: plug-ins/common/mng.c:1392
+#: plug-ins/common/mng.c:1506
 msgid "Default frame delay:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1473
+#: plug-ins/common/mng.c:1584
 #, fuzzy
 msgid "MNG animation"
 msgstr "MNG 選項"
@@ -5392,8 +5369,7 @@ msgid "_Factory defaults"
 msgstr "使用預設值(_F)"
 
 #. anti-alias control
-#. 2
-#: plug-ins/common/newsprint.c:1376 plug-ins/gfig/gfig.c:2404
+#: plug-ins/common/newsprint.c:1376
 msgid "Antialiasing"
 msgstr "平滑化"
 
@@ -5631,17 +5607,17 @@ msgstr "1999 年 9 月 31 日"
 msgid "_Paper Tile..."
 msgstr "紙塊..."
 
-#: plug-ins/common/pat.c:104 plug-ins/common/pat.c:125
+#: plug-ins/common/pat.c:104 plug-ins/common/pat.c:127
 #, fuzzy
 msgid "GIMP pattern"
 msgstr "圖樣"
 
-#: plug-ins/common/pat.c:343
+#: plug-ins/common/pat.c:347
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "圖樣檔案‘%s’中含有無效的 UTF-8 文字。"
 
-#: plug-ins/common/pat.c:501
+#: plug-ins/common/pat.c:505
 msgid "Save as Pattern"
 msgstr "儲存為圖樣"
 
@@ -5775,10 +5751,6 @@ msgstr "簡介："
 msgid "Help:"
 msgstr "說明："
 
-#: plug-ins/common/plugindetails.c:416 plug-ins/common/spheredesigner.c:2617
-msgid "Type:"
-msgstr "類型："
-
 #: plug-ins/common/plugindetails.c:968
 msgid "Plugin Descriptions"
 msgstr "增效模組說明"
@@ -5824,93 +5796,87 @@ msgstr "樹狀顯示模式"
 msgid "Search:"
 msgstr "搜尋："
 
-#: plug-ins/common/png.c:246 plug-ins/common/png.c:264
-#: plug-ins/common/png.c:279 plug-ins/common/png.c:293
+#: plug-ins/common/png.c:249 plug-ins/common/png.c:267
+#: plug-ins/common/png.c:282 plug-ins/common/png.c:296
 msgid "PNG image"
 msgstr ""
 
-#: plug-ins/common/png.c:656
+#: plug-ins/common/png.c:659
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr ""
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:790
+#: plug-ins/common/png.c:793
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr ""
 
-#: plug-ins/common/png.c:845
+#: plug-ins/common/png.c:848
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 
-#: plug-ins/common/png.c:1162
+#: plug-ins/common/png.c:1165
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
-#: plug-ins/common/png.c:1546
-msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "儲存時無法不損失任何透明度資訊，因此改用不透明的方式儲存。"
-
-#: plug-ins/common/png.c:1571
+#: plug-ins/common/png.c:1593
 msgid "Save as PNG"
 msgstr "儲存為 PNG"
 
-#: plug-ins/common/png.c:1575
+#: plug-ins/common/png.c:1597
 #, fuzzy
 msgid "_Load defaults"
 msgstr "載入預設值(_L)"
 
-#: plug-ins/common/png.c:1576
+#: plug-ins/common/png.c:1598
 #, fuzzy
 msgid "_Save defaults"
 msgstr "儲存預設值(_S)"
 
-#: plug-ins/common/png.c:1597
+#: plug-ins/common/png.c:1619
 msgid "_Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1608
+#: plug-ins/common/png.c:1630
 msgid "Save _background color"
 msgstr "儲存背景顏色(_B)"
 
-#: plug-ins/common/png.c:1616
+#: plug-ins/common/png.c:1638
 msgid "Save _gamma"
 msgstr "儲存 _gamma 值"
 
-#: plug-ins/common/png.c:1625
+#: plug-ins/common/png.c:1647
 #, fuzzy
 msgid "Save layer o_ffset"
 msgstr "儲存圖層偏移位置(_F)"
 
-#: plug-ins/common/png.c:1634
+#: plug-ins/common/png.c:1656
 msgid "Save _resolution"
 msgstr "儲存解析度(_R)"
 
-#: plug-ins/common/png.c:1643
+#: plug-ins/common/png.c:1665
 msgid "Save creation _time"
 msgstr "儲存檔案製作時間(_T)"
 
-#: plug-ins/common/png.c:1651
+#: plug-ins/common/png.c:1673
 #, fuzzy
 msgid "Save comme_nt"
 msgstr "在檔案中儲存備註文字(_N)"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1688
 msgid "Save color _values from transparent pixels"
 msgstr ""
 
-#: plug-ins/common/png.c:1679
+#: plug-ins/common/png.c:1701
 #, fuzzy
 msgid "Co_mpression level:"
 msgstr "壓縮程度(_M)："
 
-#: plug-ins/common/png.c:1799
+#: plug-ins/common/png.c:1821
 msgid "Could not load PNG defaults"
 msgstr "無法載入 PNG 預設組態"
 
@@ -5979,41 +5945,41 @@ msgstr "Ascii"
 msgid "P_olar Coords..."
 msgstr ""
 
-#: plug-ins/common/polar.c:357
+#: plug-ins/common/polar.c:362
 msgid "Polarizing..."
 msgstr "正在轉換為極座標..."
 
-#: plug-ins/common/polar.c:588
+#: plug-ins/common/polar.c:593
 msgid "Polarize"
 msgstr "極座標化"
 
-#: plug-ins/common/polar.c:621
+#: plug-ins/common/polar.c:626
 #, fuzzy
 msgid "Circle _depth in percent:"
 msgstr "轉化為圓形的程度[%] (_D)："
 
-#: plug-ins/common/polar.c:630
+#: plug-ins/common/polar.c:635
 #, fuzzy
 msgid "Offset _angle:"
 msgstr "偏移角度(_A)："
 
-#: plug-ins/common/polar.c:642
+#: plug-ins/common/polar.c:647
 #, fuzzy
 msgid "_Map backwards"
 msgstr "向相反方向映射(_M)"
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:653
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "如選用本選項，映射程序會在右邊開始，否則會在左邊開始。"
 
-#: plug-ins/common/polar.c:656
+#: plug-ins/common/polar.c:661
 #, fuzzy
 msgid "Map from _top"
 msgstr "從四週開始映射(_T)"
 
-#: plug-ins/common/polar.c:662
+#: plug-ins/common/polar.c:667
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -6021,12 +5987,12 @@ msgstr ""
 "如果不選用本選項，映射後的影像底部表示原來影像的中心點，而頂端表示原來影像的"
 "四周。如果選用則會以相反方向映射。"
 
-#: plug-ins/common/polar.c:671
+#: plug-ins/common/polar.c:676
 #, fuzzy
 msgid "To _polar"
 msgstr "變成圓形(_P)"
 
-#: plug-ins/common/polar.c:677
+#: plug-ins/common/polar.c:682
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -6107,7 +6073,7 @@ msgid "Gray"
 msgstr "灰"
 
 #: plug-ins/common/postscript.c:2885 plug-ins/common/xpm.c:462
-#: plug-ins/gimpressionist/color.c:40 plug-ins/gimpressionist/general.c:100
+#: plug-ins/gimpressionist/color.c:38 plug-ins/gimpressionist/general.c:138
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1399
 msgid "Color"
 msgstr "色彩"
@@ -6464,45 +6430,45 @@ msgstr "<Toolbox>/檔案/擷取/_TWAIN..."
 msgid "Error grabbing the pointer"
 msgstr "擷取滑鼠指標時發生錯誤"
 
-#: plug-ins/common/screenshot.c:467
+#: plug-ins/common/screenshot.c:471
 msgid "Loading Screen Shot..."
 msgstr "正在載入畫面快照..."
 
-#: plug-ins/common/screenshot.c:474 plug-ins/common/screenshot.c:634
+#: plug-ins/common/screenshot.c:478 plug-ins/common/screenshot.c:638
 msgid "Screen Shot"
 msgstr "畫面快照"
 
-#: plug-ins/common/screenshot.c:582
+#: plug-ins/common/screenshot.c:586
 msgid "Specified window not found"
 msgstr "找不到指定的視窗"
 
-#: plug-ins/common/screenshot.c:605
+#: plug-ins/common/screenshot.c:609
 msgid "Error obtaining Screen Shot"
 msgstr "擷取畫面快照時發生錯誤"
 
 #. single window
 #. Action area
-#: plug-ins/common/screenshot.c:669 plug-ins/winsnap/winsnap.c:905
+#: plug-ins/common/screenshot.c:673 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "擷取"
 
-#: plug-ins/common/screenshot.c:676
+#: plug-ins/common/screenshot.c:680
 msgid "a _Single Window"
 msgstr "單一視窗(_S)"
 
-#: plug-ins/common/screenshot.c:692
+#: plug-ins/common/screenshot.c:696
 msgid "S_elect Window After"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:705 plug-ins/common/screenshot.c:745
+#: plug-ins/common/screenshot.c:709 plug-ins/common/screenshot.c:749
 msgid "Seconds Delay"
 msgstr "秒"
 
-#: plug-ins/common/screenshot.c:713
+#: plug-ins/common/screenshot.c:717
 msgid "the _Whole Screen"
 msgstr "整個畫面(_W)"
 
-#: plug-ins/common/screenshot.c:732
+#: plug-ins/common/screenshot.c:736
 msgid "Grab _After"
 msgstr ""
 
@@ -6940,7 +6906,7 @@ msgstr "使用前景顏色"
 msgid "Use the background color"
 msgstr "使用背景顏色"
 
-#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:92
+#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:132
 msgid "Solid"
 msgstr "純色"
 
@@ -7026,7 +6992,7 @@ msgid "Color Selection Dialog"
 msgstr "顏色選擇對話方塊"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2662 plug-ins/gimpressionist/paper.c:150
+#: plug-ins/common/spheredesigner.c:2662 plug-ins/gimpressionist/paper.c:162
 #: plug-ins/ifscompose/ifscompose.c:584
 msgid "Scale:"
 msgstr "比例："
@@ -7317,6 +7283,10 @@ msgstr ""
 msgid "Threshold Alpha"
 msgstr ""
 
+#: plug-ins/common/threshold_alpha.c:240
+msgid "Threshold:"
+msgstr "界限值："
+
 #: plug-ins/common/tiff.c:211
 #, fuzzy
 msgid "TIFF images"
@@ -7347,47 +7317,47 @@ msgstr ""
 "準備載入的影像的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行"
 "轉換，而在這個過程中將會失去一部份資訊。"
 
-#: plug-ins/common/tiff.c:1941
+#: plug-ins/common/tiff.c:1950
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 "TIFF 影像格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
-#: plug-ins/common/tiff.c:2090
+#: plug-ins/common/tiff.c:2099
 msgid "Save as TIFF"
 msgstr "儲存為 TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2104
+#: plug-ins/common/tiff.c:2113
 msgid "Compression"
 msgstr "壓縮"
 
-#: plug-ins/common/tiff.c:2108
+#: plug-ins/common/tiff.c:2117
 msgid "_None"
 msgstr "無(_N)"
 
-#: plug-ins/common/tiff.c:2109
+#: plug-ins/common/tiff.c:2118
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2110
+#: plug-ins/common/tiff.c:2119
 msgid "_Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2111
+#: plug-ins/common/tiff.c:2120
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: plug-ins/common/tiff.c:2112
+#: plug-ins/common/tiff.c:2121
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2121
+#: plug-ins/common/tiff.c:2130
 msgid "Save _color values from transparent pixels"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2136 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:2146 plug-ins/common/xbm.c:1205
 msgid "Comment:"
 msgstr "備註："
 
@@ -7611,7 +7581,7 @@ msgstr "反銳化遮罩"
 msgid "Merging..."
 msgstr ""
 
-#: plug-ins/common/unsharp.c:732
+#: plug-ins/common/unsharp.c:736
 msgid "Unsharp Mask"
 msgstr "反銳化遮罩"
 
@@ -7839,7 +7809,7 @@ msgid "Smear"
 msgstr ""
 
 #: plug-ins/common/warp.c:510 plug-ins/fits/fits.c:993
-#: plug-ins/flame/flame.c:1098 plug-ins/gfig/gfig.c:2575
+#: plug-ins/flame/flame.c:1098
 msgid "Black"
 msgstr "黑"
 
@@ -8116,7 +8086,7 @@ msgstr "兩者(_H)"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1008 plug-ins/gimpressionist/orientmap.c:600
+#: plug-ins/common/wind.c:1008 plug-ins/gimpressionist/orientmap.c:575
 msgid "_Strength:"
 msgstr "強度(_S)："
 
@@ -8334,7 +8304,7 @@ msgstr "透明度臨界值(_A)："
 
 #: plug-ins/common/xwd.c:241 plug-ins/common/xwd.c:262
 #, fuzzy
-msgid "X window image"
+msgid "X window dump"
 msgstr "裁剪成影像尺寸"
 
 #: plug-ins/common/xwd.c:396
@@ -8478,8 +8448,7 @@ msgstr "載入 FITS 檔"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr ""
 
-#: plug-ins/fits/fits.c:994 plug-ins/gfig/gfig.c:2077
-#: plug-ins/gfig/gfig.c:2576
+#: plug-ins/fits/fits.c:994
 msgid "White"
 msgstr "白"
 
@@ -8542,8 +8511,8 @@ msgstr "隨機化(_R)"
 msgid "Same"
 msgstr ""
 
-#: plug-ins/flame/flame.c:718 plug-ins/gimpressionist/orientation.c:129
-#: plug-ins/gimpressionist/size.c:121
+#: plug-ins/flame/flame.c:718 plug-ins/gimpressionist/orientation.c:142
+#: plug-ins/gimpressionist/size.c:135
 msgid "Random"
 msgstr "隨機"
 
@@ -8555,7 +8524,7 @@ msgstr "漩渦"
 msgid "Horseshoe"
 msgstr "馬蹄"
 
-#: plug-ins/flame/flame.c:724 plug-ins/gfig/gfig.c:2559
+#: plug-ins/flame/flame.c:724
 msgid "Polar"
 msgstr "極線"
 
@@ -8768,590 +8737,80 @@ msgstr "拖曳時同時更新預覽圖"
 msgid "Preview Size"
 msgstr "預覽圖尺寸"
 
-#: plug-ins/gfig/gfig.c:348
+#: plug-ins/gfig/gfig.c:133
 #, fuzzy
 msgid "_Gfig..."
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig.c:627
-msgid "First Gfig"
-msgstr "第一個 Gfig 圖形"
-
-#: plug-ins/gfig/gfig.c:1105
-msgid "Save Gfig Drawing"
-msgstr "儲存 Gfig 圖形"
-
-#: plug-ins/gfig/gfig.c:1262
-msgid "Show previous object"
-msgstr "顯示上一件物件"
-
-#: plug-ins/gfig/gfig.c:1275
-msgid "Show next object"
-msgstr "顯示下一件物件"
-
-#: plug-ins/gfig/gfig.c:1287
-msgid "All"
-msgstr "全部"
-
-#: plug-ins/gfig/gfig.c:1288
-msgid "Show all objects"
-msgstr "顯示所有物件"
-
-#: plug-ins/gfig/gfig.c:1389
-msgid "Number of Sides/Points/Turns:"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:1399
-msgid "Clockwise"
-msgstr "順時針"
-
-#: plug-ins/gfig/gfig.c:1400
-msgid "Anti-Clockwise"
-msgstr "逆時針"
-
-#: plug-ins/gfig/gfig.c:1410 plug-ins/gimpressionist/orientation.c:101
-#: plug-ins/print/gimp_main_window.c:500
-msgid "Orientation:"
-msgstr "方向："
-
-#: plug-ins/gfig/gfig.c:1442
-msgid "Create line"
-msgstr "繪畫直線"
-
-#: plug-ins/gfig/gfig.c:1447
-msgid "Create circle"
-msgstr "繪畫圓形"
-
-#: plug-ins/gfig/gfig.c:1452
-msgid "Create ellipse"
-msgstr "繪畫橢圓"
-
-#: plug-ins/gfig/gfig.c:1457
-msgid "Create arch"
-msgstr "繪畫弧線"
-
-#: plug-ins/gfig/gfig.c:1466
-msgid "Create reg polygon"
-msgstr "繪畫正多邊形"
-
-#: plug-ins/gfig/gfig.c:1474
-msgid "Create star"
-msgstr "繪畫星形"
-
-#: plug-ins/gfig/gfig.c:1483
-msgid "Create spiral"
-msgstr "繪畫螺旋"
-
-#: plug-ins/gfig/gfig.c:1493
-msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "繪畫貝茲曲線。Shift + 滑鼠按鈕代表完成。"
-
-#: plug-ins/gfig/gfig.c:1499
-msgid "Move an object"
-msgstr "移動物件"
-
-#: plug-ins/gfig/gfig.c:1504
-msgid "Move a single point"
-msgstr "移動一點"
-
-#: plug-ins/gfig/gfig.c:1509
-msgid "Copy an object"
-msgstr "複製物件"
-
-#: plug-ins/gfig/gfig.c:1514
-msgid "Delete an object"
-msgstr "刪除物件"
-
-#: plug-ins/gfig/gfig.c:1665 plug-ins/gfig/gfig.c:2055
-#: plug-ins/gfig/gfig.c:2991
-msgid "Brush"
-msgstr "筆刷"
-
-#: plug-ins/gfig/gfig.c:1666
-msgid "Airbrush"
-msgstr "噴槍"
-
-#: plug-ins/gfig/gfig.c:1667
-msgid "Pencil"
-msgstr "鉛筆"
-
-#. 5
-#: plug-ins/gfig/gfig.c:1668 plug-ins/gfig/gfig.c:2435
-msgid "Pattern"
-msgstr "圖樣"
-
-#: plug-ins/gfig/gfig.c:1683
+#: plug-ins/gfig/gfig.c:723
 msgid ""
-"Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to circles/"
-"ellipses if the \"Approx. Circles/Ellipses\" toggle is set."
+"Error trying to save figure as a parasite: can't attach parasite to "
+"drawable.\n"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2032 plug-ins/rcm/rcm_dialog.c:120
-msgid "Original"
-msgstr "原來"
-
-#: plug-ins/gfig/gfig.c:2033
-msgid "New"
-msgstr "新增"
-
-#: plug-ins/gfig/gfig.c:2034
-msgid "Multiple"
-msgstr "多個圖層"
-
-#: plug-ins/gfig/gfig.c:2043
-#, fuzzy
-msgid ""
-"Draw all objects on one layer (original or new) or one object per layer."
-msgstr ""
-"在一個圖層上繪畫所有物件 (原來的圖層或者新增圖層)，還是每個物件使用一個圖層"
-
-#: plug-ins/gfig/gfig.c:2051
-msgid "Draw on:"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2057
-msgid "Selection+Fill"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2066
-msgid ""
-"Draw type. Either a brush or a selection. See brush page or selection page "
-"for more options."
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2071
-msgid "Using:"
-msgstr "使用："
-
-#: plug-ins/gfig/gfig.c:2074 plug-ins/gimpressionist/general.c:113
-msgid "Transparent"
-msgstr "透明"
-
-#: plug-ins/gfig/gfig.c:2076 plug-ins/gfig/gfig.c:2436
-msgid "Foreground"
-msgstr "前景顏色"
-
-#: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
-#: plug-ins/imagemap/imap_cmd_copy_object.c:55
-#: plug-ins/imagemap/imap_object_popup.c:113
-#: plug-ins/imagemap/imap_toolbar.c:127
-msgid "Copy"
-msgstr "複製"
-
-#: plug-ins/gfig/gfig.c:2087
-#, fuzzy
-msgid ""
-"Layer background type. Copy causes the previous layer to be copied before "
-"the draw is performed."
-msgstr "圖層背景的類型。會在繪畫時複製之前的圖層。"
-
-#: plug-ins/gfig/gfig.c:2093
-msgid "Background:"
-msgstr "背景："
-
-#: plug-ins/gfig/gfig.c:2096
-#, fuzzy
-msgid "Reverse line"
-msgstr "相反方向(_E)"
-
-#: plug-ins/gfig/gfig.c:2103
-msgid "Draw lines in reverse order"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2111
-#, fuzzy
-msgid "Scale to image"
-msgstr "縮放至影像"
-
-#: plug-ins/gfig/gfig.c:2119
-msgid "Scale drawings to images size"
-msgstr "將繪圖縮放至影像尺寸"
-
-#: plug-ins/gfig/gfig.c:2141
-#, fuzzy
-msgid "Approx. circles/ellipses"
-msgstr "近似圓形/橢圓"
-
-#: plug-ins/gfig/gfig.c:2148
-msgid ""
-"Approx. circles & ellipses using lines. Allows the use of brush fading with "
-"these types of objects."
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2198
-msgid "Gfig Brush Selection"
-msgstr "Gfig 選擇筆刷"
-
-#: plug-ins/gfig/gfig.c:2236
-msgid "Fade out:"
-msgstr "淡出："
-
-#: plug-ins/gfig/gfig.c:2259
-msgid "Gradient:"
-msgstr "漸層："
-
-#: plug-ins/gfig/gfig.c:2279
-msgid "Pressure:"
-msgstr "壓力："
-
-#: plug-ins/gfig/gfig.c:2297
-#, fuzzy
-msgid "No options..."
-msgstr "沒有選項..."
-
-#. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:2312
-#, fuzzy
-msgid "Set brush..."
-msgstr "設定筆刷..."
-
-#. The secltion settings -
-#. * 1) Type (combo box)
-#. * 2) Anti A (toggle)
-#. * 3) Feather (toggle)
-#. * 4) F radius (slider)
-#. * 5) Fill type (combo box)
-#. * 6) Opacity (slider)
-#. * 7) When to fill (toggle)
-#. * 8) Arc as segment/sector
-#.
-#. 1
-#: plug-ins/gfig/gfig.c:2388
-msgid "Add"
-msgstr "相加"
-
-#: plug-ins/gfig/gfig.c:2389
-msgid "Subtract"
-msgstr "相減"
-
-#: plug-ins/gfig/gfig.c:2391
-msgid "Intersect"
-msgstr "交集"
-
-#. 3
-#: plug-ins/gfig/gfig.c:2413
-msgid "Feather"
-msgstr "羽化"
-
-#: plug-ins/gfig/gfig.c:2431
-msgid "Radius:"
-msgstr "半徑："
-
-#: plug-ins/gfig/gfig.c:2446
-#, fuzzy
-msgid "Fill type:"
-msgstr "填色方式："
-
-#: plug-ins/gfig/gfig.c:2459
-msgid "Fill Opacity:"
-msgstr "填色時的透明度："
-
-#. 7
-#: plug-ins/gfig/gfig.c:2463
-#, fuzzy
-msgid "Each selection"
-msgstr "顯示選擇區域"
-
-#: plug-ins/gfig/gfig.c:2464
-#, fuzzy
-msgid "All selections"
-msgstr "選擇區域"
-
-#: plug-ins/gfig/gfig.c:2473
-msgid "Fill after:"
-msgstr ""
-
-#. 8
-#: plug-ins/gfig/gfig.c:2477
-msgid "Segment"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2478
-msgid "Sector"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2487
-msgid "Arc as:"
-msgstr ""
-
-#. Put buttons in
-#: plug-ins/gfig/gfig.c:2538
-#, fuzzy
-msgid "Show image"
-msgstr "顯示影像"
-
-#: plug-ins/gfig/gfig.c:2549
-#, fuzzy
-msgid "Reload image"
-msgstr "重新載入影像"
-
-#: plug-ins/gfig/gfig.c:2558 plug-ins/imagemap/imap_menu.c:366
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
-msgid "Rectangle"
-msgstr "矩形"
-
-#: plug-ins/gfig/gfig.c:2560
-msgid "Isometric"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2569
-#, fuzzy
-msgid "Grid type:"
-msgstr "格線類型："
-
-#: plug-ins/gfig/gfig.c:2574 plug-ins/gflare/gflare.c:562
-msgid "Normal"
-msgstr "一般"
-
-#: plug-ins/gfig/gfig.c:2577
-msgid "Grey"
-msgstr "灰"
-
-#: plug-ins/gfig/gfig.c:2578
-msgid "Darker"
-msgstr "較深"
-
-#: plug-ins/gfig/gfig.c:2579
-msgid "Lighter"
-msgstr "較淺"
-
-#: plug-ins/gfig/gfig.c:2580
-#, fuzzy
-msgid "Very dark"
-msgstr "很深"
-
-#: plug-ins/gfig/gfig.c:2589
-#, fuzzy
-msgid "Grid color:"
-msgstr "格線顏色："
-
-#: plug-ins/gfig/gfig.c:2593
-#, fuzzy
-msgid "Max undo:"
-msgstr "復原次數上限："
-
-#: plug-ins/gfig/gfig.c:2601
-#, fuzzy
-msgid "Show position"
-msgstr "顯示位置"
-
-#: plug-ins/gfig/gfig.c:2612
-#, fuzzy
-msgid "Hide control points"
-msgstr "隱藏控制點"
-
-#: plug-ins/gfig/gfig.c:2656
-#, fuzzy
-msgid "Show grid"
-msgstr "靠齊參考線"
-
-#. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
-#. it from the user interface
-#: plug-ins/gfig/gfig.c:2679
-#, fuzzy
-msgid "Lock on grid"
-msgstr "鎖定格線"
-
-#: plug-ins/gfig/gfig.c:2694
-msgid "Grid spacing:"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:2759
-msgid "Object"
-msgstr "物件"
-
-#: plug-ins/gfig/gfig.c:2801
-msgid "Create a new Gfig object collection for editing"
-msgstr "建立用來編輯的新 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:2811
-msgid "Load a single Gfig object collection"
-msgstr "載入單一的 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:2819
-msgid "Edit Gfig object collection"
-msgstr "編輯 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:2823
-msgid "_Merge"
-msgstr "合併(_M)"
-
-#: plug-ins/gfig/gfig.c:2827
-#, fuzzy
-msgid "Merge Gfig Ooject collection into the current edit session"
-msgstr "建立用來編輯的新 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:2836
-msgid "Delete currently selected Gfig Object collection"
-msgstr "刪除目前選擇的 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:2846
-msgid "Select folder and rescan Gfig object collections"
-msgstr "選取目錄並重新掃瞄 Gfig 物件集"
-
-#. Position labels
-#: plug-ins/gfig/gfig.c:2873 plug-ins/gimpressionist/size.c:99
-msgid "Size:"
-msgstr "尺寸："
-
-#. Start building the dialog up
-#: plug-ins/gfig/gfig.c:2931
-msgid "Gfig"
-msgstr "Gfig"
-
-#: plug-ins/gfig/gfig.c:2940 plug-ins/gfig/gfig.c:2986
-msgid "Paint"
-msgstr "繪畫"
-
-#: plug-ins/gfig/gfig.c:2999 plug-ins/imagemap/imap_cmd_select.c:53
-#: plug-ins/imagemap/imap_tools.c:144
-msgid "Select"
-msgstr ""
-
-#: plug-ins/gfig/gfig.c:3109
+#: plug-ins/gfig/gfig.c:744
 #, c-format
-msgid "%d unsaved Gfig objects. Continue with exiting?"
-msgstr "有 %d 個未儲存的 Gfig 物件。確定要離開？"
-
-#: plug-ins/gfig/gfig.c:3278
-#, fuzzy
-msgid "Enter Gfig object name"
-msgstr "請輸入 Gfig 物件名稱"
-
-#: plug-ins/gfig/gfig.c:3303
-#, fuzzy
-msgid "Gfig object name:"
-msgstr "Gfig 物件名稱："
-
-#. the dialog
-#: plug-ins/gfig/gfig.c:3358
-#, fuzzy
-msgid "Rescan for Gfig objects"
-msgstr "重新掃瞄 Gfig 物件"
-
-#: plug-ins/gfig/gfig.c:3375
-#, fuzzy
-msgid "Add Gfig path"
-msgstr "加入 Gfig 路徑"
-
-#. Load a single object
-#: plug-ins/gfig/gfig.c:3448
-msgid "Load Gfig object collection"
-msgstr "載入 Gfig 物件集"
-
-#: plug-ins/gfig/gfig.c:3476
-msgid "Error in copy layer for onlayers"
+msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3589
-#, fuzzy, c-format
-msgid "Gfig layer %d"
-msgstr "Gfig 圖層 %d"
-
-#: plug-ins/gfig/gfig.c:3663
-msgid "About Gfig"
-msgstr "關於 Gfig"
-
-#: plug-ins/gfig/gfig.c:3689
-msgid "Gfig - GIMP plug-in"
-msgstr "Gfig - GIMP 增效模組"
-
-#: plug-ins/gfig/gfig.c:3694
-msgid "Release 2.0"
-msgstr "2.0 版本"
-
-#: plug-ins/gfig/gfig.c:3729
-msgid "New Gfig Object"
-msgstr "新增 gfig 物件"
-
-#: plug-ins/gfig/gfig.c:3850
-#, fuzzy
-msgid "Delete Gfig drawing"
-msgstr "刪除 Gfig 圖畫"
-
-#: plug-ins/gfig/gfig.c:3902
-msgid "Editing read-only object - you will not be able to save it"
-msgstr "唯讀物件 - 編輯後將無法儲存"
-
-#. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:4001
-#, c-format
-msgid "%s copy"
-msgstr "%s 複製本"
-
-#: plug-ins/gfig/gfig.c:4373
-msgid "Error reading file"
-msgstr "讀取檔案發生錯誤"
-
-#: plug-ins/gfig/gfig-bezier.c:523
+#: plug-ins/gfig/gfig-bezier.c:446
 msgid "Bezier Settings"
 msgstr "貝茲曲線設定"
 
-#: plug-ins/gfig/gfig-bezier.c:544
+#: plug-ins/gfig/gfig-bezier.c:467
 msgid "Closed"
 msgstr "封閉"
 
-#: plug-ins/gfig/gfig-bezier.c:549
+#: plug-ins/gfig/gfig-bezier.c:472
 msgid "Close curve on completion"
 msgstr "完成時封閉曲線"
 
-#: plug-ins/gfig/gfig-bezier.c:554
+#: plug-ins/gfig/gfig-bezier.c:477
 msgid "Show Line Frame"
 msgstr ""
 
-#: plug-ins/gfig/gfig-bezier.c:559
+#: plug-ins/gfig/gfig-bezier.c:482
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 
-#: plug-ins/gfig/gfig-dobject.c:423
+#: plug-ins/gfig/gfig-dobject.c:588
 msgid "Hey where has the object gone ?"
 msgstr "嘿，物件到哪裡去了？"
 
-#: plug-ins/gfig/gfig-poly.c:56
+#: plug-ins/gfig/gfig-dobject.c:1018
+msgid "Error reading file"
+msgstr "讀取檔案發生錯誤"
+
+#: plug-ins/gfig/gfig-dobject.c:1108
+msgid "Editing read-only object - you will not be able to save it"
+msgstr "唯讀物件 - 編輯後將無法儲存"
+
+#: plug-ins/gfig/gfig-poly.c:55
 msgid "Regular Polygon Number of Sides"
 msgstr "正多邊形邊數"
 
-#: plug-ins/gfig/gfig-preview.c:504
+#: plug-ins/gfig/gfig-preview.c:329
 msgid "Object Details"
 msgstr "物件的細節"
 
-#: plug-ins/gfig/gfig-preview.c:532
-msgid "Collection Details"
-msgstr "物件集細節"
-
-#: plug-ins/gfig/gfig-preview.c:540
-#, fuzzy
-msgid "Draw name:"
-msgstr "形狀名稱："
-
-#: plug-ins/gfig/gfig-preview.c:546 plug-ins/imagemap/imap_settings.c:94
-msgid "Filename:"
-msgstr "檔案名稱："
-
-#: plug-ins/gfig/gfig-preview.c:552 plug-ins/gfig/gfig-preview.c:558
-msgid "(none)"
-msgstr "(無)"
-
-#: plug-ins/gfig/gfig-preview.c:577 plug-ins/gfig/gfig-preview.c:608
-#, c-format
-msgid "<NONE>"
-msgstr "<無>"
-
 #. Position labels
-#: plug-ins/gfig/gfig-preview.c:643
+#: plug-ins/gfig/gfig-preview.c:379
 #, fuzzy
 msgid "XY position:"
 msgstr "座標位置："
 
-#: plug-ins/gfig/gfig-spiral.c:57
+#: plug-ins/gfig/gfig-spiral.c:56
 #, fuzzy
 msgid "Spiral Number of Turns"
 msgstr "螺旋形點數"
 
-#: plug-ins/gfig/gfig-star.c:56
+#: plug-ins/gfig/gfig-star.c:55
 msgid "Star Number of Points"
 msgstr "星形點數"
+
+#: plug-ins/gflare/gflare.c:562
+msgid "Normal"
+msgstr "一般"
 
 #: plug-ins/gflare/gflare.c:563
 msgid "Addition"
@@ -9535,7 +8994,7 @@ msgstr "繪畫放射光線選項"
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3408 plug-ins/gimpressionist/general.c:57
+#: plug-ins/gflare/gflare.c:3408 plug-ins/gimpressionist/general.c:104
 #: plug-ins/imagemap/imap_preferences.c:443
 msgid "_General"
 msgstr "一般(_G)"
@@ -9646,613 +9105,623 @@ msgstr ""
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:201
+#: plug-ins/gimpressionist/brush.c:215
 msgid "Can only save drawables!"
 msgstr "只可以儲存可繪物件！"
 
-#: plug-ins/gimpressionist/brush.c:206
+#: plug-ins/gimpressionist/brush.c:220
 msgid "Save Brush"
 msgstr "儲存筆刷"
 
-#: plug-ins/gimpressionist/brush.c:392
+#: plug-ins/gimpressionist/brush.c:440
 msgid "_Brush"
 msgstr "筆刷(_B)"
 
-#: plug-ins/gimpressionist/brush.c:425 plug-ins/print/gimp_color_window.c:402
+#: plug-ins/gimpressionist/brush.c:474 plug-ins/print/gimp_color_window.c:402
 msgid "Gamma:"
 msgstr "Gamma："
 
-#: plug-ins/gimpressionist/brush.c:442
+#: plug-ins/gimpressionist/brush.c:491
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "更改所選筆刷的 gamma(亮度)值"
 
-#: plug-ins/gimpressionist/brush.c:450
+#: plug-ins/gimpressionist/brush.c:499
 msgid "Select:"
 msgstr "選取："
 
-#: plug-ins/gimpressionist/brush.c:479
+#: plug-ins/gimpressionist/brush.c:528
 msgid "Aspect ratio:"
 msgstr "長寬比："
 
-#: plug-ins/gimpressionist/brush.c:483
+#: plug-ins/gimpressionist/brush.c:532
 msgid "Specifies the aspect ratio of the brush"
 msgstr "指定筆刷的長寬比"
 
-#: plug-ins/gimpressionist/brush.c:492 plug-ins/gimpressionist/paper.c:162
+#: plug-ins/gimpressionist/brush.c:541 plug-ins/gimpressionist/paper.c:174
 msgid "Relief:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:496 plug-ins/gimpressionist/paper.c:166
+#: plug-ins/gimpressionist/brush.c:545 plug-ins/gimpressionist/paper.c:178
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:34
+#: plug-ins/gimpressionist/color.c:32
 msgid "Co_lor"
 msgstr "色彩(_L)"
 
-#: plug-ins/gimpressionist/color.c:44
+#: plug-ins/gimpressionist/color.c:42
 msgid "A_verage under brush"
 msgstr "筆刷下的平均顏色(_V)"
 
-#: plug-ins/gimpressionist/color.c:46
+#: plug-ins/gimpressionist/color.c:44
 msgid "C_enter of brush"
 msgstr "筆刷中心點(_E)"
 
-#: plug-ins/gimpressionist/color.c:53
+#: plug-ins/gimpressionist/color.c:51
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "依筆刷下的所有像素的平均顏色來計算顏色"
 
-#: plug-ins/gimpressionist/color.c:57
+#: plug-ins/gimpressionist/color.c:55
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "取筆刷中心點的顏色"
 
-#: plug-ins/gimpressionist/color.c:71
+#: plug-ins/gimpressionist/color.c:66
 msgid "Color _noise:"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:75
+#: plug-ins/gimpressionist/color.c:70
 msgid "Adds random noise to the color"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:72
+#: plug-ins/gimpressionist/general.c:118
 msgid "Keep original"
 msgstr "保留"
 
-#: plug-ins/gimpressionist/general.c:78
+#: plug-ins/gimpressionist/general.c:119
 msgid "Preserve the original image as a background"
 msgstr "保留原來的影像作為背景"
 
-#: plug-ins/gimpressionist/general.c:80
+#: plug-ins/gimpressionist/general.c:123
 msgid "From paper"
 msgstr "使用紙張"
 
-#: plug-ins/gimpressionist/general.c:86
+#: plug-ins/gimpressionist/general.c:124
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:98
+#: plug-ins/gimpressionist/general.c:133
 msgid "Solid colored background"
 msgstr "純色背景"
 
-#: plug-ins/gimpressionist/general.c:119
+#: plug-ins/gimpressionist/general.c:152
+msgid "Transparent"
+msgstr "透明"
+
+#: plug-ins/gimpressionist/general.c:153
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "使用透明背景；只會顯示新繪畫的筆劃"
 
-#: plug-ins/gimpressionist/general.c:134
+#: plug-ins/gimpressionist/general.c:171
 msgid "Paint edges"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:139
+#: plug-ins/gimpressionist/general.c:176
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:143 plug-ins/maze/maze_face.c:277
+#: plug-ins/gimpressionist/general.c:180 plug-ins/maze/maze_face.c:276
 msgid "Tileable"
 msgstr "可鋪排"
 
-#: plug-ins/gimpressionist/general.c:147
+#: plug-ins/gimpressionist/general.c:184
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "決定最終的影像可否重複鋪排"
 
-#: plug-ins/gimpressionist/general.c:151
+#: plug-ins/gimpressionist/general.c:188
 msgid "Drop Shadow"
 msgstr "陰影"
 
-#: plug-ins/gimpressionist/general.c:156
+#: plug-ins/gimpressionist/general.c:193
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "為每一筆加上陰影效果"
 
-#: plug-ins/gimpressionist/general.c:168
+#: plug-ins/gimpressionist/general.c:205
 msgid "Edge darken:"
 msgstr "邊緣的陰暗度："
 
-#: plug-ins/gimpressionist/general.c:172
+#: plug-ins/gimpressionist/general.c:209
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "每一筆的邊緣變黑的程度"
 
-#: plug-ins/gimpressionist/general.c:177
+#: plug-ins/gimpressionist/general.c:214
 msgid "Shadow darken:"
 msgstr "陰影的陰暗度："
 
-#: plug-ins/gimpressionist/general.c:181
+#: plug-ins/gimpressionist/general.c:218
 msgid "How much to \"darken\" the drop shadow"
 msgstr "陰影變黑的程度"
 
-#: plug-ins/gimpressionist/general.c:186
+#: plug-ins/gimpressionist/general.c:223
 msgid "Shadow depth:"
 msgstr "陰影深度："
 
-#: plug-ins/gimpressionist/general.c:190
+#: plug-ins/gimpressionist/general.c:227
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "陰影的深度，即是它離原來的物件有多遠"
 
-#: plug-ins/gimpressionist/general.c:195
+#: plug-ins/gimpressionist/general.c:232
 msgid "Shadow blur:"
 msgstr "陰影模糊化："
 
-#: plug-ins/gimpressionist/general.c:199
+#: plug-ins/gimpressionist/general.c:236
 msgid "How much to blur the drop shadow"
 msgstr "陰影模糊的程度"
 
-#: plug-ins/gimpressionist/general.c:204
+#: plug-ins/gimpressionist/general.c:241
 #, fuzzy
 msgid "Deviation threshold:"
 msgstr "綠色界限值(_R)："
 
-#: plug-ins/gimpressionist/general.c:208
+#: plug-ins/gimpressionist/general.c:245
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimp.c:108
+#: plug-ins/gimpressionist/gimp.c:75
 #, fuzzy
 msgid "_GIMPressionist..."
 msgstr "GIMPressionist"
 
-#: plug-ins/gimpressionist/gimp.c:297
+#: plug-ins/gimpressionist/gimp.c:312
 msgid "Painting..."
 msgstr "繪畫中..."
 
-#. don't translate the gimprc entry
-#: plug-ins/gimpressionist/gimpressionist.c:64
-#, c-format
-msgid ""
-"It is highly recommended to add\n"
-" (gimpressionist-path \"%s\")\n"
-"(or similar) to your gimprc file."
-msgstr ""
-"強烈建議在 gimprc 檔案中加入\n"
-" (gimpressionist-path \"%s\")\n"
-"或類似的設定。"
-
-#: plug-ins/gimpressionist/gimpressionist.c:349
+#: plug-ins/gimpressionist/gimpressionist.c:114
 msgid "The GIMPressionist"
 msgstr "GIMPressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:428
+#: plug-ins/gimpressionist/gimpressionist.c:193
 msgid "Gimpressionist"
 msgstr "Gimpressionist"
 
-#: plug-ins/gimpressionist/gimpressionist.c:432
+#: plug-ins/gimpressionist/gimpressionist.c:197
 msgid "A_bout"
 msgstr "關於(_B)"
 
-#: plug-ins/gimpressionist/orientation.c:45
+#: plug-ins/gimpressionist/orientation.c:68
 msgid "Or_ientation"
 msgstr "方向(_I)"
 
-#: plug-ins/gimpressionist/orientation.c:59
+#: plug-ins/gimpressionist/orientation.c:82
 msgid "Directions:"
 msgstr "方向："
 
-#: plug-ins/gimpressionist/orientation.c:63
+#: plug-ins/gimpressionist/orientation.c:86
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:71
+#: plug-ins/gimpressionist/orientation.c:94
 msgid "Start angle:"
 msgstr "起始角度："
 
-#: plug-ins/gimpressionist/orientation.c:75
+#: plug-ins/gimpressionist/orientation.c:98
 #, fuzzy
 msgid "The starting angle of the first brush to create"
 msgstr "筆刷尺寸上限"
 
-#: plug-ins/gimpressionist/orientation.c:83
+#: plug-ins/gimpressionist/orientation.c:106
 msgid "Angle span:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:87
+#: plug-ins/gimpressionist/orientation.c:110
 #, fuzzy
 msgid "The angle span of the first brush to create"
 msgstr "筆刷尺寸上限"
 
-#: plug-ins/gimpressionist/orientation.c:115
+#: plug-ins/gimpressionist/orientation.c:124
+#: plug-ins/print/gimp_main_window.c:500
+msgid "Orientation:"
+msgstr "方向："
+
+#: plug-ins/gimpressionist/orientation.c:133
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "依該區域的亮度來決定筆劃的方向"
 
-#: plug-ins/gimpressionist/orientation.c:119
-#: plug-ins/gimpressionist/size.c:114
+#: plug-ins/gimpressionist/orientation.c:137
+#: plug-ins/gimpressionist/size.c:130
 msgid "Radius"
 msgstr "半徑"
 
-#: plug-ins/gimpressionist/orientation.c:125
+#: plug-ins/gimpressionist/orientation.c:138
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "以該點和影像中心點之間的距離來決定筆劃的方向"
 
-#: plug-ins/gimpressionist/orientation.c:135
+#: plug-ins/gimpressionist/orientation.c:143
 msgid "Selects a random direction of each stroke"
 msgstr "隨機決定每一筆的方向"
 
-#: plug-ins/gimpressionist/orientation.c:139
-#: plug-ins/gimpressionist/size.c:128
+#: plug-ins/gimpressionist/orientation.c:147
+#: plug-ins/gimpressionist/size.c:140
 msgid "Radial"
 msgstr "旋轉"
 
-#: plug-ins/gimpressionist/orientation.c:145
+#: plug-ins/gimpressionist/orientation.c:148
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "依從影像中心點出發至該點的方向來決定筆劃的方向"
 
-#: plug-ins/gimpressionist/orientation.c:153
-#: plug-ins/gimpressionist/size.c:139
+#: plug-ins/gimpressionist/orientation.c:156
+#: plug-ins/gimpressionist/size.c:149
 msgid "Flowing"
 msgstr "流動"
 
-#: plug-ins/gimpressionist/orientation.c:159
-#: plug-ins/gimpressionist/size.c:145
+#: plug-ins/gimpressionist/orientation.c:157
+#: plug-ins/gimpressionist/size.c:150
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "筆劃會以「流動」的方式來鋪排"
 
-#: plug-ins/gimpressionist/orientation.c:169
+#: plug-ins/gimpressionist/orientation.c:162
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "依該區域的色相來決定筆劃的方向"
 
-#: plug-ins/gimpressionist/orientation.c:174
-#: plug-ins/gimpressionist/size.c:156
+#: plug-ins/gimpressionist/orientation.c:166
+#: plug-ins/gimpressionist/size.c:159
 msgid "Adaptive"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:180
+#: plug-ins/gimpressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:188
-#: plug-ins/gimpressionist/size.c:167
+#: plug-ins/gimpressionist/orientation.c:175
+#: plug-ins/gimpressionist/size.c:169
 msgid "Manual"
 msgstr "自選"
 
-#: plug-ins/gimpressionist/orientation.c:194
+#: plug-ins/gimpressionist/orientation.c:176
 msgid "Manually specify the stroke orientation"
 msgstr "自行指定筆劃的方向"
 
-#: plug-ins/gimpressionist/orientation.c:205
+#: plug-ins/gimpressionist/orientation.c:188
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:446
+#: plug-ins/gimpressionist/orientmap.c:421
 msgid "Orientation Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:468
+#: plug-ins/gimpressionist/orientmap.c:443
 msgid "Vectors"
 msgstr "向量"
 
-#: plug-ins/gimpressionist/orientmap.c:480
+#: plug-ins/gimpressionist/orientmap.c:455
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:502
-#: plug-ins/gimpressionist/sizemap.c:456
+#: plug-ins/gimpressionist/orientmap.c:477
+#: plug-ins/gimpressionist/sizemap.c:408
 msgid "Adjust the preview's brightness"
 msgstr "調整預覽圖的亮度"
 
-#: plug-ins/gimpressionist/orientmap.c:523
+#: plug-ins/gimpressionist/orientmap.c:498
 msgid "Select previous vector"
 msgstr "選取上一個向量"
 
-#: plug-ins/gimpressionist/orientmap.c:529
+#: plug-ins/gimpressionist/orientmap.c:504
 msgid "Select next vector"
 msgstr "選取下一個向量"
 
-#: plug-ins/gimpressionist/orientmap.c:531
-#: plug-ins/gimpressionist/sizemap.c:487
+#: plug-ins/gimpressionist/orientmap.c:506
+#: plug-ins/gimpressionist/sizemap.c:439
 msgid "A_dd"
 msgstr "加入(_D)"
 
-#: plug-ins/gimpressionist/orientmap.c:535
+#: plug-ins/gimpressionist/orientmap.c:510
 msgid "Add new vector"
 msgstr "加入新的向量"
 
-#: plug-ins/gimpressionist/orientmap.c:537
-#: plug-ins/gimpressionist/sizemap.c:494
+#: plug-ins/gimpressionist/orientmap.c:512
+#: plug-ins/gimpressionist/sizemap.c:446
 msgid "_Kill"
 msgstr "刪除(_K)"
 
-#: plug-ins/gimpressionist/orientmap.c:541
+#: plug-ins/gimpressionist/orientmap.c:516
 msgid "Delete selected vector"
 msgstr "刪除指定的向量"
 
-#: plug-ins/gimpressionist/orientmap.c:556
+#: plug-ins/gimpressionist/orientmap.c:531
 msgid "_Normal"
 msgstr "正常(_N)"
 
-#: plug-ins/gimpressionist/orientmap.c:557
+#: plug-ins/gimpressionist/orientmap.c:532
 msgid "Vorte_x"
 msgstr "旋渦 _1"
 
-#: plug-ins/gimpressionist/orientmap.c:558
+#: plug-ins/gimpressionist/orientmap.c:533
 msgid "Vortex_2"
 msgstr "旋渦 _2"
 
-#: plug-ins/gimpressionist/orientmap.c:559
+#: plug-ins/gimpressionist/orientmap.c:534
 msgid "Vortex_3"
 msgstr "旋渦 _3"
 
-#: plug-ins/gimpressionist/orientmap.c:565
-#: plug-ins/gimpressionist/sizemap.c:539
+#: plug-ins/gimpressionist/orientmap.c:540
+#: plug-ins/gimpressionist/sizemap.c:491
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: plug-ins/gimpressionist/orientmap.c:570
+#: plug-ins/gimpressionist/orientmap.c:545
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "Voronoi 模式表示最接近某一點的向量才會對於該點的筆劃有影響"
 
-#: plug-ins/gimpressionist/orientmap.c:579
+#: plug-ins/gimpressionist/orientmap.c:554
 msgid "A_ngle:"
 msgstr "角度(_N)："
 
-#: plug-ins/gimpressionist/orientmap.c:583
+#: plug-ins/gimpressionist/orientmap.c:558
 msgid "Change the angle of the selected vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/gimpressionist/orientmap.c:564
 msgid "Ang_le offset:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:593
+#: plug-ins/gimpressionist/orientmap.c:568
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:604
+#: plug-ins/gimpressionist/orientmap.c:579
 msgid "Change the strength of the selected vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:610
+#: plug-ins/gimpressionist/orientmap.c:585
 msgid "S_trength exp.:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:614
-#: plug-ins/gimpressionist/sizemap.c:534
+#: plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/gimpressionist/sizemap.c:486
 msgid "Change the exponent of the strength"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:97
+#: plug-ins/gimpressionist/paper.c:109
 msgid "P_aper"
 msgstr "紙張(_A)"
 
-#: plug-ins/gimpressionist/paper.c:125
+#: plug-ins/gimpressionist/paper.c:137
 msgid "_Invert"
 msgstr "加入(_I)"
 
-#: plug-ins/gimpressionist/paper.c:131
+#: plug-ins/gimpressionist/paper.c:143
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:134
+#: plug-ins/gimpressionist/paper.c:146
 msgid "O_verlay"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:139
+#: plug-ins/gimpressionist/paper.c:151
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:154
+#: plug-ins/gimpressionist/paper.c:166
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:36
+#: plug-ins/gimpressionist/placement.c:37
 msgid "Pl_acement"
 msgstr "筆劃位置(_A)"
 
-#: plug-ins/gimpressionist/placement.c:42
+#: plug-ins/gimpressionist/placement.c:43
 msgid "Placement"
 msgstr "筆劃位置"
 
-#: plug-ins/gimpressionist/placement.c:46
+#: plug-ins/gimpressionist/placement.c:47
 msgid "Randomly"
 msgstr "隨機"
 
-#: plug-ins/gimpressionist/placement.c:47
+#: plug-ins/gimpressionist/placement.c:49
 msgid "Evenly distributed"
 msgstr "平均分佈"
 
-#: plug-ins/gimpressionist/placement.c:52
+#: plug-ins/gimpressionist/placement.c:56
 msgid "Place strokes randomly around the image"
 msgstr "隨機地在影像中繪出筆劃"
 
-#: plug-ins/gimpressionist/placement.c:54
+#: plug-ins/gimpressionist/placement.c:59
 msgid "The strokes are evenly distributed across the image"
 msgstr "筆劃均勻地在影像中分佈"
 
-#: plug-ins/gimpressionist/placement.c:69
+#: plug-ins/gimpressionist/placement.c:74
 msgid "Stroke _density:"
 msgstr "筆劃密度(_D)："
 
-#: plug-ins/gimpressionist/placement.c:73
+#: plug-ins/gimpressionist/placement.c:78
 msgid "The relative density of the brush strokes"
 msgstr "筆劃的相對密度"
 
-#: plug-ins/gimpressionist/placement.c:79
+#: plug-ins/gimpressionist/placement.c:84
 msgid "Centerize"
 msgstr "集中"
 
-#: plug-ins/gimpressionist/placement.c:83
+#: plug-ins/gimpressionist/placement.c:88
 msgid "Focus the brush strokes around the center of the image"
 msgstr "將筆劃盡量集中在影像中心點附近"
 
-#: plug-ins/gimpressionist/ppmtool.c:499
+#.
+#. * gimp_filename_to_utf8() and g_strerror() return temporary strings
+#. * that need not and should not be freed. So this call is OK.
+#. *
+#: plug-ins/gimpressionist/ppmtool.c:522
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "無法儲存 PPM 檔‘%s’：%s"
 
-#: plug-ins/gimpressionist/presets.c:384
+#: plug-ins/gimpressionist/presets.c:564
 msgid "Save Current"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:626
+#: plug-ins/gimpressionist/presets.c:801
+#, fuzzy
+msgid "The Gimpressionist Defaults"
+msgstr "Gimpressionist"
+
+#: plug-ins/gimpressionist/presets.c:923
 msgid "_Presets"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:641
+#: plug-ins/gimpressionist/presets.c:938
 msgid "Save current..."
 msgstr "儲存目前的設定..."
 
-#: plug-ins/gimpressionist/presets.c:646
+#: plug-ins/gimpressionist/presets.c:943
 msgid "Save the current settings to the specified file"
 msgstr "將目前的設定儲存至指定的檔案"
 
-#: plug-ins/gimpressionist/presets.c:674
+#: plug-ins/gimpressionist/presets.c:971
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:680
+#: plug-ins/gimpressionist/presets.c:977
 msgid "Deletes the selected Preset"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:686
+#: plug-ins/gimpressionist/presets.c:983
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:137
+#: plug-ins/gimpressionist/preview.c:173
 msgid "Refresh the Preview window"
 msgstr "更新預覽視窗"
 
-#: plug-ins/gimpressionist/preview.c:145
+#: plug-ins/gimpressionist/preview.c:181
 msgid "Revert to the original image"
 msgstr "還原至本來的影像"
 
-#: plug-ins/gimpressionist/repaint.c:853
+#: plug-ins/gimpressionist/repaint.c:905
 msgid "Update"
 msgstr "更新"
 
-#: plug-ins/gimpressionist/size.c:43
+#: plug-ins/gimpressionist/size.c:61
 msgid "_Size"
 msgstr "筆劃尺寸(_S)"
 
-#: plug-ins/gimpressionist/size.c:57
+#: plug-ins/gimpressionist/size.c:75
 msgid "Sizes:"
 msgstr "多少種尺寸："
 
-#: plug-ins/gimpressionist/size.c:61
+#: plug-ins/gimpressionist/size.c:79
 msgid "The number of sizes of brushes to use"
 msgstr "使用多少種不同尺寸的筆刷"
 
-#: plug-ins/gimpressionist/size.c:69
+#: plug-ins/gimpressionist/size.c:87
 msgid "Minimum size:"
 msgstr "尺寸下限："
 
-#: plug-ins/gimpressionist/size.c:73
+#: plug-ins/gimpressionist/size.c:91
 msgid "The smallest brush to create"
 msgstr "筆刷尺寸下限"
 
-#: plug-ins/gimpressionist/size.c:81
+#: plug-ins/gimpressionist/size.c:99
 msgid "Maximum size:"
 msgstr "尺寸上限："
 
-#: plug-ins/gimpressionist/size.c:85
+#: plug-ins/gimpressionist/size.c:103
 msgid "The largest brush to create"
 msgstr "筆刷尺寸上限"
 
-#: plug-ins/gimpressionist/size.c:112
+#: plug-ins/gimpressionist/size.c:117
+msgid "Size:"
+msgstr "尺寸："
+
+#: plug-ins/gimpressionist/size.c:126
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "依該區域的亮度來決定筆劃的大小"
 
-#: plug-ins/gimpressionist/size.c:119
+#: plug-ins/gimpressionist/size.c:131
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "以該點和影像中心點之間的距離來決定筆劃的大小"
 
-#: plug-ins/gimpressionist/size.c:126
+#: plug-ins/gimpressionist/size.c:136
 msgid "Selects a random size for each stroke"
 msgstr "每一筆的大小都是隨機決定的"
 
-#: plug-ins/gimpressionist/size.c:133
+#: plug-ins/gimpressionist/size.c:141
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "依從影像中心點出發至該點的方向來決定筆劃的大小"
 
-#: plug-ins/gimpressionist/size.c:153
+#: plug-ins/gimpressionist/size.c:155
 msgid "The hue of the region determines the size of the stroke"
 msgstr "依該區域的色相來決定筆劃的大小"
 
-#: plug-ins/gimpressionist/size.c:161
+#: plug-ins/gimpressionist/size.c:160
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:172
+#: plug-ins/gimpressionist/size.c:170
 msgid "Manually specify the stroke size"
 msgstr "自行指定筆劃的大小"
 
-#: plug-ins/gimpressionist/size.c:182
+#: plug-ins/gimpressionist/size.c:181
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:404
+#: plug-ins/gimpressionist/sizemap.c:356
 msgid "Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:426
+#: plug-ins/gimpressionist/sizemap.c:378
 msgid "Smvectors"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:436
+#: plug-ins/gimpressionist/sizemap.c:388
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:478
+#: plug-ins/gimpressionist/sizemap.c:430
 msgid "Select previous smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:485
+#: plug-ins/gimpressionist/sizemap.c:437
 msgid "Select next smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/sizemap.c:444
 msgid "Add new smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/gimpressionist/sizemap.c:451
 msgid "Delete selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:512
+#: plug-ins/gimpressionist/sizemap.c:464
 msgid "Change the angle of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:519
+#: plug-ins/gimpressionist/sizemap.c:471
 msgid "S_trength:"
 msgstr "強度(_T)："
 
-#: plug-ins/gimpressionist/sizemap.c:523
+#: plug-ins/gimpressionist/sizemap.c:475
 msgid "Change the strength of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:530
+#: plug-ins/gimpressionist/sizemap.c:482
 msgid "St_rength exp.:"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:546
+#: plug-ins/gimpressionist/sizemap.c:498
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10543,6 +10012,13 @@ msgstr "中心點垂直位置(_Y)："
 msgid "Clear"
 msgstr "清除"
 
+#: plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: plug-ins/imagemap/imap_object_popup.c:113
+#: plug-ins/imagemap/imap_toolbar.c:127
+msgid "Copy"
+msgstr "複製"
+
 #: plug-ins/imagemap/imap_cmd_create.c:58
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:151
 msgid "Create"
@@ -10697,6 +10173,10 @@ msgstr "向上移"
 #: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:130
 msgid "Paste"
 msgstr "貼上"
+
+#: plug-ins/imagemap/imap_cmd_select.c:53 plug-ins/imagemap/imap_tools.c:144
+msgid "Select"
+msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_select_all.c:51
 msgid "Select All"
@@ -10995,6 +10475,11 @@ msgstr "箭頭"
 msgid "Select contiguous region"
 msgstr "選取連續的區域"
 
+#: plug-ins/imagemap/imap_menu.c:366 plug-ins/imagemap/imap_popup.c:137
+#: plug-ins/imagemap/imap_tools.c:154
+msgid "Rectangle"
+msgstr "矩形"
+
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
 msgstr "工具(_T)"
@@ -11170,6 +10655,10 @@ msgstr "目標"
 msgid "Settings for this Mapfile"
 msgstr ""
 
+#: plug-ins/imagemap/imap_settings.c:94
+msgid "Filename:"
+msgstr "檔案名稱："
+
 #: plug-ins/imagemap/imap_settings.c:97
 msgid "Image name:"
 msgstr "影像名稱："
@@ -11295,38 +10784,38 @@ msgid "Maze"
 msgstr "大理石紋"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: plug-ins/maze/maze_face.c:215
+#: plug-ins/maze/maze_face.c:214
 #, fuzzy
 msgid "Width (pixels):"
 msgstr "寬度(像素)："
 
-#: plug-ins/maze/maze_face.c:227 plug-ins/maze/maze_face.c:243
+#: plug-ins/maze/maze_face.c:226 plug-ins/maze/maze_face.c:242
 msgid "Pieces:"
 msgstr "格數："
 
-#: plug-ins/maze/maze_face.c:232
+#: plug-ins/maze/maze_face.c:231
 #, fuzzy
 msgid "Height (pixels):"
 msgstr "高度(像素)："
 
-#: plug-ins/maze/maze_face.c:255
+#: plug-ins/maze/maze_face.c:254
 msgid "Multiple (57):"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:268
+#: plug-ins/maze/maze_face.c:267
 msgid "Offset (1):"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:299
+#: plug-ins/maze/maze_face.c:298
 msgid "Depth first"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:300
+#: plug-ins/maze/maze_face.c:299
 #, fuzzy
 msgid "Prim's algorithm"
 msgstr "Prim 演算法"
 
-#: plug-ins/maze/maze_face.c:407
+#: plug-ins/maze/maze_face.c:406
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -11334,76 +10823,82 @@ msgstr ""
 "選擇區域的尺寸不是偶數。\n"
 "鋪排迷宮時不會得到預期的效果。"
 
-#: plug-ins/maze/maze_face.c:571
+#: plug-ins/maze/maze_face.c:572
 #, c-format
 msgid "Opening %s"
 msgstr "正在開啟 %s"
 
-#: plug-ins/maze/maze_face.c:583
+#: plug-ins/maze/maze_face.c:580
 #, c-format
 msgid "See %s"
 msgstr "請參考 %s"
 
-#: plug-ins/pagecurl/pagecurl.c:212
+#: plug-ins/pagecurl/pagecurl.c:235
 #, fuzzy
 msgid "_Pagecurl..."
 msgstr "頁角捲曲..."
 
-#: plug-ins/pagecurl/pagecurl.c:492
+#: plug-ins/pagecurl/pagecurl.c:452
 msgid "Pagecurl Effect"
 msgstr "頁角捲曲效果"
 
-#: plug-ins/pagecurl/pagecurl.c:507
+#: plug-ins/pagecurl/pagecurl.c:467
 msgid "Curl Location"
 msgstr "捲曲位置"
 
-#: plug-ins/pagecurl/pagecurl.c:531
-#, fuzzy
-msgid "Upper left"
-msgstr "左上角"
-
-#: plug-ins/pagecurl/pagecurl.c:532
-#, fuzzy
-msgid "Upper right"
-msgstr "右上角"
-
-#: plug-ins/pagecurl/pagecurl.c:533
-#, fuzzy
-msgid "Lower left"
-msgstr "左下角"
-
-#: plug-ins/pagecurl/pagecurl.c:534
+#: plug-ins/pagecurl/pagecurl.c:487
 #, fuzzy
 msgid "Lower right"
 msgstr "右下角"
 
-#: plug-ins/pagecurl/pagecurl.c:564
+#: plug-ins/pagecurl/pagecurl.c:488
+#, fuzzy
+msgid "Lower left"
+msgstr "左下角"
+
+#: plug-ins/pagecurl/pagecurl.c:489
+#, fuzzy
+msgid "Upper left"
+msgstr "左上角"
+
+#: plug-ins/pagecurl/pagecurl.c:490
+#, fuzzy
+msgid "Upper right"
+msgstr "右上角"
+
+#: plug-ins/pagecurl/pagecurl.c:529
 msgid "Curl Orientation"
 msgstr "捲曲方向"
 
-#: plug-ins/pagecurl/pagecurl.c:601
-msgid "Curl Opacity"
-msgstr "捲曲時的透明度"
-
-#: plug-ins/pagecurl/pagecurl.c:619
+#: plug-ins/pagecurl/pagecurl.c:573
 #, fuzzy
-msgid "Shade under curl"
+msgid "_Shade under curl"
 msgstr "捲曲位置下加上陰影"
 
-#: plug-ins/pagecurl/pagecurl.c:630
-#, fuzzy
-msgid ""
-"Use current gradient\n"
-"instead of FG/BG-color"
+#: plug-ins/pagecurl/pagecurl.c:586
+msgid "Current gradient (reversed)"
 msgstr ""
-"使用目前的漸層\n"
-"而非前景/背景色"
 
-#: plug-ins/pagecurl/pagecurl.c:750
+#: plug-ins/pagecurl/pagecurl.c:591
+#, fuzzy
+msgid "Current gradient"
+msgstr "連續漸層"
+
+#: plug-ins/pagecurl/pagecurl.c:596
+#, fuzzy
+msgid "Foreground / background colors"
+msgstr "前景及背景色(_F)"
+
+#: plug-ins/pagecurl/pagecurl.c:616
+#, fuzzy
+msgid "_Opacity:"
+msgstr "透明度："
+
+#: plug-ins/pagecurl/pagecurl.c:739
 msgid "Curl Layer"
 msgstr "捲曲圖層"
 
-#: plug-ins/pagecurl/pagecurl.c:996
+#: plug-ins/pagecurl/pagecurl.c:1027
 msgid "Page Curl..."
 msgstr "頁角捲曲..."
 
@@ -12026,6 +11521,10 @@ msgstr "切換為順時針旋轉"
 msgid "Switch to c/clockwise"
 msgstr "切換為逆時針旋轉"
 
+#: plug-ins/rcm/rcm_dialog.c:120
+msgid "Original"
+msgstr "原來"
+
 #: plug-ins/rcm/rcm_dialog.c:133
 msgid "Rotated"
 msgstr "旋轉後"
@@ -12206,21 +11705,21 @@ msgstr ""
 msgid "Icon details"
 msgstr "物件集細節"
 
-#: plug-ins/winicon/icoload.c:347
+#: plug-ins/winicon/icoload.c:342
 #, c-format
 msgid "Icon #%i"
 msgstr ""
 
-#: plug-ins/winicon/icoload.c:515
+#: plug-ins/winicon/icoload.c:510
 #, c-format
 msgid "Loading %s:"
 msgstr "正在載入 %s："
 
-#: plug-ins/winicon/icosave.c:753
+#: plug-ins/winicon/icosave.c:778
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 
-#: plug-ins/winicon/icosave.c:769
+#: plug-ins/winicon/icosave.c:794
 #, c-format
 msgid "Saving %s:"
 msgstr "正在儲存 %s："
@@ -12319,6 +11818,368 @@ msgstr "錯誤：無法讀取 XJT 屬性檔 %s。"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "錯誤：XJT 屬性檔‘%s’是空的。"
+
+#, fuzzy
+#~ msgid "E_nable antialiasing"
+#~ msgstr "啟用平滑化(_N)"
+
+#~ msgid "T_hreshold:"
+#~ msgstr "界限值(_H)："
+
+#, fuzzy
+#~ msgid "L_ight yype:"
+#~ msgstr "光源類型(_I)："
+
+#, fuzzy
+#~ msgid "Lig_ht color:"
+#~ msgstr "光源顏色(_H)："
+
+#~ msgid "_Ambient:"
+#~ msgstr "環境(_A)："
+
+#~ msgid "_Diffuse:"
+#~ msgstr "散射(_D)："
+
+#~ msgid "D_iffuse:"
+#~ msgstr "散射(_I)："
+
+#~ msgid "_Highlight:"
+#~ msgstr "高亮度區(_H)："
+
+#~ msgid "Parameters were Saved to '%s'"
+#~ msgstr "參數已儲存至‘%s’"
+
+#~ msgid "'%s' is not a HRZ file"
+#~ msgstr "‘%s’不是 HRZ 格式檔案"
+
+#~ msgid "Image must be 256x240"
+#~ msgstr "影像尺寸必須為 256×240"
+
+#~ msgid "Image must be RGB or GRAY"
+#~ msgstr "影像必須使用 RGB 或灰階色系"
+
+#~ msgid "First Gfig"
+#~ msgstr "第一個 Gfig 圖形"
+
+#~ msgid "Save Gfig Drawing"
+#~ msgstr "儲存 Gfig 圖形"
+
+#~ msgid "Show previous object"
+#~ msgstr "顯示上一件物件"
+
+#~ msgid "Show next object"
+#~ msgstr "顯示下一件物件"
+
+#~ msgid "All"
+#~ msgstr "全部"
+
+#~ msgid "Show all objects"
+#~ msgstr "顯示所有物件"
+
+#~ msgid "Clockwise"
+#~ msgstr "順時針"
+
+#~ msgid "Anti-Clockwise"
+#~ msgstr "逆時針"
+
+#~ msgid "Create line"
+#~ msgstr "繪畫直線"
+
+#~ msgid "Create circle"
+#~ msgstr "繪畫圓形"
+
+#~ msgid "Create ellipse"
+#~ msgstr "繪畫橢圓"
+
+#~ msgid "Create arch"
+#~ msgstr "繪畫弧線"
+
+#~ msgid "Create reg polygon"
+#~ msgstr "繪畫正多邊形"
+
+#~ msgid "Create star"
+#~ msgstr "繪畫星形"
+
+#~ msgid "Create spiral"
+#~ msgstr "繪畫螺旋"
+
+#~ msgid "Create bezier curve. Shift + Button ends object creation."
+#~ msgstr "繪畫貝茲曲線。Shift + 滑鼠按鈕代表完成。"
+
+#~ msgid "Move an object"
+#~ msgstr "移動物件"
+
+#~ msgid "Move a single point"
+#~ msgstr "移動一點"
+
+#~ msgid "Copy an object"
+#~ msgstr "複製物件"
+
+#~ msgid "Delete an object"
+#~ msgstr "刪除物件"
+
+#~ msgid "Brush"
+#~ msgstr "筆刷"
+
+#~ msgid "Airbrush"
+#~ msgstr "噴槍"
+
+#~ msgid "Pencil"
+#~ msgstr "鉛筆"
+
+#~ msgid "Pattern"
+#~ msgstr "圖樣"
+
+#~ msgid "New"
+#~ msgstr "新增"
+
+#~ msgid "Multiple"
+#~ msgstr "多個圖層"
+
+#, fuzzy
+#~ msgid ""
+#~ "Draw all objects on one layer (original or new) or one object per layer."
+#~ msgstr ""
+#~ "在一個圖層上繪畫所有物件 (原來的圖層或者新增圖層)，還是每個物件使用一個圖"
+#~ "層"
+
+#~ msgid "Using:"
+#~ msgstr "使用："
+
+#~ msgid "Foreground"
+#~ msgstr "前景顏色"
+
+#, fuzzy
+#~ msgid ""
+#~ "Layer background type. Copy causes the previous layer to be copied before "
+#~ "the draw is performed."
+#~ msgstr "圖層背景的類型。會在繪畫時複製之前的圖層。"
+
+#~ msgid "Background:"
+#~ msgstr "背景："
+
+#, fuzzy
+#~ msgid "Reverse line"
+#~ msgstr "相反方向(_E)"
+
+#, fuzzy
+#~ msgid "Scale to image"
+#~ msgstr "縮放至影像"
+
+#~ msgid "Scale drawings to images size"
+#~ msgstr "將繪圖縮放至影像尺寸"
+
+#, fuzzy
+#~ msgid "Approx. circles/ellipses"
+#~ msgstr "近似圓形/橢圓"
+
+#~ msgid "Gfig Brush Selection"
+#~ msgstr "Gfig 選擇筆刷"
+
+#~ msgid "Fade out:"
+#~ msgstr "淡出："
+
+#~ msgid "Gradient:"
+#~ msgstr "漸層："
+
+#~ msgid "Pressure:"
+#~ msgstr "壓力："
+
+#, fuzzy
+#~ msgid "No options..."
+#~ msgstr "沒有選項..."
+
+#, fuzzy
+#~ msgid "Set brush..."
+#~ msgstr "設定筆刷..."
+
+#~ msgid "Add"
+#~ msgstr "相加"
+
+#~ msgid "Subtract"
+#~ msgstr "相減"
+
+#~ msgid "Intersect"
+#~ msgstr "交集"
+
+#~ msgid "Feather"
+#~ msgstr "羽化"
+
+#~ msgid "Radius:"
+#~ msgstr "半徑："
+
+#, fuzzy
+#~ msgid "Fill type:"
+#~ msgstr "填色方式："
+
+#~ msgid "Fill Opacity:"
+#~ msgstr "填色時的透明度："
+
+#, fuzzy
+#~ msgid "Each selection"
+#~ msgstr "顯示選擇區域"
+
+#, fuzzy
+#~ msgid "All selections"
+#~ msgstr "選擇區域"
+
+#, fuzzy
+#~ msgid "Show image"
+#~ msgstr "顯示影像"
+
+#, fuzzy
+#~ msgid "Reload image"
+#~ msgstr "重新載入影像"
+
+#, fuzzy
+#~ msgid "Grid type:"
+#~ msgstr "格線類型："
+
+#~ msgid "Grey"
+#~ msgstr "灰"
+
+#~ msgid "Darker"
+#~ msgstr "較深"
+
+#~ msgid "Lighter"
+#~ msgstr "較淺"
+
+#, fuzzy
+#~ msgid "Very dark"
+#~ msgstr "很深"
+
+#, fuzzy
+#~ msgid "Grid color:"
+#~ msgstr "格線顏色："
+
+#, fuzzy
+#~ msgid "Max undo:"
+#~ msgstr "復原次數上限："
+
+#, fuzzy
+#~ msgid "Show position"
+#~ msgstr "顯示位置"
+
+#, fuzzy
+#~ msgid "Hide control points"
+#~ msgstr "隱藏控制點"
+
+#, fuzzy
+#~ msgid "Show grid"
+#~ msgstr "靠齊參考線"
+
+#, fuzzy
+#~ msgid "Lock on grid"
+#~ msgstr "鎖定格線"
+
+#~ msgid "Object"
+#~ msgstr "物件"
+
+#~ msgid "Create a new Gfig object collection for editing"
+#~ msgstr "建立用來編輯的新 Gfig 物件集"
+
+#~ msgid "Load a single Gfig object collection"
+#~ msgstr "載入單一的 Gfig 物件集"
+
+#~ msgid "Edit Gfig object collection"
+#~ msgstr "編輯 Gfig 物件集"
+
+#~ msgid "_Merge"
+#~ msgstr "合併(_M)"
+
+#, fuzzy
+#~ msgid "Merge Gfig Ooject collection into the current edit session"
+#~ msgstr "建立用來編輯的新 Gfig 物件集"
+
+#~ msgid "Delete currently selected Gfig Object collection"
+#~ msgstr "刪除目前選擇的 Gfig 物件集"
+
+#~ msgid "Select folder and rescan Gfig object collections"
+#~ msgstr "選取目錄並重新掃瞄 Gfig 物件集"
+
+#~ msgid "Gfig"
+#~ msgstr "Gfig"
+
+#~ msgid "Paint"
+#~ msgstr "繪畫"
+
+#~ msgid "%d unsaved Gfig objects. Continue with exiting?"
+#~ msgstr "有 %d 個未儲存的 Gfig 物件。確定要離開？"
+
+#, fuzzy
+#~ msgid "Enter Gfig object name"
+#~ msgstr "請輸入 Gfig 物件名稱"
+
+#, fuzzy
+#~ msgid "Gfig object name:"
+#~ msgstr "Gfig 物件名稱："
+
+#, fuzzy
+#~ msgid "Rescan for Gfig objects"
+#~ msgstr "重新掃瞄 Gfig 物件"
+
+#, fuzzy
+#~ msgid "Add Gfig path"
+#~ msgstr "加入 Gfig 路徑"
+
+#~ msgid "Load Gfig object collection"
+#~ msgstr "載入 Gfig 物件集"
+
+#, fuzzy
+#~ msgid "Gfig layer %d"
+#~ msgstr "Gfig 圖層 %d"
+
+#~ msgid "About Gfig"
+#~ msgstr "關於 Gfig"
+
+#~ msgid "Gfig - GIMP plug-in"
+#~ msgstr "Gfig - GIMP 增效模組"
+
+#~ msgid "Release 2.0"
+#~ msgstr "2.0 版本"
+
+#~ msgid "New Gfig Object"
+#~ msgstr "新增 gfig 物件"
+
+#, fuzzy
+#~ msgid "Delete Gfig drawing"
+#~ msgstr "刪除 Gfig 圖畫"
+
+#~ msgid "%s copy"
+#~ msgstr "%s 複製本"
+
+#~ msgid "Collection Details"
+#~ msgstr "物件集細節"
+
+#, fuzzy
+#~ msgid "Draw name:"
+#~ msgstr "形狀名稱："
+
+#~ msgid "(none)"
+#~ msgstr "(無)"
+
+#~ msgid "<NONE>"
+#~ msgstr "<無>"
+
+#~ msgid ""
+#~ "It is highly recommended to add\n"
+#~ " (gimpressionist-path \"%s\")\n"
+#~ "(or similar) to your gimprc file."
+#~ msgstr ""
+#~ "強烈建議在 gimprc 檔案中加入\n"
+#~ " (gimpressionist-path \"%s\")\n"
+#~ "或類似的設定。"
+
+#~ msgid "Curl Opacity"
+#~ msgstr "捲曲時的透明度"
+
+#, fuzzy
+#~ msgid ""
+#~ "Use current gradient\n"
+#~ "instead of FG/BG-color"
+#~ msgstr ""
+#~ "使用目前的漸層\n"
+#~ "而非前景/背景色"
 
 #~ msgid "Random Seed"
 #~ msgstr "隨機來源數字"
@@ -12451,9 +12312,6 @@ msgstr "錯誤：XJT 屬性檔‘%s’是空的。"
 
 #~ msgid "Change intensity of the blue channel"
 #~ msgstr "更改藍色色版的亮度"
-
-#~ msgid "_Sine"
-#~ msgstr "正弦(_S)"
 
 #~ msgid "Cos_ine"
 #~ msgstr "餘弦(_I)"

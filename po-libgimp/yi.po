@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:26+0200\n"
+"POT-Creation-Date: 2004-07-20 01:15+0200\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
 "Language-Team: Yiddish <raphael@cs.uky.edu>\n"
@@ -252,31 +252,31 @@ msgstr ""
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
-#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
-#: libgimpmodule/gimpmodule.c:450
+#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
+#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
+#: libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:283
+#: libgimpmodule/gimpmodule.c:282
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:424
+#: libgimpmodule/gimpmodule.c:422
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:425
+#: libgimpmodule/gimpmodule.c:423
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:426
+#: libgimpmodule/gimpmodule.c:424
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:427
+#: libgimpmodule/gimpmodule.c:425
 msgid "Not loaded"
 msgstr ""
 
@@ -301,72 +301,72 @@ msgstr ""
 msgid "/_White"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:142
+#: libgimpwidgets/gimpcolorscales.c:134
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorscales.c:162
 msgid "_A"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:317
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "באַטרעף"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:254
+#: libgimpwidgets/gimpcolorscales.c:244
 msgid "Hexadecimal color notation as used in HTML"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:268
+#: libgimpwidgets/gimpcolorscales.c:258
 msgid "He_x Triplet:"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgstr ""
 msgid "Folder"
 msgstr ""
 
-#: libgimpwidgets/gimppickbutton.c:141
+#: libgimpwidgets/gimppickbutton.c:138
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -446,154 +446,154 @@ msgstr ""
 msgid "Visible"
 msgstr "זעעװדיק"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:185
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:263
+#: libgimpwidgets/gimpstock.c:264
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:286
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:304
+#: libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:614
+#: libgimpwidgets/gimpunitmenu.c:612
 msgid "Unit Selection"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:657
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:808
+#: libgimpwidgets/gimpwidgets.c:811
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:812
+#: libgimpwidgets/gimpwidgets.c:815
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:825
+#: libgimpwidgets/gimpwidgets.c:828
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:829
+#: libgimpwidgets/gimpwidgets.c:832
 msgid "_Randomize"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:124
-msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-
-#: modules/cdisplay_colorblind.c:190
-msgid "Color Deficient Vision"
-msgstr ""
-
-#: modules/cdisplay_colorblind.c:464
-msgid "Color _Deficiency Type:"
-msgstr ""
-
-#: modules/cdisplay_colorblind.c:469
+#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:471
+#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:90
+#: modules/cdisplay_colorblind.c:153
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:242
+msgid "Color Deficient Vision"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:540
+msgid "Color _Deficiency Type:"
+msgstr ""
+
+#: modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:156
+#: modules/cdisplay_gamma.c:178
 msgid "Gamma"
 msgstr "γ (גאַמאַ)"
 
-#: modules/cdisplay_gamma.c:311
+#: modules/cdisplay_gamma.c:352
 #, fuzzy
 msgid "_Gamma:"
 msgstr "γ (גאַמאַ)"
 
-#: modules/cdisplay_highcontrast.c:90
+#: modules/cdisplay_highcontrast.c:105
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:156
+#: modules/cdisplay_highcontrast.c:178
 msgid "Contrast"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:308
+#: modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:102
-msgid "Color proof filter using ICC color profile"
-msgstr ""
-
-#: modules/cdisplay_proof.c:166
-msgid "Color Proof"
-msgstr ""
-
-#: modules/cdisplay_proof.c:313
+#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr ""
 
-#: modules/cdisplay_proof.c:315
+#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr ""
 
-#: modules/cdisplay_proof.c:330
+#: modules/cdisplay_proof.c:138
+msgid "Color proof filter using ICC color profile"
+msgstr ""
+
+#: modules/cdisplay_proof.c:238
+msgid "Color Proof"
+msgstr ""
+
+#: modules/cdisplay_proof.c:457
 msgid "_Intent:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:333
+#: modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
 msgstr ""
 
-#: modules/cdisplay_proof.c:336
+#: modules/cdisplay_proof.c:463
 msgid "_Profile:"
 msgstr ""
 
-#: modules/cdisplay_proof.c:344
+#: modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
 msgstr ""
 

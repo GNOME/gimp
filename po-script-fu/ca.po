@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-03-26 19:46+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Catalan <xbea@pie.xtec.es>\n"
@@ -15,36 +15,28 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "L'Script-Fu en mode de consola només permet la invocació interactiva"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Consola de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "Sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Ordre actual"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Navega..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "No es pot obrir el conducte de sortida SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
@@ -161,11 +153,11 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/N_eó..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Torna a llegir totes les seqüències disponibles"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Extensions/Script-Fu/_Actualitza les seqüències"
 
@@ -891,7 +883,7 @@ msgstr "<Image>/Script-Fu/Animadors/_Barreja..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Marcs intermitjos"
 
 #
@@ -1762,16 +1754,16 @@ msgstr "<Image>/Script-Fu/Alfa a logotipus/Lluminó_s..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Lluminó_s..."
 
+#
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
+#, fuzzy
+msgid "Blend gradient (Text)"
+msgstr "Barreja el degradat(text)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
 msgid "Blend gradient (outline)"
 msgstr "Barreja el degradat(contorn)"
-
-#
-#: plug-ins/script-fu/scripts/glossy.scm.h:5
-#, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Barreja el degradat(text)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -2965,6 +2957,17 @@ msgstr "Desplaçament del ressaltat Y"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Opacitat del ressaltat"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "No es pot obrir el conducte de sortida SIOD"
+
+#
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Barreja el degradat(text)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Extensions/Script-Fu/_Consola de l'Script-Fu"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-02-10 21:40+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -28,36 +28,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu-konsoltilstand kan kun startes interaktivt"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsol"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD-uddata"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Nuværende kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Gennemse..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Kan ikke åbne en strøm til SIOD-uddatakanal"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "Kan ikke åbne SIOD-uddatakanal"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
@@ -172,11 +164,11 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/_Neon..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Genindlæs alle tilgængelige programmer"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Udvidelser/Script-Fu/_Genopfrisk"
 
@@ -855,7 +847,7 @@ msgstr "<Image>/Script-Fu/Animering/_Bland..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Mellembilleder"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1655,16 +1647,16 @@ msgstr "<Image>/Script-Fu/Alfa til logo/_Glittet..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
 msgstr "<Toolbox>/Udvidelser/Script-Fu/Logoer/_Glittet..."
 
-# 'blend' er vist overflødigt
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
+#, fuzzy
+msgid "Blend gradient (Text)"
+msgstr "Farveovergang (tekst)"
+
+# 'blend' er vist overflødigt
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
 msgid "Blend gradient (outline)"
 msgstr "Farveovergang (omrids)"
-
-#: plug-ins/script-fu/scripts/glossy.scm.h:5
-#, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Farveovergang (tekst)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2739,6 +2731,16 @@ msgstr "Højlysafstand y"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Højlysugennemsigtighed"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Kan ikke åbne en strøm til SIOD-uddatakanal"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Kan ikke åbne SIOD-uddatakanal"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Farveovergang (tekst)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Udvidelser/Script-Fu/_Konsol..."

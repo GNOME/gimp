@@ -170,8 +170,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 256)
-#     (height 256)
+#     (width 377)
+#     (height 233)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -246,6 +246,22 @@
 # 
 # (min-colors 144)
 
+# Sets the size of the checkerboard used to display transparency.  Possible
+# values are small-checks, medium-checks and large-checks.
+# 
+# (transparency-size medium-checks)
+
+# Sets the manner in which transparency is displayed in images.  Possible
+# values are light-checks, gray-checks, dark-checks, white-only, gray-only
+# and black-only.
+# 
+# (transparency-type gray-checks)
+
+# This is the distance in pixels where Guide and Grid snapping activates. 
+# This is an integer value.
+# 
+# (snap-distance 8)
+
 # Speed of marching ants in the selection outline.  This value is in
 # milliseconds (less time indicates faster marching).  This is an integer
 # value.
@@ -316,6 +332,8 @@
 # %d  destination scale factor
 # %Dx expands to x if the image is dirty, the empty string otherwise
 # %Cx expands to x if the image is clean, the empty string otherwise
+# %B  expands to (modified) if the image is dirty, the empty string otherwise
+# %A  expands to (clean) if the image is clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image
@@ -346,6 +364,8 @@
 # %d  destination scale factor
 # %Dx expands to x if the image is dirty, the empty string otherwise
 # %Cx expands to x if the image is clean, the empty string otherwise
+# %B  expands to (modified) if the image is dirty, the empty string otherwise
+# %A  expands to (clean) if the image is clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image
@@ -423,22 +443,6 @@
 # focus".  Possible values are yes and no.
 # 
 # (activate-on-focus yes)
-
-# Sets the size of the checkerboard used to display transparency.  Possible
-# values are small-checks, medium-checks and large-checks.
-# 
-# (transparency-size medium-checks)
-
-# Sets the manner in which transparency is displayed in images.  Possible
-# values are light-checks, gray-checks, dark-checks, white-only, gray-only
-# and black-only.
-# 
-# (transparency-type gray-checks)
-
-# This is the distance in pixels where Guide and Grid snapping activates. 
-# This is an integer value.
-# 
-# (snap-distance 8)
 
 # Tools such as fuzzy-select and bucket fill find regions based on a
 # seed-fill algorithm.  The seed fill starts at the initially selected pixel

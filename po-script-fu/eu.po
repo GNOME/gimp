@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-04-06 19:42+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -18,37 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 "Script-Fu kontsola-moduak deitze interaktiboak bakarrik baimentzen ditu"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu kontsola"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD irteera"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Uneko komandoa"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Arakatu..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Ezin da korrontea ireki SIOD irteerako kanalizazioan"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "Ezin da SIOD irteerako kanalizazioa ireki"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Script-Fu-ren ebaluatze-moduak deitze ez-interaktiboak bakarrik baimentzen "
@@ -165,11 +157,11 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Ne_on..."
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Berriz irakurri erabilgarri dauden script guztiak"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Luzp/Script-Fu/_Freskatu script-ak..."
 
@@ -840,7 +832,7 @@ msgstr "<Image>/Script-Fu/Animazioa/_Nahastu..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Tarteko markoak"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1631,13 +1623,13 @@ msgstr "<Toolbox>/Luzp/Script-Fu/Logotipoak/Dis_tiratsua..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "Nahaste-gradientea (Eskema)"
+msgid "Blend gradient (Text)"
+msgstr "Nahaste-gradientea (Testua)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Nahaste-gradientea (Testua)"
+msgid "Blend gradient (outline)"
+msgstr "Nahaste-gradientea (Eskema)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2713,6 +2705,16 @@ msgstr "Nabarmentzearen Y desplazamendua"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Nabarmentzearen opakutasuna"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Ezin da korrontea ireki SIOD irteerako kanalizazioan"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Ezin da SIOD irteerako kanalizazioa ireki"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Nahaste-gradientea (Testua)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Luzp/Script-Fu/Script-Fu _Kontsola"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
+"POT-Creation-Date: 2004-07-20 01:17+0200\n"
 "PO-Revision-Date: 2004-01-23 12:55+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -18,36 +18,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:140
+#: plug-ins/script-fu/script-fu-console.c:134
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Скрипт-Фу конзола дозвољава само интерактивно кориштење"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Скрипт-Фу Конзола"
 
-#: plug-ins/script-fu/script-fu-console.c:195
+#: plug-ins/script-fu/script-fu-console.c:188
 msgid "SIOD Output"
 msgstr "SIOD излаз"
 
-#: plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:254
 msgid "Current Command"
 msgstr "Тренутна наредба"
 
-#: plug-ins/script-fu/script-fu-console.c:294
+#: plug-ins/script-fu/script-fu-console.c:272
 msgid "Browse..."
 msgstr "Тражи..."
 
-#: plug-ins/script-fu/script-fu-console.c:592
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Не може да отвори проток на цевоводу SIOD излаза"
-
-#: plug-ins/script-fu/script-fu-console.c:598
-msgid "Unable to open the SIOD output pipe"
-msgstr "Не могу да отворим цевовод SIOD излаза"
-
-#: plug-ins/script-fu/script-fu-console.c:643
+#: plug-ins/script-fu/script-fu-console.c:555
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Скрипт-Фу провера је дозвољена само као не-интерактивни позив"
 
@@ -164,11 +156,11 @@ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Неонк
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:282 plug-ins/script-fu/script-fu.c:283
 msgid "Re-read all available scripts"
 msgstr "Поново учитај све доступне скрипте"
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:287
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Проширења/Скрипт-Фу/_Освежи скрипте"
 
@@ -832,7 +824,7 @@ msgstr "<Image>/Скрипт-Фу/Аниматори/Стапање..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 #, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Центрирај Оквире"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -1617,13 +1609,13 @@ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Логотип/Glo_ssy...
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
-msgid "Blend gradient (outline)"
-msgstr "Стопи прелив (цртеж)"
+msgid "Blend gradient (Text)"
+msgstr "Стопи прелив (текст)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 #, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Стопи прелив (текст)"
+msgid "Blend gradient (outline)"
+msgstr "Стопи прелив (цртеж)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 #, fuzzy
@@ -2701,6 +2693,16 @@ msgstr "Y одступање осветљености"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Непровидност осветљеног"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Не може да отвори проток на цевоводу SIOD излаза"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Не могу да отворим цевовод SIOD излаза"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Стопи прелив (текст)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Проширења/Скрипт-Фу/Скрипт-Фу _конзола"

@@ -219,8 +219,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 256)
-    (height 256)
+    (width 377)
+    (height 233)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -305,6 +305,25 @@ values are yes and no.
 
 Generally only a concern for 8-bit displays, this sets the minimum number of
 system colors allocated for the GIMP.  This is an integer value.
+
+.TP
+(transparency-size medium-checks)
+
+Sets the size of the checkerboard used to display transparency.  Possible
+values are small-checks, medium-checks and large-checks.
+
+.TP
+(transparency-type gray-checks)
+
+Sets the manner in which transparency is displayed in images.  Possible values
+are light-checks, gray-checks, dark-checks, white-only, gray-only and
+black-only.
+
+.TP
+(snap-distance 8)
+
+This is the distance in pixels where Guide and Grid snapping activates.  This
+is an integer value.
 
 .TP
 (marching-ants-speed 300)
@@ -401,6 +420,10 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %Cx expands to x if the image is clean, the empty string otherwise
 .br
+%B  expands to (modified) if the image is dirty, the empty string otherwise
+.br
+%A  expands to (clean) if the image is clean, the empty string otherwise
+.br
 %l  the number of layers
 .br
 %L  the number of layers (long form)
@@ -455,6 +478,10 @@ certain % character sequences are recognised and expanded as follows:
 %Dx expands to x if the image is dirty, the empty string otherwise
 .br
 %Cx expands to x if the image is clean, the empty string otherwise
+.br
+%B  expands to (modified) if the image is dirty, the empty string otherwise
+.br
+%A  expands to (clean) if the image is clean, the empty string otherwise
 .br
 %l  the number of layers
 .br
@@ -551,25 +578,6 @@ This is a parameter list.
 When enabled, an image will become the active image when its image window
 receives the focus. This is useful for window managers using "click to focus".
  Possible values are yes and no.
-
-.TP
-(transparency-size medium-checks)
-
-Sets the size of the checkerboard used to display transparency.  Possible
-values are small-checks, medium-checks and large-checks.
-
-.TP
-(transparency-type gray-checks)
-
-Sets the manner in which transparency is displayed in images.  Possible values
-are light-checks, gray-checks, dark-checks, white-only, gray-only and
-black-only.
-
-.TP
-(snap-distance 8)
-
-This is the distance in pixels where Guide and Grid snapping activates.  This
-is an integer value.
 
 .TP
 (default-threshold 15)
