@@ -5,7 +5,6 @@
 #
 #
 msgid ""
-msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-10-31 05:33+0100\n"
 "PO-Revision-Date: 2002-11-10 00:09+EDT\n"
@@ -192,7 +191,7 @@ msgstr ""
 
 #: app/undo.c:3600
 msgid "Resize Image"
-msgstr ""
+msgstr "ምስሉን እንደገና መጠን ለውጥ"
 
 #: app/undo.c:3601
 msgid "Convert Image"
@@ -1927,7 +1926,7 @@ msgstr ""
 #: app/tools/gimpcroptool.c:1000 app/tools/gimprotatetool.c:213
 #: app/tools/gimpscaletool.c:219 app/tools/gimpsheartool.c:190
 msgid "Y:"
-msgstr ""
+msgstr "Y፦"
 
 #: app/gui/file-new-dialog.c:324 app/gui/resize-dialog.c:638
 #, c-format
@@ -2270,7 +2269,7 @@ msgstr ""
 
 #: app/gui/info-window.c:159 app/gui/resize-dialog.c:473
 msgid "X:"
-msgstr ""
+msgstr "X፦"
 
 #: app/gui/info-window.c:173 app/gui/info-window.c:240
 #: app/gui/info-window.c:282 app/gui/info-window.c:300
@@ -2303,12 +2302,12 @@ msgstr ""
 #. Hue
 #: app/gui/info-window.c:260
 msgid "H:"
-msgstr "h"
+msgstr ""
 
 #. Saturation
 #: app/gui/info-window.c:267
 msgid "S:"
-msgstr "s"
+msgstr ""
 
 #. Value
 #: app/gui/info-window.c:274
@@ -4353,7 +4352,7 @@ msgstr ""
 #.
 #: app/gui/preferences-dialog.c:2682
 msgid "Auto Save"
-msgstr ""
+msgstr "በራሱ አስቀማጭ"
 
 #: app/gui/preferences-dialog.c:2693
 msgid "Only when Modified"
@@ -4657,7 +4656,7 @@ msgstr ""
 
 #: app/gui/tool-options-dialog.c:130
 msgid "Reset"
-msgstr ""
+msgstr "እንደገና አስተካክል"
 
 #: app/gui/user-install-dialog.c:128
 msgid ""
@@ -5156,7 +5155,7 @@ msgstr ""
 
 #: app/pdb/internal_procs.c:133
 msgid "Miscellaneous"
-msgstr ""
+msgstr "የተለያየ"
 
 #: app/pdb/internal_procs.c:136
 msgid "Misc Tool procedures"
@@ -5500,11 +5499,11 @@ msgstr ""
 
 #: app/tools/gimpclonetool.c:381
 msgid "Source"
-msgstr ""
+msgstr "ምንጭ"
 
 #: app/tools/gimpclonetool.c:393
 msgid "Alignment"
-msgstr ""
+msgstr "ኩልኩል"
 
 #: app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
@@ -5938,7 +5937,7 @@ msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
-msgstr "c"
+msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
@@ -6667,7 +6666,7 @@ msgstr ""
 
 #: app/widgets/gimpbrushfactoryview.c:114
 msgid "Spacing:"
-msgstr ""
+msgstr "ክፍተት፦"
 
 #: app/widgets/gimpbufferview.c:155
 msgid "Paste Into"
@@ -6953,7 +6952,7 @@ msgstr ""
 
 #: app/widgets/gimptoolbox-color-area.c:392
 msgid "Change Background Color"
-msgstr ""
+msgstr "የመደቡን ቀለም ለውጥ"
 
 #: app/widgets/gimptoolbox-indicator-area.c:141
 msgid ""
@@ -6990,7 +6989,7 @@ msgstr ""
 #: app/widgets/gimpwidgets-constructors.c:45
 #: app/widgets/gimpwidgets-constructors.c:77
 msgid "Normal"
-msgstr ""
+msgstr "የተለመደ"
 
 #: app/widgets/gimpwidgets-constructors.c:46
 #: app/widgets/gimpwidgets-constructors.c:78
