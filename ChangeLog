@@ -1,3 +1,11 @@
+Sun Jul 26 23:47:33 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/blend.c
+	* app/crop.c
+	* app/edit_selection.c
+	* app/rect_select.c: More statusbar stuff (should be finished now,
+	but who knows...)
+	
 Sat Jul 25 04:11:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/pixel_region.c: optimized pixel_region_[gs]et_row,

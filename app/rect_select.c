@@ -30,6 +30,8 @@
 #define FIXED_ENTRY_SIZE 50
 #define FIXED_ENTRY_MAX_CHARS 10
 
+#define STATUSBAR_SIZE 128
+
 extern SelectionOptions *ellipse_options;
 static SelectionOptions *rect_options = NULL;
 
@@ -314,7 +316,7 @@ rect_select_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   RectSelect * rect_sel;
-  gchar *select_mode;
+  gchar select_mode[STATUSBAR_SIZE];
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -378,27 +380,26 @@ rect_select_button_press (Tool           *tool,
       rect_sel->op = REPLACE;
     }
 
+  /* initialize the statusbar display */
   rect_sel->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "selection");
-  select_mode = g_new (gchar, 21); /* strlen("Selection: INTERSECT") */
   switch (rect_sel->op)
     {
     case ADD:
-      g_snprintf (select_mode, 21, "Selection: ADD");
+      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: ADD");
       break;
     case SUB:
-      g_snprintf (select_mode, 21, "Selection: SUBTRACT");
+      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: SUBTRACT");
       break;
     case INTERSECT:
-      g_snprintf (select_mode, 21, "Selection: INTERSECT");
+      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: INTERSECT");
       break;
     case REPLACE:
-      g_snprintf (select_mode, 21, "Selection: REPLACE");
+      g_snprintf (select_mode, STATUSBAR_SIZE, "Selection: REPLACE");
       break;
     default:
       break;
     }
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, select_mode);
-  g_free (select_mode);
 
   draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
 }
@@ -481,7 +482,7 @@ rect_select_motion (Tool           *tool,
 {
   RectSelect * rect_sel;
   GDisplay * gdisp;
-  gchar *size;
+  gchar size[STATUSBAR_SIZE];
   int ox, oy;
   int x, y;
   int w, h, s;
@@ -591,10 +592,8 @@ rect_select_motion (Tool           *tool,
     }
 
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id);
-  size = g_new (gchar, 25); /* strlen("Selection:  x ") + 2*5 */
-  g_snprintf (size, 25, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
+  g_snprintf (size, STATUSBAR_SIZE, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), rect_sel->context_id, size);
-  g_free (size);
 
   draw_core_resume (rect_sel->core, tool);
 }

@@ -49,6 +49,8 @@
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
 
+#define STATUSBAR_SIZE 128
+
 /*  the Blend structures  */
 
 typedef enum
@@ -91,6 +93,7 @@ struct _BlendTool
 
   int          endx;       /*  ending x coord              */
   int          endy;       /*  ending y coord              */
+  guint        context_id; /*  for the statusbar           */
 };
 
 typedef struct _BlendOptions BlendOptions;
@@ -575,6 +578,10 @@ blend_button_press (Tool           *tool,
   tool->gdisp_ptr = gdisp_ptr;
   tool->state = ACTIVE;
 
+  /* initialize the statusbar display */
+  blend_tool->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, "Blend: 0, 0");
+
   /*  Start drawing the blend tool  */
   draw_core_start (blend_tool->core, gdisp->canvas->window, tool);
 }
@@ -584,16 +591,21 @@ blend_button_release (Tool           *tool,
 		      GdkEventButton *bevent,
 		      gpointer        gdisp_ptr)
 {
+  GDisplay * gdisp;
   GImage * gimage;
   BlendTool * blend_tool;
   Argument *return_vals;
   int nreturn_vals;
 
-  gimage = ((GDisplay *) gdisp_ptr)->gimage;
+  gdisp = (GDisplay *) gdisp_ptr;
+  gimage = gdisp->gimage;
   blend_tool = (BlendTool *) tool->private;
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
+
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+
   draw_core_stop (blend_tool->core, tool);
   tool->state = INACTIVE;
 
@@ -637,6 +649,7 @@ blend_motion (Tool           *tool,
 {
   GDisplay * gdisp;
   BlendTool * blend_tool;
+  gchar vector[STATUSBAR_SIZE];
 
   gdisp = (GDisplay *) gdisp_ptr;
   blend_tool = (BlendTool *) tool->private;
@@ -647,6 +660,12 @@ blend_motion (Tool           *tool,
   /*  Get the current coordinates  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
+
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
+  g_snprintf (vector, STATUSBAR_SIZE, "Blend: %d, %d", 
+	      abs(blend_tool->endx - blend_tool->startx), 
+	      abs(blend_tool->endy - blend_tool->starty));
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, vector);
 
   /*  redraw the current tool  */
   draw_core_resume (blend_tool->core, tool);

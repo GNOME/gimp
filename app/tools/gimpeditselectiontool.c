@@ -30,6 +30,7 @@
 
 #define EDIT_SELECT_SCROLL_LOCK 0
 #define ARROW_VELOCITY          25
+#define STATUSBAR_SIZE          128
 
 typedef struct _edit_selection EditSelection;
 
@@ -97,7 +98,6 @@ init_edit_selection (Tool           *tool,
 {
   GDisplay *gdisp;
   Layer *layer;
-  gchar *offset;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -148,11 +148,8 @@ init_edit_selection (Tool           *tool,
   selection_pause (gdisp->select);
 
   /* initialize the statusbar display */
-  edit_select.context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
-							 "edit_select");
-  offset = g_new (gchar, 11); /* strlen("Move: 0, 0") */
+  edit_select.context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "edit_select");
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), edit_select.context_id, "Move: 0, 0");
-  g_free (offset);
 
   /*  Create and start the selection core  */
   edit_select.core = draw_core_new (edit_selection_draw);
@@ -285,7 +282,7 @@ edit_selection_motion (Tool           *tool,
 		       gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
-  gchar *offset;
+  gchar offset[STATUSBAR_SIZE];
 
   if (tool->state != ACTIVE)
     return;
@@ -297,11 +294,9 @@ edit_selection_motion (Tool           *tool,
   edit_selection_snap (gdisp, mevent->x, mevent->y);
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
-  offset = g_new (gchar, 22); /* strlen("Move:  x ") + 2*6 */
-  g_snprintf (offset, 22, "Move: %d, %d", 
+  g_snprintf (offset, STATUSBAR_SIZE, "Move: %d, %d", 
 	   (edit_select.x - edit_select.origx), (edit_select.y - edit_select.origy));
   gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id, offset);
-  g_free (offset);
 
   draw_core_resume (edit_select.core, tool);
 }

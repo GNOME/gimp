@@ -29,6 +29,8 @@
 #include "info_dialog.h"
 #include "undo.h"
 
+#define STATUSBAR_SIZE 128
+
 typedef struct _crop Crop;
 
 struct _crop
@@ -50,6 +52,7 @@ struct _crop
   int             tx2, ty2;   /*                              */
 
   int             function;   /*  moving or resizing          */
+  guint           context_id; /*  for the statusbar           */
 };
 
 /* possible crop functions */
@@ -186,16 +189,14 @@ crop_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
+  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), crop->context_id);
+
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       if (crop->function == CROPPING) 
 	crop_image (gdisp->gimage, crop->tx1, crop->ty1, crop->tx2, crop->ty2);
       else
 	{
-	  /*  if the crop information dialog doesn't yet exist, create the bugger  */
-	  if (! crop_info)
-	    crop_info_create (tool);
-
 	  crop_info_update (tool);
 	  return;
 	}
@@ -264,6 +265,7 @@ crop_motion (Tool           *tool,
   int x1, y1, x2, y2;
   int curx, cury;
   int inc_x, inc_y;
+  gchar size[STATUSBAR_SIZE];
 
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
@@ -338,6 +340,16 @@ crop_motion (Tool           *tool,
 
   /*  recalculate the coordinates for crop_draw based on the new values  */
   crop_recalc (tool, crop);
+
+  if (crop->function == CREATING || 
+      crop->function == RESIZING_LEFT || crop->function == RESIZING_RIGHT)
+    {
+      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), crop->context_id);
+      g_snprintf (size, STATUSBAR_SIZE, "Crop: %d x %d", 
+		  (crop->tx2 - crop->tx1), (crop->ty2 - crop->ty1));
+      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, size);
+    }
+
   draw_core_resume (crop->core, tool);
 }
 
@@ -677,6 +689,14 @@ crop_start (Tool *tool,
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   crop_recalc (tool, crop);
+  /*  if the crop information dialog doesn't yet exist, create the bugger  */
+  if (! crop_info)
+    crop_info_create (tool);
+  
+  /* initialize the statusbar display */
+  crop->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "crop");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, "Crop: 0 x 0");
+
   draw_core_start (crop->core, gdisp->canvas->window, tool);
 }
 
@@ -712,7 +732,7 @@ static void
 crop_info_update (Tool *tool)
 {
   Crop * crop;
-
+ 
   crop = (Crop *) tool->private;
 
   sprintf (orig_x_buf, "%d", crop->tx1);
