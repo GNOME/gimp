@@ -1,3 +1,9 @@
+2001-12-07  Tor Lillqvist  <tml@iki.fi>
+
+	* app/general.c (iso_8601_date_format): Can't use g_snprintf here,
+	we don't know the size of the user-supplied buffer. The
+	sizeof (buf) was bogus, buf is a char pointer.
+
 2001-12-05  Sven Neumann  <sven@gimp.org>
 
 	* app/scan_convert.c (convert_segment): corrected wrong clipping code
@@ -73,7 +79,7 @@ Thu Nov 29 14:25:50 PST 2001 Manish Singh <yosh@gimp.org>
 
 	* accompat.m4: New file. Should solve the AM_GLIB_GNU_GETTEXT and
 	PKG_CHECK_MODULES problem when building for Unix on a system
-	without glib-2.0.m4 or pkg.m4. Idea taken from GLib.
+	without glib-gettext.m4 or pkg.m4. Idea taken from GLib.
 
 	* configure.in: Include accompat.m4.
 
