@@ -1177,10 +1177,11 @@ gimp_context_set_default_colors (GimpContext *context)
 {
   GimpContext *bg_context;
 
-  bg_context = context;
-
   context_check_current (context);
   context_return_if_fail (context);
+
+  bg_context = context;
+
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
 
@@ -1195,10 +1196,11 @@ gimp_context_swap_colors (GimpContext *context)
   guchar f_r, f_g, f_b;
   guchar b_r, b_g, b_b;
 
-  bg_context = context;
-
   context_check_current (context);
   context_return_if_fail (context);
+
+  bg_context = context;
+
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
 

@@ -1,14 +1,29 @@
+2002-11-11  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (SUBDIRS): Remove intl.
+	(ACLOCAL_AMFLAGS): New variable.
+
+2002-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontext.c (gimp_context_set_default_colors,
+	gimp_context_swap_colors): don't simply crash when called with a
+	NULL context but use the deafult context. Fixes this functions
+	when called from the PDB. Spotted by Michael Bushey
+	<gimp@michael.mailshell.com>.
+
 2002-11-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/png.c: allow setting compression level 0 from
 	the UI.
 
 2002-11-07  Dave Neary  <bolsh@gimp.org>
+
 	* plug-ins/common/xbm.c: Applied patch from Raphael
 	Quinet to suppress printing of comments in XBM files.
 	Closes bug #82763.
 
 2002-11-07  Dave Neary  <bolsh@gimp.org>
+
 	* help/C/images/brush_dialog.png
 	* help/C/dialogs/brush_selection.html: Applied patch from
 	Cameron Gregory <cameron@bloke.com> to add missing help
