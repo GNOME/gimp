@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
+"POT-Creation-Date: 2004-08-31 00:44+0200\n"
 "PO-Revision-Date: 2004-07-29 11:27+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:155 libgimp/gimppatternmenu.c:140
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
 
-#: libgimp/gimpgradientmenu.c:103
+#: libgimp/gimpgradientmenu.c:98
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
@@ -458,6 +458,11 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
+#. a toggle button to (des)activate the instant preview
+#: libgimpwidgets/gimppreview.c:236
+msgid "_Preview"
+msgstr ""
+
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Verankern"
@@ -538,7 +543,7 @@ msgstr "Einheit"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:811
+#: libgimpwidgets/gimpwidgets.c:1000
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -546,15 +551,15 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:1004
 msgid "_New Seed"
 msgstr "_Neu Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:828
+#: libgimpwidgets/gimpwidgets.c:1017
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
-#: libgimpwidgets/gimpwidgets.c:832
+#: libgimpwidgets/gimpwidgets.c:1021
 msgid "_Randomize"
 msgstr "_Zufällig"
 
@@ -647,62 +652,67 @@ msgstr "Schwarzpunkt-Abgleich"
 msgid "CMYK color selector"
 msgstr "CMYK Farbmischer"
 
-#: modules/colorsel_cmyk.c:132
+#: modules/colorsel_cmyk.c:130
 msgid "CMYK"
 msgstr "CMYK"
 
-#: modules/colorsel_cmyk.c:149
+#: modules/colorsel_cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:148
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:150
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:156
+#: modules/colorsel_cmyk.c:154
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:155
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:156
 msgid "Yellow"
 msgstr "Gelb (Yellow)"
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:157
 msgid "Black"
 msgstr "Schwarz (Key)"
 
-#: modules/colorsel_cmyk.c:193
-msgid "Black Pullout (%):"
+#: modules/colorsel_cmyk.c:191
+#, fuzzy
+msgid "Black _Pullout:"
 msgstr "Schwarz-Auszug (%):"
 
-#: modules/colorsel_triangle.c:110
+#: modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
 msgstr "Dreiecks-Farbauswahl im Stil von Painter"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:170
 msgid "Triangle"
 msgstr "Dreieck"
 
-#: modules/colorsel_water.c:104
+#: modules/colorsel_water.c:88
 msgid "Watercolor style color selector"
 msgstr "Wasserfarben Farbmischer"
 
-#: modules/colorsel_water.c:176
+#: modules/colorsel_water.c:154
 msgid "Watercolor"
 msgstr "Wasserfarbe"
 
-#: modules/colorsel_water.c:251
+#: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
