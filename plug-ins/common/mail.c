@@ -90,13 +90,6 @@
  * As always: The utility of this plugin is left as an exercise for the reader
  *
  */
-#ifndef MAILER
-#define MAILER "/usr/lib/sendmail"
-#endif
-
-#ifndef UUENCODE
-#define UUENCODE "uuencode"
-#endif
 
 #define ENCAPSULATION_UUENCODE 0
 #define ENCAPSULATION_MIME     1
@@ -104,6 +97,14 @@
 #define BUFFER_SIZE            256
 
 #include "config.h"
+
+#ifndef SENDMAIL
+#define SENDMAIL "/usr/lib/sendmail"
+#endif
+
+#ifndef UUENCODE
+#define UUENCODE "uuencode"
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -325,7 +326,7 @@ save_image (gchar  *filename,
   tmpname = gimp_temp_name (ext + 1);
 
   /* construct the "sendmail user@location" line */
-  strcpy (mailcmdline, MAILER);
+  strcpy (mailcmdline, SENDMAIL);
   strcat (mailcmdline, " ");
   strcat (mailcmdline, mail_info.receipt);
 

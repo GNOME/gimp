@@ -2,7 +2,9 @@
 
 	* configure.in (AC_OUTPUT): fixed dist target by commenting out
 	plug-ins/tools/common since it's also commented out in the Makefile
-	in plug-ins/tools.
+	in plug-ins/tools. Fixed broken check for sendmail.
+
+	* plug-ins/common/mail.c: use the SENDMAIL define from config.h.
 
 2002-05-28  Sven Neumann  <sven@gimp.org>
 

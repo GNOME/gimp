@@ -777,17 +777,18 @@ AC_SUBST(HELPBROWSER)
 # Check for sendmail
 ####################
 
-sendmail_path=":"
-AC_ARG_WITH(sendmail, [  --with-sendmail=DIR     set sendmail command location],
-if eval "test x$with_sendmail != x"; then
-    sendmail_path=$with_sendmail
-fi)
-AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/sbin:/usr/lib)
+AC_ARG_WITH(sendmail,[  --with-sendmail=DIR     set sendmail command location])
 
-if test $ac_cv_path_SENDMAIL != ":"; then
-  MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
+if test "x$with_sendmail" != "x"; then
+  sendmail_path=$with_sendmail
+else
+  sendmail_path=$PATH:/usr/sbin:/usr/lib
 fi
-AC_SUBST(MAILER)
+
+AC_PATH_PROG(SENDMAIL, sendmail, , $sendmail_path)
+if test "x$SENDMAIL" != "x"; then
+  AC_DEFINE_UNQUOTED(SENDMAIL, "$SENDMAIL", [The MTA used the mail plug-in.])
+fi
 
 
 ######################
