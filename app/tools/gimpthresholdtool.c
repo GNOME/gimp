@@ -225,13 +225,15 @@ gimp_threshold_tool_initialize (GimpTool *tool,
   gimp_drawable_calculate_histogram (threshold_dialog->drawable,
 				     threshold_dialog->hist);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (threshold_dialog->histogram),
-				    threshold_dialog);
+  g_signal_handlers_block_by_func (G_OBJECT (threshold_dialog->histogram),
+                                   threshold_histogram_range,
+                                   threshold_dialog);
   histogram_widget_update (threshold_dialog->histogram,
 			   threshold_dialog->hist);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (threshold_dialog->histogram),
-				      threshold_dialog);
-
+  g_signal_handlers_unblock_by_func (G_OBJECT (threshold_dialog->histogram),
+                                     threshold_histogram_range,
+                                     threshold_dialog);
+  
   threshold_update (threshold_dialog, ALL);
 
   if (threshold_dialog->preview)
@@ -394,9 +396,9 @@ threshold_dialog_new (void)
   gtk_widget_set_usize (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (td->low_threshold_data), "value_changed",
-		      GTK_SIGNAL_FUNC (threshold_low_threshold_adjustment_update),
-		      td);
+  g_signal_connect (G_OBJECT (td->low_threshold_data), "value_changed",
+                    GTK_SIGNAL_FUNC (threshold_low_threshold_adjustment_update),
+                    td);
 
   gtk_widget_show (spinbutton);
 
@@ -408,9 +410,9 @@ threshold_dialog_new (void)
   gtk_widget_set_usize (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (td->high_threshold_data), "value_changed",
-		      GTK_SIGNAL_FUNC (threshold_high_threshold_adjustment_update),
-		      td);
+  g_signal_connect (G_OBJECT (td->high_threshold_data), "value_changed",
+                    GTK_SIGNAL_FUNC (threshold_high_threshold_adjustment_update),
+                    td);
 
   gtk_widget_show (spinbutton);
 
@@ -428,9 +430,9 @@ threshold_dialog_new (void)
 
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (td->histogram));
 
-  gtk_signal_connect (GTK_OBJECT (td->histogram), "range_changed",
-		      GTK_SIGNAL_FUNC (threshold_histogram_range),
-		      td);
+  g_signal_connect (G_OBJECT (td->histogram), "range_changed",
+                    GTK_SIGNAL_FUNC (threshold_histogram_range),
+                    td);
 
   gtk_widget_show (GTK_WIDGET(td->histogram));
 
@@ -446,9 +448,9 @@ threshold_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), td->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (threshold_preview_update),
-		      td);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    GTK_SIGNAL_FUNC (threshold_preview_update),
+                    td);
 
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);

@@ -236,8 +236,8 @@ gimp_transform_tool_transform (GimpTransformTool   *tool,
   g_return_val_if_fail (tool, NULL);
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tool), NULL);
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_transform_tool_signals[TRANSFORM],
-                   gdisp, state, &retval);
+  g_signal_emit (G_OBJECT (tool), gimp_transform_tool_signals[TRANSFORM], 0,
+                 gdisp, state, &retval);
 
   return retval;
 }

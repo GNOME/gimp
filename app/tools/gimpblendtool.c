@@ -703,9 +703,9 @@ blend_options_new (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Offset:"), 1.0, 1.0,
 			     scale, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->offset);
+  g_signal_connect (G_OBJECT (options->offset_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->offset);
 
   /*  the blend mode menu  */
   options->blend_mode_w = gimp_option_menu_new2
@@ -786,11 +786,12 @@ blend_options_new (void)
     gtk_check_button_new_with_label (_("Adaptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
 				options->supersample_d);
-  gtk_signal_connect (GTK_OBJECT (options->supersample_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->supersample);
   gtk_box_pack_start (GTK_BOX (vbox), options->supersample_w, FALSE, FALSE, 0);
   gtk_widget_show (options->supersample_w);
+
+  g_signal_connect (G_OBJECT (options->supersample_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->supersample);
 
   /*  table for supersampling options  */
   table = gtk_table_new (2, 2, FALSE);
@@ -813,9 +814,10 @@ blend_options_new (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Max Depth:"), 1.0, 1.0,
 			     scale, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &options->max_depth);
+
+  g_signal_connect (G_OBJECT(options->max_depth_w), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &options->max_depth);
 
   /*  threshold scale  */
   options->threshold_w =
@@ -826,9 +828,10 @@ blend_options_new (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Threshold:"), 1.0, 1.0,
 			     scale, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->threshold);
+
+  g_signal_connect (G_OBJECT(options->threshold_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->threshold);
 
   /*  show the table  */
   gtk_widget_show (table);

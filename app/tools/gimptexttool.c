@@ -284,9 +284,9 @@ text_tool_options_new (void)
   /*  antialias toggle  */
   options->antialias_w =
     gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->antialias);
+  g_signal_connect (G_OBJECT (options->antialias_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->antialias);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				options->antialias_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w,
@@ -303,9 +303,9 @@ text_tool_options_new (void)
 
   options->border_w =
     gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (options->border_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &options->border);
+  g_signal_connect (G_OBJECT (options->border_w), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &options->border);
   spinbutton =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -322,9 +322,9 @@ text_tool_options_new (void)
   /*  the dynamic text toggle  */
   options->use_dyntext_w =
     gtk_check_button_new_with_label (_("Use Dynamic Text"));
-  gtk_signal_connect (GTK_OBJECT (options->use_dyntext_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->use_dyntext);
+  g_signal_connect (G_OBJECT (options->use_dyntext_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->use_dyntext);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_dyntext_w),
 				options->use_dyntext_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->use_dyntext_w,
@@ -484,20 +484,20 @@ text_dialog_create (void)
   gtk_window_set_position (GTK_WINDOW (text_tool_shell), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (text_tool_shell), "delete_event",
-		      GTK_SIGNAL_FUNC (text_dialog_delete_callback),
-		      text_tool_shell);
+  g_signal_connect (G_OBJECT (text_tool_shell), "delete_event",
+                    G_CALLBACK (text_dialog_delete_callback),
+                    text_tool_shell);
 
   /* ok and cancel buttons */
-  gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool_shell)->ok_button), "clicked",
-		      GTK_SIGNAL_FUNC (text_dialog_ok_callback),
-		      text_tool_shell);
+  g_signal_connect (G_OBJECT (GTK_FONT_SELECTION_DIALOG
+                              (text_tool_shell)->ok_button), "clicked",
+                    G_CALLBACK (text_dialog_ok_callback),
+                    text_tool_shell);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
-				  (text_tool_shell)->cancel_button), "clicked",
-		      GTK_SIGNAL_FUNC (text_dialog_cancel_callback),
-		      text_tool_shell);
+  g_signal_connect (G_OBJECT (GTK_FONT_SELECTION_DIALOG
+                              (text_tool_shell)->cancel_button), "clicked",
+                    G_CALLBACK (text_dialog_cancel_callback),
+                    text_tool_shell);
 
   /* Show the shell */
   gtk_widget_show (text_tool_shell);

@@ -340,9 +340,9 @@ brightness_contrast_dialog_new (void)
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      GTK_SIGNAL_FUNC (brightness_contrast_brightness_adjustment_update),
-		      bcd);
+  g_signal_connect (G_OBJECT (data), "value_changed",
+                    G_CALLBACK (brightness_contrast_brightness_adjustment_update),
+                    bcd);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -371,9 +371,9 @@ brightness_contrast_dialog_new (void)
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      GTK_SIGNAL_FUNC (brightness_contrast_contrast_adjustment_update),
-		      bcd);
+  g_signal_connect (G_OBJECT (data), "value_changed",
+                    G_CALLBACK (brightness_contrast_contrast_adjustment_update),
+                    bcd);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -388,9 +388,9 @@ brightness_contrast_dialog_new (void)
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bcd->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (brightness_contrast_preview_update),
-		      bcd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (brightness_contrast_preview_update),
+                    bcd);
 
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);

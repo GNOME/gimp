@@ -308,9 +308,9 @@ posterize_dialog_new (void)
   gtk_widget_set_usize (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (pd->levels_data), "value_changed",
-		      GTK_SIGNAL_FUNC (posterize_levels_adjustment_update),
-		      pd);
+  g_signal_connect (G_OBJECT (pd->levels_data), "value_changed",
+                    G_CALLBACK (posterize_levels_adjustment_update),
+                    pd);
 
   gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
@@ -324,9 +324,9 @@ posterize_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pd->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (posterize_preview_update),
-		      pd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (posterize_preview_update),
+                    pd);
 
   gtk_widget_show (label);
   gtk_widget_show (toggle);

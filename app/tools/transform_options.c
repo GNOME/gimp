@@ -239,9 +239,9 @@ transform_options_init (TransformOptions     *options,
 
   /*  the show grid toggle button  */
   options->show_grid_w = gtk_check_button_new_with_label (_("Show Grid"));
-  gtk_signal_connect (GTK_OBJECT (options->show_grid_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_show_grid_update),
-		      &options->show_grid);
+  g_signal_connect (G_OBJECT (options->show_grid_w), "toggled",
+                    G_CALLBACK (gimp_transform_tool_show_grid_update),
+                    &options->show_grid);
   gtk_box_pack_start (GTK_BOX (fbox), options->show_grid_w, FALSE, FALSE, 0);
   gtk_widget_show (options->show_grid_w);
   
@@ -259,9 +259,9 @@ transform_options_init (TransformOptions     *options,
   grid_density =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
-  gtk_signal_connect (GTK_OBJECT (options->grid_size_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_grid_density_callback),
-		      &options->grid_size);
+  g_signal_connect (G_OBJECT (options->grid_size_w), "value_changed",
+                    G_CALLBACK (gimp_transform_tool_grid_density_callback),
+                    &options->grid_size);
   gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
   gtk_widget_show (grid_density);
   gtk_widget_set_sensitive (label, options->show_grid_d);
@@ -283,18 +283,18 @@ transform_options_init (TransformOptions     *options,
 
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->smoothing);
+  g_signal_connect (G_OBJECT (options->smoothing_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->smoothing);
   gtk_table_attach_defaults (GTK_TABLE (table), 
 			     options->smoothing_w, 0, 1, 0, 1);
   gtk_widget_show (options->smoothing_w);
 
   /*  the showpath toggle button  */
   options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
-  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_transform_tool_show_path_update),
-		      &options->showpath);
+  g_signal_connect (G_OBJECT (options->showpath_w), "toggled",
+                    G_CALLBACK (gimp_transform_tool_show_path_update),
+                    &options->showpath);
   gtk_table_attach_defaults (GTK_TABLE (table), 
 			     options->showpath_w, 1, 2, 0, 1);
   gtk_widget_show (options->showpath_w);
@@ -303,9 +303,9 @@ transform_options_init (TransformOptions     *options,
 
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
-  gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->clip);
+  g_signal_connect (G_OBJECT (options->clip_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->clip);
   gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), 
 		      options->clip_w, FALSE, FALSE, 0);
   gtk_widget_show (options->clip_w);

@@ -207,7 +207,7 @@ gimp_scale_tool_transform (GimpTransformTool  *tr_tool,
 				       tool);
 	  g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
 			    G_CALLBACK (gimp_scale_tool_unit_changed),
-			    sc_tool);
+			    tool);
 
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton), NULL);
@@ -223,7 +223,12 @@ gimp_scale_tool_transform (GimpTransformTool  *tr_tool,
 				     2, 0);
 	}
 
-      gtk_signal_handler_block_by_data (GTK_OBJECT (sizeentry), tool);
+      g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+                                       gimp_scale_tool_size_changed,
+                                       tool);
+      g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+                                       gimp_scale_tool_unit_changed,
+                                       tool);
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
 				gdisp->gimage->unit);
@@ -254,7 +259,12 @@ gimp_scale_tool_transform (GimpTransformTool  *tr_tool,
 
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (sizeentry), tool);
+      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+                                         gimp_scale_tool_size_changed,
+                                         tool);
+      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+                                         gimp_scale_tool_unit_changed,
+                                         tool);
 
       tr_tool->trans_info [X0] = (double) tr_tool->x1;
       tr_tool->trans_info [Y0] = (double) tr_tool->y1;

@@ -407,9 +407,9 @@ gimp_eraser_tool_options_new (void)
   /* the hard toggle */
   options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
   gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->hard_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->hard);
+  g_signal_connect (G_OBJECT (options->hard_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->hard);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);
   gtk_widget_show (options->hard_w);
@@ -417,9 +417,9 @@ gimp_eraser_tool_options_new (void)
   /* the anti_erase toggle */
   options->anti_erase_w = gtk_check_button_new_with_label (_("Anti Erase"));
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->anti_erase_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->anti_erase);
+  g_signal_connect (G_OBJECT (options->anti_erase_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->anti_erase);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase_d);
   gtk_widget_show (options->anti_erase_w);

@@ -1,5 +1,31 @@
 2001-08-01  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/tools/transform_options.c: got rid of all remaining gtk_signal 
+	wrappers.
+
+2001-08-01  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h: defined GimpTransferMode enum.
 	
 	* app/tools/gimpcolorbalancetool.[ch]

@@ -409,9 +409,9 @@ histogram_tool_dialog_new (void)
   htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
 
-  gtk_signal_connect (GTK_OBJECT (htd->histogram), "range_changed",
-		      GTK_SIGNAL_FUNC (histogram_tool_histogram_range),
-		      htd);
+  g_signal_connect (G_OBJECT (htd->histogram), "range_changed",
+                    G_CALLBACK (histogram_tool_histogram_range),
+                    htd);
 
   gtk_widget_show (GTK_WIDGET (htd->histogram));
   gtk_widget_show (frame);

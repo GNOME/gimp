@@ -241,14 +241,14 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
 	    info_dialog_add_spinbutton (transform_info, _("Angle:"),
 					&angle_val,
 					-180, 180, 1, 15, 1, 1, 2,
-					(GtkSignalFunc) rotate_angle_changed,
+					G_CALLBACK (rotate_angle_changed),
 					tool);
 	  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
 
 	  /*  this looks strange (-180, 181), but it works  */
 	  widget = info_dialog_add_scale (transform_info, "", &angle_val,
 					  -180, 181, 0.01, 0.1, 1, -1,
-					  (GtkSignalFunc) rotate_angle_changed,
+					  G_CALLBACK (rotate_angle_changed),
 					  tool);
 	  gtk_widget_set_usize (widget, 180, 0);
 
@@ -273,7 +273,9 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
 				     2, 0);
 	}
 
-      gtk_signal_handler_block_by_data (GTK_OBJECT (sizeentry), tool);
+      g_signal_handlers_block_by_func (G_OBJECT (sizeentry), 
+                                       rotate_center_changed,
+                                       tool);
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
 				gdisp->gimage->unit);
@@ -304,7 +306,9 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
 
       gtk_widget_set_sensitive (transform_info->shell, TRUE);
 
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (sizeentry), tool);
+      g_signal_handlers_unblock_by_func (G_OBJECT (sizeentry), 
+                                         rotate_center_changed,
+                                         tool);
 
       transform_tool->trans_info[ANGLE] = angle_val;
       transform_tool->trans_info[REAL_ANGLE] = angle_val;

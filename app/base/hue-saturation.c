@@ -512,18 +512,18 @@ hue_saturation_dialog_new (void)
 			    DA_WIDTH, DA_HEIGHT);
 	  gtk_widget_set_events (hsd->hue_partition_da[i - 1],
 				 HUE_PARTITION_MASK);
-	  gtk_signal_connect (GTK_OBJECT (hsd->hue_partition_da[i - 1]), "event",
-			      GTK_SIGNAL_FUNC (hue_saturation_hue_partition_events),
-			      hsd);
+	  g_signal_connect (G_OBJECT (hsd->hue_partition_da[i - 1]), "event",
+                            G_CALLBACK (hue_saturation_hue_partition_events),
+                            hsd);
 	  gtk_container_add (GTK_CONTAINER (frame), hsd->hue_partition_da[i - 1]);
 
 	  gtk_widget_show (hsd->hue_partition_da[i - 1]);
 	  gtk_widget_show (frame);
 	}
 
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  GTK_SIGNAL_FUNC (hue_saturation_partition_callback),
-			  hsd);
+      g_signal_connect (G_OBJECT (radio_button), "toggled",
+                        G_CALLBACK (hue_saturation_partition_callback),
+                        hsd);
 
       gtk_widget_show (radio_button);
     }
@@ -570,9 +570,9 @@ hue_saturation_dialog_new (void)
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT (hsd->hue_data), "value_changed",
-		      GTK_SIGNAL_FUNC (hue_saturation_hue_adjustment_update),
-		      hsd);
+  g_signal_connect (G_OBJECT (hsd->hue_data), "value_changed",
+                    G_CALLBACK (hue_saturation_hue_adjustment_update),
+                    hsd);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -604,9 +604,9 @@ hue_saturation_dialog_new (void)
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT (hsd->lightness_data), "value_changed",
-		      GTK_SIGNAL_FUNC (hue_saturation_lightness_adjustment_update),
-		      hsd);
+  g_signal_connect (G_OBJECT (hsd->lightness_data), "value_changed",
+                    G_CALLBACK (hue_saturation_lightness_adjustment_update),
+                    hsd);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -638,9 +638,9 @@ hue_saturation_dialog_new (void)
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_signal_connect (GTK_OBJECT (hsd->saturation_data), "value_changed",
-		      GTK_SIGNAL_FUNC (hue_saturation_saturation_adjustment_update),
-		      hsd);
+  g_signal_connect (G_OBJECT (hsd->saturation_data), "value_changed",
+                    G_CALLBACK (hue_saturation_saturation_adjustment_update),
+                    hsd);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -658,9 +658,9 @@ hue_saturation_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), hsd->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (hue_saturation_preview_update),
-		      hsd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (hue_saturation_preview_update),
+                    hsd);
 
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);

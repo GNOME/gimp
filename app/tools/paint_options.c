@@ -169,16 +169,16 @@ paint_options_init (PaintOptions         *options,
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
-		      GTK_SIGNAL_FUNC (paint_options_opacity_adjustment_update),
-		      tool_info->context);
+  g_signal_connect (G_OBJECT (options->opacity_w), "value_changed",
+                    G_CALLBACK (paint_options_opacity_adjustment_update),
+                    tool_info->context);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Opacity:"), 1.0, 1.0,
 			     scale, 1, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (tool_info->context), "opacity_changed",
-		      GTK_SIGNAL_FUNC (paint_options_opacity_changed),
-		      options->opacity_w);
+  g_signal_connect (G_OBJECT (tool_info->context), "opacity_changed",
+                    G_CALLBACK (paint_options_opacity_changed),
+                    options->opacity_w);
 
   /*  the paint mode menu  */
   if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
@@ -200,9 +200,9 @@ paint_options_init (PaintOptions         *options,
 				 _("Mode:"), 1.0, 0.5,
 				 options->paint_mode_w, 1, TRUE);
 
-      gtk_signal_connect (GTK_OBJECT (tool_info->context), "paint_mode_changed",
-			  GTK_SIGNAL_FUNC (paint_options_paint_mode_changed),
-			  options->paint_mode_w);
+      g_signal_connect (G_OBJECT (tool_info->context), "paint_mode_changed",
+                        G_CALLBACK (paint_options_paint_mode_changed),
+                        options->paint_mode_w);
     }
 
   /*  show the main table  */
@@ -231,9 +231,9 @@ paint_options_init (PaintOptions         *options,
 	gtk_check_button_new_with_label (_("Incremental"));
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
 			  options->incremental_w, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &options->incremental);
+      g_signal_connect (G_OBJECT (options->incremental_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->incremental);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental_d);
       gtk_widget_show (options->incremental_w);
@@ -392,9 +392,9 @@ paint_pressure_options_new (GtkType       tool_type,
       pressure->opacity_w =
 	gtk_check_button_new_with_label (_("Opacity"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->opacity_w);
-      gtk_signal_connect (GTK_OBJECT (pressure->opacity_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pressure->opacity);
+      g_signal_connect (G_OBJECT (pressure->opacity_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->opacity);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
 				    pressure->opacity_d);
       gtk_widget_show (pressure->opacity_w);
@@ -410,9 +410,9 @@ paint_pressure_options_new (GtkType       tool_type,
     {
       pressure->pressure_w = gtk_check_button_new_with_label (_("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
-      gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pressure->pressure);
+      g_signal_connect (G_OBJECT (pressure->pressure_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->pressure);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
       gtk_widget_show (pressure->pressure_w);
@@ -426,9 +426,9 @@ paint_pressure_options_new (GtkType       tool_type,
       pressure->rate_w =
 	gtk_check_button_new_with_label (_("Rate"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->rate_w);
-      gtk_signal_connect (GTK_OBJECT (pressure->rate_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pressure->rate);
+      g_signal_connect (G_OBJECT (pressure->rate_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->rate);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
 				    pressure->rate_d);
       gtk_widget_show (pressure->rate_w);
@@ -446,9 +446,9 @@ paint_pressure_options_new (GtkType       tool_type,
       pressure->size_w =
 	gtk_check_button_new_with_label (_("Size"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->size_w);
-      gtk_signal_connect (GTK_OBJECT (pressure->size_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pressure->size);
+      g_signal_connect (G_OBJECT (pressure->size_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->size);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
 				    pressure->size_d);
       gtk_widget_show (pressure->size_w);
@@ -462,9 +462,9 @@ paint_pressure_options_new (GtkType       tool_type,
       pressure->color_w =
 	gtk_check_button_new_with_label (_("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->color_w);
-      gtk_signal_connect (GTK_OBJECT (pressure->color_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &pressure->color);
+      g_signal_connect (G_OBJECT (pressure->color_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->color);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
 				    pressure->color_d);
       gtk_widget_show (pressure->color_w);
@@ -557,9 +557,9 @@ paint_gradient_options_new (GtkType       tool_type,
       gradient->use_fade_w =
         gtk_check_button_new_with_label (_("Fade Out"));
       gtk_container_add (GTK_CONTAINER (abox), gradient->use_fade_w);
-      gtk_signal_connect (GTK_OBJECT (gradient->use_fade_w), "toggled",
-                          GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-                          &gradient->use_fade);
+      g_signal_connect (G_OBJECT (gradient->use_fade_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &gradient->use_fade);
       gtk_widget_show (gradient->use_fade_w);
 
       /*  the fade-out sizeentry  */
@@ -570,18 +570,18 @@ paint_gradient_options_new (GtkType       tool_type,
                                         1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (gradient->fade_out_w), "value_changed",
-                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                          &gradient->fade_out);
+      g_signal_connect (G_OBJECT (gradient->fade_out_w), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &gradient->fade_out);
       gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 0, 1);
       gtk_widget_show (spinbutton);
 
       /*  the fade-out unitmenu  */
       gradient->fade_unit_w =
         gimp_unit_menu_new ("%a", gradient->fade_unit_d, TRUE, TRUE, TRUE);
-      gtk_signal_connect (GTK_OBJECT (gradient->fade_unit_w), "unit_changed",
-                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
-                          &gradient->fade_unit);
+      g_signal_connect (G_OBJECT (gradient->fade_unit_w), "unit_changed",
+                        G_CALLBACK (gimp_unit_menu_update),
+                        &gradient->fade_unit);
       g_object_set_data (G_OBJECT (gradient->fade_unit_w), "set_digits",
                            spinbutton);
       gtk_table_attach (GTK_TABLE (table), gradient->fade_unit_w, 2, 3, 0, 1,
@@ -609,9 +609,9 @@ paint_gradient_options_new (GtkType       tool_type,
       gradient->use_gradient_w =
         gtk_check_button_new_with_label (_("Gradient"));
       gtk_container_add (GTK_CONTAINER (abox), gradient->use_gradient_w);
-      gtk_signal_connect (GTK_OBJECT (gradient->use_gradient_w), "toggled",
-                          GTK_SIGNAL_FUNC (paint_gradient_options_gradient_toggle_callback),
-                          paint_options);
+      g_signal_connect (G_OBJECT (gradient->use_gradient_w), "toggled",
+                        G_CALLBACK (paint_gradient_options_gradient_toggle_callback),
+                        paint_options);
       gtk_widget_show (gradient->use_gradient_w);
 
       /*  the gradient length scale  */
@@ -623,18 +623,18 @@ paint_gradient_options_new (GtkType       tool_type,
                              1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (gradient->gradient_length_w), "value_changed",
-                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                          &gradient->gradient_length);
+      g_signal_connect (G_OBJECT (gradient->gradient_length_w), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &gradient->gradient_length);
       gtk_table_attach_defaults (GTK_TABLE (table), spinbutton, 1, 2, 1, 2);
       gtk_widget_show (spinbutton);
 
       /*  the gradient unitmenu  */
       gradient->gradient_unit_w =
         gimp_unit_menu_new ("%a", gradient->gradient_unit_d, TRUE, TRUE, TRUE);
-      gtk_signal_connect (GTK_OBJECT (gradient->gradient_unit_w), "unit_changed",
-                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
-                          &gradient->gradient_unit);
+      g_signal_connect (G_OBJECT (gradient->gradient_unit_w), "unit_changed",
+                        G_CALLBACK (gimp_unit_menu_update),
+                        &gradient->gradient_unit);
       g_object_set_data (G_OBJECT (gradient->gradient_unit_w), "set_digits",
                            spinbutton);
       gtk_table_attach (GTK_TABLE (table), gradient->gradient_unit_w, 2, 3, 1, 2,
@@ -752,10 +752,14 @@ static void
 paint_options_opacity_adjustment_update (GtkAdjustment *adjustment,
 					 gpointer       data)
 {
-  gtk_signal_handler_block_by_data (GTK_OBJECT (data), adjustment);
+  g_signal_handlers_block_by_func (G_OBJECT (data), 
+                                   paint_options_opacity_changed,
+                                   adjustment);
   gimp_context_set_opacity (GIMP_CONTEXT (data),
 			    adjustment->value / 100);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (data), adjustment);
+  g_signal_handlers_unblock_by_func (G_OBJECT (data), 
+                                     paint_options_opacity_changed,
+                                     adjustment);
 }
 
 static void
@@ -763,9 +767,13 @@ paint_options_opacity_changed (GimpContext *context,
 			       gdouble      opacity,
 			       gpointer     data)
 {
-  gtk_signal_handler_block_by_data (GTK_OBJECT (data), context);
+  g_signal_handlers_block_by_func (G_OBJECT (data), 
+                                   paint_options_opacity_adjustment_update,
+                                   context);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (data), opacity * 100);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (data), context);
+  g_signal_handlers_unblock_by_func (G_OBJECT (data), 
+                                     paint_options_opacity_adjustment_update,
+                                     context);
 }
 
 static void
@@ -775,8 +783,10 @@ paint_options_paint_mode_update (GtkWidget *widget,
   LayerModeEffects  paint_mode;
   PaintOptions     *options;
 
-  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
-  options    = (PaintOptions *) data;
+  paint_mode = 
+    (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  options = (PaintOptions *) data;
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (options->context),
 				    options->paint_mode_w);

@@ -234,12 +234,13 @@ magnify_options_new (void)
   /*  the allow_resize toggle button  */
   options->allow_resize_w =
     gtk_check_button_new_with_label (_("Allow Window Resizing"));
-  gtk_signal_connect (GTK_OBJECT (options->allow_resize_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &(gimprc.allow_resize_windows));
+  g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &(gimprc.allow_resize_windows));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				gimprc.allow_resize_windows);
-  gtk_box_pack_start (GTK_BOX (vbox), options->allow_resize_w, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), 
+                      options->allow_resize_w, FALSE, FALSE, 0);
   gtk_widget_show (options->allow_resize_w);
 
   /*  tool toggle  */

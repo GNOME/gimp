@@ -505,9 +505,9 @@ levels_dialog_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->low_input_data), "value_changed",
-                      GTK_SIGNAL_FUNC (levels_low_input_adjustment_update),
-                      ld);
+  g_signal_connect (G_OBJECT (ld->low_input_data), "value_changed",
+                    G_CALLBACK (levels_low_input_adjustment_update),
+                    ld);
 
   gtk_widget_show (spinbutton);
 
@@ -520,9 +520,9 @@ levels_dialog_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->gamma_data), "value_changed",
-		      GTK_SIGNAL_FUNC (levels_gamma_adjustment_update),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->gamma_data), "value_changed",
+                    G_CALLBACK (levels_gamma_adjustment_update),
+                    ld);
 
   gtk_widget_show (spinbutton);
 
@@ -535,9 +535,9 @@ levels_dialog_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->high_input_data), "value_changed",
-		      GTK_SIGNAL_FUNC (levels_high_input_adjustment_update),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->high_input_data), "value_changed",
+                    G_CALLBACK (levels_high_input_adjustment_update),
+                    ld);
 
   gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
@@ -577,9 +577,9 @@ levels_dialog_new (void)
   gtk_widget_set_events (ld->input_levels_da[0], LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), ld->input_levels_da[0], FALSE, TRUE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->input_levels_da[0]), "event",
-		      GTK_SIGNAL_FUNC (levels_input_da_events),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->input_levels_da[0]), "event",
+                    G_CALLBACK (levels_input_da_events),
+                    ld);
 
   ld->input_levels_da[1] = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (ld->input_levels_da[1]),
@@ -587,9 +587,9 @@ levels_dialog_new (void)
   gtk_widget_set_events (ld->input_levels_da[1], LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), ld->input_levels_da[1], FALSE, TRUE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->input_levels_da[1]), "event",
-		      GTK_SIGNAL_FUNC (levels_input_da_events),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->input_levels_da[1]), "event",
+                    G_CALLBACK (levels_input_da_events),
+                    ld);
 
   gtk_widget_show (ld->input_levels_da[0]);
   gtk_widget_show (ld->input_levels_da[1]);
@@ -614,9 +614,9 @@ levels_dialog_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->low_output_data), "value_changed",
-                      GTK_SIGNAL_FUNC (levels_low_output_adjustment_update),
-                      ld);
+  g_signal_connect (G_OBJECT (ld->low_output_data), "value_changed",
+                    G_CALLBACK (levels_low_output_adjustment_update),
+                    ld);
 
   gtk_widget_show (spinbutton);
 
@@ -629,9 +629,9 @@ levels_dialog_new (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->high_output_data), "value_changed",
-                      GTK_SIGNAL_FUNC (levels_high_output_adjustment_update),
-                      ld);
+  g_signal_connect (G_OBJECT (ld->high_output_data), "value_changed",
+                    G_CALLBACK (levels_high_output_adjustment_update),
+                    ld);
 
   gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
@@ -652,18 +652,18 @@ levels_dialog_new (void)
   gtk_widget_set_events (ld->output_levels_da[0], LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), ld->output_levels_da[0], FALSE, TRUE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->output_levels_da[0]), "event",
-		      GTK_SIGNAL_FUNC (levels_output_da_events),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->output_levels_da[0]), "event",
+                    G_CALLBACK (levels_output_da_events),
+                    ld);
 
   ld->output_levels_da[1] = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (ld->output_levels_da[1]), DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (ld->output_levels_da[1], LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), ld->output_levels_da[1], FALSE, TRUE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (ld->output_levels_da[1]), "event",
-		      GTK_SIGNAL_FUNC (levels_output_da_events),
-		      ld);
+  g_signal_connect (G_OBJECT (ld->output_levels_da[1]), "event",
+                    G_CALLBACK (levels_output_da_events),
+                    ld);
 
   gtk_widget_show (ld->output_levels_da[0]);
   gtk_widget_show (ld->output_levels_da[1]);
@@ -681,9 +681,9 @@ levels_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ld->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (levels_preview_update),
-		      ld);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (levels_preview_update),
+                    ld);
 
   gtk_widget_show (toggle);
 
@@ -699,8 +699,8 @@ levels_dialog_new (void)
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (levels_auto_callback),
+  g_signal_connect (G_OBJECT (button), "clicked",
+		      G_CALLBACK (levels_auto_callback),
 		      ld);
 
   gtk_widget_show (button);
@@ -709,9 +709,9 @@ levels_dialog_new (void)
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (levels_load_callback),
-		      ld->shell);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (levels_load_callback),
+                    ld->shell);
 
   gtk_widget_show (button);
 
@@ -719,9 +719,9 @@ levels_dialog_new (void)
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (levels_save_callback),
-		      ld->shell);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (levels_save_callback),
+                    ld->shell);
 
   gtk_widget_show (button);
 
@@ -1550,19 +1550,21 @@ file_dialog_create (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_dialog_ok_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
+                    "clicked", 
+                    G_CALLBACK (file_dialog_cancel_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
+                    "clicked", 
+                    G_CALLBACK (file_dialog_ok_callback),
+                    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (parent), "unmap",
-		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (file_dlg), "delete_event",
+                    G_CALLBACK (file_dialog_cancel_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (parent), "unmap",
+                    G_CALLBACK (file_dialog_cancel_callback),
+                    NULL);
 
   temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "levels" G_DIR_SEPARATOR_S,
       			  gimp_directory ());

@@ -93,9 +93,9 @@ selection_options_init (SelectionOptions     *options,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
 				options->feather_d);
-  gtk_signal_connect (GTK_OBJECT (options->feather_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->feather);
+  g_signal_connect (G_OBJECT (options->feather_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->feather);
   gtk_widget_show (options->feather_w);
 
   /*  the feather radius scale  */
@@ -116,9 +116,9 @@ selection_options_init (SelectionOptions     *options,
   gtk_container_add (GTK_CONTAINER (abox), scale);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->feather_radius_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->feather_radius);
+  g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->feather_radius);
   gtk_widget_show (scale);
 
   /*  grey out label & scale if feather is off  */
@@ -136,9 +136,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				    options->antialias_d);
-      gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &options->antialias);
+      g_signal_connect (G_OBJECT (options->antialias_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->antialias);
       gtk_widget_show (options->antialias_w);
     }
 
@@ -164,9 +164,9 @@ selection_options_init (SelectionOptions     *options,
 			  FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
 				    options->interactive_d);
-      gtk_signal_connect (GTK_OBJECT (options->interactive_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &options->interactive);
+      g_signal_connect (G_OBJECT (options->interactive_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->interactive);
       gtk_widget_show (options->interactive_w);
     }
 
@@ -180,9 +180,9 @@ selection_options_init (SelectionOptions     *options,
 	gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w,
 			  FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &options->sample_merged);
+      g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->sample_merged);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
       gtk_widget_show (options->sample_merged_w);
@@ -203,9 +203,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-      gtk_signal_connect (GTK_OBJECT (options->threshold_w), "value_changed",
-			  GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-			  &options->threshold);
+      g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &options->threshold);
       gtk_widget_show (scale);
     }
 
@@ -222,9 +222,9 @@ selection_options_init (SelectionOptions     *options,
 	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
       gtk_box_pack_start (GTK_BOX (vbox), options->fixed_size_w,
 			  FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (options->fixed_size_w), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			  &options->fixed_size);
+      g_signal_connect (G_OBJECT (options->fixed_size_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->fixed_size);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
 				    options->fixed_size_d);
       gtk_widget_show (options->fixed_size_w);
@@ -250,9 +250,9 @@ selection_options_init (SelectionOptions     *options,
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_width_w), 1.0, 0.0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
       gtk_widget_set_usize (width_spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
-                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                          &options->fixed_width);
+      g_signal_connect (G_OBJECT (options->fixed_width_w), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &options->fixed_width);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Width:"), 1.0, 0.5,
 				 width_spinbutton, 1, FALSE);
@@ -264,18 +264,18 @@ selection_options_init (SelectionOptions     *options,
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_height_w), 1.0, 0.0);
       gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
       gtk_widget_set_usize (height_spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
-                          GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-                          &options->fixed_height);
+      g_signal_connect (G_OBJECT (options->fixed_height_w), "value_changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &options->fixed_height);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Height:"), 1.0, 0.5,
 				 height_spinbutton, 1, FALSE);
 
       options->fixed_unit_w =
 	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
-      gtk_signal_connect (GTK_OBJECT (options->fixed_unit_w), "unit_changed",
-                          GTK_SIGNAL_FUNC (gimp_unit_menu_update),
-                          &options->fixed_unit);
+      g_signal_connect (G_OBJECT (options->fixed_unit_w), "unit_changed",
+                        G_CALLBACK (gimp_unit_menu_update),
+                        &options->fixed_unit);
       g_object_set_data (G_OBJECT (options->fixed_unit_w), "set_digits",
 			   width_spinbutton);
       g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",

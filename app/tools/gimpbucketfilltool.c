@@ -254,9 +254,9 @@ bucket_options_new (void)
   /*  the sample merged toggle  */
   options->sample_merged_w =
     gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->sample_merged);
+  g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
@@ -275,9 +275,9 @@ bucket_options_new (void)
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->threshold_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->threshold);
+  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->threshold);
   gtk_widget_show (scale);
 
   gtk_widget_show (hbox);

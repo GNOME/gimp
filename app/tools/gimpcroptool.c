@@ -154,7 +154,7 @@ static void   crop_selection_callback       (GtkWidget       *widget,
 static void   crop_automatic_callback       (GtkWidget       *widget,
 					     gpointer         data);
 
-static void   crop_orig_changed             (GtkWidget       *widget,
+static void   crop_origin_changed           (GtkWidget       *widget,
 					     gpointer         data);
 static void   crop_size_changed             (GtkWidget       *widget,
 					     gpointer         data);
@@ -809,8 +809,12 @@ crop_start (GimpTool     *tool,
   if (! crop_info)
     crop_info_create (tool);
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (origin_sizeentry), crop_info);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (size_sizeentry), crop_info);
+  g_signal_handlers_block_by_func (G_OBJECT (origin_sizeentry), 
+                                   crop_origin_changed,
+                                   crop_info);
+  g_signal_handlers_block_by_func (G_OBJECT (size_sizeentry), 
+                                   crop_size_changed,
+                                   crop_info);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
 				  tool->gdisp->gimage->xresolution, FALSE);
@@ -848,8 +852,12 @@ crop_start (GimpTool     *tool,
 	}
     }
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (size_sizeentry), crop_info);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (origin_sizeentry), crop_info);
+  g_signal_handlers_unblock_by_func (G_OBJECT (origin_sizeentry), 
+                                     crop_origin_changed,
+                                     crop_info);
+  g_signal_handlers_unblock_by_func (G_OBJECT (size_sizeentry), 
+                                     crop_size_changed,
+                                     crop_info);
 
   old_gdisp = tool->gdisp;
 
@@ -902,7 +910,7 @@ crop_info_create (GimpTool *tool)
 			       gdisp->dot_for_dot ? 
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
-			       G_CALLBACK (crop_orig_changed),
+			       G_CALLBACK (crop_origin_changed),
 			       crop_info);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (origin_sizeentry),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
@@ -939,16 +947,17 @@ crop_info_create (GimpTool *tool)
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
 
   button = gtk_button_new_with_label (_("From Selection"));
-  gtk_container_add( GTK_CONTAINER(bbox), button);
-  gtk_signal_connect(GTK_OBJECT (button) , "clicked",
-		     (GtkSignalFunc) crop_selection_callback, NULL);
+  gtk_container_add (GTK_CONTAINER(bbox), button);
+  g_signal_connect (G_OBJECT (button) , "clicked",
+                    G_CALLBACK (crop_selection_callback), 
+                    NULL);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Auto Shrink"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_signal_connect (GTK_OBJECT (button) , "clicked",
-		      GTK_SIGNAL_FUNC (crop_automatic_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button) , "clicked",
+                    G_CALLBACK (crop_automatic_callback),
+                    NULL);
   gtk_widget_show (button);
 
   gtk_box_pack_start (GTK_BOX (crop_info->vbox), bbox, FALSE, FALSE, 2);
@@ -1150,8 +1159,8 @@ crop_automatic_callback (GtkWidget *widget,
 }
 
 static void
-crop_orig_changed (GtkWidget *widget,
-		   gpointer   data)
+crop_origin_changed (GtkWidget *widget,
+                     gpointer   data)
 {
   GimpTool     *tool;
   GimpCropTool *crop;
@@ -1244,9 +1253,9 @@ crop_options_new (void)
     gtk_check_button_new_with_label(_("Current Layer only"));
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->layer_only_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->layer_only);
+  g_signal_connect (G_OBJECT (options->layer_only_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->layer_only);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
 				options->layer_only_d);
   gtk_widget_show (options->layer_only_w);
@@ -1255,9 +1264,9 @@ crop_options_new (void)
   options->allow_enlarge_w = gtk_check_button_new_with_label (_("Allow Enlarging"));
   gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
 		      FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->allow_enlarge_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->allow_enlarge);
+  g_signal_connect (G_OBJECT (options->allow_enlarge_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->allow_enlarge);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
 				options->allow_enlarge_d);
   gtk_widget_show (options->allow_enlarge_w);
