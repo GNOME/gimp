@@ -48,7 +48,7 @@
 
 #include <libgimp/gimp_pdb.h>
 
-#include <libgimp/gimpcompat.h>  /* to be removed in 1.3 */
+#include <libgimp/gimpcompat.h>  /* to be removed before 1.2 */
 
 #ifdef G_OS_WIN32
 #  include <stdlib.h>		/* For _-argc and __argv */
@@ -69,7 +69,6 @@ extern "C" {
 #define gimp_get_data         gimp_procedural_db_get_data
 #define gimp_get_data_size    gimp_procedural_db_get_data_size
 #define gimp_set_data         gimp_procedural_db_set_data
-#define gimp_query_procedure  gimp_procedural_db_proc_info
 
 
 GIMPVAR guint gimp_major_version;

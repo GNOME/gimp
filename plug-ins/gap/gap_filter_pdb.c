@@ -92,17 +92,17 @@ gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunMode
   l_drawable =  gimp_drawable_get(layer_id);  /* use the background layer */
 
   /* query for plugin_name to get its argument types */
-  if (FALSE == gimp_query_procedure  (plugin_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
+  if (!gimp_procedural_db_proc_info (plugin_name,
+				     &l_proc_blurb,
+				     &l_proc_help,
+				     &l_proc_author,
+				     &l_proc_copyright,
+				     &l_proc_date,
+				     &l_proc_type,
+				     &l_nparams,
+				     &l_nreturn_vals,
+				     &l_params,
+				     &l_return_vals))
   {
     fprintf(stderr, "ERROR: Plugin not available, Name was %s\n", plugin_name);
     return -1;
@@ -277,18 +277,18 @@ gint p_procedure_available(char  *proc_name, t_proc_type ptype)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if (gimp_query_procedure (proc_name,
-			    &l_proc_blurb,
-			    &l_proc_help,
-			    &l_proc_author,
-			    &l_proc_copyright,
-			    &l_proc_date,
-			    &l_proc_type,
-			    &l_nparams,
-			    &l_nreturn_vals,
-			    &l_params,
-			    &l_return_vals))
-  {
+  if (gimp_procedural_db_proc_info (proc_name,
+				    &l_proc_blurb,
+				    &l_proc_help,
+				    &l_proc_author,
+				    &l_proc_copyright,
+				    &l_proc_date,
+				    &l_proc_type,
+				    &l_nparams,
+				    &l_nreturn_vals,
+				    &l_params,
+				    &l_return_vals))
+    {
      /* procedure found in PDB */
      if(gap_debug) fprintf(stderr, "DEBUG: found in PDB %s\n", proc_name);
 

@@ -74,21 +74,21 @@ gint p_procedure_available(gchar *proc_name)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if(gimp_query_procedure  (proc_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
-  {
-     /* procedure found in PDB */
-     return (l_nparams);
-  }
+  if (gimp_procedural_db_proc_info (proc_name,
+				    &l_proc_blurb,
+				    &l_proc_help,
+				    &l_proc_author,
+				    &l_proc_copyright,
+				    &l_proc_date,
+				    &l_proc_type,
+				    &l_nparams,
+				    &l_nreturn_vals,
+				    &l_params,
+				    &l_return_vals))
+    {
+      /* procedure found in PDB */
+      return (l_nparams);
+    }
 
   printf("Warning: Procedure %s not found.\n", proc_name);
   return -1;

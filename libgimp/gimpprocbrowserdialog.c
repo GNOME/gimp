@@ -317,18 +317,18 @@ dialog_select (dbbrowser_t *dbbrowser,
   g_free (dbbrowser->selected_params);
   g_free (dbbrowser->selected_return_vals);
 
-  gimp_query_procedure (proc_name, 
-			&(dbbrowser->selected_proc_blurb), 
-			&(dbbrowser->selected_proc_help), 
-			&(dbbrowser->selected_proc_author),
-			&(dbbrowser->selected_proc_copyright), 
-			&(dbbrowser->selected_proc_date), 
-			&(dbbrowser->selected_proc_type), 
-			&(dbbrowser->selected_nparams),
-			&(dbbrowser->selected_nreturn_vals), 
-			&(dbbrowser->selected_params), 
-			&(dbbrowser->selected_return_vals));
-
+  gimp_procedural_db_proc_info (proc_name, 
+				&(dbbrowser->selected_proc_blurb), 
+				&(dbbrowser->selected_proc_help), 
+				&(dbbrowser->selected_proc_author),
+				&(dbbrowser->selected_proc_copyright), 
+				&(dbbrowser->selected_proc_date), 
+				&(dbbrowser->selected_proc_type), 
+				&(dbbrowser->selected_nparams),
+				&(dbbrowser->selected_nreturn_vals), 
+				&(dbbrowser->selected_params), 
+				&(dbbrowser->selected_return_vals));
+  
   /* save the "old" table */
   old_table = dbbrowser->descr_table;
 

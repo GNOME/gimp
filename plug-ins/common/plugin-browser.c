@@ -293,17 +293,15 @@ procedure_general_select_callback (PDesc *pdesc,
   selected_params         = NULL;
   selected_return_vals    = NULL;
 
-  gimp_query_procedure (pinfo->realname, 
-			&selected_proc_blurb, 
-			&selected_proc_help, 
-			&selected_proc_author,
-			&selected_proc_copyright, 
-			&selected_proc_date, 
-			&selected_proc_type, 
-			&selected_nparams,
-			&selected_nreturn_vals, 
-			&selected_params, 
-			&selected_return_vals);   
+  gimp_procedural_db_proc_info (pinfo->realname, 
+				&selected_proc_blurb, 
+				&selected_proc_help, 
+				&selected_proc_author,
+				&selected_proc_copyright, 
+				&selected_proc_date, 
+				&selected_proc_type, 
+				&selected_nparams, &selected_nreturn_vals, 
+				&selected_params, &selected_return_vals);
 
   old_table = pdesc->info_table;
   old_align = pdesc->info_align;

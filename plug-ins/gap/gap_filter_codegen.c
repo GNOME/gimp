@@ -175,18 +175,18 @@ gint p_gen_code_iter_ALT(char  *proc_name)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if(gimp_query_procedure  (proc_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
-  {
+  if (gimp_procedural_db_proc_info (proc_name,
+				    &l_proc_blurb,
+				    &l_proc_help,
+				    &l_proc_author,
+				    &l_proc_copyright,
+				    &l_proc_date,
+				    &l_proc_type,
+				    &l_nparams,
+				    &l_nreturn_vals,
+				    &l_params,
+				    &l_return_vals))
+    {
      p_clean_name(proc_name, &l_clean_proc_name[0]);
      /* procedure found in PDB */
      if(gap_debug) fprintf(stderr, "DEBUG: found in PDB %s author: %s copyright: %s\n",
@@ -367,18 +367,18 @@ gint p_gen_code_iter(char  *proc_name)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if(gimp_query_procedure  (proc_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
-  {
+  if (gimp_procedural_db_proc_info (proc_name,
+				    &l_proc_blurb,
+				    &l_proc_help,
+				    &l_proc_author,
+				    &l_proc_copyright,
+				    &l_proc_date,
+				    &l_proc_type,
+				    &l_nparams,
+				    &l_nreturn_vals,
+				    &l_params,
+				    &l_return_vals))
+    {
      p_clean_name(proc_name, &l_clean_proc_name[0]);
      /* procedure found in PDB */
      if(gap_debug) fprintf(stderr, "DEBUG: found in PDB %s\n", proc_name);

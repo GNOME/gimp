@@ -586,11 +586,15 @@ maze_help (GtkWidget *widget,
   gint   baz;
   gchar *message;
 
-  if (gimp_query_procedure ("extension_web_browser",
-			    &proc_blurb, &proc_help, 
-			    &proc_author, &proc_copyright, &proc_date,
-			    &proc_type, &nparams, &nreturn_vals,
-			    &params, &return_vals)) 
+  if (gimp_procedural_db_proc_info ("extension_web_browser",
+				    &proc_blurb, 
+				    &proc_help, 
+				    &proc_author, 
+				    &proc_copyright, 
+				    &proc_date,
+				    &proc_type, 
+				    &nparams, &nreturn_vals,
+				    &params, &return_vals))
     {
       /* open URL for help */ 
       message = g_strdup_printf (_("Opening %s"), MAZE_URL);

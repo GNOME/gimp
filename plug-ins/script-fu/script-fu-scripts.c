@@ -132,22 +132,22 @@ typedef union
 
 typedef struct
 {
-  GtkWidget  **args_widgets;
-  gchar       *script_name;
-  gchar       *pdb_name;
-  gchar       *description;
-  gchar       *help;
-  gchar       *author;
-  gchar       *copyright;
-  gchar       *date;
-  gchar       *img_types;
-  gint         num_args;
-  SFArgType   *arg_types;
-  gchar      **arg_labels;
-  SFArgValue  *arg_defaults;
-  SFArgValue  *arg_values;
-  gint32       image_based;
-  GParamDef   *args;     /*  used only temporary until installed  */
+  GtkWidget    **args_widgets;
+  gchar         *script_name;
+  gchar         *pdb_name;
+  gchar         *description;
+  gchar         *help;
+  gchar         *author;
+  gchar         *copyright;
+  gchar         *date;
+  gchar         *img_types;
+  gint           num_args;
+  SFArgType     *arg_types;
+  gchar        **arg_labels;
+  SFArgValue    *arg_defaults;
+  SFArgValue    *arg_values;
+  gint32         image_based;
+  GimpParamDef  *args;     /*  used only temporary until installed  */
 } SFScript;
 
 typedef struct
@@ -165,36 +165,36 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
-static gint      script_fu_install_script    (gpointer  foo,
-					      SFScript *script,
-					      gpointer  bar);
-static gint      script_fu_remove_script     (gpointer  foo,
-					      SFScript *script,
-					      gpointer  bar);
-static void       script_fu_script_proc      (gchar     *name,
-					      gint       nparams,
-					      GParam    *params,
-					      gint      *nreturn_vals,
-					      GParam   **return_vals);
+static gint      script_fu_install_script    (gpointer    foo,
+					      SFScript   *script,
+					      gpointer    bar);
+static gint      script_fu_remove_script     (gpointer    foo,
+					      SFScript   *script,
+					      gpointer    bar);
+static void       script_fu_script_proc      (gchar      *name,
+					      gint        nparams,
+					      GimpParam  *params,
+					      gint       *nreturn_vals,
+					      GimpParam **return_vals);
 
-static SFScript * script_fu_find_script      (gchar     *script_name);
-static void       script_fu_free_script      (SFScript  *script);
+static SFScript * script_fu_find_script      (gchar      *script_name);
+static void       script_fu_free_script      (SFScript   *script);
 static void       script_fu_enable_cc        (void);
-static void       script_fu_disable_cc       (gint       err_msg);
-static void       script_fu_interface        (SFScript  *script);
-static void       script_fu_font_preview     (GtkWidget *preview,
-					      gchar     *fontname);
-static void       script_fu_cleanup_widgets  (SFScript  *script);
-static void       script_fu_ok_callback      (GtkWidget *widget,
-					      gpointer   data);
-static gint       script_fu_destroy_callback (GtkWidget *widget,
-					      gpointer   data);
-static void       script_fu_about_callback   (GtkWidget *widget,
-					      gpointer   data);
-static void       script_fu_reset_callback   (GtkWidget *widget,
-					      gpointer   data);
-static void       script_fu_menu_callback    (gint32     id,
-					      gpointer   data);
+static void       script_fu_disable_cc       (gint        err_msg);
+static void       script_fu_interface        (SFScript   *script);
+static void       script_fu_font_preview     (GtkWidget  *preview,
+					      gchar      *fontname);
+static void       script_fu_cleanup_widgets  (SFScript   *script);
+static void       script_fu_ok_callback      (GtkWidget  *widget,
+					      gpointer    data);
+static gint       script_fu_destroy_callback (GtkWidget  *widget,
+					      gpointer    data);
+static void       script_fu_about_callback   (GtkWidget  *widget,
+					      gpointer    data);
+static void       script_fu_reset_callback   (GtkWidget  *widget,
+					      gpointer    data);
+static void       script_fu_menu_callback    (gint32      id,
+					      gpointer    data);
 static void       script_fu_file_selection_callback(GtkWidget *widget,
 						    gpointer   data);
 static void       script_fu_font_preview_callback  (GtkWidget *widget,
@@ -385,7 +385,7 @@ script_fu_find_scripts (void)
 LISP
 script_fu_add_script (LISP a)
 {
-  GParamDef *args;
+  GimpParamDef *args;
   SFScript  *script;
   gchar *val;
   gint i;
@@ -458,8 +458,8 @@ script_fu_add_script (LISP a)
   /*  Check the supplied number of arguments  */
   script->num_args = nlength (a) / 3;
 
-  args = g_new (GParamDef, script->num_args + 1);
-  args[0].type = PARAM_INT32;
+  args = g_new (GimpParamDef, script->num_args + 1);
+  args[0].type = GIMP_PDB_INT32;
   args[0].name = "run_mode";
   args[0].description = "Interactive, non-interactive";
 
@@ -509,19 +509,19 @@ script_fu_add_script (LISP a)
 		  switch (script->arg_types[i])
 		    {
 		    case SF_IMAGE:
-		      args[i + 1].type = PARAM_IMAGE;
+		      args[i + 1].type = GIMP_PDB_IMAGE;
 		      args[i + 1].name = "image";
 		      break;
 		    case SF_DRAWABLE:
-		      args[i + 1].type = PARAM_DRAWABLE;
+		      args[i + 1].type = GIMP_PDB_DRAWABLE;
 		      args[i + 1].name = "drawable";
 		      break;
 		    case SF_LAYER:
-		      args[i + 1].type = PARAM_LAYER;
+		      args[i + 1].type = GIMP_PDB_LAYER;
 		      args[i + 1].name = "layer";
 		      break;
 		    case SF_CHANNEL:
-		      args[i + 1].type = PARAM_CHANNEL;
+		      args[i + 1].type = GIMP_PDB_CHANNEL;
 		      args[i + 1].name = "channel";
 		      break;
 		    default:
@@ -543,7 +543,7 @@ script_fu_add_script (LISP a)
 		  memcpy (script->arg_defaults[i].sfa_color, color, sizeof (guchar) * 3);
 		  memcpy (script->arg_values[i].sfa_color, color, sizeof (guchar) * 3);
 
-		  args[i + 1].type = PARAM_COLOR;
+		  args[i + 1].type = GIMP_PDB_COLOR;
 		  args[i + 1].name = "color";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -554,7 +554,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_toggle = (get_c_long (car (a))) ? TRUE : FALSE;
 		  script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
 
-		  args[i + 1].type = PARAM_INT32;
+		  args[i + 1].type = GIMP_PDB_INT32;
 		  args[i + 1].name = "toggle";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -565,7 +565,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_value = g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_value =  g_strdup (script->arg_defaults[i].sfa_value);
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -576,7 +576,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_value = g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_value =  g_strdup (script->arg_defaults[i].sfa_value);
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "string";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -601,7 +601,7 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_adjustment.adj = NULL;
 		  script->arg_values[i].sfa_adjustment.value = script->arg_defaults[i].sfa_adjustment.value;
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -627,7 +627,7 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_file.filename =  g_strdup (script->arg_defaults[i].sfa_file.filename);
 		  script->arg_values[i].sfa_file.fileselection = NULL;
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "filename";
 		  args[i + 1].description = script->arg_labels[i];
 		 break;
@@ -640,7 +640,7 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_font.preview = NULL;
 		  script->arg_values[i].sfa_font.dialog = NULL;
 		  
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "font";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -651,7 +651,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_pattern = g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_pattern =  g_strdup (script->arg_defaults[i].sfa_pattern);
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "pattern";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -674,7 +674,7 @@ script_fu_add_script (LISP a)
 		   */
 		  script->arg_values[i].sfa_brush.name = g_strdup(script->arg_defaults[i].sfa_brush.name);
 
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "brush";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -685,7 +685,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_gradient = g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_gradient =  g_strdup (script->arg_defaults[i].sfa_pattern);
 		  
-		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "gradient";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -702,7 +702,7 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_option.history = 0;
 		  script->arg_values[i].sfa_option.history = 0;
 
-		  args[i + 1].type = PARAM_INT32;
+		  args[i + 1].type = GIMP_PDB_INT32;
 		  args[i + 1].name = "option";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
@@ -805,15 +805,15 @@ script_fu_remove_script (gpointer  foo,
 
 
 static void
-script_fu_script_proc (gchar    *name,
-		       gint      nparams,
-		       GParam   *params,
-		       gint     *nreturn_vals,
-		       GParam  **return_vals)
+script_fu_script_proc (gchar       *name,
+		       gint         nparams,
+		       GimpParam   *params,
+		       gint        *nreturn_vals,
+		       GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
-  GRunModeType run_mode;
+  static GimpParam values[1];
+  GimpPDBStatusType status = STATUS_SUCCESS;
+  GimpRunModeType run_mode;
   SFScript *script;
   gint min_args;
   gchar *escaped;
@@ -990,7 +990,7 @@ script_fu_script_proc (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 

@@ -904,8 +904,8 @@ newpfobject(name)
     int pt, np, nr, i;
     GParamDef *p, *r;
 
-    if (!gimp_query_procedure(name, &b, &h, &a, &c, &d, &pt,
-			      &np, &nr, &p, &r)) {
+    if (!gimp_procedural_db_proc_info (name, &b, &h, &a, &c, &d, &pt,
+				       &np, &nr, &p, &r)) {
 	PyErr_SetString(ErrorObject, "procedure not found.");
 	return NULL;
     }

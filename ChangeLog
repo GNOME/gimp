@@ -1,8 +1,26 @@
+2000-08-04  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.h
+	* libgimp/gimpcompat.h
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/gap/gap_dbbrowser_utils.c
+	* plug-ins/gap/gap_filter_codegen.c
+	* plug-ins/gap/gap_filter_pdb.c
+	* plug-ins/gap/gap_pdb_calls.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/xjt/xpdb_calls.c: removed COMPAT_CRUFT
+
 2000-08-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext.[ch]
 	* lug-ins/gdyntext/gdyntext_ui.c: use a GimpColorButton to select
-	the text color (fixes bug #5302). Reintended the code so it becomes
+	the text color (fixes bug #5302). Reindented the code so it becomes
 	readable.
 
 2000-08-07  Sven Neumann  <sven@gimp.org>
