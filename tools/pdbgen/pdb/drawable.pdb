@@ -131,7 +131,7 @@ HELP
 	  desc => 'The type of fill: %%desc%%' }
     );
 
-    %invoke = ( code => 'drawable_fill (drawable, fill_type);' );
+    %invoke = ( code => 'drawable_fill (drawable, (GimpFillType) fill_type);' );
 }
 
 sub drawable_update {

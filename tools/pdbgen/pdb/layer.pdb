@@ -238,7 +238,7 @@ HELP
 	code => <<'CODE'
 {
   opacity = (int) ((opacity_arg * 255) / 100);
-  layer = layer_new (gimage, width, height, type, name, opacity, mode);
+  layer = layer_new (gimage, width, height, (GimpImageType) type, name, opacity, (LayerModeEffects) mode);
   success = layer != NULL;
 }
 CODE
@@ -305,7 +305,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (mask = layer_create_mask (layer, mask_type)) != NULL;
+success = (mask = layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
 CODE
     );
 }

@@ -1,3 +1,32 @@
+1999-08-19  Tor Lillqvist  <tml@iki.fi>
+
+	* app/*.[ch]: Actually use the enum types GimpImageType,
+	GimpImageBaseType, LayerModeEffects, PaintApplicationMode,
+	BrushApplicationMode, GimpFillType and ConvertPaletteType, instead
+	of just int or gint. Hopefully I catched most of the places
+	where these should be used.
+
+	Add an enum ConvolutionType, suffix the too general constants
+	NORMAL, ABSOLUTE and NEGATIVE with _CONVOL. Use NORMAL_MODE
+	instead of NORMAL in some places (this was what was intended). Fix
+	some minor gccisms.
+
+	* app/apptypes.h: New file. This file contains the above
+	enumeration types, and some opaque struct typedefs. It was
+	necessary to collect these in one header that doesn't include
+	other headers, because when we started using the above mentioned
+	types in the headers, all hell broke loose because of the
+	spaghetti-like cross-inclusion mess between headers.
+
+	(An example: Header A includes header B, which includes header C
+	which includes A. B uses a type defined in A. This is not defined,
+	because A hasn't defined it yet at the point where it includes B,
+	and A included from B of course is skipped as we already are
+	reading A.)
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/layer.pdb: Add a few casts.
+
 Wed Aug 18 20:49:48 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: Almost complete now. Pressing <Shift> in one of
@@ -11,10 +40,6 @@ Wed Aug 18 20:49:48 MEST 1999  Sven Neumann <sven@gimp.org>
 	subclass of), is the first brush in its list. The rest of the
 	pixmap brushes in the list are separately allocated ones. Don't
 	read the pattern names into dummy buffers, just seek past.
-
-	(A sample pixmap brush hose file (hi aspi, xach and yosh!) is at
-	http://www.iki.fi/tml/gimp/developers.gih. Put it in the brushes
-	directory)
 
 	* app/pixmapbrush.c (pixmapbrush_motion): Now works better, and
 	actually steps through the pixmaps in the hose's list. The
