@@ -187,7 +187,7 @@ gimp_module_load (GTypeModule *module)
                                   "Missing gimp_module_register() symbol");
 
       if (gimp_module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
+	g_message (_("Module '%s' load error: %s"),
 		   gimp_module->filename, gimp_module->last_module_error);
 
       gimp_module_close (gimp_module);
@@ -204,7 +204,7 @@ gimp_module_load (GTypeModule *module)
                                   "gimp_module_register() returned FALSE");
 
       if (gimp_module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
+	g_message (_("Module '%s' load error: %s"),
 		   gimp_module->filename, gimp_module->last_module_error);
 
       gimp_module_close (gimp_module);
@@ -239,9 +239,9 @@ gimp_module_unload (GTypeModule *module)
  * @filename:     The filename of a loadable module.
  * @load_inhibit: Pass %TRUE to exclude this module from auto-loading.
  * @verbose:      Pass %TRUE to enable debugging output.
- * 
+ *
  * Creates a new #GimpModule instance.
- * 
+ *
  * Return value: The new #GimpModule object.
  **/
 GimpModule *
@@ -279,11 +279,11 @@ gimp_module_new (const gchar *filename,
 /**
  * gimp_module_query_module:
  * @module: A #GimpModule.
- * 
+ *
  * Queries the module without actually registering any of the types it
  * may implement. After successful query, the @info field of the
  * #GimpModule struct will be available for further inspection.
- * 
+ *
  * Return value: %TRUE on success.
  **/
 gboolean
@@ -311,7 +311,7 @@ gimp_module_query_module (GimpModule *module)
                                   "Missing gimp_module_query() symbol");
 
       if (module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
+	g_message (_("Module '%s' load error: %s"),
                    module->filename, module->last_module_error);
 
       gimp_module_close (module);
@@ -338,7 +338,7 @@ gimp_module_query_module (GimpModule *module)
                                   "gimp_module_query() returned NULL");
 
       if (module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
+	g_message (_("Module '%s' load error: %s"),
                    module->filename, module->last_module_error);
 
       gimp_module_close (module);
@@ -358,7 +358,7 @@ gimp_module_query_module (GimpModule *module)
 /**
  * gimp_module_modified:
  * @module: A #GimpModule.
- * 
+ *
  * Emits the "modified" signal. Call it whenever you have modified the module
  * manually (which you shouldn't do).
  **/
@@ -374,7 +374,7 @@ gimp_module_modified (GimpModule *module)
  * gimp_module_set_load_inhibit:
  * @module:       A #GimpModule.
  * @load_inhibit: Pass %TRUE to exclude this module from auto-loading.
- * 
+ *
  * Sets the @load_inhibit property if the module. Emits "modified".
  **/
 void
@@ -394,10 +394,10 @@ gimp_module_set_load_inhibit (GimpModule *module,
 /**
  * gimp_module_state_name:
  * @state: A #GimpModuleState.
- * 
+ *
  * Returns the translated textual representation of a #GimpModuleState.
  * The returned string must not be freed.
- * 
+ *
  * Return value: The @state's name.
  **/
 const gchar *
@@ -431,7 +431,7 @@ gimp_module_open (GimpModule *module)
       gimp_module_set_last_error (module, g_module_error ());
 
       if (module->verbose)
-	g_message (_("Module '%s' load error:\n%s"),
+	g_message (_("Module '%s' load error: %s"),
                    module->filename, module->last_module_error);
       return FALSE;
     }
@@ -473,9 +473,9 @@ gimp_module_set_last_error (GimpModule  *module,
  * @version:     The module's version.
  * @copyright:   The module's copyright.
  * @date:        The module's release date.
- * 
+ *
  * Creates a newly allocated #GimpModuleInfo struct.
- * 
+ *
  * Return value: The new #GimpModuleInfo struct.
  **/
 GimpModuleInfo *
@@ -503,9 +503,9 @@ gimp_module_info_new (guint32      abi_version,
 /**
  * gimp_module_info_copy:
  * @info: The #GimpModuleInfo struct to copy.
- * 
+ *
  * Copies a #GimpModuleInfo struct.
- * 
+ *
  * Return value: The new copy.
  **/
 GimpModuleInfo *
@@ -524,7 +524,7 @@ gimp_module_info_copy (const GimpModuleInfo *info)
 /**
  * gimp_module_info_free:
  * @info: The #GimpModuleInfo struct to free
- * 
+ *
  * Frees the passed #GimpModuleInfo.
  **/
 void

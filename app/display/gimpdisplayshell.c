@@ -799,23 +799,23 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   {
     static GtkItemFactoryEntry menu_items[] =
     {
-      { N_("/From Theme"), NULL,
+      { N_("/From _Theme"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_CANVAS_PADDING_MODE_DEFAULT, NULL },
-      { N_("/Light Check Color"), NULL,
+      { N_("/_Light Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NULL },
-      { N_("/Dark Check Color"), NULL,
+      { N_("/_Dark Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NULL },
 
       { "/---", NULL, NULL, 0, "<Separator>"},
 
-      { N_("/Select Custom Color..."), NULL,
+      { N_("/Select _Custom Color..."), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_CANVAS_PADDING_MODE_CUSTOM, "<StockItem>",
         GTK_STOCK_SELECT_COLOR },
-      { N_("/As in Preferences"), NULL,
+      { N_("/As in _Preferences"), NULL,
         gimp_display_shell_color_button_menu_callback,
         0xffff, "<StockItem>",
         GIMP_STOCK_RESET }

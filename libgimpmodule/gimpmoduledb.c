@@ -71,9 +71,9 @@ static void         gimp_module_db_dump_module         (gpointer      data,
 static gboolean     gimp_module_db_write_modulerc      (GimpModuleDB *db);
 #endif
 
-static void         gimp_module_db_module_on_disk_func (gpointer      data, 
+static void         gimp_module_db_module_on_disk_func (gpointer      data,
                                                         gpointer      user_data);
-static void         gimp_module_db_module_remove_func  (gpointer      data, 
+static void         gimp_module_db_module_remove_func  (gpointer      data,
                                                         gpointer      user_data);
 static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
@@ -190,10 +190,10 @@ gimp_module_db_finalize (GObject *object)
 /**
  * gimp_module_db_new:
  * @verbose: Pass %TRUE to enable debugging output.
- * 
+ *
  * Creates a new #GimpModuleDB instance. The @verbose parameter will be
  * passed to the created #GimpModule instances using gimp_module_new().
- * 
+ *
  * Return value: The new #GimpModuleDB instance.
  **/
 GimpModuleDB *
@@ -249,7 +249,7 @@ is_in_inhibit_list (const gchar *filename,
  * @db:           A #GimpModuleDB.
  * @load_inhibit: A #G_SEARCHPATH_SEPARATOR delimited list of module
  *                filenames to exclude from auto-loading.
- * 
+ *
  * Sets the @load_inhibit flag for all #GimpModule's which are kept
  * by @db (using gimp_module_set_load_inhibit()).
  **/
@@ -280,10 +280,10 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
 /**
  * gimp_module_db_get_load_inhibit:
  * @db: A #GimpModuleDB.
- * 
+ *
  * Return the #G_SEARCHPATH_SEPARATOR selimited list of module filenames
  * which are excluded from auto-loading.
- * 
+ *
  * Return value: the @db's @load_inhibit string.
  **/
 const gchar *
@@ -299,7 +299,7 @@ gimp_module_db_get_load_inhibit (GimpModuleDB *db)
  * @db:          A #GimpModuleDB.
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
- * 
+ *
  * Scans the directories contained in @module_path using
  * gimp_datafiles_read_directories() and creates a #GimpModule
  * instance for every loadable module contained in the directories.
@@ -327,7 +327,7 @@ gimp_module_db_load (GimpModuleDB *db,
  * @db:          A #GimpModuleDB.
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
- * 
+ *
  * Does the same as gimp_module_db_load(), plus removes all #GimpModule
  * instances whose modules have been deleted from disk.
  *
@@ -441,7 +441,7 @@ gimp_module_db_module_find_by_path (GimpModuleDB *db,
 
 #ifdef DUMP_DB
 static void
-gimp_module_db_dump_module (gpointer data, 
+gimp_module_db_dump_module (gpointer data,
                             gpointer user_data)
 {
   GimpModule *i = data;
@@ -473,7 +473,7 @@ gimp_module_db_dump_module (gpointer data,
 #endif
 
 static void
-gimp_module_db_module_on_disk_func (gpointer data, 
+gimp_module_db_module_on_disk_func (gpointer data,
                                     gpointer user_data)
 {
   GimpModule  *module;
@@ -501,7 +501,7 @@ gimp_module_db_module_on_disk_func (gpointer data,
 }
 
 static void
-gimp_module_db_module_remove_func (gpointer data, 
+gimp_module_db_module_remove_func (gpointer data,
                                    gpointer user_data)
 {
   GimpModule   *module;

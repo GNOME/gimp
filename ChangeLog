@@ -1,3 +1,16 @@
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/gimpmodule.c: removed newlines from messages,
+	removed trailing whitespace.
+
+	* libgimpmodule/gimpmoduledb.c: removed trailing whitespace.
+
+	* libgimpwidgets/gimpcolorbutton.c: added mnemonics to the
+	button's popup menu.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): added
+	mnemonics to the padding button's additional menu items.
+
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

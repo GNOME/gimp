@@ -90,14 +90,14 @@ static void     gimp_color_button_help_func         (const gchar     *help_id,
 
 static GtkItemFactoryEntry menu_items[] =
 {
-  { N_("/Foreground Color"), NULL,
+  { N_("/_Foreground Color"), NULL,
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_FG, NULL },
-  { N_("/Background Color"), NULL,
+  { N_("/_Background Color"), NULL,
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BG, NULL },
   { "/fg-bg-separator", NULL, NULL, 0, "<Separator>"},
-  { N_("/Black"), NULL,
+  { N_("/Blac_k"), NULL,
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BLACK, NULL },
-  { N_("/White"), NULL,
+  { N_("/_White"), NULL,
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_WHITE, NULL },
 };
 
