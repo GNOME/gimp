@@ -1,3 +1,20 @@
+2000-05-08  Jay Cox  <jaycox@earthlink.net>
+
+	* app/image_map.[ch]: new function image_map_clear that removes
+	the preview without freeing the image_map.
+	
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/curves.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c: Add a call to image_map_clear in the
+	preview toggle button callback.  This makes the preview toggle
+	button behave as expected.
+	
+	* app/histogram_tool: remove an unnecessary include.
+
 2000-05-09  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: tRNS expansion using transforms for

@@ -240,7 +240,7 @@ image_map_commit (ImageMap image_map)
 }
 
 void
-image_map_abort (ImageMap image_map)
+image_map_clear (ImageMap image_map)
 {
   _ImageMap *_image_map;
   PixelRegion srcPR, destPR;
@@ -254,6 +254,7 @@ image_map_abort (ImageMap image_map)
       _image_map->pr = NULL;
     }
 
+  _image_map->state = WAITING;
   /*  Make sure the drawable is still valid  */
   if (! drawable_gimage ( (_image_map->drawable)))
     return;
@@ -291,9 +292,15 @@ image_map_abort (ImageMap image_map)
 
       /*  Free the undo_tiles tile manager  */
       tile_manager_destroy (_image_map->undo_tiles);
+      _image_map->undo_tiles = NULL;
     }
+}
 
-  g_free (_image_map);
+void
+image_map_abort (ImageMap image_map)
+{
+  image_map_clear(image_map);
+  g_free (image_map);
 }
 
 unsigned char *

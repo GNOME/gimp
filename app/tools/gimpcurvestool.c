@@ -1303,7 +1303,16 @@ curves_preview_update (GtkWidget *widget,
       curves_preview (cd);
     }
   else
-    cd->preview = FALSE;
+    {
+      cd->preview = FALSE;
+      if (cd->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (cd->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
 }
 
 static gint

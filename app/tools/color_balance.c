@@ -657,7 +657,16 @@ color_balance_preview_update (GtkWidget *widget,
       color_balance_preview (cbd);
     }
   else
-    cbd->preview = FALSE;
+    {
+      cbd->preview = FALSE;
+      if (cbd->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (cbd->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
 }
 
 static void

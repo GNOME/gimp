@@ -433,7 +433,16 @@ brightness_contrast_preview_update (GtkWidget *widget,
       brightness_contrast_preview (bcd);
     }
   else
-    bcd->preview = FALSE;
+    {
+      bcd->preview = FALSE;
+      if (bcd->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (bcd->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
 }
 
 static void
