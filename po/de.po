@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-19 03:11+0100\n"
-"PO-Revision-Date: 2004-12-18 12:08+0100\n"
+"PO-Revision-Date: 2004-12-20 19:12+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -10543,7 +10543,7 @@ msgstr "Farb_raum:"
 
 #: app/widgets/gimptemplateeditor.c:445
 msgid "_Fill with:"
-msgstr "_Füllbreite:"
+msgstr "_Füllung:"
 
 #: app/widgets/gimptemplateeditor.c:455
 msgid "Comme_nt:"
