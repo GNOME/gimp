@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-23 00:17+0200\n"
-"PO-Revision-Date: 2004-07-23 00:26+0200\n"
+"POT-Creation-Date: 2004-07-24 12:14+0200\n"
+"PO-Revision-Date: 2004-07-24 12:14+0200\n"
 "Last-Translator: Roman Joost <roman@bromeco.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2660,11 +2660,11 @@ msgstr "_Schließen"
 
 #: app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
-msgstr "In _Fenster anpassen"
+msgstr "_Fenster an Bild anpassen"
 
 #: app/actions/view-actions.c:92 app/display/gimpnavigationview.c:483
 msgid "Fit Image to Window"
-msgstr "In Fenster anpassen"
+msgstr "_Bild dem Fenster anpassen"
 
 #: app/actions/view-actions.c:97
 msgid "_Info Window"
@@ -4322,6 +4322,7 @@ msgstr "»%s« konnte nicht gelöscht werden: %s"
 #, c-format
 msgid ""
 "Warning: Failed to save data:\n"
+"\n"
 "%s"
 msgstr ""
 "Warnung: Daten konnten nicht gespeichert werden:\n"
@@ -4341,6 +4342,7 @@ msgstr "%s-Kopie"
 #, c-format
 msgid ""
 "Warning: Failed to load data:\n"
+"\n"
 "%s"
 msgstr ""
 "Warnung: Daten konnten nicht geladen werden:\n"
@@ -4430,6 +4432,16 @@ msgstr ""
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Fehlerhaftes Segment %d in Farbverlaufsdatei »%s«."
+
+#: app/core/gimpgradient-load.c:275
+#, c-format
+msgid "No linear gradient found in '%s'"
+msgstr "Keinen linearen Farbverlauf in »%s« gefunden"
+
+#: app/core/gimpgradient-load.c:283
+#, c-format
+msgid "Failed to import gradient from '%s': %s"
+msgstr "Fehler beim Farbverlauf-Import aus »%s«: %s"
 
 #: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
@@ -5842,19 +5854,23 @@ msgstr "Tastenkürzel konfigurieren"
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Die Tastenkürzel werden beim nächsten Start von GIMPzurückgesetzt."
 
 #: app/gui/preferences-dialog.c:597
 msgid ""
 "Your window setup will be reset to default values. the next time you start "
 "GIMP."
 msgstr ""
+"Die Fenstereinstellungen werden auf Vorgabewerte beim nächsten Startvon GIMP "
+"zurückgesetzt."
 
 #: app/gui/preferences-dialog.c:631
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"Die Einstellungen für Eingabegeräte werden beim nächsten Start vonGIMP "
+"wieder zurückgesetzt."
 
 #: app/gui/preferences-dialog.c:1041
 msgid "Show _menubar"
@@ -6042,7 +6058,7 @@ msgstr "Voreingestellte _Interpolationsart:"
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1575
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "Maleinstellungen werden von Werkzeuge gemeinsam benutzt."
 
 #: app/gui/preferences-dialog.c:1597 app/gui/preferences-dialog.c:1600
 msgid "Toolbox"
@@ -6233,11 +6249,11 @@ msgstr "Eingabegeräte"
 
 #: app/gui/preferences-dialog.c:2083
 msgid "Dump events from this controller"
-msgstr ""
+msgstr "Ereignisse des Gerätes ausgeben"
 
 #: app/gui/preferences-dialog.c:2086
 msgid "Enable this controller"
-msgstr ""
+msgstr "Gerät einschalten"
 
 #: app/gui/preferences-dialog.c:2100
 msgid "Name:"
@@ -6257,7 +6273,7 @@ msgstr "Fensterverwaltung"
 
 #: app/gui/preferences-dialog.c:2210
 msgid "Window Manager Hints"
-msgstr "Fensterverwaltung"
+msgstr "Fensterverwaltungs-Hints"
 
 #: app/gui/preferences-dialog.c:2216
 msgid "Hint for the _toolbox:"
@@ -6555,6 +6571,8 @@ msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
 msgstr ""
+"Indizierte Farbebenen werden durchgehend ohne Interpolation skaliert.Die "
+"ausgewählte Interpolation wird nur auf Kanäle und Maske Auswirkunghaben."
 
 #: app/gui/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -7655,7 +7673,7 @@ msgstr "Füllart  %s"
 #: app/tools/gimpbucketfilloptions.c:267
 #, c-format
 msgid "Affected Area  %s"
-msgstr ""
+msgstr "Beeinflusster Bereich %s"
 
 #: app/tools/gimpbucketfilloptions.c:271
 msgid "Fill whole selection"
@@ -8995,23 +9013,23 @@ msgstr "Name"
 
 #: app/widgets/gimpactionview.c:420 app/widgets/gimpactionview.c:600
 msgid "Changing shortcut failed."
-msgstr ""
+msgstr "Wechseln des Tastenkürzels fehlgeschlagen."
 
 #: app/widgets/gimpactionview.c:480
 msgid "Removing shortcut failed."
-msgstr ""
+msgstr "Entfernen des Tastenkürzels fehlgeschlagen."
 
 #: app/widgets/gimpactionview.c:485
 msgid "Invalid shortcut."
-msgstr ""
+msgstr "Falscher Tastenkürzel."
 
 #: app/widgets/gimpactionview.c:570
 msgid "Conflicting Shortcuts"
-msgstr ""
+msgstr "Kollidierende Tastenkürzel"
 
 #: app/widgets/gimpactionview.c:576
 msgid "_Resassign Shortcut"
-msgstr ""
+msgstr "_Tastenkürzel neu zuweisen"
 
 #: app/widgets/gimpbrusheditor.c:146
 msgid "Hardness:"
@@ -9077,7 +9095,7 @@ msgstr ""
 
 #: app/widgets/gimpclipboard.c:281
 msgid "Clipboard"
-msgstr ""
+msgstr "Zwischenablage"
 
 #: app/widgets/gimpcolordisplayeditor.c:177
 msgid "Available Filters"
@@ -9211,7 +9229,7 @@ msgstr "Größere Vorschaubilder"
 
 #: app/widgets/gimpcontrollerkeyboard.c:68
 msgid "Key Up (Shift + Control + Alt)"
-msgstr "Pfeiltaste Hoch (Shift + Strg + Alt)"
+msgstr "Pfeiltaste »Hoch« (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:71
 msgid "Key Up (Control + Alt)"
@@ -9243,27 +9261,27 @@ msgstr "Pfeiltaste Hoch"
 
 #: app/widgets/gimpcontrollerkeyboard.c:93
 msgid "Key Down (Shift + Control + Alt)"
-msgstr "Pfeiltaste Unten (Shift + Strg + Alt)"
+msgstr "Pfeiltaste Runter (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:96
 msgid "Key Down (Control + Alt)"
-msgstr "Pfeiltaste Unten (Strg + Alt)"
+msgstr "Pfeiltaste Runter (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:99
 msgid "Key Down (Shift + Alt)"
-msgstr "Pfeiltaste Unten (Shift + Alt)"
+msgstr "Pfeiltaste Runter (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:102
 msgid "Key Down (Shift + Control)"
-msgstr ""
+msgstr "Pfeiltaste Runter (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:105
 msgid "Key Down (Alt)"
-msgstr ""
+msgstr "Pfeiltaste Runter (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:108
 msgid "Key Down (Control)"
-msgstr ""
+msgstr "Pfeiltaste Runter (Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:111
 msgid "Key Down (Shift)"
@@ -9275,55 +9293,55 @@ msgstr "Pfeiltaste Runter"
 
 #: app/widgets/gimpcontrollerkeyboard.c:118
 msgid "Key Left (Shift + Control + Alt)"
-msgstr ""
+msgstr "Pfeiltaste Links (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:121
 msgid "Key Left (Control + Alt)"
-msgstr ""
+msgstr "Pfeiltaste Links (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:124
 msgid "Key Left (Shift + Alt)"
-msgstr ""
+msgstr "Pfeiltaste (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:127
 msgid "Key Left (Shift + Control)"
-msgstr ""
+msgstr "Pfeiltaste Links (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:130
 msgid "Key Left (Alt)"
-msgstr ""
+msgstr "Pfeiltaste Links (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:133
 msgid "Key Left (Control)"
-msgstr ""
+msgstr "Pfeiltaste Links (Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:136
 msgid "Key Left (Shift)"
-msgstr ""
+msgstr "Pfeiltaste Links (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:139
 msgid "Key Left"
-msgstr ""
+msgstr "Pfeiltaste Links"
 
 #: app/widgets/gimpcontrollerkeyboard.c:143
 msgid "Key Right (Shift + Control + Alt)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:146
 msgid "Key Right (Control + Alt)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:149
 msgid "Key Right (Shift + Alt)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:152
 msgid "Key Right (Shift + Control)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:155
 msgid "Key Right (Alt)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:158
 msgid "Key Right (Control)"
@@ -9331,7 +9349,7 @@ msgstr "Pfeiltaste Rechts (Strg)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:161
 msgid "Key Right (Shift)"
-msgstr ""
+msgstr "Pfeiltaste Rechts (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:164
 msgid "Key Right"
@@ -9347,131 +9365,131 @@ msgstr "Haupttastatur"
 
 #: app/widgets/gimpcontrollerwheel.c:67
 msgid "Scroll Up (Shift + Control + Alt)"
-msgstr ""
+msgstr "Hochscrollen (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:70
 msgid "Scroll Up (Control + Alt)"
-msgstr ""
+msgstr "Hochscrollen (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:73
 msgid "Scroll Up (Shift + Alt)"
-msgstr ""
+msgstr "Hochsrollen (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:76
 msgid "Scroll Up (Shift + Control)"
-msgstr ""
+msgstr "Hochscrollen (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:79
 msgid "Scroll Up (Alt)"
-msgstr ""
+msgstr "Hochscrollen (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:82
 msgid "Scroll Up (Control)"
-msgstr ""
+msgstr "Hochscrollen (Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:85
 msgid "Scroll Up (Shift)"
-msgstr ""
+msgstr "Hochscrollen (Shift)"
 
 #: app/widgets/gimpcontrollerwheel.c:88
 msgid "Scroll Up"
-msgstr ""
+msgstr "Hochscrollen"
 
 #: app/widgets/gimpcontrollerwheel.c:92
 msgid "Scroll Down (Shift + Control + Alt)"
-msgstr ""
+msgstr "Runterscrollen (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:95
 msgid "Scroll Down (Control + Alt)"
-msgstr ""
+msgstr "Runterscrollen (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:98
 msgid "Scroll Down (Shift + Alt)"
-msgstr ""
+msgstr "Runterscrollen (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:101
 msgid "Scroll Down (Shift + Control)"
-msgstr ""
+msgstr "Runterscrollen (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:104
 msgid "Scroll Down (Alt)"
-msgstr ""
+msgstr "Runterscrollen (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:107
 msgid "Scroll Down (Control)"
-msgstr ""
+msgstr "Runterscrollen (Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:110
 msgid "Scroll Down (Shift)"
-msgstr ""
+msgstr "Runterscrollen (Shift)"
 
 #: app/widgets/gimpcontrollerwheel.c:113
 msgid "Scroll Down"
-msgstr ""
+msgstr "Runterscrollen"
 
 #: app/widgets/gimpcontrollerwheel.c:117
 msgid "Scroll Left (Shift + Control + Alt)"
-msgstr ""
+msgstr "Links Scrollen (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:120
 msgid "Scroll Left (Control + Alt)"
-msgstr ""
+msgstr "Links Scrollen (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:123
 msgid "Scroll Left (Shift + Alt)"
-msgstr ""
+msgstr "Links Scrollen (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:126
 msgid "Scroll Left (Shift + Control)"
-msgstr ""
+msgstr "Links Scrollen (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:129
 msgid "Scroll Left (Alt)"
-msgstr ""
+msgstr "Links Scrollen (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:132
 msgid "Scroll Left (Control)"
-msgstr ""
+msgstr "Links Scrollen (Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:135
 msgid "Scroll Left (Shift)"
-msgstr ""
+msgstr "Links Scrollen (Shift)"
 
 #: app/widgets/gimpcontrollerwheel.c:138
 msgid "Scroll Left"
-msgstr ""
+msgstr "Links Scrollen"
 
 #: app/widgets/gimpcontrollerwheel.c:142
 msgid "Scroll Right (Shift + Control + Alt)"
-msgstr ""
+msgstr "Rechts Scrollen (Shift + Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:145
 msgid "Scroll Right (Control + Alt)"
-msgstr ""
+msgstr "Rechts Scrollen (Strg + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:148
 msgid "Scroll Right (Shift + Alt)"
-msgstr ""
+msgstr "Rechts Scrollen (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:151
 msgid "Scroll Right (Shift + Control)"
-msgstr ""
+msgstr "Rechts Scrollen (Shift + Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:154
 msgid "Scroll Right (Alt)"
-msgstr ""
+msgstr "Rechts Scrollen (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:157
 msgid "Scroll Right (Control)"
-msgstr ""
+msgstr "Rechts Scrollen (Strg)"
 
 #: app/widgets/gimpcontrollerwheel.c:160
 msgid "Scroll Right (Shift)"
-msgstr ""
+msgstr "Rechts Scrollen (Shift)"
 
 #: app/widgets/gimpcontrollerwheel.c:163
 msgid "Scroll Right"
-msgstr "nach Rechts scrollen"
+msgstr "Rechts Scrollen"
 
 #: app/widgets/gimpcontrollerwheel.c:205
 msgid "Mouse Wheel"
@@ -10182,12 +10200,12 @@ msgstr "Weiche Kanten"
 #: app/widgets/gimpwidgets-constructors.c:64
 #: app/widgets/gimpwidgets-constructors.c:97
 msgid "Grain extract"
-msgstr ""
+msgstr "Faser extrahieren"
 
 #: app/widgets/gimpwidgets-constructors.c:65
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Grain merge"
-msgstr ""
+msgstr "Faser mischen"
 
 #: app/widgets/gimpwidgets-constructors.c:67
 #: app/widgets/gimpwidgets-constructors.c:100
@@ -10414,14 +10432,6 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #~ msgid "Pointer Movement Feedback"
 #~ msgstr "Zeigerbewegung"
 
-#, fuzzy
-#~ msgid "Don't show grid"
-#~ msgstr "Kein Gitter anzeigen"
-
-#, fuzzy
-#~ msgid "Foreground Color"
-#~ msgstr "_Vordergrundfarbe:"
-
 #~ msgid ""
 #~ "Unable to run font callback. The corresponding plug-in may have crashed."
 #~ msgstr ""
@@ -10451,22 +10461,6 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 
 #~ msgid "Determine File _Type:"
 #~ msgstr "Da_teityp bestimmen:"
-
-#, fuzzy
-#~ msgid "Zoom to _Fit Window"
-#~ msgstr "Auf Fenstergröße zoomen"
-
-#~ msgid "Set canvas padding color"
-#~ msgstr "Farbe des Leinwandrahmens festlegen"
-
-#~ msgid "Zoom to fit window"
-#~ msgstr "Auf Fenstergröße zoomen"
-
-#~ msgid "Show S_election"
-#~ msgstr "Auswahl anzeigen"
-
-#~ msgid "_Undo History Preview Size:"
-#~ msgstr "Größe der _Journalvorschau:"
 
 #~ msgid "Dialog Behavior"
 #~ msgstr "Verhalten von Dialogen"
@@ -10584,10 +10578,6 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 
 #~ msgid "Intensity Range:"
 #~ msgstr "Intensitätsbereich:"
-
-#, fuzzy
-#~ msgid "Selection to path"
-#~ msgstr "/P_fad aus Auswahl"
 
 #~ msgid "Trying legacy loader on file '%s' with unknown extension."
 #~ msgstr ""
@@ -11512,10 +11502,6 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #, fuzzy
 #~ msgid "Other (%.2f%%) ..."
 #~ msgstr "Anders (%d:%d) ..."
-
-#, fuzzy
-#~ msgid "_Zoom (%.2f%%)"
-#~ msgstr "_Zoom (%d:%d)"
 
 #~ msgid "Cannot create folder: %s"
 #~ msgstr "Ordner konnte nicht angelegt werden: %s"
