@@ -23,4 +23,4 @@ config.h.in
 stamp-h.in
 ABOUT-NLS
 .xvpics
-
+autom4te.cache
