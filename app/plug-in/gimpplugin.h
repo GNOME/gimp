@@ -30,7 +30,7 @@ struct _PlugIn
 {
   Gimp         *gimp;
 
-  guint         open : 1;         /*  Is the plug-in open*                    */
+  guint         open : 1;         /*  Is the plug-in open?                    */
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */

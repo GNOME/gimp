@@ -424,9 +424,18 @@ plug_ins_file_handler (gchar *name,
 void
 plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
 {
-  GSList *tmp;
+  GSList *list;
   gchar  *basename1;
-  gchar  *basename2;
+
+  g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (plug_in_def->prog != NULL);
+
+  if (! g_path_is_absolute (plug_in_def->prog))
+    {
+      g_warning ("plug_ins_def_add_from_rc: filename not absolute (skipping)");
+      plug_in_def_free (plug_in_def, TRUE);
+      return;
+    }
 
   basename1 = g_path_get_basename (plug_in_def->prog);
 
@@ -437,11 +446,11 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
    *  loader needs to be able to register no extensions, prefixes or
    *  magics. -- austin 13/Feb/99
    */
-  for (tmp = plug_in_def->proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = plug_in_def->proc_defs; list; list = g_slist_next (list))
     {
       PlugInProcDef *proc_def;
 
-      proc_def = tmp->data;
+      proc_def = (PlugInProcDef *) list->data;
 
       if (! proc_def->extensions &&
           ! proc_def->prefixes   &&
@@ -457,11 +466,12 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
   /*  Check if the entry mentioned in pluginrc matches an executable
    *  found in the plug_in_path.
    */
-  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = plug_in_defs; list; list = g_slist_next (list))
     {
       PlugInDef *ondisk_plug_in_def;
+      gchar     *basename2;
 
-      ondisk_plug_in_def = tmp->data;
+      ondisk_plug_in_def = (PlugInDef *) list->data;
 
       basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
 
@@ -472,7 +482,7 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
 	      (plug_in_def->mtime == ondisk_plug_in_def->mtime))
 	    {
 	      /* Use pluginrc entry, deleting ondisk entry */
-	      tmp->data = plug_in_def;
+	      list->data = plug_in_def;
 	      plug_in_def_free (ondisk_plug_in_def, TRUE);
 	    }
 	  else
@@ -493,7 +503,7 @@ plug_ins_def_add_from_rc (PlugInDef *plug_in_def)
   g_free (basename1);
 
   write_pluginrc = TRUE;
-  g_print ("\"%s\" executable not found\n", plug_in_def->prog);
+  g_print ("executable not found: \"%s\"\n", plug_in_def->prog);
   plug_in_def_free (plug_in_def, FALSE);
 }
 
@@ -724,25 +734,26 @@ plug_ins_image_types_parse (gchar *image_types)
 static void
 plug_ins_init_file (GimpDatafileData *file_data)
 {
-  GSList    **plug_in_defs;
-  GSList     *tmp;
   PlugInDef  *plug_in_def;
-  gchar      *plug_in_name;
+  GSList    **plug_in_defs;
+  GSList     *list;
   gchar      *basename;
 
   plug_in_defs = file_data->user_data;
 
   basename = g_path_get_basename (file_data->filename);
 
-  for (tmp = *plug_in_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = *plug_in_defs; list; list = g_slist_next (list))
     {
-      plug_in_def = tmp->data;
+      gchar *plug_in_name;
+
+      plug_in_def = (PlugInDef *) list->data;
 
       plug_in_name = g_path_get_basename (plug_in_def->prog);
 
       if (g_ascii_strcasecmp (basename, plug_in_name) == 0)
 	{
-	  g_print ("duplicate plug-in: \"%s\" (skipping)\n",
+	  g_print ("skipping duplicate plug-in: \"%s\"\n",
                    file_data->filename);
 
           g_free (plug_in_name);
@@ -770,11 +781,11 @@ plug_ins_add_to_db (Gimp *gimp)
   PlugInProcDef *proc_def;
   Argument       args[4];
   Argument      *return_vals;
-  GSList        *tmp;
+  GSList        *list;
 
-  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = proc_defs; list; list = g_slist_next (list))
     {
-      proc_def = tmp->data;
+      proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->prog && (proc_def->db_info.proc_type != GIMP_INTERNAL))
 	{
@@ -783,9 +794,9 @@ plug_ins_add_to_db (Gimp *gimp)
 	}
     }
 
-  for (tmp = proc_defs; tmp; tmp = tmp->next)
+  for (list = proc_defs; list; list = list->next)
     {
-      proc_def = tmp->data;
+      proc_def = (PlugInProcDef *) list->data;
 
       if (proc_def->extensions || proc_def->prefixes || proc_def->magics)
         {
@@ -803,7 +814,7 @@ plug_ins_add_to_db (Gimp *gimp)
 
           if (proc_def->image_types)
             {
-              return_vals = 
+              return_vals =
 		procedural_db_execute (gimp,
 				       "gimp_register_save_handler", 
 				       args);
@@ -811,7 +822,7 @@ plug_ins_add_to_db (Gimp *gimp)
             }
           else
             {
-              return_vals = 
+              return_vals =
 		procedural_db_execute (gimp,
 				       "gimp_register_magic_load_handler", 
 				       args);
@@ -824,20 +835,18 @@ plug_ins_add_to_db (Gimp *gimp)
 static PlugInProcDef *
 plug_ins_proc_def_insert (PlugInProcDef *proc_def)
 {
-  PlugInProcDef *tmp_proc_def;
-  GSList        *tmp;
-  GSList        *prev;
-  GSList        *list;
+  GSList *list;
+  GSList *prev = NULL;
 
-  prev = NULL;
-
-  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
+  for (list = proc_defs; list; list = g_slist_next (list))
     {
-      tmp_proc_def = tmp->data;
+      PlugInProcDef *tmp_proc_def;
+
+      tmp_proc_def = (PlugInProcDef *) list->data;
 
       if (strcmp (proc_def->db_info.name, tmp_proc_def->db_info.name) == 0)
 	{
-	  tmp->data = proc_def;
+	  list->data = proc_def;
 
 	  if (proc_def->menu_path)
 	    g_free (proc_def->menu_path);
@@ -852,23 +861,25 @@ plug_ins_proc_def_insert (PlugInProcDef *proc_def)
 
 	  return tmp_proc_def;
 	}
-      else if (!proc_def->menu_path ||
+      else if (! proc_def->menu_path ||
 	       (tmp_proc_def->menu_path &&
 		(strcmp (proc_def->menu_path, tmp_proc_def->menu_path) < 0)))
 	{
-	  list = g_slist_alloc ();
-	  list->data = proc_def;
+          GSList *new;
 
-	  list->next = tmp;
+	  new = g_slist_alloc ();
+	  new->data = proc_def;
+
+	  new->next = list;
 	  if (prev)
-	    prev->next = list;
+	    prev->next = new;
 	  else
-	    proc_defs = list;
+	    proc_defs = new;
 
 	  return NULL;
 	}
 
-      prev = tmp;
+      prev = list;
     }
 
   proc_defs = g_slist_append (proc_defs, proc_def);

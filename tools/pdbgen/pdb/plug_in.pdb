@@ -62,7 +62,7 @@ HELP
       success = TRUE;
 
       if (! gimp->no_interface)
-	plug_in_progress_init (current_plug_in, message, gdisplay);
+	plug_in_progress_start (current_plug_in, message, gdisplay);
     }
 }
 CODE
@@ -275,8 +275,7 @@ HELP
 	  desc => 'The absolute path to the compiled message catalog (may be NULL).',
 	  no_success => 1 },
     );
-    
-	      
+
     %invoke = (
 	success => 'TRUE',
 	code => <<'CODE',

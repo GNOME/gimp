@@ -1,3 +1,28 @@
+2003-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-progress.[ch]: renamed plug_in_progress_init()
+	to plug_in_progress_start() so it matches plug_in_progress_end().
+	Added g_return_if_fail() to all functions.
+
+	* app/plug-in/plug-in.[ch]: plug_in_new(): require the passed
+	path to be absolute. Removed plug_in_search_in_path(). Replaced
+	some if(plug_in){...} by g_return_if_fail(plug_in!=NULL). Cleanup.
+
+	* app/plug-in/plug-ins.c: plug_ins_def_add_from_rc(): refuse to
+	add plug_in_defs with non-absolute paths (should never happen).
+	Misc cleanup all over the place like s/GSList *tmp/GSList *list/.
+
+	* app/plug-in/plug-in-params.c: cleanup.
+
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: some code review & cleanup.
+
 2003-01-19  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def: Add gimp_show_tool_tips.

@@ -86,7 +86,7 @@ progress_init_invoker (Gimp     *gimp,
       success = TRUE;
 
       if (! gimp->no_interface)
-	plug_in_progress_init (current_plug_in, message, gdisplay);
+	plug_in_progress_start (current_plug_in, message, gdisplay);
     }
 
   return procedural_db_return_args (&progress_init_proc, success);

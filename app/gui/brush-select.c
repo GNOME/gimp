@@ -46,11 +46,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define MIN_CELL_SIZE     GIMP_PREVIEW_SIZE_EXTRA_SMALL
-#define STD_BRUSH_COLUMNS 5
-#define STD_BRUSH_ROWS    5
-
-
 /*  local function prototypes  */
 
 static void     brush_select_change_callbacks   (BrushSelect          *bsp,
@@ -165,9 +160,8 @@ brush_select_new (Gimp                 *gimp,
                                  dialogs_edit_brush_func,
                                  bsp->context,
                                  FALSE,
-                                 MIN_CELL_SIZE,
-                                 STD_BRUSH_COLUMNS,
-                                 STD_BRUSH_ROWS,
+                                 GIMP_PREVIEW_SIZE_EXTRA_SMALL,
+                                 5, 5,
                                  global_menu_factory);
 
   gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
@@ -284,10 +278,8 @@ static void
 brush_select_change_callbacks (BrushSelect *bsp,
 			       gboolean     closing)
 {
-  ProcRecord *proc = NULL;
+  ProcRecord *proc;
   GimpBrush  *brush;
-  Argument   *return_vals; 
-  gint        nreturn_vals;
 
   static gboolean busy = FALSE;
 
@@ -303,6 +295,9 @@ brush_select_change_callbacks (BrushSelect *bsp,
 
   if (proc && brush)
     {
+      Argument *return_vals; 
+      gint      nreturn_vals;
+
       return_vals =
 	procedural_db_run_proc (bsp->context->gimp,
 				bsp->callback_name,
@@ -318,7 +313,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 				GIMP_PDB_INT8ARRAY, temp_buf_data (brush->mask),
 				GIMP_PDB_INT32,     closing,
 				GIMP_PDB_END);
- 
+
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run brush callback.\n"
                      "The corresponding plug-in may have crashed."));

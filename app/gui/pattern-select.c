@@ -44,11 +44,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define MIN_CELL_SIZE       GIMP_PREVIEW_SIZE_SMALL
-#define STD_PATTERN_COLUMNS 5
-#define STD_PATTERN_ROWS    5 
-
-
 /*  local function prototypes  */
 
 static void   pattern_select_change_callbacks (PatternSelect *psp,
@@ -132,9 +127,8 @@ pattern_select_new (Gimp        *gimp,
                                           gimp->pattern_factory,
                                           NULL,
                                           psp->context,
-                                          MIN_CELL_SIZE,
-                                          STD_PATTERN_COLUMNS,
-                                          STD_PATTERN_ROWS,
+                                          GIMP_PREVIEW_SIZE_SMALL,
+                                          5, 5,
                                           global_menu_factory, "<Patterns>");
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
@@ -197,7 +191,7 @@ pattern_select_dialogs_check (void)
       list = g_slist_next (list);
 
       if (psp->callback_name)
-        {        
+        {
           if (! procedural_db_lookup (psp->context->gimp, psp->callback_name))
             pattern_select_close_callback (NULL, psp); 
         }
@@ -211,10 +205,8 @@ static void
 pattern_select_change_callbacks (PatternSelect *psp,
 				 gboolean       closing)
 {
-  ProcRecord  *proc = NULL;
+  ProcRecord  *proc;
   GimpPattern *pattern;
-  Argument    *return_vals; 
-  gint         nreturn_vals;
 
   static gboolean busy = FALSE;
 
@@ -230,6 +222,9 @@ pattern_select_change_callbacks (PatternSelect *psp,
 
   if (proc && pattern)
     {
+      Argument *return_vals; 
+      gint      nreturn_vals;
+
       return_vals =
 	procedural_db_run_proc (psp->context->gimp,
 				psp->callback_name,

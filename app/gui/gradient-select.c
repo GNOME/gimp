@@ -71,7 +71,6 @@ gradient_select_new (Gimp        *gimp,
   GradientSelect *gsp;
   GimpGradient   *active = NULL;
 
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
@@ -127,7 +126,7 @@ gradient_select_new (Gimp        *gimp,
 
   /*  the gradient list  */
   gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-                                          gsp->context->gimp->gradient_factory,
+                                          gimp->gradient_factory,
                                           dialogs_edit_gradient_func,
                                           gsp->context,
                                           GIMP_PREVIEW_SIZE_EXTRA_SMALL,
@@ -210,8 +209,6 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 {
   ProcRecord   *proc = NULL;
   GimpGradient *gradient;
-  Argument     *return_vals; 
-  gint          nreturn_vals;
 
   static gboolean  busy = FALSE;
 
@@ -227,6 +224,8 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 
   if (proc && gradient)
     {
+      Argument *return_vals; 
+      gint      nreturn_vals;
       gdouble  *values, *pv;
       double    pos, delta;
       GimpRGB   color;

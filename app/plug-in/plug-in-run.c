@@ -40,6 +40,7 @@
 #endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
+
 #define STRICT
 #include <windows.h>
 #include <process.h>
@@ -56,7 +57,7 @@
 #define _O_BINARY	0x0200	/* binary file */
 #endif
 
-#endif
+#endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
 #ifdef __EMX__
 #include <fcntl.h>
@@ -82,15 +83,12 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
-#include "config/gimpcoreconfig.h"
-#include "config/gimpconfig-path.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpenvirontable.h"
-#include "core/gimpimage.h"
 
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
@@ -103,7 +101,6 @@
 #include "plug-in-params.h"
 #include "plug-in-proc.h"
 #include "plug-in-progress.h"
-#include "plug-in-rc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -114,15 +111,6 @@ struct _PlugInBlocked
 {
   PlugIn *plug_in;
   gchar  *proc_name;
-};
-
-
-typedef struct _PlugInHelpPathDef PlugInHelpPathDef;
-
-struct _PlugInHelpPathDef
-{
-  gchar *prog_name;
-  gchar *help_path;
 };
 
 
@@ -158,24 +146,21 @@ static Argument * plug_in_temp_run       (ProcRecord         *proc_rec,
 					  gint                argc);
 static void       plug_in_init_shm       (void);
 
-static gchar    * plug_in_search_in_path (gchar              *search_path,
-					  gchar              *filename);
-
 static void       plug_in_prep_for_exec  (gpointer            data);
 
 
-PlugIn     *current_plug_in    = NULL;
-ProcRecord *last_plug_in       = NULL;
+PlugIn          *current_plug_in      = NULL;
+ProcRecord      *last_plug_in         = NULL;
 
-static GSList     *open_plug_ins    = NULL;
-static GSList     *blocked_plug_ins = NULL;
+static GSList   *open_plug_ins        = NULL;
+static GSList   *blocked_plug_ins     = NULL;
 
-static GSList     *plug_in_stack              = NULL;
-static Argument   *current_return_vals        = NULL;
-static gint        current_return_nvals       = 0;
+static GSList   *plug_in_stack        = NULL;
+static Argument *current_return_vals  = NULL;
+static gint      current_return_nvals = 0;
 
-static gint    shm_ID   = -1;
-static guchar *shm_addr = NULL;
+static gint      shm_ID               = -1;
+static guchar   *shm_addr             = NULL;
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 static HANDLE shm_handle;
@@ -389,29 +374,10 @@ plug_in_new (Gimp  *gimp,
              gchar *name)
 {
   PlugIn *plug_in;
-  gchar  *path;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (! g_path_is_absolute (name))
-    {
-      gchar *plug_in_path;
-
-      plug_in_path = gimp_config_path_expand (gimp->config->plug_in_path,
-                                              FALSE, NULL); 
-      path = plug_in_search_in_path (plug_in_path, name);
-      g_free (plug_in_path);
-
-      if (! path)
-	{
-	  g_message (_("Unable to locate Plug-In: \"%s\""), name);
-	  return NULL;
-	}
-    }
-  else
-    {
-      path = name;
-    }
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (name), NULL);
 
   plug_in = g_new0 (PlugIn, 1);
 
@@ -424,7 +390,7 @@ plug_in_new (Gimp  *gimp,
   plug_in->recurse            = FALSE;
   plug_in->busy               = FALSE;
   plug_in->pid                = 0;
-  plug_in->args[0]            = g_strdup (path);
+  plug_in->args[0]            = g_strdup (name);
   plug_in->args[1]            = g_strdup ("-gimp");
   plug_in->args[2]            = NULL;
   plug_in->args[3]            = NULL;
@@ -447,32 +413,31 @@ plug_in_new (Gimp  *gimp,
 void
 plug_in_destroy (PlugIn *plug_in)
 {
-  if (plug_in)
-    {
-      if (plug_in->open)
-	plug_in_close (plug_in, TRUE);
+  g_return_if_fail (plug_in != NULL);
 
-      if (plug_in->args[0])
-	g_free (plug_in->args[0]);
-      if (plug_in->args[1])
-	g_free (plug_in->args[1]);
-      if (plug_in->args[2])
-	g_free (plug_in->args[2]);
-      if (plug_in->args[3])
-	g_free (plug_in->args[3]);
-      if (plug_in->args[4])
-	g_free (plug_in->args[4]);
-      if (plug_in->args[5])
-	g_free (plug_in->args[5]);
+  if (plug_in->open)
+    plug_in_close (plug_in, TRUE);
 
-      if (plug_in->progress)
-	plug_in_progress_end (plug_in);
+  if (plug_in->args[0])
+    g_free (plug_in->args[0]);
+  if (plug_in->args[1])
+    g_free (plug_in->args[1]);
+  if (plug_in->args[2])
+    g_free (plug_in->args[2]);
+  if (plug_in->args[3])
+    g_free (plug_in->args[3]);
+  if (plug_in->args[4])
+    g_free (plug_in->args[4]);
+  if (plug_in->args[5])
+    g_free (plug_in->args[5]);
 
-      if (plug_in == current_plug_in)
-	plug_in_pop ();
+  if (plug_in->progress)
+    plug_in_progress_end (plug_in);
 
-      g_free (plug_in);
-    }
+  if (plug_in == current_plug_in)
+    plug_in_pop ();
+
+  g_free (plug_in);
 }
 
 static void
@@ -492,127 +457,122 @@ plug_in_prep_for_exec (gpointer data)
 gboolean
 plug_in_open (PlugIn *plug_in)
 {
-  gint my_read[2];
-  gint my_write[2];
+  gint    my_read[2];
+  gint    my_write[2];
   gchar **envp;
   GError *error = NULL;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
 
-  if (plug_in)
+  /* Open two pipes. (Bidirectional communication).
+   */
+  if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
     {
-      /* Open two pipes. (Bidirectional communication).
-       */
-      if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
-	{
-	  g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
-		     g_path_get_basename (plug_in->args[0]),
-		     plug_in->args[0]);
-	  return FALSE;
-	}
-
-#if defined(G_WITH_CYGWIN) || defined(__EMX__)
-      /* Set to binary mode */
-      setmode (my_read[0], _O_BINARY);
-      setmode (my_write[0], _O_BINARY);
-      setmode (my_read[1], _O_BINARY);
-      setmode (my_write[1], _O_BINARY);
-#endif
-
-      plug_in->my_read   = g_io_channel_unix_new (my_read[0]);
-      plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
-      plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
-      plug_in->his_write = g_io_channel_unix_new (my_read[1]);
-
-      g_io_channel_set_encoding (plug_in->my_read, NULL, NULL);
-      g_io_channel_set_encoding (plug_in->my_write, NULL, NULL);
-      g_io_channel_set_encoding (plug_in->his_read, NULL, NULL);
-      g_io_channel_set_encoding (plug_in->his_write, NULL, NULL);
-
-      g_io_channel_set_buffered (plug_in->my_read, FALSE);
-      g_io_channel_set_buffered (plug_in->my_write, FALSE);
-      g_io_channel_set_buffered (plug_in->his_read, FALSE);
-      g_io_channel_set_buffered (plug_in->his_write, FALSE);
-
-      g_io_channel_set_close_on_unref (plug_in->my_read, TRUE);
-      g_io_channel_set_close_on_unref (plug_in->my_write, TRUE);
-      g_io_channel_set_close_on_unref (plug_in->his_read, TRUE);
-      g_io_channel_set_close_on_unref (plug_in->his_write, TRUE);
-
-      /* Remember the file descriptors for the pipes.
-       */
-      plug_in->args[2] =
-	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
-      plug_in->args[3] =
-	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
-
-      /* Set the rest of the command line arguments.
-       * FIXME: this is ugly.  Pass in the mode as a separate argument?
-       */
-      if (plug_in->query)
-	{
-	  plug_in->args[4] = g_strdup ("-query");
-	}
-      else if (plug_in->init)
-	{
-	  plug_in->args[4] = g_strdup ("-init");
-	}
-      else  
-	{
-	  plug_in->args[4] = g_strdup ("-run");
-	}
-
-      plug_in->args[5] = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
-
-#ifdef __EMX__
-      fcntl (my_read[0], F_SETFD, 1);
-      fcntl (my_write[1], F_SETFD, 1);
-#endif
-
-      /* Fork another process. We'll remember the process id
-       *  so that we can later use it to kill the filter if
-       *  necessary.
-       */
-      envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
-      if (! g_spawn_async (NULL, plug_in->args, envp,
-                           G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
-                           G_SPAWN_DO_NOT_REAP_CHILD,
-                           plug_in_prep_for_exec, plug_in,
-                           &plug_in->pid,
-                           &error))
-	{
-          g_message ("Unable to run Plug-In: \"%s\"\n(%s)\n%s",
-		     g_path_get_basename (plug_in->args[0]),
-		     plug_in->args[0],
-		     error->message);
-          g_error_free (error);
-
-          plug_in_destroy (plug_in);
-          return FALSE;
-	}
-
-      g_io_channel_unref (plug_in->his_read);
-      plug_in->his_read  = NULL;
-
-      g_io_channel_unref (plug_in->his_write);
-      plug_in->his_write = NULL;
-
-      if (!plug_in->synchronous)
-	{
-	  plug_in->input_id =
-	    g_io_add_watch (plug_in->my_read,
-			    G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
-			    plug_in_recv_message,
-			    plug_in);
-
-	  open_plug_ins = g_slist_prepend (open_plug_ins, plug_in);
-	}
-
-      plug_in->open = TRUE;
-      return TRUE;
+      g_message ("pipe() failed: Unable to start Plug-In \"%s\"\n(%s)",
+                 g_path_get_basename (plug_in->args[0]),
+                 plug_in->args[0]);
+      return FALSE;
     }
 
-  return FALSE;
+#if defined(G_WITH_CYGWIN) || defined(__EMX__)
+  /* Set to binary mode */
+  setmode (my_read[0], _O_BINARY);
+  setmode (my_write[0], _O_BINARY);
+  setmode (my_read[1], _O_BINARY);
+  setmode (my_write[1], _O_BINARY);
+#endif
+
+  plug_in->my_read   = g_io_channel_unix_new (my_read[0]);
+  plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
+  plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
+  plug_in->his_write = g_io_channel_unix_new (my_read[1]);
+
+  g_io_channel_set_encoding (plug_in->my_read, NULL, NULL);
+  g_io_channel_set_encoding (plug_in->my_write, NULL, NULL);
+  g_io_channel_set_encoding (plug_in->his_read, NULL, NULL);
+  g_io_channel_set_encoding (plug_in->his_write, NULL, NULL);
+
+  g_io_channel_set_buffered (plug_in->my_read, FALSE);
+  g_io_channel_set_buffered (plug_in->my_write, FALSE);
+  g_io_channel_set_buffered (plug_in->his_read, FALSE);
+  g_io_channel_set_buffered (plug_in->his_write, FALSE);
+
+  g_io_channel_set_close_on_unref (plug_in->my_read, TRUE);
+  g_io_channel_set_close_on_unref (plug_in->my_write, TRUE);
+  g_io_channel_set_close_on_unref (plug_in->his_read, TRUE);
+  g_io_channel_set_close_on_unref (plug_in->his_write, TRUE);
+
+  /* Remember the file descriptors for the pipes.
+   */
+  plug_in->args[2] =
+    g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
+  plug_in->args[3] =
+    g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
+
+  /* Set the rest of the command line arguments.
+   * FIXME: this is ugly.  Pass in the mode as a separate argument?
+   */
+  if (plug_in->query)
+    {
+      plug_in->args[4] = g_strdup ("-query");
+    }
+  else if (plug_in->init)
+    {
+      plug_in->args[4] = g_strdup ("-init");
+    }
+  else  
+    {
+      plug_in->args[4] = g_strdup ("-run");
+    }
+
+  plug_in->args[5] = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
+
+#ifdef __EMX__
+  fcntl (my_read[0], F_SETFD, 1);
+  fcntl (my_write[1], F_SETFD, 1);
+#endif
+
+  /* Fork another process. We'll remember the process id
+   *  so that we can later use it to kill the filter if
+   *  necessary.
+   */
+  envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
+  if (! g_spawn_async (NULL, plug_in->args, envp,
+                       G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
+                       G_SPAWN_DO_NOT_REAP_CHILD,
+                       plug_in_prep_for_exec, plug_in,
+                       &plug_in->pid,
+                       &error))
+    {
+      g_message ("Unable to run Plug-In: \"%s\"\n(%s)\n%s",
+                 g_path_get_basename (plug_in->args[0]),
+                 plug_in->args[0],
+                 error->message);
+      g_error_free (error);
+
+      plug_in_destroy (plug_in);
+      return FALSE;
+    }
+
+  g_io_channel_unref (plug_in->his_read);
+  plug_in->his_read  = NULL;
+
+  g_io_channel_unref (plug_in->his_write);
+  plug_in->his_write = NULL;
+
+  if (! plug_in->synchronous)
+    {
+      plug_in->input_id = g_io_add_watch (plug_in->my_read,
+                                          G_IO_IN  | G_IO_PRI |
+                                          G_IO_ERR | G_IO_HUP,
+                                          plug_in_recv_message,
+                                          plug_in);
+
+      open_plug_ins = g_slist_prepend (open_plug_ins, plug_in);
+    }
+
+  plug_in->open = TRUE;
+  return TRUE;
 }
 
 void
@@ -669,7 +629,7 @@ plug_in_close (PlugIn   *plug_in,
       DWORD dwExitCode = STILL_ACTIVE;
       DWORD dwTries  = 10;
       while ((STILL_ACTIVE == dwExitCode)
-	     && GetExitCodeProcess((HANDLE) plug_in->pid, &dwExitCode)
+	     && GetExitCodeProcess ((HANDLE) plug_in->pid, &dwExitCode)
 	     && (dwTries > 0))
 	{
 	  Sleep(10);
@@ -677,7 +637,7 @@ plug_in_close (PlugIn   *plug_in,
 	}
       if (STILL_ACTIVE == dwExitCode)
 	{
-	  g_warning("Terminating %s ...", plug_in->args[0]);
+	  g_warning ("Terminating %s ...", plug_in->args[0]);
 	  TerminateProcess ((HANDLE) plug_in->pid, 0);
 	}
     }
@@ -1307,11 +1267,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                              GPProcInstall *proc_install)
 {
   PlugInDef     *plug_in_def = NULL;
-  PlugInProcDef *proc_def;
-  ProcRecord    *proc = NULL;
-  GSList        *tmp = NULL;
-  gchar         *prog = NULL;
-  gboolean       valid;
+  PlugInProcDef *proc_def    = NULL;
+  ProcRecord    *proc        = NULL;
+  GSList        *tmp         = NULL;
+  gchar         *prog        = NULL;
+  gboolean       valid_utf8  = FALSE;
   gint           i;
 
   /*  Argument checking
@@ -1421,7 +1381,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     }
 
   /*  Sanity check strings for UTF-8 validity  */
-  valid = FALSE;
 
   if ((proc_install->menu_path == NULL || 
        g_utf8_validate (proc_install->menu_path, -1, NULL)) &&
@@ -1437,25 +1396,25 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       (proc_install->date == NULL ||
        g_utf8_validate (proc_install->date, -1, NULL)))
     {
-      valid = TRUE;
+      valid_utf8 = TRUE;
 
-      for (i = 0; i < proc_install->nparams && valid; i++)
+      for (i = 0; i < proc_install->nparams && valid_utf8; i++)
         {
           if (! (g_utf8_validate (proc_install->params[i].name, -1, NULL) &&
                  (proc_install->params[i].description == NULL || 
                   g_utf8_validate (proc_install->params[i].description, -1, NULL))))
-            valid = FALSE;
+            valid_utf8 = FALSE;
         }
-      for (i = 0; i < proc_install->nreturn_vals && valid; i++)
+      for (i = 0; i < proc_install->nreturn_vals && valid_utf8; i++)
         {
           if (! (g_utf8_validate (proc_install->return_vals[i].name, -1, NULL) &&
                  (proc_install->return_vals[i].description == NULL ||
                   g_utf8_validate (proc_install->return_vals[i].description, -1, NULL))))
-            valid = FALSE;
+            valid_utf8 = FALSE;
         }
     }
   
-  if (!valid)
+  if (! valid_utf8)
     {
       g_message ("Plug-In \"%s\"\n(%s)\n"
                  "attempted to install a procedure with invalid UTF-8 strings.\n", 
@@ -1465,8 +1424,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     }
 
   /*  Initialization  */
-
-  proc_def = NULL;
 
   switch (proc_install->type)
     {
@@ -1794,37 +1751,4 @@ plug_in_temp_run (ProcRecord *proc_rec,
 
  done:
   return return_vals;
-}
-
-static gchar *
-plug_in_search_in_path (gchar *search_path,
-			gchar *filename)
-{
-  gchar *local_path;
-  gchar *token;
-  gchar *next_token;
-  gchar *path;
-
-  local_path = g_strdup (search_path);
-  next_token = local_path;
-  token      = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
-    {
-      path = g_build_filename (token, filename, NULL);
-
-      if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
-	{
-	  token = path;
-	  break;
-	}
-
-      g_free (path);
-
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-    }
-
-  g_free (local_path);
-
-  return token;
 }

@@ -195,7 +195,7 @@ palette_select_dialogs_check (void)
       list = g_slist_next (list);
 
       if (psp->callback_name)
-        {        
+        {
           if (!  procedural_db_lookup (psp->context->gimp, psp->callback_name))
             palette_select_close_callback (NULL, psp); 
         }
@@ -209,10 +209,8 @@ static void
 palette_select_change_callbacks (PaletteSelect *psp,
 				 gboolean       closing)
 {
-  ProcRecord  *proc = NULL;
+  ProcRecord  *proc;
   GimpPalette *palette;
-  Argument    *return_vals; 
-  gint         nreturn_vals;
 
   static gboolean busy = FALSE;
 
@@ -228,6 +226,9 @@ palette_select_change_callbacks (PaletteSelect *psp,
 
   if (proc && palette)
     {
+      Argument *return_vals; 
+      gint      nreturn_vals;
+
       return_vals =
 	procedural_db_run_proc (psp->context->gimp,
 				psp->callback_name,

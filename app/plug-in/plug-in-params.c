@@ -34,9 +34,9 @@
 
 
 Argument *
-plug_in_params_to_args (GPParam *params,
-			gint     nparams,
-			gboolean full_copy)
+plug_in_params_to_args (GPParam  *params,
+			gint      nparams,
+			gboolean  full_copy)
 {
   Argument  *args;
   gchar    **stringarray;
@@ -368,7 +368,7 @@ plug_in_args_to_params (Argument *args,
 }
 
 void
-plug_in_params_destroy (GPParam *params,
+plug_in_params_destroy (GPParam  *params,
 			gint      nparams,
 			gboolean  full_destroy)
 {
@@ -442,8 +442,8 @@ plug_in_params_destroy (GPParam *params,
 
 void
 plug_in_args_destroy (Argument *args,
-		      gint       nargs,
-		      gboolean   full_destroy)
+		      gint      nargs,
+		      gboolean  full_destroy)
 {
   if (full_destroy)
     {

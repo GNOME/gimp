@@ -43,13 +43,15 @@ static void   plug_in_progress_cancel (GtkWidget *widget,
 /*  public functions  */
 
 void
-plug_in_progress_init (PlugIn *plug_in,
-		       gchar  *message,
-		       gint    gdisp_ID)
+plug_in_progress_start (PlugIn      *plug_in,
+                        const gchar *message,
+                        gint         gdisp_ID)
 {
   GimpDisplay *gdisp = NULL;
 
-  if (!message)
+  g_return_if_fail (plug_in != NULL);
+
+  if (! message)
     message = plug_in->args[0];
 
   if (gdisp_ID > 0)
@@ -69,8 +71,10 @@ void
 plug_in_progress_update (PlugIn  *plug_in,
 			 gdouble  percentage)
 {
+  g_return_if_fail (plug_in != NULL);
+
   if (! plug_in->progress)
-    plug_in_progress_init (plug_in, NULL, -1);
+    plug_in_progress_start (plug_in, NULL, -1);
 
   gimp_progress_update (plug_in->progress, percentage);
 }
@@ -78,6 +82,8 @@ plug_in_progress_update (PlugIn  *plug_in,
 void
 plug_in_progress_end (PlugIn *plug_in)
 {
+  g_return_if_fail (plug_in != NULL);
+
   if (plug_in->progress)
     {
       gimp_progress_end (plug_in->progress);
