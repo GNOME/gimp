@@ -28,6 +28,7 @@
 /* for now we can only attach to one shm segment */
 static int SHMid = 0;
 static char * SHMaddr = NULL;
+static char * SHMPtr = NULL;	/* SHMaddr + offset */
 
 struct _ShmBuf
 {
@@ -70,7 +71,7 @@ shmbuf_new  (
   f->data = NULL;
 
   f->shmid = SHMid;
-  f->shmaddr = SHMaddr;
+  f->shmaddr = SHMPtr;
 
   f->bytes = tag_bytes (tag);
   
@@ -443,7 +444,7 @@ shmseg_new_invoker  (
   return_args = procedural_db_return_args (&shmseg_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = shmid;
+    return_args[0].value.pdb_int = shmid;
 
   return return_args;
 }
@@ -572,27 +573,36 @@ shmseg_attach_invoker  (
   Argument *return_args;
   
   int shmid = 0;
+  int offset = 0;
   char * addr;
   
   success = (SHMaddr == NULL);
+
+  /*printf( "Attach invoker: %X\n", SHMaddr );*/
 
   if (success)
     {
       int_value = args[0].value.pdb_int;
       shmid = int_value;
+
+      int_value = args[1].value.pdb_int;
+      offset = int_value;
     }
+  /*printf( "Attach invoker: shmid: %d, offset: %d\n", shmid, offset );*/
   
   if (success)
     {
       addr = shmat (shmid, 0, 0);
       success = (addr != (char*) -1);
     }
+  /*printf( "Attach invoker: addr: %X (%d)\n", addr, success );*/
   
   if (success)
     {
       /* remember who we're attached to */
       SHMid = shmid;
       SHMaddr = addr;
+	  SHMPtr = addr + offset;
     }
   
   return_args = procedural_db_return_args (&shmseg_attach_proc, success);
@@ -607,6 +617,10 @@ ProcArg shmseg_attach_args[] =
     "shmid",
     "the shared memory id"
   },
+  { PDB_INT32,
+    "offset",
+    "offset to start of image data"
+  }
 };
 
 ProcRecord shmseg_attach_proc =
@@ -620,7 +634,7 @@ ProcRecord shmseg_attach_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  1,
+  2,
   shmseg_attach_args,
 
   /*  Output arguments  */
@@ -656,6 +670,7 @@ shmseg_detach_invoker  (
       /* forget who we're attached to */
       SHMid = 0;
       SHMaddr = NULL;
+      SHMPtr = NULL;
     }
   
   return_args = procedural_db_return_args (&shmseg_detach_proc, success);
@@ -704,10 +719,10 @@ shmseg_status_invoker  (
   return_args = procedural_db_return_args (&shmseg_status_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = SHMid;
+    return_args[0].value.pdb_int = SHMid;
 
   if (success)
-    return_args[2].value.pdb_int = (int) SHMaddr;
+    return_args[1].value.pdb_int = (int)SHMPtr;
 
   return return_args;
 }
