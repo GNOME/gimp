@@ -10,7 +10,9 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
+#include "gimp-composite-dispatch.h"
 #include "gimp-composite-util.h"
+#include "gimp-composite-generic.h"
 
 
 #undef use_oldmmx
@@ -271,7 +273,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_burn_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("burn rgba8", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("burn rgba8", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("burn rgba8", old_elapsed, new_elapsed);
 
   gettimeofday(&t0, NULL);
@@ -284,7 +286,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_burn_any_any_any_generic(&ctx_va8_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_va8("burn rgba8", ctx_va8.A, ctx_va8.B, ctx_va8_generic.D, ctx_va8.D, ctx_va8.n_pixels);
+  comp_va8("burn rgba8", (va8_t *) ctx_va8.A, (va8_t *) ctx_va8.B, (va8_t *) ctx_va8_generic.D, (va8_t *) ctx_va8.D, ctx_va8.n_pixels);
   timer_report("burn va8", old_elapsed, new_elapsed);
 #endif
 
@@ -299,7 +301,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_dodge_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("dodge", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("dodge", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("dodge", old_elapsed, new_elapsed);
 #endif
 
@@ -314,7 +316,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_divide_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("divide", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("divide", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("divide",  old_elapsed, new_elapsed);
 #endif
 
@@ -329,7 +331,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_grain_extract_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("grain extract", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("grain extract", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("grainextract",  old_elapsed, new_elapsed);
 #endif
 
@@ -343,7 +345,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_grain_merge_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("grain merge", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("grain merge", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("grainmerge",  old_elapsed, new_elapsed);
 #endif
 
@@ -358,7 +360,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_scale_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("scale", ctx.A, NULL, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("scale", (rgba8_t *) ctx.A, NULL, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("scale", old_elapsed, new_elapsed);
 #endif
 
@@ -372,7 +374,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_screen_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("screen", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("screen", (rgba8_t *) ctx.A,(rgba8_t *)  ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("screen",  old_elapsed, new_elapsed);
 #endif
 
@@ -386,7 +388,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_lighten_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("lighten", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("lighten", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("lighten",  old_elapsed, new_elapsed);
 #endif
 
@@ -401,7 +403,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_darken_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("darken", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("darken", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("darken",  old_elapsed, new_elapsed);
 #endif
 
@@ -415,7 +417,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_difference_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("difference", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("difference", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("difference",  old_elapsed, new_elapsed);
 #endif
 
@@ -429,7 +431,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_multiply_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("multiply", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("multiply", (rgba8_t *)ctx.A, (rgba8_t *)ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("multiply",  old_elapsed, new_elapsed);
 #endif
 
@@ -443,7 +445,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_subtract_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("subtract", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("subtract", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("subtract",  old_elapsed, new_elapsed);
 #endif
 
@@ -457,7 +459,7 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_addition_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("addition", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
+  comp_rgba8("addition", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.D, (rgba8_t *) ctx.D, ctx.n_pixels);
   timer_report("add",  old_elapsed, new_elapsed);
 #endif
 
@@ -471,8 +473,8 @@ main (int argc, char *argv[])
   for (i = 0; i < iterations; i++) { gimp_composite_swap_any_any_any_generic(&ctx_generic); }
   gettimeofday(&t1, NULL);
   timersub(&t1, &t0, &old_elapsed);
-  comp_rgba8("swap", ctx.A, ctx.B, ctx_generic.A, ctx.A, ctx.n_pixels);
-  comp_rgba8("swap", ctx.A, ctx.B, ctx_generic.B, ctx.B, ctx.n_pixels);
+  comp_rgba8("swap", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.A, (rgba8_t *) ctx.A, ctx.n_pixels);
+  comp_rgba8("swap", (rgba8_t *) ctx.A, (rgba8_t *) ctx.B, (rgba8_t *) ctx_generic.B, (rgba8_t *) ctx.B, ctx.n_pixels);
   timer_report("swap",  old_elapsed, new_elapsed);
 #endif
 

@@ -34,7 +34,7 @@ libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite
 
 
 
-gimp-composite.c: gimp-composite-dispatch.c
+#gimp-composite.c: gimp-composite-dispatch.c
 
 gimp-composite-dispatch.c: gimp-composite-generic.o make-gimp-composite-dispatch.py
 	./make-gimp-composite-dispatch.py gimp-composite-generic.o > gimp-composite-dispatch.c

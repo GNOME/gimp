@@ -1,3 +1,21 @@
+2003-07-15  Helvetix Victorinox  <helvetix@gimp.org>
+ 
+	* app/composite/gimp-composite-generic.h: Use
+	GimpCompositeFunction as the type for all compositing functions.
+ 
+	* app/composite/Makefile.am: gimp-composite.c is no longer
+	dependant upon gimp-composite-dispatch.c
+ 
+	* app/composite/gimp-composite-dispatch.[ch]
+	app/composite/make-gimp-composite-dispatch.py: Fixed type
+	mismatches.
+ 
+	* app/composite/test-composite.c: Fixed bit-rot in not keeping up
+	with the changes in the surrounding .h files.
+ 
+	* app/composite/gimp-composite-mmx.c: Incipient cleanup in marking
+	some asm constructs as volatile.
+
 2003-07-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.[ch]: took the fade options out of
