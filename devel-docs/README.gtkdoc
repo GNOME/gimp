@@ -38,7 +38,7 @@ Modular DocBook Stylesheets (v1.19+ should be OK) - This is the DSSSL code to
 
 gtk-doc - This package automatically generates DocBook documentation for GTK+
     and converts the DocBook documentation into HTML (and other formats).
-    http://www.gtk.org/rdp/download.html
+    ftp://ftp.gtk.org/pub/gtk-doc/
 
 
 HOWTO
