@@ -246,7 +246,7 @@ convolve_options_new (GimpToolInfo *tool_info)
 
   options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					  _("Rate:"), -1, 50,
-					  options->rate_d,
+					  options->rate,
 					  0.0, 100.0, 1.0, 10.0, 1,
 					  TRUE, 0.0, 0.0,
 					  NULL, NULL);

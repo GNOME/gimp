@@ -164,7 +164,7 @@ selection_options_init (SelectionOptions *options,
   /*  the antialias toggle button  */
   options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-                                options->antialias_d);
+                                options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
   gtk_widget_show (options->antialias_w);
 
@@ -192,7 +192,7 @@ selection_options_init (SelectionOptions *options,
 
     options->feather_w = gtk_check_button_new_with_label (_("Feather Edges"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-                                  options->feather_d);
+                                  options->feather);
     gtk_frame_set_label_widget (GTK_FRAME (frame), options->feather_w);
     gtk_widget_show (options->feather_w);
 
@@ -207,20 +207,19 @@ selection_options_init (SelectionOptions *options,
     gtk_container_add (GTK_CONTAINER (frame), table);
     gtk_widget_show (table);
   
-    options->feather_radius_w =
-      gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			    _("Radius:"), -1, 50,
-			    options->feather_radius_d,
-			    0.0, 100.0, 1.0, 10.0, 1,
-			    TRUE, 0.0, 0.0,
-			    NULL, NULL);
+    options->feather_radius_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                                      _("Radius:"), -1, 50,
+                                                      options->feather_radius,
+                                                      0.0, 100.0, 1.0, 10.0, 1,
+                                                      TRUE, 0.0, 0.0,
+                                                      NULL, NULL);
 
     g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
                       G_CALLBACK (gimp_double_adjustment_update),
                       &options->feather_radius);
 
     /*  grey out label & scale if feather is off  */
-    gtk_widget_set_sensitive (table, options->feather_d);
+    gtk_widget_set_sensitive (table, options->feather);
     g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", table);
   }
 
@@ -246,7 +245,7 @@ selection_options_init (SelectionOptions *options,
       options->interactive_w =
 	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
-				    options->interactive_d);
+				    options->interactive);
       gtk_box_pack_start (GTK_BOX (vbox), options->interactive_w,
 			  FALSE, FALSE, 0);
       gtk_widget_show (options->interactive_w);
@@ -277,7 +276,7 @@ selection_options_init (SelectionOptions *options,
       options->select_transparent_w =
 	gtk_check_button_new_with_label (_("Select Transparent Areas"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->select_transparent_w),
-				    options->select_transparent_d);
+				    options->select_transparent);
       gtk_box_pack_start (GTK_BOX (vbox2), options->select_transparent_w,
 			  FALSE, FALSE, 0);
       gtk_widget_show (options->select_transparent_w);
@@ -294,7 +293,7 @@ selection_options_init (SelectionOptions *options,
       options->sample_merged_w =
 	gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				    options->sample_merged_d);
+				    options->sample_merged);
       gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
 			  FALSE, FALSE, 0);
       gtk_widget_show (options->sample_merged_w);
@@ -347,7 +346,7 @@ selection_options_init (SelectionOptions *options,
       options->auto_shrink_w =
 	gtk_check_button_new_with_label (_("Auto Shrink Selection"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->auto_shrink_w),
-				    options->auto_shrink_d);
+				    options->auto_shrink);
       gtk_frame_set_label_widget (GTK_FRAME (frame), options->auto_shrink_w);
       gtk_widget_show (options->auto_shrink_w);
 
@@ -362,7 +361,7 @@ selection_options_init (SelectionOptions *options,
       options->shrink_merged_w =
 	gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->shrink_merged_w),
-				    options->shrink_merged_d);
+				    options->shrink_merged);
       gtk_box_pack_start (GTK_BOX (vbox2), options->shrink_merged_w,
                           FALSE, FALSE, 0);
       gtk_widget_show (options->shrink_merged_w);
@@ -382,7 +381,7 @@ selection_options_init (SelectionOptions *options,
       options->fixed_size_w =
 	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
-				    options->fixed_size_d);
+				    options->fixed_size);
       gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_size_w);
       gtk_widget_show (options->fixed_size_w);
 
@@ -396,13 +395,13 @@ selection_options_init (SelectionOptions *options,
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
       gtk_container_add (GTK_CONTAINER (frame), table);
 
-      gtk_widget_set_sensitive (table, options->fixed_size_d);
+      gtk_widget_set_sensitive (table, options->fixed_size);
       g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
                          table);
 
       options->fixed_width_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                                      _("Width:"), -1, 50,
-                                                     options->fixed_width_d,
+                                                     options->fixed_width,
                                                      1.0, 100.0, 1.0, 50.0, 1,
                                                      FALSE, 1e-5, 32767.0,
                                                      NULL, NULL);
@@ -415,7 +414,7 @@ selection_options_init (SelectionOptions *options,
 
       options->fixed_height_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                                       _("Height:"), -1, 50,
-                                                      options->fixed_height_d,
+                                                      options->fixed_height,
                                                       1.0, 100.0, 1.0, 50.0, 1,
                                                       FALSE, 1e-5, 32767.0,
                                                       NULL, NULL);
@@ -427,7 +426,7 @@ selection_options_init (SelectionOptions *options,
                         &options->fixed_height);
 
       options->fixed_unit_w =
-	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
+	gimp_unit_menu_new ("%a", options->fixed_unit, TRUE, TRUE, TRUE);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Unit:"), 1.0, 0.5,
 				 options->fixed_unit_w, 2, TRUE);

@@ -1381,7 +1381,7 @@ crop_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->layer_only);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only_d);
+				options->layer_only);
   gtk_widget_show (options->layer_only_w);
 
   /*  enlarge toggle  */
@@ -1393,7 +1393,7 @@ crop_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->allow_enlarge);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
-				options->allow_enlarge_d);
+				options->allow_enlarge);
   gtk_widget_show (options->allow_enlarge_w);
 
   return (GimpToolOptions *) options;

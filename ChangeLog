@@ -1,5 +1,31 @@
 2002-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/tools/transform_options.c: in preparation of a more generic tool
+	options framework: use the options value, not the default value when
+	setting up the tool options UI. Doesn't make any difference since both
+	are initialized to the same value, but reduces usage of the ugly foo_d
+	variables.
+
+	* app/tools/gimpmagnifytool.c: don't change the resize_windows_on_zoom
+	gimprc value in response to changes in the tool options. Only use it
+	as default value when resetting the tool options.
+
+2002-04-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c (gimp_image_convert): invalidate layer
 	previews so we don't crash when an image preview is generated after
 	converting the image from RGB to GRAY.

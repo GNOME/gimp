@@ -623,7 +623,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                           _("Size:"), -1, 50,
-                                          options->size_d,
+                                          options->size,
                                           1.0, 256.0, 1.0, 50.0, 1,
                                           FALSE, 1e-5, 32767.0,
                                           NULL, NULL);
@@ -636,7 +636,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   options->border_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                                             _("Border:"), -1, 50,
-                                            options->border_d,
+                                            options->border,
                                             0.0, 100.0, 1.0, 50.0, 1,
                                             FALSE, 0.0, 32767.0,
                                             NULL, NULL);
@@ -647,8 +647,8 @@ text_tool_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->border);
 
-  options->unit_w =
-    gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
+  options->unit_w = gimp_unit_menu_new ("%a", options->unit, 
+                                        TRUE, FALSE, TRUE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Unit:"), 1.0, 0.5,

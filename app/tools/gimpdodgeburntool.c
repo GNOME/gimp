@@ -240,7 +240,7 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
 
   options->exposure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					      _("Exposure:"), -1, 50,
-					      options->exposure_d,
+					      options->exposure,
 					      0.0, 100.0, 1.0, 10.0, 1,
 					      TRUE, 0.0, 0.0,
 					      NULL, NULL);

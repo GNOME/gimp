@@ -389,7 +389,7 @@ bucket_options_new (GimpToolInfo *tool_info)
   options->fill_transparent_w =
     gtk_check_button_new_with_label (_("Fill Transparent Areas"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_transparent_w),
-                                options->fill_transparent_d);
+                                options->fill_transparent);
   gtk_box_pack_start (GTK_BOX (vbox2), options->fill_transparent_w,
                       FALSE, FALSE, 0);
   gtk_widget_show (options->fill_transparent_w);

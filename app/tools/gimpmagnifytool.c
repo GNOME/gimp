@@ -52,8 +52,7 @@ struct _MagnifyOptions
 {
   GimpToolOptions   tool_options;
 
-  /* gint       resize_windows_on_zoom; (from gimprc) */
-  gint          allow_resize_d;
+  gint          allow_resize;  /* default from gimprc.resize_windows_on_zoom */
   GtkWidget    *allow_resize_w;
 
   GimpZoomType  type;
@@ -300,7 +299,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
                                            (win_width / 2)),
                                           ((scaledest * ((y1 + y2) / 2)) / scalesrc -
                                            (win_height / 2)),
-                                          gimprc.resize_windows_on_zoom);
+                                          options->allow_resize);
     }
 }
 
@@ -439,9 +438,9 @@ magnify_options_new (GimpToolInfo *tool_info)
 
   ((GimpToolOptions *) options)->reset_func = magnify_options_reset;
 
-  options->allow_resize_d = gimprc.resize_windows_on_zoom;
-  options->type_d         = options->type      = GIMP_ZOOM_IN;
-  options->threshold_d    = options->threshold = 5;
+  options->allow_resize = gimprc.resize_windows_on_zoom;
+  options->type_d       = options->type         = GIMP_ZOOM_IN;
+  options->threshold_d  = options->threshold    = 5;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -450,14 +449,14 @@ magnify_options_new (GimpToolInfo *tool_info)
   options->allow_resize_w =
     gtk_check_button_new_with_label (_("Allow Window Resizing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				gimprc.resize_windows_on_zoom);
+				options->allow_resize);
   gtk_box_pack_start (GTK_BOX (vbox),  options->allow_resize_w,
                       FALSE, FALSE, 0);
   gtk_widget_show (options->allow_resize_w);
 
   g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &(gimprc.resize_windows_on_zoom));
+                    &options->allow_resize);
 
   /*  tool toggle  */
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_ZOOM_TYPE,
@@ -480,7 +479,7 @@ magnify_options_new (GimpToolInfo *tool_info)
 
   options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					       _("Threshold:"), -1, 50,
-					       options->threshold_d,
+					       options->threshold,
 					       1.0, 15.0, 1.0, 3.0, 1,
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
@@ -500,7 +499,7 @@ magnify_options_reset (GimpToolOptions *tool_options)
   options = (MagnifyOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				options->allow_resize_d);
+				gimprc.resize_windows_on_zoom);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));

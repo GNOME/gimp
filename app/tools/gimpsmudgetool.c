@@ -151,13 +151,12 @@ smudge_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  options->rate_w =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Rate:"), -1, 50,
-			  options->rate_d,
-			  0.0, 100.0, 1.0, 10.0, 1,
-			  TRUE, 0.0, 0.0,
-			  NULL, NULL);
+  options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                          _("Rate:"), -1, 50,
+                                          options->rate,
+                                          0.0, 100.0, 1.0, 10.0, 1,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->rate_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),

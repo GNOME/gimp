@@ -163,7 +163,7 @@ transform_options_init (TransformOptions *options,
   gtk_widget_show (label);
 
   options->grid_size_w =
-    gtk_adjustment_new (7.0 - log (options->grid_size_d) / log (2.0), 0.0, 5.0,
+    gtk_adjustment_new (7.0 - log (options->grid_size) / log (2.0), 0.0, 5.0,
 			1.0, 1.0, 0.0);
   grid_density =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
@@ -175,8 +175,8 @@ transform_options_init (TransformOptions *options,
                     G_CALLBACK (gimp_transform_tool_grid_density_update),
                     options);
 
-  gtk_widget_set_sensitive (label, options->show_grid_d);
-  gtk_widget_set_sensitive (grid_density, options->show_grid_d);
+  gtk_widget_set_sensitive (label, options->show_grid);
+  gtk_widget_set_sensitive (grid_density, options->show_grid);
   g_object_set_data (G_OBJECT (options->show_grid_w), "set_sensitive",
                      grid_density);
   g_object_set_data (G_OBJECT (grid_density), "set_sensitive", label);  

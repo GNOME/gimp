@@ -715,7 +715,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   options->sample_merged_w =
     gtk_check_button_new_with_label (_("Sample Merged"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
+				options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
@@ -738,7 +738,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   options->sample_average_w =
     gtk_check_button_new_with_label (_("Sample Average"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average_d);
+				options->sample_average);
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->sample_average_w);
   gtk_widget_show (options->sample_average_w);
 
@@ -746,14 +746,14 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_average);
 
-  gtk_widget_set_sensitive (table, options->sample_average_d);
+  gtk_widget_set_sensitive (table, options->sample_average);
   g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
 		     table);
 
   options->average_radius_w =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Radius:"), -1, 50,
-			  options->average_radius_d,
+			  options->average_radius,
 			  1.0, 15.0, 1.0, 3.0, 0,
 			  TRUE, 0.0, 0.0,
 			  NULL, NULL);
@@ -766,7 +766,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   options->update_active_w =
     gtk_check_button_new_with_label (_("Update Active Color"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active_d);
+				options->update_active);
   gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
   gtk_widget_show (options->update_active_w);
 

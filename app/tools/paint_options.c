@@ -176,7 +176,7 @@ paint_options_init (GimpPaintOptions *options,
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
 			  options->incremental_w, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				    options->incremental_d);
+				    options->incremental);
       gtk_widget_show (options->incremental_w);
 
       g_signal_connect (G_OBJECT (options->incremental_w), "toggled",
@@ -284,7 +284,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 	gtk_check_button_new_with_label (_("Opacity"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->opacity_w);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
-				    pressure->opacity_d);
+				    pressure->opacity);
       gtk_widget_show (pressure->opacity_w);
 
       g_signal_connect (G_OBJECT (pressure->opacity_w), "toggled",
@@ -303,7 +303,7 @@ pressure_options_init (GimpPressureOptions *pressure,
       pressure->pressure_w = gtk_check_button_new_with_label (_("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
-				    pressure->pressure_d);
+				    pressure->pressure);
       gtk_widget_show (pressure->pressure_w);
 
       g_signal_connect (G_OBJECT (pressure->pressure_w), "toggled",
@@ -320,7 +320,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 	gtk_check_button_new_with_label (_("Rate"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->rate_w);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
-				    pressure->rate_d);
+				    pressure->rate);
       gtk_widget_show (pressure->rate_w);
 
       g_signal_connect (G_OBJECT (pressure->rate_w), "toggled",
@@ -341,7 +341,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 	gtk_check_button_new_with_label (_("Size"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->size_w);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
-				    pressure->size_d);
+				    pressure->size);
       gtk_widget_show (pressure->size_w);
 
       g_signal_connect (G_OBJECT (pressure->size_w), "toggled",
@@ -358,7 +358,7 @@ pressure_options_init (GimpPressureOptions *pressure,
 	gtk_check_button_new_with_label (_("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->color_w);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
-				    pressure->color_d);
+				    pressure->color);
       gtk_widget_show (pressure->color_w);
 
       g_signal_connect (G_OBJECT (pressure->color_w), "toggled",
@@ -425,13 +425,13 @@ gradient_options_init (GimpGradientOptions *gradient,
                         G_CALLBACK (gimp_toggle_button_update),
                         &gradient->use_fade);
 
-      gtk_widget_set_sensitive (table, gradient->use_fade_d);
+      gtk_widget_set_sensitive (table, gradient->use_fade);
       g_object_set_data (G_OBJECT (gradient->use_fade_w),
                            "set_sensitive", table);
 
      /*  the fade-out sizeentry  */
       gradient->fade_out_w =
-        gtk_adjustment_new (gradient->fade_out_d,
+        gtk_adjustment_new (gradient->fade_out,
                             1e-5, 32767.0, 1.0, 50.0, 0.0);
 
       spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (gradient->fade_out_w),
@@ -449,7 +449,7 @@ gradient_options_init (GimpGradientOptions *gradient,
 
       /*  the fade-out unitmenu  */
       gradient->fade_unit_w =
-        gimp_unit_menu_new ("%a", gradient->fade_unit_d, TRUE, TRUE, TRUE);
+        gimp_unit_menu_new ("%a", gradient->fade_unit, TRUE, TRUE, TRUE);
       gtk_table_attach (GTK_TABLE (table), gradient->fade_unit_w, 2, 3, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (gradient->fade_unit_w);
@@ -483,7 +483,7 @@ gradient_options_init (GimpGradientOptions *gradient,
                         G_CALLBACK (paint_options_gradient_toggle_callback),
                         paint_options);
 
-      gtk_widget_set_sensitive (table, gradient->use_gradient_d);
+      gtk_widget_set_sensitive (table, gradient->use_gradient);
       g_object_set_data (G_OBJECT (gradient->use_gradient_w), "set_sensitive",
                          table);
       g_object_set_data (G_OBJECT (gradient->use_gradient_w),
@@ -492,7 +492,7 @@ gradient_options_init (GimpGradientOptions *gradient,
 
       /*  the gradient length scale  */
       gradient->gradient_length_w =
-        gtk_adjustment_new (gradient->gradient_length_d,
+        gtk_adjustment_new (gradient->gradient_length,
                             1e-5, 32767.0, 1.0, 50.0, 0.0);
       spinbutton =
         gtk_spin_button_new (GTK_ADJUSTMENT (gradient->gradient_length_w),
@@ -510,7 +510,7 @@ gradient_options_init (GimpGradientOptions *gradient,
 
       /*  the gradient unitmenu  */
       gradient->gradient_unit_w =
-        gimp_unit_menu_new ("%a", gradient->gradient_unit_d, TRUE, TRUE, TRUE);
+        gimp_unit_menu_new ("%a", gradient->gradient_unit, TRUE, TRUE, TRUE);
       gtk_table_attach (GTK_TABLE (table), gradient->gradient_unit_w, 2, 3, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (gradient->gradient_unit_w);
@@ -528,7 +528,7 @@ gradient_options_init (GimpGradientOptions *gradient,
                                    G_CALLBACK (gimp_menu_item_update),
                                    &gradient->gradient_type);
       gimp_option_menu_set_history (GTK_OPTION_MENU (gradient->gradient_type_w),
-                                    GINT_TO_POINTER (gradient->gradient_type_d));
+                                    GINT_TO_POINTER (gradient->gradient_type));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("Type:"), 1.0, 0.5,

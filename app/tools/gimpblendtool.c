@@ -363,14 +363,20 @@ gimp_blend_tool_motion (GimpTool        *tool,
 	{
 	  radius = sqrt (SQR (dx) + SQR (dy));
 	  frac = abs ((dx << 8) / dy);
+
 	  for (i = 0; i < 6; i++)
 	    {
 	      if (frac < tangens2[i])
 		break;  
 	    }
-	  dx = dx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
-	  dy = dy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
+
+	  dx = dx > 0 ? 
+            (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
+
+	  dy = dy > 0 ? 
+            (cosinus[i]   * radius) >> 8 : - ((cosinus[i]   * radius) >> 8);
 	}
+
       blend_tool->endx = blend_tool->startx + dx;
       blend_tool->endy = blend_tool->starty + dy;
     }
@@ -497,7 +503,7 @@ blend_options_new (GimpToolInfo *tool_info)
 
   options->offset_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					    _("Offset:"), -1, 50,
-					    options->offset_d,
+					    options->offset,
 					    0.0, 100.0, 1.0, 10.0, 1,
 					    TRUE, 0.0, 0.0,
 					    NULL, NULL);
@@ -512,7 +518,7 @@ blend_options_new (GimpToolInfo *tool_info)
                                G_CALLBACK (gimp_menu_item_update),
                                &options->blend_mode);
   gimp_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w),
-                                GINT_TO_POINTER (options->blend_mode_d));
+                                GINT_TO_POINTER (options->blend_mode));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Blend:"), 1.0, 0.5,
 			     options->blend_mode_w, 2, TRUE);
@@ -523,7 +529,7 @@ blend_options_new (GimpToolInfo *tool_info)
                                G_CALLBACK (gradient_type_callback),
                                options);
   gimp_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-                                GINT_TO_POINTER (options->gradient_type_d));
+                                GINT_TO_POINTER (options->gradient_type));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Gradient:"), 1.0, 0.5,
 			     options->gradient_type_w, 2, TRUE);
@@ -534,7 +540,7 @@ blend_options_new (GimpToolInfo *tool_info)
                                G_CALLBACK (gimp_menu_item_update),
                                &options->repeat);
   gimp_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
-                                GINT_TO_POINTER (options->repeat_d));
+                                GINT_TO_POINTER (options->repeat));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
 			     options->repeat_w, 2, TRUE);
@@ -557,7 +563,7 @@ blend_options_new (GimpToolInfo *tool_info)
   options->supersample_w =
     gtk_check_button_new_with_label (_("Adaptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
-				options->supersample_d);
+				options->supersample);
   gtk_frame_set_label_widget (GTK_FRAME (frame), options->supersample_w);
   gtk_widget_show (options->supersample_w);
 
@@ -573,14 +579,14 @@ blend_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  automatically set the sensitive state of the table  */
-  gtk_widget_set_sensitive (table, options->supersample_d);
+  gtk_widget_set_sensitive (table, options->supersample);
   g_object_set_data (G_OBJECT (options->supersample_w), "set_sensitive",
                      table);
 
   /*  max depth scale  */
   options->max_depth_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					       _("Max Depth:"), -1, 50,
-					       options->max_depth_d,
+					       options->max_depth,
 					       1.0, 10.0, 1.0, 1.0, 0,
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
@@ -592,12 +598,12 @@ blend_options_new (GimpToolInfo *tool_info)
   /*  threshold scale  */
   options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 					       _("Threshold:"), -1, 50,
-					       options->threshold_d,
+					       options->threshold,
 					       0.0, 4.0, 0.01, 0.1, 2,
 					       TRUE, 0.0, 0.0,
 					       NULL, NULL);
 
-  g_signal_connect (G_OBJECT(options->threshold_w), "value_changed",
+  g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
 
