@@ -158,7 +158,8 @@ run (const gchar      *name,
       parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
       if (parasite)
 	{
-	  config.comment = g_strdup (parasite->data);
+	  config.comment = g_strndup (gimp_parasite_data (parasite),
+                                      gimp_parasite_data_size (parasite));
 	  gimp_parasite_free (parasite);
 	}
       x = config.comment;

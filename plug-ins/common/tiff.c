@@ -329,7 +329,8 @@ run (const gchar      *name,
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
         {
-          image_comment = g_strdup (parasite->data);
+          image_comment = g_strndup (gimp_parasite_data (parasite),
+                                     gimp_parasite_data_size (parasite));
           gimp_parasite_free (parasite);
         }
 
@@ -342,10 +343,10 @@ run (const gchar      *name,
           parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
           if (parasite)
             {
-              tsvals.compression =
-                ((TiffSaveVals *) parasite->data)->compression;
-              tsvals.save_transp_pixels =
-                ((TiffSaveVals *) parasite->data)->save_transp_pixels;
+              const TiffSaveVals *pvals = gimp_parasite_data (parasite);
+
+              tsvals.compression        = pvals->compression;
+              tsvals.save_transp_pixels = pvals->save_transp_pixels;
             }
           gimp_parasite_free (parasite);
 
@@ -386,10 +387,10 @@ run (const gchar      *name,
           parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
           if (parasite)
             {
-              tsvals.compression =
-                ((TiffSaveVals *) parasite->data)->compression;
-              tsvals.save_transp_pixels =
-                ((TiffSaveVals *) parasite->data)->save_transp_pixels;
+              const TiffSaveVals *pvals = gimp_parasite_data (parasite);
+
+              tsvals.compression        = pvals->compression;
+              tsvals.save_transp_pixels = pvals->save_transp_pixels;
             }
           gimp_parasite_free (parasite);
           break;

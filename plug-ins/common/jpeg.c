@@ -546,7 +546,8 @@ run (const gchar      *name,
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
       if (parasite)
         {
-          image_comment = g_strdup (parasite->data);
+          image_comment = g_strndup (gimp_parasite_data (parasite),
+                                     gimp_parasite_data_size (parasite));
           gimp_parasite_free (parasite);
         }
 
@@ -555,7 +556,8 @@ run (const gchar      *name,
       parasite = gimp_image_parasite_find (orig_image_ID, "exif-data");
       if (parasite)
         {
-          exif_data = exif_data_new_from_data (parasite->data, parasite->size);
+          exif_data = exif_data_new_from_data (gimp_parasite_data (parasite),
+                                               gimp_parasite_data_size (parasite));
           gimp_parasite_free (parasite);
         }
 

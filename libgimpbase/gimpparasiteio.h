@@ -59,7 +59,7 @@ typedef struct
 void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);
 
 /* Parse a string into a GimpPixPipeParams */
-void    gimp_pixpipe_params_parse (gchar             *parameters,
+void    gimp_pixpipe_params_parse (const gchar       *parameters,
 				   GimpPixPipeParams *params);
 
 /* Build a string representation of GimpPixPipeParams */

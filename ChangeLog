@@ -1,3 +1,25 @@
+2004-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparasitelist.c: cosmetics, untabified.
+
+	* libgimpbase/gimpparasiteio.[ch]: added g_return_if_fail()'s
+	to all functions. 
+
+	(gimp_pixpipe_params_parse): changed "gchar*" param to "const
+	gchar*" (sortof API change, but these files are most probably only
+	used by GIMP itself). Still uses strtok() on the internal copy,
+	but at least not on the passed string.
+
+	* plug-ins/common/csource.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/png.c
+	* plug-ins/common/tiff.c: use parasite getters instead of
+	accessing the scruct members directly. Always use g_strndup()
+	instead of just g_strdup() to get strings stored in parasites
+	because there is no guarantee that they are nul-terminated.
+
 2004-11-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_file.c (do_file_save_as_dialog): do

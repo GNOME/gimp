@@ -1299,7 +1299,7 @@ save_image (const gchar *filename,
       parasite = gimp_image_parasite_find (orig_image_ID, "gamma");
       if (parasite)
 	{
-          gamma = g_ascii_strtod (parasite->data, NULL);
+          gamma = g_ascii_strtod (gimp_parasite_data (parasite), NULL);
 	  gimp_parasite_free (parasite);
 	}
 

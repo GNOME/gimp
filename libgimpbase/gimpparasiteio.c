@@ -41,6 +41,8 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
 {
   gint i;
 
+  g_return_if_fail (params != NULL);
+
   params->step       = 100;
   params->ncells     = 1;
   params->cellwidth  = 1;
@@ -61,13 +63,19 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
 }
 
 void
-gimp_pixpipe_params_parse (gchar            *string,
+gimp_pixpipe_params_parse (const gchar       *string,
 			   GimpPixPipeParams *params)
 {
+  gchar *copy;
   gchar *p, *q, *r;
   gint   i;
 
-  q = string;
+  g_return_if_fail (string != NULL);
+  g_return_if_fail (params != NULL);
+
+  copy = g_strdup (string);
+
+  q = copy;
   while ((p = strtok (q, " \r\n")) != NULL)
     {
       q = NULL;
@@ -145,15 +153,20 @@ gimp_pixpipe_params_parse (gchar            *string,
       if (r)
 	*r = ':';
     }
+
+  g_free (copy);
 }
 
 gchar *
 gimp_pixpipe_params_build (GimpPixPipeParams *params)
 {
-  GString *s = g_string_new (NULL);
+  GString *s;
   gchar   *str;
+  gint     i;
 
-  gint i;
+  g_return_val_if_fail (params != NULL, NULL);
+
+  s = g_string_new (NULL);
 
   g_string_printf (s, "ncells:%d cellwidth:%d cellheight:%d "
                    "step:%d dim:%d cols:%d rows:%d placement:%s",

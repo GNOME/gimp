@@ -349,7 +349,8 @@ run (const gchar      *name,
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
 	  if (pipe_parasite)
-	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparams);
+	    gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
+                                       &gihparams);
 
 	  if (!gih_save_dialog (image_ID))
 	    status = GIMP_PDB_CANCEL;
@@ -398,7 +399,8 @@ run (const gchar      *name,
 				      "gimp-brush-pipe-parameters");
 	  gimp_pixpipe_params_init (&gihparams);
 	  if (pipe_parasite)
-	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparams);
+	    gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
+                                       &gihparams);
 	  break;
 	}
 

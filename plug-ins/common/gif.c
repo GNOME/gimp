@@ -1316,24 +1316,19 @@ save_dialog (gint32 image_ID)
 
   g_object_unref (text_buffer);
 
-  if (globalcomment != NULL)
-    {
-      g_free (globalcomment);
-    }
+  if (globalcomment)
+    g_free (globalcomment);
+
 #ifdef FACEHUGGERS
   GIF2_CMNT = gimp_image_parasite_find (image_ID, "gimp-comment");
   if (GIF2_CMNT)
-    {
-      globalcomment = g_malloc (GIF2_CMNT->size+1);
-      memcpy (globalcomment, GIF2_CMNT->data, GIF2_CMNT->size);
-      globalcomment[GIF2_CMNT->size] = 0;
-    }
+    globalcomment = g_strndup (gimp_parasite_data (GIF2_CMNT),
+                               gimp_parasite_data_size (GIF2_CMNT));
   else
-    {
 #endif
-      globalcomment = gimp_get_default_comment ();
+    globalcomment = gimp_get_default_comment ();
+
 #ifdef FACEHUGGERS
-    }
   gimp_parasite_free (GIF2_CMNT);
 #endif
 
