@@ -1,6 +1,6 @@
-%define subver   1.1
-%define microver 19
-%define ver      %{subver}.%{microver}
+%define subver   @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+%define microver @GIMP_MICRO_VERSION@
+%define ver      @VERSION@
 %define prefix	 /usr
 
 Summary: The GNU Image Manipulation Program

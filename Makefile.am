@@ -22,75 +22,74 @@ bin_SCRIPTS = gimptool @GIMPINSTALL@
 EXTRA_SCRIPTS = gimpinstall
 
 EXTRA_DIST = \
-	cursors/mouse.xbm			\
-	cursors/mouse_mask.xbm			\
+	cursors/bad.xbm				\
+	cursors/bad_mask.xbm			\
+	cursors/bucket_fill_small.xbm		\
+	cursors/bucket_fill_small_mask.xbm	\
+	cursors/crop_small.xbm			\
+	cursors/crop_small_mask.xbm		\
 	cursors/crosshair.xbm			\
 	cursors/crosshair_mask.xbm		\
 	cursors/crosshair_small.xbm		\
 	cursors/crosshair_small_mask.xbm	\
+	cursors/dropper.xbm			\
+	cursors/dropper_mask.xbm		\
+	cursors/ellipse_select_small.xbm	\
+	cursors/ellipse_select_small_mask.xbm	\
+	cursors/eraser_small.xbm		\
+	cursors/eraser_small_mask.xbm		\
+	cursors/free_select_small.xbm		\
+	cursors/free_select_small_mask.xbm	\
+	cursors/fuzzy_select_small.xbm		\
+	cursors/fuzzy_select_small_mask.xbm	\
 	cursors/intersect.xbm			\
 	cursors/intersect_mask.xbm		\
 	cursors/minus.xbm			\
 	cursors/minus_mask.xbm			\
-	cursors/move.xbm			\
-	cursors/move_mask.xbm			\
-	cursors/plus.xbm			\
-	cursors/plus_mask.xbm			\
-	rect_select_small.xbm			\
-	rect_select_small_mask.xbm		\
-	ellipse_select_small.xbm		\
-	ellipse_select_small_mask.xbm		\
-	free_select_small.xbm			\
-	free_select_small_mask.xbm		\
-	fuzzy_select_small.xbm			\
-	fuzzy_select_small_mask.xbm		\
-	bucket_fill_small.xbm			\
-	bucket_fill_small_mask.xbm		\
-	crop_small.xbm				\
-	crop_small_mask.xbm			\
-	resize_small.xbm			\
-	resize_small_mask.xbm			\
-	pencil_small.xbm			\
-	pencil_small_mask.xbm			\
-	paintbrush_small.xbm			\
-	paintbrush_small_mask.xbm		\
-	eraser_small.xbm			\
-	eraser_small_mask.xbm			\
-	cursors/zoom.xbm			\
-	cursors/zoom_mask.xbm			\
-	cursors/zoom_small.xbm			\
-	cursors/zoom_small_mask.xbm		\
-	\
+	cursors/mouse.xbm			\
 	cursors/mouse_add.xbm			\
-        cursors/mouse_add_mask.xbm		\
-	cursors/mouse_subtract.xbm		\
-	cursors/mouse_subtract_mask.xbm		\
+	cursors/mouse_add_mask.xbm		\
 	cursors/mouse_intersect.xbm		\
 	cursors/mouse_intersect_mask.xbm	\
+	cursors/mouse_mask.xbm			\
+	cursors/mouse_move.xbm			\
+	cursors/mouse_move_mask.xbm		\
 	cursors/mouse_point.xbm			\
 	cursors/mouse_point_mask.xbm		\
 	cursors/mouse_rectangle.xbm		\
 	cursors/mouse_rectangle_mask.xbm	\
-	cursors/mouse_move.xbm			\
-	cursors/mouse_move_mask.xbm		\
+	cursors/mouse_subtract.xbm		\
+	cursors/mouse_subtract_mask.xbm		\
+	cursors/move.xbm			\
+	cursors/move_mask.xbm			\
+	cursors/paintbrush_small.xbm		\
+	cursors/paintbrush_small_mask.xbm	\
+	cursors/pencil_small.xbm		\
+	cursors/pencil_small_mask.xbm		\
+	cursors/plus.xbm			\
+	cursors/plus_mask.xbm			\
+	cursors/rect_select_small.xbm		\
+	cursors/rect_select_small_mask.xbm	\
+	cursors/resize_small.xbm		\
+	cursors/resize_small_mask.xbm		\
 	cursors/selection.xbm			\
-	cursors/selection_mask.xbm		\
 	cursors/selection_add.xbm		\
 	cursors/selection_add_mask.xbm		\
-	cursors/selection_subtract.xbm		\
-	cursors/selection_subtract_mask.xbm	\
 	cursors/selection_intersect.xbm		\
 	cursors/selection_intersect_mask.xbm	\
+	cursors/selection_mask.xbm		\
 	cursors/selection_move.xbm		\
 	cursors/selection_move_mask.xbm		\
-	cursors/bad.xbm				\
-	cursors/bad_mask.xbm			\
-	cursors/dropper.xbm			\
-	cursors/dropper_mask.xbm		\
+	cursors/selection_subtract.xbm		\
+	cursors/selection_subtract_mask.xbm	\
+	cursors/zoom.xbm			\
 	cursors/zoom_in.xbm			\
 	cursors/zoom_in_mask.xbm		\
+	cursors/zoom_mask.xbm			\
 	cursors/zoom_out.xbm			\
 	cursors/zoom_out_mask.xbm		\
+	cursors/zoom_small.xbm			\
+	cursors/zoom_small_mask.xbm		\
 	pixmaps/anchor.xpm			\
 	pixmaps/chain.xpm			\
 	pixmaps/channel.xbm			\

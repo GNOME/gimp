@@ -1,7 +1,18 @@
+2000-06-13  Sven Neumann  <sven@gimp.org>
+
+	* gimp.spec: removed
+	
+	* configure.in
+	* gimp.spec.in: new file to autogenerate gimpc.spec with the
+	proper version number
+
+	* Makefile.am: bumped dependency to gtk+-1.2.8 and included
+	new cursor files
+
 2000-06-10  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS: applied gimp-cornwell-000507-0
-	Please add yourself if have contributed and are missing.
+	Please add yourself if you have contributed and are missing.
 
 Sat Jun 10 12:19:31 BST 2000  Adam D. Moss <adam@gimp.org>
 
