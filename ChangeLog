@@ -1,3 +1,15 @@
+Tue Apr 27 23:52:26 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* tools/Makefile.am
+	* tools/pdbgen/Makefile.am: integrated pdbgen into the build system
+
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c: renamed gimp_image_findnext_guide to
+	gimp_image_find_next_guide, so change pdb wrapper
+
+	* plug-ins/guillotine/guillotine.c: reflect api change
+
 Tue Apr 27 22:59:08 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/tool_options.c

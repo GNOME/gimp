@@ -20,8 +20,8 @@
 require 5.004;
 
 BEGIN {
-    $srcdir = '.';
-    $destdir = '.';
+    $srcdir  = $ENV{srcdir}  || '.';
+    $destdir = $ENV{destdir} || '.';
 }
 
 use lib $srcdir;
@@ -35,8 +35,8 @@ BEGIN {
     # What to do?
     require 'groups.pl';
 
-    if (exists $ENV{PDBGEN_GROUPS}) {
-	@groups = split(' ', $ENV{PDBGEN_GROUPS});
+    if ($ENV{PDBGEN_GROUPS}) {
+	@groups = split(/:/, $ENV{PDBGEN_GROUPS});
     }
 }
 

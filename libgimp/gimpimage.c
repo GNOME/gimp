@@ -83,14 +83,14 @@ gimp_image_delete_guide (gint32 image_id,
 }
 
 gint32
-gimp_image_findnext_guide (gint32 image_id,
-			   gint32 guide_id)
+gimp_image_find_next_guide (gint32 image_id,
+			    gint32 guide_id)
 {
   GParam *return_vals;
   int nreturn_vals;
   gint32 rtn_guide_id;
 
-  return_vals = gimp_run_procedure ("gimp_image_findnext_guide",
+  return_vals = gimp_run_procedure ("gimp_image_find_next_guide",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_id,
 				    PARAM_INT32, guide_id,

@@ -59,14 +59,9 @@ AC_ARG_WITH(gcg, [  --with-gcg              build 'gcg' code generation tool],
 ,
 with_gcg=$enable_maintainer_mode)
 
-if eval "test x$with_gcg = xyes"; then
-  GCG_SUBDIRS="tools/gcg"
-else
-  GCG_SUBDIRS=""
+if test "x$with_gcg" = xyes; then
+  AC_CONFIG_SUBDIRS(tools/gcg)
 fi
-
-AC_SUBST(GCG_SUBDIRS)
-AC_CONFIG_SUBDIRS($GCG_SUBDIRS)
 
 AC_ARG_ENABLE(gcg-deps, [  --enable-gcg-deps       turn on dynamic gcg dependency tracking (need gcc and gnu make)],
 ,
@@ -530,8 +525,18 @@ fi
 
 dnl This is for the gimp-perl plug-in
 AC_ARG_ENABLE(perl, [  --disable-perl          do not build perl extension [by default enabled]])
-if eval "test x$enable_perl != xno"; then
-   AC_PATH_PROGS(PERL,perl perl5.005 perl5.004,perl)
+
+AC_ARG_WITH(pdbgen, [  --with-pdbgen           use 'pdbgen' code generation tool],
+,
+with_pdbgen=$enable_maintainer_mode)
+
+if test "x$enable_perl" != xno || test "x$with_pdbgen" = xyes ; then
+   AC_PATH_PROGS(PERL,perl5 perl perl5.005 perl5.004,perl)
+fi
+
+AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
+
+if test "x$enable_perl" != xno; then
    AC_MSG_CHECKING(for perl version >= 5.004_04)
    if test "`$PERL -e 'print $]>=5.004_04'`" = "1"; then
       AC_MSG_RESULT(yes)

@@ -140,7 +140,7 @@ guillotine(gint32 image_ID)
 
   num_vguides = 0;
   num_hguides = 0;
-  guide_num = gimp_image_findnext_guide(image_ID, 0);
+  guide_num = gimp_image_find_next_guide(image_ID, 0);
 
   /* Count the guides so we can allocate appropriate memory */
   if (guide_num>0)
@@ -157,7 +157,7 @@ guillotine(gint32 image_ID)
 	      printf("Aie!  Aie!  Aie!\n");
 	      gimp_quit();
 	    }
-	  guide_num = gimp_image_findnext_guide(image_ID, guide_num);
+	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
 	}
       while (guide_num>0);
     }
@@ -181,7 +181,7 @@ guillotine(gint32 image_ID)
   num_hguides = 0;
   vguides[num_vguides++] = 0;
   hguides[num_hguides++] = 0;
-  guide_num = gimp_image_findnext_guide(image_ID, 0);
+  guide_num = gimp_image_find_next_guide(image_ID, 0);
   if (guide_num>0)
     {
       do
@@ -198,7 +198,7 @@ guillotine(gint32 image_ID)
 	      printf("Aie!  Aie!  Aie!  Too!\n");
 	      gimp_quit();
 	    }
-	  guide_num = gimp_image_findnext_guide(image_ID, guide_num);
+	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
 	}
       while (guide_num>0);
     }

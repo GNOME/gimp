@@ -20,7 +20,7 @@ package Gimp::CodeGen::util;
 use File::Copy 'cp';
 use File::Compare 'cmp';
 
-$DEBUG_OUTPUT = 1;
+$DEBUG_OUTPUT = exists $ENV{PDBGEN_BACKUP} ? $ENV{PDBGEN_BACKUP} : 1;
 
 $FILE_EXT = ".tmp.$$";
 

@@ -671,7 +671,7 @@ GPL
 	$pcount += $out->{pcount};
     }
 
-    if (!exists $ENV{PDBGEN_GROUPS}) {
+    if (! $ENV{PDBGEN_GROUPS}) {
 	my $internal = "$destdir/internal_procs.h$FILE_EXT";
 	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
 	print IFILE $gpl;
@@ -691,6 +691,7 @@ HEADER
 	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
+	print IFILE qq@#include <glib.h>\n@;
 	print IFILE qq@#include "app_procs.h"\n\n@;
 	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";

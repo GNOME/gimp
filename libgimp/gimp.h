@@ -523,7 +523,7 @@ gint32       gimp_image_add_vguide              (gint32     image_ID,
 						 gint32     yposition);
 void         gimp_image_delete_guide            (gint32     image_ID,
 						 gint32     guide_ID);
-gint32       gimp_image_findnext_guide          (gint32     image_ID,
+gint32       gimp_image_find_next_guide         (gint32     image_ID,
 						 gint32     guide_ID);
 GOrientation gimp_image_get_guide_orientation   (gint32     image_ID,
 					         gint32     guide_ID);
