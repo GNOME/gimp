@@ -421,8 +421,12 @@ paint_line_pixmap_mask (GImage          *dest,
 			int              width)
 {
   guchar *b, *p;
-  int alpha;
-  int i;
+  int x_index;
+  gdouble alpha;
+  gdouble factor = 0.00392156986;  /* 1.0/255.0 */
+  gint i;
+  gint j;
+  guchar *mask;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -434,14 +438,27 @@ paint_line_pixmap_mask (GImage          *dest,
   b = temp_buf_data (brush->pixmap_mask) +
     (y % brush->pixmap_mask->height) * brush->pixmap_mask->width * brush->pixmap_mask->bytes;
     
+  /* ditto, except for the brush mask, so we can pre-multiply the alpha value */
+  mask = temp_buf_data((brush->gbrush).mask) +
+    (y % brush->pixmap_mask->height) * brush->pixmap_mask->width;
+ 
   for (i = 0; i < width; i++)
     {
-      p = b + ((i + x) % brush->pixmap_mask->width)
-	* brush->pixmap_mask->bytes;
-      d[bytes-1] = OPAQUE_OPACITY;
+      /* attempt to avoid doing this calc twice in the loop */
+      x_index = ((i + x) % brush->pixmap_mask->width);
+      p = b + x_index * brush->pixmap_mask->bytes;
+      d[bytes-1] = mask[x_index];
 
+      /* multiply alpha into the pixmap data */
+      /* maybe we could do this at tool creation or brush switch time? */
+      /* and compute it for the whole brush at once and cache it?  */
+      alpha = d[bytes-1] * factor;
+      d[0] *= alpha;
+      d[1] *= alpha;
+      d[2] *= alpha;
       /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
       gimage_transform_color (dest, drawable, p, d, RGB);
       d += bytes;
     }
 }
+
