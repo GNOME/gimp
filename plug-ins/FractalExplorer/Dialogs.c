@@ -2252,7 +2252,7 @@ explorer_load()
 	return;
     }
     if (load_options(current_obj,fp)) {
-      g_message (_("File '%s' is corrupt\nLine %d Option section incorrect"), 
+      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), 
 		 filename, line_no);
 	return;
     }
