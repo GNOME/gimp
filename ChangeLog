@@ -1,3 +1,7 @@
+2003-06-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig.c: minor GUI cleanups.
+
 2003-06-16  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/psd.c: Avoid memory corruption when things

@@ -513,8 +513,8 @@ static gint      need_to_scale;
 static gint32    brush_image_ID = -1;
 
 static GtkWidget *undo_widget;
-static GtkWidget *gfig_op_menu; /* Popup menu in the list box */
-static GtkWidget *delete_frame_to_freeze; /* Top preview frame window */
+static GtkWidget *gfig_op_menu;    /* Popup menu in the list box */
+static GtkWidget *object_list;     /* Top preview frame window */
 static GtkWidget *fade_out_hbox;   /* Fade out widget in brush page */
 static GtkWidget *gradient_hbox;   /* Gradient widget in brush page */
 static GtkWidget *pressure_hbox;   /* Pressure widget in brush page */
@@ -1448,7 +1448,7 @@ create_file_selection (GFigObj *obj,
 
   if (!window)
     {
-      window = gtk_file_selection_new (_("Save Gfig drawing"));
+      window = gtk_file_selection_new (_("Save Gfig Drawing"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
       g_signal_connect (window, "destroy",
@@ -1508,7 +1508,6 @@ gfig_save (void)
 
 /* HACK WARNING */
 static void * xxx;
-static void * yyy;
 
 /* Cache the preview image - updates are a lot faster. */
 /* The preview_cache will contain the small image */
@@ -1755,24 +1754,18 @@ but_with_pix (const gchar  *stock_id,
 }
 
 static GtkWidget *
-small_preview (GtkWidget *list)
+small_preview (void)
 {
-  GtkWidget *label;
   GtkWidget *frame;
-  GtkWidget *button;
   GtkWidget *vbox;
   gint       y;
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (_("Prev"));
-  gtk_container_add (GTK_CONTAINER (vbox), label);
-  gtk_widget_show (label);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (vbox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   pic_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -1785,7 +1778,7 @@ small_preview (GtkWidget *list)
   for (y = 0; y < SMALL_PREVIEW_SZ; y++)
     {
       guchar prow[SMALL_PREVIEW_SZ*3];
-      memset (prow, -1, SMALL_PREVIEW_SZ * 3);
+      memset (prow, 255, SMALL_PREVIEW_SZ * 3);
       gtk_preview_draw_row (GTK_PREVIEW (pic_preview), prow,
 			    0, y, SMALL_PREVIEW_SZ);
     }
@@ -1793,24 +1786,6 @@ small_preview (GtkWidget *list)
   g_signal_connect_after (pic_preview, "expose_event",
                           G_CALLBACK (pic_preview_expose),
                           NULL);
-
-  /* More Buttons */
-  button = gtk_button_new_with_label (_("Edit"));
-  gtk_container_add (GTK_CONTAINER (vbox), button);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (edit_button_callback),
-                    list);
-  gimp_help_set_help_data (button, _("Edit Gfig object collection"), NULL); 
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Merge"));
-  gtk_container_add (GTK_CONTAINER (vbox), button);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (merge_button_callback),
-                    list);
-  gimp_help_set_help_data (button, _("Merge Gfig Object collection into the "
-				     "current edit session"), NULL); 
-  gtk_widget_show (button);
 
   return vbox;
 }
@@ -1982,19 +1957,12 @@ bezier_button_press (GtkWidget      *widget,
 static GtkWidget *
 draw_buttons (GtkWidget *ww)
 {
-  GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *vbox;
-  GSList    *group;
+  GSList    *group = NULL;
 
-  frame = gtk_frame_new (_("Ops"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 1);
-  
   /* Create group */
-  group = NULL;
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox); 
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
   /* Put buttons in */
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
@@ -2079,9 +2047,8 @@ draw_buttons (GtkWidget *ww)
   gtk_widget_show (button);
 
   gtk_widget_show (vbox);
-  gtk_widget_show (frame);
 
-  return frame;
+  return vbox;
 }
 
 /* Brush preview stuff */
@@ -2825,18 +2792,18 @@ select_brush_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   BrushDesc *bdesc = g_new0 (BrushDesc, 1);
- 
-  gimp_interactive_selection_brush (_("Gfig brush selection"),
-				    mygimp_brush_get (),
+
+   bdesc->bpp = 3; 
+   bdesc->bname = mygimp_brush_get ();
+   
+  gimp_interactive_selection_brush (_("Gfig Brush Selection"),
+				    bdesc->bname,
 				    100.0, /* Opacity */
 				    -1,  /* spacing (default)*/
 				    1,   /* Paint mode */
 				    gfig_brush_invoker,
 				    NULL);
 
-   bdesc->bpp = 3; 
-   bdesc->bname = mygimp_brush_get ();
-   
    brush_list_button_callback (NULL, bdesc); 
 }
 
@@ -3389,10 +3356,9 @@ build_list_items (GtkWidget *list)
 static GtkWidget *
 add_objects_list (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *list_frame;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *scrolled_win;
   GtkWidget *list;
   GtkWidget *button;
@@ -3400,25 +3366,23 @@ add_objects_list (void)
   frame = gtk_frame_new (_("Object"));
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_widget_show (table);
-
-  delete_frame_to_freeze = list_frame = gtk_frame_new (NULL);
-  gtk_widget_show (list_frame);
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (list_frame), scrolled_win);
-  gtk_widget_show (scrolled_win);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   gfig_gtk_list = list = gtk_list_new ();
-  /* gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_MULTIPLE); */
   gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_BROWSE);
+
+  gtk_box_pack_start (GTK_BOX (hbox), small_preview (), FALSE, FALSE, 0);
+
+  object_list = scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
 					 list);
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_win);
   gtk_widget_show (list);
 
   /* Load saved objects */
@@ -3428,15 +3392,17 @@ add_objects_list (void)
   build_list_items (list);
 
   /* Put buttons in */
-  button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
+  vbox = gtk_vbutton_box_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (rescan_button_callback),
+                    G_CALLBACK (new_button_callback),
                     NULL);
-  gimp_help_set_help_data (button,
-			_("Select folder and rescan Gfig object collections"),
-			   NULL); 
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
+  gimp_help_set_help_data (button, _("Create a new Gfig object collection "
+				     "for editing"), NULL); 
+  gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -3445,18 +3411,24 @@ add_objects_list (void)
                     list);
   gimp_help_set_help_data (button,
 			   _("Load a single Gfig object collection"), NULL); 
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 1, 2,
-		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
+  button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (new_button_callback),
-                    "New gfig obj");
-  gimp_help_set_help_data (button, _("Create a new Gfig object collection "
-				     "for editing"), NULL); 
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 2, 3,
-		    GTK_FILL, GTK_FILL, 0, 0);
+                    G_CALLBACK (edit_button_callback),
+                    list);
+  gimp_help_set_help_data (button, _("Edit Gfig object collection"), NULL); 
+  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Merge"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (merge_button_callback),
+                    list);
+  gimp_help_set_help_data (button, _("Merge Gfig Object collection into the "
+				     "current edit session"), NULL); 
+  gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
@@ -3465,19 +3437,18 @@ add_objects_list (void)
                     list);
   gimp_help_set_help_data (button, _("Delete currently selected Gfig Object "
 				     "collection"), NULL); 
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 3, 4,
-		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
-  /* Attach the frame for the list Show the widgets */
-
-  gtk_table_attach (GTK_TABLE (table), list_frame, 1, 2, 0, 4,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-
-  vbox = small_preview (list);
-  gtk_table_attach (GTK_TABLE (table), vbox, 0, 1, 0, 4, 0, 0, 0, 0);
-
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (rescan_button_callback),
+                    NULL);
+  gimp_help_set_help_data (button,
+			_("Select folder and rescan Gfig object collections"),
+			   NULL); 
+  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_widget_show (button);
 
   return frame;
 }
@@ -3793,10 +3764,7 @@ static gint
 gfig_dialog (void)
 {
   GtkWidget *main_hbox;
-  GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *xframe;
-  GtkWidget *oframe;
   GtkWidget *notebook;
   GtkWidget *page;
   GtkWidget *top_level_dlg;
@@ -3804,7 +3772,6 @@ gfig_dialog (void)
   gimp_ui_init ("gfig", TRUE);
   gfig_stock_init ();
 
-  yyy = gdk_rgb_get_visual ();
   xxx = gdk_rgb_get_colormap ();
 
   gfig_path_list = gimp_plug_in_parse_path ("gfig-path", "gfig");
@@ -3818,7 +3785,7 @@ gfig_dialog (void)
   top_level_dlg = gimp_dialog_new (_("Gfig"), "gfig",
 				   gimp_standard_help_func, "filters/gfig.html",
 				   GTK_WIN_POS_MOUSE,
-				   FALSE, FALSE, FALSE,
+				   FALSE, TRUE, FALSE,
 
 				   GTK_STOCK_UNDO, gfig_undo_callback,
 				   NULL, NULL, &undo_widget, FALSE, FALSE,
@@ -3850,38 +3817,23 @@ gfig_dialog (void)
 		      TRUE, TRUE, 0);
 
   /* Add buttons beside the preview frame */
-  xframe = draw_buttons (top_level_dlg);
-  gtk_box_pack_start (GTK_BOX (main_hbox), xframe, FALSE, FALSE, 0);
-  /*gtk_widget_show (xframe);*/
-
-  /* Start building the frame for the preview area */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame); 
+  gtk_box_pack_start (GTK_BOX (main_hbox),
+                      draw_buttons (top_level_dlg), FALSE, FALSE, 0);
 
   /* Preview itself */
-  xframe = make_preview ();
-  gtk_container_add (GTK_CONTAINER (frame), xframe);
-  /* gtk_widget_show (xframe); */
+  gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (), FALSE, FALSE, 0);
 
   gtk_widget_show (gfig_preview);
 
-  frame = gtk_frame_new (_("Settings"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame); 
-
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /* listbox + entry */
-  oframe = add_objects_list ();
-  gtk_box_pack_start (GTK_BOX (vbox), oframe, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), add_objects_list (), TRUE, TRUE, 0);
 
   /* Grid entry */
-  xframe = grid_frame ();
-  gtk_box_pack_start (GTK_BOX (vbox), xframe, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), grid_frame (), FALSE, FALSE, 0);
 
   /* The notebook */
   notebook = gtk_notebook_new ();
@@ -3931,8 +3883,6 @@ gfig_dialog (void)
   gimp_image_delete (brush_image_ID);
   brush_image_ID = -1;
 
-  gdk_flush ();
-
   return gfig_run;
 }
 
@@ -3970,7 +3920,8 @@ gfig_ok_callback (GtkWidget *widget,
       gchar     *message;
 
       message =
-	g_strdup_printf (_("%d unsaved Gfig objects.\nContinue with exiting?"), count);
+	g_strdup_printf (_("%d unsaved Gfig objects.\n"
+                           "Continue with exiting?"), count);
 
       dialog = gimp_query_boolean_box (_("Warning"),
 				       gimp_standard_help_func,
@@ -4699,6 +4650,7 @@ about_button_callback (GtkWidget *widget,
   gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
   gtk_widget_show (vbox);
 
   gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
@@ -4755,7 +4707,7 @@ rescan_button_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-new_gfig_obj (gchar *name)
+new_gfig_obj (const gchar *name)
 {
   GFigObj   *gfig;
   GtkWidget *new_list_item;
@@ -4764,7 +4716,7 @@ new_gfig_obj (gchar *name)
   gfig = gfig_new ();
 
   if (!name)
-    name = _("New gfig obj");
+    name = _("New Gfig Object");
 
   gfig->draw_name = g_strdup (name);
 
@@ -4788,7 +4740,7 @@ new_button_callback (GtkWidget *widget,
 {
   GtkWidget *new_list_item;
 
-  new_list_item = new_gfig_obj ((gchar*) data);
+  new_list_item = new_gfig_obj (NULL);
   gfig_dialog_edit_list (new_list_item, current_obj, TRUE);
 }
 
@@ -4806,7 +4758,7 @@ gfig_do_delete_gfig_callback (GtkWidget *widget,
 
   if (!delete)
     {
-      gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
+      gtk_widget_set_sensitive (object_list, TRUE);
       return;
     }
 
@@ -4859,7 +4811,7 @@ gfig_do_delete_gfig_callback (GtkWidget *widget,
       pos = 0;
     }
 
-  gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
+  gtk_widget_set_sensitive (object_list, TRUE);
 
   gtk_list_select_item (GTK_LIST (gfig_gtk_list), pos);  
 
@@ -4909,7 +4861,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
                     G_CALLBACK (gtk_widget_destroyed),
                     &delete_dialog);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (delete_frame_to_freeze), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (object_list), FALSE);
   gtk_widget_show (delete_dialog);
 } 
 
@@ -5105,7 +5057,8 @@ gfig_copy_menu_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   /* Create new entry with name + copy at end & copy object into it */
-  gchar *new_name = g_strdup_printf (_("%s copy"), gfig_obj_for_menu->draw_name);
+  gchar *new_name = g_strdup_printf (_("%s copy"),
+                                     gfig_obj_for_menu->draw_name);
   new_gfig_obj (new_name);
   g_free (new_name);
 
