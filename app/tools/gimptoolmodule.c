@@ -39,7 +39,8 @@ gimp_tool_module_load (GTypeModule *gmodule) {
   if (!module)
   	return FALSE;
 
-  if (!g_module_symbol (module->module, "gimp_tool_module_register", (gpointer *) &module->register_tool))
+  if (!g_module_symbol (module->module, "gimp_tool_module_register_tool", (gpointer *) &module->register_tool) ||
+      !g_module_symbol (module->module, "gimp_tool_module_register_type", (gpointer *) &module->register_type))
     {
       g_warning (g_module_error());
       g_module_close (module->module);
@@ -47,7 +48,7 @@ gimp_tool_module_load (GTypeModule *gmodule) {
       return FALSE;
     }
                                                                                                                   
-  return TRUE;
+  return module->register_type(module);
 }
 
 static void
@@ -120,7 +121,7 @@ gimp_tool_module_new (gchar *filename, Gimp *gimp, GimpToolRegisterCallback call
 
   module->filename = g_strdup(filename);
   gimp_tool_module_load(G_TYPE_MODULE(module)); /* FIXME: check for errors! */
-  module->register_tool (gimp, callback, G_TYPE_MODULE(module));
+  module->register_tool (gimp, callback);
   gimp_tool_module_unload(G_TYPE_MODULE(module));
 
   return module;

@@ -45,9 +45,10 @@ struct _GimpToolModule
   GModule	*module;
   gchar         *filename;
   
-  void (* register_tool) (Gimp                     *gimp,
-                          GimpToolRegisterCallback  callback,
-                          GTypeModule              *module);
+  void       (* register_tool) (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback);
+                          
+  gboolean   (* register_type) (GTypeModule              *module);
 
 };
 
