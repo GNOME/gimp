@@ -32,6 +32,7 @@
 #include "text-types.h"
 
 #include "gimpfont.h"
+#include "gimpfont-utils.h"
 #include "gimpfontlist.h"
 
 #include "gimp-intl.h"
@@ -158,7 +159,7 @@ gimp_font_list_add_font (GimpFontList         *list,
   if (! desc)
     return;
 
-  name = pango_font_description_to_string (desc);
+  name = gimp_font_util_pango_font_description_to_string (desc);
 
   if (! g_utf8_validate (name, -1, NULL))
     {

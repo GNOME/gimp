@@ -233,8 +233,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   name = gimp_object_get_name (GIMP_OBJECT (font));
 
   font_desc = pango_font_description_from_string (name);
-  if (!font_desc)
-    return FALSE;
+  g_return_val_if_fail (font_desc != NULL, FALSE);
 
   pango_font_description_set_size (font_desc, GIMP_FONT_POPUP_SIZE);
 
@@ -291,8 +290,6 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 
       font_desc = pango_font_description_from_string (name);
       g_return_val_if_fail (font_desc != NULL, NULL);
-      if (!font_desc)
-        return NULL;
 
       pango_font_description_set_size (font_desc,
                                        PANGO_SCALE * height * 2.0 / 3.0);

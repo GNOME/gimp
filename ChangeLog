@@ -1,5 +1,22 @@
 2005-02-08  Manish Singh  <yosh@gimp.org>
 
+	* app/text/gimpfont-utils.[ch]: new function to workaround pango
+	bug #166450, by tacking on a ',' to font names that end in numbers,
+	so pango_font_description_from_string doesn't interpret it as a size.
+
+	* app/text/Makefile.am: add above files.
+
+	* app/text/gimpfontlist.c
+	* app/text/gimptext-compat.c: use new function.
+
+	* app/text/gimptext-xlfd.c: also make sure font names pulled out
+	from XLFD don't end in numbers.
+
+	* app/text/gimpfont.c
+	* app/text/gimptextlayout.c: remove some redundant checks.
+
+2005-02-08  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/Makefile.am: don't install sphere.py.
 
 2005-02-08  Manish Singh  <yosh@gimp.org>
