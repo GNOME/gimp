@@ -30,35 +30,26 @@ EXPORTS
 	gimp_path_editor_get_path
 	gimp_path_editor_get_type
 	gimp_path_editor_new
+	gimp_size_entry_add_field
 	gimp_size_entry_attach_label
 	gimp_size_entry_get_refval
 	gimp_size_entry_get_type
 	gimp_size_entry_get_unit
 	gimp_size_entry_get_value
+	gimp_size_entry_grab_focus
 	gimp_size_entry_new
 	gimp_size_entry_set_resolution
 	gimp_size_entry_set_refval
 	gimp_size_entry_set_refval_boundaries
 	gimp_size_entry_set_refval_digits
+	gimp_size_entry_set_size
 	gimp_size_entry_set_unit
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
-	gimp_unit_get_abbreviation
-	gimp_unit_get_deletion_flag
-	gimp_unit_get_digits
-	gimp_unit_get_factor
-	gimp_unit_get_identifier
-	gimp_unit_get_number_of_units
-	gimp_unit_get_number_of_built_in_units
-	gimp_unit_get_plural
-	gimp_unit_get_singular
-	gimp_unit_get_symbol
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit
 	gimp_unit_menu_new
 	gimp_unit_menu_set_unit
-	gimp_unit_new
-	gimp_unit_set_deletion_flag
 	gp_config_write
 	gp_extension_ack_write
 	gp_init
@@ -78,9 +69,11 @@ EXPORTS
 	parasite_data
 	parasite_data_size
 	parasite_free
+	parasite_flags
 	parasite_has_flag
 	parasite_is_persistent
 	parasite_is_type
+	parasite_is_undoable
 	parasite_name
 	parasite_new
 	wire_clear_error
