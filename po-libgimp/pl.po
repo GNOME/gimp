@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2002 Free Software Foundation, Inc.
+# Copyright (C) 2001-2003 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2002-06-12 01:22+0200\n"
+"POT-Creation-Date: 2003-12-19 16:00+0100\n"
+"PO-Revision-Date: 2003-11-24 09:29+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,32 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Wybór jednostki"
+msgstr "Wybór pędzla"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Przeglądaj..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "nie obsługuje warstw"
+msgstr "Format %s nie obsługuje warstw"
 
 #: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Połącz widoczne warstwy"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "nie obsługuje przesunięć, rozmiarów ani nieprzepuszczalności warstw"
+msgstr "Format %s nie obsługuje przesunięć, rozmiarów ani krycia warstw"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "obsługuje warstwy wyłącznie jako ramki animacji"
+msgstr "Format %s obsługuje warstwy wyłącznie jako ramki animacji"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -55,42 +54,41 @@ msgid "Flatten Image"
 msgstr "Spłaszcz obraz"
 
 #: libgimp/gimpexport.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "nie obsługuje przezroczystości"
+msgstr "Format %s nie obsługuje przezroczystości"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "nie obsługuje warstw"
+msgstr "Format %s nie obsługuje mask warstw"
 
 #: libgimp/gimpexport.c:270
-#, fuzzy
 msgid "Apply Layer Masks"
-msgstr "maska warstwy"
+msgstr "Zastosuj maski warstw"
 
 #: libgimp/gimpexport.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "obsługuje wyłącznie obrazy RGB"
+msgstr "Format %s obsługuje wyłącznie obrazy RGB"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Przekonwertuj na RGB"
 
 #: libgimp/gimpexport.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "obsługuje wyłącznie obrazy w odcieniach szarości"
+msgstr "Format %s obsługuje wyłącznie obrazy w odcieniach szarości"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Przekonwertuj na odcienie szarości"
 
 #: libgimp/gimpexport.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "obsługuje wyłącznie obrazy indeksowane"
+msgstr "Format %s obsługuje wyłącznie obrazy indeksowane"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
@@ -101,38 +99,38 @@ msgstr ""
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "obsługuje wyłącznie obrazy RGB lub indeksowane"
+msgstr "Format %s obsługuje wyłącznie dwukolorowe obrazy indeksowane"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Przekonwertuj na indeksowany z użyciem ustawień domyślnych\n"
+"Przekonwertuj na indeksowany z użyciem ustawień domyślnych dla bitmap\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: libgimp/gimpexport.c:316
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "obsługuje wyłącznie obrazy RGB lub w odcieniach szarości"
+msgstr "Format %s obsługuje wyłącznie obrazy RGB lub w odcieniach szarości"
 
 #: libgimp/gimpexport.c:325
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "obsługuje wyłącznie obrazy RGB lub indeksowane"
+msgstr "Format %s obsługuje wyłącznie obrazy RGB lub indeksowane"
 
 #: libgimp/gimpexport.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "obsługuje wyłącznie obrazy indeksowane lub w odcieniach szarości"
+msgstr ""
+"Format %s obsługuje wyłącznie obrazy indeksowane lub w odcieniach szarości"
 
 #: libgimp/gimpexport.c:346
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "Wymaga kanału alfa"
+msgstr "Format %s wymaga kanału alfa"
 
 #: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
@@ -151,83 +149,60 @@ msgid "Export File"
 msgstr "Eksport pliku"
 
 #: libgimp/gimpexport.c:460
-#, fuzzy
 msgid "_Ignore"
-msgstr "Zignoruj"
+msgstr "Z_ignoruj"
 
 #: libgimp/gimpexport.c:462
-#, fuzzy
 msgid "_Export"
-msgstr "Wyeksportuj"
+msgstr "Wy_eksportuj"
 
 #. the headline
 #: libgimp/gimpexport.c:484
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Z wymienionych poniżej powodów przed zapisem obraz powinien zostać "
-"wyeksportowany:"
+"Z wymienionych poniżej powodów przed zapisaniem w formacie %s obraz powinien "
+"zostać wyeksportowany:"
 
 #: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
 msgstr "Konwersja podczas eksportu nie zmodyfikuje oryginalnego obrazu."
 
 #: libgimp/gimpexport.c:664
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Zamierzasz zapisać %s jako %s.\n"
+"Zamierzasz zapisać maskę warstwy jako %s.\n"
 "Nie spowoduje to zapisania widocznych warstw."
 
 #: libgimp/gimpexport.c:670
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Zamierzasz zapisać %s jako %s.\n"
+"Zamierzasz zapisać kanał (zapisane zaznaczenie) jako %s.\n"
 "Nie spowoduje to zapisania widocznych warstw."
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Wybór jednostki"
+msgstr "Wybór czcionki"
 
 #: libgimp/gimpgradientmenu.c:103
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Wybór jednostki"
+msgstr "Wybór gradientu"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Brak"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr ""
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-
-#: libgimp/gimpmiscui.c:556
-#, fuzzy
-msgid "Parameter Settings"
-msgstr "Wybór jednostki"
-
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Wybór jednostki"
+msgstr "Wybór desenia"
 
 #: libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -235,207 +210,206 @@ msgstr "procent"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(niepoprawny napis UTF-8)"
 
 #: libgimpbase/gimputils.c:198
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "Bajty"
+msgstr "%d bajtów"
 
 #: libgimpbase/gimputils.c:203
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:207
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:218
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:222
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpbase/gimputils.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "Bajty"
+msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:233
 #, c-format
 msgid "%.2f GB"
-msgstr ""
+msgstr "%.2f GB"
 
 #: libgimpbase/gimputils.c:237
 #, c-format
 msgid "%.1f GB"
-msgstr ""
+msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "Bajty"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:175
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Ładowanie modułu: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:191 libgimpmodule/gimpmodule.c:208
 #: libgimpmodule/gimpmodule.c:315 libgimpmodule/gimpmodule.c:342
 #: libgimpmodule/gimpmodule.c:435
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "Błąd przy ładowaniu modułu \"%s\": %s"
 
 #: libgimpmodule/gimpmodule.c:272
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "Pomijanie modułu: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
-msgstr ""
+msgstr "Błąd w module"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
-msgstr ""
+msgstr "Załadowany"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
-msgstr ""
+msgstr "Błąd przy ładowaniu"
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
+msgstr "Niezaładowany"
+
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/Bieżący kolor"
+msgstr "/_Kolor pierwszoplanowy"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/Kolor tła"
+msgstr "/Kolor _tła"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
-msgstr "/Czarny"
+msgstr "/_Czarny"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-#, fuzzy
 msgid "/_White"
-msgstr "/Biały"
+msgstr "/_Biały"
 
 #: libgimpwidgets/gimpcolorscales.c:142
-#, fuzzy
 msgid "Scales"
-msgstr "Przeskaluj"
+msgstr "Skale"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
-msgstr ""
+msgstr "Odcień"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 #: modules/cdisplay_proof.c:323
 msgid "Saturation"
-msgstr ""
+msgstr "Nasycenie"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
-#, fuzzy
 msgid "Value"
-msgstr "Przeskaluj"
+msgstr "Wartość"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr ""
+msgstr "Czerwony"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr ""
+msgstr "Zielony"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr ""
+msgstr "Niebieski"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Zapis szesnastkowy, używany w języku HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "_Triplet szesnastkowy:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Bieżący:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Stary:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Wybór folderu"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Wybór pliku"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "Kilobajty"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "Megabajty"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "Gigabajty"
 
@@ -444,20 +418,20 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Kliknij ten zakraplacz, a następnie dowolny punkt obrazu, aby pobrać z niego "
+"kolor."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Zakotwicz"
 
 #: libgimpwidgets/gimpstock.c:114
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Zduplikuj"
+msgstr "Z_duplikuj"
 
 #: libgimpwidgets/gimpstock.c:115
-#, fuzzy
 msgid "_Edit"
-msgstr "Zmodyfikuj"
+msgstr "Z_modyfikuj"
 
 #: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
@@ -481,133 +455,125 @@ msgstr "Widoczny"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Odstępy międzyz_nakowe"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Odstępy między_wierszowe"
 
 #: libgimpwidgets/gimpstock.c:184
-#, fuzzy
 msgid "_Resize"
-msgstr "Z_resetuj"
+msgstr "Zmień _rozmiar"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
-#, fuzzy
 msgid "_Scale"
-msgstr "Przeskaluj"
+msgstr "Prze_skaluj"
 
 #: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
-msgstr ""
+msgstr "Wykadruj"
 
 #: libgimpwidgets/gimpstock.c:276
-#, fuzzy
 msgid "_Transform"
-msgstr "Przekształć"
+msgstr "_Przekształć"
 
 #: libgimpwidgets/gimpstock.c:279
-#, fuzzy
 msgid "_Rotate"
-msgstr "Obróć"
+msgstr "O_bróć"
 
 #: libgimpwidgets/gimpstock.c:281
-#, fuzzy
 msgid "_Shear"
-msgstr "Zetnij"
+msgstr "_Zetnij"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Więcej..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Wybór jednostki"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Jednostka"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Współczynnik"
 
-#: libgimpwidgets/gimpwidgets.c:1252
-#, fuzzy
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Jeśli przycisk \"Czas\" nie zostanie wciśnięty, wartość ta zostanie "
-"wykorzystana do zainicjowania generatora liczb losowych, co pozwoli na "
-"powtórzenie określonej \"losowej\" operacji."
+"Wartość ta może zostać użyta w roli ziarna generatora liczb losowych, co "
+"pozwala na dokładne powtórzenie wykonanej \"losowej\" operacji."
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
-msgstr ""
+msgstr "Wy_losuj"
 
-#: libgimpwidgets/gimpwidgets.c:1267
-#, fuzzy
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Inicjowanie generatora liczb losowych na podstawie bieżącego czasu. "
-"Gwarantuje to dość dobrą losowość."
+"Ustala ziarno generatora liczb losowych na podstawie wygenerowanej losowo "
+"liczby."
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Filtr symulujący deficyt kolorów (algorytm Brettela-Vienota-Mollona)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Widzenie z deficytem kolorów"
 
 #: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
-msgstr ""
+msgstr "Typ _deficytu kolorów:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (czułość na czerwony)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Protanopia (czułość na zielony)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Protanopia (czułość na niebieski)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Filtr wyświetlania kolorów z korekcją gamma"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
 msgid "_Gamma:"
-msgstr ""
+msgstr "_Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Filtr wyświetlania kolorów z wysokim kontrastem"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:308
 msgid "Contrast C_ycles:"
-msgstr ""
+msgstr "_Cykle kontrastu:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Filtr korygujący kolory w oparciu o profil ICC"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Korekcja kolorów"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
@@ -627,11 +593,11 @@ msgstr ""
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Wybór profilu kolorów ICC"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
@@ -639,69 +605,88 @@ msgstr ""
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Wybór koloru z przestrzeni CMYK"
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:152
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
-#, fuzzy
 msgid "Cyan"
-msgstr "Anuluj"
+msgstr "Niebieskozielony"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
-msgstr ""
+msgstr "Purpurowy"
 
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
-msgstr ""
+msgstr "Żółty"
 
 #: modules/colorsel_cmyk.c:159
-#, fuzzy
 msgid "Black"
-msgstr "/Czarny"
+msgstr "Czarny"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Oddalenie czarnego (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Wybór koloru z trójkąta malarskiego"
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
-msgstr ""
+msgstr "Trójkąt"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Wybór koloru oparty na akwareli"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Akwarela"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Nacisk"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Brak ścieżki %s w pliku gimprc:\n"
+#~ "Do pliku %s należy dodać\n"
+#~ "pozycję postaci\n"
+#~ "(%s \"%s\")\n"
+#~ "."
+
+#~ msgid "Preview"
+#~ msgstr "Podgląd"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Ustawienia parametru"
+
+#~ msgid "None (normal vision)"
+#~ msgstr "Brak (zwykłe widzenie)"
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "kanał (zapisane zaznaczenie)"
