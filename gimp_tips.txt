@@ -44,8 +44,7 @@ You can change the name of a layer by double-clicking on its name in
 the Layers dialog box.
 
 The layer named "Background" is special.  You can't add transparency 
-or a layer mask to it.  However, if you rename it, it will behave
-like a normal layer.
+or a layer mask to it.  To add transparency, you must first "Add alpha" to the layer by right-clicking in the layers dialog and selecting "Add alpha to layer". 
 
 When using a drawing tool (Paintbrush, Airbrush, or Pencil), Shift-click
 will draw a straight line from your last drawing point to your current

@@ -1,3 +1,12 @@
+Mon Dec  8 11:43:17 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* updated iwarp to latest version
+
+	* added Sven Neumans patch for 32-bit color in gck
+
+	* fixed gimp_tips.txt (the tip about the "add alpha")
+
+
 Mon Dec  8 02:13:36 PST 1997  Manish Singh <yosh@gimp.org>
 
 	* app/about_dialog.c: Added Nathan Summers patch to make it

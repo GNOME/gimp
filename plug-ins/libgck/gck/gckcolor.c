@@ -1792,9 +1792,10 @@ void gck_rgb_to_image32(GckVisualInfo * visinfo,
 	      g = (guint32) RGB_data[count++];
 	      b = (guint32) RGB_data[count++];
 
-	      r = r << 24;
-	      g = g << 16;
-	      b = b << 8;
+	      /* changed to work on 32 bit displays */
+	      r = r << 16;
+	      g = g << 8;
+	      b = b;
 
 	      pixel = r | g | b;
 	      *imagedata = pixel;

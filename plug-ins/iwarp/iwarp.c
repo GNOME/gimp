@@ -28,9 +28,9 @@
 
    Most of the gimp and gtk specific code is taken from other plug-ins 
 
-   v0.11
-    animation of non-alpha layers (background) creates now layers with alpha
-    channel. (thanks to Adrian Likins for reporting this bug)
+   v0.11a
+    animation of non-alpha layers (background) creates now layers with 
+    alpha channel. (thanks to Adrian Likins for reporting this bug)
 
 */
 
@@ -494,7 +494,7 @@ iwarp_supersample(gint sxl,gint syl ,gint sxr, gint syr,guchar* dest_data,int st
     if (layer_alpha) dest = dest_data+(col-syl)*(stride)+(row-sxl)*(image_bpp+1);
     else  dest = dest_data+(col-syl)*stride+(row-sxl)*image_bpp;
     for (i=0; i<image_bpp; i++) *dest++ = color[i] / cc;
-    if (layer_alpha) dest++; 
+    if (layer_alpha) *dest++ = 255; 
     (*progress)++;
   }      
   gimp_progress_update((double) (*progress) / max_progress);
@@ -537,12 +537,12 @@ iwarp_frame()
 	        if (fabs(xv) > 0.0 || fabs(yv) > 0.0) { 
 	          iwarp_get_point(pre2img * xv +col, pre2img *yv +row,color);
  	          for (i=0; i<image_bpp; i++) *dest++ = color[i];
-                  if (layer_alpha) dest++;
+                  if (layer_alpha) *dest++ = 255;
  	        }
  	        else {
  	         iwarp_get_pixel(col,row,color);
  	         for (i=0; i<image_bpp; i++) *dest++ = color[i];
- 	         if (layer_alpha) dest++;
+ 	         if (layer_alpha) *dest++ = 255;
  	        }  
 	     }
 	     dest_row += dest_rgn.rowstride;
