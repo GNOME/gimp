@@ -1,3 +1,10 @@
+2004-10-25  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/newsprint.c: removed debugging g_print and
+	remove my memory fix, since it was buggy and shouldn't be done.
+	My fix just broke this plug-in (reported by Joao S. O. Bueno
+	Calligaris)
+
 2004-10-25  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Switch to design mode when

@@ -880,8 +880,6 @@ lpi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.output_lpi);
 
-  g_print ("lpi (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
-
   g_signal_handlers_block_by_func (st->cellsize,
                                    cellsize_callback,
                                    data);
@@ -902,7 +900,6 @@ spi_callback (GtkAdjustment *adjustment,
 
   gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
 
-  g_print ("spi (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
   g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
@@ -923,7 +920,6 @@ cellsize_callback (GtkAdjustment *adjustment,
 
   gimp_int_adjustment_update (adjustment, &pvals.cell_width);
 
-  g_print ("cell (%g / %g = %d)\n", pvals_ui.input_spi, pvals_ui.output_lpi, pvals.cell_width);
   g_signal_handlers_block_by_func (st->output_lpi,
                                    lpi_callback,
                                    data);
@@ -2063,9 +2059,11 @@ do {                                                            \
   g_timer_destroy (timer);
 #endif
 
-  for (b = 0; b < 4; b++)
-    if (thresh[b])
-      g_free (thresh[b]);
+  /*
+   * Note: the tresh array should *NOT* be freed.
+   * Its values will be reused anyway so this is NOT a memory leak.
+   * Well it is, but only the first time, so it doesn't matter.
+   */
 
   if (preview)
     {
