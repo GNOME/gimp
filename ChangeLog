@@ -1,3 +1,10 @@
+2003-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_select_item): put back the hack which
+	calls gtk_tree_selection_select_iter() in addition to
+	gtk_tree_view_set_cursor() until bug #115871 is fixed.
+
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
         Added persistent storage of text layers in XCF files. We use a 

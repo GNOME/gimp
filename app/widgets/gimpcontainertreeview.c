@@ -550,9 +550,11 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
 
-#if 0
-      gtk_tree_selection_select_iter (tree_view->selection, iter);
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as #115871 is fixed
 #endif
+      /*  gtk_tree_view_set_cursor() should be sufficient actually...  */
+      gtk_tree_selection_select_iter (tree_view->selection, iter);
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
